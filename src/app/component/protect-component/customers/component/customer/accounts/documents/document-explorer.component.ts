@@ -34,12 +34,12 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     {id: 5, name: 'MP4'},
     {id: 6, name: 'WAV'},
     {id: 7, name: 'ZIP'},
-    { id: 8, name: 'BIN' },
-    { id: 9, name: 'ISO' },
-    { id: 10, name: 'JPEG' },
-    { id: 11, name: 'JPG' },
-    { id: 12, name: 'TXT' },
-    { id: 13, name: 'HTML' },
+    {id: 8, name: 'BIN'},
+    {id: 9, name: 'ISO'},
+    {id: 10, name: 'JPEG'},
+    {id: 11, name: 'JPG'},
+    {id: 12, name: 'TXT'},
+    {id: 13, name: 'HTML'},
   ];
   displayedColumns: string[] = ['emptySpace', 'name', 'lastModi', 'type', 'size', 'icons'];
   dataSource = ELEMENT_DATA;
@@ -70,9 +70,9 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   noResult = false;
 
   constructor(private eventService: EventService, private http: HttpService, private _bottomSheet: MatBottomSheet,
-    private event: EventService, private router: Router, private fb: FormBuilder,
-    private custumService: CustomerService, public subInjectService: SubscriptionInject,
-    public utils: UtilService, public dialog: MatDialog) {
+              private event: EventService, private router: Router, private fb: FormBuilder,
+              private custumService: CustomerService, public subInjectService: SubscriptionInject,
+              public utils: UtilService, public dialog: MatDialog) {
   }
 
   showDots = false;
@@ -111,7 +111,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   openDialog(element, value): void {
     const dialogRef = this.dialog.open(DocumentNewFolderComponent, {
       width: '30%',
-      data: { name: value, animal: element }
+      data: {name: value, animal: element}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -132,7 +132,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   openDialogCopy(element, value): void {
     const dialogRef = this.dialog.open(CopyDocumentsComponent, {
       width: '40%',
-      data: { name: value, animal: element }
+      data: {name: value, animal: element}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -240,13 +240,13 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
 
   getAllFilesRes(data, value) {
-    if(data.files.length == 0 && data.folders.length == 0){
-      this.showMsg = true
-    }else{
-      this.showMsg = false
+    if (data.files.length == 0 && data.folders.length == 0) {
+      this.showMsg = true;
+    } else {
+      this.showMsg = false;
     }
     this.isLoading = false;
-    console.log("this is folder length and files length ")
+    console.log('this is folder length and files length ');
     console.log(data.folders.length, data.files.length);
     this.allFiles = data.files;
     this.AllDocs = data.folders;
@@ -254,21 +254,21 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     this.getSort = this.dataToCommon;
     this.dataToCommon.push.apply(this.dataToCommon, this.allFiles);
     if (this.dataToCommon.openFolderId == undefined || this.openFolderName.length == 0) {
-      Object.assign(this.dataToCommon, { openFolderNm: value.folderName });
-      Object.assign(this.dataToCommon, { openFolderId: value.id });
+      Object.assign(this.dataToCommon, {openFolderNm: value.folderName});
+      Object.assign(this.dataToCommon, {openFolderId: value.id});
       this.parentId = (value.id == undefined) ? 0 : value.id;
       console.log('parentId', this.parentId);
       this.openFolderName.push(this.dataToCommon);
       this.valueFirst = this.openFolderName[0];
       if (this.dataToCommon.length > 0) {
-        this.commonFileFolders = this.dataToCommon
+        this.commonFileFolders = this.dataToCommon;
         this.commonFileFolders = new MatTableDataSource(this.dataToCommon);
         this.commonFileFolders.sort = this.sort;
         this.fileTypeGet();
         this.backUpfiles.push(this.dataToCommon);
       }
       console.log('this.backUpfiles', this.backUpfiles);
-      this.commonFileFolders = this.dataToCommon
+      this.commonFileFolders = this.dataToCommon;
       this.commonFileFolders = new MatTableDataSource(this.dataToCommon);
       this.commonFileFolders.sort = this.sort;
     }
@@ -278,53 +278,56 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     this.fileSizeConversion();
     console.log('sorted', this.commonFileFolders);
   }
-  keyPress(event){
-    if(event == " "){
-      this.reset()
-    }else{
-      console.log('search',event)
-      let obj = {
-        clientId : this.clientId,
-        advisorId :  this.advisorId,
-        name : event
-      }
-      if(event.length > 2){
+
+  keyPress(event) {
+    if (event == ' ') {
+      this.reset();
+    } else {
+      console.log('search', event);
+      const obj = {
+        clientId: this.clientId,
+        advisorId: this.advisorId,
+        name: event
+      };
+      if (event.length > 2) {
         this.custumService.searchFile(obj).subscribe(
           data => this.searchFileRes(data, 'value')
         );
       }
     }
   }
-  searchFileRes(data,value){
-    this.showResult = true
-    let obj = []
-    console.log(data)
-    Object.assign(obj, {'files': data.SEARCHED_FILE})
-    Object.assign(obj, {'folders': data.SEARCHED_FOLDER})
-    if(data.SEARCHED_FILE.length == 0 && data.SEARCHED_FILE.length == 0){
+
+  searchFileRes(data, value) {
+    this.showResult = true;
+    const obj = [];
+    console.log(data);
+    Object.assign(obj, {files: data.SEARCHED_FILE});
+    Object.assign(obj, {folders: data.SEARCHED_FOLDER});
+    if (data.SEARCHED_FILE.length == 0 && data.SEARCHED_FILE.length == 0) {
       this.noResult = true;
-    }else{
+    } else {
       this.isLoading = true;
       this.commonFileFolders.data = [{}, {}, {}];
       this.commonFileFolders = new MatTableDataSource(this.data);
-      this.getAllFilesRes(obj, value)
+      this.getAllFilesRes(obj, value);
     }
 
   }
+
   fileTypeGet() {
     this.commonFileFolders.filteredData.forEach(p => {
       this.fileType.forEach(n => {
         if (n.id == p.fileTypeId) {
           p.fileTypeId = n.name;
         }
-        this.isLoading = false
+        this.isLoading = false;
       });
     });
   }
 
   getFolders(data) {
     this.isLoading = true;
-    this.showMsg = false
+    this.showMsg = false;
     this.commonFileFolders.data = [{}, {}, {}];
     this.commonFileFolders = new MatTableDataSource(this.data);
     this.parentId = (data == undefined) ? 0 : data[0].folderParentId;
@@ -343,9 +346,9 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
 
   reset() {
-    this.showMsg = false
-    this.showResult = false
-    this.noResult = false
+    this.showMsg = false;
+    this.showResult = false;
+    this.noResult = false;
     if (this.openFolderName.length > 0) {
       this.commonFileFolders = this.backUpfiles[0];
     }
@@ -356,10 +359,10 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   openFolder(value) {
     if (this.isLoading) {
-      return
+      return;
     }
     if (value.fileName != undefined) {
-      return
+      return;
     } else {
       this.isLoading = true;
       const obj = {
@@ -371,7 +374,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       console.log('this.parentId', this.parentId);
       console.log('backUpfiles', this.backUpfiles);
       this.commonFileFolders.data = [{}, {}, {}];
-    this.commonFileFolders = new MatTableDataSource(this.data);
+      this.commonFileFolders = new MatTableDataSource(this.data);
       this.custumService.getAllFiles(obj).subscribe(
         data => this.getAllFilesRes(data, value)
       );
@@ -636,10 +639,10 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { emptySpace: '', name: 'Identity & address proofs', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-' },
-  { emptySpace: '', name: 'Accounts', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-' },
-  { emptySpace: '', name: 'Planning', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-' },
-  { emptySpace: '', name: 'Transaction', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-' },
-  { emptySpace: '', name: 'Agreements & invoices', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-' },
+  {emptySpace: '', name: 'Identity & address proofs', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
+  {emptySpace: '', name: 'Accounts', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
+  {emptySpace: '', name: 'Planning', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
+  {emptySpace: '', name: 'Transaction', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
+  {emptySpace: '', name: 'Agreements & invoices', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
 
 ];
