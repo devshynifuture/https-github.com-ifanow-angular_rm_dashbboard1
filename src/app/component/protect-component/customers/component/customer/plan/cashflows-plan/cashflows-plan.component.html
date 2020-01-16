@@ -18,15 +18,87 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-12 cashflowTable pr-0" *ngIf="!showSurplusTable">
-                                <table mat-table [dataSource]="dataSource" id="table-low" class=" ">
+                            <div class="col-md-12 cashflowTable pr-0">
+                                <table mat-table [dataSource]="dataSource" id="table-low" class=" "
+                                    *ngIf="!showSurplusTable">
 
                                     <!--- Note that these columns can be defined in any order.
                                                       The actual rendered columns are set as a property on the row definition" -->
 
                                     <!-- Position Column -->
                                     <ng-container matColumnDef="year">
-                                        <th class="br-grey f-14" mat-header-cell *matHeaderCellDef> Year </th>
+                                        <th class="br-grey f-400 f-14" mat-header-cell *matHeaderCellDef> Year </th>
+                                        <td class="br-grey f-14" mat-cell *matCellDef="let element">
+                                            {{element.financialYear}}
+                                        </td>
+                                    </ng-container>
+
+                                    <!-- Name Column -->
+                                    <ng-container matColumnDef="age">
+                                        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
+                                            Group head age
+                                        </th>
+                                        <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
+                                            {{element.ageH}} </td>
+                                    </ng-container>
+
+                                    <!-- Weight Column -->
+                                    <ng-container matColumnDef="age2">
+                                        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
+                                            Spouse age
+                                        </th>
+                                        <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
+                                            {{element.ageW}} </td>
+                                    </ng-container>
+
+                                    <!-- Symbol Column -->
+                                    <ng-container matColumnDef="salary">
+                                        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
+                                            Total incomes
+                                        </th>
+                                        <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
+                                            {{element.originalSurplus}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="salary2">
+                                        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
+                                            Monthly view
+                                        </th>
+                                        <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
+                                            {{element.surplusAllocated}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="total">
+                                        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
+                                            Total
+                                        </th>
+                                        <td class="br-grey text-right f-14 f-bold" mat-cell *matCellDef="let element">
+                                            {{element.balanceSurplus}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="view">
+                                        <th mat-header-cell *matHeaderCellDef> </th>
+                                        <td class="c-p text-primary text-center f-14" mat-cell
+                                            *matCellDef="let element"> {{element.view}} </td>
+                                    </ng-container>
+
+
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                </table>
+                            </div>
+
+                            <div class="col-md-12 cashflowTable pr-0">
+                                <table mat-table [dataSource]="dataSourceSurplus" *ngIf="showSurplusTable"
+                                    id="table-low" class=" ">
+
+                                    <!--- Note that these columns can be defined in any order.
+                                                      The actual rendered columns are set as a property on the row definition" -->
+
+                                    <!-- Position Column -->
+                                    <ng-container matColumnDef="year">
+                                        <th class="br-grey f-400 f-14" mat-header-cell *matHeaderCellDef> Financial year
+                                        </th>
                                         <td class="br-grey f-14" mat-cell *matCellDef="let element">
                                             {{element.year}}
                                         </td>
@@ -34,8 +106,8 @@
 
                                     <!-- Name Column -->
                                     <ng-container matColumnDef="age">
-                                        <th class="br-grey text-right f-14" mat-header-cell *matHeaderCellDef> Group
-                                            head age
+                                        <th class="br-grey f-400 text-right f-14" mat-header-cell *matHeaderCellDef> Age
+                                            (H)
                                         </th>
                                         <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
                                             {{element.age}} </td>
@@ -43,8 +115,8 @@
 
                                     <!-- Weight Column -->
                                     <ng-container matColumnDef="age2">
-                                        <th class="br-grey text-right f-14" mat-header-cell *matHeaderCellDef> Spouse
-                                            age
+                                        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef> Age
+                                            (W)
                                         </th>
                                         <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
                                             {{element.age2}} </td>
@@ -52,23 +124,24 @@
 
                                     <!-- Symbol Column -->
                                     <ng-container matColumnDef="salary">
-                                        <th class="br-grey text-right f-14" mat-header-cell *matHeaderCellDef> Total
-                                            incomes
+                                        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
+                                            Original surplus
                                         </th>
                                         <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
                                             {{element.salary}} </td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="salary2">
-                                        <th class="br-grey text-right f-14" mat-header-cell *matHeaderCellDef> Monthly
-                                            view
+                                        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
+                                            Surplus allocated
                                         </th>
                                         <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
                                             {{element.salary2}} </td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="total">
-                                        <th class="br-grey text-right f-14" mat-header-cell *matHeaderCellDef> Total
+                                        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
+                                            Balance Surplus
                                         </th>
                                         <td class="br-grey text-right f-14 f-bold" mat-cell *matCellDef="let element">
                                             {{element.total}} </td>
@@ -76,13 +149,13 @@
 
                                     <ng-container matColumnDef="view">
                                         <th mat-header-cell *matHeaderCellDef> </th>
-                                        <td class="c-p text-primary text-center f-14" mat-cell
-                                            *matCellDef="let element" (click)="openUpperSlider(element)"> {{element.view}} </td>
+                                        <td class="c-p text-primary text-center f-14" mat-cell *matCellDef="let element"
+                                            (click)="openUpperSlider(element)"> {{element.view}} </td>
                                     </ng-container>
 
 
-                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
                                 </table>
                             </div>
                         </div>

@@ -11,7 +11,7 @@ export class CashflowsPlanComponent implements OnInit {
   displayedColumns: string[] = ['year', 'age', 'age2', 'total', 'view'];
   dataSource = ELEMENT_DATA;
 
-  displayedColumns1: string[] = ['financialYear', 'ageH', 'ageW', 'originalSurplus', 'surplusAllocated', 'balanceSurplus'];
+  displayedColumns1: string[] = ['financialYear', 'ageH', 'ageW', 'originalSurplus', 'surplusAllocated', 'balanceSurplus', 'view'];
 
   dataSourceSurplus = SURPLUS_DATA;
 
@@ -234,3 +234,16 @@ const ELEMENT_DATA7: IncomeTableI[] = [
   { year: '25', age: '0', age2: '6', total: '2,80,000', view: 'view' },
   { year: '26', age: '31', age2: '27', total: '2,20,0', view: 'view' },
 ];
+
+
+
+export interface PeriodicElement2 {
+  year: string;
+  age: string;
+  age2: string;
+  salary: string;
+  salary2: string;
+  total: string;
+  view: string;
+
+}

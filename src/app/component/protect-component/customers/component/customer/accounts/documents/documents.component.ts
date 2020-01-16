@@ -66,6 +66,8 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
   isLoading = false;
   dataToCommon: any;
   showMsg = false;
+  showResult = false;
+  noResult = false;
 
   constructor(private eventService: EventService, private http: HttpService, private _bottomSheet: MatBottomSheet,
     private event: EventService, private router: Router, private fb: FormBuilder,
@@ -240,6 +242,8 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
   getAllFilesRes(data, value) {
     if(data.files.length == 0 && data.folders.length == 0){
       this.showMsg = true
+    }else{
+      this.showMsg = false
     }
     this.isLoading = false;
     console.log("this is folder length and files length ")
@@ -275,22 +279,37 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
     console.log('sorted', this.commonFileFolders);
   }
   keyPress(event){
-    console.log('search',event)
-    let obj = {
-      clientId : this.clientId,
-      advisorId :  this.advisorId,
-      name : '%'+event.key+'%'
+    if(event == " "){
+      this.reset()
+    }else{
+      console.log('search',event)
+      let obj = {
+        clientId : this.clientId,
+        advisorId :  this.advisorId,
+        name : event
+      }
+      if(event.length > 2){
+        this.custumService.searchFile(obj).subscribe(
+          data => this.searchFileRes(data,'value')
+        ); 
+      }
     }
-    this.custumService.searchFile(obj).subscribe(
-      data => this.searchFileRes(data,'value')
-    ); 
   }
   searchFileRes(data,value){
+    this.showResult = true
     let obj = []
     console.log(data)
     Object.assign(obj, {'files': data.SEARCHED_FILE})
     Object.assign(obj, {'folders': data.SEARCHED_FOLDER})
-    this.getAllFilesRes(obj, value)
+    if(data.SEARCHED_FILE.length == 0 && data.SEARCHED_FILE.length == 0){
+      this.noResult = true;
+    }else{
+      this.isLoading = true;
+      this.commonFileFolders.data = [{}, {}, {}];
+      this.commonFileFolders = new MatTableDataSource(this.data);
+      this.getAllFilesRes(obj, value)
+    }
+ 
   }
   fileTypeGet() {
     this.commonFileFolders.filteredData.forEach(p => {
@@ -325,6 +344,8 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
 
   reset() {
     this.showMsg = false
+    this.showResult = false
+    this.noResult = false
     if (this.openFolderName.length > 0) {
       this.commonFileFolders = this.backUpfiles[0];
     }
