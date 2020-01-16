@@ -29,6 +29,9 @@ export class AddPoTdComponent implements OnInit {
   editApi: any;
   clientId: any;
   nomineesListFM: any;
+  nomineesList: any;
+  nominees: any[];
+  potdData: any;
 
   constructor(public utils: UtilService, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
   @Input()
@@ -42,12 +45,16 @@ export class AddPoTdComponent implements OnInit {
   }
   display(value) {
     console.log('value selected', value)
-    this.ownerName = value.userName;
+    this.ownerName = value;
     this.familyMemberId = value.id
   }
   lisNominee(value) {
     console.log(value)
     this.nomineesListFM = Object.assign([], value.familyMembersList);
+  }
+  getFormDataNominee(data) {
+    console.log(data)
+    this.nomineesList = data.controls
   }
   getdataForm(data) {
     if (data == undefined) {
@@ -56,6 +63,7 @@ export class AddPoTdComponent implements OnInit {
     else {
       this.editApi = data;
     }
+    this.potdData=data;
     this.POTDForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
       amtInvested: [data.amountInvested, [Validators.required, Validators.min(200)]],
@@ -98,6 +106,19 @@ export class AddPoTdComponent implements OnInit {
         finalTransctList.push(obj)
       });
     }
+    this.nominees = []
+    if (this.nomineesList) {
+
+      this.nomineesList.forEach(element => {
+        let obj = {
+          "name": element.controls.name.value,
+          "sharePercentage": element.controls.sharePercentage.value,
+          "id":element.id,
+          "familyMemberId":element.familyMemberId
+        }
+        this.nominees.push(obj)
+      });
+    }
     if (this.POTDForm.get('amtInvested').invalid) {
       this.POTDForm.get('amtInvested').markAsTouched();
       return
@@ -132,7 +153,7 @@ export class AddPoTdComponent implements OnInit {
           "tenure": this.POTDForm.get('tenure').value,
           "postOfficeBranch": this.POTDOptionalForm.get('poBranch').value,
           "ownerTypeId": this.POTDForm.get('ownershipType').value,
-          "nomineeName": this.POTDOptionalForm.get('nominee').value,
+          "nominees": this.nominees,
           "tdNumber": this.POTDOptionalForm.get('tdNum').value,
           "bankAccountNumber": this.POTDOptionalForm.get('bankAccNum').value,
           "description": this.POTDOptionalForm.get('description').value,
