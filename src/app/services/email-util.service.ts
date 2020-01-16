@@ -14,9 +14,18 @@ export class EmailUtilService {
     return btoa(value);
   }
 
+  static isTheStringBase64Format(value: string) {
+    try {
+      return btoa(atob(value)) == value;
+    } catch (err) {
+      return false;
+    }
+
+  }
+
   static parseBase64AndDecodeGoogleUrlEncoding(contentInBase64) {
     // console.log("parseBase64AndDecodeGoogleUrlEncoding ->> ", contentInBase64);
-    if(contentInBase64){
+    if (contentInBase64) {
       return atob(contentInBase64.replace(/\-/g, '+').replace(/_/g, '/'));
     }
   }
@@ -59,14 +68,25 @@ export class EmailUtilService {
       const { payload: { parts } } = message;
       const { payload: { headers } } = message;
       const { snippet } = message;
-      if (parts && parts !== null) {
+      if (parts && parts.length !== 0 && parts !== null) {
         parts.forEach((part) => {
-          if (part.body.data && part.body.data !== null) {
-            decodedPartArray.push(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data));
+          console.log("this is the part of the body::::::::::::", part);
+          const data = part.body.data;
+
+          console.log("this is part body and data of a message :::::::::::::::::::::::: 124", part.body, data);
+
+          if (part.body.data) {
+            let decodedValue = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data)
+            // console.log("this is decoded Value:::::::::::::::", decodedValue);
+            if (decodedValue === null) {
+              decodedPartArray.push(part.body.data);
+            } else if (decodedValue !== '') {
+              decodedPartArray.push(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data));
+            }
           }
           // not perfect
           else {
-            console.log(" this is null hope so it is not :: data null");
+            console.log("this is null hope so it is not :: data null");
           }
         });
       } else {
@@ -101,6 +121,15 @@ export class EmailUtilService {
   static getIdsOfGmailThreads(gmailThread: GmailInboxResponseI): Object {
     const { historyId, id } = gmailThread;
     return { historyId, id };
+  }
+
+  static getIdsOfGmailMessages(gmailThread: GmailInboxResponseI): string[] {
+    let idArray: string[] = [];
+    gmailThread.messages.forEach(message => {
+      const { id } = message;
+      idArray.push(id);
+    });
+    return idArray;
   }
 
   static getSubjectAndFromOfGmailHeaders(gmailThread: GmailInboxResponseI): Object {

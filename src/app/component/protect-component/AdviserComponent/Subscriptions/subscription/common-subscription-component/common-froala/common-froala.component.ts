@@ -122,14 +122,14 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     this.storeData = data;
   }
 
-  Close(data,flag) {
+  Close(data, flag) {
     // if (this.showActivityLog == true) {
     //   this.showActivityLog = false;
     // } else {
     //   this.subInjectService.rightSideData(value);
     // }
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data ,refreshRequired:flag});
-    this.subInjectService.changeUpperRightSliderState({ state: 'close', data,refreshRequired:flag });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: flag });
+    this.subInjectService.changeUpperRightSliderState({ state: 'close', data, refreshRequired: flag });
 
     // this.subInjectService.changeUpperRightSliderState({value:'close'})
     // this.subInjectService.changeUpperRightSliderState({value:'close'})
@@ -224,7 +224,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
       this.inputData.sendEsign = false;
     }
     else {
-      this.Close('close',true);
+      this.Close('close', true);
     }
   }
 
@@ -268,7 +268,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     //     data.documentList.push(singleElement);
     //   }
     // });
-    this.OpenEmail(data, 'email');
+    this.openEmail(data, 'email');
   }
 
   generatePdf() {
@@ -344,10 +344,10 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     //     data.documentList.push(singleElement);
     //   }
     // });
-    this.OpenEmail(data, 'email');
+    this.openEmail(data, 'email');
   }
 
-  OpenEmail(data, value) {
+  openEmail(data, value) {
     const fragmentData = {
       flag: value,
       data,
