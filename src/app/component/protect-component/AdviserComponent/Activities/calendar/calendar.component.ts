@@ -214,9 +214,17 @@ export class calendarComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result, "result 123");
-      
+      let eventData = {
+        "calendarId": "gaurav@futurewise.co.in",
+        "userId": this.userInfo.advisorId,
+        "eventId": result.eventId
+      }
+
       this.dialogData = 
       {
+        "calendarId": "gaurav@futurewise.co.in",
+        "userId": this.userInfo.advisorId,
+        "eventId": result.eventId,
         "summary": result.title,
         "location": result.location,
         "description": result.description,
@@ -242,7 +250,7 @@ export class calendarComponent implements OnInit {
       console.log(this.dialogData, 'The dialog was closed');
 
       if(this.isEditEvent){
-        this.canlenderService.getEvent(this.dialogData).subscribe((data)=>{
+        this.canlenderService.updateEvent(this.dialogData).subscribe((data)=>{
 
         })
       }
@@ -324,6 +332,7 @@ export class EventDialog implements OnInit{
       // userId: [2727,[Validators.required]],
       // fileId: [12345,[Validators.required]],
       // calendarId:["gaurav@futurewise.co.in",[Validators.required]],
+      eventId:[this.eventData.id],
       summary: [this.eventData.summary,[Validators.required]],
       location: [this.eventData.location],
       title: [this.eventData.summary,[Validators.required]],

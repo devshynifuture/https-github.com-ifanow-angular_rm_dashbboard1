@@ -360,21 +360,22 @@
                 </div>
             </div>
             <div class="custom-grid p-0 b-a bb-0  calendar-column">
-                <div class="column" *ngFor="let day of daysArr; let i = index">
-                    <mat-chip [class.actived]="day == todayDate && i > addLastMonthDays - 1 && i < numbersOfDays - 1 && currentMonth == month" 
+                <div class="column " *ngFor="let day of daysArr; let i = index">
+                    <mat-chip style="margin-right: 3px;;" [class.actived]="day == todayDate && i > addLastMonthDays - 1 && i < numbersOfDays - 1 && currentMonth == month" 
                     [class.text-primitive]="i < addLastMonthDays || i > numbersOfDays + addLastMonthDays - 1" 
                     >{{day}}</mat-chip>
-                    
-                    <div *ngFor="let event of formatedEvent;" class="date-info" [hidden]="day != event.day || month + 1 != event.month || year != event.year || i < addLastMonthDays || i > numbersOfDays + addLastMonthDays - 1">
-                        <mat-chip-list style="visibility: hidden;" *ngFor="let list of event.attendeeList;"  class="pink mt-8" >
-                            <mat-chip >{{list}}</mat-chip>
-                        </mat-chip-list>
-                        <ul class="blue">
-                            <li (click)="openDialog(event)">{{event.time}} <span class="f-700 m-0">{{event.summary}}</span></li>
-                        </ul>
-                        <!-- <ul class="yellow" >
-                            <li>11.00 <span class="f-700 m-0">Srinivas chandra</span></li>
-                        </ul> -->
+                    <div class="pt-20 pl-4" style="width: 100%; border: none;">
+                    <ul  *ngFor="let event of formatedEvent;" class="date-info blue" [hidden]="day != event.day || month + 1 != event.month || year != event.year || i < addLastMonthDays || i > numbersOfDays + addLastMonthDays - 1">
+                        <li style="display: none;" >
+                            <mat-chip-list *ngFor="let list of event.attendeeList;"  class="pink mt-8" >
+                                <mat-chip >{{list}}</mat-chip>
+                            </mat-chip-list>
+                        </li>
+                        <li  (click)="openDialog(event)">{{event.time}} <span class="f-700 m-0" [innerHTML]="event.summary" ></span></li>
+                    </ul>
+                    <!-- <ul class="yellow" >
+                        <li>11.00 <span class="f-700 m-0">Srinivas chandra</span></li>
+                    </ul> -->
                     </div>
                 </div>
             </div>
