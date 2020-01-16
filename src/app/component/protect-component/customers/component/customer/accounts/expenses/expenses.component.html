@@ -5,7 +5,8 @@
                 <div class="wrapper-8">
                     <div class="row pt-28 pb-28">
                         <div class="col-md-4 pl-0">
-                            <button mat-stroked-button (click)="viewMode='Transactions'" class="br-0 text-primary">Transactions</button>
+                            <button mat-stroked-button (click)="viewMode='Transactions'"
+                                class="br-0 text-primary">Transactions</button>
                             <button mat-button (click)="viewMode='Budget'" class="br-0 text-custom">Budget</button>
                         </div>
                         <div class="col-md-8 right text-right pr-0">
@@ -35,7 +36,8 @@
                                 <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
                                 <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                                         class="material-icons">filter_list</i>FILTERS</button>
-                                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openExpenses('addExpenses')"> ADD NEW</button>
+                                <button mat-stroked-button class="btn-primary addon v-middle"
+                                    (click)="openExpenses('addExpenses',null)"> ADD NEW</button>
                             </div>
                         </div>
                         <div class="row pt-12">
@@ -44,26 +46,30 @@
                                     <table mat-table [dataSource]="dataSource" id="table-low">
                                         <ng-container matColumnDef="no">
                                             <th mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
-                                            <td mat-cell *matCellDef="let element let i = index;" class="br t-2"> {{i + 1 }} </td>
+                                            <td mat-cell *matCellDef="let element let i = index;" class="br t-2">
+                                                {{i + 1 }} </td>
                                         </ng-container>
                                         <ng-container matColumnDef="expense">
                                             <th mat-header-cell *matHeaderCellDef class="br t-15"> Expense </th>
-                                            <td *matCellDef="let element" class="br t-15"
-                                                mat-cell> {{element.expenseType}}
+                                            <td *matCellDef="let element" class="br t-15" mat-cell>
+                                                {{element.expenseType}}
                                             </td>
                                         </ng-container>
                                         <ng-container matColumnDef="date">
                                             <th mat-header-cell *matHeaderCellDef class="br t-10"> Date </th>
-                                            <td mat-cell *matCellDef="let element" class="br t-10"> {{element.expenseDoneOn | date:'dd/MM/yyyy'}}
+                                            <td mat-cell *matCellDef="let element" class="br t-10">
+                                                {{element.expenseDoneOn | date:'dd/MM/yyyy'}}
                                             </td>
                                         </ng-container>
                                         <ng-container matColumnDef="desc">
                                             <th mat-header-cell *matHeaderCellDef class="br"> Description </th>
-                                            <td mat-cell *matCellDef="let element" class="br"> {{element.description}} </td>
+                                            <td mat-cell *matCellDef="let element" class="br"> {{element.description}}
+                                            </td>
                                         </ng-container>
                                         <ng-container matColumnDef="mode">
                                             <th mat-header-cell *matHeaderCellDef class="br"> Mode </th>
-                                            <td mat-cell *matCellDef="let element" class="br"> {{element.paymentModeId}} </td>
+                                            <td mat-cell *matCellDef="let element" class="br"> {{element.paymentModeId}}
+                                            </td>
                                         </ng-container>
                                         <ng-container matColumnDef="amt">
                                             <th mat-header-cell *matHeaderCellDef class="br"> Amount </th>
@@ -76,9 +82,11 @@
                                         <ng-container matColumnDef="icons">
                                             <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
                                             <td mat-cell *matCellDef="let element" class="t-2">
-                                                <i class="material-icons c-p text-black" [matMenuTriggerFor]="menu4">more_vert</i>
+                                                <i class="material-icons c-p text-black"
+                                                    [matMenuTriggerFor]="menu4">more_vert</i>
                                                 <mat-menu #menu4="matMenu">
-                                                    <button mat-menu-item (click)="openExpenses('editExpenses',element)">Edit</button>
+                                                    <button mat-menu-item
+                                                        (click)="openExpenses('editExpenses',element)">Edit</button>
                                                     <button mat-menu-item>Deatiled View</button>
                                                     <button mat-menu-item>Activity</button>
                                                     <button mat-menu-item>Delete</button>
@@ -149,20 +157,30 @@
 
                                 <div class="row pt-60">
                                     <div class="col-md-6 expenses-chart-first pl-0">
-                                        <p class="m-0 text-black"><span class="bg-warning pr-8 hw-10 br-50"></span>Groceries</p>
-                                        <p class="m-0 text-black"><span class="bg-success pr-8 hw-10 br-50"></span>Transportation</p>
-                                        <p class="m-0 text-black"><span class="bg-danger pr-8 hw-10 br-50"></span>School fees
+                                        <p class="m-0 text-black"><span
+                                                class="bg-warning pr-8 hw-10 br-50"></span>Groceries</p>
+                                        <p class="m-0 text-black"><span
+                                                class="bg-success pr-8 hw-10 br-50"></span>Transportation</p>
+                                        <p class="m-0 text-black"><span class="bg-danger pr-8 hw-10 br-50"></span>School
+                                            fees
                                         </p>
-                                        <p class="m-0 text-black"><span class="bg-primary pr-8 hw-10 br-50"></span>Dining out</p>
-                                        <p class="m-0 text-black"><span class="bg-warning pr-8 hw-10 br-50"></span>Leisure & Entertainment</p>
+                                        <p class="m-0 text-black"><span
+                                                class="bg-primary pr-8 hw-10 br-50"></span>Dining out</p>
+                                        <p class="m-0 text-black"><span
+                                                class="bg-warning pr-8 hw-10 br-50"></span>Leisure & Entertainment</p>
                                     </div>
                                     <div class="col-md-6 expenses-chart-second pl-0">
-                                        <p class="m-0 text-black"><span class="bg-primary pr-8 hw-10 br-50"></span>Groceries</p>
-                                        <p class="m-0 text-black"><span class="bg-success pr-8 hw-10 br-50"></span>Transportation</p>
-                                        <p class="m-0 text-black"><span class="bg-warning pr-8 hw-10 br-50"></span>School fees</p>
-                                        <p class="m-0 text-black"><span class="bg-danger pr-8 hw-10 br-50"></span>Dining out
+                                        <p class="m-0 text-black"><span
+                                                class="bg-primary pr-8 hw-10 br-50"></span>Groceries</p>
+                                        <p class="m-0 text-black"><span
+                                                class="bg-success pr-8 hw-10 br-50"></span>Transportation</p>
+                                        <p class="m-0 text-black"><span
+                                                class="bg-warning pr-8 hw-10 br-50"></span>School fees</p>
+                                        <p class="m-0 text-black"><span class="bg-danger pr-8 hw-10 br-50"></span>Dining
+                                            out
                                         </p>
-                                        <p class="m-0 text-black"><span class="bg-primary pr-8 hw-10 br-50"></span>Leisure & Entertainment</p>
+                                        <p class="m-0 text-black"><span
+                                                class="bg-primary pr-8 hw-10 br-50"></span>Leisure & Entertainment</p>
                                     </div>
                                 </div>
                             </div>
@@ -182,7 +200,8 @@
                                 <i class="material-icons">filter_list</i>
                                 FILTERS
                             </button>
-                            <button mat-stroked-button class="btn-primary addon v-middle" (click)="openExpensesB('addBudget')">
+                            <button mat-stroked-button class="btn-primary addon v-middle"
+                                (click)="openExpensesB('addBudget')">
                                 <i class="material-icons">add</i>
                                 ADD NEW
                             </button>
@@ -222,7 +241,8 @@
                                     <ng-container matColumnDef="icons">
                                         <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
                                         <td mat-cell *matCellDef="let element" class="t-2">
-                                            <i class="material-icons c-p text-black" [matMenuTriggerFor]="menu4">more_vert</i>
+                                            <i class="material-icons c-p text-black"
+                                                [matMenuTriggerFor]="menu4">more_vert</i>
                                             <mat-menu #menu4="matMenu">
                                                 <button mat-menu-item>Edit</button>
                                                 <button mat-menu-item>Deatiled View</button>
@@ -269,7 +289,8 @@
                                     <ng-container matColumnDef="icons">
                                         <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
                                         <td mat-cell *matCellDef="let element" class="t-2">
-                                            <i class="material-icons c-p text-black" [matMenuTriggerFor]="menu4">more_vert</i>
+                                            <i class="material-icons c-p text-black"
+                                                [matMenuTriggerFor]="menu4">more_vert</i>
                                             <mat-menu #menu4="matMenu">
                                                 <button mat-menu-item>Edit</button>
                                                 <button mat-menu-item>Deatiled View</button>
