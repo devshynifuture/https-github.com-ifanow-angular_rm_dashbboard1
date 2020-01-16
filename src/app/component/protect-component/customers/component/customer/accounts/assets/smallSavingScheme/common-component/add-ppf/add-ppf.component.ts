@@ -37,6 +37,9 @@ export class AddPpfComponent implements OnInit {
   dataFM: any;
   familyList: any;
   errorFieldName: string;
+  nomineesList: any;
+  ppfData: any;
+  nominees: any[];
   constructor(public utils: UtilService,private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
   @Input()
@@ -55,7 +58,7 @@ export class AddPpfComponent implements OnInit {
   }
   display(value) {
     console.log('value selected', value)
-    this.ownerName = value.userName;
+    this.ownerName = value;
     this.familyMemberId = value.id
   }
   lisNominee(value) {
@@ -66,7 +69,10 @@ export class AddPpfComponent implements OnInit {
   moreFields() {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true
   }
-
+  getFormDataNominee(data) {
+    console.log(data)
+    this.nomineesList = data.controls
+  }
   getdataForm(data) {
     if (data == undefined) {
       data = {};
@@ -74,6 +80,7 @@ export class AddPpfComponent implements OnInit {
     else {
       this.editApi = data
     }
+    this.ppfData=data;
     this.ppfSchemeForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
       accountBalance: [data.accountBalance, [Validators.required, Validators.min(500)]],
@@ -86,7 +93,7 @@ export class AddPpfComponent implements OnInit {
       description: [data.description, [Validators.required]],
       bankName: [data.bankName, [Validators.required]],
       linkedBankAccount: [data.linkedBankAccount, [Validators.required]],
-      nominee: [data, [Validators.required]]
+      nominees: this.nomineesList
     })
     this.ownerData = this.ppfSchemeForm.controls;
   }
@@ -111,6 +118,19 @@ export class AddPpfComponent implements OnInit {
           "paymentType": element.controls.transactionType.value
         }
         finalTransctList.push(obj)
+      });
+    }
+    this.nominees = []
+    if (this.nomineesList) {
+
+      this.nomineesList.forEach(element => {
+        let obj = {
+          "name": element.controls.name.value,
+          "sharePercentage": element.controls.sharePercentage.value,
+          "id":(element.controls.id.value)?element.controls.id.value:0,
+          "familyMemberId":(element.controls.familyMemberId.value)?element.controls.familyMemberId.value:0
+        }
+        this.nominees.push(obj)
       });
     }
     if (this.ppfSchemeForm.get('accountBalance').invalid) {
@@ -148,7 +168,7 @@ export class AddPpfComponent implements OnInit {
         "description": this.optionalppfSchemeForm.get('description').value,
         "bankName": this.optionalppfSchemeForm.get('bankName').value,
         "linkedBankAccount": this.optionalppfSchemeForm.get('linkedBankAccount').value,
-        "nomineeName": this.optionalppfSchemeForm.get('nominee').value,
+        "nominees":this.nominees,
         "frequency": this.ppfSchemeForm.get('frquency').value,
         "futureApproxcontribution": this.ppfSchemeForm.get('futureContribution').value,
         "publicprovidendfundtransactionlist": finalTransctList,

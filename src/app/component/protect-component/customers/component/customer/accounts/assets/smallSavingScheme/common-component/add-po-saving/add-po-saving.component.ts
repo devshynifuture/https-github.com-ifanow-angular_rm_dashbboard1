@@ -29,6 +29,9 @@ export class AddPoSavingComponent implements OnInit {
   editApi: any;
   accBalance: number;
   nomineesListFM: any;
+  posavingData: any;
+  nomineesList: any;
+  nominees: any[];
 
   constructor(public utils: UtilService,private fb: FormBuilder, private cusService: CustomerService,
               private eventService: EventService, private subInjectService: SubscriptionInject) {
@@ -47,7 +50,7 @@ export class AddPoSavingComponent implements OnInit {
 
   display(value) {
     console.log('value selected', value);
-    this.ownerName = value.userName;
+    this.ownerName = value;
     this.familyMemberId = value.id;
   }
   lisNominee(value) {
@@ -66,7 +69,10 @@ export class AddPoSavingComponent implements OnInit {
     this.clientId = AuthService.getClientId();
 
   }
-
+  getFormDataNominee(data) {
+    console.log(data)
+    this.nomineesList = data.controls
+  }
   getdataForm(data) {
     if (data == undefined) {
       data = {
@@ -75,6 +81,7 @@ export class AddPoSavingComponent implements OnInit {
     } else {
       this.editApi = data;
     }
+    this.posavingData=data
     this.poSavingForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
       accBal: [data.accountBalance, [Validators.required, Validators.min(50), Validators.max(1500000)]],
@@ -85,7 +92,7 @@ export class AddPoSavingComponent implements OnInit {
     });
     this.poSavingOptionalForm = this.fb.group({
       poBranch: [data.postOfficeBranch],
-      nominee: [data.nominee],
+      nominees: this.nominees,
       bankAccNo: [data.acNumber],
       description: [data.description]
     });
@@ -99,6 +106,19 @@ export class AddPoSavingComponent implements OnInit {
   }
 
   addPOSaving() {
+    this.nominees = []
+    if (this.nomineesList) {
+
+      this.nomineesList.forEach(element => {
+        let obj = {
+          "name": element.controls.name.value,
+          "sharePercentage": element.controls.sharePercentage.value,
+          "id":element.id,
+          "familyMemberId":element.familyMemberId
+        }
+        this.nominees.push(obj)
+      });
+    }
     if (this.poSavingForm.get('accBal').invalid) {
       this.poSavingForm.get('accBal').markAsTouched();
       return;
@@ -120,7 +140,7 @@ export class AddPoSavingComponent implements OnInit {
           accountBalance: this.poSavingForm.get('accBal').value,
           postOfficeBranch: this.poSavingOptionalForm.get('poBranch').value,
           ownerTypeId: this.poSavingForm.get('ownershipType').value,
-          nominee: this.poSavingOptionalForm.get('nominee').value,
+          nominees: this.nominees,
           acNumber: this.poSavingOptionalForm.get('bankAccNo').value,
           description: this.poSavingOptionalForm.get('description').value,
           ownerName:  (this.ownerName == undefined) ? this.poSavingForm.controls.ownerName.value : this.ownerName
@@ -138,7 +158,7 @@ export class AddPoSavingComponent implements OnInit {
           accountBalance: this.poSavingForm.get('accBal').value,
           postOfficeBranch: this.poSavingOptionalForm.get('poBranch').value,
           ownerTypeId: this.poSavingForm.get('ownershipType').value,
-          nominee: this.poSavingOptionalForm.get('nominee').value,
+          nominees: this.nominees,
           acNumber: this.poSavingOptionalForm.get('bankAccNo').value,
           description: this.poSavingOptionalForm.get('description').value,
           ownerName: this.ownerName

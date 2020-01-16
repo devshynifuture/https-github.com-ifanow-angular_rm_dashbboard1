@@ -29,6 +29,9 @@ export class AddSsyComponent implements OnInit {
   transactionData: any;
   clientId: any;
   nomineesListFM: any;
+  ssyData: any;
+  nomineesList: any;
+  nominees: any[];
 
   constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
@@ -39,7 +42,7 @@ export class AddSsyComponent implements OnInit {
   }
   display(value) {
     console.log('value selected', value)
-    this.ownerName = value.userName;
+    this.ownerName = value;
     this.familyMemberId = value.id
   }
   lisNominee(value) {
@@ -49,6 +52,10 @@ export class AddSsyComponent implements OnInit {
   get data() {
     return this.inputData;
   }
+  getFormDataNominee(data) {
+    console.log(data)
+    this.nomineesList = data.controls
+  }
   getdataForm(data) {
     if (data == undefined) {
       data = {};
@@ -56,6 +63,7 @@ export class AddSsyComponent implements OnInit {
     else {
       this.editApi = data
     }
+    this.ssyData=data;
     this.ssySchemeForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
       guardian: [data.guardianName, [Validators.required]],
@@ -69,7 +77,7 @@ export class AddSsyComponent implements OnInit {
       description: [data.description],
       linkedAcc: [data.linkedBankAccount],
       bankName: [data.bankName],
-      nominee: [data.nomineeName],
+      nominees: this.nominees,
       agentName: [data.agentName]
     })
     this.ownerData = this.ssySchemeForm.controls;
@@ -97,6 +105,19 @@ export class AddSsyComponent implements OnInit {
           "paymentType": element.controls.transactionType.value
         }
         finalTransctList.push(obj)
+      });
+    }
+    this.nominees = []
+    if (this.nomineesList) {
+
+      this.nomineesList.forEach(element => {
+        let obj = {
+          "name": element.controls.name.value,
+          "sharePercentage": element.controls.sharePercentage.value,
+          "id":element.id,
+          "familyMemberId":element.familyMemberId
+        }
+        this.nominees.push(obj)
       });
     }
     if (this.ssySchemeForm.get('guardian').invalid) {
@@ -131,7 +152,7 @@ export class AddSsyComponent implements OnInit {
         let obj = {
           "id": this.editApi.id,
           "familyMemberId": this.familyMemberId,
-          "ownerName": this.ownerName,
+          "ownerName":(this.ownerName == null) ? this.ssySchemeForm.controls.ownerName.value : this.ownerName,
           "accountBalance": this.ssySchemeForm.get('accBalance').value,
           "balanceAsOn": this.ssySchemeForm.get('balanceAsOn').value,
           "commencementDate": this.ssySchemeForm.get('commDate').value,
@@ -140,6 +161,7 @@ export class AddSsyComponent implements OnInit {
           "linkedBankAccount": this.ssySchemeOptionalForm.get('linkedAcc').value,
           "agentName": this.ssySchemeOptionalForm.get('agentName').value,
           "guardianName": this.ssySchemeForm.get('guardian').value,
+          "nominees":this.nominees
         }
         this.cusService.editSSYData(obj).subscribe(
           data => this.addSSYSchemeResponse(data),
@@ -152,7 +174,7 @@ export class AddSsyComponent implements OnInit {
           "clientId": this.clientId,
           "advisorId": this.advisorId,
           "familyMemberId": this.familyMemberId,
-          "ownerName": this.ownerName,
+          "ownerName": (this.ownerName == null) ? this.ssySchemeForm.controls.ownerName.value : this.ownerName,
           "accountBalance": this.ssySchemeForm.get('accBalance').value,
           "balanceAsOn": this.ssySchemeForm.get('balanceAsOn').value,
           "commencementDate": this.ssySchemeForm.get('commDate').value,
@@ -161,10 +183,10 @@ export class AddSsyComponent implements OnInit {
           "linkedBankAccount": this.ssySchemeOptionalForm.get('linkedAcc').value,
           "agentName": this.ssySchemeOptionalForm.get('agentName').value,
           "guardianName": this.ssySchemeForm.get('guardian').value,
+          "nominees": this.nominees,
           "ssyFutureContributionList": [{
             "futureApproxContribution": this.ssySchemeForm.get('futureAppx').value,
             "frequency": this.ssySchemeForm.get('futureAppx').value,
-            "nomineeName": this.ssySchemeOptionalForm.get('nominee').value
           }],
           "ssyTransactionList": finalTransctList
         }

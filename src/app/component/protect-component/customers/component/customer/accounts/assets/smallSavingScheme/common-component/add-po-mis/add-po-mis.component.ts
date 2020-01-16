@@ -32,6 +32,7 @@ export class AddPoMisComponent implements OnInit {
   nominees: any;
   nomineesList: any;
   nomineesListFM: any;
+  pomisData: any;
 
   constructor(public utils: UtilService, private fb: FormBuilder, public subInjectService: SubscriptionInject,
     public custumService: CustomerService, public eventService: EventService) {
@@ -61,7 +62,7 @@ export class AddPoMisComponent implements OnInit {
 
   display(value) {
     console.log('value selected', value);
-    this.ownerName = value.userName;
+    this.ownerName = value;
     this.familyMemberId = value;
   }
   lisNominee(value) {
@@ -69,7 +70,7 @@ export class AddPoMisComponent implements OnInit {
     this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
   getPomisData(data) {
-  
+    this.pomisData=data;
     if (data == undefined) {
       data = {};
     }
@@ -79,7 +80,7 @@ export class AddPoMisComponent implements OnInit {
       commencementdate: [new Date(data.commencementDate), [Validators.required]],
       ownershipType: [(data.ownerTypeId) + '', [Validators.required]],
       poBranch: [data.postOfficeBranch],
-      nominee: [data.nominee],
+      nominees: [data.nominees],
       accNumber: [(data.bankAccountNumber)],
       description: [data.description],
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]],
@@ -108,9 +109,9 @@ export class AddPoMisComponent implements OnInit {
       this.nomineesList.forEach(element => {
         let obj = {
           "name": element.controls.name.value,
-          "sharePercentage": element.controls.share.value,
-          "id": 0,
-          "familyMemberId":0
+          "sharePercentage": element.controls.sharePercentage.value,
+          "id":element.id,
+          "familyMemberId":element.familyMemberId
         }
         this.nominees.push(obj)
       });
