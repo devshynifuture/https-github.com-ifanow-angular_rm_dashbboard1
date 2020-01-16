@@ -46,8 +46,8 @@
                                     <p class="m-0 text-black roboto f-18"*ngIf="showResult == true">Search results</p>
                                 </li>
 
-                                <li class="breadcrumb-item active c-p" (click)="getFolders(folder)"
-                                    *ngFor="let folder of openFolderName">{{folder.openFolderNm }}</li>
+                                <li class="breadcrumb-item active c-p" (click)="getFolders(folder,i)"
+                                    *ngFor="let folder of openFolderName; let i = index">{{folder.openFolderNm }}</li>
                             </ol>
                         </div>
                         <div class="col-md-6 p-0 d-flex justify-content-end">
@@ -101,7 +101,7 @@
 
                     <div class="row">
                         <div class="col-md-9 p-0 documentsTable" *ngSwitchCase="viewMode">
-                            <div *ngIf="showMsg == false">
+                            <div *ngIf="showMsg == false && noResult == false">
                                 <table mat-table matSort [dataSource]="commonFileFolders" id="table-low"
                                     class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                                     <ng-container matColumnDef="emptySpace">
@@ -214,6 +214,11 @@
                                 <img class="mr-12" src="/assets/images/svg/folder-icon.svg">
                                 Folder is empty<br>
                                 <p class="m-0 f-12 text-custom">Drop files here</p>
+                            </div>
+                            <div *ngIf="noResult == true" class="d-flex flex-column align-items-center">
+                                <img src="assets/images/svg/document-search-icon.svg">
+                                No result found<br>
+                                <p class="m-0 f-12 text-custom">Try a diffrent search</p>
                             </div>
                         </div>
                         <div class="col-md-3">
