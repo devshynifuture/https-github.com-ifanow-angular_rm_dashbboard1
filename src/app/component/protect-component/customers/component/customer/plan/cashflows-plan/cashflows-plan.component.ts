@@ -1,6 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import * as Highcharts from 'highcharts';
-import {SeriesBarOptions, SeriesSplineOptions} from 'highcharts';
+import { Component, OnInit } from '@angular/core';
+import { chart } from './highChart';
 
 @Component({
   selector: 'app-cashflows-plan',
@@ -9,77 +8,38 @@ import {SeriesBarOptions, SeriesSplineOptions} from 'highcharts';
 })
 export class CashflowsPlanComponent implements OnInit {
 
-  displayedColumns: string[] = ['year', 'age', 'age2', 'salary', 'salary2', 'total', 'view'];
+  displayedColumns: string[] = ['year', 'age', 'age2', 'total', 'view'];
   dataSource = ELEMENT_DATA;
+
+  displayedColumns1: string[] = ['financialYear', 'ageH', 'ageW', 'originalSurplus', 'surplusAllocated', 'balanceSurplus'];
+
+  dataSourceSurplus = SURPLUS_DATA;
+
+  showSurplusTable: boolean = false;
 
   constructor() {
   }
 
   ngOnInit() {
     this.cashFlow('surplus');
+    this.filterCashFlowTableUsing('income');
+  }
+
+  filterCashFlowTableUsing(flag: string): void {
+
+    if (flag === 'surplus') {
+      this.showSurplusTable = true;
+    } else {
+      this.showSurplusTable = false;
+    }
+    // call api and consume data
+
+    // update table dataSource
+
   }
 
   cashFlow(id) {
-    const chart1 = new Highcharts.Chart('surplus', {
-      chart: {
-        type: 'bar'
-      },
-      title: {
-        text: 'Bar chart with negative values'
-      },
-      xAxis: {
-        categories: []
-      },
-      credits: {
-        enabled: false
-      },
-      plotOptions: {
-        series: {
-          stacking: 'normal',
-          // pointWidth: 10
-        }
-      },
-      series: [{
-        name: 'Income',
-        data: [-1, -2, -2, -7, -2, -1, -1, -2, -3, -4, -5, -5, -6, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, 2, 3],
-        color: '#5DC644',
-        // type: 'bar'
-
-      } as SeriesBarOptions, {
-        name: 'Expenses',
-        data: [1, 2, 2, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-        color: '#FFC100',
-        // type: 'bar'
-
-      } as SeriesBarOptions, {
-        name: 'Liabilities',
-        data: [1, 2, 3, 4, 2, -1, -1, -1, -1, -1, -1, -1, -1, 1, 0, 0, 0, 0, 0, 0, 0, 0, -1, -2, -3, -3, -4, -5],
-        color: '#FF6823',
-        // type: 'bar'
-
-      } as SeriesBarOptions, {
-        name: 'Insurance',
-        data: [1, 2, 3, 3, 2, 1, 2, 3, 4, 5, 5, 6, 6, 0, 0, 0, -1, -2, -3, -4, -5, -6, -7],
-        color: '#7B50FF',
-        // type: 'bar'
-
-      } as SeriesBarOptions, {
-        name: 'Assets',
-        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 3, 0, 7, 2],
-        color: '#BCC6CA',
-        // type: 'bar'
-
-      } as SeriesBarOptions, {
-        type: 'spline',
-        name: 'Surplus',
-        marker: {
-          enabled: false
-        },
-        color: '#000000',
-        dashStyle: 'ShortDot',
-        data: [1, 1, 1, 1., 1., 2, 1, 2, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1],
-      } as SeriesSplineOptions]
-    });
+    chart();
   }
   // cashFlow(id) {
   //   var chart1 = new Highcharts.Chart('surplus', {
@@ -136,24 +96,43 @@ export class CashflowsPlanComponent implements OnInit {
 }
 
 
-export interface PeriodicElement {
+
+export interface IncomeTableI {
   year: string;
   age: string;
   age2: string;
-  salary: string;
-  salary2: string;
   total: string;
   view: string;
-
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {year: '2020', age: '25', age2: '21', salary: '1,20,000', salary2: '90,000', total: '2,10,000', view: 'view'},
-  {year: '2020', age: '25', age2: '21', salary: '1,20,000', salary2: '90,000', total: '2,10,000', view: 'view'},
-  {year: '2020', age: '25', age2: '21', salary: '1,20,000', salary2: '90,000', total: '2,10,000', view: 'view'},
-  {year: '2020', age: '25', age2: '21', salary: '1,20,000', salary2: '90,000', total: '2,10,000', view: 'view'},
-  {year: '2020', age: '25', age2: '21', salary: '1,20,000', salary2: '90,000', total: '2,10,000', view: 'view'},
-  {year: '2020', age: '25', age2: '21', salary: '1,20,000', salary2: '90,000', total: '2,10,000', view: 'view'},
-  {year: '2020', age: '25', age2: '21', salary: '1,20,000', salary2: '90,000', total: '2,10,000', view: 'view'},
+export interface SurplusInterface {
+  financialYear: string,
+  ageH: string,
+  ageW: string,
+  originalSurplus: string,
+  surplusAllocated: string,
+  balanceSurplus: string
+}
 
+const SURPLUS_DATA: SurplusInterface[] = [
+  { financialYear: "2020", ageH: '39', ageW: '30', originalSurplus: '3020', surplusAllocated: '88000', balanceSurplus: "3500" },
+  { financialYear: "2021", ageH: '40', ageW: '31', originalSurplus: '2000', surplusAllocated: '18000', balanceSurplus: "3300" },
+  { financialYear: "2022", ageH: '41', ageW: '32', originalSurplus: '5000', surplusAllocated: '28000', balanceSurplus: "3400" },
+  { financialYear: "2023", ageH: '42', ageW: '33', originalSurplus: '7000', surplusAllocated: '38000', balanceSurplus: "3700" },
+  { financialYear: "2024", ageH: '43', ageW: '34', originalSurplus: '4000', surplusAllocated: '78000', balanceSurplus: "8000" },
+  { financialYear: "2025", ageH: '44', ageW: '35', originalSurplus: '2030', surplusAllocated: '68000', balanceSurplus: "9000" },
+  { financialYear: "2026", ageH: '45', ageW: '36', originalSurplus: '9000', surplusAllocated: '4030', balanceSurplus: "5000" },
+  { financialYear: "2027", ageH: '46', ageW: '37', originalSurplus: '37000', surplusAllocated: '4300', balanceSurplus: "3000" },
+  { financialYear: "2028", ageH: '47', ageW: '38', originalSurplus: '5600', surplusAllocated: '4000', balanceSurplus: "9800" },
+  { financialYear: "2029", ageH: '48', ageW: '39', originalSurplus: '54400', surplusAllocated: '8000', balanceSurplus: "2300" },
+]
+
+const ELEMENT_DATA: IncomeTableI[] = [
+  { year: '2020', age: '25', age2: '21', total: '2,10,000', view: 'view' },
+  { year: '2021', age: '26', age2: '22', total: '2,10,400', view: 'view' },
+  { year: '2022', age: '27', age2: '23', total: '2,30,000', view: 'view' },
+  { year: '2023', age: '28', age2: '24', total: '2,10,000', view: 'view' },
+  { year: '2024', age: '29', age2: '25', total: '2,40,000', view: 'view' },
+  { year: '2025', age: '30', age2: '26', total: '2,80,000', view: 'view' },
+  { year: '2026', age: '31', age2: '27', total: '2,20,000', view: 'view' },
 ];
