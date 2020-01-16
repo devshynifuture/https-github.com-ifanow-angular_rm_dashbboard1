@@ -12,3 +12,119 @@
         </button>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-md-12 text-right">
+        <button mat-raised-button color="primary">ADD EXPENSE</button>
+        <button mat-raised-button color="accent">EDIT MODE</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table mat-table [dataSource]="dataSource" id="table-low" class=" " *ngIf="!showSurplusTable">
+
+            <!--- Note that these columns can be defined in any order.
+                              The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="description">
+                <th class="br-grey f-400 f-14" mat-header-cell *matHeaderCellDef> Description </th>
+                <td class="br-grey f-14" mat-cell *matCellDef="let element">
+                    Household <i class="material-icons">
+                        edit
+                    </i>
+                </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="month1">
+                <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
+                    Apr-20
+                </th>
+                <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
+                    1,20,000 </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="month2">
+                <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
+                    May-20
+                </th>
+                <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
+                    1,20,000 </td>
+            </ng-container>
+
+            <ng-container matColumnDef="month3">
+                <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
+                    Jun-20
+                </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
+                    1,20,000 </td>
+            </ng-container>
+
+            <ng-container matColumnDef="month4">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Jul-20 </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element" (click)="openUpperSlider(element)">
+                    1,20,000 </td>
+            </ng-container>
+
+            <ng-container matColumnDef="month5">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Aug-20 </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element" (click)="openUpperSlider(element)">
+                    1,20,000 </td>
+            </ng-container>
+
+            <ng-container matColumnDef="month6">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Sep-20 </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element" (click)="openUpperSlider(element)">
+                    1,20,000 </td>
+            </ng-container>
+
+            <ng-container matColumnDef="month7">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Oct-20 </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element" (click)="openUpperSlider(element)">
+                    1,20,000 </td>
+            </ng-container>
+
+            <ng-container matColumnDef="month8">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Nov-20 </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element" (click)="openUpperSlider(element)">
+                    1,20,000 </td>
+            </ng-container>
+
+            <ng-container matColumnDef="month9">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Dec-20 </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element" (click)="openUpperSlider(element)">
+                    1,20,000 </td>
+            </ng-container>
+
+            <ng-container matColumnDef="month10">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Jan-21 </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element" (click)="openUpperSlider(element)">
+                    1,20,000 </td>
+            </ng-container>
+
+            <ng-container matColumnDef="month11">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Feb-21 </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element" (click)="openUpperSlider(element)">
+                    1,20,000 </td>
+            </ng-container>
+
+            <ng-container matColumnDef="month12">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Mar-21 </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element" (click)="openUpperSlider(element)">
+                    1,20,000 </td>
+            </ng-container>
+
+            <ng-container matColumnDef="total">
+                <th mat-header-cell *matHeaderCellDef> Total 2020-21 </th>
+                <td class="br-grey text-right f-14  " mat-cell *matCellDef="let element" (click)="openUpperSlider(element)">
+                    1,20,000 </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>
