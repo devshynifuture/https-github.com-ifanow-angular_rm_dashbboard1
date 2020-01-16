@@ -291,7 +291,7 @@ export class AddExpensesComponent implements OnInit {
     console.log('family Memebers', data);
     this.familyMember = data.familyMembersList
   }
-  saveEPF() {
+  saveExpenses() {
     if (this.expenses.get('date').invalid) {
       this.expenses.get('date').markAsTouched();
       return

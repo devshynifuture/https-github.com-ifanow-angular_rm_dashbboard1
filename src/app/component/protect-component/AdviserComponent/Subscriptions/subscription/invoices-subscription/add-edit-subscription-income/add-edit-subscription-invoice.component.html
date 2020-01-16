@@ -1,9 +1,9 @@
 <div [formGroup]="editPayment"
-     [ngClass]="{'pt-72': invoiceInSub=='invoiceSubscription','mt-0':invoiceInSub!='invoiceSubscription'}"
-     class="bg-white pb-44 ">
+  [ngClass]="{'pt-72': invoiceInSub=='invoiceSubscription','mt-0':invoiceInSub!='invoiceSubscription'}"
+  class="bg-white pb-44 ">
   <div class="row  popup-header">
     <div class="col-md-10 pl-0">
-      <h2 *ngIf="showEditIn == true" class="f-400 wrapper-20 mb-0">Edit Invoice of
+      <h2 class="f-400 wrapper-20 mb-0">Edit Invoice of
         {{storeData.invoiceNumber}}
       </h2>
       <h4 *ngIf="invoiceInSub!='invoiceSubscription'" class="f-400 wrapper-20 mb-0">Add Invoice</h4>
@@ -19,12 +19,11 @@
           <div class="col-md-12 p-0">
             <div class="form-group">
               <mat-form-field>
-                <input [matAutocomplete]="auto1" [readonly]="invoiceInSub =='invoiceSubscription'"
-                       aria-label="client" class="form-control br-0 pl-8" formControlName="clientName"
-                       matInput>
+                <input [matAutocomplete]="auto1" [readonly]="invoiceInSub =='invoiceSubscription'" aria-label="client"
+                  class="form-control br-0 pl-8" formControlName="clientName" matInput>
                 <mat-autocomplete #auto1="matAutocomplete">
-                  <mat-option (onSelectionChange)="selectClient($event, c)"
-                              *ngFor="let c of clientList" [value]="c.clientName">
+                  <mat-option (onSelectionChange)="selectClient($event, c)" *ngFor="let c of clientList"
+                    [value]="c.clientName">
                     <span>{{c.clientName}}</span>
                   </mat-option>
                 </mat-autocomplete>
@@ -43,8 +42,8 @@
           <p class="m-0 text-custom f-12">BILLER ADDRESS</p>
           <p *ngIf="editAdd1 == false" class="m-0 text-black text-break w-90 l-21">{{storeData.billerAddress}}
           </p>
-          <textarea *ngIf="editAdd1 == true" class="form-control br-0" formControlName="billerAddress"
-                    maxlength="150" rows="5"></textarea>
+          <textarea *ngIf="editAdd1 == true" class="form-control br-0" formControlName="billerAddress" maxlength="150"
+            rows="5"></textarea>
           <p (click)="onclickChangeAdd1(editAdd1)" class="m-0 text-primary c-p f-12">CHANGE</p>
           <p class="mb-0 f-12 text-custom text-right pt-4 pr-36">
             {{getFormControledit().billerAddress.value?.length ? getFormControledit().billerAddress.value.length : 0}}
@@ -56,8 +55,8 @@
           <p *ngIf="editAdd2 == false" class="m-0 text-black text-break l-21 w-90">
             {{storeData.billingAddress}}
           </p>
-          <textarea *ngIf="editAdd2 == true" class="form-control br-0" formControlName="billingAddress"
-                    maxlength="150" rows="5"></textarea>
+          <textarea *ngIf="editAdd2 == true" class="form-control br-0" formControlName="billingAddress" maxlength="150"
+            rows="5"></textarea>
           <p (click)="onclickChangeAdd2(editAdd2)" class="m-0 text-primary c-p f-12">CHANGE</p>
           <p class="mb-0 f-12 text-custom text-right pt-4 pr-12">
             {{getFormControledit().billingAddress.value?.length ? getFormControledit().billingAddress.value.length : 0}}
@@ -77,8 +76,7 @@
             </div>
             <div class="col-md-7 p-0">
               <div class="form-group mb-0">
-                <input class="form-control br-0" formControlName="invoiceNumber"
-                       maxlength="20" type="text">
+                <input class="form-control br-0" formControlName="invoiceNumber" maxlength="20" type="text">
               </div>
               <div class="col-md-12 pl-0">
                 <mat-error
@@ -104,8 +102,8 @@
             <div class="col-md-6 p-0">
               <div class="form-group mb-0">
                 <mat-form-field class="ba-date">
-                  <input (dateChange)="checkDateDiff($event)" [matDatepicker]="picker"
-                         class="form-control b-0" formControlName="invoiceDate" matInput readonly>
+                  <input (dateChange)="checkDateDiff($event)" [matDatepicker]="picker" class="form-control b-0"
+                    formControlName="invoiceDate" matInput readonly>
                   <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
                   <mat-error class="f-12 pt-4">Invoice date is required
@@ -124,9 +122,8 @@
             <div class="col-md-6 p-0">
               <div class="form-group mb-0">
                 <mat-form-field class="ba-date">
-                  <input (dateChange)="checkDateDiff($event)" [matDatepicker]="dueDatePicker"
-                         [min]="maxDate" class="form-control b-0" formControlName="dueDate" matInput
-                         readonly>
+                  <input (dateChange)="checkDateDiff($event)" [matDatepicker]="dueDatePicker" class="form-control b-0"
+                    formControlName="dueDate" matInput readonly>
                   <mat-datepicker-toggle [for]="dueDatePicker" matSuffix></mat-datepicker-toggle>
                   <mat-datepicker #dueDatePicker></mat-datepicker>
                   <mat-error class="f-12 pt-4">Invoice date is required
@@ -159,10 +156,9 @@
           <div class="col-md-6 pl-0">
             <div class="row">
               <div class="form-group mb-0 ml-8 w-100">
-                <input [matAutocomplete]="auto" [readonly]="invoiceInSub =='invoiceSubscription'"
-                       aria-label="State" class="form-control w-100 br-0 pl-8"
-                       formControlName="serviceName" list="serviceName" matInput
-                       placeholder="You can search service">
+                <input [matAutocomplete]="auto" [readonly]="invoiceInSub =='invoiceSubscription'" aria-label="State"
+                  class="form-control w-100 br-0 pl-8" formControlName="serviceName" list="serviceName" matInput
+                  placeholder="You can search service">
                 <mat-autocomplete #auto="matAutocomplete">
                   <mat-option *ngFor="let s of serviceList" [value]="s.serviceName">
                     <span>{{s.serviceName}}</span>
@@ -180,8 +176,7 @@
           </div>
           <div class="col-md-2 pl-0">
             <input #finalAmountInput [(ngModel)]="finalAmount" [inputValidator]="validatorType.NUMBER_ONLY"
-                   appInputValueValidation
-                   class="form-control br-0" formControlName="finalAmount" type="number">
+              appInputValueValidation class="form-control br-0" formControlName="finalAmount" type="number">
             <div class="col-md-8">
               <mat-error
                 *ngIf=" getFormControledit().finalAmount.invalid || (getFormControledit().finalAmount.touched && getFormControledit().finalAmount.invalid)"
@@ -192,8 +187,7 @@
           </div>
           <div class="col-md-2 pl-0">
             <!--            (change)="changeTaxStatus($event.target.value)"-->
-            <select class="form-control"
-                    formControlName="taxStatus" id="serviceName">
+            <select class="form-control" formControlName="taxStatus" id="serviceName">
               <option value="">Select tax type</option>
               <option value="IGST(18%)">IGST(18%)</option>
               <option value="SGST(9%)|CGST(9%)">SGST(9%) | CGST(9%)</option>
@@ -211,11 +205,9 @@
             <h5 class="m-0 text-right ">
               {{finalAmount}}
             </h5>
-            <h5 *ngIf="storeData.sgst != undefined" [hidden]="finalAmount !=undefined"
-                class="m-0 text-right ">
+            <h5 *ngIf="storeData.sgst != undefined" [hidden]="finalAmount !=undefined" class="m-0 text-right ">
               {{storeData.cgstTaxAmount}}</h5>
-            <h5 *ngIf="storeData.igst != undefined" [hidden]="finalAmount !=undefined"
-                class="m-0 text-right ">
+            <h5 *ngIf="storeData.igst != undefined" [hidden]="finalAmount !=undefined" class="m-0 text-right ">
               {{storeData.igstTaxAmount}}</h5>
           </div>
         </div>
@@ -237,9 +229,9 @@
       <h5 class="m-0">Discount ₹</h5>
     </div>
     <div class="col-md-2 pr-24">
-      <input (changedValue)="discount = $event" [(ngModel)]="discount"
-             [inputValidator]="validatorType.NUMBER_ONLY" [maxValue]="finalAmountInput.value" appInputValueValidation
-             class="form-control br-0 text-right" formControlName="discount" type="number">
+      <input (changedValue)="discount = $event" [(ngModel)]="discount" [inputValidator]="validatorType.NUMBER_ONLY"
+        [maxValue]="finalAmountInput.value" appInputValueValidation class="form-control br-0 text-right"
+        formControlName="discount" type="number">
     </div>
   </div>
   <div class="row pt-20 pb-12">
@@ -287,8 +279,7 @@
           </div>
           <div class="col-md-9 p-0">
             <div class="form-group mb-0">
-                            <textarea class="form-control" formControlName="footnote"
-                                      maxlength="100" rows="5"></textarea>
+              <textarea class="form-control" formControlName="footnote" maxlength="100" rows="5"></textarea>
             </div>
             <div class="row">
               <div class="col-md-6">
@@ -311,8 +302,7 @@
           </div>
           <div class="col-md-9 p-0">
             <div class="form-group mb-0">
-                            <textarea class="form-control" formControlName="terms"
-                                      maxlength="150" rows="5"></textarea>
+              <textarea class="form-control" formControlName="terms" maxlength="150" rows="5"></textarea>
             </div>
             <div class="row">
               <div class="col-md-6">

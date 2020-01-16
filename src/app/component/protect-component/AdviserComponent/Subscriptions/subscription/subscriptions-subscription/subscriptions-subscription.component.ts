@@ -29,7 +29,7 @@ import { ChangePayeeComponent } from '../common-subscription-component/change-pa
 //     dateA11yLabel: 'LL',
 //     monthYearA11yLabel: 'MMMM YYYY',
 //   },
-// };
+// }; 
 // export const APP_DATE_FORMATS = {
 //   parse: {
 //     dateInput: {month: 'short', year: 'numeric', day: 'numeric'},

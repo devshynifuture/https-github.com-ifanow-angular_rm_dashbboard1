@@ -3,6 +3,8 @@ import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { AddExpensesComponent } from '../../../common-component/add-expenses/add-expenses.component';
 import { AddBudgetComponent } from '../../../common-component/add-budget/add-budget/add-budget.component';
+import { CustomerService } from '../../customer.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-expenses',
@@ -17,14 +19,35 @@ export class ExpensesComponent implements OnInit {
 
   displayedColumns4 = ['no', 'expense', 'budget', 'progress','spent','icons'];
   dataSource4 = ELEMENT_DATA4;
+  advisorId: any;
+  clientId: any;
 
-  constructor(private subInjectService: SubscriptionInject) { }
+  constructor(private subInjectService: SubscriptionInject,private custumService: CustomerService) { }
   viewMode
   ngOnInit() {
     this.viewMode="tab1"
+    this.advisorId = AuthService.getAdvisorId()
+    this.clientId = AuthService.getClientId()
   }
 
-  
+  getTransaction(){
+    let obj = {
+      advisorId: this.advisorId,
+      clientId : this.clientId,
+      allOrSingle: 1,
+      endDate : '2020-01-01',
+      startDate:'2020-01-10',
+      limit:10,
+      offset:1,
+      familyMemberId: 0,
+    }
+    this.custumService.getTransactionExpense(obj).subscribe(
+      data => this.getTransactionExpenseRes(data)
+    );
+  }
+  getTransactionExpenseRes(data){
+    console.log(data)
+  }
     openExpenses(value) {
       const fragmentData = {
         flag:value,
