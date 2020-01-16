@@ -45,7 +45,7 @@ export class PlansSettingsComponent implements OnInit {
     this.subService.getSubscriptionPlanSettingsData(obj).subscribe(
       data => this.getSettingsPlanResponse(data), (error) => {
         this.eventService.showErrorMessage(error);
-        // this.planSettingData = [];
+        this.planSettingData = [];
         this.isLoading = false;
       }
     );

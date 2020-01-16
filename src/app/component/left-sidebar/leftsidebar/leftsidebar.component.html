@@ -95,6 +95,20 @@
                                 </div>
                             </div>
                         </mat-option>
+
+                        <mat-option disabled *ngIf="showDefaultDropDownOnSearch">
+                            <div class="row">
+                                <div class="col-md-1 d-flex align-items-center">
+                                    <i class="material-icons"> person </i>
+                                </div>
+                                <div class="col-md-7 d-flex align-items-center">
+                                    <p class="t-left m-0"> No Client Found</p>
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    <button class="small-primitive" mat-stroked-button disabled>FAMILY MEMBER</button>
+                                </div>
+                            </div>
+                        </mat-option>
                     </mat-autocomplete>
                 </div>
             </mat-form-field>

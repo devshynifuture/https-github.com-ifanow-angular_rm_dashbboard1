@@ -195,7 +195,7 @@ export class RetirementAccountComponent implements OnInit {
   constructor(private excel: ExcelService, private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) {
   }
 
-  displayedColumns11 = ['no', 'owner', 'cvalue', 'emp', 'empc', 'rate', 'bal', 'bacla', 'year', 'desc', 'status', 'icons'];
+  displayedColumns11 = ['no', 'owner', 'cvalue', 'emp', 'rate', 'bal', 'bacla', 'year', 'desc', 'status', 'icons'];
   datasource11;
   displayedColumns12 = ['no', 'owner', 'cvalue', 'total', 'scheme', 'pran', 'desc', 'status', 'icons'];
   datasource12;
@@ -672,7 +672,7 @@ export interface PeriodicElement11 {
   owner: string;
   cvalue: string;
   emp: string;
-  empc: string;
+  //empc: string;
   rate: string;
   bal: string;
   bacla: string;
