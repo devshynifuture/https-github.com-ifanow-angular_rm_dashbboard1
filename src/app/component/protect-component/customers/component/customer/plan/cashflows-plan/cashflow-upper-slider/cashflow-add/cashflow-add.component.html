@@ -3,25 +3,163 @@
         Add {{ this.data.tableData.tableInUse | titlecase }}
     </h3>
 </div>
-<div class="row p-44">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
-        <form [formGroup]="form">
-            <div class="row">
-                <div class="col-md-4">
-                    <label for="category">Select Category:</label>
-                </div>
-                <div class="col-md-8">
-                    <mat-select id="category" formControlName="category">
-                        <mat-option value="1">
-                            Household Expense
-                        </mat-option>
-                    </mat-select>
+<div class="row p-12">
+    <div class="col-md-5 pr-0 text-right">
+        <h5 class="m-0 pt-8">Select a category</h5>
+
+    </div>
+    <div class="col-md-5">
+        <mat-form-field>
+            <mat-select class="form-control br-0">
+                <mat-option value=''>Household expenses</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>
+
+<div class="row p-12">
+    <div class="col-md-5 pr-0 text-right">
+        <h5 class="m-0 pt-8">Enter amount</h5>
+        <p class="m-0 f-12 text-custom">Enter the expense</p>
+
+    </div>
+    <div class="col-md-5">
+        <mat-form-field>
+            <input matInput type="text" class="form-control br-0 rupess">
+        </mat-form-field>
+    </div>
+</div>
+
+
+<div class="row p-12">
+    <div class="col-md-5 pr-0 text-right">
+        <h5 class="m-0 pt-8">Repeat options</h5>
+
+    </div>
+    <div class="col-md-5">
+        <div class="row">
+            <div class="col-md-6">
+                <h5 class="m-0 pb-8">Frequency</h5>
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <mat-select class="form-control br-0">
+                            <mat-option value=''>Repeat weekly</mat-option>
+                        </mat-select>
+                    </mat-form-field>
                 </div>
             </div>
-        </form>
+            <div class="col-md-6">
+                <h5 class="m-0 pb-8">Every</h5>
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <mat-select class="form-control br-0">
+                            <mat-option value=''> 1 week</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-2">
-        this is something
+</div>
+
+
+
+<div class="row p-12">
+    <div class="col-md-5 pr-0 text-right">
+        <h5 class="m-0 pt-8">Starts from</h5>
+    </div>
+    <div class="col-md-5">
+        <div class="row">
+            <div class="col-md-6">
+
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input matInput class="form-control br-0" [matDatepicker]="picker" readonly>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-6">
+
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <mat-select class="form-control br-0">
+                            <mat-option value=''> Until</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row p-12">
+    <div class="col-md-5 pr-0 text-right">
+        <h5 class="m-0 pt-8"> Continues till</h5>
+    </div>
+    <div class="col-md-5">
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <mat-select class="form-control br-0">
+                            <mat-option value=''> Until</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input matInput class="form-control br-0" [matDatepicker]="picker" readonly>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row p-12">
+    <div class="col-md-5 pr-0 text-right">
+        <h5 class="m-0 pt-8">Payment mode</h5>
+
+    </div>
+    <div class="col-md-5">
+        <mat-form-field>
+            <mat-select class="form-control br-0">
+                <mat-option value=''> Credit card</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>
+
+<div class="row p-12">
+    <div class="col-md-5 pr-0 text-right">
+        <h5 _ngcontent-brf-c36="" class="m-0 pt-8"> Family member </h5>
+
+    </div>
+    <div class="col-md-5">
+        <mat-form-field>
+            <mat-select class="form-control br-0">
+                <mat-option value=''>Rahul Jain</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>
+<div class="row p-12">
+    <div class="col-md-12 text-right">
+        <button mat-button class="text-primitive">CANCEL</button>
+        <button mat-button class="text-primary">SAVE</button>
     </div>
 </div>

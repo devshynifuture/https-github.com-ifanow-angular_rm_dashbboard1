@@ -20,7 +20,7 @@
         text-align: left !important;
     }
     
-    .breadcrumb {
+    .documentBreadCrumb {
         padding: 0px;
         background-color: transparent;
         font-family: "Roboto", sans-serif !important;
@@ -97,6 +97,13 @@
         }
     }
     
-    .documentBreadCrumb li:nth-child(2) {
-        content: none;
+    .documentBreadCrumb {
+        padding: 0px;
+        background-color: transparent;
+        font-family: "Roboto", sans-serif !important;
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+        list-style: none;
+        border-radius: .25rem;
     }
