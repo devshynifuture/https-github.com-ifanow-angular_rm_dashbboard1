@@ -1,39 +1,39 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatBottomSheet, MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { BottomSheetComponent } from '../../../common-component/bottom-sheet/bottom-sheet.component';
-import { EventService } from 'src/app/Data-service/event.service';
-import { Router } from '@angular/router';
-import { FormBuilder } from '@angular/forms';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { CustomerService } from '../../customer.service';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {MatBottomSheet, MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {BottomSheetComponent} from '../../../common-component/bottom-sheet/bottom-sheet.component';
+import {EventService} from 'src/app/Data-service/event.service';
+import {Router} from '@angular/router';
+import {FormBuilder} from '@angular/forms';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {CustomerService} from '../../customer.service';
 import * as _ from 'lodash';
-import { AuthService } from 'src/app/auth-service/authService';
-import { HttpHeaders } from '@angular/common/http';
-import { DocumentNewFolderComponent } from '../../../common-component/document-new-folder/document-new-folder.component';
-import { HttpService } from 'src/app/http-service/http-service';
-import { CopyDocumentsComponent } from '../../../common-component/copy-documents/copy-documents.component';
-import { ViewActivityComponent } from './view-activity/view-activity.component';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { EmailQuotationComponent } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/email-quotation/email-quotation.component';
+import {AuthService} from 'src/app/auth-service/authService';
+import {HttpHeaders} from '@angular/common/http';
+import {DocumentNewFolderComponent} from '../../../common-component/document-new-folder/document-new-folder.component';
+import {HttpService} from 'src/app/http-service/http-service';
+import {CopyDocumentsComponent} from '../../../common-component/copy-documents/copy-documents.component';
+import {ViewActivityComponent} from './view-activity/view-activity.component';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {EmailQuotationComponent} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/email-quotation/email-quotation.component';
 
 @Component({
-  selector: 'app-documents',
-  templateUrl: './documents.component.html',
-  styleUrls: ['./documents.component.scss']
+  selector: 'app-document-explorer',
+  templateUrl: './document-explorer.component.html',
+  styleUrls: ['./document-explorer.component.scss']
 })
 
-export class DocumentsComponent implements AfterViewInit, OnInit {
+export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
   fileType = [
-    { id: 1, name: 'PDF' },
-    { id: 2, name: 'DOC' },
-    { id: 3, name: 'XLSX' },
-    { id: 4, name: 'MP3' },
-    { id: 5, name: 'MP4' },
-    { id: 6, name: 'WAV' },
-    { id: 7, name: 'ZIP' },
+    {id: 1, name: 'PDF'},
+    {id: 2, name: 'DOC'},
+    {id: 3, name: 'XLSX'},
+    {id: 4, name: 'MP3'},
+    {id: 5, name: 'MP4'},
+    {id: 6, name: 'WAV'},
+    {id: 7, name: 'ZIP'},
     { id: 8, name: 'BIN' },
     { id: 9, name: 'ISO' },
     { id: 10, name: 'JPEG' },
@@ -290,8 +290,8 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
       }
       if(event.length > 2){
         this.custumService.searchFile(obj).subscribe(
-          data => this.searchFileRes(data,'value')
-        ); 
+          data => this.searchFileRes(data, 'value')
+        );
       }
     }
   }
@@ -309,7 +309,7 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
       this.commonFileFolders = new MatTableDataSource(this.data);
       this.getAllFilesRes(obj, value)
     }
- 
+
   }
   fileTypeGet() {
     this.commonFileFolders.filteredData.forEach(p => {
