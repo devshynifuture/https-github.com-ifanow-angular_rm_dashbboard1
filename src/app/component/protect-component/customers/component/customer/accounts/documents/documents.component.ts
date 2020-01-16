@@ -66,6 +66,7 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
   isLoading = false;
   dataToCommon: any;
   showMsg = false;
+  showResult = false;
 
   constructor(private eventService: EventService, private http: HttpService, private _bottomSheet: MatBottomSheet,
     private event: EventService, private router: Router, private fb: FormBuilder,
@@ -271,21 +272,29 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
     if (this.openFolderName.length > 2) {
       this.showDots = true;
     }
+    this.showMsg = false
     this.fileSizeConversion();
     console.log('sorted', this.commonFileFolders);
   }
   keyPress(event){
-    console.log('search',event)
-    let obj = {
-      clientId : this.clientId,
-      advisorId :  this.advisorId,
-      name : '%'+event.key+'%'
+    if(event == " "){
+      this.reset()
+    }else{
+      console.log('search',event)
+      let obj = {
+        clientId : this.clientId,
+        advisorId :  this.advisorId,
+        name : event
+      }
+      if(event.length > 2){
+        this.custumService.searchFile(obj).subscribe(
+          data => this.searchFileRes(data,'value')
+        ); 
+      }
     }
-    this.custumService.searchFile(obj).subscribe(
-      data => this.searchFileRes(data,'value')
-    ); 
   }
   searchFileRes(data,value){
+    this.showResult = true
     let obj = []
     console.log(data)
     Object.assign(obj, {'files': data.SEARCHED_FILE})
