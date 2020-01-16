@@ -34,6 +34,7 @@ export class GoldComponent implements OnInit {
   advisorId: any;
   fdYears: string[];
   clientId: any;
+  nomineesListFM: any;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public utils: UtilService,public eventService:EventService) { }
 
@@ -58,6 +59,10 @@ export class GoldComponent implements OnInit {
     console.log('value selected', value)
     this.ownerName = value.userName;
     this.familyMemberId = value.id
+  }
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
   Close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag })

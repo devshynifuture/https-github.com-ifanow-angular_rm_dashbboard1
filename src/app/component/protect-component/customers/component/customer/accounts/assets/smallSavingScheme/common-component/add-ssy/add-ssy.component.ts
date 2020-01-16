@@ -28,6 +28,7 @@ export class AddSsyComponent implements OnInit {
   editApi: any;
   transactionData: any;
   clientId: any;
+  nomineesListFM: any;
 
   constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
@@ -40,6 +41,10 @@ export class AddSsyComponent implements OnInit {
     console.log('value selected', value)
     this.ownerName = value.userName;
     this.familyMemberId = value.id
+  }
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
   get data() {
     return this.inputData;
@@ -68,8 +73,6 @@ export class AddSsyComponent implements OnInit {
       agentName: [data.agentName]
     })
     this.ownerData = this.ssySchemeForm.controls;
-    this.familyMemberId = this.ssySchemeForm.controls.familyMemberId.value
-    this.familyMemberId = this.familyMemberId[0]
   }
   ngOnInit() {
     this.clientId = AuthService.getClientId();
@@ -99,6 +102,9 @@ export class AddSsyComponent implements OnInit {
     if (this.ssySchemeForm.get('guardian').invalid) {
       this.ssySchemeForm.get('guardian').markAsTouched();
       return
+    } else if (this.ssySchemeForm.get('ownerName').invalid) {
+      this.ssySchemeForm.get('ownerName').markAsTouched();
+      return;
     }
     else if (this.ssySchemeForm.get('accBalance').invalid) {
       this.ssySchemeForm.get('accBalance').markAsTouched();

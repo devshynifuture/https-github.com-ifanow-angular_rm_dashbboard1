@@ -27,6 +27,7 @@ export class AddKvpComponent implements OnInit {
   isOptionalField: boolean;
   KVPFormScheme: any;
   KVPOptionalFormScheme: any;
+  nomineesListFM: any;
 
   constructor(public utils: UtilService,private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   ngOnInit() {
@@ -43,6 +44,10 @@ export class AddKvpComponent implements OnInit {
     console.log('value selected', value)
     this.ownerName = value.userName;
     this.familyMemberId = value.id
+  }
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
   get data() {
     return this.inputData;
@@ -77,6 +82,9 @@ export class AddKvpComponent implements OnInit {
     if (this.KVPFormScheme.get('amtInvested').invalid) {
       this.KVPFormScheme.get('amtInvested').markAsTouched();
       return
+    } else if (this.KVPFormScheme.get('ownerName').invalid) {
+      this.KVPFormScheme.get('ownerName').markAsTouched();
+      return;
     }
     else if (this.KVPFormScheme.get('commDate').invalid) {
       this.KVPFormScheme.get('commDate').markAsTouched();

@@ -133,7 +133,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
       id: this.advisorId,
       // id: 2735, // pass here advisor id for Invoice advisor
       module: 1,
-      
+
     };
     // this.dataSource.data = [{}, {}, {}];
     this.isLoading = true;
@@ -250,7 +250,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
     this.dataCount = 0;
     if (this.dataSource != undefined) {
       console.log(this.dataSource.filteredData, this.dataSource.data, "data check api 123");
-      
+
       this.dataSource.filteredData.forEach(item => {
         item.selected = event.checked;
         if (item.selected) {
@@ -284,18 +284,21 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
   display(data) {
 
-    if(data.closingState){
+    if (data.closingState) {
       console.log(data, "edited data invoice");
       this.dataSource.data = [{}, {}, {}]
       this.tableData = [];
       this.getInvoiceSubData(false);
       this.dataCount = 0;
     }
-      this.invoiceSubscription = 'false';
-    
+    this.invoiceSubscription = 'false';
+
     // this.ngOnInit();
   }
-
+  getCancelInvoiceSubscription(data) {
+    console.log(data);
+    this.ngOnInit();
+  }
   showFilters(showFilter) {
     if (showFilter == true) {
       this.showFilter = false;
@@ -476,7 +479,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
           },
           error => this.eventService.showErrorMessage(error)
         );
-            dialogRef.close(listIndex);
+        dialogRef.close(listIndex);
 
       },
       negativeMethod: () => {
@@ -493,8 +496,8 @@ export class InvoicesSubscriptionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result,this.dataSource.data,"delete result");
-      if(result.length > 0 ){
+      console.log(result, this.dataSource.data, "delete result");
+      if (result.length > 0) {
         const tempList = []
         this.dataSource.data.forEach(singleElement => {
           if (!singleElement.selected) {
@@ -506,7 +509,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
         this.dataCount = 0;
       }
 
-     
+
     });
   }
 }

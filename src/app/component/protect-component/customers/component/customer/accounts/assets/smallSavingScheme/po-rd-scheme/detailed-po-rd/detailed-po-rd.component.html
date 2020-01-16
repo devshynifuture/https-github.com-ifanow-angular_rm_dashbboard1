@@ -22,12 +22,28 @@
                         {{ data.ownerName }}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br">
+                <!-- <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Advisor Id
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{ data.advisorId }}
+                    </div>
+                </div> -->
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Current Value
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{data.currentValue}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Maturity Value
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{data.maturityValue}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -59,7 +75,7 @@
                         Commencement Date
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{data.commencementDate}}
+                        {{data.commencementDate | date:'dd/MM/yyyy'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -70,14 +86,7 @@
                         {{data.createdDate}}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Current Value
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{data.currentValue}}
-                    </div>
-                </div>
+
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Description
@@ -103,14 +112,7 @@
                     </div>
                 </div>
 
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Maturity Value
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{data.maturityValue}}
-                    </div>
-                </div>
+
 
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
@@ -170,4 +172,4 @@
             </div>
         </div>
     </div>
-</div> 
+</div>

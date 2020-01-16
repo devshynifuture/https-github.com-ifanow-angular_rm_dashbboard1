@@ -1,7 +1,7 @@
 <div id="ui-document-settings">
 
     <div class="bg-white pb-36 ">
-        <div *ngIf="documentSettingData != undefined ">
+        <div *ngIf="documentSettingData != undefined && documentSettingData.length > 0">
             <div class="wrapper-20 pr-0">
                 <div class="row">
                     <div class="col-md-8 p-0">
@@ -26,13 +26,19 @@
                         </mat-card>
                     </div>
                     <div [hidden]="!documentSettingData" *ngFor="let singleDocument of documentSettingData" class="col-md-4 pr-20 pb-20 pl-0 documents-body">
-                        <app-single-document-view class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" [singleDocument]="singleDocument" (valueChange)='display($event)'>
-                        </app-single-document-view>
+                        <div class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                            <div class="relClass">
+                                <div class="bar">
+                                    <app-single-document-view [singleDocument]="singleDocument" (valueChange)='display($event)'>
+                                    </app-single-document-view>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row" *ngIf="documentSettingData == undefined ">
+        <div class="row" *ngIf="documentSettingData == undefined || documentSettingData.length == 0 ">
             <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
                 <img class="width200" src="assets/images/svg/add-documents-img.svg">
                 <p class="f-22 f-600 pt-28"> Create Documents </p>

@@ -16,10 +16,9 @@ export class EmailServiceService {
   private dataSourceOneMailView = new BehaviorSubject<Object>('');
   data = this.dataSourceOneMailView.asObservable();
   paginatorLength;
-  
+
   constructor(public https: HttpClient,
     public http: HttpService,
-    private authService: AuthService,
     private subInjectService: SubscriptionInject) { }
 
   getProfile() {
@@ -111,7 +110,7 @@ export class EmailServiceService {
       email: userInfo.emailId,
       userId: userInfo.advisorId,
       messageId
-    })
+    });
   }
 
   getRightSideNavList() {

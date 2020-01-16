@@ -18,6 +18,7 @@ export class AddAssetStocksComponent implements OnInit {
   ownerName: any;
   familyMemberId: any;
   editApiData: any;
+  nomineesListFM: any;
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService) { }
 
@@ -48,7 +49,10 @@ export class AddAssetStocksComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
-
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
+  }
   preventDefault(e){
     e.preventDefault();
   }

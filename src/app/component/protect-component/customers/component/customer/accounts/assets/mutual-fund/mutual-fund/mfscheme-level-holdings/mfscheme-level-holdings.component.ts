@@ -13,6 +13,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   ownerData: any;
   ownerName: any;
   selectedFamilyData: any;
+  nomineesListFM: any;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder) { }
   @Input()
@@ -68,6 +69,10 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
     console.log('value selected', value)
     this.ownerName = value.userName;
     this.selectedFamilyData = value
+  }
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
   saveMfSchemeLevel() {
     if (this.schemeLevelHoldingForm.get('schemeName').invalid) {

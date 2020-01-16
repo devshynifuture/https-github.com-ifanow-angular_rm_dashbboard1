@@ -19,7 +19,6 @@
             </button>
 
         </div>
-
     </div>
 
     <div *ngIf="showRecurring == '1'">
@@ -49,18 +48,18 @@
             </div>
         </div>
 
-        <div class="example-container col-md-12   p-0 mt-8 real-estate" id="epf" #EPF #epf>
+        <div class="example-container col-md-12 overflow-hidden p-0 mt-8 real-estate" id="epf" #EPF #epf>
             <table *ngIf="dataEPFList.filteredData.length > 0" matSort #epfListTable="matSort" mat-table [dataSource]="dataEPFList" matSort id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
                 <ng-container matColumnDef="no">
-                    <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header mat-sort-header="no"> No</th>
+                    <th *matHeaderCellDef class="br t-10" mat-header-cell mat-sort-header mat-sort-header="no"> No</th>
                     <td *matCellDef="let element let i = index" class="br" mat-cell>
                         <div class="bar">{{isLoading ? '' : i + 1 }} </div>
                     </td>
                     <td *matFooterCellDef class="  pl-4 f-600 text-left" mat-footer-cell>Total</td>
                 </ng-container>
                 <ng-container matColumnDef="owner">
-                    <th *matHeaderCellDef class="br t-20" mat-header-cell mat-sort-header="ownerName"> Owner</th>
+                    <th *matHeaderCellDef class="br t-24" mat-header-cell mat-sort-header="ownerName"> Owner</th>
                     <td mat-cell *matCellDef="let element" class="br t-20">
                         <div class="bar"> {{element.ownerName}} </div>
                     </td>
@@ -78,8 +77,8 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="emp">
-                    <th mat-sort-header="employeesMonthlyContribution" mat-header-cell *matHeaderCellDef class="br text-right">
-                        Employee’s contribution
+                    <th mat-sort-header="employeesMonthlyContribution" mat-header-cell *matHeaderCellDef class="br t-18 text-right">
+                        Employee's <br> contribution
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right">
                         <div class="bar" appFormatNumber> {{ element.employeesMonthlyContribution }} </div>
@@ -88,19 +87,19 @@
                         <div class="bar"> {{ sumOfemployeesMonthlyContribution || ' '}} </div>
                     </td>
                 </ng-container>
-                <ng-container matColumnDef="empc">
-                    <th mat-sort-header="employersMonthlyContribution" mat-header-cell *matHeaderCellDef class="br text-right">
-                        Employer’s contribution
+                <!-- <ng-container matColumnDef="empc">
+                    <th mat-sort-header="employersMonthlyContribution" mat-header-cell *matHeaderCellDef class="br text-right t-18">
+                        Employer's <br> contribution
                     </th>
-                    <td mat-cell *matCellDef="let element" class="br text-right">
+                    <td mat-cell *matCellDef="let element" class="br t-20 text-right">
                         <div class="bar" appFormatNumber> {{ element.employersMonthlyContribution }} </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 f-600 p-8 text-right" appFormatNumber [value]="sumOfemployersMonthlyContribution">
                         <div class="bar"> {{ sumOfemployersMonthlyContribution || ' '}} </div>
                     </td>
-                </ng-container>
+                </ng-container> -->
                 <ng-container matColumnDef="rate">
-                    <th mat-sort-header="rateOfReturns" mat-header-cell *matHeaderCellDef class="br text-right t-7">
+                    <th mat-sort-header="rateOfReturns" mat-header-cell *matHeaderCellDef class="br t-18 text-right t-7">
                         Rate of returns
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right t-7">
@@ -109,37 +108,38 @@
                     <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
                 </ng-container>
                 <ng-container matColumnDef="bal">
-                    <th mat-sort-header="currentEpfBalance" mat-header-cell *matHeaderCellDef class="br t-8 text-right">
+                    <th mat-sort-header="currentEpfBalance" mat-header-cell *matHeaderCellDef class="br t-18 text-right">
                         Balance mentioned
                     </th>
-                    <td mat-cell *matCellDef="let element" class="br t-8 text-right">
+                    <td mat-cell *matCellDef="let element" class="br t-18 text-right">
                         <div class="bar" appFormatNumber> {{ element.currentEpfBalance }} </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br t-20 f-600 p-8 text-right" appFormatNumber [value]="sumOfcurrentEpfBalance">
+                    <td mat-footer-cell *matFooterCellDef class="br t-18 f-600 p-8 text-right" appFormatNumber [value]="sumOfcurrentEpfBalance">
                         <div class="bar"> {{ sumOfcurrentEpfBalance || ' '}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="bacla">
-                    <th mat-sort-header="balanceAsOnDate" mat-header-cell *matHeaderCellDef class="br t-5 text-left">
+                    <th mat-sort-header="balanceAsOnDate" mat-header-cell *matHeaderCellDef class="br t-18 text-left">
                         Balance as on
                     </th>
-                    <td mat-cell *matCellDef="let element" class="br t-5 text-left">
+                    <td mat-cell *matCellDef="let element" class="br t-18 text-left">
                         <div class="bar"> {{element.balanceAsOnDate | date:'dd/MM/yyyy'}} </div>
                     </td>
                     <td *matFooterCellDef mat-footer-cell></td>
                 </ng-container>
                 <ng-container matColumnDef="year">
-                    <th mat-sort-header="maturityYear" mat-header-cell *matHeaderCellDef class="br text-right">Maturity year
+                    <th mat-sort-header="maturityYear" mat-header-cell *matHeaderCellDef class="br t-18 text-right">
+                        Maturity year
                     </th>
-                    <td mat-cell *matCellDef="let element" class="br text-right">
+                    <td mat-cell *matCellDef="let element" class="br t-18 text-right">
                         <div class="bar"> {{element.maturityYear}} </div>
                     </td>
                     <td *matFooterCellDef mat-footer-cell></td>
                 </ng-container>
                 <ng-container matColumnDef="desc">
-                    <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br t-10"> Description
+                    <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br t-18"> Description
                     </th>
-                    <td mat-cell *matCellDef="let element" class="br t-10">
+                    <td mat-cell *matCellDef="let element" class="br t-18">
                         <div class="bar"> {{element.description}} </div>
                     </td>
                     <td *matFooterCellDef mat-footer-cell></td>
@@ -256,7 +256,7 @@
     </button>
     </mat-menu>
 </div>
-<div class="example-container mt-8 col-md-12 p-0 ovreflow-hidden real-estate" #NPS #nps>
+<div class="example-container mt-8 col-md-12 p-0 overflow-hidden real-estate" #NPS #nps>
     <table *ngIf="dataNPSList.filteredData.length > 0" matSort #npsListTable="matSort" mat-table [dataSource]="dataNPSList" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
         <ng-container matColumnDef="no">
             <th *matHeaderCellDef class="br t-2" mat-header-cell mat-sort-header="no"> No</th>
@@ -439,7 +439,7 @@
             </button>
         </div>
     </div>
-    <div class="example-container mt-8 col-md-12 p-0 real-estate" #GRATUITY #Gratuity>
+    <div class="example-container mt-8 col-md-12 p-0 overflow-hidden real-estate" #GRATUITY #Gratuity>
         <table *ngIf="dataGratuityList.filteredData.length > 0" #gratuityListTable="matSort" [dataSource]="dataGratuityList" id="table-low" mat-table matSort class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="no">
                 <th *matHeaderCellDef class="br t-2" mat-header-cell mat-sort-header="no"> No</th>
@@ -466,7 +466,7 @@
             </ng-container>
             <ng-container matColumnDef="number">
                 <th *matHeaderCellDef class="br text-right t-12" mat-header-cell mat-sort-header="yearsCompleted">
-                    Number of completed years
+                    Number of <br> completed years
                 </th>
                 <td *matCellDef="let element" class="br text-right t-12" mat-cell>
                     <div class="bar"> {{element.yearsCompleted}} </div>
@@ -589,7 +589,7 @@
             </ng-container>
             <ng-container matColumnDef="aemp">
                 <th *matHeaderCellDef class="br text-right t-12" mat-header-cell mat-sort-header="annualEmployerContribution">
-                    Annual employer...
+                    Annual Employer <br> contribution
                 </th>
                 <td *matCellDef="let element" class="br text-right t-12" mat-cell>
                     <div class="bar" appFormatNumber> {{element.annualEmployerContribution}} </div>

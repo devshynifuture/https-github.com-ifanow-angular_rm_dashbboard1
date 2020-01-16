@@ -33,6 +33,7 @@ export class AddOtherPayablesComponent implements OnInit {
   _data: any;
   interestRate: number;
   showError: boolean;
+  nomineesListFM: any;
 
   constructor(private fb: FormBuilder, public subInjectService: SubscriptionInject, public custumService: CustomerService, public eventService: EventService) {
   }
@@ -114,7 +115,10 @@ export class AddOtherPayablesComponent implements OnInit {
     this.ownerName = value.userName;
     this.selectedFamilyData = value;
   }
-
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
+  }
   keyPress(event: any) {
     const pattern = /[0-9\+\-\ ]/;
 
@@ -128,6 +132,9 @@ export class AddOtherPayablesComponent implements OnInit {
     if (this.otherLiabilityForm.get('dateOfReceipt').invalid) {
       this.otherLiabilityForm.get('dateOfReceipt').markAsTouched();
       return;
+    } else if (this.otherLiabilityForm.get('ownerName').invalid) {
+      this.otherLiabilityForm.get('ownerName').markAsTouched();
+      return
     } else if (this.otherLiabilityForm.get('creditorName').invalid) {
       this.otherLiabilityForm.get('creditorName').markAsTouched();
       return;

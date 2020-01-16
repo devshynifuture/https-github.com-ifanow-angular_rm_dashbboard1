@@ -27,6 +27,7 @@ export class AddScssComponent implements OnInit {
   ownerData: any;
   isOptionalField: any;
   editApi: any;
+  nomineesListFM: any;
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
               private cusService: CustomerService, private eventService: EventService,public utils: UtilService) {
@@ -50,7 +51,10 @@ export class AddScssComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id;
   }
-
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
+  }
   getdataForm(data) {
     if (data == undefined) {
       data = {};
@@ -81,7 +85,10 @@ export class AddScssComponent implements OnInit {
     if (this.scssSchemeForm.get('amtInvested').invalid) {
       this.scssSchemeForm.get('amtInvested').markAsTouched();
       return;
-    } else if (this.scssSchemeForm.get('commDate').invalid) {
+    }  else if (this.scssSchemeForm.get('ownerName').invalid) {
+      this.scssSchemeForm.get('ownerName').markAsTouched();
+      return;
+    }else if (this.scssSchemeForm.get('commDate').invalid) {
       this.scssSchemeForm.get('commDate').markAsTouched();
       return;
     } else if (this.scssSchemeForm.get('ownershipType').invalid) {
