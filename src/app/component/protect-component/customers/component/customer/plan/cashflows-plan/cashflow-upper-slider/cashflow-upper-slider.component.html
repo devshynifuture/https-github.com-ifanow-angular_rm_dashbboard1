@@ -1,45 +1,46 @@
-<div class="row">
-    <div class="col-md-10">
+<div class="row b-b">
+    <div class="col-md-3">
         <div class="logo">
             <!-- <img src="/assets/" alt="logo image" /> -->
         </div>
     </div>
-    <div class="col-md-2 float-left">
-        <mat-icon class="c-p" (click)="close('close')">
-            close
-        </mat-icon>
+    <div class="col-md-7 ">
+        <h2 class="text-center f-16 m-0"> {{ data.tableInUse | titlecase }} {{ data.year }} -
+            {{ addOneInYear(data.year) }} </h2>
     </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12 text-right">
-        <button mat-raised-button color="primary" (click)="addExpense('')">Add {{ data.tableInUse | uppercase }}
+    <div class="col-md-2 text-right">
+        <button mat-stroked-button (click)="close('close')">
+            <mat-icon> close </mat-icon>
         </button>
-        <button mat-raised-button color="accent" (click)="toggleEditMode()">EDIT MODE</button>
     </div>
 </div>
 
 <div class="row">
-    <div class="col-md-12">
-        <table mat-table [dataSource]="dataSource" id="table-low" class=" " *ngIf="!showSurplusTable">
+    <div class="col-md-12 text-right mb-10 mt-20">
+        <button mat-raised-button class="btn-primary addon f-14 mr-16" (click)="addExpense('')">ADD
+            {{ data.tableInUse | uppercase }}</button>
+        <button mat-raised-button class="greryColorBg" (click)="toggleEditMode()">EDIT MODE</button>
+    </div>
+</div>
 
-            <!--- Note that these columns can be defined in any order.
-                              The actual rendered columns are set as a property on the row definition" -->
-
-            <!-- Position Column -->
+<div class="row">
+    <div class="col-md-12 cash-flow-upperTable">
+        <table mat-table [dataSource]="dataSource" id="table-low" class=" ">
             <ng-container matColumnDef="description">
                 <th class="br-grey f-400 f-14" mat-header-cell *matHeaderCellDef> Description </th>
                 <td class="br-grey f-14" mat-cell *matCellDef="let element">
-                    Household <i class="material-icons">
-                        edit
-                    </i>
+                    Household <img src="/assets/images/svg/cash-flow-edit-icon.svg">
                 </td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="month1">
-                <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
+                <th *ngIf="data.tableInUse !== 'surplus'" class="br-grey text-right f-400 f-14" mat-header-cell
+                    *matHeaderCellDef>
                     Apr-{{ year.slice(-2) }}
+                </th>
+                <th *ngIf="data.tableInUse === 'surplus'">
+                    Apr-{{ financialYear.slice(-2) }}
                 </th>
                 <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
                     {{ element.month1 }}</td>
@@ -141,6 +142,13 @@
                     (click)="openUpperSlider(element)">
 
                     {{ element.total }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="remove">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td class="br-grey text-right f-14  " mat-cell *matCellDef="let element"
+                    (click)="openUpperSlider(element)">
+                    1,20,000 </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
