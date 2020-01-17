@@ -40,29 +40,16 @@
     <div class="col-md-5">
       <h5 class="text-right pt-8 mb-0">Code</h5>
     </div>
-    <div class="col-md-7">
-      <div class="row">
-        <div class="col-md-5 p-0">
-          <div class="form-group mb-0">
-            <input #codeRef type="text" appCodeText [maxLength]="10" formControlName="code" class="form-control br-0">
-
-          </div>
-          <div class="row">
-            <div class="col-md-9 pr-0">
-              <mat-error class="f-12 pt-4"
-                [ngClass]="{'v-h':!(isCodeValid && getFormControl().code.invalid || getFormControl().code.touched && getFormControl().code.invalid)}">
-                Code is required
-              </mat-error>
-            </div>
-            <div class="col-md-3 pl-0">
-              <p class="mb-0 f-12 text-custom text-right pt-4">
-                {{ codeRef.value.length }}/{{ getFormControl().code.maxLength }}
-                <!-- {{getFormControl().code.value?.length ? getFormControl().code.value.length : 0}}
-                /{{getFormControl().code.maxLength}} -->
-              </p>
-            </div>
-          </div>
-        </div>
+    <div class="col-md-3">
+      <div class="form-group mb-0">
+        <mat-form-field>
+          <input #code [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
+                 appInputValueValidation class="form-control br-0 text-left" formControlName="code" matInput
+                 type="text">
+          <mat-error
+            class="f-12">{{'Invalid code'}}</mat-error>
+          <mat-hint align="end" class="f-12">{{code.value.length}}/10</mat-hint>
+        </mat-form-field>
       </div>
     </div>
   </div>
