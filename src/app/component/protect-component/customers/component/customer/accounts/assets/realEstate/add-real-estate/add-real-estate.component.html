@@ -40,7 +40,7 @@
                         (keyup)="onChange('owner')">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isOwnerPercent && getFormControl().ownerPercent.invalid || getFormControl().ownerPercent.touched && getFormControl().ownerPercent.invalid)}">
-                        This feild is required
+                        This field is required
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -75,7 +75,7 @@
                         <input matInput class="form-control br-0" type="number" formControlName="ownershipPerc"
                             (keyup)="onChange('owner')">
                         <mat-error class="f-12 pt-4">
-                            This feild is required
+                            This field is required
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -108,7 +108,7 @@
                     </mat-select>
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isTypeValid && getFormControl().type.invalid || getFormControl().type.touched && getFormControl().type.invalid)}">
-                        This feild is required
+                        This field is required
                     </mat-error>
                 </mat-form-field>
 
@@ -129,7 +129,7 @@
                         (keypress)="utils.keyPress($event)" formControlName="marketValue" maxlength="10">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isMvValid && getFormControl().marketValue.invalid || getFormControl().marketValue.touched && getFormControl().marketValue.invalid)}">
-                        This feild is required
+                        This field is required
                         <!-- [ngClass]="{'v-h':!(isLoanAmount && getFormControl().marketValue.invalid || getFormControl().marketValue.touched && getFormControl().marketValue.invalid)}" -->
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{marketValue.value.length}}/10</mat-hint>

@@ -83,8 +83,8 @@ export class AddBudgetComponent implements OnInit {
       data = {}
     }
     this.budget = this.fb.group({
-      time: [(data == undefined) ? '' : data.time, [Validators.required]],
-      date: [(data == undefined) ? '' : new Date(data.date), [Validators.required]],
+      timeInMilliSec: [(data == undefined) ? '' : data.timeInMilliSec, [Validators.required]],
+      expenseDoneOn: [(data == undefined) ? '' : new Date(data.expenseDoneOn), [Validators.required]],
       amount: [(data == undefined) ? '' : data.amount, [Validators.required]],
       category: [(data == undefined) ? '' : (data.category) + "", [Validators.required]],
       familyMember: [(data == undefined) ? '' :  this.familyMember, [Validators.required]],
@@ -92,7 +92,7 @@ export class AddBudgetComponent implements OnInit {
       isRecuring:[(data == undefined) ? '' : data.isRecuring, [Validators.required]],
       startDate:[(data == undefined) ? '' : data.startDate, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
-      paymentMode: [[(data == undefined) ? '' : data.paymentMode], [Validators.required]]
+      paymentModeId: [(data == undefined) ? '' : data.paymentModeId, [Validators.required]],
     });
   }
   getFormControl(): any {
