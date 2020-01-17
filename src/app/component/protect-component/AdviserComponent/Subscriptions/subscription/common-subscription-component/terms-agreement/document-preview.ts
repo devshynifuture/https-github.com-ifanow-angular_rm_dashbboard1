@@ -1,0 +1,2 @@
+export const tableHtml = `"Mutual fund fees↵↵Enter yearly rates here even if your↵charging mode is monthly or quarterly.↵We will calculate accordingly.↵↵Direct (per annum) %↵Equity↵Debt↵Liquid↵Regular (per annum) %↵Equity↵Debt↵Liquid"
+`

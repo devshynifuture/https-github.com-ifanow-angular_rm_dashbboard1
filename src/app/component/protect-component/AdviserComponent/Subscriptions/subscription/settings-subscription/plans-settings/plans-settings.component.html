@@ -3,8 +3,9 @@
 </div> -->
 <div class="bg-white">
     <div class="wrapper-20 pb-0 pr-0">
-        <div class="row" *ngIf="planSettingData != undefined">
-            <div (click)="openFragment('','plan')" class="col-md-4 pr-20 pb-20 pl-0 c-p">
+        <div class="row">
+
+            <div *ngIf="planSettingData != undefined && planSettingData.length > 0" (click)="openFragment('','plan')" class="col-md-4 pr-20 pb-20 pl-0 c-p">
                 <mat-card class="example-card b-a height-470 bg-grey lter bd-1">
                     <mat-card-content>
                         <p class="text-center">
@@ -14,66 +15,73 @@
                 </mat-card>
             </div>
 
-            <div class="col-md-4  pr-20 pb-20 pl-0 d-flex" *ngFor="let singlePlan of planSettingData">
-                <mat-card class="example-card b-a bg-grey lter p-0 flex-fill">
-                    <mat-card-header class="">
-                        <div class="wrapper-20 skeletonAnimation pb-10 height120" appSkeletonLoading
-                            [appSkeletonLoading]="isLoading">
-                            <mat-card-title class="mb-0 text-break f-24  mb-10 l-26 relClass">
-                                <div class="bar"> {{singlePlan.name}} </div>
+            <div class="col-md-4  pr-20 pb-20 pl-0 d-flex skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngFor="let singlePlan of planSettingData">
+                <mat-card class="example-card b-a  bg-grey lter p-0 flex-fill">
+                    <mat-card-header class="overflow-hidden">
+                        <div class="wrapper-20 pb-10 height120 width100per">
+
+                            <mat-card-title class="mb-0 text-break f-24 relClass  mb-10 l-26">
+                                <div class="bar" [ngClass]="{'height23': isLoading}">
+                                    {{singlePlan.name}}
+                                </div>
                             </mat-card-title>
-                            <mat-card-subtitle class="pt-4 pb-12 mb-0 relClass">
-                                <div class="bar"> {{singlePlan.code}}
+                            <mat-card-subtitle class="pt-4 pb-12 relClass mb-0">
+                                <div class="bar" [ngClass]="{'height23': isLoading}">
+                                    {{singlePlan.code}}
                                 </div>
                             </mat-card-subtitle>
                         </div>
                     </mat-card-header>
-
                     <mat-card-content class="bg-white mb-0">
-                        <div class="row wrapper-20">
-                            <div class="col-md-12 height120 p-0">
+                        <div class="row wrapper-20 overflow-hidden">
+                            <div class="col-md-12 height120 p-0 ">
                                 <p class="mb-0 text-primitive f-12">DESCRIPTION</p>
-                                <p class="mb-0 pt-8 plan-description">{{singlePlan.description}}</p>
+                                <div class="mb-0 pt-8 plan-description relClass">
+                                    <div class="bar" [ngClass]="{'height23': isLoading}">
+                                        {{singlePlan.description}}
+                                    </div>
+                                </div>
                             </div>
-
                         </div>
-                        <div class="row wrapper-20 bt-1 bb-1">
-                            <div class="col-md-6 p-0">
+                        <div class="row wrapper-20 bt-1 bb-1 overflow-hidden">
+                            <div class="col-md-6 pl-0 relClass ">
                                 <p class="f-14 text-primitive mb-8">SERVICES</p>
-                                <p class="f-24 mb-0">{{singlePlan.serviceCount}}</p>
+                                <div class="f-24 mb-0 relClass">
+                                    <div class="bar" [ngClass]="{'height23': isLoading}">
+                                        {{singlePlan.serviceCount}}
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-6 p-0">
+                            <div class="col-md-6 p-0 ">
                                 <p class="f-14 text-primitive mb-8">DOCUMENTS</p>
-                                <p class="f-24">{{singlePlan.docCount}}</p>
+
+                                <div class="f-24 mb-0 relClass">
+                                    <div class="bar" [ngClass]="{'height23': isLoading}">
+                                        {{singlePlan.docCount}}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </mat-card-content>
-                    <mat-card-actions class="block text-center pt-20 pb-20 mb-0">
-                        <button mat-stroked-button class="btn-header addon mb-12 mt-12 br-0"
-                            (click)="openFragment(singlePlan,'plan')">INFO
+                    <mat-card-actions class="block text-center paddTopBottom18 mb-0">
+                        <button mat-stroked-button class="btn-header addon mb-12 mt-12 br-0" (click)="openFragment(singlePlan,'plan')">INFO
                         </button>
                     </mat-card-actions>
 
                 </mat-card>
             </div>
 
-        </div>
-        <div class="row" *ngIf="planSettingData == undefined">
-            <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
+            <div *ngIf="planSettingData == undefined || planSettingData.length == 0" class="col-md-12 d-flex align-items-center flex-column justify-content-center">
+
                 <img class="width200" src="assets/images/svg/new-add-plan.svg">
                 <p class="f-22 f-600 pt-28">Create Plan </p>
-                <p class="f-16 text-center l-21"> You start by creating Plans first. Plans are your core offerings. You
-                    can have <br> multiple plans for different types of clients. Each plan will have sub offerings, also
+                <p class="f-16 text-center l-21"> You start by creating Plans first. Plans are your core offerings. You can have <br> multiple plans for different types of clients. Each plan will have sub offerings, also
                     <br> known as Services (explained in next slide). </p>
 
                 <button (click)="openFragment('','plan')" class="btn-primary d-flex align-items-center">
                     ADD PLAN </button>
+
             </div>
-
         </div>
-
-
-
-
     </div>
 </div>

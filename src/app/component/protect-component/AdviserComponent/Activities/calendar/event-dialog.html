@@ -1,0 +1,115 @@
+<div class="p-24">
+    <h1 mat-dialog-title class="m-0">Add New</h1>
+    <div mat-dialog-content class="p-24">
+        <form [formGroup]="eventForm">
+            <h5 class="m-0 text-black">Title</h5>
+            <div class="form-group">
+                <mat-form-field>
+                    <input matInput formControlName="title" class="form-control br-0">
+                </mat-form-field>
+            </div>
+            <h5 class="m-0 mb-2 text-black">Description</h5>
+            <app-froala [(model)]="eventData.description" modelChange="saveData($event)"></app-froala>
+
+            <h5 class="m-0 text-black" style="margin-top:-46px !important">Event address</h5>
+            <div class="form-group">
+                <mat-form-field>
+                    <textarea matInput rows="4" formControlName="location" class="form-control p-8"></textarea>
+                </mat-form-field>
+            </div>
+            <div class="pt-28">
+                <div class="date-wrapper">
+                    <div class="row">
+                        <div class="col-md-3 pl-0">
+                            <h5 class="m-0 f-12 
+                    text-black ">Start date</h5>
+                            <div class="form-group">
+                                <mat-form-field class="date-input">
+                                    <input (click)="picker.open()" (dateChange)="setEndDate()" readonly matInput formControlName="startDateTime" class="form-control"
+                                       [value]="this.eventData.start.dateTime == undefined ? startDate : this.eventData.start.dateTime" [min]="startDate" [matDatepicker]="picker">
+                                    <mat-datepicker-toggle matSuffix style="margin-top: -18px;" [for]="picker">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3 p-0" *ngIf="showTime">
+                            <div class="row pl-0">
+                                <div class="col-md-6 pl-0">
+                                    <mat-form-field class="form-group">
+                                        <h5 class="text-black f-12 " style="margin-bottom: 18px;">Start time</h5>
+                                        <!-- <mat-label>Start time</mat-label> -->
+                                        <select matNativeControl class="form-control" formControlName="startTime"
+                                            (change)="setTime('start')">
+                                            <option *ngFor="let time of timeArr" [value]="time">{{time}}</option>
+                                        </select>
+
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6 pl-0">
+                                    <mat-form-field class="form-group">
+                                        <h5 class="text-black f-12 " style="margin-bottom: 18px;">End time</h5>
+                                        <!-- <mat-label>End time</mat-label> -->
+                                        <select matNativeControl class="form-control" formControlName="endTime"
+                                            (change)="setTime('end')">
+                                            <option *ngFor="let time of timeArr" [value]="time"
+                                                [hidden]="eventForm.value.startTime > time"> {{time}} </option>
+                                        </select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 pr-0">
+                            <h5 class="m-0 text-black f-12">End date</h5>
+                            <div class="form-group">
+                                <mat-form-field class="date-input">
+                                    <input (click)="epicker.open()" readonly class="form-control" matInput formControlName="endDateTime"
+                                        [min]="eventForm.value.startDateTime._d == null?startDate : eventForm.value.startDateTime._d"
+                                        [matDatepicker]="epicker">
+                                    <mat-datepicker-toggle matSuffix style="margin-top: -18px;" [for]="epicker">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #epicker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3 pr-0 " style="margin-top: 27px;" *ngIf="!showTime">
+                            <button (click)="addTime()">Add Time</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h5 class="m-0 text-black">Attendee List </h5>
+            <div class="row pl-0">
+                <div class="col-md-10 pl-0 " >
+                    <div class="form-group" >
+                        <mat-form-field>
+                            <input matInput formControlName="attendee" class="form-control br-0 ">
+                            <mat-error *ngIf="eventForm.controls['attendee'].hasError('pattern')">Email is valid</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-2 pl-0 mt-8">
+                    <button type="button" [hidden]="eventForm.controls['attendee'].hasError('pattern') || this.eventForm.get('attendee').value == ''" mat-stroked-button class="btn-primary br-0 p-12 btn-sm m-n0" (click)="addAttendee()">
+                        <img src="/assets/images/svg/plus.svg"
+                    >
+                    </button>
+                </div>
+                <div class="col-md-10 pl-0 mt-8" *ngIf="attendeesArr.length > 0">
+                    <div class="row pl-0" *ngFor="let member of attendeesArr" >
+                        <div class="col-md-10 pl-0 " >
+                            {{member.email}}
+                        </div>
+                        <div class="col-md-2 pl-0 " >
+                            <img src="assets/images/svg/delete.svg" (click)="removeMember(member)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- <input matInput [(ngModel)]="data.animal"> -->
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">No Thanks</button>
+        <button mat-button [mat-dialog-close]="eventForm.value" cdkFocusInitial>Ok</button>
+    </div>
+</div>

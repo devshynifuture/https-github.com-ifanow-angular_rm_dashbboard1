@@ -34,6 +34,7 @@ export class AddSuperannuationComponent implements OnInit {
   isAssumedRateReturn = false
   isFirstDateContry = false
   clientId: any;
+  nomineesListFM: any;
 
   constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) { }
 
@@ -55,8 +56,12 @@ export class AddSuperannuationComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
-  Close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' })
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
+  }
+  Close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag })
   }
   showLess(value) {
     if (value == true) {
@@ -106,6 +111,9 @@ export class AddSuperannuationComponent implements OnInit {
     if (this.superannuation.get('employeeContry').invalid) {
       this.superannuation.get('employeeContry').markAsTouched();
       return;
+    } else if (this.superannuation.get('ownerName').invalid) {
+      this.superannuation.get('ownerName').markAsTouched();
+      return;
     } else if (this.superannuation.get('employerContry').invalid) {
       this.superannuation.get('employerContry').markAsTouched();
       return;
@@ -153,10 +161,10 @@ export class AddSuperannuationComponent implements OnInit {
   addSuperannuationRes(data) {
     console.log('addrecuringDepositRes', data)
     this.event.openSnackBar('Added successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ flag: 'addedSuperannuation', state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({ flag: 'addedSuperannuation', state: 'close', data,refreshRequired:true })
   }
   editSuperannuationRes(data) {
     this.event.openSnackBar('Updated successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ flag: 'addedSuperannuation', state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({ flag: 'addedSuperannuation', state: 'close', data,refreshRequired:true })
   }
 }

@@ -1,9 +1,9 @@
-import {Component, OnInit, Input} from '@angular/core';
-import {MatDialogRef} from '@angular/material';
-import {SubscriptionService} from '../../../subscription.service';
+import { Component, OnInit, Input } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
+import { SubscriptionService } from '../../../subscription.service';
 import * as _ from 'lodash';
-import {SubscriptionUpperSliderComponent} from '../upper-slider/subscription-upper-slider.component';
-import {EventService} from 'src/app/Data-service/event.service';
+import { SubscriptionUpperSliderComponent } from '../upper-slider/subscription-upper-slider.component';
+import { EventService } from 'src/app/Data-service/event.service';
 import { element } from 'protractor';
 
 @Component({
@@ -38,7 +38,7 @@ export class ModulesComponent implements OnInit {
   }
 
   dialogClose() {
-    this.eventService.changeUpperSliderState({state: 'close'});
+    this.eventService.changeUpperSliderState({ state: 'close' });
   }
 
   getModuleData() {
@@ -53,9 +53,8 @@ export class ModulesComponent implements OnInit {
   getModuleDataResponse(data) {
     console.log('Module data', data);
     this.ModuleData = data;
-    this.ModuleData.forEach(element=>{
-      if(element.selected==true)
-      {
+    this.ModuleData.forEach(element => {
+      if (element.selected == true) {
         this.mappedData.push(element)
       }
     })
@@ -83,9 +82,7 @@ export class ModulesComponent implements OnInit {
     const data = {
       serviceModuleMappingList: []
     };
-    if (this.mappedData.length == 0) {
-      this.eventService.openSnackBar("No Modules selected", "DISMISS");
-    } else {
+    if(this.mappedData.length!=0){
       this.mappedData.forEach(element => {
         const obj = {
           active: element.selected,
@@ -94,16 +91,27 @@ export class ModulesComponent implements OnInit {
         };
         data.serviceModuleMappingList.push(obj);
       });
-      this.subService.mapModuleToplanData(data).subscribe(
-        data => this.mapModuleToPlanResponse(data)
-      );
+    }else{
+      const obj = {
+        active:true,
+        serviceId: this.upperData.id,
+        subModuleId: 0
+      };
+      data.serviceModuleMappingList.push(obj);
     }
-
+    
+    this.subService.mapModuleToplanData(data).subscribe(
+      data => this.mapModuleToPlanResponse(data)
+    );
   }
 
   mapModuleToPlanResponse(data) {
     this.dialogClose();
     console.log('Module Map data', data);
-    this.eventService.openSnackBar('Module is mapped', 'OK');
+    if(this.mappedData.length!=0){
+      this.eventService.openSnackBar('Module is mapped', 'OK');
+    }else{
+      this.eventService.openSnackBar('No module is mapped', 'OK');
+    }
   }
 }

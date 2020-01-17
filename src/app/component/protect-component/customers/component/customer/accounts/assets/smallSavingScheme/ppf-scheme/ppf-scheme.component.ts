@@ -1,13 +1,13 @@
-import {AddPpfComponent} from './../common-component/add-ppf/add-ppf.component';
-import {Component, OnInit} from '@angular/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {CustomerService} from '../../../../customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatTableDataSource} from '@angular/material';
-import {ExcelService} from '../../../../excel.service';
+import { AddPpfComponent } from './../common-component/add-ppf/add-ppf.component';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatTableDataSource } from '@angular/material';
+import { ExcelService } from '../../../../excel.service';
 
 @Component({
   selector: 'app-ppf-scheme',
@@ -55,7 +55,7 @@ export class PPFSchemeComponent implements OnInit {
 
     } else {
       this.noData = 'No scheme found';
-      //this.dataSource.data = []
+      this.dataSource.data = []
     }
   }
   deleteModal(value, data) {
@@ -104,7 +104,7 @@ export class PPFSchemeComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
+        if (UtilService.isRefreshRequired(sideBarData)) {
           this.getPpfSchemeData();
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();

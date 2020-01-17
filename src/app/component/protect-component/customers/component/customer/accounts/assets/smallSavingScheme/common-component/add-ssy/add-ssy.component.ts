@@ -1,19 +1,19 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {MAT_DATE_FORMATS} from '@angular/material';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {CustomerService} from '../../../../../customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService} from 'src/app/services/util.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { MAT_DATE_FORMATS } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-ssy',
   templateUrl: './add-ssy.component.html',
   styleUrls: ['./add-ssy.component.scss'],
   providers: [
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ]
 })
 export class AddSsyComponent implements OnInit {
@@ -28,8 +28,12 @@ export class AddSsyComponent implements OnInit {
   editApi: any;
   transactionData: any;
   clientId: any;
+  nomineesListFM: any;
+  ssyData: any;
+  nomineesList: any;
+  nominees: any[];
 
-  constructor(public utils: UtilService,private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
+  constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
   @Input()
   set data(data) {
@@ -38,11 +42,19 @@ export class AddSsyComponent implements OnInit {
   }
   display(value) {
     console.log('value selected', value)
-    this.ownerName = value.userName;
+    this.ownerName = value;
     this.familyMemberId = value.id
+  }
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
   get data() {
     return this.inputData;
+  }
+  getFormDataNominee(data) {
+    console.log(data)
+    this.nomineesList = data.controls
   }
   getdataForm(data) {
     if (data == undefined) {
@@ -51,6 +63,7 @@ export class AddSsyComponent implements OnInit {
     else {
       this.editApi = data
     }
+    this.ssyData=data;
     this.ssySchemeForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
       guardian: [data.guardianName, [Validators.required]],
@@ -64,11 +77,10 @@ export class AddSsyComponent implements OnInit {
       description: [data.description],
       linkedAcc: [data.linkedBankAccount],
       bankName: [data.bankName],
-      nominee: [data.nomineeName],
+      nominees: this.nominees,
       agentName: [data.agentName]
     })
     this.ownerData = this.ssySchemeForm.controls;
-
   }
   ngOnInit() {
     this.clientId = AuthService.getClientId();
@@ -95,9 +107,25 @@ export class AddSsyComponent implements OnInit {
         finalTransctList.push(obj)
       });
     }
+    this.nominees = []
+    if (this.nomineesList) {
+
+      this.nomineesList.forEach(element => {
+        let obj = {
+          "name": element.controls.name.value,
+          "sharePercentage": element.controls.sharePercentage.value,
+          "id":element.id,
+          "familyMemberId":element.familyMemberId
+        }
+        this.nominees.push(obj)
+      });
+    }
     if (this.ssySchemeForm.get('guardian').invalid) {
       this.ssySchemeForm.get('guardian').markAsTouched();
       return
+    } else if (this.ssySchemeForm.get('ownerName').invalid) {
+      this.ssySchemeForm.get('ownerName').markAsTouched();
+      return;
     }
     else if (this.ssySchemeForm.get('accBalance').invalid) {
       this.ssySchemeForm.get('accBalance').markAsTouched();
@@ -124,7 +152,7 @@ export class AddSsyComponent implements OnInit {
         let obj = {
           "id": this.editApi.id,
           "familyMemberId": this.familyMemberId,
-          "ownerName": this.ownerName,
+          "ownerName":(this.ownerName == null) ? this.ssySchemeForm.controls.ownerName.value : this.ownerName,
           "accountBalance": this.ssySchemeForm.get('accBalance').value,
           "balanceAsOn": this.ssySchemeForm.get('balanceAsOn').value,
           "commencementDate": this.ssySchemeForm.get('commDate').value,
@@ -133,6 +161,7 @@ export class AddSsyComponent implements OnInit {
           "linkedBankAccount": this.ssySchemeOptionalForm.get('linkedAcc').value,
           "agentName": this.ssySchemeOptionalForm.get('agentName').value,
           "guardianName": this.ssySchemeForm.get('guardian').value,
+          "nominees":this.nominees
         }
         this.cusService.editSSYData(obj).subscribe(
           data => this.addSSYSchemeResponse(data),
@@ -145,7 +174,7 @@ export class AddSsyComponent implements OnInit {
           "clientId": this.clientId,
           "advisorId": this.advisorId,
           "familyMemberId": this.familyMemberId,
-          "ownerName": this.ownerName,
+          "ownerName": (this.ownerName == null) ? this.ssySchemeForm.controls.ownerName.value : this.ownerName,
           "accountBalance": this.ssySchemeForm.get('accBalance').value,
           "balanceAsOn": this.ssySchemeForm.get('balanceAsOn').value,
           "commencementDate": this.ssySchemeForm.get('commDate').value,
@@ -154,10 +183,10 @@ export class AddSsyComponent implements OnInit {
           "linkedBankAccount": this.ssySchemeOptionalForm.get('linkedAcc').value,
           "agentName": this.ssySchemeOptionalForm.get('agentName').value,
           "guardianName": this.ssySchemeForm.get('guardian').value,
+          "nominees": this.nominees,
           "ssyFutureContributionList": [{
             "futureApproxContribution": this.ssySchemeForm.get('futureAppx').value,
             "frequency": this.ssySchemeForm.get('futureAppx').value,
-            "nomineeName": this.ssySchemeOptionalForm.get('nominee').value
           }],
           "ssyTransactionList": finalTransctList
         }
@@ -171,11 +200,11 @@ export class AddSsyComponent implements OnInit {
   addSSYSchemeResponse(data) {
     (this.editApi) ? this.eventService.openSnackBar("SSY is edited", "dismiss") : this.eventService.openSnackBar("SSY is edited", "added")
     console.log(data)
-    this.close()
+    this.close(true)
   }
 
-  close() {
+  close(flag) {
     this.isOptionalField = true
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag });
   }
 }

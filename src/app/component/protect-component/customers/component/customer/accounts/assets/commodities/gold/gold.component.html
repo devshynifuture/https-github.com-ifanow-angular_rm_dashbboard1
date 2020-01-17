@@ -5,7 +5,7 @@
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle" (click)="Close()"> clear</i>
+                <i class="material-icons c-p pt-8 v-middle" (click)="Close(false)"> clear</i>
             </div>
         </div>
     </div>
@@ -18,7 +18,18 @@
             <p class="m-0 f-12 text-custom">In whose name is this asset</p>
         </div>
         <div class="col-md-5">
-            <app-owner-column (valueChange)='display($event)' [data]='ownerData'></app-owner-column>
+            <mat-form-field class="w-100">
+                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                    [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                    <mat-option value=''>Search family members</mat-option>
+                    <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
+                        <span>{{f.userName}}</span>
+                    </mat-option>
+                </mat-select>
+                <mat-error class="f-12 pt-4">
+                    This field is required
+                </mat-error>
+            </mat-form-field>
         </div>
     </div>
     <div class="row pt-24">
@@ -66,8 +77,8 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #noTolasGramsPur type="text" (keypress)="utils.keyPress($event)"
-                        maxlength="10" class="form-control br-0" formControlName="noTolasGramsPur">
+                    <input matInput #noTolasGramsPur type="text" (keypress)="utils.keyPress($event)" maxlength="10"
+                        class="form-control br-0" formControlName="noTolasGramsPur">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isNoTolasGramsPur && getFormControl().noTolasGramsPur.invalid || getFormControl().noTolasGramsPur.touched && getFormControl().noTolasGramsPur.invalid)}">
                         This field is required
@@ -83,7 +94,8 @@
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <input matInput formControlName="balanceAsOn" class="form-control br-0" [matDatepicker]="picker" readonly>
+                <input matInput formControlName="balanceAsOn" class="form-control br-0" [matDatepicker]="picker"
+                    readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error class="f-12 pt-4"
@@ -101,9 +113,10 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput type="text" (keypress)="utils.keyPress($event)"
-                        class="form-control br-0 " formControlName="tenure">
-                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isPurchaseYear && getFormControl().tenure.invalid || getFormControl().tenure.touched && getFormControl().tenure.invalid)}">
+                    <input matInput type="text" (keypress)="utils.keyPress($event)" class="form-control br-0 "
+                        formControlName="tenure">
+                    <mat-error class="f-12 pt-4"
+                        [ngClass]="{'v-h':!(isPurchaseYear && getFormControl().tenure.invalid || getFormControl().tenure.touched && getFormControl().tenure.invalid)}">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -131,75 +144,75 @@
             </div>
         </div>
     </div>
-        <!-- <div class="col-md-5 text-right" *ngIf="showHide == true">
+    <!-- <div class="col-md-5 text-right" *ngIf="showHide == true">
             <h5 class="m-0 pt-8 text-custom c-p" (click)="showLess(showHide)">Show less</h5>
         </div> -->
+    <div class="row pt-40">
+        <div class="col-md-5 text-right" *ngIf="showHide == true">
+            <h5 class="m-0 pt-8 text-custom c-p" (click)="showLess(showHide)">Show less</h5>
+        </div>
+        <div class="col-md-5 text-right" *ngIf="showHide == false">
+            <h5 class="m-0 pt-8 text-custom c-p" (click)="showLess(showHide)">+ Add more [optional data] </h5>
+        </div>
+        <div class="col-md-5">
+
+        </div>
+    </div>
+    <div *ngIf="showHide == true">
         <div class="row pt-40">
-                <div class="col-md-5 text-right" *ngIf="showHide == true">
-                    <h5 class="m-0 pt-8 text-custom c-p" (click)="showLess(showHide)">Show less</h5>
-                </div>
-                <div class="col-md-5 text-right" *ngIf="showHide == false">
-                    <h5 class="m-0 pt-8 text-custom c-p" (click)="showLess(showHide)">+ Add more [optional data] </h5>
-                </div>
-                <div class="col-md-5">
-        
-                </div>
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8">Market value</h5>
             </div>
-        <div *ngIf="showHide == true">
-            <div class="row pt-40">
-                <div class="col-md-5 pr-0 text-right">
-                    <h5 class="m-0 pt-8">Market value</h5>
-                </div>
-                <div class="col-md-5">
-                    <div class="form-group mb-0">
-                        <mat-form-field>
-                            <input matInput #marketValue type="text" (keypress)="utils.keyPress($event)"
-                                maxlength="10" class="form-control br-0" formControlName="marketValue">
-                            <mat-hint align="start" class="f-12">Optional</mat-hint>
-                            <mat-hint align="end" class="f-12">{{marketValue.value.length}}/10</mat-hint>
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div>
-            <div class="row pt-40">
-                <div class="col-md-5 pr-0 text-right">
-                    <h5 class="m-0 pt-8">Bank account number</h5>
-                </div>
-                <div class="col-md-5">
-                    <div class="form-group mb-0">
-                        <mat-form-field>
-                            <input matInput #bankAcNo type="text" (keypress)="utils.keyPress($event)"
-                                maxlength="16" class="form-control br-0" formControlName="bankAcNo">
-                            <mat-hint align="start" class="f-12">Optional</mat-hint>
-                            <mat-hint align="end" class="f-12">{{bankAcNo.value.length}}/16</mat-hint>
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row pt-40">
-                <div class="col-md-5 pr-0 text-right">
-                    <h5 class="m-0 pt-8">Description</h5>
-                </div>
-                <div class="col-md-5">
-                    <div class="form-group mb-0">
-                        <mat-form-field>
-                            <input matInput #description
-                                maxlength="60" class="form-control br-0" formControlName="description">
-                            <mat-hint align="start" class="f-12">Optional</mat-hint>
-                            <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
-                        </mat-form-field>
-                    </div>
-
+            <div class="col-md-5">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input matInput #marketValue type="text" (keypress)="utils.keyPress($event)" maxlength="10"
+                            class="form-control br-0" formControlName="marketValue">
+                        <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="end" class="f-12">{{marketValue.value.length}}/10</mat-hint>
+                    </mat-form-field>
                 </div>
             </div>
         </div>
+        <div class="row pt-40">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8">Bank account number</h5>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input matInput #bankAcNo type="text" (keypress)="utils.keyPress($event)" maxlength="16"
+                            class="form-control br-0" formControlName="bankAcNo">
+                        <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="end" class="f-12">{{bankAcNo.value.length}}/16</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pt-40">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8">Description</h5>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input matInput #description maxlength="60" class="form-control br-0"
+                            formControlName="description">
+                        <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
+                    </mat-form-field>
+                </div>
+
+            </div>
+        </div>
     </div>
+</div>
 
 <div class="bottom-fixed wrapper-12 pt-16">
     <div class="row">
         <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
             <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveGold()">Save</button>

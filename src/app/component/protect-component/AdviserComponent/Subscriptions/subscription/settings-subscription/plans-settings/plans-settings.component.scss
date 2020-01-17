@@ -1,30 +1,32 @@
 h2 {
-  color: #3F3F3F;
-  text-align: center;
-  padding: 16px 12px;
-  font-family: "Playfair Display";
-  letter-spacing: 0.2px;
-  line-height: 32px;
+    color: #3F3F3F;
+    text-align: center;
+    padding: 16px 12px;
+    font-family: "Playfair Display";
+    letter-spacing: 0.2px;
+    line-height: 32px;
 }
 
 h3 {
-  font-family: "Playfair Display";
-  letter-spacing: 0.2px;
-  line-height: 32px;
+    font-family: "Playfair Display";
+    letter-spacing: 0.2px;
+    line-height: 32px;
 }
 
 .padder-80 {
-  padding-right: 80px;
-  padding-left: 80px;
+    padding-right: 80px;
+    padding-left: 80px;
 }
 
-
+.height23 {
+    height: 23px;
+}
 
 // p{
 //     margin-bottom: 0;
 // }
 h3 p {
-  color: #757575;
+    color: #757575;
 }
 
 // .button-fix {
@@ -35,46 +37,46 @@ h3 p {
 //     z-index: 2;
 // }
 .btn-primary {
-  border-radius: 0px !important;
+    border-radius: 0px !important;
 }
 
 .material-icons {
-  line-height: .7;
+    line-height: .7;
 }
 
 .content {
-  position: relative;
-  right: 20%;
+    position: relative;
+    right: 20%;
 }
 
 .box {
-  box-sizing: border-box;
-  border-radius: 4px;
+    box-sizing: border-box;
+    border-radius: 4px;
 }
 
 label {
-  background: #004164;
-  border-radius: 4px;
-  letter-spacing: 0.2px;
-  color: #FFFFFF;
-  font-family: "Proxima Nova", sans-serif;
-  font-size: 14px;
-  line-height: 17px;
-  display: inline-block;
-  min-width: 10px;
-  padding: 3px 10px;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: baseline;
+    background: #004164;
+    border-radius: 4px;
+    letter-spacing: 0.2px;
+    color: #FFFFFF;
+    font-family: "Proxima Nova", sans-serif;
+    font-size: 14px;
+    line-height: 17px;
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 10px;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
 }
 
 .done-icons {
-  background: #02B875;
-  padding: 0px 0px 4px 4px;
-  color: #fff;
-  float: right;
-  text-align: right;
-  line-height: .9;
+    background: #02B875;
+    padding: 0px 0px 4px 4px;
+    color: #fff;
+    float: right;
+    text-align: right;
+    line-height: .9;
 }
 
 
@@ -99,65 +101,74 @@ label {
 
 //@import "compass/css3";
 @mixin transition($transition...) {
-  -moz-transition: $transition;
-  -o-transition: $transition;
-  -webkit-transition: $transition;
-  transition: $transition;
+    -moz-transition: $transition;
+    -o-transition: $transition;
+    -webkit-transition: $transition;
+    transition: $transition;
 }
 
 @mixin transition-property($property...) {
-  -moz-transition-property: $property;
-  -o-transition-property: $property;
-  -webkit-transition-property: $property;
-  transition-property: $property;
+    -moz-transition-property: $property;
+    -o-transition-property: $property;
+    -webkit-transition-property: $property;
+    transition-property: $property;
 }
 
 @mixin transition-duration($duration...) {
-  -moz-transition-property: $duration;
-  -o-transition-property: $duration;
-  -webkit-transition-property: $duration;
-  transition-property: $duration;
+    -moz-transition-property: $duration;
+    -o-transition-property: $duration;
+    -webkit-transition-property: $duration;
+    transition-property: $duration;
 }
 
 @mixin transition-timing-function($timing...) {
-  -moz-transition-timing-function: $timing;
-  -o-transition-timing-function: $timing;
-  -webkit-transition-timing-function: $timing;
-  transition-timing-function: $timing;
+    -moz-transition-timing-function: $timing;
+    -o-transition-timing-function: $timing;
+    -webkit-transition-timing-function: $timing;
+    transition-timing-function: $timing;
 }
 
 @mixin transition-delay($delay...) {
-  -moz-transition-delay: $delay;
-  -o-transition-delay: $delay;
-  -webkit-transition-delay: $delay;
-  transition-delay: $delay;
+    -moz-transition-delay: $delay;
+    -o-transition-delay: $delay;
+    -webkit-transition-delay: $delay;
+    transition-delay: $delay;
 }
 
 a {
-  color: blue;
-  display: inline-block;
-  padding: 10px;
-  text-decoration: none;
-  background-color: orange;
-  border-radius: 4px;
-  @include transition(background-color 1s .5s, color 2s);
+    color: blue;
+    display: inline-block;
+    padding: 10px;
+    text-decoration: none;
+    background-color: orange;
+    border-radius: 4px;
+    @include transition(background-color 1s .5s, color 2s);
 }
 
 a:hover {
-  color: red;
-  background-color: blue;
+    color: red;
+    background-color: blue;
 }
 
 .mat-card-actions {
-  height: 20%;
+    height: 20%;
 }
 
 // ::ng-deep .mat-card:not([class*=mat-elevation-z]){
 //     box-shadow: none !important;
 // }
 .matCardTitleBox {
-  width: 250px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.width100per {
+    width: 100%;
+}
+
+.paddTopBottom18 {
+    padding-top: 18px;
+    padding-bottom: 18px;
 }

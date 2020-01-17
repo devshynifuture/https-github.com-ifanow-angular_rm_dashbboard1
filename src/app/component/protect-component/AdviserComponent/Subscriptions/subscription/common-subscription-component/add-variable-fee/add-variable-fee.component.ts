@@ -1,13 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionService } from '../../../subscription.service';
 import { EnumServiceService } from '../../../../../../../services/enum-service.service';
-import * as _ from 'lodash';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from "../../../../../../../auth-service/authService";
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-add-variable-fee',
@@ -32,11 +30,11 @@ export class AddVariableFeeComponent implements OnInit {
   dataToSend: any;
   data: any;
   restrictMoreThan100Val;
-
+  @ViewChild('htmlTag', { static: true }) htmltag: ElementRef
   @Input() set variableFee(data) {
     if (data == "") {
       // this.otherAssetData=UtilService.
-      this.otherAssetData = this.enumService.getOtherAssetData();
+      this.otherAssetData = Object.assign([], this.enumService.getOtherAssetData());
       return;
     }
     else {
@@ -56,7 +54,9 @@ export class AddVariableFeeComponent implements OnInit {
     this.setValidation(false);
     (this.ischeckVariableData) ? console.log("fixed fee Data") : this.createVariableFeeForm('');
   }
-
+  ngAfterViewInit() {
+    console.log(this.htmltag)
+  }
   restrictFrom100(event) {
     if (parseInt(event.target.value) > 100) {
       event.target.value = 100;
@@ -252,8 +252,6 @@ export class AddVariableFeeComponent implements OnInit {
 
   unselectAssets(data) {
     data.isActive = 0;
-    _.remove(this.selectedOtherAssets, function (delData) {
-      return delData.subAssetClassId == data.subAssetClassId;
-    });
+    this.selectedOtherAssets = this.selectedOtherAssets.filter(delData => delData != data.subAssetClassId);
   }
 }

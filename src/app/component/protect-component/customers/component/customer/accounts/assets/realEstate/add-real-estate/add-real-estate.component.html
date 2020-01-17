@@ -5,7 +5,7 @@
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
-                <i (click)="close()" class="material-icons c-p pt-8 v-middle"> clear</i>
+                <i (click)="close(false)" class="material-icons c-p pt-8 v-middle"> clear</i>
             </div>
         </div>
     </div>
@@ -19,8 +19,18 @@
 
         <div class="col-md-3 pr-0">
 
-            <app-owner-column (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData'>
-            </app-owner-column>
+             <mat-form-field class="w-100">
+                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                    [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                    <mat-option value=''>Search family members</mat-option>
+                    <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
+                        <span>{{f.userName}}</span>
+                    </mat-option>
+                </mat-select>
+                <mat-error class="f-12 pt-4">
+                    This field is required
+                </mat-error>
+            </mat-form-field>
         </div>
 
         <div class="col-md-2">
@@ -30,7 +40,7 @@
                         (keyup)="onChange('owner')">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isOwnerPercent && getFormControl().ownerPercent.invalid || getFormControl().ownerPercent.touched && getFormControl().ownerPercent.invalid)}">
-                        Type is required
+                        This feild is required
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -65,7 +75,7 @@
                         <input matInput class="form-control br-0" type="number" formControlName="ownershipPerc"
                             (keyup)="onChange('owner')">
                         <mat-error class="f-12 pt-4">
-                            Type is required
+                            This feild is required
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -98,7 +108,7 @@
                     </mat-select>
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isTypeValid && getFormControl().type.invalid || getFormControl().type.touched && getFormControl().type.invalid)}">
-                        Type is required
+                        This feild is required
                     </mat-error>
                 </mat-form-field>
 
@@ -119,7 +129,7 @@
                         (keypress)="utils.keyPress($event)" formControlName="marketValue" maxlength="10">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isMvValid && getFormControl().marketValue.invalid || getFormControl().marketValue.touched && getFormControl().marketValue.invalid)}">
-                        Market value is required
+                        This feild is required
                         <!-- [ngClass]="{'v-h':!(isLoanAmount && getFormControl().marketValue.invalid || getFormControl().marketValue.touched && getFormControl().marketValue.invalid)}" -->
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{marketValue.value.length}}/10</mat-hint>
@@ -384,7 +394,7 @@
     <div class="bottom-fixed wrapper-12 pt-16">
         <div class="row">
             <div class="col-md-4">
-                <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
+                <h5 class="mb-0 pt-8 text-white c-p" (click)="close(false)">Cancel</h5>
             </div>
             <div class="col-md-8 right text-right">
                 <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveFormData()">Save</button>

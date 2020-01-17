@@ -6,7 +6,7 @@
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle" (click)="Close()"> clear</i>
+                <i class="material-icons c-p pt-8 v-middle" (click)="Close(false)"> clear</i>
             </div>
         </div>
     </div>
@@ -18,7 +18,18 @@
             <p class="m-0 f-12 text-custom">In whose name is this asset</p>
         </div>
         <div class="col-md-5">
-            <app-owner-column (valueChange)='display($event)' [data]='ownerData'></app-owner-column>
+            <mat-form-field class="w-100">
+                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                    [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                    <mat-option value=''>Search family members</mat-option>
+                    <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
+                        <span>{{f.userName}}</span>
+                    </mat-option>
+                </mat-select>
+                <mat-error class="f-12 pt-4">
+                    This field is required
+                </mat-error>
+            </mat-form-field>
         </div>
     </div>
     <div class="row pt-40">
@@ -28,7 +39,7 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #bondName type="text" (keypress)="utils.onlyText($event)" maxlength="50"
+                    <input matInput #bondName type="text" (keypress)="onlyTextNotSplChar($event)" maxlength="50"
                         class="form-control br-0" formControlName="bondName">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isBondName && getFormControl().bondName.invalid || getFormControl().bondName.touched && getFormControl().bondName.invalid)}">
@@ -249,7 +260,7 @@
 <div class="bottom-fixed wrapper-12 pt-16">
     <div class="row">
         <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
             <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveBonds()">Save</button>

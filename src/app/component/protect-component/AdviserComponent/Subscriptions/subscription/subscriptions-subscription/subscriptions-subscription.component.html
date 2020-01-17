@@ -107,9 +107,14 @@
                 <ng-container matColumnDef="amt">
                     <th *matHeaderCellDef class="f-18 t-10" mat-header-cell> Fee amount</th>
 
-                    <td (click)="openFeeEditor(element)" *matCellDef="let element"
-                        class="c-p t-10 text-primary text-underline" mat-cell>
-                        <div class="bar"> {{isLoading?' ': 'View details'}} </div>
+                    <td *matCellDef="let element" class="c-p t-10 " mat-cell>
+                        <div (click)="openFeeEditor(element)" *ngIf="element.startsOn==undefined"
+                            class="bar text-primary text-underline">
+                            {{isLoading?' ': 'View details'}} </div>
+                        <div *ngIf="element.startsOn && element.subscriptionPricing.feeTypeId==1">
+                            {{element.subscriptionPricing.subscriptionAssetPricingList[0].pricing}}</div>
+                        <div *ngIf="element.startsOn && element.subscriptionPricing.feeTypeId==2">
+                            {{element.subscriptionPricing.subscriptionAssetPricingList[2].pricing}}</div>
                     </td>
                 </ng-container>
 
@@ -139,10 +144,13 @@
                     <th *matHeaderCellDef class="f-18 t-6" mat-header-cell mat-sort-header="startsOn"> Activation date
                     </th>
                     <td *matCellDef="let element" mat-cell>
-                        <div *ngIf="element.status!=1" class="text-left"> {{element.startsOn | date:'dd/MM/yyyy'}}</div>
-                        <div (click)="openPlanSlider('createSub','open',element)" *ngIf="element.status==1">
-                            <button class="btn-header btn-xs ml-8 br-0 btn-sm c-p" mat-stroked-button>START
-                            </button>
+                        <div class="bar">
+                            <div *ngIf="element.status!=1" class="text-left"> {{element.startsOn | date:'dd/MM/yyyy'}}
+                            </div>
+                            <div (click)="openPlanSlider('createSub','open',element)" *ngIf="element.status==1">
+                                <button class="btn-header btn-xs ml-8 br-0 btn-sm c-p" mat-stroked-button>START
+                                </button>
+                            </div>
                         </div>
                         <!-- <div (click)="openPlanSlider('createSub','open',element)">
                       <button class="btn-header btn-xs ml-8 br-0 btn-sm" mat-stroked-button>START
@@ -172,13 +180,15 @@
                     <th mat-sort-header="subscriptionPricing.feeTypeId" *matHeaderCellDef
                         class="f-18 text-right pr-24 t-12" mat-header-cell> Fee mode</th>
                     <td *matCellDef="let element" class="text-right pr-8 t-12" mat-cell>
-                        <span *ngIf="element.subscriptionPricing">
-                            <span class="t-10">
-                                {{ getFeeTypeName(element.subscriptionPricing.feeTypeId) }}
-                            </span>
-                            <!-- <span class="t-10" *ngIf="element.subscriptionPricing.feeTypeId==1">FIXED</span>
+                        <div class="bar">
+                            <span *ngIf="element.subscriptionPricing">
+                                <span class="t-10">
+                                    {{ getFeeTypeName(element.subscriptionPricing.feeTypeId) }}
+                                </span>
+                                <!-- <span class="t-10" *ngIf="element.subscriptionPricing.feeTypeId==1">FIXED</span>
                         <span class="t-10" *ngIf="element.subscriptionPricing.feeTypeId==2">VARIABLE</span> -->
-                        </span>
+                            </span>
+                        </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="icons">
@@ -188,7 +198,8 @@
                             more_vert
                         </i>
                         <mat-menu #menu="matMenu">
-                            <a (click)="openFeeEditor(element)" mat-menu-item>View & edit fee structure</a>
+                            <a (click)="openFeeEditor(element)" *ngIf="element.startsOn==undefined" mat-menu-item>View &
+                                edit fee structure</a>
                             <a (click)="openPlanSlider('billerSettings','open',element)" class="bt-1"
                                 mat-menu-item>Change
                                 biller</a>

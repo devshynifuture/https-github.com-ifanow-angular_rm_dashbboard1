@@ -1,22 +1,22 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from '../../subscription-inject.service';
-import {MAT_DATE_FORMATS, MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {DeleteSubscriptionComponent} from '../common-subscription-component/delete-subscription/delete-subscription.component';
-import {SubscriptionService} from '../../subscription.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {AuthService} from '../../../../../../auth-service/authService';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from '../../subscription-inject.service';
+import { MAT_DATE_FORMATS, MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { DeleteSubscriptionComponent } from '../common-subscription-component/delete-subscription/delete-subscription.component';
+import { SubscriptionService } from '../../subscription.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { AuthService } from '../../../../../../auth-service/authService';
 import * as _ from 'lodash';
-import {EnumServiceService} from '../../../../../../services/enum-service.service';
-import {UtilService} from '../../../../../../services/util.service';
-import {DatePipe} from '@angular/common';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {FixedFeeComponent} from '../common-subscription-component/fixed-fee/fixed-fee.component';
-import {VariableFeeComponent} from '../common-subscription-component/variable-fee/variable-fee.component';
-import {CreateSubscriptionComponent} from '../common-subscription-component/create-subscription/create-subscription.component';
-import {BillerSettingsComponent} from '../common-subscription-component/biller-settings/biller-settings.component';
-import {InvoiceHistoryComponent} from '../common-subscription-component/invoice-history/invoice-history.component';
-import {ChangePayeeComponent} from '../common-subscription-component/change-payee/change-payee.component';
+import { EnumServiceService } from '../../../../../../services/enum-service.service';
+import { UtilService } from '../../../../../../services/util.service';
+import { DatePipe } from '@angular/common';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { FixedFeeComponent } from '../common-subscription-component/fixed-fee/fixed-fee.component';
+import { VariableFeeComponent } from '../common-subscription-component/variable-fee/variable-fee.component';
+import { CreateSubscriptionComponent } from '../common-subscription-component/create-subscription/create-subscription.component';
+import { BillerSettingsComponent } from '../common-subscription-component/biller-settings/biller-settings.component';
+import { InvoiceHistoryComponent } from '../common-subscription-component/invoice-history/invoice-history.component';
+import { ChangePayeeComponent } from '../common-subscription-component/change-payee/change-payee.component';
 
 // declare var window
 // export const MY_FORMATS = {
@@ -29,7 +29,7 @@ import {ChangePayeeComponent} from '../common-subscription-component/change-paye
 //     dateA11yLabel: 'LL',
 //     monthYearA11yLabel: 'MMMM YYYY',
 //   },
-// };
+// }; 
 // export const APP_DATE_FORMATS = {
 //   parse: {
 //     dateInput: {month: 'short', year: 'numeric', day: 'numeric'},
@@ -278,11 +278,12 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isRefreshRequired(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          rightSideDataSub.unsubscribe();
           setTimeout(() => {
+            this.lastDataId = 0;
             this.getSummaryDataAdvisor(false);
           }, 1000);
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
         }
       }
     );
@@ -373,7 +374,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result,this.dataSource.data,"delete result");
+      console.log(result, this.dataSource.data, "delete result");
       const tempList = []
       this.dataSource.data.forEach(singleElement => {
         if (singleElement.id != result.id) {
@@ -382,7 +383,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       });
       this.dataSource.data = tempList;
 
-     
+
     });
   }
 

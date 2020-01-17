@@ -12,6 +12,7 @@ export class DetailedPoSavingsComponent implements OnInit {
   constructor(public utils: UtilService,private subInjectService: SubscriptionInject) { }
   data;
   ngOnInit() {
+    
   }
 
 

@@ -51,6 +51,7 @@ export class RecuringDepositComponent implements OnInit {
   ownerData: any;
   familyMemberId: any;
   clientId: any;
+  nomineesListFM: any;
 
   constructor(private event: EventService, private fb: FormBuilder, private custumService: CustomerService,
     public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) {
@@ -76,8 +77,8 @@ export class RecuringDepositComponent implements OnInit {
 
 
 
-  Close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' })
+  Close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' ,refreshRequired:flag})
   }
 
   display(value) {
@@ -85,7 +86,10 @@ export class RecuringDepositComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
-
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
+  }
   keyPressRdNumber(event: any) {
     var k = event.keyCode;
     return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 45 || k == 47 || k == 8 || (k >= 48 && k <= 57));
@@ -143,7 +147,8 @@ export class RecuringDepositComponent implements OnInit {
   }
 
   saveRecuringDeposit() {
-
+    this.tenure = this.getDateYMD()
+    this.maturityDate = this.tenure
     if (this.recuringDeposit.get('monthlyContribution').invalid) {
       this.recuringDeposit.get('monthlyContribution').markAsTouched();
       this.isMonthlyContribution = true;
@@ -162,8 +167,6 @@ export class RecuringDepositComponent implements OnInit {
       return;
     } else if (this.recuringDeposit.get('tenure').invalid) {
       this.recuringDeposit.get('tenure').markAsTouched();
-      this.tenure = this.getDateYMD()
-      this.maturityDate = this.tenure
       return;
     } else if (this.recuringDeposit.get('ownerType').invalid) {
       this.recuringDeposit.get('ownerType').markAsTouched();
@@ -214,11 +217,11 @@ export class RecuringDepositComponent implements OnInit {
   addrecuringDepositRes(data) {
     console.log('addrecuringDepositRes', data)
     this.event.openSnackBar('Added successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data ,refreshRequired:true})
   }
 
   editrecuringDepositRes(data) {
     this.event.openSnackBar('Updated successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data ,refreshRequired:true})
   }
 }

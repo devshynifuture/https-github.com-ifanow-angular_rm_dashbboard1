@@ -7,6 +7,7 @@ import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-bank-accounts',
@@ -31,8 +32,9 @@ export class BankAccountsComponent implements OnInit {
   showHide = false;
   advisorId: any;
   clientId: any;
+  nomineesListFM: any;
 
-  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public utils: UtilService) { }
+  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public utils: UtilService,public eventService:EventService) { }
 
   @Input()
   set data(data) {
@@ -54,6 +56,10 @@ export class BankAccountsComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
+  }
   showLess(value) {
     if (value == true) {
       this.showHide = false;
@@ -61,8 +67,8 @@ export class BankAccountsComponent implements OnInit {
       this.showHide = true;
     }
   }
-  Close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' })
+  Close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag })
   }
   getdataForm(data) {
     if (data == undefined) {
@@ -99,6 +105,9 @@ export class BankAccountsComponent implements OnInit {
     if (this.bankAccounts.get('accountType').invalid) {
       this.bankAccounts.get('accountType').markAsTouched();
       return;
+    } else if (this.bankAccounts.get('ownerName').invalid) {
+      this.bankAccounts.get('ownerName').markAsTouched();
+      return
     } else if (this.bankAccounts.get('accountBalance').invalid) {
       this.bankAccounts.get('accountBalance').markAsTouched();
       return;
@@ -123,7 +132,7 @@ export class BankAccountsComponent implements OnInit {
         interestCompounding: this.bankAccounts.controls.compound.value,
         interestRate: this.bankAccounts.controls.interestRate.value,
         accountBalance:this.bankAccounts.controls.accountBalance.value,
-        bankAccountNumber: this.bankAccounts.controls.bankAcNo.value,
+        accountNo: this.bankAccounts.controls.bankAcNo.value,
         description: this.bankAccounts.controls.description.value,
         id: this.bankAccounts.controls.id.value
       }
@@ -141,9 +150,13 @@ export class BankAccountsComponent implements OnInit {
   }
   addBankAccountsRes(data) {
     console.log('addrecuringDepositRes', data)
-    this.subInjectService.changeNewRightSliderState({flag:'addedbankAc', state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({flag:'addedbankAc', state: 'close', data,refreshRequired:true })
+    this.eventService.openSnackBar('Bank account added successfully', 'OK');
+
   }
   editBankAcountsRes(data) {
-    this.subInjectService.changeNewRightSliderState({flag:'addedbankAc', state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({flag:'addedbankAc', state: 'close', data,refreshRequired:true })
+    this.eventService.openSnackBar('Bank account edited successfully', 'OK');
+
   }
 }

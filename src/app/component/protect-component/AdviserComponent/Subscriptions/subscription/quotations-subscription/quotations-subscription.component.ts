@@ -39,12 +39,12 @@ export interface PeriodicElement {
     // },
     // { provide: MAT_DATE_LOCALE, useValue: 'en' },
     [DatePipe],
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
   ],
 })
 export class QuotationsSubscriptionComponent implements OnInit {
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-  displayedColumns: string[] = ['checkbox','name', 'docname', 'plan', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  displayedColumns: string[] = ['checkbox', 'name', 'docname', 'plan', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
   advisorId;
   maxDate = new Date();
   noData: string;
@@ -74,20 +74,20 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
 
   chips = [
-    { name: 'LIVE', value: 1 },
-    { name: 'PAID', value: 2 },
-    { name: 'OVERDUE', value: 3 }
+    {name: 'LIVE', value: 1},
+    {name: 'PAID', value: 2},
+    {name: 'OVERDUE', value: 3}
   ];
   dateChips = [
-    { name: 'Created date', value: 1 },
-    { name: 'Sent date', value: 2 },
-    { name: 'Client consent', value: 3 }
+    {name: 'Created date', value: 1},
+    {name: 'Sent date', value: 2},
+    {name: 'Client consent', value: 3}
   ];
   dataCount: number;
 
 
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
-    public dialog: MatDialog, private subService: SubscriptionService, private datePipe: DatePipe) {
+              public dialog: MatDialog, private subService: SubscriptionService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
@@ -96,15 +96,17 @@ export class QuotationsSubscriptionComponent implements OnInit {
     this.getQuotationsData(false);
     this.dataCount = 0;
   }
+
   changeSelect() {
     this.dataCount = 0;
     this.dataSource.filteredData.forEach(item => {
-      console.log('item item ', item);
+      // console.log('item item ', item);
       if (item.selected) {
         this.dataCount++;
       }
     });
   }
+
   selectAll(event) {
     this.dataCount = 0;
     if (this.dataSource != undefined) {
@@ -116,18 +118,20 @@ export class QuotationsSubscriptionComponent implements OnInit {
       });
     }
   }
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    if (this.dataSource != undefined) {
-      return this.dataCount === this.dataSource.filteredData.length;
-    }
-  }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-      this.selectAll({checked: false}) : this.selectAll({checked: true});
-  }
+  /** Whether the number of selected elements matches the total number of rows. */
+  // isAllSelected() {
+  //   if (this.dataSource != undefined) {
+  //     return this.dataCount === this.dataSource.filteredData.length;
+  //   }
+  // }
+
+  // /** Selects all rows if they are not all selected; otherwise clear selection. */
+  // masterToggle() {
+  //   this.isAllSelected() ?
+  //     this.selectAll({checked: false}) : this.selectAll({checked: true});
+  // }
+
   scrollCall(scrollLoader) {
     const uisubs = document.getElementById('ui-subs');
     const wrapper = document.getElementById('wrapper');
@@ -167,11 +171,12 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate)
-    this.selectedDateRange = { begin: selectedDateRange.begin, end: selectedDateRange.end };
+    this.selectedDateRange = {begin: selectedDateRange.begin, end: selectedDateRange.end};
     this.getQuotationsData(false)
   }
 
   getQuotationsData(scrollLoader) {
+    this.dataCount = 0;
     const obj = {
       // advisorId: 12345
       advisorId: this.advisorId,
@@ -216,16 +221,16 @@ export class QuotationsSubscriptionComponent implements OnInit {
   }
 
   deleteModal(data) {
-    let list = [];
+    this.list = [];
     if(data == null){
       this.dataSource.filteredData.forEach(singleElement => {
         if (singleElement.selected) {
-          list.push(singleElement.documentRepositoryId);
+          this.list.push(singleElement.documentRepositoryId);
         }
       });
     }
     else{
-      [data.documentRepositoryId]
+     this.list = [data.documentRepositoryId];
     }
     const dialogData = {
       data: 'DOCUMENT',
@@ -235,17 +240,18 @@ export class QuotationsSubscriptionComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.subService.deleteSettingsDocument(list).subscribe(
+        this.subService.deleteSettingsDocument(this.list).subscribe(
           data => {
             this.eventService.openSnackBar('document is deleted', 'dismiss');
             // this.valueChange.emit('close');
-            dialogRef.close();
+            dialogRef.close(this.list);
             // this.getRealEstate();
           },
           error => this.eventService.showErrorMessage(error)
         );
       },
       negativeMethod: () => {
+        this.list = []
         console.log('2222222222222222222222222222222222222');
       }
     };
@@ -259,17 +265,16 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result,this.dataSource.data,"delete result");
-      const tempList = []
-      this.dataSource.data.forEach(singleElement => {
-        if (!singleElement.selected) {
-          tempList.push(singleElement);
-        }
-      });
-      this.dataSource.data = tempList;
-
-     
+      if(this.list.length > 0){
+        const tempList = []
+        this.dataSource.data.forEach(singleElement => {
+          if (!singleElement.selected) {
+            tempList.push(singleElement);
+          }
+        });
+        this.dataSource.data = tempList;
+      }
     });
-
   }
 
   showFilters(showFilter) {
@@ -286,12 +291,11 @@ export class QuotationsSubscriptionComponent implements OnInit {
     console.log('addFilters', addFilters);
     if (!_.includes(this.filterStatus, addFilters)) {
       this.filterStatus.push(addFilters);
-      this.getQuotationsData(false)
+      this.getQuotationsData(false);
     } else {
       // _.remove(this.filterStatus, this.senddataTo);
     }
   }
-
 
 
   filterSubscriptionRes(data) {
@@ -305,7 +309,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     if (this.filterDate.length >= 1) {
       this.filterDate = []
     }
-    this.filterDate.push((dateFilter == "1: Object") ? 1 : (dateFilter == "2: Object") ? 2 : 3);
+    this.filterDate.push(dateFilter.value);
     const beginDate = new Date();
     beginDate.setMonth(beginDate.getMonth() - 1);
     UtilService.getStartOfTheDay(beginDate);
@@ -313,7 +317,9 @@ export class QuotationsSubscriptionComponent implements OnInit {
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
 
-    this.selectedDateRange = { begin: beginDate, end: endDate };
+    this.selectedDateRange = {begin: beginDate, end: endDate};
+
+    this.getQuotationsData(false);
   }
 
   openPopup(data) {
@@ -327,8 +333,8 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
     });
     dialogRef.afterClosed().subscribe(result => {
-      
-      
+
+
     });
   }
 

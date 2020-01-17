@@ -6,7 +6,7 @@
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
+                <i class="material-icons c-p pt-8 v-middle" (click)="close(false)"> clear</i>
             </div>
         </div>
     </div>
@@ -19,9 +19,18 @@
                 <p class="m-0 f-12 text-custom">In whose name is this asset</p>
             </div>
             <div class="col-md-5">
-                <app-owner-column (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
-                    [data]='ownerData'>
-                </app-owner-column>
+                <mat-form-field class="w-100">
+                    <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                        [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                        <mat-option value=''>Search family members</mat-option>
+                        <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
+                            <span>{{f.userName}}</span>
+                        </mat-option>
+                    </mat-select>
+                    <mat-error class="f-12 pt-4">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
             </div>
         </div>
         <div class="row pt-40">
@@ -180,14 +189,14 @@
                 </div>
             </div>
         </div>
-        <app-add-nominee [ownerName]="ownerName"></app-add-nominee>
+        <app-add-nominee [ownerName]="ownerName"  [data]="ppfData" (outputEvent)="getFormDataNominee($event)"></app-add-nominee>
     </div>
     <app-add-transaction (outputEvent)="getFormData($event)"></app-add-transaction>
 </div>
 <div class="bottom-fixed wrapper-12 pt-16">
     <div class="row">
         <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="close(false)">Cancel</h5>
         </div>
         <div (click)="addPPF()" class="col-md-8 right text-right">
             <button mat-button class="btn-bottom br-0 text-inherit">Save</button>

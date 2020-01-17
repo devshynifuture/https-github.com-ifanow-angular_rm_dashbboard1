@@ -36,7 +36,15 @@ export class GmailRedirectComponent implements OnInit {
     this.emailId = AuthService.getUserInfo().emailId;
     this.route.queryParams
       .subscribe(params => {
-        console.log('GmailRedirectComponent ngOnInit ', params); // {order: "popular"}
+        console.log('GmailRedirectComponent ngOnInit ', params);
+
+       
+        localStorage.removeItem('googleOAuthToken'); 
+        
+        localStorage.setItem('googleOAuthToken', String(JSON.stringify(params)));
+         // {order: "popular"}
+
+
         const bodyData = 'code=' + params.code + '&client_id=' + this.CLIENT_ID
           + '&client_secret=' + this.CLIENT_SECRET + '&grant_type=' + this.GRANT_TYPE
           + '&redirect_uri=' + this.REDIRECT_URI;
@@ -56,9 +64,9 @@ export class GmailRedirectComponent implements OnInit {
         this.httpService.postExternal(this.URL, bodyData, httpOptions).subscribe((responseData) => {
           console.log('GmailRedirectComponent ngOnInit bodyData: ', bodyData);
 
-          const serverRequestData = {...responseData, userId: this.advisorId, emailId: this.emailId};
+          const serverRequestData = {...responseData, userId: this.advisorId, emailId: localStorage.getItem('associatedGoogleEmailId')};
           this.sendDataToServer(serverRequestData);
-          console.log('GmailRedirectComponent ngOnInit postExternal responseData: ', responseData);
+          console.log('GmailRedirectComponent ngOnInit  sdsd postExternal responseData: ', responseData);
         }, (errorResponse) => {
           console.log('GmailRedirectComponent ngOnInit postExternal errorResponse: ', errorResponse);
         });
@@ -71,7 +79,10 @@ export class GmailRedirectComponent implements OnInit {
     console.log(data);
 
     this.httpService.post(apiConfig.GMAIL_URL + appConfig.ACCESS_TOKEN_SAVE, data).subscribe(
-      response => console.log('this is gmail succeed response', response)
+      response => {
+        console.log('this is gmail succeed response', response);
+        localStorage.setItem("successStoringToken", "true");
+      }
     );
   }
 }

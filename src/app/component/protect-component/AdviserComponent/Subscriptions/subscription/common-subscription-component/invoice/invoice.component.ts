@@ -31,6 +31,16 @@ export class InvoiceComponent implements OnInit {
   maxDate = new Date();
   validatorType = ValidatorType;
   advisorBillerProfileId: any;
+  sendRecordPaymentData: any;
+  recordData: any;
+  clientId: any;
+  igstTaxAmount: any;
+  cgstTaxAmount: any;
+  sgstTaxAmount: any;
+  showEditIn: boolean;
+  service: { serviceName: any; averageFees: any; description: any; fromDate: any; toDate: any; }[];
+  feeCalc: boolean;
+  rpyment = true;
 
   [x: string]: any;
 
@@ -81,6 +91,7 @@ export class InvoiceComponent implements OnInit {
   ismodeValid: boolean;
   isgstValid: boolean;
   isClientName = false;
+  showErr = false
   isServiceName = false;
   isInvoiceNumber = false;
   isDueDate = false;
@@ -95,7 +106,7 @@ export class InvoiceComponent implements OnInit {
   @Input() upperData;
   editPayment;
   @Output() valueChange = new EventEmitter();
-
+  @Output() cancelInvoiceSubscription = new EventEmitter();
   @Input() invoiceTab;
   // rPayment;
   advisorId;
@@ -109,7 +120,6 @@ export class InvoiceComponent implements OnInit {
   ELEMENT_DATA: {}[];
   clientList: any;
   finAmount: any;
-  feeCalc: boolean;
   isdateValid: boolean;
   subToatal: any;
   finAmountC: number;
@@ -133,6 +143,7 @@ export class InvoiceComponent implements OnInit {
     this.showPaymentRecive = false;
     this.advisorId = AuthService.getAdvisorId();
     this.getClients();
+    this.showErr = false
     this.getServicesList();
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
     console.log('this.feeCollectionMode', this.feeCollectionMode);
@@ -179,7 +190,9 @@ export class InvoiceComponent implements OnInit {
   preventDefault(e) {
     e.preventDefault();
   }
-
+  getCancelFlag(data) {
+    this.showEdit = false;
+  }
   getPayReceive(data) {
     const obj = {
       invoiceId: data
@@ -188,7 +201,10 @@ export class InvoiceComponent implements OnInit {
       data => this.getPaymentReceivedRes(data)
     );
   }
-
+  display(value) {
+    console.log(value)
+    this.cancel(value);
+  }
   getPaymentReceivedRes(data) {
     this.dataSource = data;
     if (data == undefined) {
@@ -197,6 +213,7 @@ export class InvoiceComponent implements OnInit {
       this.showPaymentRecive = true;
     }
     if (data) {
+
       this.feeCollectionMode.forEach(o => {
         o.value = parseInt(o.value);
         this.dataSource.forEach(sub => {
@@ -207,7 +224,19 @@ export class InvoiceComponent implements OnInit {
       });
     }
   }
+  checkDateDiff(event) {
+    let invoiceDate;
+    let dueDate;
 
+    if (this.editPayment.get('invoiceDate').value !== null && this.editPayment.get('dueDate').value !== null) {
+      invoiceDate = new Date((this.editPayment.get('invoiceDate').value._d) ? this.editPayment.get('invoiceDate').value._d : this.editPayment.get('invoiceDate').value).getTime();
+      dueDate = new Date((this.editPayment.get('dueDate').value._d) ? this.editPayment.get('dueDate').value._d : this.editPayment.get('dueDate').value).getTime();
+      (invoiceDate == undefined && dueDate == undefined) ? ''
+        : (dueDate <= invoiceDate)
+          ? this.showDateError = "invoice date should be greater than due" :
+          this.showDateError = undefined;
+    }
+  }
   selectClient(c, data) {
     console.log(c);
     console.log('ssss', data);
@@ -230,7 +259,7 @@ export class InvoiceComponent implements OnInit {
       invoiceDate: [(data.invoiceDate == undefined) ? new Date() : new Date(data.invoiceDate), [Validators.required]],
       taxStatus: [(data.igst != undefined) ? 'IGST(18%)' : 'SGST(9%)|CGST(9%)'],
       balanceDue: [(data.balanceDue == undefined) ? '' : data.balanceDue],
-      serviceName: [(data.services == undefined) ? '' : data.services[0].serviceName, [Validators.required]],
+      serviceName: [(data.services == undefined) ? this.editPayment.controls.serviceName.value : data.services[0].serviceName, [Validators.required]],
       subTotal: [(data.subTotal == undefined) ? '' : data.subTotal],
       dueDate: [new Date(data.dueDate), [Validators.required]],
       footnote: [(data.footnote == undefined) ? '' : data.footnote, [Validators.required]],
@@ -318,31 +347,17 @@ export class InvoiceComponent implements OnInit {
   }
 
   getRecordPayment(data) {
-    console.log('payee data', data);
-    this.rPayment = this.fb.group({
-      amountReceived: [data.amountReceived, [Validators.required, Validators.min(0), Validators.max(10)]],
-      chargesIfAny: [data.chargesIfAny, [Validators.required]],
-      tds: [data.tds, [Validators.required]],
-      paymentDate: [new Date(data.paymentDate), [Validators.required]],
-      paymentMode: [data.paymentMode, [Validators.required]],
-      gstTreatment: [(data.gstTreatmentId == 1) ? 'Registered Business - Regular' : (data.gstTreatmentId == 2) ? 'Registered Business - Composition' : 'Unregistered Business', [Validators.required]],
-      notes: [data.notes],
-      id: [data.id],
-      editFormData: [true]
-    });
-
-    this.getFormControl().amountReceived.maxLength = 10;
-    this.getFormControl().chargesIfAny.maxLength = 10;
-    this.getFormControl().tds.maxLength = 10;
-    this.getFormControl().notes.maxLength = 40;
+    this.recordData = data
     this.getPayReceive(data.id);
-
   }
 
   getInvoiceData(data) {
-    console.log('@@@@@@@@', this.upperData);
+    console.log('@@@@@@@@', data);
     this.copyStoreData = data;
     this.storeData = data;
+    if (this.storeData.balanceDue == 0) {
+      this.rpyment = false
+    }
     this.clientId = AuthService.getClientId();
     this.auto = this.storeData.auto;
     console.log(this.storeData);
@@ -358,14 +373,20 @@ export class InvoiceComponent implements OnInit {
       dueDate: [new Date(data.dueDate), [Validators.required]],
       footnote: [data.footnote, [Validators.required]],
       terms: [data.terms, [Validators.required]],
-      taxStatus: ['IGST(18%)'],
+      taxStatus: [(data.igstTaxAmount == undefined) ? 'SGST(9%)|CGST(9%)' : 'IGST(18%)'],
       serviceName: [(data.services == undefined) ? '0' : (data.services.length == 0) ? '0' : data.services[0].serviceName, [Validators.required]],
       subTotal: [(data == undefined) ? '' : data.subTotal],
       igstTaxAmount: [data.igstTaxAmount],
+      cgstTaxAmount: [data.cgstTaxAmount],
+      sgstTaxAmount: [data.sgstTaxAmount],
       auto: [data.auto]
       // fromDate : [data.services[0].fromDate,[Validators.required]],
 
     });
+    this.igstTaxAmount = data.igstTaxAmount
+    this.cgstTaxAmount = data.cgstTaxAmount
+    this.sgstTaxAmount = data.sgstTaxAmount
+    this.taxStatus = this.editPayment.controls.taxStatus.value
     this.getFormControledit().clientName.maxLength = 10;
     this.getFormControledit().billerAddress.maxLength = 150;
     this.getFormControledit().billingAddress.maxLength = 150;
@@ -383,9 +404,11 @@ export class InvoiceComponent implements OnInit {
   changeTaxStatus(changeTaxStatus) {
     console.log('changeTaxStatus', changeTaxStatus);
     if (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') {
-      this.finAmountC = this.finalAmount * 9 / 100;
-      this.finAmountS = this.finalAmount * 9 / 100;
-      this.finAmount = this.finAmountC + this.finAmountS + parseInt(this.editPayment.controls.finalAmount.value);
+      this.finAmountC = this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount);
+      this.finAmountC = this.finAmountC * 9 / 100;
+      this.finAmountS = this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount);
+      this.finAmountS = this.finAmountS * 9 / 100;
+      this.finAmount = this.finAmountC + this.finAmountS;
     } else {
       this.finAmount = (this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount));
       this.finAmount = (this.finAmount) * 18 / 100;
@@ -396,16 +419,21 @@ export class InvoiceComponent implements OnInit {
   }
 
   updateInvoice() {
-    if (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') {
-      this.finAmountC = this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount);
-      this.finAmountC = this.finAmountC * 9 / 100;
-      this.finAmountS = this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount);
-      this.finAmountS = this.finAmountS * 9 / 100;
-      this.finAmount = this.finAmountC + this.finAmountS;
-    } else {
-      this.finAmount = (this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount));
-      this.finAmount = (this.finAmount) * 18 / 100;
+    this.showErr = false
+    if (this.editPayment.value.discount == "") {
+      this.editPayment.value.discount = 0
     }
+    this.changeTaxStatus(this.editPayment.value.taxStatus)
+    // if (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') {
+    //   this.finAmountC = this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount);
+    //   this.finAmountC = this.finAmountC * 9 / 100;
+    //   this.finAmountS = this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount);
+    //   this.finAmountS = this.finAmountS * 9 / 100;
+    //   this.finAmount = this.finAmountC + this.finAmountS;
+    // } else {
+    //   this.finAmount = (this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount));
+    //   this.finAmount = (this.finAmount) * 18 / 100;
+    // }
     if (this.editPayment.get('dueDate').invalid) {
       this.editPayment.get('dueDate').markAsTouched();
       return;
@@ -414,6 +442,9 @@ export class InvoiceComponent implements OnInit {
       return;
     } else if (this.editPayment.get('taxStatus').invalid) {
       this.editPayment.get('taxStatus').markAsTouched();
+      return;
+    } else if (isNaN(this.editPayment.controls.finalAmount.value)) {
+      this.showErr = true
       return;
     } else {
       if (this.editPayment.value.id == 0 || this.editPayment.value.id == null) {
@@ -445,6 +476,7 @@ export class InvoiceComponent implements OnInit {
           clientId: (this.upperData == undefined) ? this.clientId : this.upperData,
           services: service,
         };
+
         console.log('this.editPayment', obj);
         this.subService.addInvoice(obj).subscribe(
           data => this.addInvoiceRes(data)
@@ -473,10 +505,10 @@ export class InvoiceComponent implements OnInit {
           auto: this.editPayment.value.auto,
           billerAddress: this.editPayment.value.billerAddress,
           billingAddress: this.editPayment.value.billingAddress,
-          finalAmount: this.editPayment.value.finalAmount,
+          // finalAmount: this.editPayment.value.finalAmount,
           invoiceNumber: this.editPayment.value.invoiceNumber,
           subTotal: this.editPayment.value.finalAmount,
-          total: (parseInt(this.editPayment.value.finalAmount) - parseInt(this.editPayment.value.discount)) + parseInt(this.finAmount),
+          finalAmount: (parseInt(this.editPayment.value.finalAmount) - parseInt(this.editPayment.value.discount)) + parseInt(this.finAmount),
           discount: this.editPayment.value.discount,
           invoiceDate: this.editPayment.value.invoiceDate,
           dueDate: this.editPayment.value.dueDate,
@@ -502,14 +534,16 @@ export class InvoiceComponent implements OnInit {
   updateInvoiceInfoRes(data) {
     console.log('updateInvoiceInfoRes', data);
     if (data == 1) {
-      this.Close('close');
+      this.Close('close', true);
     }
   }
-
+  getAddCancelFlag(data) {
+    this.cancelInvoiceSubscription.emit(data)
+  }
   addInvoiceRes(data) {
     console.log('addInvoiceRes', data);
     if (data == 1) {
-      this.Close('close');
+      this.Close('close', true);
     }
   }
 
@@ -521,103 +555,6 @@ export class InvoiceComponent implements OnInit {
     return this.rPayment.controls;
   }
 
-  saveFormData() {
-    if (this.rPayment.controls.chargesIfAny.invalid) {
-      this.ischargeValid = true;
-      return;
-    } else if (this.rPayment.controls.tds.invalid) {
-      this.istdsValid = true;
-      return;
-    } else if (this.rPayment.controls.paymentMode.invalid) {
-      this.ismodeValid = true;
-      return;
-    } else if (this.rPayment.controls.paymentDate.invalid) {
-      this.isdateValid = true;
-    }
-    if (this.rPayment.controls.gstTreatment.invalid) {
-      this.isgstValid = true;
-    } else {
-      this.formObj = [{
-        advisorId: this.advisorId,
-        // advisorId: 12345,
-        amountReceived: this.rPayment.controls.amountReceived.value,
-        chargeIfAny: this.rPayment.controls.chargesIfAny.value,
-        TDS: this.rPayment.controls.tds.value,
-        paymentDate: this.rPayment.controls.paymentDate.value,
-        paymentMode: this.rPayment.controls.paymentMode.value,
-        gstTreatment: this.rPayment.controls.gstTreatment.value,
-        notes: this.rPayment.controls.notes.value
-      }];
-
-    }
-    const ELEMENT_DATA = this.formObj;
-    this.dataSource = ELEMENT_DATA;
-    this.feeCollectionMode.forEach(o => {
-      if (o.name == this.dataSource[0].paymentMode) {
-        this.dataSource[0].paymentMode = o.value;
-      }
-    });
-    this.gstTreatment.forEach(o => {
-      if (o.name == this.dataSource[0].gstTreatment) {
-        this.dataSource[0].gstTreatment = o.value;
-      }
-    });
-    this.dataSource[0].amountReceived = parseInt(this.dataSource[0].amountReceived);
-    this.dataSource[0].chargeIfAny = parseInt(this.dataSource[0].chargeIfAny);
-    this.dataSource[0].paymentMode = parseInt(this.dataSource[0].paymentMode);
-    this.dataSource[0].gstTreatment = parseInt(this.dataSource[0].gstTreatment);
-    this.dataSource[0].TDS = parseInt(this.dataSource[0].TDS);
-    this.dataSource[0].paymentDate = this.dataSource[0].paymentDate.toISOString().slice(0, 10);
-    if (this.editFormData != undefined) {
-      const obj = {
-        id: this.rPayment.controls.id.value,
-        paymentMode: this.dataSource[0].paymentMode,
-        amountReceived: this.dataSource[0].amountReceived,
-        chargesIfAny: this.dataSource[0].chargeIfAny,
-        notes: this.dataSource[0].notes,
-        tds: this.dataSource[0].TDS,
-        gstTreatmentId: this.dataSource[0].gstTreatment
-      };
-      this.subService.editPaymentReceive(obj).subscribe(
-        data => this.getSubStagesRecordResponse(data)
-      );
-    } else {
-      const obj = {
-        invoiceId: this.storeData.id,
-        paymentMode: this.dataSource[0].paymentMode,
-        amountReceived: this.dataSource[0].amountReceived,
-        paymentDate: this.dataSource[0].paymentDate,
-        tds: this.dataSource[0].TDS,
-        notes: this.dataSource[0].notes,
-        chargesIfAny: this.dataSource[0].chargeIfAny,
-        advisorId: this.dataSource[0].advisorId,
-        referenceNumber: this.storeData.invoiceNumber,
-        gstTreatmentId: this.dataSource[0].gstTreatment
-
-      };
-      this.subService.getSubscriptionCompleteStages(obj).subscribe(
-        data => this.getSubStagesRecordResponse(data)
-      );
-
-    }
-
-  }
-
-  getSubStagesRecordResponse(data) {
-    console.log('data', data);
-    this.feeCollectionMode.forEach(o => {
-      if (o.value == this.dataSource[0].paymentMode) {
-        this.dataSource[0].paymentMode = o.name;
-      }
-    });
-    const obj = {
-      invoiceId: this.storeData.id
-    };
-    this.subService.getPaymentReceive(obj).subscribe(
-      data => this.getPaymentReceivedRes(data)
-    );
-    this.cancel();
-  }
 
   OpenFeeCalc() {
     this.feeCalc = true;
@@ -625,17 +562,25 @@ export class InvoiceComponent implements OnInit {
 
   recordPayment() {
     this.showRecord = true;
-    this.rPayment.reset();
+    this.sendRecordPaymentData = this.recordData;
+    this.sendRecordPaymentData.add = true;
+
 
   }
 
   editForm(data) {
-    this.editFormData = true;
+    // this.editFormData = true;
     this.showRecord = true;
-    this.getRecordPayment(data);
+    // this.getRecordPayment(data);
+    this.sendRecordPaymentData = data;
+    this.sendRecordPaymentData.add = false;
+    // this.sendRecordPaymentData.add=false;
   }
 
-  cancel() {
+  cancel(value) {
+    if (value != undefined) {
+      this.storeData.balanceDue = value.balanceDue;
+    }
     this.showRecord = false;
     const obj = {
       invoiceId: this.storeData.id
@@ -643,7 +588,7 @@ export class InvoiceComponent implements OnInit {
     this.subService.getPaymentReceive(obj).subscribe(
       data => this.getPaymentReceivedRes(data)
     );
-    this.rPayment.reset();
+    // this.rPayment.reset();
   }
 
   formatter(data) {
@@ -652,6 +597,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   passInvoice(data, index, event) {
+    this.recordData = data;
     console.log(data);
     this.storeData = data;
     const obj = {
@@ -678,7 +624,11 @@ export class InvoiceComponent implements OnInit {
     }
   }
 
-  Close(state) {
+  Close(state, dismiss) {
+    const closeObj = {
+      dataString: this.invoiceInSub,
+      closingState: dismiss
+    }
     if (this.showRecord == true) {
       this.showRecord = false;
       const obj = {
@@ -687,12 +637,13 @@ export class InvoiceComponent implements OnInit {
       this.subService.getPaymentReceive(obj).subscribe(
         data => this.getPaymentReceivedRes(data)
       );
-      this.rPayment.reset();
+      // this.rPayment.reset();
     } else if (this.feeCalc == true) {
       this.feeCalc = false;
     } else {
+
       (this.invoiceTab == 'invoiceUpperSlider') ? this.subInjectService.rightSliderData(state) : this.subInjectService.rightSideData(state);
-      this.valueChange.emit(this.invoiceInSub);
+      this.valueChange.emit(closeObj);
     }
 
   }
@@ -714,12 +665,6 @@ export class InvoiceComponent implements OnInit {
       }],
       isInv: true
     }
-      ;
-    // this.dataSource.forEach(singleElement => {
-    //   if (singleElement.selected) {
-    //     data.documentList.push(singleElement);
-    //   }
-    // });
     if (input == 'upper') {
       this.OpenEmailUpper(data, 'email');
     } else {
@@ -786,7 +731,7 @@ export class InvoiceComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('this is template result delete::', result);
 
-      this.Close(result);
+      this.Close(result, true);
     });
 
   }
@@ -797,21 +742,8 @@ export class InvoiceComponent implements OnInit {
   }
 
   generatePdf() {
-    const opt = {
-      margin: 1,
-      filename: this.storeData.invoiceNumber + '.pdf',
-      // image: {type: 'jpeg', quality: 0.98},
-      html2canvas: { scale: 2 },
-      // jsPDF: {unit: 'in', format: 'letter', orientation: 'portrait'}
-    };
-
-    try {
-      console.log('generatepdf invoice this.invoiceTemplate.nativeElement : ', this.invoiceTemplate.nativeElement.innerHTML);
-      PdfService.generatePdfFromHtmlText(this.invoiceTemplate.nativeElement.innerHTML, opt);
-
-    } catch (e) {
-      console.log('    PdfService.generatePdfFromElement(this.renderElement, docName); e : ', e);
-    }
+    let para = document.getElementById('template');
+    this.utils.htmlToPdf(para.innerHTML, 'Test')
   }
 
 

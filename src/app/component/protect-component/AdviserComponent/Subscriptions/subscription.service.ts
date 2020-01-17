@@ -109,7 +109,7 @@ export class SubscriptionService {
   }
 
   mapDocumentsToPlanData(data) {
-    console.log("this is something which im looking for :::::::::::", data);
+    console.log('this is something which im looking for :::::::::::', data);
     return this.http.post(apiConfig.MAIN_URL + appConfig.MAP_DOCUMENTS_TO_PLAN, data);
   }
 
@@ -239,8 +239,8 @@ export class SubscriptionService {
   filterInvoices(data) {
     // const httpParams = new HttpParams().set('id', data.id).set('module', data.module);
     // return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PLAN_INVOICE, httpParams);
-    console.log(data, "invoices data header");
-    
+    console.log(data, 'invoices data header');
+
     const httpParams = new HttpParams().set('id', data.Id).set('fromDate', data.fromDate).set('module', data.module)
       .set('toDate', data.toDate).set('dateType', data.dateType).set('limit', data.limit)
       .set('statusIdList', data.statusIdList).set('offset', data.offset);
@@ -305,9 +305,17 @@ export class SubscriptionService {
   }
 
   getDocumentData(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId)
-      .set('flag', data.flag).set('limit', data.limit).set('offset', data.offset).set('dateType', data.dateType)
-      .set('fromDate', data.fromDate).set('toDate', data.toDate).set('statusIdList', data.statusIdList);
+    let httpParams = new HttpParams().set('advisorId', data.advisorId)
+      .set('flag', data.flag).set('limit', data.limit).set('offset', data.offset).set('dateType', data.dateType);
+    if (data.fromDate) {
+      httpParams = httpParams.set('fromDate', data.fromDate).set('toDate', data.toDate);
+    }
+    if (data.statusIdList) {
+      httpParams = httpParams.set('statusIdList', data.statusIdList);
+    }
+    if (data.clientId) {
+      httpParams = httpParams.set('clientId', data.clientId);
+    }
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_GET, httpParams);
   }
 
@@ -351,6 +359,14 @@ export class SubscriptionService {
 
   deleteService(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SERVICE, data);
+  }
+
+  deleteQuotations(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_QUOTATIONS, data);
+  }
+
+  deleteClientDocuments(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_CLIENT_DOCUMENT, data);
   }
 
   deleteSettingsDocument(data) {
@@ -428,6 +444,11 @@ export class SubscriptionService {
   sendDocumentViaEmailInPdfFormat(data) {
     // const httpParams = new HttpParams().set('advisorId', data.advisorId).set('type', data.type);
     return this.http.post(apiConfig.MAIN_URL + appConfig.EMAIL_DOCUMENT, data);
+  }
+
+  getQuotationServiceData(data) {
+    const httpParams = new HttpParams().set('documentRepositoryId', data.documentRepositoryId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_QUOTATION_SERVICE_DATA, httpParams);
   }
 
   base_64Data(data) {

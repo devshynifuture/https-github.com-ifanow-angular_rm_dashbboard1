@@ -27,7 +27,10 @@ export class AddKvpComponent implements OnInit {
   isOptionalField: boolean;
   KVPFormScheme: any;
   KVPOptionalFormScheme: any;
-
+  nomineesListFM: any;
+  nomineesList: any;
+  nominees: any[];
+  kvpData;
   constructor(public utils: UtilService,private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   ngOnInit() {
     this.isOptionalField = true;
@@ -41,14 +44,22 @@ export class AddKvpComponent implements OnInit {
   }
   display(value) {
     console.log('value selected', value)
-    this.ownerName = value.userName;
+    this.ownerName = value;
     this.familyMemberId = value.id
+  }
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
   get data() {
     return this.inputData;
   }
   moreFields() {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true
+  }
+  getFormDataNominee(data) {
+    console.log(data)
+    this.nomineesList = data.controls
   }
   getdataForm(data) {
     if (data == undefined) {
@@ -65,7 +76,7 @@ export class AddKvpComponent implements OnInit {
     })
     this.KVPOptionalFormScheme = this.fb.group({
       poBranch: [, [Validators.required]],
-      nominee: [, [Validators.required]],
+      nominees: this.nominees,
       bankAccNum: [, [Validators.required]],
       description: [data.description, [Validators.required]],
     })
@@ -73,10 +84,25 @@ export class AddKvpComponent implements OnInit {
   }
 
   addKVP() {
+    this.nominees = []
+    if (this.nomineesList) {
 
+      this.nomineesList.forEach(element => {
+        let obj = {
+          "name": element.controls.name.value,
+          "sharePercentage": element.controls.sharePercentage.value,
+          "id":element.id,
+          "familyMemberId":element.familyMemberId
+        }
+        this.nominees.push(obj)
+      });
+    }
     if (this.KVPFormScheme.get('amtInvested').invalid) {
       this.KVPFormScheme.get('amtInvested').markAsTouched();
       return
+    } else if (this.KVPFormScheme.get('ownerName').invalid) {
+      this.KVPFormScheme.get('ownerName').markAsTouched();
+      return;
     }
     else if (this.KVPFormScheme.get('commDate').invalid) {
       this.KVPFormScheme.get('commDate').markAsTouched();
@@ -97,7 +123,7 @@ export class AddKvpComponent implements OnInit {
           "commencementDate": this.KVPFormScheme.get('commDate').value,
           "postOfficeBranch": this.KVPOptionalFormScheme.get('poBranch').value,
           "ownershipTypeId": this.KVPFormScheme.get('ownerType').value,
-          "nomineeName": this.KVPOptionalFormScheme.get('nominee').value,
+          "nominees": this.nominees,
           "bankAccountNumber": this.KVPOptionalFormScheme.get('bankAccNum').value,
           "description": this.KVPOptionalFormScheme.get('description').value
         }
@@ -117,12 +143,12 @@ export class AddKvpComponent implements OnInit {
     }
   }
   addKVPResponse(data) {
-    (this.editApi) ? this.eventService.openSnackBar("KVP is edited", "dismiss") : this.eventService.openSnackBar("KVP is edited", "added")
+    (this.editApi) ? this.eventService.openSnackBar("KVP is added", "dismiss") : this.eventService.openSnackBar("KVP is edited", "added")
    console.log(data)
-   this.close();
+   this.close(true);
   }
-  close() {
+  close(flag) {
     this.isOptionalField = true
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag });
   }
 }

@@ -31,9 +31,9 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
 
   chips = [
-    { name: 'UNPAID', value: 0 },
-    { name: 'PAID', value: 1 },
-    { name: 'OVERDUE', value: 2 }
+    { name: 'UNPAID', value: 1 },
+    { name: 'PAID', value: 2 },
+    { name: 'OVERDUE', value: 3 }
   ];
   dateChips = [
     { name: 'Date', value: 1 },
@@ -132,10 +132,12 @@ export class InvoicesSubscriptionComponent implements OnInit {
     const obj = {
       id: this.advisorId,
       // id: 2735, // pass here advisor id for Invoice advisor
-      module: 1
+      module: 1,
+
     };
     // this.dataSource.data = [{}, {}, {}];
     this.isLoading = true;
+    this.dataCount = 0;
 
     this.subscription.getInvoices(obj).subscribe(
       data => {
@@ -146,14 +148,15 @@ export class InvoicesSubscriptionComponent implements OnInit {
           this.lastDataId = data[data.length - 1].id;
           // obj.offset = this.lastDataId;
           // console.log(this.lastDataId, obj, "data check");
-          if (this.tableData.length <= 0) {
-            this.tableData = data;
-          } else {
-            console.log(this.tableData, 'this.tableData 123');
+          this.tableData = data;
+          // if (this.tableData.length <= 0) {
+          //   this.tableData = data;
+          // } else {
+          //   console.log(this.tableData, 'this.tableData 123');
 
-            this.tableData = this.tableData.concat(data);
-            console.log(this.tableData, 'this.tableData 123');
-          }
+          //   this.tableData = this.tableData.concat(data);
+          //   console.log(this.tableData, 'this.tableData 123');
+          // }
         } else {
         }
         this.getInvoiceResponseData(this.tableData);
@@ -246,6 +249,8 @@ export class InvoicesSubscriptionComponent implements OnInit {
   selectAll(event) {
     this.dataCount = 0;
     if (this.dataSource != undefined) {
+      console.log(this.dataSource.filteredData, this.dataSource.data, "data check api 123");
+
       this.dataSource.filteredData.forEach(item => {
         item.selected = event.checked;
         if (item.selected) {
@@ -258,7 +263,6 @@ export class InvoicesSubscriptionComponent implements OnInit {
   changeSelect() {
     this.dataCount = 0;
     this.dataSource.filteredData.forEach(item => {
-      console.log('item item ', item);
       if (item.selected) {
         this.dataCount++;
       }
@@ -266,28 +270,35 @@ export class InvoicesSubscriptionComponent implements OnInit {
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    if (this.dataSource != undefined) {
-      return this.dataCount === this.dataSource.filteredData.length;
-    }
-  }
+  // isAllSelected() {
+  //   if (this.dataSource != undefined) {
+  //     return this.dataCount === this.dataSource.filteredData.length;
+  //   }
+  // }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-      this.selectAll({ checked: false }) : this.selectAll({ checked: true });
-  }
+  // masterToggle() {
+  //   this.isAllSelected() ?
+  //     this.selectAll({ checked: false }) : this.selectAll({ checked: true });
+  // }
 
   display(data) {
-    console.log(data, "edited data invoice");
-    this.dataSource.data = [{}, {}, {}]
-    this.tableData = [];
-    this.getInvoiceSubData(false);
+
+    if (data.closingState) {
+      console.log(data, "edited data invoice");
+      this.dataSource.data = [{}, {}, {}]
+      this.tableData = [];
+      this.getInvoiceSubData(false);
+      this.dataCount = 0;
+    }
     this.invoiceSubscription = 'false';
-    this.dataCount = 0;
+
     // this.ngOnInit();
   }
-
+  getCancelInvoiceSubscription(data) {
+    console.log(data);
+    this.ngOnInit();
+  }
   showFilters(showFilter) {
     if (showFilter == true) {
       this.showFilter = false;
@@ -318,9 +329,10 @@ export class InvoicesSubscriptionComponent implements OnInit {
   }
 
   callFilter(scrollLoader) {
-    this.dataSource.data = [{}, {}, {}]
-    this.isLoading = true;
+    this.dataCount = 0;
     if (this.filterStatus && this.filterStatus.length > 0) {
+      this.dataSource.data = [{}, {}, {}]
+      this.isLoading = true;
       this.statusIdList = [];
       this.filterStatus.forEach(singleFilter => {
         this.statusIdList.push(singleFilter.value);
@@ -360,7 +372,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
     this.isLoading = false;
 
     if (data == undefined && this.statusIdLength < 1) {
-      this.noData = 'No Data Found';
+      // this.noData = 'No Data Found';
       if (!scrollLoader) {
         this.dataSource.data = [];
       }
@@ -462,12 +474,12 @@ export class InvoicesSubscriptionComponent implements OnInit {
           data => {
             this.dataCount = 0;
             this.eventService.openSnackBar('invoice deleted successfully.', 'dismiss');
-            dialogRef.close(listIndex);
+            dialogRef.close(this.list);
 
           },
           error => this.eventService.showErrorMessage(error)
         );
-            dialogRef.close(listIndex);
+        dialogRef.close(listIndex);
 
       },
       negativeMethod: () => {
@@ -484,16 +496,20 @@ export class InvoicesSubscriptionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result,this.dataSource.data,"delete result");
-      const tempList = []
-      this.dataSource.data.forEach(singleElement => {
-        if (!singleElement.selected) {
-          tempList.push(singleElement);
-        }
-      });
-      this.dataSource.data = tempList;
+      console.log(result, this.dataSource.data, "delete result");
+      if (result.length > 0) {
+        const tempList = []
+        this.dataSource.data.forEach(singleElement => {
+          if (!singleElement.selected) {
+            tempList.push(singleElement);
+          }
+          singleElement.selected = false;
+        });
+        this.dataSource.data = tempList;
+        this.dataCount = 0;
+      }
 
-     
+
     });
   }
 }

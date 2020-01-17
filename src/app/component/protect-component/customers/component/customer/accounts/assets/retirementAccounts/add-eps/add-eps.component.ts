@@ -30,6 +30,7 @@ export class AddEPSComponent implements OnInit {
   isDate = false;
   isPensionPayFreq = false;
   clientId: any;
+  nomineesListFM: any;
 
   constructor(private event: EventService,private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe,public utils: UtilService) { }
 
@@ -51,6 +52,10 @@ export class AddEPSComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
+  }
   showLess(value) {
     if (value == true) {
       this.showHide = false;
@@ -58,8 +63,8 @@ export class AddEPSComponent implements OnInit {
       this.showHide = true;
     }
   }
-  Close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' })
+  Close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag })
   }
   // getDateYMD(){
   //   let now = moment();
@@ -94,6 +99,9 @@ export class AddEPSComponent implements OnInit {
     if (this.eps.get('commencementDate').invalid) {
       this.eps.get('commencementDate').markAsTouched();
       return;
+    } else if (this.eps.get('ownerName').invalid) {
+      this.eps.get('ownerName').markAsTouched();
+      return
     } else if (this.eps.get('pensionAmount').invalid) {
       this.eps.get('pensionAmount').markAsTouched();
       return;
@@ -128,10 +136,10 @@ export class AddEPSComponent implements OnInit {
   addEPSRes(data){
     console.log('addrecuringDepositRes', data)
      this.event.openSnackBar('Added successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({flag:'addedEps', state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({flag:'addedEps', state: 'close', data ,refreshRequired:true })
   }
   editEPSRes(data){
      this.event.openSnackBar('Updated successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({flag:'addedEps', state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({flag:'addedEps', state: 'close', data ,refreshRequired:true })
   }
 }

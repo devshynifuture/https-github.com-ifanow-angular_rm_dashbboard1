@@ -71,6 +71,7 @@ export class FixedDepositComponent implements OnInit {
   recuringDeposit: any;
   clientId: any;
   isViewInitCalled = false;
+  nomineesListFM: any;
 
   constructor( public utils: UtilService,private event: EventService, private router: Router,
     private fb: FormBuilder, private custumService: CustomerService,
@@ -122,8 +123,8 @@ export class FixedDepositComponent implements OnInit {
   getOwnerListRes(data) {
     console.log('familymember', data);
   }
-  Close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  Close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag });
   }
 
   display(value) {
@@ -131,7 +132,10 @@ export class FixedDepositComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id;
   }
-
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
+  }
   showLess(value) {
     if (value) {
       this.showHide = false;
@@ -230,6 +234,10 @@ export class FixedDepositComponent implements OnInit {
       this.fixedDeposit.get('FDType').markAsTouched();
       return
     }
+    else if (this.fixedDeposit.get('ownerName').invalid) {
+      this.fixedDeposit.get('ownerName').markAsTouched();
+      return
+    }
     else if (this.fixedDeposit.get('amountInvest').invalid) {
       this.fixedDeposit.get('amountInvest').markAsTouched();
       return
@@ -300,11 +308,11 @@ export class FixedDepositComponent implements OnInit {
   addFixedDepositRes(data) {
     console.log('addFixedDepositRes', data);
     this.event.openSnackBar('Added successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data,refreshRequired:true });
   }
 
   editFixedDepositRes(data) {
     this.event.openSnackBar('Updated successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data,refreshRequired:true });
   }
 }

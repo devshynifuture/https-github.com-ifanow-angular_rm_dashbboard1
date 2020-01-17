@@ -27,6 +27,10 @@ export class AddScssComponent implements OnInit {
   ownerData: any;
   isOptionalField: any;
   editApi: any;
+  nomineesListFM: any;
+  scssData: any;
+  nomineesList: any;
+  nominees: any[];
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
               private cusService: CustomerService, private eventService: EventService,public utils: UtilService) {
@@ -47,16 +51,24 @@ export class AddScssComponent implements OnInit {
 
   display(value) {
     console.log('value selected', value);
-    this.ownerName = value.userName;
+    this.ownerName = value;
     this.familyMemberId = value.id;
   }
-
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
+  }
+  getFormDataNominee(data) {
+    console.log(data)
+    this.nomineesList = data.controls
+  }
   getdataForm(data) {
     if (data == undefined) {
       data = {};
     } else {
       this.editApi = data;
     }
+    this.scssData=data;
     this.scssSchemeForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
       amtInvested: [data.amountInvested, [Validators.required, Validators.min(1500), Validators.max(1500000)]],
@@ -65,7 +77,7 @@ export class AddScssComponent implements OnInit {
     });
     this.scssOptionalSchemeForm = this.fb.group({
       poBranch: [],
-      nominee: [],
+      nominees: this.nominees,
       bankAccNumber: [],
       description: [data.description]
     });
@@ -77,11 +89,26 @@ export class AddScssComponent implements OnInit {
   }
 
   addScss() {
+    this.nominees = []
+    if (this.nomineesList) {
 
+      this.nomineesList.forEach(element => {
+        let obj = {
+          "name": element.controls.name.value,
+          "sharePercentage": element.controls.sharePercentage.value,
+          "id":element.id,
+          "familyMemberId":element.familyMemberId
+        }
+        this.nominees.push(obj)
+      });
+    }
     if (this.scssSchemeForm.get('amtInvested').invalid) {
       this.scssSchemeForm.get('amtInvested').markAsTouched();
       return;
-    } else if (this.scssSchemeForm.get('commDate').invalid) {
+    }  else if (this.scssSchemeForm.get('ownerName').invalid) {
+      this.scssSchemeForm.get('ownerName').markAsTouched();
+      return;
+    }else if (this.scssSchemeForm.get('commDate').invalid) {
       this.scssSchemeForm.get('commDate').markAsTouched();
       return;
     } else if (this.scssSchemeForm.get('ownershipType').invalid) {
@@ -99,7 +126,7 @@ export class AddScssComponent implements OnInit {
         postOfficeBranch: this.scssOptionalSchemeForm.get('poBranch').value,
         bankAccountNumber: this.scssOptionalSchemeForm.get('bankAccNumber').value,
         ownerTypeId: this.scssSchemeForm.get('ownershipType').value,
-        nominee: this.scssOptionalSchemeForm.get('nominee').value,
+        nominees: this.nominees,
         description: this.scssOptionalSchemeForm.get('description').value
       };
       if (this.editApi) {
@@ -119,11 +146,11 @@ export class AddScssComponent implements OnInit {
 
   addScssResponse(data) {
     console.log(data);
-    this.close();
+    this.close(true);
   }
 
-  close() {
+  close(flag) {
     this.isOptionalField = true;
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({state: 'close',refreshRequired:flag});
   }
 }

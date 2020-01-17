@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from "../../../../../../../auth-service/authService";
-import {UtilService} from "../../../../../../../services/util.service";
-import {SubscriptionUpperSliderComponent} from '../../common-subscription-component/upper-slider/subscription-upper-slider.component';
-import {HelpComponent} from '../../common-subscription-component/help/help.component';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from "../../../../../../../auth-service/authService";
+import { UtilService } from "../../../../../../../services/util.service";
+import { SubscriptionUpperSliderComponent } from '../../common-subscription-component/upper-slider/subscription-upper-slider.component';
+import { HelpComponent } from '../../common-subscription-component/help/help.component';
 
 // import {CustomHtmlComponent} from "../../../../../../../common/customhtml.component";
 
@@ -20,7 +20,7 @@ export class DocumentsSettingsComponent implements OnInit {
   Questions = [{ question: 'Can I create my own template for Quotations?' },
   { question: 'Can I create my own template for Consent T&C?' },
   { question: 'What are the Future subscriptions?' }]
-  documentSettingData = [{}, {}, {}];
+  documentSettingData = [{}, {}];
   isLoading = false;
   //showLoader;
 
@@ -44,12 +44,13 @@ export class DocumentsSettingsComponent implements OnInit {
 
       // "advisorId": 2735
     };
-    // const data = [{}, {}, {}];
+    // const data = [{}, {}];
     // this.getDocumentsSettingResponse(data);
+    this.documentSettingData = [{}, {}];
     this.subService.getSubscriptionDocumentSetting(obj).subscribe(
-      data => this.getDocumentsSettingResponse(data),(error) => {
+      data => this.getDocumentsSettingResponse(data), (error) => {
         this.eventService.showErrorMessage(error);
-        // this.dataSource.data = [];
+        this.documentSettingData = [];
         this.isLoading = false;
       }
     );

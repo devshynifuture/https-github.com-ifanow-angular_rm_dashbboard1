@@ -123,15 +123,15 @@ export class NpsSchemeHoldingComponent implements OnInit {
         frequencyId:  [null, [Validators.required]],
         accountPreferenceId:  [null, [Validators.required]], approxContribution:  [null, [Validators.required]]
       })]),
-      npsNomineesList: this.fb.array([this.fb.group({
-        nomineeName: null,nomineePercentageShare:null,
+      nominees: this.fb.array([this.fb.group({
+        name: null,sharePercentage:null,
       })]),
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
     });
     this.ownerData = this.schemeHoldingsNPS.controls;
     this.familyMemberId = this.schemeHoldingsNPS.controls.familyMemberId.value
     this.familyMemberId = this.familyMemberId[0]
-    if (data.futureContributionList != undefined || data.npsNomineesList != undefined || data.holdingList != undefined) {
+    if (data.futureContributionList != undefined || data.nominees != undefined || data.holdingList != undefined) {
       data.futureContributionList.forEach(element => {
         this.schemeHoldingsNPS.controls.futureContributionList.push(this.fb.group({
           frequencyId: [(element.frequencyId) + "", [Validators.required]],
@@ -140,11 +140,12 @@ export class NpsSchemeHoldingComponent implements OnInit {
           id:[element.id,[Validators.required]]
         }))
       })
-      data.npsNomineesList.forEach(element => {
-        this.schemeHoldingsNPS.controls.npsNomineesList.push(this.fb.group({
-          nomineeName: [(element.nomineeName), [Validators.required]],
-          nomineePercentageShare: [element.nomineePercentageShare , Validators.required],
-          id:[element.id,[Validators.required]]
+      data.nominees.forEach(element => {
+        this.schemeHoldingsNPS.controls.nominees.push(this.fb.group({
+          name: [(element.name), [Validators.required]],
+          sharePercentage: [element.sharePercentage , Validators.required],
+          id:[element.id,[Validators.required]],
+          familyMemberId:[element.familyMemberId]
         }))
       })
       data.holdingList.forEach(element => {
@@ -193,14 +194,14 @@ export class NpsSchemeHoldingComponent implements OnInit {
     }
   }
   get nominee() {
-    return this.schemeHoldingsNPS.get('npsNomineesList') as FormArray;
+    return this.schemeHoldingsNPS.get('nominees') as FormArray;
   }
   addNominee() {
     // this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
     //   return o.nomineePercentageShare;
     // });
     this.nominee.value.forEach(element => {
-      this.nexNomineePer += element.nomineePercentageShare;
+      this.nexNomineePer += element.sharePercentage;
     });
     if (this.nexNomineePer > 100) {
       this.showError = true
@@ -210,7 +211,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
     }
     if (this.showError == false) {
       this.nominee.push(this.fb.group({
-        nomineeName:  null, nomineePercentageShare:null,
+        name:  null, sharePercentage:null,
       }));
     }
    
@@ -235,16 +236,19 @@ export class NpsSchemeHoldingComponent implements OnInit {
   getFormControl(): any {
     return this.schemeHoldingsNPS.controls;
   }
-  Close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' })
+  Close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag })
   }
   saveSchemeHolding() {
     console.log(this.schemeHoldingsNPS.get('holdingList').invalid)
     console.log(this.schemeHoldingsNPS.get('futureContributionList').invalid)
-    console.log(this.schemeHoldingsNPS.get('npsNomineesList').invalid)
+    console.log(this.schemeHoldingsNPS.get('nominees').invalid)
     if (this.schemeHoldingsNPS.get('pran').invalid) {
       this.schemeHoldingsNPS.get('pran').markAsTouched();
       return;
+    } else if (this.schemeHoldingsNPS.get('ownerName').invalid) {
+      this.schemeHoldingsNPS.get('ownerName').markAsTouched();
+      return
     }  else if (this.schemeHoldingsNPS.get('holdingList').invalid) {
       this.schemeHoldingsNPS.get('holdingList').markAsTouched();
       return
@@ -260,7 +264,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
         pran: this.schemeHoldingsNPS.controls.pran.value,
         holdingList:this.schemeHoldingsNPS.controls.holdingList.value,
         futureContributionList: this.schemeHoldingsNPS.controls.futureContributionList.value,
-        npsNomineesList: this.schemeHoldingsNPS.controls.npsNomineesList.value,
+        nominees: this.schemeHoldingsNPS.controls.nominees.value,
         description: this.schemeHoldingsNPS.controls.description.value,
         id: this.schemeHoldingsNPS.controls.id.value
       }
@@ -278,10 +282,10 @@ export class NpsSchemeHoldingComponent implements OnInit {
   }
   addNPSRes(data){
     this.event.openSnackBar('Added successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data ,refreshRequired:true })
   }
   editNPSRes(data){
     this.event.openSnackBar('Updated successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data ,refreshRequired:true })
   }
 }

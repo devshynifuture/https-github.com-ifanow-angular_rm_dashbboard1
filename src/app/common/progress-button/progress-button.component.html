@@ -1,6 +1,25 @@
-<div>
-    <h2>fill horizontal</h2>
-    <button class="progress-button" data-style="fill" data-horizontal>Submit</button>
-</div>
-<!-- <script src="https://tympanus.net/Development/ProgressButtonStyles/js/classie.js"></script>
-<script src="https://tympanus.net/Development/ProgressButtonStyles/js/progressButton.js"></script> -->
+<button [class.active]="options.active" [class.fullWidth]="options.fullWidth" [class.mat-flat-button]="options.flat"
+        [class.mat-raised-button]="options.raised" [class.mat-stroked-button]="options.stroked"
+        [color]="options.buttonColor" [disabled]="options.active || options.disabled"
+        [ngClass]="options.customClass" [type]="options.type" class="boxShadowNone"
+        mat-button>
+
+  <ng-container *ngIf="options.buttonIcon">
+    <mat-icon [class.is-mat-icon]="!options.buttonIcon.fontSet" [color]="options.buttonIcon.color"
+              [fontIcon]="options.buttonIcon.fontIcon" [fontSet]="options.buttonIcon.fontSet"
+              [inline]="options.buttonIcon.inline" [ngClass]="options.buttonIcon.customClass"
+              [svgIcon]="options.buttonIcon.svgIcon">
+      {{ options.buttonIcon.fontSet ? '' : options.buttonIcon.fontIcon }}
+    </mat-icon>
+  </ng-container>
+
+  <span class="textZindex">{{ options.text }}</span>
+
+  <mat-progress-bar #progressBar *ngIf="options.active && !options.disabled" [color]="options.barColor"
+                    [mode]="options.mode"
+                    [value]="options.value" class="bar">
+    <!--    class="bar"-->
+    <!--    [ngStyle]="{'.mat-progress-bar-buffer.background-color':options.buttonColor}"-->
+    <!--    [bufferValue]="0"-->
+  </mat-progress-bar>
+</button>

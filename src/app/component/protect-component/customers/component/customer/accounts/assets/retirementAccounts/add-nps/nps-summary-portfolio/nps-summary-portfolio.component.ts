@@ -85,8 +85,8 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     console.log('familyList', this.familyList)
   }
 
-  Close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' })
+  Close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' ,refreshRequired:flag})
   }
   showLess(value) {
     if (value == true) {
@@ -126,14 +126,14 @@ export class NpsSummaryPortfolioComponent implements OnInit {
         frequencyId: [null, [Validators.required]],
         accountPreferenceId: [null, [Validators.required]], approxContribution: [null, [Validators.required]]
       })]),
-      npsNomineesList: this.fb.array([this.fb.group({
-        nomineeName: [null, [Validators.required]], nomineePercentageShare: [null, [Validators.required, Validators.min(1)]],
+      nominees: this.fb.array([this.fb.group({
+        name: [null, [Validators.required]], sharePercentage: [null, [Validators.required, Validators.min(1)]],
       })]),
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
     });
     this.ownerData = this.summaryNPS.controls;
     this.nomineeData = this.summaryNPS.controls;
-    if (data.futureContributionList != undefined || data.npsNomineesList != undefined) {
+    if (data.futureContributionList != undefined) {
       data.futureContributionList.forEach(element => {
         this.summaryNPS.controls.futureContributionList.push(this.fb.group({
           frequencyId: [(element.frequencyId) + "", [Validators.required]],
@@ -142,17 +142,23 @@ export class NpsSummaryPortfolioComponent implements OnInit {
           id: [element.id, [Validators.required]]
         }))
       })
-      data.npsNomineesList.forEach(element => {
-        this.summaryNPS.controls.npsNomineesList.push(this.fb.group({
-          nomineeName: [(element.nomineeName), [Validators.required]],
+      this.futureContry.removeAt(0);
 
-          nomineePercentageShare: [element.nomineePercentageShare, Validators.required],
+    }
+    if(data.nominees!=undefined){
+      data.nominees.forEach(element => {
+        this.summaryNPS.controls.nominees.push(this.fb.group({
+          name: [(element.name), [Validators.required]],
+          familyMemberId: [(element.familyMemberId), [Validators.required]],
+          sharePercentage: [element.sharePercentage, Validators.required],
           id: [element.id, [Validators.required]]
         }))
       })
       this.nominee.removeAt(0);
-      this.futureContry.removeAt(0);
+
     }
+     
+    
     this.familyMemberId = this.summaryNPS.controls.familyMemberId.value
     this.familyMemberId = this.familyMemberId[0]
 
@@ -176,14 +182,14 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     }
   }
   get nominee() {
-    return this.summaryNPS.get('npsNomineesList') as FormArray;
+    return this.summaryNPS.get('nominees') as FormArray;
   }
   addNominee() {
     // this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
     //   return o.nomineePercentageShare;
     // });
     this.nominee.value.forEach(element => {
-      this.nexNomineePer += element.nomineePercentageShare
+      this.nexNomineePer += element.sharePercentage
     });
     if (this.nexNomineePer > 100) {
       this.showError = true
@@ -193,7 +199,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     }
     if (this.showError == false) {
       this.nominee.push(this.fb.group({
-        nomineeName: [null, [Validators.required]], nomineePercentageShare: [null, [Validators.required]],
+        name: [null, [Validators.required]], sharePercentage: [null, [Validators.required]],
       }));
     }
 
@@ -220,6 +226,9 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     if (this.summaryNPS.get('currentValue').invalid) {
       this.summaryNPS.get('currentValue').markAsTouched();
       return;
+    } else if (this.summaryNPS.get('ownerName').invalid) {
+      this.summaryNPS.get('ownerName').markAsTouched();
+      return
     } else if (this.summaryNPS.get('valueAsOn').invalid) {
       this.summaryNPS.get('valueAsOn').markAsTouched();
       return;
@@ -241,7 +250,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
         pran: this.summaryNPS.controls.pran.value,
         schemeChoice: this.summaryNPS.controls.schemeChoice.value,
         futureContributionList: this.summaryNPS.controls.futureContributionList.value,
-        npsNomineesList: this.summaryNPS.controls.npsNomineesList.value,
+        nominees: this.summaryNPS.controls.nominees.value,
         description: this.summaryNPS.controls.description.value,
         id: this.summaryNPS.controls.id.value
       }
@@ -259,10 +268,10 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   }
   addNPSRes(data) {
     this.event.openSnackBar('Added successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data ,refreshRequired:true})
   }
   editNPSRes(data) {
     this.event.openSnackBar('Updated successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data,refreshRequired:true })
   }
 }
