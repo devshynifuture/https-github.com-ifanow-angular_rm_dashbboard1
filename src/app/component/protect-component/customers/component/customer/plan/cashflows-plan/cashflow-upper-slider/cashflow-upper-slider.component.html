@@ -9,7 +9,7 @@
             {{ addOneInYear(year) }} </h2>
     </div>
     <div class="col-md-2 text-right">
-        <button mat-stroked-button (click)="close('close')">
+        <button mat-stroked-button (click)="close()">
             <mat-icon> close </mat-icon>
         </button>
     </div>
@@ -63,88 +63,77 @@
             <ng-container matColumnDef="month4">
                 <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Jul-{{ year.slice(-2) }}
                 </th>
-                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                     {{ element.month4 }} </td>
             </ng-container>
 
             <ng-container matColumnDef="month5">
                 <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Aug-{{ year.slice(-2) }}
                 </th>
-                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                     {{ element.month5 }} </td>
             </ng-container>
 
             <ng-container matColumnDef="month6">
                 <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Sep-{{ year.slice(-2) }}
                 </th>
-                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                     {{ element.month6 }} </td>
             </ng-container>
 
             <ng-container matColumnDef="month7">
                 <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Oct-{{ year.slice(-2) }}
                 </th>
-                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                     {{ element.month7 }} </td>
             </ng-container>
 
             <ng-container matColumnDef="month8">
                 <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Nov-{{ year.slice(-2) }}
                 </th>
-                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                     {{ element.month8 }} </td>
             </ng-container>
 
             <ng-container matColumnDef="month9">
                 <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Dec-{{ year.slice(-2) }}
                 </th>
-                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                     {{ element.month9 }}</td>
             </ng-container>
 
             <ng-container matColumnDef="month10">
                 <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Jan-{{ year.slice(-2) }}
                 </th>
-                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                     {{ element.month10 }} </td>
             </ng-container>
 
             <ng-container matColumnDef="month11">
                 <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Feb-{{ year.slice(-2) }}
                 </th>
-                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                     {{element.month11}} </td>
             </ng-container>
 
             <ng-container matColumnDef="month12">
                 <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Mar-{{ year.slice(-2) }}
                 </th>
-                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                     {{ element.month12 }}</td>
             </ng-container>
 
             <ng-container matColumnDef="total">
                 <th mat-header-cell *matHeaderCellDef> Total
                     20{{ year.slice(-2) }}-{{ addOneInYear(year.slice(-2))}} </th>
-                <td class="br-grey text-right f-14  " mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14  " mat-cell *matCellDef="let element">
 
                     {{ element.total }} </td>
             </ng-container>
 
             <ng-container matColumnDef="remove">
                 <th mat-header-cell *matHeaderCellDef> </th>
-                <td class="br-grey text-right f-14  " mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14  " mat-cell *matCellDef="let element">
                     1,20,000 </td>
             </ng-container>
 
@@ -194,16 +183,14 @@
             <ng-container matColumnDef="month4">
                 <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Jul-{{ year.slice(-2) }}
                 </th>
-                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                     {{ element.month4 }} </td>
             </ng-container>
 
             <ng-container matColumnDef="month5">
                 <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Aug-{{ year.slice(-2) }}
                 </th>
-                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                     {{ element.month5 }} </td>
             </ng-container>
 
@@ -216,72 +203,63 @@
             <ng-container matColumnDef="month6">
                 <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Sep-{{ year.slice(-2) }}
                 </th>
-                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                     {{ element.month6 }} </td>
             </ng-container>
 
             <ng-container matColumnDef="month7">
                 <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Oct-{{ year.slice(-2) }}
                 </th>
-                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                     {{ element.month7 }} </td>
             </ng-container>
 
             <ng-container matColumnDef="month8">
                 <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Nov-{{ year.slice(-2) }}
                 </th>
-                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                     {{ element.month8 }} </td>
             </ng-container>
 
             <ng-container matColumnDef="month9">
                 <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Dec-{{ year.slice(-2) }}
                 </th>
-                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                     {{ element.month9 }}</td>
             </ng-container>
 
             <ng-container matColumnDef="month10">
                 <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Jan-{{ year.slice(-2) }}
                 </th>
-                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                     {{ element.month10 }} </td>
             </ng-container>
 
             <ng-container matColumnDef="month11">
                 <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Feb-{{ year.slice(-2) }}
                 </th>
-                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                     {{element.month11}} </td>
             </ng-container>
 
             <ng-container matColumnDef="month12">
                 <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Mar-{{ year.slice(-2) }}
                 </th>
-                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                     {{ element.month12 }}</td>
             </ng-container>
 
             <ng-container matColumnDef="total">
                 <th mat-header-cell *matHeaderCellDef> Total
                     20{{ year.slice(-2) }}-{{ addOneInYear(year.slice(-2))}} </th>
-                <td class="br-grey text-right f-14  " mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14  " mat-cell *matCellDef="let element">
 
                     {{ element.total }} </td>
             </ng-container>
 
             <ng-container matColumnDef="remove">
                 <th mat-header-cell *matHeaderCellDef> </th>
-                <td class="br-grey text-right f-14  " mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14  " mat-cell *matCellDef="let element">
                     1,20,000 </td>
             </ng-container>
 
@@ -331,16 +309,14 @@
             <ng-container matColumnDef="month4">
                 <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Jul-{{ year.slice(-2) }}
                 </th>
-                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                     {{ element.month4 }} </td>
             </ng-container>
 
             <ng-container matColumnDef="month5">
                 <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Aug-{{ year.slice(-2) }}
                 </th>
-                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                     {{ element.month5 }} </td>
             </ng-container>
 
@@ -353,56 +329,49 @@
             <ng-container matColumnDef="month6">
                 <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Sep-{{ year.slice(-2) }}
                 </th>
-                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                     {{ element.month6 }} </td>
             </ng-container>
 
             <ng-container matColumnDef="month7">
                 <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Oct-{{ year.slice(-2) }}
                 </th>
-                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                     {{ element.month7 }} </td>
             </ng-container>
 
             <ng-container matColumnDef="month8">
                 <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Nov-{{ year.slice(-2) }}
                 </th>
-                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                     {{ element.month8 }} </td>
             </ng-container>
 
             <ng-container matColumnDef="month9">
                 <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Dec-{{ year.slice(-2) }}
                 </th>
-                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                     {{ element.month9 }}</td>
             </ng-container>
 
             <ng-container matColumnDef="month10">
                 <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Jan-{{ year.slice(-2) }}
                 </th>
-                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                     {{ element.month10 }} </td>
             </ng-container>
 
             <ng-container matColumnDef="month11">
                 <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Feb-{{ year.slice(-2) }}
                 </th>
-                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                     {{element.month11}} </td>
             </ng-container>
 
             <ng-container matColumnDef="month12">
                 <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Mar-{{ year.slice(-2) }}
                 </th>
-                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                     {{ element.month12 }}</td>
             </ng-container>
 
@@ -410,16 +379,14 @@
                 <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Total
                     20{{ year.slice(-2) }}-{{ addOneInYear(year.slice(-2))}}
                 </th>
-                <td class="br-grey text-right f-14  " mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14  " mat-cell *matCellDef="let element">
 
                     {{ element.total }} </td>
             </ng-container>
 
             <ng-container matColumnDef="remove">
                 <th mat-header-cell *matHeaderCellDef> </th>
-                <td class="br-grey text-right f-14  " mat-cell *matCellDef="let element"
-                    (click)="openUpperSlider(element)">
+                <td class="br-grey text-right f-14  " mat-cell *matCellDef="let element">
                     <i class="material-icons text-danger f-18 ">
                         delete_outline
                     </i>
