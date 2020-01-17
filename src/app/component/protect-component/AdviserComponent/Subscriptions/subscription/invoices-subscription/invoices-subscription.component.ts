@@ -6,7 +6,6 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { AuthService } from '../../../../../../auth-service/authService';
 import { UtilService, ValidatorType } from '../../../../../../services/util.service';
-import * as _ from 'lodash';
 import { DatePipe } from '@angular/common';
 import { element } from 'protractor';
 
