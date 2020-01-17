@@ -9,11 +9,15 @@ import { AddGoalComponent } from './goals-plan/add-goal/add-goal.component';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { CashflowUpperSliderComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-upper-slider.component';
+import { CashflowAddComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-add/cashflow-add.component';
 
 export const componentList = [
   PreferencesComponent,
   AddGoalComponent,
-  AddProfilePlanComponent
+  AddProfilePlanComponent,
+  CashflowUpperSliderComponent,
+  CashflowAddComponent
 ];
 // import { AddPlaninsuranceComponent } from './insurance-plan/add-planinsurance/add-planinsurance.component';
 

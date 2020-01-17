@@ -86,7 +86,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   }
 
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' ,refreshRequired:flag})
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag })
   }
   showLess(value) {
     if (value == true) {
@@ -145,20 +145,27 @@ export class NpsSummaryPortfolioComponent implements OnInit {
       this.futureContry.removeAt(0);
 
     }
-    if(data.nominees!=undefined){
-      data.nominees.forEach(element => {
-        this.summaryNPS.controls.nominees.push(this.fb.group({
-          name: [(element.name), [Validators.required]],
-          familyMemberId: [(element.familyMemberId), [Validators.required]],
-          sharePercentage: [element.sharePercentage, Validators.required],
-          id: [element.id, [Validators.required]]
-        }))
-      })
-      this.nominee.removeAt(0);
+    if (data.nominees != undefined) {
+      if (data.nominees.length != 0) {
+        data.nominees.forEach(element => {
+          this.summaryNPS.controls.nominees.push(this.fb.group({
+            name: [(element.name), [Validators.required]],
+            familyMemberId: [(element.familyMemberId), [Validators.required]],
+            sharePercentage: [element.sharePercentage, Validators.required],
+            id: [element.id, [Validators.required]]
+          }))
+        })
+        this.nominee.removeAt(0);
+
+      }else{
+        this.nominee.push(this.fb.group({
+          name: [null, [Validators.required]], sharePercentage: [null, [Validators.required]],
+        }));
+      }
 
     }
-     
-    
+
+
     this.familyMemberId = this.summaryNPS.controls.familyMemberId.value
     this.familyMemberId = this.familyMemberId[0]
 
@@ -254,6 +261,12 @@ export class NpsSummaryPortfolioComponent implements OnInit {
         description: this.summaryNPS.controls.description.value,
         id: this.summaryNPS.controls.id.value
       }
+      this.nominee.value.forEach(element => {
+        if (element.sharePercentage == null && element.name == null){
+          this.nominee.removeAt(0);
+        }
+        obj.nominees=this.summaryNPS.controls.nominees.value;
+      });
       if (this.summaryNPS.controls.id.value == undefined) {
         this.custumService.addNPS(obj).subscribe(
           data => this.addNPSRes(data)
@@ -268,10 +281,10 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   }
   addNPSRes(data) {
     this.event.openSnackBar('Added successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data ,refreshRequired:true})
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }
   editNPSRes(data) {
     this.event.openSnackBar('Updated successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data,refreshRequired:true })
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }
 }

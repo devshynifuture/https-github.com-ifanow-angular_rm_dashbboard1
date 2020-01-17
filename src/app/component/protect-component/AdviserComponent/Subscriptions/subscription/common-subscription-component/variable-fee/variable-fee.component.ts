@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { SubscriptionService } from '../../../subscription.service';
 import { ValidatorType } from "../../../../../../../services/util.service";
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-variable-fee',
@@ -10,7 +11,7 @@ import { ValidatorType } from "../../../../../../../services/util.service";
   styleUrls: ['./variable-fee.component.scss']
 })
 export class VariableFeeComponent implements OnInit {
-  otherAssetData: any[];
+  otherAssetData: [];
   selectedOtherAssets = [];
   isBillValid: any;
   mutualFundFees: any;
@@ -111,8 +112,12 @@ export class VariableFeeComponent implements OnInit {
       this.getVariableFee().otherAssetClassFees.setValue(this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[0].subscriptionSubAssets);
       this.otherAssetData = [];
       this.otherAssetData = this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[2].subscriptionSubAssets;
+      this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[2].subscriptionSubAssets.forEach(element => {
+        if (element.selected) {
+          this.selectedOtherAssets.push(element.subAssetClassId)
+        }
+      });
       (this.singleSubscriptionData.isCreateSub == false) ? this.variableFeeStructureForm.enable() : this.variableFeeStructureForm.disable();
-
     }
   }
 
@@ -134,7 +139,7 @@ export class VariableFeeComponent implements OnInit {
 
   selectAssets(data) {
     data.selected = true;
-    this.selectedOtherAssets.push(data);
+    this.selectedOtherAssets.push(parseInt(data.subAssetClassId));
     console.log(this.selectedOtherAssets);
   }
 
@@ -185,11 +190,12 @@ export class VariableFeeComponent implements OnInit {
             liquidAllocation: this.variableFeeStructureForm.get('regularFees.liquid').value
           }, {
             assetClassId: 2,
-            subAssetIds: this.getJsonForSelectedSubAsset(),
+            subAssetIds: this.selectedOtherAssets,
             pricing: this.variableFeeStructureForm.controls.pricing.value
           }
         ]
       };
+      // this.getJsonForSelectedSubAsset()
       if (this.singleSubscriptionData.isCreateSub == false) {
         obj['feeTypeId'] = this.singleSubscriptionData.subscriptionPricing.feeTypeId;
         obj['clientId'] = this.singleSubscriptionData.clientId;
@@ -220,13 +226,13 @@ export class VariableFeeComponent implements OnInit {
     }
   }
 
-  getJsonForSelectedSubAsset() {
-    const selectedSubAssetIds = [];
-    this.selectedOtherAssets.forEach(singleSubAsset => {
-      selectedSubAssetIds.push(singleSubAsset.subAssetClassId);
-    });
-    return selectedSubAssetIds;
-  }
+  // getJsonForSelectedSubAsset() {
+  //   const selectedSubAssetIds = [];
+  //   this.selectedOtherAssets.forEach(singleSubAsset => {
+  //     selectedSubAssetIds.push(singleSubAsset.subAssetClassId);
+  //   });
+  //   return selectedSubAssetIds;
+  // }
 
   saveVariableModifyFeesResponse(data) {
     if (this.singleSubscriptionData.isCreateSub) {

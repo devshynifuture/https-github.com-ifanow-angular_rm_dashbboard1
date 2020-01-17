@@ -165,8 +165,8 @@
       </div>
       <div class="col-md-5">
         <div class="form-group mb-0">
-          <textarea class="form-control" formControlName="notes" maxlength="{{getFormControl().notes.maxLength}}"
-            rows="5"></textarea>
+          <textarea class="form-control" #notesRef formControlName="notes"
+            maxlength="{{getFormControl().notes.maxLength}}" rows="5"></textarea>
         </div>
         <div class="row ">
           <div class="col-md-9">
@@ -176,6 +176,9 @@
             <p class="mb-0 f-12 text-custom text-right pt-4">
               {{getFormControl().notes.value?.length ? getFormControl().notes.value.length : 0}}
               /{{getFormControl().notes.maxLength}}
+            </p> -->
+            <p class="mb-0 f-12 text-custom text-right pt-4">
+              {{notesRef.value.length }}/{{getFormControl().notes.maxLength}}
             </p>
           </div>
         </div>

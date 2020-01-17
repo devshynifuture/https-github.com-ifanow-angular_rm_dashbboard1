@@ -88,7 +88,7 @@ export class InputValueValidationDirective {
     if (!this.inputValidator.test(currValue)) {
       // console.log('InputValueValidationDirective onInputChange inputValidator failed : ', this.inputValidator);
       //
-      // console.log('InputValueValidationDirective onInputChange inputValidator failed : ', currValue);
+      console.log('InputValueValidationDirective onInputChange inputValidator failed : ', currValue);
       currValue = this.prevValue;
     }
     if (currValue !== this._el.nativeElement.value) {
