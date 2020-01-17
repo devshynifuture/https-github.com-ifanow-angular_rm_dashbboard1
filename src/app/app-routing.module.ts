@@ -1,12 +1,12 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {LeftsidebarComponent} from './component/left-sidebar/leftsidebar/leftsidebar.component';
-import {LoginComponent} from './component/no-protected/login/login.component';
-import {SelectivePreloadingStrategyService} from './services/selective-preloading-strategy.service';
-import {ErrorPageComponent} from './component/protect-component/common-component/error-page/error-page.component';
-import {DataNotFoundComponent} from './component/protect-component/common-component/data-not-found/data-not-found.component';
-import {AuthGuard} from './guards/auth.guard';
-import {FormTestComponent} from './test/form-test/form-test.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { LeftsidebarComponent } from './component/left-sidebar/leftsidebar/leftsidebar.component';
+import { LoginComponent } from './component/no-protected/login/login.component';
+import { SelectivePreloadingStrategyService } from './services/selective-preloading-strategy.service';
+import { ErrorPageComponent } from './component/protect-component/common-component/error-page/error-page.component';
+import { DataNotFoundComponent } from './component/protect-component/common-component/data-not-found/data-not-found.component';
+import { AuthGuard } from './guards/auth.guard';
+import { FormTestComponent } from './test/form-test/form-test.component';
 import { calendarComponent } from './component/protect-component/AdviserComponent/Activities/calendar/calendar.component';
 
 const routes: Routes = [
@@ -17,39 +17,9 @@ const routes: Routes = [
     // outlet: 'mainrouter'
   },
   {
-    path: 'admin', component: LeftsidebarComponent,
-
+    path: 'admin',
+    loadChildren: () => import('./component/left-sidebar/leftsidebar/leftsidebar.module').then(m => m.LeftsidebarModule),
     // outlet: 'mainrouter',
-    children: [
-      {
-        path: 'subscription',
-        // outlet: 'main-left-router',
-        // outlet: 'mainleftbar',
-        loadChildren: () => import('./component/protect-component/AdviserComponent/Subscriptions/subscription.module')
-          .then(m => m.SubscriptionModule),
-        data: {animation: 'Tab1', preload: true}
-
-        // data: {preload: true}
-
-      },
-      {
-        path: 'emails',
-        // outlet: 'main-left-router',
-        loadChildren: () => import('./component/protect-component/AdviserComponent/Email/email.module')
-          .then(m => m.EmailModule),
-        data: {animation: 'Tab1', preload: true}
-
-      },
-      {
-        path: 'activies',
-        loadChildren: () => import('./component/protect-component/AdviserComponent/Activities/activities/activies.module').then(m => m.ActiviesModule),
-        data: {animation: 'Tab1', preload: true}
-      },
-      {
-        path: 'calendar',
-        component: calendarComponent
-      },
-    ],
     canActivate: [AuthGuard],
 
   },
@@ -65,7 +35,7 @@ const routes: Routes = [
         path: '',
         loadChildren: () => import('./component/protect-component/customers/customers.module')
           .then(m => m.CustomersModule),
-        data: {animation: 'Tab1', preload: true},
+        data: { animation: 'Tab1', preload: true },
 
 
         // data: {preload: true}
@@ -111,10 +81,10 @@ const routes: Routes = [
     path: 'data-not-found',
     component: DataNotFoundComponent
   },
- /* {
-    path: 'buttons',
-    component: ProgressButtonComponent
-  },*/
+  /* {
+     path: 'buttons',
+     component: ProgressButtonComponent
+   },*/
   {
     path: 'test',
     component: FormTestComponent

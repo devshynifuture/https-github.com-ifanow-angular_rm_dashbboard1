@@ -79,7 +79,7 @@ export class AddExpensesComponent implements OnInit {
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
       category:[(data == undefined) ? '' : data.expenseCategoryId, [Validators.required]],
       familyMember: [(data == undefined) ? '' : data.familyMember, [Validators.required]],
-      paymentModeId: [[(data == undefined) ? '' : data.paymentModeId], [Validators.required]],
+      paymentModeId: [(data == undefined) ? '' : data.paymentModeId+ '', [Validators.required]],
       isRecuring: [(data == undefined) ? '' : data.isRecuring, [Validators.required]],
     });
     this.expenseList = this.constantService.expenseList

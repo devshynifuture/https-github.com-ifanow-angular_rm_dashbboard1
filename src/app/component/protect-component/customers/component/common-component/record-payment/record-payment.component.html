@@ -14,7 +14,7 @@
           <div class="col-md-10 pr-0">
             <mat-error class="f-12 pt-4"
               *ngIf="rPayment.get('amountReceived').errors?.required && rPayment.get('amountReceived').touched">
-              This feild is required
+              This field is required
             </mat-error>
             <mat-error *ngIf="(rPayment.get('amountReceived').errors?.max)" class="f-12 pt-4">
               Should be less than or equal to {{this.balDue}}
@@ -65,7 +65,7 @@
           <div class="col-md-10 pr-0">
             <mat-error class="f-12 pt-4"
               *ngIf="rPayment.get('tds').errors?.required && rPayment.get('tds').touched && showError==false">
-              This feild is required
+              This field is required
             </mat-error>
             <mat-error *ngIf="showError==true" class="f-12 pt-4">
               Should be less than or equal to {{this.tdsAmt}}
@@ -131,7 +131,7 @@
           <div class="col-md-10 pr-0">
             <mat-error class="f-12 pt-4"
               *ngIf="rPayment.get('paymentMode').errors?.required && rPayment.get('paymentMode').touched">
-              This feild is required
+              This field is required
             </mat-error>
           </div>
         </div>
@@ -153,7 +153,7 @@
           <div class="col-md-10 pr-0">
             <mat-error class="f-12 pt-4"
               *ngIf="rPayment.get('gstTreatment').errors?.required && rPayment.get('gstTreatment').touched">
-              This feild is required
+              This field is required
             </mat-error>
           </div>
         </div>
