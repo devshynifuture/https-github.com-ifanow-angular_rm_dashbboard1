@@ -4,14 +4,14 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
 import {AuthService} from '../../../../../../../auth-service/authService';
 import {EventService} from 'src/app/Data-service/event.service';
-import {ValidatorType} from "../../../../../../../services/util.service";
+import {ValidatorType} from '../../../../../../../services/util.service';
 
 @Component({
-  selector: 'app-add-structure',
-  templateUrl: './add-structure.component.html',
-  styleUrls: ['./add-structure.component.scss']
+  selector: 'app-add-plan-detail',
+  templateUrl: './add-plan-detail.component.html',
+  styleUrls: ['./add-plan-detail.component.scss']
 })
-export class AddStructureComponent implements OnInit {
+export class AddPlanDetailComponent implements OnInit {
   editApiCall;
   @Output() planOuputData = new EventEmitter();
   isCheckPlanData: any;
@@ -85,7 +85,7 @@ export class AddStructureComponent implements OnInit {
       this.isDescValid = true;
       return;
     } else {
-      if (this.editApiCall == undefined) {
+      if (!this.editApiCall) {
         const obj = {
           name: this.getFormControl().planName.value,
           description: this.getFormControl().description.value,
@@ -118,7 +118,7 @@ export class AddStructureComponent implements OnInit {
     // obj.id = (this.editApiCall == '') ? data : data.id
     // console.log(obj);
     this.planOuputData.emit(data);
-    (this.editApiCall == undefined) ? this.eventService.openSnackBar('Plan is created', 'OK') : this.eventService.openSnackBar('Plan is edited', 'OK');
+    (!this.editApiCall) ? this.eventService.openSnackBar('Plan is created', 'OK') : this.eventService.openSnackBar('Plan is edited', 'OK');
     this.subinject.changeUpperRightSliderState({state: 'close'});
 
   }

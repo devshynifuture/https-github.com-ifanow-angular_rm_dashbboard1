@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import * as _ from 'lodash';
 
 @Component({
   selector: 'app-add-mutual-fund',
@@ -16,7 +15,7 @@ export class AddMutualFundComponent implements OnInit {
   _data: any;
   ownerName: any;
   selectedFamilyData: any;
-  dataFM: any;
+  dataFM = [];
   familyList: any[];
   nexNomineePer: number;
   showError: boolean;
@@ -112,9 +111,10 @@ export class AddMutualFundComponent implements OnInit {
     this.dataFM = this.nomineesListFM
     if (this.dataFM.length > 0) {
       let name = this.ownerName
-      var evens = _.reject(this.dataFM, function (n) {
-        return n.userName == name;
-      });
+      // var evens = _.reject(this.dataFM, function (n) {
+      //   return n.userName == name;
+      // });
+      let evens = this.dataFM.filter(delData => delData.userName != name)
       this.familyList = evens
     }
     console.log('familyList', this.familyList)

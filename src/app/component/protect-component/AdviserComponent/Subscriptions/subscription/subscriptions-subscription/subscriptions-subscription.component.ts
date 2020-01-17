@@ -6,7 +6,6 @@ import { DeleteSubscriptionComponent } from '../common-subscription-component/de
 import { SubscriptionService } from '../../subscription.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { AuthService } from '../../../../../../auth-service/authService';
-import * as _ from 'lodash';
 import { EnumServiceService } from '../../../../../../services/enum-service.service';
 import { UtilService } from '../../../../../../services/util.service';
 import { DatePipe } from '@angular/common';
@@ -401,7 +400,8 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   addFilters(addFilters) {
 
     console.log('addFilters', addFilters);
-    if (!_.includes(this.filterStatus, addFilters)) {
+    // !_.includes(this.filterStatus, addFilters)
+    if (this.filterStatus.find(element => element.name == addFilters.name) == undefined) {
       this.lastFilterDataId = 0;
       this.filterStatus.push(addFilters);
       this.filterDataArr = [];

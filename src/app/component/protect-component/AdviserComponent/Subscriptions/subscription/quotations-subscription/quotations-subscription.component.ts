@@ -1,17 +1,16 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {SubscriptionInject} from '../../subscription-inject.service';
-import {SubscriptionService} from '../../subscription.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from "../../../../../../auth-service/authService";
-import {UtilService} from 'src/app/services/util.service';
-import * as _ from 'lodash';
-import {DatePipe} from '@angular/common';
-import {MAT_DATE_FORMATS} from 'saturn-datepicker';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {AddQuotationComponent} from '../common-subscription-component/add-quotation/add-quotation.component';
-import {CommonFroalaComponent} from '../common-subscription-component/common-froala/common-froala.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { SubscriptionInject } from '../../subscription-inject.service';
+import { SubscriptionService } from '../../subscription.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from "../../../../../../auth-service/authService";
+import { UtilService } from 'src/app/services/util.service';
+import { DatePipe } from '@angular/common';
+import { MAT_DATE_FORMATS } from 'saturn-datepicker';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { AddQuotationComponent } from '../common-subscription-component/add-quotation/add-quotation.component';
+import { CommonFroalaComponent } from '../common-subscription-component/common-froala/common-froala.component';
 
 export interface PeriodicElement {
   name: string;
@@ -39,11 +38,11 @@ export interface PeriodicElement {
     // },
     // { provide: MAT_DATE_LOCALE, useValue: 'en' },
     [DatePipe],
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
 export class QuotationsSubscriptionComponent implements OnInit {
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   displayedColumns: string[] = ['checkbox', 'name', 'docname', 'plan', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
   advisorId;
   maxDate = new Date();
@@ -74,20 +73,20 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
 
   chips = [
-    {name: 'LIVE', value: 1},
-    {name: 'PAID', value: 2},
-    {name: 'OVERDUE', value: 3}
+    { name: 'LIVE', value: 1 },
+    { name: 'PAID', value: 2 },
+    { name: 'OVERDUE', value: 3 }
   ];
   dateChips = [
-    {name: 'Created date', value: 1},
-    {name: 'Sent date', value: 2},
-    {name: 'Client consent', value: 3}
+    { name: 'Created date', value: 1 },
+    { name: 'Sent date', value: 2 },
+    { name: 'Client consent', value: 3 }
   ];
   dataCount: number;
 
 
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
-              public dialog: MatDialog, private subService: SubscriptionService, private datePipe: DatePipe) {
+    public dialog: MatDialog, private subService: SubscriptionService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
@@ -171,7 +170,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate)
-    this.selectedDateRange = {begin: selectedDateRange.begin, end: selectedDateRange.end};
+    this.selectedDateRange = { begin: selectedDateRange.begin, end: selectedDateRange.end };
     this.getQuotationsData(false)
   }
 
@@ -222,15 +221,15 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
   deleteModal(data) {
     this.list = [];
-    if(data == null){
+    if (data == null) {
       this.dataSource.filteredData.forEach(singleElement => {
         if (singleElement.selected) {
           this.list.push(singleElement.documentRepositoryId);
         }
       });
     }
-    else{
-     this.list = [data.documentRepositoryId];
+    else {
+      this.list = [data.documentRepositoryId];
     }
     const dialogData = {
       data: 'DOCUMENT',
@@ -264,8 +263,8 @@ export class QuotationsSubscriptionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result,this.dataSource.data,"delete result");
-      if(this.list.length > 0){
+      console.log(result, this.dataSource.data, "delete result");
+      if (this.list.length > 0) {
         const tempList = []
         this.dataSource.data.forEach(singleElement => {
           if (!singleElement.selected) {
@@ -289,7 +288,8 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
   addFilters(addFilters) {
     console.log('addFilters', addFilters);
-    if (!_.includes(this.filterStatus, addFilters)) {
+    // !_.includes(this.filterStatus, addFilters)
+    if (this.filterStatus.find(element => element.name == addFilters.name) == undefined) {
       this.filterStatus.push(addFilters);
       this.getQuotationsData(false);
     } else {
@@ -317,7 +317,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
 
-    this.selectedDateRange = {begin: beginDate, end: endDate};
+    this.selectedDateRange = { begin: beginDate, end: endDate };
 
     this.getQuotationsData(false);
   }

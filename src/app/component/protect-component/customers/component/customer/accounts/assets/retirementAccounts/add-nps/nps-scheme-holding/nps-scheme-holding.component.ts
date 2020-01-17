@@ -9,7 +9,6 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
-import * as _ from 'lodash';
 
 @Component({
   selector: 'app-nps-scheme-holding',
@@ -35,27 +34,27 @@ export class NpsSchemeHoldingComponent implements OnInit {
   idForscheme1: any[];
   clientId: any;
   nomineesListFM: any;
-  dataFM: any;
+  dataFM = [];
   familyList: any;
-  nexNomineePer=0;
+  nexNomineePer = 0;
   showError = false;
 
-  constructor(private event : EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public utils: UtilService) { }
+  constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) { }
   @Input()
   set data(data) {
     this.inputData = data;
-   this.getdataForm(data);
+    this.getdataForm(data);
   }
   get data() {
     return this.inputData;
   }
   ngOnInit() {
-    this.idForscheme1  = []
+    this.idForscheme1 = []
     this.advisorId = AuthService.getAdvisorId()
     this.clientId = AuthService.getClientId();
     this.getGlobalList()
-    
-  
+
+
   }
 
   display(value) {
@@ -71,9 +70,10 @@ export class NpsSchemeHoldingComponent implements OnInit {
     this.dataFM = this.nomineesListFM
     if (this.dataFM.length > 0) {
       let name = this.ownerName
-      var evens = _.reject(this.dataFM, function (n) {
-        return n.userName == name;
-      });
+      // var evens = _.reject(this.dataFM, function (n) {
+      //   return n.userName == name;
+      // });
+      let evens = this.dataFM.filter(deltData => deltData.userName != name)
       this.familyList = evens
     }
 
@@ -93,38 +93,38 @@ export class NpsSchemeHoldingComponent implements OnInit {
       this.showError = false
     }
   }
-  getGlobalList(){
+  getGlobalList() {
     this.custumService.getGlobal().subscribe(
-        data => this.getGlobalRes(data)
+      data => this.getGlobalRes(data)
     );
   }
-  getGlobalRes(data){
- 
-    console.log('getGlobalRes',data)
+  getGlobalRes(data) {
+
+    console.log('getGlobalRes', data)
     this.schemeList = data.npsScheme;
   }
-  
+
   getdataForm(data) {
     if (data == undefined) {
       data = {}
     }
     this.schemeHoldingsNPS = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
-      schemeChoice: [(data == undefined) ? '' : (data.schemeChoice)+"", [Validators.required]],
+      schemeChoice: [(data == undefined) ? '' : (data.schemeChoice) + "", [Validators.required]],
       pran: [(data == undefined) ? '' : data.pran, [Validators.required]],
-      schemeName:[(data == undefined) ? '' : data.schemeName, [Validators.required]],
+      schemeName: [(data == undefined) ? '' : data.schemeName, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
       holdingList: this.fb.array([this.fb.group({
-        schemeName:  [null, [Validators.required]], holdingAsOn:  [null, [Validators.required]],
-        totalUnits:  [null, [Validators.required]], totalNetContribution:  [null, [Validators.required]]
+        schemeName: [null, [Validators.required]], holdingAsOn: [null, [Validators.required]],
+        totalUnits: [null, [Validators.required]], totalNetContribution: [null, [Validators.required]]
       })]),
       futureContributionList: this.fb.array([this.fb.group({
-        frequencyId:  [null, [Validators.required]],
-        accountPreferenceId:  [null, [Validators.required]], approxContribution:  [null, [Validators.required]]
+        frequencyId: [null, [Validators.required]],
+        accountPreferenceId: [null, [Validators.required]], approxContribution: [null, [Validators.required]]
       })]),
       nominees: this.fb.array([this.fb.group({
-        name: null,sharePercentage:null,
+        name: null, sharePercentage: null,
       })]),
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
     });
@@ -137,7 +137,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
           frequencyId: [(element.frequencyId) + "", [Validators.required]],
           accountPreferenceId: [(element.accountPreferenceId + ""), Validators.required],
           approxContribution: [(element.approxContribution), Validators.required],
-          id:[element.id,[Validators.required]]
+          id: [element.id, [Validators.required]]
         }))
       })
       // data.nominees.forEach(element => {
@@ -159,21 +159,21 @@ export class NpsSchemeHoldingComponent implements OnInit {
             }))
           })
           this.nominee.removeAt(0);
-  
-        }else{
+
+        } else {
           this.nominee.push(this.fb.group({
             name: [null, [Validators.required]], sharePercentage: [null, [Validators.required]],
           }));
         }
-  
+
       }
       data.holdingList.forEach(element => {
         this.schemeHoldingsNPS.controls.holdingList.push(this.fb.group({
           schemeName: [(element.schemeId) + "", [Validators.required]],
           totalUnits: [(element.totalUnits), Validators.required],
           totalNetContribution: [(element.totalNetContribution), Validators.required],
-          holdingAsOn:[new Date(element.totalNetContribution), Validators.required],
-          id:[element.id,[Validators.required]]
+          holdingAsOn: [new Date(element.totalNetContribution), Validators.required],
+          id: [element.id, [Validators.required]]
         }))
       })
       // this.nominee.removeAt(0);
@@ -187,13 +187,13 @@ export class NpsSchemeHoldingComponent implements OnInit {
   }
   addHoldings() {
     this.holdings.push(this.fb.group({
-      schemeName:  [null, [Validators.required]], holdingAsOn:  [null, [Validators.required]],
-      totalUnits:  [null, [Validators.required]], totalNetContribution:  [null, [Validators.required]]
+      schemeName: [null, [Validators.required]], holdingAsOn: [null, [Validators.required]],
+      totalUnits: [null, [Validators.required]], totalNetContribution: [null, [Validators.required]]
     }));
 
   }
   removeHoldings(item) {
-    if(this.holdings.value.length>1){
+    if (this.holdings.value.length > 1) {
       this.holdings.removeAt(item)
     }
   }
@@ -202,8 +202,8 @@ export class NpsSchemeHoldingComponent implements OnInit {
   }
   addFutureContry() {
     this.futureContry.push(this.fb.group({
-      frequencyId:  [null, [Validators.required]],
-      accountPreferenceId:  [null, [Validators.required]], approxContribution:  [null, [Validators.required]]
+      frequencyId: [null, [Validators.required]],
+      accountPreferenceId: [null, [Validators.required]], approxContribution: [null, [Validators.required]]
     }));
 
   }
@@ -230,10 +230,10 @@ export class NpsSchemeHoldingComponent implements OnInit {
     }
     if (this.showError == false) {
       this.nominee.push(this.fb.group({
-        name:  null, sharePercentage:null,
+        name: null, sharePercentage: null,
       }));
     }
-   
+
   }
   removeNominee(item) {
     if (this.nominee.value.length > 1) {
@@ -256,7 +256,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
     return this.schemeHoldingsNPS.controls;
   }
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag })
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag })
   }
   saveSchemeHolding() {
     console.log(this.schemeHoldingsNPS.get('holdingList').invalid)
@@ -268,30 +268,30 @@ export class NpsSchemeHoldingComponent implements OnInit {
     } else if (this.schemeHoldingsNPS.get('ownerName').invalid) {
       this.schemeHoldingsNPS.get('ownerName').markAsTouched();
       return
-    }  else if (this.schemeHoldingsNPS.get('holdingList').invalid) {
+    } else if (this.schemeHoldingsNPS.get('holdingList').invalid) {
       this.schemeHoldingsNPS.get('holdingList').markAsTouched();
       return
-    }  else if (this.schemeHoldingsNPS.get('futureContributionList').invalid) {
+    } else if (this.schemeHoldingsNPS.get('futureContributionList').invalid) {
       this.schemeHoldingsNPS.get('futureContributionList').markAsTouched();
       return
-    }else {
+    } else {
       let obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
         familyMemberId: this.familyMemberId,
         ownerName: (this.ownerName == undefined) ? this.schemeHoldingsNPS.controls.ownerName.value : this.ownerName,
         pran: this.schemeHoldingsNPS.controls.pran.value,
-        holdingList:this.schemeHoldingsNPS.controls.holdingList.value,
+        holdingList: this.schemeHoldingsNPS.controls.holdingList.value,
         futureContributionList: this.schemeHoldingsNPS.controls.futureContributionList.value,
         nominees: this.schemeHoldingsNPS.controls.nominees.value,
         description: this.schemeHoldingsNPS.controls.description.value,
         id: this.schemeHoldingsNPS.controls.id.value
       }
       this.nominee.value.forEach(element => {
-        if (element.sharePercentage == null && element.name == null){
+        if (element.sharePercentage == null && element.name == null) {
           this.nominee.removeAt(0);
         }
-        obj.nominees=this.schemeHoldingsNPS.controls.nominees.value;
+        obj.nominees = this.schemeHoldingsNPS.controls.nominees.value;
       });
       if (this.schemeHoldingsNPS.controls.id.value == undefined) {
         this.custumService.addNPS(obj).subscribe(
@@ -305,12 +305,12 @@ export class NpsSchemeHoldingComponent implements OnInit {
       }
     }
   }
-  addNPSRes(data){
+  addNPSRes(data) {
     this.event.openSnackBar('Added successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data ,refreshRequired:true })
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }
-  editNPSRes(data){
+  editNPSRes(data) {
     this.event.openSnackBar('Updated successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data ,refreshRequired:true })
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }
 }

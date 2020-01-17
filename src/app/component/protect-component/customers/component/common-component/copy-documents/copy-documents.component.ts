@@ -1,5 +1,4 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import * as _ from 'lodash';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DialogData } from '../document-new-folder/document-new-folder.component';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -80,7 +79,7 @@ export class CopyDocumentsComponent implements OnInit {
     tabValue = (tabValue == 'Documents' || tabValue == 1) ? 1 : (tabValue == 'Recents' || tabValue == 2) ? 2 : (tabValue == 'Starred' || tabValue == 3) ? 3 : 4;
     this.valueTab = tabValue;
     this.backUpfiles = [];
-    this.commonFileFolders=[];
+    this.commonFileFolders = [];
     this.openFolderName = [];
     const obj = {
       advisorId: this.advisorId,
@@ -121,21 +120,22 @@ export class CopyDocumentsComponent implements OnInit {
     this.fileSizeConversion();
   }
 
-  getFolders(data) {
+  getFolders(data, index) {
     this.parentId = (data == undefined) ? 0 : data[0].folderParentId
     console.log('parentId', this.parentId)
-    this.openFolderName = _.reject(this.openFolderName, function (n) {
-      return n.openFolderId > data.openFolderId + 1;
-    });
+    // this.openFolderName = _.reject(this.openFolderName, function (n) {
+    //   return n.openFolderId > data.openFolderId + 1;
+    // });
+    this.openFolderName = this.openFolderName.filter((element, i) => i <= index);
     this.commonFileFolders = this.openFolderName[this.openFolderName.length - 1];
-    this.openFolderName = _.reject(this.openFolderName, function (n) {
-      return n.openFolderId > data.openFolderId;
-    });
+    // this.openFolderName = _.reject(this.openFolderName, function (n) {
+    //   return n.openFolderId > data.openFolderId;
+    // });
     this.commonFileFolders = data;
     this.valueFirst = this.openFolderName[0];
   }
 
-  
+
   reset() {
     if (this.openFolderName.length > 0) {
       this.commonFileFolders = this.backUpfiles[0];
@@ -194,20 +194,20 @@ export class CopyDocumentsComponent implements OnInit {
       }
     }
   }
-  moveFolderRes(data){
+  moveFolderRes(data) {
     console.log(data)
     this.reset()
-     this.dialogRef.close('Documents')
+    this.dialogRef.close('Documents')
   }
   moveFilesRes(data) {
     console.log(data);
     this.reset()
-     this.dialogRef.close('Documents')
+    this.dialogRef.close('Documents')
   }
   copyFilesRes(data) {
     console.log(data);
     this.reset()
-     this.dialogRef.close('Documents')
+    this.dialogRef.close('Documents')
   }
 
 }

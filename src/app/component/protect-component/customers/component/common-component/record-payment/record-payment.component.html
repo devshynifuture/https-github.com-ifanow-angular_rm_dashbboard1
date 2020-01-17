@@ -14,7 +14,7 @@
           <div class="col-md-10 pr-0">
             <mat-error class="f-12 pt-4"
               *ngIf="rPayment.get('amountReceived').errors?.required && rPayment.get('amountReceived').touched">
-              This field is required
+              This feild is required
             </mat-error>
             <mat-error *ngIf="(rPayment.get('amountReceived').errors?.max)" class="f-12 pt-4">
               Should be less than or equal to {{this.balDue}}

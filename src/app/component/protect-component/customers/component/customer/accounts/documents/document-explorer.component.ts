@@ -7,7 +7,6 @@ import { FormBuilder } from '@angular/forms';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../customer.service';
-import * as _ from 'lodash';
 import { AuthService } from 'src/app/auth-service/authService';
 import { HttpHeaders } from '@angular/common/http';
 import { DocumentNewFolderComponent } from '../../../common-component/document-new-folder/document-new-folder.component';

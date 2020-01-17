@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CustomerService } from '../../customer.service';
 import { Validators, FormBuilder } from '@angular/forms';
-import * as _ from 'lodash';
 
 @Component({
   selector: 'app-owner-component',
@@ -21,7 +20,7 @@ export class OwnerComponentComponent implements OnInit {
   ownerName: any;
   familyMemberId: any;
   nomineesListFM: any;
-  dataFM: any;
+  dataFM = [];
   familyList: any;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService) {
@@ -59,9 +58,10 @@ export class OwnerComponentComponent implements OnInit {
     this.dataFM = this.nomineesListFM
     if (this.dataFM.length > 0) {
       let name = this.ownerName
-      var evens = _.reject(this.dataFM, function (n) {
-        return n.userName == name;
-      });
+      // var evens = _.reject(this.dataFM, function (n) {
+      //   return n.userName == name;
+      // });
+      let evens = this.dataFM.filter(delData => delData.userName != name)
       this.familyList = evens
     }
 
