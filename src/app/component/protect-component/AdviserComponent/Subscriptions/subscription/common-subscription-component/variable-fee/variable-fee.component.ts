@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { SubscriptionService } from '../../../subscription.service';
 import { ValidatorType } from "../../../../../../../services/util.service";
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-variable-fee',
@@ -10,7 +11,7 @@ import { ValidatorType } from "../../../../../../../services/util.service";
   styleUrls: ['./variable-fee.component.scss']
 })
 export class VariableFeeComponent implements OnInit {
-  otherAssetData: any[];
+  otherAssetData: [];
   selectedOtherAssets = [];
   isBillValid: any;
   mutualFundFees: any;
@@ -111,8 +112,12 @@ export class VariableFeeComponent implements OnInit {
       this.getVariableFee().otherAssetClassFees.setValue(this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[0].subscriptionSubAssets);
       this.otherAssetData = [];
       this.otherAssetData = this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[2].subscriptionSubAssets;
+      this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[2].subscriptionSubAssets.forEach(element => {
+        if (element.selected) {
+          this.selectedOtherAssets.push(element.subAssetClassId)
+        }
+      });
       (this.singleSubscriptionData.isCreateSub == false) ? this.variableFeeStructureForm.enable() : this.variableFeeStructureForm.disable();
-
     }
   }
 

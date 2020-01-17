@@ -20,10 +20,16 @@
     }
 }
 
-.widht145 {
-    width: 145px;
-}
-
 #cashFlow {
     height: 400px;
+}
+
+.btn-cash-flow {
+    width: 145px;
+    text-align: left;
+    margin: 20px auto 0px;
+    border-radius: 2px !important;
+    color: #008FFF;
+    border: 1px solid #008FFF;
+    display: block;
 }
