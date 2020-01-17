@@ -20,9 +20,27 @@ export class CashflowAddComponent implements OnInit {
 
   validatorType = ValidatorType;
 
-  form = this.fb.group({
+  cashFlowCategory = this.data.tableData.tableInUse;
+
+  formIncome = this.fb.group({
+    "earning-member": [, Validators.required],
+    "income-src": [, Validators.pattern(/\d+/), Validators.required],
+    "monthly-amt": [, Validators.required],
+    "continues-till": [, Validators.required],
+    "continues-till-date": [, Validators.required],
+    "income-growth-rate": [, Validators.required],
+    "income-growth-rate-input": [, Validators.required],
+    "income-period-start": [, Validators.required],
+    "income-period-end": [, Validators.required],
+    "next-appraisal-date": [,],
+    "bonus-date": [,],
+    "bonus-amt": [,]
+  });
+
+
+  formExpense = this.fb.group({
     "category": [, Validators.required],
-    "amount": [, Validators.pattern(/\d+/)],
+    "amount": [, Validators.pattern(/\d+/), Validators.required],
     "repeat-freq": [, Validators.required],
     "repeat-every": [, Validators.required],
     "starts-date": [, Validators.required],
@@ -31,7 +49,7 @@ export class CashflowAddComponent implements OnInit {
     "continues-till-date": [, Validators.required],
     "payment-mode": [, Validators.required],
     "family-member": [, Validators.required]
-  })
+  });
 
 
   ngOnInit() {
@@ -42,11 +60,14 @@ export class CashflowAddComponent implements OnInit {
   }
 
   submitForm() {
-    if (this.form.invalid) {
-      this.eventService.openSnackBar("Please solve required Fields", "DISMISS");
-    } else {
-      this.eventService.openSnackBar("Submitted Successfully!!", "OK");
-      this.closeDialog();
+    if (this.cashFlowCategory === 'income') {
+      // income api 
+      console.log(this.formIncome);
+
+    } else if (this.cashFlowCategory === 'expense') {
+      // expense api
+
+      console.log(this.formExpense);
     }
   }
 
