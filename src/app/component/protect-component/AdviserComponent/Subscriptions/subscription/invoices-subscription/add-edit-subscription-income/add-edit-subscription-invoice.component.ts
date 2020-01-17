@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/auth-service/authService';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { SubscriptionService } from '../../../subscription.service';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { EnumServiceService } from 'src/app/services/enum-service.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AuthService} from 'src/app/auth-service/authService';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {SubscriptionService} from '../../../subscription.service';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {EnumServiceService} from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-add-edit-subscription-invoice',
@@ -18,7 +18,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   cgstTaxAmount: any;
   sgstTaxAmount: any;
   taxStatus: any;
-  finalAmount: any;
+  finalAmount: any = 0;
   discount: any;
   auto: any;
   editAdd1: boolean;
@@ -27,9 +27,9 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   rpyment: boolean;
   clientId: any;
   copyStoreData: any;
-  finAmountC: number;
-  finAmountS: number;
-  finAmount: any;
+  finAmountC: number = 0;
+  finAmountS: number = 0;
+  finAmount: any = 0;
   showDateError: string;
   showErr: boolean;
   advisorId: any;
@@ -55,7 +55,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   serviceList: any;
 
   constructor(public enumService: EnumServiceService, private fb: FormBuilder, private subService: SubscriptionService,
-    public subInjectService: SubscriptionInject) {
+              public subInjectService: SubscriptionInject) {
   }
 
   @Input() set data(data) {
@@ -121,7 +121,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       terms: [data.terms, [Validators.required]],
       taxStatus: [(!data.igstTaxAmount) ? 'SGST(9%)|CGST(9%)' : 'IGST(18%)'],
       serviceName: [(!data.services) ? '0' : (data.services.length == 0) ? '0' : data.services[0].serviceName,
-      [Validators.required]],
+        [Validators.required]],
       subTotal: [(!data.subTotal) ? '' : data.subTotal],
       igstTaxAmount: [data.igstTaxAmount],
       cgstTaxAmount: [data.cgstTaxAmount],
@@ -146,8 +146,8 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     }
     this.editPayment.controls.finalAmount.valueChanges.subscribe(val => {
       if (val == null) {
-        val = 0;
-        this.editPayment.controls.finalAmount.setValue(val);
+        // val = 0;
+        // this.editPayment.controls.finalAmount.setValue(val);
       } else if (val < this.editPayment.value.discount) {
         // val = this.editPayment.value.finalAmount;
         this.editPayment.controls.discount.setValue(val);
@@ -157,8 +157,8 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     this.editPayment.controls.discount.valueChanges.subscribe(val => {
       // console.log('this.editPayment.controls.discount : ', val);
       if (val == null) {
-        val = 0;
-        this.editPayment.controls.discount.setValue(val);
+        // val = 0;
+        // this.editPayment.controls.discount.setValue(val);
       } else if (val > this.editPayment.value.finalAmount) {
         val = this.editPayment.value.finalAmount;
         this.editPayment.controls.discount.setValue(val);
@@ -270,6 +270,15 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
 
   changeTaxStatus(price, discount, changeTaxStatus) {
     console.log('changeTaxStatus', changeTaxStatus);
+    if (price == null) {
+      price = 0;
+    }
+    if (discount == null) {
+      discount = 0;
+    }
+    if (changeTaxStatus == null) {
+      changeTaxStatus = 0;
+    }
     if (changeTaxStatus == 'SGST(9%)|CGST(9%)') {
       this.finAmountC = price - parseInt(discount);
       this.cgstTaxAmount = this.finAmountC * 9 / 100;
@@ -302,8 +311,8 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       dueDate = new Date((this.editPayment.get('dueDate').value._d) ? this.editPayment.get('dueDate').value._d : this.editPayment.get('dueDate').value).getTime();
       (invoiceDate == undefined && dueDate == undefined) ? ''
         : (dueDate <= invoiceDate)
-          ? this.showDateError = 'Due date should be greater than invoice date' :
-          this.showDateError = undefined;
+        ? this.showDateError = 'Due date should be greater than invoice date' :
+        this.showDateError = undefined;
     }
   }
 
