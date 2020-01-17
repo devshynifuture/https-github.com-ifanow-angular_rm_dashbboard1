@@ -178,6 +178,9 @@ export const appConfig = {
   EDIT_EXPENSE: 'account/expense/transaction/edit',
   RISK_HISTORY: 'plan/risk-assessment/history/get',
   RESULT_VIEW: 'plan/risk-assessment-result/get',
+  RECURING_EXPENSE_ADD:'account/expense/recurring/expense/add',
+  RECURING_EXPENSE_GET:'account/expense/recurring/expense/list/get',
+  RECURING_EXPENSE_EDIT:'account/expense/recurring/expense/edit',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   GET_EPF: 'account/asset/retirement/epf/list/get',

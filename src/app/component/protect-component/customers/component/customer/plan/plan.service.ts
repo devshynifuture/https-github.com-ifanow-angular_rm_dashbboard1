@@ -83,4 +83,16 @@ export class PlanService {
   getResultRisk(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.RESULT_VIEW, data)
   }
+  getTransactionExpense(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TRANSACTION_EXPENSE, data);
+  }
+  getRecuringExpense(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.RECURING_EXPENSE_GET, data);
+  }
+  addRecuringExpense(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.RECURING_EXPENSE_ADD, data);
+  }
+  editRecuringExpense(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.RECURING_EXPENSE_EDIT, data);
+  }
 }

@@ -1,90 +1,92 @@
 <div class="bg-white popup-header-fix-60">
-    <div class="row bb-1">
-        <div class="col-md-10 p-0">
-            <h4 class="f-16 mb-0 pb-20 wrapper-20">ADD PLAN DETAILS</h4>
-        </div>
-        <div class="col-md-2">
-            <i class="material-icons right pt-16 pb-12 c-p" (click)="closeNav('close')">
-                close
-            </i>
-        </div>
+  <div class="row bb-1">
+    <div class="col-md-10 p-0">
+      <h4 class="f-16 mb-0 pb-20 wrapper-20">ADD PLAN DETAILS</h4>
     </div>
-    <div class="row pt-40">
-        <div class="col-md-12">
-            <form [formGroup]="planDataForm">
-                <div class="row">
-                    <div class="col-md-5 pr-0">
-                        <h5>Plan name</h5>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="form-group mb-0">
-                            <input type="email" #planName formControlName="planName" maxlength="40"
-                                class="form-control br-2">
-                        </div>
-                        <div class="row">
-                            <div class="col-md-8">
-                                <mat-error class="f-12 pt-4"
-                                    [ngClass]="{'v-h': !(isPlanValid && getFormControl().planName.invalid || getFormControl().planName.touched && getFormControl().planName.invalid)}">
-                                    Plan name is required</mat-error>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="mb-0 f-12 text-custom text-right pt-4">{{planName.value.length}}/40</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row pt-24">
-                    <div class="col-md-5">
-                        <h5>Code </h5>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group mb-0">
-                                <input #code type="text" appCodeText [maxLength]="10" formControlName="code" class="form-control br-2">
-                        </div>
-                        <div class="row">
-                            <div class="col-md-9">
-                                <mat-error class="f-12"
-                                    [ngClass]="{'v-h': !(isCodeValid && getFormControl().code.invalid || getFormControl().code.touched && getFormControl().code.invalid)}">
-                                    Code is required</mat-error>
-                            </div>
-                            <div class="col-md-3">
-                                <p class="mb-0 f-12 text-custom text-right pt-4">{{code.value.length}}/10</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row pt-24">
-                    <div class="col-md-5">
-                        <h5>Description</h5>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="form-group mb-0">
+    <div class="col-md-2">
+      <i (click)="closeNav('close')" class="material-icons right pt-16 pb-12 c-p">
+        close
+      </i>
+    </div>
+  </div>
+  <div class="row pt-40">
+    <div class="col-md-12">
+      <form [formGroup]="planDataForm">
+        <div class="row">
+          <div class="col-md-5 pr-0">
+            <h5>Plan name</h5>
+          </div>
+          <div class="col-md-5">
+            <div class="form-group mb-0">
+              <input #planName class="form-control br-2" formControlName="planName" maxlength="40"
+                     type="email">
+            </div>
+            <div class="row">
+              <div class="col-md-8">
+                <mat-error
+                  [ngClass]="{'v-h': !(isPlanValid && getFormControl().planName.invalid || getFormControl().planName.touched && getFormControl().planName.invalid)}"
+                  class="f-12 pt-4">
+                  Plan name is required
+                </mat-error>
+              </div>
+              <div class="col-md-4">
+                <p class="mb-0 f-12 text-custom text-right pt-4">{{planName.value.length}}/40</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row pt-24">
+          <div class="col-md-5">
+            <h5>Code </h5>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group mb-0">
+              <mat-form-field>
+                <input #code [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
+                       appInputValueValidation class="form-control br-0 text-left" formControlName="code" matInput
+                       type="text">
+                <mat-error
+                  class="f-12">{{'Invalid code'}}</mat-error>
+                <mat-hint align="end" class="f-12">{{code.value.length}}/10</mat-hint>
+              </mat-form-field>
+            </div>
+
+          </div>
+        </div>
+        <div class="row pt-24">
+          <div class="col-md-5">
+            <h5>Description</h5>
+          </div>
+          <div class="col-md-5">
+            <div class="form-group mb-0">
                             <textarea class="form-control br-2" #description maxlength="160"
-                                formControlName="description" rows="5"></textarea>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-8">
-                                <mat-error class="f-12"
-                                    [ngClass]="{'d-n': !(isDescValid && getFormControl().description.invalid || getFormControl().description.touched && getFormControl().description.invalid)}">
-                                    Description is required</mat-error>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="mb-0 f-12 text-custom text-right pt-4">{{description.value.length}}/160</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
+                                      formControlName="description" rows="5"></textarea>
+            </div>
+            <div class="row">
+              <div class="col-md-8">
+                <mat-error
+                  [ngClass]="{'d-n': !(isDescValid && getFormControl().description.invalid || getFormControl().description.touched && getFormControl().description.invalid)}"
+                  class="f-12">
+                  Description is required
+                </mat-error>
+              </div>
+              <div class="col-md-4">
+                <p class="mb-0 f-12 text-custom text-right pt-4">{{description.value.length}}/160</p>
+              </div>
+            </div>
+          </div>
         </div>
+      </form>
     </div>
+  </div>
 </div>
 <div class="bottom-fixed wrapper-12">
-    <div class="row">
-        <div class="col-md-4">
-            <h4 class="mb-0 pt-8 text-white c-p f-16" (click)="closeNav('close')">Cancel</h4>
-        </div>
-        <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="addPlanData('close')">Save</button>
-        </div>
+  <div class="row">
+    <div class="col-md-4">
+      <h4 (click)="closeNav('close')" class="mb-0 pt-8 text-white c-p f-16">Cancel</h4>
     </div>
+    <div class="col-md-8 right text-right">
+      <button (click)="addPlanData('close')" class="btn-bottom br-0 text-inherit" mat-button>Save</button>
+    </div>
+  </div>
 </div>

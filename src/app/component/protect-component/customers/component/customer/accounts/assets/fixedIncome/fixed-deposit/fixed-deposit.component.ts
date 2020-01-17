@@ -1,16 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { CustomerService } from '../../../../customer.service';
-import { MAT_DATE_FORMATS } from '@angular/material';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { AuthService } from 'src/app/auth-service/authService';
-import { DatePipe } from '@angular/common';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { Observable } from 'rxjs';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {CustomerService} from '../../../../customer.service';
+import {MAT_DATE_FORMATS} from '@angular/material';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {AuthService} from 'src/app/auth-service/authService';
+import {DatePipe} from '@angular/common';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {Observable} from 'rxjs/Observable';
 import * as moment from 'moment';
-import { Router } from '@angular/router';
-import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService } from 'src/app/services/util.service';
+import {Router} from '@angular/router';
+import {EventService} from 'src/app/Data-service/event.service';
+import {UtilService} from 'src/app/services/util.service';
 
 
 @Component({
@@ -19,7 +19,7 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./fixed-deposit.component.scss'],
   providers: [
     [DatePipe],
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
   ],
 })
 export class FixedDepositComponent implements OnInit {
@@ -241,22 +241,22 @@ export class FixedDepositComponent implements OnInit {
     else if (this.fixedDeposit.get('amountInvest').invalid) {
       this.fixedDeposit.get('amountInvest').markAsTouched();
       return
-    } 
+    }
     else if (this.fixedDeposit.get('commencementDate').invalid) {
       this.fixedDeposit.get('commencementDate').markAsTouched();
       return
-    } 
+    }
     else if (this.fixedDeposit.get('interestRate').invalid) {
       this.fixedDeposit.get('interestRate').markAsTouched();
       return
-    } 
+    }
     else if (this.fixedDeposit.get('compound').invalid) {
       this.fixedDeposit.get('compound').markAsTouched();
       return
     } else if (this.fixedDeposit.get('compound').invalid) {
       this.fixedDeposit.get('compound').markAsTouched();
       return
-    } 
+    }
     else if (this.fixedDeposit.get('frequencyOfPayoutPerYear').invalid) {
       this.fixedDeposit.get('frequencyOfPayoutPerYear').markAsTouched();
       return

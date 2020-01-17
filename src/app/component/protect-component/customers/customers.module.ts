@@ -1,18 +1,18 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { CustomersRoutingModule } from './customers-routing.module';
-import { MaterialModule } from '../../../material/material';
-import { ChartModule } from 'angular-highcharts';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {CustomersRoutingModule} from './customers-routing.module';
+import {MaterialModule} from '../../../material/material';
+import {ChartModule} from 'angular-highcharts';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 // import {BrowserModule} from '@angular/platform-browser';
-import { CustomerComponent } from './component/customer/customer.component';
+import {CustomerComponent} from './component/customer/customer.component';
 
-import { CustomCommonModule } from '../../../common/custom.common.module';
-import { EntryComponentsModule } from '../../../entry.components.module';
-import { AccountEntryModule } from './component/customer/accounts/account.entry.module';
-import { PlanEntryModule } from './component/customer/plan/plan.entry.module';
-import { DynamicComponentService } from '../../../services/dynamic-component.service';
+import {CustomCommonModule} from '../../../common/custom.common.module';
+import {EntryComponentsModule} from '../../../entry.components.module';
+import {AccountEntryModule} from './component/customer/accounts/account.entry.module';
+import {PlanEntryModule} from './component/customer/plan/plan.entry.module';
+import {DynamicComponentService} from '../../../services/dynamic-component.service';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -42,7 +42,8 @@ import { DynamicComponentService } from '../../../services/dynamic-component.ser
   ],
   exports: [],
   providers: [DynamicComponentService],
-  entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), PlanEntryModule.getComponentList()]
+  entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(),
+    PlanEntryModule.getComponentList()]
 })
 export class CustomersModule {
 }

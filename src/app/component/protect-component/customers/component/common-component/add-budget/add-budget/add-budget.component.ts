@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { PlanService } from '../../../customer/plan/plan.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { ConstantsService } from 'src/app/constants/constants.service';
 
 @Component({
   selector: 'app-add-budget',
@@ -15,249 +16,67 @@ export class AddBudgetComponent implements OnInit {
   clientId: any;
   advisorId: any;
   expenseList: { "clientExpenseTypeMasterId": number; "expenseType": string; "label": string; }[];
+  isRecuring = false;
+  isNoOfYrs: any;
+  recuring: any;
+  isViewInitCalled: any;
+  inputData: any;
 
-  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,private planService:PlanService) { }
+  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,private planService:PlanService,private constantService : ConstantsService) { }
 
   ngOnInit() {
     this.clientId = AuthService.getClientId();
     this.advisorId = AuthService.getAdvisorId();
-    this.expenseList = [
-      {
-        "clientExpenseTypeMasterId": 1,
-        "expenseType": "Food & Groceries",
-        "label": "Basic"
-      },
-      {
-        "clientExpenseTypeMasterId": 2,
-        "expenseType": "Clothing",
-        "label": "Basic"
-      },
-      {
-        "clientExpenseTypeMasterId": 3,
-        "expenseType": "Medical expenses",
-        "label": "Basic"
-      },
-      {
-        "clientExpenseTypeMasterId": 4,
-        "expenseType": "Shopping",
-        "label": "Basic"
-      },
-      {
-        "clientExpenseTypeMasterId": 5,
-        "expenseType": "Basic misc.",
-        "label": "Basic"
-      },
-      {
-        "clientExpenseTypeMasterId": 6,
-        "expenseType": "Mobile",
-        "label": "Bills & Utilities"
-      },
-      {
-        "clientExpenseTypeMasterId": 7,
-        "expenseType": "Internet",
-        "label": "Bills & Utilities"
-      },
-      {
-        "clientExpenseTypeMasterId": 8,
-        "expenseType": "Electricity",
-        "label": "Bills & Utilities"
-      },
-      {
-        "clientExpenseTypeMasterId": 9,
-        "expenseType": "DTH",
-        "label": "Bills & Utilities"
-      },
-      {
-        "clientExpenseTypeMasterId": 10,
-        "expenseType": "Telephone",
-        "label": "Bills & Utilities"
-      },
-      {
-        "clientExpenseTypeMasterId": 11,
-        "expenseType": "Newspaper & Magazines",
-        "label": "Bills & Utilities"
-      },
-      {
-        "clientExpenseTypeMasterId": 12,
-        "expenseType": "Bills & Utilities misc.",
-        "label": "Bills & Utilities"
-      },
-      {
-        "clientExpenseTypeMasterId": 13,
-        "expenseType": "Daily commute",
-        "label": "Transport"
-      },
-      {
-        "clientExpenseTypeMasterId": 14,
-        "expenseType": "Petrol/Diesel",
-        "label": "Transport"
-      },
-      {
-        "clientExpenseTypeMasterId": 15,
-        "expenseType": "Driver's salary",
-        "label": "Transport"
-      },
-      {
-        "clientExpenseTypeMasterId": 16,
-        "expenseType": "Parking charges",
-        "label": "Transport"
-      },
-      {
-        "clientExpenseTypeMasterId": 17,
-        "expenseType": "Transport misc.",
-        "label": "Transport"
-      },
-      {
-        "clientExpenseTypeMasterId": 18,
-        "expenseType": "School/College/University fees",
-        "label": "Education"
-      },
-      {
-        "clientExpenseTypeMasterId": 19,
-        "expenseType": "Tuition fees",
-        "label": "Education"
-      },
-      {
-        "clientExpenseTypeMasterId": 20,
-        "expenseType": "Book & Supplies",
-        "label": "Education"
-      },
-      {
-        "clientExpenseTypeMasterId": 21,
-        "expenseType": "Kids activities",
-        "label": "Education"
-      },
-      {
-        "clientExpenseTypeMasterId": 22,
-        "expenseType": "Education misc.",
-        "label": "Education"
-      },
-      {
-        "clientExpenseTypeMasterId": 23,
-        "expenseType": "Rent",
-        "label": "Housing"
-      },
-      {
-        "clientExpenseTypeMasterId": 24,
-        "expenseType": "Society maintenance",
-        "label": "Housing"
-      },
-      {
-        "clientExpenseTypeMasterId": 25,
-        "expenseType": "Car wash",
-        "label": "Housing"
-      },
-      {
-        "clientExpenseTypeMasterId": 26,
-        "expenseType": "Housing misc.",
-        "label": "Housing"
-      },
-      {
-        "clientExpenseTypeMasterId": 27,
-        "expenseType": "Movies",
-        "label": "Entertainment"
-      },
-      {
-        "clientExpenseTypeMasterId": 28,
-        "expenseType": "Restaurants",
-        "label": "Entertainment"
-      },
-      {
-        "clientExpenseTypeMasterId": 29,
-        "expenseType": "Amusement",
-        "label": "Entertainment"
-      },
-      {
-        "clientExpenseTypeMasterId": 30,
-        "expenseType": "Vacation",
-        "label": "Entertainment"
-      },
-      {
-        "clientExpenseTypeMasterId": 31,
-        "expenseType": "Entertainment misc.",
-        "label": "Entertainment"
-      },
-      {
-        "clientExpenseTypeMasterId": 32,
-        "expenseType": "Gifts & Donations",
-        "label": "Miscellaneous"
-      },
-      {
-        "clientExpenseTypeMasterId": 33,
-        "expenseType": "Personal care",
-        "label": "Miscellaneous"
-      },
-      {
-        "clientExpenseTypeMasterId": 34,
-        "expenseType": "Health & Fitness",
-        "label": "Miscellaneous"
-      },
-      {
-        "clientExpenseTypeMasterId": 35,
-        "expenseType": "Doctor",
-        "label": "Miscellaneous"
-      },
-      {
-        "clientExpenseTypeMasterId": 36,
-        "expenseType": "Dentist",
-        "label": "Miscellaneous"
-      },
-      {
-        "clientExpenseTypeMasterId": 37,
-        "expenseType": "Miscellaneous",
-        "label": "Miscellaneous"
-      },
-      {
-        "clientExpenseTypeMasterId": 38,
-        "expenseType": "Gas",
-        "label": "Bills & Utilities"
-      },
-      {
-        "clientExpenseTypeMasterId": 39,
-        "expenseType": "Professional Fees",
-        "label": "Miscellaneous"
-      },
-      {
-        "clientExpenseTypeMasterId": 40,
-        "expenseType": "Repairs & Maintenance",
-        "label": "Miscellaneous"
-      },
-      {
-        "clientExpenseTypeMasterId": 41,
-        "expenseType": "Maid/Domestic Helper",
-        "label": "Housing"
-      },
-      {
-        "clientExpenseTypeMasterId": 42,
-        "expenseType": "Nanny - Baby sitting",
-        "label": "Miscellaneous"
-      },
-      {
-        "clientExpenseTypeMasterId": 43,
-        "expenseType": "Property Tax",
-        "label": "Housing"
-      },
-      {
-        "clientExpenseTypeMasterId": 44,
-        "expenseType": "Vehicle Maintenance",
-        "label": "Transport"
-      },
-      {
-        "clientExpenseTypeMasterId": 45,
-        "expenseType": "Saloon & Spa",
-        "label": "Miscellaneous"
-      },
-      {
-        "clientExpenseTypeMasterId": 46,
-        "expenseType": "Parental care",
-        "label": "Miscellaneous"
-      }
-    ]
-    this.getdataForm('')
+    this.getdataForm(this.inputData)
+    this.getdataFormRec(this.inputData)
   }
-  
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    console.log('This is Input data of FixedDepositComponent ', data);
+
+    if (this.isViewInitCalled) {
+      this.getdataForm(data);
+    }
+  }
+
+  get data() {
+    return this.inputData;
+  }
   preventDefault(e){
     e.preventDefault();
+  }
+  toggle(value){
+    this.isRecuring = value.checked;
+  }
+  continuesTill(value){
+    this.isNoOfYrs = value;
+  }
+  getdataFormRec(data) {
+    if (data == undefined) {
+      data = {};
+    }
+    this.recuring = this.fb.group({
+      timeInMilliSec: [(data == undefined) ? '' : data.timeInMilliSec, [Validators.required]],
+      expenseDoneOn: [(data == undefined) ? '' : new Date(data.expenseDoneOn), [Validators.required]],
+      amount: [(data == undefined) ? '' : data.amount, [Validators.required]],
+      repeatFrequency:[(data == undefined) ? '' : data.repeatFrequency, [Validators.required]],
+      every:[(data == undefined) ? '' : data.every, [Validators.required]],
+      startsFrom:[(data == undefined) ? '' : new Date(data.startsFrom), [Validators.required]],
+      whatDay:[(data == undefined) ? '' : data.whatDay, [Validators.required]],
+      continuesDate:[(data == undefined) ? '' :  new Date(data.continuesDate), [Validators.required]],
+      continueTill:[(data == undefined) ? '' :(data.continueTill), [Validators.required]],
+      description: [(data == undefined) ? '' : data.description, [Validators.required]],
+      id: [(data == undefined) ? '' : data.id, [Validators.required]],
+      category:[(data == undefined) ? '' : data.expenseCategoryId, [Validators.required]],
+      familyMember: [(data == undefined) ? '' : data.familyMember, [Validators.required]],
+      paymentModeId: [[(data == undefined) ? '' : data.paymentModeId], [Validators.required]],
+      isRecuring: [(data == undefined) ? '' : data.isRecuring, [Validators.required]],
+    });
+    this.expenseList = this.constantService.expenseList
+  }
+  getFormControlRec(): any {
+    return this.recuring.controls;
   }
   getdataForm(data) {
     if (data == undefined) {
@@ -270,6 +89,8 @@ export class AddBudgetComponent implements OnInit {
       category: [(data == undefined) ? '' : (data.category) + "", [Validators.required]],
       familyMember: [(data == undefined) ? '' :  this.familyMember, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
+      isRecuring:[(data == undefined) ? '' : data.isRecuring, [Validators.required]],
+      startDate:[(data == undefined) ? '' : data.startDate, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
       paymentMode: [[(data == undefined) ? '' : data.paymentMode], [Validators.required]]
     });
