@@ -1,16 +1,20 @@
-<form [formGroup]="form" (ngSubmit)="submitForm()">
+<!-- ------------------------- add Expenses -------------- -->
+
+<!-- <form [formGroup]="form" (ngSubmit)="submitForm()">
 
     <div class="row pt-12">
         <h3 class="col-md-12">
             Add {{ this.data.tableData.tableInUse | titlecase }}
         </h3>
     </div>
-    <div class="row p-12">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Select a category</h5>
 
+    <div class="scrollHeight">
+
+    <div class="row p-12">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-8">Select a category</h5>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-6">
             <mat-form-field>
                 <mat-select class="form-control br-0" formControlName="category">
                     <mat-option value='1'>Household expenses</mat-option>
@@ -22,15 +26,14 @@
     </div>
 
     <div class="row p-12">
-        <div class="col-md-5 pr-0 text-right">
+        <div class="col-md-4 pr-0 text-right">
             <h5 class="m-0 pt-8">Enter amount</h5>
             <p class="m-0 f-12 text-custom">Enter the expense</p>
 
         </div>
-        <div class="col-md-5">
+        <div class="col-md-4">
             <mat-form-field>
-                <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                    [maxLength]="10" formControlName="amount" class="form-control br-0 rupess">
+                <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" formControlName="amount" class="form-control br-0 rupess">
                 <mat-error *ngIf="form.get('amount').touched && form.get('amount').invalid">
                     Must be inserted
                 </mat-error>
@@ -40,13 +43,12 @@
 
 
     <div class="row p-12">
-        <div class="col-md-5 pr-0 text-right">
+        <div class="col-md-4 pr-0 text-right d-flex justify-content-end align-items-center">
             <h5 class="m-0 pt-8">Repeat options</h5>
-
         </div>
-        <div class="col-md-5">
+        <div class="col-md-6">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6 pl-0">
                     <h5 class="m-0 pb-8">Frequency</h5>
                     <div class="form-group mb-0">
                         <mat-form-field>
@@ -59,7 +61,7 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 pr-0">
                     <h5 class="m-0 pb-8">Every</h5>
                     <div class="form-group mb-0">
                         <mat-form-field>
@@ -77,17 +79,15 @@
     </div>
 
     <div class="row p-12">
-        <div class="col-md-5 pr-0 text-right">
+        <div class="col-md-4 pr-0 text-right">
             <h5 class="m-0 pt-8">Starts from</h5>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-6">
             <div class="row">
-                <div class="col-md-6">
-
+                <div class="col-md-6 pl-0">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput (focus)="picker.open()" formControlName="starts-date"
-                                class="form-control br-0" [matDatepicker]="picker" readonly>
+                            <input matInput (focus)="picker.open()" formControlName="starts-date" class="form-control br-0" [matDatepicker]="picker" readonly>
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                             <mat-error *ngIf="form.get('starts-date').touched && form.get('starts-date').invalid">
@@ -96,8 +96,7 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="col-md-6">
-
+                <div class="col-md-6 pr-0">
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <mat-select class="form-control br-0" formControlName="starts-day">
@@ -120,14 +119,12 @@
     </div>
 
     <div class="row p-12">
-        <div class="col-md-5 pr-0 text-right">
+        <div class="col-md-4 pr-0 text-right">
             <h5 class="m-0 pt-8"> Continues till</h5>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-6">
             <div class="row">
-
-                <div class="col-md-6">
-
+                <div class="col-md-6 pr-8  pl-0">
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <mat-select class="form-control br-0" formControlName="continues-till">
@@ -140,16 +137,14 @@
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-6 pl-8  pr-0">
 
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput formControlName="continues-till-date" class="form-control br-0"
-                                [matDatepicker]="picker1" readonly (focus)="picker1.open()">
+                            <input matInput formControlName="continues-till-date" class="form-control br-0" [matDatepicker]="picker1" readonly (focus)="picker1.open()">
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                             <mat-datepicker #picker1></mat-datepicker>
-                            <mat-error
-                                *ngIf="form.get('continues-till-date').touched && form.get('continues-till-date').invalid">
+                            <mat-error *ngIf="form.get('continues-till-date').touched && form.get('continues-till-date').invalid">
                                 Must be Selected
                             </mat-error>
                         </mat-form-field>
@@ -159,13 +154,12 @@
         </div>
     </div>
 
-
     <div class="row p-12">
-        <div class="col-md-5 pr-0 text-right">
+        <div class="col-md-4 pr-0 text-right">
             <h5 class="m-0 pt-8">Payment mode</h5>
 
         </div>
-        <div class="col-md-5">
+        <div class="col-md-6">
             <mat-form-field>
                 <mat-select formControlName="payment-mode" class="form-control br-0">
                     <mat-option value='1'> Credit card</mat-option>
@@ -178,11 +172,11 @@
     </div>
 
     <div class="row p-12">
-        <div class="col-md-5 pr-0 text-right">
+        <div class="col-md-4 pr-0 text-right">
             <h5 class="m-0 pt-8"> Family member </h5>
 
         </div>
-        <div class="col-md-5">
+        <div class="col-md-6">
             <mat-form-field>
                 <mat-select formControlName="family-member" class="form-control br-0">
                     <mat-option value='1'>Rahul Jain</mat-option>
@@ -193,10 +187,200 @@
             </mat-form-field>
         </div>
     </div>
+
     <div class="row p-12">
         <div class="col-md-12 text-right">
             <button mat-button class="text-primitive" (click)="closeDialog()">CANCEL</button>
             <button mat-button class="text-primary" type="submit">SAVE</button>
         </div>
     </div>
-</form>
+</div>
+</form> -->
+
+
+<!-- ------------------------- add income -------------- -->
+
+
+
+<div class="row pt-12">
+    <h3 class="col-md-12">
+        Add {{ this.data.tableData.tableInUse | titlecase }}
+    </h3>
+</div>
+
+<div class="scrollHeight">
+
+    <div class="row p-12">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-8">Earning member</h5>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field>
+                <input matInput type="text" class="form-control br-0  ">
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row p-12">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-8">Income source </h5>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field>
+                <input matInput type="text" class="form-control br-0  ">
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row p-12">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-8">Monthly amount </h5>
+            <p class="m-0 f-12 text-custom">Enter the net income you get in hand</p>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field>
+                <input matInput type="text" class="form-control br-0  ">
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row p-12">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-8">Continues till</h5>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6 pr-8  pl-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input matInput type="text" class="form-control br-0  ">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-6 pl-8  pr-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input matInput type="text" class="form-control br-0  ">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row p-12">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-8"> Income growth rate </h5>
+            <p class="m-0 f-12 text-custom">This is the long term growth rate rather than just the next year’s</p>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-3 p-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input matInput type="text" class="form-control br-0 height50 ">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-3 p-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input matInput type="text" class="form-control br-0 height50 ">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-3 p-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input matInput type="text" class="form-control br-0 height50 ">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="col-md-3 pr-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input matInput type="text" class="form-control br-0 height50 ">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row p-12">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-8">Income period</h5>
+            <p class="m-0 f-12 text-custom"> Income start & end dates helps in planning cash flows better </p>
+
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6 pr-8  pl-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input matInput type="text" class="form-control br-0  ">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-6 pl-8 pr-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input matInput type="text" class="form-control br-0  ">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row p-12">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-8"> Next appraisal in</h5>
+            <p class="m-0 f-12 text-custom"> Enter next appriasal date. Approx year & month should do </p>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field>
+                <input matInput type="text" class="form-control br-0  ">
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row p-12">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-8">I’m expecting a bonus/inflow</h5>
+            <p class="m-0 f-12 text-custom">Enter the month & approx amount </p>
+
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6 pr-8 pl-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input matInput type="text" class="form-control br-0  ">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-5 pl-8 pr-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input matInput type="text" class="form-control br-0  ">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-1 p-0 d-flex align-items-center justify-content-center">
+                    <i class="material-icons text-primitive  c-p  ">add</i>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row p-12">
+        <div class="col-md-12 text-right">
+            <button mat-button class="text-primitive" (click)="closeDialog()">CANCEL</button>
+            <button mat-button class="text-primary" type="submit">SAVE</button>
+        </div>
+    </div>
+</div>
