@@ -7,8 +7,8 @@
       </div>
       <div class="col-md-4">
         <div class="form-group mb-0">
-          <input #amountReceiveRef [maxLength]="10" (keypress)="utils.keyPress($event)"  appInputValueValidation class="form-control"
-            formControlName="amountReceived" matInput type="text">
+          <input #amountReceiveRef [maxLength]="10" (keypress)="utils.keyPress($event)" appInputValueValidation
+            class="form-control" formControlName="amountReceived" matInput type="text">
         </div>
         <div class="row">
           <div class="col-md-10 pr-0">
@@ -17,7 +17,7 @@
               This feild is required
             </mat-error>
             <mat-error *ngIf="(rPayment.get('amountReceived').errors?.max)" class="f-12 pt-4">
-                Should be less than or equal to {{this.balDue}}
+              Should be less than or equal to {{this.balDue}}
             </mat-error>
           </div>
           <div class="col-md-2 pl-0">
@@ -34,14 +34,14 @@
       </div>
       <div class="col-md-4">
         <div class="form-group mb-0">
-          <input #chargesIfAnyRef [maxLength]="10" (keypress)="utils.keyPress($event)"  appInputValueValidation class="form-control"
-            formControlName="chargesIfAny" type="text">
+          <input #chargesIfAnyRef [maxLength]="10" (keypress)="utils.keyPress($event)" appInputValueValidation
+            class="form-control" formControlName="chargesIfAny" type="text">
         </div>
         <div class="row">
-            <div class="col-md-10">
-                <p class="f-12 m-0 text-custom pt-4">Optional</p>
-              </div>
-            <!-- <mat-error class="f-12 pt-4" *ngIf="rPayment.get('chargesIfAny').errors?.required && rPayment.get('chargesIfAny').touched">
+          <div class="col-md-10">
+            <p class="f-12 m-0 text-custom pt-4">Optional</p>
+          </div>
+          <!-- <mat-error class="f-12 pt-4" *ngIf="rPayment.get('chargesIfAny').errors?.required && rPayment.get('chargesIfAny').touched">
               This feild is required
             </mat-error> -->
           <div class="col-md-2 pl-0">
@@ -58,16 +58,17 @@
       </div>
       <div class="col-md-4">
         <div class="form-group mb-0">
-          <input #tdsRef [maxLength]="10" (keypress)="utils.keyPress($event)" (keyup)="onChange()" appInputValueValidation class="form-control" formControlName="tds"
-            type="text">
+          <input #tdsRef [maxLength]="10" (keypress)="utils.keyPress($event)" (keyup)="onChange()"
+            appInputValueValidation class="form-control" formControlName="tds" type="text">
         </div>
         <div class="row">
           <div class="col-md-10 pr-0">
-            <mat-error class="f-12 pt-4" *ngIf="rPayment.get('tds').errors?.required && rPayment.get('tds').touched && showError==false">
+            <mat-error class="f-12 pt-4"
+              *ngIf="rPayment.get('tds').errors?.required && rPayment.get('tds').touched && showError==false">
               This feild is required
             </mat-error>
             <mat-error *ngIf="showError==true" class="f-12 pt-4">
-                Should be less than or equal to {{this.tdsAmt}}
+              Should be less than or equal to {{this.tdsAmt}}
             </mat-error>
           </div>
           <div class="col-md-2 pl-0">
@@ -101,18 +102,17 @@
       </div> -->
       <div class="col-md-4">
         <div class="form-group mb-0">
-            <mat-form-field>
-                <input matInput formControlName="paymentDate" class="form-control br-0"
-                    [matDatepicker]="picker" readonly>
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-                <mat-error class="f-12 pt-4"
-                   >
-                    This field is required
-                </mat-error>
-            </mat-form-field>
+          <mat-form-field class="ba-date">
+            <input matInput formControlName="paymentDate" class="form-control br-0 b-0" [matDatepicker]="picker"
+              readonly>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error class="f-12 pt-4">
+              This field is required
+            </mat-error>
+          </mat-form-field>
         </div>
-    </div>
+      </div>
     </div>
     <div class="row pt-24">
       <div class="col-md-5">
@@ -129,7 +129,8 @@
         </div>
         <div class="row">
           <div class="col-md-10 pr-0">
-            <mat-error class="f-12 pt-4" *ngIf="rPayment.get('paymentMode').errors?.required && rPayment.get('paymentMode').touched">
+            <mat-error class="f-12 pt-4"
+              *ngIf="rPayment.get('paymentMode').errors?.required && rPayment.get('paymentMode').touched">
               This feild is required
             </mat-error>
           </div>
@@ -150,7 +151,8 @@
         </div>
         <div class="row">
           <div class="col-md-10 pr-0">
-            <mat-error class="f-12 pt-4" *ngIf="rPayment.get('gstTreatment').errors?.required && rPayment.get('gstTreatment').touched">
+            <mat-error class="f-12 pt-4"
+              *ngIf="rPayment.get('gstTreatment').errors?.required && rPayment.get('gstTreatment').touched">
               This feild is required
             </mat-error>
           </div>
@@ -167,10 +169,10 @@
             rows="5"></textarea>
         </div>
         <div class="row ">
-          <div class="col-md-10">
+          <div class="col-md-9">
             <p class="f-12 m-0 text-custom pt-4">Optional</p>
           </div>
-          <div class="col-md-2">
+          <div class="col-md-3">
             <p class="mb-0 f-12 text-custom text-right pt-4">
               {{getFormControl().notes.value?.length ? getFormControl().notes.value.length : 0}}
               /{{getFormControl().notes.maxLength}}
