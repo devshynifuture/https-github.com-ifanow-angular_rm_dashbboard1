@@ -1,16 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {UtilService} from 'src/app/services/util.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {AddAssetStocksComponent} from './add-asset-stocks/add-asset-stocks.component';
-import {StockScripLevelHoldingComponent} from './stock-scrip-level-holding/stock-scrip-level-holding.component';
-import {AuthService} from 'src/app/auth-service/authService';
-import {CustomerService} from '../../../customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {MatTableDataSource} from '@angular/material/table';
-import {StockScripLevelTransactionComponent} from './stock-scrip-level-transaction/stock-scrip-level-transaction.component';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import * as Highcharts from 'highcharts';
+import { Component, OnInit } from '@angular/core';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { AddAssetStocksComponent } from './add-asset-stocks/add-asset-stocks.component';
+import { StockScripLevelHoldingComponent } from './stock-scrip-level-holding/stock-scrip-level-holding.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { StockScripLevelTransactionComponent } from './stock-scrip-level-transaction/stock-scrip-level-transaction.component';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { pieChart } from './highChart-pichart';
 
 @Component({
   selector: 'app-asset-stocks',
@@ -32,7 +32,7 @@ export class AssetStocksComponent implements OnInit {
   noData: string;
 
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject,
-              private cusService: CustomerService, private eventService: EventService) {
+    private cusService: CustomerService, private eventService: EventService) {
   }
 
   ngOnInit() {
@@ -44,81 +44,7 @@ export class AssetStocksComponent implements OnInit {
   }
 
   pieChart(id) {
-    Highcharts.chart('piechartStock', {
-      chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: 0,
-        plotShadow: false
-      },
-      title: {
-        text: '',
-        align: 'center',
-        verticalAlign: 'middle',
-        y: 60
-      },
-      tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-      },
-      plotOptions: {
-        pie: {
-          dataLabels: {
-            enabled: true,
-            distance: -50,
-            style: {
-              fontWeight: 'bold',
-              color: 'white'
-            }
-          },
-          startAngle: 0,
-          endAngle: 360,
-          center: ['52%', '55%'],
-          size: '120%'
-        }
-      },
-      series: [{
-        type: 'pie',
-        name: 'Browser share',
-        innerSize: '60%',
-        data: [
-          {
-            name: 'Banking',
-            y: 23,
-            color: '#008FFF',
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Information technology',
-            y: 13,
-            color: '#5DC644',
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'FMCG',
-            y: 25.42,
-            color: '#FFC100',
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Other',
-            y: 12.61,
-            color: '#A0AEB4',
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Auto ancillaries',
-            y: 23.42,
-            color: '#FF7272',
-            dataLabels: {
-              enabled: false
-            }
-          }
-        ]
-      }]
-    });
+    pieChart();
   }
 
   getStocksData() {
@@ -182,7 +108,7 @@ export class AssetStocksComponent implements OnInit {
 
     const customDataSource = new MatTableDataSource(customStock);
     Object.keys(categoryWiseMap).map(key => {
-      customDataSource.data.push({groupName: key});
+      customDataSource.data.push({ groupName: key });
       categoryWiseMap[key].forEach((singleData) => {
         customDataSource.data.push(singleData);
       });

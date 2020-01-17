@@ -1,3 +1,5 @@
+import { CustomDirectiveModule } from './../../../../../../common/directives/common-directive.module';
+import { InputValueValidationDirective } from './../../../../../../common/directives/input-value-validation.directive';
 import { AddProfilePlanComponent } from './profile-plan/add-profile-plan/add-profile-plan.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -17,7 +19,7 @@ export const componentList = [
   AddGoalComponent,
   AddProfilePlanComponent,
   CashflowUpperSliderComponent,
-  CashflowAddComponent
+  CashflowAddComponent,
 ];
 // import { AddPlaninsuranceComponent } from './insurance-plan/add-planinsurance/add-planinsurance.component';
 
@@ -33,7 +35,8 @@ export const componentList = [
     MaterialModule,
     ChartModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CustomDirectiveModule
   ],
   exports: [
     FormsModule,
