@@ -78,6 +78,9 @@ export class AddBudgetComponent implements OnInit {
   getFormControlRec(): any {
     return this.recuring.controls;
   }
+  selectClient(f,data){
+
+  }
   getdataForm(data) {
     if (data == undefined) {
       data = {}
@@ -100,5 +103,11 @@ export class AddBudgetComponent implements OnInit {
   }
   close(){
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  }
+  saveRecuringExpense(){
+
+  }
+  saveExpenses(){
+    
   }
 }
