@@ -149,7 +149,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #bankName maxlength="60" class="form-control br-0" formControlName="bankName">
+                        <input matInput #bankName maxlength="60" (keypress)="onlyTextNotSplChar($event)"  class="form-control br-0" formControlName="bankName">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{bankName.value.length}}/60</mat-hint>
                     </mat-form-field>
