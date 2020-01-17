@@ -8,6 +8,7 @@ import { AuthService } from '../../../../../../auth-service/authService';
 import { UtilService, ValidatorType } from '../../../../../../services/util.service';
 import * as _ from 'lodash';
 import { DatePipe } from '@angular/common';
+import { element } from 'protractor';
 
 export interface PeriodicElement {
   date: string;
@@ -313,7 +314,8 @@ export class InvoicesSubscriptionComponent implements OnInit {
   addFilters(addFilters) {
 
     console.log('addFilters', addFilters);
-    if (!_.includes(this.filterStatus, addFilters)) {
+    // !_.includes(this.filterStatus, addFilters)
+    if (this.filterStatus.find(element => element.name == addFilters.name) == undefined) {
       this.lastFilterDataId = 0;
       this.filterStatus.push(addFilters);
       this.filterDataArr = [];

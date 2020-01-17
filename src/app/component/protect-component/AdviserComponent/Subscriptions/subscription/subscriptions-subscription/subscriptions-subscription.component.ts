@@ -401,7 +401,8 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   addFilters(addFilters) {
 
     console.log('addFilters', addFilters);
-    if (!_.includes(this.filterStatus, addFilters)) {
+    // !_.includes(this.filterStatus, addFilters)
+    if (this.filterStatus.find(element => element.name == addFilters.name) == undefined) {
       this.lastFilterDataId = 0;
       this.filterStatus.push(addFilters);
       this.filterDataArr = [];
