@@ -2,8 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../../customer.service';
-import { remove } from 'lodash'
-import * as _ from 'lodash';
 
 import { from } from 'rxjs';
 @Component({
@@ -19,7 +17,7 @@ export class AddNomineeComponent implements OnInit {
   @Input() ownerName;
   @Input() data;
   @Output() outputEvent = new EventEmitter();
-  dataFM: any;
+  dataFM = [];
   nexNomineePer: number;
   showError = false;
 
@@ -78,18 +76,18 @@ export class AddNomineeComponent implements OnInit {
 
 
     if (data) {
-      if(data.nominees != undefined){
-        if(data.nominees.length!= 0){
+      if (data.nominees != undefined) {
+        if (data.nominees.length != 0) {
           data.nominees.forEach(element => {
             this.getNomineeList.push(this.fb.group({
               id: element.id,
               name: [(element.name) ? (element.name) + "" : '', [Validators.required]],
               sharePercentage: [(element.sharePercentage + ""), Validators.required],
               familyMemberId: [(element.familyMemberId)]
-    
+
             }))
           })
-        }else{
+        } else {
           this.getNomineeList.push(this.fb.group({
             name: [, [Validators.required]],
             sharePercentage: [, [Validators.required]],
@@ -97,7 +95,7 @@ export class AddNomineeComponent implements OnInit {
             familyMemberId: 0
           }))
         }
-      }else{
+      } else {
         this.getNomineeList.push(this.fb.group({
           name: [, [Validators.required]],
           sharePercentage: [, [Validators.required]],
@@ -105,10 +103,10 @@ export class AddNomineeComponent implements OnInit {
           familyMemberId: 0
         }))
       }
-    
+
       // this.getNomineeList.removeAt(0);
       // console.log(this.addrealEstateForm.controls.getNomineeName.value)
-    } 
+    }
   }
   removeNominee(index) {
     if (this.getNomineeList.length == 1) {
@@ -131,9 +129,10 @@ export class AddNomineeComponent implements OnInit {
     this.dataFM = this.familyList
     if (this.dataFM.length > 0) {
       let name = this.ownerName
-      var evens = _.reject(this.dataFM, function (n) {
-        return n.userName == name;
-      });
+      // var evens = _.reject(this.dataFM, function (n) {
+      //   return n.userName == name;
+      // });
+      let evens = this.dataFM.filter(delData => delData.userName != name)
       this.familyList = evens
     }
 

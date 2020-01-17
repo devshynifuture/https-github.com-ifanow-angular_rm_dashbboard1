@@ -3,7 +3,6 @@ import { PlanService } from '../../../plan.service';
 import { FormBuilder } from '@angular/forms';
 import { UtilService } from 'src/app/services/util.service';
 import * as Highcharts from 'highcharts';
-import * as _ from 'lodash';
 import { AuthService } from 'src/app/auth-service/authService';
 import { Container } from '@angular/compiler/src/i18n/i18n_ast';
 import { HistoryRiskProfileComponent } from '../../history-risk-profile/history-risk-profile.component';

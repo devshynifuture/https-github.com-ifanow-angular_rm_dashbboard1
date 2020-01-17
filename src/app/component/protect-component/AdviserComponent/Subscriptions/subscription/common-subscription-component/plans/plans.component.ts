@@ -132,9 +132,10 @@ export class PlansComponent implements OnInit {
 
   unmapPlanToService(data) {
     data.selected = false;
-    _.remove(this.mappedPlan, function (delData) {
-      return delData.id == data.id;
-    });
+    // _.remove(this.mappedPlan, function (delData) {
+    //   return delData.id == data.id;
+    // });
+    this.mappedPlan = this.mappedPlan.filter(delData => delData.id != data.id)
     console.log(data);
   }
 

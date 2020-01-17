@@ -5,7 +5,6 @@ import { SubscriptionInject } from '../../../../../AdviserComponent/Subscription
 import { UtilService } from 'src/app/services/util.service';
 import { CustomerService } from '../../customer.service';
 import { AuthService } from 'src/app/auth-service/authService';
-import * as _ from 'lodash';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { AddLiabilitiesComponent } from "../../../common-component/add-liabilities/add-liabilities.component";
@@ -155,15 +154,21 @@ export class LiabilitiesComponent implements OnInit {
       if (filterData.length == 0) {
         this.noData = "No Data Found";
       } else {
-        this.totalLoanAmt = _.sumBy(filterData, function (o) {
-          return o.loanAmount;
-        });
-        this.outStandingAmt = _.sumBy(filterData, function (o) {
-          if (o.outstandingAmount == "NaN") {
-            o.outstandingAmount = 0
-          }
-          return o.outstandingAmount;
-        });
+        this.totalLoanAmt = filterData.reduce((accumulator, currentElement) =>
+          accumulator + currentElement.loanAmount
+          , 0)
+        // _.sumBy(filterData, function (o) {
+        //   return o.loanAmount;
+        // });
+        // this.outStandingAmt = _.sumBy(filterData, function (o) {
+        //   if (o.outstandingAmount == "NaN") {
+        //     o.outstandingAmount = 0
+        //   }
+        //   return o.outstandingAmount;
+        // });
+        this.outStandingAmt = filterData.reduce((accumulator, currentElement) =>
+          accumulator + currentElement.outstandingAmount
+          , 0)
         // this.dataSource = filterData;
         this.dataSource = new MatTableDataSource(filterData);
         this.dataSource.sort = this.sort;
