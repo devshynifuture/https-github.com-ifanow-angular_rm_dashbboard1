@@ -21,26 +21,38 @@
   text-align: left !important;
 }
 
-.breadcrumb {
+.documentBreadCrumb {
   padding: 0px;
   background-color: transparent;
   font-family: "Roboto", sans-serif !important;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin-bottom: 1rem;
+  list-style: none;
+  border-radius: .25rem;
+  margin: 0px;
 }
 
-.breadcrumb li {
+.documentBreadCrumb li {
   padding: 0px !important;
   font-family: "Roboto", sans-serif !important;
   font-size: 18px !important;
   color: #000000 !important;
+  height: auto;
+  line-height: normal;
+  margin-bottom: 0;
 }
 
-.breadcrumb li a {
+.documentBreadCrumb li a {
   font-size: 18px;
   font-family: "Roboto", sans-serif !important;
   color: #000000 !important;
 }
 
-.breadcrumb li a i {
+.documentBreadCrumb li a i {
   vertical-align: bottom;
 }
 
@@ -99,3 +111,4 @@
 ::ng-deep .options label {
   padding: 0 !important;
 }
+/*# sourceMappingURL=document-explorer.component.css.map */
