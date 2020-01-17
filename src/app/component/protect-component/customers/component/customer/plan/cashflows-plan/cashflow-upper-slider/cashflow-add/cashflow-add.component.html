@@ -1,4 +1,4 @@
-<div class="row pt-12">
+<div class="row pt-12" *ngIf="cashFlowCategory !== 'surplus'">
     <h3 class="col-md-12">
         Add {{ cashFlowCategory | titlecase }}
     </h3>
@@ -6,7 +6,7 @@
 
 <!-- ------------------------- add Expenses -------------- -->
 
-<form *ngIf="cashFlowCategory==='expense'" [formGroup]="formExpense" (ngSubmit)="submitForm()">
+<form *ngIf="cashFlowCategory==='expenses'" [formGroup]="formExpense" (ngSubmit)="submitForm()">
     <div class="scrollHeight">
 
         <div class="row p-12">
@@ -18,7 +18,8 @@
                     <mat-select class="form-control br-0" formControlName="category">
                         <mat-option value='1'>Household expenses</mat-option>
                     </mat-select>
-                    <mat-error *ngIf="form.get('category').touched && form.get('category').invalid">Must be selected
+                    <mat-error *ngIf="formExpense.get('category').touched && formExpense.get('category').invalid">Must
+                        be selected
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -34,7 +35,7 @@
                 <mat-form-field>
                     <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                         [maxLength]="10" formControlName="amount" class="form-control br-0 rupess">
-                    <mat-error *ngIf="form.get('amount').touched && form.get('amount').invalid">
+                    <mat-error *ngIf="formExpense.get('amount').touched && formExpense.get('amount').invalid">
                         Must be inserted
                     </mat-error>
                 </mat-form-field>
@@ -55,7 +56,8 @@
                                 <mat-select class="form-control br-0" formControlName="repeat-freq">
                                     <mat-option value='1'>Repeat weekly</mat-option>
                                 </mat-select>
-                                <mat-error *ngIf="form.get('repeat-freq').touched && form.get('repeat-freq').invalid">
+                                <mat-error
+                                    *ngIf="formExpense.get('repeat-freq').touched && formExpense.get('repeat-freq').invalid">
                                     Must be Selected
                                 </mat-error>
                             </mat-form-field>
@@ -68,7 +70,8 @@
                                 <mat-select class="form-control br-0" formControlName="repeat-every">
                                     <mat-option value='1'> 1 week</mat-option>
                                 </mat-select>
-                                <mat-error *ngIf="form.get('repeat-every').touched && form.get('repeat-every').invalid">
+                                <mat-error
+                                    *ngIf="formExpense.get('repeat-every').touched && formExpense.get('repeat-every').invalid">
                                     Must be Selected
                                 </mat-error>
                             </mat-form-field>
@@ -91,7 +94,8 @@
                                     class="form-control br-0" [matDatepicker]="picker" readonly>
                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
-                                <mat-error *ngIf="form.get('starts-date').touched && form.get('starts-date').invalid">
+                                <mat-error
+                                    *ngIf="formExpense.get('starts-date').touched && formExpense.get('starts-date').invalid">
                                     Must be Selected
                                 </mat-error>
                             </mat-form-field>
@@ -109,7 +113,8 @@
                                     <mat-option value='6'> Saturday</mat-option>
                                     <mat-option value='7'> Sunday</mat-option>
                                 </mat-select>
-                                <mat-error *ngIf="form.get('starts-day').touched && form.get('starts-day').invalid">
+                                <mat-error
+                                    *ngIf="formExpense.get('starts-day').touched && formExpense.get('starts-day').invalid">
                                     Must be Selected
                                 </mat-error>
                             </mat-form-field>
@@ -132,7 +137,7 @@
                                     <mat-option value='1'> Until</mat-option>
                                 </mat-select>
                                 <mat-error
-                                    *ngIf="form.get('continues-till').touched && form.get('continues-till').invalid">
+                                    *ngIf="formExpense.get('continues-till').touched && formExpense.get('continues-till').invalid">
                                     Must be Selected
                                 </mat-error>
                             </mat-form-field>
@@ -148,7 +153,7 @@
                                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                 <mat-datepicker #picker1></mat-datepicker>
                                 <mat-error
-                                    *ngIf="form.get('continues-till-date').touched && form.get('continues-till-date').invalid">
+                                    *ngIf="formExpense.get('continues-till-date').touched && formExpense.get('continues-till-date').invalid">
                                     Must be Selected
                                 </mat-error>
                             </mat-form-field>
@@ -168,7 +173,8 @@
                     <mat-select formControlName="payment-mode" class="form-control br-0">
                         <mat-option value='1'> Credit card</mat-option>
                     </mat-select>
-                    <mat-error *ngIf="form.get('payment-mode').touched && form.get('payment-mode').invalid">
+                    <mat-error
+                        *ngIf="formExpense.get('payment-mode').touched && formExpense.get('payment-mode').invalid">
                         Must be Selected
                     </mat-error>
                 </mat-form-field>
@@ -185,7 +191,8 @@
                     <mat-select formControlName="family-member" class="form-control br-0">
                         <mat-option value='1'>Rahul Jain</mat-option>
                     </mat-select>
-                    <mat-error *ngIf="form.get('family-member').touched && form.get('family-member').invalid">
+                    <mat-error
+                        *ngIf="formExpense.get('family-member').touched && formExpense.get('family-member').invalid">
                         Must be Selected
                     </mat-error>
                 </mat-form-field>
@@ -433,3 +440,119 @@
         </div>
     </div>
 </form>
+
+<!-- surplus dialog -->
+
+<div class="row pt-12" *ngIf="cashFlowCategory==='surplus'">
+    <div class="col-md-10">
+        <h3>
+            <!-- Add {{ this.data.tableData.tableInUse | titlecase }} -->
+            Monthly allocation: Max available ₹ 50,000
+        </h3>
+    </div>
+
+    <div class="col-md-2 text-primitive text-right">
+        Apr 2020
+    </div>
+</div>
+
+<mat-tab-group *ngIf="cashFlowCategory==='surplus'" class="p-12">
+    <mat-tab label="Goals">
+        <table mat-table id="table-low" class="" [dataSource]="dataSource1">
+            <ng-container matColumnDef="goal">
+                <th class="br-grey f-400 f-14" mat-header-cell *matHeaderCellDef> Goal </th>
+                <td class="br-grey f-14" mat-cell *matCellDef="let element">
+                    {{ element.goal }}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="goalYear">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef>
+                    Goal year
+                </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
+                    {{ element.goalYear }}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="monthlyRequired">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef>
+                    Monthly required
+                </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
+                    {{ element.monthlyRequired }}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="lumpsumRequired">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef>
+                    Lumpsum required
+                </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
+                    {{ element.lumpsumRequired }}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="allocate">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef>
+                    Allocate
+                </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
+                    ₹ Add allocation {{ element.allocate }}
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+        </table>
+    </mat-tab>
+
+    <mat-tab label="Loans" class="p-12">
+        <table mat-table id="table-low" class="" [dataSource]="dataSource2">
+            <ng-container matColumnDef="loan">
+                <th class="br-grey f-400 f-14" mat-header-cell *matHeaderCellDef> Loan </th>
+                <td class="br-grey f-14" mat-cell *matCellDef="let element">
+                    Retirement loan
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="loanYear">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef>
+                    Loan year
+                </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
+                    Jun 2020
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="monthlyRequired">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef>
+                    Monthly required
+                </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
+                    35,440
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="lumpsumRequired">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef>
+                    Lumpsum required
+                </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
+                    15,27,923
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="allocate">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef>
+                    Allocate
+                </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
+                    ₹ Add allocation
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+        </table>
+    </mat-tab>
+
+</mat-tab-group>
