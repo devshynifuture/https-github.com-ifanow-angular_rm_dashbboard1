@@ -13,16 +13,18 @@
                             <img class="c-p" src="assets/images/svg/up-down.svg">
                             <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
                             <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
-                  class="material-icons">filter_list</i>FILTERS
-              </button>
-                            <button (click)="addIncome('addIncome',null)" class="btn-primary addon v-middle" mat-stroked-button>ADD
-                NEW
-              </button>
+                                    class="material-icons">filter_list</i>FILTERS
+                            </button>
+                            <button (click)="addIncome('addIncome',null)" class="btn-primary addon v-middle"
+                                mat-stroked-button>ADD
+                                NEW
+                            </button>
                         </div>
                     </div>
                 </div>
                 <div class="liabilities wrapper-8">
-                    <table *ngIf="dataSource.data.length > 0" [dataSource]="dataSource" id="table-low" mat-table matSort appSkeletonLoading [appSkeletonLoading]="isLoading">
+                    <table *ngIf="dataSource.data.length > 0" [dataSource]="dataSource" id="table-low" mat-table matSort
+                        appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="no">
                             <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header> No.</th>
                             <td *matCellDef="let element;index as i" class="br" mat-cell>
@@ -39,37 +41,40 @@
                             <th *matHeaderCellDef class="br t-12" mat-header-cell mat-sort-header> Type</th>
                             <td *matCellDef="let element" class="br t-12" mat-cell>
                                 <div class="bar"> <span>
-                    <span *ngIf="element.incomeTypeId==1">Salaried</span>
-                                    <span *ngIf="element.incomeTypeId==2">Buisness</span>
-                                    <span *ngIf="element.incomeTypeId==3">Profession</span>
-                                    <span *ngIf="element.incomeTypeId==4">Rental</span>
-                                    <span *ngIf="element.incomeTypeId==5">Others</span>
+                                        <span *ngIf="element.incomeTypeId==1">Salaried</span>
+                                        <span *ngIf="element.incomeTypeId==2">Buisness</span>
+                                        <span *ngIf="element.incomeTypeId==3">Profession</span>
+                                        <span *ngIf="element.incomeTypeId==4">Rental</span>
+                                        <span *ngIf="element.incomeTypeId==5">Others</span>
                                     </span>
                                 </div>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="amt">
-                            <th *matHeaderCellDef class="br t-18 text-right" mat-header-cell mat-sort-header> Monthly amount
+                            <th *matHeaderCellDef class="br t-18 text-right" mat-header-cell mat-sort-header> Monthly
+                                amount
                             </th>
                             <td *matCellDef="let element" class="br t-18 text-right" mat-cell>
                                 <div class="bar"> {{element.monthlyIncome}} </div>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="income">
-                            <th *matHeaderCellDef class="br t-14 text-right" mat-header-cell mat-sort-header> Income style
+                            <th *matHeaderCellDef class="br t-14 text-right" mat-header-cell mat-sort-header> Income
+                                style
                             </th>
                             <td *matCellDef="let element" class="br t-14 text-right" mat-cell>
                                 <div class="bar"> {{element.incomeStyleId}} </div>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="till">
-                            <th *matHeaderCellDef class="br t-14 text-right" mat-header-cell mat-sort-header> Continues till
+                            <th *matHeaderCellDef class="br t-14 text-right" mat-header-cell mat-sort-header> Continues
+                                till
                             </th>
                             <td *matCellDef="let element" class="br t-14 text-right" mat-cell>
                                 <div class="bar"> <span>
-                    <span *ngIf="element.continueTill==1">Retirement</span>
-                                    <span *ngIf="element.continueTill==2">Life time</span>
-                                    <span *ngIf="element.continueTill==3">{{element.numberOfYear}}Years</span>
+                                        <span *ngIf="element.continueTill==1">Retirement</span>
+                                        <span *ngIf="element.continueTill==2">Life time</span>
+                                        <span *ngIf="element.continueTill==3">{{element.numberOfYear}}Years</span>
                                     </span>
                                 </div>
                             </td>
@@ -92,13 +97,13 @@
                             <th *matHeaderCellDef class="t-2" mat-header-cell></th>
                             <td *matCellDef="let element" class="t-2" mat-cell>
                                 <i [matMenuTriggerFor]="menu4" class="material-icons c-p text-black">
-                  more_vert
-                </i>
+                                    more_vert
+                                </i>
                                 <mat-menu #menu4="matMenu">
                                     <button (click)="addIncome('editIncome',element)" mat-menu-item>Edit</button>
-                                    <button (click)="addIncomeDetail('addIncomeDetail')" mat-menu-item>Deatiled
-                    View
-                  </button>
+                                    <button (click)="addIncomeDetail('addIncomeDetail')" mat-menu-item>Detailed
+                                        View
+                                    </button>
                                     <button mat-menu-item>Activity</button>
                                     <button (click)="deleteModal('INCOME',element)" mat-menu-item>Delete</button>
                                 </mat-menu>
@@ -112,8 +117,9 @@
                     <div *ngIf="dataSource.data.length == 0" class="d-flex flex-column align-items-center">
                         <img class="width400" src="assets/images/svg/clients-img.svg">
                         <h4 class="pt-72">No Scheme Found</h4>
-                        <button (click)="addIncome(null,null)" class="btn-primary addon v-middle mt-20" mat-stroked-button>ADD NEW
-            </button>
+                        <button (click)="addIncome(null,null)" class="btn-primary addon v-middle mt-20"
+                            mat-stroked-button>ADD NEW
+                        </button>
                     </div>
                 </div>
             </div>

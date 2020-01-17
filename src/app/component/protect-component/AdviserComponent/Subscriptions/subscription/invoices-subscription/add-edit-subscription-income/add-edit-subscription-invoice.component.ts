@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/auth-service/authService';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { SubscriptionService } from '../../../subscription.service';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { EnumServiceService } from 'src/app/services/enum-service.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AuthService} from 'src/app/auth-service/authService';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {SubscriptionService} from '../../../subscription.service';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {EnumServiceService} from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-add-edit-subscription-invoice',
@@ -18,7 +18,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   cgstTaxAmount: any;
   sgstTaxAmount: any;
   taxStatus: any;
-  finalAmount: any;
+  finalAmount: any = 0;
   discount: any;
   auto: any;
   editAdd1: boolean;
@@ -27,9 +27,9 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   rpyment: boolean;
   clientId: any;
   copyStoreData: any;
-  finAmountC: number;
-  finAmountS: number;
-  finAmount: any;
+  finAmountC = 0;
+  finAmountS = 0;
+  finAmount: any = 0;
   showDateError: string;
   showErr: boolean;
   advisorId: any;
@@ -55,7 +55,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   serviceList: any;
 
   constructor(public enumService: EnumServiceService, private fb: FormBuilder, private subService: SubscriptionService,
-    public subInjectService: SubscriptionInject) {
+              public subInjectService: SubscriptionInject) {
   }
 
   @Input() set data(data) {
@@ -92,6 +92,8 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   }
 
   initFormsAndVariable(data) {
+    console.log('initFormsAndVariable data : ', data);
+
     if (this.storeData.balanceDue == 0) {
       this.rpyment = false;
     }
@@ -121,7 +123,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       terms: [data.terms, [Validators.required]],
       taxStatus: [(!data.igstTaxAmount) ? 'SGST(9%)|CGST(9%)' : 'IGST(18%)'],
       serviceName: [(!data.services) ? '0' : (data.services.length == 0) ? '0' : data.services[0].serviceName,
-      [Validators.required]],
+        [Validators.required]],
       subTotal: [(!data.subTotal) ? '' : data.subTotal],
       igstTaxAmount: [data.igstTaxAmount],
       cgstTaxAmount: [data.cgstTaxAmount],
@@ -146,8 +148,8 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     }
     this.editPayment.controls.finalAmount.valueChanges.subscribe(val => {
       if (val == null) {
-        val = 0;
-        this.editPayment.controls.finalAmount.setValue(val);
+        // val = 0;
+        // this.editPayment.controls.finalAmount.setValue(val);
       } else if (val < this.editPayment.value.discount) {
         // val = this.editPayment.value.finalAmount;
         this.editPayment.controls.discount.setValue(val);
@@ -157,8 +159,8 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     this.editPayment.controls.discount.valueChanges.subscribe(val => {
       // console.log('this.editPayment.controls.discount : ', val);
       if (val == null) {
-        val = 0;
-        this.editPayment.controls.discount.setValue(val);
+        // val = 0;
+        // this.editPayment.controls.discount.setValue(val);
       } else if (val > this.editPayment.value.finalAmount) {
         val = this.editPayment.value.finalAmount;
         this.editPayment.controls.discount.setValue(val);
@@ -169,16 +171,25 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       this.changeTaxStatus(this.editPayment.value.finalAmount, this.editPayment.value.discount, val);
     });
 
+    this.editPayment.controls.clientName.valueChanges.subscribe(value => {
+      // this.selectClient(value);
+    });
   }
 
-  getFormControledit() {
+  getFormControlEdit() {
     return this.editPayment.controls;
   }
 
   selectClient(event, data) {
-    console.log('selectClient c : ', event);
-    console.log('ssss', data);
-    console.log('getInvoiceDataRes', data);
+    if (!data || !event.isUserInput) {
+      console.log('selectClient data  is null : ', data);
+      console.log('selectClient isUserInput  is false : ', event);
+
+      return;
+    }
+    console.log('selectClient event : ', event);
+    // console.log('ssss', data);
+    console.log('data ', data);
     this.storeData = data;
     this.storeData.billerAddress = this.defaultVal.biller.billerAddress;
     this.auto = false;
@@ -207,30 +218,33 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
        clientBillerId: [(data.clientBillerId == undefined) ? '' : data.clientBillerId],
        // clientId: [(data.clientId == undefined) ? '' : data.clientId],
      });*/
-    this.editPayment.controls.clientName.setValue(this.checkAndGetDefaultValue(data.clientName));
+    const clientName = this.checkAndGetDefaultValue(data.clientName);
+    this.clientId = this.storeData.clientId;
+    console.log('clientName : ', clientName);
+    // this.editPayment.controls.clientName.setValue(clientName);
     this.editPayment.controls.billingAddress.setValue(this.checkAndGetDefaultValue(data.billingAddress));
 
-    this.editPayment.controls.billerName.setValue(this.checkAndGetDefaultValue(data.billerName));
-    this.editPayment.controls.billerAddress.setValue(this.defaultVal.biller.billerAddress);
-    this.editPayment.controls.finalAmount.setValue((!data.finalAmount) ? '' : parseFloat(data.finalAmount));
+    // this.editPayment.controls.billerName.setValue(this.checkAndGetDefaultValue(data.billerName));
+    // this.editPayment.controls.billerAddress.setValue(this.defaultVal.biller.billerAddress);
+    // this.editPayment.controls.finalAmount.setValue((!data.finalAmount) ? '' : parseFloat(data.finalAmount));
 
-    this.editPayment.controls.discount.setValue(this.checkAndGetDefaultValue(data.discount));
-    this.editPayment.controls.invoiceNumber.setValue((!data.invoiceNumber) ? this.defaultVal.invoiceNumber : data.invoiceNumber);
-    this.editPayment.controls.invoiceDate.setValue(this.checkAndGetDefaultValue(data.invoiceDate, new Date()));
-    this.editPayment.controls.taxStatus.setValue((data.igst != undefined) ? 'IGST(18%)' : 'SGST(9%)|CGST(9%)');
-    this.editPayment.controls.balanceDue.setValue(this.checkAndGetDefaultValue(data.balanceDue));
+    // this.editPayment.controls.discount.setValue(this.checkAndGetDefaultValue(data.discount));
+    // this.editPayment.controls.invoiceNumber.setValue((!data.invoiceNumber) ? this.defaultVal.invoiceNumber : data.invoiceNumber);
+    // this.editPayment.controls.invoiceDate.setValue(this.checkAndGetDefaultValue(data.invoiceDate, new Date()));
+    // this.editPayment.controls.taxStatus.setValue((data.igst != undefined) ? 'IGST(18%)' : 'SGST(9%)|CGST(9%)');
+    // this.editPayment.controls.balanceDue.setValue(this.checkAndGetDefaultValue(data.balanceDue));
     if (data.services) {
       this.editPayment.controls.serviceName.setValue(data.services[0].serviceName);
     }
-    this.editPayment.controls.subTotal.setValue(this.checkAndGetDefaultValue(data.subTotal));
-    this.editPayment.controls.dueDate.setValue(new Date(data.dueDate));
-    this.editPayment.controls.footnote.setValue(this.checkAndGetDefaultValue(data.footnote));
-    this.editPayment.controls.terms.setValue(this.checkAndGetDefaultValue(data.terms));
+    // this.editPayment.controls.subTotal.setValue(this.checkAndGetDefaultValue(data.subTotal));
+    // this.editPayment.controls.dueDate.setValue(new Date(data.dueDate));
+    // this.editPayment.controls.footnote.setValue(this.checkAndGetDefaultValue(data.footnote));
+    // this.editPayment.controls.terms.setValue(this.checkAndGetDefaultValue(data.terms));
 
-    this.editPayment.controls.auto.setValue(this.checkAndGetDefaultValue(data.auto));
-    this.editPayment.controls.advisorBillerProfileId.setValue(this.checkAndGetDefaultValue(data.advisorBillerProfileId));
-    this.editPayment.controls.clientBillerId.setValue(this.checkAndGetDefaultValue(data.clientBillerId));
-    this.editPayment.controls.terms.setValue(this.checkAndGetDefaultValue(data.terms));
+    // this.editPayment.controls.auto.setValue(this.checkAndGetDefaultValue(data.auto));
+    // this.editPayment.controls.advisorBillerProfileId.setValue(this.checkAndGetDefaultValue(data.advisorBillerProfileId));
+    // this.editPayment.controls.clientBillerId.setValue(this.checkAndGetDefaultValue(data.clientBillerId));
+    // this.editPayment.controls.terms.setValue(this.checkAndGetDefaultValue(data.terms));
 
     // this.getFormControledit().clientName.maxLength = 10;
     // this.getFormControledit().billerAddress.maxLength = 150;
@@ -241,10 +255,10 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     if (data.auto == true) {
       this.editPayment.controls.serviceName.disable();
     }
-    this.finalAmount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.finalAmount.value;
-    this.discount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.discount.value;
-    console.log('finalAmount', this.finalAmount);
-    this.taxStatus = this.editPayment.value.taxStatus;
+    // this.finalAmount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.finalAmount.value;
+    // this.discount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.discount.value;
+    // console.log('finalAmount', this.finalAmount);
+    // this.taxStatus = this.editPayment.value.taxStatus;
   }
 
   checkAndGetDefaultValue(value, defaultValue?) {
@@ -270,25 +284,33 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
 
   changeTaxStatus(price, discount, changeTaxStatus) {
     console.log('changeTaxStatus', changeTaxStatus);
+    if (price == null) {
+      price = 0;
+    }
+    if (discount == null) {
+      discount = 0;
+    }
+    if (changeTaxStatus == null) {
+      changeTaxStatus = 0;
+    }
     if (changeTaxStatus == 'SGST(9%)|CGST(9%)') {
       this.finAmountC = price - parseInt(discount);
       this.cgstTaxAmount = this.finAmountC * 9 / 100;
-      // console.log('changeTaxStatus cgstTaxAmount : ', this.cgstTaxAmount);
+      console.log('changeTaxStatus cgstTaxAmount : ', this.cgstTaxAmount);
       this.cgstTaxAmount = UtilService.roundOff(this.cgstTaxAmount, 2);
       this.sgstTaxAmount = this.finAmountC * 9 / 100;
       this.sgstTaxAmount = UtilService.roundOff(this.sgstTaxAmount, 2);
       this.finAmount = this.finAmountC + this.sgstTaxAmount + this.cgstTaxAmount;
       this.finAmount = UtilService.roundOff(this.finAmount, 2);
-
     } else {
       this.finAmount = price - parseInt(discount);
       this.igstTaxAmount = (this.finAmount) * 18 / 100;
       this.igstTaxAmount = UtilService.roundOff(this.igstTaxAmount, 2);
       this.finAmount = this.finAmount + this.igstTaxAmount;
       this.finAmount = UtilService.roundOff(this.finAmount, 2);
-
     }
-    this.storeData.subTotal = price;
+    if (this.storeData)
+      this.storeData.subTotal = price;
     this.taxStatus = changeTaxStatus;
     console.log('finAmount', this.finAmount);
   }
@@ -302,8 +324,8 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       dueDate = new Date((this.editPayment.get('dueDate').value._d) ? this.editPayment.get('dueDate').value._d : this.editPayment.get('dueDate').value).getTime();
       (invoiceDate == undefined && dueDate == undefined) ? ''
         : (dueDate <= invoiceDate)
-          ? this.showDateError = 'Due date should be greater than invoice date' :
-          this.showDateError = undefined;
+        ? this.showDateError = 'Due date should be greater than invoice date' :
+        this.showDateError = undefined;
     }
   }
 
@@ -345,10 +367,10 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
         }];
         const obj = {
           clientName: this.editPayment.value.clientName,
-          advisorBillerProfileId: (this.editPayment.value.advisorBillerProfileId == undefined) ? this.advisorBillerProfileId : this.editPayment.value.advisorBillerProfileId,
+          advisorBillerProfileId: (!this.storeData.advisorBillerProfileId) ? this.advisorBillerProfileId : this.storeData.advisorBillerProfileId,
           billerName: this.editPayment.value.billerName,
           advisorId: this.advisorId,
-          clientBillerId: this.editPayment.value.clientBillerId,
+          clientBillerId: this.storeData.clientBillerId,
           billerAddress: this.editPayment.value.billerAddress,
           billingAddress: this.editPayment.value.billingAddress,
           invoiceNumber: this.editPayment.value.invoiceNumber,

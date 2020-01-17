@@ -5,17 +5,19 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-import { OverlayRef } from '@angular/cdk/overlay';
-import { Location } from '@angular/common';
-import { Observable } from 'rxjs';
-import { DialogPosition } from './dialog-config';
-import { MatDialogContainer } from './dialog-container';
+import {OverlayRef} from '@angular/cdk/overlay';
+import {Location} from '@angular/common';
+import {Observable} from 'rxjs/Observable';
+import {DialogPosition} from './dialog-config';
+import {MatDialogContainer} from './dialog-container';
+
 /** Possible states of the lifecycle of a dialog. */
 export declare const enum MatDialogState {
-    OPEN = 0,
-    CLOSING = 1,
-    CLOSED = 2
+  OPEN = 0,
+  CLOSING = 1,
+  CLOSED = 2
 }
+
 /**
  * Reference to a dialog opened via the MatDialog service.
  */

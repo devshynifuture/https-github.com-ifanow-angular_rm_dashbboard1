@@ -1,25 +1,29 @@
-import { Component, OnInit, Output, Input } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionService } from '../../../subscription.service';
-import { EventEmitter } from '@angular/core';
-import { AuthService } from "../../../../../../../auth-service/authService";
-import { EventService } from 'src/app/Data-service/event.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from '../../../../../../../auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ValidatorType} from '../../../../../../../services/util.service';
 
 @Component({
-  selector: 'app-add-structure',
-  templateUrl: './add-structure.component.html',
-  styleUrls: ['./add-structure.component.scss']
+  selector: 'app-add-plan-detail',
+  templateUrl: './add-plan-detail.component.html',
+  styleUrls: ['./add-plan-detail.component.scss']
 })
-export class AddStructureComponent implements OnInit {
+export class AddPlanDetailComponent implements OnInit {
   editApiCall;
   @Output() planOuputData = new EventEmitter();
   isCheckPlanData: any;
-  @Input() set planData(data) {
-    this.isCheckPlanData = data
-    this.getSinglePlanData(data)
+  validatorType = ValidatorType;
+
+  constructor(private eventService: EventService, private subinject: SubscriptionInject,
+              private fb: FormBuilder, private subService: SubscriptionService) {
   }
-  constructor(private eventService: EventService, private subinject: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService) {
+
+  @Input() set planData(data) {
+    this.isCheckPlanData = data;
+    this.getSinglePlanData(data);
   }
 
   isPlanValid = false;
@@ -31,34 +35,36 @@ export class AddStructureComponent implements OnInit {
     code: [, [Validators.required]],
     description: [, [Validators.required]]
   });
+
   // planName = {maxLength: 20, placeholder: '', formControlName: 'planName', data: ''};
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    (this.isCheckPlanData) ? console.log("get planData") : this.createPlanForm('')
+    (this.isCheckPlanData) ? console.log('get planData') : this.createPlanForm('');
   }
 
   submitPlanData() {
 
   }
+
   createPlanForm(data) {
     this.planDataForm = this.fb.group({
       planName: [data, [Validators.required]],
       code: [data, [Validators.required]],
       description: [data, [Validators.required]]
-    })
+    });
 
   }
+
   getFormControl(): any {
     return this.planDataForm.controls;
   }
 
 
   getSinglePlanData(data) {
-    if (data == '') {  
-      return
-    }
-    else {
+    if (data == '') {
+      return;
+    } else {
       this.editApiCall = data;
       this.planDataForm = this.fb.group({
         planName: [data.name, [Validators.required]],
@@ -79,7 +85,7 @@ export class AddStructureComponent implements OnInit {
       this.isDescValid = true;
       return;
     } else {
-      if (this.editApiCall == undefined) {
+      if (!this.editApiCall) {
         const obj = {
           name: this.getFormControl().planName.value,
           description: this.getFormControl().description.value,
@@ -112,13 +118,13 @@ export class AddStructureComponent implements OnInit {
     // obj.id = (this.editApiCall == '') ? data : data.id
     // console.log(obj);
     this.planOuputData.emit(data);
-    (this.editApiCall == undefined) ? this.eventService.openSnackBar('Plan is created', 'OK') : this.eventService.openSnackBar('Plan is edited', 'OK');
-    this.subinject.changeUpperRightSliderState({ state: 'close' });
+    (!this.editApiCall) ? this.eventService.openSnackBar('Plan is created', 'OK') : this.eventService.openSnackBar('Plan is edited', 'OK');
+    this.subinject.changeUpperRightSliderState({state: 'close'});
 
   }
 
   closeNav(state) {
-    this.subinject.changeUpperRightSliderState({ state: 'close' });
+    this.subinject.changeUpperRightSliderState({state: 'close'});
     this.planDataForm.reset();
     this.isPlanValid = false;
     this.isCodeValid = false;

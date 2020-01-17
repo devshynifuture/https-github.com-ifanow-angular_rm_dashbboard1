@@ -1,5 +1,8 @@
+import { UtilService } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
 import { Component, OnInit } from '@angular/core';
 import { chart } from './highChart';
+import { CashflowUpperSliderComponent } from './cashflow-upper-slider/cashflow-upper-slider.component';
 
 @Component({
   selector: 'app-cashflows-plan',
@@ -19,8 +22,8 @@ export class CashflowsPlanComponent implements OnInit {
 
   tableInUse: string = 'income';
 
-  constructor() {
-  }
+  constructor(private eventService: EventService,
+  ) { }
 
   ngOnInit() {
     this.cashFlow('surplus');
@@ -61,8 +64,26 @@ export class CashflowsPlanComponent implements OnInit {
 
   }
 
-  openUpperSlider(element, flag) {
+  openUpperSlider(element) {
+    console.log(this.tableInUse);
+    console.log(element);
 
+    const fragmentData = {
+      flag: 'openCashFlowUpper',
+      id: 1,
+      data: { ...element, tableInUse: this.tableInUse },
+      direction: 'top',
+      componentName: CashflowUpperSliderComponent,
+      state: 'open'
+    };
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getClientSubscriptionList();
+          subscription.unsubscribe();
+        }
+      }
+    );
   }
 
   cashFlow(id) {
@@ -224,26 +245,3 @@ const ELEMENT_DATA6: IncomeTableI[] = [
   { year: '2026', age: '31', age2: '27', total: '2,200', view: 'view' },
 ];
 
-
-const ELEMENT_DATA7: IncomeTableI[] = [
-  { year: '2020', age: '25', age2: '21', total: '2,00', view: 'view' },
-  { year: '20', age: '2', age2: '22', total: '2,10', view: 'view' },
-  { year: '2022', age: '27', age2: '23', total: '2,30,000', view: 'view' },
-  { year: '2023', age: '28', age2: '24', total: '2,10,000', view: 'view' },
-  { year: '2024', age: '2', age2: '2', total: '2,40,000', view: 'view' },
-  { year: '25', age: '0', age2: '6', total: '2,80,000', view: 'view' },
-  { year: '26', age: '31', age2: '27', total: '2,20,0', view: 'view' },
-];
-
-
-
-export interface PeriodicElement2 {
-  year: string;
-  age: string;
-  age2: string;
-  salary: string;
-  salary2: string;
-  total: string;
-  view: string;
-
-}

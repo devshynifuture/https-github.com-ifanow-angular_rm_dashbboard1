@@ -14,13 +14,6 @@ import {ExcelService} from '../../../../excel.service';
 @Component({
   selector: 'app-ssy-scheme',
   templateUrl: './ssy-scheme.component.html',
-  styles: [`
-    kendo-pdf-export {
-      font-family: 'Material Icons';
-      font-size: 1px;
-    }
-  `,
-  ],
   encapsulation: ViewEncapsulation.None
 })
 export class SsySchemeComponent implements OnInit {

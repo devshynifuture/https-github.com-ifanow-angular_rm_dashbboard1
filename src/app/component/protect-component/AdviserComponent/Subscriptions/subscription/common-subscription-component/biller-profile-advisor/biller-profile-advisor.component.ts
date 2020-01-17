@@ -49,8 +49,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
   // validatorType = ValidatorType;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private fb: FormBuilder,
-    private subService: SubscriptionService,
-    private eventService: EventService, private http: HttpClient) {
+              private subService: SubscriptionService,
+              private eventService: EventService, private http: HttpClient) {
   }
 
   @Input() Selected;
@@ -75,7 +75,11 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
 
   getFormControl() {
-    return this.billerProfileForm.controls;
+    if (this.billerProfileForm) {
+      return this.billerProfileForm.controls;
+    } else {
+      return null;
+    }
   }
 
   getFormControlProfile() {
@@ -161,7 +165,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
       panNum: [(data.pan), [Validators.required]],
       Address: [(data.billerAddress), [Validators.required]],
       state: [(data.state), [Validators.required]],
-      pincode: [(data.zipCode), [Validators.required]],
+      pincode: [(data.zipCode), [Validators.required, Validators.minLength(6)]],
       country: [(data.country), [Validators.required]],
       city: [(data.city), [Validators.required]],
       id: [data.id]
@@ -176,7 +180,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
       ifscCode: [(data.ifscCode), [Validators.required]],
       address: [(data.bankCity), [Validators.required]],
       state: [(data.state), [Validators.required]],
-      pincode: [(data.bankZipCode), [Validators.required]],
+      pincode: [(data.bankZipCode), [Validators.required, Validators.minLength(6)]],
       city: [(data.city), Validators.required],
       country: [(data.country), [Validators.required]],
     }),
@@ -199,7 +203,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
 
   Close(data) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+    this.subInjectService.changeNewRightSliderState({state: 'close', data});
   }
 
   nextStep(value, eventName) {

@@ -554,7 +554,5 @@ export class CustomerService {
   searchFile(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.SEARCH_FILE, data);
   }
-  getTransactionExpense(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TRANSACTION_EXPENSE, data);
-  }
+
 }

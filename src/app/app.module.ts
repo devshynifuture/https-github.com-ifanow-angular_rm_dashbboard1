@@ -8,7 +8,6 @@ import {MaterialModule} from './material/material';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {LeftsidebarComponent} from './component/left-sidebar/leftsidebar/leftsidebar.component';
 import {AuthService} from './auth-service/authService';
 import {DashboardComponent} from './component/protect-component/AdviserComponent/dashboard/dashboard.component';
 import {MutualFundsComponent} from './component/protect-component/AdviserComponent/backOffice/MIS/mutual-funds/mutual-funds.component';
@@ -43,24 +42,19 @@ import {DatePipe} from '@angular/common';
 import {MatSortModule, MatTableModule} from '@angular/material';
 import {DynamicComponentService} from './services/dynamic-component.service';
 // import { SubscriptionModule } from './component/protect-component/AdviserComponent/Subscriptions/subscription.module';
-import {SubscriptionEntry} from './component/protect-component/AdviserComponent/Subscriptions/subscription.entry.module';
 import {EmailEntryModule} from './component/protect-component/AdviserComponent/Email/email.entry.module';
 import 'zone.js/dist/zone';
-
-import {SubscriptionUpperEntry} from './component/protect-component/AdviserComponent/Subscriptions/subscription-upper-entry-module';
+// import { SubscriptionUpperEntry } from './component/protect-component/AdviserComponent/Subscriptions/subscription-upper-entry-module';
 import {FormTestComponent} from "./test/form-test/form-test.component";
 import {CustomDirectiveModule} from "./common/directives/common-directive.module";
-import { CalendarModule } from './component/protect-component/AdviserComponent/Activities/calendar/calendar.module';
-// import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
+import {CalendarModule} from './component/protect-component/AdviserComponent/Activities/calendar/calendar.module';
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LeftsidebarComponent,
     DashboardComponent,
-
     MutualFundsComponent,
     LifeInsuranceComponent,
     GeneralInsuranceComponent,
@@ -89,14 +83,14 @@ import { CalendarModule } from './component/protect-component/AdviserComponent/A
     // CustomDialogContainerComponent,
     // AddLiabilitiesComponent,
     // AddInsuranceComponent
-    
+
     FormTestComponent
 
   ],
   imports: [
     CalendarModule,
-    SubscriptionEntry,
-    SubscriptionUpperEntry,
+    // SubscriptionEntry,
+    // SubscriptionUpperEntry,
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,
@@ -117,11 +111,10 @@ import { CalendarModule } from './component/protect-component/AdviserComponent/A
     CustomCommonModule,
     EmailEntryModule,
     AppRoutingModule,
-    CustomDirectiveModule,
+    CustomDirectiveModule
   ],
   providers: [AuthService, HttpService, DatePipe, DynamicComponentService],
-  bootstrap: [AppComponent],
-  entryComponents: [SubscriptionEntry.getComponentList(), SubscriptionUpperEntry.getComponentList()]
+  bootstrap: [AppComponent]
   // entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), PlanEntryModule.getComponentList()]
 })
 export class AppModule {

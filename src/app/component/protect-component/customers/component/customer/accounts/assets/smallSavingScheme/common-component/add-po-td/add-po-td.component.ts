@@ -68,7 +68,7 @@ export class AddPoTdComponent implements OnInit {
       ownerName: [data.ownerName, [Validators.required]],
       amtInvested: [data.amountInvested, [Validators.required, Validators.min(200)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
-      tenure: [data.tenure, [Validators.required]],
+      tenure: [data.tenure+"", [Validators.required]],
       ownershipType: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]]
     })
     this.POTDOptionalForm = this.fb.group({
@@ -76,7 +76,8 @@ export class AddPoTdComponent implements OnInit {
       nominee: [],
       tdNum: [data.tdNumber],
       bankAccNum: [],
-      description: [data.description]
+      description: [data.description],
+      id:[data.id]
     })
     this.ownerData = this.POTDForm.controls;
 
@@ -140,14 +141,32 @@ export class AddPoTdComponent implements OnInit {
     }
     else {
       if (this.editApi) {
-
+        let obj = {
+          
+            "familyMemberId":this.familyMemberId,
+            "ownerName":(this.ownerName == null) ? this.POTDForm.controls.ownerName.value : this.ownerName,
+            "amountInvested":this.POTDForm.get('amtInvested').value,
+            "commencementDate":this.POTDForm.get('commDate').value,
+            "tenure": this.POTDForm.get('tenure').value,
+            "postOfficeBranch":this.POTDOptionalForm.get('poBranch').value,
+            "ownerTypeId": this.POTDForm.get('ownershipType').value,
+            "nominees": this.nominees,
+            "tdNumber":this.POTDOptionalForm.get('tdNum').value,
+            "bankAccountNumber":this.POTDOptionalForm.get('bankAccNum').value,
+            "description": this.POTDOptionalForm.get('description').value,
+            "id":this.POTDOptionalForm.get('id').value
+        }
+        this.cusService.editPOTD(obj).subscribe(
+          data => this.response(data),
+          error => this.eventService.showErrorMessage(error)
+        )
       }
       else {
         let obj = {
           "clientId": this.clientId,
           "advisorId": this.advisorId,
           "familyMemberId": this.familyMemberId,
-          "ownerName": this.ownerName,
+          "ownerName": (this.ownerName == null) ? this.POTDForm.controls.ownerName.value : this.ownerName,
           "amountInvested": this.POTDForm.get('amtInvested').value,
           "commencementDate": this.POTDForm.get('commDate').value,
           "tenure": this.POTDForm.get('tenure').value,
@@ -160,14 +179,14 @@ export class AddPoTdComponent implements OnInit {
           "postOfficeTdTransactionList": finalTransctList
         }
         this.cusService.addPOTD(obj).subscribe(
-          data => this.addPOTDResponse(data),
+          data => this.response(data),
           error => this.eventService.showErrorMessage(error)
         )
       }
     }
   }
-  addPOTDResponse(data) {
-    (this.editApi) ? this.eventService.openSnackBar("PO_TD is edited", "dismiss") : this.eventService.openSnackBar("PO_TD is edited", "added")
+  response(data) {
+    (this.editApi) ? this.eventService.openSnackBar("PO_TD is edited", "dismiss") : this.eventService.openSnackBar("PO_TD is added", "added")
     console.log(data)
     this.close(true);
   }

@@ -1,18 +1,17 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {SubscriptionInject} from '../../subscription-inject.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort} from '@angular/material';
-import {MatTableDataSource} from '@angular/material/table';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { SubscriptionInject } from '../../subscription-inject.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionService} from '../../subscription.service';
-import {AuthService} from '../../../../../../auth-service/authService';
-import {UtilService} from 'src/app/services/util.service';
-import * as _ from 'lodash';
-import {DatePipe} from '@angular/common';
-import {MAT_DATE_FORMATS} from 'saturn-datepicker';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {CommonFroalaComponent} from '../common-subscription-component/common-froala/common-froala.component';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionService } from '../../subscription.service';
+import { AuthService } from '../../../../../../auth-service/authService';
+import { UtilService } from 'src/app/services/util.service';
+import { DatePipe } from '@angular/common';
+import { MAT_DATE_FORMATS } from 'saturn-datepicker';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { CommonFroalaComponent } from '../common-subscription-component/common-froala/common-froala.component';
 
 export interface PeriodicElement {
   name: string;
@@ -30,11 +29,11 @@ export interface PeriodicElement {
   selector: 'app-documents-subscriptions',
   templateUrl: './documents-subscriptions.component.html',
   styleUrls: ['./documents-subscriptions.component.scss'],
-  providers: [[DatePipe], {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+  providers: [[DatePipe], { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
 export class DocumentsSubscriptionsComponent implements OnInit {
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   displayedColumns: string[] = ['checkbox', 'name', 'docname', 'plan', 'servicename', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
 
@@ -52,15 +51,15 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   selectedDateFilter: any = 'dateFilter';
   selectedStatusFilter: any = 'statusFilter';
   chips = [
-    {name: 'NOT STARTED', value: 0},
-    {name: 'READY TO SEND', value: 1},
-    {name: 'SENT', value: 2},
-    {name: 'ESIGNED', value: 3}
+    { name: 'NOT STARTED', value: 0 },
+    { name: 'READY TO SEND', value: 1 },
+    { name: 'SENT', value: 2 },
+    { name: 'ESIGNED', value: 3 }
   ];
   dateChips = [
-    {name: 'Created date', value: 1},
-    {name: 'Sent date', value: 2},
-    {name: 'Client Signitature', value: 3}
+    { name: 'Created date', value: 1 },
+    { name: 'Sent date', value: 2 },
+    { name: 'Client Signitature', value: 3 }
   ];
   selectedDateRange: { begin: Date; end: Date; };
   showFilter = false;
@@ -72,7 +71,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
 
 
   constructor(public subInjectService: SubscriptionInject, public dialog: MatDialog, public eventService: EventService,
-              public subscription: SubscriptionService, private datePipe: DatePipe, private subService: SubscriptionService) {
+    public subscription: SubscriptionService, private datePipe: DatePipe, private subService: SubscriptionService) {
   }
 
   ngOnInit() {
@@ -236,7 +235,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     UtilService.getStartOfTheDay(beginDate);
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
-    this.selectedDateRange = {begin: selectedDateRange.begin, end: selectedDateRange.end};
+    this.selectedDateRange = { begin: selectedDateRange.begin, end: selectedDateRange.end };
   }
 
   getdocumentSubData(scrollLoader) {
@@ -281,7 +280,8 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   addFilters(addFilters) {
 
     console.log('addFilters', addFilters);
-    if (!_.includes(this.filterStatus, addFilters)) {
+    // !_.includes(this.filterStatus, addFilters)
+    if (this.filterStatus.find(element => element.name == addFilters.name) == undefined) {
       this.lastFilterDataId = 0;
       this.filterStatus.push(addFilters);
       this.filterDataArr = [];
@@ -313,7 +313,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
 
-    this.selectedDateRange = {begin: beginDate, end: endDate};
+    this.selectedDateRange = { begin: beginDate, end: endDate };
     console.log(this.filterDate, 'this.filterDate 123');
     this.callFilter(false);
   }
@@ -414,7 +414,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   getdocumentResponseData(data) {
     this.isLoading = false;
     console.log(data, "document data");
-    
+
     if (data == undefined) {
       this.dataSource.data = [];
       this.noData = 'No Data Found';

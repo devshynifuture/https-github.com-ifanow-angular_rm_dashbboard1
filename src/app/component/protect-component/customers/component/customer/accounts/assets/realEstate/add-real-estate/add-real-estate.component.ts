@@ -4,7 +4,6 @@ import { Validators, FormBuilder, FormArray } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
-import * as _ from 'lodash';
 import { UtilService } from 'src/app/services/util.service';
 
 @Component({
@@ -94,9 +93,10 @@ export class AddRealEstateComponent implements OnInit {
     this.dataFM = this.nomineesListFM
     if (this.dataFM.length > 0) {
       let name = this.ownerName
-      var evens = _.reject(this.dataFM, function (n) {
-        return n.userName == name;
-      });
+      // var evens = _.reject(this.dataFM, function (n) {
+      //   return n.userName == name;
+      // });
+      let evens = this.dataFM.filter(deltData => deltData.userName != name)
       this.familyList = evens
     }
 
@@ -133,7 +133,7 @@ export class AddRealEstateComponent implements OnInit {
     }
   }
   close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
   getFormControl() {
     return this.addrealEstateForm.controls;
@@ -248,7 +248,7 @@ export class AddRealEstateComponent implements OnInit {
       //   return o.ownershipPerc;
       // });
       this.getCoOwner.value.forEach(element => {
-        this.nexNomineePer += (element.ownershipPerc)?parseInt(element.ownershipPerc):null;
+        this.nexNomineePer += (element.ownershipPerc) ? parseInt(element.ownershipPerc) : null;
       });
       this.nexNomineePer = this.addrealEstateForm.controls.ownerPercent.value + this.nexNomineePer
       if (this.nexNomineePer > 100) {
@@ -265,7 +265,7 @@ export class AddRealEstateComponent implements OnInit {
       this.nexNomineePer = 0;
 
       this.getNominee.value.forEach(element => {
-        this.nexNomineePer +=(element.ownershipPer)?parseInt(element.ownershipPer):null; 
+        this.nexNomineePer += (element.ownershipPer) ? parseInt(element.ownershipPer) : null;
       });
       if (this.nexNomineePer > 100) {
         this.showError = true
@@ -279,7 +279,7 @@ export class AddRealEstateComponent implements OnInit {
     // if (data == undefined) {
     //   data ={};
     // }
-    this.familyMemberId=data.familyMemberId
+    this.familyMemberId = data.familyMemberId
     this.addOwner = false;
     this.addrealEstateForm = this.fb.group({
       ownerName: this.ownerName,
@@ -311,9 +311,10 @@ export class AddRealEstateComponent implements OnInit {
       data = {};
     } else {
       if (data.realEstateOwners.length != 0) {
-        var ownerName = _.reject(data.realEstateOwners, function (n) {
-          return n.owner == false;
-        });
+        // var ownerName = _.reject(data.realEstateOwners, function (n) {
+        //   return n.owner == false;
+        // });
+        const ownerName = data.realEstateOwners.filter(element => element.ownerName != true)
         if (ownerName.length != 0) {
           this.addrealEstateForm.controls.ownerName.setValue(ownerName[0].ownerName);
           this.ownerName = ownerName[0].ownerName;
@@ -335,9 +336,10 @@ export class AddRealEstateComponent implements OnInit {
         console.log(this.addrealEstateForm.controls.getNomineeName.value)
       }
       if (data.realEstateOwners.length != 0) {
-        const ownerName = _.reject(data.realEstateOwners, function (n) {
-          return n.owner == true;
-        });
+        // const ownerName = _.reject(data.realEstateOwners, function (n) {
+        //   return n.owner == true;
+        // });
+        const ownerName = data.realEstateOwners.filter(element => element.ownerName != true)
         ownerName.forEach(element => {
           this.addrealEstateForm.controls.getCoOwnerName.push(this.fb.group({
             id: element.id,
@@ -405,7 +407,7 @@ export class AddRealEstateComponent implements OnInit {
           let obj1 = {
             'id': element.id,
             'name': element.name,
-            'familyMemberId':(element.familyMemberId)?element.familyMemberId:0,
+            'familyMemberId': (element.familyMemberId) ? element.familyMemberId : 0,
             'sharePercentage': parseInt(element.ownershipPer)
           }
           obj.nominees.push(obj1)
@@ -451,7 +453,7 @@ export class AddRealEstateComponent implements OnInit {
     console.log(data);
     if (data) {
       console.log(data);
-      this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:true})
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true })
       this.eventService.openSnackBar('Real Estate added successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'dismiss');
@@ -462,7 +464,7 @@ export class AddRealEstateComponent implements OnInit {
     console.log(data);
     if (data) {
       console.log(data);
-      this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:true})
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true })
       this.eventService.openSnackBar('Real edited successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'dismiss');

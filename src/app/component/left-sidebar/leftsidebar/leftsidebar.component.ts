@@ -1,20 +1,29 @@
-import { Component, ElementRef, NgZone, OnInit } from '@angular/core';
+import {Component, ElementRef, NgZone, OnInit} from '@angular/core';
 import $ from 'jquery';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EventService } from '../../../Data-service/event.service';
-import { SubscriptionInject } from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { FormControl } from '@angular/forms';
-import { SubscriptionService } from '../../protect-component/AdviserComponent/Subscriptions/subscription.service';
-import { Router } from '@angular/router';
-import { map, startWith } from 'rxjs/operators';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EventService} from '../../../Data-service/event.service';
+import {SubscriptionInject} from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {FormControl} from '@angular/forms';
+import {SubscriptionService} from '../../protect-component/AdviserComponent/Subscriptions/subscription.service';
+import {Router} from '@angular/router';
+import {map, startWith} from 'rxjs/operators';
+import {DialogContainerComponent} from '../../../common/dialog-container/dialog-container.component';
+import {DynamicComponentService} from '../../../services/dynamic-component.service';
+import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from '../../../animation/animation';
 
 @Component({
   selector: 'app-leftsidebar',
   templateUrl: './leftsidebar.component.html',
-  styleUrls: ['./leftsidebar.component.scss']
+  styleUrls: ['./leftsidebar.component.scss'],
+  animations: [
+    dialogContainerOpacity,
+    rightSliderAnimation,
+    // getRightSliderAnimation(40),
+    upperSliderAnimation
+  ]
 })
 
-export class LeftsidebarComponent implements OnInit {
+export class LeftsidebarComponent extends DialogContainerComponent implements OnInit {
 
   showTabs = true;
   showSettings = false;
@@ -29,10 +38,16 @@ export class LeftsidebarComponent implements OnInit {
   loginType = 1;
   showDefaultDropDownOnSearch: boolean;
 
-  logoText: string = "Your Logo here"
+  logoText = 'Your Logo here';
+
   constructor(private authService: AuthService, private _eref: ElementRef,
-    private eventService: EventService, private subinject: SubscriptionInject,
-    private subService: SubscriptionService, private router: Router, private ngZone: NgZone) {
+              protected eventService: EventService, protected subinject: SubscriptionInject,
+              private subService: SubscriptionService, private router: Router, private ngZone: NgZone,
+              protected dynamicComponentService: DynamicComponentService) {
+    /*constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
+      protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute,
+      private authService: AuthService) {*/
+    super(eventService, subinject, dynamicComponentService);
   }
 
   serachClientData(data) {
@@ -59,9 +74,9 @@ export class LeftsidebarComponent implements OnInit {
       map(name => name ? this._filter(name) : this.clientList.slice())
     );
 
-    if(data){
+    if (data) {
       this.showDefaultDropDownOnSearch = false;
-     } else {
+    } else {
       this.showDefaultDropDownOnSearch = true;
     }
   }
@@ -69,7 +84,7 @@ export class LeftsidebarComponent implements OnInit {
   selectClient(singleClientData) {
     console.log(singleClientData);
     this.ngZone.run(() => {
-      this.router.navigate(['customer', 'detail', 'account', 'assets'], { state: { ...singleClientData } });
+      this.router.navigate(['customer', 'detail', 'account', 'assets'], {state: {...singleClientData}});
     });
   }
 
