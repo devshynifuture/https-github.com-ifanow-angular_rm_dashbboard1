@@ -4,7 +4,7 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
 import {AuthService} from 'src/app/auth-service/authService';
-import {UtilService} from 'src/app/services/util.service';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-payee-settings',
@@ -20,15 +20,8 @@ export class PayeeSettingsComponent implements OnInit {
   sendData;
   updatedData: any;
   inputData: any;
-  isCustomerName = false;
-  isDisplayName = false;
-  isCompanyName = false;
-  isEmailId = false;
-  isMobileNo = false;
-  isPan = false;
-  isGstIn = false;
-  isBillingAddress = false;
-  isPincode = false;
+  validatorType = ValidatorType;
+
   @Output() getEditData = new EventEmitter();
   obj = [
     {
@@ -130,7 +123,7 @@ export class PayeeSettingsComponent implements OnInit {
       city: [data.city],
       state: [data.state],
       country: [data.country],
-      pincode: [data.zipCode, [Validators.required]],
+      pincode: [data.zipCode, [Validators.required, Validators.minLength(6)]],
       id: [data.id]
     });
     this.getFormControl().customerName.maxLength = 50;
