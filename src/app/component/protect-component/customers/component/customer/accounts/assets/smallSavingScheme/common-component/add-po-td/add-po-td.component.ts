@@ -167,7 +167,7 @@ export class AddPoTdComponent implements OnInit {
     }
   }
   addPOTDResponse(data) {
-    (this.editApi) ? this.eventService.openSnackBar("PO_TD is edited", "dismiss") : this.eventService.openSnackBar("PO_TD is edited", "added")
+    (this.editApi) ? this.eventService.openSnackBar("PO_TD is edited", "dismiss") : this.eventService.openSnackBar("PO_TD is added", "added")
     console.log(data)
     this.close(true);
   }
