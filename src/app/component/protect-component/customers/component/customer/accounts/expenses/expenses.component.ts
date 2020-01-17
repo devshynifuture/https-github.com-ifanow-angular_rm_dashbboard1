@@ -7,6 +7,7 @@ import {CustomerService} from '../../customer.service';
 import {AuthService} from 'src/app/auth-service/authService';
 import {ConstantsService} from "../../../../../../../constants/constants.service";
 import {MatTableDataSource} from "@angular/material/table";
+import { PlanService } from '../../plan/plan.service';
 
 @Component({
   selector: 'app-expenses',
@@ -25,35 +26,55 @@ export class ExpensesComponent implements OnInit {
   advisorId: any;
   clientId: any;
   viewMode;
+  dataSource1: any;
 
-  constructor(private subInjectService: SubscriptionInject, private customerService: CustomerService,
+  constructor(private subInjectService: SubscriptionInject, private planService: PlanService,
               private constantService: ConstantsService) {
   }
 
   ngOnInit() {
-    this.viewMode = 'tab1';
+    this.viewMode = 'Transactions';
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getTransaction();
+    this.getRecuringTransactions();
   }
-
-  getTransaction() {
+  getRecuringTransactions(){
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
       allOrSingle: 1,
-      endDate: '2020-01-10',
+      endDate: '2020-01-30',
       startDate: '2020-01-01',
       limit: 10,
       offset: 1,
       familyMemberId: 0,
     };
     this.dataSource.data = [{}, {}, {}];
-    this.customerService.getTransactionExpense(obj).subscribe(
+    this.planService.getRecuringExpense(obj).subscribe(
+      data => this.getRecuringExpenseRes(data)
+    );
+  }
+  getRecuringExpenseRes(data){
+    console.log(data)
+    this.dataSource1 = data
+  }
+  getTransaction() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      allOrSingle: 1,
+      endDate: '2020-01-30',
+      startDate: '2020-01-01',
+      limit: 10,
+      offset: 1,
+      familyMemberId: 0,
+    };
+    this.dataSource.data = [{}, {}, {}];
+    this.planService.getTransactionExpense(obj).subscribe(
       data => this.getTransactionExpenseRes(data)
     );
   }
-
   getTransactionExpenseRes(data) {
     console.log(data);
     if (data) {

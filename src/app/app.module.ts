@@ -51,7 +51,6 @@ import {SubscriptionUpperEntry} from './component/protect-component/AdviserCompo
 import {FormTestComponent} from "./test/form-test/form-test.component";
 import {CustomDirectiveModule} from "./common/directives/common-directive.module";
 import { CalendarModule } from './component/protect-component/AdviserComponent/Activities/calendar/calendar.module';
-// import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 

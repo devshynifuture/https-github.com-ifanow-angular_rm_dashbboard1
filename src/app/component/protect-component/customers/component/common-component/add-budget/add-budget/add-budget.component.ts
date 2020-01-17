@@ -15,6 +15,8 @@ export class AddBudgetComponent implements OnInit {
   clientId: any;
   advisorId: any;
   expenseList: { "clientExpenseTypeMasterId": number; "expenseType": string; "label": string; }[];
+  isRecuring = false;
+  isNoOfYrs: any;
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,private planService:PlanService) { }
 
@@ -258,6 +260,12 @@ export class AddBudgetComponent implements OnInit {
   
   preventDefault(e){
     e.preventDefault();
+  }
+  toggle(value){
+    this.isRecuring = value.checked;
+  }
+  continuesTill(value){
+    this.isNoOfYrs = value;
   }
   getdataForm(data) {
     if (data == undefined) {
