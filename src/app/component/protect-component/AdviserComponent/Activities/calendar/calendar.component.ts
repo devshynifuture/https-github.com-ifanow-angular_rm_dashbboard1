@@ -147,7 +147,7 @@ export class calendarComponent implements OnInit {
       this.daysArr.push(fd);
     }
 
-    console.log(this.daysArr, "daysArr 123");
+    console.log(this.daysArr, this.addLastMonthDays, "daysArr 123");
   }
 
   // daysInMonth(month, year) {
@@ -203,8 +203,13 @@ export class calendarComponent implements OnInit {
 
   addEvent(day,month,year){
     let event:any;
-    day.length == 1? "0"+day : day;
-    month.length == 1? "0"+month : month;
+    if(month == 0){
+      month = 12;
+    }
+    else if(month == 13){
+      month = 1;
+      year += 1;
+    }
     let eventDate = month + "/" + day + "/" + year;
     console.log(eventDate, "eventDate 123");
     
