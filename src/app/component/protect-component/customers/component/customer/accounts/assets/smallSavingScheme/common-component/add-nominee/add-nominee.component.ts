@@ -142,9 +142,11 @@ export class AddNomineeComponent implements OnInit {
     console.log(data)
     this.familyList = data.familyMembersList;
     const singleFamilyMember = this.ownerName
-    remove(this.familyList, function (n) {
-      return n.userName == singleFamilyMember;
-    });
+    // remove(this.familyList, function (n) {
+    //   return n.userName == singleFamilyMember;
+    // });
+    this.familyList = this.familyList.filter(delData => delData.userName != singleFamilyMember)
+
     console.log(this.familyList)
   }
 
