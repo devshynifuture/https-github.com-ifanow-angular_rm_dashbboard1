@@ -70,6 +70,10 @@ export class BankAccountsComponent implements OnInit {
   Close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag })
   }
+  onlyTextNotSplChar(event: any) {
+    var k = event.keyCode;
+    return ((k > 64 && k < 91) || (k == 32) || (k > 96 && k < 123) || k == 8);
+  }
   getdataForm(data) {
     if (data == undefined) {
       data = {}
@@ -82,7 +86,7 @@ export class BankAccountsComponent implements OnInit {
       interestRate: [(data == undefined) ? '' : data.interestRate, [Validators.required]],
       balanceAsOn: [(data == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
       accountBalance: [(data == undefined) ? '' : data.accountBalance, [Validators.required]],
-      bankAcNo: [(data == undefined) ? '' : data.bankAccountNumber, [Validators.required]],
+      bankAcNo: [(data == undefined) ? '' : data.accountNo, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
@@ -132,7 +136,7 @@ export class BankAccountsComponent implements OnInit {
         interestCompounding: this.bankAccounts.controls.compound.value,
         interestRate: this.bankAccounts.controls.interestRate.value,
         accountBalance:this.bankAccounts.controls.accountBalance.value,
-        bankAccountNumber: this.bankAccounts.controls.bankAcNo.value,
+        accountNo: this.bankAccounts.controls.bankAcNo.value,
         description: this.bankAccounts.controls.description.value,
         id: this.bankAccounts.controls.id.value
       }

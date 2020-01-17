@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   APIEndpoint: 'http://dev.ifanow.in:8080/futurewise/api/v1/web/',
   GmailAPIEndpoint: 'http://dev.ifanow.in:8080/email-server/api/v1/web/',
+  // CalendarAPIEndpoint: 'http://dev.ifanow.in:8080/email-server/',
   // GmailAPIEndpoint: 'http://localhost:8090/email-server/api/v1/web/',
 
 

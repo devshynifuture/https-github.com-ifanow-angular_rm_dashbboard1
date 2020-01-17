@@ -56,7 +56,11 @@
                 <mat-form-field>
                     <mat-select class="form-control br-0">
 
-                        <mat-option value="1"> Frequency </mat-option>
+                        <mat-option value="1">Weekly</mat-option>
+                        <mat-option value="2">Quaterly</mat-option>
+                        <mat-option value="3">Monthly</mat-option>
+                        <mat-option value="4">Yearly</mat-option>
+
                     </mat-select>
                     <mat-error class="f-12 pt-4">
                         This is required
@@ -85,9 +89,9 @@
             <h5 class="m-0 pt-8">Start from </h5>
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <mat-select class="form-control br-0">
-                        <mat-option value="1"> Credit card </mat-option>
-                    </mat-select>
+                        <input matInput class="form-control br-0" (focus)="picker.open()" (input)="preventDefault($event)" [matDatepicker]="picker" formControlName="startDate">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
                     <mat-error class="f-12 pt-4">
                         This is required
                     </mat-error>

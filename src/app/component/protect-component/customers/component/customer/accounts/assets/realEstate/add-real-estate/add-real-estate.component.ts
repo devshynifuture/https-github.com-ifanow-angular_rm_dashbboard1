@@ -140,7 +140,7 @@ export class AddRealEstateComponent implements OnInit {
   }
   display(value) {
     console.log('value selected', value)
-    this.ownerName = value.userName;
+    this.ownerName = value;
     this.selectedFamilyData = value
   }
   showMore() {
@@ -433,7 +433,7 @@ export class AddRealEstateComponent implements OnInit {
         'isOwner': true
       }
       obj.realEstateOwners.push(obj1)
-      if (obj.unitId == null) {
+      if (obj.id == undefined) {
         console.log(obj);
         this.custumService.addRealEstate(obj).subscribe(
           data => this.addRealEstateRes(data)
