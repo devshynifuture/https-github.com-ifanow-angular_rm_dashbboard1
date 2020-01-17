@@ -71,6 +71,7 @@ export class PayeeSettingsComponent implements OnInit {
   advisorId: any;
   family: any;
   familyMemberId: any;
+  showGstin: any;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private eventService: EventService,
               private subService: SubscriptionService, private fb: FormBuilder) {
@@ -101,6 +102,9 @@ export class PayeeSettingsComponent implements OnInit {
     this.subService.getListOfFamilyByClient(obj).subscribe(
       data => this.getListOfFamilyByClientRes(data)
     );
+  }
+  gstTreatmentRemove(value){
+  this.showGstin = value
   }
   getListOfFamilyByClientRes(data) {
     console.log('family Memebers', data)
@@ -188,9 +192,6 @@ export class PayeeSettingsComponent implements OnInit {
       return
     } else if (this.payeeSettingsForm.get('pincode').invalid) {
       this.payeeSettingsForm.get('pincode').markAsTouched();
-      return
-    } else if (this.payeeSettingsForm.get('gstIn').invalid) {
-      this.payeeSettingsForm.get('gstIn').markAsTouched();
       return
     } else if (this.payeeSettingsForm.get('primaryContact').invalid) {
       this.payeeSettingsForm.get('primaryContact').markAsTouched();
