@@ -61,7 +61,7 @@
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error class="f-12 pt-4"
                     *ngIf="isdateValid && getFormControl().dateOfReceipt.invalid || (getFormControl().dateOfReceipt.touched && getFormControl().dateOfReceipt.invalid)">
-                    This feild is required
+                    This field is required
                 </mat-error>
             </mat-form-field>
 
@@ -78,7 +78,7 @@
                         maxlength="{{getFormControl().creditorName.maxLength}}">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isCreditorName && getFormControl().creditorName.invalid || getFormControl().creditorName.touched && getFormControl().creditorName.invalid)}">
-                        This feild is required
+                        This field is required
 
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{creditorName.value.length}}/20</mat-hint>
@@ -97,7 +97,7 @@
                         formControlName="amtBorrowed" maxlength="{{getFormControl().amtBorrowed.maxLength}}">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isAmtBorrowed && getFormControl().amtBorrowed.invalid || getFormControl().amtBorrowed.touched && getFormControl().amtBorrowed.invalid)}">
-                        This feild is required
+                        This field is required
 
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{amtBorrowed.value.length}}/20</mat-hint>
@@ -150,7 +150,7 @@
                         formControlName="balance" maxlength="{{getFormControl().balance.maxLength}}">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isBalance && getFormControl().balance.invalid || getFormControl().balance.touched && getFormControl().balance.invalid)}">
-                        This feild is required
+                        This field is required
 
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{balance.value.length}}/20</mat-hint>
