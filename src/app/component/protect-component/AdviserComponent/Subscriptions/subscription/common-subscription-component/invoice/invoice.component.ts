@@ -742,21 +742,8 @@ export class InvoiceComponent implements OnInit {
   }
 
   generatePdf() {
-    const opt = {
-      margin: 1,
-      filename: this.storeData.invoiceNumber + '.pdf',
-      // image: {type: 'jpeg', quality: 0.98},
-      html2canvas: { scale: 2 },
-      // jsPDF: {unit: 'in', format: 'letter', orientation: 'portrait'}
-    };
-
-    try {
-      console.log('generatepdf invoice this.invoiceTemplate.nativeElement : ', this.invoiceTemplate.nativeElement.innerHTML);
-      PdfService.generatePdfFromHtmlText(this.invoiceTemplate.nativeElement.innerHTML, opt);
-
-    } catch (e) {
-      console.log('PdfService.generatePdfFromElement(this.renderElement, docName); e : ', e);
-    }
+    let para = document.getElementById('template');
+    this.utils.htmlToPdf(para.innerHTML, 'Test')
   }
 
 

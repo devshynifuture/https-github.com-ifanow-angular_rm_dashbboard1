@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {DatePipe, DecimalPipe} from '@angular/common';
-import {EventService} from '../Data-service/event.service';
-import {HttpClient} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { DatePipe, DecimalPipe } from '@angular/common';
+import { EventService } from '../Data-service/event.service';
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable({
@@ -32,7 +32,7 @@ export class UtilService {
   static convertObjectToCustomArray(inputObject: object, keyNameForOutput: string, keyValueForOutput: string): object[] {
     const outputArray = [];
     Object.keys(inputObject).map(key => {
-      const object = {selected: false};
+      const object = { selected: false };
       object[keyNameForOutput] = inputObject[key];
       object[keyValueForOutput] = key;
 
@@ -172,9 +172,9 @@ export class UtilService {
       htmlInput: inputData,
       name: pdfName
     };
-    this.http.post('http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj, {responseType: 'blob'}).subscribe(
+    this.http.post('http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj, { responseType: 'blob' }).subscribe(
       data => {
-        const file = new Blob([data], {type: 'application/pdf'});
+        const file = new Blob([data], { type: 'application/pdf' });
         const fileURL = URL.createObjectURL(file);
         window.open(fileURL);
         const a = document.createElement('a');
@@ -182,7 +182,6 @@ export class UtilService {
       }
     );
   }
-
 }
 
 export class ValidatorType {

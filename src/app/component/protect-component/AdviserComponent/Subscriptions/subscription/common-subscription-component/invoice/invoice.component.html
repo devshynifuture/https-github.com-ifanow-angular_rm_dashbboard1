@@ -30,7 +30,7 @@
     <div class="row ">
       <div class="col-md-4 p-0 max-height-100">
         <div (click)="passInvoice(strData,i,$event)" *ngFor="let strData of dataInvoices let i=index"
-             [ngClass]="(strData.id==storeData.id)?'bg-grey lter':'b-b'" class="invoiceSpacing b-b c-p">
+          [ngClass]="(strData.id==storeData.id)?'bg-grey lter':'b-b'" class="invoiceSpacing b-b c-p">
           <div class="row">
             <div class="col-md-8">
               <p class="m-0 f-15">{{strData.clientName}}</p>
@@ -47,8 +47,7 @@
               <p class="m-0 f-13 pt-12">{{strData.invoiceDate | date:'dd/MM/yyyy'}}</p>
             </div>
             <div class="col-md-5 text-right pr-8">
-              <p
-                [ngClass]="{'text-danger':strData.status==2,'text-primary':strData.status==0,'text-success':strData.status==1}"
+              <p [ngClass]="{'text-danger':strData.status==2,'text-primary':strData.status==0,'text-success':strData.status==1}"
                 class="m-0 f-13 pt-12">
                 {{(strData.status == 0) ? 'UNPAID' : (strData.status == 1) ? 'PAID' : (strData.status == 2) ? 'OVERDUE' : ''}}
               </p>
@@ -64,16 +63,17 @@
             <img (click)="generatePdf()" class="b-a " src="assets/images/svg/pdf-icons.svg">
             <img (click)="printPage(invoiceTemplate)" class="b-a " src="assets/images/svg/printer.svg">
             <img (click)="deleteModal('INVOICE',storeData.id)" class="b-a wrapper-9 ml-8"
-                 src="assets/images/svg/delete.svg">
+              src="assets/images/svg/delete.svg">
           </div>
           <div class="col-md-4 right text-right">
             <button (click)="recordPayment()" class="btn-primary br-0 mb-12" *ngIf="rpyment==true"
-                    mat-stroked-button>RECORD
+              mat-stroked-button>RECORD
               PAYMENT
             </button>
           </div>
         </div>
-        <div #invoiceTemplate *ngIf="showRecord==false && feeCalc==false" class="b-a m-20 pb-28 max-height-100">
+        <div #invoiceTemplate id="template" *ngIf="showRecord==false && feeCalc==false"
+          class="b-a m-20 pb-28 max-height-100">
           <div class="p-16">
             <div class="row">
               <div class="col-md-9">
@@ -81,7 +81,7 @@
               </div>
               <div class="col-md-3 text-right">
                 <img class="pt-20"
-                     src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
+                  src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
               </div>
             </div>
             <div class="row">
@@ -278,7 +278,7 @@
   </div>
   <div *ngIf="showRecord==false && feeCalc==false" class="row bb-1 pt-72">
     <div class="col-md-8 text-custom">
-      <img (click)="editInvoice()" class="c-p" src="assets/images/svg/pencil.svg">
+      <img matTooltip="Info about the action" (click)="editInvoice()" class="c-p" src="assets/images/svg/pencil.svg">
       <img (click)="openSendEmail('upper')" class="b-a" src="assets/images/svg/mail-light.svg">
       <img class="b-a " src="assets/images/svg/pdf-icons.svg">
       <img (click)="printPage(invoiceTemplate)" class="b-a " src="assets/images/svg/printer.svg">
@@ -447,7 +447,7 @@
 <!--Add and edit invoice section-->
 <div *ngIf="showEdit">
   <app-add-edit-subscription-invoice (cancelAddInvoice)="getAddCancelFlag($event)"
-                                     (cancelEditInvoice)="getCancelFlag($event)" (valueChange)='display($event)'
-                                     [data]="storeData" [invoiceInSub]="invoiceInSub" [invoiceValue]="invoiceValue">
+    (cancelEditInvoice)="getCancelFlag($event)" (valueChange)='display($event)' [data]="storeData"
+    [invoiceInSub]="invoiceInSub" [invoiceValue]="invoiceValue">
   </app-add-edit-subscription-invoice>
 </div>
