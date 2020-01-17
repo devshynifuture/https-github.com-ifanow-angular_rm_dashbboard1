@@ -1,7 +1,6 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { LeftsidebarComponent } from './leftsidebar.component';
-import { calendarComponent } from '../../protect-component/AdviserComponent/Activities/calendar/calendar.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {LeftsidebarComponent} from './leftsidebar.component';
 
 
 const routes: Routes = [
