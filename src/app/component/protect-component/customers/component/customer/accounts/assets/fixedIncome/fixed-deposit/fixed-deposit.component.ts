@@ -147,6 +147,8 @@ export class FixedDepositComponent implements OnInit {
   intrestPayout(value) {
     if (value == 2) {
       this.showFreqPayOpt = true;
+    }else{
+      this.showFreqPayOpt=false;
     }
   }
 
@@ -257,9 +259,9 @@ export class FixedDepositComponent implements OnInit {
       this.fixedDeposit.get('compound').markAsTouched();
       return
     }
-    else if (this.fixedDeposit.get('frequencyOfPayoutPerYear').invalid) {
-      this.fixedDeposit.get('frequencyOfPayoutPerYear').markAsTouched();
-      return
+    else if (this.showFreqPayOpt == true && this.fixedDeposit.get('frequencyOfPayoutPerYear').invalid) {
+        this.fixedDeposit.get('frequencyOfPayoutPerYear').markAsTouched();
+        return
     } else {
       const obj = {
         advisorId: this.advisorId,
@@ -272,7 +274,7 @@ export class FixedDepositComponent implements OnInit {
         commencementDate: this.datePipe.transform(this.fixedDeposit.controls.commencementDate.value, 'yyyy-MM-dd'),
         institutionName: this.fixedDeposit.controls.institution.value,
         description: this.fixedDeposit.controls.description.value,
-        frequencyOfPayoutPerYear: this.fixedDeposit.controls.frequencyOfPayoutPerYear.value,
+        frequencyOfPayoutPerYear: (this.fixedDeposit.controls.frequencyOfPayoutPerYear.value!="")?this.fixedDeposit.controls.frequencyOfPayoutPerYear.value:null,
         maturityDate: this.datePipe.transform(this.maturityDate, 'yyyy-MM-dd'),
         interestPayoutOption: this.fixedDeposit.controls.payOpt.value,
         bankAcNumber: this.fixedDeposit.controls.bankACNo.value,

@@ -8,7 +8,6 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionService } from '../../subscription.service';
 import { AuthService } from '../../../../../../auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
-import * as _ from 'lodash';
 import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS } from 'saturn-datepicker';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';

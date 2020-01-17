@@ -6,7 +6,6 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer/customer.service';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { MAT_DATE_FORMATS } from '@angular/material';
-import * as _ from 'lodash';
 import { DataComponent } from '../../../../../../interfaces/data.component';
 
 @Component({

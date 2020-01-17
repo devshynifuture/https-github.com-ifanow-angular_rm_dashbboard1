@@ -1,6 +1,5 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { SubscriptionService } from '../../../subscription.service';
-import * as _ from 'lodash';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from '../../../../../../../auth-service/authService';
 
