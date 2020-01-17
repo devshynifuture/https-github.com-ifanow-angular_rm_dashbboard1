@@ -202,7 +202,7 @@
 
 
 
-<div class="row pt-12">
+<!-- <div class="row pt-12">
     <h3 class="col-md-12">
         Add {{ this.data.tableData.tableInUse | titlecase }}
     </h3>
@@ -383,4 +383,245 @@
             <button mat-button class="text-primary" type="submit">SAVE</button>
         </div>
     </div>
+</div> -->
+
+
+<!-- ------------------------- add Liabilities -------------- -->
+
+<!-- <div class="row pt-12">
+    <h3 class="col-md-12">
+        Add {{ this.data.tableData.tableInUse | titlecase }}
+    </h3>
 </div>
+
+<div class="scrollHeight">
+
+    <div class="row p-12">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-8">Owner</h5>
+            <p class="m-0 f-12 text-custom"> In whose name is this asset </p>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field>
+                <input matInput type="text" class="form-control br-0  ">
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row p-12">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-8">Loan type </h5>
+        </div>
+        <div class="col-md-4">
+            <mat-select formControlName="family-member" class="form-control br-0">
+                <mat-select class="form-control br-0">
+                    <mat-option value='1'>Rahul Jain</mat-option>
+                </mat-select>
+            </mat-select>
+        </div>
+    </div>
+
+    <div class="row p-12">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-8">Original loan amount</h5>
+
+        </div>
+        <div class="col-md-4">
+            <mat-form-field>
+                <input matInput type="text" class="form-control br-0 rupess">
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row p-12">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-8">Loan tenure</h5>
+        </div>
+
+        <div class="col-md-4">
+            <mat-form-field>
+                <input matInput type="text" class="form-control br-0  ">
+            </mat-form-field>
+        </div>
+
+    </div>
+
+    <div class="row p-12">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-8"> Commencement date</h5>
+
+        </div>
+        <div class="col-md-4">
+            <mat-form-field>
+                <input matInput (focus)="picker.open()" class="form-control br-0" [matDatepicker]="picker" readonly>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row p-12">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-8">EMI frequency</h5>
+
+        </div>
+        <div class="col-md-4">
+            <mat-select formControlName="family-member" class="form-control br-0">
+                <mat-select class="form-control br-0">
+                    <mat-option value='1'>Rahul Jain</mat-option>
+                </mat-select>
+            </mat-select>
+        </div>
+    </div>
+
+    <div class="row p-12">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-8"> Annual interest rate </h5>
+
+        </div>
+        <div class="col-md-4">
+            <mat-form-field>
+                <input matInput type="text" class="form-control br-0  ">
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row pt-40 ng-star-inserted">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 text-primitive c-p"> + Add more [optional data] </h5>
+        </div>
+        <div class="col-md-3 "></div>
+    </div>
+
+
+    <div class="row p-12">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-8"> EMI </h5>
+
+        </div>
+        <div class="col-md-4">
+            <mat-form-field>
+                <input matInput type="text" class="form-control br-0 rupess">
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row p-12">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-8"> Financial institution </h5>
+
+        </div>
+        <div class="col-md-6">
+            <mat-form-field>
+                <input matInput type="text" class="form-control br-0  ">
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row p-12">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-8"> Collateral </h5>
+
+        </div>
+        <div class="col-md-6">
+            <mat-form-field>
+                <input matInput type="text" class="form-control br-0  ">
+            </mat-form-field>
+        </div>
+    </div>
+
+
+    <div class="row pt-24 justify-content-md-center ">
+        <div class="col-md-9 pt-20 bt-grey text-center">
+            <button class="btn-dark-black" mat-stroked-button="">
+                <i class="material-icons">add</i>ADD TRANSACTIONS
+            </button>
+
+            <p class="f-12 text-primitive mt-12 ng-star-inserted">
+                Adding transactions is optional but highly <br> recommended to get better reports More info </p>
+        </div>
+    </div>
+
+
+    <div class="row p-12">
+        <div class="col-md-12 text-right">
+            <button mat-button class="text-primitive" type="button" (click)="closeDialog()">CANCEL</button>
+            <button mat-button class="text-primary" type="submit">SAVE</button>
+        </div>
+    </div>
+</div> -->
+
+
+<!-- ------------------------- add Surplus -------------- -->
+
+
+<div class="row pt-12">
+    <div class="col-md-8">
+        <h3>
+            <!-- Add {{ this.data.tableData.tableInUse | titlecase }} -->
+            Monthly allocation: Max available ₹ 50,000
+        </h3>
+    </div>
+
+    <div class="col-md-4 text-primitive text-right">
+        Apr 2020
+    </div>
+
+
+
+</div>
+
+<mat-tab-group>
+    <mat-tab label="Goals">
+        <table mat-table id="table-low" class=" ">
+            <ng-container matColumnDef="goal">
+                <th class="br-grey f-400 f-14" mat-header-cell *matHeaderCellDef> Goal </th>
+                <td class="br-grey f-14" mat-cell *matCellDef="let element">
+                    Retirement goal
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="year">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef>
+                    Goal year
+                </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
+                    Jun 2020
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="month">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef>
+                    Monthly required
+                </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
+                    35,440
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="lumpsum">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef>
+                    Lumpsum required
+                </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
+                    15,27,923
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="allocate">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef>
+                    Allocate
+                </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
+                    ₹ Add allocation
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </mat-tab>
+
+    <mat-tab label="Loans"> Loans </mat-tab>
+
+</mat-tab-group>
