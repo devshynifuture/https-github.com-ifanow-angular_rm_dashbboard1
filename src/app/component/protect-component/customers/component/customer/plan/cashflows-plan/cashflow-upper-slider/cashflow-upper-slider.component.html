@@ -407,8 +407,9 @@
             </ng-container>
 
             <ng-container matColumnDef="total">
-                <th mat-header-cell *matHeaderCellDef> Total
-                    20{{ year.slice(-2) }}-{{ addOneInYear(year.slice(-2))}} </th>
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Total
+                    20{{ year.slice(-2) }}-{{ addOneInYear(year.slice(-2))}}
+                </th>
                 <td class="br-grey text-right f-14  " mat-cell *matCellDef="let element"
                     (click)="openUpperSlider(element)">
 
@@ -419,7 +420,10 @@
                 <th mat-header-cell *matHeaderCellDef> </th>
                 <td class="br-grey text-right f-14  " mat-cell *matCellDef="let element"
                     (click)="openUpperSlider(element)">
-                    1,20,000 </td>
+                    <i class="material-icons text-danger f-18 ">
+                        delete_outline
+                    </i>
+                </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
