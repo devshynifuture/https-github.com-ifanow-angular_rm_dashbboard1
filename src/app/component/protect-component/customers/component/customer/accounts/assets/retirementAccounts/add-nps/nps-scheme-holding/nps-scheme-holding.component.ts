@@ -140,14 +140,33 @@ export class NpsSchemeHoldingComponent implements OnInit {
           id:[element.id,[Validators.required]]
         }))
       })
-      data.nominees.forEach(element => {
-        this.schemeHoldingsNPS.controls.nominees.push(this.fb.group({
-          name: [(element.name), [Validators.required]],
-          sharePercentage: [element.sharePercentage , Validators.required],
-          id:[element.id,[Validators.required]],
-          familyMemberId:[element.familyMemberId]
-        }))
-      })
+      // data.nominees.forEach(element => {
+      //   this.schemeHoldingsNPS.controls.nominees.push(this.fb.group({
+      //     name: [(element.name), [Validators.required]],
+      //     sharePercentage: [element.sharePercentage , Validators.required],
+      //     id:[element.id,[Validators.required]],
+      //     familyMemberId:[element.familyMemberId]
+      //   }))
+      // })
+      if (data.nominees != undefined) {
+        if (data.nominees.length != 0) {
+          data.nominees.forEach(element => {
+            this.schemeHoldingsNPS.controls.nominees.push(this.fb.group({
+              name: [(element.name), [Validators.required]],
+              familyMemberId: [(element.familyMemberId), [Validators.required]],
+              sharePercentage: [element.sharePercentage, Validators.required],
+              id: [element.id, [Validators.required]]
+            }))
+          })
+          this.nominee.removeAt(0);
+  
+        }else{
+          this.nominee.push(this.fb.group({
+            name: [null, [Validators.required]], sharePercentage: [null, [Validators.required]],
+          }));
+        }
+  
+      }
       data.holdingList.forEach(element => {
         this.schemeHoldingsNPS.controls.holdingList.push(this.fb.group({
           schemeName: [(element.schemeId) + "", [Validators.required]],
@@ -157,7 +176,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
           id:[element.id,[Validators.required]]
         }))
       })
-      this.nominee.removeAt(0);
+      // this.nominee.removeAt(0);
       this.futureContry.removeAt(0);
       this.holdings.removeAt(0);
     }
@@ -268,6 +287,12 @@ export class NpsSchemeHoldingComponent implements OnInit {
         description: this.schemeHoldingsNPS.controls.description.value,
         id: this.schemeHoldingsNPS.controls.id.value
       }
+      this.nominee.value.forEach(element => {
+        if (element.sharePercentage == null && element.name == null){
+          this.nominee.removeAt(0);
+        }
+        obj.nominees=this.schemeHoldingsNPS.controls.nominees.value;
+      });
       if (this.schemeHoldingsNPS.controls.id.value == undefined) {
         this.custumService.addNPS(obj).subscribe(
           data => this.addNPSRes(data)

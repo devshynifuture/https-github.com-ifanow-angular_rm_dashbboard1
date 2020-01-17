@@ -132,7 +132,7 @@ export class BankAccountsComponent implements OnInit {
         interestCompounding: this.bankAccounts.controls.compound.value,
         interestRate: this.bankAccounts.controls.interestRate.value,
         accountBalance:this.bankAccounts.controls.accountBalance.value,
-        bankAccountNumber: this.bankAccounts.controls.bankAcNo.value,
+        accountNo: this.bankAccounts.controls.bankAcNo.value,
         description: this.bankAccounts.controls.description.value,
         id: this.bankAccounts.controls.id.value
       }

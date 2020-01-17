@@ -259,7 +259,7 @@
             <h5 class="m-0 pt-8">Choose a date</h5>
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput class="form-control br-0" (focus)="picker.open()" (input)="preventDefault($event)" [matDatepicker]="picker" formControlName="date">
+                    <input matInput class="form-control br-0" (focus)="picker.open()" (input)="preventDefault($event)" [matDatepicker]="picker" formControlName="expenseDoneOn">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
@@ -269,7 +269,7 @@
             <h5 class="m-0 pt-8">Choose a time</h5>
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput class="form-control br-0" maxlength="20" formControlName="time">
+                    <input matInput class="form-control br-0" maxlength="20" formControlName="timeInMilliSec">
                 </mat-form-field>
             </div>
         </div>
@@ -280,7 +280,7 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <mat-select class="form-control br-0" formControlName="category">
-                        <mat-option *ngFor="let choice of expenseList" [value]="choice.expenseType">
+                        <mat-option *ngFor="let choice of expenseList" [value]="choice.clientExpenseTypeMasterId">
                             {{choice.expenseType}}</mat-option>
                     </mat-select>
                     <mat-error class="f-12 pt-4">
@@ -308,9 +308,10 @@
             <h5 class="m-0 pt-8">Payment mode</h5>
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <mat-select class="form-control br-0" formControlName="paymentMode">
+                    <mat-select class="form-control br-0" formControlName="paymentModeId">
                         <mat-option disabled selected hidden> Credit card </mat-option>
                         <mat-option value="1"> Credit card </mat-option>
+                        <mat-option value="2"> Debit card </mat-option>
                     </mat-select>
                     <mat-error class="f-12 pt-4">
                         This is required
@@ -336,12 +337,15 @@
         <div class="col-md-6">
             <h5 class="m-0 pt-8">Family member</h5>
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <mat-select class="form-control br-0" formControlName="familyMember">
-                        <mat-option > {{familyMember.userName}} </mat-option>
+                <mat-form-field class="w-100">
+                    <mat-select formControlName="familyMember" class="form-control br-0">
+                        <mat-option value='' >Search family members</mat-option>
+                        <mat-option *ngFor="let f of familyMember" [value]="f.userName" (click)="selectClient($event, f)">
+                            <span>{{f.userName}}</span>
+                        </mat-option>
                     </mat-select>
                     <mat-error class="f-12 pt-4">
-                        This is required
+                        This field is required
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -353,11 +357,11 @@
         <div class="col-md-4 p-0">
             <!-- close(null)  Expected 0 arguments, but got 1-->
             <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="close()">Cancel</h5>
+            <button mat-button class="btn-bottom br-0 text-inherit"(click)="saveExpenses()">SAVE</button>
         </div>
-        <div class="col-md-8 right text-right">
+        <div class="col-md-8 right text-center">
             <!-- (click)="saveAddInsurance()" Property 'saveAddInsurance' does not exist on type 'AddExpensesComponent'-->
-            <button mat-button class="btn-bottom br-0 text-inherit">SAVE</button>
-
+            <button mat-button class="btn-bottom br-0 text-inherit"(click)="saveExpenses()">SAVE</button>
         </div>
     </div>
 </div>

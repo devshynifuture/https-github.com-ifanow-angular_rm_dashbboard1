@@ -272,6 +272,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
     this.incomePosition++;
     if (this.incomePosition < this.finalIncomeAddList.length) {
       this.singleIndividualIncome = this.finalIncomeAddList[this.incomePosition]
+      this.incomeNetForm.reset();
     }
     else {
       (this.editApiData) ? this.eventService.openSnackBar("Income is edited") : this.eventService.openSnackBar("Income is added")

@@ -46,13 +46,11 @@ import {DynamicComponentService} from './services/dynamic-component.service';
 import {SubscriptionEntry} from './component/protect-component/AdviserComponent/Subscriptions/subscription.entry.module';
 import {EmailEntryModule} from './component/protect-component/AdviserComponent/Email/email.entry.module';
 import 'zone.js/dist/zone';
-import {
-  CalenderComponent,
-  EventDialog
-} from './component/protect-component/AdviserComponent/Email/calender/calender.component';
+
 import {SubscriptionUpperEntry} from './component/protect-component/AdviserComponent/Subscriptions/subscription-upper-entry-module';
 import {FormTestComponent} from "./test/form-test/form-test.component";
 import {CustomDirectiveModule} from "./common/directives/common-directive.module";
+import { CalendarModule } from './component/protect-component/AdviserComponent/Activities/calendar/calendar.module';
 // import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
@@ -91,13 +89,12 @@ import {CustomDirectiveModule} from "./common/directives/common-directive.module
     // CustomDialogContainerComponent,
     // AddLiabilitiesComponent,
     // AddInsuranceComponent
-    CalenderComponent,
-    EventDialog,
+    
     FormTestComponent
 
   ],
   imports: [
-
+    CalendarModule,
     SubscriptionEntry,
     SubscriptionUpperEntry,
     BrowserModule,
@@ -124,7 +121,7 @@ import {CustomDirectiveModule} from "./common/directives/common-directive.module
   ],
   providers: [AuthService, HttpService, DatePipe, DynamicComponentService],
   bootstrap: [AppComponent],
-  entryComponents: [SubscriptionEntry.getComponentList(), SubscriptionUpperEntry.getComponentList(), EventDialog]
+  entryComponents: [SubscriptionEntry.getComponentList(), SubscriptionUpperEntry.getComponentList()]
   // entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), PlanEntryModule.getComponentList()]
 })
 export class AppModule {

@@ -8,13 +8,10 @@
                     <input matInput formControlName="title" class="form-control br-0">
                 </mat-form-field>
             </div>
-            <h5 class="m-0 text-black">Description</h5>
-            <div class="form-group">
-                <mat-form-field>
-                    <textarea matInput class="form-control br-0 p-8" rows="4" formControlName="description"></textarea>
-                </mat-form-field>
-            </div>
-            <h5 class="m-0 text-black pt-28">Event address</h5>
+            <h5 class="m-0 mb-2 text-black">Description</h5>
+            <app-froala [(model)]="eventData.description" modelChange="saveData($event)"></app-froala>
+
+            <h5 class="m-0 text-black" style="margin-top:-46px !important">Event address</h5>
             <div class="form-group">
                 <mat-form-field>
                     <textarea matInput rows="4" formControlName="location" class="form-control p-8"></textarea>
@@ -28,8 +25,8 @@
                     text-black ">Start date</h5>
                             <div class="form-group">
                                 <mat-form-field class="date-input">
-                                    <input matInput formControlName="startDateTime" class="form-control"
-                                        [min]="startDate" [matDatepicker]="picker">
+                                    <input (click)="picker.open()" (dateChange)="setEndDate()" readonly matInput formControlName="startDateTime" class="form-control"
+                                       [value]="this.eventData.start.dateTime == undefined ? startDate : this.eventData.start.dateTime" [min]="startDate" [matDatepicker]="picker">
                                     <mat-datepicker-toggle matSuffix style="margin-top: -18px;" [for]="picker">
                                     </mat-datepicker-toggle>
                                     <mat-datepicker #picker></mat-datepicker>
@@ -66,8 +63,7 @@
                             <h5 class="m-0 text-black f-12">End date</h5>
                             <div class="form-group">
                                 <mat-form-field class="date-input">
-                                    <input class="form-control" matInput formControlName="endDateTime"
-                                        [value]="eventForm.value.startDateTime._d == null?startDate : eventForm.value.startDateTime._d"
+                                    <input (click)="epicker.open()" readonly class="form-control" matInput formControlName="endDateTime"
                                         [min]="eventForm.value.startDateTime._d == null?startDate : eventForm.value.startDateTime._d"
                                         [matDatepicker]="epicker">
                                     <mat-datepicker-toggle matSuffix style="margin-top: -18px;" [for]="epicker">
