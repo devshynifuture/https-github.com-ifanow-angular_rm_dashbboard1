@@ -1,5 +1,6 @@
-<div class="p-24">
-    <h1 mat-dialog-title class="m-0">Add New</h1>
+<div class="p-24" *ngIf="isEditAdd">
+    <h1 mat-dialog-title class="m-0" *ngIf="!isEditable">Add New Event</h1>
+    <h1 mat-dialog-title class="m-0" *ngIf="isEditable"><span style="font-size: 80px; color:#84BDF3; line-height: 0px;">.</span>Edit Event</h1>
     <div mat-dialog-content class="p-24">
         <form [formGroup]="eventForm">
             <h5 class="m-0 text-black">Title</h5>
@@ -9,7 +10,7 @@
                 </mat-form-field>
             </div>
             <h5 class="m-0 mb-2 text-black">Description</h5>
-            <app-froala [(model)]="eventData.description" modelChange="saveData($event)"></app-froala>
+            <app-froala [(model)]="eventData.description" (modelChange)="descriptionData($event)"></app-froala>
 
             <h5 class="m-0 mb-2 text-black" style="margin-top:-46px !important">Event address</h5>
             <div class="form-group">
@@ -111,5 +112,49 @@
     <div mat-dialog-actions>
         <button mat-button (click)="onNoClick()">No Thanks</button>
         <button mat-button [mat-dialog-close]="eventForm.value" cdkFocusInitial>Ok</button>
+    </div>
+</div>
+
+<!---------------------------------- view Event start ----------------------------------------->
+
+<div class="p-24" *ngIf="!isEditAdd">
+    <div mat-dialog-title class="m-0">
+    <h5 class="m-0" ><strong><span style="font-size: 80px; color:#84BDF3; line-height: 0px;">.</span>{{eventData.summary}}</strong></h5>
+    <p class="mt-4"><span>{{eventData.start.dateTime | date : 'MMMM d, y'}}</span> - <span>{{eventData.end.dateTime | date : 'MMMM d, y'}}</span></p>
+    </div>
+    <div mat-dialog-content class="p-24 f-12">
+        <div *ngIf="eventData.description != null" style="display: flex;">
+            <div> <img src="assets/images/svg/bell.svg" width="25px" class="mr-16"> </div>
+            <div>
+                <div  [innerHTML]="eventData.description"> </div>
+            </div>
+        </div>
+        <div *ngIf="eventData.location != null" style="display: flex;" class="mt-16">
+            <div> <img src="assets/images/svg/addon-three.svg" width="25px" class="mr-16"> </div>
+            <div>
+                <strong class="mb-2 text-black">Event address:</strong>
+                <div [innerHTML]="eventData.location"> </div>
+            </div>
+        </div>
+        
+        <div style="display: flex;" *ngIf="attendeesArr.length > 0" class="mt-16" >
+            <div> <img src="assets/images/svg/people.svg" width="25px" class="mr-16"> </div>   
+            <div class="col-md-10 pl-0" >
+                <strong class="m-0 text-black">Attendee List: </strong>
+                <div class="row pl-0" *ngFor="let member of attendeesArr" >
+                    <div class="col-md-10 pl-0 " >
+                        <strong><span style="font-size: 30px; color:#84BDF3; line-height: 7px;">.</span></strong> {{member.email}}
+                    </div>
+                </div>
+            </div>     
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <!-- *ngIf="eventData.creator.self" -->
+        <img  (click)="editEvent()" class="c-p" src="assets/images/svg/pencil.svg">
+        <img (click)="deleteEvent()" class="b-a c-p wrapper-9 ml-8"
+              src="assets/images/svg/delete.svg">
+        <!-- <button mat-button (click)="onNoClick()">No Thanks</button>
+        <button mat-button [mat-dialog-close]="eventForm.value" cdkFocusInitial>Ok</button> -->
     </div>
 </div>

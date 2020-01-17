@@ -320,7 +320,8 @@ export const appConfig = {
 
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
-  GET_UPDATE: 'calendar/event/update'
+  GET_UPDATE: 'calendar/event/update',
+  GET_ADD: 'calendar/event/add'
 
   ////////////////////////////// calendar////////////////////////////////////////////
 };
