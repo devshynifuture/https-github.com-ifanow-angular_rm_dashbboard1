@@ -24,11 +24,20 @@
         padding: 0px;
         background-color: transparent;
         font-family: "Roboto", sans-serif !important;
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+        list-style: none;
+        border-radius: .25rem;
+        margin: 0px;
         li {
             padding: 0px !important;
             font-family: "Roboto", sans-serif !important;
             font-size: 18px !important;
             color: #000000 !important;
+            height: auto;
+            line-height: normal;
+            margin-bottom: 0;
             a {
                 font-size: 18px;
                 font-family: "Roboto", sans-serif !important;
@@ -95,15 +104,4 @@
         label {
             padding: 0 !important;
         }
-    }
-    
-    .documentBreadCrumb {
-        padding: 0px;
-        background-color: transparent;
-        font-family: "Roboto", sans-serif !important;
-        display: flex;
-        flex-wrap: wrap;
-        margin-bottom: 1rem;
-        list-style: none;
-        border-radius: .25rem;
     }

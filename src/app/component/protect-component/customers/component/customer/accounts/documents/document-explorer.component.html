@@ -38,7 +38,7 @@
                 <div class="wrapper-8">
                     <div class="row pt-28 pb-28">
                         <div class="col-md-6 pl-0">
-                            <ol class="  documentBreadCrumb">
+                            <ol class="documentBreadCrumb">
                                 <li (click)="reset()" class="breadcrumb-item  c-p">
                                     <p *ngIf="showResult == false" class="m-0 text-black roboto f-18 ">
                                         {{tabValue || 'Documents'}}</p>
@@ -99,8 +99,8 @@
               </div> -->
 
                     <div class="row">
-                        <div *ngSwitchCase="viewMode" class="col-md-9 p-0 documentsTable">
-                            <div *ngIf="showMsg == false && noResult == false">
+                        <div class="col-md-9 p-0 documentsTable" *ngIf="showMsg == false && noResult == false">
+                            <div *ngSwitchCase="viewMode">
                                 <table [appSkeletonLoading]="isLoading" [dataSource]="commonFileFolders" appSkeletonLoading class="skeletonAnimation" id="table-low" mat-table matSort>
                                     <ng-container matColumnDef="emptySpace">
                                         <th *matHeaderCellDef mat-header-cell></th>
@@ -200,16 +200,17 @@
                                     <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
                                 </table>
                             </div>
-
-                            <div *ngIf="showMsg == true">
-                                <img class="mr-12" src="/assets/images/svg/folder-icon.svg"> Folder is empty<br>
-                                <p class="m-0 f-12 text-custom">Drop files here</p>
-                            </div>
-                            <div *ngIf="noResult == true">
-                                <img src="assets/images/svg/document-search-icon.svg"> No result found<br>
-                                <p class="m-0 f-12 text-custom">Try a diffrent search</p>
-                            </div>
                         </div>
+
+                        <div class="col-md-9 d-flex justify-content-center flex-column align-items-center" *ngIf="showMsg == true">
+                            <img class="mr-12" src="/assets/images/svg/folder-icon.svg"> Folder is empty<br>
+                            <p class="m-0 f-12 text-custom">Drop files here</p>
+                        </div>
+                        <div class="col-md-9 d-flex justify-content-center flex-column align-items-center" *ngIf="noResult == true">
+                            <img src="assets/images/svg/document-search-icon.svg"> No result found<br>
+                            <p class="m-0 f-12 text-custom">Try a diffrent search</p>
+                        </div>
+
                         <div class="col-md-3">
                             <div class="bg-grey lter mb-16 boxGrey f-14">
                                 <p class="selectMoreDetails">
