@@ -7,7 +7,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SubscriptionEntry} from '../../protect-component/AdviserComponent/Subscriptions/subscription.entry.module';
 import {SubscriptionUpperEntry} from '../../protect-component/AdviserComponent/Subscriptions/subscription-upper-entry-module';
 import {LeftsidebarComponent} from './leftsidebar.component';
-import {CustomCommonModule} from "../../../common/custom.common.module";
+import {CustomCommonModule} from '../../../common/custom.common.module';
+import {DynamicComponentService} from '../../../services/dynamic-component.service';
 
 
 @NgModule({
@@ -15,15 +16,18 @@ import {CustomCommonModule} from "../../../common/custom.common.module";
     LeftsidebarComponent
   ],
   imports: [
+    SubscriptionEntry,
+    SubscriptionUpperEntry,
     CommonModule,
-    LeftsidebarRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    SubscriptionEntry,
-    SubscriptionUpperEntry,
-    CustomCommonModule
+    CustomCommonModule,
+    LeftsidebarRoutingModule,
+
   ],
-  entryComponents: [SubscriptionEntry.getComponentList(), SubscriptionUpperEntry.getComponentList()]
+  entryComponents: [SubscriptionEntry.getComponentList(), SubscriptionUpperEntry.getComponentList()],
+  providers: [DynamicComponentService]
 })
-export class LeftsidebarModule { }
+export class LeftsidebarModule {
+}
