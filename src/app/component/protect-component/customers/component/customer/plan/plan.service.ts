@@ -95,4 +95,22 @@ export class PlanService {
   editRecuringExpense(data){
     return this.http.post(apiConfig.MAIN_URL + appConfig.RECURING_EXPENSE_EDIT, data);
   }
+  getBudget(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BUDGETS, data);
+  }
+  addBudget(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_BUDGET, data);
+  }
+  editBudget(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.EDIT_BUDGET, data);
+  }
+  otherCommitmentsGet(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.OTHERCOMMITMENTS_GET, data);
+  }
+  otherCommitmentsAdd(data){
+     return this.http.post(apiConfig.MAIN_URL + appConfig.OTHERCOMMITMENTS_ADD, data);
+  }
+  otherCommitmentsEdit(data){
+     return this.http.post(apiConfig.MAIN_URL + appConfig.OTHERCOMMITMENTS_EDIT, data);
+  }
 }

@@ -181,6 +181,12 @@ export const appConfig = {
   RECURING_EXPENSE_ADD:'account/expense/recurring/expense/add',
   RECURING_EXPENSE_GET:'account/expense/recurring/expense/list/get',
   RECURING_EXPENSE_EDIT:'account/expense/recurring/expense/edit',
+  GET_BUDGETS:'account/expense/budget/list/get',
+  ADD_BUDGET:'account/expense/budget/add',
+  EDIT_BUDGET:'account/expense/budget/edit',
+  OTHERCOMMITMENTS_ADD:'account/expense/othercommitments/add',
+  OTHERCOMMITMENTS_EDIT:'account/expense/othercommitments/edit',
+  OTHERCOMMITMENTS_GET:'account/expense/othercommitments/get',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   GET_EPF: 'account/asset/retirement/epf/list/get',
