@@ -8,11 +8,14 @@ import {Component, OnInit} from '@angular/core';
 })
 export class DetailedPoTdComponent implements OnInit {
   data;
+  nominee: any;
 
   constructor(private subInjectService: SubscriptionInject) {
   }
 
   ngOnInit() {
+    console.log(this.data);
+    this.nominee=this.data.nominees;
   }
 
   close() {

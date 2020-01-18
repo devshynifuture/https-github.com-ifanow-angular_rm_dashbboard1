@@ -62,7 +62,7 @@
             <th *matHeaderCellDef class="br text-right" mat-header-cell mat-sort-header="balance">Balance mentioned
             </th>
             <td *matCellDef="let element" appFormatNumber class="br text-right" mat-cell>
-                <div class="bar"> {{element.balance}} </div>
+                <div class="bar"> {{element.accountBalance}} </div>
             </td>
             <td *matFooterCellDef [value]="balanceMentionedSum" appFormatNumber class="br text-right f-500 p-8 t-7" mat-footer-cell>{{balanceMentionedSum}}</td>
         </ng-container>

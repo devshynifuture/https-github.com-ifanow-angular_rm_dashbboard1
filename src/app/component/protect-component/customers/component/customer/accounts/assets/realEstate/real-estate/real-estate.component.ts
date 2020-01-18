@@ -102,7 +102,7 @@ export class RealEstateComponent implements OnInit {
           // const ownerName = _.filter(array, function (n) {
           //   return n.owner == true;
           // });
-          const ownerName = array.filter(element => element.ownerName != false)
+          const ownerName = array.filter(element => element.owner != false)
           if (ownerName.length != 0) {
             this.ownerName = ownerName[0].ownerName;
             element.ownerName = this.ownerName;
