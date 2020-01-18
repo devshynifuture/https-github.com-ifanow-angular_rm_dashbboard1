@@ -265,7 +265,7 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <mat-select class="form-control br-0" formControlName="category">
-                            <mat-option *ngFor="let choice of expenseList" [value]="choice.expenseType">
+                            <mat-option *ngFor="let choice of expenseList" [value]="choice.clientExpenseTypeMasterId">
                                 {{choice.expenseType}}</mat-option>
                         </mat-select>
                         <mat-error class="f-12 pt-4">
@@ -280,7 +280,7 @@
                 <h5 class="m-0 pt-8">Enter amount</h5>
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput class="form-control rupess br-0" formControlName="amount">
+                        <input matInput class="form-control rupess br-0" formControlName="amount" type="number">
                         <mat-error class="f-12 pt-4">
                             This is required
                         </mat-error>
@@ -301,10 +301,10 @@
                     <mat-form-field>
                         <mat-select class="form-control br-0" formControlName="repeatFrequency">
 
-                            <mat-option value="1">Daily</mat-option>
-                            <mat-option value="2">Weekly</mat-option>
-                            <mat-option value="3">Monthly</mat-option>
-                            <mat-option value="4">Yearly</mat-option>
+                            <mat-option value=1>Daily</mat-option>
+                            <mat-option value=2>Weekly</mat-option>
+                            <mat-option value=3>Monthly</mat-option>
+                            <mat-option value=4>Yearly</mat-option>
 
                         </mat-select>
                         <mat-error class="f-12 pt-4">
@@ -337,11 +337,11 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <mat-select class="form-control br-0" (ngModelChange)="continuesTill($event)"
-                            formControlName="continuesDate">
-                            <mat-option value="1"> Retirement </mat-option>
-                            <mat-option value="2"> Life time </mat-option>
-                            <mat-option value="3"> No.of yrs </mat-option>
-                            <mat-option value="4"> No.of times </mat-option>
+                            formControlName="continueTill">
+                            <mat-option value=1> Retirement </mat-option>
+                            <mat-option value=2> Life time </mat-option>
+                            <mat-option value=3> No.of yrs </mat-option>
+                            <mat-option value=4> No.of times </mat-option>
                         </mat-select>
                         <mat-error class="f-12 pt-4">
                             This is required
@@ -352,7 +352,7 @@
             <div class="col-md-6" *ngIf="isNoOfYrs == '4' || isNoOfYrs == '3'">
                 <div class="form-group mt-24 mb-0">
                     <mat-form-field>
-                        <input matInput class="form-control br-0" formControlName="noOfYr">
+                        <input matInput class="form-control br-0" formControlName="numberOfYearOrNumberOfTime">
                         <mat-error class="f-12 pt-4">
                             This is required
                         </mat-error>
@@ -368,8 +368,8 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <mat-select class="form-control br-0" formControlName="paymentModeId">
-                            <mat-option value="1"> Credit card </mat-option>
-                            <mat-option value="1"> Debit card </mat-option>
+                            <mat-option value=1> Credit card </mat-option>
+                            <mat-option value=2> Debit card </mat-option>
                         </mat-select>
                         <mat-error class="f-12 pt-4">
                             This is required

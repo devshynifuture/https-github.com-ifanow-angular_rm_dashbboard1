@@ -21,6 +21,7 @@ export class AddBudgetComponent implements OnInit {
   recuring: any;
   isViewInitCalled: any;
   inputData: any;
+  familyMemberId: any;
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,private planService:PlanService,private constantService : ConstantsService) { }
 
@@ -29,6 +30,7 @@ export class AddBudgetComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.getdataForm(this.inputData)
     this.getdataFormRec(this.inputData)
+    this.getListFamilyMem()
   }
   @Input()
   set data(data) {
@@ -52,6 +54,20 @@ export class AddBudgetComponent implements OnInit {
   continuesTill(value){
     this.isNoOfYrs = value;
   }
+  getListFamilyMem() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.planService.getListOfFamilyByClient(obj).subscribe(
+      data => this.getListOfFamilyByClientRes(data)
+    );
+  }
+
+  getListOfFamilyByClientRes(data) {
+    console.log('family Memebers', data);
+    this.familyMember = data.familyMembersList;
+  }
   getdataFormRec(data) {
     if (data == undefined) {
       data = {};
@@ -61,9 +77,7 @@ export class AddBudgetComponent implements OnInit {
       expenseDoneOn: [(data == undefined) ? '' : new Date(data.expenseDoneOn), [Validators.required]],
       amount: [(data == undefined) ? '' : data.amount, [Validators.required]],
       repeatFrequency:[(data == undefined) ? '' : data.repeatFrequency, [Validators.required]],
-      every:[(data == undefined) ? '' : data.every, [Validators.required]],
       startsFrom:[(data == undefined) ? '' : new Date(data.startsFrom), [Validators.required]],
-      whatDay:[(data == undefined) ? '' : data.whatDay, [Validators.required]],
       continuesDate:[(data == undefined) ? '' :  new Date(data.continuesDate), [Validators.required]],
       continueTill:[(data == undefined) ? '' :(data.continueTill), [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
@@ -105,9 +119,114 @@ export class AddBudgetComponent implements OnInit {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
   saveRecuringExpense(){
-
+    if (this.recuring.get('expenseDoneOn').invalid) {
+      this.recuring.get('expenseDoneOn').markAsTouched();
+      return
+    } else if (this.recuring.get('repeatFrequency').invalid) {
+      this.recuring.get('repeatFrequency').markAsTouched();
+      return
+    } else if (this.recuring.get('amount').invalid) {
+      this.recuring.get('amount').markAsTouched();
+      return
+    }else if (this.recuring.get('category').invalid) {
+      this.recuring.get('category').markAsTouched();
+      return
+    } else if (this.recuring.get('startFrom').invalid) {
+      this.recuring.get('startFrom').markAsTouched();
+      return
+    } else if (this.recuring.get('paymentModeId').invalid) {
+      this.recuring.get('paymentModeId').markAsTouched();
+      return
+    } else if (this.recuring.get('continueTill').invalid) {
+      this.recuring.get('continueTill').markAsTouched();
+      return
+    } else if (this.recuring.get('familyMember').invalid) {
+      this.recuring.get('familyMember').markAsTouched();
+      return
+    }  else {
+        let obj = {
+          advisorId: this.advisorId,
+          clientId: this.clientId,
+          familyMemberId: this.familyMemberId,
+          expenseDoneOn: this.recuring.controls.expenseDoneOn.value,
+          amount: this.recuring.controls.amount.value,
+          timeInMilliSec: this.recuring.controls.timeInMilliSec.value,
+          paymentModeId:this.recuring.controls.paymentModeId.value,
+          expenseCategoryId: this.recuring.controls.category.value,
+          description: this.recuring.controls.description.value,
+          isRecuring:this.recuring.controls.isRecuring.value,
+          
+        }
+        if (this.recuring.controls.id.value == undefined) {
+          this.planService.otherCommitmentsAdd(obj).subscribe(
+            data => this.otherCommitmentsAddRes(data)
+          );
+        } else {
+          obj['id']=this.recuring.controls.id.value;
+          //edit call
+          this.planService.editRecuringExpense(obj).subscribe(
+            data => this.editRecuringExpenseRes(data)
+          );
+        }
+      }
+  }
+  otherCommitmentsAddRes(data){
+    console.log(data)
+  }
+  editRecuringExpenseRes(data){
+    console.log(data)
   }
   saveExpenses(){
-    
+    if (this.budget.get('expenseDoneOn').invalid) {
+      this.budget.get('expenseDoneOn').markAsTouched();
+      return
+    } else if (this.budget.get('timeInMilliSec').invalid) {
+      this.budget.get('timeInMilliSec').markAsTouched();
+      return
+    } else if (this.budget.get('amount').invalid) {
+      this.budget.get('amount').markAsTouched();
+      return
+    } else if (this.budget.get('category').invalid) {
+      this.budget.get('category').markAsTouched();
+      return
+    } else if (this.budget.get('paymentModeId').invalid) {
+      this.budget.get('paymentModeId').markAsTouched();
+      return
+    } else if (this.budget.get('familyMember').invalid) {
+      this.budget.get('familyMember').markAsTouched();
+      return
+    } else if (this.budget.get('isRecuring').invalid) {
+      this.budget.get('isRecuring').markAsTouched();
+      return
+    } else {
+        let obj = {
+          advisorId: this.advisorId,
+          clientId: this.clientId,
+          familyMemberId: this.familyMemberId,
+          expenseDoneOn: this.budget.controls.expenseDoneOn.value,
+          amount: this.budget.controls.amount.value,
+          timeInMilliSec: this.budget.controls.timeInMilliSec.value,
+          paymentModeId:this.budget.controls.paymentModeId.value,
+          expenseCategoryId: this.budget.controls.category.value,
+          description: this.budget.controls.description.value,
+          id: this.budget.controls.id.value
+        }
+        if (this.budget.controls.id.value == undefined) {
+          this.planService.addBudget(obj).subscribe(
+            data => this.addBudgetRes(data)
+          );
+        } else {
+          //edit call
+          this.planService.editBudget(obj).subscribe(
+            data => this.editBudgetRes(data)
+          );
+        }
+      }
+  }
+  addBudgetRes(data){
+    console.log(data)
+  }
+  editBudgetRes(data){
+    console.log(data)
   }
 }

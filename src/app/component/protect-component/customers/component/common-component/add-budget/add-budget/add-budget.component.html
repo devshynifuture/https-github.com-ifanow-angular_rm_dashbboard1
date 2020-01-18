@@ -11,7 +11,7 @@
     </div>
 </div>
 <!-- [formGroup]="expenses"   Property 'expenses' does not exist on type 'AddExpensesComponent' -->
-<div *ngIf="isRecuring == false" class="pt-72 pl-24 pr-24 pb-48 mb-48" [formGroup]="recuring">
+<div *ngIf="isRecuring == true" class="pt-72 pl-24 pr-24 pb-48 mb-48" [formGroup]="recuring">
     <div class="row">
         <mat-checkbox class="text-right" [(ngModel)]="isRecuring" (change)="toggle($event)"
             formControlName="isRecuring">Add recuring
@@ -170,7 +170,7 @@
         </div>
     </div>
 </div>
-<div *ngIf="isRecuring == true" class="pt-72 pl-24 pr-24 pb-48 mb-48" [formGroup]="recuring">
+<div *ngIf="isRecuring == false" class="pt-72 pl-24 pr-24 pb-48 mb-48" [formGroup]="recuring">
     <div class="row">
         <mat-checkbox class="text-right" [(ngModel)]="isRecuring" (change)="toggle($event)"
             formControlName="isRecuring">Add recuring
