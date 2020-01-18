@@ -9,7 +9,6 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
-import * as _ from 'lodash';
 @Component({
   selector: 'app-add-epf',
   templateUrl: './add-epf.component.html',
@@ -36,7 +35,7 @@ export class AddEPFComponent implements OnInit {
   clientId: any;
   isOwnerName = false;
   nomineesListFM: any;
-  dataFM: any;
+  dataFM = [];
   familyList: any;
 
   constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) { }
@@ -67,9 +66,10 @@ export class AddEPFComponent implements OnInit {
     this.dataFM = this.nomineesListFM
     if (this.dataFM.length > 0) {
       let name = this.ownerName
-      var evens = _.reject(this.dataFM, function (n) {
-        return n.userName == name;
-      });
+      // var evens = _.reject(this.dataFM, function (n) {
+      //   return n.userName == name;
+      // });
+      let evens = this.dataFM.filter(delData => delData.userName != name)
       this.familyList = evens
     }
 
@@ -89,7 +89,7 @@ export class AddEPFComponent implements OnInit {
     }
   }
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag})
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag })
   }
   onChange(event) {
     if (parseInt(event.target.value) > 100) {
@@ -130,7 +130,7 @@ export class AddEPFComponent implements OnInit {
     } else if (this.epf.get('ownerName').invalid) {
       this.epf.get('ownerName').markAsTouched();
       return;
-    }else if (this.epf.get('employerContry').invalid) {
+    } else if (this.epf.get('employerContry').invalid) {
       this.epf.get('employerContry').markAsTouched();
       return;
     } else if (this.epf.get('currentEPFBal').invalid) {
@@ -175,10 +175,10 @@ export class AddEPFComponent implements OnInit {
   addEPFRes(data) {
     console.log('addrecuringDepositRes', data)
     this.event.openSnackBar('Added successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data ,refreshRequired:true})
+    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
   editEPFRes(data) {
     this.event.openSnackBar('Updated successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data ,refreshRequired:true})
+    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
 }

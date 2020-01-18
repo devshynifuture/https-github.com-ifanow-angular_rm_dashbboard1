@@ -6,7 +6,6 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import * as _ from 'lodash';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -76,9 +75,10 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     this.dataFM = this.nomineesListFM
     if (this.dataFM.length > 0) {
       let name = this.ownerName
-      var evens = _.reject(this.dataFM, function (n) {
-        return n.userName == name;
-      });
+      // var evens = _.reject(this.dataFM, function (n) {
+      //   return n.userName == name;
+      // });
+      let evens = this.dataFM.filter(deltData => deltData.userName != name)
       this.familyList = evens
     }
 
@@ -157,7 +157,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
         })
         this.nominee.removeAt(0);
 
-      }else{
+      } else {
         this.nominee.push(this.fb.group({
           name: [null, [Validators.required]], sharePercentage: [null, [Validators.required]],
         }));
@@ -262,10 +262,10 @@ export class NpsSummaryPortfolioComponent implements OnInit {
         id: this.summaryNPS.controls.id.value
       }
       this.nominee.value.forEach(element => {
-        if (element.sharePercentage == null && element.name == null){
+        if (element.sharePercentage == null && element.name == null) {
           this.nominee.removeAt(0);
         }
-        obj.nominees=this.summaryNPS.controls.nominees.value;
+        obj.nominees = this.summaryNPS.controls.nominees.value;
       });
       if (this.summaryNPS.controls.id.value == undefined) {
         this.custumService.addNPS(obj).subscribe(

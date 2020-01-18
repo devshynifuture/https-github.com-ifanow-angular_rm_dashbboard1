@@ -1,16 +1,15 @@
-import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {CustomerService} from '../../../../customer.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import * as _ from 'lodash';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {AddRealEstateComponent} from '../add-real-estate/add-real-estate.component';
-import {DetailedViewRealEstateComponent} from '../detailed-view-real-estate/detailed-view-real-estate.component';
-import {FormatNumberDirective} from 'src/app/format-number.directive';
-import {ExcelService} from '../../../../excel.service';
+import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { CustomerService } from '../../../../customer.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { AddRealEstateComponent } from '../add-real-estate/add-real-estate.component';
+import { DetailedViewRealEstateComponent } from '../detailed-view-real-estate/detailed-view-real-estate.component';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { ExcelService } from '../../../../excel.service';
 
 @Component({
   selector: 'app-real-estate',
@@ -100,9 +99,10 @@ export class RealEstateComponent implements OnInit {
       data.realEstateList.forEach(element => {
         if (element.realEstateOwners.length != 0) {
           const array = element.realEstateOwners;
-          const ownerName = _.filter(array, function (n) {
-            return n.owner == true;
-          });
+          // const ownerName = _.filter(array, function (n) {
+          //   return n.owner == true;
+          // });
+          const ownerName = array.filter(element => element.ownerName != false)
           if (ownerName.length != 0) {
             this.ownerName = ownerName[0].ownerName;
             element.ownerName = this.ownerName;

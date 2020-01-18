@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SubscriptionService } from '../../../subscription.service';
-import * as _ from 'lodash';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { EventService } from '../../../../../../../Data-service/event.service';
 import { AuthService } from "../../../../../../../auth-service/authService";
@@ -16,7 +15,7 @@ export class ServicesComponent implements OnInit {
   advisorId;
 
   @Input() componentFlag: string;
-  planServiceData:Array<any> = [{ selected: false }];
+  planServiceData: Array<any> = [{ selected: false }];
   mappedData = [];
   mappedPlan = [];
   @Input() planData;
@@ -78,7 +77,7 @@ export class ServicesComponent implements OnInit {
     if (data) {
       this.planServiceData = data;
       this.planServiceData.forEach(element => {
-       const newElement = {
+        const newElement = {
           ...element,
           ...element.servicePricing
         };
@@ -111,7 +110,7 @@ export class ServicesComponent implements OnInit {
       this.planServiceData = data;
       const modifiedArray = []
       this.planServiceData.forEach(element => {
-       const newElement = {
+        const newElement = {
           ...element,
           ...element.servicePricing
         };
@@ -152,9 +151,10 @@ export class ServicesComponent implements OnInit {
     //   return delData.id == data.id;
     // });
     data.selected = false;
-    _.remove(this.mappedData, function (delData) {
-      return delData.id == data.id;
-    });
+    // _.remove(this.mappedData, function (delData) {
+    //   return delData.id == data.id;
+    // });
+    this.mappedData = this.mappedData.filter(delData => delData.id != data.id)
     console.log(data);
     // console.log(this.mappedData.length);
   }
