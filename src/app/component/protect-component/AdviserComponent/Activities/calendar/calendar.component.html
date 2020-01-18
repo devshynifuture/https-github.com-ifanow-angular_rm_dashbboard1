@@ -371,7 +371,7 @@
                                         <mat-chip >{{list}}</mat-chip>
                                     </mat-chip-list>
                                 </li>
-                                <li  (click)="editEvent(event)">{{event.time}} <span class="f-700 m-0" [innerHTML]="event.summary" ></span></li>
+                                <li  (click)="editEvent(event)"><span *ngIf="event.start.dateTime != null">{{event.startTime}}</span> <span class="f-700 m-0" [innerHTML]="event.summary" ></span></li>
                             </ul>
                             <!-- <ul class="yellow" >
                                 <li>11.00 <span class="f-700 m-0">Srinivas chandra</span></li>
