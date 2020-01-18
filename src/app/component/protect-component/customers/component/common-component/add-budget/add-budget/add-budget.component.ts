@@ -4,6 +4,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { PlanService } from '../../../customer/plan/plan.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ConstantsService } from 'src/app/constants/constants.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-add-budget',
@@ -23,7 +24,7 @@ export class AddBudgetComponent implements OnInit {
   inputData: any;
   familyMemberId: any;
 
-  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,private planService:PlanService,private constantService : ConstantsService) { }
+  constructor(private event: EventService,private fb: FormBuilder, private subInjectService: SubscriptionInject,private planService:PlanService,private constantService : ConstantsService) { }
 
   ngOnInit() {
     this.clientId = AuthService.getClientId();
@@ -195,10 +196,7 @@ export class AddBudgetComponent implements OnInit {
     } else if (this.budget.get('familyMember').invalid) {
       this.budget.get('familyMember').markAsTouched();
       return
-    } else if (this.budget.get('isRecuring').invalid) {
-      this.budget.get('isRecuring').markAsTouched();
-      return
-    } else {
+    }else {
         let obj = {
           advisorId: this.advisorId,
           clientId: this.clientId,
@@ -225,8 +223,12 @@ export class AddBudgetComponent implements OnInit {
   }
   addBudgetRes(data){
     console.log(data)
+    this.event.openSnackBar('Added successfully!', 'dismiss');
+    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
   editBudgetRes(data){
     console.log(data)
+    this.event.openSnackBar('Updated successfully!', 'dismiss');
+    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
 }

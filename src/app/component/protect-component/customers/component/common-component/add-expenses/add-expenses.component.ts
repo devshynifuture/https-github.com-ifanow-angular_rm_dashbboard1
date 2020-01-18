@@ -4,6 +4,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {AuthService} from 'src/app/auth-service/authService';
 import {PlanService} from '../../customer/plan/plan.service';
 import {ConstantsService} from "../../../../../../constants/constants.service";
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-add-expenses',
@@ -27,7 +28,7 @@ export class AddExpensesComponent implements OnInit {
   recuring: any;
   isNoOfYrs: any;
 
-  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,
+  constructor(private event: EventService,private fb: FormBuilder, private subInjectService: SubscriptionInject,
               private planService: PlanService, private constantService: ConstantsService) {
   }
   @Input()
@@ -212,9 +213,6 @@ editRecuringExpenseRes(data) {
     } else if (this.expenses.get('familyMember').invalid) {
       this.expenses.get('familyMember').markAsTouched();
       return
-    } else if (this.expenses.get('isRecuring').invalid) {
-      this.expenses.get('isRecuring').markAsTouched();
-      return
     } else {
         let obj = {
           advisorId: this.advisorId,
@@ -242,13 +240,17 @@ editRecuringExpenseRes(data) {
     }
   addExpenseRes(data) {
     console.log('addExpenseRes', data);
+    this.event.openSnackBar('Added successfully!', 'dismiss');
+    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
 
   editExpenseRes(data) {
     console.log('editExpenseRes', data);
+    this.event.openSnackBar('Updated successfully!', 'dismiss');
+    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
 
-  close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+  Close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag })
   }
 }

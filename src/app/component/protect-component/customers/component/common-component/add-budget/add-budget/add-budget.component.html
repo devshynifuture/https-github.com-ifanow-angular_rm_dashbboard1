@@ -156,16 +156,15 @@
             </div>
         </div>
     </div>
-    <div class="bottom-fixed wrapper-16 pb-12">
+    <div class="bottom-fixed-35 wrapper-16 pb-12">
         <div class="row">
             <div class="col-md-4 p-0">
                 <!-- close(null)  Expected 0 arguments, but got 1-->
                 <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="close()">Cancel</h5>
-                <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveRecuringExpense()">SAVE</button>
             </div>
             <div class="col-md-8 right text-center">
                 <!-- (click)="saveAddInsurance()" Property 'saveAddInsurance' does not exist on type 'AddExpensesComponent'-->
-                <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveExpenses()">SAVE</button>
+                <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveRecuringExpense()">SAVE</button>
             </div>
         </div>
     </div>
@@ -276,7 +275,7 @@
         </div>
     </div>
 </div>
-<div class="bottom-fixed wrapper-16 pb-12">
+<div class="bottom-fixed-35 wrapper-16 pb-12">
     <div class="row">
         <div class="col-md-4 p-0">
             <!-- close(null)  Expected 0 arguments, but got 1-->
@@ -284,7 +283,7 @@
         </div>
         <div class="col-md-8 right text-right">
             <!-- (click)="saveAddInsurance()" Property 'saveAddInsurance' does not exist on type 'AddExpensesComponent'-->
-            <button mat-button class="btn-bottom br-0 text-inherit">SAVE</button>
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveExpenses()">SAVE</button>
 
         </div>
     </div>
