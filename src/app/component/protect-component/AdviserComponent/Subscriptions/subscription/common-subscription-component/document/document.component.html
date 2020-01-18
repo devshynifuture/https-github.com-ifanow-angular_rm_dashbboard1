@@ -142,7 +142,8 @@
             <div class="row text-center padder-80">
                 <div class="col-md-4 pr-20 pb-20 pl-0" *ngFor="let document of serviceDocumentData">
                     <div (click)="selectDocument(document)">
-                        <mat-card [ngClass]="{'ba-blue': document.selected}" class="example-card bg-grey lter p-0 c-p">
+                        <mat-card [ngClass]="{'ba-blue': document.selected,'b-ua':document.selected==false}"
+                            class="example-card bg-grey lter p-0 c-p">
                             <mat-card-header class="m-0">
                                 <!-- [isChecked]="document.selected"  -->
                                 <app-custom-html [isChecked]="document.selected" [data]="document.docText"
