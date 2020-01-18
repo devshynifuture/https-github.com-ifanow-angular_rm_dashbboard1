@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { SubscriptionService } from '../../../subscription.service';
-import * as _ from 'lodash';
 import { SubscriptionUpperSliderComponent } from '../upper-slider/subscription-upper-slider.component';
 import { EventService } from 'src/app/Data-service/event.service';
 import { element } from 'protractor';
@@ -74,7 +73,8 @@ export class ModulesComponent implements OnInit {
 
   unmapModuleToService(data) {
     data.selected = false;
-    _.remove(this.mappedData, delData => delData.subModuleId === data.subModuleId);
+    // _.remove(this.mappedData, delData => delData.subModuleId === data.subModuleId);
+    this.mappedData = this.mappedData.filter(delData => delData.subModuleId != data.subModuleId)
     console.log(this.mappedData.length);
   }
 
@@ -82,7 +82,7 @@ export class ModulesComponent implements OnInit {
     const data = {
       serviceModuleMappingList: []
     };
-    if(this.mappedData.length!=0){
+    if (this.mappedData.length != 0) {
       this.mappedData.forEach(element => {
         const obj = {
           active: element.selected,
@@ -91,15 +91,15 @@ export class ModulesComponent implements OnInit {
         };
         data.serviceModuleMappingList.push(obj);
       });
-    }else{
+    } else {
       const obj = {
-        active:true,
+        active: true,
         serviceId: this.upperData.id,
         subModuleId: 0
       };
       data.serviceModuleMappingList.push(obj);
     }
-    
+
     this.subService.mapModuleToplanData(data).subscribe(
       data => this.mapModuleToPlanResponse(data)
     );
@@ -108,9 +108,9 @@ export class ModulesComponent implements OnInit {
   mapModuleToPlanResponse(data) {
     this.dialogClose();
     console.log('Module Map data', data);
-    if(this.mappedData.length!=0){
+    if (this.mappedData.length != 0) {
       this.eventService.openSnackBar('Module is mapped', 'OK');
-    }else{
+    } else {
       this.eventService.openSnackBar('No module is mapped', 'OK');
     }
   }

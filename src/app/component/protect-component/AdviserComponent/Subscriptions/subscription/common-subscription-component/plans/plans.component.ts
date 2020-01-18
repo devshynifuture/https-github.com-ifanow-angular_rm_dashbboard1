@@ -1,6 +1,5 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { SubscriptionService } from '../../../subscription.service';
-import * as _ from 'lodash';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from '../../../../../../../auth-service/authService';
 
@@ -132,9 +131,10 @@ export class PlansComponent implements OnInit {
 
   unmapPlanToService(data) {
     data.selected = false;
-    _.remove(this.mappedPlan, function (delData) {
-      return delData.id == data.id;
-    });
+    // _.remove(this.mappedPlan, function (delData) {
+    //   return delData.id == data.id;
+    // });
+    this.mappedPlan = this.mappedPlan.filter(delData => delData.id != data.id)
     console.log(data);
   }
 

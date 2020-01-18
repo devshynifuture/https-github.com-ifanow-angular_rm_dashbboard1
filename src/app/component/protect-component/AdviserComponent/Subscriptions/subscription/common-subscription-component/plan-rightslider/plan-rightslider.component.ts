@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { SubscriptionService } from '../../../subscription.service';
-import * as _ from 'lodash';
 import { AuthService } from "../../../../../../../auth-service/authService";
 import { element } from 'protractor';
 

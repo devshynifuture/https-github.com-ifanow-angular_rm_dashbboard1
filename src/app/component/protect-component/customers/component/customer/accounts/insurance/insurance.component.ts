@@ -167,10 +167,10 @@ export class InsuranceComponent implements OnInit {
       this.lifeInsuranceFlag = false;
       this.generalInsuranceFlag = true;
       this.generalLifeInsuranceList = [];
-      [{ name: 'Health', id: 4 }, { name: 'Car/2 Wheeler', id: 5 }, { name: 'Travel', id: 6 }, {
-        name: 'Personal accident',
+      [{ name: 'Health', id: 4 }, { name: 'Personal accident', id: 5 }, { name: 'Critical illness', id: 6 }, {
+        name: 'Motor',
         id: 7
-      }, { name: 'Critical illness', id: 8 }, { name: 'Cancer', id: 9 }, { name: 'Home', id: 10 }, {
+      }, { name: 'Travel', id: 8 }, { name: 'Home', id: 9 }, { name: 'Fire & special perils', id: 10 }, {
         name: 'Others',
         id: 11
       }].map((i) => {

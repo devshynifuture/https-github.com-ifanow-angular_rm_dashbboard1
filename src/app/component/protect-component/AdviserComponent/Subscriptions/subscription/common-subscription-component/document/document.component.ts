@@ -5,7 +5,6 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionPopupComponent } from '../subscription-popup/subscription-popup.component';
 import { SubscriptionService } from '../../../subscription.service';
-import * as _ from 'lodash';
 import { AddDocumentComponent } from '../add-document/add-document.component';
 // import { SubscriptionUpperSliderComponent } from '../../common-subscription-component/upper-slider/subscription-upper-slider.component';
 import { AuthService } from '../../../../../../../auth-service/authService';
@@ -257,7 +256,8 @@ export class DocumentComponent implements OnInit {
 
   unmapDocumentToPlan(data) {
     data.selected = false;
-    _.remove(this.mappedData, delData => delData.documentRepositoryId === data.documentRepositoryId);
+    // _.remove(this.mappedData, delData => delData.documentRepositoryId === data.documentRepositoryId);
+    this.mappedData = this.mappedData.filter(delData => delData.documentRepositoryId != data.documentRepositoryId)
     console.log(this.mappedData.length);
   }
 
@@ -698,7 +698,7 @@ export class DocumentComponent implements OnInit {
   saveMappingDocumentToPlansResponse(data) {
     console.log("response status:::::::::::::::", data);
     this.eventService.changeUpperSliderState({ state: 'close' });
-    if (this.mappedData.length==0) {
+    if (this.mappedData.length == 0) {
       this.eventService.openSnackBar('No Document mapped', 'Dismiss');
     } else {
       this.eventService.openSnackBar('Document is mapped', 'OK');

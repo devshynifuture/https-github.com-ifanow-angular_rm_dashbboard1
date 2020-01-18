@@ -1,6 +1,6 @@
 <div [formGroup]="editPayment"
-  [ngClass]="{'pt-72': invoiceInSub=='invoiceSubscription','mt-0':invoiceInSub!='invoiceSubscription'}"
-  class="bg-white pb-44 ">
+     [ngClass]="{'pt-72': invoiceInSub=='invoiceSubscription','mt-0':invoiceInSub!='invoiceSubscription'}"
+     class="bg-white pb-44 ">
   <div class="row  popup-header">
     <div class="col-md-10 pl-0">
       <h2 class="f-400 wrapper-20 mb-0">Edit Invoice of
@@ -20,15 +20,15 @@
             <div class="form-group">
               <mat-form-field>
                 <input [matAutocomplete]="auto1" [readonly]="invoiceInSub =='invoiceSubscription'" aria-label="client"
-                  class="form-control br-0 pl-8" formControlName="clientName" matInput>
+                       class="form-control br-0 pl-8" formControlName="clientName" matInput>
                 <mat-autocomplete #auto1="matAutocomplete">
-                  <mat-option (onSelectionChange)="selectClient($event, c)" *ngFor="let c of clientList"
-                    [value]="c.clientName">
+                  <mat-option (onSelectionChange)="selectClient($event , c)"
+                              *ngFor="let c of clientList" [value]="c.clientName">
                     <span>{{c.clientName}}</span>
                   </mat-option>
                 </mat-autocomplete>
                 <mat-error
-                  *ngIf="getFormControledit().clientName.invalid || (getFormControledit().clientName.touched && getFormControledit().clientName.invalid)"
+                  *ngIf="getFormControlEdit().clientName.invalid || (getFormControlEdit().clientName.touched && getFormControlEdit().clientName.invalid)"
                   class="f-12 pt-4">
                   Client name is required
                 </mat-error>
@@ -43,10 +43,10 @@
           <p *ngIf="editAdd1 == false" class="m-0 text-black text-break w-90 l-21">{{storeData.billerAddress}}
           </p>
           <textarea *ngIf="editAdd1 == true" class="form-control br-0" formControlName="billerAddress" maxlength="150"
-            rows="5"></textarea>
+                    rows="5"></textarea>
           <p (click)="onclickChangeAdd1(editAdd1)" class="m-0 text-primary c-p f-12">CHANGE</p>
           <p class="mb-0 f-12 text-custom text-right pt-4 pr-36">
-            {{getFormControledit().billerAddress.value?.length ? getFormControledit().billerAddress.value.length : 0}}
+            {{getFormControlEdit().billerAddress.value?.length ? getFormControlEdit().billerAddress.value.length : 0}}
             /150
           </p>
         </div>
@@ -56,10 +56,10 @@
             {{storeData.billingAddress}}
           </p>
           <textarea *ngIf="editAdd2 == true" class="form-control br-0" formControlName="billingAddress" maxlength="150"
-            rows="5"></textarea>
+                    rows="5"></textarea>
           <p (click)="onclickChangeAdd2(editAdd2)" class="m-0 text-primary c-p f-12">CHANGE</p>
           <p class="mb-0 f-12 text-custom text-right pt-4 pr-12">
-            {{getFormControledit().billingAddress.value?.length ? getFormControledit().billingAddress.value.length : 0}}
+            {{getFormControlEdit().billingAddress.value?.length ? getFormControlEdit().billingAddress.value.length : 0}}
             /150
           </p>
         </div>
@@ -80,14 +80,14 @@
               </div>
               <div class="col-md-12 pl-0">
                 <mat-error
-                  *ngIf="getFormControledit().invoiceNumber.invalid || (getFormControledit().invoiceNumber.touched && getFormControledit().invoiceNumber.invalid)"
+                  *ngIf="getFormControlEdit().invoiceNumber.invalid || (getFormControlEdit().invoiceNumber.touched && getFormControlEdit().invoiceNumber.invalid)"
                   class="f-12 pt-4">
                   Invoice no. is required
                 </mat-error>
               </div>
               <div class="col-md-12">
                 <p class="mb-0 f-12 text-custom text-right pt-4">
-                  {{getFormControledit().invoiceNumber.value?.length ? getFormControledit().invoiceNumber.value.length : 0}}
+                  {{getFormControlEdit().invoiceNumber.value?.length ? getFormControlEdit().invoiceNumber.value.length : 0}}
                   /20
                 </p>
               </div>
@@ -103,7 +103,7 @@
               <div class="form-group mb-0">
                 <mat-form-field class="ba-date">
                   <input (dateChange)="checkDateDiff($event)" [matDatepicker]="picker" class="form-control b-0"
-                    formControlName="invoiceDate" matInput readonly>
+                         formControlName="invoiceDate" matInput readonly>
                   <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
                   <mat-error class="f-12 pt-4">Invoice date is required
@@ -123,7 +123,7 @@
               <div class="form-group mb-0">
                 <mat-form-field class="ba-date">
                   <input (dateChange)="checkDateDiff($event)" [matDatepicker]="dueDatePicker" class="form-control b-0"
-                    formControlName="dueDate" matInput readonly>
+                         formControlName="dueDate" matInput readonly>
                   <mat-datepicker-toggle [for]="dueDatePicker" matSuffix></mat-datepicker-toggle>
                   <mat-datepicker #dueDatePicker></mat-datepicker>
                   <mat-error class="f-12 pt-4">Invoice date is required
@@ -157,8 +157,8 @@
             <div class="row">
               <div class="form-group mb-0 ml-8 w-100">
                 <input [matAutocomplete]="auto" [readonly]="invoiceInSub =='invoiceSubscription'" aria-label="State"
-                  class="form-control w-100 br-0 pl-8" formControlName="serviceName" list="serviceName" matInput
-                  placeholder="You can search service">
+                       class="form-control w-100 br-0 pl-8" formControlName="serviceName" list="serviceName" matInput
+                       placeholder="You can search service">
                 <mat-autocomplete #auto="matAutocomplete">
                   <mat-option *ngFor="let s of serviceList" [value]="s.serviceName">
                     <span>{{s.serviceName}}</span>
@@ -167,7 +167,7 @@
               </div>
               <div class="col-md-8">
                 <mat-error
-                  *ngIf="getFormControledit().serviceName.invalid || (getFormControledit().serviceName.touched && getFormControledit().serviceName.invalid)"
+                  *ngIf="getFormControlEdit().serviceName.invalid || (getFormControlEdit().serviceName.touched && getFormControlEdit().serviceName.invalid)"
                   class="f-12 pt-4">
                   Service name is required
                 </mat-error>
@@ -176,10 +176,10 @@
           </div>
           <div class="col-md-2 pl-0">
             <input #finalAmountInput [(ngModel)]="finalAmount" [inputValidator]="validatorType.NUMBER_ONLY"
-              appInputValueValidation class="form-control br-0" formControlName="finalAmount" type="number">
+                   appInputValueValidation class="form-control br-0" formControlName="finalAmount" type="number">
             <div class="col-md-8">
               <mat-error
-                *ngIf=" getFormControledit().finalAmount.invalid || (getFormControledit().finalAmount.touched && getFormControledit().finalAmount.invalid)"
+                *ngIf=" getFormControlEdit().finalAmount.invalid || (getFormControlEdit().finalAmount.touched && getFormControlEdit().finalAmount.invalid)"
                 class="f-12 pt-4">
                 Price is required
               </mat-error>
@@ -194,7 +194,7 @@
             </select>
             <div class="col-md-8">
               <mat-error
-                *ngIf=" getFormControledit().taxStatus.invalid || (getFormControledit().taxStatus.touched && getFormControledit().taxStatus.invalid)"
+                *ngIf=" getFormControlEdit().taxStatus.invalid || (getFormControlEdit().taxStatus.touched && getFormControlEdit().taxStatus.invalid)"
                 class="f-12 pt-4">
                 Tax status is required
               </mat-error>
@@ -230,8 +230,8 @@
     </div>
     <div class="col-md-2 pr-24">
       <input (changedValue)="discount = $event" [(ngModel)]="discount" [inputValidator]="validatorType.NUMBER_ONLY"
-        [maxValue]="finalAmountInput.value" appInputValueValidation class="form-control br-0 text-right"
-        formControlName="discount" type="number">
+             [maxValue]="finalAmountInput.value" appInputValueValidation class="form-control br-0 text-right"
+             formControlName="discount" type="number">
     </div>
   </div>
   <div class="row pt-20 pb-12">
@@ -287,7 +287,7 @@
               </div>
               <div class="col-md-6">
                 <p class="mb-0 f-12 text-custom text-right pt-4">
-                  {{getFormControledit().footnote.value?.length ? getFormControledit().footnote.value.length : 0}}
+                  {{getFormControlEdit().footnote.value?.length ? getFormControlEdit().footnote.value.length : 0}}
                   /100
                 </p>
               </div>
@@ -310,7 +310,7 @@
               </div>
               <div class="col-md-6">
                 <p class="mb-0 f-12 text-custom text-right pt-4">
-                  {{getFormControledit().terms.value?.length ? getFormControledit().terms.value.length : 0}}
+                  {{getFormControlEdit().terms.value?.length ? getFormControlEdit().terms.value.length : 0}}
                   /150
                 </p>
               </div>

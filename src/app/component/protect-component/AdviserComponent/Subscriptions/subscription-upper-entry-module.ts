@@ -18,7 +18,7 @@ import {QuotationsComponent} from './subscription/common-subscription-component/
 import {InvoicesComponent} from './subscription/common-subscription-component/invoices/invoices.component';
 import {SettingsComponent} from './subscription/common-subscription-component/settings/settings.component';
 import {CustomDialogContainerComponent} from 'src/app/common/custom-dialog-container/custom-dialog-container.component';
-import {AddStructureComponent} from './subscription/common-subscription-component/add-structure/add-structure.component';
+import {AddPlanDetailComponent} from './subscription/common-subscription-component/add-structure/add-plan-detail.component';
 import {PlanRightsliderComponent} from './subscription/common-subscription-component/plan-rightslider/plan-rightslider.component';
 import {EmailQuotationComponent} from './subscription/common-subscription-component/email-quotation/email-quotation.component';
 import {InvoiceComponent} from './subscription/common-subscription-component/invoice/invoice.component';
@@ -54,7 +54,7 @@ export const componentList = [
   InvoicesComponent,
   SettingsComponent,
   CustomDialogContainerComponent,
-  AddStructureComponent,
+  AddPlanDetailComponent,
   PlanRightsliderComponent,
   EmailQuotationComponent,
   InvoiceComponent,

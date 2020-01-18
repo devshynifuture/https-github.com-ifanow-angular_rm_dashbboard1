@@ -1,15 +1,14 @@
-import { ValidatorType } from './../../../../../../../services/util.service';
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionService } from '../../../subscription.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EnumServiceService } from '../../../../../../../services/enum-service.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
-import { UtilService } from 'src/app/services/util.service';
-import { EmailOnlyComponent } from '../email-only/email-only.component';
-import { PdfService } from '../../../../../../../services/pdf.service';
+import {ValidatorType} from './../../../../../../../services/util.service';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EnumServiceService} from '../../../../../../../services/enum-service.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
+import {UtilService} from 'src/app/services/util.service';
+import {EmailOnlyComponent} from '../email-only/email-only.component';
 
 
 export interface PeriodicElement {
@@ -46,15 +45,15 @@ export class InvoiceComponent implements OnInit {
 
   // invoiceTemplate
   gstTreatment = [
-    { name: 'Registered Business - Regular', value: 0 },
-    { name: 'Registered Business - Composition', value: 1 },
-    { name: 'Unregistered Business', value: 2 }
+    {name: 'Registered Business - Regular', value: 0},
+    {name: 'Registered Business - Composition', value: 1},
+    {name: 'Unregistered Business', value: 2}
   ];
 
-  @ViewChild('invoiceTemplate', { static: false }) invoiceTemplate: ElementRef;
+  @ViewChild('invoiceTemplate', {static: false}) invoiceTemplate: ElementRef;
 
   constructor(public utils: UtilService, public enumService: EnumServiceService, public subInjectService: SubscriptionInject,
-    private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
+              private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
       data => this.getInvoiceData(data)
     );
@@ -164,8 +163,8 @@ export class InvoiceComponent implements OnInit {
       this.showEdit = true;
       this.finalAmount = 0;
       this.discount = 0;
-      this.storeData =
-        this.taxStatus = ['IGST(18%)'];
+      // this.storeData =
+      this.taxStatus = ['IGST(18%)'];
       this.editPayment.controls.serviceName.enable();
 
     }
@@ -190,9 +189,11 @@ export class InvoiceComponent implements OnInit {
   preventDefault(e) {
     e.preventDefault();
   }
+
   getCancelFlag(data) {
     this.showEdit = false;
   }
+
   getPayReceive(data) {
     const obj = {
       invoiceId: data
@@ -201,10 +202,12 @@ export class InvoiceComponent implements OnInit {
       data => this.getPaymentReceivedRes(data)
     );
   }
+
   display(value) {
     console.log(value)
     this.cancel(value);
   }
+
   getPaymentReceivedRes(data) {
     this.dataSource = data;
     if (data == undefined) {
@@ -224,6 +227,7 @@ export class InvoiceComponent implements OnInit {
       });
     }
   }
+
   checkDateDiff(event) {
     let invoiceDate;
     let dueDate;
@@ -233,10 +237,11 @@ export class InvoiceComponent implements OnInit {
       dueDate = new Date((this.editPayment.get('dueDate').value._d) ? this.editPayment.get('dueDate').value._d : this.editPayment.get('dueDate').value).getTime();
       (invoiceDate == undefined && dueDate == undefined) ? ''
         : (dueDate <= invoiceDate)
-          ? this.showDateError = "invoice date should be greater than due" :
-          this.showDateError = undefined;
+        ? this.showDateError = "invoice date should be greater than due" :
+        this.showDateError = undefined;
     }
   }
+
   selectClient(c, data) {
     console.log(c);
     console.log('ssss', data);
@@ -537,9 +542,11 @@ export class InvoiceComponent implements OnInit {
       this.Close('close', true);
     }
   }
+
   getAddCancelFlag(data) {
     this.cancelInvoiceSubscription.emit(data)
   }
+
   addInvoiceRes(data) {
     console.log('addInvoiceRes', data);
     if (data == 1) {
