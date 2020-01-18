@@ -3,12 +3,11 @@ import {UtilService} from 'src/app/services/util.service';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {AddExpensesComponent} from '../../../common-component/add-expenses/add-expenses.component';
 import {AddBudgetComponent} from '../../../common-component/add-budget/add-budget/add-budget.component';
-import {CustomerService} from '../../customer.service';
 import {AuthService} from 'src/app/auth-service/authService';
 import {ConstantsService} from "../../../../../../../constants/constants.service";
 import {MatTableDataSource} from "@angular/material/table";
 import { PlanService } from '../../plan/plan.service';
-
+import * as Highcharts from 'highcharts';
 @Component({
   selector: 'app-expenses',
   templateUrl: './expenses.component.html',
@@ -26,7 +25,7 @@ export class ExpensesComponent implements OnInit {
   advisorId: any;
   clientId: any;
   viewMode;
-  dataSource1: any;
+  dataSource1= new MatTableDataSource([] as Array<any>);
 
   constructor(private subInjectService: SubscriptionInject, private planService: PlanService,
               private constantService: ConstantsService) {
@@ -38,6 +37,147 @@ export class ExpensesComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getTransaction();
     this.getRecuringTransactions();
+    setTimeout(() => {
+       this.cashFlow('piechartExpense')
+
+    }, 300);
+  }
+  
+budgetChart(id){
+  var chart = Highcharts.chart('budget', {
+
+    title: {
+        text: 'Chart.update'
+    },
+
+    subtitle: {
+        text: 'Plain'
+    },
+
+    xAxis: {
+        categories: ['Jan', 'Feb']
+    },
+
+    series: [{
+        type: 'column',
+        colorByPoint: true,
+        data: [29.9, 71.5, ],
+        showInLegend: false
+    }]
+
+});
+}
+  cashFlow(id) {
+    Highcharts.chart('piechartExpense', {
+      chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: 0,
+        plotShadow: false
+      },
+      title: {
+        text: '',
+        align: 'center',
+        verticalAlign: 'middle',
+        y: 60
+      },
+      tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+      },
+      plotOptions: {
+        pie: {
+          dataLabels: {
+            enabled: true,
+            distance: -50,
+            style: {
+              fontWeight: 'bold',
+              color: 'white'
+            }
+          },
+          startAngle: 0,
+          endAngle: 360,
+          center: ['50%', '50%'],
+          size: '85%'
+        }
+      },
+      series: [{
+        type: 'pie',
+        name: 'Browser share',
+        innerSize: '60%',
+        data: [
+          {
+            name: 'Equity',
+            y: 23,
+            color: "#A6CEE3",
+            dataLabels: {
+              enabled: false
+            }
+          }, {
+            name: 'Debt',
+            y: 13,
+            color: "#1F78B4",
+            dataLabels: {
+              enabled: false
+            }
+          }, {
+            name: 'Hybrid',
+            y: 25.42,
+            color: "#B2DF8A",
+            dataLabels: {
+              enabled: false
+            }
+          }, {
+            name: 'Other',
+            y: 12.61,
+            color: "#33A02C",
+            dataLabels: {
+              enabled: false
+            }
+          }, {
+            name: 'Solutions oriented',
+            y: 23.42,
+            color: "#FB9A99",
+            dataLabels: {
+              enabled: false
+            }
+          }, {
+            name: 'Solutions oriented',
+            y: 23.42,
+            color: "#E31A1C",
+            dataLabels: {
+              enabled: false
+            }
+          }, {
+            name: 'Solutions oriented',
+            y: 23.42,
+            color: "#FDBF6F",
+            dataLabels: {
+              enabled: false
+            }
+          }, {
+            name: 'Solutions oriented',
+            y: 23.42,
+            color: "#FF7F00",
+            dataLabels: {
+              enabled: false
+            }
+          }, {
+            name: 'Solutions oriented',
+            y: 23.42,
+            color: "#CAB2D6",
+            dataLabels: {
+              enabled: false
+            }
+          }, {
+            name: 'Solutions oriented',
+            y: 23.42,
+            color: "#6A3D9A",
+            dataLabels: {
+              enabled: false
+            }
+          }
+        ]
+      }]
+    });
   }
   getRecuringTransactions(){
     const obj = {
@@ -57,7 +197,19 @@ export class ExpensesComponent implements OnInit {
   }
   getRecuringExpenseRes(data){
     console.log(data)
-    this.dataSource1 = data
+    // this.dataSource1 = data
+    console.log(data);
+    if (data) {
+      data.forEach(singleExpense => {
+        const singleExpenseCategory = this.constantService.expenseJsonMap[singleExpense.expenseCategoryId];
+        if (singleExpenseCategory) {
+          singleExpense.expenseType = singleExpenseCategory.expenseType;
+        }
+      });
+      this.dataSource1.data = data;
+    } else {
+
+    }
   }
   getTransaction() {
     const obj = {
@@ -102,6 +254,8 @@ export class ExpensesComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          this.getTransaction();
+          this.getRecuringTransactions();
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 
