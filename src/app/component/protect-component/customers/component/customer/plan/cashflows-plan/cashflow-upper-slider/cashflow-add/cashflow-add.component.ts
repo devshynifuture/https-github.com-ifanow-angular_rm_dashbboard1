@@ -28,6 +28,7 @@ export class CashflowAddComponent implements OnInit {
   validatorType = ValidatorType;
 
   cashFlowCategory = this.data.tableData.tableInUse;
+  shouldExpandLiabilities: boolean = false;
 
   formIncome = this.fb.group({
     "earning-member": [, Validators.required],
@@ -58,9 +59,26 @@ export class CashflowAddComponent implements OnInit {
     "family-member": [, Validators.required]
   });
 
+  formLiabilities = this.fb.group({
+    "owner": [, Validators.required],
+    "loan-type": [, Validators.required],
+    "original-amt-loan": [, Validators.required],
+    "loan-tenure": [, Validators.required],
+    "commencement-date": [, Validators.required],
+    "emi-freq": [, Validators.required],
+    "annual-interest-rate": [, Validators.required],
+    "emi": [,],
+    "financial-institution": [,],
+    "collateral": [,]
+  })
+
 
   ngOnInit() {
 
+  }
+
+  toggleLiabilitiesExpansion() {
+    this.shouldExpandLiabilities = !this.shouldExpandLiabilities;
   }
 
   closeDialog() {
@@ -76,6 +94,10 @@ export class CashflowAddComponent implements OnInit {
       // expense api
 
       console.log(this.formExpense);
+    } else if (this.cashFlowCategory === 'liabilities') {
+      // liabilities
+
+      console.log(this.formLiabilities);
     }
   }
 

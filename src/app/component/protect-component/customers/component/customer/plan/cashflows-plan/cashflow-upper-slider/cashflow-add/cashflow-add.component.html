@@ -556,3 +556,198 @@
     </mat-tab>
 
 </mat-tab-group>
+
+
+<!-- add liabilities dialog -->
+
+<div class="row" *ngIf="cashFlowCategory==='liabilities'" class="p-12">
+    <form [formGroup]="formLiabilities" (ngSubmit)="submitForm()">
+        <div class="scrollHeight">
+            <div class="row p-12">
+                <div class="col-md-4 pr-0 text-right">
+                    <h5 class="m-0 pt-8">Owner</h5>
+                    <p class="m-0 f-12 text-custom"> In whose name is this asset </p>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <!-- <input matInput type="text" formControlName="owner" class="form-control br-0"> -->
+                        <mat-select formControlName="owner" class="form-control br-0">
+                            <mat-option value="1">
+                                Rahul Jain
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="formLiabilities.get('owner').touched && formLiabilities.get('owner').invalid">
+                            Must be selected
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row p-12">
+                <div class="col-md-4 pr-0 text-right">
+                    <h5 class="m-0 pt-8">Loan type </h5>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field>
+                        <mat-select formControlName="loan-type" class="form-control br-0">
+                            <mat-option value='1'>Rahul Jain</mat-option>
+                        </mat-select>
+                        <mat-error
+                            *ngIf="formLiabilities.get('loan-type').touched && formLiabilities.get('loan-type').invalid">
+                            Must be selected
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row p-12">
+                <div class="col-md-4 pr-0 text-right">
+                    <h5 class="m-0 pt-8">Original loan amount</h5>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field>
+                        <input matInput type="text" class="form-control br-0 rupess"
+                            formControlName="original-amt-loan">
+                        <mat-error
+                            *ngIf="formLiabilities.get('original-amt-loan').touched && formLiabilities.get('original-amt-loan').invalid">
+                            Must be filled
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row p-12">
+                <div class="col-md-4 pr-0 text-right">
+                    <h5 class="m-0 pt-8">Loan tenure</h5>
+                </div>
+
+                <div class="col-md-4">
+                    <mat-form-field>
+                        <input matInput type="text" class="form-control br-0" formControlName="loan-tenure">
+                        <mat-error
+                            *ngIf="formLiabilities.get('loan-tenure').touched && formLiabilities.get('loan-tenure').invalid">
+                            Must be filled
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+            </div>
+
+            <div class="row p-12">
+                <div class="col-md-4 pr-0 text-right">
+                    <h5 class="m-0 pt-8"> Commencement date</h5>
+
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field>
+                        <input matInput (focus)="picker.open()" formControlName="commencement-date"
+                            class="form-control br-0" [matDatepicker]="picker" readonly>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error
+                            *ngIf="formLiabilities.get('commencement-date').touched && formLiabilities.get('commencement-date').invalid">
+                            Must be filled
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row p-12">
+                <div class="col-md-4 pr-0 text-right">
+                    <h5 class="m-0 pt-8">EMI frequency</h5>
+
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field>
+                        <mat-select formControlName="emi-freq" class="form-control br-0">
+                            <mat-option value='1'>1 week</mat-option>
+                        </mat-select>
+                        <mat-error
+                            *ngIf="formLiabilities.get('emi-freq').touched && formLiabilities.get('emi-freq').invalid">
+                            Must be selected
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row p-12">
+                <div class="col-md-4 pr-0 text-right">
+                    <h5 class="m-0 pt-8"> Annual interest rate </h5>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field>
+                        <input matInput type="text" formControlName="annual-interest-rate" class="form-control br-0">
+                        <mat-error
+                            *ngIf="formLiabilities.get('annual-interest-rate').touched && formLiabilities.get('annual-interest-rate').invalid">
+                            Must be filled
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row pt-40 ng-star-inserted">
+                <div class="col-md-4 pr-0 text-right">
+                    <h5 class="m-0 text-primitive c-p" (click)="toggleLiabilitiesExpansion()"> + Add more [optional
+                        data] </h5>
+                </div>
+                <div class="col-md-3 "></div>
+            </div>
+
+            <div *ngIf="shouldExpandLiabilities==true">
+                <div class="row p-12">
+                    <div class="col-md-4 pr-0 text-right">
+                        <h5 class="m-0 pt-8"> EMI </h5>
+
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field>
+                            <input matInput type="text" formControlName="emi" class="form-control br-0 rupess">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row p-12">
+                    <div class="col-md-4 pr-0 text-right">
+                        <h5 class="m-0 pt-8"> Financial institution </h5>
+
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field>
+                            <input matInput type="text" class="form-control br-0"
+                                formControlName="financial-institution">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row p-12">
+                    <div class="col-md-4 pr-0 text-right">
+                        <h5 class="m-0 pt-8"> Collateral </h5>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field>
+                            <input matInput type="text" class="form-control br-0" fornControlName="collateral">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row pt-24 justify-content-md-center ">
+                    <div class="col-md-9 pt-20 bt-grey text-center">
+                        <button class="btn-dark-black" mat-stroked-button="">
+                            <i class="material-icons">add</i>ADD TRANSACTIONS
+                        </button>
+
+                        <p class="f-12 text-primitive mt-12 ng-star-inserted">
+                            Adding transactions is optional but highly <br> recommended to get better reports More info
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row p-12">
+                <div class="col-md-12 text-right">
+                    <button mat-button class="text-primitive" type="button" (click)="closeDialog()">CANCEL</button>
+                    <button mat-button class="text-primary" type="submit">SAVE</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
