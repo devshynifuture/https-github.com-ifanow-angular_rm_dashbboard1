@@ -35,7 +35,8 @@ const routes: Routes = [
       },
       {
         path: 'calendar',
-        component: calendarComponent
+        loadChildren: () => import('src/app/component/protect-component/AdviserComponent/Activities/calendar/calendar.module').then(m => m.CalendarModule),
+        data: { animation: 'Tab1', preload: true }
       },
     ]
   }
