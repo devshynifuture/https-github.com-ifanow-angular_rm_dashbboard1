@@ -8,11 +8,12 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./detailed-po-savings.component.scss']
 })
 export class DetailedPoSavingsComponent implements OnInit {
+  nominee: any;
 
   constructor(public utils: UtilService,private subInjectService: SubscriptionInject) { }
   data;
   ngOnInit() {
-    
+    this.nominee=this.data.nominees;
   }
 
 

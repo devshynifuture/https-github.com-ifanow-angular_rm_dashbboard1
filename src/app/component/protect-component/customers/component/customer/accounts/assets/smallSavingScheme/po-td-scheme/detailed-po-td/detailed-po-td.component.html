@@ -16,146 +16,42 @@
             <div class="insurance-ui bt">
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Owner Name
+                        Owner name
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{ data.ownerName }}
+                        {{ (data.ownerName)?data.ownerName:'-' }}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Advisor Id
+                        Amount invested
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{ data.advisorId }}
+                        {{ (data.amountInvested)?data.amountInvested:'-' }}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Amount Invested
+                        Current value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{ data.amountInvested }}
+                        {{(data.currentValue)?data.currentValue:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Bank Account Number
+                        Maturity value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{ data.bankAccountNumber }}
+                        {{(data.maturityValue)?data.maturityValue:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Client Id
+                        Commencement date
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{ data.clientId }}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Commencement Date
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{data.commencementDate}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Created Date
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{data.createdDate}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Current Value
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{data.currentValue}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Description
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{data.description}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Family Member Id
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{data.familyMemberId}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Id
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{data.id}}
-                    </div>
-                </div>
-
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Maturity Value
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{data.maturityValue}}
-                    </div>
-                </div>
-
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Monthly Payout
-                    </div>
-
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{ data.monthlyPayout }}
-                    </div>
-                </div>
-
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Nominee
-                    </div>
-
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{ data.nominee }}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Owner Name
-                    </div>
-
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{ data.ownerName }}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Owner TypeId
-                    </div>
-
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{ data.ownerTypeId }}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Post Office Branch
-                    </div>
-
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{ data.postOfficeBranch }}
+                        {{(data.commencementDate)?data.commencementDate:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -164,11 +60,67 @@
                     </div>
 
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{ data.rate }}
+                        {{ (data.rate)?data.rate:'-' }}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Tenure(in months)
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{ (data.tenure)?data.tenure:'-' }}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Owner type
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{ (data.ownerTypeId==1)? 'Joint':(data.ownerTypeId==2)?'Single':'-' }}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        PO branch
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{ (data.poBranch)?data.poBranch:'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        TD number
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{ (data.tdNumber)?data.tdNumber:'-' }}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Bank account number
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{ (data.bankAccountNumber)?data.bankAccountNumber:'-' }}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Description
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(data.description)?data.description:'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br" *ngFor="let data of nominee; let i = index">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Nominee {{i+1}}
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{ data.name }}
                     </div>
                 </div>
 
             </div>
         </div>
     </div>
-</div> -->
+</div> 
