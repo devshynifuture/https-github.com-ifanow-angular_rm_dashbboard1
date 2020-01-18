@@ -49,7 +49,6 @@
     "highcharts-angular": "^2.4.0",
     "html2pdf.js": "^0.9.1",
     "jquery": "^3.4.1",
-    "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "ng-circle-progress": "~1.5.1",
     "ng2-file-upload": "^1.4.0",

@@ -34,7 +34,7 @@ const routes: Routes = [
       },
       {
         path: 'calendar',
-        loadChildren: () => import('src/app/component/protect-component/AdviserComponent/Activities/calendar/calendar.module')
+        loadChildren: () => import('src/app/component/protect-component/AdviserComponent/Activities/calendar/calendar.module').then(m => m.CalendarModule),
       },
     ]
   }

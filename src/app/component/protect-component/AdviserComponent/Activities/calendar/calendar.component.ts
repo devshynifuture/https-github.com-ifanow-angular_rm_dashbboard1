@@ -6,6 +6,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { variable } from '@angular/compiler/src/output/output_ast';
 import { calendarService } from './calendar.service';
 import { AuthService } from '../../../../../auth-service/authService';
+import { log } from 'util';
 
 
 export interface DialogData {
@@ -50,32 +51,6 @@ export class calendarComponent implements OnInit {
     this.updatecalendar();
     this.getEvent();
     console.log(Intl.DateTimeFormat().resolvedOptions().timeZone, localStorage.getItem('userInfo'), "test date");
-
-    // demo get data calendar
-    // this.eventData = [{
-    //   "eventId":"02megf77o1dqjkhevj9udlfh25",
-    //   "userId":2808,
-    //   "fileId":12345,
-    //   "calendarId":"chetan@futurewise.co.in",
-    //   "summary":"doom event",
-    //     "location":"800 Howard St., San Francisco, CA 94103",
-    //     "title":"it is successful",
-    //     "description":"it is successful",
-    //     "start":{
-    //       "dateTime":"2020-01-03T05:00:00-07:00",
-    //       "timeZone":"America/Los_Angeles"
-    //     },
-    //     "end":{
-    //       "dateTime":"2020-01-03T06:00:00-07:00",
-    //       "timeZone":"America/Los_Angeles"
-    //     },
-    //     "timeZone":"America/Los_Angeles",
-    //     "recurrence":["RRULE:FREQ=DAILY;COUNT=2"],
-    //     "attendeeList":["chetan@futurewise.co.in","chetan@futurewise.co.in"]
-    // }]
-    // demo get data calendar
-    // console.log(this.eventData, "this.eventData 12345");
-
     
   }
 
@@ -147,20 +122,8 @@ export class calendarComponent implements OnInit {
       this.daysArr.push(fd);
     }
 
-    console.log(this.daysArr, "daysArr 123");
+    console.log(this.daysArr, this.addLastMonthDays, "daysArr 123");
   }
-
-  // daysInMonth(month, year) {
-  //   return 32 - new Date(year, month, 32).getDate();
-  // }
-
-  // daysInLastMonth(month, year) {
-  //   return 32 - new Date(year - 1, month - 1, 32).getDate();
-  // }
-
-  // daysInNextMonth(month, year) {
-  //   return 32 - new Date(year + 1, month + 1, 32).getDate();
-  // }
 
   persentMonth(){
     this.viewDate = new Date();
@@ -201,25 +164,109 @@ export class calendarComponent implements OnInit {
     return hh + ":" + mm;
   }
 
-  openDialog(eventData): void {
+  addEvent(day,month,year){
+    let event:any;
+    if(month == 0){
+      month = 12;
+    }
+    else if(month == 13){
+      month = 1;
+      year += 1;
+    }
+    let eventDate = month + "/" + day + "/" + year;
+    console.log(eventDate, "eventDate 123");
+    
+      event = {
+          "eventId": "",
+          "summary": "",
+          "location": "",
+          "title": "",
+          "description":"",
+          "start": {
+            "dateTime": new Date(eventDate),
+            "timeZone": null
+          },
+          "end": {
+            "dateTime": new Date(eventDate),
+            "timeZone": null
+          },
+          "recurrence": "",
+          "attendee": "",
+          "attendeesList":""
+        }
+
+        this.openDialog(event);
+    
+    // const dialogRef = this.dialog.open(EventDialog, {
+    //   width: '50%',
+    //   data: event
+    // });
+  }
+
+  editEvent(eventData){
     let event:any;
     if(eventData != null){
       this.isEditEvent = true;
       event = eventData;
     }
+    else{
+      event = {
+          "eventId": "",
+          "summary": "",
+          "location": "",
+          "title": "",
+          "description":"",
+          "start": {
+            "dateTime": null,
+            "timeZone": null
+          },
+          "end": {
+            "dateTime": null,
+            "timeZone": null
+          },
+          "recurrence": "",
+          "attendee": "",
+          "attendeesList":""
+        }
+    }
+
+    this.openDialog(event);
+  }
+
+  openDialog(eventData): void {
+    // let event:any;
+    // if(eventData != null){
+    //   this.isEditEvent = true;
+    //   event = eventData;
+    // }
+    // else{
+    //   event = {
+    //       "eventId": "",
+    //       "summary": "",
+    //       "location": "",
+    //       "title": "",
+    //       "description":"",
+    //       "start": {
+    //         "dateTime": null,
+    //         "timeZone": null
+    //       },
+    //       "end": {
+    //         "dateTime": null,
+    //         "timeZone": null
+    //       },
+    //       "recurrence": "",
+    //       "attendee": "",
+    //       "attendeesList":""
+    //     }
+    // }
     const dialogRef = this.dialog.open(EventDialog, {
       width: '50%',
-      data: event
+      data: eventData
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result, "result 123");
-      let eventData = {
-        "calendarId": "gaurav@futurewise.co.in",
-        "userId": this.userInfo.advisorId,
-        "eventId": result.eventId
-      }
-
+    if(result != undefined){
       this.dialogData = 
       {
         "calendarId": "gaurav@futurewise.co.in",
@@ -255,8 +302,11 @@ export class calendarComponent implements OnInit {
         })
       }
       else{
+        this.canlenderService.addEvent(this.dialogData).subscribe((data)=>{
 
+        })
       }
+    }
     });
   }
 
@@ -312,9 +362,12 @@ export class EventDialog implements OnInit{
   startDate = new Date();
   startTime="";
   endTime="";
+  eventDescription:any;
   eventForm: FormGroup;
   showTime:boolean = false;
   eventData:any;
+  isEditAdd:boolean = true;
+  isEditable:boolean = false;
   timeArr = ["01:00","01:30","02:00","02:30","03:00","03:30","04:00","04:30","05:00","05:30","06:00","06:30","07:00","07:30","08:00","08:30","09:00","09:30","10:00","10:30","11:00","11:30","12:00","12:20","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30","21:00","21:30","22:00","22:30","23:00","23:30","24:00"]
   constructor(
     private fb: FormBuilder,
@@ -324,28 +377,15 @@ export class EventDialog implements OnInit{
       console.log(data, "this.eventData 111");
       this.eventData = data;
   }
-  model:any;
-  writeValue(content: any): void {
-    this.model = content;
-  }
-
-  saveData(data) {
-    console.log(data);
-
-  }
+ 
 
   ngOnInit(){
-    
     this.eventForm = this.fb.group({
-      // eventId: ["02megf77o1dqjkhevj9udlfh25",[Validators.required]],
-      // userId: [2727,[Validators.required]],
-      // fileId: [12345,[Validators.required]],
-      // calendarId:["gaurav@futurewise.co.in",[Validators.required]],
       eventId:[this.eventData.id],
       summary: [this.eventData.summary,[Validators.required]],
       location: [this.eventData.location],
       title: [this.eventData.summary,[Validators.required]],
-      description: [this.eventData.description],
+      description: [this.eventDescription],
       startDateTime: ["",[Validators.required]],
       endDateTime: ["",[Validators.required]],
       recurrence: [this.eventData.recurrence],
@@ -355,6 +395,10 @@ export class EventDialog implements OnInit{
       endTime: [this.endTime]
     });
 
+    if(this.eventData.id != undefined){
+      this.isEditAdd = false;
+    }
+
     console.log(this.eventForm.get("attendee").value == "", "see value");
     if(this.eventData.attendees != undefined){
       for(let att of this.eventData.attendees){
@@ -362,6 +406,15 @@ export class EventDialog implements OnInit{
       }
     }
     this.setEndDate();
+  }
+
+  model:any;
+  writeValue(content: any): void {
+    this.model = content;
+  }
+
+  descriptionData(data) {
+    this.eventForm.get("description").setValue(data);
   }
 
   addAttendee(){
@@ -410,8 +463,16 @@ export class EventDialog implements OnInit{
 
   onNoClick(): void {
     this.dialogRef.close();
+
+    console.log(this.eventForm.value, "check from value");
+    console.log(this.eventDescription, "check from value2");
+    console.log(this.eventData.description, "check from value3");
+    
   }
 
-  
+  editEvent(){
+    this.isEditAdd = true;
+    this.isEditable = true;
+  }
 }
 
