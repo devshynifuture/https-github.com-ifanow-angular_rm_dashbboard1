@@ -53,6 +53,8 @@ export class InsuranceComponent implements OnInit {
   }
 
   getInsuranceSubTypeData(advisorId, clientId, insuranceId, insuranceSubTypeId) {
+    this.dataSource = new MatTableDataSource([{}, {}, {}]);
+    this.isLoading = true;
     const obj = {
       advisorId: advisorId,
       clientId: clientId,
@@ -65,7 +67,7 @@ export class InsuranceComponent implements OnInit {
   }
 
   getInsuranceDataResponse(data) {
-
+    this.isLoading = false
     if (data) {
       this.dataSource = data.insuranceList;
     } else {

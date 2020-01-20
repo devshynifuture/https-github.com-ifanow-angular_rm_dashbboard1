@@ -7,12 +7,14 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-ssy',
   templateUrl: './add-ssy.component.html',
   styleUrls: ['./add-ssy.component.scss'],
   providers: [
+    [DatePipe],
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ]
 })
@@ -33,7 +35,7 @@ export class AddSsyComponent implements OnInit {
   nomineesList: any;
   nominees: any[];
 
-  constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
+  constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService,private datePipe: DatePipe) { }
 
   @Input()
   set data(data) {
@@ -100,7 +102,7 @@ export class AddSsyComponent implements OnInit {
     if (this.transactionData) {
       this.transactionData.forEach(element => {
         let obj = {
-          "date": element.controls.date.value._d,
+          "date": this.datePipe.transform(element.controls.date.value, 'yyyy-MM-dd'),
           "amount": element.controls.amount.value,
           "paymentType": element.controls.transactionType.value
         }
@@ -198,7 +200,7 @@ export class AddSsyComponent implements OnInit {
     }
   }
   addSSYSchemeResponse(data) {
-    (this.editApi) ? this.eventService.openSnackBar("SSY is edited", "dismiss") : this.eventService.openSnackBar("SSY is edited", "added")
+    (this.editApi) ? this.eventService.openSnackBar("SSY is edited", "dismiss") : this.eventService.openSnackBar("SSY is added", "added")
     console.log(data)
     this.close(true)
   }

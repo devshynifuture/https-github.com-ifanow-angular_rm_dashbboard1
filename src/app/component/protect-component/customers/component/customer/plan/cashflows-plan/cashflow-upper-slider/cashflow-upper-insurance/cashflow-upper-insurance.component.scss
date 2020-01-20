@@ -1,0 +1,7 @@
+::ng-deep .mat-tab-header {
+    border-bottom: transparent !important;
+}
+
+::ng-deep .mat-tab-group.mat-primary .mat-ink-bar {
+    display: none;
+}
