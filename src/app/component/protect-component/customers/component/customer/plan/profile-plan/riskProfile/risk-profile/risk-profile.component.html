@@ -15,7 +15,8 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <mat-radio-group aria-label="Select an option" id="custom-radio">
-                            <mat-radio-button *ngFor="let choice of item.riskAssessmentChoices; let i = index"  [checked]="choice.selected" [value]="choice"
+                            <mat-radio-button *ngFor="let choice of item.riskAssessmentChoices; let i = index"
+                                [checked]="choice.selected" [value]="choice"
                                 (click)="item.selectedChoiceId = choice.id;item.weight = choice.weight;checkState(item)">
                                 {{choice.choice}}</mat-radio-button><br>
                         </mat-radio-group>
@@ -29,7 +30,7 @@
                 (click)="submitRiskAnalysis(item)">SUBMIT</button>
         </div>
         <div class="col-md-3 pr-0">
-                <button mat-raised-button color="primary" (click)="open('riskProfile', null)">History</button>
+            <!-- <button mat-raised-button color="primary" (click)="open('riskProfile', null)">History</button> -->
             <div class="p-20 b-primitive mt-8">
                 <mat-progress-bar mode="determinate" value="{{this.progressBar}}"></mat-progress-bar>
                 <h5 class="pt-8 m-0 pt-12 text-center">{{this.statusArray.length}} of 5 completed</h5>
@@ -38,7 +39,7 @@
     </div>
 </div>
 <div class="pt-44 pb-44" *ngIf="showRisk == true">
-        <button mat-raised-button color="primary" (click)="open('riskProfile', null)">History</button>
+    <button mat-raised-button color="primary" (click)="open('riskProfile', null)">History</button>
     <div class="row">
         <div class="col-md-6">
             <div class="row">
@@ -57,7 +58,8 @@
                 <div class="col-md-8 p-0">
                     <h5 class="m-0 f-500 text-black">Your risk profile: Moderately aggressive</h5>
                     <div #referenceKeyName (click)="onClickMe(referenceKeyName)" id="Gauge"></div>
-                    <p class="m-0 text-custom roboto" style="text-align: center;">You are an investor who is willing to take moderately high risk
+                    <p class="m-0 text-custom roboto" style="text-align: center;">You are an investor who is willing to
+                        take moderately high risk
                         for moderately high returns</p>
                 </div>
                 <div class="col-md-4">

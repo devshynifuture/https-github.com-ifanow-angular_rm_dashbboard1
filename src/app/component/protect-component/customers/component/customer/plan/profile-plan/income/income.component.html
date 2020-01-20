@@ -1,10 +1,21 @@
 <div>
     <div class="row h-100vh">
-        <div [ngSwitch]="viewMode" class="col-md-12 b-a p-0 min-height">
+        <div [ngSwitch]="viewMode" class="col-md-12 b-a p-0">
             <div *ngSwitchCase="'tab1'">
-                <div class="wrapper-8">
-
+                <div class="wrapper-8 pt-20">
                     <div class="row">
+                        <div class="col-md-12 p-0 text-right">
+                            <button mat-button [matMenuTriggerFor]="menu" class="ba-black pr-8">Overview Report <i
+                                    class="material-icons text-black">
+                                    keyboard_arrow_down
+                                </i></button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item>Item 1</button>
+                                <button mat-menu-item>Item 2</button>
+                            </mat-menu>
+                        </div>
+                    </div>
+                    <div class="row pt-28">
                         <div class="col-md-4 p-0">
                             <h4 class="m-0 text-black roboto pt-8">Income</h4>
                         </div>
