@@ -1,21 +1,21 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionInject } from '../../subscription-inject.service';
-import { MAT_DATE_FORMATS, MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { DeleteSubscriptionComponent } from '../common-subscription-component/delete-subscription/delete-subscription.component';
-import { SubscriptionService } from '../../subscription.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { AuthService } from '../../../../../../auth-service/authService';
-import { EnumServiceService } from '../../../../../../services/enum-service.service';
-import { UtilService } from '../../../../../../services/util.service';
-import { DatePipe } from '@angular/common';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { FixedFeeComponent } from '../common-subscription-component/fixed-fee/fixed-fee.component';
-import { VariableFeeComponent } from '../common-subscription-component/variable-fee/variable-fee.component';
-import { CreateSubscriptionComponent } from '../common-subscription-component/create-subscription/create-subscription.component';
-import { BillerSettingsComponent } from '../common-subscription-component/biller-settings/biller-settings.component';
-import { InvoiceHistoryComponent } from '../common-subscription-component/invoice-history/invoice-history.component';
-import { ChangePayeeComponent } from '../common-subscription-component/change-payee/change-payee.component';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionInject} from '../../subscription-inject.service';
+import {MAT_DATE_FORMATS, MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {DeleteSubscriptionComponent} from '../common-subscription-component/delete-subscription/delete-subscription.component';
+import {SubscriptionService} from '../../subscription.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {AuthService} from '../../../../../../auth-service/authService';
+import {EnumServiceService} from '../../../../../../services/enum-service.service';
+import {UtilService} from '../../../../../../services/util.service';
+import {DatePipe} from '@angular/common';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {FixedFeeComponent} from '../common-subscription-component/fixed-fee/fixed-fee.component';
+import {VariableFeeComponent} from '../common-subscription-component/variable-fee/variable-fee.component';
+import {CreateSubscriptionComponent} from '../common-subscription-component/create-subscription/create-subscription.component';
+import {BillerSettingsComponent} from '../common-subscription-component/biller-settings/biller-settings.component';
+import {InvoiceHistoryComponent} from '../common-subscription-component/invoice-history/invoice-history.component';
+import {ChangePayeeComponent} from '../common-subscription-component/change-payee/change-payee.component';
 
 // declare var window
 // export const MY_FORMATS = {
@@ -28,7 +28,7 @@ import { ChangePayeeComponent } from '../common-subscription-component/change-pa
 //     dateA11yLabel: 'LL',
 //     monthYearA11yLabel: 'MMMM YYYY',
 //   },
-// }; 
+// };
 // export const APP_DATE_FORMATS = {
 //   parse: {
 //     dateInput: {month: 'short', year: 'numeric', day: 'numeric'},
@@ -71,11 +71,11 @@ export interface PeriodicElement {
     // },
     // { provide: MAT_DATE_LOCALE, useValue: 'en' },
     [DatePipe],
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
   ],
 })
 export class SubscriptionsSubscriptionComponent implements OnInit {
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
   selector: string = '.wrapper-20';
   displayedColumns: string[] = ['client', 'service', 'amt', 'sub', 'status', 'activation',
     'lastbilling', 'nextbilling', 'feemode', 'icons'];
@@ -92,15 +92,15 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   scrollCallData: boolean = true;
   isLoading = false;
   chips = [
-    { name: 'LIVE', value: 2 },
-    { name: 'FUTURE', value: 3 },
-    { name: 'NOT STARTED', value: 1 },
-    { name: 'CANCELLED', value: 4 }
+    {name: 'LIVE', value: 2},
+    {name: 'FUTURE', value: 3},
+    {name: 'NOT STARTED', value: 1},
+    {name: 'CANCELLED', value: 4}
   ];
   dateChips = [
-    { name: 'Activation date', value: 1 },
-    { name: 'Last billing date', value: 2 },
-    { name: 'Next billing date', value: 3 }
+    {name: 'Activation date', value: 1},
+    {name: 'Last billing date', value: 2},
+    {name: 'Next billing date', value: 3}
   ];
   filterStatus = [];
   filterDate = [];
@@ -118,7 +118,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   feeCollectionMode: any;
   getDate: any;
   getDate2: string;
-  selectedDateRange = { begin: new Date(), end: new Date() };
+  selectedDateRange = {begin: new Date(), end: new Date()};
   noData: string;
   lastDataId;
   statusIdLength = 0;
@@ -129,8 +129,8 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   scrollPosition;
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
-    private eventService: EventService, private subService: SubscriptionService,
-    public enumService: EnumServiceService, private datePipe: DatePipe) {
+              private eventService: EventService, private subService: SubscriptionService,
+              public enumService: EnumServiceService, private datePipe: DatePipe) {
   }
 
 
@@ -160,8 +160,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       this.scrollCallData = false;
       if (this.scrollPosition == undefined) {
         this.scrollPosition = contentheight - yoffset;
-      }
-      else if (this.scrollPosition < contentheight) {
+      } else if (this.scrollPosition < contentheight) {
         this.scrollPosition = contentheight - window.innerHeight;
       }
 
@@ -177,7 +176,6 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
     }
   }
-
 
 
   getSummaryDataAdvisor(scrollLoader) {
@@ -207,8 +205,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
           // console.log(this.lastDataId, obj, "data check");
           if (this.tableData.length <= 0) {
             this.tableData = data;
-          }
-          else {
+          } else {
             this.tableData = this.tableData.concat(data);
             console.log(this.tableData, "this.tableData 123");
           }
@@ -225,7 +222,6 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     );
 
   }
-
 
 
   getSubSummaryRes(data) {
@@ -292,23 +288,32 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   getFeeTypeName(ch) {
     let feeModeName = '';
     switch (ch) {
-      case 1: feeModeName = 'Cheque';
+      case 1:
+        feeModeName = 'Cheque';
         break;
-      case 2: feeModeName = 'NEFT';
+      case 2:
+        feeModeName = 'NEFT';
         break;
-      case 3: feeModeName = 'Cash';
+      case 3:
+        feeModeName = 'Cash';
         break;
-      case 4: feeModeName = 'ECS mandate';
+      case 4:
+        feeModeName = 'ECS mandate';
         break;
-      case 5: feeModeName = 'Bank Transfer';
+      case 5:
+        feeModeName = 'Bank Transfer';
         break;
-      case 6: feeModeName = 'Debit Card';
+      case 6:
+        feeModeName = 'Debit Card';
         break;
-      case 7: feeModeName = 'Credit Card';
+      case 7:
+        feeModeName = 'Credit Card';
         break;
-      case 8: feeModeName = 'NACH Mandate';
+      case 8:
+        feeModeName = 'NACH Mandate';
         break;
-      default: feeModeName = '';
+      default:
+        feeModeName = '';
     }
 
     return feeModeName;
@@ -425,8 +430,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       this.noData = 'No Data Found';
       if (!scrollLoader) {
         this.dataSource.data = [];
-      }
-      else {
+      } else {
         this.dataSource.data = this.filterDataArr;
       }
     } else {
@@ -441,8 +445,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       console.log(this.lastFilterDataId, "this.lastFilterDataId");
       if (this.filterDataArr.length <= 0) {
         this.filterDataArr = data;
-      }
-      else {
+      } else {
         this.filterDataArr = this.filterDataArr.concat(data);
         console.log(this.filterDataArr, "this.filterDataArr 123");
       }
@@ -469,7 +472,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
 
-    this.selectedDateRange = { begin: beginDate, end: endDate };
+    this.selectedDateRange = {begin: beginDate, end: endDate};
     console.log(this.filterDate, "this.filterDate 123");
     this.callFilter(false);
   }
@@ -488,7 +491,9 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     }
 
     this.filterStatus.splice(item, 1);
-    this.filterDataArr = this.filterDataArr.filter((x) => { x.status != item.value })
+    this.filterDataArr = this.filterDataArr.filter((x) => {
+      x.status != item.value
+    })
     this.lastFilterDataId = 0;
     this.callFilter(false);
 
@@ -501,7 +506,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
-    this.selectedDateRange = { begin: selectedDateRange.begin, end: selectedDateRange.end };
+    this.selectedDateRange = {begin: selectedDateRange.begin, end: selectedDateRange.end};
     this.callFilter(false);
   }
 
@@ -566,7 +571,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   deletedData(data) {
     if (data) {
-      this.eventService.changeUpperSliderState({ state: 'close' });
+      this.eventService.changeUpperSliderState({state: 'close'});
       this.eventService.openSnackBar('Deleted successfully!', 'dismiss');
     }
   }
