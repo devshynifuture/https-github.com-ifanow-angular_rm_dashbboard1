@@ -73,9 +73,9 @@ export class ServicesComponent implements OnInit {
   getPlanServiceDataResponse(data) {
     console.log('plan service', data);
     this.isLoading = false;
-
+    this.planServiceData = data;
     if (data) {
-      this.planServiceData = data;
+
       this.planServiceData.forEach(element => {
         const newElement = {
           ...element,
