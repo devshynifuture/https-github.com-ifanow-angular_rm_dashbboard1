@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ValidatorType} from '../../../../../../../services/util.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ValidatorType } from '../../../../../../../services/util.service';
 
 @Component({
   selector: 'app-add-plan-detail',
@@ -18,7 +18,7 @@ export class AddPlanDetailComponent implements OnInit {
   validatorType = ValidatorType;
 
   constructor(private eventService: EventService, private subinject: SubscriptionInject,
-              private fb: FormBuilder, private subService: SubscriptionService) {
+    private fb: FormBuilder, private subService: SubscriptionService) {
   }
 
   @Input() set planData(data) {
@@ -119,12 +119,12 @@ export class AddPlanDetailComponent implements OnInit {
     // console.log(obj);
     this.planOuputData.emit(data);
     (!this.editApiCall) ? this.eventService.openSnackBar('Plan is created', 'OK') : this.eventService.openSnackBar('Plan is edited', 'OK');
-    this.subinject.changeUpperRightSliderState({state: 'close'});
+    this.subinject.changeUpperRightSliderState({ state: 'close' });
 
   }
 
   closeNav(state) {
-    this.subinject.changeUpperRightSliderState({state: 'close'});
+    this.subinject.changeUpperRightSliderState({ state: 'close' });
     this.planDataForm.reset();
     this.isPlanValid = false;
     this.isCodeValid = false;
