@@ -19,3 +19,19 @@ export interface UpperTableBox {
 export interface Group {
     groupName: string
 }
+
+export interface GoalTableI {
+    goal: string,
+    goalYear: string,
+    monthlyRequired: string,
+    lumpsumRequired: string,
+    allocate: string
+}
+
+export interface loanTableI {
+    loan: string,
+    loanYear: string,
+    monthlyRequired: string,
+    lumpsumRequired: string,
+    allocate: string
+}
