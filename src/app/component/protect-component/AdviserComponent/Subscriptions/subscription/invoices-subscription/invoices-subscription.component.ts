@@ -66,7 +66,12 @@ export class InvoicesSubscriptionComponent implements OnInit {
   scrollPosition;
   lastDataId;
   tableData = [];
-
+ passFilterData ={
+   data:"",
+   selectedCount:"",
+   statusFilter:this.chips,
+   dateFilter:this.dateChips
+ };
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject, private subService: SubscriptionService,
     private eventService: EventService, public subscription: SubscriptionService, private datePipe: DatePipe, private router: Router) {
@@ -454,6 +459,15 @@ export class InvoicesSubscriptionComponent implements OnInit {
     this.lastFilterDataId = 0;
     this.callFilter(false);
 
+  }
+
+  getFiterRes(data){
+    console.log(data , "data for filter");
+    this.filterStatus = data.statusFilterJson;
+    this.filterDate = data.dateFilterArr;
+    this.selectedDateRange = data.dateFilterJson;
+    this.lastFilterDataId = 0;
+    this.callFilter(false);
   }
 
   formatter(data) {
