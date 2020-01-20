@@ -25,4 +25,9 @@ export class calendarService {
     // const httpParams = new HttpParams().set('calendarId', setData.calendarId).set('userId', setData.userId).set('eventId', setData.eventId);
     return this.http.post(apiConfig.GMAIL_URL + appConfig.GET_ADD, data);
   }
+
+  deleteEvent(data) {
+    // const httpParams = new HttpParams().set('calendarId', setData.calendarId).set('userId', setData.userId).set('eventId', setData.eventId);
+    return this.http.delete(apiConfig.GMAIL_URL + appConfig.GET_DELETE, data);
+  }
 }

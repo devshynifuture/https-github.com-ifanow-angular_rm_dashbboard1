@@ -114,6 +114,39 @@ export class HttpService {
         }
       });
   }
+ 
+  delete(url: string, body, options?): Observable<any> {
+    let httpOptions = {
+      headers: new HttpHeaders().set('authToken', this._userService.getToken())
+        .set('Content-Type', 'application/json')
+    };
+    if (options != undefined) {
+      httpOptions = options;
+    }
+    // console.log('HttpService put request httpOptions... ', httpOptions);
+    // console.log('HttpService put request body... ', body);
+    // console.log('HttpService put request url... ', url);
+
+    return this._http
+      .delete(this.baseUrl + url, body).pipe(
+        catchError(err => {
+          console.log('Handling error locally and rethrowing it...', err);
+          return throwError(err);
+        })
+      )
+      .map((res: any) => {
+        if (res.status === 200) {
+          const resData = this.changeBase64ToString(res);
+          console.log(resData);
+          return resData;
+        } else {
+          const err = new Error(res.message);
+          throwError(err);
+
+          // this._router.navigate(['login']);
+        }
+      });
+  }
 
   deleteExpiredCache() {
     this.cacheMap.forEach(entry => {
