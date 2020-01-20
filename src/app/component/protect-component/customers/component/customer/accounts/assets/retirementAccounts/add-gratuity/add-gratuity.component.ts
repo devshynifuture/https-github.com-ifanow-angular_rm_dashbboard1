@@ -117,7 +117,7 @@ export class AddGratuityComponent implements OnInit {
         amountReceived: this.gratuity.controls.amountRecived.value,
         organizationName: this.gratuity.controls.nameOfOrg.value,
         yearOfReceipt:this.gratuity.controls.yearOfReceipt.value,
-        yearReceipt: this.gratuity.controls.resonOfRecipt.value,
+        reasonOfReceipt: this.gratuity.controls.resonOfRecipt.value,
         bankAccountNumber: this.gratuity.controls.bankAcNo.value,
         description: this.gratuity.controls.description.value,
         id: this.gratuity.controls.id.value
