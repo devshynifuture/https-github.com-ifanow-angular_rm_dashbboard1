@@ -35,7 +35,7 @@
           <img routerLink="/customer/detail/overview" src="assets/images/svg/people.svg">
           <span *ngIf="showTabs" class="title" mat-line>People</span>
         </a>
-        <a class="sidenav-link" mat-list-item routerLink="./calendar">
+        <a class="sidenav-link" mat-list-item routerLink="/admin/calendar">
           <img src="assets/images/svg/file-lines.svg">
           <span *ngIf="showTabs" class="title" mat-line>Activities</span>
           <mat-icon aria-hidden="false" aria-label="Example home icon" class="text-custom">
@@ -75,22 +75,26 @@
   </mat-sidenav>
   <mat-sidenav-content id="left">
     <mat-toolbar class="bg-white bl-1" class="fix-top pl-0">
-      <button (click)="showMainNavWrapper()" *ngIf="showTabs==false" aria-label="Toggle sidenav" mat-icon-button type="button">
+      <button (click)="showMainNavWrapper()" *ngIf="showTabs==false" aria-label="Toggle sidenav" mat-icon-button
+        type="button">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <button (click)="showsmallNavWrapper()" *ngIf="showTabs" aria-label="Toggle sidenav" class="btn_nav" mat-icon-button type="button">
+      <button (click)="showsmallNavWrapper()" *ngIf="showTabs" aria-label="Toggle sidenav" class="btn_nav"
+        mat-icon-button type="button">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
 
       <mat-form-field class="width40 serachbox">
         <div class="form-group searchBoxHeader">
-          <input #inputSearch [formControl]="myControl" [matAutocomplete]="auto" class="form-control pl-40" matInput type="text">
+          <input #inputSearch [formControl]="myControl" [matAutocomplete]="auto" class="form-control pl-40" matInput
+            type="text">
           <i class="material-icons searchIcon"> search </i>
           <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete">
             <!-- <mat-option>
     <p>Start typing to search clients,leads otr team members</p>
 </mat-option> -->
-            <mat-option (click)="selectClient(singleClient)" *ngFor="let singleClient of filteredOptions | async" [value]="singleClient">
+            <mat-option (click)="selectClient(singleClient)" *ngFor="let singleClient of filteredOptions | async"
+              [value]="singleClient">
               <div class="row">
                 <div class="col-md-1 d-flex align-items-center">
                   <i class="material-icons"> person </i>

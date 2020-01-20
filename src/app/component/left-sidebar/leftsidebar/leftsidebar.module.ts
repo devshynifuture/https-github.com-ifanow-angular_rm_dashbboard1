@@ -9,6 +9,7 @@ import {SubscriptionUpperEntry} from '../../protect-component/AdviserComponent/S
 import {LeftsidebarComponent} from './leftsidebar.component';
 import {CustomCommonModule} from '../../../common/custom.common.module';
 import {DynamicComponentService} from '../../../services/dynamic-component.service';
+import { CalendarModule } from '../../protect-component/AdviserComponent/Activities/calendar/calendar.module';
 
 
 @NgModule({
@@ -24,7 +25,7 @@ import {DynamicComponentService} from '../../../services/dynamic-component.servi
     FormsModule,
     CustomCommonModule,
     LeftsidebarRoutingModule,
-
+    CalendarModule
   ],
   entryComponents: [SubscriptionEntry.getComponentList(), SubscriptionUpperEntry.getComponentList()],
   providers: [DynamicComponentService]
