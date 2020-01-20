@@ -187,6 +187,10 @@ export const appConfig = {
   OTHERCOMMITMENTS_ADD:'account/expense/othercommitments/add',
   OTHERCOMMITMENTS_EDIT:'account/expense/othercommitments/edit',
   OTHERCOMMITMENTS_GET:'account/expense/othercommitments/get',
+  DELETE_TRANSACTION_EXPENSE:'account/expense/transaction/delete',
+  DELETE_RECURRING_EXPENSE:'account/expense/recurring/expense/delete',
+  DELETE_BUDGET:'account/expense/budget/delete',
+  DELETE_RECURING_BUDGET:'account/expense/othercommitments/delete',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   GET_EPF: 'account/asset/retirement/epf/list/get',

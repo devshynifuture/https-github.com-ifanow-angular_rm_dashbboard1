@@ -1,16 +1,16 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { SubscriptionInject } from '../../subscription-inject.service';
-import { SubscriptionService } from '../../subscription.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from "../../../../../../auth-service/authService";
-import { UtilService } from 'src/app/services/util.service';
-import { DatePipe } from '@angular/common';
-import { MAT_DATE_FORMATS } from 'saturn-datepicker';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { AddQuotationComponent } from '../common-subscription-component/add-quotation/add-quotation.component';
-import { CommonFroalaComponent } from '../common-subscription-component/common-froala/common-froala.component';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {SubscriptionInject} from '../../subscription-inject.service';
+import {SubscriptionService} from '../../subscription.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from '../../../../../../auth-service/authService';
+import {UtilService} from 'src/app/services/util.service';
+import {DatePipe} from '@angular/common';
+import {MAT_DATE_FORMATS} from 'saturn-datepicker';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {AddQuotationComponent} from '../common-subscription-component/add-quotation/add-quotation.component';
+import {CommonFroalaComponent} from '../common-subscription-component/common-froala/common-froala.component';
 
 export interface PeriodicElement {
   name: string;
@@ -38,11 +38,11 @@ export interface PeriodicElement {
     // },
     // { provide: MAT_DATE_LOCALE, useValue: 'en' },
     [DatePipe],
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
   ],
 })
 export class QuotationsSubscriptionComponent implements OnInit {
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   displayedColumns: string[] = ['checkbox', 'name', 'docname', 'plan', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
   advisorId;
   maxDate = new Date();
@@ -73,24 +73,24 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
 
   chips = [
-    { name: 'LIVE', value: 1 },
-    { name: 'PAID', value: 2 },
-    { name: 'OVERDUE', value: 3 }
+    {name: 'LIVE', value: 1},
+    {name: 'PAID', value: 2},
+    {name: 'OVERDUE', value: 3}
   ];
   dateChips = [
-    { name: 'Created date', value: 1 },
-    { name: 'Sent date', value: 2 },
-    { name: 'Client consent', value: 3 }
+    {name: 'Created date', value: 1},
+    {name: 'Sent date', value: 2},
+    {name: 'Client consent', value: 3}
   ];
   dataCount: number;
 
 
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
-    public dialog: MatDialog, private subService: SubscriptionService, private datePipe: DatePipe) {
+              public dialog: MatDialog, private subService: SubscriptionService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
-    //this.dataSource = [{}, {}, {}];
+    // this.dataSource = [{}, {}, {}];
     this.advisorId = AuthService.getAdvisorId();
     this.getQuotationsData(false);
     this.dataCount = 0;
@@ -169,9 +169,9 @@ export class QuotationsSubscriptionComponent implements OnInit {
     UtilService.getStartOfTheDay(beginDate);
 
     const endDate = new Date();
-    UtilService.getStartOfTheDay(endDate)
-    this.selectedDateRange = { begin: selectedDateRange.begin, end: selectedDateRange.end };
-    this.getQuotationsData(false)
+    UtilService.getStartOfTheDay(endDate);
+    this.selectedDateRange = {begin: selectedDateRange.begin, end: selectedDateRange.end};
+    this.getQuotationsData(false);
   }
 
   getQuotationsData(scrollLoader) {
@@ -209,13 +209,13 @@ export class QuotationsSubscriptionComponent implements OnInit {
       this.data = [];
       this.dataSource.data = data;
       // console.log(data);
-      this.dataSource.data = []
+      this.dataSource.data = [];
       this.noData = 'No Data Found';
 
       // console.log(data);
       // this.dataSource = data;
       // this.dataSource = new MatTableDataSource(data);
-      //this.dataSource.sort = this.sort;
+      // this.dataSource.sort = this.sort;
     }
   }
 
@@ -227,19 +227,18 @@ export class QuotationsSubscriptionComponent implements OnInit {
           this.list.push(singleElement.documentRepositoryId);
         }
       });
-    }
-    else {
+    } else {
       this.list = [data.documentRepositoryId];
     }
     const dialogData = {
       data: 'DOCUMENT',
       header: 'DELETE',
-      body: 'Are you sure you want to delete the document?',
+      body: this.list.length == 1 ? 'Are you sure you want to delete the document?' : 'Are you sure you want to delete these documents?',
       body2: 'This cannot be undone',
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.subService.deleteSettingsDocument(this.list).subscribe(
+        this.subService.deleteClientDocumentsMultiple(this.list).subscribe(
           data => {
             this.eventService.openSnackBar('document is deleted', 'dismiss');
             // this.valueChange.emit('close');
@@ -250,7 +249,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
         );
       },
       negativeMethod: () => {
-        this.list = []
+        this.list = [];
         console.log('2222222222222222222222222222222222222');
       }
     };
@@ -263,9 +262,9 @@ export class QuotationsSubscriptionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result, this.dataSource.data, "delete result");
+      console.log(result, this.dataSource.data, 'delete result');
       if (this.list.length > 0) {
-        const tempList = []
+        const tempList = [];
         this.dataSource.data.forEach(singleElement => {
           if (!singleElement.selected) {
             tempList.push(singleElement);
@@ -307,7 +306,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
   addFiltersDate(dateFilter) {
     console.log('addFilters', dateFilter);
     if (this.filterDate.length >= 1) {
-      this.filterDate = []
+      this.filterDate = [];
     }
     this.filterDate.push(dateFilter.value);
     const beginDate = new Date();
@@ -317,7 +316,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
 
-    this.selectedDateRange = { begin: beginDate, end: endDate };
+    this.selectedDateRange = {begin: beginDate, end: endDate};
 
     this.getQuotationsData(false);
   }
@@ -340,7 +339,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
   removeDate(item) {
     this.filterDate.splice(item, 1);
-    this.getQuotationsData(false)
+    this.getQuotationsData(false);
 
   }
 
@@ -354,7 +353,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     }
     const fragmentData = {
       flag: value,
-      data: data,
+      data,
       id: 1,
       state: 'open',
       componentName: CommonFroalaComponent

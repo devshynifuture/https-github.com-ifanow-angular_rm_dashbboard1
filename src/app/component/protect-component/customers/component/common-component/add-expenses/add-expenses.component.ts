@@ -37,7 +37,13 @@ export class AddExpensesComponent implements OnInit {
     console.log('This is Input data of FixedDepositComponent ', data);
 
     if (this.isViewInitCalled) {
-      this.getdataForm(data);
+      if(data.isRecuring == true){
+        this.getdataFormRec(data)
+         this.isRecuring = true
+      }else{
+        this.getdataForm(data);
+         this.isRecuring = false
+      }
     }
   }
 
@@ -71,6 +77,8 @@ export class AddExpensesComponent implements OnInit {
   getdataForm(data) {
     if (data == undefined) {
       data = {};
+    }else{
+      this.isRecuring = data.isRecuring
     }
     this.expenses = this.fb.group({
       timeInMilliSec: [(data == undefined) ? '' : data.timeInMilliSec, [Validators.required]],
@@ -81,28 +89,30 @@ export class AddExpensesComponent implements OnInit {
       category:[(data == undefined) ? '' : data.expenseCategoryId, [Validators.required]],
       familyMember: [(data == undefined) ? '' : data.familyMember, [Validators.required]],
       paymentModeId: [(data == undefined) ? '' : data.paymentModeId+ '', [Validators.required]],
-      isRecuring: [(data == undefined) ? '' : data.isRecuring, [Validators.required]],
+      isRecuring: false
     });
     this.expenseList = this.constantService.expenseList
   }
   getdataFormRec(data) {
     if (data == undefined) {
       data = {};
+    }else{
+      this.isRecuring = data.isRecuring
     }
     this.recuring = this.fb.group({
       timeInMilliSec: [(data == undefined) ? '' : data.timeInMilliSec, [Validators.required]],
       expenseDoneOn: [(data == undefined) ? '' : new Date(data.expenseDoneOn), [Validators.required]],
       amount: [(data == undefined) ? '' : data.amount, [Validators.required]],
-      repeatFrequency:[(data == undefined) ? '' : data.repeatFrequency, [Validators.required]],
+      repeatFrequency:[(data == undefined) ? '' : data.repeatFrequency+'', [Validators.required]],
       startsFrom:[(data == undefined) ? '' : new Date(data.startsFrom), [Validators.required]],
       numberOfYearOrNumberOfTime:[(data == undefined) ? '' : (data.numberOfYearOrNumberOfTime), [Validators.required]],
-      continueTill:[(data == undefined) ? '' :(data.continueTill), [Validators.required]],
+      continueTill:[(data == undefined) ? '' :(data.continueTill)+'', [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
       category:[(data == undefined) ? '' : data.expenseCategoryId, [Validators.required]],
       familyMember: [(data == undefined) ? '' : data.familyMember, [Validators.required]],
-      paymentModeId: [[(data == undefined) ? '' : data.paymentModeId], [Validators.required]],
-      isRecuring: [(data == undefined) ? '' : data.isRecuring, [Validators.required]],
+      paymentModeId: [(data == undefined) ? '' : data.paymentModeId+'', [Validators.required]],
+      isRecuring: true,
     });
     this.expenseList = this.constantService.expenseList
   }

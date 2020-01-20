@@ -20,7 +20,7 @@ export class DocumentsSettingsComponent implements OnInit {
   Questions = [{ question: 'Can I create my own template for Quotations?' },
   { question: 'Can I create my own template for Consent T&C?' },
   { question: 'What are the Future subscriptions?' }]
-  documentSettingData = [{}, {}];
+  documentSettingData = [];
   isLoading = false;
   //showLoader;
 
@@ -46,7 +46,7 @@ export class DocumentsSettingsComponent implements OnInit {
     };
     // const data = [{}, {}];
     // this.getDocumentsSettingResponse(data);
-    this.documentSettingData = [{}, {}];
+    //    this.documentSettingData = [{}, {}];
     this.subService.getSubscriptionDocumentSetting(obj).subscribe(
       data => this.getDocumentsSettingResponse(data), (error) => {
         this.eventService.showErrorMessage(error);
