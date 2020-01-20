@@ -44,7 +44,6 @@
                                             (change)="setTime('start')">
                                             <option *ngFor="let time of timeArr" [value]="time">{{time}}</option>
                                         </select>
-
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-6 pl-0">
@@ -102,6 +101,22 @@
                         </div>
                         <div class="col-md-2 pl-0 " >
                             <img src="assets/images/svg/delete.svg" (click)="removeMember(member)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row pl-0">
+                <div class="col-md-10 pl-0 " >
+                    <input style="display: none;" (change)="getFileDetails($event)"  id="file-3" multiple type="file">
+                    <label class="uploadLabel c-p text-primary f-14 c-p" for="file-3">
+                        <img class="mr-8" src="/assets/images/svg/upload-document-icon.svg">
+                        <span>Attach files</span>
+                    </label>
+                </div>
+                <div class="col-md-10 pl-0 mt-8" *ngIf="myFiles.length > 0">
+                    <div class="row pl-0" *ngFor="let file of myFiles, let i = index" >
+                        <div class="col-md-10 pl-0 " >
+                           {{i+1}}. {{file.name}}
                         </div>
                     </div>
                 </div>
