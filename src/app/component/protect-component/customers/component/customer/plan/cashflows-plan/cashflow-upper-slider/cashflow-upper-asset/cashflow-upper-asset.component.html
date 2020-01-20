@@ -1,9 +1,9 @@
-<div class="col-md-12 cash-flow-upperTable">
+<div class="col-md-12 cash-flow-upperTable mt-20">
     <table mat-table [dataSource]="dataSource" id="table-low" class=" ">
         <ng-container matColumnDef="description">
             <th class="br-grey f-400 f-14" mat-header-cell *matHeaderCellDef> Description </th>
             <td class="br-grey f-14" mat-cell *matCellDef="let element">
-                {{ element.description }} <img src="/assets/images/svg/cash-flow-edit-icon.svg">
+                {{ element.description }}
             </td>
         </ng-container>
 
@@ -49,8 +49,7 @@
         </ng-container>
 
         <ng-container matColumnDef="groupHeader">
-            <td class="br-grey text-primary text-center" [attr.colspan]="displayedColumns.length" mat-cell
-                *matCellDef="let group">
+            <td class="br-grey text-primary text-center" [attr.colspan]="displayedColumns.length" mat-cell *matCellDef="let group">
                 {{ group.groupName }} </td>
         </ng-container>
 
@@ -104,8 +103,7 @@
         </ng-container>
 
         <ng-container matColumnDef="total">
-            <th mat-header-cell *matHeaderCellDef> Total
-                20{{ year.slice(-2) }}-{{ addOneInYear(year.slice(-2))}} </th>
+            <th mat-header-cell *matHeaderCellDef> Total 20{{ year.slice(-2) }}-{{ addOneInYear(year.slice(-2))}} </th>
             <td class="br-grey text-right f-14  " mat-cell *matCellDef="let element">
 
                 {{ element.total }} </td>

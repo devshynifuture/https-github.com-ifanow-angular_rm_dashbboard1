@@ -5,11 +5,10 @@
         </div>
     </div>
     <div class="col-md-7 ">
-        <h2 class="text-center f-16 m-0"> {{ data.tableInUse | titlecase }} {{ year }} -
-            {{ addOneInYear(year) }} </h2>
+        <h2 class="text-center f-16 m-0"> {{ data.tableInUse | titlecase }} {{ year }} - {{ addOneInYear(year) }} </h2>
     </div>
     <div class="col-md-2 text-right">
-        <button mat-stroked-button (click)="close()">
+        <button mat-stroked-button class="b-0" (click)="close()">
             <mat-icon> close </mat-icon>
         </button>
     </div>
@@ -17,37 +16,41 @@
 
 <div class="row" *ngIf="shouldShowAdd()">
     <div class="col-md-12 text-right mb-10 mt-20">
-        <button mat-raised-button class="btn-primary addon f-14 mr-16" (click)="addExpense('')">ADD
-            {{ cashFlowCategory | uppercase }}</button>
-        <button mat-raised-button class="greryColorBg" (click)="toggleEditMode()">EDIT MODE</button>
+        <button mat-raised-button class="btn-primary addon f-14 mr-16" (click)="addExpense('')">
+            ADD {{ cashFlowCategory | uppercase }}
+        </button>
+
+        <button mat-raised-button class="greryColorBg" (click)="toggleEditMode()">
+            EDIT MODE
+        </button>
     </div>
 </div>
 
-<div class="row" *ngIf="cashFlowCategory === 'income'">
-    <app-cashflow-upper-income-expense [data]="data"></app-cashflow-upper-income-expense>
+<div *ngIf="cashFlowCategory === 'income'">
+    <app-cashflow-upper-income-expense class="row" [data]="data"></app-cashflow-upper-income-expense>
 </div>
 
 <!-- expenses table -->
-<div class="row" *ngIf="cashFlowCategory === 'expenses'">
-    <app-cashflow-upper-income-expense [data]="data"></app-cashflow-upper-income-expense>
+<div *ngIf="cashFlowCategory === 'expenses'">
+    <app-cashflow-upper-income-expense class="row" [data]="data"></app-cashflow-upper-income-expense>
 </div>
 
 <!-- assets table -->
-<div class="row" *ngIf="cashFlowCategory === 'assets'">
-    <app-cashflow-upper-asset [data]="data"></app-cashflow-upper-asset>
+<div *ngIf="cashFlowCategory === 'assets'">
+    <app-cashflow-upper-asset class="row" [data]="data"></app-cashflow-upper-asset>
 </div>
 
 <!-- insurance table -->
-<div class="row" *ngIf="cashFlowCategory === 'insurance'">
+<div *ngIf="cashFlowCategory === 'insurance'">
     <app-cashflow-upper-insurance [data]="data"></app-cashflow-upper-insurance>
 </div>
 
 <!-- surplus table -->
-<div class="row" *ngIf="cashFlowCategory === 'surplus'">
-    <app-cashflow-upper-surplus [data]="data"></app-cashflow-upper-surplus>
+<div *ngIf="cashFlowCategory === 'surplus'">
+    <app-cashflow-upper-surplus class="row" [data]="data"></app-cashflow-upper-surplus>
 </div>
 
 <!-- liabilities table -->
-<div class="row" *ngIf="cashFlowCategory === 'liabilities'">
-    <app-cashflow-upper-income-expense [data]="data"></app-cashflow-upper-income-expense>
+<div *ngIf="cashFlowCategory === 'liabilities'">
+    <app-cashflow-upper-income-expense class="row" [data]="data"></app-cashflow-upper-income-expense>
 </div>

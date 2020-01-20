@@ -48,8 +48,7 @@
         </ng-container>
 
         <ng-container matColumnDef="groupHeader">
-            <td class="br-grey text-primary text-center" [attr.colspan]="displayedColumns.length" mat-cell
-                *matCellDef="let group">
+            <td class="br-grey text-primary text-center" [attr.colspan]="displayedColumns.length" mat-cell *matCellDef="let group">
                 {{ group.groupName }} </td>
         </ng-container>
 
@@ -103,8 +102,7 @@
         </ng-container>
 
         <ng-container matColumnDef="total">
-            <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Total
-                20{{ year.slice(-2) }}-{{ addOneInYear(year.slice(-2))}}
+            <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Total 20{{ year.slice(-2) }}-{{ addOneInYear(year.slice(-2))}}
             </th>
             <td class="br-grey text-right f-14  " mat-cell *matCellDef="let element">
 
