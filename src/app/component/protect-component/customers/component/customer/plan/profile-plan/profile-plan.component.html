@@ -33,11 +33,11 @@
                         <div class="col-md-12 p-0">Financial plans</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab7'" [ngClass]="{'b-ua':viewMode =='tab7'}" class=" c-p">
+                <!-- <li (click)="viewMode ='tab7'" [ngClass]="{'b-ua':viewMode =='tab7'}" class=" c-p">
                     <div class="row">
                         <div class="col-md-12 p-0">Preferences</div>
                     </div>
-                </li>
+                </li> -->
             </ul>
         </div>
         <div class="col-md-10 b-a p-0" [ngSwitch]="viewMode">
@@ -341,6 +341,20 @@
             <!-- <div *ngSwitchCase="'tab4'">
 
             </div> -->
+            <div *ngSwitchCase="'tab5'">
+
+            </div>
+            <div *ngSwitchCase="'tab6'">
+                <div class="row pt-150">
+                    <div class="col-md-12 text-center">
+                        <h3 class="m-0 f-22">No financial plans generated yet!</h3>
+                        <h6 class="m-0 pt-28">Once you’re done with the planning exercise, you can generate<br>
+                            a fully customized financial plan from here and do much more.</h6>
+                        <button mat-stroked-button class="btn-primary btn-lg br-0 mt-44 f-16 h-40">Generate financial
+                            plan</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

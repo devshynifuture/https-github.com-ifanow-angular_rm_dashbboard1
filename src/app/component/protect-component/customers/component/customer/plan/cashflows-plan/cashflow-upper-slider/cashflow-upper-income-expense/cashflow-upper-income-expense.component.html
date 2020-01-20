@@ -21,7 +21,8 @@
             </th>
 
             <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
-                {{ element.month1 }}</td>
+                {{ element.month1 }}
+            </td>
         </ng-container>
 
         <!-- Weight Column -->
@@ -105,7 +106,8 @@
         </ng-container>
 
         <ng-container matColumnDef="total">
-            <th mat-header-cell class="br-grey text-right f-600 f-14" *matHeaderCellDef> Total 20{{ year.slice(-2) }}-{{ addOneInYear(year.slice(-2))}} </th>
+            <th mat-header-cell class="br-grey text-right f-600 f-14" *matHeaderCellDef> Total
+                20{{ year.slice(-2) }}-{{ addOneInYear(year.slice(-2))}} </th>
             <td class="br-grey text-right f-14  f-600 " mat-cell *matCellDef="let element">
                 {{ element.total }} </td>
         </ng-container>

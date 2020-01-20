@@ -1,4 +1,3 @@
-
 <!-- ADD BUDGET -->
 
 
@@ -9,7 +8,7 @@
         </div>
         <div class="col-md-2 text-left">
             <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle" (click)="Close(false)"> clear</i>
+                <i class="material-icons c-p pt-8 v-middle" (click)="close(close)"> clear</i>
             </div>
         </div>
     </div>
@@ -17,14 +16,16 @@
 <div *ngIf="isRecuring == true">
     <div class="pt-72 pl-24 pr-24 pb-48 mb-48" [formGroup]="recuring">
         <div class="row">
-            <mat-checkbox class="text-right" [(ngModel)]="isRecuring" (change)="toggle($event)"
-                formControlName="isRecuring">Add recuring
-            </mat-checkbox>
+            <div class="col-md-12 p-0 text-right">
+                Add recuring <mat-checkbox class="text-right" [(ngModel)]="isRecuring" (change)="toggle($event)"
+                    formControlName="isRecuring">
+                </mat-checkbox>
+            </div>
         </div>
         <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-10 pl-0">
                 <h5 class="m-0 pt-8">Select a category</h5>
-                <div class="form-group mb-0">
+                <div class="form-group mb-0 pt-8">
                     <mat-form-field>
                         <mat-select class="form-control br-0" formControlName="category">
                             <mat-option *ngFor="let choice of expenseList" [value]="choice.clientExpenseTypeMasterId">
@@ -38,9 +39,9 @@
             </div>
         </div>
         <div class="row pt-24">
-            <div class="col-md-6">
+            <div class="col-md-6 pl-0">
                 <h5 class="m-0 pt-8">Enter amount</h5>
-                <div class="form-group mb-0">
+                <div class="form-group mb-0 pt-8">
                     <mat-form-field>
                         <input matInput class="form-control rupess br-0" formControlName="amount" type="number">
                         <mat-error class="f-12 pt-4">
@@ -52,14 +53,14 @@
         </div>
 
         <div class="row pt-24">
-            <div class="col-md-12">
+            <div class="col-md-12 p-0">
                 <h5 class="m-0 pt-8"> Repeat options </h5>
             </div>
         </div>
         <div class="row pt-24">
-            <div class="col-md-6">
+            <div class="col-md-6 pl-0">
                 <h5 class="m-0 pt-8">Frequency</h5>
-                <div class="form-group mb-0">
+                <div class="form-group mb-0 pt-8">
                     <mat-form-field>
                         <mat-select class="form-control br-0" formControlName="repeatFrequency">
 
@@ -77,11 +78,11 @@
             </div>
         </div>
         <div class="row pt-24">
-            <div class="col-md-6">
+            <div class="col-md-6 pl-0">
                 <h5 class="m-0 pt-8">Start from </h5>
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput class="form-control br-0" (focus)="picker1.open()"
+                <div class="form-group mb-0 pt-8">
+                    <mat-form-field class="ba-date">
+                        <input matInput class="form-control br-0 b-0" (focus)="picker1.open()"
                             (input)="preventDefault($event)" [matDatepicker]="picker1" formControlName="startsFrom">
                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
@@ -94,9 +95,9 @@
         </div>
 
         <div class="row pt-24">
-            <div class="col-md-6">
+            <div class="col-md-6 pl-0">
                 <h5 class="m-0 pt-8"> Continues till </h5>
-                <div class="form-group mb-0">
+                <div class="form-group mb-0 pt-8">
                     <mat-form-field>
                         <mat-select class="form-control br-0" (ngModelChange)="continuesTill($event)"
                             formControlName="continueTill">
@@ -114,7 +115,8 @@
             <div class="col-md-6" *ngIf="isNoOfYrs == '4' || isNoOfYrs == '3'">
                 <div class="form-group mt-24 mb-0">
                     <mat-form-field>
-                        <input matInput class="form-control br-0" formControlName="numberOfYearOrNumberOfTime" type="number">
+                        <input matInput class="form-control br-0" formControlName="numberOfYearOrNumberOfTime"
+                            type="number">
                         <mat-error class="f-12 pt-4">
                             This is required
                         </mat-error>
@@ -125,9 +127,9 @@
 
 
         <div class="row pt-24">
-            <div class="col-md-6">
+            <div class="col-md-6 pl-0">
                 <h5 class="m-0 pt-8">Payment mode</h5>
-                <div class="form-group mb-0">
+                <div class="form-group mb-0 pt-8">
                     <mat-form-field>
                         <mat-select class="form-control br-0" formControlName="paymentModeId">
                             <mat-option value='1'> Credit card </mat-option>
@@ -142,9 +144,9 @@
         </div>
 
         <div class="row pt-24">
-            <div class="col-md-6">
+            <div class="col-md-6 pl-0">
                 <h5 class="m-0 pt-8">Family Member</h5>
-                <div class="form-group mb-0">
+                <div class="form-group mb-0 pt-8">
                     <mat-form-field class="w-100">
                         <mat-select formControlName="familyMember" class="form-control br-0">
                             <mat-option value=''>Search family members</mat-option>
@@ -167,7 +169,8 @@
             <div class="col-md-4 p-0">
                 <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="Close(false)">Cancel</h5>
             </div>
-            <div class="col-md-8 right text-center">
+            <div class="col-md-8 text-right">
+                <!-- (click)="saveAddInsurance()" Property 'saveAddInsurance' does not exist on type 'AddExpensesComponent'-->
                 <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveExpenses()">SAVE</button>
             </div>
         </div>
@@ -177,35 +180,37 @@
 <!-- [formGroup]="expenses"   Property 'expenses' does not exist on type 'AddExpensesComponent' -->
 <div *ngIf="isRecuring == false">
     <div class="pt-72 pl-24 pr-24 pb-48 mb-48" [formGroup]="expenses">
-        <div class="row">
-            <mat-checkbox class="text-right" formControlName = "isRecuring" (change)="toggle($event)">Add recuring
-            </mat-checkbox>
+        <div class="row ">
+            <div class="col-md-12 p-0 text-right">
+                Add recuring <mat-checkbox class="" (change)=" toggle($event)" formControlName="isRecuring">
+                </mat-checkbox>
+            </div>
         </div>
-        <div class="row">
-            <div class="col-md-5">
+        <div class="row pt-28">
+            <div class="col-md-5 pl-0">
                 <h5 class="m-0 pt-8">Choose a date</h5>
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput class="form-control br-0" (focus)="picker.open()"
+                <div class="form-group mb-0 pt-4">
+                    <mat-form-field class="ba-date">
+                        <input matInput class="form-control b-0 br-0" (focus)="picker.open()"
                             (input)="preventDefault($event)" [matDatepicker]="picker" formControlName="expenseDoneOn">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
                 </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-5 pr-0">
                 <h5 class="m-0 pt-8">Choose a time</h5>
-                <div class="form-group mb-0">
+                <div class="form-group mb-0 pt-4">
                     <mat-form-field>
                         <input matInput class="form-control br-0" maxlength="20" formControlName="timeInMilliSec">
                     </mat-form-field>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
+        <div class="row pt-28">
+            <div class="col-md-6 pl-0">
                 <h5 class="m-0 pt-8">Select a category</h5>
-                <div class="form-group mb-0">
+                <div class="form-group mb-0 pt-4">
                     <mat-form-field>
                         <mat-select class="form-control br-0" formControlName="category">
                             <mat-option *ngFor="let choice of expenseList" [value]="choice.clientExpenseTypeMasterId">
@@ -219,9 +224,9 @@
             </div>
         </div>
         <div class="row pt-32">
-            <div class="col-md-6">
+            <div class="col-md-6 pl-0">
                 <h5 class="m-0 pt-8">Enter amount</h5>
-                <div class="form-group mb-0">
+                <div class="form-group mb-0 pt-8">
                     <mat-form-field>
                         <input matInput class="form-control rupess br-0" formControlName="amount" type="number">
                         <mat-error class="f-12 pt-4">
@@ -232,9 +237,9 @@
             </div>
         </div>
         <div class="row pt-32">
-            <div class="col-md-6">
+            <div class="col-md-6 pl-0">
                 <h5 class="m-0 pt-8">Payment mode</h5>
-                <div class="form-group mb-0">
+                <div class="form-group mb-0 pt-8">
                     <mat-form-field>
                         <mat-select class="form-control br-0" formControlName="paymentModeId">
                             <mat-option disabled selected hidden> Credit card </mat-option>
@@ -249,9 +254,9 @@
             </div>
         </div>
         <div class="row pt-32">
-            <div class="col-md-6">
+            <div class="col-md-6 pl-0">
                 <h5 class="m-0 pt-8">Description</h5>
-                <div class="form-group mb-0">
+                <div class="form-group mb-0 pt-8">
                     <mat-form-field>
                         <input matInput class="form-control br-0" maxlength="20" formControlName="description">
                         <mat-error class="f-12 pt-4">
@@ -262,9 +267,9 @@
             </div>
         </div>
         <div class="row pt-32">
-            <div class="col-md-6">
+            <div class="col-md-6 pl-0">
                 <h5 class="m-0 pt-8">Family member</h5>
-                <div class="form-group mb-0">
+                <div class="form-group mb-0 pt-8">
                     <mat-form-field class="w-100">
                         <mat-select formControlName="familyMember" class="form-control br-0">
                             <mat-option value=''>Search family members</mat-option>

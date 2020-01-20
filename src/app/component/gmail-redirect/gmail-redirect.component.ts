@@ -1,12 +1,13 @@
-import {appConfig} from './../../config/component-config';
-import {apiConfig} from './../../config/main-config';
-import {AuthService} from './../../auth-service/authService';
-import {SubscriptionInject} from './../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import { EmailServiceService } from './../protect-component/AdviserComponent/Email/email-service.service';
+import { appConfig } from './../../config/component-config';
+import { apiConfig } from './../../config/main-config';
+import { AuthService } from './../../auth-service/authService';
+import { SubscriptionInject } from './../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import 'rxjs-compat/add/operator/filter';
-import {HttpService} from '../../http-service/http-service';
-import {HttpHeaders} from '@angular/common/http';
+import { HttpService } from '../../http-service/http-service';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-gmail-redirect',
@@ -25,10 +26,12 @@ export class GmailRedirectComponent implements OnInit {
   REDIRECT_URI = 'http://localhost:4200/redirect';
   advisorId;
   emailId;
+  isSuccess: boolean = false;
 
   constructor(private route: ActivatedRoute,
-              private httpService: HttpService,
-              private subInjectService: SubscriptionInject) {
+    private httpService: HttpService,
+    private subInjectService: SubscriptionInject,
+    private emailService: EmailServiceService) {
   }
 
   ngOnInit() {
@@ -38,11 +41,11 @@ export class GmailRedirectComponent implements OnInit {
       .subscribe(params => {
         console.log('GmailRedirectComponent ngOnInit ', params);
 
-       
-        localStorage.removeItem('googleOAuthToken'); 
-        
+
+        localStorage.removeItem('googleOAuthToken');
+
         localStorage.setItem('googleOAuthToken', String(JSON.stringify(params)));
-         // {order: "popular"}
+        // {order: "popular"}
 
 
         const bodyData = 'code=' + params.code + '&client_id=' + this.CLIENT_ID
@@ -63,8 +66,9 @@ export class GmailRedirectComponent implements OnInit {
 
         this.httpService.postExternal(this.URL, bodyData, httpOptions).subscribe((responseData) => {
           console.log('GmailRedirectComponent ngOnInit bodyData: ', bodyData);
+          console.log("this is response Data from google", responseData);
 
-          const serverRequestData = {...responseData, userId: this.advisorId, emailId: localStorage.getItem('associatedGoogleEmailId')};
+          const serverRequestData = { ...responseData, userId: this.advisorId, emailId: localStorage.getItem('associatedGoogleEmailId') };
           this.sendDataToServer(serverRequestData);
           console.log('GmailRedirectComponent ngOnInit  sdsd postExternal responseData: ', responseData);
         }, (errorResponse) => {
@@ -75,13 +79,22 @@ export class GmailRedirectComponent implements OnInit {
       });
   }
 
+  closeTab() {
+    window.close();
+  }
+
   sendDataToServer(data) {
-    console.log(data);
 
     this.httpService.post(apiConfig.GMAIL_URL + appConfig.ACCESS_TOKEN_SAVE, data).subscribe(
       response => {
         console.log('this is gmail succeed response', response);
         localStorage.setItem("successStoringToken", "true");
+        this.isSuccess = true;
+        window.close();
+      },
+      error => {
+        this.isSuccess = false;
+        console.error(error);
       }
     );
   }
