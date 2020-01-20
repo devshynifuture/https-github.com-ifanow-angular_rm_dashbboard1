@@ -8,7 +8,7 @@ import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import * as moment from 'moment';
 import { EventService } from 'src/app/Data-service/event.service';
-import {UtilService, ValidatorType} from "../../../../../../../../../services/util.service";
+import { UtilService,ValidatorType } from 'src/app/services/util.service';
 
 
 @Component({
