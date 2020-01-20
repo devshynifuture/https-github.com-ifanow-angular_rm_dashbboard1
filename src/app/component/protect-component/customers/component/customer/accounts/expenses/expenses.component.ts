@@ -63,10 +63,10 @@ export class ExpensesComponent implements OnInit {
         colorByPoint: true,
         color: "#5cc644",
         data: [{
-          y: 60,
+          y: 60000,
           color: "#5cc644"
         }, {
-          y: 30,
+          y: 30000,
           color: "#f3ae40"
         }],
         showInLegend: false

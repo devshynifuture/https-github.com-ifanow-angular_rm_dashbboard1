@@ -110,7 +110,8 @@
         <div class="col-md-6" *ngIf="isNoOfYrs == '4' || isNoOfYrs == '3'">
             <div class="form-group mt-24 mb-0">
                 <mat-form-field>
-                    <input matInput class="form-control br-0" formControlName="numberOfYearOrNumberOfTime" type="number">
+                    <input matInput class="form-control br-0" formControlName="numberOfYearOrNumberOfTime"
+                        type="number">
                     <mat-error class="f-12 pt-4">
                         This is required
                     </mat-error>
@@ -156,22 +157,24 @@
             </div>
         </div>
     </div>
-    <div class="bottom-fixed-35 wrapper-16 pb-12"  *ngIf="isRecuring == true" >
-        <div class="row">
-            <div class="col-md-4 p-0">
-                <!-- close(null)  Expected 0 arguments, but got 1-->
-                <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="close()">Cancel</h5>
-            </div>
-            <div class="col-md-8 right text-center">
-                <!-- (click)="saveAddInsurance()" Property 'saveAddInsurance' does not exist on type 'AddExpensesComponent'-->
-                <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveRecuringExpense()">SAVE</button>
-            </div>
+</div>
+<div class="bottom-fixed-35 wrapper-16 pb-12" *ngIf="isRecuring == true">
+    <div class="row">
+        <div class="col-md-4 p-0">
+            <!-- close(null)  Expected 0 arguments, but got 1-->
+            <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="close()">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+            <!-- (click)="saveAddInsurance()" Property 'saveAddInsurance' does not exist on type 'AddExpensesComponent'-->
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveRecuringExpense()">SAVE</button>
+
         </div>
     </div>
 </div>
 <div *ngIf="isRecuring == false" class="pt-72 pl-24 pr-24 pb-48 mb-48" [formGroup]="budget">
     <div class="row">
-        <mat-checkbox class="text-right" [(ngModel)]="isRecuring" (change)="toggle($event)" formControlName="isRecuring">Add recuring
+        <mat-checkbox class="text-right" [(ngModel)]="isRecuring" (change)="toggle($event)"
+            formControlName="isRecuring">Add recuring
         </mat-checkbox>
     </div>
     <div class="row">
@@ -274,7 +277,7 @@
         </div>
     </div>
 </div>
-<div class="bottom-fixed-35 wrapper-16 pb-12"  *ngIf="isRecuring == false" >
+<div class="bottom-fixed-35 wrapper-16 pb-12" *ngIf="isRecuring == false">
     <div class="row">
         <div class="col-md-4 p-0">
             <!-- close(null)  Expected 0 arguments, but got 1-->
