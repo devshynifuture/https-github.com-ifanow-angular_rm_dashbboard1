@@ -13,6 +13,14 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { CashflowUpperSliderComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-upper-slider.component';
 import { CashflowAddComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-add/cashflow-add.component';
+import { CashflowUpperIncomeExpenseComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-upper-income-expense/cashflow-upper-income-expense.component';
+import { CashflowUpperAssetComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-upper-asset/cashflow-upper-asset.component';
+import { CashflowUpperInsuranceComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-upper-insurance/cashflow-upper-insurance.component';
+import { CashflowUpperSurplusComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-upper-surplus/cashflow-upper-surplus.component';
+import { CashflowAddIncomeComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-add/cashflow-add-income/cashflow-add-income.component';
+import { CashflowAddExpensesComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-add/cashflow-add-expenses/cashflow-add-expenses.component';
+import { CashflowAddSurplusComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-add/cashflow-add-surplus/cashflow-add-surplus.component';
+import { CashflowAddLiabilitiesComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-add/cashflow-add-liabilities/cashflow-add-liabilities.component';
 
 export const componentList = [
   PreferencesComponent,
@@ -20,6 +28,14 @@ export const componentList = [
   AddProfilePlanComponent,
   CashflowUpperSliderComponent,
   CashflowAddComponent,
+  CashflowUpperIncomeExpenseComponent,
+  CashflowUpperAssetComponent,
+  CashflowUpperInsuranceComponent,
+  CashflowUpperSurplusComponent,
+  CashflowAddIncomeComponent,
+  CashflowAddExpensesComponent,
+  CashflowAddLiabilitiesComponent,
+  CashflowAddSurplusComponent
 ];
 // import { AddPlaninsuranceComponent } from './insurance-plan/add-planinsurance/add-planinsurance.component';
 

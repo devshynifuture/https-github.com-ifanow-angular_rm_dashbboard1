@@ -25,15 +25,6 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <!-- <mat-form-field>
-                        <input matInput maxlength="40" formControlName="lifeAssured" #lifeassured autocomplete="off"
-                            class="form-control br-0">
-                        <mat-error class="f-12 pt-4"
-                            [ngClass]="{'v-h':!(islifeAssured && lifeInsuranceForm.get('lifeAssured').invalid || (lifeInsuranceForm.get('lifeAssured').touched && lifeInsuranceForm.get('lifeAssured').invalid))}">
-                            This field is required
-                        </mat-error>
-                        <mat-hint align="end" class="f-12">{{lifeassured.value.length}}/40</mat-hint>
-                    </mat-form-field> -->
                     <mat-form-field>
                         <mat-select formControlName="lifeAssured" #Proposer autocomplete="true"
                             class="form-control br-0">
@@ -108,11 +99,12 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput type="text" formControlName="policyNum" #policynumber autocomplete="off"
+                        <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
+                            formControlName="policyNum" #policynumber appInputValueValidation autocomplete="off"
                             class="form-control br-0">
                         <mat-error>This field is required
                         </mat-error>
-                        <mat-hint align="end" class="f-12">{{policynumber.value.length}}/40</mat-hint>
+                        <mat-hint align="end" class="f-12">{{policynumber.value.length}}/20</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -144,11 +136,12 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput type="number" formControlName="sumAssured" #sumassured autocomplete="off"
-                            class="form-control br-0">
+                        <input matInput type="number" [inputValidator]="validatorType.ALPHA_NUMERIC"
+                            appInputValueValidation [maxLength]="10" formControlName="sumAssured" [maxLength]="10"
+                            #sumassured autocomplete="off" class="form-control br-0">
                         <mat-error>This field is required
                         </mat-error>
-                        <mat-hint align="end" class="f-12">{{sumassured.value.length}}/40</mat-hint>
+                        <mat-hint align="end" class="f-12">{{sumassured.value.length}}/10</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -162,10 +155,12 @@
                 <div class="form-group mb-0">
                     <label class="f-16 roboto">Amount</label>
                     <mat-form-field>
-                        <input matInput type="number" formControlName="premiumDetailsAmount" #premiumdetails
-                            autocomplete="true" class="form-control rupess br-0">
+                        <input matInput type="number" formControlName="premiumDetailsAmount"
+                            [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation #premiumdetails
+                            autocomplete="true" [maxLength]="10" class="form-control rupess br-0">
                         <mat-error>This field is required
                         </mat-error>
+                        <mat-hint align="end" class="f-12">{{premiumdetails.value.length}}/10</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -221,10 +216,12 @@
                 <div class="form-group mb-0">
                     <label class="f-16 roboto">Premium paying term</label>
                     <mat-form-field>
-                        <input matInput type="number" formControlName="premiumPayingTerm" #premiumterm
+                        <input matInput type="number" [inputValidator]="validatorType.NUMBER_ONLY"
+                            appInputValueValidation formControlName="premiumPayingTerm" [maxLength]="10" #premiumterm
                             autocomplete="off" class="form-control br-0">
                         <mat-error>This field is required
                         </mat-error>
+                        <mat-hint align="end" class="f-12">{{premiumterm.value.length}}/10</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -254,10 +251,12 @@
                 <div class="form-group form-group_two mb-0">
                     <label class="f-16 roboto">Last unpaid premium</label>
                     <mat-form-field>
-                        <input matInput type="number" formControlName="policyStatusLastUnpaid" #lastunpaid
-                            autocomplete="off" class="form-control br-0">
+                        <input matInput type="number" [inputValidator]="validatorType.NUMBER_ONLY"
+                            appInputValueValidation formControlName="policyStatusLastUnpaid" [maxLength]="10"
+                            #lastunpaid autocomplete="off" class="form-control br-0">
                         <mat-error>This field is required
                         </mat-error>
+                        <mat-hint align="end" class="f-12">{{lastunpaid.value.length}}/10</mat-hint>
                     </mat-form-field>
                 </div>
                 <div class="col-md-12">
@@ -293,9 +292,11 @@
                             <div class="col-md-3">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <input type="number" formControlName="riskCover" matInput autocomplete="off"
-                                            class="rupess form-control br-0">
+                                        <input type="number" [inputValidator]="validatorType.NUMBER_ONLY"
+                                            appInputValueValidation formControlName="riskCover" [maxLength]="10"
+                                            matInput autocomplete="off" #riskCover class="rupess form-control br-0">
                                     </mat-form-field>
+                                    <mat-hint align="end" class="f-12">{{riskCover.value.length}}/10</mat-hint>
                                 </div>
                             </div>
                         </div>
@@ -306,8 +307,11 @@
                             <div class="col-md-3">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <input type="number" formControlName="surrenderName" matInput autocomplete="off"
+                                        <input type="number" [inputValidator]="validatorType.NUMBER_ONLY"
+                                            appInputValueValidation formControlName="surrenderName" #surrenderName
+                                            [maxLength]="10" matInput autocomplete="off"
                                             class="form-control rupess br-0">
+                                        <mat-hint align="end" class="f-12">{{surrenderName.value.length}}/10</mat-hint>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -333,8 +337,10 @@
                             <div class="col-md-3">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <input type="number" autocomplete="off" formControlName="vestedBonus" matInput
+                                        <input type="number" autocomplete="off" [maxLength]="10"
+                                            formControlName="vestedBonus" #vestedBonus matInput
                                             class="form-control rupess br-0">
+                                        <mat-hint align="end" class="f-12">{{vestedBonus.value.length}}/10</mat-hint>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -347,8 +353,11 @@
                             <div class="col-md-3">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <input type="number" autocomplete="off" formControlName="assumedRate" matInput
+                                        <input type="number" [inputValidator]="validatorType.NUMBER_ONLY"
+                                            appInputValueValidation autocomplete="off" [maxLength]="10"
+                                            formControlName="assumedRate" #assumedRate matInput
                                             class="form-control br-0">
+                                        <mat-hint align="end" class="f-12">{{assumedRate.value.length}}/10</mat-hint>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -360,8 +369,10 @@
                             <div class="col-md-3">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <input type="number" formControlName="fundValue" autocomplete="off" matInput
-                                            class="form-control rupess br-0">
+                                        <input type="number" [inputValidator]="validatorType.NUMBER_ONLY"
+                                            appInputValueValidation formControlName="fundValue" [maxLength]="10"
+                                            autocomplete="off" matInput class="form-control rupess br-0">
+                                        <mat-hint align="end" class="f-12">{{fundValue.value.length}}/10</mat-hint>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -388,8 +399,11 @@
                                     <div class="form-group mb-0">
                                         <!-- <label class="f-16 roboto">Cash Flow Type</label> -->
                                         <mat-form-field>
-                                            <input type="number" autocomplete="off" formControlName="cashFlowType"
-                                                matInput class="form-control br-0">
+                                            <input type="number" autocomplete="off" [maxLength]="10"
+                                                formControlName="cashFlowType" #cashFlowType matInput
+                                                class="form-control br-0">
+                                            <mat-hint align="end" class="f-12">{{cashFlowType.value.length}}/10
+                                            </mat-hint>
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -406,8 +420,12 @@
                                     <div class="form-group mb-0">
                                         <!-- <label class="f-16 roboto">Approx amount</label> -->
                                         <mat-form-field>
-                                            <input type="number" autocomplete="off" formControlName="approxAmt" matInput
+                                            <input type="number" [inputValidator]="validatorType.NUMBER_ONLY"
+                                                appInputValueValidation [maxLength]="10" autocomplete="off"
+                                                formControlName="approxAmt" #approxAmt matInput
                                                 class="form-control br-0 rupess">
+                                            <mat-hint align="end" class="f-12">{{approxAmt.value.length}}/10
+                                            </mat-hint>
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -431,8 +449,12 @@
                                 <div class="form-group mb-0">
                                     <label class="f-16 roboto">Accidental benefit</label>
                                     <mat-form-field>
-                                        <input type="number" autocomplete="off" formControlName="accidentalBenefit"
-                                            matInput class="form-control br-0">
+                                        <input type="number" [inputValidator]="validatorType.NUMBER_ONLY"
+                                            appInputValueValidation autocomplete="off" [maxLength]="10"
+                                            formControlName="accidentalBenefit" #accidentalBenefit matInput
+                                            class="form-control br-0">
+                                        <mat-hint align="end" class="f-12">{{accidentalBenefit.value.length}}/10
+                                        </mat-hint>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -440,8 +462,12 @@
                                 <div class="form-group mb-0">
                                     <label class="f-16 roboto">Double Accidental</label>
                                     <mat-form-field>
-                                        <input type="number" autocomplete="off" formControlName="doubleAccidental"
-                                            matInput class="form-control br-0">
+                                        <input type="number" [inputValidator]="validatorType.NUMBER_ONLY"
+                                            appInputValueValidation autocomplete="off" [maxLength]="10"
+                                            formControlName="doubleAccidental" #doubleAccidental matInput
+                                            class="form-control br-0">
+                                        <mat-hint align="end" class="f-12">{{doubleAccidental.value.length}}/10
+                                        </mat-hint>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -449,8 +475,10 @@
                                 <div class="form-group mb-0">
                                     <label class="f-16 roboto">Term waiver</label>
                                     <mat-form-field>
-                                        <input type="number" autocomplete="off" formControlName="termWaiver" matInput
-                                            class="form-control br-0">
+                                        <input type="number" [inputValidator]="validatorType.NUMBER_ONLY"
+                                            appInputValueValidation autocomplete="off" [maxLength]="10"
+                                            formControlName="termWaiver" #termWaiver matInput class="form-control br-0">
+                                        <mat-hint align="end" class="f-12">{{termWaiver.value.length}}/10</mat-hint>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -462,8 +490,12 @@
                                 <div class="form-group mb-0">
                                     <label class="f-16 roboto">Critical illeness</label>
                                     <mat-form-field>
-                                        <input type="number" autocomplete="off" formControlName="criticalIlleness"
-                                            matInput class="form-control br-0">
+                                        <input type="number" [inputValidator]="validatorType.NUMBER_ONLY"
+                                            appInputValueValidation autocomplete="off" [maxLength]="10"
+                                            formControlName="criticalIlleness" #criticalIlleness matInput
+                                            class="form-control br-0">
+                                        <mat-hint align="end" class="f-12">{{criticalIlleness.value.length}}/10
+                                        </mat-hint>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -471,8 +503,11 @@
                                 <div class="form-group mb-0">
                                     <label class="f-16 roboto">Premium waiver</label>
                                     <mat-form-field>
-                                        <input type="number" autocomplete="off" formControlName="premiumWaiver" matInput
+                                        <input type="number" [inputValidator]="validatorType.NUMBER_ONLY"
+                                            appInputValueValidation autocomplete="off" [maxLength]="10"
+                                            formControlName="premiumWaiver" #premiumWaiver matInput
                                             class="form-control br-0">
+                                        <mat-hint align="end" class="f-12">{{premiumWaiver.value.length}}/10</mat-hint>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -480,8 +515,12 @@
                                 <div class="form-group mb-0">
                                     <label class="f-16 roboto">Female critical illeness</label>
                                     <mat-form-field>
-                                        <input type="number" autocomplete="off" formControlName="femaleCriticalIlleness"
-                                            matInput class="form-control br-0">
+                                        <input type="number" [inputValidator]="validatorType.NUMBER_ONLY"
+                                            appInputValueValidation autocomplete="off" [maxLength]="10"
+                                            formControlName="femaleCriticalIlleness" #femaleCriticalIlleness matInput
+                                            class="form-control br-0">
+                                        <mat-hint align="end" class="f-12">{{femaleCriticalIlleness.value.length}}/10
+                                        </mat-hint>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -557,8 +596,10 @@
                             <div class="col-md-3">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <input formControlName="advisorName" autocomplete="off" matInput
-                                            class="form-control br-0">
+                                        <input formControlName="advisorName" autocomplete="off" maxlength="40" matInput
+                                            #advisorName class="form-control br-0">
+                                        <mat-hint align="end" class="f-12">{{advisorName.value.length}}/40
+                                        </mat-hint>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -571,8 +612,10 @@
                             <div class="col-md-3">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <input formControlName="serviceBranch" autocomplete="off" matInput
-                                            class="form-control br-0">
+                                        <input formControlName="serviceBranch" #serviceName maxlength="40"
+                                            autocomplete="off" matInput class="form-control br-0">
+                                        <mat-hint align="end" class="f-12">{{serviceName.value.length}}/40
+                                        </mat-hint>
                                     </mat-form-field>
                                 </div>
                             </div>

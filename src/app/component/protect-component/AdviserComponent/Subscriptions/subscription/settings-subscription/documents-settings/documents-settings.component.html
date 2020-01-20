@@ -14,7 +14,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4 pr-20 pb-20 pl-0">
-                        <mat-card class="example-card height-470 bg-grey lter b-a">
+                        <mat-card class="example-card height-484 bg-grey lter b-a">
                             <mat-card-content>
                                 <p class="text-center">
                                     <i class="material-icons icon-center" (click)="openFragment('documents',null)">
@@ -25,6 +25,16 @@
 
                         </mat-card>
                     </div>
+
+                    <div class="col-md-4 ">
+                        <div class="emptyDocumentBox"></div>
+                    </div>
+
+                    <div class="col-md-4 ">
+                        <div class="emptyDocumentBox"></div>
+                    </div>
+
+
                     <div [hidden]="!documentSettingData" *ngFor="let singleDocument of documentSettingData" class="col-md-4 pr-20 pb-20 pl-0 documents-body">
                         <div class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                             <div class="relClass">

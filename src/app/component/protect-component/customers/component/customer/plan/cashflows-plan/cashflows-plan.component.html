@@ -1,11 +1,11 @@
 <div id="scenariosPlan">
 
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-5">
             <div id="surplus"></div>
         </div>
 
-        <div class="col-md-8">
+        <div class="col-md-7">
             <div class=" bl-grey">
                 <div class="d-flex scenariosHeadingTwo bb-grey justify-content-md-between align-items-center">
                     <p class="f-20 pb-20 pt-20 roboto m-0 pl-16"> Life cash flows</p>
@@ -19,8 +19,7 @@
 
                         <div class="row">
                             <div class="col-md-12 cashflowTable pr-0">
-                                <table mat-table [dataSource]="dataSource" id="table-low" class=" "
-                                    *ngIf="!showSurplusTable">
+                                <table mat-table [dataSource]="dataSource" id="table-low" class=" " *ngIf="!showSurplusTable">
 
                                     <!--- Note that these columns can be defined in any order.
                                                       The actual rendered columns are set as a property on the row definition" -->
@@ -61,8 +60,7 @@
 
                                     <ng-container matColumnDef="view">
                                         <th mat-header-cell *matHeaderCellDef> Monthly View </th>
-                                        <td class="c-p text-primary text-center f-400 f-14" mat-cell
-                                            *matCellDef="let element" (click)="openUpperSlider(element)">
+                                        <td class="c-p text-primary text-center f-400 f-14" mat-cell *matCellDef="let element" (click)="openUpperSlider(element)">
                                             {{element.view}} </td>
                                     </ng-container>
 
@@ -73,8 +71,7 @@
                             </div>
 
                             <div class="col-md-12 cashflowTable pr-0">
-                                <table mat-table [dataSource]="dataSourceSurplus" *ngIf="showSurplusTable"
-                                    id="table-low" class=" ">
+                                <table mat-table [dataSource]="dataSourceSurplus" *ngIf="showSurplusTable" id="table-low" class=" ">
 
                                     <!--- Note that these columns can be defined in any order.
                                                       The actual rendered columns are set as a property on the row definition" -->
@@ -90,8 +87,7 @@
 
                                     <!-- Name Column -->
                                     <ng-container matColumnDef="ageH">
-                                        <th class="br-grey f-400 text-right f-14" mat-header-cell *matHeaderCellDef> Age
-                                            (H)
+                                        <th class="br-grey f-400 text-right f-14" mat-header-cell *matHeaderCellDef> Age (H)
                                         </th>
                                         <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
                                             {{element.ageH}} </td>
@@ -99,8 +95,7 @@
 
                                     <!-- Weight Column -->
                                     <ng-container matColumnDef="ageW">
-                                        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef> Age
-                                            (W)
+                                        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef> Age (W)
                                         </th>
                                         <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
                                             {{element.ageW}} </td>
@@ -133,8 +128,7 @@
 
                                     <ng-container matColumnDef="view">
                                         <th mat-header-cell *matHeaderCellDef> </th>
-                                        <td class="c-p text-primary text-center f-14" mat-cell *matCellDef="let element"
-                                            (click)="openUpperSlider(element)"> {{element.view}} Allocate
+                                        <td class="c-p text-primary text-center f-14" mat-cell *matCellDef="let element" (click)="openUpperSlider(element)"> {{element.view}} Allocate
                                         </td>
                                     </ng-container>
 
@@ -153,11 +147,9 @@
                             <img class="mr-12" src="/assets/images/svg/cash-flow-expenses-icon.svg"> Expenses</button>
                         <button mat-stroked-button class="btn-cash-flow" (click)="filterCashFlowTableUsing('assets')">
                             <img class="mr-12" src="/assets/images/svg/cash-flow-assets-icon.svg"> Assets</button>
-                        <button mat-stroked-button class="btn-cash-flow"
-                            (click)="filterCashFlowTableUsing('insurance')">
+                        <button mat-stroked-button class="btn-cash-flow" (click)="filterCashFlowTableUsing('insurance')">
                             <img class="mr-12" src="/assets/images/svg/cash-flow-insurance-icon.svg">Insurance</button>
-                        <button mat-stroked-button class="btn-cash-flow"
-                            (click)="filterCashFlowTableUsing('liabilities')">
+                        <button mat-stroked-button class="btn-cash-flow" (click)="filterCashFlowTableUsing('liabilities')">
                             <img class="mr-12"
                                 src="/assets/images/svg/cash-flow-liabilites-icon.svg">Liabilities</button>
 

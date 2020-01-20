@@ -3,29 +3,49 @@
 //     height: 310px;
 // }
 .bottom-tops {
-  bottom: -50%;
-  position: relative;
+    bottom: -50%;
+    position: relative;
 }
 
 .green {
-  background: #02B875;
-  padding: 4px 5px;
+    background: #02B875;
+    padding: 4px 5px;
 }
 
 ::ng-deep .blue {
-  background: #008FFF;
-
-  padding: 4px 10px;
+    background: #008FFF;
+    padding: 4px 10px;
 }
 
 .btn-success {
-  background-color: #02B875;
+    background-color: #02B875;
 }
 
 #ui-document-settings {
-  margin-top: 20px !important;
+    margin-top: 20px !important;
 }
 
 ::ng-deep .mat-card-header .mat-card-subtitle:not(:first-child) {
-  margin-top: -4px !important;
+    margin-top: -4px !important;
+}
+
+.emptyDocumentBox {
+    height: 485px;
+    background-color: #E7E7E7;
+    overflow: hidden;
+    &:after {
+        position: absolute;
+        transform: translateY(-50%);
+        top: 50%;
+        left: 0;
+        content: "";
+        display: block;
+        width: 100%;
+        height: 485px;
+        background-image: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80%);
+        background-size: 100px 485px;
+        background-position: -100px 0;
+        background-repeat: no-repeat;
+        animation: loading 1s infinite;
+    }
 }

@@ -1,21 +1,19 @@
 :host {
-  button {
-    &.active {
-      cursor: not-allowed;
-    }
-
-    &.fullWidth {
-      width: 100%;
-    }
-
-    .bar {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-
-      /*.mat-progress-bar-background {
+    button {
+        &.active {
+            cursor: not-allowed;
+        }
+        &.fullWidth {
+            width: 100%;
+        }
+        .bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: green;
+            /*.mat-progress-bar-background {
         animation: none;
         background-color: green;
         fill: yellow;
@@ -24,38 +22,30 @@
       .mat-progress-bar-buffer {
         background-color: red !important;
       }*/
+        }
+        mat-icon {
+            padding-right: 5px;
+            &.is-mat-icon {
+                font-size: 18px;
+                position: relative;
+                top: 3px;
+            }
+        }
     }
-
-    mat-icon {
-      padding-right: 5px;
-
-      &.is-mat-icon {
-        font-size: 18px;
+    .textZindex {
         position: relative;
-        top: 3px;
-      }
+        left: 0px;
+        right: 0px;
+        text-align: center;
+        z-index: 1;
+        color: #ffffff !important;
     }
-  }
-
-  .textZindex {
-    position: relative;
-    left: 0px;
-    right: 0px;
-    text-align: center;
-    z-index: 1;
-    color: #ffffff !important;
-  }
-
-  .boxShadowNone {
-    box-shadow: none;
-  }
-
-  //mat-progress-bar
+    .boxShadowNone {
+        box-shadow: none;
+    }
+    //mat-progress-bar
 }
 
-
-::ng-deep .mat-progress-bar-buffer {
-    background-color: red !important;
-}
-
-
+// ::ng-deep .mat-progress-bar-buffer {
+//     background-color: red !important;
+// }

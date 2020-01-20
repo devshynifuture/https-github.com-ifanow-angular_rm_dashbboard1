@@ -14,7 +14,7 @@
         </div>
     </div>
 </div>
-<div *ngIf="isRecuring == true" >
+<div *ngIf="isRecuring == true">
     <div class="pt-72 pl-24 pr-24 pb-48 mb-48" [formGroup]="recuring">
         <div class="row">
             <mat-checkbox class="text-right" [(ngModel)]="isRecuring" (change)="toggle($event)"
