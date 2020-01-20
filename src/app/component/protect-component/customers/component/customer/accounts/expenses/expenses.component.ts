@@ -120,7 +120,8 @@ export class ExpensesComponent implements OnInit {
           startAngle: 0,
           endAngle: 360,
           center: ['50%', '50%'],
-          size: '85%'
+          size: '85%',
+          showInLegend: true
         }
       },
       series: [{
@@ -129,70 +130,70 @@ export class ExpensesComponent implements OnInit {
         innerSize: '60%',
         data: [
           {
-            name: 'Equity',
+            name: 'Food & Groceries',
             y: 23,
             color: "#A6CEE3",
             dataLabels: {
               enabled: false
             }
           }, {
-            name: 'Debt',
+            name: 'Clothing',
             y: 13,
             color: "#1F78B4",
             dataLabels: {
               enabled: false
             }
           }, {
-            name: 'Hybrid',
+            name: 'Medical expenses',
             y: 25.42,
             color: "#B2DF8A",
             dataLabels: {
               enabled: false
             }
           }, {
-            name: 'Other',
+            name: 'Shopping',
             y: 12.61,
             color: "#33A02C",
             dataLabels: {
               enabled: false
             }
           }, {
-            name: 'Solutions oriented',
+            name: 'Basic misc.',
             y: 23.42,
             color: "#FB9A99",
             dataLabels: {
               enabled: false
             }
           }, {
-            name: 'Solutions oriented',
+            name: 'Mobile',
             y: 23.42,
             color: "#E31A1C",
             dataLabels: {
               enabled: false
             }
           }, {
-            name: 'Solutions oriented',
+            name: 'Internet',
             y: 23.42,
             color: "#FDBF6F",
             dataLabels: {
               enabled: false
             }
           }, {
-            name: 'Solutions oriented',
+            name: 'Electricity',
             y: 23.42,
             color: "#FF7F00",
             dataLabels: {
               enabled: false
             }
           }, {
-            name: 'Solutions oriented',
+            name: 'DTH',
             y: 23.42,
             color: "#CAB2D6",
             dataLabels: {
               enabled: false
             }
           }, {
-            name: 'Solutions oriented',
+            name: 'Telephone',
             y: 23.42,
             color: "#6A3D9A",
             dataLabels: {
