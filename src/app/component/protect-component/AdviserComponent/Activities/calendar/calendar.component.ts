@@ -1,10 +1,11 @@
 import {ChangeDetectorRef, Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {MAT_DATE_FORMATS} from '@angular/material';
+import {MAT_DATE_FORMATS, MatBottomSheet} from '@angular/material';
 import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {calendarService} from './calendar.service';
 import {AuthService} from '../../../../../auth-service/authService';
+import { BottomSheetComponent } from '../../../customers/component/common-component/bottom-sheet/bottom-sheet.component';
 
 
 export interface DialogData {
@@ -39,7 +40,7 @@ export class CalendarComponent implements OnInit {
   endTime;
   current_day = new Date();
   userInfo:any;
-  constructor(public dialog: MatDialog, private canlenderService : calendarService) { }
+  constructor(public dialog: MatDialog, private calenderService : calendarService) { }
 
   ngOnInit() {
     this.currentMonth = new Date().getMonth();
@@ -56,7 +57,7 @@ export class CalendarComponent implements OnInit {
       "calendarId": "aniruddha@futurewise.co.in",
       "userId": this.userInfo.advisorId
     }
-    this.canlenderService.getEvent(eventData).subscribe((data)=>{
+    this.calenderService.getEvent(eventData).subscribe((data)=>{
       if(data != undefined){
 
         this.eventData = data;
@@ -286,12 +287,12 @@ export class CalendarComponent implements OnInit {
       console.log(this.dialogData, 'The dialog was closed');
 
       if(this.dialogData.eventId != null){
-        this.canlenderService.updateEvent(this.dialogData).subscribe((data)=>{
+        this.calenderService.updateEvent(this.dialogData).subscribe((data)=>{
 
         })
       }
       else{
-        this.canlenderService.addEvent(this.dialogData).subscribe((data)=>{
+        this.calenderService.addEvent(this.dialogData).subscribe((data)=>{
 
         })
       }
@@ -364,7 +365,8 @@ export class EventDialog implements OnInit{
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<EventDialog>,
     private changeDetectorRef: ChangeDetectorRef,
-    private canlenderService : calendarService,
+    private calenderService : calendarService,
+    private _bottomSheet: MatBottomSheet,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
       console.log(data, "this.eventData 111");
       this.eventData = data;
@@ -394,7 +396,7 @@ export class EventDialog implements OnInit{
       this.isEditAdd = false;
     }
 
-    if(this.eventData.start.dateTime != null && this.eventData.end.dateTime != null) {
+    if(this.eventData.id != undefined) {
       this.showTime = true;
       if (new Date(this.eventData.start.dateTime).getDate() == new Date(this.eventData.end.dateTime).getDate() && new Date(this.eventData.start.dateTime).getMonth() == new Date(this.eventData.end.dateTime).getMonth()) {
         this.showBothDate = false;
@@ -504,9 +506,42 @@ export class EventDialog implements OnInit{
         "userId": this.userInfo.advisorId,
         "eventId": eventId,
     }
-    this.canlenderService.deleteEvent(deleteData).subscribe((data)=>{
+    this.calenderService.deleteEvent(deleteData).subscribe((data)=>{
 
     });
   }
+ 
+  myFiles:any = [];
+  filenm:any;
+  parentId:any;
+  // upload file
+  getFileDetails(e) {
+    console.log(e.target.files, "e.target.files 123");
+    
+    for (let i = 0; i < e.target.files.length; i++) {
+      this.myFiles.push(e.target.files[i]);
+    }
+    this.myFiles.forEach(fileName => {
+      this.filenm = fileName;
+      this.parentId = (this.parentId == undefined) ? 0 : this.parentId;
+      // this.uploadFile(this.parentId, this.filenm);
+    });
+    console.log(this.myFiles, "e.target.files 123 myFiles");
+    // const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
+    //   data: this.myFiles,
+    // });
+  }
+
+  // uploadFile(element, fileName) {
+  //   const obj = {
+  //     clientId: this.clientId,
+  //     advisorId: this.userInfo.advisorId,
+  //     folderId: element,
+  //     fileName: fileName.name
+  //   };
+  //   this.custumService.uploadFile(obj).subscribe(
+  //     data => this.uploadFileRes(data, fileName)
+  //   );
+  // }
 }
 
