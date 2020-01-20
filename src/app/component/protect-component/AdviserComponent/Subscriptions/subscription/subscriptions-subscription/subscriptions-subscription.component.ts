@@ -76,7 +76,7 @@ export interface PeriodicElement {
 })
 export class SubscriptionsSubscriptionComponent implements OnInit {
   @ViewChild(MatSort, {static: false}) sort: MatSort;
-  selector: string = '.wrapper-20';
+  selector = '.wrapper-20';
   displayedColumns: string[] = ['client', 'service', 'amt', 'sub', 'status', 'activation',
     'lastbilling', 'nextbilling', 'feemode', 'icons'];
 
@@ -85,11 +85,11 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   advisorId;
   lastFilterDataId;
   Oposition;
-  maxDate = new Date()
-  getData: any = "";
+  maxDate = new Date();
+  getData: any = '';
   filterDataArr = [];
   // DataToSend;
-  scrollCallData: boolean = true;
+  scrollCallData = true;
   isLoading = false;
   chips = [
     {name: 'LIVE', value: 2},
@@ -108,8 +108,8 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   // sendData: any[];
   // senddataTo: any;
   showFilter = false;
-  selectedStatusFilter: any = "status";
-  selectedDateFilter: any = "selected";
+  selectedStatusFilter: any = 'status';
+  selectedDateFilter: any = 'selected';
   // selectedDateFilter;
   dataTocheck: boolean;
   live: boolean;
@@ -147,14 +147,14 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
 
   scrollCall(scrollLoader) {
-    let uisubs = document.getElementById('ui-subs');
-    let wrapper = document.getElementById('wrapper');
+    const uisubs = document.getElementById('ui-subs');
+    const wrapper = document.getElementById('wrapper');
 
-    var contentheight = wrapper.offsetHeight;
-    var yoffset = uisubs.scrollTop;
-    var y = yoffset + window.innerHeight;
+    const contentheight = wrapper.offsetHeight;
+    const yoffset = uisubs.scrollTop;
+    const y = yoffset + window.innerHeight;
     // console.log(y >= contentheight && this.getData != undefined && this.scrollCallData, this.scrollCallData, "this.scrollCallData 123");
-    console.log(this.getData != undefined, this.scrollCallData, "|| this.statusIdList.length > 0");
+    console.log(this.getData != undefined, this.scrollCallData, '|| this.statusIdList.length > 0');
 
     if ((y >= contentheight && this.getData != undefined && this.scrollCallData)) {
       this.scrollCallData = false;
@@ -164,7 +164,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
         this.scrollPosition = contentheight - window.innerHeight;
       }
 
-      console.log(this.scrollPosition, "this.scrollPosition 123");
+      console.log(this.scrollPosition, 'this.scrollPosition 123');
 
 
       if (this.statusIdList.length <= 0) {
@@ -180,7 +180,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   getSummaryDataAdvisor(scrollLoader) {
 
-    let obj = {
+    const obj = {
       advisorId: this.advisorId,
       clientId: 0,
       flag: 0,
@@ -207,7 +207,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
             this.tableData = data;
           } else {
             this.tableData = this.tableData.concat(data);
-            console.log(this.tableData, "this.tableData 123");
+            console.log(this.tableData, 'this.tableData 123');
           }
         } else {
           this.isLoading = false;
@@ -225,7 +225,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
 
   getSubSummaryRes(data) {
-    let uisubs = document.getElementById('ui-subs');
+    const uisubs = document.getElementById('ui-subs');
     this.isLoading = false;
     console.log('  aaa: ', data);
 
@@ -235,7 +235,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       this.dataSource.data = data;
       this.dataSource.sort = this.sort;
       uisubs.scrollTo(0, this.scrollPosition);
-      console.log(uisubs.scrollTop, this.scrollPosition, "this.yoffset");
+      console.log(uisubs.scrollTop, this.scrollPosition, 'this.yoffset');
 
       this.scrollCallData = true;
       // this.DataToSend = data;
@@ -243,15 +243,15 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       this.data = [];
       this.dataSource.data = data;
       // console.log(data);
-      this.dataSource.data = []
+      this.dataSource.data = [];
       this.noData = 'No Data Found';
     }
   }
 
   openPlanSlider(value, state, data) {
-    console.log("call get 123");
+    console.log('call get 123');
     if (this.isLoading) {
-      return
+      return;
     }
     let componentName;
     (value == 'billerSettings') ? componentName = BillerSettingsComponent : (value == 'changePayee') ? componentName = ChangePayeeComponent :
@@ -378,8 +378,8 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result, this.dataSource.data, "delete result");
-      const tempList = []
+      console.log(result, this.dataSource.data, 'delete result');
+      const tempList = [];
       this.dataSource.data.forEach(singleElement => {
         if (singleElement.id != result.id) {
           tempList.push(singleElement);
@@ -416,7 +416,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       // _.remove(this.filterStatus, this.senddataTo);
     }
 
-    console.log(this.filterStatus, "this.filterStatus 123");
+    console.log(this.filterStatus, 'this.filterStatus 123');
 
     this.callFilter(false);
   }
@@ -434,7 +434,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
         this.dataSource.data = this.filterDataArr;
       }
     } else {
-      console.log(this.statusIdList.length, this.statusIdLength < this.statusIdList.length, this.statusIdLength, "this.statusIdList.length123");
+      console.log(this.statusIdList.length, this.statusIdLength < this.statusIdList.length, this.statusIdLength, 'this.statusIdList.length123');
       // if(this.statusIdLength < this.statusIdList.length || this.statusIdList.length <= 0){
       //   this.statusIdLength = this.statusIdList.length;
       //   this.lastFilterDataId = 0;
@@ -442,12 +442,12 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
       this.lastFilterDataId = data[data.length - 1].id;
       // }
-      console.log(this.lastFilterDataId, "this.lastFilterDataId");
+      console.log(this.lastFilterDataId, 'this.lastFilterDataId');
       if (this.filterDataArr.length <= 0) {
         this.filterDataArr = data;
       } else {
         this.filterDataArr = this.filterDataArr.concat(data);
-        console.log(this.filterDataArr, "this.filterDataArr 123");
+        console.log(this.filterDataArr, 'this.filterDataArr 123');
       }
       this.scrollCallData = true;
 
@@ -473,13 +473,13 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     UtilService.getStartOfTheDay(endDate);
 
     this.selectedDateRange = {begin: beginDate, end: endDate};
-    console.log(this.filterDate, "this.filterDate 123");
+    console.log(this.filterDate, 'this.filterDate 123');
     this.callFilter(false);
   }
 
   removeDate(item) {
-    console.log(this.filterDate, "this.filterDate 123 r");
-    this.selectedDateFilter = "selected"
+    console.log(this.filterDate, 'this.filterDate 123 r');
+    this.selectedDateFilter = 'selected';
     this.filterDate.splice(item, 1);
     this.lastFilterDataId = 0;
     this.callFilter(false);
@@ -487,13 +487,13 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   remove(item) {
     if (this.filterStatus[item].name == this.selectedStatusFilter.name) {
-      this.selectedStatusFilter = "status";
+      this.selectedStatusFilter = 'status';
     }
 
     this.filterStatus.splice(item, 1);
     this.filterDataArr = this.filterDataArr.filter((x) => {
-      x.status != item.value
-    })
+      x.status != item.value;
+    });
     this.lastFilterDataId = 0;
     this.callFilter(false);
 
@@ -520,17 +520,17 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   callFilter(scrollLoader) {
     if (this.filterStatus && this.filterStatus.length > 0) {
       this.statusIdList = [];
-      this.dataSource.data = [{}, {}, {}]
+      this.dataSource.data = [{}, {}, {}];
       this.isLoading = true;
       this.filterStatus.forEach(singleFilter => {
         this.statusIdList.push(singleFilter.value);
-        console.log(this.statusIdList, "this.statusIdList 1233");
+        console.log(this.statusIdList, 'this.statusIdList 1233');
       });
     } else {
       this.statusIdList = [];
     }
     // this.statusIdList = (this.sendData == undefined) ? [] : this.sendData;
-    console.log(this.lastFilterDataId, this.statusIdLength < this.statusIdList.length, "aaaa");
+    console.log(this.lastFilterDataId, this.statusIdLength < this.statusIdList.length, 'aaaa');
     const obj = {
       advisorId: this.advisorId,
       limit: 10,
@@ -546,7 +546,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     } else {
       this.subService.filterSubscription(obj).subscribe(
         (data) => {
-          this.filterSubscriptionRes(data, scrollLoader)
+          this.filterSubscriptionRes(data, scrollLoader);
         }
       );
     }
