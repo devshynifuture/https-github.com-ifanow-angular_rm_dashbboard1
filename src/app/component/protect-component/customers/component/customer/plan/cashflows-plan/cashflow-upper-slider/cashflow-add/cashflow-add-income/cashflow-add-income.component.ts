@@ -14,8 +14,7 @@ export class CashflowAddIncomeComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<CashflowAddIncomeComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private fb: FormBuilder,
-    private eventService: EventService
+    private fb: FormBuilder
   ) { }
 
   validatorType = ValidatorType;

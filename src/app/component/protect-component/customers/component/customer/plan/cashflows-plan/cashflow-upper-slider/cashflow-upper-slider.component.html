@@ -15,14 +15,6 @@
     </div>
 </div>
 
-<div class="row" *ngIf="shouldShowAdd()">
-    <div class="col-md-12 text-right mb-10 mt-20">
-        <button mat-raised-button class="btn-primary addon f-14 mr-16" (click)="addExpense('')">ADD
-            {{ cashFlowCategory | uppercase }}</button>
-        <button mat-raised-button class="greryColorBg" (click)="toggleEditMode()">EDIT MODE</button>
-    </div>
-</div>
-
 <div class="row" *ngIf="cashFlowCategory === 'income'">
     <app-cashflow-upper-income-expense [data]="data"></app-cashflow-upper-income-expense>
 </div>

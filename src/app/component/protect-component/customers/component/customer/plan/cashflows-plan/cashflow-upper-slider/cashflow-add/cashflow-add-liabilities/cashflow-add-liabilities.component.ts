@@ -11,7 +11,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 export class CashflowAddLiabilitiesComponent implements OnInit {
 
   constructor(
-    public dialogRef: MatDialogRef<CashflowAddComponent>,
+    public dialogRef: MatDialogRef<CashflowAddLiabilitiesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder
   ) { }
