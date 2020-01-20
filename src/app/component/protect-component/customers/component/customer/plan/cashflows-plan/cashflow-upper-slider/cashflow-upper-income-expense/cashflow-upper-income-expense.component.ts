@@ -1,5 +1,7 @@
+import { CashflowAddComponent } from './../cashflow-add/cashflow-add.component';
 import { Component, OnInit, Input } from '@angular/core';
 import { UpperTableBox } from './../../cashflow.interface';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-cashflow-upper-income-expense',
@@ -8,16 +10,18 @@ import { UpperTableBox } from './../../cashflow.interface';
 })
 export class CashflowUpperIncomeExpenseComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   displayedColumns: string[] = ['description', 'month1', 'month2', 'month3', 'month4', 'month5', 'month6', 'month7', 'month8', 'month9', 'month10', 'month11', 'month12', 'total', 'remove'];
   dataSource = null;
   year: string = '';
   cashflowCategory;
   @Input() data;
+  editMode: boolean = false;
 
   ngOnInit() {
     this.cashflowCategory = this.data.tableInUse;
+    console.log("this is data sent from upper slider", this.data);
     this.year = this.data.year;
     if (this.cashflowCategory === 'expenses') {
       this.dataSource = ELEMENT_DATA1;
@@ -28,6 +32,21 @@ export class CashflowUpperIncomeExpenseComponent implements OnInit {
     } else if (this.cashflowCategory === 'liabilities') {
       this.dataSource = ELEMENT_DATA2;
     }
+  }
+
+  toggleEditMode() {
+    this.editMode = !this.editMode;
+  }
+
+  addCashFlow(data) {
+    const dialogRef = this.dialog.open(CashflowAddComponent, {
+      width: '750px',
+      data: { ...data, tableData: this.data }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
 
   addOneInYear(value: string) {

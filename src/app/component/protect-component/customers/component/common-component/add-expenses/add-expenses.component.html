@@ -247,12 +247,12 @@
         </div>
         <div class="col-md-2 text-left">
             <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
+                <i class="material-icons c-p pt-8 v-middle" (click)="Close('')"> clear</i>
             </div>
         </div>
     </div>
 </div>
-<div *ngIf="isRecuring == true" >
+<div *ngIf="isRecuring == true">
     <div class="pt-72 pl-24 pr-24 pb-48 mb-48" [formGroup]="recuring">
         <div class="row">
             <mat-checkbox class="text-right" [(ngModel)]="isRecuring" (change)="toggle($event)"
