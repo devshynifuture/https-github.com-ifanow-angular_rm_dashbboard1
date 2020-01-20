@@ -1,0 +1,113 @@
+<div class="row pt-12">
+    <div class="col-md-10">
+        <h3>
+            <!-- Add {{ this.data.tableData.tableInUse | titlecase }} -->
+            Monthly allocation: Max available ₹ 50,000
+        </h3>
+    </div>
+
+    <div class="col-md-2 text-primitive text-right">
+        Apr 2020
+    </div>
+</div>
+
+<mat-tab-group class="p-12">
+    <mat-tab label="Goals">
+        <table mat-table id="table-low" class="" [dataSource]="dataSource1">
+            <ng-container matColumnDef="goal">
+                <th class="br-grey f-400 f-14" mat-header-cell *matHeaderCellDef> Goal </th>
+                <td class="br-grey f-14" mat-cell *matCellDef="let element">
+                    {{ element.goal }}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="goalYear">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef>
+                    Goal year
+                </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
+                    {{ element.goalYear }}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="monthlyRequired">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef>
+                    Monthly required
+                </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
+                    {{ element.monthlyRequired }}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="lumpsumRequired">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef>
+                    Lumpsum required
+                </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
+                    {{ element.lumpsumRequired }}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="allocate">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef>
+                    Allocate
+                </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
+                    ₹ Add allocation {{ element.allocate }}
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+        </table>
+    </mat-tab>
+
+    <mat-tab label="Loans" class="p-12">
+        <table mat-table id="table-low" class="" [dataSource]="dataSource2">
+            <ng-container matColumnDef="loan">
+                <th class="br-grey f-400 f-14" mat-header-cell *matHeaderCellDef> Loan </th>
+                <td class="br-grey f-14" mat-cell *matCellDef="let element">
+                    Retirement loan
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="loanYear">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef>
+                    Loan year
+                </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
+                    Jun 2020
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="monthlyRequired">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef>
+                    Monthly required
+                </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
+                    35,440
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="lumpsumRequired">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef>
+                    Lumpsum required
+                </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
+                    15,27,923
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="allocate">
+                <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef>
+                    Allocate
+                </th>
+                <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
+                    ₹ Add allocation
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+        </table>
+    </mat-tab>
+
+</mat-tab-group>
