@@ -47,7 +47,6 @@ import 'zone.js/dist/zone';
 // import { SubscriptionUpperEntry } from './component/protect-component/AdviserComponent/Subscriptions/subscription-upper-entry-module';
 import {FormTestComponent} from "./test/form-test/form-test.component";
 import {CustomDirectiveModule} from "./common/directives/common-directive.module";
-import {CalendarModule} from './component/protect-component/AdviserComponent/Activities/calendar/calendar.module';
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
@@ -88,7 +87,7 @@ import {CalendarModule} from './component/protect-component/AdviserComponent/Act
 
   ],
   imports: [
-    CalendarModule,
+    // CalendarModule,
     // SubscriptionEntry,
     // SubscriptionUpperEntry,
     BrowserModule,

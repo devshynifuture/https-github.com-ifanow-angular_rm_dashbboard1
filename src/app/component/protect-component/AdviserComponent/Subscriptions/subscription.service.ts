@@ -365,7 +365,7 @@ export class SubscriptionService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_QUOTATIONS, data);
   }
 
-  deleteClientDocuments(data) {
+  deleteClientDocumentsMultiple(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_CLIENT_DOCUMENT, data);
   }
 

@@ -1,12 +1,10 @@
-import { Component, OnInit, Inject, ChangeDetectorRef, Input} from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MAT_DATE_FORMATS } from '@angular/material';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { variable } from '@angular/compiler/src/output/output_ast';
-import { calendarService } from './calendar.service';
-import { AuthService } from '../../../../../auth-service/authService';
-import { log } from 'util';
+import {ChangeDetectorRef, Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DATE_FORMATS} from '@angular/material';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {calendarService} from './calendar.service';
+import {AuthService} from '../../../../../auth-service/authService';
 
 
 export interface DialogData {
@@ -20,7 +18,7 @@ export interface DialogData {
   styleUrls: ['./calendar.component.scss'],
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class calendarComponent implements OnInit {
+export class CalendarComponent implements OnInit {
   viewDate: any;
   numbersOfDays: any;
   lastMonthDays: any;
@@ -50,7 +48,7 @@ export class calendarComponent implements OnInit {
     this.updatecalendar();
     this.getEvent();
     console.log(Intl.DateTimeFormat().resolvedOptions().timeZone, localStorage.getItem('userInfo'), "test date");
-    
+
   }
 
   getEvent(){
@@ -67,11 +65,11 @@ export class calendarComponent implements OnInit {
         this.formatedEvent = [];
         for(let e of this.eventData){
           e["day"] = this.formateDate(new Date(e.start.dateTime == null? e.created : e.start.dateTime));
-          e["month"] = this.formateMonth(new Date(e.start.dateTime == null? e.created : e.start.dateTime));
-          e["year"] = this.formateYear(new Date(e.start.dateTime == null? e.created : e.start.dateTime)); 
-          e["startTime"] = this.formateTime(new Date(e.start.dateTime == null? e.created : e.start.dateTime));
+          e["month"] = this.formateMonth(new Date(e.start.dateTime == null ? e.created : e.start.dateTime));
+          e["year"] = this.formateYear(new Date(e.start.dateTime == null ? e.created : e.start.dateTime));
+          e["startTime"] = this.formateTime(new Date(e.start.dateTime == null ? e.created : e.start.dateTime));
           e["endTime"] = this.formateTime(new Date(e.end.dateTime == null? e.created : e.end.dateTime));
-          
+
           this.formatedEvent.push(e);
         }
         console.log(this.formatedEvent, "this.eventData 12345");
@@ -82,7 +80,7 @@ export class calendarComponent implements OnInit {
   getDaysCount(month: number, year: number, ch: string): any{
     switch(ch){
       case "currentMonthDays": return 32 - new Date(year, month, 32).getDate();
-      
+
       case "lastMonthDays": return 32 - new Date(year - 1, month - 1, 32).getDate();
 
       case "nextMonthDays": return 32 - new Date(year + 1, month + 1, 32).getDate();
@@ -144,7 +142,7 @@ export class calendarComponent implements OnInit {
 
   formateDate(date){
     var dd = date.getDate();
-   
+
     return dd;
   }
 
@@ -159,13 +157,13 @@ export class calendarComponent implements OnInit {
   }
 
   formateTime(date){
-    
+
     var hh = date.getHours() > 12? date.getHours() - 12 : date.getHours();
     var mm = date.getMinutes();
     var amPm = date.getHours() > 12? "pm" : "am";
     hh = hh < 10 ? '0' + hh : hh;
     mm = mm < 10 ? '0' + mm : mm;
-    console.log(date, hh , mm, "time check");
+    console.log(date, hh, mm, "time check");
     return hh + ":" + mm + amPm + " ";
 
     // var now = date;
@@ -173,8 +171,8 @@ export class calendarComponent implements OnInit {
     // var isPM = now.getHours() >= 12;
     // var isMidday = now.getHours() == 12;
     // var result = document.querySelector('#result');
-    // var time = [now.getHours() - (isPM && !isMidday ? 12 : 0), 
-    //             now.getMinutes(), 
+    // var time = [now.getHours() - (isPM && !isMidday ? 12 : 0),
+    //             now.getMinutes(),
     //             now.getSeconds() || '00'].join(':')
     //              +(isPM ? ' pm' : 'am');
     // return time;
@@ -191,8 +189,8 @@ export class calendarComponent implements OnInit {
     }
     let eventDate = month + "/" + day + "/" + year;
     console.log(eventDate, "eventDate 123");
-    
-      event = {
+
+    event = {
           "eventId": "",
           "summary": "",
           "location": "",
@@ -212,7 +210,7 @@ export class calendarComponent implements OnInit {
         }
 
         this.openDialog(event);
-    
+
     // const dialogRef = this.dialog.open(EventDialog, {
     //   width: '50%',
     //   data: event
@@ -249,7 +247,7 @@ export class calendarComponent implements OnInit {
   }
 
   openDialog(eventData): void {
-    
+
     const dialogRef = this.dialog.open(EventDialog, {
       width: '50%',
       data: eventData
@@ -258,17 +256,17 @@ export class calendarComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(result, "result 123");
     if(result != undefined){
-      this.dialogData = 
-      {
-        "calendarId": "gaurav@futurewise.co.in",
-        "userId": this.userInfo.advisorId,
-        "eventId": result.eventId,
-        "summary": result.title,
-        "location": result.location,
-        "description": result.description,
-        "start": {
-        "dateTime": "",
-        "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
+      this.dialogData =
+        {
+          "calendarId": "gaurav@futurewise.co.in",
+          "userId": this.userInfo.advisorId,
+          "eventId": result.eventId,
+          "summary": result.title,
+          "location": result.location,
+          "description": result.description,
+          "start": {
+            "dateTime": "",
+            "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
         },
         "end": {
         "dateTime": "",
@@ -280,7 +278,7 @@ export class calendarComponent implements OnInit {
         "attendees":result.attendeesList
       }
 
-      
+
       this.startTime = result.startTime;
       this.endTime = result.endTime;
       this.dialogData.start.dateTime = this.googleDate(result.startDateTime._d == undefined? new Date(result.startDateTime) : result.startDateTime._d , "start");
@@ -303,7 +301,7 @@ export class calendarComponent implements OnInit {
 
 googleDate(date, timeMood){
   console.log(date, "date 123");
-  
+
   this.current_day = new Date();
   var current_date = date.getDate();
   var current_month = date.getMonth() + 1;
@@ -319,14 +317,14 @@ googleDate(date, timeMood){
     var end_hrs_mins = this.endTime;
   }
   var current_secs:any = this.current_day.getSeconds();
-   
+
   // Add 0 before date, month, hrs, mins or secs if they are less than 0
   current_date = current_date < 10 ? '0' + current_date : current_date;
   current_month = current_month < 10 ? '0' + current_month : current_month;
-  
+
   current_secs = current_secs < 10 ? '0' + current_secs : current_secs;
   console.log(current_year + '-' + current_month + '-' + current_date + 'T' + current_hrs + ':' + current_mins + ':' + current_secs, "hi date");
-  
+
   // Current datetime
   // String such as 2016-07-16T19:20:30
   if(timeMood == "start" && this.startTime != ""){
@@ -371,7 +369,7 @@ export class EventDialog implements OnInit{
       console.log(data, "this.eventData 111");
       this.eventData = data;
   }
- 
+
 
   ngOnInit(){
     this.eventForm = this.fb.group({
@@ -396,13 +394,13 @@ export class EventDialog implements OnInit{
       this.isEditAdd = false;
     }
 
-    if(this.eventData.start.dateTime != null && this.eventData.end.dateTime != null){
+    if(this.eventData.start.dateTime != null && this.eventData.end.dateTime != null) {
       this.showTime = true;
-      if(new Date(this.eventData.start.dateTime).getDate() == new Date(this.eventData.end.dateTime).getDate() && new Date(this.eventData.start.dateTime).getMonth() == new Date(this.eventData.end.dateTime).getMonth()){
+      if (new Date(this.eventData.start.dateTime).getDate() == new Date(this.eventData.end.dateTime).getDate() && new Date(this.eventData.start.dateTime).getMonth() == new Date(this.eventData.end.dateTime).getMonth()) {
         this.showBothDate = false;
       }
-      this.eventForm.get("startTime").setValue(this.formateTime(new Date(this.eventData.start.dateTime))); 
-      this.eventForm.get("endTime").setValue(this.formateTime(new Date(this.eventData.end.dateTime))); 
+      this.eventForm.get("startTime").setValue(this.formateTime(new Date(this.eventData.start.dateTime)));
+      this.eventForm.get("endTime").setValue(this.formateTime(new Date(this.eventData.end.dateTime)));
     }
 
     this.eventForm.get("description").setValue(this.eventData.description);
@@ -424,7 +422,7 @@ export class EventDialog implements OnInit{
 
   descriptionData(data) {
     console.log("description 123");
-    
+
     this.eventForm.get("description").setValue(data);
   }
 
@@ -438,10 +436,10 @@ export class EventDialog implements OnInit{
     this.attendeesArr = this.attendeesArr.filter((x)=> x.email != member.email);
   }
 
-  addTime(){
+  addTime() {
     this.showTime = true;
-    this.eventForm.get("startTime").setValue("09:00"); 
-    this.eventForm.get("endTime").setValue("10:00"); 
+    this.eventForm.get("startTime").setValue("09:00");
+    this.eventForm.get("endTime").setValue("10:00");
   }
 
   setEndDate(){
@@ -467,13 +465,13 @@ export class EventDialog implements OnInit{
   }
 
   setTime(mood){
-    if(mood == "start" && this.eventForm.value.endTime < this.eventForm.value.startTime){
+    if(mood == "start" && this.eventForm.value.endTime < this.eventForm.value.startTime) {
       console.log("hi");
-      
+
       console.log(this.eventForm.value.startDateTime._d, "this.eventForm.value.startDateTime_d 123");
-      
-      this.eventForm.get("endTime").setValue(this.timeArr[this.timeArr.indexOf(this.eventForm.value.startTime)+2]); 
-      // this.eventForm.get("endDateTime").setValue(this.eventForm.value.startDateTime._d); 
+
+      this.eventForm.get("endTime").setValue(this.timeArr[this.timeArr.indexOf(this.eventForm.value.startTime) + 2]);
+      // this.eventForm.get("endDateTime").setValue(this.eventForm.value.startDateTime._d);
     }
   }
 
@@ -483,7 +481,7 @@ export class EventDialog implements OnInit{
     console.log(this.eventForm.value, "check from value");
     console.log(this.eventDescription, "check from value2");
     console.log(this.eventData.description, "check from value3");
-    
+
   }
 
   formateTime(date){

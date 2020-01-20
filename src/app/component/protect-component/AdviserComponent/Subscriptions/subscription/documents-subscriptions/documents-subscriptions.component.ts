@@ -1,17 +1,17 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { SubscriptionInject } from '../../subscription-inject.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort } from '@angular/material';
-import { MatTableDataSource } from '@angular/material/table';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {SubscriptionInject} from '../../subscription-inject.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatSort} from '@angular/material';
+import {MatTableDataSource} from '@angular/material/table';
 
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionService } from '../../subscription.service';
-import { AuthService } from '../../../../../../auth-service/authService';
-import { UtilService } from 'src/app/services/util.service';
-import { DatePipe } from '@angular/common';
-import { MAT_DATE_FORMATS } from 'saturn-datepicker';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { CommonFroalaComponent } from '../common-subscription-component/common-froala/common-froala.component';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionService} from '../../subscription.service';
+import {AuthService} from '../../../../../../auth-service/authService';
+import {UtilService} from 'src/app/services/util.service';
+import {DatePipe} from '@angular/common';
+import {MAT_DATE_FORMATS} from 'saturn-datepicker';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {CommonFroalaComponent} from '../common-subscription-component/common-froala/common-froala.component';
 
 export interface PeriodicElement {
   name: string;
@@ -446,12 +446,12 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     const dialogData = {
       data: 'DOCUMENT',
       header: 'DELETE',
-      body: 'Are you sure you want to delete the document?',
+      body: list.length == 1 ? 'Are you sure you want to delete the document?' : 'Are you sure you want to delete these documents?',
       body2: 'This cannot be undone',
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.subService.deleteClientDocuments(list).subscribe(
+        this.subService.deleteClientDocumentsMultiple(list).subscribe(
           data => {
             this.eventService.openSnackBar('document is deleted', 'dismiss');
             // this.valueChange.emit('close');
