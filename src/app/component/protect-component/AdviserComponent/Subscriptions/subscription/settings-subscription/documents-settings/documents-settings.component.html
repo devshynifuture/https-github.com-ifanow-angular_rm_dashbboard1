@@ -1,7 +1,7 @@
 <div id="ui-document-settings">
 
     <div class="bg-white pb-36 ">
-        <div *ngIf="documentSettingData != undefined && documentSettingData.length > 0">
+        <div *ngIf="isLoading || documentSettingData.length > 0">
             <div class="wrapper-20 pr-0">
                 <div class="row">
                     <div class="col-md-8 p-0">
@@ -26,11 +26,11 @@
                         </mat-card>
                     </div>
 
-                    <div class="col-md-4 ">
+                    <div class="col-md-4 overflow-hidden" *ngIf="isLoading">
                         <div class="emptyDocumentBox"></div>
                     </div>
 
-                    <div class="col-md-4 ">
+                    <div class="col-md-4 overflow-hidden" *ngIf="isLoading">
                         <div class="emptyDocumentBox"></div>
                     </div>
 
@@ -48,7 +48,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" *ngIf="documentSettingData == undefined || documentSettingData.length == 0 ">
+        <div class="row" *ngIf="!isLoading && documentSettingData.length == 0 ">
             <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
                 <img class="width200" src="assets/images/svg/add-documents-img.svg">
                 <p class="f-22 f-600 pt-28"> Create Documents </p>
