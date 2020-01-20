@@ -4,6 +4,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {AuthService} from 'src/app/auth-service/authService';
 import {PlanService} from '../../customer/plan/plan.service';
 import {ConstantsService} from "../../../../../../constants/constants.service";
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-add-expenses',
@@ -27,7 +28,7 @@ export class AddExpensesComponent implements OnInit {
   recuring: any;
   isNoOfYrs: any;
 
-  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,
+  constructor(private event: EventService,private fb: FormBuilder, private subInjectService: SubscriptionInject,
               private planService: PlanService, private constantService: ConstantsService) {
   }
   @Input()
@@ -93,10 +94,8 @@ export class AddExpensesComponent implements OnInit {
       expenseDoneOn: [(data == undefined) ? '' : new Date(data.expenseDoneOn), [Validators.required]],
       amount: [(data == undefined) ? '' : data.amount, [Validators.required]],
       repeatFrequency:[(data == undefined) ? '' : data.repeatFrequency, [Validators.required]],
-      every:[(data == undefined) ? '' : data.every, [Validators.required]],
       startsFrom:[(data == undefined) ? '' : new Date(data.startsFrom), [Validators.required]],
-      whatDay:[(data == undefined) ? '' : data.whatDay, [Validators.required]],
-      continuesDate:[(data == undefined) ? '' :  new Date(data.continuesDate), [Validators.required]],
+      numberOfYearOrNumberOfTime:[(data == undefined) ? '' : (data.numberOfYearOrNumberOfTime), [Validators.required]],
       continueTill:[(data == undefined) ? '' :(data.continueTill), [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
@@ -140,59 +139,47 @@ export class AddExpensesComponent implements OnInit {
     this.isNoOfYrs = value;
   }
 saveRecuringExpense(){
-  if (this.expenses.get('expenseDoneOn').invalid) {
-    this.expenses.get('expenseDoneOn').markAsTouched();
+  if (this.recuring.get('repeatFrequency').invalid) {
+    this.recuring.get('repeatFrequency').markAsTouched();
     return
-  } else if (this.expenses.get('repeatFrequency').invalid) {
-    this.expenses.get('repeatFrequency').markAsTouched();
+  } else if (this.recuring.get('amount').invalid) {
+    this.recuring.get('amount').markAsTouched();
     return
-  } else if (this.expenses.get('amount').invalid) {
-    this.expenses.get('amount').markAsTouched();
+  } else if (this.recuring.get('category').invalid) {
+    this.recuring.get('category').markAsTouched();
     return
-  }else if (this.expenses.get('every').invalid) {
-    this.expenses.get('every').markAsTouched();
+  } else if (this.recuring.get('startsFrom').invalid) {
+    this.recuring.get('startsFrom').markAsTouched();
     return
-  } else if (this.expenses.get('category').invalid) {
-    this.expenses.get('category').markAsTouched();
+  } else if (this.recuring.get('paymentModeId').invalid) {
+    this.recuring.get('paymentModeId').markAsTouched();
     return
-  } else if (this.expenses.get('startFrom').invalid) {
-    this.expenses.get('startFrom').markAsTouched();
+  } else if (this.recuring.get('continueTill').invalid) {
+    this.recuring.get('continueTill').markAsTouched();
     return
-  } else if (this.expenses.get('paymentModeId').invalid) {
-    this.expenses.get('paymentModeId').markAsTouched();
-    return
-  } else if (this.expenses.get('continueTill').invalid) {
-    this.expenses.get('continueTill').markAsTouched();
-    return
-  }  else if (this.expenses.get('whatDay').invalid) {
-    this.expenses.get('whatDay').markAsTouched();
-    return
-  } else if (this.expenses.get('familyMember').invalid) {
-    this.expenses.get('familyMember').markAsTouched();
-    return
-  } else if (this.expenses.get('isRecuring').invalid) {
-    this.expenses.get('isRecuring').markAsTouched();
+  } else if (this.recuring.get('familyMember').invalid) {
+    this.recuring.get('familyMember').markAsTouched();
     return
   } else {
       let obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
         familyMemberId: this.familyMemberId,
-        expenseDoneOn: this.expenses.controls.expenseDoneOn.value,
-        amount: this.expenses.controls.amount.value,
-        timeInMilliSec: this.expenses.controls.timeInMilliSec.value,
-        paymentModeId:this.expenses.controls.paymentModeId.value,
-        expenseCategoryId: this.expenses.controls.category.value,
-        description: this.expenses.controls.description.value,
-        isRecuring:this.expenses.controls.isRecuring.value,
-        id: this.expenses.controls.id.value
+        repeatFrequency:this.recuring.controls.repeatFrequency.value,
+        amount: this.recuring.controls.amount.value,
+        paymentModeId:this.recuring.controls.paymentModeId.value,
+        startsFrom:this.recuring.controls.startsFrom.value,
+        continueTill:parseInt(this.recuring.controls.continueTill.value),
+        numberOfYearOrNumberOfTime:(this.recuring.controls.numberOfYearOrNumberOfTime.value == undefined)?null:this.recuring.controls.numberOfYearOrNumberOfTime.value,
+        expenseCategoryId: this.recuring.controls.category.value,
       }
-      if (this.expenses.controls.id.value == undefined) {
+      if (this.recuring.controls.id.value == undefined) {
         this.planService.addRecuringExpense(obj).subscribe(
           data => this.addRecuringExpenseRes(data)
         );
       } else {
         //edit call
+        obj['id']=this.recuring.controls.id.value;
         this.planService.editRecuringExpense(obj).subscribe(
           data => this.editRecuringExpenseRes(data)
         );
@@ -226,9 +213,6 @@ editRecuringExpenseRes(data) {
     } else if (this.expenses.get('familyMember').invalid) {
       this.expenses.get('familyMember').markAsTouched();
       return
-    } else if (this.expenses.get('isRecuring').invalid) {
-      this.expenses.get('isRecuring').markAsTouched();
-      return
     } else {
         let obj = {
           advisorId: this.advisorId,
@@ -240,7 +224,6 @@ editRecuringExpenseRes(data) {
           paymentModeId:this.expenses.controls.paymentModeId.value,
           expenseCategoryId: this.expenses.controls.category.value,
           description: this.expenses.controls.description.value,
-          isRecuring:this.expenses.controls.isRecuring.value,
           id: this.expenses.controls.id.value
         }
         if (this.expenses.controls.id.value == undefined) {
@@ -257,13 +240,17 @@ editRecuringExpenseRes(data) {
     }
   addExpenseRes(data) {
     console.log('addExpenseRes', data);
+    this.event.openSnackBar('Added successfully!', 'dismiss');
+    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
 
   editExpenseRes(data) {
     console.log('editExpenseRes', data);
+    this.event.openSnackBar('Updated successfully!', 'dismiss');
+    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
 
-  close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+  Close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag })
   }
 }

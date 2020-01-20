@@ -147,12 +147,12 @@
         </div>
     </div>
     <div *ngIf="showMoreData==true">
-        <div class="row pt-24">
+        <!-- <div class="row pt-24">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-36">Purchase period</h5>
             </div>
-            <div class="col-md-6">
-                <div class="row">
+            <div class="col-md-3"> -->
+                <!-- <div class="row">
                     <div class="col-md-4 pr-0 pl-0">
                         <h5 class="m-0 pb-8">Year</h5>
                         <div class="form-group mb-0">
@@ -185,6 +185,33 @@
 
                         </div>
                     </div>
+                </div> -->
+                <!-- <mat-form-field>
+                    <input class="form-control br-0" matInput (focus)="picker.open()" (input)="preventDefault($event)" [matDatepicker]="picker" formControlName="purchasePeriod" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error class="f-12 pt-4">
+                      This field is required
+                    </mat-error>
+                  </mat-form-field>
+            </div>
+        </div> -->
+        <div class="row pt-24">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8">Purchase period</h5>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group mb-0">
+
+                    <mat-form-field>
+                        <input class="form-control br-0" matInput (focus)="picker.open()" (input)="preventDefault($event)" [matDatepicker]="picker" formControlName="purchasePeriod" readonly>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error class="f-12 pt-4">
+                          This field is required
+                        </mat-error>
+                      </mat-form-field>
+
                 </div>
             </div>
         </div>

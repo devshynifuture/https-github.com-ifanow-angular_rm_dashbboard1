@@ -26,7 +26,6 @@ export class calendarComponent implements OnInit {
   lastMonthDays: any;
   nextMonthDays: any;
   updateDate: any;
-  isEditEvent:boolean = false;
   month;
   year;
   todayDate;
@@ -56,7 +55,7 @@ export class calendarComponent implements OnInit {
 
   getEvent(){
     let eventData = {
-      "calendarId": "gaurav@futurewise.co.in",
+      "calendarId": "aniruddha@futurewise.co.in",
       "userId": this.userInfo.advisorId
     }
     this.canlenderService.getEvent(eventData).subscribe((data)=>{
@@ -67,10 +66,11 @@ export class calendarComponent implements OnInit {
         console.log(this.eventData, data, "event data");
         this.formatedEvent = [];
         for(let e of this.eventData){
-          e["day"] = this.formateDate(new Date(e.start.dateTime));
-          e["month"] = this.formateMonth(new Date(e.start.dateTime));
-          e["year"] = this.formateYear(new Date(e.start.dateTime)); 
-          e["time"] = this.formateTime(new Date(e.start.dateTime));
+          e["day"] = this.formateDate(new Date(e.start.dateTime == null? e.created : e.start.dateTime));
+          e["month"] = this.formateMonth(new Date(e.start.dateTime == null? e.created : e.start.dateTime));
+          e["year"] = this.formateYear(new Date(e.start.dateTime == null? e.created : e.start.dateTime)); 
+          e["startTime"] = this.formateTime(new Date(e.start.dateTime == null? e.created : e.start.dateTime));
+          e["endTime"] = this.formateTime(new Date(e.end.dateTime == null? e.created : e.end.dateTime));
           
           this.formatedEvent.push(e);
         }
@@ -159,9 +159,25 @@ export class calendarComponent implements OnInit {
   }
 
   formateTime(date){
-    var hh = date.getUTCHours();
-    var mm = date.getUTCMinutes();
-    return hh + ":" + mm;
+    
+    var hh = date.getHours() > 12? date.getHours() - 12 : date.getHours();
+    var mm = date.getMinutes();
+    var amPm = date.getHours() > 12? "pm" : "am";
+    hh = hh < 10 ? '0' + hh : hh;
+    mm = mm < 10 ? '0' + mm : mm;
+    console.log(date, hh , mm, "time check");
+    return hh + ":" + mm + amPm + " ";
+
+    // var now = date;
+    // // now.setHours(now.getHours()+2);
+    // var isPM = now.getHours() >= 12;
+    // var isMidday = now.getHours() == 12;
+    // var result = document.querySelector('#result');
+    // var time = [now.getHours() - (isPM && !isMidday ? 12 : 0), 
+    //             now.getMinutes(), 
+    //             now.getSeconds() || '00'].join(':')
+    //              +(isPM ? ' pm' : 'am');
+    // return time;
   }
 
   addEvent(day,month,year){
@@ -206,7 +222,6 @@ export class calendarComponent implements OnInit {
   editEvent(eventData){
     let event:any;
     if(eventData != null){
-      this.isEditEvent = true;
       event = eventData;
     }
     else{
@@ -234,31 +249,7 @@ export class calendarComponent implements OnInit {
   }
 
   openDialog(eventData): void {
-    // let event:any;
-    // if(eventData != null){
-    //   this.isEditEvent = true;
-    //   event = eventData;
-    // }
-    // else{
-    //   event = {
-    //       "eventId": "",
-    //       "summary": "",
-    //       "location": "",
-    //       "title": "",
-    //       "description":"",
-    //       "start": {
-    //         "dateTime": null,
-    //         "timeZone": null
-    //       },
-    //       "end": {
-    //         "dateTime": null,
-    //         "timeZone": null
-    //       },
-    //       "recurrence": "",
-    //       "attendee": "",
-    //       "attendeesList":""
-    //     }
-    // }
+    
     const dialogRef = this.dialog.open(EventDialog, {
       width: '50%',
       data: eventData
@@ -292,11 +283,11 @@ export class calendarComponent implements OnInit {
       
       this.startTime = result.startTime;
       this.endTime = result.endTime;
-      this.dialogData.start.dateTime = this.googleDate(result.startDateTime._d == undefined? this.current_day : result.startDateTime._d , "start");
-      this.dialogData.end.dateTime = this.googleDate(result.endDateTime._d == undefined? this.current_day : result.endDateTime._d, "end");
+      this.dialogData.start.dateTime = this.googleDate(result.startDateTime._d == undefined? new Date(result.startDateTime) : result.startDateTime._d , "start");
+      this.dialogData.end.dateTime = this.googleDate(result.endDateTime._d == undefined? new Date(result.endDateTime) : result.endDateTime._d, "end");
       console.log(this.dialogData, 'The dialog was closed');
 
-      if(this.isEditEvent){
+      if(this.dialogData.eventId != null){
         this.canlenderService.updateEvent(this.dialogData).subscribe((data)=>{
 
         })
@@ -368,11 +359,14 @@ export class EventDialog implements OnInit{
   eventData:any;
   isEditAdd:boolean = true;
   isEditable:boolean = false;
+  showBothDate:boolean = true;
+  userInfo:any;
   timeArr = ["01:00","01:30","02:00","02:30","03:00","03:30","04:00","04:30","05:00","05:30","06:00","06:30","07:00","07:30","08:00","08:30","09:00","09:30","10:00","10:30","11:00","11:30","12:00","12:20","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30","21:00","21:30","22:00","22:30","23:00","23:30","24:00"]
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<EventDialog>,
     private changeDetectorRef: ChangeDetectorRef,
+    private canlenderService : calendarService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
       console.log(data, "this.eventData 111");
       this.eventData = data;
@@ -395,9 +389,24 @@ export class EventDialog implements OnInit{
       endTime: [this.endTime]
     });
 
+    this.userInfo = AuthService.getUserInfo();
+
+
     if(this.eventData.id != undefined){
       this.isEditAdd = false;
     }
+
+    if(this.eventData.start.dateTime != null && this.eventData.end.dateTime != null){
+      this.showTime = true;
+      if(new Date(this.eventData.start.dateTime).getDate() == new Date(this.eventData.end.dateTime).getDate() && new Date(this.eventData.start.dateTime).getMonth() == new Date(this.eventData.end.dateTime).getMonth()){
+        this.showBothDate = false;
+      }
+      this.eventForm.get("startTime").setValue(this.formateTime(new Date(this.eventData.start.dateTime))); 
+      this.eventForm.get("endTime").setValue(this.formateTime(new Date(this.eventData.end.dateTime))); 
+    }
+
+    this.eventForm.get("description").setValue(this.eventData.description);
+    this.eventForm.get("startDateTime").setValue(this.eventData.start.dateTime);
 
     console.log(this.eventForm.get("attendee").value == "", "see value");
     if(this.eventData.attendees != undefined){
@@ -414,6 +423,8 @@ export class EventDialog implements OnInit{
   }
 
   descriptionData(data) {
+    console.log("description 123");
+    
     this.eventForm.get("description").setValue(data);
   }
 
@@ -434,19 +445,24 @@ export class EventDialog implements OnInit{
   }
 
   setEndDate(){
-    
-    if(this.eventForm.value.startDateTime._d != undefined){
-      if(new Date(this.eventForm.value.startDateTime._d).getTime() > new Date(this.eventForm.value.endDateTime).getTime()){
-        this.eventForm.get("endDateTime").setValue(this.eventForm.value.startDateTime._d);
+    if(this.eventData.start.dateTime != null && this.eventData.end.dateTime != null){
+      if(this.eventForm.value.startDateTime._d != undefined){
+        if(new Date(this.eventForm.value.startDateTime._d).getTime() > new Date(this.eventForm.value.endDateTime).getTime()){
+          this.eventForm.get("endDateTime").setValue(this.eventForm.value.startDateTime._d);
+        }
+      }
+      else{
+        if(this.eventData.end.dateTime != undefined){
+          this.eventForm.get("endDateTime").setValue(this.eventData.end.dateTime);
+        }
+        else{
+          this.eventForm.get("endDateTime").setValue(this.startDate);
+        }
       }
     }
     else{
-      if(this.eventData.end.dateTime != undefined){
-        this.eventForm.get("endDateTime").setValue(this.eventData.end.dateTime);
-      }
-      else{
-        this.eventForm.get("endDateTime").setValue(this.startDate);
-      }
+      this.eventForm.get("startDateTime").setValue(this.eventData.created);
+      this.eventForm.get("endDateTime").setValue(this.eventData.created);
     }
   }
 
@@ -470,9 +486,29 @@ export class EventDialog implements OnInit{
     
   }
 
+  formateTime(date){
+    var hh = date.getHours();
+    var mm = date.getMinutes();
+    hh = hh < 10 ? '0' + hh : hh;
+    mm = mm < 10 ? '0' + mm : mm;
+    return hh + ":" + mm;
+  }
+
+
   editEvent(){
     this.isEditAdd = true;
     this.isEditable = true;
+  }
+
+  deleteEvent(eventId){
+    let deleteData = {
+      "calendarId": "gaurav@futurewise.co.in",
+        "userId": this.userInfo.advisorId,
+        "eventId": eventId,
+    }
+    this.canlenderService.deleteEvent(deleteData).subscribe((data)=>{
+
+    });
   }
 }
 
