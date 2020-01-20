@@ -1,3 +1,4 @@
+import { ValidatorType } from './../../../../../../../../../../services/util.service';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -14,6 +15,8 @@ export class CashflowAddExpensesComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder
   ) { }
+
+  validatorType = ValidatorType;
 
   formExpense = this.fb.group({
     "category": [, Validators.required],
