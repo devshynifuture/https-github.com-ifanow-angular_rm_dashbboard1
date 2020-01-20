@@ -113,4 +113,16 @@ export class PlanService {
   otherCommitmentsEdit(data){
      return this.http.post(apiConfig.MAIN_URL + appConfig.OTHERCOMMITMENTS_EDIT, data);
   }
+  deleteExpenseTransaction(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_TRANSACTION_EXPENSE, data)
+  }
+  deleteExpenseRecurring(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_RECURRING_EXPENSE, data)
+  }
+  deletBudget(data){
+  return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_BUDGET, data)
+  }
+  deleteRecuringBudget(data){
+  return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_RECURING_BUDGET, data)
+  }
 }
