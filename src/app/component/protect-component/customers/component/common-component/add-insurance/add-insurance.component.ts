@@ -7,6 +7,7 @@ import { CustomerService } from '../../customer/customer.service';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { DataComponent } from '../../../../../../interfaces/data.component';
+import { ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-insurance',
@@ -38,7 +39,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   }*/
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder, private customerService: CustomerService) {
   }
-
+  validatorType = ValidatorType
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
