@@ -67,20 +67,6 @@ export class CopyDocumentsComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
-  fileSizeConversion() {
-    this.commonFileFolders.filteredData.forEach(element => {
-      const data = parseInt(element.size);
-      if (data >= 1024) {
-        element.size = data / 1024;
-        element.size = (this.utils.formatter(element.size) + '' + 'Kb');
-      } else if (data >= 1000000) {
-        element.size = data / 1000000;
-        element.size = (this.utils.formatter(element.size) + '' + 'Mb');
-      }
-    });
-  }
-
-
   getAllFileList(tabValue) {
     tabValue = (tabValue == 'Documents' || tabValue == 1) ? 1 : (tabValue == 'Recents' || tabValue == 2) ? 2 : (tabValue == 'Starred' || tabValue == 3) ? 3 : 4;
     this.valueTab = tabValue;
@@ -110,7 +96,7 @@ export class CopyDocumentsComponent implements OnInit {
     this.allFiles = data.files;
     this.AllDocs = data.folders;
     this.dataToCommon = data.folders;
-    this.dataToCommon.push.apply(this.dataToCommon, this.allFiles);
+    // this.dataToCommon.push.apply(this.dataToCommon, this.allFiles);
     if (this.dataToCommon.openFolderId == undefined || this.openFolderName.length == 0) {
       Object.assign(this.dataToCommon, { openFolderNm: value.folderName });
       Object.assign(this.dataToCommon, { openFolderId: value.id });
@@ -131,7 +117,6 @@ export class CopyDocumentsComponent implements OnInit {
     if (this.openFolderName.length > 2) {
       this.showDots = true;
     }
-    this.fileSizeConversion();
     console.log('sorted', this.commonFileFolders);
   }
 
@@ -180,22 +165,6 @@ export class CopyDocumentsComponent implements OnInit {
     this.dialogRef.close(obj)
 
   }
-  moveFolderRes(data) {
-    console.log(data)
-    this.reset()
-    this.dialogRef.close('Documents')
-  }
-  moveFilesRes(data) {
-    console.log(data);
-    this.reset()
-    this.dialogRef.close('Documents')
-  }
-  copyFilesRes(data) {
-    console.log(data);
-    this.reset()
-    this.dialogRef.close('Documents')
-  }
-
 }
 
 export interface PeriodicElement {

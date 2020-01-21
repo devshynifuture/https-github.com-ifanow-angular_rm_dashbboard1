@@ -98,7 +98,7 @@
                 </div> -->
 
                     <div class="row">
-                        <div *ngIf="showMsg == false && noResult == false" class="col-md-9 p-0 documentsTable">
+                        <div *ngIf="showMsg == false && noResult == false && commonFileFolders.data.length > 0" class="col-md-9 p-0 documentsTable">
                             <div *ngSwitchCase="viewMode">
                                 <table [appSkeletonLoading]="isLoading" [dataSource]="commonFileFolders" appSkeletonLoading class="skeletonAnimation" id="table-low" mat-table matSort>
                                     <ng-container matColumnDef="emptySpace">

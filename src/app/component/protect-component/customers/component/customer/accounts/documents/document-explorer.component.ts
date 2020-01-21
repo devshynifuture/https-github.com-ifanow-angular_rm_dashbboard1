@@ -43,10 +43,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   ];
   displayedColumns: string[] = ['emptySpace', 'name', 'lastModi', 'type', 'size', 'icons'];
   dataSource = ELEMENT_DATA;
-  percentDone: number;
-  uploadSuccess: boolean;
   myFiles: string[] = [];
-  sMsg = '';
   setTab: string;
   advisorId: any;
   clientId: any;
@@ -61,7 +58,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   tabValue: any;
   valueTab: any;
   valueFirst: any;
-  animal: any;
+  getInnerDoc: any;
   name: string;
   isLoading = false;
   dataToCommon: any;
@@ -85,10 +82,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   detailed: { clientId: any; advisorId: any; folderParentId: any; folderName: any; };
   uploadFolder: string[] = [];
   folderNameToDisplay: any;
-
-
   getSort: any;
-
   viewMode;
 
   ngAfterViewInit(): void {
@@ -116,14 +110,14 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
-      this.animal = result;
+      this.getInnerDoc = result;
       if (element == 'CREATE') {
-        this.createFolder(this.animal);
+        this.createFolder(this.getInnerDoc);
       }
-      if (this.animal.rename.flag == 'fileName') {
-        this.renameFile(this.animal);
+      if (this.getInnerDoc.rename.flag == 'fileName') {
+        this.renameFile(this.getInnerDoc);
       } else {
-        this.renameFolders(this.animal);
+        this.renameFolders(this.getInnerDoc);
       }
     });
 
@@ -150,7 +144,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', element);
-      this.animal = result;
+      this.getInnerDoc = result;
       if (result.value == 'Copy') {
         delete result.value;
         this.custumService.copyFiles(result).subscribe(
