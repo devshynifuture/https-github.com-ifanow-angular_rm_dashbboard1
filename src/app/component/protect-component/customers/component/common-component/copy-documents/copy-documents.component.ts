@@ -16,10 +16,7 @@ export class CopyDocumentsComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   displayedColumns: string[] = ['name', 'lastModi', 'type', 'size'];
   dataSource = ELEMENT_DATA;
-  percentDone: number;
-  uploadSuccess: boolean;
   myFiles: string[] = [];
-  sMsg = '';
   setTab: string;
   advisorId: any;
   clientId: any;
@@ -34,7 +31,6 @@ export class CopyDocumentsComponent implements OnInit {
   tabValue: any;
   valueTab: any;
   valueFirst: any;
-  animal: string;
   name: string;
   viewMode: string;
   parentId: any;
@@ -51,7 +47,6 @@ export class CopyDocumentsComponent implements OnInit {
     this.sendToCopy = this.dataGet.animal
     this.CopyOrMove = this.dataGet.name
   }
-
   ngOnInit() {
     const tabValue = 'Documents';
     this.viewMode = 'tab1';
@@ -63,7 +58,6 @@ export class CopyDocumentsComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getAllFileList(tabValue);
   }
-
   onNoClick(): void {
     this.dialogRef.close();
   }
@@ -85,7 +79,6 @@ export class CopyDocumentsComponent implements OnInit {
       data => this.getAllFilesRes(data, 'value')
     );
   }
-
   getAllFilesRes(data, value) {
     if (data.files.length == 0 && data.folders.length == 0) {
       this.showMsg = true;
@@ -96,7 +89,6 @@ export class CopyDocumentsComponent implements OnInit {
     this.allFiles = data.files;
     this.AllDocs = data.folders;
     this.dataToCommon = data.folders;
-    // this.dataToCommon.push.apply(this.dataToCommon, this.allFiles);
     if (this.dataToCommon.openFolderId == undefined || this.openFolderName.length == 0) {
       Object.assign(this.dataToCommon, { openFolderNm: value.folderName });
       Object.assign(this.dataToCommon, { openFolderId: value.id });
