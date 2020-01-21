@@ -259,7 +259,7 @@ export class CalendarComponent implements OnInit {
     if(result != undefined){
       this.dialogData =
         {
-          "calendarId": "gaurav@futurewise.co.in",
+          "calendarId": "aniruddha@futurewise.co.in",
           "userId": this.userInfo.advisorId,
           "eventId": result.eventId,
           "summary": result.title,
@@ -502,7 +502,7 @@ export class EventDialog implements OnInit{
 
   deleteEvent(eventId){
     let deleteData = {
-      "calendarId": "gaurav@futurewise.co.in",
+      "calendarId": "aniruddha@futurewise.co.in",
         "userId": this.userInfo.advisorId,
         "eventId": eventId,
     }

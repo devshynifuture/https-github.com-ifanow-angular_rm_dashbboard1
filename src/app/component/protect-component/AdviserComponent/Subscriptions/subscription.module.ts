@@ -39,6 +39,7 @@ import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/materia
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { SudscriptionTableFilterComponent } from './subscription/common-subscription-component/sudscription-table-filter/sudscription-table-filter.component';
+import { SetDateFooter } from './subscription/common-subscription-component/sudscription-table-filter/set-date-footer.component';
 
 
 export const componentList = [SubscriptionComponent,
@@ -49,6 +50,7 @@ export const componentList = [SubscriptionComponent,
   // SettingsComponent,
   // ClientUpperSubscriptionComponent,
   // InvoiceComponent,
+  SetDateFooter,
   DocumentsSubscriptionsComponent,
   DashboardSubscriptionComponent,
   ClientSubscriptionComponent,
@@ -123,7 +125,7 @@ export const componentList = [SubscriptionComponent,
     DeleteSubscriptionComponent,
     DeleteSubscriptionComponent, HowToUseDialogComponent,
     PreferenceEmailInvoiceComponent,
-    ModifyFeeDialogComponent, ConsentTandCComponent, HowItWorksComponent, AddQuotationComponent],
+    ModifyFeeDialogComponent, ConsentTandCComponent, HowItWorksComponent, AddQuotationComponent, SetDateFooter],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
 

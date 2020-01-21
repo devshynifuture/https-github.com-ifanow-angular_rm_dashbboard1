@@ -8,9 +8,9 @@
         <mat-chip-list class="newDateIcon">
           <mat-chip *ngFor="let dateFilter of filterDate; let i = index" class="bg-white b-a c-p f-400 p-12">
             <p>{{dateFilter.name}}</p>
-            <input (click)="picker2.open()" [(ngModel)]="selectedDateRange" [max]="maxDate"
+            <input (click)="picker2.open()" [(ngModel)]="selectedDateRange" [max]="maxDate" 
               [satDatepicker]="picker2" class="pL-20" matInput placeholder="Choose a date" readonly>
-            <sat-datepicker #picker2 [closeAfterSelection]="false" [rangeMode]="true">
+            <sat-datepicker #picker2 [closeAfterSelection]="false" [rangeMode]="true" [calendarFooterComponent]="rangesFooter" [selectFirstDateOnClose]="true"  (dateRangesChange)="orgValueChange($event)">
             </sat-datepicker>
             <sat-datepicker-toggle [for]="picker2" matSuffix></sat-datepicker-toggle>
             <i (click)="removeDate(i)" class="material-icons text-custom c-p">

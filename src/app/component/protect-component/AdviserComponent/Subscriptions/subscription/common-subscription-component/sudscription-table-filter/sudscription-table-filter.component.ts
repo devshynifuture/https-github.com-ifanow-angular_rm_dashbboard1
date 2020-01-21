@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { UtilService} from '../../../../../../../services/util.service';
-import { E } from '@angular/cdk/keycodes';
+
+import {SetDateFooter} from './set-date-footer.component'
 
 @Component({
   selector: 'app-sudscription-table-filter',
@@ -25,6 +26,8 @@ export class SudscriptionTableFilterComponent implements OnInit {
     dateFilterArr:[],
     statusFilterJson:[]
   }
+
+  rangesFooter = SetDateFooter;
   constructor() { }
 
   ngOnInit() {
@@ -65,6 +68,18 @@ export class SudscriptionTableFilterComponent implements OnInit {
 
   filterDate:any = []
   selectedDateRange= {};
+
+  orgValueChange(selectedDateRange) {
+    // const beginDate = new Date();
+    // beginDate.setMonth(beginDate.getMonth() - 1);
+    // UtilService.getStartOfTheDay(beginDate);
+
+    // const endDate = new Date();
+    // UtilService.getStartOfTheDay(endDate);
+    this.filterJson.dateFilterJson = {begin: selectedDateRange.begin, end: selectedDateRange.end};
+    this.filterRes.emit(this.filterJson);
+  }
+
   addFiltersDate(dateFilter) {
     this.filterDate = [];
     
@@ -120,3 +135,24 @@ export class SudscriptionTableFilterComponent implements OnInit {
 
 
 }
+
+// @Component({
+//   selector: 'app-sudscription-table-filter',
+//   templateUrl: './set-date-footer.html',
+//   styleUrls: ['./sudscription-table-filter.component.scss']
+// })
+// export class SetDateFooter {
+//   private destroyed = new Subject<void>();
+//   constructor(
+//     private calendar: SatCalendar<Date>,
+//     cdr: ChangeDetectorRef
+// ) {
+//     calendar.stateChanges
+//         .pipe(takeUntil(this.destroyed))
+//         .subscribe(() => cdr.markForCheck())
+
+//         console.log(this.calendar.beginDate, this.calendar.endDate, "footer date data");
+        
+// }
+
+// }
