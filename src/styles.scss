@@ -837,7 +837,7 @@ mat-tab-group[vertical] {
   width: 100%;
   top: 0;
   background: #fff;
-  z-index: 100;
+  z-index: 99;
 
   .left-icons {
     position: fixed;
@@ -917,7 +917,7 @@ mat-tab-group[vertical] {
   width: 100%;
   margin-top: 58px;
   background: #000;
-  z-index: 111;
+  z-index: 99;
 
   .mat-tab-links {
     height: 65px;
