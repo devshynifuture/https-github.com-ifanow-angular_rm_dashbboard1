@@ -15,7 +15,6 @@ import { SubscriptionEntry } from './subscription.entry.module';
 import { ClientSubscriptionComponent } from './subscription/client-subscription/client-subscription.component';
 import { AddQuotationComponent } from './subscription/common-subscription-component/add-quotation/add-quotation.component';
 import { ConsentTandCComponent } from './subscription/common-subscription-component/consent-tand-c/consent-tand-c.component';
-import { DeleteSubscriptionComponent } from './subscription/common-subscription-component/delete-subscription/delete-subscription.component';
 import { HowItWorksComponent } from './subscription/common-subscription-component/how-it-works/how-it-works.component';
 import { HowToUseDialogComponent } from './subscription/common-subscription-component/how-to-use-dialog/how-to-use-dialog.component';
 import { ModifyFeeDialogComponent } from './subscription/common-subscription-component/modify-fee-dialog/modify-fee-dialog.component';
@@ -73,7 +72,6 @@ export const componentList = [SubscriptionComponent,
   // AddStructureComponent,
   SubscriptionCompletenessComponent,
   // TermsAgreementComponent,
-  DeleteSubscriptionComponent,
   // PlanRightsliderComponent,
   // EmailQuotationComponent,
   // PayeeSettingsComponent,
@@ -122,8 +120,8 @@ export const componentList = [SubscriptionComponent,
   ],
   exports: componentList,
   entryComponents: [
-    DeleteSubscriptionComponent,
-    DeleteSubscriptionComponent, HowToUseDialogComponent,
+    
+    HowToUseDialogComponent,
     PreferenceEmailInvoiceComponent,
     ModifyFeeDialogComponent, ConsentTandCComponent, HowItWorksComponent, AddQuotationComponent, SetDateFooter],
   providers: [
