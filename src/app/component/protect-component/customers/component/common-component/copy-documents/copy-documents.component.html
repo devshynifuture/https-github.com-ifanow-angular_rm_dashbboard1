@@ -16,7 +16,7 @@
     </ol>
 </div>
 
-<div class="col-md-12 p-0 copyDocumentcomp "  *ngIf="commonFileFolders.data.length > 0">
+<div class="col-md-12 p-0 copyDocumentcomp ">
     <table mat-table [dataSource]="commonFileFolders" id="table-low" [appSkeletonLoading]="isLoading"
         [dataSource]="commonFileFolders" appSkeletonLoading class="skeletonAnimation">
 
@@ -50,7 +50,10 @@
     </table>
 </div>
 
-
+<div *ngIf="showMsg == true" class="col-md-9 d-flex justify-content-center  flex-column align-items-center">
+    <img class="mr-12" src="/assets/images/svg/folder-icon.svg"> Folder is empty<br>
+    <p class="m-0 f-12 text-custom">Drop files here</p>
+</div>
 
 
 <div class="row pt-100 ">

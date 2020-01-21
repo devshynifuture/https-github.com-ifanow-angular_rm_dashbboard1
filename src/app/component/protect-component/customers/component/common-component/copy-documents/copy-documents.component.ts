@@ -38,7 +38,7 @@ export class CopyDocumentsComponent implements OnInit {
   sendToCopy: any;
   CopyOrMove: string;
   isLoading = false;
-  showMsg: boolean;
+  showMsg = false;
   dataToCommon: any;
   constructor(
     public dialogRef: MatDialogRef<CopyDocumentsComponent>,
@@ -113,19 +113,24 @@ export class CopyDocumentsComponent implements OnInit {
   }
 
   getFolders(data, index) {
-    this.parentId = (data == undefined) ? 0 : data[0].folderParentId
-    console.log('parentId', this.parentId)
+    this.showMsg = false;
+    this.commonFileFolders.data = [{}, {}, {}];
+    this.commonFileFolders = new MatTableDataSource(this.data);
+    this.parentId = (data == undefined) ? 0 : data[0].folderParentId;
     this.openFolderName = this.openFolderName.filter((element, i) => i <= index);
     this.commonFileFolders = this.openFolderName[this.openFolderName.length - 1];
-    this.commonFileFolders = data;
+    this.commonFileFolders = new MatTableDataSource(data);
+    this.commonFileFolders.sort = this.sort;
     this.valueFirst = this.openFolderName[0];
   }
   reset() {
+    this.showMsg = false;
     if (this.openFolderName.length > 0) {
       this.commonFileFolders = this.backUpfiles[0];
     }
     this.commonFileFolders = this.backUpfiles[0];
     this.openFolderName = [];
+    this.parentId = 0;
   }
 
   openFolder(value) {
