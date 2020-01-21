@@ -1,6 +1,3 @@
-<div *ngIf="showLoader==true">
-    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-</div>
 <div class="row p-8 bg-dark text-white">
     <div class="col-md-10">
         {{CopyOrMove}} 1 item to
@@ -27,13 +24,18 @@
 </div>
 
 <div class="col-md-12 p-0 copyDocumentcomp ">
-    <table mat-table [dataSource]="commonFileFolders" class="" id="table-low">
+    <table mat-table [dataSource]="commonFileFolders" id="table-low" [appSkeletonLoading]="isLoading"
+        [dataSource]="commonFileFolders" appSkeletonLoading class="skeletonAnimation">
 
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell class="c-p " *matCellDef="let element" (click)="openFolder(element)">
-                <img class="mr-12" src="/assets/images/svg/folder-icon.svg"> {{element.folderName || element.fileName}}
-                <img *ngIf="element.isStarred == 1" class="mr-12" src="/assets/images/svg/document-star.svg"> </td>
+                <div class="bar">
+                    <img class="mr-12" src="/assets/images/svg/folder-icon.svg">
+                    {{element.folderName || element.fileName}}
+                    <img *ngIf="element.isStarred == 1" class="mr-12" src="/assets/images/svg/document-star.svg">
+                </div>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="lastModi">

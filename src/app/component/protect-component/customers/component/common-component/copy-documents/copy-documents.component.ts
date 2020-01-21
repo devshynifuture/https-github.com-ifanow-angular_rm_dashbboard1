@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatSort, MatDialog } from '@angular/material';
 import { DialogData } from '../document-new-folder/document-new-folder.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer/customer.service';
@@ -10,7 +10,10 @@ import { UtilService } from 'src/app/services/util.service';
   templateUrl: './copy-documents.component.html',
   styleUrls: ['./copy-documents.component.scss']
 })
+
 export class CopyDocumentsComponent implements OnInit {
+
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   displayedColumns: string[] = ['name', 'lastModi', 'type', 'size'];
   dataSource = ELEMENT_DATA;
   percentDone: number;
@@ -22,7 +25,8 @@ export class CopyDocumentsComponent implements OnInit {
   clientId: any;
   allFiles: any;
   AllDocs: any;
-  commonFileFolders: any;
+  data: Array<any> = [{}, {}, {}];
+  commonFileFolders = new MatTableDataSource(this.data);
   openFolderName: any;
   backUpfiles: any;
   i = 0;
@@ -34,35 +38,37 @@ export class CopyDocumentsComponent implements OnInit {
   name: string;
   viewMode: string;
   parentId: any;
-  showLoader: boolean;
   showDots: boolean;
   sendToCopy: any;
   CopyOrMove: string;
+  isLoading = false;
+  showMsg: boolean;
+  dataToCommon: any;
   constructor(
     public dialogRef: MatDialogRef<CopyDocumentsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData, private custumService: CustomerService, public utils: UtilService, ) {
-    console.log('data', this.data);
-    this.sendToCopy = this.data.animal
-    this.CopyOrMove = this.data.name
+    @Inject(MAT_DIALOG_DATA) public dataGet: DialogData, private custumService: CustomerService, public utils: UtilService, public dialog: MatDialog) {
+    console.log('data', this.dataGet);
+    this.sendToCopy = this.dataGet.animal
+    this.CopyOrMove = this.dataGet.name
   }
 
   ngOnInit() {
     const tabValue = 'Documents';
     this.viewMode = 'tab1';
-    this.commonFileFolders = [];
     this.backUpfiles = [];
     this.openFolderName = [];
     this.advisorId = AuthService.getAdvisorId();
+    this.commonFileFolders = new MatTableDataSource(this.data);
+    this.commonFileFolders.sort = this.sort;
     this.clientId = AuthService.getClientId();
     this.getAllFileList(tabValue);
-    this.showLoader = true;
   }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
   fileSizeConversion() {
-    this.commonFileFolders.forEach(element => {
+    this.commonFileFolders.filteredData.forEach(element => {
       const data = parseInt(element.size);
       if (data >= 1024) {
         element.size = data / 1024;
@@ -79,7 +85,6 @@ export class CopyDocumentsComponent implements OnInit {
     tabValue = (tabValue == 'Documents' || tabValue == 1) ? 1 : (tabValue == 'Recents' || tabValue == 2) ? 2 : (tabValue == 'Starred' || tabValue == 3) ? 3 : 4;
     this.valueTab = tabValue;
     this.backUpfiles = [];
-    this.commonFileFolders = [];
     this.openFolderName = [];
     const obj = {
       advisorId: this.advisorId,
@@ -87,55 +92,57 @@ export class CopyDocumentsComponent implements OnInit {
       docGetFlag: tabValue,
       folderParentId: 0,
     };
-    this.showLoader = true;
+    this.isLoading = true;
+    this.commonFileFolders.data = [{}, {}, {}];
+    this.commonFileFolders = new MatTableDataSource(this.data);
     this.custumService.getAllFiles(obj).subscribe(
       data => this.getAllFilesRes(data, 'value')
     );
   }
 
   getAllFilesRes(data, value) {
-    console.log(data);
+    if (data.files.length == 0 && data.folders.length == 0) {
+      this.showMsg = true;
+    } else {
+      this.showMsg = false;
+    }
+    this.isLoading = false;
     this.allFiles = data.files;
     this.AllDocs = data.folders;
-    this.commonFileFolders = data.folders;
-    this.commonFileFolders.push.apply(this.commonFileFolders, this.allFiles);
-    console.log('commonFileFolders', this.commonFileFolders);
-
-    if (this.commonFileFolders.openFolderId == undefined || this.openFolderName.length == 0) {
-      Object.assign(this.commonFileFolders, { openFolderNm: value.folderName });
-      Object.assign(this.commonFileFolders, { openFolderId: value.id });
-      this.parentId = (value.folderParentId == undefined) ? 0 : value.id
-      console.log('parentId', this.parentId)
-      this.openFolderName.push(this.commonFileFolders);
+    this.dataToCommon = data.folders;
+    this.dataToCommon.push.apply(this.dataToCommon, this.allFiles);
+    if (this.dataToCommon.openFolderId == undefined || this.openFolderName.length == 0) {
+      Object.assign(this.dataToCommon, { openFolderNm: value.folderName });
+      Object.assign(this.dataToCommon, { openFolderId: value.id });
+      this.parentId = (value.id == undefined) ? 0 : value.id;
+      this.openFolderName.push(this.dataToCommon);
       this.valueFirst = this.openFolderName[0];
-      if (this.commonFileFolders.length > 0) {
-        this.backUpfiles.push(this.commonFileFolders);
+      if (this.dataToCommon.length > 0) {
+        this.commonFileFolders = this.dataToCommon;
+        this.commonFileFolders = new MatTableDataSource(this.dataToCommon);
+        this.commonFileFolders.sort = this.sort;
+        this.backUpfiles.push(this.dataToCommon);
       }
       console.log('this.backUpfiles', this.backUpfiles);
+      this.commonFileFolders = this.dataToCommon;
+      this.commonFileFolders = new MatTableDataSource(this.dataToCommon);
+      this.commonFileFolders.sort = this.sort;
     }
-    this.showLoader = false;
     if (this.openFolderName.length > 2) {
       this.showDots = true;
     }
     this.fileSizeConversion();
+    console.log('sorted', this.commonFileFolders);
   }
 
   getFolders(data, index) {
     this.parentId = (data == undefined) ? 0 : data[0].folderParentId
     console.log('parentId', this.parentId)
-    // this.openFolderName = _.reject(this.openFolderName, function (n) {
-    //   return n.openFolderId > data.openFolderId + 1;
-    // });
     this.openFolderName = this.openFolderName.filter((element, i) => i <= index);
     this.commonFileFolders = this.openFolderName[this.openFolderName.length - 1];
-    // this.openFolderName = _.reject(this.openFolderName, function (n) {
-    //   return n.openFolderId > data.openFolderId;
-    // });
     this.commonFileFolders = data;
     this.valueFirst = this.openFolderName[0];
   }
-
-
   reset() {
     if (this.openFolderName.length > 0) {
       this.commonFileFolders = this.backUpfiles[0];
@@ -145,6 +152,7 @@ export class CopyDocumentsComponent implements OnInit {
   }
 
   openFolder(value) {
+    this.isLoading = true
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -154,45 +162,23 @@ export class CopyDocumentsComponent implements OnInit {
     this.parentId = value.folderParentId;
     console.log('this.parentId', this.parentId)
     console.log('backUpfiles', this.backUpfiles);
+    this.commonFileFolders.data = [{}, {}, {}];
+    this.commonFileFolders = new MatTableDataSource(this.data);
     this.custumService.getAllFiles(obj).subscribe(
       data => this.getAllFilesRes(data, value)
     );
   }
-  copyFile(element) {
-    var value = this.sendToCopy
-    if (element == 'Copy') {
-      const obj = {
-        clientId: this.clientId,
-        advisorId: this.advisorId,
-        parentFolderId: this.parentId,
-        id: value.id
-      };
-      this.custumService.copyFiles(obj).subscribe(
-        data => this.copyFilesRes(data)
-      );
-    } else {
-      if (value.folderName == undefined) {
-        const obj = {
-          clientId: this.clientId,
-          advisorId: this.advisorId,
-          parentFolderId: this.parentId,
-          id: value.id
-        };
-        this.custumService.moveFiles(obj).subscribe(
-          data => this.moveFilesRes(data)
-        );
-      } else {
-        const obj = {
-          clientId: this.clientId,
-          advisorId: this.advisorId,
-          folderParentId: this.parentId,
-          id: value.id
-        };
-        this.custumService.moveFolder(obj).subscribe(
-          data => this.moveFolderRes(data)
-        );
-      }
-    }
+  copyFile(value) {
+    var idTOsend = this.sendToCopy
+    const obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+      parentFolderId: this.parentId,
+      id: idTOsend.id
+    };
+    Object.assign(obj, { value: value });
+    this.dialogRef.close(obj)
+
   }
   moveFolderRes(data) {
     console.log(data)
