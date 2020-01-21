@@ -1,15 +1,15 @@
-import {DetailedPoRdComponent} from './detailed-po-rd/detailed-po-rd.component';
-import {AddPoRdComponent} from './../common-component/add-po-rd/add-po-rd.component';
-import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {CustomerService} from '../../../../customer.service';
-import {UtilService} from 'src/app/services/util.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {FormatNumberDirective} from 'src/app/format-number.directive';
-import {ExcelService} from '../../../../excel.service';
+import { DetailedPoRdComponent } from './detailed-po-rd/detailed-po-rd.component';
+import { AddPoRdComponent } from './../common-component/add-po-rd/add-po-rd.component';
+import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../../../customer.service';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { ExcelService } from '../../../../excel.service';
 
 @Component({
   selector: 'app-po-rd-scheme',
@@ -92,7 +92,7 @@ export class PoRdSchemeComponent implements OnInit {
   getPoRdSchemedataResponse(data) {
     console.log(data);
     this.isLoading = false;
-    if (data) {
+    if (data && data.postOfficeRDList.length != 0) {
       this.dataSource.data = data.postOfficeRDList;
       this.dataSource.sort = this.sort;
       UtilService.checkStatusId(this.dataSource.filteredData);

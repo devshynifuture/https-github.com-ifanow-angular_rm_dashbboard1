@@ -50,7 +50,7 @@ export class PPFSchemeComponent implements OnInit {
 
     console.log(data);
     this.isLoading = false;
-    if (data.PPFList.length != 0) {
+    if (data && data.PPFList.length != 0) {
       this.dataSource.data = data.PPFList;
 
     } else {
