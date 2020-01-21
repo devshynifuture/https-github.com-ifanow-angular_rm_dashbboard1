@@ -27,7 +27,7 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Amount invested
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
+                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
                         {{ (data.amountInvested)?data.amountInvested:'-' }}
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Current value
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
+                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
                         {{(data.currentValue)?data.currentValue:'-'}}
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Maturity value
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
+                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
                         {{(data.maturityValue)?data.maturityValue:'-'}}
                     </div>
                 </div>
@@ -59,13 +59,13 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Monthly contribution
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
+                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
                         {{(data.monthlyContribution)?data.monthlyContribution:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Commencement Date
+                        Commencement date
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{(data.commencementDate)?(data.commencementDate | date:'dd/MM/yyyy'):'-'}}
