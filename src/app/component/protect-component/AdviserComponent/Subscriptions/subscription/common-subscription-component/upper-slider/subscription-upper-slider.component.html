@@ -165,12 +165,12 @@
 
   <!--<div [@upperRightSlider]="State" class="right_sidenav">-->
   <app-add-plan-detail (planOuputData)="upperData=$event" *ngIf="rightSliderFlag=='addPlan'"
-                       [planData]="upperRightSideInputData.data"></app-add-plan-detail>
+    [planData]="upperRightSideInputData.data"></app-add-plan-detail>
   <app-plan-rightslider [clientData]="fragmentData.data" *ngIf="rightSliderFlag=='planRightSlider'">
   </app-plan-rightslider>
   <app-email-quotation [headerData]="headerData" *ngIf="rightSliderFlag=='eSignQuotations'"></app-email-quotation>
   <app-invoice [data]="upperRightSideInputData.data" [invoiceTab]="rightSliderFlag"
-               *ngIf="rightSliderFlag=='invoiceUpperSlider'"></app-invoice>
+    *ngIf="rightSliderFlag=='invoiceUpperSlider'"></app-invoice>
   <app-payee-settings [data]="upperRightSideInputData" [upperData]="upperData" *ngIf="rightSliderFlag=='payeeSettings'">
   </app-payee-settings>
   <!-- <app-email-quotation [headerDataDocuments]="headerDataDocuments" *ngIf="rightSliderFlag=='eSignDocument'">
