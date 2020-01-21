@@ -10,7 +10,7 @@
             <p>{{dateFilter.name}}</p>
             <input (click)="picker2.open()" [(ngModel)]="selectedDateRange" [max]="maxDate" (dateChange)="orgValueChange(selectedDateRange)"
               [satDatepicker]="picker2" class="pL-20" matInput placeholder="Choose a date" readonly>
-            <sat-datepicker #picker2 [closeAfterSelection]="true" [rangeMode]="true"  [selectFirstDateOnClose]="true"  >
+            <sat-datepicker #picker2 (closed)="onClose($event)" [closeAfterSelection]="false" [rangeMode]="true">
             </sat-datepicker>
             <sat-datepicker-toggle [for]="picker2" matSuffix></sat-datepicker-toggle>
             <i (click)="removeDate(i)" class="material-icons text-custom c-p">

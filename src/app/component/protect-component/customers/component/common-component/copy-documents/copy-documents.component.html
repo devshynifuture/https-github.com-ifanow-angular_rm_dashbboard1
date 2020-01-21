@@ -3,7 +3,7 @@
         {{CopyOrMove}} 1 item to
     </div>
     <div class="col-md-2 p-0 text-right">
-        <i class="material-icons c-p v-middle" mat-dialog-close> clear</i>
+        <i class="material-icons  c-p v-middle"> clear</i>
     </div>
 </div>
 <div class="col-md-12 p-0 breadCrumbClass">
@@ -11,21 +11,18 @@
         <li class="breadcrumb-item c-p" (click)="reset()">
             <span>{{tabValue || 'Documents'}}</span></li>
 
-        <li class="breadcrumb-item active c-p" (click)="getFolders(folder,i)"
-            *ngFor="let folder of openFolderName;index as i">{{folder.openFolderNm}}</li>
+        <li class="breadcrumb-item active c-p" (click)="getFolders(folder,i)" *ngFor="let folder of openFolderName;index as i">{{folder.openFolderNm}}</li>
     </ol>
 </div>
 
 <div class="col-md-12 p-0 copyDocumentcomp ">
-    <table mat-table [dataSource]="commonFileFolders" id="table-low" [appSkeletonLoading]="isLoading"
-        [dataSource]="commonFileFolders" appSkeletonLoading class="skeletonAnimation">
+    <table mat-table [dataSource]="commonFileFolders" id="table-low" [appSkeletonLoading]="isLoading" [dataSource]="commonFileFolders" appSkeletonLoading class="skeletonAnimation">
 
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell class="c-p " *matCellDef="let element" (click)="openFolder(element)">
                 <div class="bar">
-                    <img *ngIf="element.folderName != undefined" class="mr-12" src="/assets/images/svg/folder-icon.svg">
-                    {{element.folderName}}
+                    <img *ngIf="element.folderName != undefined" class="mr-12" src="/assets/images/svg/folder-icon.svg"> {{element.folderName}}
                     <img *ngIf="element.isStarred == 1" class="mr-12" src="/assets/images/svg/document-star.svg">
                 </div>
             </td>
@@ -56,9 +53,9 @@
 </div>
 
 
-<div class="row pt-100 ">
-    <div class="col-md-12 pt-10 pb-10 pr-0  right text-right" style="border-top: 1px solid rgba(0, 0, 0, 0.12);">
-        <button mat-button class="text-custom f-500 c-p" mat-dialog-close> CANCEL </button>
+<div class="row   ">
+    <div class="col-md-12 pt-10 pb-10 pr-0  right text-right">
+        <button mat-button class="text-custom f-500 c-p"> CANCEL </button>
         <button mat-button class="colorDark f-500 c-p" (click)="copyFile(CopyOrMove)"> {{CopyOrMove}} </button>
     </div>
 </div>
