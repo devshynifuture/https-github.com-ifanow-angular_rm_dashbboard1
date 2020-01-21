@@ -43,10 +43,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   ];
   displayedColumns: string[] = ['emptySpace', 'name', 'lastModi', 'type', 'size', 'icons'];
   dataSource = ELEMENT_DATA;
-  percentDone: number;
-  uploadSuccess: boolean;
   myFiles: string[] = [];
-  sMsg = '';
   setTab: string;
   advisorId: any;
   clientId: any;
@@ -61,13 +58,14 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   tabValue: any;
   valueTab: any;
   valueFirst: any;
-  animal: any;
+  getInnerDoc: any;
   name: string;
   isLoading = false;
   dataToCommon: any;
   showMsg = false;
   showResult = false;
   noResult = false;
+  selectedFolder: any;
 
   constructor(private eventService: EventService, private http: HttpService, private _bottomSheet: MatBottomSheet,
     private event: EventService, private router: Router, private fb: FormBuilder,
@@ -78,17 +76,13 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   showDots = false;
   parentId: any;
   filenm: string;
-  showLoader: boolean;
   viewFolder: string[] = [];
   createdFolderName: any;
   sendObj: { clientId: any; advisorId: any; parentFolderId: any; folderName: any; };
   detailed: { clientId: any; advisorId: any; folderParentId: any; folderName: any; };
   uploadFolder: string[] = [];
   folderNameToDisplay: any;
-
-
   getSort: any;
-
   viewMode;
 
   ngAfterViewInit(): void {
@@ -105,10 +99,10 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getAllFileList(tabValue);
-    this.showLoader = true;
   }
 
   openDialog(element, value): void {
+    this.selectedFolder = element
     const dialogRef = this.dialog.open(DocumentNewFolderComponent, {
       width: '30%',
       data: { name: value, animal: element }
@@ -116,19 +110,32 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
-      this.animal = result;
+      this.getInnerDoc = result;
       if (element == 'CREATE') {
-        this.createFolder(this.animal);
+        this.createFolder(this.getInnerDoc);
       }
-      if (this.animal.rename.flag == 'fileName') {
-        this.renameFile(this.animal);
+      if (this.getInnerDoc.rename.flag == 'fileName') {
+        this.renameFile(this.getInnerDoc);
       } else {
-        this.renameFolders(this.animal);
+        this.renameFolders(this.getInnerDoc);
       }
     });
 
   }
-
+  copyFilesRes(data) {
+    this.eventService.openSnackBar('copy file successfully', 'dismiss');
+    this.reset()
+  }
+  moveFilesRes(data) {
+    this.eventService.openSnackBar('move file successfully', 'dismiss');
+    this.getAllFileList('Documents')
+    this.reset()
+  }
+  moveFolderRes(data) {
+    this.eventService.openSnackBar('move folder successfully', 'dismiss');
+    this.getAllFileList('Documents')
+    this.reset()
+  }
   openDialogCopy(element, value): void {
     const dialogRef = this.dialog.open(CopyDocumentsComponent, {
       width: '40%',
@@ -136,9 +143,26 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.animal = result;
-      this.getAllFileList(this.animal);
+      console.log('The dialog was closed', element);
+      this.getInnerDoc = result;
+      if (result.value == 'Copy') {
+        delete result.value;
+        this.custumService.copyFiles(result).subscribe(
+          data => this.copyFilesRes(data)
+        );
+      } else if (result.value == 'Move') {
+        if (element.folderName == undefined) {
+          delete result.value;
+          this.custumService.moveFiles(result).subscribe(
+            data => this.moveFilesRes(data)
+          );
+        } else {
+          delete result.value;
+          this.custumService.moveFolder(result).subscribe(
+            data => this.moveFolderRes(data)
+          );
+        }
+      }
     });
   }
 
@@ -215,7 +239,6 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
 
   getAllFileList(tabValue) {
-
     tabValue = (tabValue == 'Documents' || tabValue == 1) ? 1 : (tabValue == 'Recents' || tabValue == 2) ? 2 : (tabValue == 'Starred' || tabValue == 3) ? 3 : 4;
     this.valueTab = tabValue;
     this.backUpfiles = [];
@@ -246,8 +269,6 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       this.showMsg = false;
     }
     this.isLoading = false;
-    console.log('this is folder length and files length ');
-    console.log(data.folders.length, data.files.length);
     this.allFiles = data.files;
     this.AllDocs = data.folders;
     this.dataToCommon = data.folders;
@@ -257,7 +278,6 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       Object.assign(this.dataToCommon, { openFolderNm: value.folderName });
       Object.assign(this.dataToCommon, { openFolderId: value.id });
       this.parentId = (value.id == undefined) ? 0 : value.id;
-      console.log('parentId', this.parentId);
       this.openFolderName.push(this.dataToCommon);
       this.valueFirst = this.openFolderName[0];
       if (this.dataToCommon.length > 0) {
@@ -332,14 +352,8 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     this.commonFileFolders = new MatTableDataSource(this.data);
     this.parentId = (data == undefined) ? 0 : data[0].folderParentId;
     console.log('parentId', this.parentId);
-    // this.openFolderName = _.reject(this.openFolderName, function (n) {
-    //   return n.openFolderId > data.openFolderId + 1;
-    // });
     this.openFolderName = this.openFolderName.filter((element, i) => i <= index);
     this.commonFileFolders = this.openFolderName[this.openFolderName.length - 1];
-    // this.openFolderName = _.reject(this.openFolderName, function (n) {
-    //   return n.openFolderId > data.openFolderId;
-    // });
     this.commonFileFolders = new MatTableDataSource(data);
     this.commonFileFolders.sort = this.sort;
     this.fileTypeGet();

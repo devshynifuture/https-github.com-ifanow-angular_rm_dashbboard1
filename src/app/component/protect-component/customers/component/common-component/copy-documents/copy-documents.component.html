@@ -1,6 +1,3 @@
-<div *ngIf="showLoader==true">
-    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-</div>
 <div class="row p-8 bg-dark text-white">
     <div class="col-md-10">
         {{CopyOrMove}} 1 item to
@@ -13,27 +10,25 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item c-p" (click)="reset()">
             <span>{{tabValue || 'Documents'}}</span></li>
-        <!-- <li class="breadcrumb-item c-p" *ngIf="showDots == true">
-            <mat-icon class="c-p" [matMenuTriggerFor]="menu"> more_horiz</mat-icon>
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="getFolders(folder)"
-                    *ngFor="let folder of openFolderName | slice:1:openFolderName.length - 1">
-                    {{folder.openFolderNm}}</button>
-            </mat-menu>
-        </li> -->
+
         <li class="breadcrumb-item active c-p" (click)="getFolders(folder,i)"
             *ngFor="let folder of openFolderName;index as i">{{folder.openFolderNm}}</li>
     </ol>
 </div>
 
 <div class="col-md-12 p-0 copyDocumentcomp ">
-    <table mat-table [dataSource]="commonFileFolders" class="" id="table-low">
+    <table mat-table [dataSource]="commonFileFolders" id="table-low" [appSkeletonLoading]="isLoading"
+        [dataSource]="commonFileFolders" appSkeletonLoading class="skeletonAnimation">
 
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell class="c-p " *matCellDef="let element" (click)="openFolder(element)">
-                <img class="mr-12" src="/assets/images/svg/folder-icon.svg"> {{element.folderName || element.fileName}}
-                <img *ngIf="element.isStarred == 1" class="mr-12" src="/assets/images/svg/document-star.svg"> </td>
+                <div class="bar">
+                    <img *ngIf="element.folderName != undefined" class="mr-12" src="/assets/images/svg/folder-icon.svg">
+                    {{element.folderName}}
+                    <img *ngIf="element.isStarred == 1" class="mr-12" src="/assets/images/svg/document-star.svg">
+                </div>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="lastModi">
@@ -55,7 +50,10 @@
     </table>
 </div>
 
-
+<div *ngIf="showMsg == true" class="col-md-9 d-flex justify-content-center  flex-column align-items-center">
+    <img class="mr-12" src="/assets/images/svg/folder-icon.svg"> Folder is empty<br>
+    <p class="m-0 f-12 text-custom">Drop files here</p>
+</div>
 
 
 <div class="row pt-100 ">
