@@ -1,3 +1,16 @@
 .heightAuto {
     height: auto !important;
 }
+
+::ng-deep .heightAuto .mat-chip-list-wrapper input.mat-input-element {
+    margin: 0px !important;
+    padding: 0px !important;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 0px !important;
+}
+
+::ng-deep .fr-box.fr-basic .fr-wrapper {
+    margin-bottom: 10px !important;
+}
