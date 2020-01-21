@@ -94,10 +94,10 @@ export class PoMisSchemeComponent implements OnInit {
     );
   }
 
-  getPoMisSchemedataResponse(data) {
+  getPoMisSchemedataResponse(data:any) {
     console.log(data);
     this.isLoading = false;
-    if (data.poMisList.length != 0) {
+    if (data && data.poMisList && data.poMisList.length != 0) {
       this.datasource.data = data.poMisList;
       this.datasource.sort = this.sort;
       UtilService.checkStatusId(this.datasource.filteredData);
@@ -107,8 +107,9 @@ export class PoMisSchemeComponent implements OnInit {
       this.sumOfAmountInvested = data.sumOfAmountInvested;
       this.pomisData = data;
     } else {
-      this.datasource = undefined
+    
       this.noData = 'No scheme found';
+      this.datasource.data = []
     }
   }
 
