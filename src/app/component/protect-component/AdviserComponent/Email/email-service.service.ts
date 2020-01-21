@@ -374,8 +374,6 @@ export class EmailServiceService {
     });
   }
 
-
-
   sendNextData(data: Object) {
     this.dataSourceOneMailView.next(data);
   }

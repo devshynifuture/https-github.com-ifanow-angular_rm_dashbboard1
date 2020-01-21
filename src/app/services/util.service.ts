@@ -129,14 +129,14 @@ export class UtilService {
 
   // Allow Only text NOT number and special character
   onlyText(event: any) {
-    const pattern = /[0-9\+\-\. ]/;
-
+    // const pattern = /[0-9\+\-\. ]/;
+    const pattern =new RegExp(/^[a-zA-Z /-]*$/);
     const inputChar = String.fromCharCode(event.charCode);
-    if (event.keyCode != 8 && pattern.test(inputChar)) {
+    if (event.keyCode != 8 && !pattern.test(inputChar)) {
       event.preventDefault();
     }
-    const k = event.keyCode;
-    return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
+    // const k = event.keyCode;
+    // return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
   }
 
   // allows text and number NOT special character
@@ -194,8 +194,8 @@ export class ValidatorType {
   static TEXT_ONLY = new RegExp(/^[a-zA-Z ]/);
   static TEXT_WITH_SPACE = new RegExp(/^[a-zA-Z ]/gi);
 
-  static ALPHA_NUMERIC = new RegExp(/^[a-zA-Z0-9]*$/);
-  static ALPHA_NUMERIC_WITH_SPACE = new RegExp(/^[a-zA-Z0-9 ]*$/);
+  static ALPHA_NUMERIC = new RegExp(/^[a-zA-Z0-9/-]*$/);
+  static ALPHA_NUMERIC_WITH_SPACE = new RegExp(/^[a-zA-Z0-9 /-]*$/);
   static EMAIL = new RegExp(/^[a-z0-9]+(.[_a-z0-9]+)@[a-z0-9-]+(.[a-z0-9-]+)(.[a-z]{2,15})$/);
   // static EMAIL = new RegExp(/^[a-z0-9!#$%&'*+\=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/);
   // static EMAIL_ONLY = new RegExp(/\b[\w.!#$%&’*+\/=?^`{|}~-]+@[\w-]+(?:\.[\w-]+)*\b/);
