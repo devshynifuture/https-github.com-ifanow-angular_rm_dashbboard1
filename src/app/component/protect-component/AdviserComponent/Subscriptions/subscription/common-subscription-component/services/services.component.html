@@ -58,35 +58,33 @@
                                     </div>
                                     <div class="col-md-6">
                                         <p class="text-primitive f-12">BILLING NATURE</p>
-                                        <p class="f-18" *ngIf="serviceData&&serviceData.billingNature==1">
-                                            Recurring</p>
-                                        <p class="f-18" *ngIf="serviceData&&serviceData.billingNature==2">
-                                            Once</p>
+                                        <h3 class="m-0 proxima" *ngIf="serviceData&&serviceData.billingNature==1">
+                                            Recurring</h3>
+                                        <h3 class="m-0 proxima" *ngIf="serviceData&&serviceData.billingNature==2">
+                                            Once</h3>
                                     </div>
                                 </div>
                                 <div class="row pt-24 text-left">
                                     <div class="col-md-6">
                                         <p class="text-primitive f-12">BILLING MODE</p>
 
-                                        <p class="f-18" *ngIf="serviceData&&serviceData.billingMode==1"
-                                            class="mb-0 text-lighter f-16">
-                                            Start Of Period</p>
-                                        <p class="f-18" *ngIf="serviceData&&serviceData.billingMode==2"
-                                            class="mb-0 text-lighter f-16">
+                                        <h3 class="m-0 proxima" *ngIf="serviceData&&serviceData.billingMode==1">
+                                            Start Of Period</h3>
+                                        <h3 class="m-0 proxima" *ngIf="serviceData&&serviceData.billingMode==2">
                                             End Of Period
-                                        </p>
+                                        </h3>
                                     </div>
                                     <div class="col-md-6">
                                         <p *ngIf="serviceData&&serviceData.feeTypeId==1" class="text-primitive f-12">
                                             FEES</p>
                                         <p *ngIf="serviceData&&serviceData.feeTypeId==2" class="text-primitive f-12">
                                             OTHER ASSET FEES</p>
-                                        <p class="f-18" *ngIf="serviceData&&serviceData.feeTypeId==1">
+                                        <h3 class="m-0 proxima" *ngIf="serviceData&&serviceData.feeTypeId==1">
                                             ₹{{serviceData.averageFees}}
-                                        </p>
-                                        <p class="f-18" *ngIf="serviceData&&serviceData.feeTypeId==2">
+                                        </h3>
+                                        <h3 class="m-0 proxima" *ngIf="serviceData&&serviceData.feeTypeId==2">
                                             {{serviceData.averageFees}}%
-                                        </p>
+                                        </h3>
                                     </div>
                                 </div>
                             </div>
