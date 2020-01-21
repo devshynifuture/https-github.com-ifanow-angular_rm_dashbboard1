@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { SummaryComponent } from './summary.component';
 
-import { SummaryComponent } from '../summary/summary.component';
 
 const routes: Routes = [{ path: '', component: SummaryComponent }];
 
@@ -9,4 +9,4 @@ const routes: Routes = [{ path: '', component: SummaryComponent }];
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AccountsSummaryRoutingModule { }
+export class SummaryRoutingModule { }

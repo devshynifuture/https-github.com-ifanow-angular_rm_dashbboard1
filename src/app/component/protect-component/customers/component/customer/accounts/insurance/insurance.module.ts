@@ -1,31 +1,31 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AccountsInsuranceRoutingModule } from './accounts-insurance-routing.module';
-import { AccountsInsuranceComponent } from './accounts-insurance.component';
-import { InsuranceComponent } from '../insurance/insurance.component';
+import { InsuranceRoutingModule } from './insurance-routing.module';
 import { MaterialModule } from 'src/app/material/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { InsuranceComponent } from './insurance.component';
 
 
 @NgModule({
-  declarations: [AccountsInsuranceComponent, InsuranceComponent],
+  declarations: [InsuranceComponent],
   imports: [
     CommonModule,
-    AccountsInsuranceRoutingModule,
+    InsuranceRoutingModule,
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
     CustomDirectiveModule
-  ],
+  ]
+  ,
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
 
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
-export class AccountsInsuranceModule { }
+export class InsuranceModule { }

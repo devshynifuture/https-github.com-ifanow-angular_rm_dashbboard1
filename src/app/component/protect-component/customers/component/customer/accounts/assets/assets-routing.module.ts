@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AssetsComponent } from './assets.component';
 
-import { AccountAssetsComponent } from './account-assets.component';
-import { AssetsComponent } from '../assets/assets.component';
 
 const routes: Routes = [{ path: '', component: AssetsComponent }];
 
@@ -10,4 +9,4 @@ const routes: Routes = [{ path: '', component: AssetsComponent }];
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AccountAssetsRoutingModule { }
+export class AssetsRoutingModule { }

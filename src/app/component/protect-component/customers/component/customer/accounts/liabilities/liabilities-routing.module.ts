@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { LiabilitiesComponent } from './liabilities.component';
 
-import { AccountsLiabilitiesComponent } from './accounts-liabilities.component';
-import { LiabilitiesComponent } from '../liabilities/liabilities.component';
 
 const routes: Routes = [{ path: '', component: LiabilitiesComponent }];
 
@@ -10,4 +9,4 @@ const routes: Routes = [{ path: '', component: LiabilitiesComponent }];
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AccountsLiabilitiesRoutingModule { }
+export class LiabilitiesRoutingModule { }
