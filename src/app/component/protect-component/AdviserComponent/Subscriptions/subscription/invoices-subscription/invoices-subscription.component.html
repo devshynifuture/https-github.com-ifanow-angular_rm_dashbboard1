@@ -44,11 +44,12 @@
       </div>
     </div>
     <div [ngClass]="showFilter === true ? 'block' : 'none'" class="row pt-12">
-      <div class="row">
+      <!-- <div class="row">
 
 
-      </div>
-      <div class="row pt-12">
+      </div> -->
+      <app-sudscription-table-filter [dataToFilter]="passFilterData" (filterRes)="getFiterRes($event)"></app-sudscription-table-filter>
+      <!-- <div class="row pt-12">
         <div class="col-md-8 p-0 custom-tags">
           <mat-chip-list>
             <mat-chip *ngFor="let status of filterStatus; let ind = index" class="bg-white b-a c-p f-400 p-12">
@@ -93,7 +94,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 

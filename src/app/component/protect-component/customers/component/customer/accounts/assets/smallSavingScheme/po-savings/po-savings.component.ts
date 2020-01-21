@@ -1,15 +1,15 @@
-import {AddPoSavingComponent} from './../common-component/add-po-saving/add-po-saving.component';
-import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {CustomerService} from '../../../../customer.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {DetailedPoSavingsComponent} from './detailed-po-savings/detailed-po-savings.component';
-import {FormatNumberDirective} from 'src/app/format-number.directive';
-import {ExcelService} from '../../../../excel.service';
+import { AddPoSavingComponent } from './../common-component/add-po-saving/add-po-saving.component';
+import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../../../customer.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { DetailedPoSavingsComponent } from './detailed-po-savings/detailed-po-savings.component';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { ExcelService } from '../../../../excel.service';
 
 @Component({
   selector: 'app-po-savings',
@@ -88,7 +88,7 @@ export class PoSavingsComponent implements OnInit {
   getPoSavingSchemedataResponse(data) {
     console.log(data);
     this.isLoading = false;
-    if (data.PostOfficeSavingsList.length != 0) {
+    if (data && data.PostOfficeSavingsList.length != 0) {
       this.datasource.data = data.PostOfficeSavingsList;
       this.datasource.sort = this.sort;
       this.currentValueSum = data.currentValueSum;

@@ -2,3 +2,7 @@
     width: 200px;
     margin-top: 220px;
 }
+
+::ng-deep .textRightSide .mat-sort-header-container {
+    justify-content: flex-end;
+}
