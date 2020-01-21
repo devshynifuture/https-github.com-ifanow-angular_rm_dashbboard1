@@ -467,6 +467,8 @@ export class InvoicesSubscriptionComponent implements OnInit {
     this.filterDate = data.dateFilterArr;
     this.selectedDateRange = data.dateFilterJson;
     this.lastFilterDataId = 0;
+    this.dataSource.data = [{}, {}, {}];
+      this.isLoading = true;
     this.callFilter(false);
   }
 
