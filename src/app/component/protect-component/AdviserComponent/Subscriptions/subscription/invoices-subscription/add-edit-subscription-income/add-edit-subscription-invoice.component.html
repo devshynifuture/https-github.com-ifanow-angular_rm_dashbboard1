@@ -5,12 +5,17 @@
             </h2>
             <!-- <h4 *ngIf="invoiceInSub!='invoiceSubscription'" class="f-400 wrapper-20 mb-0">Add Invoice</h4> -->
         </div>
+        <!-- <div class="col-md-2 text-right">
+            <div class="wrapper-12">
+                <i class="material-icons c-p pt-8 v-middle" (click)="Close(false)"> clear</i>
+            </div>
+        </div> -->
     </div>
     <div class="row pt-40">
         <div class="col-md-3 pr-0">
             <h5 class="m-0 text-right pt-8">Client name</h5>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-12 p-0">
@@ -36,10 +41,16 @@
                     <p *ngIf="editAdd1 == false" class="m-0 text-black text-break w-90 l-21">{{storeData.billerAddress}}
                     </p>
                     <textarea *ngIf="editAdd1 == true" class="form-control br-0" formControlName="billerAddress" maxlength="150" rows="5"></textarea>
-                    <p (click)="onclickChangeAdd1(editAdd1)" class="m-0 text-primary c-p f-12">CHANGE</p>
-                    <p class="mb-0 f-12 text-custom text-right pt-4 pr-36">
-                        {{getFormControlEdit().billerAddress.value?.length ? getFormControlEdit().billerAddress.value.length : 0}} /150
-                    </p>
+                    <div class="row">
+                        <div class="col-md-6 pl-0">
+                            <p (click)="onclickChangeAdd1(editAdd1)" class="m-0 text-primary c-p f-12">CHANGE</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="mb-0 f-12 text-custom text-right">
+                                {{getFormControlEdit().billerAddress.value?.length ? getFormControlEdit().billerAddress.value.length : 0}} /150
+                            </p>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-6 pl-0">
                     <p class="m-0 text-custom f-12">PAYEE ADDRESS</p>
@@ -47,10 +58,16 @@
                         {{storeData.billingAddress}}
                     </p>
                     <textarea *ngIf="editAdd2 == true" class="form-control br-0" formControlName="billingAddress" maxlength="150" rows="5"></textarea>
-                    <p (click)="onclickChangeAdd2(editAdd2)" class="m-0 text-primary c-p f-12">CHANGE</p>
-                    <p class="mb-0 f-12 text-custom text-right pt-4 pr-12">
-                        {{getFormControlEdit().billingAddress.value?.length ? getFormControlEdit().billingAddress.value.length : 0}} /150
-                    </p>
+                    <div class="row">
+                        <div class="col-md-6 pl-0">
+                            <p (click)="onclickChangeAdd2(editAdd2)" class="m-0 text-primary c-p f-12">CHANGE</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="mb-0 f-12 text-custom text-right">
+                                {{getFormControlEdit().billingAddress.value?.length ? getFormControlEdit().billingAddress.value.length : 0}} /150
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -165,10 +182,10 @@
                     <div class="col-md-2 pl-0">
                         <!--            (change)="changeTaxStatus($event.target.value)"-->
                         <select class="form-control" formControlName="taxStatus" id="serviceName">
-              <option value="">Select tax type</option>
-              <option value="IGST(18%)">IGST(18%)</option>
-              <option value="SGST(9%)|CGST(9%)">SGST(9%) | CGST(9%)</option>
-            </select>
+                            <option value="">Select tax type</option>
+                            <option value="IGST(18%)">IGST(18%)</option>
+                            <option value="SGST(9%)|CGST(9%)">SGST(9%) | CGST(9%)</option>
+                        </select>
                         <div class="col-md-8">
                             <mat-error *ngIf=" getFormControlEdit().taxStatus.invalid || (getFormControlEdit().taxStatus.touched && getFormControlEdit().taxStatus.invalid)" class="f-12 pt-4">
                                 Tax status is required
@@ -234,13 +251,17 @@
     </div>
     <div class="row pb-12 ">
         <div class="col-md-8"></div>
-        <div class="col-md-2 pt-4 bt-grey">
-            <h5 class="m-0 text-black pt-8 f-500">Total</h5>
+        <div class="col-md-2 pt-4 pr-0 ">
+            <div class="bt-grey">
+                <h5 class="m-0 text-black pt-8 f-500">Total</h5>
+            </div>
         </div>
-        <div class="col-md-2 pt-4 bt-grey pr-24">
-            <h5 class="m-0 text-right pr-8 pt-8 text-black f-500">
-                {{finAmount}}
-            </h5>
+        <div class="col-md-2 pt-4 pl-0 pr-24">
+            <div class="bt-grey">
+                <h5 class="m-0 text-right pr-8 pt-8 text-black f-500">
+                    {{finAmount}}
+                </h5>
+            </div>
         </div>
     </div>
     <div class="bg-grey lter wrapper-28">
