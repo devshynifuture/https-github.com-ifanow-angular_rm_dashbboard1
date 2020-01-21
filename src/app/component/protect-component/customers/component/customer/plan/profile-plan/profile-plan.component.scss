@@ -42,3 +42,46 @@
 .f-56 {
   font-size: 56px !important;
 }
+
+::ng-deep #fp-modules {
+  .mat-expansion-panel-body {
+    padding: 0 !important;
+
+  }
+
+  .mat-expansion-panel-header {
+    height: 40px !important;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+
+  }
+
+  .mat-expansion-panel {
+    border-radius: 0px !important;
+  }
+}
+
+::ng-deep {
+  #ui-fp-planmodule {
+    margin-top: 12px;
+
+
+    .mat-tab-label-active {
+      border-top: 1px solid #e0e0e0;
+      border-right: 1px solid #e0e0e0;
+      border-left: 1px solid #e0e0e0;
+    }
+
+    .mat-ink-bar {
+      display: none;
+    }
+
+    .mat-tab-label {
+      height: 40px !important;
+    }
+
+    .mat-tab-body-wrapper {
+      border: 1px solid #e0e0e0;
+      border-top: 0px !important;
+    }
+  }
+}
