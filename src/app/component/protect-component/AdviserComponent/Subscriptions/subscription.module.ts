@@ -38,6 +38,7 @@ import { SubscriptionsSubscriptionComponent } from './subscription/subscriptions
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { SudscriptionTableFilterComponent } from './subscription/common-subscription-component/sudscription-table-filter/sudscription-table-filter.component';
 
 
 export const componentList = [SubscriptionComponent,
@@ -59,6 +60,7 @@ export const componentList = [SubscriptionComponent,
   ServicesSettingsComponent,
   DocumentsSettingsComponent,
   PreferencesSettingsComponent,
+  SudscriptionTableFilterComponent,
   // SubscriptionUpperSliderComponent,
   // OverviewComponent,
   // ServicesComponent,

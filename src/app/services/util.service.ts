@@ -129,14 +129,14 @@ export class UtilService {
 
   // Allow Only text NOT number and special character
   onlyText(event: any) {
-    const pattern = /[0-9\+\-\. ]/;
-
+    // const pattern = /[0-9\+\-\. ]/;
+    const pattern =new RegExp(/^[a-zA-Z /-]*$/);
     const inputChar = String.fromCharCode(event.charCode);
-    if (event.keyCode != 8 && pattern.test(inputChar)) {
+    if (event.keyCode != 8 && !pattern.test(inputChar)) {
       event.preventDefault();
     }
-    const k = event.keyCode;
-    return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
+    // const k = event.keyCode;
+    // return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
   }
 
   // allows text and number NOT special character

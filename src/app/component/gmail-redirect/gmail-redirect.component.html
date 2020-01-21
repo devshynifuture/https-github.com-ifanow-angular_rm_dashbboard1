@@ -1,1 +1,16 @@
-<p>gmail-redirect works!</p>
+<div class="row justify-content-center align-items-center" *ngIf="isSuccess">
+    <div class="col-md-8">
+        <h3 class="f-700">
+            Thank You for connecting your account with Google.
+        </h3>
+        <p class="text-primitive">
+            This screen will be automatically closed if not please click below button.
+        </p>
+        <button mat-stroke-button (click)="closeTab()">
+            Close
+        </button>
+    </div>
+</div>
+<div class="row" *ngIf="!isSuccess">
+    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
+</div>
