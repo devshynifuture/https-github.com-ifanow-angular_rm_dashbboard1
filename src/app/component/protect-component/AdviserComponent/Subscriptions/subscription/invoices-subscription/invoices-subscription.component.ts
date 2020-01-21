@@ -8,6 +8,7 @@ import { AuthService } from '../../../../../../auth-service/authService';
 import { UtilService, ValidatorType } from '../../../../../../services/util.service';
 import { DatePipe } from '@angular/common';
 import { element } from 'protractor';
+import {Router} from '@angular/router';
 
 export interface PeriodicElement {
   date: string;
@@ -65,10 +66,15 @@ export class InvoicesSubscriptionComponent implements OnInit {
   scrollPosition;
   lastDataId;
   tableData = [];
-
+ passFilterData ={
+   data:"",
+   selectedCount:"",
+   statusFilter:this.chips,
+   dateFilter:this.dateChips
+ };
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject, private subService: SubscriptionService,
-    private eventService: EventService, public subscription: SubscriptionService, private datePipe: DatePipe) {
+    private eventService: EventService, public subscription: SubscriptionService, private datePipe: DatePipe, private router: Router) {
     // this.ngOnInit();
   }
 
@@ -94,7 +100,8 @@ export class InvoicesSubscriptionComponent implements OnInit {
     this.invoiceSubscription = 'false';
     this.invoiceDesign = 'true';
     this.dataCount = 0;
-
+    console.log(this.router.url, "this.router.isActive");
+     
   }
 
   scrollCall(scrollLoader) {
@@ -310,25 +317,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
   }
 
-  addFilters(addFilters) {
-
-    console.log('addFilters', addFilters);
-    // !_.includes(this.filterStatus, addFilters)
-    if (this.filterStatus.find(element => element.name == addFilters.name) == undefined) {
-      this.lastFilterDataId = 0;
-      this.filterStatus.push(addFilters);
-      this.filterDataArr = [];
-      console.log(this.filterStatus);
-    } else {
-      this.lastFilterDataId = 0;
-      // _.remove(this.filterStatus, this.senddataTo);
-    }
-
-    console.log(this.filterStatus, 'this.filterStatus 123');
-
-    this.callFilter(false);
-  }
-
+  
   callFilter(scrollLoader) {
     this.dataCount = 0;
     if (this.filterStatus && this.filterStatus.length > 0) {
@@ -404,15 +393,37 @@ export class InvoicesSubscriptionComponent implements OnInit {
     // this.getSubSummaryRes(data);
   }
 
+  addFilters(addFilters) {
+
+    console.log('addFilters', addFilters);
+    // !_.includes(this.filterStatus, addFilters)
+    if (this.filterStatus.find(element => element.name == addFilters.name) == undefined) {
+      this.lastFilterDataId = 0;
+      this.filterStatus.push(addFilters);
+      this.filterDataArr = [];
+      console.log(this.filterStatus);
+    } else {
+      this.lastFilterDataId = 0;
+      // _.remove(this.filterStatus, this.senddataTo);
+    }
+
+    console.log(this.filterStatus, 'this.filterStatus 123');
+
+    this.callFilter(false);
+  }
+
+
   addFiltersDate(dateFilter) {
     this.filterDate = [];
+    this.dataSource.data = [{}, {}, {}]
+      this.isLoading = true;
     if (this.filterDate.length >= 1) {
       this.filterDate = [];
     }
     this.filterDataArr = [];
     this.lastFilterDataId = 0;
     this.filterDate.push((dateFilter == '1: Object') ? 1 : (dateFilter == '2: Object') ? 2 : 3);
-    console.log('addFilters', dateFilter);
+    console.log(this.selectedDateFilter,'addFilters', dateFilter);
     const beginDate = new Date();
     beginDate.setMonth(beginDate.getMonth() - 1);
     UtilService.getStartOfTheDay(beginDate);
@@ -427,6 +438,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
   removeDate(item) {
     console.log(this.filterDate, 'this.filterDate 123 r');
+    this.dataSource.data = [{}, {}, {}];
     this.selectedDateFilter = 'dateFilter';
     this.filterDate.splice(item, 1);
     this.lastFilterDataId = 0;
@@ -435,7 +447,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
   remove(item) {
     console.log(item, 'item123');
-
+    this.dataSource.data = [{}, {}, {}];
     if (this.filterStatus[item].name == this.selectedStatusFilter.name) {
       this.selectedStatusFilter = 'statusFilter';
     }
@@ -447,6 +459,17 @@ export class InvoicesSubscriptionComponent implements OnInit {
     this.lastFilterDataId = 0;
     this.callFilter(false);
 
+  }
+
+  getFiterRes(data){
+    console.log(data , "data for filter");
+    this.filterStatus = data.statusFilterJson;
+    this.filterDate = data.dateFilterArr;
+    this.selectedDateRange = data.dateFilterJson;
+    this.lastFilterDataId = 0;
+    this.dataSource.data = [{}, {}, {}];
+      this.isLoading = true;
+    this.callFilter(false);
   }
 
   formatter(data) {
