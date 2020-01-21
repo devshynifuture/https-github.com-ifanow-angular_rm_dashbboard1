@@ -42,6 +42,7 @@ import { SatCalendar, SatCalendarFooter, SatDatepicker } from 'saturn-datepicker
 import { DateAdapter } from 'saturn-datepicker';
 
 @Component({
+    selector:'app-set-date-footer',
     templateUrl: './set-date-footer.html'
 })
 export class SetDateFooter<Date> implements SatCalendarFooter<Date> {
@@ -84,5 +85,6 @@ export class SetDateFooter<Date> implements SatCalendarFooter<Date> {
 
     cancelRange(){
         this.datePicker.close();
+       
     }
 }

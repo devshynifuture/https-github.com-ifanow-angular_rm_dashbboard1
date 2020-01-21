@@ -26,15 +26,21 @@ export class SudscriptionTableFilterComponent implements OnInit {
     dateFilterArr:[],
     statusFilterJson:[]
   }
-
+  onlyDateFilter:boolean = false;
   rangesFooter = SetDateFooter;
-  constructor() { }
+  constructor(
+
+        ) { }
 
   ngOnInit() {
     this.chipStatus = this.dataToFilter.statusFilter;
     this.chipDate = this.dataToFilter.dateFilter;
+    if(this.dataToFilter.filterQuotation != undefined){
+      this.onlyDateFilter = this.dataToFilter.filterQuotation
+    }
     console.log(this.dataToFilter, this.chipStatus, this.chipDate, " dataToFilter 123 ");
   }
+  
 
   showFilters(showFilter) {
     if (showFilter == true) {
@@ -76,6 +82,7 @@ export class SudscriptionTableFilterComponent implements OnInit {
 
     // const endDate = new Date();
     // UtilService.getStartOfTheDay(endDate);
+     
     this.filterJson.dateFilterJson = {begin: selectedDateRange.begin, end: selectedDateRange.end};
     this.filterRes.emit(this.filterJson);
   }

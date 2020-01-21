@@ -41,7 +41,8 @@
             </div>
         </div>
         <div [ngClass]="showFilter === true ? 'block' : 'none'" class="row pt-12">
-            <div class="row pt-12">
+            <app-sudscription-table-filter [dataToFilter]="passFilterData" (filterRes)="getFiterRes($event)"></app-sudscription-table-filter>
+            <!-- <div class="row pt-12">
                 <div class="col-md-8 p-0 custom-tags">
                     <mat-chip-list>
                         <mat-chip *ngFor="let status of filterStatus; let ind = index"
@@ -54,7 +55,7 @@
                         <mat-chip-list>
                             <mat-chip *ngFor="let dateFilter of filterDate; let i = index"
                                 class="bg-white newDateClass b-a c-p f-400 p-12 w-220">
-                                <!--<div class="row">-->
+                                <div class="row">
                                 <p>{{dateFilter.name}}</p>
                                 <input (click)="picker2.open()" (dateChange)="orgValueChange(selectedDateRange)"
                                     [(ngModel)]="selectedDateRange" [max]="maxDate" [satDatepicker]="picker2"
@@ -72,7 +73,7 @@
                 <div class="col-md-4 right text-right p-0">
                     <div class="row">
                         <div class="col-md-6 pr-0">
-                            <!-- <div class="form-group mb-0">
+                            <div class="form-group mb-0">
                   <mat-form-field>
                        <mat-label>FILTERS ONE</mat-label>
                       <mat-select class="form-control" id="sel11" [(value)]='selectedStatusFilter' (selectionChange)="addFilters(selectedStatusFilter)">
@@ -82,12 +83,11 @@
                           </mat-option>
                       </mat-select>
                   </mat-form-field>
-              </div> -->
+              </div>
                         </div>
                         <div class="col-md-6 pr-0">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <!-- <mat-label>FILTERS TWO</mat-label> -->
                                     <mat-select (selectionChange)="addFiltersDate(selectedDateFilter)"
                                         [(ngModel)]='selectedDateFilter' class="form-control br-0" id="sel12">
                                         <mat-option [disabled]="true" value="dateFilter">By date</mat-option>
@@ -100,7 +100,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
