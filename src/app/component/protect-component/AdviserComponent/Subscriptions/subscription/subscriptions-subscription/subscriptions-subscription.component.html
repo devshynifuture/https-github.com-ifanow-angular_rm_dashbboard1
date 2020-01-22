@@ -93,8 +93,8 @@
           <td (click)="openPlanSlider('SUBSCRIPTIONS','open',element)"
               *matCellDef="let element; let i = index;" class="c-p t-20" mat-cell>
             <div class="bar">
-              {{element.planName}} <br>
-              <small class="text-custom roboto">{{element.clientName}}</small>
+              {{element.clientName}} <br>
+              <small class="text-custom roboto">{{element.planName}}</small>
             </div>
           </td>
         </ng-container>
@@ -180,7 +180,7 @@
         </ng-container>
         <ng-container matColumnDef="feemode">
           <th *matHeaderCellDef class="f-18 text-right pr-24 t-12"
-              mat-header-cell mat-sort-header="subscriptionPricing.feeTypeId"> Fee mode
+              mat-header-cell mat-sort-header="subscriptionPricing.feeTypeId"> Fee collection mode
           </th>
           <td *matCellDef="let element" class="text-right pr-8 t-12" mat-cell>
             <div class="bar">
