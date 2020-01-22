@@ -168,7 +168,7 @@
                     <p>CGST ({{storeData.cgst}}%)</p>
                   </div>
                   <div class="col-md-4 pr-8">
-                    <p class="text-right">₹{{formatter(storeData.cgstTaxAmount)}}</p>
+                    <p class="text-right">₹{{formatter(storeData.subTotal-storeData.discount)*9/100)}}</p>
                   </div>
                 </div>
                 <div *ngIf="storeData.sgst!=undefined" class="row">
@@ -176,7 +176,7 @@
                     <p>SGST ({{storeData.sgst}}%)</p>
                   </div>
                   <div class="col-md-4 pr-8">
-                    <p class="text-right">₹{{formatter(storeData.sgstTaxAmount)}}</p>
+                    <p class="text-right">₹{{formatter(storeData.subTotal-storeData.discount)*9/100)}}</p>
                   </div>
                 </div>
                 <div class="row bt-1">
@@ -378,7 +378,7 @@
                   <p>IGST ({{storeData.igst}}%)</p>
                 </div>
                 <div class="col-md-4">
-                  <p class="text-right">₹{{formatter(storeData.igstTaxAmount)}}</p>
+                  <p class="text-right">₹{{formatter(storeData.subTotal-storeData.discount)*18/100)}}</p>
                 </div>
               </div>
               <div *ngIf="storeData.cgst!=undefined" class="row">
@@ -386,7 +386,7 @@
                   <p>CGST ({{storeData.cgst}}%)</p>
                 </div>
                 <div class="col-md-4">
-                  <p class="text-right">₹{{formatter(storeData.cgstTaxAmount)}}</p>
+                  <p class="text-right">₹{{formatter(storeData.subTotal-storeData.discount)*9/100)}}</p>
                 </div>
               </div>
               <div *ngIf="storeData.sgst!=undefined" class="row">
@@ -394,7 +394,7 @@
                   <p>SGST ({{storeData.sgst}}%)</p>
                 </div>
                 <div class="col-md-4">
-                  <p class="text-right">₹{{formatter(storeData.sgstTaxAmount)}}</p>
+                  <p class="text-right">₹{{formatter(storeData.subTotal-storeData.discount)*9/100)}}</p>
                 </div>
               </div>
               <div class="row bt-1">
