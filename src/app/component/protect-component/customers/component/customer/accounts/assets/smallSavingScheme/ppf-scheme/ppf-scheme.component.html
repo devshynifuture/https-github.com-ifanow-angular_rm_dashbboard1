@@ -12,7 +12,7 @@
         <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPPF(null)">ADD NEW</button>
     </div>
 </div>
-<div class="example-container mt-8 real-estate">
+<div class="example-container overflow-hidden mt-8 real-estate">
     <table *ngIf="dataSource.data.length > 0" mat-table [dataSource]="dataSource" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
         <ng-container matColumnDef="no">
             <th mat-header-cell *matHeaderCellDef class="br"> No </th>
@@ -26,7 +26,11 @@
             <td mat-cell *matCellDef="let element" class="br t-25">
                 <div class="bar"> {{element.ownerName}} </div>
             </td>
-            <td mat-footer-cell *matFooterCellDef>Total</td>
+            <td mat-footer-cell class="f-600" *matFooterCellDef>
+                <div class="bar"> {{isLoading ? '' : Total }} </div>
+
+            </td>
+
         </ng-container>
         <ng-container matColumnDef="cvalue">
             <th mat-header-cell *matHeaderCellDef class="br t-10 text-right"> Current value </th>
@@ -81,15 +85,18 @@
         </ng-container>
         <ng-container matColumnDef="icons">
             <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-            <td mat-cell *matCellDef="let element" class="t-2"> <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
-                    more_vert
-                </i>
-                <mat-menu #menubank="matMenu">
-                    <button mat-menu-item (click)="openAddPPF(element)">Edit</button>
-                    <button mat-menu-item>Detailed view</button>
-                    <button mat-menu-item>Activity</button>
-                    <button mat-menu-item (click)="deleteModal('SUBSCRIPTION',element)">Delete</button>
-                </mat-menu>
+            <td mat-cell *matCellDef="let element" class="t-2">
+                <div *ngIf="!isLoading">
+                    <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
+                        more_vert
+                    </i>
+                    <mat-menu #menubank="matMenu">
+                        <button mat-menu-item (click)="openAddPPF(element)">Edit</button>
+                        <button mat-menu-item>Detailed view</button>
+                        <button mat-menu-item>Activity</button>
+                        <button mat-menu-item (click)="deleteModal('SUBSCRIPTION',element)">Delete</button>
+                    </mat-menu>
+                </div>
             </td>
             <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>

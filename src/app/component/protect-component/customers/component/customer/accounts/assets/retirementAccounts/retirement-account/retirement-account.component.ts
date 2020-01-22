@@ -643,13 +643,13 @@ export class RetirementAccountComponent implements OnInit {
     this.isLoading = true;
     const obj = this.getObject;
     this.EPSList.data = [{}, {}, {}];
-    // this.custumService.getEPS(obj).subscribe(
-    //   data => this.getEPSRes(data), (error) => {
-    //     this.eventService.showErrorMessage(error);
-    //     this.EPSList.data = [];
-    //     this.isLoading = false;
-    //   }
-    // );
+    this.custumService.getEPS(obj).subscribe(
+      data => this.getEPSRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+        this.EPSList.data = [];
+        this.isLoading = false;
+      }
+    );
   }
   getEPSRes(data) {
     console.log('getEPSRes =', data);

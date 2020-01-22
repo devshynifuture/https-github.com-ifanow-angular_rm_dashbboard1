@@ -56,7 +56,9 @@
                     <td *matCellDef="let element let i = index" class="br" mat-cell>
                         <div class="bar">{{isLoading ? '' : i + 1 }} </div>
                     </td>
-                    <td *matFooterCellDef class="  pl-4 f-600 text-left" mat-footer-cell>Total</td>
+                    <td *matFooterCellDef class="  pl-4 f-600 text-left" mat-footer-cell>
+                        <div class="bar"> {{isLoading ? '' : Total }} </div>
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="owner">
                     <th *matHeaderCellDef class="br t-24" mat-header-cell mat-sort-header="ownerName"> Owner</th>
@@ -256,7 +258,9 @@
             <td *matCellDef="let element; let i = index;" class="br t-2" mat-cell>
                 <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
             </td>
-            <td *matFooterCellDef class=" t-2 f-600 pl-4 text-left" mat-footer-cell>Total</td>
+            <td *matFooterCellDef class=" t-2 f-600 pl-4 text-left" mat-footer-cell>
+                <div class="bar"> {{isLoading ? '' : Total }} </div>
+            </td>
         </ng-container>
         <ng-container matColumnDef="owner">
             <th *matHeaderCellDef class="br t-15" mat-header-cell mat-sort-header="ownerName"> Owner</th>
@@ -441,7 +445,9 @@
                 <td *matCellDef="let element let i = index" class="br t-2" mat-cell>
                     <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                 </td>
-                <td *matFooterCellDef class="t-2 text-left pl-4 f-600" mat-footer-cell> Total</td>
+                <td *matFooterCellDef class="t-2 text-left pl-4 f-600" mat-footer-cell>
+                    <div class="bar"> {{isLoading ? '' : Total }} </div>
+                </td>
             </ng-container>
             <ng-container matColumnDef="owner">
                 <th *matHeaderCellDef class="br t-20" mat-header-cell mat-sort-header="ownerName"> Owner</th>
@@ -575,7 +581,9 @@
                 <td *matCellDef="let element let i = index" class="br t-2" mat-cell>
                     <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                 </td>
-                <td *matFooterCellDef class="t-2 f-600 pl-4 text-left" mat-footer-cell> Total</td>
+                <td *matFooterCellDef class="t-2 f-600 pl-4 text-left" mat-footer-cell>
+                    <div class="bar"> {{isLoading ? '' : Total }} </div>
+                </td>
             </ng-container>
             <ng-container matColumnDef="owner">
                 <th *matHeaderCellDef class="br t-20" mat-header-cell mat-sort-header="ownerName"> Owner</th>
@@ -715,7 +723,9 @@
                 <td *matCellDef="let element let i = index" class="br t-2" mat-cell>
                     <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                 </td>
-                <td *matFooterCellDef class=" t-2 text-left f-600 pl-4" mat-footer-cell> Total</td>
+                <td *matFooterCellDef class=" t-2 text-left f-600 pl-4" mat-footer-cell>
+                    <div class="bar"> {{isLoading ? '' : Total }} </div>
+                </td>
             </ng-container>
             <ng-container matColumnDef="owner">
                 <th *matHeaderCellDef class="br t-20" mat-header-cell mat-sort-header="ownerName"> Owner</th>
@@ -761,7 +771,7 @@
                 </th>
                 <td *matCellDef="let element" class="br t-16" mat-cell>
                     <div class="bar">
-                        {{(element.pensionPayoutFrequencyId == '1') ? 'Daily' : (element.pensionPayoutFrequencyId == '2') ? 'Monthly' : (element.pensionPayoutFrequencyId == '3') ? 'Quarterly' : (element.pensionPayoutFrequencyId == '4') ? 'Semi annually' : 'Annually'}}
+                        {{isLoading ? ' ' : (element.pensionPayoutFrequencyId == '1') ? 'Daily' : (element.pensionPayoutFrequencyId == '2') ? 'Monthly' : (element.pensionPayoutFrequencyId == '3') ? 'Quarterly' : (element.pensionPayoutFrequencyId == '4') ? 'Semi annually' : 'Annually'}}
                     </div>
                 </td>
                 <td *matFooterCellDef mat-footer-cell></td>
