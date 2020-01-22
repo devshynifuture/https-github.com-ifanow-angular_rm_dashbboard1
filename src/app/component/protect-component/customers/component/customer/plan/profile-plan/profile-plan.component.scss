@@ -121,3 +121,7 @@
     }
   }
 }
+
+::ng-deep .mat-card:not([class*=mat-elevation-z]) {
+  box-shadow: none;
+}
