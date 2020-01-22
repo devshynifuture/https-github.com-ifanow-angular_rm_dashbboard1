@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {UtilService} from '../../../../../../../services/util.service';
-
+import {SetDateFooter} from './set-date-footer.component'
 @Component({
   selector: 'app-sudscription-table-filter',
   templateUrl: './sudscription-table-filter.component.html',
@@ -26,6 +26,7 @@ export class SudscriptionTableFilterComponent implements OnInit {
   }
   filterDate: any = []
   onlyDateFilter:boolean = false;
+  rangesFooter = SetDateFooter;
   ngOnInit() {
     this.chipStatus = this.dataToFilter.statusFilter;
     this.chipDate = this.dataToFilter.dateFilter;
@@ -33,6 +34,7 @@ export class SudscriptionTableFilterComponent implements OnInit {
       this.onlyDateFilter = this.dataToFilter.filterQuotation
     }
     console.log(this.dataToFilter, this.chipStatus, this.chipDate, " dataToFilter 123 ");
+  
   }
   
 
@@ -57,28 +59,20 @@ export class SudscriptionTableFilterComponent implements OnInit {
       this.filterDataArr = [];
       console.log(this.filterStatus);
     } else {
-      // this.lastFilterDataId = 0;
-      // _.remove(this.filterStatus, this.senddataTo);
+      
     }
     this.filterJson.statusFilterJson = this.filterStatus;
     console.log(this.filterStatus, 'this.filterStatus 123');
     this.filterRes.emit(this.filterJson);
-    // this.callFilter(false);
   }
 
   selectedDateRange= {};
 
   orgValueChange(selectedDateRange) {
-    // const beginDate = new Date();
-    // beginDate.setMonth(beginDate.getMonth() - 1);
-    // UtilService.getStartOfTheDay(beginDate);
-
-    // const endDate = new Date();
-    // UtilService.getStartOfTheDay(endDate);
      
     this.filterJson.dateFilterJson = {begin: selectedDateRange.begin, end: selectedDateRange.end};
     this.filterRes.emit(this.filterJson);
-  selectedDateRange = {};
+    selectedDateRange = {};
 
   
   }
@@ -90,7 +84,6 @@ export class SudscriptionTableFilterComponent implements OnInit {
       this.filterDate = [];
     }
     this.filterDataArr = [];
-    // this.lastFilterDataId = 0;
     this.filterDate.push((dateFilter == '1: Object') ? 1 : (dateFilter == '2: Object') ? 2 : 3);
     console.log(this.selectedDateFilter, 'addFilters', dateFilter);
     const beginDate = new Date();
@@ -110,18 +103,15 @@ export class SudscriptionTableFilterComponent implements OnInit {
 
   removeDate(item) {
     console.log(this.filterDate, 'this.filterDate 123 r');
-    // this.dataSource.data = [{}, {}, {}];
     this.selectedDateFilter = 'dateFilter';
     this.filterDate.splice(item, 1);
-    // this.lastFilterDataId = 0;
-    // this.callFilter(false);
+    
     this.filterRes.emit(this.filterJson);
 
   }
 
   remove(item) {
     console.log(item, 'item123');
-    // this.dataSource.data = [{}, {}, {}];
     if (this.filterStatus[item].name == this.selectedStatusFilter.name) {
       this.selectedStatusFilter = 'statusFilter';
     }
@@ -130,36 +120,16 @@ export class SudscriptionTableFilterComponent implements OnInit {
     this.filterDataArr = this.filterDataArr.filter((x) => {
       x.status != item.value;
     });
-    // this.lastFilterDataId = 0;
-    // this.callFilter(false);
+   
     this.filterRes.emit(this.filterJson);
 
   }
 
-  onClose(event) {
-    console.log('SudscriptionTableFilterComponent onClose event : ', event);
+  onClose() {
+    console.log('SudscriptionTableFilterComponent onClose event : ');
+    this.orgValueChange(this.selectedDateRange);
   }
 
 
 }
 
-// @Component({
-//   selector: 'app-sudscription-table-filter',
-//   templateUrl: './set-date-footer.html',
-//   styleUrls: ['./sudscription-table-filter.component.scss']
-// })
-// export class SetDateFooter {
-//   private destroyed = new Subject<void>();
-//   constructor(
-//     private calendar: SatCalendar<Date>,
-//     cdr: ChangeDetectorRef
-// ) {
-//     calendar.stateChanges
-//         .pipe(takeUntil(this.destroyed))
-//         .subscribe(() => cdr.markForCheck())
-
-//         console.log(this.calendar.beginDate, this.calendar.endDate, "footer date data");
-        
-// }
-
-// }
