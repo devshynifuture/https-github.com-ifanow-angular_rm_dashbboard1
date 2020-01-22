@@ -92,9 +92,11 @@ export class AddExpensesComponent implements OnInit {
       category: [(data == undefined) ? '' : (data.expenseCategoryId == undefined) ? data.budgetCategoryId : data.expenseCategoryId, [Validators.required]],
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       paymentModeId: [(data == undefined) ? '' : data.paymentModeId + '', [Validators.required]],
+      familyMemberId : [(data == undefined) ? '' : data.familyMemberId + '', [Validators.required]],
       isRecuring: false
     });
-    this.expenseList = this.constantService.expenseList
+    this.expenseList = this.constantService.expenseList;
+    this.familyMemberId = this.expenses.controls.familyMemberId.value
   }
   getdataFormRec(data) {
     this.getFlag = data.flag
@@ -116,9 +118,11 @@ export class AddExpensesComponent implements OnInit {
       category: [(data == undefined) ? '' : (data.expenseCategoryId == undefined) ? data.budgetCategoryId : data.expenseCategoryId, [Validators.required]],
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       paymentModeId: [(data == undefined) ? '' : data.paymentModeId + '', [Validators.required]],
+      familyMemberId : [(data == undefined) ? '' : data.familyMemberId + '', [Validators.required]],
       isRecuring: true,
     });
     this.expenseList = this.constantService.expenseList
+    this.familyMemberId = this.expenses.controls.familyMemberId.value
   }
 
   getFormControl(): any {
@@ -171,8 +175,8 @@ export class AddExpensesComponent implements OnInit {
     } else if (this.recuring.get('continueTill').invalid) {
       this.recuring.get('continueTill').markAsTouched();
       return
-    } else if (this.recuring.get('familyMember').invalid) {
-      this.recuring.get('familyMember').markAsTouched();
+    } else if (this.recuring.get('ownerName').invalid) {
+      this.recuring.get('ownerName').markAsTouched();
       return
     } else {
       let obj = {
@@ -254,8 +258,8 @@ export class AddExpensesComponent implements OnInit {
     } else if (this.expenses.get('paymentModeId').invalid) {
       this.expenses.get('paymentModeId').markAsTouched();
       return
-    } else if (this.expenses.get('familyMember').invalid) {
-      this.expenses.get('familyMember').markAsTouched();
+    } else if (this.expenses.get('ownerName').invalid) {
+      this.expenses.get('ownerName').markAsTouched();
       return
     } else {
       let obj = {

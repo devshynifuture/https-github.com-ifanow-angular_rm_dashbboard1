@@ -158,7 +158,7 @@
                 <h5 class="m-0 pt-8">Family Member</h5>
                 <div class="form-group mb-0 pt-8">
                     <mat-form-field class="w-100">
-                        <mat-select formControlName="familyMember" class="form-control br-0">
+                        <mat-select formControlName="ownerName" class="form-control br-0">
                             <mat-option value=''>Search family members</mat-option>
                             <mat-option *ngFor="let f of familyMember" [value]="f.userName"
                                 (click)="selectClient($event, f)">
