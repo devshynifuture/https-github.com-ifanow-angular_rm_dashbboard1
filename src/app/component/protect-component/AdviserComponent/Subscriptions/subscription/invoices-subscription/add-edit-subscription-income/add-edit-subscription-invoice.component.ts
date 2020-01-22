@@ -349,7 +349,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     console.log('updateInvoiceInfoRes', data);
     if (data == 1) {
       this.cancelAddInvoice.emit(false);
-      // this.Close('close', true);
+      this.Close('close', true);
     }
   }
 
@@ -415,7 +415,9 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       this.feeCalc = false;
     } else {
 
-      (this.invoiceTab == 'invoiceUpperSlider') ? this.subInjectService.rightSliderData(state) : this.subInjectService.rightSideData(state);
+      // (this.invoiceTab == 'invoiceUpperSlider') ?
+      this.subInjectService.rightSliderData(state)
+      this.subInjectService.rightSideData(state);
       // this.valueChange.emit(closeObj);
     }
 

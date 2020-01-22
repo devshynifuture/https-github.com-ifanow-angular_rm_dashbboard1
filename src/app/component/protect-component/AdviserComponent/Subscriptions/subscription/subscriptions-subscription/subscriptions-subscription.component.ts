@@ -102,6 +102,12 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     {name: 'Last billing date', value: 2},
     {name: 'Next billing date', value: 3}
   ];
+  passFilterData ={
+    data:"",
+    selectedCount:"",
+    statusFilter:this.chips,
+    dateFilter:this.dateChips
+  };
   filterStatus = [];
   filterDate = [];
   statusIdList = [];
@@ -185,7 +191,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       clientId: 0,
       flag: 0,
       dateType: 0,
-      limit: 10,
+      limit: -1,
       offset: this.lastDataId > 0 ? this.lastDataId : 0,
       order: 0,
     };
@@ -246,6 +252,18 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       this.dataSource.data = [];
       this.noData = 'No Data Found';
     }
+  }
+
+  getFiterRes(data){
+    console.log(data , "data for filter");
+    this.filterStatus = data.statusFilterJson;
+    this.filterDate = data.dateFilterArr;
+    this.selectedDateRange = data.dateFilterJson;
+    this.lastFilterDataId = 0;
+    this.filterDataArr = [];
+    this.dataSource.data = [{}, {}, {}];
+      this.isLoading = true;
+    this.callFilter(false);
   }
 
   openPlanSlider(value, state, data) {
@@ -533,7 +551,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     console.log(this.lastFilterDataId, this.statusIdLength < this.statusIdList.length, 'aaaa');
     const obj = {
       advisorId: this.advisorId,
-      limit: 10,
+      limit: -1,
       offset: this.lastFilterDataId,
       fromDate: (this.filterDate.length > 0) ? this.datePipe.transform(this.selectedDateRange.begin, 'yyyy-MM-dd') : null,
       toDate: (this.filterDate.length > 0) ? this.datePipe.transform(this.selectedDateRange.end, 'yyyy-MM-dd') : null,

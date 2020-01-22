@@ -11,6 +11,8 @@
 }
 
 .copyDocumentcomp {
+    height: 250px;
+    overflow: auto;
     #table-low {
         tr.mat-header-row {
             display: none;

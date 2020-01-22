@@ -86,6 +86,9 @@ export class RecuringDepositComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
+  ownerDetails(value){
+    this.familyMemberId=value.id;
+  }
   lisNominee(value) {
     console.log(value)
     this.nomineesListFM = Object.assign([], value.familyMembersList);
@@ -104,9 +107,9 @@ export class RecuringDepositComponent implements OnInit {
   }
 
   getDateYMD() {
-    let now = moment();
     this.tenure = moment(this.recuringDeposit.controls.commencementDate.value).add(this.recuringDeposit.controls.tenure.value, 'months');
     this.getDate = this.datePipe.transform(this.tenure, 'yyyy-MM-dd')
+    console.log('recurring deposit',this.getDate)
     return this.getDate;
   }
 
@@ -163,7 +166,6 @@ export class RecuringDepositComponent implements OnInit {
       return;
     } else if (this.recuringDeposit.get('commencementDate').invalid) {
       this.recuringDeposit.get('commencementDate').markAsTouched();
-      // this.isCommencementDate = true;
       return;
     } else if (this.recuringDeposit.get('tenure').invalid) {
       this.recuringDeposit.get('tenure').markAsTouched();
@@ -185,7 +187,8 @@ export class RecuringDepositComponent implements OnInit {
         commencementDate: this.datePipe.transform(this.recuringDeposit.controls.commencementDate.value, 'yyyy-MM-dd'),
         linkedBankAccount: this.recuringDeposit.controls.linkBankAc.value,
         description: this.recuringDeposit.controls.description.value,
-        maturityDate: this.datePipe.transform(this.maturityDate, 'yyyy-MM-dd'),
+        tenure:this.recuringDeposit.controls.tenure.value,
+        maturityDate: this.maturityDate,
         bankName: this.recuringDeposit.controls.bankName.value,
         rdNumber: this.recuringDeposit.controls.rdNo.value,
         interestCompounding: this.recuringDeposit.controls.compound.value,

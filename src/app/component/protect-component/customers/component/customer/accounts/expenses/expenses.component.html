@@ -58,7 +58,7 @@
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="expense">
-                                                <th mat-header-cell *matHeaderCellDef class="br t-15"> Expense </th>
+                                                <th mat-header-cell *matHeaderCellDef class="br t-15"> Category </th>
                                                 <td *matCellDef="let element" class="br t-15" mat-cell>
                                                     <div class="bar">
                                                         {{element.expenseType}}
@@ -112,7 +112,7 @@
                                                         [matMenuTriggerFor]="menu4">more_vert</i>
                                                     <mat-menu #menu4="matMenu">
                                                         <button mat-menu-item
-                                                            (click)="element.isRecuring = false;openExpenses('editExpenses',element)">Edit</button>
+                                                            (click)="element.isRecuring = false;openExpenses('addExpenses',element)">Edit</button>
                                                         <button mat-menu-item>Deatiled View</button>
                                                         <button mat-menu-item>Activity</button>
                                                         <button mat-menu-item
@@ -148,7 +148,7 @@
                                                     </td>
                                                 </ng-container>
                                                 <ng-container matColumnDef="expense">
-                                                    <th mat-header-cell *matHeaderCellDef class="br t-15"> Expense </th>
+                                                    <th mat-header-cell *matHeaderCellDef class="br t-15"> Category </th>
                                                     <td mat-cell *matCellDef="let element" class="br t-15">
                                                         <div class="bar">
                                                             {{element.expenseType}}
@@ -206,7 +206,7 @@
                                                         </i>
                                                         <mat-menu #menu4="matMenu">
                                                             <button mat-menu-item
-                                                                (click)="element.isRecuring = true;openExpenses('editExpenses',element)">Edit</button>
+                                                                (click)="element.isRecuring = true;openExpenses('addExpenses',element)">Edit</button>
                                                             <button mat-menu-item>Deatiled View</button>
                                                             <button mat-menu-item>Activity</button>
                                                             <button mat-menu-item
@@ -270,7 +270,7 @@
                                 <h4 class="m-0 text-black roboto pt-8">Budget</h4>
                             </div>
                             <div class="col-md-8 p-0 right text-right"
-                                *ngIf="dataSource5.filteredData.length > 0 && dataSource4.filteredData.length > 0">
+                                *ngIf="dataSource5.filteredData.length > 0 || dataSource4.filteredData.length > 0">
                                 <button mat-stroked-button class="br-0 btn-sm p-0 min-52 text-custom">Help</button>
                                 <img src="assets/images/svg/download-bordered.svg" class="c-p">
                                 <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
@@ -279,7 +279,7 @@
                                     FILTERS
                                 </button>
                                 <button mat-stroked-button class="btn-primary addon v-middle"
-                                    (click)="openExpensesBuget('addBudget')">
+                                    (click)="openExpenses('addBudget')">
                                     <i class="material-icons">add</i>
                                     ADD NEW
                                 </button>
@@ -294,17 +294,17 @@
                                         appSkeletonLoading [appSkeletonLoading]="isLoading">
                                         <ng-container matColumnDef="no">
                                             <th mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
-                                            <td mat-cell *matCellDef="let element" class="br t-2">
+                                            <td mat-cell *matCellDef="let element;  let i = index;" class="br t-2">
                                                 <div class="bar">
-                                                    {{element.no}}
+                                                    {{i + 1}}
                                                 </div>
                                             </td>
                                         </ng-container>
                                         <ng-container matColumnDef="expense">
-                                            <th mat-header-cell *matHeaderCellDef class="br t-15"> Expense </th>
+                                            <th mat-header-cell *matHeaderCellDef class="br t-15"> Category </th>
                                             <td mat-cell *matCellDef="let element" class="br t-15">
                                                 <div class="bar">
-                                                    {{element.expense}}
+                                                    {{element.expenseType}}
                                                 </div>
                                             </td>
                                         </ng-container>
@@ -314,7 +314,7 @@
                                             <td mat-cell *matCellDef="let element" class="br t-10 text-right">
 
                                                 <div class="bar">
-                                                    {{element.budget}}
+                                                    {{element.amount}}
                                                 </div>
                                             </td>
                                         </ng-container>
@@ -341,7 +341,7 @@
                                                     [matMenuTriggerFor]="menu4">more_vert</i>
                                                 <mat-menu #menu4="matMenu">
                                                     <button mat-menu-item
-                                                        (click)="element.isRecuring = false;openExpensesBuget('addBudget',element)">Edit</button>
+                                                        (click)="element.isRecuring = false;openExpenses('addBudget',element)">Edit</button>
                                                     <button mat-menu-item>Deatiled View</button>
                                                     <button mat-menu-item>Activity</button>
                                                     <button mat-menu-item
@@ -357,7 +357,7 @@
                                         <img class="width400" src="assets/images/svg/clients-img.svg">
                                         <h4 class="text-center pt-12">{{noData}}</h4>
                                         <button mat-stroked-button class="btn-primary proximaFont addon v-middle"
-                                            (click)="openExpensesBuget('addBudget')"> ADD NEW
+                                            (click)="openExpenses('addBudget')"> ADD NEW
                                         </button>
                                     </div>
                                 </div>
@@ -378,7 +378,7 @@
                                             </td>
                                         </ng-container>
                                         <ng-container matColumnDef="expense">
-                                            <th mat-header-cell *matHeaderCellDef class="br t-15"> Expense </th>
+                                            <th mat-header-cell *matHeaderCellDef class="br t-15"> Category </th>
                                             <td mat-cell *matCellDef="let element" class="br t-15">
                                                 <div class="bar">
                                                     {{element.expense}}
@@ -416,7 +416,7 @@
                                                     [matMenuTriggerFor]="menu4">more_vert</i>
                                                 <mat-menu #menu4="matMenu">
                                                     <button mat-menu-item
-                                                        (click)="element.isRecuring = true;openExpensesBuget('addBudget',element)">Edit</button>
+                                                        (click)="element.isRecuring = true;openExpenses('addBudget',element)">Edit</button>
                                                     <button mat-menu-item>Deatiled View</button>
                                                     <button mat-menu-item>Activity</button>
                                                     <button mat-menu-item

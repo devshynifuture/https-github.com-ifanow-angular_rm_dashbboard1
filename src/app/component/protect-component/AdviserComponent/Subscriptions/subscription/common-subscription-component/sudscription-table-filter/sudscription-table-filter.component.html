@@ -8,9 +8,10 @@
         <mat-chip-list class="newDateIcon">
           <mat-chip *ngFor="let dateFilter of filterDate; let i = index" class="bg-white b-a c-p f-400 p-12">
             <p>{{dateFilter.name}}</p>
-            <input (click)="picker2.open()" [(ngModel)]="selectedDateRange" [max]="maxDate"
+            <input (click)="picker2.open()" [(ngModel)]="selectedDateRange" [max]="maxDate" 
               [satDatepicker]="picker2" class="pL-20" matInput placeholder="Choose a date" readonly>
-            <sat-datepicker #picker2 [closeAfterSelection]="false" [rangeMode]="true">
+            <sat-datepicker #picker2 (closed)="onClose()" [closeAfterSelection]="false" [calendarFooterComponent]="rangesFooter"
+            [selectFirstDateOnClose]="true" [rangeMode]="true">
             </sat-datepicker>
             <sat-datepicker-toggle [for]="picker2" matSuffix></sat-datepicker-toggle>
             <i (click)="removeDate(i)" class="material-icons text-custom c-p">
@@ -22,7 +23,7 @@
     </div>
     <div class="col-md-4 right text-right p-0">
       <div class="row">
-        <div class="col-md-6 pr-0">
+        <div class="col-md-6 pr-0" *ngIf = "!onlyDateFilter">
           <mat-form-field>
             <mat-select (selectionChange)="addFilters(selectedStatusFilter)" [(ngModel)]='selectedStatusFilter'
               class="form-control br-0" id="sel11">
@@ -31,11 +32,21 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="col-md-6 pr-0">
+        <div class="col-md-6 pr-0" *ngIf = "!onlyDateFilter">
           <mat-form-field>
             <mat-select (selectionChange)="addFiltersDate($event)" [(ngModel)]='selectedDateFilter'
               class="form-control br-0" id="sel12">
-              <mat-option [disabled]="true" value="dateFilter">FILTER TWO</mat-option>
+              <mat-option  [disabled]="true" value="dateFilter">FILTER TWO</mat-option>
+              <mat-option *ngFor="let dateAdd of chipDate" [value]="dateAdd">{{dateAdd.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-6 pr-0 text-right" *ngIf = "onlyDateFilter">
+          <mat-form-field>
+            <mat-select (selectionChange)="addFiltersDate($event)" [(ngModel)]='selectedDateFilter'
+              class="form-control br-0" id="sel12">
+              <mat-option [disabled]="true" value="dateFilter">FILTER ONE</mat-option>
               <mat-option *ngFor="let dateAdd of chipDate" [value]="dateAdd">{{dateAdd.name}}
               </mat-option>
             </mat-select>

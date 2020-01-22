@@ -39,6 +39,7 @@ import {AddDocumentComponent} from './subscription/common-subscription-component
 import {RecordPaymentComponent} from '../../customers/component/common-component/record-payment/record-payment.component';
 import {FeeCalculationsComponent} from '../../customers/component/common-component/fee-calculations/fee-calculations.component';
 import {AddEditSubscriptionInvoiceComponent} from './subscription/invoices-subscription/add-edit-subscription-income/add-edit-subscription-invoice.component';
+import { DeleteSubscriptionComponent } from './subscription/common-subscription-component/delete-subscription/delete-subscription.component';
 
 export const componentList = [
   OverviewComponent,
@@ -59,6 +60,8 @@ export const componentList = [
   EmailQuotationComponent,
   InvoiceComponent,
   PayeeSettingsComponent,
+  DeleteSubscriptionComponent,
+
   ClientUpperSubscriptionComponent,
   CreateSubscriptionComponent,
   AddFixedFeeComponent,
@@ -74,7 +77,8 @@ export const componentList = [
   AddDocumentComponent,
   RecordPaymentComponent,
   FeeCalculationsComponent,
-  AddEditSubscriptionInvoiceComponent
+  AddEditSubscriptionInvoiceComponent,
+  
 ]
 
 @NgModule({
@@ -87,10 +91,11 @@ export const componentList = [
     ReactiveFormsModule,
     CommonComponentModule,
     CustomHtmlModule,
-    CustomDirectiveModule
+    CustomDirectiveModule,
+    
   ],
   exports: [componentList],
-  entryComponents: [componentList, SubscriptionPopupComponent, AddDocumentComponent]
+  entryComponents: [componentList, SubscriptionPopupComponent, AddDocumentComponent, ]
 })
 
 export class SubscriptionUpperEntry {

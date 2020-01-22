@@ -3,12 +3,13 @@ import { SubscriptionService } from '../../subscription.service';
 import { SubscriptionInject } from '../../subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatSort, MatTableDataSource, MAT_DATE_FORMATS } from '@angular/material';
 import { AuthService } from '../../../../../../auth-service/authService';
 import { UtilService, ValidatorType } from '../../../../../../services/util.service';
 import { DatePipe } from '@angular/common';
 import { element } from 'protractor';
 import {Router} from '@angular/router';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 
 export interface PeriodicElement {
   date: string;
@@ -25,7 +26,10 @@ export interface PeriodicElement {
 @Component({
   selector: 'app-invoices-subscription',
   templateUrl: './invoices-subscription.component.html',
-  styleUrls: ['./invoices-subscription.component.scss']
+  styleUrls: ['./invoices-subscription.component.scss'],
+  providers: [
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+  ],
 })
 export class InvoicesSubscriptionComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
