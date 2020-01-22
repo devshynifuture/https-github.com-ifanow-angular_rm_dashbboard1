@@ -177,7 +177,7 @@
                                                 <th *matHeaderCellDef mat-header-cell> Fee amount</th>
                                                 <td (click)="Open(element)" *matCellDef="let element" class="c-p" mat-cell>
                                                     <div class="bar text-primary text-underline">
-                                                      {{isLoadingSubSummary ? ' ' : 'View details'}}
+                                                        {{isLoadingSubSummary ? ' ' : 'View details'}}
                                                     </div>
                                                 </td>
                                             </ng-container>
@@ -195,9 +195,12 @@
                                             <ng-container matColumnDef="icons">
                                                 <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;">
                                                 </th>
-                                                <td *matCellDef="let element" mat-cell style="width: 2%"><i [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
-                                                        more_vert
-                                                    </i>
+                                                <td *matCellDef="let element" mat-cell style="width: 2%">
+                                                    <div class="bar">
+                                                        <i *ngIf="!isLoadingSubSummary" [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
+                                                            more_vert
+                                                        </i>
+                                                    </div>
                                                     <mat-menu #menu="matMenu">
                                                         <a (click)="Open(element)" mat-menu-item>View & Modify fee
                                                             structure</a>
