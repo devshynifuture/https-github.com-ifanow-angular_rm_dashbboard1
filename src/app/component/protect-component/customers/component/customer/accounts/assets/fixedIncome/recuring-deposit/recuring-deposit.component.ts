@@ -86,6 +86,9 @@ export class RecuringDepositComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
+  ownerDetails(value){
+    this.familyMemberId=value.id;
+  }
   lisNominee(value) {
     console.log(value)
     this.nomineesListFM = Object.assign([], value.familyMembersList);
@@ -184,6 +187,7 @@ export class RecuringDepositComponent implements OnInit {
         commencementDate: this.datePipe.transform(this.recuringDeposit.controls.commencementDate.value, 'yyyy-MM-dd'),
         linkedBankAccount: this.recuringDeposit.controls.linkBankAc.value,
         description: this.recuringDeposit.controls.description.value,
+        tenure:this.recuringDeposit.controls.tenure.value,
         maturityDate: this.maturityDate,
         bankName: this.recuringDeposit.controls.bankName.value,
         rdNumber: this.recuringDeposit.controls.rdNo.value,
