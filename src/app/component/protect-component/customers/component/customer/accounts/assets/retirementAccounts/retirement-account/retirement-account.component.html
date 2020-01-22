@@ -56,7 +56,9 @@
                     <td *matCellDef="let element let i = index" class="br" mat-cell>
                         <div class="bar">{{isLoading ? '' : i + 1 }} </div>
                     </td>
-                    <td *matFooterCellDef class="  pl-4 f-600 text-left" mat-footer-cell>Total</td>
+                    <td *matFooterCellDef class="  pl-4 f-600 text-left" mat-footer-cell>
+                        <div class="bar"> {{isLoading ? '' : Total }} </div>
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="owner">
                     <th *matHeaderCellDef class="br t-24" mat-header-cell mat-sort-header="ownerName"> Owner</th>
@@ -87,17 +89,7 @@
                         <div class="bar"> {{ sumOfemployeesMonthlyContribution || ' '}} </div>
                     </td>
                 </ng-container>
-                <!-- <ng-container matColumnDef="empc">
-                    <th mat-sort-header="employersMonthlyContribution" mat-header-cell *matHeaderCellDef class="br text-right t-18">
-                        Employer's <br> contribution
-                    </th>
-                    <td mat-cell *matCellDef="let element" class="br t-20 text-right">
-                        <div class="bar" appFormatNumber> {{ element.employersMonthlyContribution }} </div>
-                    </td>
-                    <td mat-footer-cell *matFooterCellDef class="br t-20 f-600 p-8 text-right" appFormatNumber [value]="sumOfemployersMonthlyContribution">
-                        <div class="bar"> {{ sumOfemployersMonthlyContribution || ' '}} </div>
-                    </td>
-                </ng-container> -->
+
                 <ng-container matColumnDef="rate">
                     <th mat-sort-header="rateOfReturns" mat-header-cell *matHeaderCellDef class="br t-18 text-right t-7">
                         Rate of returns
@@ -153,17 +145,20 @@
                 </ng-container>
                 <ng-container matColumnDef="icons">
                     <th *matHeaderCellDef class="t-2" mat-header-cell></th>
-                    <td *matCellDef="let element" class="t-2" mat-cell><i [matMenuTriggerFor]="menubank" class="material-icons c-p text-black">
-                            more_vert
-                        </i>
-                        <mat-menu #menubank="matMenu">
-                            <button mat-menu-item class="c-p" (click)="openAddEPF(element)">Edit</button>
-                            <button mat-menu-item class="c-p" (click)="openDetailedViewEPF(element)">Detailed
-                                view
-                            </button>
-                            <button mat-menu-item class="c-p">Activity</button>
-                            <button mat-menu-item class="c-p" (click)="deleteModal('EPF',element)">Delete</button>
-                        </mat-menu>
+                    <td *matCellDef="let element" class="t-2" mat-cell>
+                        <div *ngIf="!isLoading">
+                            <i [matMenuTriggerFor]="menubank" class="material-icons c-p text-black">
+                                more_vert
+                            </i>
+                            <mat-menu #menubank="matMenu">
+                                <button mat-menu-item class="c-p" (click)="openAddEPF(element)">Edit</button>
+                                <button mat-menu-item class="c-p" (click)="openDetailedViewEPF(element)">Detailed
+                                    view
+                                </button>
+                                <button mat-menu-item class="c-p">Activity</button>
+                                <button mat-menu-item class="c-p" (click)="deleteModal('EPF',element)">Delete</button>
+                            </mat-menu>
+                        </div>
                     </td>
                     <td *matFooterCellDef mat-footer-cell></td>
                 </ng-container>
@@ -263,7 +258,9 @@
             <td *matCellDef="let element; let i = index;" class="br t-2" mat-cell>
                 <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
             </td>
-            <td *matFooterCellDef class=" t-2 f-600 pl-4 text-left" mat-footer-cell>Total</td>
+            <td *matFooterCellDef class=" t-2 f-600 pl-4 text-left" mat-footer-cell>
+                <div class="bar"> {{isLoading ? '' : Total }} </div>
+            </td>
         </ng-container>
         <ng-container matColumnDef="owner">
             <th *matHeaderCellDef class="br t-15" mat-header-cell mat-sort-header="ownerName"> Owner</th>
@@ -324,18 +321,20 @@
         <ng-container matColumnDef="icons">
             <th *matHeaderCellDef class="t-2" mat-header-cell></th>
             <td mat-cell *matCellDef="let element" class="t-2">
-                <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
-                            more_vert
-                        </i>
-                <mat-menu #menubank="matMenu">
-                    <button mat-menu-item class="c-p" *ngIf="element.schemeChoice != undefined" (click)="openAddSummaryPort(element)">Edit
-                            </button>
-                    <button mat-menu-item class="c-p" *ngIf="element.schemeChoice == undefined" (click)="openAddSchemeHolding(element)">Edit
-                            </button>
-                    <button mat-menu-item class="c-p">Detailed view</button>
-                    <button mat-menu-item class="c-p">Activity</button>
-                    <button mat-menu-item class="c-p" (click)="deleteModal('NPS',element)">Delete</button>
-                </mat-menu>
+                <div *ngIf="!isLoading">
+                    <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
+                                more_vert
+                            </i>
+                    <mat-menu #menubank="matMenu">
+                        <button mat-menu-item class="c-p" *ngIf="element.schemeChoice != undefined" (click)="openAddSummaryPort(element)">Edit
+                                </button>
+                        <button mat-menu-item class="c-p" *ngIf="element.schemeChoice == undefined" (click)="openAddSchemeHolding(element)">Edit
+                                </button>
+                        <button mat-menu-item class="c-p">Detailed view</button>
+                        <button mat-menu-item class="c-p">Activity</button>
+                        <button mat-menu-item class="c-p" (click)="deleteModal('NPS',element)">Delete</button>
+                    </mat-menu>
+                </div>
             </td>
             <td *matFooterCellDef mat-footer-cell></td>
         </ng-container>
@@ -446,7 +445,9 @@
                 <td *matCellDef="let element let i = index" class="br t-2" mat-cell>
                     <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                 </td>
-                <td *matFooterCellDef class="t-2 text-left pl-4 f-600" mat-footer-cell> Total</td>
+                <td *matFooterCellDef class="t-2 text-left pl-4 f-600" mat-footer-cell>
+                    <div class="bar"> {{isLoading ? '' : Total }} </div>
+                </td>
             </ng-container>
             <ng-container matColumnDef="owner">
                 <th *matHeaderCellDef class="br t-20" mat-header-cell mat-sort-header="ownerName"> Owner</th>
@@ -519,17 +520,19 @@
             <ng-container matColumnDef="icons">
                 <th *matHeaderCellDef class="t-2" mat-header-cell></th>
                 <td *matCellDef="let element" class="t-2" mat-cell>
-                    <i [matMenuTriggerFor]="menubank" class="material-icons c-p text-black">
-                        more_vert
-                    </i>
-                    <mat-menu #menubank="matMenu">
-                        <button (click)="openAddGratuity(element)" class="c-p" mat-menu-item>Edit</button>
-                        <button (click)="detailedViewGratuity(element)" class="c-p" mat-menu-item>Detailed
-                            view
-                        </button>
-                        <button class="c-p" mat-menu-item>Activity</button>
-                        <button (click)="deleteModal('GRATUITY',element)" class="c-p" mat-menu-item>Delete</button>
-                    </mat-menu>
+                    <div *ngIf="!isLoading">
+                        <i [matMenuTriggerFor]="menubank" class="material-icons c-p text-black">
+                            more_vert
+                        </i>
+                        <mat-menu #menubank="matMenu">
+                            <button (click)="openAddGratuity(element)" class="c-p" mat-menu-item>Edit</button>
+                            <button (click)="detailedViewGratuity(element)" class="c-p" mat-menu-item>Detailed
+                                view
+                            </button>
+                            <button class="c-p" mat-menu-item>Activity</button>
+                            <button (click)="deleteModal('GRATUITY',element)" class="c-p" mat-menu-item>Delete</button>
+                        </mat-menu>
+                    </div>
                 </td>
                 <td *matFooterCellDef mat-footer-cell></td>
             </ng-container>
@@ -578,7 +581,9 @@
                 <td *matCellDef="let element let i = index" class="br t-2" mat-cell>
                     <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                 </td>
-                <td *matFooterCellDef class="t-2 f-600 pl-4 text-left" mat-footer-cell> Total</td>
+                <td *matFooterCellDef class="t-2 f-600 pl-4 text-left" mat-footer-cell>
+                    <div class="bar"> {{isLoading ? '' : Total }} </div>
+                </td>
             </ng-container>
             <ng-container matColumnDef="owner">
                 <th *matHeaderCellDef class="br t-20" mat-header-cell mat-sort-header="ownerName"> Owner</th>
@@ -711,14 +716,16 @@
             </button>
         </div>
     </div>
-    <div class="example-container mt-8 col-md-12 p-0 real-estate" #EPS #eps>
+    <div class="example-container overflow-hidden mt-8 col-md-12 p-0 real-estate" #EPS #eps>
         <table *ngIf="EPSList.filteredData.length > 0" #epsListTable="matSort" [dataSource]="EPSList" id="table-low" mat-table matSort class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="no">
                 <th *matHeaderCellDef class="br t-2" mat-header-cell mat-sort-header="no"> No</th>
                 <td *matCellDef="let element let i = index" class="br t-2" mat-cell>
                     <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                 </td>
-                <td *matFooterCellDef class=" t-2 text-left f-600 pl-4" mat-footer-cell> Total</td>
+                <td *matFooterCellDef class=" t-2 text-left f-600 pl-4" mat-footer-cell>
+                    <div class="bar"> {{isLoading ? '' : Total }} </div>
+                </td>
             </ng-container>
             <ng-container matColumnDef="owner">
                 <th *matHeaderCellDef class="br t-20" mat-header-cell mat-sort-header="ownerName"> Owner</th>
@@ -764,7 +771,7 @@
                 </th>
                 <td *matCellDef="let element" class="br t-16" mat-cell>
                     <div class="bar">
-                        {{(element.pensionPayoutFrequencyId == '1') ? 'Daily' : (element.pensionPayoutFrequencyId == '2') ? 'Monthly' : (element.pensionPayoutFrequencyId == '3') ? 'Quarterly' : (element.pensionPayoutFrequencyId == '4') ? 'Semi annually' : 'Annually'}}
+                        {{isLoading ? ' ' : (element.pensionPayoutFrequencyId == '1') ? 'Daily' : (element.pensionPayoutFrequencyId == '2') ? 'Monthly' : (element.pensionPayoutFrequencyId == '3') ? 'Quarterly' : (element.pensionPayoutFrequencyId == '4') ? 'Semi annually' : 'Annually'}}
                     </div>
                 </td>
                 <td *matFooterCellDef mat-footer-cell></td>
@@ -787,15 +794,17 @@
             <ng-container matColumnDef="icons">
                 <th *matHeaderCellDef class="t-2" mat-header-cell></th>
                 <td *matCellDef="let element" class="t-2" mat-cell>
-                    <i [matMenuTriggerFor]="menubank" class="material-icons c-p text-black">
-                        more_vert
-                    </i>
-                    <mat-menu #menubank="matMenu">
-                        <button (click)="openAddEPS(element)" class="c-p" mat-menu-item>Edit</button>
-                        <button (click)="detailedViewEPS(element)" class="c-p" mat-menu-item>Detailed view</button>
-                        <button class="c-p" mat-menu-item>Activity</button>
-                        <button (click)="deleteModal('EPS',element)" class="c-p" mat-menu-item>Delete</button>
-                    </mat-menu>
+                    <div *ngIf="!isLoading">
+                        <i [matMenuTriggerFor]="menubank" class="material-icons c-p text-black">
+                            more_vert
+                        </i>
+                        <mat-menu #menubank="matMenu">
+                            <button (click)="openAddEPS(element)" class="c-p" mat-menu-item>Edit</button>
+                            <button (click)="detailedViewEPS(element)" class="c-p" mat-menu-item>Detailed view</button>
+                            <button class="c-p" mat-menu-item>Activity</button>
+                            <button (click)="deleteModal('EPS',element)" class="c-p" mat-menu-item>Delete</button>
+                        </mat-menu>
+                    </div>
                 </td>
                 <td *matFooterCellDef mat-footer-cell></td>
             </ng-container>

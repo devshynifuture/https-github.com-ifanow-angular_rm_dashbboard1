@@ -232,7 +232,7 @@ export class CommoditiesComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-       
+
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isRefreshRequired(sideBarData)) {
           if (value == 'addGold') {
@@ -258,7 +258,7 @@ export class CommoditiesComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        
+
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isRefreshRequired(sideBarData)) {
           if (value == 'addGold') {
