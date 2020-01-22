@@ -49,7 +49,6 @@ export class CreateSubscriptionComponent implements OnInit {
   }
 
   inputData;
-
   @Input()
   set data(data) {
     this.totalSelectedPayeeShare = 0;
@@ -241,7 +240,7 @@ export class CreateSubscriptionComponent implements OnInit {
 
 
   getSubStartDetailsResponse(data, feeModeData) {
-    console.log('getSubStartDetailsResponse: ', data);
+    console.log('getSubStartDetailsResponse: ', data, feeModeData);
     this.feeModeData = feeModeData;
     this.feeStructureData = data;
     this.subscriptionDetails.controls.subscription.setValue(data.subscriptionNo);

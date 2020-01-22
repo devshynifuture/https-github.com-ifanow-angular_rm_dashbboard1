@@ -39,8 +39,12 @@ export class FixedFeeComponent implements OnInit {
   getFixedFee() {
     return this.fixedFeeStructureForm.controls;
   }
+  subData:any
   getSubscribeData(data) {
     const fixedData = data
+    console.log(fixedData, "abc fix");
+    this.subData = data;
+    
     if (data == '') {
       return;
     }

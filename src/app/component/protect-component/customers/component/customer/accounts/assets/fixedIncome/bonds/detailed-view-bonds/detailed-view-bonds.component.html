@@ -32,10 +32,34 @@
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
+                        Amount invested
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                        {{utils.formatter(bonds.amountInvested)}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Current value
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                        {{utils.formatter(bonds.currentValue)}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0" appFormatNumber>
+                        Maturity value
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{utils.formatter(bonds.maturityValue)}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Coupon payout
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{bonds.couponPayoutFrequencyId}}
+                        {{(bonds.couponPayoutFrequencyId=='1')?'Zero coupon':(bonds.couponPayoutFrequencyId=='2')?'Monthly':(bonds.couponPayoutFrequencyId=='3')?'Quarterly':(bonds.couponPayoutFrequencyId=='4')?'Semi annually':(bonds.couponPayoutFrequencyId=='5')?'Annually':'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -46,20 +70,13 @@
                         {{bonds.couponRate}}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Amount invested
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{utils.formatter(bonds.amountInvested)}}
-                    </div>
-                </div>
+               
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Commencement date
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{bonds.commencementDate}}
+                        {{(bonds.commencementDate)?(bonds.commencementDate | date:'dd/MM/yyyy'):'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -75,7 +92,7 @@
                         Compounding
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{bonds.compounding}}
+                        {{(bonds.compounding=='1')?'Daily':(bonds.compounding=='2')?'Monthly':(bonds.compounding=='3')?'Quarterly':(bonds.compounding=='4')?'Semi annually':(bonds.compounding=='5')?'Annually':'-'}}
                     </div>
                 </div>
 
@@ -89,29 +106,13 @@
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Current value
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{utils.formatter(bonds.currentValue)}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Coupon amount
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
+                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
                         {{utils.formatter(bonds.couponAmount)}}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Maturity Value
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{utils.formatter(bonds.maturityValue)}}
-                    </div>
-                </div>
-
+<!-- 
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Maturity Date
@@ -119,14 +120,14 @@
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{bonds.maturityDate}}
                     </div>
-                </div>
+                </div> -->
 
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Type
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{bonds.type}}
+                        {{(bonds.type=="1")?'Tax free':(bonds.type=="2")?'Non tax free':'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
