@@ -1,6 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { UtilService} from '../../../../../../../services/util.service';
-import { E } from '@angular/cdk/keycodes';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {UtilService} from '../../../../../../../services/util.service';
 
 @Component({
   selector: 'app-sudscription-table-filter',
@@ -8,30 +7,34 @@ import { E } from '@angular/cdk/keycodes';
   styleUrls: ['./sudscription-table-filter.component.scss']
 })
 export class SudscriptionTableFilterComponent implements OnInit {
-  dataSource= {
-    data:[{},{},{}]
+  dataSource = {
+    data: [{}, {}, {}]
   };
-  @Input() dataToFilter:any
-  @Output() filterRes= new EventEmitter();
-  showFilter:boolean=false;
+  @Input() dataToFilter: any
+  @Output() filterRes = new EventEmitter();
+  showFilter: boolean = false;
   selectedStatusFilter: any = 'statusFilter';
   selectedDateFilter: any = 'dateFilter';
-  chipStatus:any;
-  chipDate:any;
+  chipStatus: any;
+  chipDate: any;
   filterDataArr = [];
-  filterStatus =[];
+  filterStatus = [];
   filterJson = {
-    dateFilterJson:{},
-    dateFilterArr:[],
-    statusFilterJson:[]
+    dateFilterJson: {},
+    dateFilterArr: [],
+    statusFilterJson: []
   }
-  constructor() { }
-
+  filterDate: any = []
+  onlyDateFilter:boolean = false;
   ngOnInit() {
     this.chipStatus = this.dataToFilter.statusFilter;
     this.chipDate = this.dataToFilter.dateFilter;
+    if(this.dataToFilter.filterQuotation != undefined){
+      this.onlyDateFilter = this.dataToFilter.filterQuotation
+    }
     console.log(this.dataToFilter, this.chipStatus, this.chipDate, " dataToFilter 123 ");
   }
+  
 
   showFilters(showFilter) {
     if (showFilter == true) {
@@ -63,18 +66,33 @@ export class SudscriptionTableFilterComponent implements OnInit {
     // this.callFilter(false);
   }
 
-  filterDate:any = []
   selectedDateRange= {};
+
+  orgValueChange(selectedDateRange) {
+    // const beginDate = new Date();
+    // beginDate.setMonth(beginDate.getMonth() - 1);
+    // UtilService.getStartOfTheDay(beginDate);
+
+    // const endDate = new Date();
+    // UtilService.getStartOfTheDay(endDate);
+     
+    this.filterJson.dateFilterJson = {begin: selectedDateRange.begin, end: selectedDateRange.end};
+    this.filterRes.emit(this.filterJson);
+  selectedDateRange = {};
+
+  
+  }
+
   addFiltersDate(dateFilter) {
     this.filterDate = [];
-    
+
     if (this.filterDate.length >= 1) {
       this.filterDate = [];
     }
     this.filterDataArr = [];
     // this.lastFilterDataId = 0;
     this.filterDate.push((dateFilter == '1: Object') ? 1 : (dateFilter == '2: Object') ? 2 : 3);
-    console.log(this.selectedDateFilter,'addFilters', dateFilter);
+    console.log(this.selectedDateFilter, 'addFilters', dateFilter);
     const beginDate = new Date();
     beginDate.setMonth(beginDate.getMonth() - 1);
     UtilService.getStartOfTheDay(beginDate);
@@ -82,7 +100,7 @@ export class SudscriptionTableFilterComponent implements OnInit {
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
 
-    this.selectedDateRange = { begin: beginDate, end: endDate };
+    this.selectedDateRange = {begin: beginDate, end: endDate};
     console.log(this.filterDate, 'this.filterDate 123');
     // this.callFilter(false);
     this.filterJson.dateFilterJson = this.selectedDateRange;
@@ -118,5 +136,30 @@ export class SudscriptionTableFilterComponent implements OnInit {
 
   }
 
+  onClose(event) {
+    console.log('SudscriptionTableFilterComponent onClose event : ', event);
+  }
+
 
 }
+
+// @Component({
+//   selector: 'app-sudscription-table-filter',
+//   templateUrl: './set-date-footer.html',
+//   styleUrls: ['./sudscription-table-filter.component.scss']
+// })
+// export class SetDateFooter {
+//   private destroyed = new Subject<void>();
+//   constructor(
+//     private calendar: SatCalendar<Date>,
+//     cdr: ChangeDetectorRef
+// ) {
+//     calendar.stateChanges
+//         .pipe(takeUntil(this.destroyed))
+//         .subscribe(() => cdr.markForCheck())
+
+//         console.log(this.calendar.beginDate, this.calendar.endDate, "footer date data");
+        
+// }
+
+// }

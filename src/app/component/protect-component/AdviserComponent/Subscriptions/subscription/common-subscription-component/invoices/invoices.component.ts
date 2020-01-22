@@ -194,7 +194,10 @@ export class InvoicesComponent implements OnInit {
 
     );
   }
-
+  getCancelInvoiceSubscription(data) {
+    console.log(data);
+    this.ngOnInit();
+  }
   openInvoicesESign(value, state) {
     this.subInjectService.rightSliderData(state);
     this.eventService.sliderData(value);
@@ -236,7 +239,7 @@ export class InvoicesComponent implements OnInit {
           },
           error => this.eventService.showErrorMessage(error)
         );
-            dialogRef.close(listIndex);
+        dialogRef.close(listIndex);
 
       },
       negativeMethod: () => {
@@ -253,8 +256,8 @@ export class InvoicesComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result,this.dataSource.data,"delete result");
-      if(result.length > 0 ){
+      console.log(result, this.dataSource.data, "delete result");
+      if (result.length > 0) {
         const tempList = []
         this.dataSource.data.forEach(singleElement => {
           if (!singleElement.selected) {
@@ -264,7 +267,7 @@ export class InvoicesComponent implements OnInit {
         this.dataSource.data = tempList;
       }
 
-     
+
     });
   }
 }
