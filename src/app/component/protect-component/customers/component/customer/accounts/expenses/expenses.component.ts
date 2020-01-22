@@ -270,6 +270,18 @@ export class ExpensesComponent implements OnInit {
       this.noData = 'No data found';
       this.dataSource5.data = [];
     }
+    if (data) {
+      data.forEach(singleExpense => {
+        const singleExpenseCategory = this.constantService.expenseJsonMap[singleExpense.budgetCategoryId];
+        if (singleExpenseCategory) {
+          singleExpense.expenseType = singleExpenseCategory.expenseType;
+        }
+      });
+      this.dataSource5.data = data;
+    } else {
+      this.noData = 'No data found';
+      this.dataSource5.data = [];
+    }
     this.isLoading = false;
     console.log('otherCommitmentsGetRes', data)
   }
@@ -301,8 +313,6 @@ export class ExpensesComponent implements OnInit {
       this.dataSource1.data = [];
     }
     this.isLoading = false;
-    console.log(data)
-    // this.dataSource1 = data
     console.log(data);
     if (data) {
       data.forEach(singleExpense => {
@@ -424,8 +434,12 @@ export class ExpensesComponent implements OnInit {
     });
   }
   openExpenses(value, data) {
-    data = {}
-    data.flag = value
+    if(data == null){
+      data = {}
+      data.flag = value
+    }else{
+      data.flag = value
+    }
     const fragmentData = {
       flag: value,
       data: data,
@@ -439,9 +453,10 @@ export class ExpensesComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           this.getTransaction();
           this.getRecuringTransactions();
+          this.getBudgetList();
+          this.getBugetRecurring();
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
-
         }
       }
     );

@@ -248,7 +248,7 @@ export class PayeeSettingsComponent implements OnInit {
           pan: this.getFormControl().pan.value,
           country: this.getFormControl().country.value,
           zipCode: this.getFormControl().pincode.value,
-          clientId: this.clientId,
+          clientId:  this.upperData.id,
 
         };
         this.subService.addClientBillerProfile(obj).subscribe(

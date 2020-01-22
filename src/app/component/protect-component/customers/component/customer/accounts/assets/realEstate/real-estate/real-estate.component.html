@@ -46,85 +46,95 @@
         </div>
     </div>
     <div class="example-container mt-8 p-0 col-md-12 real-estate">
-        <table *ngIf="datasource3.filteredData.length > 0" matSort mat-table [dataSource]="datasource3" id="table-low" class=" skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
-            <ng-container matColumnDef="no">
-                <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br w-2"> No </th>
-                <td mat-cell *matCellDef="let element; let i = index;" class="br w-2">
-                    <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
-                </td>
-                <td mat-footer-cell *matFooterCellDef class=" text-left pl-4 f-600"> Total</td>
+        <div class="overflow-hidden">
+            <table *ngIf="datasource3.filteredData.length > 0" matSort mat-table [dataSource]="datasource3" id="table-low" class=" skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                <ng-container matColumnDef="no">
+                    <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br w-2"> No </th>
+                    <td mat-cell *matCellDef="let element; let i = index;" class="br w-2">
+                        <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef class=" text-left pl-4 f-600"> Total</td>
 
-            </ng-container>
-            <ng-container matColumnDef="owner">
-                <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br w-20"> Owner </th>
-                <td mat-cell *matCellDef="let element" class="br w-20">
-                    <div class="bar"> {{element.ownerName}} </div>
-                </td>
-                <td mat-footer-cell *matFooterCellDef class="br text-right w-2"> </td>
-            </ng-container>
-            <ng-container matColumnDef="type">
-                <th mat-sort-header="typeId" mat-header-cell *matHeaderCellDef class="br text-right w-15"> Type </th>
-                <td mat-cell *matCellDef="let element" class="br w-15">
-                    <div class="bar">
-                        {{(element.typeId == 0)?'Land':(element.typeId == 1)?'Residential':(element.typeId == 2)?'Secondary':(element.typeId == 3)?'Commercial':''}}
-                    </div>
-                </td>
-                <td mat-footer-cell *matFooterCellDef class="br text-right w-15"> </td>
-            </ng-container>
-            <ng-container matColumnDef="value">
-                <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef class="br w-15 rightText text-right"> Market value
-                </th>
-                <td mat-cell *matCellDef="let element" class="br w-15 text-right">
-                    <div class="bar" appFormatNumber> {{element.marketValue}} </div>
-                </td>
-                <td mat-footer-cell *matFooterCellDef class="br text-right w-15 p-8 f-600" appFormatNumber [value]="sumOfMarketValue">
-                    <div class="bar"> {{sumOfMarketValue}} </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="pvalue">
-                <th mat-sort-header="purchaseValue" mat-header-cell *matHeaderCellDef class="br w-20 rightText text-right">
-                    Purchase value
-                </th>
-                <td mat-cell *matCellDef="let element" class="br w-20 text-right">
-                    <div class="bar" appFormatNumber> {{element.purchaseValue}} </div>
-                </td>
-                <td mat-footer-cell *matFooterCellDef class="br text-right w-20 p-8 f-600" appFormatNumber [value]="sumOfpurchasedValue">
-                    <div class="bar"> {{sumOfpurchasedValue}} </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="desc">
-                <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br w-15"> Description </th>
-                <td mat-cell *matCellDef="let element" class="br w-15">
-                    <div class="bar"> {{element.description}} </div>
-                </td>
-                <td mat-footer-cell *matFooterCellDef class="br text-right w-15"> </td>
-            </ng-container>
-            <ng-container matColumnDef="status">
-                <th *matHeaderCellDef class="br t-10" mat-header-cell mat-sort-header="active"> Status</th>
-                <td *matCellDef="let element" class="br t-10 text-primary" mat-cell> LIVE </td>
-                <td *matFooterCellDef mat-footer-cell class="t-10"></td>
-            </ng-container>
+                </ng-container>
+                <ng-container matColumnDef="owner">
+                    <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br w-20"> Owner </th>
+                    <td mat-cell *matCellDef="let element" class="br w-20">
+                        <div class="bar"> {{element.ownerName}} </div>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef class="br text-right w-2"> </td>
+                </ng-container>
+                <ng-container matColumnDef="type">
+                    <th mat-sort-header="typeId" mat-header-cell *matHeaderCellDef class="br text-right w-15"> Type
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="br w-15">
+                        <div class="bar">
+                            {{(element.typeId == 0)?'Land':(element.typeId == 1)?'Residential':(element.typeId == 2)?'Secondary':(element.typeId == 3)?'Commercial':''}}
+                        </div>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef class="br text-right w-15"> </td>
+                </ng-container>
+                <ng-container matColumnDef="value">
+                    <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef class="br w-15 rightText text-right"> Market value
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="br w-15 text-right">
+                        <div class="bar" appFormatNumber> {{element.marketValue}} </div>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef class="br text-right w-15 p-8 f-600" appFormatNumber [value]="sumOfMarketValue">
+                        <div class="bar"> {{sumOfMarketValue}} </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="pvalue">
+                    <th mat-sort-header="purchaseValue" mat-header-cell *matHeaderCellDef class="br w-20 rightText text-right">
+                        Purchase value
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="br w-20 text-right">
+                        <div class="bar" appFormatNumber> {{element.purchaseValue}} </div>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef class="br text-right w-20 p-8 f-600" appFormatNumber [value]="sumOfpurchasedValue">
+                        <div class="bar"> {{sumOfpurchasedValue}} </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="desc">
+                    <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br w-15"> Description
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="br w-15">
+                        <div class="bar"> {{element.description}} </div>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef class="br text-right w-15"> </td>
+                </ng-container>
+                <ng-container matColumnDef="status">
+                    <th *matHeaderCellDef class="br t-10" mat-header-cell mat-sort-header="active"> Status</th>
+                    <td *matCellDef="let element" class="br t-10 text-primary" mat-cell>
+                        <div class="bar">
+                            {{isLoading ? '' : LIVE }}
+                        </div>
+                    </td>
+                    <td *matFooterCellDef mat-footer-cell class="t-10"></td>
+                </ng-container>
 
-            <ng-container matColumnDef="icons">
-                <th mat-header-cell *matHeaderCellDef class="t-2"></th>
-                <td mat-cell *matCellDef="let element" class="t-2">
-                    <i class="material-icons c-p text-black" [matMenuTriggerFor]="menu4">
-                        more_vert
-                    </i>
-                    <mat-menu #menu4="matMenu">
-                        <button mat-menu-item (click)="open('realEstate',element)">Edit</button>
-                        <button mat-menu-item (click)="detailedViewRealEstate('addRealEstate',element)">Deatiled
-                            View</button>
-                        <button mat-menu-item>Activity</button>
-                        <button mat-menu-item (click)="deleteModal('REAL ESTATE',element)">Delete</button>
-                    </mat-menu>
-                </td>
-                <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns3; sticky: true"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
-            <tr mat-footer-row *matFooterRowDef="displayedColumns3;sticky: true" [hidden]="isLoading"></tr>
-        </table>
+                <ng-container matColumnDef="icons">
+                    <th mat-header-cell *matHeaderCellDef class="t-2"></th>
+                    <td mat-cell *matCellDef="let element" class="t-2">
+                        <div *ngIf="!isLoading">
+                            <i class="material-icons c-p text-black" [matMenuTriggerFor]="menu4">
+                                more_vert
+                            </i>
+                            <mat-menu #menu4="matMenu">
+                                <button mat-menu-item (click)="open('realEstate',element)">Edit</button>
+                                <button mat-menu-item (click)="detailedViewRealEstate('addRealEstate',element)">Deatiled
+                                    View</button>
+                                <button mat-menu-item>Activity</button>
+                                <button mat-menu-item (click)="deleteModal('REAL ESTATE',element)">Delete</button>
+                            </mat-menu>
+                        </div>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns3; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+                <tr mat-footer-row *matFooterRowDef="displayedColumns3;sticky: true" [hidden]="isLoading"></tr>
+            </table>
+        </div>
         <div *ngIf="datasource3.filteredData.length == 0" class="d-flex flex-column align-items-center">
             <img class="width400" src="assets/images/svg/clients-img.svg">
             <h4 class="text-center pt-72">{{noData}}</h4>
