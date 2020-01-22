@@ -197,8 +197,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.getFrormControlBank().acNo.maxLength = 16;
     this.getFrormControlBank().ifscCode.maxLength = 11;
     this.getFrormControlBank().address.maxLength = 150;
-    this.getFrormControlMisc().footnote.maxLength = 150;
-    this.getFrormControlMisc().terms.maxLength = 150;
+    this.getFrormControlMisc().footnote.maxLength = 160;
+    this.getFrormControlMisc().terms.maxLength = 160;
     this.logoImg = data.logoUrl;
   }
 
