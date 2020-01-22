@@ -160,7 +160,7 @@
                     <p>IGST ({{storeData.igst}}%)</p>
                   </div>
                   <div class="col-md-4 pr-8">
-                    <p class="text-right">₹{{formatter(storeData.igstTaxAmount)}}</p>
+                    <p class="text-right">₹{{formatter((storeData.subTotal-storeData.discount)*18/100)}}</p>
                   </div>
                 </div>
                 <div *ngIf="storeData.cgst!=undefined" class="row">
