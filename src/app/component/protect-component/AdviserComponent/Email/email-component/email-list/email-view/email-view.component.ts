@@ -11,6 +11,7 @@ import { EmailReplyComponent } from '../email-reply/email-reply.component';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { EmailUtilService } from 'src/app/services/email-util.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-email-view',
@@ -30,10 +31,11 @@ export class EmailViewComponent implements OnInit, OnDestroy {
   constructor(private emailService: EmailServiceService,
     private _bottomSheet: MatBottomSheet,
     private location: Location,
-    private eventService: EventService) { }
+    private eventService: EventService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-
     this.getEmailThread();
   }
 
@@ -68,8 +70,10 @@ export class EmailViewComponent implements OnInit, OnDestroy {
   getEmailThread() {
     this.emailSubscription = this.emailService.data.subscribe(response => {
       this.emailObj = response;
-
-
+      if (!this.emailObj) {
+        this.eventService.openSnackBar("No Email Data !", "DISMISS");
+        this.router.navigate(['../'], { relativeTo: this.activatedRoute });
+      }
       console.log("this is email Object passed from list component ->>>  ", this.emailObj);
       if (this.emailObj) {
 
