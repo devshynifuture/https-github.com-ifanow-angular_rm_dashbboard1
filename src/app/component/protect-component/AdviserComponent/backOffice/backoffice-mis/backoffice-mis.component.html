@@ -1,0 +1,17 @@
+<div id="ui-subscriptions">
+    <div class="sub-header-fix">
+        <div class="bg-white">
+            <h1 class="cusotm-haeding-main">Backoffice-MIS</h1>
+
+            <nav class="text-right" id="ui-customer-secondhead" mat-align-tabs="end" mat-tab-nav-bar>
+                <a [routerLink]="['/admin/backoffice/mutual-funds']" routerLinkActive="active" mat-tab-link>MUTUTAL
+                    FUNDS</a>
+                <a [routerLink]="['/admin/backoffice/life-insurance']" routerLinkActive="active" mat-tab-link>LIFE
+                    INSURANCE</a>
+                <a [routerLink]="['/admin/backoffice/general-insurance']" routerLinkActive="active" mat-tab-link>GENERAL
+                    INSURANCE</a>
+            </nav>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
