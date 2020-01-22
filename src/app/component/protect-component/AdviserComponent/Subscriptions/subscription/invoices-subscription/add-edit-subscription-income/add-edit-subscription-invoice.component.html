@@ -1,17 +1,17 @@
 <div [formGroup]="editPayment"
     [ngClass]="{'pt-72': invoiceInSub=='invoiceSubscription','mt-0':invoiceInSub!='invoiceSubscription'}"
     class="bg-white pb-44 ">
-    <div class="row  popup-header">
-        <div class="col-md-10 pl-0">
-            <h2 class="f-400 wrapper-20 mb-0">Edit Invoice of {{storeData.invoiceNumber}}
-            </h2>
-            <h4 *ngIf="invoiceInSub!='invoiceSubscription'" class="f-400 wrapper-20 mb-0">Add Invoice</h4>
+    <div class="row  popup-header bb-1">
+        <div class="col-md-10 pl-0 mt-4">
+            <h3 *ngIf="storeData.id != undefined" class="f-400 wrapper-20 mb-0">Edit Invoice of {{storeData.invoiceNumber}}
+            </h3>
+            <h3 *ngIf="storeData.id == undefined" class="f-400 wrapper-20 mb-0">Add Invoice</h3>
         </div>
-        <!-- <div class="col-md-2 text-right">
+        <div class="col-md-2 text-right">
             <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle" (click)="Close(false)"> clear</i>
+                <i class="material-icons c-p pt-8 v-middle" (click)="closeEditInv()"> clear</i>
             </div>
-        </div> -->
+        </div>
     </div>
     <div class="row pt-40">
         <div class="col-md-3 pr-0">

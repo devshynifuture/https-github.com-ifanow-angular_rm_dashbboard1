@@ -77,46 +77,52 @@ export class AddExpensesComponent implements OnInit {
 
   getdataForm(data) {
     this.getFlag = data.flag
+
     if (data == undefined) {
       data = {};
-    } else {
-      // this.isRecuring = data.isRecuring
+    } if (this.getFlag == 'editBudget' || this.getFlag == 'editExpense') {
+      this.isRecuring = data.isRecuring
     }
     this.expenses = this.fb.group({
-      timeInMilliSec: [(data == undefined) ? '' : data.timeInMilliSec, [Validators.required]],
-      expenseDoneOn: [(data == undefined) ? '' : new Date(data.expenseDoneOn), [Validators.required]],
+      timeInMilliSec: [(data == undefined) ? '' : (data.timeInMilliSec == undefined) ? data.time : data.timeInMilliSec, [Validators.required]],
+      expenseDoneOn: [(data == undefined) ? '' : new Date((data.expenseDoneOn == undefined) ? data.startsFrom : data.expenseDoneOn), [Validators.required]],
       amount: [(data == undefined) ? '' : data.amount, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
-      category: [(data == undefined) ? '' : data.expenseCategoryId, [Validators.required]],
-      familyMember: [(data == undefined) ? '' : data.familyMember, [Validators.required]],
+      category: [(data == undefined) ? '' : (data.expenseCategoryId == undefined) ? data.budgetCategoryId : data.expenseCategoryId, [Validators.required]],
+      ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       paymentModeId: [(data == undefined) ? '' : data.paymentModeId + '', [Validators.required]],
+      familyMemberId : [(data == undefined) ? '' : data.familyMemberId + '', [Validators.required]],
       isRecuring: false
     });
-    this.expenseList = this.constantService.expenseList
+    this.expenseList = this.constantService.expenseList;
+    this.familyMemberId = this.expenses.controls.familyMemberId.value
   }
   getdataFormRec(data) {
+    this.getFlag = data.flag
+
     if (data == undefined) {
       data = {};
-    } else {
-      // this.isRecuring = data.isRecuring
+    } if (this.getFlag == 'editExpense' || this.getFlag == 'editBudget') {
+      this.isRecuring = data.isRecuring
     }
     this.recuring = this.fb.group({
-      timeInMilliSec: [(data == undefined) ? '' : data.timeInMilliSec, [Validators.required]],
-      expenseDoneOn: [(data == undefined) ? '' : new Date(data.expenseDoneOn), [Validators.required]],
+      timeInMilliSec: [(data == undefined) ? '' : (data.timeInMilliSec == undefined) ? data.time : data.timeInMilliSec, [Validators.required]],
       amount: [(data == undefined) ? '' : data.amount, [Validators.required]],
       repeatFrequency: [(data == undefined) ? '' : data.repeatFrequency + '', [Validators.required]],
-      startsFrom: [(data == undefined) ? '' : new Date(data.startsFrom), [Validators.required]],
+      startsFrom: [(data == undefined) ? '' : new Date((data.expenseDoneOn == undefined) ? data.startsFrom : data.expenseDoneOn), [Validators.required]],
       numberOfYearOrNumberOfTime: [(data == undefined) ? '' : (data.numberOfYearOrNumberOfTime), [Validators.required]],
       continueTill: [(data == undefined) ? '' : (data.continueTill) + '', [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
-      category: [(data == undefined) ? '' : data.expenseCategoryId, [Validators.required]],
-      familyMember: [(data == undefined) ? '' : data.familyMember, [Validators.required]],
+      category: [(data == undefined) ? '' : (data.expenseCategoryId == undefined) ? data.budgetCategoryId : data.expenseCategoryId, [Validators.required]],
+      ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       paymentModeId: [(data == undefined) ? '' : data.paymentModeId + '', [Validators.required]],
+      familyMemberId : [(data == undefined) ? '' : data.familyMemberId + '', [Validators.required]],
       isRecuring: true,
     });
     this.expenseList = this.constantService.expenseList
+    this.familyMemberId = this.expenses.controls.familyMemberId.value
   }
 
   getFormControl(): any {
@@ -169,8 +175,8 @@ export class AddExpensesComponent implements OnInit {
     } else if (this.recuring.get('continueTill').invalid) {
       this.recuring.get('continueTill').markAsTouched();
       return
-    } else if (this.recuring.get('familyMember').invalid) {
-      this.recuring.get('familyMember').markAsTouched();
+    } else if (this.recuring.get('ownerName').invalid) {
+      this.recuring.get('ownerName').markAsTouched();
       return
     } else {
       let obj = {
@@ -181,60 +187,59 @@ export class AddExpensesComponent implements OnInit {
         amount: this.recuring.controls.amount.value,
         paymentModeId: this.recuring.controls.paymentModeId.value,
         startsFrom: this.recuring.controls.startsFrom.value,
+        budgetCategoryId: this.recuring.controls.category.value,
         continueTill: parseInt(this.recuring.controls.continueTill.value),
-        numberOfYearOrNumberOfTime: (this.recuring.controls.numberOfYearOrNumberOfTime.value == undefined) ? null : this.recuring.controls.numberOfYearOrNumberOfTime.value,
+        numberOfYearOrNumberOfTime: this.recuring.controls.numberOfYearOrNumberOfTime.value,
         expenseCategoryId: this.recuring.controls.category.value,
       }
       if (this.getFlag == 'addExpenses') {
         if (this.recuring.controls.id.value == undefined) {
+          delete obj.budgetCategoryId;
           this.planService.addRecuringExpense(obj).subscribe(
             data => this.addRecuringExpenseRes(data)
           );
-        } else {
-          //edit call
-          obj['id'] = this.recuring.controls.id.value;
-          this.planService.editRecuringExpense(obj).subscribe(
-            data => this.editRecuringExpenseRes(data)
-          );
         }
-      } else {
+      } else if (this.getFlag == 'editExpenses') {
+        //edit call
+        delete obj.budgetCategoryId;
+        obj['id'] = this.recuring.controls.id.value;
+        this.planService.editRecuringExpense(obj).subscribe(
+          data => this.editRecuringExpenseRes(data)
+        );
+      } else if (this.getFlag == 'addBudget') {
         if (this.recuring.controls.id.value == undefined) {
+          delete obj.expenseCategoryId;
           this.planService.otherCommitmentsAdd(obj).subscribe(
             data => this.otherCommitmentsAddRes(data)
           );
-        } else {
-          obj['id'] = this.recuring.controls.id.value;
-          //edit call
-          this.planService.otherCommitmentsEdit(obj).subscribe(
-            data => this.otherCommitmentsEditRes(data)
-          );
         }
-      }
+      } else if (this.getFlag == 'editBudget') {
+        delete obj.expenseCategoryId;
+        obj['id'] = this.recuring.controls.id.value;
 
+        //edit call
+        this.planService.otherCommitmentsEdit(obj).subscribe(
+          data => this.otherCommitmentsEditRes(data)
+        );
+      }
     }
   }
   otherCommitmentsEditRes(data) {
     this.event.openSnackBar('Added successfully!', 'dismiss');
-  }
-  otherCommitmentsAddRes(data) {
-    this.event.openSnackBar('Updated successfully!', 'dismiss');
-  }
-  addBudgetRes(data) {
-    console.log(data)
-    this.event.openSnackBar('Added successfully!', 'dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
-  editBudgetRes(data) {
-    console.log(data)
+  otherCommitmentsAddRes(data) {
     this.event.openSnackBar('Updated successfully!', 'dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
   addRecuringExpenseRes(data) {
     console.log('addRecuringExpenseRes', data);
+    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
 
   editRecuringExpenseRes(data) {
     console.log('editRecuringExpenseRes', data);
+    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
 
   saveExpenses() {
@@ -253,8 +258,8 @@ export class AddExpensesComponent implements OnInit {
     } else if (this.expenses.get('paymentModeId').invalid) {
       this.expenses.get('paymentModeId').markAsTouched();
       return
-    } else if (this.expenses.get('familyMember').invalid) {
-      this.expenses.get('familyMember').markAsTouched();
+    } else if (this.expenses.get('ownerName').invalid) {
+      this.expenses.get('ownerName').markAsTouched();
       return
     } else {
       let obj = {
@@ -264,36 +269,62 @@ export class AddExpensesComponent implements OnInit {
         expenseDoneOn: this.expenses.controls.expenseDoneOn.value,
         amount: this.expenses.controls.amount.value,
         timeInMilliSec: this.expenses.controls.timeInMilliSec.value,
+        time:this.expenses.controls.timeInMilliSec.value,
+        startsFrom:this.expenses.controls.expenseDoneOn.value,
         paymentModeId: this.expenses.controls.paymentModeId.value,
         expenseCategoryId: this.expenses.controls.category.value,
+        budgetCategoryId: this.expenses.controls.category.value,
         description: this.expenses.controls.description.value,
         id: this.expenses.controls.id.value
       }
       if (this.getFlag == 'addExpenses') {
         if (this.expenses.controls.id.value == undefined) {
+          delete obj.budgetCategoryId;
+          delete obj.time
+          delete obj.startsFrom
           this.planService.addExpense(obj).subscribe(
             data => this.addExpenseRes(data)
           );
-        } else {
-          //edit call
+        } 
+      } else if (this.getFlag == 'editExpenses') {
+        //edit call
+        delete obj.budgetCategoryId;
+        delete obj.time
+        delete obj.startsFrom        
           this.planService.editExpense(obj).subscribe(
-            data => this.editExpenseRes(data)
-          );
-        }
-      } else {
+          data => this.editExpenseRes(data)
+        );
+      }else if (this.getFlag == 'addBudget') {
         if (this.expenses.controls.id.value == undefined) {
+          delete obj.expenseCategoryId;
+          delete obj.expenseDoneOn
+          delete obj.timeInMilliSec
           this.planService.addBudget(obj).subscribe(
             data => this.addBudgetRes(data)
           );
-        } else {
-          //edit call
-          this.planService.editBudget(obj).subscribe(
-            data => this.editBudgetRes(data)
-          );
         }
+      } else if (this.getFlag == 'editBudget') {
+        //edit call
+        delete obj.expenseCategoryId;
+        delete obj.expenseCategoryId;
+        delete obj.expenseDoneOn
+        delete obj.timeInMilliSec
+        this.planService.editBudget(obj).subscribe(
+          data => this.editBudgetRes(data)
+        );
       }
 
     }
+  }
+  addBudgetRes(data) {
+    console.log(data)
+    this.event.openSnackBar('Added successfully!', 'dismiss');
+    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
+  }
+  editBudgetRes(data) {
+    console.log(data)
+    this.event.openSnackBar('Updated successfully!', 'dismiss');
+    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
   addExpenseRes(data) {
     console.log('addExpenseRes', data);
