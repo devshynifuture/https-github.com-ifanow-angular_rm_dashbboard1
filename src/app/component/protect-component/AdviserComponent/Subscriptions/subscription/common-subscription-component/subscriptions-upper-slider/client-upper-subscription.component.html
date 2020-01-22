@@ -122,7 +122,9 @@
                 <ng-container matColumnDef="mode">
                     <th *matHeaderCellDef class="f-18" mat-header-cell> Fee collection mode</th>
                     <td *matCellDef="let element" mat-cell>
-                        <div class="bar"></div>
+                        <div class="bar">
+                            {{ getFeeTypeName(element.subscriptionPricing.feeTypeId) }}
+                        </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="icons">

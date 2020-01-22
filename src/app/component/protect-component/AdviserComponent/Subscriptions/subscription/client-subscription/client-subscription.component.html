@@ -16,7 +16,7 @@
             <div class="clientTable">
                 <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="mt-8 skeletonAnimation" id="table-low" mat-table matSort>
                     <ng-container matColumnDef="name">
-                        <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="name"> Clients name</th>
+                        <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="name"> Client name</th>
                         <td (click)="openFragment('clients',element)" *matCellDef="let element" class="c-p" mat-cell>
                             <div class="bar"> {{element.name}} </div>
                         </td>
@@ -45,7 +45,8 @@
                             Balance due (₹)
                         </th>
                         <td (click)="openFragment('clients',element)" *matCellDef="let element" class="c-p text-right" mat-cell>
-                            <div class="bar"> {{element.balanceDue ? element.balanceDue : (isLoading) ? '' : 0}} </div>
+                            <div class="bar" *ngIf="element.balanceDue != undefined" >₹<span appFormatNumber>{{element.balanceDue}}</span></div>
+                            <div class="bar" *ngIf="element.balanceDue == undefined" >{{!isLoading? "₹0" : ""}} </div>
                         </td>
                     </ng-container>
 
