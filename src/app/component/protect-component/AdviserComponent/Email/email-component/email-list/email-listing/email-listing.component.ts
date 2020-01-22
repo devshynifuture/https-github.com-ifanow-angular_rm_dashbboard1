@@ -168,12 +168,12 @@ export class EmailListingComponent implements OnInit {
   }
 
   openDraftView(dataObj) {
-    const idArray = [];
+    const threadIdsArray = [];
     this.messageListArray.forEach((item) => {
-      idArray.push(item["idsOfThread"]["id"]);
-    })
-    this.emailService.sendNextData({ dataObj, idArray });
-    this.emailService.openComposeEmail({ dataObj, idArray }, ComposeEmailComponent);
+      threadIdsArray.push(item["idsOfThread"]["id"]);
+    });
+    this.emailService.sendNextData({ dataObj, threadIdsArray });
+    this.emailService.openComposeEmail({ dataObj, threadIdsArray }, ComposeEmailComponent);
     this.showDraftView = false;
   }
 

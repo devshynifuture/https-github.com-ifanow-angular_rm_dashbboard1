@@ -25,8 +25,8 @@
                         {{ from }}
                     </p> -->
                     <input type="text" [(ngModel)]="from" formControlName="sender">
-                    <div *ngIf="!emailForm.controls['sender'].valid && emailForm.controls['sender'].touched"
-                        [ngClass]="emailForm.controls['sender'].valid && emailForm.controls['sender'].touched ? '': 'is-invalid'">
+                    <div *ngIf="!emailForm.get('sender').valid && emailForm.get('sender').touched"
+                        [ngClass]="emailForm.get('sender').valid && emailForm.get('sender').touched ? '': 'is-invalid'">
                         invalid email
                     </div>
                 </div>
@@ -44,11 +44,23 @@
                     <p class="m-0 text-custom">To</p>
                 </div>
                 <div class="col-md-11">
-                    <input type="text" [(ngModel)]="to" formControlName="receiver" />
-                    <div *ngIf="!emailForm.controls['receiver'].valid && emailForm.controls['receiver'].touched"
+                    <mat-form-field class="example-chip-list">
+                        <mat-chip-list #chipList aria-label="Email Selection">
+                            <mat-chip *ngFor="let receipient of receipients" [selectable]="selectable"
+                                [removable]="removable" (removed)="remove(receipient)">
+                                {{receipient.email}}
+                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                            </mat-chip>
+                            <input placeholder="Receipient" [matChipInputFor]="chipList"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                                (matChipInputTokenEnd)="add($event, this.receipients)">
+                        </mat-chip-list>
+                    </mat-form-field>
+                    <!-- <input type="text" [(ngModel)]="to" formControlName="receiver" /> -->
+                    <!-- <div *ngIf="!emailForm.controls['receiver'].valid && emailForm.controls['receiver'].touched"
                         [ngClass]="emailForm.controls['receiver'].valid && emailForm.controls['receiver'].touched ? '': 'is-invalid'">
                         invalid email
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="row pt-16" *ngIf="isCcSelected">
@@ -56,11 +68,23 @@
                     <p class="m-1 text-custom">CC</p>
                 </div>
                 <div class="col-md-11">
-                    <input type="text" formControlName="carbonCopy" *ngIf="isCcSelected">
-                    <div *ngIf="!emailForm.controls['carbonCopy'].valid && emailForm.controls['carbonCopy'].touched"
-                        [ngClass]="emailForm.controls['carbonCopy'].valid && emailForm.controls['carbonCopy'].touched ? '': 'is-invalid'">
+                    <mat-form-field class="example-chip-list">
+                        <mat-chip-list #chipList1 aria-label="CC Email Selection">
+                            <mat-chip *ngFor="let cc of ccArray" [selectable]="selectable" [removable]="removable"
+                                (removed)="remove(cc)">
+                                {{cc.email}}
+                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                            </mat-chip>
+                            <input placeholder="CC" [matChipInputFor]="chipList1"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                                (matChipInputTokenEnd)="add($event, this.ccArray)">
+                        </mat-chip-list>
+                    </mat-form-field>
+                    <!-- <input type="text" formControlName="carbonCopy" *ngIf="isCcSelected">
+                    <div *ngIf="!emailForm.get('carbonCopy').valid && emailForm.get('carbonCopy').touched"
+                        [ngClass]="emailForm.get('carbonCopy').valid && emailForm.get('carbonCopy').touched ? '': 'is-invalid'">
                         invalid email
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
@@ -69,11 +93,23 @@
                     <p class="m-1 text-custom">BCC</p>
                 </div>
                 <div class="col-md-11">
-                    <input type="text" formControlName="blindCarbonCopy" *ngIf="isBccSelected">
-                    <div *ngIf="!emailForm.controls['blindCarbonCopy'].valid && emailForm.controls['blindCarbonCopy'].touched"
-                        [ngClass]="emailForm.controls['carbonCopy'].valid && emailForm.controls['carbonCopy'].touched ? '': 'is-invalid'">
+                    <mat-form-field class="example-chip-list">
+                        <mat-chip-list #chipList2 aria-label="BCC Email Selection">
+                            <mat-chip *ngFor="let bcc of bccArray" [selectable]="selectable" [removable]="removable"
+                                (removed)="remove(bcc)">
+                                {{cc.email}}
+                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                            </mat-chip>
+                            <input placeholder="BCC" [matChipInputFor]="chipList2"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                                (matChipInputTokenEnd)="add($event, this.bccArray)">
+                        </mat-chip-list>
+                    </mat-form-field>
+                    <!-- <input type="text" formControlName="blindCarbonCopy" *ngIf="isBccSelected">
+                    <div *ngIf="!emailForm.get('blindCarbonCopy').valid && emailForm.get('blindCarbonCopy').touched"
+                        [ngClass]="emailForm.get('carbonCopy').valid && emailForm.get('carbonCopy').touched ? '': 'is-invalid'">
                         invalid email
-                    </div>
+                    </div> -->
                 </div>
             </div>
 

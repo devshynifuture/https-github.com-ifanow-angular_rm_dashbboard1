@@ -7,8 +7,9 @@ import { SubscriptionInject } from './../../../Subscriptions/subscription-inject
 import { EmailServiceService } from './../../email-service.service';
 import { EventService } from './../../../../../../Data-service/event.service';
 import { Validators } from '@angular/forms';
-import { Subscription, Subject } from 'rxjs';
-import { count } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { MatChipInputEvent } from '@angular/material';
 
 @Component({
   selector: 'app-compose-email',
@@ -44,8 +45,15 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   emailFormChangeSubscription: Subscription;
   didFormChanged: boolean = false;
   emailForm: FormGroup;
-  cc: string = '';
-  bcc: string = '';
+  ccArray: { email: string }[] = [];
+  bccArray: { email: string }[] = [];
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  receipients: { email: string }[] = [];
+
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   interval;
   emailFormValueChange;
@@ -56,8 +64,9 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
     this.emailForm.valueChanges.subscribe(res => this.emailFormValueChange = res);
 
     this.interval = setInterval(() => {
-      if(!this.areTwoObjectsEquivalent(this.prevStateOfForm, this.emailFormValueChange)){  
-        console.log("auto saved!!")
+      if (!this.areTwoObjectsEquivalent(this.prevStateOfForm, this.emailFormValueChange)) {
+        console.log("auto saved!!");
+        // call update or create draft api
         this.prevStateOfForm = this.emailFormValueChange;
       }
     }, 4000);
@@ -67,20 +76,20 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
     // console.log("this is data sent from draft list ->>>>  ", this.data);
     this.emailForm = this.fb.group({
       sender: ['', Validators.email],
-      receiver: ['', Validators.email],
-      carbonCopy: ['', Validators.email],
-      blindCarbonCopy: ['', Validators.email],
+      receiver: [[''], Validators.email],
+      carbonCopy: [[''], Validators.email],
+      blindCarbonCopy: [[''], Validators.email],
       subject: [''],
       messageBody: [''],
       attachments: [''],
     });
 
     if (this.data) {
-      const { dataObj, idArray } = this.data;
+      const { dataObj, threadIdsArray } = this.data;
       const { idsOfThread: { id } } = dataObj;
       this.idOfMessage = id;
 
-      this.idArray = idArray;
+      this.idArray = threadIdsArray;
       const { subjectMessage: { subject, message } } = dataObj;
       const { date } = dataObj;
       this.date = date;
@@ -92,45 +101,66 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
         if (element.name === "From") {
           this.from = element.value.split('<')[1].split('>')[0];
         }
-        if (element.name === "To") {
-          this.to = element.value.split('<')[1].split('>')[0];
+        if (element.name === "To" && element.value.includes('<')) {
+          this.receipients = [
+            {
+              email: element.value.split('<')[1].split('>')[0]
+            }
+          ]
+        } else if (element.name === "To" && element.value.includes(',')) {
+          let toArray = [];
+          toArray = element.value.split(',').map(item => ({ email: item }));
+          this.receipients = toArray;
         }
-        if (element.name === "Cc") {
-          this.cc = element.value.split('<')[1].split('>')[0];
+
+        if (element.name === "Cc" && element.name.includes('<')) {
+          this.ccArray = [{
+            email: element.value.split('<')[1].split('>')[0]
+          }]
+
+          this.isCcSelected = true;
+        } else if (element.name === 'Cc' && element.name.includes(',')) {
+          let ccArray = [];
+          ccArray = element.value.split(',').map(item => ({ email: item }));
+          this.ccArray = ccArray;
           this.isCcSelected = true;
         }
-        if (element.name === "Bcc") {
-          this.bcc = element.value.split('<')[1].split('>')[0];
+        if (element.name === "Bcc" && element.name.includes('<')) {
+          this.bccArray = [{
+            email: element.value.split('<')[1].split('>')[0]
+          }]
+          this.isBccSelected = true;
+        } else if (element.name === 'Bcc' && element.name.includes(',')) {
+          let bccArray = [];
+          bccArray = element.value.split(',').map(item => ({ email: item }));
+          this.bccArray = bccArray;
           this.isBccSelected = true;
         }
       });
       this.emailForm.setValue({
         sender: this.from ? this.from : '',
-        receiver: this.to ? this.to : '',
-        carbonCopy: this.cc ? this.cc : '',
-        blindCarbonCopy: this.bcc ? this.bcc : '',
         subject: this.subject ? this.subject : '',
         messageBody: this.emailBody ? this.emailBody : '',
         attachments: ['']
       });
     }
   }
-  
+
   areTwoObjectsEquivalent(a: {}, b: {}): boolean {
 
     let aProps = Object.getOwnPropertyNames(a);
     let bProps = Object.getOwnPropertyNames(b);
 
     if (aProps.length != bProps.length) {
-        return false;
+      return false;
     }
 
     for (let i = 0; i < aProps.length; i++) {
-        let propName = aProps[i];
+      let propName = aProps[i];
 
-        if (a[propName] !== b[propName]) {
-            return false;
-        }
+      if (a[propName] !== b[propName]) {
+        return false;
+      }
     }
     return true;
   }
@@ -155,6 +185,32 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   //   };
   //   console.log('send email complete JSON : ', JSON.stringify(emailRequestData));
   // }
+
+  add(event: MatChipInputEvent, whichArray): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      whichArray.push({ email: value.trim() });
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+  sendEmail() {
+    console.log(this.emailForm);
+  }
+
+  remove(receipient: { email: string }): void {
+    const index = this.receipients.indexOf(receipient);
+
+    if (index >= 0) {
+      this.receipients.splice(index, 1);
+    }
+  }
 
   close(): void {
     clearInterval(this.interval);
