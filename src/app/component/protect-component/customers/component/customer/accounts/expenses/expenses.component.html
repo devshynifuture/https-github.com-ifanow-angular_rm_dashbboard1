@@ -12,19 +12,6 @@
                                 [ngClass]="{'mat-stroked-button': viewMode == 'Budget','text-primary':viewMode == 'Budget'}">Budget</button>
                         </div>
                         <div class="col-md-8 right text-right pr-0">
-                            <!-- <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-0">
-                                Overview Report
-                                <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down
-                                </mat-icon>
-                            </button>
-                            <mat-menu #menu="matMenu">
-                                <button mat-menu-item>Overview Report</button>
-                                <button mat-menu-item>Summary</button>
-                                <button mat-menu-item>All Transactions</button>
-                                <button mat-menu-item>Unrealized Transactions</button>
-                                <button mat-menu-item>Capital Gains</button>
-                                <button mat-menu-item>Goal Linkage</button>
-                            </mat-menu> -->
                         </div>
                     </div>
                     <div>
@@ -112,7 +99,7 @@
                                                         [matMenuTriggerFor]="menu4">more_vert</i>
                                                     <mat-menu #menu4="matMenu">
                                                         <button mat-menu-item
-                                                            (click)="element.isRecuring = false;openExpenses('addExpenses',element)">Edit</button>
+                                                            (click)="element.isRecuring = false;openExpenses('editExpenses',element)">Edit</button>
                                                         <button mat-menu-item>Deatiled View</button>
                                                         <button mat-menu-item>Activity</button>
                                                         <button mat-menu-item
@@ -206,7 +193,7 @@
                                                         </i>
                                                         <mat-menu #menu4="matMenu">
                                                             <button mat-menu-item
-                                                                (click)="element.isRecuring = true;openExpenses('addExpenses',element)">Edit</button>
+                                                                (click)="element.isRecuring = true;openExpenses('editExpenses',element)">Edit</button>
                                                             <button mat-menu-item>Deatiled View</button>
                                                             <button mat-menu-item>Activity</button>
                                                             <button mat-menu-item
@@ -341,7 +328,7 @@
                                                     [matMenuTriggerFor]="menu4">more_vert</i>
                                                 <mat-menu #menu4="matMenu">
                                                     <button mat-menu-item
-                                                        (click)="element.isRecuring = false;openExpenses('addBudget',element)">Edit</button>
+                                                        (click)="element.isRecuring = false;openExpenses('editBudget',element)">Edit</button>
                                                     <button mat-menu-item>Deatiled View</button>
                                                     <button mat-menu-item>Activity</button>
                                                     <button mat-menu-item
@@ -362,8 +349,7 @@
                                     </div>
                                 </div>
 
-                                <h5 *ngIf="dataSource5.filteredData.length != 0 && dataSource4.filteredData.length != 0"
-                                    class="m-0 text-black"> Other commitments</h5>
+                                <h5 class="m-0 text-black"> Other commitments</h5>
 
                                 <div class="example-container mt-8 mb-24 fixed-deposite">
                                     <table *ngIf="dataSource5.filteredData.length > 0" mat-table
@@ -371,9 +357,9 @@
                                         appSkeletonLoading [appSkeletonLoading]="isLoading">
                                         <ng-container matColumnDef="no">
                                             <th mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
-                                            <td mat-cell *matCellDef="let element" class="br t-2">
+                                            <td mat-cell *matCellDef="let element;  let i = index;" class="br t-2">
                                                 <div class="bar">
-                                                    {{element.no}}
+                                                    {{i+1}}
                                                 </div>
                                             </td>
                                         </ng-container>
@@ -381,7 +367,7 @@
                                             <th mat-header-cell *matHeaderCellDef class="br t-15"> Category </th>
                                             <td mat-cell *matCellDef="let element" class="br t-15">
                                                 <div class="bar">
-                                                    {{element.expense}}
+                                                    {{element.expenseType}}
                                                 </div>
                                             </td>
                                         </ng-container>
@@ -390,7 +376,7 @@
                                             </th>
                                             <td mat-cell *matCellDef="let element" class="br t-10 text-right">
                                                 <div class="bar">
-                                                    {{element.budget}}
+                                                    {{element.amount}}
                                                 </div>
                                             </td>
                                         </ng-container>
@@ -416,7 +402,7 @@
                                                     [matMenuTriggerFor]="menu4">more_vert</i>
                                                 <mat-menu #menu4="matMenu">
                                                     <button mat-menu-item
-                                                        (click)="element.isRecuring = true;openExpenses('addBudget',element)">Edit</button>
+                                                        (click)="element.isRecuring = true;openExpenses('editBudget',element)">Edit</button>
                                                     <button mat-menu-item>Deatiled View</button>
                                                     <button mat-menu-item>Activity</button>
                                                     <button mat-menu-item
