@@ -4,9 +4,9 @@
 // import { takeUntil } from 'rxjs/operators';
 
 // @Component({
-    
+
 //     templateUrl: './set-date-footer.html'
-    
+
 // })
 // export class SetDateFooter {
 //     private destroyed = new Subject<void>();
@@ -20,10 +20,10 @@
 //             .pipe(takeUntil(this.destroyed))
 //             .subscribe(() => cdr.markForCheck())
 
-            
+
 //         }
 
-    
+
 
 //     setRange(){
 //         this.calendar.activeDate = this.calendar.beginDate;
@@ -42,13 +42,13 @@ import { SatCalendar, SatCalendarFooter, SatDatepicker } from 'saturn-datepicker
 import { DateAdapter } from 'saturn-datepicker';
 
 @Component({
-    selector:'app-set-date-footer',
+    selector: 'app-set-date-footer',
     templateUrl: './set-date-footer.html'
 })
 export class SetDateFooter<Date> implements SatCalendarFooter<Date> {
-    public ranges: Array<{key: string, label: string}> = [
-        {key: 'today', label: 'Today'},
-        {key: 'thisWeek', label: 'This Week'},
+    public ranges: Array<{ key: string, label: string }> = [
+        { key: 'today', label: 'Today' },
+        { key: 'thisWeek', label: 'This Week' },
     ];
     private destroyed = new Subject<void>();
 
@@ -63,7 +63,7 @@ export class SetDateFooter<Date> implements SatCalendarFooter<Date> {
             .subscribe(() => cdr.markForCheck())
     }
 
-    setRange(range: string) {
+    setRange() {
         // switch (range) {
         //     case 'today':
         //         this.calendar.beginDate = this.dateAdapter.deserialize(new Date());
@@ -78,13 +78,15 @@ export class SetDateFooter<Date> implements SatCalendarFooter<Date> {
         // }
         this.calendar.activeDate = this.calendar.beginDate;
         this.calendar.beginDateSelectedChange.emit(this.calendar.beginDate);
-        this.calendar.dateRangesChange.emit({begin: this.calendar.beginDate, end: this.calendar.endDate});
-        console.log({begin: this.calendar.beginDate, end: this.calendar.endDate},"result date range button");
+        this.calendar.dateRangesChange.emit({ begin: this.calendar.beginDate, end: this.calendar.endDate });
+        console.log({ begin: this.calendar.beginDate, end: this.calendar.endDate }, "result date range button");
         this.datePicker.close();
+
+
     }
 
-    cancelRange(){
+    cancelRange() {
         this.datePicker.close();
-       
+
     }
 }

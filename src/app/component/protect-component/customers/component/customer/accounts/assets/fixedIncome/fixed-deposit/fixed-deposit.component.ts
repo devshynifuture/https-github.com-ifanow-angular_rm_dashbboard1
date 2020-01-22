@@ -132,6 +132,9 @@ export class FixedDepositComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id;
   }
+  ownerDetails(value){
+    this.familyMemberId=value.id;
+  }
   lisNominee(value) {
     console.log(value)
     this.nomineesListFM = Object.assign([], value.familyMembersList);

@@ -64,6 +64,9 @@ export class BondsComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
+  ownerDetails(value){
+    this.familyMemberId=value.id;
+  }
   lisNominee(value) {
     console.log(value)
     this.nomineesListFM = Object.assign([], value.familyMembersList);
@@ -177,8 +180,8 @@ export class BondsComponent implements OnInit {
         rateOfReturn: this.bonds.controls.rateReturns.value,
         linkedBankAccount: this.bonds.controls.linkBankAc.value,
         description: this.bonds.controls.description.value,
-        maturityDate: this.datePipe.transform(this.maturityDate, 'yyyy-MM-dd'),
-        bankName: this.bonds.controls.bankName.value,
+        // maturityDate: this.datePipe.transform(this.maturityDate, 'yyyy-MM-dd'),
+        // bankName: this.bonds.controls.bankName.value,
         tenure: this.bonds.controls.tenure.value,
         type: this.bonds.controls.type.value,
         compounding: this.bonds.controls.compound.value,
