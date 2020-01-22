@@ -63,7 +63,11 @@
                     <td *matCellDef="let element let i = index;" class="br " mat-cell>
                         <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="f-600 pl-4 proximaFont text-left">Total</td>
+                    <td mat-footer-cell *matFooterCellDef class="f-600 pl-4 proximaFont text-left">
+                        <div class="bar">
+                            {{isLoading ? '' : Total }}
+                        </div>
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="owner">
                     <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br w-20"> Owner</th>

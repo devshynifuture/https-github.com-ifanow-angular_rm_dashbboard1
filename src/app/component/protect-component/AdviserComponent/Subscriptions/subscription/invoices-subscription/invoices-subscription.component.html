@@ -164,15 +164,15 @@
         </ng-container>
 
         <ng-container matColumnDef="amt">
-          <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="finalAmount"> Amount(₹)</th>
+          <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="finalAmount"> Amount</th>
           <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" class="c-p"
             mat-cell>
-            <div class="bar"> {{formatter(element.finalAmount) || ''}} </div>
+            <div class="bar"> ₹<span appFormatNumber>{{element.finalAmount}}</span> </div>
           </td>
         </ng-container>
         <ng-container matColumnDef="balance">
           <th *matHeaderCellDef class="f-18 text-right common-right pr-24" mat-header-cell mat-sort-header="balanceDue">
-            Balance due(₹)
+            Balance due
           </th>
           <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element"
             class="text-right pr-8 c-p" mat-cell>

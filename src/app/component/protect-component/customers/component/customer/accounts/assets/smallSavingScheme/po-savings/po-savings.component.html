@@ -16,14 +16,15 @@
             <button mat-menu-item>Option 3</button>
         </mat-menu>
 
-        <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
-    </button>
+        <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
+                class="material-icons">filter_list</i>FILTERS
+        </button>
         <button (click)="openAddPOSAVING(null)" class="btn-primary addon v-middle" mat-stroked-button>
-      ADD NEW
-    </button>
+            ADD NEW
+        </button>
     </div>
 </div>
-<div class="example-container mt-8 col-md-12 p-0 real-estate">
+<div class="example-container mt-8 overflow-hidden col-md-12 p-0 real-estate">
     <table *ngIf="datasource.filteredData.length > 0" [appSkeletonLoading]="isLoading" [dataSource]="datasource" appSkeletonLoading class="skeletonAnimation" id="table-low" mat-table matSort>
 
         <ng-container matColumnDef="no">
@@ -31,7 +32,9 @@
             <td *matCellDef="let element;index as i" class="br" mat-cell>
                 <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
             </td>
-            <td *matFooterCellDef class=" pl-4 f-500 text-left t-7" mat-footer-cell> Total</td>
+            <td *matFooterCellDef class=" pl-4 f-500 text-left t-7" mat-footer-cell>
+                <div class="bar"> {{isLoading ? '' : Total }} </div>
+            </td>
         </ng-container>
         <ng-container matColumnDef="owner">
             <th *matHeaderCellDef class="br t-25" mat-header-cell mat-sort-header="ownerName"> Owner</th>
@@ -43,8 +46,8 @@
         <ng-container matColumnDef="cvalue">
             <th *matHeaderCellDef class="br t-14 text-right" mat-header-cell mat-sort-header="currentValue"> Current value
             </th>
-            <td *matCellDef="let element" appFormatNumber class="br t-14 text-right" mat-cell>
-                <div class="bar"> {{element.currentValue}} </div>
+            <td *matCellDef="let element" class="br t-14 text-right" mat-cell>
+                <div class="bar" appFormatNumber> {{element.currentValue}} </div>
             </td>
             <td *matFooterCellDef [value]="currentValueSum" appFormatNumber class="br text-right f-500 p-8 t-7" mat-footer-cell>
                 <div class="bar"> {{currentValueSum}} </div>
@@ -61,8 +64,8 @@
         <ng-container matColumnDef="balanceM">
             <th *matHeaderCellDef class="br text-right" mat-header-cell mat-sort-header="balance">Balance mentioned
             </th>
-            <td *matCellDef="let element" appFormatNumber class="br text-right" mat-cell>
-                <div class="bar"> {{element.accountBalance}} </div>
+            <td *matCellDef="let element" class="br text-right" mat-cell>
+                <div class="bar" appFormatNumber> {{element.accountBalance}} </div>
             </td>
             <td *matFooterCellDef [value]="balanceMentionedSum" appFormatNumber class="br text-right f-500 p-8 t-7" mat-footer-cell>{{balanceMentionedSum}}</td>
         </ng-container>
@@ -83,21 +86,24 @@
         <ng-container matColumnDef="status">
             <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="status"> Status</th>
             <td *matCellDef="let element" class="br text-primary" mat-cell>
-                <div class="bar"> LIVE</div>
+                <div class="bar"> {{isLoading ? '' : LIVE }}</div>
             </td>
             <td *matFooterCellDef mat-footer-cell></td>
         </ng-container>
         <ng-container matColumnDef="icons">
             <th *matHeaderCellDef class="t-2" mat-header-cell></th>
-            <td *matCellDef="let element" class="t-2" mat-cell><i [matMenuTriggerFor]="menubank" class="material-icons c-p text-black">
-          more_vert
-        </i>
-                <mat-menu #menubank="matMenu">
-                    <button (click)="openAddPOSAVING(element)" mat-menu-item>Edit</button>
-                    <button (click)="openDetailPoSaving(element)" mat-menu-item>Detailed view</button>
-                    <button mat-menu-item>Activity</button>
-                    <button (click)="deleteModal('SUBSCRIPTION',element)" mat-menu-item>Delete</button>
-                </mat-menu>
+            <td *matCellDef="let element" class="t-2" mat-cell>
+                <div *ngIf="!isLoading">
+                    <i [matMenuTriggerFor]="menubank" class="material-icons c-p text-black">
+                        more_vert
+                    </i>
+                    <mat-menu #menubank="matMenu">
+                        <button (click)="openAddPOSAVING(element)" mat-menu-item>Edit</button>
+                        <button (click)="openDetailPoSaving(element)" mat-menu-item>Detailed view</button>
+                        <button mat-menu-item>Activity</button>
+                        <button (click)="deleteModal('SUBSCRIPTION',element)" mat-menu-item>Delete</button>
+                    </mat-menu>
+                </div>
             </td>
             <td *matFooterCellDef mat-footer-cell></td>
         </ng-container>
@@ -109,7 +115,7 @@
         <img class="width400" src="assets/images/svg/clients-img.svg">
         <h4 class="text-center pt-12">No Scheme Found</h4>
         <button (click)="openAddPOSAVING(null)" class="btn-primary addon v-middle" mat-stroked-button>
-      ADD NEW
-    </button>
+            ADD NEW
+        </button>
     </div>
 </div>

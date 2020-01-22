@@ -60,10 +60,10 @@
 
         <div class="col-md-10">
             <div class="row">
-                <div class="col-md-1">
+                <div class="col-md-12">
                     <p class="mb-10 text-custom pt-12">Attachment</p>
                 </div>
-                <div class="col-md-11">
+                <div class="col-md-12">
                     <mat-chip-list #chipList aria-label="docName selection">
                         <mat-chip (removed)="remove(i)" *ngFor="let doc of docObj ; let i = index">
                             {{doc.documentName}}

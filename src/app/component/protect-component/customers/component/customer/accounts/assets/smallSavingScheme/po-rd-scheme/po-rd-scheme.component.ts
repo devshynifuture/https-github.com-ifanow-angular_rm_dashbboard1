@@ -80,13 +80,13 @@ export class PoRdSchemeComponent implements OnInit {
       clientId: this.clientId,
     };
     this.dataSource.data = [{}, {}, {}];
-    this.cusService.getSmallSavingSchemePORDData(obj).subscribe(
-      data => this.getPoRdSchemedataResponse(data), (error) => {
-        this.eventService.showErrorMessage(error);
-        this.dataSource.data = [];
-        this.isLoading = false;
-      }
-    );
+    // this.cusService.getSmallSavingSchemePORDData(obj).subscribe(
+    //   data => this.getPoRdSchemedataResponse(data), (error) => {
+    //     this.eventService.showErrorMessage(error);
+    //     this.dataSource.data = [];
+    //     this.isLoading = false;
+    //   }
+    // );
   }
 
   getPoRdSchemedataResponse(data) {

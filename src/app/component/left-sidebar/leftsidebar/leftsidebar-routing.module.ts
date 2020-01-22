@@ -1,6 +1,6 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {LeftsidebarComponent} from './leftsidebar.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { LeftsidebarComponent } from './leftsidebar.component';
 
 
 const routes: Routes = [
@@ -37,6 +37,10 @@ const routes: Routes = [
         loadChildren: () => import('src/app/component/protect-component/AdviserComponent/Activities/calendar/calendar.module').then(m => m.CalendarModule),
         data: { animation: 'Tab1', preload: true }
       },
+      {
+        path: 'backoffice',
+        loadChildren: () => import('src/app/component/protect-component/AdviserComponent/backOffice/backoffice-mis/backoffice-mis.module').then(m => m.BackofficeMisModule)
+      }
     ]
   }
 ];
