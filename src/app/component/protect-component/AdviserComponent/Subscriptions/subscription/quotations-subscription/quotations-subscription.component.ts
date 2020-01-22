@@ -82,6 +82,14 @@ export class QuotationsSubscriptionComponent implements OnInit {
     {name: 'Sent date', value: 2},
     {name: 'Client consent', value: 3}
   ];
+
+  passFilterData ={
+    data:"",
+    selectedCount:"",
+    statusFilter:this.chips,
+    dateFilter:this.dateChips,
+    filterQuotation: true
+  };
   dataCount: number;
 
 
@@ -161,6 +169,18 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
     }
   }
+
+  getFiterRes(data){
+    console.log(data , "data for filter");
+    this.filterStatus = data.statusFilterJson;
+    this.filterDate = data.dateFilterArr;
+    this.selectedDateRange = data.dateFilterJson;
+    this.lastFilterDataId = 0;
+    this.filterDataArr = [];
+    this.dataSource.data = [{}, {}, {}];
+      this.isLoading = true;
+      this.getQuotationsData(false);  
+    }
 
   orgValueChange(selectedDateRange) {
 

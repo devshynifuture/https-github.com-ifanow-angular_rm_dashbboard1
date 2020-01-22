@@ -61,6 +61,13 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     { name: 'Sent date', value: 2 },
     { name: 'Client Signitature', value: 3 }
   ];
+
+  passFilterData ={
+    data:"",
+    selectedCount:"",
+    statusFilter:this.chips,
+    dateFilter:this.dateChips
+  };
   selectedDateRange: { begin: Date; end: Date; };
   showFilter = false;
   data: Array<any> = [{}, {}, {}];
@@ -277,69 +284,81 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     );
   }
 
-  addFilters(addFilters) {
-
-    console.log('addFilters', addFilters);
-    // !_.includes(this.filterStatus, addFilters)
-    if (this.filterStatus.find(element => element.name == addFilters.name) == undefined) {
-      this.lastFilterDataId = 0;
-      this.filterStatus.push(addFilters);
-      this.filterDataArr = [];
-      console.log(this.filterStatus);
-    } else {
-      this.lastFilterDataId = 0;
-      // _.remove(this.filterStatus, this.senddataTo);
-    }
-
-    console.log(this.filterStatus, 'this.filterStatus 123');
-
-    this.callFilter(false);
-  }
-
-
-  addFiltersDate(dateFilter) {
-    this.filterDate = [];
-    if (this.filterDate.length >= 1) {
-      this.filterDate = [];
-    }
+  getFiterRes(data){
+    console.log(data , "data for filter");
+    this.filterStatus = data.statusFilterJson;
+    this.filterDate = data.dateFilterArr;
+    this.selectedDateRange = data.dateFilterJson;
+    this.lastFilterDataId = 0;
     this.filterDataArr = [];
-    this.lastFilterDataId = 0;
-    this.filterDate.push((dateFilter == '1: Object') ? 1 : (dateFilter == '2: Object') ? 2 : 3);
-    console.log('addFilters', dateFilter);
-    const beginDate = new Date();
-    beginDate.setMonth(beginDate.getMonth() - 1);
-    UtilService.getStartOfTheDay(beginDate);
-
-    const endDate = new Date();
-    UtilService.getStartOfTheDay(endDate);
-
-    this.selectedDateRange = { begin: beginDate, end: endDate };
-    console.log(this.filterDate, 'this.filterDate 123');
+    this.dataSource.data = [{}, {}, {}];
+      this.isLoading = true;
     this.callFilter(false);
   }
 
+  // addFilters(addFilters) {
 
-  removeDate(item) {
-    console.log(this.filterDate, 'this.filterDate 123 r');
-    this.selectedDateFilter = 'dateFilter';
-    this.filterDate.splice(item, 1);
-    this.lastFilterDataId = 0;
-    this.callFilter(false);
-  }
+  //   console.log('addFilters', addFilters);
+  //   // !_.includes(this.filterStatus, addFilters)
+  //   if (this.filterStatus.find(element => element.name == addFilters.name) == undefined) {
+  //     this.lastFilterDataId = 0;
+  //     this.filterStatus.push(addFilters);
+  //     this.filterDataArr = [];
+  //     console.log(this.filterStatus);
+  //   } else {
+  //     this.lastFilterDataId = 0;
+  //     // _.remove(this.filterStatus, this.senddataTo);
+  //   }
 
-  remove(item) {
-    if (this.filterStatus[item].name == this.selectedStatusFilter.name) {
-      this.selectedStatusFilter = 'statusFilter';
-    }
+  //   console.log(this.filterStatus, 'this.filterStatus 123');
 
-    this.filterStatus.splice(item, 1);
-    this.filterDataArr = this.filterDataArr.filter((x) => {
-      x.status != item.value;
-    });
-    this.lastFilterDataId = 0;
-    this.callFilter(false);
+  //   this.callFilter(false);
+  // }
 
-  }
+
+  // addFiltersDate(dateFilter) {
+  //   this.filterDate = [];
+  //   if (this.filterDate.length >= 1) {
+  //     this.filterDate = [];
+  //   }
+  //   this.filterDataArr = [];
+  //   this.lastFilterDataId = 0;
+  //   this.filterDate.push((dateFilter == '1: Object') ? 1 : (dateFilter == '2: Object') ? 2 : 3);
+  //   console.log('addFilters', dateFilter);
+  //   const beginDate = new Date();
+  //   beginDate.setMonth(beginDate.getMonth() - 1);
+  //   UtilService.getStartOfTheDay(beginDate);
+
+  //   const endDate = new Date();
+  //   UtilService.getStartOfTheDay(endDate);
+
+  //   this.selectedDateRange = { begin: beginDate, end: endDate };
+  //   console.log(this.filterDate, 'this.filterDate 123');
+  //   this.callFilter(false);
+  // }
+
+
+  // removeDate(item) {
+  //   console.log(this.filterDate, 'this.filterDate 123 r');
+  //   this.selectedDateFilter = 'dateFilter';
+  //   this.filterDate.splice(item, 1);
+  //   this.lastFilterDataId = 0;
+  //   this.callFilter(false);
+  // }
+
+  // remove(item) {
+  //   if (this.filterStatus[item].name == this.selectedStatusFilter.name) {
+  //     this.selectedStatusFilter = 'statusFilter';
+  //   }
+
+  //   this.filterStatus.splice(item, 1);
+  //   this.filterDataArr = this.filterDataArr.filter((x) => {
+  //     x.status != item.value;
+  //   });
+  //   this.lastFilterDataId = 0;
+  //   this.callFilter(false);
+
+  // }
 
   callFilter(scrollLoader) {
     this.dataCount = 0;

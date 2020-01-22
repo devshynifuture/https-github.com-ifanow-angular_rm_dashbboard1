@@ -22,8 +22,34 @@ export class calendarService {
   }
 
   addEvent(data) {
+    let calData= {
+      "userId":2727,
+      "calendarId":"gaurav@futurewise.co.in",
+      "summary": "test ani",
+      "location": "800 Howard St., San Francisco, CA 94103",
+      "description": "uniiiii",
+      "start": {
+      "dateTime": "2020-01-21T05:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+      },
+      "end": {
+      "dateTime": "2020-01-21T07:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+      },
+      "recurrence": [
+      "RRULE:FREQ=DAILY;COUNT=2"
+      ],
+      "attendees":[
+      {
+      "email":"chetan@futurewise.co.in"
+      },
+      {
+      "email":"ajay@futurewise.co.in"
+      }
+      ]
+      }
     // const httpParams = new HttpParams().set('calendarId', setData.calendarId).set('userId', setData.userId).set('eventId', setData.eventId);
-    return this.http.post(apiConfig.GMAIL_URL + appConfig.GET_ADD, data);
+    return this.http.post(apiConfig.GMAIL_URL + appConfig.GET_ADD, calData);
   }
 
   deleteEvent(data) {

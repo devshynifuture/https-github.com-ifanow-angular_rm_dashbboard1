@@ -1,114 +1,103 @@
 <div *ngIf="singleSubscriptionData.isCreateSub" class="row bb-1 popup-header-fix-60">
-  <div class="col-md-8 p-0">
-    <h4 class="wrapper-20 m-0">FIXED FEE STRUCTURE</h4>
-  </div>
-  <div class="col-md-4 text-right">
-    <div class="wrapper-12 pb-10">
-      <button [ngClass]="{'v-h':!isSave}" mat-stroked-button class="br-0 btn-primary mr-20" (click)="enableForm()">
+    <div class="col-md-8 p-0">
+        <h4 class="wrapper-20 m-0">FIXED FEE STRUCTURE</h4>
+    </div>
+    <div class="col-md-4 text-right" *ngIf="subData.status == 2 || subData.status == 3">
+        <div class="wrapper-12 pb-10">
+            <button [ngClass]="{'v-h':!isSave}" mat-stroked-button class="br-0 btn-primary mr-20" (click)="enableForm()">
         EDIT
       </button>
-      <i class="material-icons c-p v-middle" (click)="Close(false)"> clear</i>
+            <i class="material-icons c-p v-middle" (click)="Close(false)"> clear</i>
+        </div>
     </div>
-  </div>
 </div>
 <div class="wrapper-20 pt-36 mb-44 pb-44">
-  <div [formGroup]="fixedFeeStructureForm">
-    <p class="text-primary">FIXED FEE STRUCTURE</p>
-    <h4 class="mb-0 pt-16">{{singleSubscriptionData.serviceName}}</h4>
-    <div class="row pt-44">
-      <div class="col-md-5">
-        <h5 class="text-right pt-12 mb-0">Fees</h5>
-      </div>
-      <div class="col-md-3">
-        <div class="form-group mb-0">
-          <input type="number" formControlName="fees" class="form-control br-0">
-        </div>
-        <mat-error class="f-12 pt-4"
-          [ngClass]="{'v-h':!(isFeeValid && getFixedFee().fees.invalid || getFixedFee().fees.touched && getFixedFee().fees.invalid)}">
-          Code is Required
-        </mat-error>
-      </div>
-
-    </div>
-
-    <div class="row pt-28">
-      <div class="col-md-5">
-        <h5 class="text-right pt-12 mb-0">Billing nature</h5>
-      </div>
-      <div class="col-md-7">
-        <mat-radio-group formControlName="billingNature">
-          <mat-radio-button value="1"
-            [ngClass]="{'b-a-custom': fixedFeeStructureForm.get('billingNature').value==1,'text-primary':fixedFeeStructureForm.get('billingNature').value==1,'b-a':fixedFeeStructureForm.get('billingNature').value==2}"
-            class="pt-8 pb-8 pr-52 pl-20 custom-radio">Recurring
-          </mat-radio-button>
-          <mat-radio-button value="2"
-            [ngClass]="{'b-a-custom': fixedFeeStructureForm.get('billingNature').value==2,'text-primary':fixedFeeStructureForm.get('billingNature').value==2,'b-a':fixedFeeStructureForm.get('billingNature').value==1}"
-            class="b-a pt-8 pr-40 pl-20 pr-76 pb-8">Once
-          </mat-radio-button>
-        </mat-radio-group>
-      </div>
-    </div>
-    <div *ngIf="fixedFeeStructureForm.get('billingNature').value==1" class="row pt-28">
-      <div class="col-md-5">
-        <h5 class="text-right pt-12 mb-0">Bill every</h5>
-      </div>
-      <div class="col-md-7">
-        <div class="row">
-          <div class="col-md-5 p-0">
-            <div class="form-group mb-0">
-              <input type="text" appNumberOnly [maxLength]="2" formControlName="billEvery"
-                class="form-control br-0 br-none">
+    <div [formGroup]="fixedFeeStructureForm">
+        <p class="text-primary">FIXED FEE STRUCTURE</p>
+        <h4 class="mb-0 pt-16">{{singleSubscriptionData.serviceName}}</h4>
+        <div class="row pt-44">
+            <div class="col-md-5">
+                <h5 class="text-right pt-12 mb-0">Fees</h5>
             </div>
-            <mat-error class="f-12 pt-4"
-              [ngClass]="{'v-h':!(isBillValid && getFixedFee().billEvery.invalid || getFixedFee().billEvery.touched && getFixedFee().billEvery.invalid)}">
-              Code is Required
-            </mat-error>
+            <div class="col-md-3">
+                <div class="form-group mb-0">
+                    <input type="number" formControlName="fees" class="form-control br-0">
+                </div>
+                <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isFeeValid && getFixedFee().fees.invalid || getFixedFee().fees.touched && getFixedFee().fees.invalid)}">
+                    Code is Required
+                </mat-error>
+            </div>
 
-          </div>
-          <div class="col-md-5 p-0">
-            <div class="form-group">
-              <select formControlName='Duration' class="form-control br-0" f id="sel1">
+        </div>
+
+        <div class="row pt-28">
+            <div class="col-md-5">
+                <h5 class="text-right pt-12 mb-0">Billing nature</h5>
+            </div>
+            <div class="col-md-7">
+                <mat-radio-group formControlName="billingNature">
+                    <mat-radio-button value="1" [ngClass]="{'b-a-custom': fixedFeeStructureForm.get('billingNature').value==1,'text-primary':fixedFeeStructureForm.get('billingNature').value==1,'b-a':fixedFeeStructureForm.get('billingNature').value==2}" class="pt-8 pb-8 pr-52 pl-20 custom-radio">Recurring
+                    </mat-radio-button>
+                    <mat-radio-button value="2" [ngClass]="{'b-a-custom': fixedFeeStructureForm.get('billingNature').value==2,'text-primary':fixedFeeStructureForm.get('billingNature').value==2,'b-a':fixedFeeStructureForm.get('billingNature').value==1}" class="b-a pt-8 pr-40 pl-20 pr-76 pb-8">Once
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+        <div *ngIf="fixedFeeStructureForm.get('billingNature').value==1" class="row pt-28">
+            <div class="col-md-5">
+                <h5 class="text-right pt-12 mb-0">Bill every</h5>
+            </div>
+            <div class="col-md-7">
+                <div class="row">
+                    <div class="col-md-5 p-0">
+                        <div class="form-group mb-0">
+                            <input type="text" appNumberOnly [maxLength]="2" formControlName="billEvery" class="form-control br-0 br-none">
+                        </div>
+                        <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isBillValid && getFixedFee().billEvery.invalid || getFixedFee().billEvery.touched && getFixedFee().billEvery.invalid)}">
+                            Code is Required
+                        </mat-error>
+
+                    </div>
+                    <div class="col-md-5 p-0">
+                        <div class="form-group">
+                            <select formControlName='Duration' class="form-control br-0" f id="sel1">
                 <option value="1">Months</option>
                 <option value="2">Yearly</option>
               </select>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
+        <div *ngIf="fixedFeeStructureForm.get('billingNature').value==1" class="row pt-28">
+            <div class="col-md-5">
+                <h5 class="text-right pt-12 mb-0">Billing Mode</h5>
+            </div>
+            <div class="col-md-7">
+                <mat-radio-group formControlName="billingMode">
+                    <mat-radio-button value="1" [ngClass]="{'b-a-custom': fixedFeeStructureForm.get('billingMode').value==1,'text-primary':fixedFeeStructureForm.get('billingMode').value==1,'b-a':fixedFeeStructureForm.get('billingMode').value==2}" class="text-custom b-a wrapper-8">Start of period
+                    </mat-radio-button>
+                    <mat-radio-button value="2" [ngClass]="{'b-a-custom': fixedFeeStructureForm.get('billingMode').value==2,'text-primary':fixedFeeStructureForm.get('billingMode').value==2,'b-a':fixedFeeStructureForm.get('billingMode').value==1}" class="text-custom b-a wrapper-8">End of period
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
     </div>
-    <div *ngIf="fixedFeeStructureForm.get('billingNature').value==1" class="row pt-28">
-      <div class="col-md-5">
-        <h5 class="text-right pt-12 mb-0">Billing Mode</h5>
-      </div>
-      <div class="col-md-7">
-        <mat-radio-group formControlName="billingMode">
-          <mat-radio-button value="1"
-            [ngClass]="{'b-a-custom': fixedFeeStructureForm.get('billingMode').value==1,'text-primary':fixedFeeStructureForm.get('billingMode').value==1,'b-a':fixedFeeStructureForm.get('billingMode').value==2}"
-            class="text-custom b-a wrapper-8">Start of period
-          </mat-radio-button>
-          <mat-radio-button value="2"
-            [ngClass]="{'b-a-custom': fixedFeeStructureForm.get('billingMode').value==2,'text-primary':fixedFeeStructureForm.get('billingMode').value==2,'b-a':fixedFeeStructureForm.get('billingMode').value==1}"
-            class="text-custom b-a wrapper-8">End of period
-          </mat-radio-button>
-        </mat-radio-group>
-      </div>
-    </div>
-  </div>
 </div>
 <div class="bottom-fixed wrapper-16">
-  <div class="row">
-    <div class="col-md-4 pt-8 pl-8">
-      <h5 class="mb-0 text-white c-p" (click)="Close(false)">Cancel</h5>
-    </div>
-    <div *ngIf="singleSubscriptionData.isCreateSub==false" class="col-md-8 right text-right">
-      <button mat-button (click)="saveFixedModifyFees()" class="btn-bottom br-0 text-inherit">Next</button>
-    </div>
-    <div *ngIf="singleSubscriptionData.isCreateSub && isSave==false" class="col-md-8 right text-right">
-      <button mat-button (click)="saveFixedModifyFees()" class="btn-bottom br-0 text-inherit">Save</button>
-    </div>
-    <!-- <div *ngIf="createSubData && singleSubscriptionData.subscriptionPricing" class="col-md-8 right text-right">
+    <div class="row">
+        <div class="col-md-4 pt-8 pl-8">
+            <h5 class="mb-0 text-white c-p" (click)="Close(false)">Cancel</h5>
+        </div>
+        <div *ngIf="singleSubscriptionData.isCreateSub==false" class="col-md-8 right text-right">
+            <button mat-button (click)="saveFixedModifyFees()" class="btn-bottom br-0 text-inherit">NEXT</button>
+        </div>
+        <div *ngIf="singleSubscriptionData.isCreateSub && isSave==false" class="col-md-8 right text-right">
+            <button mat-button (click)="saveFixedModifyFees()" class="btn-bottom br-0 text-inherit">Save</button>
+        </div>
+        <!-- <div *ngIf="createSubData && singleSubscriptionData.subscriptionPricing" class="col-md-8 right text-right">
       <button *ngIf="singleSubscriptionData.subscriptionPricing.feeTypeId==2" mat-button
         (click)="saveVariableModifyFees()" class="btn-bottom br-0 text-inherit">NEXT STEP</button>
     </div> -->
-  </div>
+    </div>
 </div>

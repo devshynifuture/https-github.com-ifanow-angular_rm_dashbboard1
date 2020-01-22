@@ -231,6 +231,15 @@ export class ExpensesComponent implements OnInit {
       this.noData = 'No data found';
       this.dataSource4.data = [];
     }
+    if (data) {
+      data.forEach(singleExpense => {
+        const singleExpenseCategory = this.constantService.expenseJsonMap[singleExpense.budgetCategoryId];
+        if (singleExpenseCategory) {
+          singleExpense.expenseType = singleExpenseCategory.expenseType;
+        }
+      });
+      this.dataSource4.data = data;
+    }
     this.isLoading = false;
     console.log('getBudgetRes', data)
   }
@@ -289,7 +298,7 @@ export class ExpensesComponent implements OnInit {
   getRecuringExpenseRes(data) {
     if (data == undefined) {
       this.noData = 'No data found';
-      this.dataSource5.data = [];
+      this.dataSource1.data = [];
     }
     this.isLoading = false;
     console.log(data)
@@ -305,7 +314,7 @@ export class ExpensesComponent implements OnInit {
       this.dataSource1.data = data;
     } else {
       this.noData = 'No data found';
-      this.dataSource.data = [];
+      this.dataSource1.data = [];
     }
   }
   getTransaction() {
@@ -333,7 +342,7 @@ export class ExpensesComponent implements OnInit {
   getTransactionExpenseRes(data) {
     if (data == undefined) {
       this.noData = 'No data found';
-      this.dataSource5.data = [];
+      this.dataSource.data = [];
     }
     this.isLoading = false;
     console.log(data);
@@ -415,6 +424,8 @@ export class ExpensesComponent implements OnInit {
     });
   }
   openExpenses(value, data) {
+    data = {}
+    data.flag = value
     const fragmentData = {
       flag: value,
       data: data,
@@ -440,7 +451,7 @@ export class ExpensesComponent implements OnInit {
       flag: value,
       id: 1,
       state: 'open35',
-      componentName: AddBudgetComponent
+      componentName: AddExpensesComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

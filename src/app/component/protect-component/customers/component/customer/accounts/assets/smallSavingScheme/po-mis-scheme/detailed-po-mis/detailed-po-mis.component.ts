@@ -7,6 +7,7 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./detailed-po-mis.component.scss']
 })
 export class DetailedPoMisComponent implements OnInit {
+  nominee: any;
 
   constructor(private subInjectService: SubscriptionInject) {
   }
@@ -14,6 +15,8 @@ export class DetailedPoMisComponent implements OnInit {
   data;
 
   ngOnInit() {
+    this.nominee=this.data.nominees
+
   }
 
   close() {
