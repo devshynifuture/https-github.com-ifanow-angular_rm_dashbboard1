@@ -122,7 +122,9 @@
                 <ng-container matColumnDef="mode">
                     <th *matHeaderCellDef class="f-18" mat-header-cell> Fee collection mode</th>
                     <td *matCellDef="let element" mat-cell>
-                        <div class="bar"></div>
+                        <div class="bar">
+                            {{ getFeeTypeName(element.subscriptionPricing.feeTypeId) }}
+                        </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="icons">
@@ -132,15 +134,18 @@
               more_vert
             </i>
                         <mat-menu #menu="matMenu">
-                            <a (click)="Open('open',element)" mat-menu-item>
+                            <a  (click)="Open('open',element)" mat-menu-item>
                 View fee structure</a>
-                            <a (click)="openPlanSlider('billerSettings','open',element)" class="bt-1" mat-menu-item>Change
+                            <a class="bt-1" (click)="openPlanSlider('billerSettings','open',element)" *ngIf="element.status!=4"  mat-menu-item>Change
                 Biller</a>
-                            <a (click)="openPlanSlider('changePayee','open',element)" mat-menu-item>Change
+                            <a (click)="openPlanSlider('changePayee','open',element)" *ngIf="element.status!=4" mat-menu-item>Change
                 Payee</a>
-                            <a (click)="delete('cancelSubscription',element)" *ngIf="element.status!=1" class="bt-1" mat-menu-item>Cancel subscription</a>
-                            <a (click)="deleteModal('SUBSCRIPTION',element, sub.subscriptions, i)" mat-menu-item>Delete
-                subscription</a>
+                <div class="bt-1">
+
+                    <a (click)="delete('cancelSubscription',element)" *ngIf="element.status==2 || element.status == 3"  mat-menu-item>Cancel subscription</a>
+                    <a  (click)="deleteModal('SUBSCRIPTION',element, sub.subscriptions, i)" mat-menu-item>Delete
+        subscription</a>
+                </div>
                         </mat-menu>
                     </td>
                 </ng-container>

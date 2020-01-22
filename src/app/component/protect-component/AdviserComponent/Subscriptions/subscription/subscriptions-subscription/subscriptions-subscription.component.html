@@ -93,8 +93,8 @@
           <td (click)="openPlanSlider('SUBSCRIPTIONS','open',element)"
               *matCellDef="let element; let i = index;" class="c-p t-20" mat-cell>
             <div class="bar">
-              {{element.planName}} <br>
-              <small class="text-custom roboto">{{element.clientName}}</small>
+              {{element.clientName}} <br>
+              <small class="text-custom roboto">{{element.planName}}</small>
             </div>
           </td>
         </ng-container>
@@ -114,9 +114,9 @@
                  class="bar text-primary text-underline">
               {{isLoading ? ' ' : 'View details'}} </div>
             <div *ngIf="element.startsOn && element.subscriptionPricing.feeTypeId==1">
-              {{element.subscriptionPricing.subscriptionAssetPricingList[0].pricing}}</div>
+              ₹<span appFormatNumber>{{element.subscriptionPricing.subscriptionAssetPricingList[0].pricing}}</span></div>
             <div *ngIf="element.startsOn && element.subscriptionPricing.feeTypeId==2">
-              {{element.subscriptionPricing.subscriptionAssetPricingList[2].pricing}}</div>
+              ₹<span appFormatNumber>{{element.subscriptionPricing.subscriptionAssetPricingList[2].pricing}}</span></div>
           </td>
         </ng-container>
 
@@ -180,7 +180,7 @@
         </ng-container>
         <ng-container matColumnDef="feemode">
           <th *matHeaderCellDef class="f-18 text-right pr-24 t-12"
-              mat-header-cell mat-sort-header="subscriptionPricing.feeTypeId"> Fee mode
+              mat-header-cell mat-sort-header="subscriptionPricing.feeTypeId"> Fee collection mode
           </th>
           <td *matCellDef="let element" class="text-right pr-8 t-12" mat-cell>
             <div class="bar">
@@ -200,17 +200,31 @@
                                                                 class="material-icons c-p iconscolors">
             more_vert
           </i>
-            <mat-menu #menu="matMenu">
-              <a (click)="openFeeEditor(element)" *ngIf="element.startsOn==undefined" mat-menu-item>View &
+          <mat-menu #menu="matMenu">
+            <a  (click)="Open('open',element)" mat-menu-item>
+View fee structure</a>
+            <a class="bt-1" (click)="openPlanSlider('billerSettings','open',element)" *ngIf="element.status!=4"  mat-menu-item>Change
+Biller</a>
+            <a (click)="openPlanSlider('changePayee','open',element)" *ngIf="element.status!=4" mat-menu-item>Change
+Payee</a>
+<div class="bt-1">
+
+    <a (click)="delete('cancelSubscription',element)" *ngIf="element.status==2 || element.status == 3"  mat-menu-item>Cancel subscription</a>
+    <a  (click)="deleteModal('SUBSCRIPTION',element, sub.subscriptions, i)" mat-menu-item>Delete
+subscription</a>
+</div>
+        </mat-menu>
+            <!-- <mat-menu #menu="matMenu">
+              <a (click)="openFeeEditor(element)"  mat-menu-item>View &
                 edit fee structure</a>
-              <a (click)="openPlanSlider('billerSettings','open',element)" class="bt-1"
+              <a (click)="openPlanSlider('billerSettings','open',element)" *ngIf="element.status!=4" class="bt-1"
                  mat-menu-item>Change
                 biller</a>
-              <a (click)="openPlanSlider('changePayee','open',element)" mat-menu-item>Change payee</a>
-              <a (click)="delete('cancelSubscription',element)" *ngIf="element.status!=1" class="bt-1"
+              <a (click)="openPlanSlider('changePayee','open',element)" *ngIf="element.status!=4" mat-menu-item>Change payee</a>
+              <a (click)="delete('cancelSubscription',element)" *ngIf="element.status==2 || element.status == 3" class="bt-1"
                  mat-menu-item>Cancel subscription</a>
               <a (click)="deleteModal('SUBSCRIPTION',element)" mat-menu-item>Delete subscription</a>
-            </mat-menu>
+            </mat-menu> -->
           </td>
         </ng-container>
         <tr *matHeaderRowDef="displayedColumns;sticky: true" mat-header-row></tr>
