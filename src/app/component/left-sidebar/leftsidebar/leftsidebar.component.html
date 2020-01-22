@@ -70,6 +70,15 @@
           <img src="assets/images/svg/folder-light.svg">
           <span *ngIf="showTabs" class="title" mat-line>Back Office</span>
         </a>
+        <a class="sidenav-link" mat-list-item>
+          <!-- <img src="assets/images/svg/folder-light.svg"> -->
+          <span *ngIf="showTabs" class="title" routerLink="/admin/backoffice-aum-reconciliation" mat-line>AUM
+            reconsilation</span>
+        </a>
+        <a class="sidenav-link" mat-list-item>
+          <!-- <img src="assets/images/svg/folder-light.svg"> -->
+          <span *ngIf="showTabs" class="title" routerLink="/admin/backoffice-mis" mat-line>MIS</span>
+        </a>
       </div>
     </mat-nav-list>
   </mat-sidenav>
