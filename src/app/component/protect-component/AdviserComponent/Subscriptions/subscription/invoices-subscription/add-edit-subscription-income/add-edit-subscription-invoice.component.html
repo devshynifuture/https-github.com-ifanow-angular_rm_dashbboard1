@@ -40,7 +40,7 @@
                     <p class="m-0 text-custom f-12">BILLER ADDRESS</p>
                     <p *ngIf="editAdd1 == false" class="m-0 text-black text-break w-90 l-21">{{storeData.billerAddress}}
                     </p>
-                    <textarea *ngIf="editAdd1 == true" class="form-control br-0" formControlName="billerAddress" maxlength="150" rows="5"></textarea>
+                    <textarea *ngIf="editAdd1 == true" class="form-control f-14 br-0" formControlName="billerAddress" maxlength="150" rows="5"></textarea>
                     <div class="row">
                         <div class="col-md-6 pl-0">
                             <p (click)="onclickChangeAdd1(editAdd1)" class="m-0 text-primary c-p f-12">CHANGE</p>
@@ -57,7 +57,7 @@
                     <p *ngIf="editAdd2 == false" class="m-0 text-black text-break l-21 w-90">
                         {{storeData.billingAddress}}
                     </p>
-                    <textarea *ngIf="editAdd2 == true" class="form-control br-0" formControlName="billingAddress" maxlength="150" rows="5"></textarea>
+                    <textarea *ngIf="editAdd2 == true" class="form-control f-14 br-0" formControlName="billingAddress" maxlength="150" rows="5"></textarea>
                     <div class="row">
                         <div class="col-md-6 pl-0">
                             <p (click)="onclickChangeAdd2(editAdd2)" class="m-0 text-primary c-p f-12">CHANGE</p>

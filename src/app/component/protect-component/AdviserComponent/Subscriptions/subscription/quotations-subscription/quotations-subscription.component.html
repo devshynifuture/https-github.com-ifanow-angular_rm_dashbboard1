@@ -22,11 +22,9 @@
                         </mat-menu>
                     </div>
                     <div class="col-md-8" *ngIf="dataSource.data.length > 0 && dataCount > 0">
-                        <p class="m-0 text-black text-left pt-12" *ngIf="dataCount == 1">{{dataCount}} quotation
-                            selected
+                        <p class="m-0 text-black text-left pt-12" *ngIf="dataCount == 1">{{dataCount}} quotation selected
                         </p>
-                        <p class="m-0 text-black text-left pt-12" *ngIf="dataCount > 1">{{dataCount}} quotations
-                            selected
+                        <p class="m-0 text-black text-left pt-12" *ngIf="dataCount > 1">{{dataCount}} quotations selected
                         </p>
                     </div>
                 </div>
@@ -41,7 +39,8 @@
             </div>
         </div>
         <div [ngClass]="showFilter === true ? 'block' : 'none'" class="row pt-12">
-            <app-sudscription-table-filter [dataToFilter]="passFilterData" (filterRes)="getFiterRes($event)"></app-sudscription-table-filter>
+            <app-sudscription-table-filter [dataToFilter]="passFilterData" (filterRes)="getFiterRes($event)">
+            </app-sudscription-table-filter>
             <!-- <div class="row pt-12">
                 <div class="col-md-8 p-0 custom-tags">
                     <mat-chip-list>
@@ -109,12 +108,10 @@
 <div class="pt-8 pl-20 pr-20 pb-44 bg-white" id="wrapper">
 
     <div [ngClass]="dataSource.data.length > 0 ? 'block' : 'none'" class="tableClass">
-        <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="skeletonAnimation"
-            id="table-low" mat-table matSort>
+        <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="skeletonAnimation" id="table-low" mat-table matSort>
             <ng-container matColumnDef="checkbox">
                 <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;">
-                    <mat-checkbox (change)="selectAll($event)" name="selectAll"
-                        [checked]="dataCount == dataSource.data.length"></mat-checkbox>
+                    <mat-checkbox (change)="selectAll($event)" name="selectAll" [checked]="dataCount == dataSource.data.length"></mat-checkbox>
                 </th>
                 <td mat-cell *matCellDef="let element" style="width: 2%;" class="c-p">
                     <mat-checkbox name="selectedData" [(ngModel)]="element.selected" (change)="changeSelect()">
@@ -165,10 +162,7 @@
                     <div class="bar"> {{element.signedDate | date:'dd/MM/yyyy'}} </div>
                 </td>
             </ng-container>
-            <!-- <ng-container matColumnDef="status">
-    <th mat-header-cell *matHeaderCellDef class="f-18 pr-24"> Status </th>
-    <td mat-cell *matCellDef="let element" class="greentext"> {{element.status}} </td>
-  </ng-container> -->
+
             <ng-container matColumnDef="status">
                 <th mat-sort-header="status" *matHeaderCellDef class=" t-12" mat-header-cell> Status</th>
                 <td *matCellDef="let element" mat-cell>
@@ -176,7 +170,7 @@
                         <span>
                             <span class="text-success t-12 f-500 c-p" *ngIf="element.status==1">READY TO
                                 SEND</span>
-                            <span class="text-success t-12 f-500 c-p" *ngIf="element.status==0">NOT
+                        <span class="text-success t-12 f-500 c-p" *ngIf="element.status==0">NOT
                                 STARTED</span>
                         </span>
                     </div>
@@ -184,18 +178,19 @@
             </ng-container>
             <ng-container matColumnDef="icons">
                 <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;"></th>
-                <td *matCellDef="let element" mat-cell style="width: 2%;"><i [matMenuTriggerFor]="menu"
-                        class="material-icons c-p iconscolors">
-                        more_vert
-                    </i>
-                    <mat-menu #menu="matMenu">
-                        <a (click)="Open('emailQuotation',element)" mat-menu-item>View & Edit Quotation</a>
-                        <a (click)="deleteModal(element)" mat-menu-item>Delete document</a>
-                    </mat-menu>
+                <td *matCellDef="let element" mat-cell style="width: 2%;">
+                    <div *ngIf="!isLoading">
+                        <i [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
+                            more_vert
+                        </i>
+                        <mat-menu #menu="matMenu">
+                            <a (click)="Open('emailQuotation',element)" mat-menu-item>View & Edit Quotation</a>
+                            <a (click)="deleteModal(element)" mat-menu-item>Delete document</a>
+                        </mat-menu>
+                    </div>
                 </td>
             </ng-container>
-            <tr *matHeaderRowDef="displayedColumns; sticky: true;"
-                [ngClass]="!showFilter ? 'stickyHeader1' : 'stickyHeader2'" mat-header-row></tr>
+            <tr *matHeaderRowDef="displayedColumns; sticky: true;" [ngClass]="!showFilter ? 'stickyHeader1' : 'stickyHeader2'" mat-header-row></tr>
             <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
         </table>
 

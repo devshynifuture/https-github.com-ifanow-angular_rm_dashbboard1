@@ -22,8 +22,7 @@
             <div class="col-md-10">
                 <h5 class="pt-28 pb-16 pl-16 m-0">Financial planning</h5>
                 <div class="row">
-                    <div (click)="selectModule(singleFinanceModule)" *ngFor="let singleFinanceModule of ModuleData"
-                        class="col-md-3 c-p">
+                    <div (click)="selectModule(singleFinanceModule)" *ngFor="let singleFinanceModule of ModuleData" class="col-md-3 c-p">
                         <div *ngIf="singleFinanceModule.moduleName=='Financial Planning'">
                             <mat-checkbox *ngIf="singleFinanceModule.selected" class="custom-checkbox" checked="false">
                             </mat-checkbox>
@@ -39,8 +38,7 @@
             <div class="col-md-10">
                 <h5 class="pt-44 pb-16 pl-16 mb-0">Online transaction</h5>
                 <div class="row">
-                    <div (click)="selectModule(singleonlineModule)" *ngFor="let singleonlineModule of ModuleData"
-                        class="col-md-3 c-p">
+                    <div (click)="selectModule(singleonlineModule)" *ngFor="let singleonlineModule of ModuleData" class="col-md-3 c-p">
                         <div *ngIf="singleonlineModule.moduleName=='Online Transaction'">
                             <mat-checkbox *ngIf="singleonlineModule.selected" class="custom-checkbox" checked="false">
                             </mat-checkbox>
@@ -72,8 +70,7 @@
             <div class="col-md-10">
                 <h5 class="pt-44 pb-16 pl-16 mb-0">Multi asset view</h5>
                 <div class="row">
-                    <div (click)="selectModule(singleMultiModule)" *ngFor="let singleMultiModule of ModuleData"
-                        class="col-md-3 c-p">
+                    <div (click)="selectModule(singleMultiModule)" *ngFor="let singleMultiModule of ModuleData" class="col-md-3 c-p">
                         <div *ngIf="singleMultiModule.moduleName=='Multi Asset View'">
                             <mat-checkbox *ngIf="singleMultiModule.selected" class="custom-checkbox" checked="false">
                             </mat-checkbox>
