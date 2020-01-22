@@ -297,7 +297,8 @@ export class InvoiceComponent implements OnInit {
 
   getClients() {
     const obj = {
-      advisorId: this.advisorId
+      advisorId: this.advisorId,
+      clientId :(this.storeData.id == undefined)? 0:this.storeData.id
     };
     this.subService.getClientList(obj).subscribe(
       data => this.getClientListRes(data)
