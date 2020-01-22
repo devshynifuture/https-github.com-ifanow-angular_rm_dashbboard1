@@ -723,7 +723,65 @@
                                 </div>
                             </mat-tab>
                             <mat-tab label="Accounts">Content 2</mat-tab>
-                            <mat-tab label="Templates">Content 3</mat-tab>
+                            <mat-tab label="Templates">
+                                <div class="pt-12 pb-12 pl-20 pr-20">
+                                    <div class="row">
+                                        <div class="col-md-12 p-0">
+                                            <button mat-button [matMenuTriggerFor]="menu" class="pr-8 b-a">Menu<i
+                                                    class="material-icons text-right icon-light">
+                                                    arrow_drop_down
+                                                </i></button>
+                                            <mat-menu #menu="matMenu">
+                                                <button mat-menu-item>Item 1</button>
+                                                <button mat-menu-item>Item 2</button>
+                                            </mat-menu>
+                                        </div>
+                                    </div>
+                                    <mat-accordion id="ui-profileplan-card">
+                                        <mat-expansion-panel class="mt-12 br-0">
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    Quotes
+                                                </mat-panel-title>
+
+                                            </mat-expansion-panel-header>
+                                            <div class="row">
+                                                <div class="col-md-6 pl-0 pr-8">
+                                                    <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
+                                                        <img mat-card-image src="/assets/images/svg/img.svg"
+                                                            class="w-100">
+                                                        <mat-card-content>
+                                                            <h5 class="m-0 text-center">Index</h5>
+                                                        </mat-card-content>
+                                                        <mat-card-actions class="text-center">
+                                                            <button mat-stroked-button
+                                                                class="text-primary b-a-custom">Preview</button>
+                                                            <button mat-stroked-button class="btn-primary">Add</button>
+                                                        </mat-card-actions>
+                                                    </mat-card>
+                                                </div>
+                                                <div class="col-md-6 pr-0 pl-8">
+                                                    <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
+                                                        <img mat-card-image src="/assets/images/svg/img.svg"
+                                                            class="w-100">
+                                                        <mat-card-content>
+                                                            <h5 class="m-0 text-center">Index</h5>
+                                                        </mat-card-content>
+                                                        <mat-card-actions class="text-center">
+                                                            <button mat-stroked-button
+                                                                class="text-primary b-a-custom">Preview</button>
+                                                            <button mat-stroked-button class="btn-primary">Add</button>
+                                                        </mat-card-actions>
+                                                    </mat-card>
+                                                </div>
+                                            </div>
+
+                                        </mat-expansion-panel>
+
+                                    </mat-accordion>
+
+                                </div>
+                            </mat-tab>
                         </mat-tab-group>
                     </div>
                 </div>

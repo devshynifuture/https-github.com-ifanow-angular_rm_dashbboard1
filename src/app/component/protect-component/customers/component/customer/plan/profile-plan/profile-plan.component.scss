@@ -85,3 +85,39 @@
     }
   }
 }
+
+::ng-deep {
+  #ui-profileplan-card {
+    .mat-expansion-panel-body {
+      padding: 0 !important;
+      margin-top: 20px;
+    }
+
+    img {
+      margin: 0 auto;
+      display: block;
+    }
+
+    .example-card {
+      border: 1px solid #E8ECEF !important;
+
+      h5 {
+        padding-top: 10px;
+        color: #000000;
+      }
+    }
+
+    .mat-card-actions {
+      padding-bottom: 10px;
+    }
+
+    .mat-expansion-panel-header {
+      height: 40px !important;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+    }
+
+    .mat-expansion-indicator {
+      display: none;
+    }
+  }
+}
