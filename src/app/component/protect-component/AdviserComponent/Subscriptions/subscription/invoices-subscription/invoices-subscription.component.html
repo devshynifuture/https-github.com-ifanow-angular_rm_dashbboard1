@@ -176,7 +176,7 @@
           </th>
           <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element"
             class="text-right pr-8 c-p" mat-cell>
-            <div class="bar"> ₹<span appFormatNumber>{{element.balanceDue}}</span></div>
+            <div class="bar">₹{{formatter(element.balanceDue) || 0}} </div>
           </td>
         </ng-container>
         <tr *matHeaderRowDef="displayedColumns; sticky: true;"

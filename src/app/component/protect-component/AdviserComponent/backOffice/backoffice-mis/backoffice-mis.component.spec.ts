@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MisComponent } from './mis.component';
+import { BackofficeMisComponent } from './backoffice-mis.component';
 
-describe('MisComponent', () => {
-  let component: MisComponent;
-  let fixture: ComponentFixture<MisComponent>;
+describe('BackofficeMisComponent', () => {
+  let component: BackofficeMisComponent;
+  let fixture: ComponentFixture<BackofficeMisComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MisComponent ]
+      declarations: [ BackofficeMisComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MisComponent);
+    fixture = TestBed.createComponent(BackofficeMisComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
