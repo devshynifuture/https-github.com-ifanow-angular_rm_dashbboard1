@@ -107,12 +107,12 @@ export class AddBudgetComponent implements OnInit {
       this.isRecuring = data.isRecuring
     }
     this.budget = this.fb.group({
-      timeInMilliSec: [(data == undefined) ? '' : data.timeInMilliSec, [Validators.required]],
-      expenseDoneOn: [(data == undefined) ? '' : new Date(data.expenseDoneOn), [Validators.required]],
+      timeInMilliSec: [(data == undefined) ? '' : data.time, [Validators.required]],
+      expenseDoneOn: [(data == undefined) ? '' : new Date(data.startsFrom), [Validators.required]],
       amount: [(data == undefined) ? '' : data.amount, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
-      category: [(data == undefined) ? '' : data.expenseCategoryId, [Validators.required]],
+      category: [(data == undefined) ? '' : data.BudgetCategoryId, [Validators.required]],
       familyMember: [(data == undefined) ? '' : data.familyMember, [Validators.required]],
       paymentModeId: [(data == undefined) ? '' : data.paymentModeId+'', [Validators.required]],
       isRecuring: false
@@ -206,11 +206,11 @@ export class AddBudgetComponent implements OnInit {
         advisorId: this.advisorId,
         clientId: this.clientId,
         familyMemberId: this.familyMemberId,
-        expenseDoneOn: this.budget.controls.expenseDoneOn.value,
+        startsFrom: this.budget.controls.expenseDoneOn.value,
         amount: this.budget.controls.amount.value,
-        timeInMilliSec: this.budget.controls.timeInMilliSec.value,
+        time: this.budget.controls.timeInMilliSec.value,
         paymentModeId: this.budget.controls.paymentModeId.value,
-        expenseCategoryId: this.budget.controls.category.value,
+        BudgetCategoryId: this.budget.controls.category.value,
         description: this.budget.controls.description.value,
         id: this.budget.controls.id.value
       }

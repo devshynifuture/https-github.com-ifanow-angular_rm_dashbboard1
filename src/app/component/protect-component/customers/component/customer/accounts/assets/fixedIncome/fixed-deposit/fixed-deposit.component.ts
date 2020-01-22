@@ -168,9 +168,9 @@ export class FixedDepositComponent implements OnInit {
   getDateYMD() {
     // if(this.fixedDeposit.controls.maturityDate.invalid == true){
     //  let now = moment();
-    moment(this.tenure = this.fixedDeposit.controls.commencementDate.value).add(this.fixedDeposit.controls.tenureM.value, 'months');
-    moment(this.tenure = this.fixedDeposit.controls.commencementDate.value).add(this.fixedDeposit.controls.tenureY.value, 'years');
-    moment(this.tenure = this.fixedDeposit.controls.commencementDate.value).add(this.fixedDeposit.controls.tenureD.value, 'days');
+    this.tenure = moment(this.fixedDeposit.controls.commencementDate.value).add(this.fixedDeposit.controls.tenureM.value, 'months');
+      this.tenure = moment(this.tenure).add(this.fixedDeposit.controls.tenureY.value, 'years');
+      this.tenure = moment(this.tenure).add(this.fixedDeposit.controls.tenureD.value, 'days');
     this.getDate = this.datePipe.transform(this.tenure, 'yyyy-MM-dd');
     return this.getDate;
     // }else{
