@@ -21,6 +21,7 @@ import { CashflowAddIncomeComponent } from './cashflows-plan/cashflow-upper-slid
 import { CashflowAddExpensesComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-add/cashflow-add-expenses/cashflow-add-expenses.component';
 import { CashflowAddSurplusComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-add/cashflow-add-surplus/cashflow-add-surplus.component';
 import { CashflowAddLiabilitiesComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-add/cashflow-add-liabilities/cashflow-add-liabilities.component';
+import { CashflowTableEditDirective } from './cashflows-plan/cashflow-table-edit.directive';
 
 export const componentList = [
   PreferencesComponent,
@@ -45,7 +46,7 @@ export const componentList = [
 // ];
 
 @NgModule({
-  declarations: componentList,
+  declarations: [...componentList, CashflowTableEditDirective],
   imports: [
     CommonModule,
     MaterialModule,
@@ -57,10 +58,9 @@ export const componentList = [
   exports: [
     FormsModule,
     ReactiveFormsModule],
-  entryComponents: [componentList]
-  , providers: [
+  entryComponents: [componentList],
+  providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
