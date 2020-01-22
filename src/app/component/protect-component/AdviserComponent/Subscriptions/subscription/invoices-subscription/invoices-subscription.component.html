@@ -1,6 +1,6 @@
 <div *ngIf="invoiceSubscription !='true' && invoiceSubscription !='EditInInvoice'" class="bg-white" id="ui-subs">
     <!-- (scroll)="scrollCall(true)" -->
-    <div class="bg-white p-20 pb-0 filterBox">
+    <div *ngIf="dataSource.data.length > 0" class="bg-white p-20 pb-0 filterBox">
         <div class="row">
 
             <div class="col-md-1 p-0">
@@ -49,52 +49,7 @@
       </div> -->
             <app-sudscription-table-filter [dataToFilter]="passFilterData" (filterRes)="getFiterRes($event)">
             </app-sudscription-table-filter>
-            <!-- <div class="row pt-12">
-        <div class="col-md-8 p-0 custom-tags">
-          <mat-chip-list>
-            <mat-chip *ngFor="let status of filterStatus; let ind = index" class="bg-white b-a c-p f-400 p-12">
-              {{status.name}}<i (click)="remove(ind)" class="material-icons text-custom ml-12">
-                cancel
-              </i></mat-chip>
-            <mat-chip-list class="newDateIcon">
-              <mat-chip *ngFor="let dateFilter of filterDate; let i = index" class="bg-white b-a c-p f-400 p-12">
-                <p>{{dateFilter.name}}</p>
-                <input (click)="picker2.open()" [(ngModel)]="selectedDateRange" [max]="maxDate"
-                  [satDatepicker]="picker2" class="pL-20" matInput placeholder="Choose a date" readonly>
-                <sat-datepicker #picker2 [closeAfterSelection]="false" [rangeMode]="true">
-                </sat-datepicker>
-                <sat-datepicker-toggle [for]="picker2" matSuffix></sat-datepicker-toggle>
-                <i (click)="removeDate(i)" class="material-icons text-custom c-p">
-                  cancel
-                </i>
-              </mat-chip>
-            </mat-chip-list>
-          </mat-chip-list>
-        </div>
-        <div class="col-md-4 right text-right p-0">
-          <div class="row">
-            <div class="col-md-6 pr-0">
-              <mat-form-field>
-                <mat-select (selectionChange)="addFilters(selectedStatusFilter)" [(ngModel)]='selectedStatusFilter'
-                  class="form-control br-0" id="sel11">
-                  <mat-option [disabled]="true" value="statusFilter">FILTER ONE</mat-option>
-                  <mat-option *ngFor="let chip of chips" [value]="chip">{{chip.name}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="col-md-6 pr-0">
-              <mat-form-field>
-                <mat-select (selectionChange)="addFiltersDate($event)" [(ngModel)]='selectedDateFilter'
-                  class="form-control br-0" id="sel12">
-                  <mat-option [disabled]="true" value="dateFilter">FILTER TWO</mat-option>
-                  <mat-option *ngFor="let dateAdd of dateChips" [value]="dateAdd">{{dateAdd.name}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          </div>
-        </div>
-      </div> -->
+
         </div>
     </div>
 
