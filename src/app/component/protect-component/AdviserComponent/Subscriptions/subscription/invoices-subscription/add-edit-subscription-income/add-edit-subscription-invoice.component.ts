@@ -298,7 +298,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
         invoiceNumber: this.editPayment.value.invoiceNumber,
         subTotal: this.editPayment.value.finalAmount,
         discount: this.editPayment.value.discount,
-        finalAmount: (parseInt(this.editPayment.value.finalAmount) - parseInt(this.editPayment.value.discount)) + parseInt(this.finAmount),
+        finalAmount:parseInt(this.finAmount) - parseInt(this.editPayment.value.discount),
         invoiceDate: this.editPayment.value.invoiceDate,
         dueDate: this.editPayment.value.dueDate,
         igst: (this.editPayment.value.taxStatus == 'IGST(18%)') ? 18 : null,

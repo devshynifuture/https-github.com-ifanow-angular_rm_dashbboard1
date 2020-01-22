@@ -17,7 +17,7 @@
                     <div>
                         <div *ngSwitchCase="'Transactions'">
                             <div class="row">
-                                <div class="col-md-4 p-0">
+                                <div class="col-md-4 p-0" *ngIf="dataSource.filteredData.length > 0">
                                     <h4 class="m-0 text-black roboto pt-8">Transactions</h4>
                                 </div>
                                 <div class="col-md-8 p-0 right text-right">
@@ -34,7 +34,7 @@
                             <div class="row pt-12">
                                 <div class="col-md-7 pl-0">
                                     <div class="example-container mb-24 fixed-deposite">
-                                        <table mat-table [dataSource]="dataSource" id="table-low"
+                                        <table *ngIf="dataSource.filteredData.length > 0" mat-table [dataSource]="dataSource" id="table-low"
                                             class="skeletonAnimation" appSkeletonLoading
                                             [appSkeletonLoading]="isLoading">
                                             <ng-container matColumnDef="no">
@@ -110,19 +110,19 @@
                                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                                         </table>
-                                        <div *ngIf="dataSource.filteredData.length == 0"
+                                        <div *ngIf="dataSource.filteredData.length == 0 && dataSource1.filteredData.length == 0"
                                             class="d-flex flex-column align-items-center">
                                             <img class="width400" src="assets/images/svg/clients-img.svg">
                                             <h4 class="text-center pt-12">{{noData}}</h4>
                                             <button mat-stroked-button class="btn-primary proximaFont addon v-middle"
-                                                (click)="openPortfolioSummary('addFixedDeposit','open')"> ADD NEW
+                                                (click)="openExpenses('addFixedDeposit','open')"> ADD NEW
                                             </button>
                                         </div>
                                     </div>
                                     <div *ngIf="dataSource1">
-                                        <h5 class="m-0 text-black">Other commitments</h5>
+                                        <h5 class="m-0 text-black" *ngIf="dataSource1.filteredData.length > 0">Other commitments</h5>
                                         <div class="example-container mt-8 mb-24 fixed-deposite">
-                                            <table mat-table [dataSource]="dataSource1" id="table-low"
+                                            <table *ngIf="dataSource1.filteredData.length > 0" mat-table [dataSource]="dataSource1" id="table-low"
                                                 class="skeletonAnimation" appSkeletonLoading
                                                 [appSkeletonLoading]="isLoading">
                                                 <ng-container matColumnDef="no">
@@ -253,7 +253,7 @@
                     <!--- Budget --->
                     <div *ngSwitchCase="'Budget'">
                         <div class="row">
-                            <div class="col-md-4 p-0">
+                            <div class="col-md-4 p-0" *ngIf="dataSource4.filteredData.length > 0">
                                 <h4 class="m-0 text-black roboto pt-8">Budget</h4>
                             </div>
                             <div class="col-md-8 p-0 right text-right"
@@ -349,7 +349,7 @@
                                     </div>
                                 </div>
 
-                                <h5 class="m-0 text-black"> Other commitments</h5>
+                                <h5 class="m-0 text-black" *ngIf="dataSource5.filteredData.length > 0"> Other commitments</h5>
 
                                 <div class="example-container mt-8 mb-24 fixed-deposite">
                                     <table *ngIf="dataSource5.filteredData.length > 0" mat-table
