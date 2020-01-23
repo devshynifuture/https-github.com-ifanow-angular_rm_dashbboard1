@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import * as $ from 'jquery';
+// import * as $ from 'jquery';
 import { BackOfficeService } from '../../../../back-office.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AumComponent } from '../aum.component';
