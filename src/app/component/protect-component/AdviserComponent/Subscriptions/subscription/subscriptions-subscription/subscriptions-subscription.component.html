@@ -1,88 +1,26 @@
 <div class="bg-white" id="ui-subs">
-  <!-- (scroll)="scrollCall(true)" -->
-  <div class="bg-white p-20 pb-0 filterBox">
-    <div class="row">
-      <div class="col-md-8 p-0">
-        <h4 class="pt-8 mb-0">Subscriptions</h4>
-      </div>
-      <div class="col-md-4 right text-right p-0">
-        <i class="material-icons mr-12 icon-light c-p v-sub">
+    <!-- (scroll)="scrollCall(true)" -->
+    <div *ngIf="dataSource.data.length > 0" class="bg-white p-20 pb-0 filterBox">
+        <div class="row">
+            <div class="col-md-8 p-0">
+                <h4 class="pt-8 mb-0">Subscriptions</h4>
+            </div>
+            <div class="col-md-4 right text-right p-0">
+                <i class="material-icons mr-12 icon-light c-p v-sub">
           search
         </i>
         <button (click)="showFilters(showFilter)" class="btn-default addon" mat-stroked-button><i
             class="material-icons">filter_list</i>FILTERS
         </button>
-      </div>
-    </div>
-    <div [ngClass]="showFilter === true ? 'block' : 'none'" class="row pt-12">
-      <app-sudscription-table-filter [dataToFilter]="passFilterData" (filterRes)="getFiterRes($event)">
-      </app-sudscription-table-filter>
-      <!-- <div class="row pt-12">
-        <div class="col-md-8 p-0 custom-tags">
-          <mat-chip-list>
-            <mat-chip *ngFor="let status of filterStatus; let ind = index"
-                      class="bg-white b-a c-p f-400 p-12">
-              {{status.name}}
-              <i (click)="remove(ind)" class="material-icons text-custom ml-12">
-                cancel
-              </i>
-            </mat-chip>
-            <mat-chip-list>
-              <mat-chip *ngFor="let dateFilter of filterDate; let i = index"
-                        class="bg-white b-a c-p f-400 newDateClass p-12 w-220">
-                <p>{{dateFilter.name}}</p>
-                <input (click)="picker2.open()" (dateChange)="orgValueChange(selectedDateRange)"
-                       [(ngModel)]="selectedDateRange" [max]="maxDate" [satDatepicker]="picker2"
-                       class="pL20" matInput
-                       placeholder="Choose a date" readonly>
-                <sat-datepicker #picker2 [closeAfterSelection]="false" [rangeMode]="true">
-                </sat-datepicker>
-                <sat-datepicker-toggle [for]="picker2" matSuffix></sat-datepicker-toggle>
-                <i (click)="removeDate(i)" class="material-icons text-custom c-p">
-                  cancel
-                </i>
-              </mat-chip>
-            </mat-chip-list>
-          </mat-chip-list>
-        </div>
-        <div class="col-md-4 right text-right p-0">
-          <div class="row">
-            <div class="col-md-6 pr-0">
-              <div class="form-group mb-0">
-                <mat-form-field>
-                  <mat-select (selectionChange)="addFilters(selectedStatusFilter)" [(value)]='selectedStatusFilter'
-                              class="form-control"
-                              id="sel11">
-                    <mat-option value="status">By status</mat-option>
-                    <mat-option *ngFor="let chip of chips" [value]="chip">
-                      {{chip.name}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
             </div>
-            <div class="col-md-6 pr-0">
-              <div class="form-group mb-0">
-                <mat-form-field>
-                  <mat-select (selectionChange)="addFiltersDate(selectedDateFilter)" [(ngModel)]='selectedDateFilter'
-                              class="form-control br-0"
-                              id="sel12">
-                    <mat-option value="selected">By date</mat-option>
-                    <mat-option *ngFor="let dateAdd of dateChips" [value]="dateAdd">
-                      {{dateAdd.name}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
         </div>
-      </div> -->
+        <div [ngClass]="showFilter === true ? 'block' : 'none'" class="row pt-12">
+            <app-sudscription-table-filter [dataToFilter]="passFilterData" (filterRes)="getFiterRes($event)">
+            </app-sudscription-table-filter>
+        </div>
     </div>
-  </div>
-  <!-- (scroll)="scrollCall()" -->
-  <!-- id="pdfDoc"  removed from above div-->
-  <div *ngIf="dataSource.data.length > 0" class="wrapper-20 pt-8 bg-white" id="wrapper">
+
+    <div *ngIf="dataSource.data.length > 0" class="wrapper-20 pt-8 bg-white" id="wrapper">
 
     <div class="tableClass">
       <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="skeletonAnimation"
@@ -154,14 +92,11 @@
               <div (click)="openPlanSlider('createSub','open',element)" *ngIf="element.status==1">
                 <button class="btn-header btn-xs ml-8 br-0 btn-sm c-p" mat-stroked-button>START
                 </button>
-              </div>
-            </div>
-            <!-- <div (click)="openPlanSlider('createSub','open',element)">
-          <button class="btn-header btn-xs ml-8 br-0 btn-sm" mat-stroked-button>START
-          </button>
-        </div> -->
-          </td>
-        </ng-container>
+                            </div>
+                        </div>
+
+                    </td>
+                </ng-container>
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="lastbilling">
@@ -190,17 +125,16 @@
 
                 {{ getFeeTypeName(element.subscriptionPricing.feeTypeId) }}
 
-                <!-- <span class="t-10" *ngIf="element.subscriptionPricing.feeTypeId==1">FIXED</span>
-                            <span class="t-10" *ngIf="element.subscriptionPricing.feeTypeId==2">VARIABLE</span> -->
+
               </span>
-            </div>
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="icons">
-          <th *matHeaderCellDef class="f-18 t-2" mat-header-cell></th>
-          <td *matCellDef="let element" class="t-2" mat-cell>
-            <div *ngIf="!isLoading">
-              <i [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="icons">
+                    <th *matHeaderCellDef class="f-18 t-2" mat-header-cell></th>
+                    <td *matCellDef="let element" class="t-2" mat-cell>
+                        <div *ngIf="!isLoading">
+                            <i [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
                 more_vert
               </i>
               <mat-menu #menu="matMenu">
@@ -217,25 +151,15 @@
                     mat-menu-item>Cancel subscription</a>
                   <a (click)="deleteModal('SUBSCRIPTION',element, sub.subscriptions, i)" mat-menu-item>Delete
                     subscription</a>
-                </div>
-              </mat-menu>
-            </div>
-            <!-- <mat-menu #menu="matMenu">
-              <a (click)="openFeeEditor(element)"  mat-menu-item>View &
-                edit fee structure</a>
-              <a (click)="openPlanSlider('billerSettings','open',element)" *ngIf="element.status!=4" class="bt-1"
-                 mat-menu-item>Change
-                biller</a>
-              <a (click)="openPlanSlider('changePayee','open',element)" *ngIf="element.status!=4" mat-menu-item>Change payee</a>
-              <a (click)="delete('cancelSubscription',element)" *ngIf="element.status==2 || element.status == 3" class="bt-1"
-                 mat-menu-item>Cancel subscription</a>
-              <a (click)="deleteModal('SUBSCRIPTION',element)" mat-menu-item>Delete subscription</a>
-            </mat-menu> -->
-          </td>
-        </ng-container>
-        <tr *matHeaderRowDef="displayedColumns;sticky: true" mat-header-row></tr>
-        <tr *matRowDef=" let row; columns: displayedColumns;" mat-row></tr>
-      </table>
+                                </div>
+                            </mat-menu>
+                        </div>
+
+                    </td>
+                </ng-container>
+                <tr *matHeaderRowDef="displayedColumns;sticky: true" mat-header-row></tr>
+                <tr *matRowDef=" let row; columns: displayedColumns;" mat-row></tr>
+            </table>
 
     </div>
   </div>
