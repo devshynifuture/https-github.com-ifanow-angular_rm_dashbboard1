@@ -15,16 +15,14 @@
         </div>
 
 
-        <div *ngFor="let profileData of SettingProfileData" appSkeletonLoading [appSkeletonLoading]="isLoading" class="d-flex justify-content-center ">
+        <div *ngFor="let profileData of SettingProfileData" appSkeletonLoading [appSkeletonLoading]="isLoading" class="d-flex justify-content-center skeletonAnimation">
             <div class="row wrapper-100 pb-72 pt-8 pb-10 ">
-                <div class="hoverable overflow-hidden skeletonAnimation">
+                <div class="hoverable overflow-hidden ">
                     <div class="row b-a bb-0 bg-grey lter ">
                         <div class="col-md-8 p-0 relClass">
-
-                            <div class="bar">
-                                <h3 class="mb-0 p-24 fontPlayfair"> {{profileData.name}}</h3>
+                            <div class="bar" [ngClass]="{'height23': isLoading}">
+                                <h3 class="mb-0 fontPlayfair"> {{profileData.name}}</h3>
                             </div>
-
                         </div>
                         <div class="col-md-4 pt-16">
                             <i [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu" class="material-icons text-right right text-custom f-28 c-p">
@@ -49,7 +47,7 @@
                                     <div class="row">
                                         <div class="col-md-3 relClass">
                                             <p>CUSTOMER TYPE</p>
-                                            <div class="bar">
+                                            <div class="bar" [ngClass]="{'height23': isLoading}">
                                                 <h5>
                                                     {{(profileData.customerTypeId == 1) ? 'Bussiness' : 'Individual'}}
                                                 </h5>

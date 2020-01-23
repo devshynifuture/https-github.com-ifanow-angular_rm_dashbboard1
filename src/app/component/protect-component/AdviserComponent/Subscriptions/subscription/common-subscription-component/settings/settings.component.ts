@@ -34,7 +34,7 @@ export class SettingsComponent implements OnInit {
   }
 
   setPrimaryField(profileData) {
-    this.isLoading = true;
+
     const obj = {
       clientId: this.upperData.id,
       id: profileData.id
@@ -62,16 +62,18 @@ export class SettingsComponent implements OnInit {
   }
 
   getSettingProfileData() {
-    this.isLoading = false;
+    this.isLoading = true;
     const obj = {
       clientId: this.upperData.id,
     };
-    // this.subService.getSubscriptionClientsSettingProfile(obj).subscribe(
-    //   data => this.getSettingProfileDataResponse(data)
-    // );
+    this.subService.getSubscriptionClientsSettingProfile(obj).subscribe(
+      data => this.getSettingProfileDataResponse(data)
+
+    );
   }
 
   getSettingProfileDataResponse(data) {
+    this.isLoading = false;
     if (data == undefined) {
       this.noData = 'No Data Found';
     } else {
