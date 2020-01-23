@@ -125,8 +125,8 @@
                     <th *matHeaderCellDef class="f-18 text-right common-right pr-24" mat-header-cell mat-sort-header="balanceDue">
                         Balance due
                     </th>
-                    <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" class="text-right amt c-p" mat-cell>
-                        <div class="bar"> {{isLoading ? '' : '₹' }} {{isLoading ? '' : formatter(element.balanceDue) || 0 }} </div>
+                    <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" class="text-right amt c-p"  mat-cell>
+                        <div class="bar"> {{isLoading ? '' : '₹' }}<span appFormatNumber> {{isLoading ? '' : formatter(element.balanceDue) || 0 }}</span> </div>
                     </td>
                 </ng-container>
                 <tr *matHeaderRowDef="displayedColumns; sticky: true;" [ngClass]="!showFilter ? 'stickyHeader1' : 'stickyHeader2'" mat-header-row></tr>

@@ -106,7 +106,7 @@
                         </th>
                         <td mat-cell *matCellDef="let element" class="c-p amt text-right" (click)="openInvoice(element,'invoiceUpperSlider','open')">
                             <div class="bar">
-                                {{isLoading ? ' ' : '₹'}} {{isLoading ? ' ' : (formatter(element.finalAmount))?formatter(element.finalAmount): '0' }}
+                                {{isLoading ? ' ' : '₹'}} <span appFormatNumber>{{isLoading ? ' ' : (formatter(element.finalAmount))?formatter(element.finalAmount): '0' }}</span> 
                             </div>
                         </td>
                     </ng-container>
@@ -116,7 +116,7 @@
                         </th>
                         <td mat-cell *matCellDef="let element" class="c-p amt text-right">
                             <div class="bar">
-                                {{isLoading ? ' ' : '₹'}} {{ isLoading ? ' ' : (formatter(element.balanceDue))?formatter(element.balanceDue):'0'}}
+                                {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{ isLoading ? ' ' : (formatter(element.balanceDue))?formatter(element.balanceDue):'0'}}</span> 
                             </div>
                         </td>
                     </ng-container>
