@@ -32,8 +32,8 @@ export class FixedIncomeComponent implements OnInit {
   sumAmountInvested: any;
   sumCurrentValue: any;
   sumMaturityValue: any;
-  totalCurrentValue: any;
-  totalMarketValue: any;
+  totalCurrentValue=0;
+  totalMarketValue=0;
   sumAmountInvestedB: any;
   sumCouponAmount: any;
   sumCurrentValueB: any;
@@ -289,8 +289,12 @@ export class FixedIncomeComponent implements OnInit {
       this.dataSourceRecurring.data = data.recurringDeposits;
       this.dataSourceRecurring.sort = this.recurringDepositTableSort;
       UtilService.checkStatusId(this.dataSourceRecurring.filteredData);
-      this.totalCurrentValue = data.totalCurrentValue;
-      this.totalMarketValue = data.totalMarketValue;
+      data.recurringDeposits.forEach(element => {
+        this.totalCurrentValue += element.currentValue
+        this.totalMarketValue+=element.monthlyContribution
+      });
+      // this.totalCurrentValue = data.totalCurrentValue;
+      // this.totalMarketValue = data.totalMarketValue;
     } else {
       this.noData = 'No scheme found';
       this.dataSourceRecurring.data = [];
