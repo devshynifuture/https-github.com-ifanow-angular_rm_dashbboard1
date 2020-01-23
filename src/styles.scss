@@ -1243,3 +1243,31 @@ textarea {
 .textRight .mat-sort-header-container {
     justify-content: flex-end;
 }
+
+.example-container {
+    height: 400px;
+    overflow: auto;
+    overflow-x: hidden;
+    margin-top: 8px;
+}
+
+.example-container::-webkit-scrollbar {
+    width: 4px;
+    cursor: pointer;
+}
+
+.example-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.example-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.example-container::-webkit-scrollbar-thumb:window-inactive {
+    background: #555;
+}
+
+.example-container::-webkit-scrollbar-button:horizontal:decrement:hover {
+    background: #555;
+}

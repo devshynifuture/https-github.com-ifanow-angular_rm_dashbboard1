@@ -49,9 +49,9 @@
 </div>
 <!-- (scroll)="scrollCall()" -->
 <!-- id="pdfDoc"  removed from above div-->
-<div class="pt-8 pl-20 pr-20 pb-44 bg-white" id="wrapper" [ngClass]="dataSource.data.length > 0 ? 'block' : 'none'">
+<div class="pt-8 pl-20 pr-20  bg-white" id="wrapper" [ngClass]="dataSource.data.length > 0 ? 'block' : 'none'">
 
-    <div class="tableClass">
+    <div class="example-container">
         <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="skeletonAnimation" id="table-low" mat-table matSort>
             <ng-container matColumnDef="checkbox">
                 <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;">
@@ -134,7 +134,7 @@
                     </div>
                 </td>
             </ng-container>
-            <tr *matHeaderRowDef="displayedColumns; sticky: true;" [ngClass]="!showFilter ? 'stickyHeader1' : 'stickyHeader2'" mat-header-row></tr>
+            <tr *matHeaderRowDef="displayedColumns; sticky: true" [ngClass]="!showFilter ? 'stickyHeader1' : 'stickyHeader2'" mat-header-row></tr>
             <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
         </table>
 
