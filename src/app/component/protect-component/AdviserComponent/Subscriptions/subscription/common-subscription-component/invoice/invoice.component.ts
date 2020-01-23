@@ -256,6 +256,7 @@ export class InvoiceComponent implements OnInit {
       clientName: [(data.clientName == undefined) ? '' : data.clientName, [Validators.required]],
       billerName: [(data.billerName == undefined) ? '' : data.billerName, [Validators.required]],
       advisorId: [(data.advisorId == undefined) ? '' : data.advisorId, [Validators.required]],
+      more: [(data.advisorId == undefined) ? '' : data.more, [Validators.required]],
       billerAddress: [this.defaultVal.biller.billerAddress],
       billingAddress: [(data.billingAddress == undefined) ? '' : data.billingAddress, [Validators.required]],
       finalAmount: [(parseInt(data.finalAmount) == undefined) ? '' : parseInt(data.finalAmount), [Validators.required]],

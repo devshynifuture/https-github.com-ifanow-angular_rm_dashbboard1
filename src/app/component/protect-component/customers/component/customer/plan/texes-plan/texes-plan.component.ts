@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { SubscriptionPopupComponent } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/subscription-popup/subscription-popup.component';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { EditTaxComputationComponent } from './edit-tax-computation/edit-tax-computation.component';
 
 @Component({
   selector: 'app-texes-plan',
@@ -10,11 +14,29 @@ export class TexesPlanComponent implements OnInit {
   dataSource = ELEMENT_DATA;
   displayedColumns1: string[] = ['position', 'name', 'symbol', 'icons'];
   dataSource1 = ELEMENT_DATA1;
-  constructor() { }
+  constructor(public subInjectService: SubscriptionInject, ) { }
 
   ngOnInit() {
   }
+  openIncome(value) {
+    const fragmentData = {
+      flag: value,
+      id: 1,
+      state: 'open',
+      componentName: EditTaxComputationComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isRefreshRequired(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ');
+          // this.getQuotationsList();
+          rightSideDataSub.unsubscribe();
 
+        }
+      }
+    );
+  }
 }
 export interface PeriodicElement {
   name: string;
