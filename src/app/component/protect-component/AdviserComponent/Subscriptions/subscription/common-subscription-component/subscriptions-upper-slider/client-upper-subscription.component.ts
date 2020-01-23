@@ -79,9 +79,12 @@ export class ClientUpperSubscriptionComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isRefreshRequired(sideBarData)) {
-          console.log('this is sidebardata in subs subs 23: ', sideBarData);
-          this.getSummaryDataClient();
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getSummaryDataClient();
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
           rightSideDataSub.unsubscribe();
         }
       }
@@ -121,9 +124,12 @@ export class ClientUpperSubscriptionComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ',  UtilService.isRefreshRequired(sideBarData));
-        if ( UtilService.isRefreshRequired(sideBarData)) {
-          // console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          this.getSummaryDataClient();
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getSummaryDataClient();
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
           rightSideDataSub.unsubscribe();
         }
       }

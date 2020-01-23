@@ -68,8 +68,8 @@ createSubscription(value,data) {
         // this.getQuotationsData(false);
         // console.log('this is sidebardata in subs subs 2: ');
         // this.dataCount = 0;
-        rightSideDataSub.unsubscribe();
       }
+      rightSideDataSub.unsubscribe();
     }
   );
 }

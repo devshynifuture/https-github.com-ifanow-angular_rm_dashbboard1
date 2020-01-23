@@ -380,12 +380,15 @@ export class QuotationsSubscriptionComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isRefreshRequired(sideBarData)) {
-          this.getQuotationsData(false);
-          console.log('this is sidebardata in subs subs 2: ');
-          this.dataCount = 0;
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getQuotationsData(false);
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
           rightSideDataSub.unsubscribe();
         }
+       
       }
     );
   }
@@ -404,10 +407,12 @@ export class QuotationsSubscriptionComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isRefreshRequired(sideBarData)) {
-          this.getQuotationsData(false);
-          console.log('this is sidebardata in subs subs 2: ');
-          this.dataCount = 0;
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getQuotationsData(false);
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
           rightSideDataSub.unsubscribe();
         }
       }
