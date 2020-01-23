@@ -10,36 +10,38 @@
                 <div class="row">
                     <div class="col-md-3 p-0" *ngIf="dataSource.data.length > 0">
                         <button [matMenuTriggerFor]="menu" class="b-a pr-0 br-0" mat-button>Actions <i
-                class="material-icons text-custom">
-                arrow_drop_down
-              </i></button>
+                                class="material-icons text-custom">
+                                arrow_drop_down
+                            </i></button>
                         <mat-menu #menu="matMenu">
                             <button *ngIf="dataCount == 0" mat-menu-item>Select invoice to see more
-                actions
-              </button>
+                                actions
+                            </button>
                             <button (click)="deleteModal('INVOICE')" *ngIf="dataCount != 0 && dataCount > 1" mat-menu-item>Delete
-                Invoices
-              </button>
+                                Invoices
+                            </button>
                             <button (click)="deleteModal('INVOICE')" *ngIf="dataCount != 0 && dataCount <= 1" mat-menu-item>Delete
-                Invoice
-              </button>
+                                Invoice
+                            </button>
                         </mat-menu>
                     </div>
                     <div class="col-md-8 p-0" *ngIf="dataSource.data.length > 0 && dataCount > 0">
-                        <p class="m-0 text-black text-left pt-12" *ngIf="dataCount == 1">{{dataCount}} invoice selected</p>
-                        <p class="m-0 text-black text-left pt-12" *ngIf="dataCount > 1">{{dataCount}} invoices selected</p>
+                        <p class="m-0 text-black text-left pt-12" *ngIf="dataCount == 1">{{dataCount}} invoice selected
+                        </p>
+                        <p class="m-0 text-black text-left pt-12" *ngIf="dataCount > 1">{{dataCount}} invoices selected
+                        </p>
                     </div>
                 </div>
             </div>
             <div class="col-md-6 right text-right p-0" *ngIf="dataSource.data.length > 0">
                 <i class="material-icons mr-12 icon-light c-p v-sub">
-          search
-        </i>
+                    search
+                </i>
                 <button (click)="showFilters(showFilter)" class="btn-default addon mr-12" mat-stroked-button><i
-            class="material-icons">filter_list</i>FILTERS
-        </button>
+                        class="material-icons">filter_list</i>FILTERS
+                </button>
                 <button (click)="addInvoice('EditInInvoice')" class="btn-primary addon" mat-stroked-button> ADD NEW
-        </button>
+                </button>
             </div>
         </div>
         <div [ngClass]="showFilter === true ? 'block' : 'none'" class="row pt-12">
@@ -114,7 +116,8 @@
                 <ng-container matColumnDef="amt">
                     <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="finalAmount"> Amount</th>
                     <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" class="c-p" mat-cell>
-                        <div class="bar"> {{isLoading ? '' : '₹' }} <span appFormatNumber>{{element.finalAmount}}</span> </div>
+                        <div class="bar"> {{isLoading ? '' : '₹' }} <span appFormatNumber>{{element.finalAmount}}</span>
+                        </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="balance">
@@ -122,7 +125,7 @@
                         Balance due
                     </th>
                     <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" class="text-right pr-8 c-p" mat-cell>
-                        <div class="bar"> {{isLoading ? '' : '₹' }} {{formatter(element.balanceDue) || 0}} </div>
+                        <div class="bar"> {{isLoading ? '' : '₹' }} {{isLoading ? '' : formatter(element.balanceDue) || 0 }} </div>
                     </td>
                 </ng-container>
                 <tr *matHeaderRowDef="displayedColumns; sticky: true;" [ngClass]="!showFilter ? 'stickyHeader1' : 'stickyHeader2'" mat-header-row></tr>
@@ -147,7 +150,7 @@
         <img class="width400" src="assets/images/svg/clients-img.svg">
         <p class="f-22 f-600 pt-28 mb-0"> No Data Found </p>
         <button mat-stroked-button class="btn-primary mt-20 br-0 right text-right addon" (click)="addInvoice('EditInInvoice')"> ADD
-      INVOICE
-    </button>
+            INVOICE
+        </button>
     </div>
 </div>

@@ -16,28 +16,20 @@
                                 <button *ngIf="dataCount == 0" mat-menu-item>Select documents to see more
                                     actions
                                 </button>
-                                <!-- <button mat-menu-item *ngIf="dataCount == 1 && sendESign" (click)="openEsignDocument(null)">Email
-                    with eSign
-                    request
-                </button> -->
-                                <!-- <button (click)="openSendEmail()" *ngIf="dataCount > 0" mat-menu-item>Email
-                    only
-                </button> -->
-                                <button (click)="deleteModal(null)" *ngIf="dataCount != 0 && dataCount > 1"
-                                    mat-menu-item>Delete
+
+                                <button (click)="deleteModal(null)" *ngIf="dataCount != 0 && dataCount > 1" mat-menu-item>Delete
                                     Documents
                                 </button>
-                                <button (click)="deleteModal(null)" *ngIf="dataCount != 0 && dataCount <= 1"
-                                    mat-menu-item>Delete
+                                <button (click)="deleteModal(null)" *ngIf="dataCount != 0 && dataCount <= 1" mat-menu-item>Delete
                                     Document
                                 </button>
                             </mat-menu>
                         </div>
                         <div class="col-md-8 p-0" *ngIf="dataSource.data.length > 0 && dataCount > 0">
-                            <p class="m-0 text-black text-left pt-12" *ngIf="dataCount == 1">{{dataCount}} document
-                                selected</p>
-                            <p class="m-0 text-black text-left pt-12" *ngIf="dataCount > 1">{{dataCount}} documents
-                                selected</p>
+                            <p class="m-0 text-black text-left pt-12" *ngIf="dataCount == 1">{{dataCount}} document selected
+                            </p>
+                            <p class="m-0 text-black text-left pt-12" *ngIf="dataCount > 1">{{dataCount}} documents selected
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -51,71 +43,13 @@
                 </div>
             </div>
             <div [ngClass]="showFilter === true ? 'block' : 'none'" class="row pt-12">
-                <app-sudscription-table-filter [dataToFilter]="passFilterData" (filterRes)="getFiterRes($event)"></app-sudscription-table-filter>
-               
-                <!-- <div class="row pt-12">
-                    <div class="col-md-8 p-0 custom-tags">
-                        <mat-chip-list>
-                            <mat-chip *ngFor="let status of filterStatus; let ind = index"
-                                class="bg-white b-a c-p f-400 p-12">
-                                {{status.name}}<i (click)="remove(ind)" class="material-icons text-custom ml-12">
-                                    cancel
-                                </i></mat-chip>
-                            <mat-chip-list>
-                                <mat-chip *ngFor="let dateFilter of filterDate; let i = index"
-                                    class="bg-white b-a c-p f-400 p-12">
-                                    <p>{{dateFilter.name}}</p>
-                                    <input (click)="picker2.open()" (dateChange)="orgValueChange(selectedDateRange)"
-                                        [(ngModel)]="selectedDateRange" [max]="maxDate" [satDatepicker]="picker2"
-                                        matInput placeholder="Choose a date">
-                                    <sat-datepicker #picker2 [closeAfterSelection]="false" [rangeMode]="true">
-                                    </sat-datepicker>
-                                    <sat-datepicker-toggle [for]="picker2" matSuffix></sat-datepicker-toggle>
-                                    <i (click)="removeDate(i)" class="material-icons text-custom ml-12">
-                                        cancel
-                                    </i>
-                                </mat-chip>
-                            </mat-chip-list>
-                        </mat-chip-list>
-                    </div>
-                    <div class="col-md-4 right text-right p-0">
-                        <div class="row">
-                            <div class="col-md-6 pr-0">
-                                <div class="form-group mb-0">
-                                    <mat-form-field>
-                                        <mat-select (selectionChange)="addFilters(selectedStatusFilter)"
-                                            [(ngModel)]='selectedStatusFilter' class="form-control br-0" id="sel11">
-                                            <mat-option value="statusFilter">By status</mat-option>
-                                            <mat-option *ngFor="let chip of chips" [value]="chip">
-                                                {{chip.name}}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </div>
-                            </div>
-                            <div class="col-md-6 pr-0">
-                                <div class="form-group mb-0">
-                                    <mat-form-field>
-                                        <mat-select (selectionChange)="addFiltersDate(selectedStatusFilter)"
-                                            [(ngModel)]='selectedDateFilter' class="form-control br-0" id="sel12">
-                                            <mat-option value="dateFilter">By date</mat-option>
-                                            <mat-option *ngFor="let dateAdd of dateChips" [value]="dateAdd">
-                                                {{dateAdd.name}}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
+                <app-sudscription-table-filter [dataToFilter]="passFilterData" (filterRes)="getFiterRes($event)">
+                </app-sudscription-table-filter>
             </div>
-            <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
-                class="mt-8 skeletonAnimation" id="table-low" mat-table matSort>
+            <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="mt-8 skeletonAnimation" id="table-low" mat-table matSort>
                 <ng-container matColumnDef="checkbox">
                     <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;">
-                        <mat-checkbox (change)="selectAll($event)" name="selectAll"
-                            [checked]="dataCount == dataSource.data.length"></mat-checkbox>
+                        <mat-checkbox (change)="selectAll($event)" name="selectAll" [checked]="dataCount == dataSource.data.length"></mat-checkbox>
                     </th>
                     <td mat-cell *matCellDef="let element" style="width: 2%;" class="c-p">
                         <mat-checkbox name="selectedData" [(ngModel)]="element.selected" (change)="changeSelect()">
@@ -124,8 +58,7 @@
                 </ng-container>
                 <ng-container matColumnDef="name">
                     <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="clientName"> Client name</th>
-                    <td (click)="openViewDocument('viewDocuments',element)" *matCellDef="let element" class="c-p"
-                        mat-cell>
+                    <td (click)="openViewDocument('viewDocuments',element)" *matCellDef="let element" class="c-p" mat-cell>
                         <div class="bar">
                             {{element.clientName}}
                         </div>
@@ -180,27 +113,28 @@
                             <span>
                                 <span *ngIf="element.status==0" class="text-success t-10 f-500 c-p">NOT
                                     STARTED</span>
-                                <span *ngIf="element.status==1" class="text-success t-10 f-500 c-p">READY TO
+                            <span *ngIf="element.status==1" class="text-success t-10 f-500 c-p">READY TO
                                     SEND</span>
-                                <span *ngIf="element.status==2" class="text-success t-10 f-500 c-p">SENT</span>
-                                <span *ngIf="element.status==3" class="text-success t-10 f-500 c-p">ESIGNED</span>
+                            <span *ngIf="element.status==2" class="text-success t-10 f-500 c-p">SENT</span>
+                            <span *ngIf="element.status==3" class="text-success t-10 f-500 c-p">ESIGNED</span>
                             </span>
                         </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="icons">
-                    <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;"></th>
-                    <td *matCellDef="let element" mat-cell style="width: 2%;"><i [matMenuTriggerFor]="menu"
-                            class="material-icons c-p iconscolors">
-                            more_vert
-                        </i>
-                        <mat-menu #menu="matMenu">
-                            <a (click)="openViewDocument('viewDoc',element)" mat-menu-item>View & Edit document</a>
-                            <a (click)="downloadEsign(element)" *ngIf="element.signed" class="bt-1"
-                                mat-menu-item>Download eSigned
-                                document</a>
-                            <a (click)="deleteModal(element)" mat-menu-item>Delete document</a>
-                        </mat-menu>
+                    <th *matHeaderCellDef class="f-18" mat-header-cell></th>
+                    <td *matCellDef="let element" mat-cell>
+                        <div *ngIf="!isLoading">
+                            <i [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
+                                more_vert
+                            </i>
+                            <mat-menu #menu="matMenu">
+                                <a (click)="openViewDocument('viewDoc',element)" mat-menu-item>View & Edit document</a>
+                                <a (click)="downloadEsign(element)" *ngIf="element.signed" class="bt-1" mat-menu-item>Download eSigned
+                                    document</a>
+                                <a (click)="deleteModal(element)" mat-menu-item>Delete document</a>
+                            </mat-menu>
+                        </div>
                     </td>
                 </ng-container>
                 <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
