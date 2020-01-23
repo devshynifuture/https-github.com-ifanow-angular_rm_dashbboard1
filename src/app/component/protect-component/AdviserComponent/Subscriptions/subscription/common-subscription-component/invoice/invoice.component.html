@@ -67,8 +67,9 @@
                             PAYMENT
                         </button>
                     </div>
-                    <div class="col-md-2 right text-right">
-                        <mat-select class="form-control br-0" formControlName="docType" id="sel1">
+                    <div class="col-md-2 right text-right"  *ngIf="rpyment==true">
+                        <mat-select class="form-control br-0" id="sel1">
+                            <mat-label>More</mat-label>
                             <mat-option value="6">Void</mat-option>
                             <mat-option value="7">Write off</mat-option>
                           </mat-select>
