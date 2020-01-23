@@ -95,7 +95,7 @@
                     <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="status"> Status</th>
                     <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" [ngClass]="{'text-danger':element.status==2,'text-primary':element.status==0,'text-success':element.status==1}" class="c-p" mat-cell ngcl>
                         <div class="bar">
-                            {{(element.status == 0) ? 'UNPAID' : (element.status == 1) ? 'PAID' : (element.status == 2) ? 'OVERDUE' : ''}}
+                                {{(element.status == 0) ? 'UNPAID' : (element.status == 1) ? 'PAID' : (element.status == 2) ? 'OVERDUE' :  (element.status == 3) ? 'PARTIALLY PAID':(element.status == 4) ? 'SENT':(element.status == 5) ? 'VOID':(element.status == 5) ? 'VOID':''}}
                         </div>
                     </td>
                 </ng-container>
