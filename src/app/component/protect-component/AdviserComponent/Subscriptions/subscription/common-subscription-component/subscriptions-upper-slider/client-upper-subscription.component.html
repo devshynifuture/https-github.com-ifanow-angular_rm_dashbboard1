@@ -5,14 +5,18 @@
     <div class="align-center">
         <div class="row">
             <div class="col-md-12 pt-150">
-                <h5 class="pt-44">Hey, it seems {{clientData.name}} hasn't been subscribed to any Services yet. You need to add a Plan to get going. </h5>
-                <h5>Once a Plan is added, all the associated Services (along with the fee structure) will be added. If you want, you can customize the fee structure for this client. Each Service will have it’s own Subscription attached to it.
+                <h5 class="pt-44">Hey, it seems {{clientData.name}} hasn't been subscribed to any Services yet. You need
+                    to add a Plan to get going. </h5>
+                <h5>Once a Plan is added, all the associated Services (along with the fee structure) will be added. If
+                    you want, you can customize the fee structure for this client. Each Service will have it’s own
+                    Subscription attached to it.
                 </h5>
                 <h5>Next, you will be able to send Quotations, sign Documents etc.</h5>
                 <h5>Let's get started!</h5>
-                <button (click)="openPlanSlider('planRightSlider','open',null)" class="btn-primary br-0 mt-44" mat-stroked-button>Add
-          Plan
-        </button>
+                <button (click)="openPlanSlider('planRightSlider','open',null)" class="btn-primary br-0 mt-44"
+                    mat-stroked-button>Add
+                    Plan
+                </button>
             </div>
         </div>
     </div>
@@ -28,8 +32,9 @@
     <div *ngIf="subscriptionData.length > 0" class="wrapper-20 pb-0 pt-180 mt-0">
         <div class="row">
             <div class="col-md-12 p-0 pt-32">
-                <button (click)="openPlanSlider('planRightSlider','open',null)" class="btn-primary br-0 right text-right addon" mat-stroked-button>ADD PLAN
-        </button>
+                <button (click)="openPlanSlider('planRightSlider','open',null)"
+                    class="btn-primary br-0 right text-right addon" mat-stroked-button>ADD PLAN
+                </button>
             </div>
         </div>
     </div>
@@ -37,7 +42,9 @@
         <!--    *ngIf="clientData.length > 0"-->
         <h4 class="pb-8 text-black">{{sub.planName}}</h4>
         <div class="overflow-hidden">
-            <table *ngIf="sub!=undefined" [appSkeletonLoading]="isLoading" [dataSource]="checkAndGenerateTableSource(sub.subscriptions)" appSkeletonLoading class="mt-8 skeletonAnimation" id="table-low" mat-table matSort>
+            <table *ngIf="sub!=undefined" [appSkeletonLoading]="isLoading"
+                [dataSource]="checkAndGenerateTableSource(sub.subscriptions)" appSkeletonLoading
+                class="mt-8 skeletonAnimation" id="table-low" mat-table matSort>
                 <ng-container matColumnDef="service">
                     <th *matHeaderCellDef class="f-18 w-23" mat-header-cell mat-sort-header="serviceName">
                         Service name
@@ -51,7 +58,8 @@
                 <ng-container matColumnDef="amt">
                     <th *matHeaderCellDef class="f-18" mat-header-cell> Fee amount</th>
                     <td (click)="Open('open',element)" *matCellDef="let element" class="c-p" mat-cell>
-                        <div class="bar text-primary text-underline" (click)="Open('open',element)" *ngIf="element.startsOn==undefined"> {{isLoading ? ' ' : 'View details'}} </div>
+                        <div class="bar text-primary text-underline" (click)="Open('open',element)"
+                            *ngIf="element.startsOn==undefined"> {{isLoading ? ' ' : 'View details'}} </div>
                         <div *ngIf="element.startsOn && element.subscriptionPricing.feeTypeId==1">
                             {{element.subscriptionPricing.subscriptionAssetPricingList[0].pricing}}</div>
                         <div *ngIf="element.startsOn && element.subscriptionPricing.feeTypeId==2">
@@ -102,7 +110,8 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="bdate">
-                    <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="prevBillingDate"> Last billing date
+                    <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="prevBillingDate"> Last billing
+                        date
                     </th>
                     <td *matCellDef="let element" mat-cell>
                         <div class="bar">
@@ -111,7 +120,8 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="ndate">
-                    <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="nextBillingDate"> Next billing date
+                    <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="nextBillingDate"> Next billing
+                        date
                     </th>
                     <td *matCellDef="let element" mat-cell>
                         <div class="bar">
@@ -120,7 +130,8 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="mode">
-                    <th *matHeaderCellDef class="f-18" mat-header-cell> Fee collection mode</th>
+                    <th *matHeaderCellDef class="f-18" mat-header-cell matTooltip="Fee collection mode"
+                        aria-label="Button that displays a tooltip when focused or hovered over">Fee coll...</th>
                     <td *matCellDef="let element" mat-cell>
                         <div class="bar" *ngIf="element.subscriptionPricing != undefined">
                             {{ getFeeTypeName(element.subscriptionPricing.feeTypeId) }}
@@ -130,22 +141,28 @@
                 <ng-container matColumnDef="icons">
                     <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;"></th>
                     <td *matCellDef="let element" mat-cell style="width: 2%;">
-                        <i [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu" class="material-icons c-p iconscolors">
-              more_vert
-            </i>
+                        <i [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu"
+                            class="material-icons c-p iconscolors">
+                            more_vert
+                        </i>
                         <mat-menu #menu="matMenu">
-                            <a  (click)="Open('open',element)" mat-menu-item>
-                View fee structure</a>
-                            <a class="bt-1" (click)="openPlanSlider('billerSettings','open',element)" *ngIf="element.status!=4"  mat-menu-item>Change
-                Biller</a>
-                            <a (click)="openPlanSlider('changePayee','open',element)" *ngIf="element.status!=4" mat-menu-item>Change
-                Payee</a>
-                <div class="bt-1">
+                            <a (click)="Open('open',element)" mat-menu-item>
+                                View fee structure</a>
+                            <a class="bt-1" (click)="openPlanSlider('billerSettings','open',element)"
+                                *ngIf="element.status!=4" mat-menu-item>Change
+                                Biller</a>
+                            <a (click)="openPlanSlider('changePayee','open',element)" *ngIf="element.status!=4"
+                                mat-menu-item>Change
+                                Payee</a>
+                            <div class="bt-1">
 
-                    <a (click)="delete('cancelSubscription',element)" *ngIf="element.status==2 || element.status == 3"  mat-menu-item>Cancel subscription</a>
-                    <a  (click)="deleteModal('SUBSCRIPTION',element, sub.subscriptions, i)" mat-menu-item>Delete
-        subscription</a>
-                </div>
+                                <a (click)="delete('cancelSubscription',element)"
+                                    *ngIf="element.status==2 || element.status == 3" mat-menu-item>Cancel
+                                    subscription</a>
+                                <a (click)="deleteModal('SUBSCRIPTION',element, sub.subscriptions, i)"
+                                    mat-menu-item>Delete
+                                    subscription</a>
+                            </div>
                         </mat-menu>
                     </td>
                 </ng-container>
