@@ -40,6 +40,8 @@ import {RecordPaymentComponent} from '../../customers/component/common-component
 import {FeeCalculationsComponent} from '../../customers/component/common-component/fee-calculations/fee-calculations.component';
 import {AddEditSubscriptionInvoiceComponent} from './subscription/invoices-subscription/add-edit-subscription-income/add-edit-subscription-invoice.component';
 import { DeleteSubscriptionComponent } from './subscription/common-subscription-component/delete-subscription/delete-subscription.component';
+import { AddQuotationComponent } from './subscription/common-subscription-component/add-quotation/add-quotation.component';
+import { AddQuotationSubscriptionComponent } from '../../customers/component/common-component/add-quotation-subscription/add-quotation-subscription.component';
 
 export const componentList = [
   OverviewComponent,
@@ -78,6 +80,8 @@ export const componentList = [
   RecordPaymentComponent,
   FeeCalculationsComponent,
   AddEditSubscriptionInvoiceComponent,
+  AddQuotationComponent,
+  AddQuotationSubscriptionComponent
   
 ]
 

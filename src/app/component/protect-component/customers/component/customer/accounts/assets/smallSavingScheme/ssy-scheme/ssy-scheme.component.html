@@ -21,15 +21,16 @@
         </button>
     </div>
 </div>
-<div class="example-container mt-8 col-md-12 p-0 real-estate">
+<div class="example-container overflow-hidden mt-8 col-md-12 p-0 real-estate">
     <table *ngIf="datasource.filteredData.length > 0" matSort mat-table [dataSource]="datasource" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
-
         <ng-container matColumnDef="no">
             <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
             <td mat-cell *matCellDef="let element;index as i" class="br">
                 <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
             </td>
-            <td mat-footer-cell class=" f-500 pl-4 text-left t-2 " *matFooterCellDef> Total </td>
+            <td mat-footer-cell class=" f-500 pl-4 text-left t-2 " *matFooterCellDef>
+                <div class="bar"> {{isLoading ? '' : Total }} </div>
+            </td>
         </ng-container>
         <ng-container matColumnDef="owner">
             <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
@@ -40,10 +41,10 @@
         </ng-container>
         <ng-container matColumnDef="cvalue">
             <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-10 text-right"> Current value </th>
-            <td mat-cell *matCellDef="let element" class="br t-10 text-right" appFormatNumber>
-                <div class="bar"> {{element.currentValue}} </div>
+            <td mat-cell *matCellDef="let element" class="br t-10 text-right">
+                <div class="bar" appFormatNumber> {{element.currentValue}} </div>
             </td>
-            <td mat-footer-cell class="br text-right f-500 p-8 t-10 " *matFooterCellDef appFormatNumber [value]="sumOfCurrentValue">
+            <td mat-footer-cell class="br text-right f-600 p-8 t-10 " *matFooterCellDef appFormatNumber [value]="sumOfCurrentValue">
                 <div class="bar"> {{sumOfCurrentValue}} </div>
             </td>
         </ng-container>
@@ -56,10 +57,10 @@
         </ng-container>
         <ng-container matColumnDef="amt">
             <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef class="br text-right"> Total amount invested </th>
-            <td mat-cell *matCellDef="let element" class="br text-right">
+            <td mat-cell *matCellDef="let element" class="br  text-right">
                 <div class="bar" appFormatNumber> {{element.amountInvested}} </div>
             </td>
-            <td mat-footer-cell class="br text-right t-10 f-500 p-8" *matFooterCellDef appFormatNumber [value]="sumOfAmountInvested">
+            <td mat-footer-cell class="br text-right t-10 f-600 p-8" *matFooterCellDef appFormatNumber [value]="sumOfAmountInvested">
                 <div class="bar"> {{sumOfAmountInvested}} </div>
             </td>
         </ng-container>
@@ -95,15 +96,18 @@
         </ng-container>
         <ng-container matColumnDef="icons">
             <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-            <td id="hide" mat-cell *matCellDef="let element" class="t-2"> <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
-                    more_vert
-                </i>
-                <mat-menu #menubank="matMenu">
-                    <button mat-menu-item (click)="addOpenSSY(element,'editSsy')">Edit</button>
-                    <button mat-menu-item (click)="addOpenSSY(element,'detailedSsy')">Detailed view</button>
-                    <button mat-menu-item>Activity</button>
-                    <button mat-menu-item (click)="deleteModal('SUBSCRIPTION',element)">Delete</button>
-                </mat-menu>
+            <td id="hide" mat-cell *matCellDef="let element" class="t-2">
+                <div *ngIf="!isLoading">
+                    <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
+                        more_vert
+                    </i>
+                    <mat-menu #menubank="matMenu">
+                        <button mat-menu-item (click)="addOpenSSY(element,'editSsy')">Edit</button>
+                        <button mat-menu-item (click)="addOpenSSY(element,'detailedSsy')">Detailed view</button>
+                        <button mat-menu-item>Activity</button>
+                        <button mat-menu-item (click)="deleteModal('SUBSCRIPTION',element)">Delete</button>
+                    </mat-menu>
+                </div>
             </td>
             <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>

@@ -51,6 +51,7 @@ export class AddRealEstateComponent implements OnInit {
   id: any;
   showErrorOwner = false;
   familyMemberId: any;
+  ownerDataName: any;
   constructor(public custumService: CustomerService, public subInjectService: SubscriptionInject, private fb: FormBuilder, public custmService: CustomerService, public eventService: EventService, public utils: UtilService) { }
   // set inputData(inputData) {
   //   this._inputData = inputData;
@@ -224,7 +225,7 @@ export class AddRealEstateComponent implements OnInit {
     if (this.addOwner == data) {
       if (this.showErrorOwner == false) {
         this.getCoOwner.push(this.fb.group({
-          ownerName: null, ownershipPerc: null,
+          ownerName: null, ownershipPerc: null,familyMemberId:null
         }));
       }
     } else {
@@ -232,7 +233,7 @@ export class AddRealEstateComponent implements OnInit {
         this.addOwner = data;
         if (this.getCoOwner.value.length == 0) {
           this.getCoOwner.push(this.fb.group({
-            ownerName: null, ownershipPerc: null,
+            ownerName: null, ownershipPerc: null,familyMemberId:null
           }));
         }
       }
@@ -244,6 +245,20 @@ export class AddRealEstateComponent implements OnInit {
   ownerList(value){
     console.log(value)
     this.familyMemberId=value.id
+  }
+  getCoOwnerDetails(item){
+    console.log(item);
+    // this.ownerDataName=this.getCoOwner.value[this.getCoOwner.value.length-1];
+    // this.addrealEstateForm.value.getCoOwnerName.forEach(element => {
+    //   if(element.ownershipPerc==null){
+    //     this.getCoOwner.setValue([
+    //       { ownerName: element.ownerName, ownershipPerc:(element.ownershipPerc)?element.ownershipPerc:null, familyMemberId: (element.familyMemberId)?element.familyMemberId:item.id},
+    //     ]);
+    //   }
+      
+    // });
+
+    // console.log(this.addrealEstateForm.value.getCoOwnerName[this.getCoOwner.value.length-1].setValue(item.id))
   }
   onChange(data) {
     if (data == 'owner') {
@@ -283,13 +298,14 @@ export class AddRealEstateComponent implements OnInit {
     // if (data == undefined) {
     //   data ={};
     // }
-    this.familyMemberId = data.familyMemberId
+    // this.familyMemberId = data.familyMemberId
     this.addOwner = false;
     this.addrealEstateForm = this.fb.group({
       ownerName: this.ownerName,
       getCoOwnerName: this.fb.array([this.fb.group({
         ownerName: null,
         ownershipPerc: null,
+        familyMemberId:null
       })]),
       ownerPercent: [data.ownerPerc, [Validators.required]],
       familyMemberId:[this.familyMemberId,],
@@ -325,7 +341,7 @@ export class AddRealEstateComponent implements OnInit {
           this.addrealEstateForm.controls.ownerName.setValue(ownerName[0].ownerName);
           this.ownerName = ownerName[0].ownerName;
           this.addrealEstateForm.controls.ownerPercent.setValue(ownerName[0].ownershipPerc);
-          this.familyMemId = ownerName[0].familyMemberId
+          // this.familyMemId = ownerName[0].familyMemberId
           this.id = ownerName[0].id;
         }
       }
@@ -350,7 +366,8 @@ export class AddRealEstateComponent implements OnInit {
           this.addrealEstateForm.controls.getCoOwnerName.push(this.fb.group({
             id: element.id,
             ownerName: [(element.ownerName) + "", [Validators.required]],
-            ownershipPerc: [(element.ownershipPerc + ""), Validators.required]
+            ownershipPerc: [(element.ownershipPerc + ""), Validators.required],
+            familyMemberId:[element.familyMemberId],
           }))
         })
         this.getCoOwner.removeAt(0);
@@ -389,7 +406,7 @@ export class AddRealEstateComponent implements OnInit {
 
       const obj = {
         ownerName: this.ownerName,
-        familyMemeberId:this.familyMemberId,
+        // familyMemeberId:this.familyMemberId,
         ownerPercent: this.addrealEstateForm.controls.ownerPercent.value,
         clientId: this.clientId,
         advisorId: this.advisorId,
@@ -414,7 +431,7 @@ export class AddRealEstateComponent implements OnInit {
           let obj1 = {
             'id': element.id,
             'name': element.name,
-            'familyMemberId': (element.familyMemberId) ? element.familyMemberId : 0,
+            'familyMemberId': (element.familyMemberId) ? element.familyMemberId : null,
             'sharePercentage': parseInt(element.ownershipPer)
           }
           obj.nominees.push(obj1)
@@ -427,7 +444,7 @@ export class AddRealEstateComponent implements OnInit {
           let obj1 = {
             'id': element.id,
             'ownerName': element.ownerName,
-            'familyMemberId': this.familyMemberId,
+            'familyMemberId': (element.familyMemberId) ? element.familyMemberId : null,
             'ownershipPerc': parseInt(element.ownershipPerc),
             'isOwner': false
           }

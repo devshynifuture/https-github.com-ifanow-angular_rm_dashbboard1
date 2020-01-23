@@ -207,10 +207,11 @@
   <!--  </app-email-only>-->
   <app-email-only [data]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='emailOnly'"></app-email-only>
 
+  <app-add-quotation-subscription *ngIf="rightSliderFlag=='addQuotation'"></app-add-quotation-subscription>
 
   <app-common-froala *ngIf="rightSliderFlag=='viewQuotation'" [data]="upperRightSideInputData.data"
     [changeFooter]='rightSliderFlag' [screenType]="'selector'"></app-common-froala>
-
+<app-common-froala *ngIf="rightSliderFlag=='openQuotation'" [data]="upperRightSideInputData.data"></app-common-froala>
   <!--  <app-common-froala [data]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='viewQuotation'"></app-common-froala>-->
   <app-common-froala *ngIf="rightSliderFlag=='viewDocuments'" [data]="upperRightSideInputData.data"
     [screenType]="'selector'"></app-common-froala>

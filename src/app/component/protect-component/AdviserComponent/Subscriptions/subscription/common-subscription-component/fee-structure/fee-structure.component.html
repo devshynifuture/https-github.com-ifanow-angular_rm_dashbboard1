@@ -1,177 +1,192 @@
 <div *ngIf="_upperData==''" class="wrapper-20 pt-150">
-  <div class="content-center">
-    <div class="row">
-      <div class="col-md-12">
-        <h5 class="text-primitive mb-0 text-center">Select a fee type to proceed further</h5>
-      </div>
-    </div>
-    <div class="row pt-40">
-      <div class="col-md-6 hover c-p" (click)="selectedFees('fixed')">
-        <mat-card [ngClass]="{'ba-blue': selectedFee=='fixed','b-ua':selectedFee!='fixed'}" class="p-0"
-          (click)="openPlanSliderFee('','fixedFee')">
-          <div class="row bg-grey lter">
-            <div class="col-md-12 p-0">
-              <mat-checkbox class="right text-right" [ngStyle]="{'pointer-events': (selectedFee=='fixed')?'none':'all'}"
-                *ngIf="selectedFee=='fixed'" checked="false"></mat-checkbox>
-              <h4 class="f-20 playfair">Fixed fee</h4>
+    <div class="content-center">
+        <div class="row">
+            <div class="col-md-12">
+                <h5 class="text-primitive mb-0 text-center">Select a fee type to proceed further</h5>
             </div>
-          </div>
-          <div class="col-md-12 p-0">
-            <h5 class="p-20 proxima">Choose this fee type if you want to charge a fixed fee. E.g. for Plan writing
-              etc.</h5>
-          </div>
-        </mat-card>
+        </div>
+        <div class="row pt-40">
+            <div class="col-md-6 hover c-p" (click)="selectedFees('fixed')">
+                <mat-card [ngClass]="{'ba-blue': selectedFee=='fixed','b-ua':selectedFee!='fixed'}" class="p-0" (click)="openPlanSliderFee('','fixedFee')">
+                    <div class="row bg-grey lter">
+                        <div class="col-md-12 p-0">
+                            <mat-checkbox class="right text-right" [ngStyle]="{'pointer-events': (selectedFee=='fixed')?'none':'all'}" *ngIf="selectedFee=='fixed'" checked="false"></mat-checkbox>
+                            <h4 class="f-20 playfair">Fixed fee</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0">
+                        <h5 class="p-20 f-14 proxima height100">
+                            Choose this fee type if you want to charge a fixed fee. E.g. for Plan writing etc.
+                        </h5>
+                    </div>
+                </mat-card>
 
-      </div>
-      <div class="col-md-6 hover c-p" (click)="selectedFees('variable')">
-        <mat-card class="b-a p-0" [ngClass]="{'ba-blue': selectedFee=='variable','b-ua':selectedFee!='variable'}"
-          (click)="openPlanSliderFee('','varibleFee')">
-          <div class="row bg-grey lter">
-            <div class="col-md-12 p-0">
-              <mat-checkbox class="right text-right"
-                [ngStyle]="{'pointer-events': (selectedFee=='variable')?'none':'all'}" *ngIf="selectedFee=='variable'"
-                checked="false"></mat-checkbox>
-              <h4 class="f-20 playfair">Variable fee</h4>
             </div>
-          </div>
-          <div class="col-md-12 p-0">
-            <h5 class="p-20 proxima">Choose this fee type if you want to charge a variable fee. E.g. for AUM linked fee.</h5>
-          </div>
-        </mat-card>
+            <div class="col-md-6 hover c-p" (click)="selectedFees('variable')">
+                <mat-card class="p-0" [ngClass]="{'ba-blue': selectedFee=='variable','b-ua':selectedFee!='variable'}" (click)="openPlanSliderFee('','varibleFee')">
+                    <div class="row bg-grey lter">
+                        <div class="col-md-12 p-0">
+                            <mat-checkbox class="right text-right" [ngStyle]="{'pointer-events': (selectedFee=='variable')?'none':'all'}" *ngIf="selectedFee=='variable'" checked="false"></mat-checkbox>
+                            <h4 class="f-20 playfair">Variable fee</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0">
+                        <h5 class="p-20 f-14 proxima height100">Choose this fee type if you want to charge a variable fee. E.g. for AUM linked fee.
+                        </h5>
+                    </div>
+                </mat-card>
 
-      </div>
+            </div>
+        </div>
+
+
     </div>
-
-
-  </div>
 </div>
 <div *ngIf="_upperData" class="wrapper-44 pt-180">
-  <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
-      <div class="example-card">
-        <mat-card class="p-0 b-a">
-          <div class="row bg-grey lter">
-            <div class="col-md-10 p-0">
-              <h3 class="m-0 pt-18 pt-24 f-24 pb-0 pl-24" *ngIf="_upperData">{{_upperData.serviceName}}</h3>
-              <h5 class="m-0 pt-4 pb-44 pl-24 text-custom proxima" *ngIf="_upperData">{{_upperData.serviceCode}}</h5>
-            </div>
-            <div *ngIf="_upperData" class="col-md-2">
-              <i class="material-icons text-right right text-custom f-28 pt-12 c-p" [matMenuTriggerFor]="menu"
-                [matMenuTriggerFor]="belowMenu">
-                more_vert
-              </i>
-              <mat-menu #menu="matMenu">
-                <a mat-menu-item *ngIf="_upperData.servicePricing.feeTypeId==1"
-                  (click)="openPlanSliderFee(_upperData,'fixedFee')">Edit Service</a>
-                <a mat-menu-item *ngIf="_upperData.servicePricing.feeTypeId==2"
-                  (click)="openPlanSliderFee(_upperData,'varibleFee')">Edit Service</a>
-                <a mat-menu-item (click)="deleteService(_upperData,'SERVICE')">Delete Service</a>
-              </mat-menu>
-            </div>
-          </div>
-          <div class="wrapper-24 pl-0 pr-0">
-            <div class="row pb-24">
-              <div *ngIf="_upperData==''" class="col-md-3 text-left pl-32">
-                <p class="m-0 text-custom f-12">FEE TYPE</p>
-                <mat-label class="label" *ngIf="_upperData.servicePricing.feeTypeId==1">Fixed</mat-label>
-                <mat-label class="label" *ngIf="_upperData.servicePricing.feeTypeId==2">Variable</mat-label>
-              </div>
-              <div *ngIf="_upperData" class="col-md-3 text-left">
-                <p class="m-0 text-custom f-12">BILLING NATURE</p>
-                <h4 class="m-0 p-0 lh-16" *ngIf="_upperData.servicePricing.billingNature==1">Recurring</h4>
-                <h4 class="m-0 p-0 lh-16" *ngIf="_upperData.servicePricing.billingNature==2">Once</h4>
-              </div>
-              <div *ngIf="_upperData" class="col-md-3 text-left">
-                <p class="text-custom m-0 f-12">BILLING MODE</p>
-                <h4 class="m-0 p-0 lh-16" *ngIf="_upperData.servicePricing.billingMode==1">Start of period</h4>
-                <h4 class="m-0 p-0 lh-16" *ngIf="_upperData.servicePricing.billingMode==2">End of period</h4>
-              </div>
-              <div *ngIf="_upperData" class="col-md-3 text-left">
-                <p class="text-custom m-0 f-12" *ngIf="_upperData.servicePricing.feeTypeId==1">FEES</p>
-                <p class="text-custom m-0 f-12" *ngIf="_upperData.servicePricing.feeTypeId==2">OTHER ASSET FEES</p>
-                <h4 class="m-0 p-0 lh-16" *ngIf="_upperData.servicePricing.feeTypeId==2">
-                  {{_upperData.servicePricing.pricingList[2].pricing}}%</h4>
-                <h4 class="m-0 p-0 lh-16" *ngIf="_upperData.servicePricing.feeTypeId==1">
-                  Rs{{_upperData.servicePricing.pricingList[0].pricing}}</h4>
-              </div>
-            </div>
-            <div class="wrapper-24 pl-16 bt-1">
-              <div class="row">
-                <div class="col-md-6 p-0">
-                  <p class="f-12 m-0 text-custom">DESCRIPTION</p>
-                  <h5 class="mb-0 text-black pt-12" *ngIf="_upperData.description">{{_upperData.description}}</h5>
-                </div>
-                <div *ngIf="_upperData.servicePricing.feeTypeId==2" class="col-md-6">
-                  <p class="text-custom f-12 m-0">VARIABLE FEE DETAILS</p>
-                  <h5 class="m-0 pt-8">Mutual Funds</h5>
-                  <div class="row bg-grey lter">
-                    <div class="col-md-6 p-0 b-grey">
-                      <h5 class="m-0 wrapper-12 text-center text-black bb-grey">Direct</h5>
-                      <div class="row roboto">
-                        <div class="col-md-4 pr-4 pl-0 bb-grey br-grey bl-0">
-                          <h5 class="m-0 wrapper-8 f-500">Equity</h5>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="example-card">
+                <mat-card class="p-0 b-a">
+                    <div class="row bg-grey lter">
+                        <div class="col-md-10 p-0">
+                            <h3 class="m-0 pt-18 pt-24 f-24 pb-0 pl-24" *ngIf="_upperData">{{_upperData.serviceName}}
+                            </h3>
+                            <h5 class="m-0 pt-4 pb-44 pl-24 text-custom proxima" *ngIf="_upperData">
+                                {{_upperData.serviceCode}}</h5>
                         </div>
-                        <div class="col-md-4 pr-4 pl-0 br-grey bb-grey">
-                          <h5 class="m-0 wrapper-8 f-500">Debt</h5>
+                        <div *ngIf="_upperData" class="col-md-2">
+                            <i class="material-icons text-right right text-custom f-28 pt-12 c-p" [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
+                                more_vert
+                            </i>
+                            <mat-menu #menu="matMenu">
+                                <a mat-menu-item *ngIf="_upperData.servicePricing.feeTypeId==1" (click)="openPlanSliderFee(_upperData,'fixedFee')">Edit Service</a>
+                                <a mat-menu-item *ngIf="_upperData.servicePricing.feeTypeId==2" (click)="openPlanSliderFee(_upperData,'varibleFee')">Edit Service</a>
+                                <a mat-menu-item (click)="deleteService(_upperData,'SERVICE')">Delete Service</a>
+                            </mat-menu>
                         </div>
-                        <div class="col-md-4 pr-4 pl-0 bb-grey">
-                          <h5 class="m-0 wrapper-8 f-500">Liquid</h5>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-4 pr-4 pl-0 br-grey bl-0">
-                          <h5 class="m-0 wrapper-8">{{_upperData.servicePricing.pricingList[0].equityAllocation}}%</h5>
-                        </div>
-                        <div class="col-md-4 pr-4 br-grey pl-0">
-                          <h5 class="m-0 wrapper-8">{{_upperData.servicePricing.pricingList[0].debtAllocation}}%</h5>
-                        </div>
-                        <div class="col-md-4 pr-4 pl-0">
-                          <h5 class="m-0 wrapper-8">{{_upperData.servicePricing.pricingList[0].liquidAllocation}}%</h5>
-                        </div>
-                      </div>
                     </div>
-                    <div class="col-md-6 p-0">
-                      <h5 class="m-0 wrapper-12 text-center text-black bb-grey bt-grey br-grey">Regular</h5>
-                      <div class="row">
-                        <div class="col-md-4 pr-4 pl-0 bb-grey br-grey bl-0">
-                          <h5 class="m-0 wrapper-8 f-500">Equity</h5>
+                    <div class="wrapper-24 pl-0 pr-0">
+                        <div class="row pb-24">
+                            <div *ngIf="_upperData==''" class="col-md-3 text-left pl-32">
+                                <p class="m-0 text-custom f-12">FEE TYPE</p>
+                                <mat-label class="label" *ngIf="_upperData.servicePricing.feeTypeId==1">Fixed
+                                </mat-label>
+                                <mat-label class="label" *ngIf="_upperData.servicePricing.feeTypeId==2">Variable
+                                </mat-label>
+                            </div>
+                            <div *ngIf="_upperData" class="col-md-3 text-left">
+                                <p class="m-0 text-custom f-12">BILLING NATURE</p>
+                                <h4 class="m-0 p-0 lh-16" *ngIf="_upperData.servicePricing.billingNature==1">Recurring
+                                </h4>
+                                <h4 class="m-0 p-0 lh-16" *ngIf="_upperData.servicePricing.billingNature==2">Once</h4>
+                            </div>
+                            <div *ngIf="_upperData" class="col-md-3 text-left">
+                                <p class="text-custom m-0 f-12">BILLING MODE</p>
+                                <h4 class="m-0 p-0 lh-16" *ngIf="_upperData.servicePricing.billingMode==1">Start of period
+                                </h4>
+                                <h4 class="m-0 p-0 lh-16" *ngIf="_upperData.servicePricing.billingMode==2">End of period
+                                </h4>
+                            </div>
+                            <div *ngIf="_upperData" class="col-md-3 text-left">
+                                <p class="text-custom m-0 f-12" *ngIf="_upperData.servicePricing.feeTypeId==1">FEES</p>
+                                <p class="text-custom m-0 f-12" *ngIf="_upperData.servicePricing.feeTypeId==2">OTHER ASSET FEES</p>
+                                <h4 class="m-0 p-0 lh-16" *ngIf="_upperData.servicePricing.feeTypeId==2">
+                                    {{_upperData.servicePricing.pricingList[2].pricing}}%</h4>
+                                <h4 class="m-0 p-0 lh-16" *ngIf="_upperData.servicePricing.feeTypeId==1">
+                                    ₹{{_upperData.servicePricing.pricingList[0].pricing}}</h4>
+                            </div>
                         </div>
-                        <div class="col-md-4 pr-4 pl-0 bb-grey br-grey">
-                          <h5 class="m-0 wrapper-8 f-500">Debt</h5>
+                        <div class="wrapper-24 pl-16 bt-1">
+                            <div class="row">
+                                <div class="col-md-6 p-0">
+                                    <p class="f-12 m-0 text-custom">DESCRIPTION</p>
+                                    <h5 class="mb-0 text-black pt-12" *ngIf="_upperData.description">
+                                        {{_upperData.description}}</h5>
+                                </div>
+                                <div *ngIf="_upperData.servicePricing.feeTypeId==2" class="col-md-6">
+                                    <p class="text-custom f-12 m-0">VARIABLE FEE DETAILS</p>
+                                    <h5 class="m-0 pt-8">Mutual Funds</h5>
+                                    <div class="row bg-grey lter">
+                                        <div class="col-md-6 p-0 b-grey">
+                                            <h5 class="m-0 wrapper-12 text-center text-black bb-grey">Direct</h5>
+                                            <div class="row roboto">
+                                                <div class="col-md-4 pr-4 pl-0 bb-grey br-grey bl-0">
+                                                    <h5 class="m-0 wrapper-8 f-500">Equity</h5>
+                                                </div>
+                                                <div class="col-md-4 pr-4 pl-0 br-grey bb-grey">
+                                                    <h5 class="m-0 wrapper-8 f-500">Debt</h5>
+                                                </div>
+                                                <div class="col-md-4 pr-4 pl-0 bb-grey">
+                                                    <h5 class="m-0 wrapper-8 f-500">Liquid</h5>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4 pr-4 pl-0 br-grey bl-0">
+                                                    <h5 class="m-0 wrapper-8">
+                                                        {{_upperData.servicePricing.pricingList[0].equityAllocation}}%
+                                                    </h5>
+                                                </div>
+                                                <div class="col-md-4 pr-4 br-grey pl-0">
+                                                    <h5 class="m-0 wrapper-8">
+                                                        {{_upperData.servicePricing.pricingList[0].debtAllocation}}%
+                                                    </h5>
+                                                </div>
+                                                <div class="col-md-4 pr-4 pl-0">
+                                                    <h5 class="m-0 wrapper-8">
+                                                        {{_upperData.servicePricing.pricingList[0].liquidAllocation}}%
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 p-0">
+                                            <h5 class="m-0 wrapper-12 text-center text-black bb-grey bt-grey br-grey">
+                                                Regular</h5>
+                                            <div class="row">
+                                                <div class="col-md-4 pr-4 pl-0 bb-grey br-grey bl-0">
+                                                    <h5 class="m-0 wrapper-8 f-500">Equity</h5>
+                                                </div>
+                                                <div class="col-md-4 pr-4 pl-0 bb-grey br-grey">
+                                                    <h5 class="m-0 wrapper-8 f-500">Debt</h5>
+                                                </div>
+                                                <div class="col-md-4 pr-4 pl-0 bb-grey br-grey">
+                                                    <h5 class="m-0 wrapper-8 f-500">Liquid</h5>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4 pr-4 bb-grey pl-0 br-grey bl-0">
+                                                    <h5 class="m-0 wrapper-8">
+                                                        {{_upperData.servicePricing.pricingList[1].equityAllocation}}%
+                                                    </h5>
+                                                </div>
+                                                <div class="col-md-4 pr-4 pl-0 bb-grey br-grey">
+                                                    <h5 class="m-0 wrapper-8">
+                                                        {{_upperData.servicePricing.pricingList[1].debtAllocation}}%
+                                                    </h5>
+                                                </div>
+                                                <div class="col-md-4 pr-4 pl-0 bb-grey br-grey">
+                                                    <h5 class="m-0 wrapper-8">
+                                                        {{_upperData.servicePricing.pricingList[1].liquidAllocation}}%
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-4 pr-4 pl-0 bb-grey br-grey">
-                          <h5 class="m-0 wrapper-8 f-500">Liquid</h5>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-4 pr-4 bb-grey pl-0 br-grey bl-0">
-                          <h5 class="m-0 wrapper-8">{{_upperData.servicePricing.pricingList[1].equityAllocation}}%</h5>
-                        </div>
-                        <div class="col-md-4 pr-4 pl-0 bb-grey br-grey">
-                          <h5 class="m-0 wrapper-8">{{_upperData.servicePricing.pricingList[1].debtAllocation}}%</h5>
-                        </div>
-                        <div class="col-md-4 pr-4 pl-0 bb-grey br-grey">
-                          <h5 class="m-0 wrapper-8">{{_upperData.servicePricing.pricingList[1].liquidAllocation}}%</h5>
-                        </div>
-                      </div>
                     </div>
-                  </div>
-                </div>
-              </div>
+                </mat-card>
             </div>
-          </div>
-        </mat-card>
-      </div>
+        </div>
+        <div class="col-md-2"></div>
     </div>
-    <div class="col-md-2"></div>
-  </div>
 </div>
 <div *ngIf="_upperData=='' || _upperData" class="bottom-fixed wrapper-16 w-100">
-  <div class="row">
-    <div class="col-md-12">
-      <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="Close()">Cancel</h5>
-    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="Close()">Cancel</h5>
+        </div>
 
-  </div>
+    </div>
 </div>

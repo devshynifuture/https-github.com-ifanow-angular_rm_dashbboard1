@@ -36,14 +36,16 @@
                 </button>
             </div>
         </div>
-        <div class="example-container mt-8 col-md-12 p-0 real-estate">
+        <div class="example-container overflow-hidden mt-8 col-md-12 p-0 real-estate">
             <table *ngIf="bankAccountList.filteredData.length > 0" matSort #bankAccountListTable="matSort" [dataSource]="bankAccountList" id="table-low" mat-table class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no">
                     <th mat-sort-header="no" *matHeaderCellDef class="br" mat-header-cell> No</th>
                     <td *matCellDef="let element let i = index" class="br" mat-cell>
                         <div class="bar">{{isLoading ? '' : i + 1 }} </div>
                     </td>
-                    <td *matFooterCellDef class=" f-500 pl-4 t-2 text-left" mat-footer-cell> Total</td>
+                    <td *matFooterCellDef class=" f-600 pl-4 t-2 text-left" mat-footer-cell>
+                        <div class="bar">{{isLoading ? '' : Total }} </div>
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="owner">
                     <th mat-sort-header="ownerName" *matHeaderCellDef class="br t-18" mat-header-cell> Owner</th>
@@ -110,22 +112,26 @@
                 </ng-container>
                 <ng-container matColumnDef="status">
                     <th mat-sort-header="isActive" *matHeaderCellDef class="br" mat-header-cell> Status</th>
-                    <td *matCellDef="let element" class="br text-primary" mat-cell>LIVE</td>
+                    <td *matCellDef="let element" class="br text-primary" mat-cell>
+                        <div class="bar">{{isLoading ? '' : LIVE }} </div>
+                    </td>
                     <td *matFooterCellDef mat-footer-cell></td>
                 </ng-container>
                 <ng-container matColumnDef="icons">
                     <th *matHeaderCellDef class="t-2" mat-header-cell></th>
                     <td *matCellDef="let element" class="t-2" mat-cell>
-                        <i [matMenuTriggerFor]="menubank" class="material-icons c-p text-black">
-                            more_vert
-                        </i>
-                        <mat-menu #menubank="matMenu">
-                            <button (click)="openCashAndBank(element)" mat-menu-item>Edit
-                            </button>
-                            <button (click)="detailedViewbankAccount(element)" mat-menu-item>Detailed view</button>
-                            <button mat-menu-item>Activity</button>
-                            <button (click)="deleteModal('BANK',element)" mat-menu-item>Delete</button>
-                        </mat-menu>
+                        <div *ngIf="!isLoading">
+                            <i [matMenuTriggerFor]="menubank" class="material-icons c-p text-black">
+                                more_vert
+                            </i>
+                            <mat-menu #menubank="matMenu">
+                                <button (click)="openCashAndBank(element)" mat-menu-item>Edit
+                                </button>
+                                <button (click)="detailedViewbankAccount(element)" mat-menu-item>Detailed view</button>
+                                <button mat-menu-item>Activity</button>
+                                <button (click)="deleteModal('BANK',element)" mat-menu-item>Delete</button>
+                            </mat-menu>
+                        </div>
                     </td>
                     <td *matFooterCellDef mat-footer-cell></td>
                 </ng-container>
@@ -167,7 +173,7 @@
                 </button>
             </div>
         </div>
-        <div class="example-container mt-8 col-md-12 p-0 real-estate">
+        <div class="example-container mt-8 overflow-hidden col-md-12 p-0 real-estate">
             <table *ngIf="cashInHandList.filteredData.length > 0" matSort #cashInHandListTable="matSort" [dataSource]="cashInHandList" id="table-low" mat-table class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
                 <ng-container matColumnDef="no">
@@ -175,7 +181,9 @@
                     <td *matCellDef="let element let i = index" class="br t-2" mat-cell>
                         <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                     </td>
-                    <td *matFooterCellDef class=" t-7 f-500 pl-4 text-left" mat-footer-cell>Total</td>
+                    <td *matFooterCellDef class=" t-7 f-500 pl-4 text-left" mat-footer-cell>
+                        <div class="bar"> {{isLoading ? '' : Total }} </div>
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="owner">
                     <th mat-sort-header="ownerName" *matHeaderCellDef class="br t-25" mat-header-cell> Owner</th>
@@ -187,11 +195,11 @@
                 <ng-container matColumnDef="cash">
                     <th mat-sort-header="cashValue" *matHeaderCellDef class="br text-right" mat-header-cell> Account type
                     </th>
-                    <td *matCellDef="let element" class="br text-right" mat-cell appFormatNumber>
-                        <div class="bar"> {{element.cashValue}} </div>
+                    <td *matCellDef="let element" class="br text-right" mat-cell>
+                        <div class="bar" appFormatNumber> {{isLoading ? ' ' : element.cashValue}} </div>
                     </td>
                     <td *matFooterCellDef class="br t-20 p-8 f-500 text-right" mat-footer-cell appFormatNumber [value]="sumOfCashValue">
-                        <div class="bar"> {{ sumOfCashValue || '-'}} </div>
+                        <div class="bar"> {{ sumOfCashValue || ' '}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="bal">
@@ -213,21 +221,26 @@
                 </ng-container>
                 <ng-container matColumnDef="status">
                     <th mat-sort-header="isActive" mat-header-cell *matHeaderCellDef class="br t-5"> Status </th>
-                    <td mat-cell *matCellDef="let element" class="br t-5 text-primary"> LIVE </td>
+                    <td mat-cell *matCellDef="let element" class="br t-5 text-primary">
+                        <div class="bar"> {{isLoading ? '' : LIVE }} </div>
+                    </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>
                 <ng-container matColumnDef="icons">
                     <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-                    <td mat-cell *matCellDef="let element" class="t-2"> <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
-                            more_vert
-                        </i>
-                        <mat-menu #menubank="matMenu">
-                            <button mat-menu-item (click)="openCashInHand(element)">Edit</button>
-                            <button (click)="detailedViewCashInHand(element)" mat-menu-item>Detailed
-                                view</button>
-                            <button mat-menu-item>Activity</button>
-                            <button mat-menu-item (click)="deleteModal('CASH IN HAND',element)">Delete</button>
-                        </mat-menu>
+                    <td mat-cell *matCellDef="let element" class="t-2">
+                        <div *ngIf="!isLoading">
+                            <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
+                                more_vert
+                            </i>
+                            <mat-menu #menubank="matMenu">
+                                <button mat-menu-item (click)="openCashInHand(element)">Edit</button>
+                                <button (click)="detailedViewCashInHand(element)" mat-menu-item>Detailed
+                                    view</button>
+                                <button mat-menu-item>Activity</button>
+                                <button mat-menu-item (click)="deleteModal('CASH IN HAND',element)">Delete</button>
+                            </mat-menu>
+                        </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>

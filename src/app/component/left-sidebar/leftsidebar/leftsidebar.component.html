@@ -16,7 +16,7 @@
       <!-- <div *ngIf="showTabs" class="pt-16">
           <img class="header-img pt-0 pb-0" src="assets/images/img1.jpg">
       </div> -->
-      <div *ngIf="showTabs" class="main-details">
+      <div *ngIf="showTabs" class="main-details min-height">
         <!-- <mat-form-field class="width215">
             <mat-select [(ngModel)]="loginType" class="form-control b-0 f-500 ">
                 <mat-option [value]=1 class="f-500">Advisor Login</mat-option>
@@ -69,6 +69,15 @@
         <a class="sidenav-link" mat-list-item>
           <img src="assets/images/svg/folder-light.svg">
           <span *ngIf="showTabs" class="title" mat-line>Back Office</span>
+        </a>
+        <a class="sidenav-link" mat-list-item>
+          <!-- <img src="assets/images/svg/folder-light.svg"> -->
+          <span *ngIf="showTabs" class="title" routerLink="/admin/backoffice-aum-reconciliation" mat-line>AUM
+            reconsilation</span>
+        </a>
+        <a class="sidenav-link" mat-list-item>
+          <!-- <img src="assets/images/svg/folder-light.svg"> -->
+          <span *ngIf="showTabs" class="title" routerLink="/admin/backoffice-mis" mat-line>MIS</span>
         </a>
       </div>
     </mat-nav-list>

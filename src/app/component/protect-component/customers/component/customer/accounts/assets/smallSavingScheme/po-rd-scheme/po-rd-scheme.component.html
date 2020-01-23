@@ -21,7 +21,7 @@
             ADD NEW</button>
     </div>
 </div>
-<div class="example-container mt-8 real-estate">
+<div class="example-container mt-8 overflow-hidden real-estate">
     <!-- "dataSource" Property 'dataSource' does not exist on type 'PoTdSchemeComponent'. Did you mean 'dataSource'?-->
     <table class="skeletonAnimation" *ngIf="dataSource.filteredData.length > 0" matSort mat-table [dataSource]="dataSource" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
@@ -37,12 +37,14 @@
             <td mat-cell *matCellDef="let element" class="br t-20">
                 <div class="bar"> {{element.ownerName}} </div>
             </td>
-            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef>Total</td>
+            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef>
+                <div class="bar"> {{isLoading ? '' : Total }} </div>
+            </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
             <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-14 text-right"> Current value </th>
-            <td mat-cell *matCellDef="let element" class="br t-14 text-right" appFormatNumber>
-                <div class="bar">{{element.currentValue}}</div>
+            <td mat-cell *matCellDef="let element" class="br t-14 text-right">
+                <div class="bar" appFormatNumber>{{element.currentValue}}</div>
             </td>
             <td mat-footer-cell class="br text-left t-7" *matFooterCellDef appFormatNumber [value]="sumOfCurrentValue">
                 <div class="bar"> {{sumOfCurrentValue}} </div>
@@ -59,15 +61,15 @@
         <ng-container matColumnDef="deposit">
             <th mat-sort-header="deposit" mat-header-cell *matHeaderCellDef class="br text-right t-18">Monthly deposit
             </th>
-            <td mat-cell *matCellDef="let element" class="br text-right t-18" appFormatNumber>
-                <div class="bar"> {{element.deposit}} </div>
+            <td mat-cell *matCellDef="let element" class="br text-right t-18">
+                <div class="bar" appFormatNumber> {{element.deposit}} </div>
             </td>
             <td mat-footer-cell class="br text-left t-7" *matFooterCellDef appFormatNumber [value]="sumOfMonthlyDeposit">{{sumOfMonthlyDeposit}}</td>
         </ng-container>
         <ng-container matColumnDef="mvalue">
             <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br text-right t-15">Maturity value </th>
-            <td mat-cell *matCellDef="let element" class="br text-right t-15" appFormatNumber>
-                <div class="bar"> {{element.maturityValue}} </div>
+            <td mat-cell *matCellDef="let element" class="br text-right t-15">
+                <div class="bar" appFormatNumber> {{element.maturityValue}} </div>
             </td>
             <td mat-footer-cell class="br text-left t-7" *matFooterCellDef appFormatNumber [value]="sumOfMaturityValue">
                 <div class="bar"> {{sumOfMaturityValue}} </div>
@@ -104,15 +106,18 @@
         </ng-container>
         <ng-container matColumnDef="icons">
             <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-            <td mat-cell *matCellDef="let element" class="t-2"> <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
-                    more_vert
-                </i>
-                <mat-menu #menubank="matMenu">
-                    <button mat-menu-item (click)="openAddPORD(element)">Edit</button>
-                    <button mat-menu-item (click)="openDetailedPoRd(element)">Detailed view</button>
-                    <button mat-menu-item>Activity</button>
-                    <button mat-menu-item (click)="deleteModal('SUBSCRIPTION',element)">Delete</button>
-                </mat-menu>
+            <td mat-cell *matCellDef="let element" class="t-2">
+                <div *ngIf="!isLoading">
+                    <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
+                        more_vert
+                    </i>
+                    <mat-menu #menubank="matMenu">
+                        <button mat-menu-item (click)="openAddPORD(element)">Edit</button>
+                        <button mat-menu-item (click)="openDetailedPoRd(element)">Detailed view</button>
+                        <button mat-menu-item>Activity</button>
+                        <button mat-menu-item (click)="deleteModal('SUBSCRIPTION',element)">Delete</button>
+                    </mat-menu>
+                </div>
             </td>
             <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
@@ -120,6 +125,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns21;"></tr>
         <tr mat-footer-row *matFooterRowDef="displayedColumns21;sticky: true" [hidden]="isLoading"></tr>
     </table>
+
     <div *ngIf="dataSource.filteredData.length == 0" class="d-flex flex-column align-items-center">
         <img class="width400" src="assets/images/svg/clients-img.svg">
         <h4 class="text-center pt-12">No Scheme Found</h4>

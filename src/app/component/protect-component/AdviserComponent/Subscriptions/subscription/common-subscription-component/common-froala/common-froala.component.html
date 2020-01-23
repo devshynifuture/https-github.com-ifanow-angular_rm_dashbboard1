@@ -1,8 +1,8 @@
 <div *ngIf="showActivityLog==false">
   <div class="row bb-1 popup-header-fix-60">
-    <div class="col-md-10 p-0">
-      <h4 class="mb-0 wrapper-20 l-22 text-left" *ngIf="storeData.clientName==undefined">{{storeData.name}}</h4>
-      <h4 class="mb-0 wrapper-20 l-22 text-left" *ngIf="storeData.clientName!=undefined">{{storeData.clientName}}</h4>
+    <div class="col-md-10 p-0" >
+      <h4 class="mb-0 wrapper-20 l-22 text-left" *ngIf="storeData!=null && storeData.clientName==undefined">{{storeData.name}}</h4>
+      <h4 class="mb-0 wrapper-20 l-22 text-left" *ngIf="storeData!=null && storeData.clientName!=undefined">{{storeData.clientName}}</h4>
     </div>
     <div class="col-md-2 text-right">
       <i class="material-icons pt-16 pr-8 c-p" (click)="Close('close',false)"> clear</i></div>
@@ -23,8 +23,8 @@
   </div>
   <div class="wrapper-20">
     <div class="row">
-      <div class="col-md-9 p-0">
-        <h3 class="mb-8 mt-20">{{storeData.documentName}}</h3>
+      <div class="col-md-9 p-0" *ngIf="storeData!=null">
+        <h3 class="mb-8 mt-20"  >{{storeData.documentName}}</h3>
         <!-- <textarea [froalaEditor]="config" (froalaModelChange)="onChange($event)" [(froalaModel)]="model"></textarea> -->
         <app-froala (modelChange)="saveData($event)" [(model)]="storeData.documentText"></app-froala>
         <!-- <div id="ui-froala">

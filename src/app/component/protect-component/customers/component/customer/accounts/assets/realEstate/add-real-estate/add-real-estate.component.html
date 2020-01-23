@@ -62,7 +62,7 @@
                         <input matInput aria-label="State" (click)="nomineesList()" [matAutocomplete]="auto"
                             list="userName" class="form-control br-0 pl-8" formControlName="ownerName">
                         <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let item of familyList" [value]="item.userName">
+                            <mat-option *ngFor="let item of familyList" (click)="getCoOwnerDetails(item)" [value]="item.userName">
                                 <span>{{item.userName}}</span>
                             </mat-option>
                         </mat-autocomplete>

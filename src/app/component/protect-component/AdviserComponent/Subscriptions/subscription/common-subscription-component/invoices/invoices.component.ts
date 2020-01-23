@@ -90,7 +90,7 @@ export class InvoicesComponent implements OnInit {
   }
   openEdit(edit) {
     this.invoiceDesign = edit;
-    this.uperDataToClient = this.upperData.id
+    this.uperDataToClient = this.upperData
     console.log('edit', edit);
   }
 

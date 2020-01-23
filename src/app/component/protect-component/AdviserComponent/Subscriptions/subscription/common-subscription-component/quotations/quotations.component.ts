@@ -72,6 +72,25 @@ export class QuotationsComponent implements OnInit {
   changeSelect(){
     
   }
+
+  addQuotation(value) {
+    const fragmentData = {
+      flag: value,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isRefreshRequired(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ');
+          // this.getQuotationsList();
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
+  }
   Open(value, state, data) {
     if (this.isLoading) {
       return

@@ -3,9 +3,19 @@
 
 <div class="popup-header-fix-35">
     <div class="row bb-1">
-        <div class="col-md-10 p-0">
+        <div *ngIf="getFlag == 'addExpenses'" class="col-md-10 p-0">
             <h4 class="mb-0 wrapper-20">ADD TRANSACTONS</h4>
         </div>
+        <div *ngIf="getFlag == 'editExpenses'" class="col-md-10 p-0">
+            <h4 class="mb-0 wrapper-20">EDIT TRANSACTONS</h4>
+        </div>
+        <div *ngIf="getFlag == 'addBudget'" class="col-md-10 p-0">
+            <h4 class="mb-0 wrapper-20">ADD BUDGET</h4>
+        </div>
+        <div *ngIf="getFlag == 'editBudget'" class="col-md-10 p-0">
+            <h4 class="mb-0 wrapper-20">EDIT BUDGET</h4>
+        </div>
+
         <div class="col-md-2 text-left">
             <div class="wrapper-12">
                 <i class="material-icons c-p pt-8 v-middle" (click)="Close(true)"> clear</i>
@@ -148,7 +158,7 @@
                 <h5 class="m-0 pt-8">Family Member</h5>
                 <div class="form-group mb-0 pt-8">
                     <mat-form-field class="w-100">
-                        <mat-select formControlName="familyMember" class="form-control br-0">
+                        <mat-select formControlName="ownerName" class="form-control br-0">
                             <mat-option value=''>Search family members</mat-option>
                             <mat-option *ngFor="let f of familyMember" [value]="f.userName"
                                 (click)="selectClient($event, f)">
@@ -171,7 +181,7 @@
             </div>
             <div class="col-md-8 text-right">
                 <!-- (click)="saveAddInsurance()" Property 'saveAddInsurance' does not exist on type 'AddExpensesComponent'-->
-                <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveExpenses()">SAVE</button>
+                <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveRecuringExpense()">SAVE</button>
             </div>
         </div>
     </div>
@@ -271,7 +281,7 @@
                 <h5 class="m-0 pt-8">Family member</h5>
                 <div class="form-group mb-0 pt-8">
                     <mat-form-field class="w-100">
-                        <mat-select formControlName="familyMember" class="form-control br-0">
+                        <mat-select formControlName="ownerName" class="form-control br-0">
                             <mat-option value=''>Search family members</mat-option>
                             <mat-option *ngFor="let f of familyMember" [value]="f.userName"
                                 (click)="selectClient($event, f)">
@@ -297,118 +307,3 @@
         </div>
     </div>
 </div>
-
-
-<!-- DRIVER’S SALARY -->
-
-<!-- <div class="popup-header-fix-35">
-    <div class="row bb-1">
-        <div class="col-md-10 p-0">
-            <h4 class="mb-0 wrapper-20">DRIVER’S SALARY</h4>
-        </div>
-        <div class="col-md-2 text-left">
-            <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
-            </div>
-        </div>
-    </div>
-
-
-
-    <div class="pt-72 pl-24 pr-24 pb-48 mb-48">
-        <div class="row">
-            <div class="col-md-6">
-                <h5 class="m-0 pt-8"> Date</h5>
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput class="form-control rupess br-0">
-                        <mat-error class="f-12 pt-4">
-                            This is required
-                        </mat-error>
-
-                    </mat-form-field>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <h5 class="m-0 pt-8"> Time</h5>
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput class="form-control   br-0">
-                        <mat-error class="f-12 pt-4">
-                            This is required
-                        </mat-error>
-
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
-        <div class="row pt-32">
-            <div class="col-md-11">
-                <h5 class="m-0 pt-8">Category</h5>
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <mat-select class="form-control br-0">
-                            <mat-option disabled selected hidden> Bills & Utilities </mat-option>
-                            <mat-option value="1"> Bills & Utilities </mat-option>
-                        </mat-select>
-                        <mat-error class="f-12 pt-4">
-                            This is required
-                        </mat-error>
-
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
-
-        <div class="row pt-32">
-            <div class="col-md-3">
-                <h5 class="m-0 pt-8">Amount</h5>
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput class="form-control rupess br-0">
-                        <mat-error class="f-12 pt-4">
-                            This is required
-                        </mat-error>
-
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
-
-        <div class="row pt-32">
-            <div class="col-md-3">
-                <h5 class="m-0 pt-8">Payment mode</h5>
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <mat-select class="form-control br-0">
-                            <mat-option disabled selected hidden> Bills & Utilities </mat-option>
-                            <mat-option value="1"> Bills & Utilities </mat-option>
-                        </mat-select>
-                        <mat-error class="f-12 pt-4">
-                            This is required
-                        </mat-error>
-
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
-
-        <div class="row pt-32">
-            <div class="col-md-11">
-                <h5 class="m-0 pt-8">Description</h5>
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <mat-select class="form-control br-0">
-                            <mat-option disabled selected hidden> Bills & Utilities </mat-option>
-                            <mat-option value="1"> Bills & Utilities </mat-option>
-                        </mat-select>
-                        <mat-error class="f-12 pt-4">
-                            This is required
-                        </mat-error>
-
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
-    </div> -->

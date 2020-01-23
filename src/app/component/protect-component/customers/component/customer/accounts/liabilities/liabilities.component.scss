@@ -9,3 +9,10 @@
 // ::ng-deep .mat-sort-header-button {
 //   white-space: normal !important;
 // }
+::ng-deep .textRight .mat-sort-header-container {
+    justify-content: flex-end;
+}
+
+::ng-deep #table-low .mat-sort-header-button {
+    text-align: right;
+}
