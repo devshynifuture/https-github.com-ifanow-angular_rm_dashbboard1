@@ -63,11 +63,6 @@ import { ViewActivityComponent } from './component/protect-component/customers/c
 import { DetailedViewOtherPayablesComponent } from './component/protect-component/customers/component/customer/accounts/liabilities/detailed-view-other-payables/detailed-view-other-payables.component';
 import { AddOtherPayablesComponent } from './component/protect-component/customers/component/customer/accounts/liabilities/add-other-payables/add-other-payables.component';
 import { MfAllocationsComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/mf-allocations/mf-allocations.component';
-
-import { AddIncomeComponent } from './component/protect-component/customers/component/customer/plan/profile-plan/income/add-income/add-income.component';
-import { AddIncomeFamilyMemberComponent } from './component/protect-component/customers/component/customer/plan/profile-plan/income/add-income-family-member/add-income-family-member.component';
-import { AddIncomeSourceComponent } from './component/protect-component/customers/component/customer/plan/profile-plan/income/add-income-source/add-income-source.component';
-import { IndividualIncomeInfoComponent } from './component/protect-component/customers/component/customer/plan/profile-plan/income/individual-income-info/individual-income-info.component';
 import { AddExpensesComponent } from './component/protect-component/customers/component/common-component/add-expenses/add-expenses.component';
 import { KeyInfoComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/key-info/key-info.component';
 import { CalculatorsComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/calculators/calculators.component';
@@ -193,10 +188,6 @@ export const componentList = [
   MfAllocationsComponent,
   DetailedPoRdComponent,
   DetailedViewSchemeHoldingComponent,
-  AddIncomeComponent,
-  AddIncomeFamilyMemberComponent,
-  AddIncomeSourceComponent,
-  IndividualIncomeInfoComponent,
   AddExpensesComponent,
   KeyInfoComponent,
   AddMutualFundComponent,
