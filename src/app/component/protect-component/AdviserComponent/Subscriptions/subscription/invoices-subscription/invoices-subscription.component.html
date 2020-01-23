@@ -1,6 +1,6 @@
 <div *ngIf="invoiceSubscription !='true' && invoiceSubscription !='EditInInvoice'" class="bg-white" id="ui-subs">
     <!-- (scroll)="scrollCall(true)" -->
-    <div *ngIf="dataSource.data.length > 0" class="bg-white p-20 pb-0 filterBox">
+    <div *ngIf="dataSource.data.length > 0 || isFilter" class="bg-white p-20 pb-0 filterBox">
         <div class="row">
 
             <div class="col-md-1 p-0">
@@ -8,7 +8,7 @@
             </div>
             <div class="col-md-5 p-0">
                 <div class="row">
-                    <div class="col-md-3 p-0" *ngIf="dataSource.data.length > 0">
+                    <div class="col-md-3 p-0" >
                         <button [matMenuTriggerFor]="menu" class="b-a pr-0 br-0" mat-button>Actions <i
                                 class="material-icons text-custom">
                                 arrow_drop_down
@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 right text-right p-0" *ngIf="dataSource.data.length > 0">
+            <div class="col-md-6 right text-right p-0" >
                 <i class="material-icons mr-12 icon-light c-p v-sub">
                     search
                 </i>
@@ -95,7 +95,7 @@
                     <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="status"> Status</th>
                     <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" [ngClass]="{'text-danger':element.status==2,'text-primary':element.status==0,'text-success':element.status==1}" class="c-p" mat-cell ngcl>
                         <div class="bar">
-                            {{(element.status == 0) ? 'UNPAID' : (element.status == 1) ? 'PAID' : (element.status == 2) ? 'OVERDUE' : ''}}
+                                {{(element.status == 0) ? 'UNPAID' : (element.status == 1) ? 'PAID' : (element.status == 2) ? 'OVERDUE' :  (element.status == 3) ? 'PARTIALLY PAID':(element.status == 4) ? 'SENT':(element.status == 5) ? 'VOID':(element.status == 5) ? 'VOID':''}}
                         </div>
                     </td>
                 </ng-container>
@@ -125,8 +125,8 @@
                     <th *matHeaderCellDef class="f-18 text-right common-right pr-24" mat-header-cell mat-sort-header="balanceDue">
                         Balance due
                     </th>
-                    <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" class="text-right amt c-p" mat-cell>
-                        <div class="bar"> {{isLoading ? '' : '₹' }} {{isLoading ? '' : formatter(element.balanceDue) || 0 }} </div>
+                    <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" class="text-right amt c-p"  mat-cell>
+                        <div class="bar"> {{isLoading ? '' : '₹' }}<span appFormatNumber> {{isLoading ? '' : formatter(element.balanceDue) || 0 }}</span> </div>
                     </td>
                 </ng-container>
                 <tr *matHeaderRowDef="displayedColumns; sticky: true;" [ngClass]="!showFilter ? 'stickyHeader1' : 'stickyHeader2'" mat-header-row></tr>

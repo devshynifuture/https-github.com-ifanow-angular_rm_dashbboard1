@@ -22,6 +22,11 @@ import { CashflowAddExpensesComponent } from './cashflows-plan/cashflow-upper-sl
 import { CashflowAddSurplusComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-add/cashflow-add-surplus/cashflow-add-surplus.component';
 import { CashflowAddLiabilitiesComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-add/cashflow-add-liabilities/cashflow-add-liabilities.component';
 import { CashflowTableEditDirective } from './cashflows-plan/cashflow-table-edit.directive';
+import { EditTaxComputationComponent } from './texes-plan/edit-tax-computation/edit-tax-computation.component';
+import { AddIncomeComponent } from './profile-plan/income/add-income/add-income.component';
+import { AddIncomeFamilyMemberComponent } from './profile-plan/income/add-income-family-member/add-income-family-member.component';
+import { AddIncomeSourceComponent } from './profile-plan/income/add-income-source/add-income-source.component';
+import { IndividualIncomeInfoComponent } from './profile-plan/income/individual-income-info/individual-income-info.component';
 
 export const componentList = [
   PreferencesComponent,
@@ -36,7 +41,13 @@ export const componentList = [
   CashflowAddIncomeComponent,
   CashflowAddExpensesComponent,
   CashflowAddLiabilitiesComponent,
-  CashflowAddSurplusComponent
+  CashflowAddSurplusComponent,
+  EditTaxComputationComponent,
+  AddIncomeComponent,
+  AddIncomeFamilyMemberComponent,
+  AddIncomeSourceComponent,
+  IndividualIncomeInfoComponent
+
 ];
 // import { AddPlaninsuranceComponent } from './insurance-plan/add-planinsurance/add-planinsurance.component';
 

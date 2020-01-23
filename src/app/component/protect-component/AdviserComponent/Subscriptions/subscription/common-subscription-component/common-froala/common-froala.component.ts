@@ -43,6 +43,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { EmailOnlyComponent } from '../email-only/email-only.component';
 import { AuthService } from '../../../../../../../auth-service/authService';
 import { PdfService } from '../../../../../../../services/pdf.service';
+import { escapeRegExp } from '@angular/compiler/src/util';
 
 // import html2canvas from 'html2canvas';
 
@@ -120,6 +121,14 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
 
   getcommanFroalaData(data) {
     this.storeData = data;
+    let d = new Date();
+    console.log(this.storeData.documentText)
+    this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp('$(customer_name)'), 'g'),
+      this.storeData.clientName);
+    this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp('$(plan_name)'), 'g'),
+      this.storeData.planName);
+    this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp(' $(date)'), 'g'),
+      d.getDate() + "/" + d.getMonth() + 1 + "/" + d.getFullYear());
   }
 
   Close(data, flag) {

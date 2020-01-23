@@ -1,13 +1,13 @@
-<div class="bg-white" id="ui-subs">
+<div class="bg-white" id="ui-subs" [ngClass]="dataSource.data.length > 0 || isFilter ? 'block' : 'none'">
     <!-- (scroll)="scrollCall(true)" -->
-    <div class="bg-white p-20 pb-0 filterBox" [ngClass]="dataSource.data.length > 0 ? 'block' : 'none'">
+    <div class="bg-white p-20 pb-0 filterBox">
         <div class="row">
             <div class="col-md-1 p-0">
                 <h4 class="pt-8 mb-0">Quotations</h4>
             </div>
             <div class="col-md-5 pl-0">
                 <div class="row">
-                    <div class="col-md-3" *ngIf="dataSource.data.length > 0">
+                    <div class="col-md-3">
                         <button [matMenuTriggerFor]="menu" class="b-a pr-0 br-0" mat-button>Actions <i
                                 class="material-icons text-custom">
                                 arrow_drop_down
@@ -36,8 +36,7 @@
                 <button (click)="showFilters(showFilter)" class="btn-default addon mr-12" mat-stroked-button><i
                         class="material-icons">filter_list</i>FILTERS
                 </button>
-                <button  class="btn-primary addon" mat-stroked-button (click)="addQuotation('addQuotation',null)"><i
-                    class="material-icons">add</i>ADD NEW
+                <button class="btn-primary addon" mat-stroked-button (click)="addQuotation('addQuotation',null)">ADD NEW
                 </button>
             </div>
         </div>
@@ -149,7 +148,7 @@
     <div class="col-md-12  d-flex align-items-center flex-column justify-content-center">
         <img class="width400" src="assets/images/svg/clients-img.svg">
         <p class="f-22 f-600 pt-28"> No Data Found </p>
-        <button mat-stroked-button class="btn-primary mt-20 br-0 right text-right addon" (click)="addQuotation('addQuotation')" > ADD
+        <button mat-stroked-button class="btn-primary mt-20 br-0 right text-right addon" (click)="addQuotation('addQuotation')"> ADD
             QUOTATION
         </button>
     </div>

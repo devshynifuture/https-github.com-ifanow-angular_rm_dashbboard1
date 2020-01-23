@@ -13,7 +13,7 @@
     </div>
     <div class="row pt-40">
         <div class="col-md-3 pr-0">
-            <h5 class="m-0 text-right pt-8">Client name</h5>
+            <h5 class="m-0 text-right pt-8">Display name</h5>
         </div>
         <div class="col-md-8">
             <div class="form-group">
@@ -28,7 +28,7 @@
                                     </mat-option>
                                 </mat-autocomplete>
                                 <mat-error *ngIf="getFormControlEdit().clientName.invalid || (getFormControlEdit().clientName.touched && getFormControlEdit().clientName.invalid)" class="f-12 pt-4">
-                                    Client name is required
+                                        Display name is required
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -38,7 +38,7 @@
             <div class="row pt-10">
                 <div class="col-md-6 pl-0">
                     <p class="m-0 text-custom f-12">BILLER ADDRESS</p>
-                    <p *ngIf="editAdd1 == true" class="m-0 text-black text-break w-90 l-21">{{storeData.billerAddress}}
+                    <p *ngIf="editAdd1 == false" class="m-0 text-black text-break w-90 l-21">{{storeData.billerAddress}}
                     </p>
                     <textarea *ngIf="editAdd1 == true" class="form-control f-14 br-0" formControlName="billerAddress" maxlength="150" rows="5"></textarea>
                     <div class="row">
@@ -159,7 +159,7 @@
                             <div class="form-group mb-0 ml-8 w-100">
                                 <input [matAutocomplete]="auto" [readonly]="invoiceInSub =='invoiceSubscription'" aria-label="State" class="form-control w-100 br-0 pl-8" formControlName="serviceName" list="serviceName" matInput placeholder="You can search service">
                                 <mat-autocomplete #auto="matAutocomplete">
-                                    <mat-option *ngFor="let s of serviceList" [value]="s.serviceName">
+                                    <mat-option *ngFor="let s of serviceList" [value]="s.serviceName" (click)="selectService(s)">
                                         <span>{{s.serviceName}}</span>
                                     </mat-option>
                                 </mat-autocomplete>

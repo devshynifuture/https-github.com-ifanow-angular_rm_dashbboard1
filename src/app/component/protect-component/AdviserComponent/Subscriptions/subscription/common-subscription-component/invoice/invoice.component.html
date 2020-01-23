@@ -47,7 +47,7 @@
                         </div>
                         <div class="col-md-5 text-right pr-8">
                             <p [ngClass]="{'text-danger':strData.status==2,'text-primary':strData.status==0,'text-success':strData.status==1}" class="m-0 f-13 pt-12">
-                                {{(strData.status == 0) ? 'UNPAID' : (strData.status == 1) ? 'PAID' : (strData.status == 2) ? 'OVERDUE' : ''}}
+                                {{(strData.status == 0) ? 'UNPAID' : (strData.status == 1) ? 'PAID' : (strData.status == 2) ? 'OVERDUE' :  (strData.status == 3) ? 'PARTIALLY PAID':(strData.status == 4) ? 'SENT':(strData.status == 5) ? 'VOID':(strData.status == 5) ? 'VOID':''}}
                             </p>
                         </div>
                     </div>
@@ -55,27 +55,34 @@
             </div>
             <div class="col-md-8 p-0 bl-1 ">
                 <div *ngIf="showRecord==false && feeCalc==false" class="row bb-1 pt-16">
-                    <div class="col-md-8 text-custom">
+                    <div class="col-md-7 text-custom">
                         <img *ngIf="storeData.status != 1" matTooltip="Edit" (click)="editInvoice()" class="c-p" src="assets/images/svg/pencil.svg">
                         <img matTooltip="Email" (click)="openSendEmail(null)" class="b-a c-p" src="assets/images/svg/mail-light.svg">
                         <img matTooltip="Download PDF" (click)="generatePdf()" class="b-a c-p" src="assets/images/svg/pdf-icons.svg">
                         <img matTooltip="Print" (click)="printPage(invoiceTemplate)" class="b-a c-p" src="assets/images/svg/printer.svg">
                         <img matTooltip="Delete" (click)="deleteModal('INVOICE',storeData.id)" class="b-a wrapper-9 ml-8 c-p" src="assets/images/svg/delete.svg">
                     </div>
-                    <div class="col-md-4 right text-right">
+                    <div class="col-md-3 right text-right">
                         <button (click)="recordPayment()" class="btn-primary br-0 mb-12" *ngIf="rpyment==true" mat-stroked-button>RECORD
                             PAYMENT
                         </button>
                     </div>
+                    <div class="col-md-2 right text-right"  *ngIf="rpyment==true">
+                        <mat-select class="form-control br-0" id="sel1">
+                            <mat-label>More</mat-label>
+                            <mat-option value="6">Void</mat-option>
+                            <mat-option value="7">Write off</mat-option>
+                          </mat-select>
+                      </div>
                 </div>
                 <div #invoiceTemplate id="template" *ngIf="showRecord==false && feeCalc==false" class="b-a m-20 pb-28 max-height-100">
                     <div class="p-16">
                         <div class="row">
-                            <div class="col-md-9">
+                            <div class="col-md-8">
                                 <h1 class="f-42 text-custom pt-48 f-700">INVOICE</h1>
                             </div>
-                            <div class="col-md-3 text-right">
-                                <img class="pt-20" src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
+                            <div class="col-md-4 text-right">
+                                <img class="pt-20 w-100" src="{{storeData.logoUrl}}">
                             </div>
                         </div>
                         <div class="row">
@@ -97,7 +104,7 @@
                             </div>
                             <div class="col-md-4 text-right">
                                 <h2 [ngClass]="{'text-danger':storeData.status==2,'text-primary':storeData.status==0,'text-success':storeData.status==1}">
-                                    {{(storeData.status == 0) ? 'UNPAID' : (storeData.status == 1) ? 'PAID' : (storeData.status == 2) ? 'OVERDUE' : ''}}
+                                    {{(storeData.status == 0) ? 'UNPAID' : (storeData.status == 1) ? 'PAID' : (storeData.status == 2) ? 'OVERDUE' :  (storeData.status == 3) ? 'PARTIALLY PAID':(storeData.status == 4) ? 'SENT':(storeData.status == 5) ? 'VOID':(storeData.status == 5) ? 'VOID':''}}
                                 </h2>
                             </div>
                         </div>
@@ -198,7 +205,7 @@
                             </div>
                         </div>
                         <div class="wrapper-9">
-                            <div *ngIf="storeData.services[0].id != undefined" class="row b-a bg-grey lter ">
+                            <div *ngIf="storeData.services[0].id != undefined && storeData.auto == true" class="row b-a bg-grey lter ">
                                 <div class="col-md-10 d-flex  align-items-center">
                                     <p class="m-0 text-black f-500  ">Fee calculation - Attachment</p>
                                 </div>
@@ -316,7 +323,7 @@
                     </div>
                     <div class="col-md-4 text-right">
                         <h2 [ngClass]="{'text-danger':storeData.status==2,'text-primary':storeData.status==0,'text-success':storeData.status==1}">
-                            {{(storeData.status == 0) ? 'UNPAID' : (storeData.status == 1) ? 'PAID' : (storeData.status == 2) ? 'OVERDUE' : ''}}
+                            {{(storeData.status == 0) ? 'UNPAID' : (storeData.status == 1) ? 'PAID' : (storeData.status == 2) ? 'OVERDUE' :  (storeData.status == 3) ? 'PARTIALLY PAID':(storeData.status == 4) ? 'SENT':(storeData.status == 5) ? 'VOID':(storeData.status == 5) ? 'VOID':''}}
                         </h2>
                     </div>
                 </div>

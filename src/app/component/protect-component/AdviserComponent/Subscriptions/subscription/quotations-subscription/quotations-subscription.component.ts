@@ -49,6 +49,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
   maxDate = new Date();
   noData: string;
   isLoading = false;
+  isFilter:boolean = false;
 
   filterStatus = [];
   filterDate = [];
@@ -179,6 +180,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     this.lastFilterDataId = 0;
     this.filterDataArr = [];
     this.dataSource.data = [{}, {}, {}];
+    this.isFilter = true;
       this.isLoading = true;
       this.getQuotationsData(false);  
     }

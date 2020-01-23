@@ -12,7 +12,6 @@ import { AuthService } from "../../../../../../../auth-service/authService";
 export class DeleteSubscriptionComponent implements OnInit {
 
   advisorId;
-
   constructor(public dialogRef: MatDialogRef<DeleteSubscriptionComponent>,
     @Inject(MAT_DIALOG_DATA) public fragmentData: any, private subscription: SubscriptionService,
     public eventService: EventService) {
