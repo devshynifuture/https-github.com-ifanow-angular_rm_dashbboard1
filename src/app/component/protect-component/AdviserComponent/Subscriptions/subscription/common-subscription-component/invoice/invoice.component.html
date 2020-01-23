@@ -8,10 +8,10 @@
                         <h4 class="mb-0 wrapper-8 pt-12">Invoices</h4>
                     </div>
                     <!-- <div class="col-md-7 text-right pt-4 right">
-            <button class="btn-primary br-0 my-btn mt-4" mat-stroked-button><i class="material-icons">
-                add
-              </i></button>
-          </div> -->
+              <button class="btn-primary br-0 my-btn mt-4" mat-stroked-button><i class="material-icons">
+                  add
+                </i></button>
+            </div> -->
                 </div>
             </div>
             <div class="col-md-8 bl-1 p-0">
@@ -21,8 +21,8 @@
                     </div>
                     <div (click)="Close('close', false)" class="col-md-2">
                         <i class="material-icons text-right pt-16 c-p right">
-              clear
-            </i>
+                            clear
+                        </i>
                     </div>
                 </div>
             </div>
@@ -64,8 +64,8 @@
                     </div>
                     <div class="col-md-4 right text-right">
                         <button (click)="recordPayment()" class="btn-primary br-0 mb-12" *ngIf="rpyment==true" mat-stroked-button>RECORD
-              PAYMENT
-            </button>
+                            PAYMENT
+                        </button>
                     </div>
                 </div>
                 <div #invoiceTemplate id="template" *ngIf="showRecord==false && feeCalc==false" class="b-a m-20 pb-28 max-height-100">
@@ -95,7 +95,7 @@
                                 <p class="text-black f-400"><span class="text-custom f-16">Invoice date</span>: {{storeData.invoiceDate| date:'dd/MM/yyyy'}}
                                 </p>
                             </div>
-                            <div class="col-md-4 text-right">
+                            <div class="col-md-4">
                                 <h2 [ngClass]="{'text-danger':storeData.status==2,'text-primary':storeData.status==0,'text-success':storeData.status==1}">
                                     {{(storeData.status == 0) ? 'UNPAID' : (storeData.status == 1) ? 'PAID' : (storeData.status == 2) ? 'OVERDUE' : ''}}
                                 </h2>
@@ -105,7 +105,9 @@
                             <div class="b-a">
                                 <div class="row bg-grey lter b-b p-16 pr-0 pl-0">
                                     <div class="col-md-9">
-                                        <h4 class="m-0 f-14 f-500"> Description </h4>
+                                        <h4 class="m-0 f-14 f-500"> Service Details
+
+                                        </h4>
                                     </div>
                                     <div class="col-md-3 ">
                                         <h4 class="m-0 f-14 f-500 text-right"> Amount </h4>
@@ -151,7 +153,8 @@
                                         <p>IGST ({{storeData.igst}}%)</p>
                                     </div>
                                     <div class="col-md-4 pr-8">
-                                        <p class="text-right">₹{{formatter((storeData.subTotal-storeData.discount)*18/100)}}</p>
+                                        <p class="text-right">
+                                            ₹{{formatter((storeData.subTotal-storeData.discount)*18/100)}}</p>
                                     </div>
                                 </div>
                                 <div *ngIf="storeData.cgst!=undefined" class="row">
@@ -159,7 +162,8 @@
                                         <p>CGST ({{storeData.cgst}}%)</p>
                                     </div>
                                     <div class="col-md-4 pr-8">
-                                        <p class="text-right">₹{{formatter((storeData.subTotal-storeData.discount)*9/100)}}</p>
+                                        <p class="text-right">
+                                            ₹{{formatter((storeData.subTotal-storeData.discount)*9/100)}}</p>
                                     </div>
                                 </div>
                                 <div *ngIf="storeData.sgst!=undefined" class="row">
@@ -167,7 +171,8 @@
                                         <p>SGST ({{storeData.sgst}}%)</p>
                                     </div>
                                     <div class="col-md-4 pr-8">
-                                        <p class="text-right">₹{{formatter((storeData.subTotal-storeData.discount)*9/100)}}</p>
+                                        <p class="text-right">
+                                            ₹{{formatter((storeData.subTotal-storeData.discount)*9/100)}}</p>
                                     </div>
                                 </div>
                                 <div class="row bt-1">
@@ -199,7 +204,7 @@
                                 </div>
                                 <div class="col-md-2 wrapper-9 text-right">
                                     <button (click)="OpenFeeCalc()" class="btn-primary br-0" mat-stroked-button>View
-                  </button>
+                                    </button>
                                 </div>
                             </div>
                             <div *ngIf="showPaymentRecive == true" class="row p-24 pl-0 pr-0 ">
@@ -229,8 +234,8 @@
                                     <th *matHeaderCellDef class="f-18 t-2" mat-header-cell></th>
                                     <td *matCellDef="let element" class="t-2" mat-cell>
                                         <i [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
-                      more_vert
-                    </i>
+                                            more_vert
+                                        </i>
                                         <mat-menu #menu="matMenu">
                                             <a (click)="editForm(element)" mat-menu-item>Edit</a>
                                         </mat-menu>
@@ -263,8 +268,8 @@
         </div>
         <div class="col-md-2">
             <i (click)="Close('close', false)" class="material-icons text-right pt-16 pr-16 c-p right">
-        clear
-      </i>
+                clear
+            </i>
         </div>
     </div>
     <div *ngIf="showRecord==false && feeCalc==false" class="row bb-1 pt-72">
@@ -277,8 +282,8 @@
         </div>
         <div class="col-md-4 right text-right">
             <button (click)="recordPayment()" class="btn-primary br-0 mb-8" *ngIf="rpyment==true" mat-stroked-button>RECORD
-        PAYMENT
-      </button>
+                PAYMENT
+            </button>
         </div>
     </div>
     <div *ngIf="showRecord==false && feeCalc==false" class="b-a m-20 mb-100 pb-28">
@@ -309,7 +314,7 @@
                         <p class="text-black f-400"><span class="text-custom f-16">Invoice date</span>: {{storeData.invoiceDate | date:'dd/MM/yyyy'}}
                         </p>
                     </div>
-                    <div class="col-md-4 text-right">
+                    <div class="col-md-4">
                         <h2 [ngClass]="{'text-danger':storeData.status==2,'text-primary':storeData.status==0,'text-success':storeData.status==1}">
                             {{(storeData.status == 0) ? 'UNPAID' : (storeData.status == 1) ? 'PAID' : (storeData.status == 2) ? 'OVERDUE' : ''}}
                         </h2>
@@ -320,7 +325,8 @@
                         <div class="b-a">
                             <div class="row bg-grey lter b-b p-16 pr-0 pl-0">
                                 <div class="col-md-9">
-                                    <h4 class="m-0 f-14 f-500"> Description </h4>
+                                    <h4 class="m-0 f-14 f-500"> Service Details
+                                    </h4>
                                 </div>
                                 <div class="col-md-3 ">
                                     <h4 class="m-0 f-14 f-500 text-right"> Amount </h4>
@@ -366,7 +372,8 @@
                                     <p>IGST ({{storeData.igst}}%)</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <p class="text-right">₹{{formatter((storeData.subTotal-storeData.discount)*18/100)}}</p>
+                                    <p class="text-right">₹{{formatter((storeData.subTotal-storeData.discount)*18/100)}}
+                                    </p>
                                 </div>
                             </div>
                             <div *ngIf="storeData.cgst!=undefined" class="row">
@@ -374,7 +381,8 @@
                                     <p>CGST ({{storeData.cgst}}%)</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <p class="text-right">₹{{formatter((storeData.subTotal-storeData.discount)*9/100)}}</p>
+                                    <p class="text-right">₹{{formatter((storeData.subTotal-storeData.discount)*9/100)}}
+                                    </p>
                                 </div>
                             </div>
                             <div *ngIf="storeData.sgst!=undefined" class="row">
@@ -382,7 +390,8 @@
                                     <p>SGST ({{storeData.sgst}}%)</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <p class="text-right">₹{{formatter((storeData.subTotal-storeData.discount)*9/100)}}</p>
+                                    <p class="text-right">₹{{formatter((storeData.subTotal-storeData.discount)*9/100)}}
+                                    </p>
                                 </div>
                             </div>
                             <div class="row bt-1">
@@ -408,8 +417,8 @@
                             </div>
                         </div>
                         <!-- <div class="col-md-7 mt-70">
-                <p class="f-14 text-black f-500 roboto"> Terms & Conditions</p>
-             </div> -->
+                  <p class="f-14 text-black f-500 roboto"> Terms & Conditions</p>
+               </div> -->
                     </div>
                 </div>
             </div>

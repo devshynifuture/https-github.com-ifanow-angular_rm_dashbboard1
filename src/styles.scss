@@ -595,7 +595,8 @@ mat-tab-group[vertical] {
 #ui-mutualfunds-capital,
 #ui-profile-plan,
 #ui-planinsurance,
-#ui-goal {
+#ui-goal,
+#ui-texes {
     padding-top: 120px !important;
     //font-family: "Proxima Nova ", sans-serif;
 }
@@ -648,7 +649,9 @@ mat-tab-group[vertical] {
 #ui-income,
 #ui-expenses,
 #ui-profile-plan,
-#ui-activity {
+#ui-activity,
+#investmentPlan,
+#ui-texes {
     .vertical-menu {
         height: 100vh;
         display: block !important;
@@ -890,7 +893,9 @@ mat-tab-group[vertical] {
 .scheme-wise,
 .familymember-wise,
 .liabilities,
-.mf-summary {
+.mf-summary,
+.texestable1,
+.texestable2 {
     tr.mat-header-row {
         height: 40px;
         padding: 10px 8px !important;

@@ -1,41 +1,30 @@
-.bottom-footer{
-    overflow: hidden;
-    position: fixed;
-    bottom: 1px;
-    z-index: 999;
-    width: 100%;
-    .mat-stroked-button{
-        height: 40px;
-        float: right;
-        border-color: #008FFF;
-        border-radius: 2px;
-        color: #008FFF;
-        background-color: #fff;
-    }
+ul {
+  display: block;
+
 }
 
-ul{
-    display: block;
-    
+li {
+  text-align: left !important;
+  padding-left: 16px;
+  font-size: 14px;
 }
-li{
-    text-align: left !important;
-    padding-left: 16px;
-    font-size: 14px;
+
+ul>li:before {
+  content: "–";
+  /* en dash here */
+  position: absolute;
+  margin-left: -1.1em;
 }
-ul > li:before {
-    content: "–"; /* en dash here */
-    position: absolute;
-    margin-left: -1.1em; 
+
+::ng-deep .in-btn {
+  font-size: 12px !important;
+  color: #008FFF;
+  border-radius: 2px;
+
+  height: 40px;
+  width: 138px;
 }
-::ng-deep .in-btn{
-    font-size: 12px !important;
-    color: #008FFF;
-    border-radius: 2px;
-  
-    height: 40px;
-    width: 138px;
-}
-.mat-stroked-button:not([disabled]){
-    border-color:#008FFF;
+
+.mat-stroked-button:not([disabled]) {
+  border-color: #008FFF;
 }
