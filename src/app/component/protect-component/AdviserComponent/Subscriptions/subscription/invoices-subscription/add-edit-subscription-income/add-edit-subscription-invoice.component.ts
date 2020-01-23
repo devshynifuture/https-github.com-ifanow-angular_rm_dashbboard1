@@ -298,7 +298,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
         invoiceNumber: this.editPayment.value.invoiceNumber,
         subTotal: this.editPayment.value.finalAmount,
         discount: this.editPayment.value.discount,
-        finalAmount:parseInt(this.finAmount) - parseInt(this.editPayment.value.discount),
+        finalAmount:parseInt(this.finAmount),
         invoiceDate: this.editPayment.value.invoiceDate,
         dueDate: this.editPayment.value.dueDate,
         igst: (this.editPayment.value.taxStatus == 'IGST(18%)') ? 18 : null,
@@ -355,7 +355,8 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
 
   getClients() {
     const obj = {
-      advisorId: this.advisorId
+      advisorId: this.advisorId,
+      clientId :(this.storeData.id == undefined)? 0:this.storeData.id
     };
     this.subService.getClientList(obj).subscribe(
       data => this.getClientListRes(data)

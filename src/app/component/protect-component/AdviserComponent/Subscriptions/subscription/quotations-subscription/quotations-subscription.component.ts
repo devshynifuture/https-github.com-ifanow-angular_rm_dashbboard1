@@ -11,6 +11,7 @@ import {MAT_DATE_FORMATS} from 'saturn-datepicker';
 import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
 import {AddQuotationComponent} from '../common-subscription-component/add-quotation/add-quotation.component';
 import {CommonFroalaComponent} from '../common-subscription-component/common-froala/common-froala.component';
+import { AddQuotationSubscriptionComponent } from 'src/app/component/protect-component/customers/component/common-component/add-quotation-subscription/add-quotation-subscription.component';
 
 export interface PeriodicElement {
   name: string;
@@ -365,6 +366,26 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
   remove(item) {
     this.filterStatus.splice(item, 1);
+  }
+  addQuotation(value,data){
+    const fragmentData = {
+      flag: value,
+      data,
+      id: 1,
+      state: 'open',
+      componentName: AddQuotationSubscriptionComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isRefreshRequired(sideBarData)) {
+          this.getQuotationsData(false);
+          console.log('this is sidebardata in subs subs 2: ');
+          this.dataCount = 0;
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
   }
 
   Open(value, data) {

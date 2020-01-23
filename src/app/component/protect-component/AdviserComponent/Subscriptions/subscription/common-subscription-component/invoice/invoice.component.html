@@ -58,7 +58,7 @@
       <div class="col-md-8 p-0 bl-1 ">
         <div *ngIf="showRecord==false && feeCalc==false" class="row bb-1 pt-16">
           <div class="col-md-8 text-custom">
-            <img matTooltip="Edit" (click)="editInvoice()" class="c-p" src="assets/images/svg/pencil.svg">
+            <img  *ngIf="storeData.status != 1" matTooltip="Edit" (click)="editInvoice()" class="c-p" src="assets/images/svg/pencil.svg">
             <img matTooltip="Email" (click)="openSendEmail(null)" class="b-a c-p" src="assets/images/svg/mail-light.svg">
             <img matTooltip="Download PDF" (click)="generatePdf()" class="b-a c-p" src="assets/images/svg/pdf-icons.svg">
             <img matTooltip="Print" (click)="printPage(invoiceTemplate)" class="b-a c-p" src="assets/images/svg/printer.svg">
@@ -105,8 +105,8 @@
               </div>
               <div class="col-md-4">
                 <h2
-                  [ngClass]="{'text-danger':storeData.status==0,'text-primary':storeData.status==1,'text-success':storeData.status==2}">
-                  {{(storeData.status == 0) ? 'OVERDUE' : (storeData.status == 1) ? 'OVERDUE' : (storeData.status == 2) ? 'PAID' : ''}}
+                  [ngClass]="{'text-danger':storeData.status==2,'text-primary':storeData.status==0,'text-success':storeData.status==1}">
+                  {{(storeData.status == 0) ? 'UNPAID' : (storeData.status == 1) ? 'PAID' : (storeData.status == 2) ? 'OVERDUE' : ''}}
                 </h2>
               </div>
             </div>
@@ -160,7 +160,7 @@
                     <p>IGST ({{storeData.igst}}%)</p>
                   </div>
                   <div class="col-md-4 pr-8">
-                    <p class="text-right">₹{{formatter(storeData.igstTaxAmount)}}</p>
+                    <p class="text-right">₹{{formatter((storeData.subTotal-storeData.discount)*18/100)}}</p>
                   </div>
                 </div>
                 <div *ngIf="storeData.cgst!=undefined" class="row">
@@ -168,7 +168,7 @@
                     <p>CGST ({{storeData.cgst}}%)</p>
                   </div>
                   <div class="col-md-4 pr-8">
-                    <p class="text-right">₹{{formatter(storeData.cgstTaxAmount)}}</p>
+                    <p class="text-right">₹{{formatter((storeData.subTotal-storeData.discount)*9/100)}}</p>
                   </div>
                 </div>
                 <div *ngIf="storeData.sgst!=undefined" class="row">
@@ -176,7 +176,7 @@
                     <p>SGST ({{storeData.sgst}}%)</p>
                   </div>
                   <div class="col-md-4 pr-8">
-                    <p class="text-right">₹{{formatter(storeData.sgstTaxAmount)}}</p>
+                    <p class="text-right">₹{{formatter((storeData.subTotal-storeData.discount)*9/100)}}</p>
                   </div>
                 </div>
                 <div class="row bt-1">
@@ -278,7 +278,7 @@
   </div>
   <div *ngIf="showRecord==false && feeCalc==false" class="row bb-1 pt-72">
     <div class="col-md-8 text-custom">
-      <img matTooltip="Edit" (click)="editInvoice()" class="c-p" src="assets/images/svg/pencil.svg">
+      <img matTooltip="Edit" *ngIf="storeData.status != 1" (click)="editInvoice()" class="c-p" src="assets/images/svg/pencil.svg">
       <img matTooltip="Email" (click)="openSendEmail('upper')" class="b-a c-p" src="assets/images/svg/mail-light.svg">
       <img matTooltip="Download PDF" class="b-a c-p" src="assets/images/svg/pdf-icons.svg">
       <img matTooltip="Print" (click)="printPage(invoiceTemplate)" class="b-a c-p" src="assets/images/svg/printer.svg">
@@ -322,8 +322,8 @@
           </div>
           <div class="col-md-4">
             <h2
-              [ngClass]="{'text-danger':storeData.status==0,'text-primary':storeData.status==1,'text-success':storeData.status==2}">
-              {{(storeData.status == 0) ? 'OVERDUE' : (storeData.status == 1) ? 'OVERDUE' : (storeData.status == 2) ? 'PAID' : ''}}
+              [ngClass]="{'text-danger':storeData.status==2,'text-primary':storeData.status==0,'text-success':storeData.status==1}">
+              {{(storeData.status == 0) ? 'UNPAID' : (storeData.status == 1) ? 'PAID' : (storeData.status == 2) ? 'OVERDUE' : ''}}
             </h2>
           </div>
         </div>
@@ -378,7 +378,7 @@
                   <p>IGST ({{storeData.igst}}%)</p>
                 </div>
                 <div class="col-md-4">
-                  <p class="text-right">₹{{formatter(storeData.igstTaxAmount)}}</p>
+                  <p class="text-right">₹{{formatter((storeData.subTotal-storeData.discount)*18/100)}}</p>
                 </div>
               </div>
               <div *ngIf="storeData.cgst!=undefined" class="row">
@@ -386,7 +386,7 @@
                   <p>CGST ({{storeData.cgst}}%)</p>
                 </div>
                 <div class="col-md-4">
-                  <p class="text-right">₹{{formatter(storeData.cgstTaxAmount)}}</p>
+                  <p class="text-right">₹{{formatter((storeData.subTotal-storeData.discount)*9/100)}}</p>
                 </div>
               </div>
               <div *ngIf="storeData.sgst!=undefined" class="row">
@@ -394,7 +394,7 @@
                   <p>SGST ({{storeData.sgst}}%)</p>
                 </div>
                 <div class="col-md-4">
-                  <p class="text-right">₹{{formatter(storeData.sgstTaxAmount)}}</p>
+                  <p class="text-right">₹{{formatter((storeData.subTotal-storeData.discount)*9/100)}}</p>
                 </div>
               </div>
               <div class="row bt-1">

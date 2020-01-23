@@ -277,6 +277,7 @@ export class DocumentComponent implements OnInit {
   }
 
   getplanDocumentData() {
+    this.isLoading = true;
     const obj = {
       // advisorId: 12345,
       advisorId: this.advisorId,
@@ -354,6 +355,7 @@ export class DocumentComponent implements OnInit {
   }
 
   getplanDocumentDataResponse(data) {
+    this.isLoading = false;
     if (data !== undefined) {
       data.forEach(singleData => {
         singleData.isChecked = false;

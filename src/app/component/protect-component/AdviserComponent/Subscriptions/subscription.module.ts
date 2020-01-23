@@ -13,7 +13,6 @@ import { SubscriptionRoutingModule } from './subscription-routing.module';
 import { SubscriptionUpperEntry } from './subscription-upper-entry-module';
 import { SubscriptionEntry } from './subscription.entry.module';
 import { ClientSubscriptionComponent } from './subscription/client-subscription/client-subscription.component';
-import { AddQuotationComponent } from './subscription/common-subscription-component/add-quotation/add-quotation.component';
 import { ConsentTandCComponent } from './subscription/common-subscription-component/consent-tand-c/consent-tand-c.component';
 import { HowItWorksComponent } from './subscription/common-subscription-component/how-it-works/how-it-works.component';
 import { HowToUseDialogComponent } from './subscription/common-subscription-component/how-to-use-dialog/how-to-use-dialog.component';
@@ -85,12 +84,12 @@ export const componentList = [SubscriptionComponent,
   SingleDocumentViewComponent,
   // CustomDialogContainerComponent,
   HowItWorksComponent,
-  AddQuotationComponent,
   //AddVariableFeeComponent
 ];
 
 @NgModule({
   declarations: componentList,
+
   imports: [
     // BrowserAnimationsModule,
     MaterialModule,
@@ -123,7 +122,7 @@ export const componentList = [SubscriptionComponent,
     
     HowToUseDialogComponent,
     PreferenceEmailInvoiceComponent,
-    ModifyFeeDialogComponent, ConsentTandCComponent, HowItWorksComponent, AddQuotationComponent, SetDateFooter],
+    ModifyFeeDialogComponent, ConsentTandCComponent, HowItWorksComponent, SetDateFooter],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
 
