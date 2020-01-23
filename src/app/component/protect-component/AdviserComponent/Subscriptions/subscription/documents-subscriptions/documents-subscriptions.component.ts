@@ -46,7 +46,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
 
   lastFilterDataId: any;
   filterDataArr = [];
-  statusIdLength: any;
+  statusIdLength: any = 0;
   scrollCallData: boolean;
   selectedDateFilter: any = 'dateFilter';
   selectedStatusFilter: any = 'statusFilter';
@@ -68,6 +68,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     statusFilter:this.chips,
     dateFilter:this.dateChips
   };
+  isFilter:boolean =false;
   selectedDateRange: { begin: Date; end: Date; };
   showFilter = false;
   data: Array<any> = [{}, {}, {}];
@@ -293,6 +294,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     this.filterDataArr = [];
     this.dataSource.data = [{}, {}, {}];
       this.isLoading = true;
+      this.isFilter = true;
     this.callFilter(false);
   }
 
