@@ -48,7 +48,7 @@
         <div class="col-md-6">
             <mat-form-field class="w-100">
                 <mat-select formControlName="customerType" class="form-control br-0" id="sel1">
-                    <mat-option [value]=1>Bussiness</mat-option>
+                    <mat-option [value]=1>Business</mat-option>
                     <mat-option [value]=2> Individual</mat-option>
                 </mat-select>
                 <mat-error class="f-12">
@@ -92,8 +92,8 @@
         </div>
         <div class="col-md-6">
             <mat-form-field class="w-100">
-                <input #primaryContact class="form-control br-0" formControlName="primaryContact" matInput
-                    maxlength="10" type="number">
+                <input #primaryContact class="form-control br-0" formControlName="primaryContact" (keypress)="utils.keyPress($event)" matInput
+                    maxlength="10" type="text">
                 <mat-error class="f-12">
                     This field is required
                 </mat-error>
@@ -109,11 +109,16 @@
         </div>
         <div class="col-md-6">
             <mat-form-field class="w-100">
-                <input #pan class="form-control br-0" (keypress)="utils.alphaNumric($event)" formControlName="pan"
+                <input #pan class="form-control br-0"  formControlName="pan"
                     matInput maxlength="10" type="text">
-                <mat-error class="f-12">
-                    This field is required
-                </mat-error>
+                  <mat-error
+                        *ngIf="payeeSettingsForm.get('pan').errors?.required && payeeSettingsForm.get('pan').touched"
+                        class="f-12 pt-4">
+                        This field is required
+                    </mat-error>
+                    <mat-error *ngIf="(payeeSettingsForm.get('pan').errors?.pattern)" class="f-12 pt-4">
+                        Enter valid pan
+                    </mat-error>
                 <mat-hint align="end" class="f-12">{{pan.value.length}}/10</mat-hint>
             </mat-form-field>
         </div>

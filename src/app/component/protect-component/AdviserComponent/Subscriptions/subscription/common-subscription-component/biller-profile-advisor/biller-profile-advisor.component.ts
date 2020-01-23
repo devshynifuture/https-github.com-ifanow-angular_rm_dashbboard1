@@ -162,7 +162,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
       companyDisplayName: [data.companyDisplayName, [Validators.required]],
       // companyName: [data.companyName, [Validators.required]],
       gstinNum: [(data.gstin), [Validators.required]],
-      panNum: [(data.pan), [Validators.required]],
+      panNum: [(data.pan), [Validators.required,Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-z]{1}")]],
       Address: [(data.billerAddress), [Validators.required]],
       state: [(data.state), [Validators.required]],
       pincode: [(data.zipCode), [Validators.required, Validators.minLength(6)]],

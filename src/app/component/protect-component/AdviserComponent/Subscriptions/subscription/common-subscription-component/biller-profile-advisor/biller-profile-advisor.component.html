@@ -80,7 +80,15 @@
                     <input #panNum [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
                            appInputValueValidation class="form-control br-0" formControlName="panNum" matInput
                            type="text">
-                    <mat-error class="f-12">PAN is required</mat-error>
+                    <!-- <mat-error class="f-12">PAN is required</mat-error> -->
+                    <mat-error
+                    *ngIf="profileDetailsForm.get('panNum').errors?.required && profileDetailsForm.get('panNum').touched"
+                    class="f-12 pt-4">
+                    This field is required
+                </mat-error>
+                <mat-error *ngIf="(profileDetailsForm.get('panNum').errors?.pattern)" class="f-12 pt-4">
+                    Enter valid pan
+                </mat-error>
                     <mat-hint align="end" class="f-12">{{panNum.value.length}}/10</mat-hint>
 
                   </mat-form-field>
