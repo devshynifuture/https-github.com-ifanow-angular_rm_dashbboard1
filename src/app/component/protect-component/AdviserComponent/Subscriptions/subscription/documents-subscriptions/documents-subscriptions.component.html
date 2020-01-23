@@ -100,7 +100,9 @@
                 </ng-container>
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="clientsign">
-                    <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="clientsign"> Client sign...
+                    <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="clientsign"
+                        matTooltip="Client signature date"
+                        aria-label="Button that displays a tooltip when focused or hovered over"> Client sign...
                     </th>
                     <td *matCellDef="let element" mat-cell>
                         <div class="bar"> {{element.clientsign | date:'dd/MM/yyyy'}} </div>
