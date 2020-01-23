@@ -1,4 +1,4 @@
-<div class="bg-white pb-36 pt-72">
+<div class="bg-white  pt-72">
     <div class="wrapper-20">
 
         <div [ngClass]="dataSource.data.length > 0 ? 'block' : 'none'">
@@ -13,7 +13,7 @@
                 </div>
             </div>
 
-            <div class="clientTable">
+            <div class="example-container">
                 <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="mt-8 skeletonAnimation" id="table-low" mat-table matSort>
                     <ng-container matColumnDef="name">
                         <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="name"> Client name</th>
@@ -50,7 +50,7 @@
                         </td>
                     </ng-container>
 
-                    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+                    <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
                     <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
                 </table>
 

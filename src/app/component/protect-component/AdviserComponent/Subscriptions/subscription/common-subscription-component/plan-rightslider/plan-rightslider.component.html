@@ -23,8 +23,8 @@
                             <mat-checkbox class="right text-right" *ngIf="singlePlan.selected == true"
                                 [(ngModel)]="singlePlan.selected"></mat-checkbox>
                             <div class="col-md-12 p-0 height115">
-                                <h3 class="m-0 pt-20 pl-24">{{singlePlan.name}}</h3>
-                                <h5 class="m-0 pt-4 pb-24 pl-24 text-custom">{{singlePlan.code}}</h5>
+                                <h3 class="m-0 pt-20 pl-24" matTooltip="Plan name">{{singlePlan.name}}</h3>
+                                <h5 class="m-0 pt-4 pb-24 pl-24 text-custom" matTooltip="Plan code">{{singlePlan.code}}</h5>
                             </div>
                         </div>
                     </div>

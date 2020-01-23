@@ -1,4 +1,4 @@
-<div class="bg-white pb-36 pt-80" id="ui-invoice">
+<div class="bg-white   pt-80" id="ui-invoice">
     <div class="wrapper-20">
         <div [ngClass]="dataSource.data.length > 0 || isFilter ? 'block' : 'none'">
             <div class="row">
@@ -47,9 +47,9 @@
                 </app-sudscription-table-filter>
             </div>
         </div>
-        <div class="example-container" [ngClass]="dataSource.data.length > 0 ? 'block' : 'none'">
 
-            <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="mt-8 skeletonAnimation" id="table-low" mat-table matSort>
+        <div class="example-container" [ngClass]="dataSource.data.length > 0 ? 'block' : 'none'">
+            <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class=" skeletonAnimation" id="table-low" mat-table matSort>
                 <ng-container matColumnDef="checkbox">
                     <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;">
                         <mat-checkbox (change)="selectAll($event)" name="selectAll" [checked]="dataCount == dataSource.data.length"></mat-checkbox>
@@ -60,7 +60,8 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="name">
-                    <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="clientName"> Client name</th>
+                    <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="clientName"> Client name
+                    </th>
                     <td (click)="openViewDocument('viewDocuments',element)" *matCellDef="let element" class="c-p" mat-cell>
                         <div class="bar">
                             {{element.clientName}}
@@ -82,14 +83,16 @@
                 </ng-container>
                 <!-- Name Column -->
                 <ng-container matColumnDef="servicename">
-                    <th mat-sort-header="serviceName" *matHeaderCellDef class="f-18" mat-header-cell> Service name</th>
+                    <th mat-sort-header="serviceName" *matHeaderCellDef class="f-18" mat-header-cell> Service name
+                    </th>
                     <td *matCellDef="let element" mat-cell>
                         <div class="bar"> {{element.serviceName}} </div>
                     </td>
                 </ng-container>
                 <!-- Weight Column -->
                 <ng-container matColumnDef="cdate">
-                    <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="startDate"> Created date</th>
+                    <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="startDate"> Created date
+                    </th>
                     <td *matCellDef="let element" mat-cell>
                         <div class="bar"> {{element.startDate | date:'dd/MM/yyyy'}} </div>
                     </td>
@@ -114,7 +117,8 @@
                     <td (click)="openViewDocument('openEmailQuot',element)" *matCellDef="let element" mat-cell>
                         <div class="bar">
                             <span>
-                                <span *ngIf="element.status==0" class="text-primary t-10 f-500 c-p">READY TO SEND</span>
+                                <span *ngIf="element.status==0" class="text-primary t-10 f-500 c-p">READY TO
+                                    SEND</span>
                             <span *ngIf="element.status==1" class="text-primary t-10 f-500 c-p">SENT</span>
                             <span *ngIf="element.status==2" class="text-success t-10 f-500 c-p">NOT APPROVED</span>
                             <span *ngIf="element.status==3" class="text-danger t-10 f-500 c-p">APPROVED</span>
@@ -130,7 +134,8 @@
                                 more_vert
                             </i>
                             <mat-menu #menu="matMenu">
-                                <a (click)="openViewDocument('viewDoc',element)" mat-menu-item>View & Edit document</a>
+                                <a (click)="openViewDocument('viewDoc',element)" mat-menu-item>View & Edit
+                                    document</a>
                                 <a (click)="downloadEsign(element)" *ngIf="element.signed" class="bt-1" mat-menu-item>Download eSigned
                                     document</a>
                                 <a (click)="deleteModal(element)" mat-menu-item>Delete document</a>
@@ -142,6 +147,7 @@
                 <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
             </table>
         </div>
+
 
 
         <div *ngIf="dataSource.data.length == 0" class="row">

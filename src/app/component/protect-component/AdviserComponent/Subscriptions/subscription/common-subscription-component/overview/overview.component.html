@@ -16,8 +16,8 @@
                     <mat-card class="p-0 b-a br-0">
                         <div class="row bg-grey lter">
                             <div class="col-md-10 p-0">
-                                <h3 class="m-0 pt-18 pt-24 pl-24 playairFont" *ngIf="upperData">{{upperData.name}}</h3>
-                                <h5 class="m-0 pt-4 pb-44 pl-24" *ngIf="upperData">{{upperData.code}}</h5>
+                                <h3 class="m-0 pt-18 pt-24 pl-24 playairFont" *ngIf="upperData" matTooltip="Plan name">{{upperData.name}}</h3>
+                                <h5 class="m-0 pt-4 pb-44 pl-24" *ngIf="upperData" matTooltip="Plan code">{{upperData.code}}</h5>
                             </div>
                             <div class="col-md-2">
                                 <i class="material-icons text-right right text-custom f-28 pt-12 c-p"

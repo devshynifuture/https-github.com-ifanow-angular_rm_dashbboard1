@@ -1,16 +1,16 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {SubscriptionInject} from '../../subscription-inject.service';
-import {SubscriptionService} from '../../subscription.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from '../../../../../../auth-service/authService';
-import {UtilService} from 'src/app/services/util.service';
-import {DatePipe} from '@angular/common';
-import {MAT_DATE_FORMATS} from 'saturn-datepicker';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {AddQuotationComponent} from '../common-subscription-component/add-quotation/add-quotation.component';
-import {CommonFroalaComponent} from '../common-subscription-component/common-froala/common-froala.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { SubscriptionInject } from '../../subscription-inject.service';
+import { SubscriptionService } from '../../subscription.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from '../../../../../../auth-service/authService';
+import { UtilService } from 'src/app/services/util.service';
+import { DatePipe } from '@angular/common';
+import { MAT_DATE_FORMATS } from 'saturn-datepicker';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { AddQuotationComponent } from '../common-subscription-component/add-quotation/add-quotation.component';
+import { CommonFroalaComponent } from '../common-subscription-component/common-froala/common-froala.component';
 import { AddQuotationSubscriptionComponent } from 'src/app/component/protect-component/customers/component/common-component/add-quotation-subscription/add-quotation-subscription.component';
 
 export interface PeriodicElement {
@@ -39,17 +39,17 @@ export interface PeriodicElement {
     // },
     // { provide: MAT_DATE_LOCALE, useValue: 'en' },
     [DatePipe],
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
 export class QuotationsSubscriptionComponent implements OnInit {
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   displayedColumns: string[] = ['checkbox', 'name', 'docname', 'plan', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
   advisorId;
   maxDate = new Date();
   noData: string;
   isLoading = false;
-  isFilter:boolean = false;
+  isFilter: boolean = false;
 
   filterStatus = [];
   filterDate = [];
@@ -75,28 +75,28 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
 
   chips = [
-    {name: 'LIVE', value: 1},
-    {name: 'PAID', value: 2},
-    {name: 'OVERDUE', value: 3}
+    { name: 'LIVE', value: 1 },
+    { name: 'PAID', value: 2 },
+    { name: 'OVERDUE', value: 3 }
   ];
   dateChips = [
-    {name: 'Created date', value: 1},
-    {name: 'Sent date', value: 2},
-    {name: 'Client consent', value: 3}
+    { name: 'Created date', value: 1 },
+    { name: 'Sent date', value: 2 },
+    { name: 'Client consent', value: 3 }
   ];
 
-  passFilterData ={
-    data:"",
-    selectedCount:"",
-    statusFilter:this.chips,
-    dateFilter:this.dateChips,
+  passFilterData = {
+    data: "",
+    selectedCount: "",
+    statusFilter: this.chips,
+    dateFilter: this.dateChips,
     filterQuotation: true
   };
   dataCount: number;
 
 
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
-              public dialog: MatDialog, private subService: SubscriptionService, private datePipe: DatePipe) {
+    public dialog: MatDialog, private subService: SubscriptionService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
@@ -172,8 +172,8 @@ export class QuotationsSubscriptionComponent implements OnInit {
     }
   }
 
-  getFiterRes(data){
-    console.log(data , "data for filter");
+  getFiterRes(data) {
+    console.log(data, "data for filter");
     this.filterStatus = data.statusFilterJson;
     this.filterDate = data.dateFilterArr;
     this.selectedDateRange = data.dateFilterJson;
@@ -181,9 +181,9 @@ export class QuotationsSubscriptionComponent implements OnInit {
     this.filterDataArr = [];
     this.dataSource.data = [{}, {}, {}];
     this.isFilter = true;
-      this.isLoading = true;
-      this.getQuotationsData(false);  
-    }
+    this.isLoading = true;
+    this.getQuotationsData(false);
+  }
 
   orgValueChange(selectedDateRange) {
 
@@ -193,7 +193,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
-    this.selectedDateRange = {begin: selectedDateRange.begin, end: selectedDateRange.end};
+    this.selectedDateRange = { begin: selectedDateRange.begin, end: selectedDateRange.end };
     this.getQuotationsData(false);
   }
 
@@ -254,7 +254,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
       this.list = [data.documentRepositoryId];
     }
     const dialogData = {
-      data: 'DOCUMENT',
+      data: 'QUOTATION',
       header: 'DELETE',
       body: this.list.length == 1 ? 'Are you sure you want to delete the document?' : 'Are you sure you want to delete these documents?',
       body2: 'This cannot be undone',
@@ -339,7 +339,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
 
-    this.selectedDateRange = {begin: beginDate, end: endDate};
+    this.selectedDateRange = { begin: beginDate, end: endDate };
 
     this.getQuotationsData(false);
   }
@@ -369,7 +369,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
   remove(item) {
     this.filterStatus.splice(item, 1);
   }
-  addQuotation(value,data){
+  addQuotation(value, data) {
     const fragmentData = {
       flag: value,
       data,

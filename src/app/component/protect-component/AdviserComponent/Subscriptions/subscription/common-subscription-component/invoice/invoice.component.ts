@@ -179,7 +179,18 @@ export class InvoiceComponent implements OnInit {
       event.preventDefault();
     }
   }
-
+  addStatus(value,status){
+    let obj = {
+      id:value.id,
+      status:status
+    }
+    this.subService.getInvoiceStatus(obj).subscribe(
+      data => this.getInvoiceStatusRes(data)
+    );
+  }
+  getInvoiceStatusRes(data){
+    console.log('getInvoiceStatusRes',data)
+  }
   dontAllowTyping(event, maxLength: number) {
     if (event.target.value.length > maxLength) {
       event.preventDefault();
