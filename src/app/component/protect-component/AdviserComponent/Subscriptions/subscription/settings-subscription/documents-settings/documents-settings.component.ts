@@ -60,8 +60,14 @@ export class DocumentsSettingsComponent implements OnInit {
     this.getDocumentsSetting();
   }
   getDocumentsSettingResponse(data) {
-    this.isLoading = false;
-    this.documentSettingData = data;
+    if (data == undefined) {
+      this.documentSettingData.length == 0;
+      this.isLoading = false;
+    }
+    else {
+      this.isLoading = false;
+      this.documentSettingData = data;
+    }
     //this.showLoader = false;
   }
   OpenHelp(value, state, data) {
