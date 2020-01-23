@@ -25,7 +25,7 @@ export class TexesPlanComponent implements OnInit {
       state: 'open',
       componentName: EditTaxComputationComponent
     };
-    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isRefreshRequired(sideBarData)) {
