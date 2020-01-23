@@ -15,8 +15,8 @@ export interface PeriodicElement {
   date: string;
   invoicenum: string;
   name: string;
-  email: string;
   status: string;
+  email: string;
   duedate: string;
   amt: string;
   balance: string;
@@ -93,7 +93,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
   singleInvoiceData;
   // showLoader = true;
   advisorId;
-  displayedColumns: string[] = ['checkbox', 'date', 'invoicenum', 'name', 'status', 'email', 'duedate', 'amt', 'balance'];
+  displayedColumns: string[] = ['checkbox', 'date', 'invoicenum', 'name', 'email','status','duedate', 'amt', 'balance'];
   @Input() invoiceValue;
 
   ngOnInit() {
