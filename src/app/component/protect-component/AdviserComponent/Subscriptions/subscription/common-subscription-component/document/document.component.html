@@ -137,7 +137,7 @@
             <div class="row text-center padder-80">
                 <div class="col-md-4 pr-20 pb-20 pl-0" *ngFor="let document of serviceDocumentData">
                     <div (click)="selectDocument(document)">
-                        <mat-card [ngClass]="{'ba-blue': document.selected,'b-ua':document.selected==false}" class="example-card bg-grey lter p-0 c-p">
+                        <mat-card [ngClass]="{'ba-blue': document.selected,'b-ua':document.selected==false}" class="example-card bg-grey lter p-0 c-p  ">
                             <mat-card-header class="m-0">
                                 <!-- [isChecked]="document.selected"  -->
                                 <app-custom-html [isChecked]="document.selected" [data]="document.docText" id="ui-appcustomhtml" class="bg-white">
@@ -260,14 +260,14 @@
                             <ng-container matColumnDef="date">
                                 <th mat-sort-header="startDate" mat-header-cell *matHeaderCellDef class="text-right" class="f-18"> Created date
                                 </th>
-                                <td mat-cell *matCellDef="let element" class="text-right">
+                                <td mat-cell *matCellDef="let element" class="text-left">
                                     <div class="bar"> {{element.startDate | date:'dd/MM/yyyy'}} </div>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="sdate">
                                 <th mat-sort-header="sentDate" mat-header-cell *matHeaderCellDef class="text-right" class="f-18"> Sent date
                                 </th>
-                                <td mat-cell *matCellDef="let element" class="text-right">
+                                <td mat-cell *matCellDef="let element" class="text-left">
                                     <div class="bar"> {{element.sentDate | date:'dd/MM/yyyy'}} </div>
                                 </td>
                             </ng-container>
@@ -275,7 +275,7 @@
                                 <th mat-sort-header="cdate" mat-header-cell *matHeaderCellDef class="text-right" class="f-18">
                                     Client sign date
                                 </th>
-                                <td mat-cell *matCellDef="let element" class="text-right">
+                                <td mat-cell *matCellDef="let element" class="text-left">
                                     <div class="bar">
                                         {{element.cdate | date:'dd/MM/yyyy'}} </div>
                                 </td>
@@ -285,41 +285,39 @@
                                     Status
                                 </th>
                                 <td *matCellDef="let element" mat-cell>
-                                    <span>
-                                        <!-- <span class="text-success t-10 f-500 c-p"
-                                            *ngIf="element.status==1 && !element.signed">READY TO
-                                            SEND</span>
-                                    <span class="text-success t-10 f-500 c-p" *ngIf="element.status==0 && !element.signed">NOT
+
+                                    <div class="bar">
+                                        <span *ngIf="element.status==0" class="text-success t-10 f-500 c-p">NOT
                                             STARTED</span>
-                                    <span class="text-success t-10 f-500 c-p" *ngIf="element.signed">SIGNED
-                                        </span>-->
-                                    <span *ngIf="element.status==0" class="text-success t-10 f-500 c-p">NOT
-                                            STARTED</span>
-                                    <span *ngIf="element.status==1" class="text-success t-10 f-500 c-p">READY TO
+                                        <span *ngIf="element.status==1" class="text-success t-10 f-500 c-p">READY TO
                                             SEND</span>
-                                    <span *ngIf="element.status==2" class="text-success t-10 f-500 c-p">SENT</span>
-                                    <span *ngIf="element.status==3" class="text-success t-10 f-500 c-p">ESIGNED</span>
-                                    </span>
+                                        <span *ngIf="element.status==2" class="text-success t-10 f-500 c-p">SENT</span>
+                                        <span *ngIf="element.status==3" class="text-success t-10 f-500 c-p">ESIGNED</span>
+                                    </div>
+
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="icons">
                                 <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;"></th>
-                                <td mat-cell *matCellDef="let element" style="width: 2%;"><i class="material-icons c-p iconscolors" [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
-                                        more_vert
-                                    </i>
-                                    <mat-menu #menu="matMenu">
-                                        <!-- <a mat-menu-item (click)="changeDisplay('documentUpper',element)">View & Modify
+                                <td mat-cell *matCellDef="let element" style="width: 2%;">
+                                    <div *ngIf="!isLoading">
+                                        <i class="material-icons c-p iconscolors" [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
+                                            more_vert
+                                        </i>
+                                        <mat-menu #menu="matMenu">
+                                            <!-- <a mat-menu-item (click)="changeDisplay('documentUpper',element)">View & Modify
                     document</a> -->
-                                        <a mat-menu-item (click)="open('viewDocuments',element)">View & Modify
-                                            document</a>
-                                        <a mat-menu-item class="bt-1" (click)="deleteModal('DOCUMENT')">Delete
-                                            document</a>
-                                        <a mat-menu-item *ngIf="element.signed" class="bt-1" (click)="downloadEsign(element)">Download eSigned
-                                            document</a>
-                                        <a mat-menu-item *ngIf="!element.signed" class="bt-1" (click)="openEsignDocument(element)">Email
-                                            with eSign
-                                            request</a>
-                                    </mat-menu>
+                                            <a mat-menu-item (click)="open('viewDocuments',element)">View & Modify
+                                                document</a>
+                                            <a mat-menu-item class="bt-1" (click)="deleteModal('DOCUMENT')">Delete
+                                                document</a>
+                                            <a mat-menu-item *ngIf="element.signed" class="bt-1" (click)="downloadEsign(element)">Download eSigned
+                                                document</a>
+                                            <a mat-menu-item *ngIf="!element.signed" class="bt-1" (click)="openEsignDocument(element)">Email
+                                                with eSign
+                                                request</a>
+                                        </mat-menu>
+                                    </div>
                                 </td>
                             </ng-container>
                             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
