@@ -1,15 +1,14 @@
-import {Component, ElementRef, NgZone, OnInit} from '@angular/core';
-import $ from 'jquery';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from '../../../Data-service/event.service';
-import {SubscriptionInject} from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {FormControl} from '@angular/forms';
-import {SubscriptionService} from '../../protect-component/AdviserComponent/Subscriptions/subscription.service';
-import {Router} from '@angular/router';
-import {map, startWith} from 'rxjs/operators';
-import {DialogContainerComponent} from '../../../common/dialog-container/dialog-container.component';
-import {DynamicComponentService} from '../../../services/dynamic-component.service';
-import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from '../../../animation/animation';
+import { Component, ElementRef, NgZone, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from '../../../Data-service/event.service';
+import { SubscriptionInject } from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { FormControl } from '@angular/forms';
+import { SubscriptionService } from '../../protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { Router } from '@angular/router';
+import { map, startWith } from 'rxjs/operators';
+import { DialogContainerComponent } from '../../../common/dialog-container/dialog-container.component';
+import { DynamicComponentService } from '../../../services/dynamic-component.service';
+import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } from '../../../animation/animation';
 
 @Component({
   selector: 'app-leftsidebar',
@@ -41,9 +40,9 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   logoText = 'Your Logo here';
 
   constructor(private authService: AuthService, private _eref: ElementRef,
-              protected eventService: EventService, protected subinject: SubscriptionInject,
-              private subService: SubscriptionService, private router: Router, private ngZone: NgZone,
-              protected dynamicComponentService: DynamicComponentService) {
+    protected eventService: EventService, protected subinject: SubscriptionInject,
+    private subService: SubscriptionService, private router: Router, private ngZone: NgZone,
+    protected dynamicComponentService: DynamicComponentService) {
     /*constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
       protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute,
       private authService: AuthService) {*/
@@ -84,7 +83,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   selectClient(singleClientData) {
     console.log(singleClientData);
     this.ngZone.run(() => {
-      this.router.navigate(['customer', 'detail', 'account', 'assets'], {state: {...singleClientData}});
+      this.router.navigate(['customer', 'detail', 'account', 'assets'], { state: { ...singleClientData } });
     });
   }
 
@@ -108,18 +107,25 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   }
 
   showMainNavWrapper() {
-    $('#d').addClass('width-230');
-    $('#d').removeClass('width-60');
-    $('#left').css('margin-left', '230px');
+    document.getElementById('d').classList.add('width-230')
+    document.getElementById('left').classList.remove('width-60')
+    document.getElementById('left').style.marginLeft = "230px"
+    // $('#d').addClass('width-230');
+    // $('#d').removeClass('width-60');
+    // $('#left').css('margin-left', '230px');
     this.showTabs = true;
     this.arrow = false;
   }
 
   showsmallNavWrapper() {
-    $('#d').removeClass('width-230');
-    $('#left').css('margin-left', '60px');
-    $('#left').css('transition', 'margin-left 0.3s');
-    $('#d').css('transition', 'width 0.2s');
+    document.getElementById('d').classList.remove('width-230')
+    document.getElementById('left').style.marginLeft = "60px"
+    document.getElementById('left').style.transition = "0.3s"
+    document.getElementById('left').style.transition = "0.2s"
+    // $('#d').removeClass('width-230');
+    // $('#left').css('margin-left', '60px');
+    // $('#left').css('transition', 'margin-left 0.3s');
+    // $('#d').css('transition', 'width 0.2s');
     this.showTabs = false;
     this.arrow = false;
   }
@@ -129,24 +135,26 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
       this.showSettings = false;
     }
     if (window.innerWidth <= 600) {
-      this.showTabs = false;
-      $('#left').css('margin-left', '60px');
-      $('#d').addClass('width,60px');
-      $('#d').removeClass('width-230');
+      // this.showTabs = false;
+      // $('#left').css('margin-left', '60px');
+      // $('#d').addClass('width,60px');
+      // $('#d').removeClass('width-230');
+      this.showsmallNavWrapper()
     } else {
       if (this.showTabs == false) {
         this.showTabs = false;
       } else {
-        this.showTabs = true;
-        $('#d').addClass('width-230');
-        $('#d').removeClass('width-60');
+        // this.showTabs = true;
+        // $('#d').addClass('width-230');
+        // $('#d').removeClass('width-60');
+        this.showMainNavWrapper();
       }
     }
   }
 
   openSettings() {
     if (this.showSettings == false) {
-      $('#showSettings').css('transition', '0.5s');
+      // $('#showSettings').css('transition', '0.5s');
       this.showSettings = true;
     } else {
       this.showSettings = false;
