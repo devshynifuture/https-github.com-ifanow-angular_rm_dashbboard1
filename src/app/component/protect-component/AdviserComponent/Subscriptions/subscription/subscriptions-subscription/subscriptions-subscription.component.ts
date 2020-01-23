@@ -88,6 +88,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   maxDate = new Date();
   getData: any = '';
   filterDataArr = [];
+  isFilter:boolean = false;
   // DataToSend;
   scrollCallData = true;
   isLoading = false;
@@ -263,6 +264,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     this.filterDataArr = [];
     this.dataSource.data = [{}, {}, {}];
       this.isLoading = true;
+      this.isFilter = true;
     this.callFilter(false);
   }
 

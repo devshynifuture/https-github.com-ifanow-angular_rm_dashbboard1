@@ -1,6 +1,6 @@
 <div *ngIf="invoiceSubscription !='true' && invoiceSubscription !='EditInInvoice'" class="bg-white" id="ui-subs">
     <!-- (scroll)="scrollCall(true)" -->
-    <div *ngIf="dataSource.data.length > 0" class="bg-white p-20 pb-0 filterBox">
+    <div *ngIf="dataSource.data.length > 0 || isFilter" class="bg-white p-20 pb-0 filterBox">
         <div class="row">
 
             <div class="col-md-1 p-0">
@@ -8,7 +8,7 @@
             </div>
             <div class="col-md-5 p-0">
                 <div class="row">
-                    <div class="col-md-3 p-0" *ngIf="dataSource.data.length > 0">
+                    <div class="col-md-3 p-0" >
                         <button [matMenuTriggerFor]="menu" class="b-a pr-0 br-0" mat-button>Actions <i
                                 class="material-icons text-custom">
                                 arrow_drop_down
@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 right text-right p-0" *ngIf="dataSource.data.length > 0">
+            <div class="col-md-6 right text-right p-0" >
                 <i class="material-icons mr-12 icon-light c-p v-sub">
                     search
                 </i>

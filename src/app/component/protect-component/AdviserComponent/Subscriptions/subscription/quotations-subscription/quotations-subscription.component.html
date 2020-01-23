@@ -1,13 +1,13 @@
-<div class="bg-white" id="ui-subs">
+<div class="bg-white" id="ui-subs" [ngClass]="dataSource.data.length > 0 || isFilter ? 'block' : 'none'">
     <!-- (scroll)="scrollCall(true)" -->
-    <div class="bg-white p-20 pb-0 filterBox" [ngClass]="dataSource.data.length > 0 ? 'block' : 'none'">
+    <div class="bg-white p-20 pb-0 filterBox" >
         <div class="row">
             <div class="col-md-1 p-0">
                 <h4 class="pt-8 mb-0">Quotations</h4>
             </div>
             <div class="col-md-5 pl-0">
                 <div class="row">
-                    <div class="col-md-3" *ngIf="dataSource.data.length > 0">
+                    <div class="col-md-3" >
                         <button [matMenuTriggerFor]="menu" class="b-a pr-0 br-0" mat-button>Actions <i
                                 class="material-icons text-custom">
                                 arrow_drop_down

@@ -20,7 +20,7 @@ export interface PeriodicElement {
   duedate: string;
   amt: string;
   balance: string;
-
+  
 }
 
 @Component({
@@ -34,7 +34,7 @@ export interface PeriodicElement {
 export class InvoicesSubscriptionComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-
+  isFilter:boolean = false;
   chips = [
     { name: 'UNPAID', value: 1 },
     { name: 'PAID', value: 2 },
@@ -473,6 +473,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
     this.lastFilterDataId = 0;
     this.dataSource.data = [{}, {}, {}];
       this.isLoading = true;
+      this.isFilter = true;
     this.callFilter(false);
   }
 

@@ -1,6 +1,6 @@
 <div class="bg-white" id="ui-subs">
     <!-- (scroll)="scrollCall(true)" -->
-    <div *ngIf="dataSource.data.length > 0" class="bg-white p-20 pb-0 filterBox">
+    <div *ngIf="dataSource.data.length > 0 || isFilter" class="bg-white p-20 pb-0 filterBox">
         <div class="row">
             <div class="col-md-8 p-0">
                 <h4 class="pt-8 mb-0">Subscriptions</h4>
