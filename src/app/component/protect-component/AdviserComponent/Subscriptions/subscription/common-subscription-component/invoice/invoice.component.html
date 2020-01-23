@@ -47,7 +47,7 @@
                         </div>
                         <div class="col-md-5 text-right pr-8">
                             <p [ngClass]="{'text-danger':strData.status==2,'text-primary':strData.status==0,'text-success':strData.status==1}" class="m-0 f-13 pt-12">
-                                {{(strData.status == 0) ? 'UNPAID' : (strData.status == 1) ? 'PAID' : (strData.status == 2) ? 'OVERDUE' : ''}}
+                                {{(strData.status == 0) ? 'UNPAID' : (strData.status == 1) ? 'PAID' : (strData.status == 2) ? 'OVERDUE' :  (strData.status == 3) ? 'PARTIALLY PAID':(strData.status == 4) ? 'SENT':(strData.status == 5) ? 'VOID':(strData.status == 5) ? 'VOID':''}}
                             </p>
                         </div>
                     </div>
@@ -78,11 +78,11 @@
                 <div #invoiceTemplate id="template" *ngIf="showRecord==false && feeCalc==false" class="b-a m-20 pb-28 max-height-100">
                     <div class="p-16">
                         <div class="row">
-                            <div class="col-md-9">
+                            <div class="col-md-8">
                                 <h1 class="f-42 text-custom pt-48 f-700">INVOICE</h1>
                             </div>
-                            <div class="col-md-3 text-right">
-                                <img class="pt-20" src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
+                            <div class="col-md-4 text-right">
+                                <img class="pt-20 w-100" src="{{storeData.logoUrl}}">
                             </div>
                         </div>
                         <div class="row">
@@ -104,7 +104,7 @@
                             </div>
                             <div class="col-md-4 text-right">
                                 <h2 [ngClass]="{'text-danger':storeData.status==2,'text-primary':storeData.status==0,'text-success':storeData.status==1}">
-                                    {{(storeData.status == 0) ? 'UNPAID' : (storeData.status == 1) ? 'PAID' : (storeData.status == 2) ? 'OVERDUE' : ''}}
+                                    {{(storeData.status == 0) ? 'UNPAID' : (storeData.status == 1) ? 'PAID' : (storeData.status == 2) ? 'OVERDUE' :  (storeData.status == 3) ? 'PARTIALLY PAID':(storeData.status == 4) ? 'SENT':(storeData.status == 5) ? 'VOID':(storeData.status == 5) ? 'VOID':''}}
                                 </h2>
                             </div>
                         </div>
@@ -323,7 +323,7 @@
                     </div>
                     <div class="col-md-4 text-right">
                         <h2 [ngClass]="{'text-danger':storeData.status==2,'text-primary':storeData.status==0,'text-success':storeData.status==1}">
-                            {{(storeData.status == 0) ? 'UNPAID' : (storeData.status == 1) ? 'PAID' : (storeData.status == 2) ? 'OVERDUE' : ''}}
+                            {{(storeData.status == 0) ? 'UNPAID' : (storeData.status == 1) ? 'PAID' : (storeData.status == 2) ? 'OVERDUE' :  (storeData.status == 3) ? 'PARTIALLY PAID':(storeData.status == 4) ? 'SENT':(storeData.status == 5) ? 'VOID':(storeData.status == 5) ? 'VOID':''}}
                         </h2>
                     </div>
                 </div>
