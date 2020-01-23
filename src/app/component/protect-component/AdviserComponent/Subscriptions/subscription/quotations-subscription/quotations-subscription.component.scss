@@ -51,6 +51,11 @@
   font-size: 13px !important;
 }
 
+::ng-deep .mat-menu-panel {
+  min-width: 112px;
+  max-width: 297px !important;
+}
+
 // .stickyHeader {
 //     position: sticky;
 //     top: 76px !important;
