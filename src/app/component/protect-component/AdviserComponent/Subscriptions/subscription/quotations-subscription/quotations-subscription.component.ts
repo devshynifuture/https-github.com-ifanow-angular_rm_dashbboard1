@@ -254,7 +254,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
       this.list = [data.documentRepositoryId];
     }
     const dialogData = {
-      data: 'DOCUMENT',
+      data: 'QUOTATION',
       header: 'DELETE',
       body: this.list.length == 1 ? 'Are you sure you want to delete the document?' : 'Are you sure you want to delete these documents?',
       body2: 'This cannot be undone',
