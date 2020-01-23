@@ -1,6 +1,6 @@
 <div class="bg-white" id="ui-subs">
     <!-- (scroll)="scrollCall(true)" -->
-    <div *ngIf="dataSource.data.length > 0" class="bg-white p-20 pb-0 filterBox">
+    <div *ngIf="dataSource.data.length > 0 || isFilter" class="bg-white p-20 pb-0 filterBox">
         <div class="row">
             <div class="col-md-8 p-0">
                 <h4 class="pt-8 mb-0">Subscriptions</h4>
@@ -43,9 +43,9 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="amt">
-                    <th *matHeaderCellDef class="f-18 t-18" mat-header-cell> Fee amount</th>
+                    <th *matHeaderCellDef class="f-18 t-18 text-right" mat-header-cell> Fee amount</th>
 
-                    <td *matCellDef="let element" class="c-p t-18 " mat-cell>
+                    <td *matCellDef="let element" class="c-p t-18 text-right" mat-cell>
                         <div (click)="openFeeEditor(element)" *ngIf="element.startsOn==undefined" class="bar text-primary text-underline">
                             {{isLoading ? ' ' : 'View details'}} </div>
                         <div *ngIf="element.startsOn && element.subscriptionPricing.feeTypeId==1">
@@ -111,7 +111,7 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="feemode">
-                    <th *matHeaderCellDef class="f-18 text-left pr-24 t-12" mat-header-cell mat-sort-header="subscriptionPricing.feeTypeId"> Fee collection <br> mode
+                    <th *matHeaderCellDef class="f-18 text-left pr-24 t-12" mat-header-cell mat-sort-header="subscriptionPricing.feeTypeId" matTooltip="Fee collection mode" aria-label="Button that displays a tooltip when focused or hovered over"> Fee coll...
                     </th>
                     <td *matCellDef="let element" class="text-left pr-8 t-12" mat-cell>
                         <div class="bar">

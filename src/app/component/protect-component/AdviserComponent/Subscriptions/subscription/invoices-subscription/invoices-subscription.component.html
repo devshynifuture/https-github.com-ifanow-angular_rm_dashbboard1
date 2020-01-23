@@ -1,6 +1,6 @@
 <div *ngIf="invoiceSubscription !='true' && invoiceSubscription !='EditInInvoice'" class="bg-white" id="ui-subs">
     <!-- (scroll)="scrollCall(true)" -->
-    <div *ngIf="dataSource.data.length > 0" class="bg-white p-20 pb-0 filterBox">
+    <div *ngIf="dataSource.data.length > 0 || isFilter" class="bg-white p-20 pb-0 filterBox">
         <div class="row">
 
             <div class="col-md-1 p-0">
@@ -8,7 +8,7 @@
             </div>
             <div class="col-md-5 p-0">
                 <div class="row">
-                    <div class="col-md-3 p-0" *ngIf="dataSource.data.length > 0">
+                    <div class="col-md-3 p-0" >
                         <button [matMenuTriggerFor]="menu" class="b-a pr-0 br-0" mat-button>Actions <i
                                 class="material-icons text-custom">
                                 arrow_drop_down
@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 right text-right p-0" *ngIf="dataSource.data.length > 0">
+            <div class="col-md-6 right text-right p-0" >
                 <i class="material-icons mr-12 icon-light c-p v-sub">
                     search
                 </i>
@@ -101,11 +101,11 @@
                 </ng-container>
 
                 <ng-container matColumnDef="email">
-                  <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="email"> Email</th>
-                  <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" class="c-p" mat-cell>
-                      <div class="bar"> {{element.email}} </div>
-                  </td>
-              </ng-container>
+                    <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="email"> Email</th>
+                    <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" class="c-p" mat-cell>
+                        <div class="bar"> {{element.email}} </div>
+                    </td>
+                </ng-container>
                 <ng-container matColumnDef="duedate">
                     <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="dueDate"> Due date</th>
                     <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" mat-cell>
@@ -114,8 +114,9 @@
                 </ng-container>
 
                 <ng-container matColumnDef="amt">
-                    <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="finalAmount"> Amount</th>
-                    <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" class="c-p" mat-cell>
+                    <th *matHeaderCellDef class="f-18 textRight" mat-header-cell mat-sort-header="finalAmount"> Amount
+                    </th>
+                    <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" class="c-p text-right amt" mat-cell>
                         <div class="bar"> {{isLoading ? '' : '₹' }} <span appFormatNumber>{{element.finalAmount}}</span>
                         </div>
                     </td>
@@ -124,7 +125,7 @@
                     <th *matHeaderCellDef class="f-18 text-right common-right pr-24" mat-header-cell mat-sort-header="balanceDue">
                         Balance due
                     </th>
-                    <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" class="text-right pr-8 c-p" mat-cell>
+                    <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" class="text-right amt c-p" mat-cell>
                         <div class="bar"> {{isLoading ? '' : '₹' }} {{isLoading ? '' : formatter(element.balanceDue) || 0 }} </div>
                     </td>
                 </ng-container>

@@ -1,453 +1,455 @@
 <!--Main invoice section-->
 <div id="ui-invoice-pdf-documents" *ngIf="invoiceInSub=='invoiceSubscription' && showEdit==false">
-  <div class="bg-white pt-72 ">
-    <div class="row b-b">
-      <div class="col-md-4 p-0">
-        <div class="row">
-          <div class="col-md-5 pl-8 pt-4 pr-8">
-            <h4 class="mb-0 wrapper-8 pt-12">Invoices</h4>
-          </div>
-          <!-- <div class="col-md-7 text-right pt-4 right">
-            <button class="btn-primary br-0 my-btn mt-4" mat-stroked-button><i class="material-icons">
-                add
-              </i></button>
-          </div> -->
-        </div>
-      </div>
-      <div class="col-md-8 bl-1 p-0">
-        <div class="row ">
-          <div class="col-md-10">
-            <h3 class="f-400 wrapper-16 pl-8 mb-0">{{storeData.invoiceNumber}}</h3>
-          </div>
-          <div (click)="Close('close', false)" class="col-md-2">
-            <i class="material-icons text-right pt-16 c-p right">
-              clear
-            </i>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row ">
-      <div class="col-md-4 p-0 max-height-100">
-        <div (click)="passInvoice(strData,i,$event)" *ngFor="let strData of dataInvoices let i=index"
-          [ngClass]="(strData.id==storeData.id)?'bg-grey lter':'b-b'" class="invoiceSpacing b-b c-p">
-          <div class="row">
-            <div class="col-md-8">
-              <p class="m-0 f-15">{{strData.clientName}}</p>
-            </div>
-            <div class="col-md-4 text-right pr-8">
-              <p class="m-0 f-15">{{formatter(strData.finalAmount)}}</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5">
-              <p class="m-0 f-13 pt-12">{{strData.invoiceNumber}}</p>
-            </div>
-            <div class="col-md-2 p-0">
-              <p class="m-0 f-13 pt-12">{{strData.invoiceDate | date:'dd/MM/yyyy'}}</p>
-            </div>
-            <div class="col-md-5 text-right pr-8">
-              <p [ngClass]="{'text-danger':strData.status==2,'text-primary':strData.status==0,'text-success':strData.status==1}"
-                class="m-0 f-13 pt-12">
-                {{(strData.status == 0) ? 'UNPAID' : (strData.status == 1) ? 'PAID' : (strData.status == 2) ? 'OVERDUE' : ''}}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-8 p-0 bl-1 ">
-        <div *ngIf="showRecord==false && feeCalc==false" class="row bb-1 pt-16">
-          <div class="col-md-8 text-custom">
-            <img  *ngIf="storeData.status != 1" matTooltip="Edit" (click)="editInvoice()" class="c-p" src="assets/images/svg/pencil.svg">
-            <img matTooltip="Email" (click)="openSendEmail(null)" class="b-a c-p" src="assets/images/svg/mail-light.svg">
-            <img matTooltip="Download PDF" (click)="generatePdf()" class="b-a c-p" src="assets/images/svg/pdf-icons.svg">
-            <img matTooltip="Print" (click)="printPage(invoiceTemplate)" class="b-a c-p" src="assets/images/svg/printer.svg">
-            <img matTooltip="Delete" (click)="deleteModal('INVOICE',storeData.id)" class="b-a wrapper-9 ml-8 c-p" 
-              src="assets/images/svg/delete.svg">
-          </div>
-          <div class="col-md-4 right text-right">
-            <button (click)="recordPayment()" class="btn-primary br-0 mb-12" *ngIf="rpyment==true"
-              mat-stroked-button>RECORD
-              PAYMENT
-            </button>
-          </div>
-        </div>
-        <div #invoiceTemplate id="template" *ngIf="showRecord==false && feeCalc==false"
-          class="b-a m-20 pb-28 max-height-100">
-          <div class="p-16">
-            <div class="row">
-              <div class="col-md-9">
-                <h1 class="f-42 text-custom pt-48 f-700">INVOICE</h1>
-              </div>
-              <div class="col-md-3 text-right">
-                <img class="pt-20"
-                  src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <h4 class="text-black pt-48">{{storeData.billerName}}</h4>
-                <p class="f-14 text-custom l-20 wb">{{storeData.billerAddress}}</p>
-              </div>
-              <div class="col-md-6">
-                <h4 class="text-black pt-48">{{storeData.clientName}}</h4>
-                <p class="f-14 text-custom l-20 wb">{{storeData.billingAddress}}</p>
-              </div>
-            </div>
-            <div class="row pt-44">
-              <div class="col-md-8">
-                <p class="text-black f-400"><span class="text-custom f-16">Invoice no</span>:
-                  {{storeData.invoiceNumber}}
-                </p>
-                <p class="text-black f-400"><span class="text-custom f-16">Invoice date</span>:
-                  {{storeData.invoiceDate| date:'dd/MM/yyyy'}}
-                </p>
-              </div>
-              <div class="col-md-4">
-                <h2
-                  [ngClass]="{'text-danger':storeData.status==2,'text-primary':storeData.status==0,'text-success':storeData.status==1}">
-                  {{(storeData.status == 0) ? 'UNPAID' : (storeData.status == 1) ? 'PAID' : (storeData.status == 2) ? 'OVERDUE' : ''}}
-                </h2>
-              </div>
-            </div>
-            <div class="p-9">
-              <div class="b-a">
-                <div class="row bg-grey lter b-b p-16 pr-0 pl-0">
-                  <div class="col-md-9">
-                    <h4 class="m-0 f-14 f-500"> Description </h4>
-                  </div>
-                  <div class="col-md-3 ">
-                    <h4 class="m-0 f-14 f-500 text-right"> Amount </h4>
-                  </div>
-                </div>
-                <div class="row p-16 pr-0 pl-0">
-                  <div class="col-md-9">
-                    <h4 class="m-0 f-14">{{storeData.services[0].serviceName}}</h4>
-                    <span class="m-0 f-14 text-custom"> {{storeData.services[0].description}}</span>
-                  </div>
-                  <div class="col-md-3 d-flex align-items-center justify-content-end">
-                    <h4 class="m-0 f-14  text-right"> ₹{{formatter(storeData.subTotal)}}</h4>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-7 mt-70">
-                <h4 class="m-0 f-14 f-500 text-left"> Footnote description </h4>
-                <p class="f-12 text-black f-400 roboto"> {{storeData.footnote}}</p>
-                <h4 class="m-0 f-14 f-500 text-left">Terms & conditions </h4>
-                <p class="f-12 text-black f-400 roboto"> {{storeData.terms}}</p>
-              </div>
-              <div class="col-md-5">
-                <div class="row pt-44">
-                  <div class="col-md-8">
-                    <p class="text-black f-400">Sub total</p>
-                  </div>
-                  <div class="col-md-4 pr-8 text-right">
-                    <p class="text-black f-400">₹{{formatter(storeData.subTotal)}}</p>
-                  </div>
-                </div>
+    <div class="bg-white pt-72 ">
+        <div class="row b-b">
+            <div class="col-md-4 p-0">
                 <div class="row">
-                  <div class="col-md-8">
-                    <p class="text-black f-400">Discount</p>
-                  </div>
-                  <div class="col-md-4  text-right">
-                    <p class="text-black f-400">₹{{formatter(storeData.discount)}}</p>
-                  </div>
+                    <div class="col-md-5 pl-8 pt-4 pr-8">
+                        <h4 class="mb-0 wrapper-8 pt-12">Invoices</h4>
+                    </div>
+                    <!-- <div class="col-md-7 text-right pt-4 right">
+              <button class="btn-primary br-0 my-btn mt-4" mat-stroked-button><i class="material-icons">
+                  add
+                </i></button>
+            </div> -->
                 </div>
-                <div *ngIf="storeData.igst!=undefined" class="row">
-                  <div class="col-md-8">
-                    <p>IGST ({{storeData.igst}}%)</p>
-                  </div>
-                  <div class="col-md-4 pr-8">
-                    <p class="text-right">₹{{formatter((storeData.subTotal-storeData.discount)*18/100)}}</p>
-                  </div>
-                </div>
-                <div *ngIf="storeData.cgst!=undefined" class="row">
-                  <div class="col-md-8">
-                    <p>CGST ({{storeData.cgst}}%)</p>
-                  </div>
-                  <div class="col-md-4 pr-8">
-                    <p class="text-right">₹{{formatter((storeData.subTotal-storeData.discount)*9/100)}}</p>
-                  </div>
-                </div>
-                <div *ngIf="storeData.sgst!=undefined" class="row">
-                  <div class="col-md-8">
-                    <p>SGST ({{storeData.sgst}}%)</p>
-                  </div>
-                  <div class="col-md-4 pr-8">
-                    <p class="text-right">₹{{formatter((storeData.subTotal-storeData.discount)*9/100)}}</p>
-                  </div>
-                </div>
-                <div class="row bt-1">
-                  <div class="col-md-8">
-                    <p class="f-500 roboto pt-8">Total</p>
-                  </div>
-                  <div *ngIf="storeData.cgst!=undefined && storeData.sgst!=undefined" class="col-md-4 pr-8 text-right">
-                    <p class="f-500 roboto pt-8">₹{{formatter(storeData.finalAmount)}}</p>
-                  </div>
-                  <div *ngIf="storeData.igst!=undefined" class="col-md-4 pr-8 text-right">
-                    <p class="f-500 roboto pt-8">₹{{formatter(storeData.finalAmount)}}</p>
-                  </div>
-                </div>
-                <div class="row bt-1 bb-1">
-                  <div class="col-md-8">
-                    <p class="f-500 roboto pt-8">Balance due</p>
-                  </div>
-                  <div class="col-md-4 pr-8">
-                    <p class="f-500 roboto pt-8 text-right">₹{{formatter(storeData.balanceDue)}}
-                    </p>
-                  </div>
-                </div>
-              </div>
             </div>
-            <div class="wrapper-9">
-              <div *ngIf="storeData.services[0].id != undefined" class="row b-a bg-grey lter ">
-                <div class="col-md-10 d-flex  align-items-center">
-                  <p class="m-0 text-black f-500  ">Fee calculation - Attachment</p>
+            <div class="col-md-8 bl-1 p-0">
+                <div class="row ">
+                    <div class="col-md-10">
+                        <h3 class="f-400 wrapper-16 pl-8 mb-0">{{storeData.invoiceNumber}}</h3>
+                    </div>
+                    <div (click)="Close('close', false)" class="col-md-2">
+                        <i class="material-icons text-right pt-16 c-p right">
+                            clear
+                        </i>
+                    </div>
                 </div>
-                <div class="col-md-2 wrapper-9 text-right">
-                  <button (click)="OpenFeeCalc()" class="btn-primary br-0" mat-stroked-button>View
-                  </button>
-                </div>
-              </div>
-              <div *ngIf="showPaymentRecive == true" class="row p-24 pl-0 pr-0 ">
-                <div class="col-md-12 p-0">
-                  <h5 class="m-0 text-black">Payments recieved</h5>
-                </div>
-              </div>
-              <table *ngIf="showPaymentRecive == true" [dataSource]="dataSource" class="" id="table-low" mat-table>
-                <ng-container matColumnDef="date">
-                  <th *matHeaderCellDef mat-header-cell>Date</th>
-                  <td *matCellDef="let element" mat-cell> {{element.paymentDate | date:'dd/MM/yyyy'}}
-                  </td>
-                </ng-container>
-                <ng-container matColumnDef="reference">
-                  <th *matHeaderCellDef mat-header-cell> Reference</th>
-                  <td *matCellDef="let element" mat-cell> {{storeData.invoiceNumber}} </td>
-                </ng-container>
-                <ng-container matColumnDef="paymentMode">
-                  <th *matHeaderCellDef mat-header-cell> Payment mode</th>
-                  <td *matCellDef="let element" mat-cell> {{element.paymentMode}} </td>
-                </ng-container>
-                <ng-container matColumnDef="amount">
-                  <th *matHeaderCellDef mat-header-cell> Amount(₹)</th>
-                  <td *matCellDef="let element" mat-cell> {{element.amountReceived}} </td>
-                </ng-container>
-                <ng-container matColumnDef="icons">
-                  <th *matHeaderCellDef class="f-18 t-2" mat-header-cell></th>
-                  <td *matCellDef="let element" class="t-2" mat-cell>
-                    <i [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
-                      more_vert
-                    </i>
-                    <mat-menu #menu="matMenu">
-                      <a (click)="editForm(element)" mat-menu-item>Edit</a>
-                    </mat-menu>
-                  </td>
-                </ng-container>
-                <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-                <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
-              </table>
             </div>
-          </div>
         </div>
-        <!--record payment div start-->
-        <div *ngIf="showRecord==true">
-          <app-record-payment [InvRecordData]="sendRecordPaymentData" [padding]="false" (outputData)='display($event)'>
-          </app-record-payment>
+        <div class="row ">
+            <div class="col-md-4 p-0 max-height-100">
+                <div (click)="passInvoice(strData,i,$event)" *ngFor="let strData of dataInvoices let i=index" [ngClass]="(strData.id==storeData.id)?'bg-grey lter':'b-b'" class="invoiceSpacing b-b c-p">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <p class="m-0 f-15">{{strData.clientName}}</p>
+                        </div>
+                        <div class="col-md-4 text-right pr-8">
+                            <p class="m-0 f-15">{{formatter(strData.finalAmount)}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <p class="m-0 f-13 pt-12">{{strData.invoiceNumber}}</p>
+                        </div>
+                        <div class="col-md-2 p-0">
+                            <p class="m-0 f-13 pt-12">{{strData.invoiceDate | date:'dd/MM/yyyy'}}</p>
+                        </div>
+                        <div class="col-md-5 text-right pr-8">
+                            <p [ngClass]="{'text-danger':strData.status==2,'text-primary':strData.status==0,'text-success':strData.status==1}" class="m-0 f-13 pt-12">
+                                {{(strData.status == 0) ? 'UNPAID' : (strData.status == 1) ? 'PAID' : (strData.status == 2) ? 'OVERDUE' : ''}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 p-0 bl-1 ">
+                <div *ngIf="showRecord==false && feeCalc==false" class="row bb-1 pt-16">
+                    <div class="col-md-7 text-custom">
+                        <img *ngIf="storeData.status != 1" matTooltip="Edit" (click)="editInvoice()" class="c-p" src="assets/images/svg/pencil.svg">
+                        <img matTooltip="Email" (click)="openSendEmail(null)" class="b-a c-p" src="assets/images/svg/mail-light.svg">
+                        <img matTooltip="Download PDF" (click)="generatePdf()" class="b-a c-p" src="assets/images/svg/pdf-icons.svg">
+                        <img matTooltip="Print" (click)="printPage(invoiceTemplate)" class="b-a c-p" src="assets/images/svg/printer.svg">
+                        <img matTooltip="Delete" (click)="deleteModal('INVOICE',storeData.id)" class="b-a wrapper-9 ml-8 c-p" src="assets/images/svg/delete.svg">
+                    </div>
+                    <div class="col-md-3 right text-right">
+                        <button (click)="recordPayment()" class="btn-primary br-0 mb-12" *ngIf="rpyment==true" mat-stroked-button>RECORD
+                            PAYMENT
+                        </button>
+                    </div>
+                    <div class="col-md-2 right text-right"  *ngIf="rpyment==true">
+                        <mat-select class="form-control br-0" id="sel1">
+                            <mat-label>More</mat-label>
+                            <mat-option value="6">Void</mat-option>
+                            <mat-option value="7">Write off</mat-option>
+                          </mat-select>
+                      </div>
+                </div>
+                <div #invoiceTemplate id="template" *ngIf="showRecord==false && feeCalc==false" class="b-a m-20 pb-28 max-height-100">
+                    <div class="p-16">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h1 class="f-42 text-custom pt-48 f-700">INVOICE</h1>
+                            </div>
+                            <div class="col-md-3 text-right">
+                                <img class="pt-20" src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4 class="text-black pt-48">{{storeData.billerName}}</h4>
+                                <p class="f-14 text-custom l-20 wb">{{storeData.billerAddress}}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="text-black pt-48">{{storeData.clientName}}</h4>
+                                <p class="f-14 text-custom l-20 wb">{{storeData.billingAddress}}</p>
+                            </div>
+                        </div>
+                        <div class="row pt-44">
+                            <div class="col-md-8">
+                                <p class="text-black f-400"><span class="text-custom f-16">Invoice no</span>: {{storeData.invoiceNumber}}
+                                </p>
+                                <p class="text-black f-400"><span class="text-custom f-16">Invoice date</span>: {{storeData.invoiceDate| date:'dd/MM/yyyy'}}
+                                </p>
+                            </div>
+                            <div class="col-md-4 text-right">
+                                <h2 [ngClass]="{'text-danger':storeData.status==2,'text-primary':storeData.status==0,'text-success':storeData.status==1}">
+                                    {{(storeData.status == 0) ? 'UNPAID' : (storeData.status == 1) ? 'PAID' : (storeData.status == 2) ? 'OVERDUE' : ''}}
+                                </h2>
+                            </div>
+                        </div>
+                        <div class="p-9">
+                            <div class="b-a">
+                                <div class="row bg-grey lter b-b p-16 pr-0 pl-0">
+                                    <div class="col-md-9">
+                                        <h4 class="m-0 f-14 f-500"> Service Details
+
+                                        </h4>
+                                    </div>
+                                    <div class="col-md-3 ">
+                                        <h4 class="m-0 f-14 f-500 text-right"> Amount </h4>
+                                    </div>
+                                </div>
+                                <div class="row p-16 pr-0 pl-0">
+                                    <div class="col-md-9">
+                                        <h4 class="m-0 f-14">{{storeData.services[0].serviceName}}</h4>
+                                        <span class="m-0 f-14 text-custom"> {{storeData.services[0].description}}</span>
+                                    </div>
+                                    <div class="col-md-3 d-flex align-items-center justify-content-end">
+                                        <h4 class="m-0 f-14  text-right"> ₹{{formatter(storeData.subTotal)}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7 mt-70">
+                                <h4 class="m-0 f-14 f-500 text-left"> Footnote description </h4>
+                                <p class="f-12 text-black f-400 roboto"> {{storeData.footnote}}</p>
+                                <h4 class="m-0 f-14 f-500 text-left">Terms & conditions </h4>
+                                <p class="f-12 text-black f-400 roboto"> {{storeData.terms}}</p>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="row pt-44">
+                                    <div class="col-md-8">
+                                        <p class="text-black f-400">Sub total</p>
+                                    </div>
+                                    <div class="col-md-4 pr-8 text-right">
+                                        <p class="text-black f-400">₹{{formatter(storeData.subTotal)}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <p class="text-black f-400">Discount</p>
+                                    </div>
+                                    <div class="col-md-4  text-right">
+                                        <p class="text-black f-400">₹{{formatter(storeData.discount)}}</p>
+                                    </div>
+                                </div>
+                                <div *ngIf="storeData.igst!=undefined" class="row">
+                                    <div class="col-md-8">
+                                        <p>IGST ({{storeData.igst}}%)</p>
+                                    </div>
+                                    <div class="col-md-4 pr-8">
+                                        <p class="text-right">
+                                            ₹{{formatter((storeData.subTotal-storeData.discount)*18/100)}}</p>
+                                    </div>
+                                </div>
+                                <div *ngIf="storeData.cgst!=undefined" class="row">
+                                    <div class="col-md-8">
+                                        <p>CGST ({{storeData.cgst}}%)</p>
+                                    </div>
+                                    <div class="col-md-4 pr-8">
+                                        <p class="text-right">
+                                            ₹{{formatter((storeData.subTotal-storeData.discount)*9/100)}}</p>
+                                    </div>
+                                </div>
+                                <div *ngIf="storeData.sgst!=undefined" class="row">
+                                    <div class="col-md-8">
+                                        <p>SGST ({{storeData.sgst}}%)</p>
+                                    </div>
+                                    <div class="col-md-4 pr-8">
+                                        <p class="text-right">
+                                            ₹{{formatter((storeData.subTotal-storeData.discount)*9/100)}}</p>
+                                    </div>
+                                </div>
+                                <div class="row bt-1">
+                                    <div class="col-md-8">
+                                        <p class="f-500 roboto pt-8">Total</p>
+                                    </div>
+                                    <div *ngIf="storeData.cgst!=undefined && storeData.sgst!=undefined" class="col-md-4 pr-8 text-right">
+                                        <p class="f-500 roboto pt-8">₹{{formatter(storeData.finalAmount)}}</p>
+                                    </div>
+                                    <div *ngIf="storeData.igst!=undefined" class="col-md-4 pr-8 text-right">
+                                        <p class="f-500 roboto pt-8">₹{{formatter(storeData.finalAmount)}}</p>
+                                    </div>
+                                </div>
+                                <div class="row bt-1 bb-1">
+                                    <div class="col-md-8">
+                                        <p class="f-500 roboto pt-8">Balance due</p>
+                                    </div>
+                                    <div class="col-md-4 pr-8">
+                                        <p class="f-500 roboto pt-8 text-right">₹{{formatter(storeData.balanceDue)}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wrapper-9">
+                            <div *ngIf="storeData.services[0].id != undefined" class="row b-a bg-grey lter ">
+                                <div class="col-md-10 d-flex  align-items-center">
+                                    <p class="m-0 text-black f-500  ">Fee calculation - Attachment</p>
+                                </div>
+                                <div class="col-md-2 wrapper-9 text-right">
+                                    <button (click)="OpenFeeCalc()" class="btn-primary br-0" mat-stroked-button>View
+                                    </button>
+                                </div>
+                            </div>
+                            <div *ngIf="showPaymentRecive == true" class="row p-24 pl-0 pr-0 ">
+                                <div class="col-md-12 p-0">
+                                    <h5 class="m-0 text-black">Payments recieved</h5>
+                                </div>
+                            </div>
+                            <table *ngIf="showPaymentRecive == true" [dataSource]="dataSource" class="" id="table-low" mat-table>
+                                <ng-container matColumnDef="date">
+                                    <th *matHeaderCellDef mat-header-cell>Date</th>
+                                    <td *matCellDef="let element" mat-cell> {{element.paymentDate | date:'dd/MM/yyyy'}}
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="reference">
+                                    <th *matHeaderCellDef mat-header-cell> Reference</th>
+                                    <td *matCellDef="let element" mat-cell> {{storeData.invoiceNumber}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="paymentMode">
+                                    <th *matHeaderCellDef mat-header-cell> Payment mode</th>
+                                    <td *matCellDef="let element" mat-cell> {{element.paymentMode}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="amount">
+                                    <th *matHeaderCellDef mat-header-cell> Amount(₹)</th>
+                                    <td *matCellDef="let element" mat-cell> {{element.amountReceived}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="icons">
+                                    <th *matHeaderCellDef class="f-18 t-2" mat-header-cell></th>
+                                    <td *matCellDef="let element" class="t-2" mat-cell>
+                                        <i [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
+                                            more_vert
+                                        </i>
+                                        <mat-menu #menu="matMenu">
+                                            <a (click)="editForm(element)" mat-menu-item>Edit</a>
+                                        </mat-menu>
+                                    </td>
+                                </ng-container>
+                                <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+                                <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--record payment div start-->
+                <div *ngIf="showRecord==true">
+                    <app-record-payment [InvRecordData]="sendRecordPaymentData" [padding]="false" (outputData)='display($event)'>
+                    </app-record-payment>
+                </div>
+                <!--Fee calculation Div start-->
+                <div *ngIf="feeCalc==true">
+                    <app-fee-calculations [padding]="false"></app-fee-calculations>
+                </div>
+            </div>
         </div>
-        <!--Fee calculation Div start-->
-        <div *ngIf="feeCalc==true">
-          <app-fee-calculations [padding]="false"></app-fee-calculations>
-        </div>
-      </div>
     </div>
-  </div>
 </div>
 <!--Invoices in client Section-->
 <div *ngIf="invoiceInSub!='invoiceSubscription'&& showEdit==false">
-  <div class="row bb-1 popup-header-fix-60">
-    <div class="col-md-10 pl-0">
-      <h4 class="f-400 wrapper-20 mb-0">{{storeData.invoiceNumber}}</h4>
+    <div class="row bb-1 popup-header-fix-60">
+        <div class="col-md-10 pl-0">
+            <h4 class="f-400 wrapper-20 mb-0">{{storeData.invoiceNumber}}</h4>
+        </div>
+        <div class="col-md-2">
+            <i (click)="Close('close', false)" class="material-icons text-right pt-16 pr-16 c-p right">
+                clear
+            </i>
+        </div>
     </div>
-    <div class="col-md-2">
-      <i (click)="Close('close', false)" class="material-icons text-right pt-16 pr-16 c-p right">
-        clear
-      </i>
+    <div *ngIf="showRecord==false && feeCalc==false" class="row bb-1 pt-72">
+        <div class="col-md-8 text-custom">
+            <img matTooltip="Edit" *ngIf="storeData.status != 1" (click)="editInvoice()" class="c-p" src="assets/images/svg/pencil.svg">
+            <img matTooltip="Email" (click)="openSendEmail('upper')" class="b-a c-p" src="assets/images/svg/mail-light.svg">
+            <img matTooltip="Download PDF" class="b-a c-p" src="assets/images/svg/pdf-icons.svg">
+            <img matTooltip="Print" (click)="printPage(invoiceTemplate)" class="b-a c-p" src="assets/images/svg/printer.svg">
+            <img matTooltip="Delete" (click)="deleteModal('INVOICE',element)" class="b-a wrapper-9 ml-8 c-p" src="assets/images/svg/delete.svg">
+        </div>
+        <div class="col-md-4 right text-right">
+            <button (click)="recordPayment()" class="btn-primary br-0 mb-8" *ngIf="rpyment==true" mat-stroked-button>RECORD
+                PAYMENT
+            </button>
+        </div>
     </div>
-  </div>
-  <div *ngIf="showRecord==false && feeCalc==false" class="row bb-1 pt-72">
-    <div class="col-md-8 text-custom">
-      <img matTooltip="Edit" *ngIf="storeData.status != 1" (click)="editInvoice()" class="c-p" src="assets/images/svg/pencil.svg">
-      <img matTooltip="Email" (click)="openSendEmail('upper')" class="b-a c-p" src="assets/images/svg/mail-light.svg">
-      <img matTooltip="Download PDF" class="b-a c-p" src="assets/images/svg/pdf-icons.svg">
-      <img matTooltip="Print" (click)="printPage(invoiceTemplate)" class="b-a c-p" src="assets/images/svg/printer.svg">
-      <img matTooltip="Delete" (click)="deleteModal('INVOICE',element)" class="b-a wrapper-9 ml-8 c-p" src="assets/images/svg/delete.svg">
-    </div>
-    <div class="col-md-4 right text-right">
-      <button (click)="recordPayment()" class="btn-primary br-0 mb-8" *ngIf="rpyment==true" mat-stroked-button>RECORD
-        PAYMENT
-      </button>
-    </div>
-  </div>
-  <div *ngIf="showRecord==false && feeCalc==false" class="b-a m-20 mb-100 pb-28">
-    <div class="row">
-      <div class="col-md-9">
-        <h1 class="f-42 text-custom pt-48 f-700">INVOICE</h1>
-      </div>
-      <div class="col-md-3 text-right">
-        <img class="pt-20" src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
+    <div *ngIf="showRecord==false && feeCalc==false" class="b-a m-20 mb-100 pb-28">
         <div class="row">
-          <div class="col-md-6">
-            <h4 class="text-black pt-48">{{storeData.billerName}}</h4>
-            <p class="f-14 text-custom l-20">{{storeData.billerAddress}}</p>
-          </div>
-          <div class="col-md-6">
-            <h4 class="text-black pt-48">{{storeData.clientName}}</h4>
-            <p class="f-14 text-custom l-20">{{storeData.billingAddress}}</p>
-          </div>
-        </div>
-        <div class="row pt-44">
-          <div class="col-md-8">
-            <p class="text-black f-400"><span class="text-custom f-16">Invoice no</span>:
-              {{storeData.invoiceNumber}}
-            </p>
-            <p class="text-black f-400"><span class="text-custom f-16">Invoice date</span>:
-              {{storeData.invoiceDate | date:'dd/MM/yyyy'}}
-            </p>
-          </div>
-          <div class="col-md-4">
-            <h2
-              [ngClass]="{'text-danger':storeData.status==2,'text-primary':storeData.status==0,'text-success':storeData.status==1}">
-              {{(storeData.status == 0) ? 'UNPAID' : (storeData.status == 1) ? 'PAID' : (storeData.status == 2) ? 'OVERDUE' : ''}}
-            </h2>
-          </div>
-        </div>
-        <div>
-          <div class="p-9">
-            <div class="b-a">
-              <div class="row bg-grey lter b-b p-16 pr-0 pl-0">
-                <div class="col-md-9">
-                  <h4 class="m-0 f-14 f-500"> Description </h4>
-                </div>
-                <div class="col-md-3 ">
-                  <h4 class="m-0 f-14 f-500 text-right"> Amount </h4>
-                </div>
-              </div>
-              <div class="row p-16 pr-0 pl-0">
-                <div class="col-md-9">
-                  <h4 class="m-0 f-14">{{storeData.services[0].serviceName}}</h4>
-                  <span class="m-0 f-14 text-custom"> {{storeData.services[0].description}}</span>
-                </div>
-                <div class="col-md-3 d-flex align-items-center justify-content-end">
-                  <h4 class="m-0 f-14  text-right"> ₹{{formatter(storeData.subTotal)}}</h4>
-                </div>
-              </div>
+            <div class="col-md-9">
+                <h1 class="f-42 text-custom pt-48 f-700">INVOICE</h1>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-md-7 mt-70">
-              <h4 class="m-0 f-14 f-500 text-left"> Footnote description </h4>
-              <p class="f-12 text-black f-400 roboto"> {{storeData.footnote}}</p>
-              <h4 class="m-0 f-14 f-500 text-left">Terms & conditions </h4>
-              <p class="f-12 text-black f-400 roboto"> {{storeData.terms}}</p>
+            <div class="col-md-3 text-right">
+                <img class="pt-20" src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
             </div>
-            <div class="col-md-5">
-              <div class="row pt-44">
-                <div class="col-md-8">
-                  <p class="text-black f-400">Sub total</p>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4 class="text-black pt-48">{{storeData.billerName}}</h4>
+                        <p class="f-14 text-custom l-20">{{storeData.billerAddress}}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h4 class="text-black pt-48">{{storeData.clientName}}</h4>
+                        <p class="f-14 text-custom l-20">{{storeData.billingAddress}}</p>
+                    </div>
                 </div>
-                <div class="col-md-4 text-right">
-                  <p class="text-black f-400">₹{{formatter(storeData.subTotal)}}</p>
+                <div class="row pt-44">
+                    <div class="col-md-8">
+                        <p class="text-black f-400"><span class="text-custom f-16">Invoice no</span>: {{storeData.invoiceNumber}}
+                        </p>
+                        <p class="text-black f-400"><span class="text-custom f-16">Invoice date</span>: {{storeData.invoiceDate | date:'dd/MM/yyyy'}}
+                        </p>
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <h2 [ngClass]="{'text-danger':storeData.status==2,'text-primary':storeData.status==0,'text-success':storeData.status==1}">
+                            {{(storeData.status == 0) ? 'UNPAID' : (storeData.status == 1) ? 'PAID' : (storeData.status == 2) ? 'OVERDUE' : ''}}
+                        </h2>
+                    </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-md-8">
-                  <p class="text-black f-400">Discount</p>
-                </div>
-                <div class="col-md-4 text-right">
-                  <p class="text-black f-400">₹{{formatter(storeData.discount)}}</p>
-                </div>
-              </div>
-              <div *ngIf="storeData.igst!=undefined" class="row">
-                <div class="col-md-8">
-                  <p>IGST ({{storeData.igst}}%)</p>
-                </div>
-                <div class="col-md-4">
-                  <p class="text-right">₹{{formatter((storeData.subTotal-storeData.discount)*18/100)}}</p>
-                </div>
-              </div>
-              <div *ngIf="storeData.cgst!=undefined" class="row">
-                <div class="col-md-8">
-                  <p>CGST ({{storeData.cgst}}%)</p>
-                </div>
-                <div class="col-md-4">
-                  <p class="text-right">₹{{formatter((storeData.subTotal-storeData.discount)*9/100)}}</p>
-                </div>
-              </div>
-              <div *ngIf="storeData.sgst!=undefined" class="row">
-                <div class="col-md-8">
-                  <p>SGST ({{storeData.sgst}}%)</p>
-                </div>
-                <div class="col-md-4">
-                  <p class="text-right">₹{{formatter((storeData.subTotal-storeData.discount)*9/100)}}</p>
-                </div>
-              </div>
-              <div class="row bt-1">
-                <div class="col-md-8">
-                  <p class="f-500 roboto pt-8">Total</p>
-                </div>
-                <div *ngIf="storeData.cgst!=undefined && storeData.sgst!=undefined" class="col-md-4 text-right">
-                  <p class="f-500 roboto pt-8">{{formatter(storeData.finalAmount)}}</p>
-                </div>
-                <div *ngIf="storeData.igst!=undefined" class="col-md-4 text-right">
-                  <p class="f-500 roboto pt-8">{{formatter(storeData.finalAmount)}}</p>
-                </div>
-              </div>
-              <div class="row bt-1 bb-1">
-                <div class="col-md-8">
-                  <p class="f-500 roboto pt-8">Balance due</p>
-                </div>
-                <div class="col-md-4 text-right">
-                  <!-- <p class="f-500 roboto pt-8 ">{{formatter(storeData.balanceDue)}}</p> -->
-                  <p class="f-500 roboto pt-8 ">{{formatter(storeData.balanceDue)}}</p>
+                <div>
+                    <div class="p-9">
+                        <div class="b-a">
+                            <div class="row bg-grey lter b-b p-16 pr-0 pl-0">
+                                <div class="col-md-9">
+                                    <h4 class="m-0 f-14 f-500"> Service Details
+                                    </h4>
+                                </div>
+                                <div class="col-md-3 ">
+                                    <h4 class="m-0 f-14 f-500 text-right"> Amount </h4>
+                                </div>
+                            </div>
+                            <div class="row p-16 pr-0 pl-0">
+                                <div class="col-md-9">
+                                    <h4 class="m-0 f-14">{{storeData.services[0].serviceName}}</h4>
+                                    <span class="m-0 f-14 text-custom"> {{storeData.services[0].description}}</span>
+                                </div>
+                                <div class="col-md-3 d-flex align-items-center justify-content-end">
+                                    <h4 class="m-0 f-14  text-right"> ₹{{formatter(storeData.subTotal)}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7 mt-70">
+                            <h4 class="m-0 f-14 f-500 text-left"> Footnote description </h4>
+                            <p class="f-12 text-black f-400 roboto"> {{storeData.footnote}}</p>
+                            <h4 class="m-0 f-14 f-500 text-left">Terms & conditions </h4>
+                            <p class="f-12 text-black f-400 roboto"> {{storeData.terms}}</p>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="row pt-44">
+                                <div class="col-md-8">
+                                    <p class="text-black f-400">Sub total</p>
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    <p class="text-black f-400">₹{{formatter(storeData.subTotal)}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <p class="text-black f-400">Discount</p>
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    <p class="text-black f-400">₹{{formatter(storeData.discount)}}</p>
+                                </div>
+                            </div>
+                            <div *ngIf="storeData.igst!=undefined" class="row">
+                                <div class="col-md-8">
+                                    <p>IGST ({{storeData.igst}}%)</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p class="text-right">₹{{formatter((storeData.subTotal-storeData.discount)*18/100)}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div *ngIf="storeData.cgst!=undefined" class="row">
+                                <div class="col-md-8">
+                                    <p>CGST ({{storeData.cgst}}%)</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p class="text-right">₹{{formatter((storeData.subTotal-storeData.discount)*9/100)}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div *ngIf="storeData.sgst!=undefined" class="row">
+                                <div class="col-md-8">
+                                    <p>SGST ({{storeData.sgst}}%)</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p class="text-right">₹{{formatter((storeData.subTotal-storeData.discount)*9/100)}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row bt-1">
+                                <div class="col-md-8">
+                                    <p class="f-500 roboto pt-8">Total</p>
+                                </div>
+                                <div *ngIf="storeData.cgst!=undefined && storeData.sgst!=undefined" class="col-md-4 text-right">
+                                    <p class="f-500 roboto pt-8">{{formatter(storeData.finalAmount)}}</p>
+                                </div>
+                                <div *ngIf="storeData.igst!=undefined" class="col-md-4 text-right">
+                                    <p class="f-500 roboto pt-8">{{formatter(storeData.finalAmount)}}</p>
+                                </div>
+                            </div>
+                            <div class="row bt-1 bb-1">
+                                <div class="col-md-8">
+                                    <p class="f-500 roboto pt-8">Balance due</p>
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    <!-- <p class="f-500 roboto pt-8 ">{{formatter(storeData.balanceDue)}}</p> -->
+                                    <p class="f-500 roboto pt-8 ">{{formatter(storeData.balanceDue)}}</p>
 
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-7 mt-70">
+                  <p class="f-14 text-black f-500 roboto"> Terms & Conditions</p>
+               </div> -->
+                    </div>
                 </div>
-              </div>
             </div>
-            <!-- <div class="col-md-7 mt-70">
-                <p class="f-14 text-black f-500 roboto"> Terms & Conditions</p>
-             </div> -->
-          </div>
         </div>
-      </div>
     </div>
-  </div>
-  <!--show record in client invoice-->
-  <div *ngIf="showRecord==true" class="pt-72">
-    <app-record-payment [InvRecordData]="sendRecordPaymentData" [padding]="true" (outputData)='display($event)'>
-    </app-record-payment>
-  </div>
-  <!--fee calc in client invoice-->
-  <div *ngIf="feeCalc==true">
-    <app-fee-calculations [padding]="true"></app-fee-calculations>
-  </div>
-  <div class="bottom-fixed wrapper-12">
-    <div class="row">
-      <div class="col-md-12">
-        <h5 (click)="Close('close', false)" class="mb-0 pt-8 pb-8 text-white c-p">Cancel</h5>
-      </div>
+    <!--show record in client invoice-->
+    <div *ngIf="showRecord==true" class="pt-72">
+        <app-record-payment [InvRecordData]="sendRecordPaymentData" [padding]="true" (outputData)='display($event)'>
+        </app-record-payment>
     </div>
-  </div>
+    <!--fee calc in client invoice-->
+    <div *ngIf="feeCalc==true">
+        <app-fee-calculations [padding]="true"></app-fee-calculations>
+    </div>
+    <div class="bottom-fixed wrapper-12">
+        <div class="row">
+            <div class="col-md-12">
+                <h5 (click)="Close('close', false)" class="mb-0 pt-8 pb-8 text-white c-p">Cancel</h5>
+            </div>
+        </div>
+    </div>
 </div>
 <!--Add and edit invoice section-->
 <div *ngIf="showEdit">
-  <app-add-edit-subscription-invoice (cancelAddInvoice)="getAddCancelFlag($event)"
-    (cancelEditInvoice)="getCancelFlag($event)" (valueChange)='display($event)' [data]="storeData"
-    [invoiceInSub]="invoiceInSub" [invoiceValue]="invoiceValue">
-  </app-add-edit-subscription-invoice>
+    <app-add-edit-subscription-invoice (cancelAddInvoice)="getAddCancelFlag($event)" (cancelEditInvoice)="getCancelFlag($event)" (valueChange)='display($event)' [data]="storeData" [invoiceInSub]="invoiceInSub" [invoiceValue]="invoiceValue">
+    </app-add-edit-subscription-invoice>
 </div>

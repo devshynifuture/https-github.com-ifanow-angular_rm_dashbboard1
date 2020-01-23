@@ -9,7 +9,7 @@
                 <div class="col-md-4 right text-right p-0">
 
                     <button (click)="Open('clientHelp','open35',Questions)" class="btn-default br-0 help-btn" mat-stroked-button>HELP
-          </button>
+                    </button>
                 </div>
             </div>
 
@@ -44,9 +44,9 @@
                         <th *matHeaderCellDef class="f-18 right bb-0" mat-header-cell mat-sort-header="balanceDue">
                             Balance due
                         </th>
-                        <td (click)="openFragment('clients',element)" *matCellDef="let element" class="c-p text-right" mat-cell>
-                            <div class="bar" *ngIf="element.balanceDue != undefined" >₹<span appFormatNumber>{{element.balanceDue}}</span></div>
-                            <div class="bar" *ngIf="element.balanceDue == undefined" >{{!isLoading? "₹0" : ""}} </div>
+                        <td (click)="openFragment('clients',element)" *matCellDef="let element" class="c-p text-right amt" mat-cell>
+                            <div class="bar" *ngIf="element.balanceDue != undefined">₹<span appFormatNumber>{{element.balanceDue}}</span></div>
+                            <div class="bar" *ngIf="element.balanceDue == undefined">{{!isLoading? "₹0" : ""}} </div>
                         </td>
                     </ng-container>
 
