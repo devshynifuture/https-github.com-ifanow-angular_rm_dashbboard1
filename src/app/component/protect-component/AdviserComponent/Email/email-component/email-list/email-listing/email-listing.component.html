@@ -53,15 +53,14 @@
     <!-- emailer name column -->
     <ng-container matColumnDef="emailers">
         <th mat-header-cell *matHeaderCellDef> </th>
-        <td mat-cell *matCellDef="let element"> {{element.emailers | truncate:20}}
+        <td mat-cell *matCellDef="let element" (click)="redirectMessages(element)"> {{element.emailers | truncate:20}}
             {{ element.messageCount <= 1 ? '': element.messageCount }} </td>
     </ng-container>
 
     <!-- subject and message Column -->
     <ng-container matColumnDef="subjectMessage">
         <th mat-header-cell *matHeaderCellDef> </th>
-        <td mat-cell *matCellDef="let element" class="d-flex"
-            (click)="redirectMessages(element)">
+        <td mat-cell *matCellDef="let element" class="d-flex" (click)="redirectMessages(element)">
             {{element.subjectMessage.subject | truncate:30}}
             <p class="m-0 pl-12 text-primitive">
                 {{element.subjectMessage.message | truncate:30}}
@@ -89,7 +88,7 @@
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" appShowListActions
-        [ngClass]="selectedThreadsArray.includes(row) ? 'selected-tr': ''">
+        [ngClass]="selectedThreadsArray.includes(row) ? 'selected-tr': ''" class="c-p">
     </tr>
 </table>
 

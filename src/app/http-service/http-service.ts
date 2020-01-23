@@ -1,13 +1,13 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
-import {Observable, of, throwError} from 'rxjs';
-import {Router} from '@angular/router';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 // import 'rxjs/Rx';
-import {AuthService} from '../auth-service/authService';
+import { AuthService } from '../auth-service/authService';
 import 'rxjs-compat/add/observable/of';
 import 'rxjs-compat/add/operator/map';
-import {catchError} from 'rxjs/operators';
-import {EmailUtilService} from '../services/email-util.service';
+import { catchError } from 'rxjs/operators';
+import { EmailUtilService } from '../services/email-util.service';
 
 const Buffer = require('buffer/').Buffer;
 declare var require: any;
@@ -70,8 +70,8 @@ export class HttpService {
           const resData = this.changeBase64ToString(res);
           console.log('resData: decoded ', resData);
           return resData;
-        } 
-        else if(res.status === 304 || 204){
+        }
+        else if (res.status === 304 || 204) {
           return res.status;
         }
         else {
@@ -114,11 +114,12 @@ export class HttpService {
         }
       });
   }
- 
+
   delete(url: string, body, options?): Observable<any> {
     let httpOptions = {
       headers: new HttpHeaders().set('authToken', this._userService.getToken())
-        .set('Content-Type', 'application/json')
+        .set('Content-Type', 'application/json'),
+      params: body
     };
     if (options != undefined) {
       httpOptions = options;
@@ -247,10 +248,10 @@ export class HttpService {
           console.log('decoded resData', resData);
           return resData;
         }
-        else if(res.status === 304){
+        else if (res.status === 304) {
           return res.status;
         }
-         else {
+        else {
           // this._router.navigate(['login']);
           return;
         }

@@ -1,3 +1,4 @@
+import { AuthService } from './../../../../../../auth-service/authService';
 import { EmailUtilService } from './../../../../../../services/email-util.service';
 import { FormBuilder, FormGroup, Form } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -10,6 +11,7 @@ import { Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material';
+import { EmailAttachmentI } from '../email.interface';
 
 @Component({
   selector: 'app-compose-email',
@@ -45,18 +47,19 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   emailFormChangeSubscription: Subscription;
   didFormChanged: boolean = false;
   emailForm: FormGroup;
-  ccArray: { email: string }[] = [];
-  bccArray: { email: string }[] = [];
+  ccArray: string[] = [];
+  bccArray: string[] = [];
   visible = true;
   selectable = true;
   removable = true;
   addOnBlur = true;
-  receipients: { email: string }[] = [];
+  receipients: string[] = [];
 
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   interval;
   emailFormValueChange;
+  emailAttachments: EmailAttachmentI[] = [];
 
   ngOnInit() {
     this.createEmailForm();
@@ -67,18 +70,25 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
       if (!this.areTwoObjectsEquivalent(this.prevStateOfForm, this.emailFormValueChange)) {
         console.log("auto saved!!");
         // call update or create draft api
+        console.log("this values are saved::::::::::::", this.emailForm.value);
         this.prevStateOfForm = this.emailFormValueChange;
       }
     }, 4000);
+  }
+
+  removeFileFromCollections(attachment) {
+    this.emailAttachments = this.emailAttachments.filter((item) => {
+      return item !== attachment
+    });
   }
 
   createEmailForm() {
     // console.log("this is data sent from draft list ->>>>  ", this.data);
     this.emailForm = this.fb.group({
       sender: ['', Validators.email],
-      receiver: [[''], Validators.email],
-      carbonCopy: [[''], Validators.email],
-      blindCarbonCopy: [[''], Validators.email],
+      receiver: [[], Validators.email],
+      carbonCopy: [[], Validators.email],
+      blindCarbonCopy: [[], Validators.email],
       subject: [''],
       messageBody: [''],
       attachments: [''],
@@ -103,45 +113,43 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
         }
         if (element.name === "To" && element.value.includes('<')) {
           this.receipients = [
-            {
-              email: element.value.split('<')[1].split('>')[0]
-            }
+            element.value.split('<')[1].split('>')[0]
           ]
         } else if (element.name === "To" && element.value.includes(',')) {
           let toArray = [];
-          toArray = element.value.split(',').map(item => ({ email: item }));
+          toArray = element.value.split(',');
           this.receipients = toArray;
         }
 
         if (element.name === "Cc" && element.name.includes('<')) {
-          this.ccArray = [{
-            email: element.value.split('<')[1].split('>')[0]
-          }]
+          this.ccArray = [element.value.split('<')[1].split('>')[0]]
 
           this.isCcSelected = true;
         } else if (element.name === 'Cc' && element.name.includes(',')) {
           let ccArray = [];
-          ccArray = element.value.split(',').map(item => ({ email: item }));
+          ccArray = element.value.split(',');
           this.ccArray = ccArray;
           this.isCcSelected = true;
         }
         if (element.name === "Bcc" && element.name.includes('<')) {
-          this.bccArray = [{
-            email: element.value.split('<')[1].split('>')[0]
-          }]
+          this.bccArray = [element.value.split('<')[1].split('>')[0]]
           this.isBccSelected = true;
         } else if (element.name === 'Bcc' && element.name.includes(',')) {
           let bccArray = [];
-          bccArray = element.value.split(',').map(item => ({ email: item }));
+          bccArray = element.value.split(',');
           this.bccArray = bccArray;
           this.isBccSelected = true;
         }
       });
+      this.getAttachmentDetails(this.data);
       this.emailForm.setValue({
         sender: this.from ? this.from : '',
+        receiver: this.receipients ? this.receipients : [],
+        carbonCopy: this.ccArray ? this.ccArray : [],
+        blindCarbonCopy: this.bccArray ? this.bccArray : [],
         subject: this.subject ? this.subject : '',
         messageBody: this.emailBody ? this.emailBody : '',
-        attachments: ['']
+        attachments: []
       });
     }
   }
@@ -192,7 +200,38 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
 
     // Add our fruit
     if ((value || '').trim()) {
-      whichArray.push({ email: value.trim() });
+      if (whichArray == this.receipients) {
+        let arr = this.emailForm.get('receiver').value;
+        if (arr == '') {
+          arr = [];
+        }
+        arr.push(value.trim());
+        this.emailForm.patchValue({
+          receiver: arr
+        });
+        // this.emailForm.get('receiver').value.push({ email: value.trim() });
+      } else if (whichArray == this.ccArray) {
+        let arr = this.emailForm.get('carbonCopy').value;
+        if (arr == '') {
+          arr = [];
+        }
+        arr.push(value.trim());
+        this.emailForm.patchValue({
+          carbonCopy: arr
+        })
+      } else if (whichArray == this.bccArray) {
+
+        let arr = this.emailForm.get('blindCarbonCopy').value;
+        if (arr == '') {
+          arr = [];
+        }
+        arr.push(value.trim());
+        this.emailForm.patchValue({
+          blindCarbonCopy: arr
+        });
+      }
+
+      whichArray.push(value.trim());
     }
 
     // Reset the input value
@@ -200,16 +239,44 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
       input.value = '';
     }
   }
-  sendEmail() {
-    console.log(this.emailForm);
-  }
+  // sendEmail() {
+  //   console.log(this.emailForm);
+  // }
 
-  remove(receipient: { email: string }): void {
-    const index = this.receipients.indexOf(receipient);
+  remove(item: string, whichArray): void {
+    const index = whichArray.indexOf(item);
 
     if (index >= 0) {
-      this.receipients.splice(index, 1);
+      whichArray.splice(index, 1);
+      if (whichArray == this.receipients) {
+        let arr = this.emailForm.get('receiver').value;
+        // arr.splice(index, 1);
+        this.emailForm.patchValue({
+          receiver: arr
+        });
+      } else if (whichArray == this.ccArray) {
+        let arr = this.emailForm.get('carbonCopy').value;
+        arr.splice(index, 1);
+        this.emailForm.patchValue({
+          carbonCopy: arr
+        });
+      } else if (whichArray == this.bccArray) {
+        let arr = this.emailForm.get('blindCarbonCopy').value;
+        arr.splice(index, 1);
+        this.emailForm.patchValue({
+          blindCarbonCopy: arr
+        });
+      }
+
     }
+  }
+
+  downloadAttachment(attachment) {
+    console.log(attachment);
+  }
+
+  getAttachmentDetails(data) {
+
   }
 
   close(): void {
@@ -271,18 +338,18 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
-  onSendEmail(): void {
-    console.log(this.emailForm.value);
-  }
+  // onSendEmail(): void {
+  //   console.log(this.emailForm.value);
+  // }
 
-  handleCloseMail() {
+  // handleCloseMail() {
 
-  }
+  // }
 
-  sendMail(): void {
-    console.log('send mail');
-    this.handleCloseMail();
-  }
+  // sendMail(): void {
+  //   console.log('send mail');
+  //   this.handleCloseMail();
+  // }
 
   saveData(event): void {
     this.emailForm.get('messageBody').setValue(event);
@@ -300,12 +367,10 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
     };
 
     console.log('LeftSidebarComponent createUpdateDraft requestJson : ', requestJson);
-    const createUpdateDraftSubscription = this.emailService.createUpdateDraft(requestJson)
+    this.emailService.createUpdateDraft(requestJson)
       .subscribe((responseJson) => {
-        console.log(requestJson);
         console.log("+++++++++++++++");
         console.log(responseJson);
-        createUpdateDraftSubscription.unsubscribe();
       }, (error) => {
         console.error(error);
       });
@@ -315,17 +380,42 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
     console.log('LeftSidebarComponent getFileDetails e : ', e.target.files[0]);
     const singleFile = e.target.files[0];
 
-    const fileData = [];
+    console.log("tjhis is simethuin to be seen ::::::::::::::::", singleFile);
 
     EmailUtilService.getBase64FromFile(singleFile, (successData) => {
-      fileData.push({
+      this.emailAttachments.push({
         filename: singleFile.name,
         size: singleFile.size,
         mimeType: singleFile.type,
         data: successData
       });
-      this.createUpdateDraft(null, ['gaurav@futurewise.co.in'],
-        'This is a test message', 'This is a test message body', fileData);
+
+      // this.createUpdateDraft(null, ['gaurav@futurewise.co.in'],
+      //   'This is a test message', 'This is a test message body', fileData);
+
+      // this.createUpdateDraft()
+    });
+
+    // this.emailAttachments = fileData;
+    console.log(this.emailAttachments);
+  }
+
+  onSendEmail() {
+    const body = {
+      userId: AuthService.getUserInfo().userId,
+      emailId: AuthService.getUserInfo().emailId,
+      receipients: this.emailForm.get('receiver').value,
+      cc: this.emailForm.get('carbonCopy').value,
+      bcc: this.emailForm.get('blindCarbonCopy').value,
+      subject: this.emailForm.get('subject').value,
+      messageBody: this.emailForm.get('messageBody').value,
+      attachments: this.emailAttachments
+    }
+
+    console.log(body);
+    this.emailService.sendEmail(body).subscribe(res => {
+      console.log(res);
+      this.close();
     });
 
   }
