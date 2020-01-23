@@ -90,12 +90,6 @@
                         <div class="bar"> {{element.clientName}} </div>
                     </td>
                 </ng-container>
-                <ng-container matColumnDef="email">
-                    <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="email"> Email</th>
-                    <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" class="c-p" mat-cell>
-                        <div class="bar"> {{element.email}} </div>
-                    </td>
-                </ng-container>
 
                 <ng-container matColumnDef="status">
                     <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="status"> Status</th>
@@ -106,6 +100,12 @@
                     </td>
                 </ng-container>
 
+                <ng-container matColumnDef="email">
+                  <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="email"> Email</th>
+                  <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" class="c-p" mat-cell>
+                      <div class="bar"> {{element.email}} </div>
+                  </td>
+              </ng-container>
                 <ng-container matColumnDef="duedate">
                     <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="dueDate"> Due date</th>
                     <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" mat-cell>
