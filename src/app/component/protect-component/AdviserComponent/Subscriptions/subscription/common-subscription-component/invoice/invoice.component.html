@@ -74,8 +74,7 @@
                         </button>
                     </div>
                     <div class="col-md-2 right text-right"  *ngIf="rpyment==true">
-                        <mat-select class="form-control br-0" id="sel1">
-                            <mat-label>More</mat-label>
+                        <mat-select class="form-control br-0" (ngModelChange)="addStatus(storeData,$event.target.value)" id="sel1" >
                             <mat-option value="6">Void</mat-option>
                             <mat-option value="7">Write off</mat-option>
                           </mat-select>

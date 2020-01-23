@@ -449,6 +449,9 @@ export class SubscriptionService {
     const httpParams = new HttpParams().set('documentRepositoryId', data.documentRepositoryId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_QUOTATION_SERVICE_DATA, httpParams);
   }
+  getInvoiceStatus(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.GET_INVOICE_STATTUS, data);
+  }
 
   base_64Data(data) {
     return this.http.getEncoded(apiConfig.MAIN_URL + appConfig.GET_BASE_64, data, 10000);
