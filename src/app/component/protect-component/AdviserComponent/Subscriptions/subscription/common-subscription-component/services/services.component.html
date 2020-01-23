@@ -33,19 +33,15 @@
             <div class="row text-center padder-80">
                 <div *ngFor="let serviceData of planServiceData; index as i" class="col-md-4 c-p pl-10 pr-10 pb-28">
                     <div class="example-card">
-                        <div [ngClass]="{'ba-blue':serviceData.selected,'b-ua':serviceData.selected==false }"
-                            (click)="selectService(serviceData,i)">
+                        <div [ngClass]="{'ba-blue':serviceData.selected,'b-ua':serviceData.selected==false }" (click)="selectService(serviceData,i)">
 
                             <div class="bg-grey lter text-left">
-                                <mat-checkbox class="custom-checkbox"
-                                    [ngStyle]="{'pointer-events':(serviceData.selected)?'none':'all'}" checked="false"
-                                    [ngClass]="{'v-h':serviceData.selected==false }"></mat-checkbox>
+                                <mat-checkbox class="custom-checkbox" [ngStyle]="{'pointer-events':(serviceData.selected)?'none':'all'}" checked="false" [ngClass]="{'v-h':serviceData.selected==false }"></mat-checkbox>
 
                                 <div class="pl-24 pt-20 height155">
                                     <h3 class="f-24 p-0 l-26 mb-8">{{serviceData.serviceName}} </h3>
                                     {{serviceData.serviceCode}}
-                                    <p class="mb-0 pb-32 pt-4" matTooltip="{{serviceData.description}}"
-                                        aria-label="Button that displays a tooltip when focused or hovered over">
+                                    <p class="mb-0 pb-32 pt-4" matTooltip="{{serviceData.description}}" aria-label="Button that displays a tooltip when focused or hovered over">
                                         {{serviceData.description}}</p>
                                 </div>
                             </div>
@@ -68,9 +64,9 @@
                                     <div class="col-md-6">
                                         <p class="text-primitive f-12">BILLING MODE</p>
 
-                                        <h3 class="m-0 proxima" *ngIf="serviceData&&serviceData.billingMode==1">
+                                        <h3 class="m-0 proxima f-18" *ngIf="serviceData&&serviceData.billingMode==1">
                                             Start Of Period</h3>
-                                        <h3 class="m-0 proxima" *ngIf="serviceData&&serviceData.billingMode==2">
+                                        <h3 class="m-0 proxima f-18" *ngIf="serviceData&&serviceData.billingMode==2">
                                             End Of Period
                                         </h3>
                                     </div>
@@ -102,9 +98,7 @@
         <img class="width200 mt-80" src="assets/images/svg/add-services-img.svg">
         <p class="f-22 f-600 pt-28">Create Services </p>
         <p class="f-16 text-center mt-20 l-21">
-            Next up, you create Services. More than one Service can be added to a Plan. E.g. <br> Plan could be
-            Financial Planning. It’s Services could be 1) Planning fees 2) <br> Implementation services 3) Retainer
-            services.
+            Next up, you create Services. More than one Service can be added to a Plan. E.g. <br> Plan could be Financial Planning. It’s Services could be 1) Planning fees 2) <br> Implementation services 3) Retainer services.
         </p>
         <!-- <button (click)="openFragment('','services')" class="btn-primary mt-12 d-flex align-items-center">
             ADD SERVICES

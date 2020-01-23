@@ -2,7 +2,7 @@
     <div class="col-md-5 p-0">
         <h4 class="m-0 text-black roboto pt-8">Post office monthly income scheme (PO MIS)</h4>
     </div>
-    <div class="col-md-7 p-0 right text-right" *ngIf="datasource">
+    <div class="col-md-7 p-0 right text-right" *ngIf="datasource.filteredData.length > 0">
         <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
         <mat-menu #menu5="matMenu">
             <button mat-menu-item>PDF</button>
@@ -22,7 +22,7 @@
     </div>
 </div>
 <div class="example-container overflow-hidden mt-8 col-md-12 p-0 real-estate">
-    <table *ngIf="datasource" matSort mat-table [dataSource]="datasource" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+    <table *ngIf="datasource.filteredData.length > 0" matSort mat-table [dataSource]="datasource" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
         <ng-container matColumnDef="no">
             <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
@@ -131,7 +131,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true"></tr>
     </table>
-    <div *ngIf="datasource==undefined" class="d-flex flex-column align-items-center">
+    <div *ngIf="datasource.filteredData.length == 0" class="d-flex flex-column align-items-center">
         <img class="width400" src="assets/images/svg/clients-img.svg">
         <h4 class="text-center pt-12">No Scheme Found</h4>
         <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPOMIS('Add')"> ADD NEW</button>

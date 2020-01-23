@@ -38,8 +38,12 @@ const routes: Routes = [
         data: { animation: 'Tab1', preload: true }
       },
       {
-        path: 'backoffice',
+        path: 'backoffice-mis',
         loadChildren: () => import('src/app/component/protect-component/AdviserComponent/backOffice/backoffice-mis/backoffice-mis.module').then(m => m.BackofficeMisModule)
+      },
+      {
+        path: 'backoffice-aum-reconciliation',
+        loadChildren: () => import('src/app/component/protect-component/AdviserComponent/backOffice/backoffice-aum-reconciliation/backoffice-aum-reconciliation.module').then(m => m.BackofficeAumReconciliationModule)
       }
     ]
   }

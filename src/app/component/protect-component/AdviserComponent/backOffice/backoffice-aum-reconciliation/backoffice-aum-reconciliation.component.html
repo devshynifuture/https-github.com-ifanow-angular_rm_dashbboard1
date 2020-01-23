@@ -1,0 +1,20 @@
+<div id="ui-subscriptions">
+    <div class="sub-header-fix">
+        <div class="bg-white">
+            <h1 class="cusotm-haeding-main">Data operations</h1>
+
+            <nav class="text-right" id="ui-customer-secondhead" mat-align-tabs="end" mat-tab-nav-bar>
+                <a [routerLink]="['/admin/backoffice-aum-reconciliation/reconciliation']" routerLinkActive="active"
+                    mat-tab-link>RECONCILIATION
+                    FUNDS</a>
+                <a [routerLink]="['/admin/backoffice-aum-reconciliation/duplicate-data']" routerLinkActive="active"
+                    mat-tab-link>DUPLICATE
+                    DATA</a>
+                <a [routerLink]="['/admin/backoffice-aum-reconciliation/folio-query']" routerLinkActive="active"
+                    mat-tab-link>FOLIO
+                    QUERY</a>
+            </nav>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
