@@ -95,7 +95,7 @@
                                 <p class="text-black f-400"><span class="text-custom f-16">Invoice date</span>: {{storeData.invoiceDate| date:'dd/MM/yyyy'}}
                                 </p>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4 text-right">
                                 <h2 [ngClass]="{'text-danger':storeData.status==2,'text-primary':storeData.status==0,'text-success':storeData.status==1}">
                                     {{(storeData.status == 0) ? 'UNPAID' : (storeData.status == 1) ? 'PAID' : (storeData.status == 2) ? 'OVERDUE' : ''}}
                                 </h2>
@@ -314,7 +314,7 @@
                         <p class="text-black f-400"><span class="text-custom f-16">Invoice date</span>: {{storeData.invoiceDate | date:'dd/MM/yyyy'}}
                         </p>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 text-right">
                         <h2 [ngClass]="{'text-danger':storeData.status==2,'text-primary':storeData.status==0,'text-success':storeData.status==1}">
                             {{(storeData.status == 0) ? 'UNPAID' : (storeData.status == 1) ? 'PAID' : (storeData.status == 2) ? 'OVERDUE' : ''}}
                         </h2>
