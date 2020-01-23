@@ -46,8 +46,14 @@
                             <p class="m-0 f-13 pt-12">{{strData.invoiceDate | date:'dd/MM/yyyy'}}</p>
                         </div>
                         <div class="col-md-5 text-right pr-8">
-                            <p [ngClass]="{'text-danger':strData.status==2,'text-primary':strData.status==0,'text-success':strData.status==1}" class="m-0 f-13 pt-12">
-                                {{(strData.status == 0) ? 'UNPAID' : (strData.status == 1) ? 'PAID' : (strData.status == 2) ? 'OVERDUE' :  (strData.status == 3) ? 'PARTIALLY PAID':(strData.status == 4) ? 'SENT':(strData.status == 5) ? 'VOID':(strData.status == 5) ? 'VOID':''}}
+                            <p>
+                                <span *ngIf="strData.status==0" class="text-primary t-10 f-500 c-p">UNPAID</span>
+                                <span *ngIf="strData.status==1" class="text-success t-10 f-500 c-p">PAID</span>
+                                <span *ngIf="strData.status==2" class="text-danger t-10 f-500 c-p">OVERDUE</span>
+                                <span *ngIf="strData.status==3" class="text-warning t-10 f-500 c-p">PARTIALLY PAID</span>
+                                <span *ngIf="strData.status==4" class="text-primary t-10 f-500 c-p">SENT</span>
+                                <span *ngIf="strData.status==5" class="text-grey t-10 f-500 c-p">VOID</span>
+                                <span *ngIf="strData.status==6" class="text-balck t-10 f-500 c-p">WRITE OFF</span>
                             </p>
                         </div>
                     </div>
@@ -96,15 +102,21 @@
                             </div>
                         </div>
                         <div class="row pt-44">
-                            <div class="col-md-8">
+                            <div class="col-md-7">
                                 <p class="text-black f-400"><span class="text-custom f-16">Invoice no</span>: {{storeData.invoiceNumber}}
                                 </p>
                                 <p class="text-black f-400"><span class="text-custom f-16">Invoice date</span>: {{storeData.invoiceDate| date:'dd/MM/yyyy'}}
                                 </p>
                             </div>
-                            <div class="col-md-4 text-right">
-                                <h2 [ngClass]="{'text-danger':storeData.status==2,'text-primary':storeData.status==0,'text-success':storeData.status==1}">
-                                    {{(storeData.status == 0) ? 'UNPAID' : (storeData.status == 1) ? 'PAID' : (storeData.status == 2) ? 'OVERDUE' :  (storeData.status == 3) ? 'PARTIALLY PAID':(storeData.status == 4) ? 'SENT':(storeData.status == 5) ? 'VOID':(storeData.status == 5) ? 'VOID':''}}
+                            <div class="col-md-5 text-right">
+                                <h2 >
+                                    <span *ngIf="storeData.status==0" class="text-primary t-10 f-500 c-p">UNPAID</span>
+                                    <span *ngIf="storeData.status==1" class="text-success t-10 f-500 c-p">PAID</span>
+                                    <span *ngIf="storeData.status==2" class="text-danger t-10 f-500 c-p">OVERDUE</span>
+                                    <span *ngIf="storeData.status==3" class="text-warning t-10 f-500 c-p">PARTIALLY PAID</span>
+                                    <span *ngIf="storeData.status==4" class="text-primary t-10 f-500 c-p">SENT</span>
+                                    <span *ngIf="storeData.status==5" class="text-grey t-10 f-500 c-p">VOID</span>
+                                    <span *ngIf="storeData.status==6" class="text-balck t-10 f-500 c-p">WRITE OFF</span>
                                 </h2>
                             </div>
                         </div>
@@ -322,8 +334,14 @@
                         </p>
                     </div>
                     <div class="col-md-4 text-right">
-                        <h2 [ngClass]="{'text-danger':storeData.status==2,'text-primary':storeData.status==0,'text-success':storeData.status==1}">
-                            {{(storeData.status == 0) ? 'UNPAID' : (storeData.status == 1) ? 'PAID' : (storeData.status == 2) ? 'OVERDUE' :  (storeData.status == 3) ? 'PARTIALLY PAID':(storeData.status == 4) ? 'SENT':(storeData.status == 5) ? 'VOID':(storeData.status == 5) ? 'VOID':''}}
+                        <h2>
+                            <span *ngIf="storeData.status==0" class="text-primary t-10 f-500 c-p">UNPAID</span>
+                            <span *ngIf="storeData.status==1" class="text-success t-10 f-500 c-p">PAID</span>
+                            <span *ngIf="storeData.status==2" class="text-danger t-10 f-500 c-p">OVERDUE</span>
+                            <span *ngIf="storeData.status==3" class="text-warning t-10 f-500 c-p">PARTIALLY PAID</span>
+                            <span *ngIf="storeData.status==4" class="text-primary t-10 f-500 c-p">SENT</span>
+                            <span *ngIf="storeData.status==5" class="text-grey t-10 f-500 c-p">VOID</span>
+                            <span *ngIf="storeData.status==6" class="text-balck t-10 f-500 c-p">WRITE OFF</span>
                         </h2>
                     </div>
                 </div>
