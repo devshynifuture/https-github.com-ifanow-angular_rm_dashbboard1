@@ -229,7 +229,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     console.log(data);
     // this.Close('close');
     if (this.inputData.sendEsign) {
-      this.openSendEmail();
+      this.openSendEmailEsign();
       this.inputData.sendEsign = false;
     }
     else {
@@ -335,7 +335,25 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
       }
   */
   }
-
+  openSendEmailEsign() {
+    if (this.storeData.isDocument == true) {
+      this.templateType = 3;
+    } else {
+      this.templateType = 2;
+    }
+    const data = {
+      advisorId: this.advisorId,
+      clientData: this.storeData,
+      templateType: this.templateType, // 2 is for quotation
+      documentList: [this.storeData],
+    };
+    // this.dataSource.forEach(singleElement => {
+    //   if (singleElement.selected) {
+    //     data.documentList.push(singleElement);
+    //   }
+    // });
+    this.openEmail(data, 'email');
+  }
   openSendEmail() {
     if (this.storeData.isDocument == true) {
       this.templateType = 4;
