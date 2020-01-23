@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
-import {Observable, of, throwError} from 'rxjs';
+import {Observable, of, throwError, from} from 'rxjs';
 import {Router} from '@angular/router';
 // import 'rxjs/Rx';
 import {AuthService} from '../auth-service/authService';
@@ -117,17 +117,19 @@ export class HttpService {
  
   delete(url: string, body, options?): Observable<any> {
     let httpOptions = {
-      headers: new HttpHeaders().set('Content-Type', 'application/json')
+      headers: new HttpHeaders().set('authToken', this._userService.getToken())
+        .set('Content-Type', 'application/json'),
+        body: body
     };
     if (options != undefined) {
       httpOptions = options;
     }
-     console.log('HttpService put request httpOptions... ', httpOptions);
+    console.log('HttpService put request httpOptions... ', httpOptions);
     console.log('HttpService put request body... ', body);
     console.log('HttpService put request url... ', url);
 
     return this._http
-      .delete(this.baseUrl + url, body).pipe(
+    .request('delete', url, { body: body }).pipe(
         catchError(err => {
           console.log('Handling error locally and rethrowing it...', err);
           return throwError(err);
