@@ -93,9 +93,15 @@
 
                 <ng-container matColumnDef="status">
                     <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="status"> Status</th>
-                    <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" [ngClass]="{'text-danger':element.status==2,'text-primary':element.status==0,'text-success':element.status==1}" class="c-p" mat-cell ngcl>
+                    <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" class="c-p" mat-cell ngcl>
                         <div class="bar">
-                            {{(element.status == 0) ? 'UNPAID' : (element.status == 1) ? 'PAID' : (element.status == 2) ? 'OVERDUE' : ''}}
+                            <span *ngIf="element.status==0" class="text-primary t-10 f-500 c-p">UNPAID</span>
+                            <span *ngIf="element.status==1" class="text-success t-10 f-500 c-p">PAID</span>
+                            <span *ngIf="element.status==2" class="text-danger t-10 f-500 c-p">OVERDUE</span>
+                            <span *ngIf="element.status==3" class="text-warning t-10 f-500 c-p">PARTIALLY PAID</span>
+                            <span *ngIf="element.status==4" class="text-primary t-10 f-500 c-p">SENT</span>
+                            <span *ngIf="element.status==5" class="text-grey t-10 f-500 c-p">VOID</span>
+                            <span *ngIf="element.status==6" class="text-balck t-10 f-500 c-p">WRITE OFF</span>
                         </div>
                     </td>
                 </ng-container>
@@ -126,7 +132,8 @@
                         Balance due
                     </th>
                     <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" class="text-right amt c-p" mat-cell>
-                        <div class="bar"> {{isLoading ? '' : '₹' }} {{isLoading ? '' : formatter(element.balanceDue) || 0 }} </div>
+                        <div class="bar"> {{isLoading ? '' : '₹' }}<span appFormatNumber>
+                                {{isLoading ? '' : formatter(element.balanceDue) || 0 }}</span> </div>
                     </td>
                 </ng-container>
                 <tr *matHeaderRowDef="displayedColumns; sticky: true" [ngClass]="!showFilter ? 'stickyHeader1' : 'stickyHeader2'" mat-header-row></tr>

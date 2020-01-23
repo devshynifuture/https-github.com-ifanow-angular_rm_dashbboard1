@@ -17,7 +17,7 @@
                                 actions
                             </button>
                             <button (click)="deleteModal(null)" *ngIf="dataCount != 0" mat-menu-item>Delete
-                                Quotation
+                                quotation
                             </button>
                         </mat-menu>
                     </div>
@@ -129,7 +129,7 @@
                         </i>
                         <mat-menu #menu="matMenu">
                             <a (click)="Open('emailQuotation',element)" mat-menu-item>View & Edit Quotation</a>
-                            <a (click)="deleteModal(element)" mat-menu-item>Delete document</a>
+                            <a (click)="deleteModal(element)" mat-menu-item>Delete quotation</a>
                         </mat-menu>
                     </div>
                 </td>

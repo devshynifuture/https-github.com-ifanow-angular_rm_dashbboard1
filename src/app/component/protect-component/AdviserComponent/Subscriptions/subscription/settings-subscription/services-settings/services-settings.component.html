@@ -21,13 +21,13 @@
                 <div class="bar">
                     <mat-card-header class="overflow-hidden">
                         <div class="wrapper-20 height130">
-                            <mat-card-title class="mb-10 l-26 text-break text-lighter relClass f-24">
-                                <div class="bar" [ngClass]="{'height23': isLoading}">
+                            <mat-card-title class="mb-10 l-26 text-break text-lighter relClass f-24" >
+                                <div class="bar" [ngClass]="{'height23': isLoading}" matTooltip="Service name">
                                     {{singleService.serviceName}} </div>
                             </mat-card-title>
 
                             <mat-card-subtitle class="pt-4 pb-12 relClass">
-                                <div class="bar" [ngClass]="{'height23': isLoading}">
+                                <div class="bar" [ngClass]="{'height23': isLoading}"  matTooltip="Service code">
                                     {{singleService.serviceCode}}
                                 </div>
 

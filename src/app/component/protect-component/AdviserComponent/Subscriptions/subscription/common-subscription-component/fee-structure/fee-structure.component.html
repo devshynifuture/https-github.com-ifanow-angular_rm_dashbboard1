@@ -1,4 +1,4 @@
-<div *ngIf="_upperData==''" class="wrapper-20 pt-150">
+    <div *ngIf="_upperData==''" class="wrapper-20 pt-150">
     <div class="content-center">
         <div class="row">
             <div class="col-md-12">
@@ -50,9 +50,9 @@
                 <mat-card class="p-0 b-a">
                     <div class="row bg-grey lter">
                         <div class="col-md-10 p-0">
-                            <h3 class="m-0 pt-18 pt-24 f-24 pb-0 pl-24" *ngIf="_upperData">{{_upperData.serviceName}}
+                            <h3 class="m-0 pt-18 pt-24 f-24 pb-0 pl-24" *ngIf="_upperData" matTooltip="Service name">{{_upperData.serviceName}}
                             </h3>
-                            <h5 class="m-0 pt-4 pb-44 pl-24 text-custom proxima" *ngIf="_upperData">
+                            <h5 class="m-0 pt-4 pb-44 pl-24 text-custom proxima" *ngIf="_upperData" matTooltip="Service code">
                                 {{_upperData.serviceCode}}</h5>
                         </div>
                         <div *ngIf="_upperData" class="col-md-2">
