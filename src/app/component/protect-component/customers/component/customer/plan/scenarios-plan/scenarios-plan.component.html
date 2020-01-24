@@ -1,4 +1,4 @@
-<div id="scenariosPlan">
+<!-- <div id="scenariosPlan">
     <div class="row">
         <div class="col-md-3">
             <div class="d-flex scenariosHeadingTwo justify-content-md-between align-items-center">
@@ -156,10 +156,7 @@
                     <h3 class="f-16 mt-20 roboto f-normal">Financial goals</h3>
                     <div class="financialGoalsTable">
                         <table mat-table [dataSource]="dataSource" class=" " id="table-low">
-                            <!--- Note that these columns can be defined in any order.
-                                  The actual rendered columns are set as a property on the row definition" -->
 
-                            <!-- Position Column -->
                             <ng-container matColumnDef="description">
                                 <th class="border-right-1" mat-header-cell *matHeaderCellDef> Description </th>
                                 <td class="border-right-1 loading " mat-cell *matCellDef="let element">
@@ -178,7 +175,7 @@
                                     </div>
                                 </td>
                             </ng-container>
-                            <!-- Name Column -->
+
                             <ng-container matColumnDef="month">
                                 <th class="text-right border-right-1" mat-header-cell *matHeaderCellDef> Month </th>
                                 <td class="text-right loading border-right-1" mat-cell *matCellDef="let element">
@@ -187,7 +184,7 @@
                                 </td>
                             </ng-container>
 
-                            <!-- Weight Column -->
+
                             <ng-container matColumnDef="lumpsum">
                                 <th class="text-right" mat-header-cell *matHeaderCellDef> Lumpsum </th>
                                 <td class="text-right loading" mat-cell *matCellDef="let element">
@@ -195,7 +192,7 @@
                                 </td>
                             </ng-container>
 
-                            <!-- Symbol Column -->
+
 
                             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -207,10 +204,6 @@
                     <div class="financialGoalsTable">
                         <table mat-table [dataSource]="dataSource2" class="skeletonAnimation" id="table-low">
 
-                            <!--- Note that these columns can be defined in any order.
-                                      The actual rendered columns are set as a property on the row definition" -->
-
-                            <!-- Position Column -->
                             <ng-container matColumnDef="member">
                                 <th class="border-right-1" mat-header-cell *matHeaderCellDef> Family member </th>
                                 <td class="border-right-1" mat-cell *matCellDef="let element"> {{element.member}} </td>
@@ -220,13 +213,13 @@
                                 <th class="border-right-1" mat-header-cell *matHeaderCellDef> Assessment year </th>
                                 <td class="border-right-1" mat-cell *matCellDef="let element"> {{element.year}} </td>
                             </ng-container>
-                            <!-- Name Column -->
+
                             <ng-container matColumnDef="status">
                                 <th class="text-right" mat-header-cell *matHeaderCellDef> Status </th>
                                 <td class="text-right" mat-cell *matCellDef="let element"> {{element.status}} </td>
                             </ng-container>
 
-                            <!-- Symbol Column -->
+
 
                             <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
@@ -237,4 +230,8 @@
 
         </div>
     </div>
+</div> -->
+
+<div id="ui-scenarios">
+
 </div>

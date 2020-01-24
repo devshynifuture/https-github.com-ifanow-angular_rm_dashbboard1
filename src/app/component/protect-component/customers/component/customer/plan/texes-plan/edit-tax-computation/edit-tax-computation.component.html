@@ -1,1 +1,134 @@
-<p>edit-tax-computation works!</p>
+<div class="popup-header-fix-60">
+    <div class="row bb-1">
+        <div class="col-md-8 p-0">
+            <h4 class="mb-0 wrapper-20">Eligible deductions</h4>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12"> <i class="material-icons c-p pt-8 v-middle" (click)="close(false)"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pt-90 pl-28 pr-28 pb-28">
+    <div class="row">
+        <div class="col-md-9 pl-0">
+            <div class="row">
+                <div class="col-md-6 p-0">
+                    <h5 class="m-0 text-black">80C, 80CCC, 80CCD(1)</h5>
+                </div>
+                <div class="col-md-6 p-0 text-right">
+                    <h5 class="m-0 text-primitive">Max: ₹1,50,000</h5>
+                </div>
+            </div>
+            <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
+
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef> Description </th>
+                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> As per system </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="weight">
+                    <th mat-header-cell *matHeaderCellDef> Considered </th>
+                    <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="symbol">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let element">
+                        <i class="material-icons">
+                            keyboard_arrow_down
+                        </i>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="icons">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let element">
+                        <i class="material-icons">
+                            more_vert
+                        </i> </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+            <div class="row">
+                <div class="col-md-6 p-0">
+                    <h5 class="m-0 pt-28">80CCD(1B) (NPS)</h5>
+                </div>
+                <div class="col-md-6 p-0 text-right">
+                    <h5 class="m-0 text-primitive pt-28">Max: ₹1,50,000</h5>
+                </div>
+            </div>
+            <table mat-table [dataSource]="dataSource1" class="mt-8" id="table-low">
+
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef> Description </th>
+                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> As per system </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="weight">
+                    <th mat-header-cell *matHeaderCellDef> Considered </th>
+                    <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="symbol">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let element">
+                        <i class="material-icons">
+                            keyboard_arrow_down
+                        </i>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="icons">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let element">
+                        <i class="material-icons">
+                            more_vert
+                        </i> </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+            </table>
+            <h5 class="m-0 f-500 pt-32">Chapter VI A</h5>
+        </div>
+        <div class="col-md-3 pr-0">
+            <h5 class="m-0 text-black">ADD DEDUCTIONS</h5>
+            <p class="m-0 text-primary pt-12">80C, 80CCC, 80CCD(1)</p>
+            <p class="f-12 roboto text-primitive pt-4">EPF, PPF, Insurance, ELSS, Housing loan principal etc.</p>
+            <button mat-stroked-button class="mt-12 text-primary b-a-custom">Add deductions</button>
+            <p class="pt-44 m-0 roboto text-primary">Chapter VI A</p>
+            <p class="m-0 text-primitive f-12">Medical insurance, Interest on education loan, Donations etc.</p>
+            <button mat-stroked-button class="mt-12 text-primary b-a-custom">Add deductions</button>
+            <p class="pt-44 m-0 roboto text-primary">Other deductions</p>
+            <p class="m-0 text-primitive f-12">80CCD (1B), 80CCD (2)
+                80EEA - Int on home loan 80EEB - Int on electric vehicle</p>
+            <button mat-stroked-button class="mt-12 text-primary b-a-custom">Add deductions</button>
+        </div>
+    </div>
+</div>
+<div class="bottom-fixed wrapper-12">
+    <div class="row">
+        <div class="col-md-4">
+            <h4 class="mb-0 pt-8 text-white c-p f-16">Cancel</h4>
+        </div>
+        <div class="col-md-8 right text-right">
+            <button class="btn-bottom br-0 text-inherit" mat-button>Save</button>
+        </div>
+    </div>
+</div>

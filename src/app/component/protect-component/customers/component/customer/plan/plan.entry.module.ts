@@ -28,6 +28,7 @@ import { AddIncomeFamilyMemberComponent } from './profile-plan/income/add-income
 import { AddIncomeSourceComponent } from './profile-plan/income/add-income-source/add-income-source.component';
 import { IndividualIncomeInfoComponent } from './profile-plan/income/individual-income-info/individual-income-info.component';
 import { SetupLumpsumDeploymentComponent } from './investments-plan/add-investment-plan/setup-lumpsum-deployment/setup-lumpsum-deployment.component';
+import { EditApplicableTaxComponent } from './texes-plan/edit-applicable-tax/edit-applicable-tax.component';
 
 export const componentList = [
   PreferencesComponent,
@@ -48,7 +49,8 @@ export const componentList = [
   AddIncomeFamilyMemberComponent,
   AddIncomeSourceComponent,
   IndividualIncomeInfoComponent,
-  SetupLumpsumDeploymentComponent
+  SetupLumpsumDeploymentComponent,
+  EditApplicableTaxComponent
 
 ];
 // import { AddPlaninsuranceComponent } from './insurance-plan/add-planinsurance/add-planinsurance.component';
