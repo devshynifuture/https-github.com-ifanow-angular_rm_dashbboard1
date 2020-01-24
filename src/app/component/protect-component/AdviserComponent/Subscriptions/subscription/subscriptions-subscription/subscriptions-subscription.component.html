@@ -21,7 +21,6 @@
     </div>
 
     <div *ngIf="dataSource.data.length > 0" class="wrapper-20 pt-8 bg-white" id="wrapper">
-
         <div class="example-container">
             <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="skeletonAnimation" id="table-low" mat-table matSort>
                 <ng-container matColumnDef="client">
