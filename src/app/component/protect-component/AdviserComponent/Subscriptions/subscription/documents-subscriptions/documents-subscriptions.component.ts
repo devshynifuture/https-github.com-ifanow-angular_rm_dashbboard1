@@ -101,15 +101,22 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   }
 
   selectAll(event) {
-    this.dataCount = 0;
-    if (this.dataSource != undefined) {
-      this.dataSource.filteredData.forEach(item => {
-        item.selected = event.checked;
-        if (item.selected) {
-          this.dataCount++;
-        }
-      });
-    }
+    // if(this.dataCount > 0 && this.dataCount != this.dataSource.data.length){
+    //   this.dataSource.filteredData.forEach(item => {
+    //     item.selected = event.undone;
+    //   });
+    //   this.dataCount = 0;
+    // }else{
+      this.dataCount = 0;
+      if (this.dataSource != undefined) {
+        this.dataSource.filteredData.forEach(item => {
+          item.selected = event.checked;
+          if (item.selected) {
+            this.dataCount++;
+          }
+        });
+      }
+    // }
   }
 
   // /** Whether the number of selected elements matches the total number of rows. */

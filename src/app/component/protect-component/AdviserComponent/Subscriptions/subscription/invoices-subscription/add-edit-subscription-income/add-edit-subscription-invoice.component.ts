@@ -364,8 +364,10 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     );
   }
   selectService(service){
-    this.finAmount = service.pricing
-    console.log('pricing ====== ',this.finAmount)
+  
+    this.editPayment.get("finalAmount").setValue(service.price)
+    this.finAmount = service.price
+    // console.log(service,'pricing ====== ',service.price)
   }
   getClientListRes(data) {
     console.log('getClientListRes', data.payees);

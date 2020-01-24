@@ -55,6 +55,8 @@ export class SubscriptionCompletenessComponent implements OnInit {
       }
     }
     this.dataObj = data;
+    console.log(this.dataObj, "dashData 123");
+    
     this.showLoader = false;
 
   }
