@@ -132,7 +132,7 @@
                                 more_vert
                             </i>
                             <mat-menu #menu="matMenu">
-                                <a (click)="Open('open',element)" mat-menu-item>
+                                <a (click)="openPlanSlider('SUBSCRIPTIONS','open',element)" mat-menu-item>
                                     View fee structure</a>
                                 <a class="bt-1" (click)="openPlanSlider('billerSettings','open',element)" *ngIf="element.status!=4" mat-menu-item>Change
                                     Biller</a>
@@ -142,7 +142,7 @@
 
                                     <a (click)="delete('cancelSubscription',element)" *ngIf="element.status==2 || element.status == 3" mat-menu-item>Cancel
                                         subscription</a>
-                                    <a (click)="deleteModal('SUBSCRIPTION',element, sub.subscriptions, i)" mat-menu-item>Delete
+                                    <a (click)="deleteModal('SUBSCRIPTION',element)" mat-menu-item>Delete
                                         subscription</a>
                                 </div>
                             </mat-menu>
