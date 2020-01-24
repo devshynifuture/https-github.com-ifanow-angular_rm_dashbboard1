@@ -39,7 +39,8 @@
                                 <mat-checkbox class="custom-checkbox" [ngStyle]="{'pointer-events':(serviceData.selected)?'none':'all'}" checked="false" [ngClass]="{'v-h':serviceData.selected==false }"></mat-checkbox>
 
                                 <div class="pl-24 pt-20 height155">
-                                    <h3 class="f-24 p-0 l-26 mb-8" matTooltip="Service name">{{serviceData.serviceName}} </h3>
+                                    <h3 class="f-24 p-0 l-26 mb-8" matTooltip="Service name">{{serviceData.serviceName}}
+                                    </h3>
                                     <p matTooltip="Service code">{{serviceData.serviceCode}}</p>
                                     <p class="mb-0 pb-32 pt-4" matTooltip="Description : {{serviceData.description}}" aria-label="Button that displays a tooltip when focused or hovered over">
                                         {{serviceData.description}}</p>
