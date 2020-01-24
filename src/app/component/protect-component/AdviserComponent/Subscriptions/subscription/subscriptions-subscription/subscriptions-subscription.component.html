@@ -7,11 +7,11 @@
             </div>
             <div class="col-md-4 right text-right p-0">
                 <i class="material-icons mr-12 icon-light c-p v-sub">
-          search
-        </i>
+                    search
+                </i>
                 <button (click)="showFilters(showFilter)" class="btn-default addon" mat-stroked-button><i
-            class="material-icons">filter_list</i>FILTERS
-        </button>
+                        class="material-icons">filter_list</i>FILTERS
+                </button>
             </div>
         </div>
         <div [ngClass]="showFilter === true ? 'block' : 'none'" class="row pt-12">
@@ -22,7 +22,7 @@
 
     <div *ngIf="dataSource.data.length > 0" class="wrapper-20 pt-8 bg-white" id="wrapper">
 
-        <div class="tableClass">
+        <div class="example-container">
             <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="skeletonAnimation" id="table-low" mat-table matSort>
                 <ng-container matColumnDef="client">
                     <th *matHeaderCellDef class="f-18 t-20" mat-header-cell mat-sort-header="planName"> Client & plan details
@@ -87,7 +87,7 @@
                             </div>
                             <div (click)="openPlanSlider('createSub','open',element)" *ngIf="element.status==1">
                                 <button class="btn-header btn-xs ml-8 br-0 btn-sm c-p" mat-stroked-button>START
-                </button>
+                                </button>
                             </div>
                         </div>
 
@@ -117,10 +117,10 @@
                         <div class="bar">
                             <span class="t-10" *ngIf="element.subscriptionPricing">
 
-                {{ getFeeTypeName(element.subscriptionPricing.feeTypeId) }}
+                                {{ getFeeTypeName(element.subscriptionPricing.feeTypeId) }}
 
 
-              </span>
+                            </span>
                         </div>
                     </td>
                 </ng-container>
@@ -129,30 +129,30 @@
                     <td *matCellDef="let element" class="t-2" mat-cell>
                         <div *ngIf="!isLoading">
                             <i [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
-                more_vert
-              </i>
+                                more_vert
+                            </i>
                             <mat-menu #menu="matMenu">
-                                <a (click)="Open('open',element)" mat-menu-item>
-                  View fee structure</a>
+                                <a (click)="openPlanSlider('SUBSCRIPTIONS','open',element)" mat-menu-item>
+                                    View fee structure</a>
                                 <a class="bt-1" (click)="openPlanSlider('billerSettings','open',element)" *ngIf="element.status!=4" mat-menu-item>Change
-                  Biller</a>
+                                    Biller</a>
                                 <a (click)="openPlanSlider('changePayee','open',element)" *ngIf="element.status!=4" mat-menu-item>Change
-                  Payee</a>
+                                    Payee</a>
                                 <div class="bt-1">
 
-                                    <a (click)="delete('cancelSubscription',element)" *ngIf="element.status==2 || element.status == 3" mat-menu-item>Cancel subscription</a>
-                                    <a (click)="deleteModal('SUBSCRIPTION',element, sub.subscriptions, i)" mat-menu-item>Delete
-                    subscription</a>
+                                    <a (click)="delete('cancelSubscription',element)" *ngIf="element.status==2 || element.status == 3" mat-menu-item>Cancel
+                                        subscription</a>
+                                    <a (click)="deleteModal('SUBSCRIPTION',element)" mat-menu-item>Delete
+                                        subscription</a>
                                 </div>
                             </mat-menu>
                         </div>
 
                     </td>
                 </ng-container>
-                <tr *matHeaderRowDef="displayedColumns;sticky: true" mat-header-row></tr>
+                <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
                 <tr *matRowDef=" let row; columns: displayedColumns;" mat-row></tr>
             </table>
-
         </div>
     </div>
 

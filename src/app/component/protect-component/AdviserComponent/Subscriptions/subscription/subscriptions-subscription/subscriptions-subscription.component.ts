@@ -292,14 +292,18 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isRefreshRequired(sideBarData)) {
-          setTimeout(() => {
-            this.lastDataId = 0;
-            this.getSummaryDataAdvisor(false);
-          }, 1000);
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            setTimeout(() => {
+              this.lastDataId = 0;
+              this.getSummaryDataAdvisor(false);
+            }, 1000);
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
           rightSideDataSub.unsubscribe();
         }
+        
       }
     );
 
@@ -353,10 +357,13 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isRefreshRequired(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getSummaryDataAdvisor(false);
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
           rightSideDataSub.unsubscribe();
-          this.getSummaryDataAdvisor(false);
         }
       }
     );
@@ -398,16 +405,16 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result, this.dataSource.data, 'delete result');
-      const tempList = [];
-      this.dataSource.data.forEach(singleElement => {
-        if (singleElement.id != result.id) {
-          tempList.push(singleElement);
-        }
-      });
-      this.dataSource.data = tempList;
-
-
+      if(result != undefined){
+        console.log(result, this.dataSource.data, 'delete result');
+        const tempList = [];
+        this.dataSource.data.forEach(singleElement => {
+          if (singleElement.id != result.id) {
+            tempList.push(singleElement);
+          }
+        });
+        this.dataSource.data = tempList;
+      }
     });
   }
 

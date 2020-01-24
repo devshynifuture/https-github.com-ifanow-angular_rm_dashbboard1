@@ -31,9 +31,9 @@ export class TexesPlanComponent implements OnInit {
         if (UtilService.isRefreshRequired(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ');
           // this.getQuotationsList();
-          rightSideDataSub.unsubscribe();
-
+          
         }
+        rightSideDataSub.unsubscribe();
       }
     );
   }

@@ -1,9 +1,9 @@
 <div [formGroup]="editPayment" [ngClass]="{'pt-72': invoiceInSub=='invoiceSubscription','mt-0':invoiceInSub!='invoiceSubscription'}" class="bg-white pb-44 ">
     <div class="row  popup-header bb-1">
         <div class="col-md-10 pl-0 mt-4">
-            <h3 *ngIf="storeData.id != undefined" class="f-400 wrapper-20 mb-0">Edit Invoice of {{storeData.invoiceNumber}}
+            <h3 *ngIf="storeData.invoiceNumber != undefined" class="f-400 wrapper-20 mb-0">Edit Invoice of {{storeData.invoiceNumber}}
             </h3>
-            <h3 *ngIf="storeData.id == undefined" class="f-400 wrapper-20 mb-0">Add Invoice</h3>
+            <h3 *ngIf="storeData.invoiceNumber == undefined" class="f-400 wrapper-20 mb-0">Add Invoice</h3>
         </div>
         <div class="col-md-2 text-right">
             <div class="wrapper-12">
@@ -38,7 +38,7 @@
             <div class="row pt-10">
                 <div class="col-md-6 pl-0">
                     <p class="m-0 text-custom f-12">BILLER ADDRESS</p>
-                    <p *ngIf="editAdd1 == false" class="m-0 text-black text-break w-90 l-21">{{storeData.billerAddress}}
+                    <p *ngIf="editAdd1 == false"  class="m-0 text-black text-break w-90 l-21">{{getFormControlEdit().billerAddress.value}}
                     </p>
                     <textarea *ngIf="editAdd1 == true" class="form-control f-14 br-0" formControlName="billerAddress" maxlength="150" rows="5"></textarea>
                     <div class="row">
@@ -105,7 +105,7 @@
                         <div class="col-md-6 p-0">
                             <div class="form-group mb-0">
                                 <mat-form-field class="ba-date">
-                                    <input (dateChange)="checkDateDiff($event)" [matDatepicker]="picker" class="form-control b-0" formControlName="invoiceDate" matInput readonly>
+                                    <input (click)="picker.open()" (dateChange)="checkDateDiff($event)" [matDatepicker]="picker" class="form-control b-0" formControlName="invoiceDate" matInput readonly>
                                     <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                                     <mat-datepicker #picker></mat-datepicker>
                                     <mat-error class="f-12 pt-4">Invoice date is required
@@ -124,7 +124,7 @@
                         <div class="col-md-6 p-0">
                             <div class="form-group mb-0">
                                 <mat-form-field class="ba-date">
-                                    <input (dateChange)="checkDateDiff($event)" [matDatepicker]="dueDatePicker" class="form-control b-0" formControlName="dueDate" matInput readonly>
+                                    <input (click)="picker.open()" (dateChange)="checkDateDiff($event)" [matDatepicker]="dueDatePicker" class="form-control b-0" formControlName="dueDate" matInput readonly>
                                     <mat-datepicker-toggle [for]="dueDatePicker" matSuffix></mat-datepicker-toggle>
                                     <mat-datepicker #dueDatePicker></mat-datepicker>
                                     <mat-error class="f-12 pt-4">Invoice date is required
@@ -195,7 +195,7 @@
                     {{storeData.taxStatus}}
                     <div class="col-md-2 d-flex align-items-center justify-content-end">
                         <h5 class="m-0 text-right ">
-                            {{finalAmount}}
+                            ₹<span appFormatNumber>{{finalAmount}}</span>
                         </h5>
                         <h5 *ngIf="storeData.sgst != undefined" [hidden]="finalAmount !=undefined" class="m-0 text-right ">
                             {{storeData.cgstTaxAmount}}</h5>
@@ -209,10 +209,10 @@
     <div class="row pt-12">
         <div class="col-md-8"></div>
         <div class="col-md-2">
-            <h5 class="m-0">Sub total ₹</h5>
+            <h5 class="m-0">Sub total</h5>
         </div>
         <div class="col-md-2 pr-24">
-            <h5 class="m-0 text-right pr-8">{{finalAmount}} </h5>
+            <h5 class="m-0 text-right pr-8">₹<span appFormatNumber>{{finalAmount}}</span></h5>
         </div>
     </div>
     <div class="row pt-20">
@@ -233,10 +233,10 @@
             <h5 class="m-0">SGST(9%)</h5>
         </div>
         <div *ngIf="taxStatus == 'IGST(18%)'" class="col-md-2 pr-24">
-            <h5 class="m-0 text-right pr-8">₹{{igstTaxAmount}}</h5>
+            <h5 class="m-0 text-right pr-8">₹<span appFormatNumber>{{igstTaxAmount}}</span></h5>
         </div>
         <div *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'" class="col-md-2 pr-24">
-            <h5 class="m-0 text-right pr-8">₹{{sgstTaxAmount}}</h5>
+            <h5 class="m-0 text-right pr-8">₹<span appFormatNumber>{{sgstTaxAmount}}</span></h5>
         </div>
     </div>
     <div class="row pt-20 pb-12">
@@ -245,7 +245,7 @@
             <h5 class="m-0">CGST(9%)</h5>
         </div>
         <div *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'" class="col-md-2 pr-24">
-            <h5 class="m-0 text-right pr-8">₹{{cgstTaxAmount}}</h5>
+            <h5 class="m-0 text-right pr-8">₹<span appFormatNumber>{{cgstTaxAmount}}</span></h5>
             <!--      | number:'1.2-2'-->
         </div>
     </div>
@@ -259,7 +259,7 @@
         <div class="col-md-2 pt-4 pl-0 pr-24">
             <div class="bt-grey">
                 <h5 class="m-0 text-right pr-8 pt-8 text-black f-500">
-                    {{finAmount}}
+                    ₹<span appFormatNumber>{{finAmount}}</span>
                 </h5>
             </div>
         </div>

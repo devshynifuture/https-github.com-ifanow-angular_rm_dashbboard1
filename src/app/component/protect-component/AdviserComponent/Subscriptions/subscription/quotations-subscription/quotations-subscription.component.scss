@@ -49,8 +49,8 @@
 }
 
 ::ng-deep .mat-menu-panel {
-  min-width: 112px;
-  max-width: 297px !important;
+    min-width: 112px;
+    max-width: 297px !important;
 }
 
 // .stickyHeader {
@@ -61,11 +61,6 @@
 //         top: 76px !important;
 //     }
 // }
-.example-container {
-    height: 270px;
-    overflow: auto;
-}
-
 .width400 {
     width: 400px;
     margin-top: 50px;
