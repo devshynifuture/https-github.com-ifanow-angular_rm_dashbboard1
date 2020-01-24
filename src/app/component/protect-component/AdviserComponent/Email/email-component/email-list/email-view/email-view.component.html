@@ -24,10 +24,19 @@
                 <img class="header-img" src="https://pbs.twimg.com/profile_images/1115218540636672001/HAgVhGPX.jpg">
             </div>
             <div class="chatMsgBox">
-                <h2> {{messagesHeaders[i].split('<')[0]}}</h2>
-                <h5 class="f-12">
+                <h2 *ngIf="decodedPart.length > 2; else elsePart1"> {{messagesHeaders[i].split('<')[0]}}</h2>
+                <ng-template #elsePart1>
+                    <h2> {{ messagesHeaders[i] }}</h2>
+                </ng-template>
+                <h5 class="f-12" *ngIf="decodedPart.length > 2; else elsePart2">
                     {{ messagesHeaders[i].split('<')[1].split('>')[0] }}
                 </h5>
+
+                <ng-template #elsePart2>
+                    <h5 class="f-12">
+                        {{ messagesHeaders[i] }}
+                    </h5>
+                </ng-template>
                 <p [innerHTML]="part.item">
                 </p>
                 <p>

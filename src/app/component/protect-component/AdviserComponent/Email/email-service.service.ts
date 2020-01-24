@@ -300,6 +300,10 @@ export class EmailServiceService {
     return this.http.post(apiConfig.GMAIL_URL + appConfig.SEND_EMAIL, data);
   }
 
+  getAttachmentFiles(data) {
+    return this.http.get(apiConfig.GMAIL_URL + appConfig.GET_ATTACHMENTS, data);
+  }
+
   createUpdateDraft(body) {
     const userInfo = AuthService.getUserInfo();
     // console.log(apiConfig.GMAIL_URL + appConfig.CREATE_DRAFT, " \n http params \n", {

@@ -59,7 +59,7 @@ export class GoogleConnectComponent implements OnInit {
 
     localStorage.removeItem('associatedGoogleEmailId');
     // compare it with authEmail id
-    if (AuthService.getUserInfo().emailId === this.redirectForm.get('googleConnectEmail')) {
+    if (AuthService.getUserInfo().emailId == this.redirectForm.get('googleConnectEmail').value) {
       localStorage.setItem('associatedGoogleEmailId', this.redirectForm.get('googleConnectEmail').value)
       const redirectWindow = window.open(hitGmailUrl);
       const lookForSuccessToken = setInterval(() => {

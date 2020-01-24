@@ -300,7 +300,7 @@ export const appConfig = {
   DOCUMENT_ESIGN_REQUEST: 'subscription/invoice/esignDocumentSend',
   GET_QUOTATION_SERVICE_DATA: 'subscription/quotation/data/get',
   EMAIL_DOCUMENT: 'pdfAndEmail/send/docId',
-  GET_INVOICE_STATTUS:'subscription/invoice/status/edit',
+  GET_INVOICE_STATTUS: 'subscription/invoice/status/edit',
   GET_BASE_64: 'api/v1/test/base64/decode',
 
 
@@ -330,7 +330,8 @@ export const appConfig = {
   CREATE_DRAFT: 'user/draft/create',
   UPDATE_DRAFT: 'user/draft/modify/put',
   GET_MESSAGE_DETAIL: 'user/message/details',
-  SEND_EMAIL: '/gmail/email/send',
+  SEND_EMAIL: 'gmail/email/send',
+  GET_ATTACHMENTS: 'gmail/attachment/get',
 
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',

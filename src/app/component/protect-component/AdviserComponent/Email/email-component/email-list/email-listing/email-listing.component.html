@@ -32,7 +32,22 @@
 
     <div class="col-md-5"></div>
     <div class="col-md-3">
-        <mat-paginator [length]="paginatorLength" [pageSizeOptions]="[25]"></mat-paginator>
+        <!-- <span class="paginator-ranges">
+            {{ currentPage }} - {{ toShowMaxThreadsLength }} of {{ paginatorLength }}
+        </span> -->
+        <span>
+            <button mat-icon-button>
+                <mat-icon>
+                    chevron_left
+                </mat-icon>
+            </button>
+            <button mat-icon-button>
+                <mat-icon>
+                    chevron_right
+                </mat-icon>
+            </button>
+        </span>
+        <!-- <mat-paginator [length]="paginatorLength" [pageSizeOptions]="[50]"></mat-paginator> -->
     </div>
 
 </div>

@@ -24,9 +24,11 @@ export class EmailViewComponent implements OnInit, OnDestroy {
   from: string;
   body;
   raw;
+  attachmentBase64Code;
   emailSubscription: Subscription;
   isLoading: boolean = true;
   messagesHeaders: string[];
+  decodedPart;
 
   constructor(private emailService: EmailServiceService,
     private _bottomSheet: MatBottomSheet,
@@ -60,6 +62,9 @@ export class EmailViewComponent implements OnInit, OnDestroy {
 
         this.raw = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(response.raw);
         this.isLoading = false;
+        // this.attachmentBase64Code = this.raw.forEach(part => {
+        //   part.item
+        // });
 
         console.log('response of detailed gmail threadL:::::::', response);
         console.log("this is raw of detail api...::::::::::::", this.raw);
@@ -137,17 +142,24 @@ export class EmailViewComponent implements OnInit, OnDestroy {
         })
 
         let { parsedData: { decodedPart } } = this.emailObj;
+        this.decodedPart = decodedPart;
 
         let { messageDates } = this.emailObj;
 
         console.log("this are message dates", messageDates);
         console.log("this is decoded part : >>>>>", decodedPart);
+        let extractHtmlValue;
+        if (decodedPart.length > 2) {
 
-        let extractHtmlValue = decodedPart.filter((part, index) => {
-          if (index % 2 === 1) {
-            return part;
-          }
-        });
+          extractHtmlValue = decodedPart.filter((part, index) => {
+            if (index % 2 === 1) {
+              return part;
+            }
+          });
+
+        } else {
+          extractHtmlValue = decodedPart;
+        }
 
         extractHtmlValue = extractHtmlValue.map((item, index) => {
           return { item, date: messageDates[index] }

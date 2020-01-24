@@ -54,6 +54,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   removable = true;
   addOnBlur = true;
   receipients: string[] = [];
+  attachmentIdsArray: string[] = [];
 
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
@@ -276,10 +277,37 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   }
 
   getAttachmentDetails(data) {
-    console.log("this is something i'm, looking for:::::::", data);
+    console.log("hello i have some data ::::::::::::::", data);
+    if (data !== null) {
+      const { dataObj: { attachmentFiles } } = data;
+      attachmentFiles.forEach(attachment => {
+        const { headers } = attachment;
+        headers.forEach(header => {
+          if (header.name === 'X-Attachment-Id') {
+            this.attachmentIdsArray.push(header.value);
+          }
+        });
+      });
+    }
+    // this.emailService.
+    this.attachmentIdsArray.forEach(attachmentId => {
+      const obj = {
+        attachmentId,
+        email: AuthService.getUserInfo().emailId,
+        messageId: data.dataObj.idsOfMessages[0],
+        userId: AuthService.getUserInfo().advisorId
+      }
+      console.log("this are parameters that is passed :::::", obj)
+      this.emailService.getAttachmentFiles(obj).subscribe(res => console.log("attachment grabbed::::::::::::", res));
+    })
   }
 
-  close(): void {
+  close() {
+    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  }
+
+  closeWithDraftCreateOrUpdate(): void {
     clearInterval(this.interval);
     console.log("cleared");
     if ((!this.data && this.data === null) && this.didFormChanged) {
@@ -402,13 +430,13 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
 
   onSendEmail() {
     const body = {
-      userId: AuthService.getUserInfo().userId,
-      emailId: AuthService.getUserInfo().emailId,
-      receipients: this.emailForm.get('receiver').value,
-      cc: this.emailForm.get('carbonCopy').value,
-      bcc: this.emailForm.get('blindCarbonCopy').value,
+      userId: AuthService.getUserInfo().advisorId,
+      email: AuthService.getUserInfo().emailId,
+      toAddress: this.emailForm.get('receiver').value,
+      ccs: this.emailForm.get('carbonCopy').value,
+      bccs: this.emailForm.get('blindCarbonCopy').value,
       subject: this.emailForm.get('subject').value,
-      messageBody: this.emailForm.get('messageBody').value,
+      message: this.emailForm.get('messageBody').value,
       attachments: this.emailAttachments
     }
 

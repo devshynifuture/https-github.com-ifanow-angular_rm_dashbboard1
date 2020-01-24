@@ -40,6 +40,8 @@ export class EmailListingComponent implements OnInit {
   listSubscription = null;
   trashAction: boolean = false;
   showDraftView: boolean = false;
+  currentPage;
+  toShowMaxThreadsLength;
 
   displayedColumns: string[] = ['select', 'emailers', 'subjectMessage', 'date'];
 
@@ -79,6 +81,18 @@ export class EmailListingComponent implements OnInit {
     }
   }
 
+  // initPaginatorLength() {
+  //   this.currentPage = 1;
+  //   this.totalNumberOfThreadsShown = 50;
+
+  // }
+
+
+  // updatePaginators() {
+  //   if (this.paginatorLength > this.)
+  //     this.currentPage
+  // }
+
   getPaginatorLengthRes(location) {
     if (localStorage.getItem('associatedGoogleEmailId')) {
       const userInfo = AuthService.getUserInfo();
@@ -90,6 +104,7 @@ export class EmailListingComponent implements OnInit {
       console.log('paginator response=>>>>', response);
       if (response === undefined) {
         this.eventService.openSnackBar("You must connect your gmail account", "DISMISS");
+        localStorage.removeItem('successStoringToken');
         this.router.navigate(['google-connect'], { relativeTo: this.activatedRoute });
       } else {
 
@@ -218,6 +233,7 @@ export class EmailListingComponent implements OnInit {
   getGmailList(data) {
     this.listSubscription = this.emailService.getMailInboxList(data)
       .subscribe(responseData => {
+        console.log(responseData);
         let tempArray1 = [];
         // console.log('this is gmails inbox data ->');
         // console.log('responseData from service ->>', responseData);
@@ -233,9 +249,7 @@ export class EmailListingComponent implements OnInit {
           // thread.messages.map((message) => {
           //   message.payload.body.data = btoa(message.payload.body.data);
           // });
-          console.log("this is main thread -:::::", thread);
 
-          console.log("modified thread::::::::::::::::::", thread);
           let parsedData: any; // object containing array of decoded parts and headers
           let idsOfThread: any; // Object of historyId and Id of thread
           let idsOfMessages: string[]; // ids of messages
@@ -298,14 +312,13 @@ export class EmailListingComponent implements OnInit {
         // console.log('this is decoded object data ->>>>');
         // console.log(this.messageDetailArray);
 
-        console.log(this.messageListArray);
         this.dataSource = new MatTableDataSource<MessageListArray>(this.messageListArray);
         this.dataSource.paginator = this.paginator;
 
       }, error => console.error(error));
   }
 
-  getFileDetails(e) {
+  getFileDetails(e): void {
     console.log('LeftSidebarComponent getFileDetails e : ', e.target.files[0]);
     const singleFile = e.target.files[0];
 
@@ -356,7 +369,7 @@ export class EmailListingComponent implements OnInit {
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
+  masterToggle(): void {
     if (this.isAllSelected()) {
       this.selection.clear();
       this.selectedThreadsArray = [];
@@ -377,7 +390,7 @@ export class EmailListingComponent implements OnInit {
   }
 
   // routing to view page
-  gotoEmailView(dataObj: Object) {
+  gotoEmailView(dataObj: Object): void {
 
     console.log("this is dataObject  =>>>>>>>>>>>>>", dataObj);
 
@@ -385,12 +398,8 @@ export class EmailListingComponent implements OnInit {
     this.router.navigate(['view'], { relativeTo: this.activatedRoute });
   }
 
-  doRefresh() {
-    this.ngOnInit();
-  }
-
   // ui select highlight
-  highlightSelectedRow(row: ExtractedGmailDataI) {
+  highlightSelectedRow(row: ExtractedGmailDataI): void {
     if (this.selectedThreadsArray.includes(row)) {
       let indexOf = this.selectedThreadsArray.indexOf(row);
       let removedRow = this.selectedThreadsArray.splice(indexOf, 1);
@@ -402,7 +411,7 @@ export class EmailListingComponent implements OnInit {
     console.log(this.selectedThreadsArray);
   }
 
-  multipleMoveToTrash() {
+  multipleMoveToTrash(): void {
     const selectedArray = this.selectedThreadsArray;
     // const { idsOfThread: { id } } =
     let ids = [];
