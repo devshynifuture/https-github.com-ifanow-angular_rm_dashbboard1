@@ -14,30 +14,32 @@
             </div>
         </div>
 
-
         <div *ngFor="let profileData of SettingProfileData skeletonAnimation" class="d-flex justify-content-center" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <div class="row wrapper-100 pb-72 pt-8 pb-10 ">
-                <div class="hoverable">
-                    <div class="row b-a bb-0 bg-grey lter">
-                        <div class="col-md-8 p-0 relClass">
+                <div class="hoverable overflow-hidden">
+                    <div class="row pt-16 pb-16 b-a bb-0 bg-grey lter">
+                        <div class="col-md-8 pl-20 d-flex align-items-center relClass">
                             <div class="bar" [ngClass]="{'height23': isLoading}">
-                                <h3 class="mb-0 p-24 fontPlayfair">{{profileData.name}}</h3>
+                                <h3 class="mb-0 fontPlayfair">{{profileData.name}}</h3>
                             </div>
                         </div>
-                        <div class="col-md-4 pt-16">
-                            <i [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu" class="material-icons text-right right text-custom f-28 c-p">
-                                more_vert
-                            </i>
-                            <mat-menu #menu="matMenu">
-                                <a (click)="setPrimaryField(profileData)" mat-menu-item>Set as primary</a>
-                                <a (click)="openPayeeSettings(profileData,'payeeSettings','open')" mat-menu-item>Edit
-                                    client profile</a>
-                                <a (click)="deleteModal('PROFILE',profileData)" class="bt-1" mat-menu-item>Delete client
-                                    profile</a>
-                            </mat-menu>
-                            <button *ngIf="profileData.isPrimary" class="text-primary br-0 right text-right" mat-stroked-button>
-                                PRIMARY
-                            </button>
+                        <div class="col-md-4">
+                            <div *ngIf="!isLoading">
+                                <i [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu" class="material-icons text-right right text-custom f-28 c-p">
+                                    more_vert
+                                </i>
+                                <mat-menu #menu="matMenu">
+                                    <a (click)="setPrimaryField(profileData)" mat-menu-item>Set as primary</a>
+                                    <a (click)="openPayeeSettings(profileData,'payeeSettings','open')" mat-menu-item>Edit
+                                        client profile</a>
+                                    <a (click)="deleteModal('PROFILE',profileData)" class="bt-1" mat-menu-item>Delete
+                                        client
+                                        profile</a>
+                                </mat-menu>
+                                <button *ngIf="profileData.isPrimary" class="text-primary br-0 right text-right" mat-stroked-button>
+                                    PRIMARY
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div class="b-a bt-none">
@@ -45,71 +47,87 @@
                             <div class="col-md-12 p-0">
                                 <div class="wrapper-20">
                                     <div class="row">
-                                        <div class="col-md-3 relClass">
+                                        <div class="col-md-3 ">
                                             <p>CUSTOMER TYPE</p>
-                                            <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                <h5>{{(profileData.customerTypeId == 1) ? 'Bussiness' : 'Individual'}}
-                                                </h5>
+                                            <div class="relClass">
+                                                <div class="bar" [ngClass]="{'height23': isLoading}">
+                                                    <h5> {{ isLoading ? ' ' : (profileData.customerTypeId == 1) ? 'Bussiness' : 'Individual'}}
+                                                    </h5>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-3 relClass">
                                             <p>PAN</p>
-                                            <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                <h5>{{profileData.pan}}</h5>
+                                            <div class="relClass">
+                                                <div class="bar" [ngClass]="{'height23': isLoading}">
+                                                    <h5> {{ isLoading ? ' ' : profileData.pan}} </h5>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-3 relClass">
                                             <p>GST TREATMENT</p>
-                                            <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                <h5>
-                                                    {{(profileData.gstTreatmentId == 1) ? 'Registered Business - Regular' : (profileData.gstTreatmentId == 2) ? 'Registered Business - Composition' : 'Unregistered Business'}}
-                                                </h5>
+                                            <div class="relClass">
+                                                <div class="bar" [ngClass]="{'height23': isLoading}">
+                                                    <h5> {{isLoading ? ' ' : (profileData.gstTreatmentId == 1) ? 'Registered Business - Regular' : (profileData.gstTreatmentId == 2) ? 'Registered Business - Composition' : 'Unregistered Business'}}
+                                                    </h5>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 relClass">
+                                        <div class="col-md-3">
                                             <p>GST</p>
-                                            <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                <h5>{{profileData.gstin}}</h5>
+                                            <div class="relClass">
+                                                <div class="bar" [ngClass]="{'height23': isLoading}">
+                                                    <h5> {{profileData.gstin}} </h5>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="wrapper-20 pl-36 bt-1">
                                     <div class="row ">
-                                        <div class="col-md-6 p-0 relClass">
+                                        <div class="col-md-6 pl-0 ">
                                             <p>BILLING ADDRESS</p>
-                                            <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                <h5 style="word-break: break-all;">{{profileData.billerAddress}},<br> {{profileData.city}},
-                                                    <br> {{profileData.state}}
-                                                    <br> {{profileData.country}}
-                                                    <br> {{profileData.zipCode}}
-                                                </h5>
+                                            <div class="relClass">
+                                                <div class="bar" [ngClass]="{'height23': isLoading}">
+                                                    <h5> {{profileData.billerAddress}} {{isLoading ? ' ' : ','}}<br> {{profileData.city}} {{isLoading ? ' ' : ','}}
+                                                        <br> {{profileData.state}}
+                                                        <br> {{profileData.country}}
+                                                        <br> {{profileData.zipCode}} </h5>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 p-0 relClass">
+                                        <div class="col-md-3 pl-0 ">
                                             <p>DISPLAY NAME</p>
-                                            <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                <h5>{{profileData.companyDisplayName}}</h5>
+                                            <div class="relClass">
+                                                <div class="bar" [ngClass]="{'height23': isLoading}">
+                                                    <h5> {{profileData.companyDisplayName}} </h5>
+                                                </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-12 block p-0 pt-24 relClass">
+                                                <div class="col-md-12 block p-0 pt-24">
                                                     <p>MOBILE NO</p>
-                                                    <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                        <h5>{{profileData.primaryContact}}</h5>
+                                                    <div class="relClass">
+                                                        <div class="bar" [ngClass]="{'height23': isLoading}">
+                                                            <h5> {{profileData.primaryContact}} </h5>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 p-0 relClass">
+                                        <div class="col-md-3">
                                             <p>COMPANY NAME</p>
-                                            <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                <h5>{{profileData.companyName}}</h5>
+                                            <div class="relClass">
+                                                <div class="bar" [ngClass]="{'height23': isLoading}">
+                                                    <h5> {{profileData.companyName}} </h5>
+                                                </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-12 block p-0 pt-24 relClass">
+                                                <div class="col-md-12 block p-0 pt-24 ">
                                                     <p>EMAIL</p>
-                                                    <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                        <h5 style="word-break: break-all;">{{profileData.email}}</h5>
+                                                    <div class="relClass">
+                                                        <div class="bar" [ngClass]="{'height23': isLoading}">
+                                                            <h5> {{profileData.email}} </h5>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

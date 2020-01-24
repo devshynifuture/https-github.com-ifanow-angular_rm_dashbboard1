@@ -66,10 +66,9 @@ export class SettingsComponent implements OnInit {
     const obj = {
       clientId: this.upperData.id,
     };
-    // this.subService.getSubscriptionClientsSettingProfile(obj).subscribe(
-    //   data => this.getSettingProfileDataResponse(data)
-
-    // );
+    this.subService.getSubscriptionClientsSettingProfile(obj).subscribe(
+      data => this.getSettingProfileDataResponse(data)
+    );
   }
 
   getSettingProfileDataResponse(data) {
