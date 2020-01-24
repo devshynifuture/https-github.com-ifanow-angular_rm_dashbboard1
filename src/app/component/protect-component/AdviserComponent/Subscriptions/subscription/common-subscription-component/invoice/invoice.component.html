@@ -74,10 +74,12 @@
                         </button>
                     </div>
                     <div class="col-md-2 right text-right"  *ngIf="rpyment==true">
-                        <mat-select class="form-control br-0" (ngModelChange)="addStatus(storeData,$event.target.value)" id="sel1" >
-                            <mat-option value="6">Void</mat-option>
-                            <mat-option value="7">Write off</mat-option>
+                            <mat-form-field>
+                        <mat-select  (selectionChange)="addStatus(storeData,$event)" class="form-control br-0" id="sel1" >
+                            <mat-option [value]="6">Void</mat-option>
+                            <mat-option [value]="7">Write off</mat-option>
                           </mat-select>
+                          </mat-form-field>
                       </div>
                 </div>
                 <div #invoiceTemplate id="template" *ngIf="showRecord==false && feeCalc==false" class="b-a m-20 pb-28 max-height-100">
