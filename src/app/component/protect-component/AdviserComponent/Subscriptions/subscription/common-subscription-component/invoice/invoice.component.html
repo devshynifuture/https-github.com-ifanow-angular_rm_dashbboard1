@@ -294,7 +294,7 @@
     </div>
     <div *ngIf="showRecord==false && feeCalc==false" class="row bb-1 pt-72">
         <div class="col-md-8 text-custom">
-            <img matTooltip="Edit" *ngIf="storeData.status != 1" (click)="editInvoice()" class="c-p" src="assets/images/svg/pencil.svg">
+            <img matTooltip="Edit" *ngIf="storeData.status != 1 && storeData.status != 5 && storeData.status != 6" (click)="editInvoice()" class="c-p" src="assets/images/svg/pencil.svg">
             <img matTooltip="Email" (click)="openSendEmail('upper')" class="b-a c-p" src="assets/images/svg/mail-light.svg">
             <img matTooltip="Download PDF" class="b-a c-p" src="assets/images/svg/pdf-icons.svg">
             <img matTooltip="Print" (click)="printPage(invoiceTemplate)" class="b-a c-p" src="assets/images/svg/printer.svg">
