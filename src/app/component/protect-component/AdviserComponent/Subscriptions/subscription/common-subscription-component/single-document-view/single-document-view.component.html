@@ -8,20 +8,20 @@
         <div class="row wrapper-8">
             <div class="col-md-10">
                 <mat-card-header>
-                    <mat-card-title class="mb-0 f-20 width235" matTooltip="{{singleDocument.name}}">
+                    <mat-card-title class="mb-0 f-20 width235" matTooltip="Document name">
                         {{singleDocument.name}}</mat-card-title>
                     <mat-card-subtitle class="pt-8 pb-12 mb-0 text-left f-16"> {{singleDocument.code}}
                     </mat-card-subtitle>
                 </mat-card-header>
             </div>
             <div class="col-md-2 pt-8" *ngIf="singleDocument.mappedType == 1">
-                <p class="blue text-white f-16">P</p>
+                <p class="blue text-white f-16" matTooltip="Plan document">P</p>
             </div>
             <div class="col-md-2 pt-8" *ngIf="singleDocument.mappedType == 3">
-                <p class="green text-white f-16">G</p>
+                <p class="green text-white f-16" matTooltip="Global document">G</p>
             </div>
             <div class="col-md-2 pt-8" *ngIf="singleDocument.mappedType == 2">
-                <p class="green text-white f-16">S</p>
+                <p class="green text-white f-16" matTooltip="Service document">S</p>
             </div>
             <div class="col-md-10 text-center" (click)="editDocument()">
                 <button mat-stroked-button class="btn-header addon ml-44 br-0">VIEW</button>

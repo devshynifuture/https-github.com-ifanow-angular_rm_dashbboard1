@@ -1,21 +1,26 @@
 import {ValidatorType} from '../../services/util.service';
 import {Directive, ElementRef, EventEmitter, HostListener, Input, Output, Renderer2} from '@angular/core';
 
+/** A hero's name can't match the given regular expression */
+
+/*export function forbiddenNameValidator(nameRe: RegExp): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    const forbidden = nameRe.test(control.value);
+    return forbidden ? {forbiddenName: {value: control.value}} : null;
+  };
+}*/
+
 @Directive({
   selector: '[appInputValueValidation]',
+  // providers: [{provide: NG_VALIDATORS, useExisting: InputValueValidationDirective, multi: true}]
+
   // animations: [
   //   getRightSliderAnimation(this.percentageOpen)
   // ]
 })
-export class InputValueValidationDirective {
 
-  // @Input() minLength;
-  @Input() maxLength;
 
-  @Input() minValue: number;
-  @Output() changedValue = new EventEmitter();
-
-  _maxValue: number;
+export class InputValueValidationDirective /*implements Validator*/ {
 
   get maxValue() {
     return this._maxValue;
@@ -29,46 +34,98 @@ export class InputValueValidationDirective {
     }
   }
 
+  // @Input() minLength;
+  @Input() maxLength;
+  @Input() minValue: number;
+  @Output() changedValue = new EventEmitter();
+  _maxValue: number;
+
+  constructor(
+    private _el: ElementRef,
+    private renderer: Renderer2) {
+    _el.nativeElement.oninput = (event) => {
+      console.log('InputValueValidationDirective constructor input event : ', event);
+
+      // this.onInputChange(event);
+    };
+  }
+
   @Output() errorMessage = new EventEmitter<string>();
   @Output() isValid = new EventEmitter<boolean>();
   // @Input() keyValidator: RegExp = ValidatorType.ALPHA_NUMERIC_WITH_SPACE;
   @Input() inputValidator: RegExp = ValidatorType.ALPHA_NUMERIC_WITH_SPACE;
 
-  constructor(
-    private _el: ElementRef,
-    private renderer: Renderer2) {
-  }
-
   private prevValue: string;
+
+  /* validate(control: AbstractControl): { [key: string]: any } | null {
+     return this.forbiddenName ? forbiddenNameValidator(new RegExp(this.forbiddenName, 'i'))(control)
+       : null;
+   }*/
 
   @HostListener('keypress', ['$event']) onKeyPress(event) {
 
-    // console.log('InputValueValidationDirective keypress event : ', event);
-    // console.log('InputValueValidationDirective onInputChange event : ', event);
-    // console.log('InputValueValidationDirective onInputChange maxValue : ', this.maxValue);
-    // console.log('InputValueValidationDirective onInputChange minValue : ', this.minValue);
-    // console.log('event.key ', event);
-    // const inputChar = event;
-    /* if (!this.keyValidator.test(inputChar)) {
-       console.log('event.key keyValidator failed', event.key);
-       console.log('event.key keyValidator failed', this.keyValidator);
-       event.preventDefault();
-     } else {
-       this.prevValue = this._el.nativeElement.value;
-     }*/
+    console.log('InputValueValidationDirective keypress event : ', event);
+    console.log('InputValueValidationDirective keypress event.location : ', event.location);
+    console.log('InputValueValidationDirective keypress event.key : ', event.key);
     this.prevValue = this._el.nativeElement.value;
+    const currValue = event.target.value;
+    console.log('InputValueValidationDirective keypress event.target.value : ', currValue);
+
+    if (this.checkCurrentValue(currValue)) {
+
+    } else {
+      console.log('InputValueValidationDirective keypress prevValue : ', this.prevValue);
+      event.preventDefault();
+    }
+    console.log('InputValueValidationDirective keypress prevValue : ', this.prevValue);
+  }
+
+  @HostListener('keyup', ['$event']) onKeyUp(event) {
+
+    console.log('InputValueValidationDirective keypress event : ', event);
+    console.log('InputValueValidationDirective keypress event.location : ', event.location);
+    console.log('InputValueValidationDirective keypress event.key : ', event.key);
+    this.prevValue = this._el.nativeElement.value;
+    const currValue = event.target.value;
+    console.log('InputValueValidationDirective keypress event.target.value : ', currValue);
+
+    if (this.checkCurrentValue(currValue)) {
+
+    } else {
+      console.log('InputValueValidationDirective keypress prevValue : ', this.prevValue);
+      event.preventDefault();
+    }
+    console.log('InputValueValidationDirective keypress prevValue : ', this.prevValue);
+  }
+
+  @HostListener('input', ['$event'])
+  onInputChange(event) {
+    console.log('InputValueValidationDirective onInputChange event.target.value : ', event);
+
+
+    const currValue = event.target.value;
+    console.log('InputValueValidationDirective keypress event.target.value : ', currValue);
+
+    if (this.checkCurrentValue(currValue)) {
+
+    } else {
+      console.log('InputValueValidationDirective keypress prevValue : ', this.prevValue);
+      event.preventDefault();
+      this.renderer.setProperty(this._el.nativeElement, 'value', this.prevValue);
+      setTimeout(() => {
+        console.log('InputValueValidationDirective keypress  setTimeout prevValue : ', this.prevValue);
+        this._el.nativeElement.value = this.prevValue;
+      }, 100);
+      this.changedValue.emit(currValue);
+    }
+    // console.log(event);
 
   }
 
-  @HostListener('input', ['$event']) onInputChange(event) {
-    let currValue = this._el.nativeElement.value;
-    console.log('InputValueValidationDirective input event : ', event);
-    console.log('InputValueValidationDirective input currValue : ', currValue);
-    // console.log('InputValueValidationDirective input this.maxLength : ', this.maxLength);
-    console.log('InputValueValidationDirective input this.maxValue : ', this.maxValue);
-
+  checkCurrentValue(currValue) {
+    // const initialCurValue = currValue;
     if (currValue == '') {
-      return;
+      return true;
     }
     if (this.maxLength && currValue.length > this.maxLength) {
       currValue = currValue.slice(0, this.maxLength);
@@ -85,25 +142,21 @@ export class InputValueValidationDirective {
 
       }
     }
-    if (!this.inputValidator.test(currValue)) {
-      // console.log('InputValueValidationDirective onInputChange inputValidator failed : ', this.inputValidator);
-      //
+    if (this.inputValidator.test(currValue)) {
+      console.log('InputValueValidationDirective onInputChange inputValidator success : ', currValue);
+
+      return true;
+    } else {
+      // currValue = this.prevValue;
       console.log('InputValueValidationDirective onInputChange inputValidator failed : ', currValue);
-      currValue = this.prevValue;
+      return false;
     }
-    if (currValue !== this._el.nativeElement.value) {
-      // console.log('InputValueValidationDirective onInputChange inputValidator replacing with : ', currValue);
-      // this._el.nativeElement.value = currValue;
+    /*if (currValue !== initalCurValue) {
+      console.log('InputValueValidationDirective onInputChange this._el : ', this._el);
+      this._el.nativeElement.value = currValue;
+      // this._el.nativeElement.focus();
       this.renderer.setProperty(this._el.nativeElement, 'value', currValue);
       this.changedValue.emit(currValue);
-    }
-
-    /*Validator */
-    /*initialValue = initialValue.replace(this.validatorType, '');
-    this.renderer.setProperty(this._el.nativeElement, 'value', initialValue);
-    // console.log(initialValue);
-    if (initialValue !== this._el.nativeElement.value) {
-      event.stopPropagation();
     }*/
   }
 }
