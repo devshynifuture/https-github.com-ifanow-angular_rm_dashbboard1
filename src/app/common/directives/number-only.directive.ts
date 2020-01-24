@@ -53,6 +53,7 @@ export class AlphaNumericDirective {
   }
 }
 
+
 @Directive({
   selector: '[appTextOnly]'
 })
