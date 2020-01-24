@@ -53,18 +53,19 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   clientList: any;
   defaultVal: any;
   serviceList: any;
+  billerName: any;
 
   constructor(public enumService: EnumServiceService, private fb: FormBuilder, private subService: SubscriptionService,
     public subInjectService: SubscriptionInject) {
   }
 
   @Input() set data(data) {
+    console.log('@@@@@@@@ yo1', data, this.copyStoreData);
+   this.copyStoreData = data;
+   this.storeData = data;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
 
-    // console.log('@@@@@@@@', data);
-    this.copyStoreData = data;
-    this.storeData = data;
     this.initFormsAndVariable(data);
 
   }
@@ -296,6 +297,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
         billerAddress: this.editPayment.value.billerAddress,
         billingAddress: this.editPayment.value.billingAddress,
         invoiceNumber: this.editPayment.value.invoiceNumber,
+        billerName : this.billerName,
         subTotal: this.editPayment.value.finalAmount,
         discount: this.editPayment.value.discount,
         finalAmount:parseInt(this.finAmount),
@@ -312,7 +314,6 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       };
       let service;
       if (this.storeData.id == 0 || this.storeData.id == null) {
-        obj['billerName'] = this.editPayment.value.billerName,
           obj['advisorBillerProfileId'] = (!this.storeData.advisorBillerProfileId) ? this.advisorBillerProfileId : this.storeData.advisorBillerProfileId,
           obj['clientId'] = (this.upperData == undefined) ? this.clientId : this.upperData,
           obj['advisorId'] = this.advisorId,
@@ -362,10 +363,14 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       data => this.getClientListRes(data)
     );
   }
-
+  selectService(service){
+    this.finAmount = service.pricing
+    console.log('pricing ====== ',this.finAmount)
+  }
   getClientListRes(data) {
     console.log('getClientListRes', data.payees);
     this.clientList = data.payees;
+    this.billerName = data.biller.companyDisplayName
     this.defaultVal = data;
     this.advisorBillerProfileId = data.biller.id;
     this.editPayment.controls.billerAddress.setValue(data.biller.billerAddress);

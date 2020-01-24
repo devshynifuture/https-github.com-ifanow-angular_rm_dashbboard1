@@ -21,12 +21,12 @@
                         <div class="wrapper-20 pb-10 height120 width100per">
 
                             <mat-card-title class="mb-0 text-break f-24 relClass  mb-10 l-26">
-                                <div class="bar" [ngClass]="{'height23': isLoading}">
+                                <div class="bar" [ngClass]="{'height23': isLoading}" matTooltip="Plan name">
                                     {{singlePlan.name}}
                                 </div>
                             </mat-card-title>
                             <mat-card-subtitle class="pt-4 pb-12 relClass mb-0">
-                                <div class="bar" [ngClass]="{'height23': isLoading}">
+                                <div class="bar" [ngClass]="{'height23': isLoading}" matTooltip="Plan code">
                                     {{singlePlan.code}}
                                 </div>
                             </mat-card-subtitle>
@@ -63,8 +63,9 @@
                             </div>
                         </div>
                     </mat-card-content>
-                    <mat-card-actions class="block text-center paddTopBottom18 mb-0">
-                        <button mat-stroked-button class="btn-header addon mb-12 mt-12 br-0" (click)="openFragment(singlePlan,'plan')">INFO
+
+                    <mat-card-actions class=" d-flex height100 align-items-center justify-content-center">
+                        <button mat-stroked-button class="btn-header addon m-0 br-0" (click)="openFragment(singlePlan,'plan')">INFO
                         </button>
                     </mat-card-actions>
 

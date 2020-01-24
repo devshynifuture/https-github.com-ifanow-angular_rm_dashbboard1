@@ -150,10 +150,6 @@ a:hover {
     background-color: blue;
 }
 
-.mat-card-actions {
-    height: 20%;
-}
-
 // ::ng-deep .mat-card:not([class*=mat-elevation-z]){
 //     box-shadow: none !important;
 // }
@@ -171,4 +167,8 @@ a:hover {
 .paddTopBottom18 {
     padding-top: 18px;
     padding-bottom: 18px;
+}
+
+.height100 {
+    height: 100px;
 }

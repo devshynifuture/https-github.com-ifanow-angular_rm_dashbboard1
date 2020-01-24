@@ -300,7 +300,7 @@ export const appConfig = {
   DOCUMENT_ESIGN_REQUEST: 'subscription/invoice/esignDocumentSend',
   GET_QUOTATION_SERVICE_DATA: 'subscription/quotation/data/get',
   EMAIL_DOCUMENT: 'pdfAndEmail/send/docId',
-
+  GET_INVOICE_STATTUS:'subscription/invoice/status/edit',
   GET_BASE_64: 'api/v1/test/base64/decode',
 
 

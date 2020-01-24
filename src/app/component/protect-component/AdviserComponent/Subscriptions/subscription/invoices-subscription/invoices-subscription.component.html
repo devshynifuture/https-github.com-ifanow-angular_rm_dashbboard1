@@ -1,6 +1,6 @@
 <div *ngIf="invoiceSubscription !='true' && invoiceSubscription !='EditInInvoice'" class="bg-white" id="ui-subs">
     <!-- (scroll)="scrollCall(true)" -->
-    <div class="bg-white p-20 pb-0 filterBox">
+    <div *ngIf="dataSource.data.length > 0 || isFilter" class="bg-white p-20 pb-0 filterBox">
         <div class="row">
 
             <div class="col-md-1 p-0">
@@ -8,38 +8,40 @@
             </div>
             <div class="col-md-5 p-0">
                 <div class="row">
-                    <div class="col-md-3 p-0" *ngIf="dataSource.data.length > 0">
+                    <div class="col-md-3 p-0">
                         <button [matMenuTriggerFor]="menu" class="b-a pr-0 br-0" mat-button>Actions <i
-                class="material-icons text-custom">
-                arrow_drop_down
-              </i></button>
+                                class="material-icons text-custom">
+                                arrow_drop_down
+                            </i></button>
                         <mat-menu #menu="matMenu">
                             <button *ngIf="dataCount == 0" mat-menu-item>Select invoice to see more
-                actions
-              </button>
+                                actions
+                            </button>
                             <button (click)="deleteModal('INVOICE')" *ngIf="dataCount != 0 && dataCount > 1" mat-menu-item>Delete
-                Invoices
-              </button>
+                                Invoices
+                            </button>
                             <button (click)="deleteModal('INVOICE')" *ngIf="dataCount != 0 && dataCount <= 1" mat-menu-item>Delete
-                Invoice
-              </button>
+                                Invoice
+                            </button>
                         </mat-menu>
                     </div>
                     <div class="col-md-8 p-0" *ngIf="dataSource.data.length > 0 && dataCount > 0">
-                        <p class="m-0 text-black text-left pt-12" *ngIf="dataCount == 1">{{dataCount}} invoice selected</p>
-                        <p class="m-0 text-black text-left pt-12" *ngIf="dataCount > 1">{{dataCount}} invoices selected</p>
+                        <p class="m-0 text-black text-left pt-12" *ngIf="dataCount == 1">{{dataCount}} invoice selected
+                        </p>
+                        <p class="m-0 text-black text-left pt-12" *ngIf="dataCount > 1">{{dataCount}} invoices selected
+                        </p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 right text-right p-0" *ngIf="dataSource.data.length > 0">
+            <div class="col-md-6 right text-right p-0">
                 <i class="material-icons mr-12 icon-light c-p v-sub">
-          search
-        </i>
+                    search
+                </i>
                 <button (click)="showFilters(showFilter)" class="btn-default addon mr-12" mat-stroked-button><i
-            class="material-icons">filter_list</i>FILTERS
-        </button>
+                        class="material-icons">filter_list</i>FILTERS
+                </button>
                 <button (click)="addInvoice('EditInInvoice')" class="btn-primary addon" mat-stroked-button> ADD NEW
-        </button>
+                </button>
             </div>
         </div>
         <div [ngClass]="showFilter === true ? 'block' : 'none'" class="row pt-12">
@@ -49,52 +51,7 @@
       </div> -->
             <app-sudscription-table-filter [dataToFilter]="passFilterData" (filterRes)="getFiterRes($event)">
             </app-sudscription-table-filter>
-            <!-- <div class="row pt-12">
-        <div class="col-md-8 p-0 custom-tags">
-          <mat-chip-list>
-            <mat-chip *ngFor="let status of filterStatus; let ind = index" class="bg-white b-a c-p f-400 p-12">
-              {{status.name}}<i (click)="remove(ind)" class="material-icons text-custom ml-12">
-                cancel
-              </i></mat-chip>
-            <mat-chip-list class="newDateIcon">
-              <mat-chip *ngFor="let dateFilter of filterDate; let i = index" class="bg-white b-a c-p f-400 p-12">
-                <p>{{dateFilter.name}}</p>
-                <input (click)="picker2.open()" [(ngModel)]="selectedDateRange" [max]="maxDate"
-                  [satDatepicker]="picker2" class="pL-20" matInput placeholder="Choose a date" readonly>
-                <sat-datepicker #picker2 [closeAfterSelection]="false" [rangeMode]="true">
-                </sat-datepicker>
-                <sat-datepicker-toggle [for]="picker2" matSuffix></sat-datepicker-toggle>
-                <i (click)="removeDate(i)" class="material-icons text-custom c-p">
-                  cancel
-                </i>
-              </mat-chip>
-            </mat-chip-list>
-          </mat-chip-list>
-        </div>
-        <div class="col-md-4 right text-right p-0">
-          <div class="row">
-            <div class="col-md-6 pr-0">
-              <mat-form-field>
-                <mat-select (selectionChange)="addFilters(selectedStatusFilter)" [(ngModel)]='selectedStatusFilter'
-                  class="form-control br-0" id="sel11">
-                  <mat-option [disabled]="true" value="statusFilter">FILTER ONE</mat-option>
-                  <mat-option *ngFor="let chip of chips" [value]="chip">{{chip.name}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="col-md-6 pr-0">
-              <mat-form-field>
-                <mat-select (selectionChange)="addFiltersDate($event)" [(ngModel)]='selectedDateFilter'
-                  class="form-control br-0" id="sel12">
-                  <mat-option [disabled]="true" value="dateFilter">FILTER TWO</mat-option>
-                  <mat-option *ngFor="let dateAdd of dateChips" [value]="dateAdd">{{dateAdd.name}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          </div>
-        </div>
-      </div> -->
+
         </div>
     </div>
 
@@ -102,7 +59,7 @@
     <!-- id="pdfDoc"  removed from above div-->
 
     <div class="wrapper-20 pt-0 bg-white" id="wrapper" *ngIf="dataSource.data.length > 0">
-        <div class="tableClass">
+        <div class="example-container">
             <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="mt-8 skeletonAnimation" id="table-low" mat-table matSort>
                 <ng-container matColumnDef="checkbox">
                     <th mat-header-cell *matHeaderCellDef class="f-18">
@@ -133,22 +90,28 @@
                         <div class="bar"> {{element.clientName}} </div>
                     </td>
                 </ng-container>
+
+                <ng-container matColumnDef="status">
+                    <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="status"> Status</th>
+                    <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" class="c-p" mat-cell ngcl>
+                        <div class="bar">
+                            <span *ngIf="element.status==0" class="text-primary t-10 f-500 c-p">UNPAID</span>
+                            <span *ngIf="element.status==1" class="text-success t-10 f-500 c-p">PAID</span>
+                            <span *ngIf="element.status==2" class="text-danger t-10 f-500 c-p">OVERDUE</span>
+                            <span *ngIf="element.status==3" class="text-warning t-10 f-500 c-p">PARTIALLY PAID</span>
+                            <span *ngIf="element.status==4" class="text-primary t-10 f-500 c-p">SENT</span>
+                            <span *ngIf="element.status==5" class="text-grey t-10 f-500 c-p">VOID</span>
+                            <span *ngIf="element.status==6" class="text-balck t-10 f-500 c-p">WRITE OFF</span>
+                        </div>
+                    </td>
+                </ng-container>
+
                 <ng-container matColumnDef="email">
                     <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="email"> Email</th>
                     <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" class="c-p" mat-cell>
                         <div class="bar"> {{element.email}} </div>
                     </td>
                 </ng-container>
-
-                <ng-container matColumnDef="status">
-                    <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="status"> Status</th>
-                    <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" [ngClass]="{'text-danger':element.status==2,'text-primary':element.status==0,'text-success':element.status==1}" class="c-p" mat-cell ngcl>
-                        <div class="bar">
-                            {{(element.status == 0) ? 'UNPAID' : (element.status == 1) ? 'PAID' : (element.status == 2) ? 'OVERDUE' : ''}}
-                        </div>
-                    </td>
-                </ng-container>
-
                 <ng-container matColumnDef="duedate">
                     <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="dueDate"> Due date</th>
                     <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" mat-cell>
@@ -157,20 +120,23 @@
                 </ng-container>
 
                 <ng-container matColumnDef="amt">
-                    <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="finalAmount"> Amount</th>
-                    <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" class="c-p" mat-cell>
-                        <div class="bar"> {{isLoading ? '' : '₹' }} <span appFormatNumber>{{element.finalAmount}}</span> </div>
+                    <th *matHeaderCellDef class="f-18 textRight" mat-header-cell mat-sort-header="finalAmount"> Amount
+                    </th>
+                    <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" class="c-p text-right amt" mat-cell>
+                        <div class="bar"> {{isLoading ? '' : '₹' }} <span appFormatNumber>{{element.finalAmount}}</span>
+                        </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="balance">
                     <th *matHeaderCellDef class="f-18 text-right common-right pr-24" mat-header-cell mat-sort-header="balanceDue">
                         Balance due
                     </th>
-                    <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" class="text-right pr-8 c-p" mat-cell>
-                        <div class="bar"> {{isLoading ? '' : '₹' }} {{formatter(element.balanceDue) || 0}} </div>
+                    <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" class="text-right amt c-p" mat-cell>
+                        <div class="bar"> {{isLoading ? '' : '₹' }}<span appFormatNumber>
+                                {{isLoading ? '' : formatter(element.balanceDue) || 0 }}</span> </div>
                     </td>
                 </ng-container>
-                <tr *matHeaderRowDef="displayedColumns; sticky: true;" [ngClass]="!showFilter ? 'stickyHeader1' : 'stickyHeader2'" mat-header-row></tr>
+                <tr *matHeaderRowDef="displayedColumns; sticky: true" [ngClass]="!showFilter ? 'stickyHeader1' : 'stickyHeader2'" mat-header-row></tr>
                 <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
             </table>
 
@@ -192,7 +158,7 @@
         <img class="width400" src="assets/images/svg/clients-img.svg">
         <p class="f-22 f-600 pt-28 mb-0"> No Data Found </p>
         <button mat-stroked-button class="btn-primary mt-20 br-0 right text-right addon" (click)="addInvoice('EditInInvoice')"> ADD
-      INVOICE
-    </button>
+            INVOICE
+        </button>
     </div>
 </div>

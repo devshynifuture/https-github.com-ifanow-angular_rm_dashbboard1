@@ -342,8 +342,355 @@
 
             </div> -->
             <div *ngSwitchCase="'tab5'">
+                <div class="p-28 pl-16 pr-16 pb-0">
+                    <div class="row">
+                        <div class="col-md-12 p-0">
+                            <h3 class="m-0 text-black bb-1">Ratios</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row pt-20" id="ui-cards">
+                    <div class="col-md-3">
+                        <mat-card class="example-card b-a h-300">
 
+                            <h4 class="m-0">Basic liquidity ratio</h4>
+                            <p class="m-0 pt-8 text-primitive roboto h-72">This ratio indicates one's ability to
+                                meet
+                                mandatory monthly expenses & other
+                                emergency needs.</p>
+
+                            <mat-card-content>
+                                <div class="row pt-24">
+                                    <div class="col-md-7 pl-0 pr-0 pt-16">
+                                        <p class="f-12 roboto text-primitive text-center mb-0">HOW IT’S DERIVED</p>
+                                        <p class="f-12 m-0 text-black bb-black text-center"> Liquid assets</p>
+                                        <p class="f-12 m-0 text-black text-center">Monthly expenses</p>
+                                    </div>
+                                    <div class="col-md-5 text-center pr-0">
+                                        <div class="h-84 bg-danger pt-16 pb-20">
+                                            <p class="m-0 f-12 roboto text-white">YOUR RATIO</p>
+                                            <p class="m-0 f-24 pt-12 roboto text-white">55.8</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                            <mat-card-actions>
+                                <div class="row pb-8">
+                                    <div class="col-md-4">
+                                        <h5 class="m-0 text-black">
+                                            < 3</h5> <p class="m-0 f-12 roboto">Adverse</p>
+                                    </div>
+                                    <div class="col-md-4">
+
+                                        <h5 class="m-0 text-black">3 - 6</h5>
+                                        <p class="m-0 f-12 roboto">Moderate</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h5 class="m-0 text-black">6 - 15</h5>
+                                        <p class="m-0 f-12 roboto">Optimum</p>
+                                    </div>
+                                </div>
+                            </mat-card-actions>
+                        </mat-card>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-card class="example-card b-a h-300">
+
+                            <h4 class="m-0">Expanded liquidity ratio</h4>
+                            <p class="m-0 pt-8 text-primitive roboto h-72">Your ability to meet emergencies when it
+                                may
+                                not be possible to convert assets into cash.</p>
+
+                            <mat-card-content>
+                                <div class="row pt-24">
+                                    <div class="col-md-7 pl-0 pr-0 pt-16">
+                                        <p class="f-12 roboto text-primitive text-center mb-0">HOW IT’S DERIVED</p>
+                                        <p class="f-12 m-0 text-black bb-black text-center"> Liquid assets</p>
+                                        <p class="f-12 m-0 text-black text-center">Net Worth expenses</p>
+                                    </div>
+                                    <div class="col-md-5 text-center pr-0">
+                                        <div class="h-84 bg-success pt-16 pb-20">
+                                            <p class="m-0 f-12 roboto text-white">YOUR RATIO</p>
+                                            <p class="m-0 f-24 pt-12 roboto text-white">55.8</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                            <mat-card-actions>
+                                <div class="row pb-8">
+                                    <div class="col-md-4">
+                                        <h5 class="m-0 text-black">
+                                            < 3</h5> <p class="m-0 f-12 roboto">Adverse</p>
+                                    </div>
+                                    <div class="col-md-4">
+
+                                        <h5 class="m-0 text-black">3 - 6</h5>
+                                        <p class="m-0 f-12 roboto">Moderate</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h5 class="m-0 text-black">6 - 15</h5>
+                                        <p class="m-0 f-12 roboto">Optimum</p>
+                                    </div>
+                                </div>
+                            </mat-card-actions>
+                        </mat-card>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-card class="example-card b-a h-300">
+
+                            <h4 class="m-0">Savings ratio</h4>
+                            <p class="m-0 pt-8 text-primitive roboto h-72">This ratio calculates the proportion of
+                                income
+                                an individual sets aside for savings out of the total income.</p>
+
+                            <mat-card-content>
+                                <div class="row pt-24">
+                                    <div class="col-md-7 pl-0 pr-0 pt-16">
+                                        <p class="f-12 roboto text-primitive text-center mb-0">HOW IT’S DERIVED</p>
+                                        <p class="f-12 m-0 text-black bb-black text-center">Saving</p>
+                                        <p class="f-12 m-0 text-black text-center">Net inflow</p>
+                                    </div>
+                                    <div class="col-md-5 text-center pr-0">
+                                        <div class="h-84 bg-success pt-16 pb-20">
+                                            <p class="m-0 f-12 roboto text-white">YOUR RATIO</p>
+                                            <p class="m-0 f-24 pt-12 roboto text-white">55.8</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                            <mat-card-actions>
+                                <div class="row pb-8">
+                                    <div class="col-md-4">
+                                        <h5 class="m-0 text-black">
+                                            < 3</h5> <p class="m-0 f-12 roboto">Adverse</p>
+                                    </div>
+                                    <div class="col-md-4">
+
+                                        <h5 class="m-0 text-black">3 - 6</h5>
+                                        <p class="m-0 f-12 roboto">Moderate</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h5 class="m-0 text-black">6 - 15</h5>
+                                        <p class="m-0 f-12 roboto">Optimum</p>
+                                    </div>
+                                </div>
+                            </mat-card-actions>
+                        </mat-card>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-card class="example-card b-a h-300">
+
+                            <h4 class="m-0">Investment ratio</h4>
+                            <p class="m-0 pt-8 text-primitive roboto h-72">This ratio calculates the proportion of
+                                savings an individual actually invests out of the total savings.</p>
+
+                            <mat-card-content>
+                                <div class="row pt-24">
+                                    <div class="col-md-7 pl-0 pr-0 pt-16">
+                                        <p class="f-12 roboto text-primitive text-center mb-0">HOW IT’S DERIVED</p>
+                                        <p class="f-12 m-0 text-black bb-black text-center"> Invtesment</p>
+                                        <p class="f-12 m-0 text-black text-center">Saving</p>
+                                    </div>
+                                    <div class="col-md-5 text-center pr-0">
+                                        <div class="h-84 bg-success pt-16 pb-20">
+                                            <p class="m-0 f-12 roboto text-white">YOUR RATIO</p>
+                                            <p class="m-0 f-24 pt-12 roboto text-white">55.8</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                            <mat-card-actions>
+                                <div class="row pb-8">
+                                    <div class="col-md-4">
+                                        <h5 class="m-0 text-black">
+                                            < 3</h5> <p class="m-0 f-12 roboto">Adverse</p>
+                                    </div>
+                                    <div class="col-md-4">
+
+                                        <h5 class="m-0 text-black">3 - 6</h5>
+                                        <p class="m-0 f-12 roboto">Moderate</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h5 class="m-0 text-black">6 - 15</h5>
+                                        <p class="m-0 f-12 roboto">Optimum</p>
+                                    </div>
+                                </div>
+                            </mat-card-actions>
+                        </mat-card>
+                    </div>
+
+                </div>
+                <div class="row pt-20">
+                    <div class="col-md-3">
+                        <mat-card class="example-card b-a h-300">
+
+                            <h4 class="m-0">Debt asset ratio</h4>
+                            <p class="m-0 pt-8 text-primitive roboto h-72">This ratio calculates an individual's
+                                ability
+                                to pay liabilities out of assets.</p>
+
+                            <mat-card-content>
+                                <div class="row pt-24">
+                                    <div class="col-md-7 pl-0 pr-0 pt-16">
+                                        <p class="f-12 roboto text-primitive text-center mb-0">HOW IT’S DERIVED</p>
+                                        <p class="f-12 m-0 text-black bb-black text-center"> Liquid assets</p>
+                                        <p class="f-12 m-0 text-black text-center">Monthly expenses</p>
+                                    </div>
+                                    <div class="col-md-5 text-center pr-0">
+                                        <div class="h-84 bg-danger pt-16 pb-20">
+                                            <p class="m-0 f-12 roboto text-white">YOUR RATIO</p>
+                                            <p class="m-0 f-24 pt-12 roboto text-white">55.8</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                            <mat-card-actions>
+                                <div class="row pb-8">
+                                    <div class="col-md-4">
+                                        <h5 class="m-0 text-black">
+                                            < 3</h5> <p class="m-0 f-12 roboto">Adverse</p>
+                                    </div>
+                                    <div class="col-md-4">
+
+                                        <h5 class="m-0 text-black">3 - 6</h5>
+                                        <p class="m-0 f-12 roboto">Moderate</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h5 class="m-0 text-black">6 - 15</h5>
+                                        <p class="m-0 f-12 roboto">Optimum</p>
+                                    </div>
+                                </div>
+                            </mat-card-actions>
+                        </mat-card>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-card class="example-card b-a h-300">
+
+                            <h4 class="m-0">Solvency ratio</h4>
+                            <p class="m-0 pt-8 text-primitive roboto h-72">This ratio is used to measure the
+                                potential of
+                                attaining long-term solvency.</p>
+
+                            <mat-card-content>
+                                <div class="row pt-24">
+                                    <div class="col-md-7 pl-0 pr-0 pt-16">
+                                        <p class="f-12 roboto text-primitive text-center mb-0">HOW IT’S DERIVED</p>
+                                        <p class="f-12 m-0 text-black bb-black text-center"> Liquid assets</p>
+                                        <p class="f-12 m-0 text-black text-center">Monthly expenses</p>
+                                    </div>
+                                    <div class="col-md-5 text-center pr-0">
+                                        <div class="h-84 bg-success pt-16 pb-20">
+                                            <p class="m-0 f-12 roboto text-white">YOUR RATIO</p>
+                                            <p class="m-0 f-24 pt-12 roboto text-white">55.8</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                            <mat-card-actions>
+                                <div class="row pb-8">
+                                    <div class="col-md-4">
+                                        <h5 class="m-0 text-black">
+                                            < 3</h5> <p class="m-0 f-12 roboto">Adverse</p>
+                                    </div>
+                                    <div class="col-md-4">
+
+                                        <h5 class="m-0 text-black">3 - 6</h5>
+                                        <p class="m-0 f-12 roboto">Moderate</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h5 class="m-0 text-black">6 - 15</h5>
+                                        <p class="m-0 f-12 roboto">Optimum</p>
+                                    </div>
+                                </div>
+                            </mat-card-actions>
+                        </mat-card>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-card class="example-card b-a h-300">
+
+                            <h4 class="m-0">Debt service ratio</h4>
+                            <p class="m-0 pt-8 text-primitive roboto h-72">hese ratios are used to measure an
+                                individual's ability to make debt repayments out of net income.</p>
+
+                            <mat-card-content>
+                                <div class="row pt-24">
+                                    <div class="col-md-7 pl-0 pr-0 pt-16">
+                                        <p class="f-12 roboto text-primitive text-center mb-0">HOW IT’S DERIVED</p>
+                                        <p class="f-12 m-0 text-black bb-black text-center"> Liquid assets</p>
+                                        <p class="f-12 m-0 text-black text-center">Monthly expenses</p>
+                                    </div>
+                                    <div class="col-md-5 text-center pr-0">
+                                        <div class="h-84 bg-success pt-16 pb-20">
+                                            <p class="m-0 f-12 roboto text-white">YOUR RATIO</p>
+                                            <p class="m-0 f-24 pt-12 roboto text-white">55.8</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                            <mat-card-actions>
+                                <div class="row pb-8">
+                                    <div class="col-md-4">
+                                        <h5 class="m-0 text-black">
+                                            < 3</h5> <p class="m-0 f-12 roboto">Adverse</p>
+                                    </div>
+                                    <div class="col-md-4">
+
+                                        <h5 class="m-0 text-black">3 - 6</h5>
+                                        <p class="m-0 f-12 roboto">Moderate</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h5 class="m-0 text-black">6 - 15</h5>
+                                        <p class="m-0 f-12 roboto">Optimum</p>
+                                    </div>
+                                </div>
+                            </mat-card-actions>
+                        </mat-card>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-card class="example-card b-a h-300">
+
+                            <h4 class="m-0">Financial investment ratio</h4>
+                            <p class="m-0 pt-8 text-primitive roboto h-72">This ratio is used to determine an
+                                individual's invested assets out of total Net worth.</p>
+
+                            <mat-card-content>
+                                <div class="row pt-24">
+                                    <div class="col-md-7 pl-0 pr-0 pt-16">
+                                        <p class="f-12 roboto text-primitive text-center mb-0">HOW IT’S DERIVED</p>
+                                        <p class="f-12 m-0 text-black bb-black text-center"> Liquid assets</p>
+                                        <p class="f-12 m-0 text-black text-center">Monthly expenses</p>
+                                    </div>
+                                    <div class="col-md-5 text-center pr-0">
+                                        <div class="h-84 bg-success pt-16 pb-20">
+                                            <p class="m-0 f-12 roboto text-white">YOUR RATIO</p>
+                                            <p class="m-0 f-24 pt-12 roboto text-white">55.8</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                            <mat-card-actions>
+                                <div class="row pb-8">
+                                    <div class="col-md-4">
+                                        <h5 class="m-0 text-black">
+                                            < 3</h5> <p class="m-0 f-12 roboto">Adverse</p>
+                                    </div>
+                                    <div class="col-md-4">
+
+                                        <h5 class="m-0 text-black">3 - 6</h5>
+                                        <p class="m-0 f-12 roboto">Moderate</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h5 class="m-0 text-black">6 - 15</h5>
+                                        <p class="m-0 f-12 roboto">Optimum</p>
+                                    </div>
+                                </div>
+                            </mat-card-actions>
+                        </mat-card>
+                    </div>
+
+                </div>
             </div>
+
             <div *ngSwitchCase="'tab6'">
                 <!-- <div class="row pt-150">
                     <div class="col-md-12 text-center">
@@ -357,94 +704,109 @@
                 <div class="row pt-28">
                     <div class="col-md-6">
                         <h3 class="m-0 bb-1 pb-8">Modules added</h3>
-                        <div class="mt-8">
-                            <div class="row p-4 b-a pt-8 pb-8">
-                                <div class="col-md-1 pl-8">
-                                    <img src="/assets/images/svg/module-icons.svg" class="c-p">
-                                </div>
-                                <div class="col-md-10 pl-0">
-                                    <p class="m-0 pt-4">Plan / Scenario 2 / Life insurance / Rahul Jain</p>
-                                </div>
-                                <div class="col-md-1">
-                                    <img src="/assets/images/svg/close.svg" class="c-p">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-4">
-                            <div class="row p-4 b-a pt-8 pb-8">
-                                <div class="col-md-1 pl-8">
-                                    <img src="/assets/images/svg/module-icons.svg" class="c-p">
-                                </div>
-                                <div class="col-md-10 pl-0">
-                                    <p class="m-0 pt-4">Plan / Scenario 2 / Life insurance / Rahul Jain</p>
-                                </div>
-                                <div class="col-md-1">
-                                    <img src="/assets/images/svg/close.svg" class="c-p">
+                        <div class="h-100vh">
+                            <div class="mt-8">
+                                <div class="row p-4 b-a pt-8 pb-8">
+                                    <div class="col-md-1 pl-8">
+                                        <img src="/assets/images/svg/module-icons.svg" class="c-p">
+                                    </div>
+                                    <div class="col-md-10 pl-0">
+                                        <p class="m-0 pt-4">Plan / Scenario 2 / Life insurance / Rahul Jain</p>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <img src="/assets/images/svg/close.svg" class="c-p">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="mt-4">
-                            <div class="row p-4 b-a pt-8 pb-8">
-                                <div class="col-md-1 pl-8">
-                                    <img src="/assets/images/svg/module-icons.svg" class="c-p">
-                                </div>
-                                <div class="col-md-10 pl-0">
-                                    <p class="m-0 pt-4">Plan / Scenario 2 / Life insurance / Rahul Jain</p>
-                                </div>
-                                <div class="col-md-1">
-                                    <img src="/assets/images/svg/close.svg" class="c-p">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-4">
-                            <div class="row p-4 b-a pt-8 pb-8">
-                                <div class="col-md-1 pl-8">
-                                    <img src="/assets/images/svg/module-icons.svg" class="c-p">
-                                </div>
-                                <div class="col-md-10 pl-0">
-                                    <p class="m-0 pt-4">Plan / Scenario 2 / Life insurance / Rahul Jain</p>
-                                </div>
-                                <div class="col-md-1">
-                                    <img src="/assets/images/svg/close.svg" class="c-p">
+                            <div class="mt-4">
+                                <div class="row p-4 b-a pt-8 pb-8">
+                                    <div class="col-md-1 pl-8">
+                                        <img src="/assets/images/svg/module-icons.svg" class="c-p">
+                                    </div>
+                                    <div class="col-md-10 pl-0">
+                                        <p class="m-0 pt-4">Plan / Scenario 2 / Life insurance / Rahul Jain</p>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <img src="/assets/images/svg/close.svg" class="c-p">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="mt-4">
-                            <div class="row p-4 b-a pt-8 pb-8">
-                                <div class="col-md-1 pl-8">
-                                    <img src="/assets/images/svg/module-icons.svg" class="c-p">
-                                </div>
-                                <div class="col-md-10 pl-0">
-                                    <p class="m-0 pt-4">Plan / Scenario 2 / Life insurance / Rahul Jain</p>
-                                </div>
-                                <div class="col-md-1">
-                                    <img src="/assets/images/svg/close.svg" class="c-p">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-4">
-                            <div class="row p-4 b-a pt-8 pb-8">
-                                <div class="col-md-1 pl-8">
-                                    <img src="/assets/images/svg/module-icons.svg" class="c-p">
-                                </div>
-                                <div class="col-md-10 pl-0">
-                                    <p class="m-0 pt-4">Plan / Scenario 2 / Life insurance / Rahul Jain</p>
-                                </div>
-                                <div class="col-md-1">
-                                    <img src="/assets/images/svg/close.svg" class="c-p">
+                            <div class="mt-4">
+                                <div class="row p-4 b-a pt-8 pb-8">
+                                    <div class="col-md-1 pl-8">
+                                        <img src="/assets/images/svg/module-icons.svg" class="c-p">
+                                    </div>
+                                    <div class="col-md-10 pl-0">
+                                        <p class="m-0 pt-4">Plan / Scenario 2 / Life insurance / Rahul Jain</p>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <img src="/assets/images/svg/close.svg" class="c-p">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="mt-4">
-                            <div class="row p-4 b-a pt-8 pb-8">
-                                <div class="col-md-1 pl-8">
-                                    <img src="/assets/images/svg/module-icons.svg" class="c-p">
+                            <div class="mt-4">
+                                <div class="row p-4 b-a pt-8 pb-8">
+                                    <div class="col-md-1 pl-8">
+                                        <img src="/assets/images/svg/module-icons.svg" class="c-p">
+                                    </div>
+                                    <div class="col-md-10 pl-0">
+                                        <p class="m-0 pt-4">Plan / Scenario 2 / Life insurance / Rahul Jain</p>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <img src="/assets/images/svg/close.svg" class="c-p">
+                                    </div>
                                 </div>
-                                <div class="col-md-10 pl-0">
-                                    <p class="m-0 pt-4">Plan / Scenario 2 / Life insurance / Rahul Jain</p>
+                            </div>
+                            <div class="mt-4">
+                                <div class="row p-4 b-a pt-8 pb-8">
+                                    <div class="col-md-1 pl-8">
+                                        <img src="/assets/images/svg/module-icons.svg" class="c-p">
+                                    </div>
+                                    <div class="col-md-10 pl-0">
+                                        <p class="m-0 pt-4">Plan / Scenario 2 / Life insurance / Rahul Jain</p>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <img src="/assets/images/svg/close.svg" class="c-p">
+                                    </div>
                                 </div>
-                                <div class="col-md-1">
-                                    <img src="/assets/images/svg/close.svg" class="c-p">
+                            </div>
+                            <div class="mt-4">
+                                <div class="row p-4 b-a pt-8 pb-8">
+                                    <div class="col-md-1 pl-8">
+                                        <img src="/assets/images/svg/module-icons.svg" class="c-p">
+                                    </div>
+                                    <div class="col-md-10 pl-0">
+                                        <p class="m-0 pt-4">Plan / Scenario 2 / Life insurance / Rahul Jain</p>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <img src="/assets/images/svg/close.svg" class="c-p">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <div class="row p-4 b-a pt-8 pb-8">
+                                    <div class="col-md-1 pl-8">
+                                        <img src="/assets/images/svg/module-icons.svg" class="c-p">
+                                    </div>
+                                    <div class="col-md-10 pl-0">
+                                        <p class="m-0 pt-4">Plan / Scenario 2 / Life insurance / Rahul Jain</p>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <img src="/assets/images/svg/close.svg" class="c-p">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-12">
+                                <div class="row b-t pt-12">
+                                    <div class="col-md-2 pl-0">
+                                        <button mat-stroked-button class="text-primary b-a-custom">Preview</button>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <button mat-stroked-button class="btn-primary">Generate plan</button>
+                                    </div>
+                                    <div class="col-md-3 p-0 text-right">
+                                        <button mat-stroked-button class="btn-success">Save plan</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -460,10 +822,334 @@
                                 </i>
                             </div>
                         </div>
-                        <mat-tab-group animationDuration="0ms">
-                            <mat-tab label="Plan">Content 1</mat-tab>
+                        <mat-tab-group animationDuration="0ms" id="ui-fp-planmodule">
+                            <mat-tab label="Plan">
+                                <div class="row pt-12 pl-20 pb-12">
+                                    <div class="col-md-12 p-0">
+                                        <button mat-button [matMenuTriggerFor]="menu" class="pr-8 b-a">Scenario 2<i
+                                                class="material-icons text-right">
+                                                arrow_drop_down
+                                            </i></button>
+                                        <mat-menu #menu="matMenu">
+                                            <button mat-menu-item>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <p class="m-0 pt-16">Scenario 1</p>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <button mat-stroked-button
+                                                            class="warning-sm">UNAPPROVED</button>
+                                                    </div>
+                                                </div>
+                                            </button>
+                                            <button mat-menu-item>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <p class="m-0 pt-16">Scenario 2</p>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <button mat-stroked-button class="primary-sm">APPROVED</button>
+                                                    </div>
+                                                </div>
+                                            </button>
+                                            <button mat-menu-item>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <p class="m-0 pt-16">Scenario 3</p>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <button mat-stroked-button
+                                                            class="warning-sm">UNAPPROVED</button>
+                                                    </div>
+                                                </div>
+                                            </button>
+                                        </mat-menu>
+                                    </div>
+                                </div>
+                                <div class="pt-12 pl-20 pr-20 pb-20">
+                                    <mat-accordion id="fp-modules">
+                                        <mat-expansion-panel>
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    <h5 class="m-0">Insurance planning</h5>
+                                                </mat-panel-title>
+
+                                            </mat-expansion-panel-header>
+                                            <div class="bl br bb">
+                                                <div class="row bb-1 pt-8 pb-8">
+                                                    <div class="col-md-1">
+                                                        <mat-checkbox></mat-checkbox>
+                                                    </div>
+                                                    <div class="col-md-11 pl-8">
+                                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
+                                                            Life
+                                                            insurance / Rahul
+                                                            Jain</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row bb-1 pt-8 pb-8">
+                                                    <div class="col-md-1">
+                                                        <mat-checkbox></mat-checkbox>
+                                                    </div>
+                                                    <div class="col-md-11 pl-8">
+                                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
+                                                            Life
+                                                            insurance / Rahul
+                                                            Jain</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row bb-1 pt-8 pb-8">
+                                                    <div class="col-md-1">
+                                                        <mat-checkbox></mat-checkbox>
+                                                    </div>
+                                                    <div class="col-md-11 pl-8">
+                                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
+                                                            Life
+                                                            insurance / Rahul
+                                                            Jain</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row bb-1 pt-8 pb-8">
+                                                    <div class="col-md-1">
+                                                        <mat-checkbox></mat-checkbox>
+                                                    </div>
+                                                    <div class="col-md-11 pl-8">
+                                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
+                                                            Life
+                                                            insurance / Rahul
+                                                            Jain</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-8 pb-8">
+                                                    <div class="col-md-1">
+                                                        <mat-checkbox></mat-checkbox>
+                                                    </div>
+                                                    <div class="col-md-11 pl-8">
+                                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
+                                                            Life
+                                                            insurance / Rahul
+                                                            Jain</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </mat-expansion-panel>
+                                        <mat-expansion-panel (opened)="panelOpenState = true"
+                                            (closed)="panelOpenState = false" class="mt-12">
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    <h5 class="m-0">Goals</h5>
+                                                </mat-panel-title>
+
+                                            </mat-expansion-panel-header>
+                                            <div class="bl br bb">
+                                                <div class="row bb-1 pt-8 pb-8">
+                                                    <div class="col-md-1">
+                                                        <mat-checkbox></mat-checkbox>
+                                                    </div>
+                                                    <div class="col-md-11 pl-8">
+                                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
+                                                            Life
+                                                            insurance / Rahul
+                                                            Jain</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row bb-1 pt-8 pb-8">
+                                                    <div class="col-md-1">
+                                                        <mat-checkbox></mat-checkbox>
+                                                    </div>
+                                                    <div class="col-md-11 pl-8">
+                                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
+                                                            Life
+                                                            insurance / Rahul
+                                                            Jain</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row bb-1 pt-8 pb-8">
+                                                    <div class="col-md-1">
+                                                        <mat-checkbox></mat-checkbox>
+                                                    </div>
+                                                    <div class="col-md-11 pl-8">
+                                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
+                                                            Life
+                                                            insurance / Rahul
+                                                            Jain</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row bb-1 pt-8 pb-8">
+                                                    <div class="col-md-1">
+                                                        <mat-checkbox></mat-checkbox>
+                                                    </div>
+                                                    <div class="col-md-11 pl-8">
+                                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
+                                                            Life
+                                                            insurance / Rahul
+                                                            Jain</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-8 pb-8">
+                                                    <div class="col-md-1">
+                                                        <mat-checkbox></mat-checkbox>
+                                                    </div>
+                                                    <div class="col-md-11 pl-8">
+                                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
+                                                            Life
+                                                            insurance / Rahul
+                                                            Jain</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </mat-expansion-panel>
+                                        <mat-expansion-panel (opened)="panelOpenState = true"
+                                            (closed)="panelOpenState = false" class="mt-12">
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    <h5 class="m-0">Taxes</h5>
+                                                </mat-panel-title>
+
+                                            </mat-expansion-panel-header>
+                                            <div class="bl br bb">
+                                                <div class="row bb-1 pt-8 pb-8">
+                                                    <div class="col-md-1">
+                                                        <mat-checkbox></mat-checkbox>
+                                                    </div>
+                                                    <div class="col-md-11 pl-8">
+                                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
+                                                            Life
+                                                            insurance / Rahul
+                                                            Jain</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row bb-1 pt-8 pb-8">
+                                                    <div class="col-md-1">
+                                                        <mat-checkbox></mat-checkbox>
+                                                    </div>
+                                                    <div class="col-md-11 pl-8">
+                                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
+                                                            Life
+                                                            insurance / Rahul
+                                                            Jain</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row bb-1 pt-8 pb-8">
+                                                    <div class="col-md-1">
+                                                        <mat-checkbox></mat-checkbox>
+                                                    </div>
+                                                    <div class="col-md-11 pl-8">
+                                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
+                                                            Life
+                                                            insurance / Rahul
+                                                            Jain</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row bb-1 pt-8 pb-8">
+                                                    <div class="col-md-1">
+                                                        <mat-checkbox></mat-checkbox>
+                                                    </div>
+                                                    <div class="col-md-11 pl-8">
+                                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
+                                                            Life
+                                                            insurance / Rahul
+                                                            Jain</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-8 pb-8">
+                                                    <div class="col-md-1">
+                                                        <mat-checkbox></mat-checkbox>
+                                                    </div>
+                                                    <div class="col-md-11 pl-8">
+                                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
+                                                            Life
+                                                            insurance / Rahul
+                                                            Jain</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                </div>
+                            </mat-tab>
                             <mat-tab label="Accounts">Content 2</mat-tab>
-                            <mat-tab label="Templates">Content 3</mat-tab>
+                            <mat-tab label="Templates">
+                                <div class="pt-12 pb-12 pl-20 pr-20" id="ui-profileplan-card">
+                                    <div class="row">
+                                        <div class="col-md-12 p-0">
+                                            <button mat-button [matMenuTriggerFor]="menu" class="pr-8 b-a">Menu<i
+                                                    class="material-icons text-right icon-light">
+                                                    arrow_drop_down
+                                                </i></button>
+                                            <mat-menu #menu="matMenu">
+                                                <button mat-menu-item>Item 1</button>
+                                                <button mat-menu-item>Item 2</button>
+                                            </mat-menu>
+                                        </div>
+                                    </div>
+                                    <mat-accordion>
+                                        <mat-expansion-panel class="mt-12 br-0">
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    Quotes
+                                                </mat-panel-title>
+
+                                            </mat-expansion-panel-header>
+                                            <div class="row">
+                                                <div class="col-md-6 pl-0 pr-8">
+                                                    <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
+                                                        <img mat-card-image src="/assets/images/svg/img.svg"
+                                                            class="w-100">
+                                                        <mat-card-content>
+                                                            <h5 class="m-0 text-center">Index</h5>
+                                                        </mat-card-content>
+                                                        <mat-card-actions class="text-center">
+                                                            <button mat-stroked-button
+                                                                class="text-primary b-a-custom">Preview</button>
+                                                            <button mat-stroked-button class="btn-primary">Add</button>
+                                                        </mat-card-actions>
+                                                    </mat-card>
+                                                </div>
+                                                <div class="col-md-6 pr-0 pl-8">
+                                                    <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
+                                                        <img mat-card-image src="/assets/images/svg/img.svg"
+                                                            class="w-100">
+                                                        <mat-card-content>
+                                                            <h5 class="m-0 text-center">Index</h5>
+                                                        </mat-card-content>
+                                                        <mat-card-actions class="text-center">
+                                                            <button mat-stroked-button
+                                                                class="text-primary b-a-custom">Preview</button>
+                                                            <button mat-stroked-button class="btn-primary">Add</button>
+                                                        </mat-card-actions>
+                                                    </mat-card>
+                                                </div>
+                                            </div>
+
+                                        </mat-expansion-panel>
+
+                                    </mat-accordion>
+                                    <mat-accordion>
+                                        <mat-expansion-panel class="mt-12">
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    Financial planning
+                                                </mat-panel-title>
+
+                                            </mat-expansion-panel-header>
+
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                    <mat-accordion>
+                                        <mat-expansion-panel class="mt-12">
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    Miscellaenous
+                                                </mat-panel-title>
+
+                                            </mat-expansion-panel-header>
+
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                </div>
+                            </mat-tab>
                         </mat-tab-group>
                     </div>
                 </div>

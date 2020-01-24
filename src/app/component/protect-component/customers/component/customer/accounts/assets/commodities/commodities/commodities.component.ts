@@ -234,16 +234,19 @@ export class CommoditiesComponent implements OnInit {
       sideBarData => {
 
         console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isRefreshRequired(sideBarData)) {
-          if (value == 'addGold') {
-            this.getGoldList()
-          } else {
-            this.getOtherList()
-          }
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          rightSideDataSub.unsubscribe();
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+            if (value == 'addGold') {
+              this.getGoldList()
+            } else {
+              this.getOtherList()
+            }
 
+          }
+          rightSideDataSub.unsubscribe();
         }
+        
       }
     );
   }
@@ -260,16 +263,19 @@ export class CommoditiesComponent implements OnInit {
       sideBarData => {
 
         console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isRefreshRequired(sideBarData)) {
-          if (value == 'addGold') {
-            this.getGoldList()
-          } else {
-            this.getOtherList()
-          }
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          rightSideDataSub.unsubscribe();
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            if (value == 'addGold') {
+              this.getGoldList()
+            } else {
+              this.getOtherList()
+            }
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
+          }
+          rightSideDataSub.unsubscribe();
         }
+        
       }
     );
   }

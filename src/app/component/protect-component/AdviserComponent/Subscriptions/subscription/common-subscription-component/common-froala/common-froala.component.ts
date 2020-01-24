@@ -43,6 +43,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { EmailOnlyComponent } from '../email-only/email-only.component';
 import { AuthService } from '../../../../../../../auth-service/authService';
 import { PdfService } from '../../../../../../../services/pdf.service';
+import { escapeRegExp } from '@angular/compiler/src/util';
 
 // import html2canvas from 'html2canvas';
 
@@ -120,6 +121,14 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
 
   getcommanFroalaData(data) {
     this.storeData = data;
+    let d = new Date();
+    console.log(this.storeData.documentText)
+    this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp('$(customer_name)'), 'g'),
+      this.storeData.clientName);
+    this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp('$(plan_name)'), 'g'),
+      this.storeData.planName);
+    this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp(' $(date)'), 'g'),
+      d.getDate() + "/" + d.getMonth() + 1 + "/" + d.getFullYear());
   }
 
   Close(data, flag) {
@@ -220,7 +229,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     console.log(data);
     // this.Close('close');
     if (this.inputData.sendEsign) {
-      this.openSendEmail();
+      this.openSendEmailEsign();
       this.inputData.sendEsign = false;
     }
     else {
@@ -326,7 +335,25 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
       }
   */
   }
-
+  openSendEmailEsign() {
+    if (this.storeData.isDocument == true) {
+      this.templateType = 3;
+    } else {
+      this.templateType = 2;
+    }
+    const data = {
+      advisorId: this.advisorId,
+      clientData: this.storeData,
+      templateType: this.templateType, // 2 is for quotation
+      documentList: [this.storeData],
+    };
+    // this.dataSource.forEach(singleElement => {
+    //   if (singleElement.selected) {
+    //     data.documentList.push(singleElement);
+    //   }
+    // });
+    this.openEmail(data, 'email');
+  }
   openSendEmail() {
     if (this.storeData.isDocument == true) {
       this.templateType = 4;

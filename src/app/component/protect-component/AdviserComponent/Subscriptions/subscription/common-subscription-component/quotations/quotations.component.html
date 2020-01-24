@@ -24,30 +24,29 @@
                     <p class="m-0 text-black text-left pt-10" *ngIf="dataCount > 1">{{dataCount}} quotations selected
                     </p>
                 </div>
-                <div class="col-md-6 right text-right p-0">
+                <div class="col-md-11 right text-right p-0">
                     <i class="material-icons mr-12 icon-light c-p v-sub">
                         search
                     </i>
                     <button (click)="showFilters(showFilter)" class="btn-default addon mr-12" mat-stroked-button><i
                             class="material-icons">filter_list</i>FILTERS
                     </button>
-                    <button  class="btn-primary addon" mat-stroked-button (click)="addQuotation('addQuotation')"><i
-                        class="material-icons">add</i>ADD NEW
+                    <button class="btn-primary addon" mat-stroked-button (click)="addQuotation('addQuotation')"> ADD NEW
                     </button>
                 </div>
             </div>
-            
+
 
             <div class="overflow-hidden">
                 <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="mt-8" class="mt-8 skeletonAnimation" id="table-low" mat-table matSort>
                     <ng-container matColumnDef="checkbox">
-                        <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;"  >
-                          <mat-checkbox (change)="selectAll($event)" name="selectAll" [checked]="dataCount == dataSource.data.length"></mat-checkbox>
-                      </th>
-                      <td mat-cell *matCellDef="let element" style="width: 2%;" class="c-p">
-                          <mat-checkbox name="selectedData" [(ngModel)]="element.selected" (change)="changeSelect()">
-                          </mat-checkbox>
-                      </td>
+                        <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;">
+                            <mat-checkbox (change)="selectAll($event)" name="selectAll" [checked]="dataCount == dataSource.data.length"></mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let element" style="width: 2%;" class="c-p">
+                            <mat-checkbox name="selectedData" [(ngModel)]="element.selected" (change)="changeSelect()">
+                            </mat-checkbox>
+                        </td>
                     </ng-container>
                     <ng-container matColumnDef="document">
                         <th *matHeaderCellDef mat-header-cell mat-sort-header="documentName"> Document name </th>
@@ -114,14 +113,17 @@
                     </ng-container>
                     <ng-container matColumnDef="icons">
                         <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;"></th>
-                        <td *matCellDef="let element" mat-cell style="width: 2%;"><i [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu" class="material-icons c-p iconscolors">
-                                more_vert
-                            </i>
-                            <mat-menu #menu="matMenu">
-                                <a (click)="Open('viewQuotation','open',element)" mat-menu-item>View & edit
-                                    quotation</a>
-                                <a (click)="deleteModal(element)" class="bt-1" mat-menu-item>Delete quotation</a>
-                            </mat-menu>
+                        <td *matCellDef="let element" mat-cell style="width: 2%;">
+                            <div *ngIf="!isLoading">
+                                <i [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu" class="material-icons c-p iconscolors">
+                                    more_vert
+                                </i>
+                                <mat-menu #menu="matMenu">
+                                    <a (click)="Open('viewQuotation','open',element)" mat-menu-item>View & edit
+                                        quotation</a>
+                                    <a (click)="deleteModal(element)" class="bt-1" mat-menu-item>Delete quotation</a>
+                                </mat-menu>
+                            </div>
                         </td>
                     </ng-container>
                     <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
@@ -137,7 +139,7 @@
         <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
             <img class="width200" src="assets/images/svg/no-data-found.svg">
             <p class="f-22 f-600 pt-28"> No Data Found </p>
-            <button mat-stroked-button class="btn-primary mt-20 br-0 right text-right addon" (click)="addQuotation('addQuotation')" > ADD
+            <button mat-stroked-button class="btn-primary mt-20 br-0 right text-right addon" (click)="addQuotation('addQuotation')"> ADD
                 QUOTATION
             </button>
         </div>

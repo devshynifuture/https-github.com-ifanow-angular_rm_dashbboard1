@@ -346,8 +346,12 @@ export class DocumentComponent implements OnInit {
     fragmentData.data.isDocument = true;
     const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        if (UtilService.isRefreshRequired(sideBarData)) {
-          this.getdocumentSubData();
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getdocumentSubData();
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
           rightSideDataSub.unsubscribe();
         }
       }

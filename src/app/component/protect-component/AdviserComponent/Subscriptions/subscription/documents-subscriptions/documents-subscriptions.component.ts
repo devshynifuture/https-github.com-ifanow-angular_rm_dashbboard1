@@ -1,17 +1,17 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {SubscriptionInject} from '../../subscription-inject.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort} from '@angular/material';
-import {MatTableDataSource} from '@angular/material/table';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { SubscriptionInject } from '../../subscription-inject.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionService} from '../../subscription.service';
-import {AuthService} from '../../../../../../auth-service/authService';
-import {UtilService} from 'src/app/services/util.service';
-import {DatePipe} from '@angular/common';
-import {MAT_DATE_FORMATS} from 'saturn-datepicker';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {CommonFroalaComponent} from '../common-subscription-component/common-froala/common-froala.component';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionService } from '../../subscription.service';
+import { AuthService } from '../../../../../../auth-service/authService';
+import { UtilService } from 'src/app/services/util.service';
+import { DatePipe } from '@angular/common';
+import { MAT_DATE_FORMATS } from 'saturn-datepicker';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { CommonFroalaComponent } from '../common-subscription-component/common-froala/common-froala.component';
 
 export interface PeriodicElement {
   name: string;
@@ -46,7 +46,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
 
   lastFilterDataId: any;
   filterDataArr = [];
-  statusIdLength: any;
+  statusIdLength: any = 0;
   scrollCallData: boolean;
   selectedDateFilter: any = 'dateFilter';
   selectedStatusFilter: any = 'statusFilter';
@@ -62,12 +62,13 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     { name: 'Client Signitature', value: 3 }
   ];
 
-  passFilterData ={
-    data:"",
-    selectedCount:"",
-    statusFilter:this.chips,
-    dateFilter:this.dateChips
+  passFilterData = {
+    data: "",
+    selectedCount: "",
+    statusFilter: this.chips,
+    dateFilter: this.dateChips
   };
+  isFilter: boolean = false;
   selectedDateRange: { begin: Date; end: Date; };
   showFilter = false;
   data: Array<any> = [{}, {}, {}];
@@ -159,10 +160,12 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isRefreshRequired(sideBarData)) {
-          this.getdocumentSubData(false);
-          console.log('this is sidebardata in subs subs 2: ');
-          this.dataCount = 0;
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getdocumentSubData(false);
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
           rightSideDataSub.unsubscribe();
         }
       }
@@ -284,15 +287,16 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     );
   }
 
-  getFiterRes(data){
-    console.log(data , "data for filter");
+  getFiterRes(data) {
+    console.log(data, "data for filter");
     this.filterStatus = data.statusFilterJson;
     this.filterDate = data.dateFilterArr;
     this.selectedDateRange = data.dateFilterJson;
     this.lastFilterDataId = 0;
     this.filterDataArr = [];
     this.dataSource.data = [{}, {}, {}];
-      this.isLoading = true;
+    this.isLoading = true;
+    this.isFilter = true;
     this.callFilter(false);
   }
 

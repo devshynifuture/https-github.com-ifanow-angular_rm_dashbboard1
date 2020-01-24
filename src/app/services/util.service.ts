@@ -47,6 +47,10 @@ export class UtilService {
   }
 
   static isRefreshRequired(data) {
+    // let closeState = {
+    //   "state": data.state,
+    //   "refreshRequired": data.refreshRequired
+    // }
     return data && data.state && data.state === 'close' && data.refreshRequired;
   }
 

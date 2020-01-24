@@ -276,7 +276,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   }
 
   getAttachmentDetails(data) {
-
+    console.log("this is something i'm, looking for:::::::", data);
   }
 
   close(): void {

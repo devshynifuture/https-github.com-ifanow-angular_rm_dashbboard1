@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of, throwError, from } from 'rxjs';
 import { Router } from '@angular/router';
 // import 'rxjs/Rx';
 import { AuthService } from '../auth-service/authService';
@@ -62,13 +62,13 @@ export class HttpService {
         // })
       )
       .map((res: any) => {
-        console.log('resData: undecoded ', res);
+        // console.log('resData: undecoded ', res);
 
         if (res.status === 200 || res.status === 201) {
           // console.log('resData: decoded ', res);
 
           const resData = this.changeBase64ToString(res);
-          console.log('resData: decoded ', resData);
+          // console.log('resData: decoded ', resData);
           return resData;
         }
         else if (res.status === 304 || 204) {
@@ -104,7 +104,7 @@ export class HttpService {
       .map((res: any) => {
         if (res.status === 200) {
           const resData = this.changeBase64ToString(res);
-          console.log(resData);
+          // console.log(resData);
           return resData;
         } else {
           const err = new Error(res.message);
@@ -119,17 +119,17 @@ export class HttpService {
     let httpOptions = {
       headers: new HttpHeaders().set('authToken', this._userService.getToken())
         .set('Content-Type', 'application/json'),
-      params: body
+      body: body
     };
     if (options != undefined) {
       httpOptions = options;
     }
-    // console.log('HttpService put request httpOptions... ', httpOptions);
-    // console.log('HttpService put request body... ', body);
-    // console.log('HttpService put request url... ', url);
+    console.log('HttpService put request httpOptions... ', httpOptions);
+    console.log('HttpService put request body... ', body);
+    console.log('HttpService put request url... ', url);
 
     return this._http
-      .delete(this.baseUrl + url, body).pipe(
+      .request('delete', url, { body: body }).pipe(
         catchError(err => {
           console.log('Handling error locally and rethrowing it...', err);
           return throwError(err);
@@ -138,7 +138,7 @@ export class HttpService {
       .map((res: any) => {
         if (res.status === 200) {
           const resData = this.changeBase64ToString(res);
-          console.log(resData);
+          // console.log(resData);
           return resData;
         } else {
           const err = new Error(res.message);
@@ -241,11 +241,11 @@ export class HttpService {
         })
       )
       .map((res: any) => {
-        console.log(res);
+        // console.log(res);
 
         if (res.status === 200) {
           const resData = this.changeBase64ToString(res);
-          console.log('decoded resData', resData);
+          // console.log('decoded resData', resData);
           return resData;
         }
         else if (res.status === 304) {
@@ -271,7 +271,7 @@ export class HttpService {
     const encodedata = res.payLoad;
     try {
       const datavalue = (Buffer.from(encodedata, 'base64').toString('utf-8'));
-      console.log('datavalue helo: ', datavalue);
+      // console.log('datavalue helo: ', datavalue);
       // console.log('encodedata: ', encodedata);
 
       try {
