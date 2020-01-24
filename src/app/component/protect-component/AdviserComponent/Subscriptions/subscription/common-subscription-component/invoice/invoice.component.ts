@@ -182,7 +182,7 @@ export class InvoiceComponent implements OnInit {
   addStatus(value,status){
     let obj = {
       id:value.id,
-      status:status
+      status:status.value
     }
     this.subService.getInvoiceStatus(obj).subscribe(
       data => this.getInvoiceStatusRes(data)
@@ -190,6 +190,7 @@ export class InvoiceComponent implements OnInit {
   }
   getInvoiceStatusRes(data){
     console.log('getInvoiceStatusRes',data)
+    this.Close('close', true);
   }
   dontAllowTyping(event, maxLength: number) {
     if (event.target.value.length > maxLength) {
@@ -442,16 +443,7 @@ export class InvoiceComponent implements OnInit {
       this.editPayment.value.discount = 0
     }
     this.changeTaxStatus(this.editPayment.value.taxStatus)
-    // if (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') {
-    //   this.finAmountC = this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount);
-    //   this.finAmountC = this.finAmountC * 9 / 100;
-    //   this.finAmountS = this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount);
-    //   this.finAmountS = this.finAmountS * 9 / 100;
-    //   this.finAmount = this.finAmountC + this.finAmountS;
-    // } else {
-    //   this.finAmount = (this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount));
-    //   this.finAmount = (this.finAmount) * 18 / 100;
-    // }
+   
     if (this.editPayment.get('dueDate').invalid) {
       this.editPayment.get('dueDate').markAsTouched();
       return;
