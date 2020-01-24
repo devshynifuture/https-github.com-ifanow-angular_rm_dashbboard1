@@ -52,7 +52,7 @@
                                 <span *ngIf="strData.status==2" class="text-danger t-10 f-500 c-p">OVERDUE</span>
                                 <span *ngIf="strData.status==3" class="text-warning t-10 f-500 c-p">PARTIALLY PAID</span>
                                 <span *ngIf="strData.status==4" class="text-primary t-10 f-500 c-p">SENT</span>
-                                <span *ngIf="strData.status==5" class="text-grey t-10 f-500 c-p">VOID</span>
+                                <span *ngIf="strData.status==5" class="text-lighter t-10 f-500 c-p">VOID</span>
                                 <span *ngIf="strData.status==6" class="text-balck t-10 f-500 c-p">WRITE OFF</span>
                             </p>
                         </div>
@@ -74,10 +74,12 @@
                         </button>
                     </div>
                     <div class="col-md-2 right text-right"  *ngIf="rpyment==true">
-                        <mat-select class="form-control br-0" (ngModelChange)="addStatus(storeData,$event.target.value)" id="sel1" >
-                            <mat-option value="6">Void</mat-option>
-                            <mat-option value="7">Write off</mat-option>
+                            <mat-form-field>
+                        <mat-select  (selectionChange)="addStatus(storeData,$event)" class="form-control br-0" id="sel1" >
+                            <mat-option [value]="5">Void</mat-option>
+                            <mat-option [value]="6">Write off</mat-option>
                           </mat-select>
+                          </mat-form-field>
                       </div>
                 </div>
                 <div #invoiceTemplate id="template" *ngIf="showRecord==false && feeCalc==false" class="b-a m-20 pb-28 max-height-100">
@@ -114,7 +116,7 @@
                                     <span *ngIf="storeData.status==2" class="text-danger t-10 f-500 c-p">OVERDUE</span>
                                     <span *ngIf="storeData.status==3" class="text-warning t-10 f-500 c-p">PARTIALLY PAID</span>
                                     <span *ngIf="storeData.status==4" class="text-primary t-10 f-500 c-p">SENT</span>
-                                    <span *ngIf="storeData.status==5" class="text-grey t-10 f-500 c-p">VOID</span>
+                                    <span *ngIf="storeData.status==5" class="text-lighter t-10 f-500 c-p">VOID</span>
                                     <span *ngIf="storeData.status==6" class="text-balck t-10 f-500 c-p">WRITE OFF</span>
                                 </h2>
                             </div>
@@ -292,7 +294,7 @@
     </div>
     <div *ngIf="showRecord==false && feeCalc==false" class="row bb-1 pt-72">
         <div class="col-md-8 text-custom">
-            <img matTooltip="Edit" *ngIf="storeData.status != 1" (click)="editInvoice()" class="c-p" src="assets/images/svg/pencil.svg">
+            <img matTooltip="Edit" *ngIf="storeData.status != 1 && storeData.status != 5 && storeData.status != 6" (click)="editInvoice()" class="c-p" src="assets/images/svg/pencil.svg">
             <img matTooltip="Email" (click)="openSendEmail('upper')" class="b-a c-p" src="assets/images/svg/mail-light.svg">
             <img matTooltip="Download PDF" class="b-a c-p" src="assets/images/svg/pdf-icons.svg">
             <img matTooltip="Print" (click)="printPage(invoiceTemplate)" class="b-a c-p" src="assets/images/svg/printer.svg">
@@ -339,7 +341,7 @@
                             <span *ngIf="storeData.status==2" class="text-danger t-10 f-500 c-p">OVERDUE</span>
                             <span *ngIf="storeData.status==3" class="text-warning t-10 f-500 c-p">PARTIALLY PAID</span>
                             <span *ngIf="storeData.status==4" class="text-primary t-10 f-500 c-p">SENT</span>
-                            <span *ngIf="storeData.status==5" class="text-grey t-10 f-500 c-p">VOID</span>
+                            <span *ngIf="storeData.status==5" class="text-lighter t-10 f-500 c-p">VOID</span>
                             <span *ngIf="storeData.status==6" class="text-balck t-10 f-500 c-p">WRITE OFF</span>
                         </h2>
                     </div>

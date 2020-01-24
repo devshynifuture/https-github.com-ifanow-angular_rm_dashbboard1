@@ -40,15 +40,19 @@ export class CalendarComponent implements OnInit {
   endTime;
   current_day = new Date();
   userInfo:any;
+  currentYear:any;
   constructor(public dialog: MatDialog, private calenderService : calendarService) { }
 
   ngOnInit() {
     this.currentMonth = new Date().getMonth();
+    this.currentYear = new Date().getFullYear();
     this.viewDate = new Date();
     this.userInfo = AuthService.getUserInfo()
     this.updatecalendar();
     this.getEvent();
-    console.log(Intl.DateTimeFormat().resolvedOptions().timeZone, localStorage.getItem('userInfo'), "test date");
+    this.curruntDayIndex = this.daysArr.indexOf(this.todayDate);
+
+    console.log(Intl.DateTimeFormat().resolvedOptions().timeZone, localStorage.getItem('userInfo'), this.curruntDayIndex, this.currentMonth, this.month, this.year, this.currentYear, "test date");
 
   }
 
@@ -89,6 +93,8 @@ export class CalendarComponent implements OnInit {
 
   }
 
+  curruntDayIndex:any;
+
   updatecalendar() {
     this.month = this.viewDate.getMonth();
     this.year = this.viewDate.getFullYear();
@@ -100,6 +106,7 @@ export class CalendarComponent implements OnInit {
     // console.log(this.numbersOfDays, this.lastMonthDays, this.nextMonthDays, "this.numbersOfDays");
     let firstDay = (new Date(this.year, this.month)).getDay();
     // console.log(firstDay, "firstDay", this.month);
+
 
     for (let i = 1; i <= this.numbersOfDays; i++) {
       this.daysArr.push(i);
@@ -121,6 +128,8 @@ export class CalendarComponent implements OnInit {
       this.daysArr.push(fd);
     }
 
+
+
     console.log(this.daysArr, this.addLastMonthDays, "daysArr 123");
   }
 
@@ -131,14 +140,20 @@ export class CalendarComponent implements OnInit {
   nextMonth() {
     this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() + 1))
     this.daysArr = [];
+    // if(this.currentMonth != this.month){
+    //   this.curruntDayIndex = 41;
+    // }else{
+    //   this.curruntDayIndex = this.daysArr.indexOf(this.todayDate);
+    // }
     this.updatecalendar();
-
+    console.log( this.curruntDayIndex, this.currentMonth, this.month, this.year, this.currentYear, "test date");
   }
 
   lastMonth() {
     this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() - 1))
     this.daysArr = [];
     this.updatecalendar();
+    console.log( this.curruntDayIndex, this.currentMonth, this.month, this.year, this.currentYear, "test date");
   }
 
   formateDate(date){
