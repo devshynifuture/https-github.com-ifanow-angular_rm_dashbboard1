@@ -13,7 +13,7 @@
 </div>
 <div class="wrapper-20 pt-36 mb-44 pb-44">
     <div [formGroup]="variableFeeStructureForm">
-        <p class="text-primary">VARIABLE </p>
+        <p class="text-primary">VARIABLE FEE STRUCTURE</p>
         <h4 class="mb-0 pt-16">{{singleSubscriptionData.serviceName}}</h4>
         <div class="row pt-28">
             <div class="col-md-5">
@@ -64,7 +64,8 @@
                         </div>
                         <div class="row ui-mff">
                             <div class="col-md-4 p-0 bl-0 border-right-1">
-                                <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" [maxValue]="100" appInputValueValidation class="form-control br-0 h-39" formControlName="equity" placeholder="%" type="text">
+                                <input addPercentage [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" [maxValue]="100" appInputValueValidation class="form-control br-0 h-39" formControlName="equity" placeholder="%" type="text">
+                                <!-- <span  style= "position:absolute; top: 10px; right: 3px;">%</span> -->
                             </div>
                             <div class="col-md-4 p-0 border-right-1">
                                 <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" [maxValue]="100" appInputValueValidation class="form-control br-0 h-39" formControlName="debt" placeholder="%" type="text">
