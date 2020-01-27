@@ -79,15 +79,10 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="emp">
-<<<<<<< HEAD
                     <th mat-sort-header="employeesMonthlyContribution" mat-header-cell *matHeaderCellDef
                         class="br t-18 text-right" matTooltip="Employee's contribution"
                         aria-label="Button that displays a tooltip when focused or hovered over">
                         Employee's con..
-=======
-                    <th mat-sort-header="employeesMonthlyContribution" mat-header-cell *matHeaderCellDef class="br t-18 text-right">
-                        Employee's <br> contribution
->>>>>>> fdc2d214738940ae22a3c907bca087ddade25165
                     </th>
                     <td mat-cell *matCellDef="let element" class="br amt text-right">
                         <div class="bar" appFormatNumber> {{ element.employeesMonthlyContribution }} </div>
@@ -475,15 +470,10 @@
                 <td *matFooterCellDef class="br t-15 text-right" mat-footer-cell></td>
             </ng-container>
             <ng-container matColumnDef="number">
-<<<<<<< HEAD
                 <th *matHeaderCellDef class="br text-right t-12" mat-header-cell mat-sort-header="yearsCompleted"
                     matTooltip="Number of completed years"
                     aria-label="Button that displays a tooltip when focused or hovered over">
                     Number of com...
-=======
-                <th *matHeaderCellDef class="br text-right textRight t-12" mat-header-cell mat-sort-header="yearsCompleted">
-                    Number of <br> completed years
->>>>>>> fdc2d214738940ae22a3c907bca087ddade25165
                 </th>
                 <td *matCellDef="let element" class="br text-right amt t-12" mat-cell>
                     <div class="bar"> {{element.yearsCompleted}} </div>

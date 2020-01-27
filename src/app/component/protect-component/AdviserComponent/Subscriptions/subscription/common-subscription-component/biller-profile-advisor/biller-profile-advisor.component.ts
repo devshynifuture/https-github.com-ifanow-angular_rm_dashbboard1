@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import {Component, Input, OnInit} from '@angular/core';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {FormBuilder, Validators} from '@angular/forms';
@@ -10,18 +9,6 @@ import {PhotoCloudinaryUploadService} from '../../../../../../../services/photo-
 import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
 import {UtilService, ValidatorType} from '../../../../../../../services/util.service';
 import { PostalService } from 'src/app/services/postal.service';
-=======
-import { Component, Input, OnInit } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionService } from '../../../subscription.service';
-import { AuthService } from '../../../../../../../auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
-import { HttpClient } from '@angular/common/http';
-import { PhotoCloudinaryUploadService } from '../../../../../../../services/photo-cloudinary-upload.service';
-import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
-import { UtilService, ValidatorType } from '../../../../../../../services/util.service';
->>>>>>> fdc2d214738940ae22a3c907bca087ddade25165
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -68,13 +55,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
   // validatorType = ValidatorType;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private fb: FormBuilder,
-<<<<<<< HEAD
               private subService: SubscriptionService, private postalService: PostalService,
               private eventService: EventService, private http: HttpClient) {
-=======
-    private subService: SubscriptionService,
-    private eventService: EventService, private http: HttpClient) {
->>>>>>> fdc2d214738940ae22a3c907bca087ddade25165
   }
 
   @Input() Selected;
