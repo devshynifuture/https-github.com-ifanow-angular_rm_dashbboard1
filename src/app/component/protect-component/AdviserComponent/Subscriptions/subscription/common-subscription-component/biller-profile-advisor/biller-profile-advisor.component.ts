@@ -225,7 +225,17 @@ export class BillerProfileAdvisorComponent implements OnInit {
         this.submitBillerForm();
     }
   }
+getPostalPin(value){
+  let obj = {
+    zipCode : value
+  }
+  if(value.length > 5){
+    this.subService.getPostal(obj.zipCode).subscribe(
+      data => this.getPostalRes(data)
+    );
+  }
 
+}
   back() {
     this.selected--;
   }
@@ -326,7 +336,9 @@ export class BillerProfileAdvisorComponent implements OnInit {
 
     }
   }
-
+  getPostalRes(data){
+    console.log('data posta 123345566')
+  }
   closeTab(data) {
     if (data == true) {
       this.Close(data);

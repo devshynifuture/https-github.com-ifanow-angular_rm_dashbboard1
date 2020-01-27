@@ -452,7 +452,9 @@ export class SubscriptionService {
   getInvoiceStatus(data){
     return this.http.put(apiConfig.MAIN_URL + appConfig.GET_INVOICE_STATTUS, data);
   }
-
+getPostal(data){
+  return this.http.get(apiConfig.MAIN_URL + appConfig.POSTAL, data);
+}
   base_64Data(data) {
     return this.http.getEncoded(apiConfig.MAIN_URL + appConfig.GET_BASE_64, data, 10000);
   }
