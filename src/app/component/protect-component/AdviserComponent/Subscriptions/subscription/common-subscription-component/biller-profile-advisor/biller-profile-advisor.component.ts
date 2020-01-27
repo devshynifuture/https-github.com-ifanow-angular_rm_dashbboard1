@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {Component, Input, OnInit} from '@angular/core';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {FormBuilder, Validators} from '@angular/forms';
@@ -9,6 +10,18 @@ import {PhotoCloudinaryUploadService} from '../../../../../../../services/photo-
 import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
 import {UtilService, ValidatorType} from '../../../../../../../services/util.service';
 import { PostalService } from 'src/app/services/postal.service';
+=======
+import { Component, Input, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { HttpClient } from '@angular/common/http';
+import { PhotoCloudinaryUploadService } from '../../../../../../../services/photo-cloudinary-upload.service';
+import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { UtilService, ValidatorType } from '../../../../../../../services/util.service';
+>>>>>>> fdc2d214738940ae22a3c907bca087ddade25165
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -55,8 +68,13 @@ export class BillerProfileAdvisorComponent implements OnInit {
   // validatorType = ValidatorType;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private fb: FormBuilder,
+<<<<<<< HEAD
               private subService: SubscriptionService, private postalService: PostalService,
               private eventService: EventService, private http: HttpClient) {
+=======
+    private subService: SubscriptionService,
+    private eventService: EventService, private http: HttpClient) {
+>>>>>>> fdc2d214738940ae22a3c907bca087ddade25165
   }
 
   @Input() Selected;
@@ -168,7 +186,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
       companyDisplayName: [data.companyDisplayName, [Validators.required]],
       // companyName: [data.companyName, [Validators.required]],
       gstinNum: [(data.gstin), [Validators.required]],
-      panNum: [(data.pan), [Validators.required,Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-z]{1}")]],
+      panNum: [(data.pan), [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-z]{1}")]],
       Address: [(data.billerAddress), [Validators.required]],
       state: [(data.state), [Validators.required]],
       pincode: [(data.zipCode), [Validators.required, Validators.minLength(6)]],
@@ -209,7 +227,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
 
   Close(data) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
   }
 
   nextStep(value, eventName) {
@@ -280,17 +298,21 @@ PinData(data){
       return;
     } /*else if (this.logUrl.controls.url.invalid) {
       return;
-    } */ else if (this.bankDetailsForm.controls.acNo.invalid) {
-      this.isAcNo = true;
-      return;
-    } else if (this.bankDetailsForm.controls.nameOnBank.invalid) {
+    } */
+    else if (this.bankDetailsForm.controls.nameOnBank.invalid) {
       this.isNameOnBank = true;
       return;
-    } else if (this.bankDetailsForm.controls.address.invalid) {
-      this.isaddress = true;
+    } else if (this.bankDetailsForm.controls.bankName.invalid) {
+      this.isBankName = true;
+      return;
+    } else if (this.bankDetailsForm.controls.acNo.invalid) {
+      this.isAcNo = true;
       return;
     } else if (this.bankDetailsForm.controls.ifscCode.invalid) {
       this.isIFSC = true;
+      return;
+    } else if (this.bankDetailsForm.controls.address.invalid) {
+      this.isaddress = true;
       return;
     } else if (this.bankDetailsForm.controls.city.invalid) {
       this.isCity = true;
@@ -298,14 +320,11 @@ PinData(data){
     } else if (this.bankDetailsForm.controls.state.invalid) {
       this.isState = true;
       return;
-    } else if (this.bankDetailsForm.controls.country.invalid) {
-      this.isCountry = true;
-      return;
     } else if (this.bankDetailsForm.controls.pincode.invalid) {
       this.isZipCode = true;
       return;
-    } else if (this.bankDetailsForm.controls.bankName.invalid) {
-      this.isBankName = true;
+    } else if (this.bankDetailsForm.controls.country.invalid) {
+      this.isCountry = true;
       return;
     } else {
       const obj = {

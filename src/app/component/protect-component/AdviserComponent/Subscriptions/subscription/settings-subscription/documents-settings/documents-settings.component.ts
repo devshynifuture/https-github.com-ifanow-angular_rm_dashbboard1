@@ -24,8 +24,8 @@ export class DocumentsSettingsComponent implements OnInit {
   isLoading = false;
   //showLoader;
 
-  constructor(public dialog: MatDialog, public eventService: EventService, public subInjectService: SubscriptionInject,
-    private subService: SubscriptionService) {
+  constructor(public dialog: MatDialog, public eventService: EventService, public subInjectService: SubscriptionInject, private utilservice: UtilService
+    , private subService: SubscriptionService) {
   }
 
   advisorId;
@@ -33,6 +33,7 @@ export class DocumentsSettingsComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     // this.openFragment('documents');
+    (this.utilservice.checkSubscriptionastepData(1) == false) ? this.documentSettingData = undefined : this.documentSettingData = [{}, {}, {}]
     this.getDocumentsSetting();
   }
 
@@ -50,7 +51,7 @@ export class DocumentsSettingsComponent implements OnInit {
     this.subService.getSubscriptionDocumentSetting(obj).subscribe(
       data => this.getDocumentsSettingResponse(data), (error) => {
         this.eventService.showErrorMessage(error);
-        this.documentSettingData = [];
+        this.documentSettingData = undefined;
         this.isLoading = false;
       }
     );
@@ -61,7 +62,7 @@ export class DocumentsSettingsComponent implements OnInit {
   }
   getDocumentsSettingResponse(data) {
     if (data == undefined) {
-      this.documentSettingData.length == 0;
+      this.documentSettingData = undefined;
       this.isLoading = false;
     }
     else {

@@ -1241,8 +1241,16 @@ textarea {
     padding-right: 20px !important;
 }
 
+#table-low tfoot td.amt {
+    padding-right: 20px !important;
+}
+
 .textRight .mat-sort-header-container {
     justify-content: flex-end;
+}
+
+.textRight .mat-sort-header-container button {
+    text-align: right;
 }
 
 .example-container {

@@ -1,7 +1,7 @@
 <div id="ui-document-settings">
 
     <div class="bg-white pb-36 ">
-        <div *ngIf="isLoading || documentSettingData.length > 0">
+        <div *ngIf="documentSettingData">
             <div class="wrapper-20 pr-0">
                 <div class="row">
                     <div class="col-md-8 p-0">
@@ -59,7 +59,7 @@
 
 
 
-                    <div [hidden]="!documentSettingData" *ngFor="let singleDocument of documentSettingData"
+                    <div [hidden]="documentSettingData==undefined" *ngFor="let singleDocument of documentSettingData"
                         class="col-md-4 pr-20 pb-20 pl-0 documents-body">
                         <div class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                             <div class="relClass">
@@ -74,7 +74,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" *ngIf="!isLoading && documentSettingData.length == 0 ">
+        <div class="row" *ngIf="documentSettingData==undefined">
             <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
                 <img class="width200" src="assets/images/svg/add-documents-img.svg">
                 <p class="f-22 f-600 pt-28"> Create Documents </p>
