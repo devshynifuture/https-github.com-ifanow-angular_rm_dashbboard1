@@ -1,16 +1,16 @@
 h2 {
-  color: #3F3F3F;
-  text-align: center;
-  padding: 16px 12px;
-  font-family: "Playfair Display";
-  letter-spacing: 0.2px;
-  line-height: 32px;
+    color: #3F3F3F;
+    text-align: center;
+    padding: 16px 12px;
+    font-family: "Playfair Display";
+    letter-spacing: 0.2px;
+    line-height: 32px;
 }
 
 h3 {
-  font-family: "Playfair Display";
-  letter-spacing: 0.2px;
-  line-height: 32px;
+    font-family: "Playfair Display";
+    letter-spacing: 0.2px;
+    line-height: 32px;
 }
 
 // img{
@@ -18,113 +18,111 @@ h3 {
 //     height: 360px;
 // }
 .green {
-  text-align: right;
-  background: #02B875;
-  padding: 4px 5px;
-  font-size: 16px;
-  display: inline;
-  // float: right;
-  // margin-top: 8px;
+    text-align: right;
+    background: #02B875;
+    padding: 4px 5px;
+    font-size: 16px;
+    display: inline;
+    // float: right;
+    // margin-top: 8px;
 }
 
 .blue {
-  background: #008FFF;
-  color: #fff;
-  margin-top: 8px;
-  font-size: 16px;
-  padding: 5px 7px;
+    background: #008FFF;
+    color: #fff;
+    margin-top: 8px;
+    font-size: 16px;
+    padding: 5px 7px;
 }
 
 .padder-80 {
-  padding-right: 80px;
-  padding-left: 80px;
-  padding-bottom: 50px;
+    padding-right: 80px;
+    padding-left: 80px;
+    padding-bottom: 50px;
 }
 
 p {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 h3 p {
-  color: #757575;
+    color: #757575;
 }
 
 .btn-primary {
-  border-radius: 0px !important;
+    border-radius: 0px !important;
 }
 
 // .material-icons{
 //     line-height: .7;
 // }
 .content {
-  position: relative;
-  right: 20%;
+    position: relative;
+    right: 20%;
 }
 
 .box {
-  box-sizing: border-box;
-  border-radius: 4px;
-  border: 1px solid #ddd;
-  // height: 455px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    // height: 455px;
 }
 
 label {
-  background: #004164;
-  border-radius: 4px;
-  letter-spacing: 0.2px;
-  color: #FFFFFF;
-  font-family: "Proxima Nova", sans-serif;
-  font-size: 14px;
-  line-height: 17px;
-  display: inline-block;
-  min-width: 10px;
-  padding: 3px 10px;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: baseline;
+    background: #004164;
+    border-radius: 4px;
+    letter-spacing: 0.2px;
+    color: #FFFFFF;
+    font-family: "Proxima Nova", sans-serif;
+    font-size: 14px;
+    line-height: 17px;
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 10px;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
 }
 
 .done-icons {
-  background: #02B875;
-  padding: 0px 0px 4px 4px;
-  color: #fff;
-  float: right;
-  text-align: right;
-  line-height: .9;
+    background: #02B875;
+    padding: 0px 0px 4px 4px;
+    color: #fff;
+    float: right;
+    text-align: right;
+    line-height: .9;
 }
 
 .bottom-fixed {
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  position: fixed;
-  z-index: 222;
-  background-color: #757575;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    position: fixed;
+    z-index: 222;
+    background-color: #757575;
 }
 
 #ui-service-documents {
-  .mat-card:not([class*=mat-elevation-z]) {
-    box-shadow: none;
-    padding: 0;
-  }
-
-  .mat-card {
-    height: 300px !important;
-  }
-
-  // img{
-  //     width: 400px !important;
-  // }
+    .mat-card:not([class*=mat-elevation-z]) {
+        box-shadow: none;
+        padding: 0;
+    }
+    .mat-card {
+        height: 300px !important;
+    }
+    // img{
+    //     width: 400px !important;
+    // }
 }
 
 ::ng-deep .mat-checkbox-checked .mat-checkbox-background,
 .mat-checkbox-indeterminate .mat-checkbox-background {
-  background-color: #008FFF !important;
+    background-color: #008FFF !important;
 }
 
 // overwrite the ripple overlay on hover and click
 ::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
-  background-color: #008FFF !important;
+    background-color: #008FFF !important;
 }
 
 //   ::ng-deep .mat-checkbox{
@@ -132,12 +130,16 @@ label {
 //     position: relative;
 //   }
 .width200 {
-  width: 200px;
-  margin-top: 220px;
+    width: 200px;
+    margin-top: 220px;
 }
 
 ::ng-deep .hide-card-text {
-  .mat-card-header-text {
-    margin: 0 !important;
-  }
+    .mat-card-header-text {
+        margin: 0 !important;
+    }
+}
+
+.height180 {
+    height: 180px;
 }
