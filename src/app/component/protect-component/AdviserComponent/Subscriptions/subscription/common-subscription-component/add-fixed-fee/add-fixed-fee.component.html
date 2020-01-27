@@ -41,7 +41,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input #code [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="10" appInputValueValidation class="form-control br-0 text-left" formControlName="code" matInput type="text">
+                    <input #code [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" maxlength = "10"[maxLength]="10" appInputValueValidation class="form-control br-0 text-left" formControlName="code" matInput type="text">
                     <mat-error class="f-12">{{'Invalid code'}}</mat-error>
                     <mat-hint align="end" class="f-12">{{code.value.length}}/10</mat-hint>
                 </mat-form-field>

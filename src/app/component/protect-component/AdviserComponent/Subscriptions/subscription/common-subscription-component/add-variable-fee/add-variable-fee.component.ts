@@ -24,7 +24,7 @@ export class AddVariableFeeComponent implements OnInit {
   advisorId;
   otherAssetData;
   selectedOtherAssets = [];
-  pricing;
+  pricing = false
   ischeckVariableData
   serviceId: any;
   dataToSend: any;
@@ -144,6 +144,7 @@ export class AddVariableFeeComponent implements OnInit {
     this.subInjectService.changeUpperRightSliderState({ state: 'close' });
     this.setValidation(false);
     this.createVariableFeeForm('')
+    this.otherAssetData = []
   }
 
   closeTab(state, value) {
