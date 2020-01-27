@@ -618,7 +618,7 @@ button.primary-sm {
   overflow: hidden;
   position: fixed;
   bottom: 1px;
-  z-index: 999;
+  z-index: 9s;
   width: 100%;
 
   .mat-stroked-button {
@@ -637,4 +637,12 @@ button.primary-sm {
 
 .bottom-10 {
   bottom: 10px;
+}
+
+.ws-nowrap {
+  white-space: nowrap !important;
+}
+
+.mat-card:not([class*=mat-elevation-z]) {
+  box-shadow: none !important;
 }

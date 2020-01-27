@@ -1,13 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionService } from '../../../subscription.service';
-import { AuthService } from '../../../../../../../auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
-import { HttpClient } from '@angular/common/http';
-import { PhotoCloudinaryUploadService } from '../../../../../../../services/photo-cloudinary-upload.service';
-import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
-import { UtilService, ValidatorType } from '../../../../../../../services/util.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from '../../../../../../../auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {PhotoCloudinaryUploadService} from '../../../../../../../services/photo-cloudinary-upload.service';
+import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
+import {UtilService, ValidatorType} from '../../../../../../../services/util.service';
+import { PostalService } from 'src/app/services/postal.service';
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -45,12 +46,17 @@ export class BillerProfileAdvisorComponent implements OnInit {
   logoImg: any;
   imageData: File;
   uploadedImage: any;
+  postalData: Object;
+  postOfficeData: any;
+  postOfficeDataDistrict: any;
+  postOfficeDataCircle: any;
+  postOfficeDataCountry: any;
 
   // validatorType = ValidatorType;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private fb: FormBuilder,
-    private subService: SubscriptionService,
-    private eventService: EventService, private http: HttpClient) {
+              private subService: SubscriptionService, private postalService: PostalService,
+              private eventService: EventService, private http: HttpClient) {
   }
 
   @Input() Selected;
@@ -225,6 +231,23 @@ export class BillerProfileAdvisorComponent implements OnInit {
         this.submitBillerForm();
     }
   }
+getPostalPin(value){
+  let obj = {
+    zipCode : value
+  }
+  if(value.length > 5){
+    this.postalService.getPostalPin(value).subscribe(data=>{
+      console.log('postal 121221',data)
+      this.PinData(data)
+    })
+  }
+
+}
+PinData(data){
+  this.postOfficeDataCircle = data[0].PostOffice[0].Circle;
+  this.postOfficeDataCountry = data[0].PostOffice[0].Country;
+  this.postOfficeDataDistrict = data[0].PostOffice[0].District;
+}
 
   back() {
     this.selected--;
@@ -327,7 +350,9 @@ export class BillerProfileAdvisorComponent implements OnInit {
 
     }
   }
-
+  getPostalRes(data){
+    console.log('data posta 123345566')
+  }
   closeTab(data) {
     if (data == true) {
       this.Close(data);

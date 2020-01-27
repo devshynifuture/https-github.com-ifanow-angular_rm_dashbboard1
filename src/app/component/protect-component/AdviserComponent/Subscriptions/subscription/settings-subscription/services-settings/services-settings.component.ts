@@ -15,14 +15,14 @@ export class ServicesSettingsComponent implements OnInit {
   feesDisplay: boolean;
 
   constructor(public dialog: MatDialog, private subService: SubscriptionService,
-    private dataService: EventService, private eventService: EventService) {
+    private dataService: EventService, private eventService: EventService, private utilservice: UtilService) {
   }
 
   button: any;
 
   // showLoader;
 
-  serviceSettingData = [{}, {}];
+  serviceSettingData;
   isLoading = false;
   advisorId;
 
@@ -30,6 +30,7 @@ export class ServicesSettingsComponent implements OnInit {
 
     this.advisorId = AuthService.getAdvisorId();
     this.feesDisplay = true;
+    (this.utilservice.checkSubscriptionastepData(1) == false) ? this.serviceSettingData = undefined : this.serviceSettingData = [{}, {}, {}]
     this.getServiceSettingSubData();
   }
 
@@ -83,8 +84,6 @@ export class ServicesSettingsComponent implements OnInit {
       advisorId: this.advisorId,
 
     };
-    this.serviceSettingData = [{}, {}];
-
     this.subService.getSubscriptionServiceSettingsData(obj).subscribe(
       data => this.getServiceSettingSubResponse(data), (error) => {
         this.eventService.showErrorMessage(error);

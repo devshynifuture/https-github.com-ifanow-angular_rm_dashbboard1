@@ -1,0 +1,164 @@
+<div class="popup-header-fix-35">
+    <div class="row bb-1">
+        <div class="col-md-8 p-0">
+            <h4 class="mb-0 wrapper-20">Income from salary / pension</h4>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12"> <i class="material-icons c-p pt-8 v-middle"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pt-90 pl-20 pr-20 pb-20">
+    <div class="row">
+        <div class="col-md-12 text-right p-0">
+            <p class="m-0 text-black roboto">As per system</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 pl-0 text-right pr-0">
+            <p class="m-0 text-black roboto pt-12">Basic income</p>
+        </div>
+        <div class="col-md-5 pr-0">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput class="form-control" value="₹ 8,50,000">
+                </mat-form-field>
+            </div>
+            <div class="col-md-12 text-right">
+                <p class="m-0 roboto f-12 text-light"> Reset</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <p class="m-0 text-light roboto pt-12">₹ 8,97,000</p>
+        </div>
+    </div>
+    <div class="row pt-24">
+        <div class="col-md-4 pl-0 text-right pr-0">
+            <p class="m-0 text-black roboto pt-12">Standard deductions</p>
+        </div>
+        <div class="col-md-5 pr-0">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput class="form-control" value="₹">
+                </mat-form-field>
+            </div>
+
+        </div>
+        <div class="col-md-3">
+            <p class="m-0 text-light roboto pt-12">₹ 1,25,000</p>
+        </div>
+    </div>
+    <div class="row pt-28">
+        <div class="col-md-4 pl-0 text-right pr-0">
+            <p class="m-0 text-black roboto pt-12">Basic salary +
+                dearness allowance</p>
+        </div>
+        <div class="col-md-5 pr-0">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput class="form-control" value="₹">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <p class="m-0 text-light roboto pt-12">₹ 1,25,000</p>
+        </div>
+    </div>
+    <div class="row pt-28">
+        <div class="col-md-4 pl-0 text-right pr-0">
+            <p class="m-0 text-black roboto pt-12">HRA received</p>
+        </div>
+        <div class="col-md-5 pr-0">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput class="form-control" value="₹">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <p class="m-0 text-light roboto pt-12">₹ 1,25,000</p>
+        </div>
+    </div>
+    <div class="row pt-28">
+        <div class="col-md-4 pl-0 text-right pr-0">
+            <p class="m-0 text-black roboto pt-12">Total rent paid</p>
+        </div>
+        <div class="col-md-5 pr-0">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput class="form-control" value="₹">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <p class="m-0 text-light roboto pt-12">₹ 1,25,000</p>
+        </div>
+    </div>
+</div>
+<div class="bottom-fixed wrapper-12 w-35">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+            <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Tax planning - Setup -->
+<!-- <div class="popup-header-fix-35">
+    <div class="row bb-1">
+        <div class="col-md-8 p-0">
+            <h4 class="mb-0 wrapper-20">Tax planning - Setup</h4>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12"> <i class="material-icons c-p pt-8 v-middle" (click)="close(false)"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pt-90 pl-20 pr-20 pb-20 taxplanning">
+    <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Family member name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="weight">
+            <th mat-header-cell *matHeaderCellDef> 2019-20 </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-checkbox checked="false"></mat-checkbox>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="symbol">
+            <th mat-header-cell *matHeaderCellDef> 2020-21 </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-checkbox checked="false"></mat-checkbox>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="symbol1">
+            <th mat-header-cell *matHeaderCellDef> 2021-22 </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-checkbox></mat-checkbox>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>
+<div class="bottom-fixed wrapper-12 w-35">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+            <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
+        </div>
+    </div>
+</div> -->

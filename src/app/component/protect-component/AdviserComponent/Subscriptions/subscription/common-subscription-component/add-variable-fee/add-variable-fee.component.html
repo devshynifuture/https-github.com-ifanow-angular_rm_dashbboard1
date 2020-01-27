@@ -39,7 +39,7 @@
     <div class="col-md-3">
       <div class="form-group mb-0">
         <mat-form-field>
-          <input #code [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="10"
+          <input #code [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="10"maxlength="10"
                  appInputValueValidation class="form-control br-0 text-left" formControlName="code" matInput
                  (changedValue)="getFormControl().code.setValue($event)"
                  type="text">
@@ -57,11 +57,28 @@
     <div class="col-md-5 pr-0">
       <mat-form-field>
         <textarea class="form-control br-0" maxlength="{{getFormControl().description.maxLength}}"
+<<<<<<< HEAD
         matInput formControlName="description" rows="3"></textarea>
         
       <mat-hint align="end" class="f-12">{{getFormControl().description.value?.length ? getFormControl().description.value.length : 0}}
         /{{getFormControl().description.maxLength}}</mat-hint>
         <mat-hint align="start" class="f-12">Optional</mat-hint>
+=======
+                  formControlName="description" rows="3"></textarea>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <p class="mb-0 f-12 text-custom">Optional</p>
+        </div>
+        <div class="col-md-6">
+          <p class="mb-0 f-12 text-custom text-right">
+            {{getFormControl().description.value?.length ? getFormControl().description.value.length : 0}}
+            /{{getFormControl().description.maxLength}}
+          </p>
+        </div>
+
+      </div>
+>>>>>>> 16cc9fa93a1954201808e07862bf20bf726530c4
 
       </mat-form-field>
     </div>
@@ -202,10 +219,9 @@
         <div class="col-md-2 p-0">
           <!--          [minValue]="0.001" [maxValue]="99"-->
           <input [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)" [maxLength]="4"
-                 appInputValueValidation class="form-control bl-0 br-0 h-39 br-grey" formControlName="pricing"
-                 placeholder="%"
-                 type="text">
-          <mat-error *ngIf="(variableFeeData.get('pricing').errors)" class="f-12 pt-4">
+            appInputValueValidation formControlName="pricing" placeholder="%" type="text"
+            class="form-control bl-0 br-0 h-39 br-grey">
+          <mat-error *ngIf="pricing == true" class="f-12 pt-4">
             Should be between than 0 to 99
           </mat-error>
         </div>

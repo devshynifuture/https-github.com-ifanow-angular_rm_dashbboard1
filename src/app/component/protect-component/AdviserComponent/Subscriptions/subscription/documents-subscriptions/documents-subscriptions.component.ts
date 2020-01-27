@@ -79,7 +79,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
 
 
   constructor(public subInjectService: SubscriptionInject, public dialog: MatDialog, public eventService: EventService,
-    public subscription: SubscriptionService, private datePipe: DatePipe, private subService: SubscriptionService) {
+    public subscription: SubscriptionService, private datePipe: DatePipe, private subService: SubscriptionService, private utilservice: UtilService) {
   }
 
   ngOnInit() {
@@ -87,6 +87,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.dataCount = 0;
+    (this.utilservice.checkSubscriptionastepData(5) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}];
     this.getdocumentSubData(false);
     this.getClientSubscriptionList();
   }
@@ -107,15 +108,15 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     //   });
     //   this.dataCount = 0;
     // }else{
-      this.dataCount = 0;
-      if (this.dataSource != undefined) {
-        this.dataSource.filteredData.forEach(item => {
-          item.selected = event.checked;
-          if (item.selected) {
-            this.dataCount++;
-          }
-        });
-      }
+    this.dataCount = 0;
+    if (this.dataSource != undefined) {
+      this.dataSource.filteredData.forEach(item => {
+        item.selected = event.checked;
+        if (item.selected) {
+          this.dataCount++;
+        }
+      });
+    }
     // }
   }
 
@@ -269,7 +270,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     };
     this.dataCount = 0;
     this.isLoading = true;
-    this.dataSource.data = [{}, {}, {}];
+    // this.dataSource.data = [{}, {}, {}];
     this.subscription.getDocumentData(obj).subscribe(
       data => this.getdocumentResponseData(data), (error) => {
         this.eventService.showErrorMessage(error);
