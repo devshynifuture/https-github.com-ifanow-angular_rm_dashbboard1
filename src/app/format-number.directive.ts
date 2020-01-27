@@ -40,9 +40,12 @@ export class FormatNumberDirective implements AfterViewInit {
         text = numberValue.toLocaleString(this.locale);
       }
     } else {
-      text = '';
+      if(text != 0){
+        text = '';
+      }
     }
 
+    // console.log(text, "check return for app formate nu");
     return text;
   }
 
