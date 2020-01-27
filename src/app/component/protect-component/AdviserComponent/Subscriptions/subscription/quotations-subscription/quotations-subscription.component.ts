@@ -102,7 +102,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
   ngOnInit() {
     // this.dataSource = [{}, {}, {}];
     this.advisorId = AuthService.getAdvisorId();
-    (this.utilservice.checkSubscriptionastepData(4) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}]
+    (this.utilservice.checkSubscriptionastepData(5) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}]
     this.getQuotationsData(false);
     this.dataCount = 0;
   }
