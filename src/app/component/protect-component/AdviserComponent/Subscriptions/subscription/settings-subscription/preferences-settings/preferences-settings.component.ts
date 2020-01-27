@@ -28,7 +28,7 @@ export class PreferencesSettingsComponent implements OnInit {
   }
   prefixData;
   isLoading = false;
-  billerProfileData: Array<any> = [{ isPrimary: false }];
+  billerProfileData: Array<any>;
   // PrefixData;
 
   selected;
@@ -37,7 +37,7 @@ export class PreferencesSettingsComponent implements OnInit {
 
     this.viewMode = 'tab1';
     this.advisorId = AuthService.getAdvisorId();
-    (this.utilservice.checkSubscriptionastepData(2) == false) ? this.billerProfileData = undefined : this.billerProfileData = [{}, {}, {}]
+    (this.utilservice.checkSubscriptionastepData(2) == false) ? this.billerProfileData = undefined : this.billerProfileData = [{ isPrimary: false }]
     this.getProfileBillerData();
     this.getTemplate();
   }
