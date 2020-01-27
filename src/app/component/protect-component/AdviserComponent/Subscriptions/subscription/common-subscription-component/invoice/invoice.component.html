@@ -74,7 +74,7 @@
                             PAYMENT
                         </button>
                     </div>
-                    <div class="col-md-2 right text-right" *ngIf="rpyment==true">
+                    <div class="col-md-2 right text-right">
                         <mat-form-field>
                             <mat-select (selectionChange)="addStatus(storeData,$event)" class="form-control br-0" id="sel1">
                                 <mat-option [value]="5">Void</mat-option>
@@ -295,17 +295,25 @@
         </div>
     </div>
     <div *ngIf="showRecord==false && feeCalc==false" class="row pt-72">
-        <div class="col-md-8 text-custom pl-20">
+        <div class="col-md-7 text-custom ">
             <img matTooltip="Edit" *ngIf="storeData.status != 1" (click)="editInvoice()" class="c-p" src="assets/images/svg/pencil.svg">
             <img matTooltip="Email" (click)="openSendEmail('upper')" class="b-a c-p" src="assets/images/svg/mail-light.svg">
             <img matTooltip="Download PDF" class="b-a c-p" src="assets/images/svg/pdf-icons.svg">
             <img matTooltip="Print" (click)="printPage(invoiceTemplate)" class="b-a c-p" src="assets/images/svg/printer.svg">
             <img matTooltip="Delete" (click)="deleteModal('INVOICE',element)" class="b-a wrapper-9 ml-8 c-p" src="assets/images/svg/delete.svg">
         </div>
-        <div class="col-md-4 right text-right">
+        <div class="col-md-3 right text-right">
             <button (click)="recordPayment()" class="btn-primary br-0 mb-8" *ngIf="rpyment==true" mat-stroked-button>RECORD
                 PAYMENT
             </button>
+        </div>
+        <div class="col-md-2 right text-right">
+            <mat-form-field>
+                <mat-select (selectionChange)="addStatus(storeData,$event)" class="form-control br-0" id="sel1">
+                    <mat-option [value]="5">Void</mat-option>
+                    <mat-option [value]="6">Write off</mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
     </div>
     <div *ngIf="showRecord==false && feeCalc==false" class="b-a m-20 mb-100 pb-28">
@@ -448,10 +456,58 @@
                   <p class="f-14 text-black f-500 roboto"> Terms & Conditions</p>
                </div> -->
                     </div>
+                    <div class="wrapper-9">
+                            <div *ngIf="storeData.services[0].id != undefined && storeData.auto == true" class="row b-a bg-grey lter ">
+                                <div class="col-md-10 d-flex  align-items-center">
+                                    <p class="m-0 text-black f-500  ">Fee calculation - Attachment</p>
+                                </div>
+                                <div class="col-md-2 wrapper-9 text-right">
+                                    <button (click)="OpenFeeCalc()" class="btn-primary br-0" mat-stroked-button>View
+                                    </button>
+                                </div>
+                            </div>
+                            <div *ngIf="showPaymentRecive == true" class="row p-24 pl-0 pr-0 ">
+                                <div class="col-md-12 p-0">
+                                    <h5 class="m-0 text-black">Payments recieved</h5>
+                                </div>
+                            </div>
+                            <table *ngIf="showPaymentRecive == true" [dataSource]="dataSource" class="" id="table-low" mat-table>
+                                <ng-container matColumnDef="date">
+                                    <th *matHeaderCellDef mat-header-cell>Date</th>
+                                    <td *matCellDef="let element" mat-cell> {{element.paymentDate | date:'dd/MM/yyyy'}}
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="reference">
+                                    <th *matHeaderCellDef mat-header-cell> Reference</th>
+                                    <td *matCellDef="let element" mat-cell> {{storeData.invoiceNumber}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="paymentMode">
+                                    <th *matHeaderCellDef mat-header-cell> Payment mode</th>
+                                    <td *matCellDef="let element" mat-cell> {{element.paymentMode}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="amount">
+                                    <th *matHeaderCellDef mat-header-cell> Amount(₹)</th>
+                                    <td *matCellDef="let element" mat-cell> {{element.amountReceived}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="icons">
+                                    <th *matHeaderCellDef class="f-18 t-2" mat-header-cell></th>
+                                    <td *matCellDef="let element" class="t-2" mat-cell>
+                                        <i [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
+                                            more_vert
+                                        </i>
+                                        <mat-menu #menu="matMenu">
+                                            <a (click)="editForm(element)" mat-menu-item>Edit</a>
+                                        </mat-menu>
+                                    </td>
+                                </ng-container>
+                                <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+                                <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+                            </table>
+                        </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div>  
     <!--show record in client invoice-->
     <div *ngIf="showRecord==true" class="pt-72">
         <app-record-payment [InvRecordData]="sendRecordPaymentData" [padding]="true" (outputData)='display($event)'>
