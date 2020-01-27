@@ -40,6 +40,7 @@ export class InvoiceComponent implements OnInit {
   service: { serviceName: any; averageFees: any; description: any; fromDate: any; toDate: any; }[];
   feeCalc: boolean;
   rpyment = true;
+  showDateError: string;
 
   [x: string]: any;
 
@@ -367,7 +368,9 @@ export class InvoiceComponent implements OnInit {
 
   getRecordPayment(data) {
     this.recordData = data
-    this.getPayReceive(data.id);
+    if(data!=""){
+      this.getPayReceive(data.id);
+    }
   }
 
   getInvoiceData(data) {
@@ -376,6 +379,8 @@ export class InvoiceComponent implements OnInit {
     this.storeData = data;
     if (this.storeData.balanceDue == 0) {
       this.rpyment = false
+    }else {
+      this.rpyment = true;
     }
     this.clientId = AuthService.getClientId();
     this.auto = this.storeData.auto;
@@ -609,6 +614,11 @@ export class InvoiceComponent implements OnInit {
   }
 
   passInvoice(data, index, event) {
+    if (data.balanceDue == 0) {
+      this.rpyment = false
+    }else{
+      this.rpyment =true
+    }
     this.recordData = data;
     console.log(data);
     this.storeData = data;
