@@ -89,7 +89,7 @@
                       This field is required
                     </mat-error>
                     <mat-error *ngIf="(profileDetailsForm.get('panNum').errors?.pattern)" class="f-12 pt-4">
-                      Enter valid pan
+                      Enter valid PAN
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{panNum.value.length}}/10</mat-hint>
 
@@ -195,7 +195,7 @@
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-5">
-                <h5 class="text-right m-0 pt-8">Your Logo</h5>
+                <h5 class="text-right m-0 pt-8">Your logo</h5>
               </div>
               <div class="col-md-7">
                 <!-- <app-photo-upload></app-photo-upload>-->
@@ -354,9 +354,8 @@
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
-                  <mat-error
-                    [ngClass]="{'v-h':!(isaddress && getFormControlBank().address.invalid || (getFormControlBank().address && getFormControlBank().address.invalid))}"
-                    class="f-12 pt-4">
+                  <mat-error 
+                    class="f-12 pt-4"  [ngClass]="{'v-h':!(isaddress && getFormControlBank().address.invalid || (getFormControlBank().address.touched && getFormControlBank().address.invalid))}">
                     Bank address is required
                   </mat-error>
                 </div>
