@@ -86,7 +86,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     return this.profileDetailsForm.controls;
   }
 
-  getFrormControlBank() {
+  getFormControlBank() {
     return this.bankDetailsForm.controls;
   }
 
@@ -192,11 +192,11 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.getFormControlProfile().companyDisplayName.maxLength = 50;
     this.getFormControlProfile().panNum.maxLength = 10;
     this.getFormControlProfile().Address.maxLength = 150;
-    this.getFrormControlBank().nameOnBank.maxLength = 25;
-    this.getFrormControlBank().bankName.maxLength = 35;
-    this.getFrormControlBank().acNo.maxLength = 16;
-    this.getFrormControlBank().ifscCode.maxLength = 11;
-    this.getFrormControlBank().address.maxLength = 150;
+    this.getFormControlBank().nameOnBank.maxLength = 25;
+    this.getFormControlBank().bankName.maxLength = 35;
+    this.getFormControlBank().acNo.maxLength = 16;
+    this.getFormControlBank().ifscCode.maxLength = 11;
+    this.getFormControlBank().address.maxLength = 150;
     this.getFrormControlMisc().footnote.maxLength = 160;
     this.getFrormControlMisc().terms.maxLength = 160;
     this.logoImg = data.logoUrl;

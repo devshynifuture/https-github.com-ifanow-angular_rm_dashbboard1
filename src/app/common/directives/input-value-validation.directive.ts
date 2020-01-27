@@ -62,38 +62,40 @@ export class InputValueValidationDirective /*implements Validator*/ {
        : null;
    }*/
 
-  @HostListener('keypress', ['$event']) onKeyPress(event) {
+  /* @HostListener('keypress', ['$event']) onKeyPress(event) {
+
+     console.log('InputValueValidationDirective keypress event : ', event);
+     console.log('InputValueValidationDirective keypress event.location : ', event.location);
+     console.log('InputValueValidationDirective keypress event.key : ', event.key);
+     this.prevValue = this._el.nativeElement.value;
+     const currValue = event.target.value;
+     console.log('InputValueValidationDirective keypress event.target.value : ', currValue);
+
+     if (this.checkCurrentValue(currValue)) {
+
+     } else {
+       console.log('InputValueValidationDirective keypress prevValue : ', this.prevValue);
+       event.preventDefault();
+     }
+     console.log('InputValueValidationDirective keypress prevValue : ', this.prevValue);
+   }*/
+
+  @HostListener('keypress', ['$event']) onKeyUp(event) {
 
     console.log('InputValueValidationDirective keypress event : ', event);
     console.log('InputValueValidationDirective keypress event.location : ', event.location);
     console.log('InputValueValidationDirective keypress event.key : ', event.key);
     this.prevValue = this._el.nativeElement.value;
-    const currValue = event.target.value;
-    console.log('InputValueValidationDirective keypress event.target.value : ', currValue);
+    if (event.target.value) {
+      const currValue = event.target.value;
+      console.log('InputValueValidationDirective keypress event.target.value : ', currValue);
 
-    if (this.checkCurrentValue(currValue)) {
+      if (this.checkCurrentValue(currValue)) {
 
-    } else {
-      console.log('InputValueValidationDirective keypress prevValue : ', this.prevValue);
-      event.preventDefault();
-    }
-    console.log('InputValueValidationDirective keypress prevValue : ', this.prevValue);
-  }
-
-  @HostListener('keyup', ['$event']) onKeyUp(event) {
-
-    console.log('InputValueValidationDirective keypress event : ', event);
-    console.log('InputValueValidationDirective keypress event.location : ', event.location);
-    console.log('InputValueValidationDirective keypress event.key : ', event.key);
-    this.prevValue = this._el.nativeElement.value;
-    const currValue = event.target.value;
-    console.log('InputValueValidationDirective keypress event.target.value : ', currValue);
-
-    if (this.checkCurrentValue(currValue)) {
-
-    } else {
-      console.log('InputValueValidationDirective keypress prevValue : ', this.prevValue);
-      event.preventDefault();
+      } else {
+        console.log('InputValueValidationDirective keypress prevValue : ', this.prevValue);
+        event.preventDefault();
+      }
     }
     console.log('InputValueValidationDirective keypress prevValue : ', this.prevValue);
   }
@@ -112,11 +114,11 @@ export class InputValueValidationDirective /*implements Validator*/ {
       console.log('InputValueValidationDirective keypress prevValue : ', this.prevValue);
       event.preventDefault();
       this.renderer.setProperty(this._el.nativeElement, 'value', this.prevValue);
-      setTimeout(() => {
-        console.log('InputValueValidationDirective keypress  setTimeout prevValue : ', this.prevValue);
-        this._el.nativeElement.value = this.prevValue;
-      }, 100);
-      this.changedValue.emit(currValue);
+      /*  setTimeout(() => {
+          console.log('InputValueValidationDirective keypress  setTimeout prevValue : ', this.prevValue);
+          this._el.nativeElement.value = this.prevValue;
+        }, 100);*/
+      this.changedValue.emit(this.prevValue);
     }
     // console.log(event);
 
@@ -129,6 +131,7 @@ export class InputValueValidationDirective /*implements Validator*/ {
     }
     if (this.maxLength && currValue.length > this.maxLength) {
       currValue = currValue.slice(0, this.maxLength);
+      return false;
       // this.renderer.setProperty(this._el.nativeElement, 'value', currValue.slice(0, this.maxLength));
     }
     if (!isNaN(currValue)) {
@@ -136,10 +139,11 @@ export class InputValueValidationDirective /*implements Validator*/ {
       if (this._maxValue && this._maxValue < currValue) {
         console.log('InputValueValidationDirective input this.maxValue  : ', this._maxValue, ' currentValue 1 : ', currValue);
         currValue = this._maxValue;
+        return false;
       } else if (this.minValue && this.minValue > currValue) {
         currValue = this.minValue;
         console.log('InputValueValidationDirective input this.minValue  : ', this.minValue, ' currentValue : ', currValue);
-
+        return false;
       }
     }
     if (this.inputValidator.test(currValue)) {
@@ -147,6 +151,8 @@ export class InputValueValidationDirective /*implements Validator*/ {
 
       return true;
     } else {
+      // currValue = currValue.slice(0, 0);
+      // currValue = currValue.concat(this.prevValue);
       // currValue = this.prevValue;
       console.log('InputValueValidationDirective onInputChange inputValidator failed : ', currValue);
       return false;
