@@ -120,7 +120,7 @@
               <div class="col-md-7">
                 <div class="form-group mb-0">
                   <mat-form-field>
-                    <input #state [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
+                    <input #state [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation [(ngModel)]="postOfficeDataCircle"
                            (changedValue)="getFormControlProfile().state.setValue($event)"
                            class="form-control br-0 text-left" formControlName="state" matInput maxLength="30"
                            type="text">
@@ -138,9 +138,8 @@
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <input #pincode [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
-                           (changedValue)="getFormControlProfile().pincode.setValue($event)"
                            [maxLength]="6" class="form-control br-0 text-left" formControlName="pincode" matInput
-                           minlength="6" type="text" (change)="getPostalPin($event)">
+                           minlength="6" type="text" (change)="getPostalPin($event.target.value)">
                     <mat-error
                       class="f-12">{{'Invalid Pincode'}}</mat-error>
                     <mat-hint align="end" class="f-12">{{pincode.value.length}}/6</mat-hint>
@@ -156,8 +155,7 @@
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <input #country [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
-
-                           (changedValue)="getFormControlProfile().country.setValue($event)"
+                           (changedValue)="getFormControlProfile().country.setValue($event)"[(ngModel)]="postOfficeDataCountry"
                            class="form-control br-0 text-left" formControlName="country" matInput maxLength="30"
                            type="text">
                     <mat-error class="f-12">Country is required</mat-error>
@@ -175,7 +173,7 @@
                   <mat-form-field>
                     <input #city
                            [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="30" appInputValueValidation
-                           class="form-control br-0 text-left"
+                           class="form-control br-0 text-left" [(ngModel)]="postOfficeDataDistrict"
                            formControlName="city" matInput
                            (changedValue)="getFormControlProfile().city.setValue($event)"
                            type="text">

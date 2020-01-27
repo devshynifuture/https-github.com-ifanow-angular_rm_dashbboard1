@@ -301,7 +301,6 @@ export const appConfig = {
   GET_QUOTATION_SERVICE_DATA: 'subscription/quotation/data/get',
   EMAIL_DOCUMENT: 'pdfAndEmail/send/docId',
   GET_INVOICE_STATTUS:'subscription/invoice/status/edit',
-  POSTAL:'https://api.postalpincode.in/pincode',
   GET_BASE_64: 'api/v1/test/base64/decode',
 
 
@@ -336,6 +335,8 @@ export const appConfig = {
   GET_EVENT: 'calendar/event/list/get',
   GET_UPDATE: 'calendar/event/update',
   GET_ADD: 'calendar/event/add',
-  GET_DELETE: 'calendar/event/detele'
+  GET_DELETE: 'calendar/event/detele',
   ////////////////////////////// calendar////////////////////////////////////////////
+  ///////////////////////////////Postal////////////////////////////////
+ 
 };
