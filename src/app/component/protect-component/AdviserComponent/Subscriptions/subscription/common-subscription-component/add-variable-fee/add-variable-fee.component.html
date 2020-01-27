@@ -43,7 +43,7 @@
     <div class="col-md-3">
       <div class="form-group mb-0">
         <mat-form-field>
-          <input #code [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="10"
+          <input #code [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="10"maxlength="10"
                  appInputValueValidation class="form-control br-0 text-left" formControlName="code" matInput
                  (changedValue)="getFormControl().code.setValue($event)"
                  type="text">
@@ -66,7 +66,7 @@
       </div>
       <div class="row">
         <div class="col-md-6">
-          <p class="mb-0 f-12 text-custom">optional</p>
+          <p class="mb-0 f-12 text-custom">Optional</p>
         </div>
         <div class="col-md-6">
           <p class="mb-0 f-12 text-custom text-right">
@@ -212,10 +212,9 @@
         <div class="col-md-2 p-0">
           <!--          [minValue]="0.001" [maxValue]="99"-->
           <input [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)" [maxLength]="4"
-                 appInputValueValidation class="form-control bl-0 br-0 h-39 br-grey" formControlName="pricing"
-                 placeholder="%"
-                 type="text">
-          <mat-error *ngIf="(variableFeeData.get('pricing').errors)" class="f-12 pt-4">
+            appInputValueValidation formControlName="pricing" placeholder="%" type="text"
+            class="form-control bl-0 br-0 h-39 br-grey">
+          <mat-error *ngIf="pricing == true" class="f-12 pt-4">
             Should be between than 0 to 99
           </mat-error>
         </div>

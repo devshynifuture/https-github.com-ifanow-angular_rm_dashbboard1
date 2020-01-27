@@ -1,8 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {EventService} from 'src/app/Data-service/event.service';
-import {EnumDataService} from '../../../../../services/enum-data.service';
-import {MatTabGroup} from '@angular/material';
-import {Router} from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { EventService } from 'src/app/Data-service/event.service';
+import { EnumDataService } from '../../../../../services/enum-data.service';
+import { MatTabGroup } from '@angular/material';
+import { Router } from '@angular/router';
+import { UtilService } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SubscriptionService } from '../subscription.service';
 
 @Component({
   selector: 'app-subscription',
@@ -17,9 +20,9 @@ export class SubscriptionComponent implements OnInit {
     this._value = value;
   }
 
-  @ViewChild(MatTabGroup, {static: true}) tabGroup: MatTabGroup;
+  @ViewChild(MatTabGroup, { static: true }) tabGroup: MatTabGroup;
 
-  constructor(private eventService: EventService, private enumDataService: EnumDataService, private router: Router) {
+  constructor(private utilservice: UtilService, private eventService: EventService, private enumDataService: EnumDataService, private router: Router, private subService: SubscriptionService) {
     this.eventService.sidebarSubscribeData.subscribe(
       data => this.getFileResponseDataAum(data)
     );
@@ -52,8 +55,16 @@ export class SubscriptionComponent implements OnInit {
     } else if (this.router.url.split('/')[3] === 'settings') {
       this._value = 7;
     }
-
+    this.advisorId = AuthService.getAdvisorId();
+    this.subService.getDashboardSubscriptionResponse(this.advisorId).subscribe(
+      data => {
+        this.utilservice.setSubscriptionStepData(data.advisorAccomplishedSubscriptionFinalList);
+      }
+    );
     // this.selected = 6;
+  }
+  advisorId(advisorId: any) {
+    throw new Error("Method not implemented.");
   }
 
   getIndex(value) {

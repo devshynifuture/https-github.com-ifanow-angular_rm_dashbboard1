@@ -143,6 +143,9 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      if(result==undefined){
+        return
+      }
       console.log('The dialog was closed', element);
       this.getInnerDoc = result;
       if (result.value == 'Copy') {
@@ -367,7 +370,8 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     if (this.openFolderName.length > 0) {
       this.commonFileFolders = this.backUpfiles[0];
     }
-    this.commonFileFolders = this.backUpfiles[0];
+    this.commonFileFolders = new MatTableDataSource(this.backUpfiles[0]);
+    this.commonFileFolders.sort = this.sort;
     this.openFolderName = [];
     this.parentId = 0;
   }

@@ -3,6 +3,7 @@ import { SubscriptionPopupComponent } from 'src/app/component/protect-component/
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { EditTaxComputationComponent } from './edit-tax-computation/edit-tax-computation.component';
+import { EditApplicableTaxComponent } from './edit-applicable-tax/edit-applicable-tax.component';
 
 @Component({
   selector: 'app-texes-plan',
@@ -31,7 +32,26 @@ export class TexesPlanComponent implements OnInit {
         if (UtilService.isRefreshRequired(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ');
           // this.getQuotationsList();
-          
+
+        }
+        rightSideDataSub.unsubscribe();
+      }
+    );
+  }
+  openApplicable(value) {
+    const fragmentData = {
+      flag: value,
+      id: 1,
+      state: 'open35',
+      componentName: EditApplicableTaxComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isRefreshRequired(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ');
+          // this.getQuotationsList();
+
         }
         rightSideDataSub.unsubscribe();
       }

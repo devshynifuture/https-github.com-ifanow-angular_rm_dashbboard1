@@ -111,7 +111,9 @@ export class CopyDocumentsComponent implements OnInit {
     }
     console.log('sorted', this.commonFileFolders);
   }
-
+Close(){
+  this.dialogRef.close()
+}
   getFolders(data, index) {
     this.showMsg = false;
     this.commonFileFolders.data = [{}, {}, {}];
@@ -128,7 +130,8 @@ export class CopyDocumentsComponent implements OnInit {
     if (this.openFolderName.length > 0) {
       this.commonFileFolders = this.backUpfiles[0];
     }
-    this.commonFileFolders = this.backUpfiles[0];
+    this.commonFileFolders = new MatTableDataSource(this.backUpfiles[0]);
+    this.commonFileFolders.sort = this.sort;
     this.openFolderName = [];
     this.parentId = 0;
   }
