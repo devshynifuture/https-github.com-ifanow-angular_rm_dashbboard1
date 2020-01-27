@@ -193,7 +193,7 @@
                     <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
                 </ng-container>
                 <ng-container matColumnDef="cash">
-                    <th mat-sort-header="cashValue" *matHeaderCellDef class="br text-right" mat-header-cell> Account type
+                    <th mat-sort-header="cashValue" *matHeaderCellDef class="br text-right" mat-header-cell> Cash balance
                     </th>
                     <td *matCellDef="let element" class="br text-right" mat-cell>
                         <div class="bar" appFormatNumber> {{isLoading ? ' ' : element.cashValue}} </div>

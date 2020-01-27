@@ -71,7 +71,7 @@ export class DashboardSubscriptionComponent implements OnInit {
     public dialog: MatDialog,
     private subService: SubscriptionService,
     private router: Router,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute, private utilservice: UtilService) {
     const date = new Date();
     const hourOfDay = date.getHours();
     console.log('DashboardSubscriptionComponent constructor hourOfDay : ', hourOfDay);
@@ -113,6 +113,7 @@ export class DashboardSubscriptionComponent implements OnInit {
       data => {
         this.showLetsBegin = data.show;
         this.showLetsBeginData = data.advisorAccomplishedSubscriptionFinalList;
+        this.utilservice.subscriptionStepData = this.showLetsBeginData
       }
     );
   }
@@ -210,10 +211,10 @@ export class DashboardSubscriptionComponent implements OnInit {
 
   getTotalRecivedRes(data) {
     this.isLoading = false;
-    console.log('getTotalRecivedRes', data);
     this.totalSaleReceived = data;
     this.totalSales = data != undefined ? data.totalSales : '0';
     this.feeRecieved = data != undefined ? data.feeRecieved : '0';
+    console.log('getTotalRecivedRes', data, this.totalSales);
   }
 
   showSubscriptionSteps() {

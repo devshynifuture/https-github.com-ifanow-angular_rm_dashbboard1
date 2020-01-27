@@ -15,7 +15,7 @@ export class ServicesComponent implements OnInit {
   advisorId;
 
   @Input() componentFlag: string;
-  planServiceData: Array<any> = [{ selected: false }];
+  planServiceData: Array<any> = [{}, {}, {}];
   mappedData = [];
   mappedPlan = [];
   @Input() planData;
@@ -55,12 +55,13 @@ export class ServicesComponent implements OnInit {
   }
 
   getPlanServiceData() {
+    this.isLoading = true;
     const obj = {
       // advisorId: 12345,
       advisorId: this.advisorId,
       planId: this.planData ? this.planData.id : null
     };
-    this.isLoading = true;
+
     this.subService.getSettingPlanServiceData(obj).subscribe(
       data => this.getPlanServiceDataResponse(data), error => {
         this.isLoading = false;

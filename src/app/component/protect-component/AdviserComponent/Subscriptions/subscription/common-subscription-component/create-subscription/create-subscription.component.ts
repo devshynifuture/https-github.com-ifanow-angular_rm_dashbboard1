@@ -102,7 +102,7 @@ export class CreateSubscriptionComponent implements OnInit {
     this.advisorName = AuthService.getUserInfo().fullName;
     this.isFlagPayee = true;
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
-    console.log(this.feeCollectionMode);
+    console.log(this.feeCollectionMode, "fee mood");
   }
   getPayeeFlagData(data) {
     console.log(data)
@@ -278,7 +278,7 @@ export class CreateSubscriptionComponent implements OnInit {
           billingCycle: (this.clientData.billingNature == '2') ? 0 : this.clientData.billingCycle,
           billingMode: this.clientData.billingMode,
           billingNature: (this.clientData.billingNature == '2') ? 0 : this.clientData.billingNature,
-          feeTypeId: this.clientData.feeTypeId,
+          feeTypeId: this.subscriptionDetails.get('feeCollectionMode').value,
           subscriptionAssetPricingList: [
             {
               assetClassId: 1,

@@ -75,7 +75,7 @@ import { CustomDirectiveModule } from "./common/directives/common-directive.modu
     CustomCommonModule,
     EmailEntryModule,
     AppRoutingModule,
-    CustomDirectiveModule
+    CustomDirectiveModule,
   ],
   providers: [AuthService, HttpService, DatePipe, DynamicComponentService],
   bootstrap: [AppComponent]

@@ -14,11 +14,11 @@
   <mat-tab-group [selectedIndex]="selected" animationDuration="0ms" class="event-none" id="ui-biller-tabs">
     <mat-tab class="active " label="Profile">
       <div [formGroup]="profileDetailsForm" class="">
-        <div class="row pt-40 pb-44">
+        <div class="row pt-40 pb-44"> 
           <div class="col-md-12">
             <div class="row pt-20">
               <div class="col-md-5 pr-0">
-                <h5 class="text-right m-0 pt-16">Company Display Name</h5>
+                <h5 class="text-right m-0 pt-16">Company display name</h5>
               </div>
               <div class="col-md-7">
                 <div class="form-group mb-0">
@@ -52,13 +52,14 @@
             </div> -->
             <div class="row pt-44">
               <div class="col-md-5 pr-0">
-                <h5 class="text-right m-0 pt-16">GSTIN Number</h5>
+                <h5 class="text-right m-0 pt-16">GSTIN number</h5>
               </div>
               <div class="col-md-7">
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <input #gstinNum [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation autofocus
                            class="form-control br-0 text-left" formControlName="gstinNum" matInput
+                           (changedValue)="getFormControlProfile().gstinNum.setValue($event)"
                            maxLength="{{getFormControlProfile().gstinNum.maxLength}}" type="text">
                     <mat-error class="f-12">GSTIN number is required</mat-error>
                     <mat-hint align="end" class="f-12">{{gstinNum.value.length}}/15</mat-hint>
@@ -78,17 +79,18 @@
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <input #panNum [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
+                           (changedValue)="getFormControlProfile().panNum.setValue($event)"
                            appInputValueValidation class="form-control br-0" formControlName="panNum" matInput
                            type="text">
                     <!-- <mat-error class="f-12">PAN is required</mat-error> -->
                     <mat-error
-                    *ngIf="profileDetailsForm.get('panNum').errors?.required && profileDetailsForm.get('panNum').touched"
-                    class="f-12 pt-4">
-                    This field is required
-                </mat-error>
-                <mat-error *ngIf="(profileDetailsForm.get('panNum').errors?.pattern)" class="f-12 pt-4">
-                    Enter valid pan
-                </mat-error>
+                      *ngIf="profileDetailsForm.get('panNum').errors?.required && profileDetailsForm.get('panNum').touched"
+                      class="f-12 pt-4">
+                      This field is required
+                    </mat-error>
+                    <mat-error *ngIf="(profileDetailsForm.get('panNum').errors?.pattern)" class="f-12 pt-4">
+                      Enter valid PAN
+                    </mat-error>
                     <mat-hint align="end" class="f-12">{{panNum.value.length}}/10</mat-hint>
 
                   </mat-form-field>
@@ -103,6 +105,7 @@
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <textarea #Address matInput class="form-control br-0" formControlName='Address'
+
                               maxLength="{{getFormControlProfile().Address.maxLength}}" rows="5"></textarea>
                     <mat-error class="f-12">Address is required</mat-error>
                     <mat-hint align="end" class="f-12">{{Address.value.length}}/150</mat-hint>
@@ -117,7 +120,8 @@
               <div class="col-md-7">
                 <div class="form-group mb-0">
                   <mat-form-field>
-                    <input #state [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
+                    <input #state [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation [(ngModel)]="postOfficeDataCircle"
+                           (changedValue)="getFormControlProfile().state.setValue($event)"
                            class="form-control br-0 text-left" formControlName="state" matInput maxLength="30"
                            type="text">
                     <mat-error class="f-12">State is required</mat-error>
@@ -135,7 +139,7 @@
                   <mat-form-field>
                     <input #pincode [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
                            [maxLength]="6" class="form-control br-0 text-left" formControlName="pincode" matInput
-                           minlength="6" type="text">
+                           minlength="6" type="text" (change)="getPostalPin($event.target.value)">
                     <mat-error
                       class="f-12">{{'Invalid Pincode'}}</mat-error>
                     <mat-hint align="end" class="f-12">{{pincode.value.length}}/6</mat-hint>
@@ -151,6 +155,7 @@
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <input #country [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
+                           (changedValue)="getFormControlProfile().country.setValue($event)"[(ngModel)]="postOfficeDataCountry"
                            class="form-control br-0 text-left" formControlName="country" matInput maxLength="30"
                            type="text">
                     <mat-error class="f-12">Country is required</mat-error>
@@ -166,8 +171,11 @@
               <div class="col-md-7">
                 <div class="form-group mb-0">
                   <mat-form-field>
-                    <input #city [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
-                           class="form-control br-0 text-left" formControlName="city" matInput maxLength="30"
+                    <input #city
+                           [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="30" appInputValueValidation
+                           class="form-control br-0 text-left" [(ngModel)]="postOfficeDataDistrict"
+                           formControlName="city" matInput
+                           (changedValue)="getFormControlProfile().city.setValue($event)"
                            type="text">
                     <mat-error class="f-12">City is required</mat-error>
                     <mat-hint align="end" class="f-12">{{city.value.length}}/30</mat-hint>
@@ -185,7 +193,7 @@
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-5">
-                <h5 class="text-right m-0 pt-8">Your Logo</h5>
+                <h5 class="text-right m-0 pt-8">Your logo</h5>
               </div>
               <div class="col-md-7">
                 <!-- <app-photo-upload></app-photo-upload>-->
@@ -220,25 +228,28 @@
         <div class="col-md-12">
           <div class="row pt-20">
             <div class="col-md-5">
-              <h5 class="text-right m-0 pt-8">Name on Bank A/C</h5>
+              <h5 class="text-right m-0 pt-8">Name on bank A/C</h5>
             </div>
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <input autofocus class="form-control br-0 text-left" formControlName="nameOnBank"
-                       maxLength="{{getFrormControlBank().nameOnBank.maxLength}}" type="text">
+                       (changedValue)="getFormControlBank().nameOnBank.setValue($event)"
+                       [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE"
+                       appInputValueValidation
+                       maxLength="{{getFormControlBank().nameOnBank.maxLength}}" type="text">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
                   <mat-error
-                    [ngClass]="{'v-h':!(isNameOnBank && getFrormControlBank().nameOnBank.invalid || (getFrormControlBank().nameOnBank.touched && getFrormControlBank().nameOnBank.invalid))}"
+                    [ngClass]="{'v-h':!(isNameOnBank && getFormControlBank().nameOnBank.invalid || (getFormControlBank().nameOnBank.touched && getFormControlBank().nameOnBank.invalid))}"
                     class="f-12 pt-4">
                     Name on bank a/c is required
                   </mat-error>
                 </div>
                 <div class="col-md-4">
                   <p class="mb-0 f-12 text-custom text-right pt-4">
-                    {{getFrormControlBank().nameOnBank.value?.length ? getFrormControlBank().nameOnBank.value.length : 0}}
-                    /{{getFrormControlBank().nameOnBank.maxLength}}
+                    {{getFormControlBank().nameOnBank.value?.length ? getFormControlBank().nameOnBank.value.length : 0}}
+                    /{{getFormControlBank().nameOnBank.maxLength}}
                   </p>
                 </div>
               </div>
@@ -251,20 +262,23 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <input class="form-control br-0 text-left" formControlName="bankName"
-                       maxLength="{{getFrormControlBank().bankName.maxLength}}" type="text">
+                       (changedValue)="getFormControlBank().bankName.setValue($event)"
+                       [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE"
+                       appInputValueValidation
+                       maxLength="{{getFormControlBank().bankName.maxLength}}" type="text">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
                   <mat-error
-                    [ngClass]="{'v-h':!(isBankName && getFrormControlBank().bankName.invalid || (getFrormControlBank().bankName.touched && getFrormControlBank().bankName.invalid))}"
+                    [ngClass]="{'v-h':!(isBankName && getFormControlBank().bankName.invalid || (getFormControlBank().bankName.touched && getFormControlBank().bankName.invalid))}"
                     class="f-12 pt-4">
                     Bank name is required
                   </mat-error>
                 </div>
                 <div class="col-md-4">
                   <p class="mb-0 f-12 text-custom text-right pt-4">
-                    {{getFrormControlBank().bankName.value?.length ? getFrormControlBank().bankName.value.length : 0}}
-                    /{{getFrormControlBank().bankName.maxLength}}
+                    {{getFormControlBank().bankName.value?.length ? getFormControlBank().bankName.value.length : 0}}
+                    /{{getFormControlBank().bankName.maxLength}}
                   </p>
                 </div>
               </div>
@@ -272,18 +286,20 @@
           </div>
           <div class="row pt-28">
             <div class="col-md-5">
-              <h5 class="text-right m-0 pt-8">Account No.</h5>
+              <h5 class="text-right m-0 pt-8">Account no.</h5>
             </div>
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <input #accNo [inputValidator]="validatorType.NUMBER_ONLY"
-                       [maxLength]="getFrormControlBank().acNo.maxLength" appInputValueValidation
+                       (changedValue)="getFormControlBank().acNo.setValue($event)"
+                       [maxLength]="getFormControlBank().acNo.maxLength"
+                       appInputValueValidation
                        class="form-control br-0 text-left" formControlName="acNo" matInput type="number">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
                   <mat-error
-                    [ngClass]="{'v-h':!(isAcNo && getFrormControlBank().acNo.invalid || (getFrormControlBank().acNo.touched && getFrormControlBank().acNo.invalid))}"
+                    [ngClass]="{'v-h':!(isAcNo && getFormControlBank().acNo.invalid || (getFormControlBank().acNo.touched && getFormControlBank().acNo.invalid))}"
                     class="f-12 pt-4">
                     Account no. is required
                   </mat-error>
@@ -291,7 +307,7 @@
                 <div class="col-md-4">
                   <p class="mb-0 f-12 text-custom text-right pt-4">
                     {{accNo.value.length}}
-                    /{{getFrormControlBank().acNo.maxLength}}
+                    /{{getFormControlBank().acNo.maxLength}}
                   </p>
                 </div>
               </div>
@@ -299,18 +315,19 @@
           </div>
           <div class="row pt-28">
             <div class="col-md-5">
-              <h5 class="text-right m-0 pt-8">IFSC Code </h5>
+              <h5 class="text-right m-0 pt-8">IFSC code </h5>
             </div>
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <input #ifscCode [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
+                       (changedValue)="getFormControlBank().ifscCode.setValue($event)"
                        class="form-control br-0 text-left" formControlName="ifscCode" matInput
-                       maxLength="{{getFrormControlBank().ifscCode.maxLength}}" type="text">
+                       maxLength="{{getFormControlBank().ifscCode.maxLength}}" type="text">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
                   <mat-error
-                    [ngClass]="{'v-h':!(isIFSC && getFrormControlBank().ifscCode.invalid || (getFrormControlBank().ifscCode.touched && getFrormControlBank().ifscCode.invalid))}"
+                    [ngClass]="{'v-h':!(isIFSC && getFormControlBank().ifscCode.invalid || (getFormControlBank().ifscCode.touched && getFormControlBank().ifscCode.invalid))}"
                     class="f-12 pt-4">
                     IFSC code is required
                   </mat-error>
@@ -318,7 +335,7 @@
                 <div class="col-md-4">
                   <p class="mb-0 f-12 text-custom text-right pt-4">
                     {{ifscCode.value.length }}
-                    /{{getFrormControlBank().ifscCode.maxLength}}
+                    /{{getFormControlBank().ifscCode.maxLength}}
                   </p>
                 </div>
               </div>
@@ -326,25 +343,24 @@
           </div>
           <div class="row pt-28">
             <div class="col-md-5">
-              <h5 class="text-right m-0 pt-8">Bank Address</h5>
+              <h5 class="text-right m-0 pt-8">Bank address</h5>
             </div>
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <textarea #bankAddress class="form-control br-0" formControlName="address" matInput
-                          maxLength="{{getFrormControlBank().address.maxLength}}" rows="5"></textarea>
+                          maxLength="{{getFormControlBank().address.maxLength}}" rows="5"></textarea>
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
-                  <mat-error
-                    [ngClass]="{'v-h':!(isaddress && getFrormControlBank().address.invalid || (getFrormControlBank().address && getFrormControlBank().address.invalid))}"
-                    class="f-12 pt-4">
+                  <mat-error 
+                    class="f-12 pt-4"  [ngClass]="{'v-h':!(isaddress && getFormControlBank().address.invalid || (getFormControlBank().address.touched && getFormControlBank().address.invalid))}">
                     Bank address is required
                   </mat-error>
                 </div>
                 <div class="col-md-4">
                   <p class="mb-0 f-12 text-custom text-right pt-4">
                     {{bankAddress.value.length}}
-                    /{{getFrormControlBank().address.maxLength}}
+                    /{{getFormControlBank().address.maxLength}}
                   </p>
                 </div>
               </div>
@@ -356,13 +372,16 @@
             </div>
             <div class="col-md-7">
               <div class="form-group mb-0">
-                <input [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation maxlength="30"
+                <input (changedValue)="getFormControlBank().city.setValue($event)"
+                       [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="30"
+                       appInputValueValidation
+
                        class="form-control br-0 text-left" formControlName="city" matInput type="text">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
                   <mat-error
-                    [ngClass]="{'v-h':!(isCity && getFrormControlBank().city.invalid || (getFrormControlBank().city.touched && getFrormControlBank().city.invalid))}"
+                    [ngClass]="{'v-h':!(isCity && getFormControlBank().city.invalid || (getFormControlBank().city.touched && getFormControlBank().city.invalid))}"
                     class="f-12 pt-4">
                     City is required
                   </mat-error>
@@ -377,12 +396,15 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <input [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
-                       class="form-control br-0 text-left" formControlName="state" matInput maxlength="30" type="text">
+                       (changedValue)="getFormControlBank().state.setValue($event)"
+
+                       [maxLength]="30" class="form-control br-0 text-left" formControlName="state" matInput
+                       type="text">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
                   <mat-error
-                    [ngClass]="{'v-h':!(isState && getFrormControlBank().state.invalid || (getFrormControlBank().state.touched && getFrormControlBank().state.invalid))}"
+                    [ngClass]="{'v-h':!(isState && getFormControlBank().state.invalid || (getFormControlBank().state.touched && getFormControlBank().state.invalid))}"
                     class="f-12 pt-4">
                     State is required
                   </mat-error>
@@ -398,6 +420,8 @@
               <div class="form-group mb-0">
                 <mat-form-field>
                   <input #pincodeBank [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6"
+                         (changedValue)="getFormControlBank().pincode.setValue($event)"
+
                          appInputValueValidation class="form-control br-0 text-left" formControlName="pincode" matInput
                          minlength="6" type="text">
                   <mat-error
@@ -415,13 +439,14 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <input [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
-                       class="form-control br-0 text-left" formControlName="country" matInput maxlength="30"
+                       (changedValue)="getFormControlBank().country.setValue($event)"
+                       [maxLength]="30" class="form-control br-0 text-left" formControlName="country" matInput
                        type="text">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
                   <mat-error
-                    [ngClass]="{'v-h':!(isCountry && getFrormControlBank().country.invalid || (getFrormControlBank().country.touched && getFrormControlBank().country.invalid))}"
+                    [ngClass]="{'v-h':!(isCountry && getFormControlBank().country.invalid || (getFormControlBank().country.touched && getFormControlBank().country.invalid))}"
                     class="f-12 pt-4">
                     Country is required
                   </mat-error>

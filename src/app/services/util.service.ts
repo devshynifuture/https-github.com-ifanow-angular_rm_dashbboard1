@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { EventService } from '../Data-service/event.service';
 import { HttpClient } from '@angular/common/http';
+import { element } from 'protractor';
+import { SubscriptionService } from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { AuthService } from '../auth-service/authService';
 
 
 @Injectable({
@@ -10,10 +13,17 @@ import { HttpClient } from '@angular/common/http';
 export class UtilService {
 
   private static decimalPipe = new DecimalPipe('en-US');
+  advisorId: any;
 
-  constructor(private eventService: EventService, private http: HttpClient) {
+  constructor(private eventService: EventService, private http: HttpClient, private subService: SubscriptionService) {
+    this.advisorId = AuthService.getAdvisorId();
+    this.subService.getDashboardSubscriptionResponse(this.advisorId).subscribe(
+      data => {
+        this.subscriptionStepData = data.advisorAccomplishedSubscriptionFinalList;
+      }
+    );
   }
-
+  subscriptionStepData;
   getFamilyMemberData: any;
 
   static convertObjectToArray(inputObject: object): object[] {
@@ -45,7 +55,12 @@ export class UtilService {
   static isDialogClose(data) {
     return data && data.state && data.state === 'close';
   }
-
+  checkSubscriptionastepData(stepNo) {
+    let tempData;
+    tempData = Object.assign([], this.subscriptionStepData)
+    tempData = tempData.filter(element => element.stepTypeId == stepNo)
+    return tempData[0].completed;
+  }
   static isRefreshRequired(data) {
     // let closeState = {
     //   "state": data.state,
@@ -134,7 +149,7 @@ export class UtilService {
   // Allow Only text NOT number and special character
   onlyText(event: any) {
     // const pattern = /[0-9\+\-\. ]/;
-    const pattern =new RegExp(/^[a-zA-Z /-]*$/);
+    const pattern = new RegExp(/^[a-zA-Z /-]*$/);
     const inputChar = String.fromCharCode(event.charCode);
     if (event.keyCode != 8 && !pattern.test(inputChar)) {
       event.preventDefault();

@@ -5,15 +5,15 @@
     <div class="col-md-4 text-right" *ngIf="singleSubscriptionData.status == 2 || singleSubscriptionData.status == 3">
         <div class="wrapper-12 pb-10">
             <button [ngClass]="{'v-h':!isSave}" mat-stroked-button class="br-0 btn-primary mr-20" (click)="enableForm()">
-        EDIT
-      </button>
+                EDIT
+            </button>
             <i class="material-icons c-p v-middle" (click)="close(false)"> clear</i>
         </div>
     </div>
 </div>
 <div class="wrapper-20 pt-36 mb-44 pb-44">
     <div [formGroup]="variableFeeStructureForm">
-        <p class="text-primary">VARIABLE </p>
+        <p class="text-primary">VARIABLE FEE STRUCTURE</p>
         <h4 class="mb-0 pt-16">{{singleSubscriptionData.serviceName}}</h4>
         <div class="row pt-28">
             <div class="col-md-5">
@@ -30,9 +30,9 @@
                     <div class="col-md-5 p-0">
                         <div class="form-group">
                             <select class="form-control br-0" formControlName="Duration" id="sel1">
-                <option value="1">Monthly</option>
-                <option value="2">Yearly</option>
-              </select>
+                                <option value="1">Monthly</option>
+                                <option value="2">Yearly</option>
+                            </select>
                         </div>
                     </div>
                     <mat-error *ngIf="isBillValid && variableFeeStructureForm.get('billEvery') .invalid ||variableFeeStructureForm.get('billEvery') .touched &&variableFeeStructureForm.get('billEvery') .invalid" class="f-12">Field is required
@@ -64,7 +64,8 @@
                         </div>
                         <div class="row ui-mff">
                             <div class="col-md-4 p-0 bl-0 border-right-1">
-                                <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" [maxValue]="100" appInputValueValidation class="form-control br-0 h-39" formControlName="equity" placeholder="%" type="text">
+                                <input addPercentage [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" [maxValue]="100" appInputValueValidation class="form-control br-0 h-39" formControlName="equity" placeholder="%" type="text">
+                                <!-- <span  style= "position:absolute; top: 10px; right: 3px;">%</span> -->
                             </div>
                             <div class="col-md-4 p-0 border-right-1">
                                 <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" [maxValue]="100" appInputValueValidation class="form-control br-0 h-39" formControlName="debt" placeholder="%" type="text">
@@ -116,16 +117,16 @@
                         <div class="b-a wrapper-12">
                             <mat-chip-list *ngIf="otherAssetData" [disabled]="!variableFeeStructureForm.enabled" aria-label="Fish selection">
                                 <mat-chip (click)="select(assets)" *ngFor="let assets of otherAssetData" [ngClass]="{'btn-primary':assets.selected}" class="f-13 f-400 wrapper-16"><i class="material-icons mr-8 text-grey f-16">
-                    check
-                  </i>
+                                        check
+                                    </i>
                                     <div *ngIf="assets">{{assets.subAssetClassName}}</div>
                                 </mat-chip>
                             </mat-chip-list>
                         </div>
                     </div>
-                    <div class="col-md-2 p-0">
+                    <div class="col-md-2  p-0">
                         <!--            [minValue]="0.001" [maxValue]="99"-->
-                        <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" appInputValueValidation class="form-control br-0 h-39 br-grey" formControlName="pricing" matInput maxlength="3" placeholder="%" type="number">
+                        <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" appInputValueValidation class="form-control  b-a br-0 h-39 br-grey" formControlName="pricing" matInput maxlength="3" placeholder="%" type="number">
                         <mat-error *ngIf="(variableFeeStructureForm.get('pricing').errors)" class="f-12 pt-4 ml-8">
                             Should be between than 0.01 to 99
                         </mat-error>
@@ -144,9 +145,9 @@
         </div>
         <div class="col-md-8 right text-right">
             <button *ngIf="singleSubscriptionData.isCreateSub && isSave==false" mat-button [disabled]="isLoading" (click)="saveVariableModifyFees()" class="btn-bottom br-0 text-inherit">Save
-      </button>
+            </button>
             <button *ngIf="singleSubscriptionData.isCreateSub==false" mat-button (click)="saveVariableModifyFees()" class="btn-bottom br-0 text-inherit">NEXT
-      </button>
+            </button>
             <!-- <mat-spinner *ngIf="isLoading"></mat-spinner> -->
         </div>
     </div>

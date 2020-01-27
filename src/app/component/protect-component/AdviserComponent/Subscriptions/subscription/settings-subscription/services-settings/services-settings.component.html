@@ -4,7 +4,7 @@
 <div class="wrapper-20  pr-0">
 
 
-    <div class="row" *ngIf="serviceSettingData != undefined && serviceSettingData.length > 0">
+    <div class="row" *ngIf="serviceSettingData">
         <div (click)="openFragment('','services')" class="col-md-4 pr-20 pb-20 pl-0 c-p">
             <mat-card class="example-card h-475 bg-grey lter">
 
@@ -15,23 +15,23 @@
                 </mat-card-content>
             </mat-card>
         </div>
-        <div *ngFor="let singleService of serviceSettingData" [appSkeletonLoading]="isLoading" appSkeletonLoading
-            class="col-md-4 pr-20 pb-20 pl-0 skeletonAnimation">
+        <div [hidden]="serviceSettingData==undefined" *ngFor="let singleService of serviceSettingData"
+            [appSkeletonLoading]="isLoading" appSkeletonLoading class="col-md-4 pr-20 pb-20 pl-0 skeletonAnimation">
             <mat-card class="example-card bg-grey lter p-0 b-a ">
                 <div class="bar">
                     <mat-card-header class="overflow-hidden">
                         <div class="wrapper-20 height130">
-                            <mat-card-title class="mb-10 l-26 text-break text-lighter relClass f-24" >
+                            <mat-card-title class="mb-10 l-26 text-break text-lighter relClass f-24">
                                 <div class="bar" [ngClass]="{'height23': isLoading}" matTooltip="Service name">
                                     {{singleService.serviceName}} </div>
                             </mat-card-title>
 
                             <mat-card-subtitle class="pt-4 pb-12 relClass">
-                                <div class="bar" [ngClass]="{'height23': isLoading}"  matTooltip="Service code">
+                                <div class="bar" [ngClass]="{'height23': isLoading}" matTooltip="Service code">
                                     {{singleService.serviceCode}}
                                 </div>
 
-                                <p class="m-0 text-sl" matTooltip="{{singleService.description}}"
+                                <p class="m-0 text-sl" matTooltip="Description : {{singleService.description}}"
                                     aria-label="Button that displays a tooltip when focused or hovered over">
 
                                     {{singleService.description}}
@@ -149,7 +149,7 @@
         </div>
     </div>
 
-    <div class="row" *ngIf="serviceSettingData == undefined || serviceSettingData.length == 0">
+    <div class="row" *ngIf="serviceSettingData == undefined">
         <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
             <img class="width200" src="assets/images/svg/add-services-img.svg">
             <p class="f-22 f-600 pt-28">Create Services </p>

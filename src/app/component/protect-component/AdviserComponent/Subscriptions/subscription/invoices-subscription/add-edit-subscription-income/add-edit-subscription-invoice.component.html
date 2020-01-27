@@ -165,7 +165,7 @@
                                 </mat-autocomplete>
                             </div>
                             <div class="col-md-8">
-                                <mat-error *ngIf="getFormControlEdit().serviceName.invalid || (getFormControlEdit().serviceName.touched && getFormControlEdit().serviceName.invalid)" class="f-12 pt-4">
+                                <mat-error *ngIf="getFormControlEdit().serviceName.touched && getFormControlEdit().serviceName.invalid" class="f-12 pt-4">
                                     Service name is required
                                 </mat-error>
                             </div>
@@ -195,7 +195,7 @@
                     {{storeData.taxStatus}}
                     <div class="col-md-2 d-flex align-items-center justify-content-end">
                         <h5 class="m-0 text-right ">
-                            ₹<span appFormatNumber>{{finalAmount}}</span>
+                            ₹<span [value]="finalAmount" appFormatNumber>{{finalAmount}}</span>
                         </h5>
                         <h5 *ngIf="storeData.sgst != undefined" [hidden]="finalAmount !=undefined" class="m-0 text-right ">
                             {{storeData.cgstTaxAmount}}</h5>
@@ -212,7 +212,7 @@
             <h5 class="m-0">Sub total</h5>
         </div>
         <div class="col-md-2 pr-24">
-            <h5 class="m-0 text-right pr-8">₹<span appFormatNumber>{{finalAmount}}</span></h5>
+            <h5 class="m-0 text-right pr-8">₹<span  [value]="finalAmount" appFormatNumber >{{finalAmount}}</span></h5>
         </div>
     </div>
     <div class="row pt-20">
@@ -233,10 +233,10 @@
             <h5 class="m-0">SGST(9%)</h5>
         </div>
         <div *ngIf="taxStatus == 'IGST(18%)'" class="col-md-2 pr-24">
-            <h5 class="m-0 text-right pr-8">₹<span appFormatNumber>{{igstTaxAmount}}</span></h5>
+            <h5 class="m-0 text-right pr-8">₹<span [value]="igstTaxAmount" appFormatNumber >{{igstTaxAmount}}</span></h5>
         </div>
         <div *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'" class="col-md-2 pr-24">
-            <h5 class="m-0 text-right pr-8">₹<span appFormatNumber>{{sgstTaxAmount}}</span></h5>
+            <h5 class="m-0 text-right pr-8">₹<span [value]="sgstTaxAmount" appFormatNumber >{{sgstTaxAmount}}</span></h5>
         </div>
     </div>
     <div class="row pt-20 pb-12">
@@ -245,7 +245,7 @@
             <h5 class="m-0">CGST(9%)</h5>
         </div>
         <div *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'" class="col-md-2 pr-24">
-            <h5 class="m-0 text-right pr-8">₹<span appFormatNumber>{{cgstTaxAmount}}</span></h5>
+            <h5 class="m-0 text-right pr-8">₹<span [value]="cgstTaxAmount" appFormatNumber >{{cgstTaxAmount}}</span></h5>
             <!--      | number:'1.2-2'-->
         </div>
     </div>
@@ -259,7 +259,7 @@
         <div class="col-md-2 pt-4 pl-0 pr-24">
             <div class="bt-grey">
                 <h5 class="m-0 text-right pr-8 pt-8 text-black f-500">
-                    ₹<span appFormatNumber>{{finAmount}}</span>
+                    ₹<span  [value]="finAmount" appFormatNumber  >{{finAmount}}</span>
                 </h5>
             </div>
         </div>

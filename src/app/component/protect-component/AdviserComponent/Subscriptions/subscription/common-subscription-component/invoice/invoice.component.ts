@@ -40,6 +40,8 @@ export class InvoiceComponent implements OnInit {
   service: { serviceName: any; averageFees: any; description: any; fromDate: any; toDate: any; }[];
   feeCalc: boolean;
   rpyment = true;
+  showDateError: string;
+  moreStatus: any;
 
   [x: string]: any;
 
@@ -182,7 +184,7 @@ export class InvoiceComponent implements OnInit {
   addStatus(value,status){
     let obj = {
       id:value.id,
-      status:status
+      status:status.value
     }
     this.subService.getInvoiceStatus(obj).subscribe(
       data => this.getInvoiceStatusRes(data)
@@ -190,6 +192,7 @@ export class InvoiceComponent implements OnInit {
   }
   getInvoiceStatusRes(data){
     console.log('getInvoiceStatusRes',data)
+    this.Close('close', true);
   }
   dontAllowTyping(event, maxLength: number) {
     if (event.target.value.length > maxLength) {
@@ -366,15 +369,24 @@ export class InvoiceComponent implements OnInit {
 
   getRecordPayment(data) {
     this.recordData = data
-    this.getPayReceive(data.id);
+    if(data!=""){
+      this.getPayReceive(data.id);
+    }
   }
 
   getInvoiceData(data) {
     console.log('@@@@@@@@', data);
     this.copyStoreData = data;
     this.storeData = data;
+    if(data.status==5 || data.status==6){
+      this.moreStatus=data.status;
+    }else{
+      this.moreStatus="";
+    }
     if (this.storeData.balanceDue == 0) {
       this.rpyment = false
+    }else {
+      this.rpyment = true;
     }
     this.clientId = AuthService.getClientId();
     this.auto = this.storeData.auto;
@@ -442,16 +454,7 @@ export class InvoiceComponent implements OnInit {
       this.editPayment.value.discount = 0
     }
     this.changeTaxStatus(this.editPayment.value.taxStatus)
-    // if (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') {
-    //   this.finAmountC = this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount);
-    //   this.finAmountC = this.finAmountC * 9 / 100;
-    //   this.finAmountS = this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount);
-    //   this.finAmountS = this.finAmountS * 9 / 100;
-    //   this.finAmount = this.finAmountC + this.finAmountS;
-    // } else {
-    //   this.finAmount = (this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount));
-    //   this.finAmount = (this.finAmount) * 18 / 100;
-    // }
+   
     if (this.editPayment.get('dueDate').invalid) {
       this.editPayment.get('dueDate').markAsTouched();
       return;
@@ -617,7 +620,17 @@ export class InvoiceComponent implements OnInit {
   }
 
   passInvoice(data, index, event) {
-    this.recordData = data;
+    if (data.balanceDue == 0) {
+      this.rpyment = false
+    }else{
+      this.rpyment =true
+    }
+    if(data.status==5 || data.status==6){
+      this.moreStatus=data.status;
+    }else{
+      this.moreStatus="";
+    }   
+     this.recordData = data;
     console.log(data);
     this.storeData = data;
     const obj = {

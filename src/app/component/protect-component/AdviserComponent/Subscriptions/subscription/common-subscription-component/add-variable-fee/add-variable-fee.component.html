@@ -19,12 +19,12 @@
     <div class="col-md-5 pr-0">
       <div class="form-group mb-0">
         <input type="text" maxlength="{{getFormControl().serviceName.maxLength}}" formControlName="serviceName"
-          class="form-control br-0">
+               class="form-control br-0">
       </div>
       <div class="row">
         <div class="col-md-8">
           <mat-error class="f-12 pt-4"
-            [ngClass]="{'v-h':!(isServiceValid && getFormControl().serviceName.invalid || (getFormControl().serviceName.touched && getFormControl().serviceName.invalid))}">
+                     [ngClass]="{'v-h':!(isServiceValid && getFormControl().serviceName.invalid || (getFormControl().serviceName.touched && getFormControl().serviceName.invalid))}">
             Service Name is required
           </mat-error>
         </div>
@@ -43,8 +43,9 @@
     <div class="col-md-3">
       <div class="form-group mb-0">
         <mat-form-field>
-          <input #code [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="10"
+          <input #code [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="10"maxlength="10"
                  appInputValueValidation class="form-control br-0 text-left" formControlName="code" matInput
+                 (changedValue)="getFormControl().code.setValue($event)"
                  type="text">
           <mat-error
             class="f-12">{{'Invalid code'}}</mat-error>
@@ -61,15 +62,16 @@
 
       <div class="form-group mb-0">
         <textarea class="form-control br-0" maxlength="{{getFormControl().description.maxLength}}"
-          formControlName="description" rows="3"></textarea>
+                  formControlName="description" rows="3"></textarea>
       </div>
       <div class="row">
         <div class="col-md-6">
-          <p class="mb-0 f-12 text-custom">optional</p>
+          <p class="mb-0 f-12 text-custom">Optional</p>
         </div>
         <div class="col-md-6">
           <p class="mb-0 f-12 text-custom text-right">
-            {{getFormControl().description.value?.length ? getFormControl().description.value.length : 0}}/{{getFormControl().description.maxLength}}
+            {{getFormControl().description.value?.length ? getFormControl().description.value.length : 0}}
+            /{{getFormControl().description.maxLength}}
           </p>
         </div>
 
@@ -86,7 +88,9 @@
         <div class="col-md-5 p-0">
           <div class="form-group mb-0">
             <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="2" appInputValueValidation
-              formControlName="billEvery" type="text" class="form-control br-0 br-none">
+                   (changedValue)="getFormControl().billEvery.setValue($event)" class="form-control br-0 br-none"
+                   formControlName="billEvery"
+                   type="text">
           </div>
         </div>
         <div class="col-md-5 p-0">
@@ -100,7 +104,7 @@
           </div>
         </div>
         <mat-error class="f-12 pt-4"
-          [ngClass]="{'v-h':!(isBillValid && getFormControl().billEvery.invalid || getFormControl().billEvery.touched && getFormControl().billEvery.invalid)}">
+                   [ngClass]="{'v-h':!(isBillValid && getFormControl().billEvery.invalid || getFormControl().billEvery.touched && getFormControl().billEvery.invalid)}">
           Billevery is required
         </mat-error>
       </div>
@@ -130,18 +134,18 @@
           <div class="row ui-mff">
             <div class="col-md-4 p-0 bl-0 br-grey bb-grey">
               <input [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)" [maxLength]="4"
-                appInputValueValidation formControlName="equity" placeholder="%" type="text"
-                class="form-control br-0 h-39">
+                     appInputValueValidation class="form-control br-0 h-39" formControlName="equity" placeholder="%"
+                     type="text">
             </div>
             <div class="col-md-4 p-0 br-grey bb-grey">
               <input [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)" [maxLength]="4"
-                appInputValueValidation formControlName="debt" placeholder="%" type="text"
-                class="form-control br-0 h-39">
+                     appInputValueValidation class="form-control br-0 h-39" formControlName="debt" placeholder="%"
+                     type="text">
             </div>
             <div class="col-md-4 p-0 bb-grey br-grey">
               <input [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)" [maxLength]="4"
-                appInputValueValidation formControlName="liquid" placeholder="%" type="text"
-                class="form-control br-0 h-39">
+                     appInputValueValidation class="form-control br-0 h-39" formControlName="liquid" placeholder="%"
+                     type="text">
             </div>
           </div>
         </div>
@@ -163,18 +167,19 @@
           <div class="row ui-mff">
             <div class="col-md-4 p-0 bl-0 bb-grey br-grey">
               <input [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)" [maxLength]="4"
-                appInputValueValidation formControlName="equity" placeholder="%" type="text"
-                class="form-control br-0 h-39 br-grey">
+                     appInputValueValidation class="form-control br-0 h-39 br-grey" formControlName="equity"
+                     placeholder="%"
+                     type="text">
             </div>
             <div class="col-md-4 p-0 br-grey bb-grey">
               <input [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)" [maxLength]="4"
-                appInputValueValidation formControlName="debt" placeholder="%" type="text"
-                class="form-control br-0 h-39">
+                     appInputValueValidation class="form-control br-0 h-39" formControlName="debt" placeholder="%"
+                     type="text">
             </div>
             <div class="col-md-4 p-0 br-grey bb-grey">
               <input [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)" [maxLength]="4"
-                appInputValueValidation formControlName="liquid" placeholder="%" type="text"
-                class="form-control br-0 h-39">
+                     appInputValueValidation class="form-control br-0 h-39" formControlName="liquid" placeholder="%"
+                     type="text">
             </div>
           </div>
         </div>
@@ -195,10 +200,10 @@
           <div class="b-grey wrapper-12">
             <mat-chip-list aria-label="Fish selection">
               <mat-chip (click)="select(assets)" *ngFor="let assets of otherAssetData"
-                [ngClass]="{'btn-primary':assets.isActive==1}" class="f-13 f-400 wrapper-16"><i
-                  class="material-icons mr-8 text-grey f-16">
-                  check
-                </i>
+                        [ngClass]="{'btn-primary':assets.isActive==1}" class="f-13 f-400 wrapper-16"><i
+                class="material-icons mr-8 text-grey f-16">
+                check
+              </i>
                 <div *ngIf="assets">{{assets.subAssetClassName}}</div>
               </mat-chip>
             </mat-chip-list>
@@ -209,7 +214,7 @@
           <input [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)" [maxLength]="4"
             appInputValueValidation formControlName="pricing" placeholder="%" type="text"
             class="form-control bl-0 br-0 h-39 br-grey">
-          <mat-error *ngIf="(variableFeeData.get('pricing').errors)" class="f-12 pt-4">
+          <mat-error *ngIf="pricing == true" class="f-12 pt-4">
             Should be between than 0 to 99
           </mat-error>
         </div>

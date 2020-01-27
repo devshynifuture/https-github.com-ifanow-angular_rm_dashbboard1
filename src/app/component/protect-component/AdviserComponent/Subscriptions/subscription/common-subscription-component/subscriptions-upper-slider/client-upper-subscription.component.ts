@@ -277,6 +277,10 @@ export class ClientUpperSubscriptionComponent implements OnInit {
         autoFocus: false,
       });
       dialogRef.afterClosed().subscribe(result => {
+        console.log(result,"cancel was close");
+        if(result != undefined){
+          this.getSummaryDataClient();
+        }
       });
     }
   }
