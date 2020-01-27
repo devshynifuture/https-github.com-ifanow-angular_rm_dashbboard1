@@ -21,14 +21,14 @@
                     <p class="m-0 text-custom">From</p>
                 </div>
                 <div class="col-md-9">
-                    <!-- <p class="m-0 text-black">
+                    <p class="m-0 text-black">
                         {{ from }}
-                    </p> -->
-                    <input type="text" [(ngModel)]="from" formControlName="sender">
-                    <div *ngIf="!emailForm.get('sender').valid && emailForm.get('sender').touched"
+                    </p>
+                    <!-- <input type="text" [(ngModel)]="from" formControlName="sender"> -->
+                    <!-- <div *ngIf="!emailForm.get('sender').valid && emailForm.get('sender').touched"
                         [ngClass]="emailForm.get('sender').valid && emailForm.get('sender').touched ? '': 'is-invalid'">
                         invalid email
-                    </div>
+                    </div> -->
                 </div>
                 <div class="col-md-2 pr-0">
                     <ul class="text-custom right f-14 pr-8 f-500">

@@ -12,6 +12,7 @@ import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { EmailUtilService } from 'src/app/services/email-util.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-email-view',
@@ -26,16 +27,19 @@ export class EmailViewComponent implements OnInit, OnDestroy {
   raw;
   attachmentBase64Code;
   emailSubscription: Subscription;
-  isLoading: boolean = true;
+  isLoading: boolean = false;
   messagesHeaders: string[];
   decodedPart;
+  attachmentBase64: string = null;
+  private _htmlString: string;
 
   constructor(private emailService: EmailServiceService,
     private _bottomSheet: MatBottomSheet,
     private location: Location,
     private eventService: EventService,
     private router: Router,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute,
+    private _sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.getEmailThread();
@@ -53,6 +57,10 @@ export class EmailViewComponent implements OnInit, OnDestroy {
     }
   }
 
+  // getSanitizedHtml(): SafeHtml {
+  //   return this._sanitizer.bypassSecurityTrustHtml(this._htmlString)
+  // }
+
   getGmailDetailMessageRaw(id) {
 
     this.emailService.gmailMessageDetail(id)
@@ -61,7 +69,12 @@ export class EmailViewComponent implements OnInit, OnDestroy {
         console.log("this is response of detailed api:::::::::::::::", response)
 
         this.raw = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(response.raw);
+        this.extractValuesFromDetailView();
+        this.attachmentBase64 = "data: image/jpeg; base64," + this.raw.match(/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=|[A-Za-z0-9+\/]{4})$/gm);
+        // this._htmlString = '<img [src]="attachmentBase64" />';
         this.isLoading = false;
+
+        console.log("this is attachment base64::::::::::::::: ", this.attachmentBase64);
         // this.attachmentBase64Code = this.raw.forEach(part => {
         //   part.item
         // });
@@ -179,6 +192,24 @@ export class EmailViewComponent implements OnInit, OnDestroy {
 
       }
     });
+  }
+
+  extractValuesFromDetailView() {
+    const keyValueRegex = /([^:\s]+):([^:\s]+)/g;
+    let keys = [];
+    let values = [];
+
+    let base64Value = this.raw.split('Content-ID')[1];
+    let messageValue = this.raw.split('Content-ID')[0];
+
+
+    // while ((m = keyValueRegex.exec(messageValue)) !== null) {
+    //   keys.push(m[1]);
+    //   values.push(m[2]);
+    // }
+
+    // console.log(keys);
+    // console.log(values);
   }
 
   moveMessageToTrash() {

@@ -80,6 +80,15 @@
         </div>
     </div>
 </div>
-<!-- <div *ngIf="!dataSource">
+
+<div class="row" *ngIf="_htmlString">
+    <div class="col-md-12">
+        <span>
+            <!-- {{ getSanitizedHtml() }} -->
+        </span>
+    </div>
+</div>
+
+<div *ngIf="isLoading">
     <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-</div> -->
+</div>

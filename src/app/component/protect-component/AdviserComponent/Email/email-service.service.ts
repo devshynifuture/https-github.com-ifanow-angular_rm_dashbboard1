@@ -93,7 +93,8 @@ export class EmailServiceService {
     });
   }
 
-  getMailInboxList(labelIds: string, maxResults: number = 50, pageToken: string = '') {
+  getMailInboxList(data) {
+    const { labelIds, maxResults, pageToken } = data;
     const userInfo = AuthService.getUserInfo();
     return this.http.get(apiConfig.GMAIL_URL + appConfig.GET_GMAIL_INBOX_LIST, {
       email: userInfo.emailId,

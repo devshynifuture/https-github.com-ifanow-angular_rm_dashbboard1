@@ -29,7 +29,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   receipentEmail: string;
   subject: string;
   emailBody: string = '';
-  from: string = "";
+  from: string = AuthService.getUserInfo().emailId;
   to: string = "";
   idOfMessage;
   date;
@@ -86,7 +86,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   createEmailForm() {
     // console.log("this is data sent from draft list ->>>>  ", this.data);
     this.emailForm = this.fb.group({
-      sender: ['', Validators.email],
+      sender: [, Validators.email],
       receiver: [[], Validators.email],
       carbonCopy: [[], Validators.email],
       blindCarbonCopy: [[], Validators.email],

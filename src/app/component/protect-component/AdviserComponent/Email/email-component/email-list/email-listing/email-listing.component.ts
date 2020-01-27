@@ -18,6 +18,11 @@ import { EmailUtilService } from 'src/app/services/email-util.service';
   styleUrls: ['./email-listing.component.scss']
 })
 export class EmailListingComponent implements OnInit {
+  isLoading: boolean = false;
+  totalListSize: number = 0;
+  maxListRes: number = 0;
+  resultSizeEstimate: any;
+  currentList: number = 0;
 
 
   constructor(
@@ -32,7 +37,7 @@ export class EmailListingComponent implements OnInit {
   paginatorSubscription;
   gmailInboxListSubscription;
   gmailThreads: [];
-  nextPageToken;
+  nextPageToken = null;
   messageDetailArray: GmailInboxResponseI[];
   messageListArray;
   dataSource = null;
@@ -40,7 +45,7 @@ export class EmailListingComponent implements OnInit {
   listSubscription = null;
   trashAction: boolean = false;
   showDraftView: boolean = false;
-  currentPage;
+  currentPage: number = 1;
   toShowMaxThreadsLength;
 
   displayedColumns: string[] = ['select', 'emailers', 'subjectMessage', 'date'];
@@ -60,6 +65,11 @@ export class EmailListingComponent implements OnInit {
     }
     (location === 'trash') ? this.trashAction = true : this.trashAction = false;
     (location === 'draft') ? this.showDraftView = true : this.showDraftView = false;
+
+    this.totalListSize = this.totalListSize - 50;
+    this.currentList = this.maxListRes + 1;
+    this.maxListRes = this.maxListRes + 50;
+
     this.getPaginatorLengthRes(location);
   }
 
@@ -109,7 +119,9 @@ export class EmailListingComponent implements OnInit {
       } else {
 
         this.paginatorLength = response.threadsTotal;
-        this.getGmailList(location.toUpperCase());
+        this.totalListSize = this.paginatorLength;
+        this.isLoading = true;
+        this.getGmailList(location.toUpperCase(), '');
       }
     });
   }
@@ -230,11 +242,21 @@ export class EmailListingComponent implements OnInit {
   }
 
   // get List view
-  getGmailList(data) {
+  getGmailList(data, page) {
+    data = {
+      labelIds: data,
+      pageToken: (page == 'next') ? (this.nextPageToken ? this.nextPageToken : '') : '',
+      maxResults: 50
+    }
     this.listSubscription = this.emailService.getMailInboxList(data)
       .subscribe(responseData => {
         console.log(responseData);
+        if (responseData.nextPageToken) {
+          this.nextPageToken = responseData.nextPageToken;
+        }
+        this.resultSizeEstimate = responseData.resultSizeEstimate;
         let tempArray1 = [];
+
         // console.log('this is gmails inbox data ->');
         // console.log('responseData from service ->>', responseData);
         // const parsedResponseData = JSON.parse(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(responseData));
@@ -307,15 +329,37 @@ export class EmailListingComponent implements OnInit {
           // console.log(extractSubjectFromHeaders);
         });
 
+
         this.messageListArray = tempArray1;
         // this.messageDetailArray = tempArray;
         // console.log('this is decoded object data ->>>>');
         // console.log(this.messageDetailArray);
-
+        this.isLoading = false;
         this.dataSource = new MatTableDataSource<MessageListArray>(this.messageListArray);
         this.dataSource.paginator = this.paginator;
 
       }, error => console.error(error));
+  }
+
+  nextPagesList() {
+
+    this.totalListSize = this.totalListSize - 50;
+    this.currentList = this.maxListRes + 1;
+    this.maxListRes = this.maxListRes + 50;
+    if (this.maxListRes >= this.paginatorLength) {
+      this.maxListRes = this.paginatorLength;
+    }
+    if (this.currentList >= this.paginatorLength) {
+      this.currentList = 1;
+      this.maxListRes = 50;
+    }
+    this.isLoading = true;
+    this.getGmailList('INBOX', 'next');
+  }
+
+  previousPagesList() {
+    this.isLoading = true;
+    this.getGmailList('INBOX', 'prev');
   }
 
   getFileDetails(e): void {
