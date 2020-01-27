@@ -18,6 +18,7 @@ export class FormatNumberDirective implements AfterViewInit {
 
   ngAfterViewInit() {
     /* this.el.nativeElement.innerText = */
+    
     this.el.nativeElement.innerText = this.formatAndRoundOffNumber(this.el.nativeElement.innerText);
   }
 

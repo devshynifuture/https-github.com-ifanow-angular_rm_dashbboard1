@@ -299,8 +299,8 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
   display(data) {
 
-    if (data.closingState) {
-      console.log(data, "edited data invoice");
+    console.log(data, "edited data invoice");
+    if (data.closingState ) {
       this.dataSource.data = [{}, {}, {}]
       this.tableData = [];
       this.getInvoiceSubData(false);
@@ -311,9 +311,18 @@ export class InvoicesSubscriptionComponent implements OnInit {
     // this.ngOnInit();
   }
   getCancelInvoiceSubscription(data) {
-    console.log(data);
-    this.ngOnInit();
+    this.invoiceSubscription = 'false';
+
+    if (data) {
+      this.dataSource.data = [{}, {}, {}]
+      this.tableData = [];
+      this.getInvoiceSubData(false);
+      this.dataCount = 0;
+    }
+    console.log(data, "cancel data invoice");
+    // this.ngOnInit();
   }
+
   showFilters(showFilter) {
     if (showFilter == true) {
       this.showFilter = false;

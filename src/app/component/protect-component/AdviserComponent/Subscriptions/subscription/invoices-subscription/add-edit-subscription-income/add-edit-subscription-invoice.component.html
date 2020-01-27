@@ -124,7 +124,7 @@
                         <div class="col-md-6 p-0">
                             <div class="form-group mb-0">
                                 <mat-form-field class="ba-date">
-                                    <input (click)="picker.open()" (dateChange)="checkDateDiff($event)" [matDatepicker]="dueDatePicker" class="form-control b-0" formControlName="dueDate" matInput readonly>
+                                    <input (click)="dueDatePicker.open()" (dateChange)="checkDateDiff($event)" [matDatepicker]="dueDatePicker" class="form-control b-0" formControlName="dueDate" matInput readonly>
                                     <mat-datepicker-toggle [for]="dueDatePicker" matSuffix></mat-datepicker-toggle>
                                     <mat-datepicker #dueDatePicker></mat-datepicker>
                                     <mat-error class="f-12 pt-4">Invoice date is required

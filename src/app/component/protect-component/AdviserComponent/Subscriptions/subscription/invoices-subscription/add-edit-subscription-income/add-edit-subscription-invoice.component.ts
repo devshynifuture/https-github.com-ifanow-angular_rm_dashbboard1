@@ -400,7 +400,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   addInvoiceRes(data) {
     console.log('addInvoiceRes', data);
     if (data == 1) {
-      this.cancelAddInvoice.emit(false);
+      this.cancelAddInvoice.emit(true);
       // this.Close('close', true);
     }
   }
@@ -454,7 +454,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
 
   closeEditInv() {
     // this.editPayment.reset();
-    if (this.invoiceValue == 'EditInInvoice' || this.invoiceValue == 'edit') {
+    if (this.storeData.invoiceNumber == undefined) {
       this.valueChange.emit(false);
       this.cancelAddInvoice.emit(false);
     } else {
