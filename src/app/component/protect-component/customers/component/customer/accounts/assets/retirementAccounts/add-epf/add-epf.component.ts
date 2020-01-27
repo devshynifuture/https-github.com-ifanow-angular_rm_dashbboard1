@@ -105,7 +105,7 @@ export class AddEPFComponent implements OnInit {
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       employeeContry: [(data == undefined) ? '' : data.employeesMonthlyContribution, [Validators.required]],
       employerContry: [(data == undefined) ? '' : data.employersMonthlyContribution, [Validators.required]],
-      annualSalGrowth: [(data == undefined) ? '' : data.annualSalaryGrowth, [Validators.required]],
+      annualSalGrowth: [(data == undefined) ? '' : data.annualSalaryGrowthRate, [Validators.required]],
       currentEPFBal: [(data == undefined) ? '' : data.currentEpfBalance, [Validators.required]],
       maturityYear: [(data == undefined) ? '' : (data.maturityYear), [Validators.required]],
       balanceAsOn: [(data == undefined) ? '' : new Date(data.balanceAsOnDate), [Validators.required]],
