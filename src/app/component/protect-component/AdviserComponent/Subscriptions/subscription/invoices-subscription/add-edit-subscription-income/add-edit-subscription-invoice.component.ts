@@ -71,6 +71,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.upperData)
     this.advisorId = AuthService.getAdvisorId();
     this.getClients();
     this.showErr = false;
@@ -357,7 +358,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   getClients() {
     const obj = {
       advisorId: this.advisorId,
-      clientId :(this.storeData.id == undefined)? 0:this.storeData.id
+      clientId :(this.upperData == undefined)? 0:this.upperData.id
     };
     this.subService.getClientList(obj).subscribe(
       data => this.getClientListRes(data)

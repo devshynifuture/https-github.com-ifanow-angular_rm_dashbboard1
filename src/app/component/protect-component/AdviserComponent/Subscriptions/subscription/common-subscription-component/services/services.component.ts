@@ -15,7 +15,7 @@ export class ServicesComponent implements OnInit {
   advisorId;
 
   @Input() componentFlag: string;
-  planServiceData: Array<any> = [{ selected: false }];
+  planServiceData: Array<any> = [{}, {}, {}];
   mappedData = [];
   mappedPlan = [];
   @Input() planData;

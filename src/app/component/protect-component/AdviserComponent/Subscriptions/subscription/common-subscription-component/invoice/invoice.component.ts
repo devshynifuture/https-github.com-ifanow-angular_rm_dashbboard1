@@ -41,6 +41,7 @@ export class InvoiceComponent implements OnInit {
   feeCalc: boolean;
   rpyment = true;
   showDateError: string;
+  moreStatus: any;
 
   [x: string]: any;
 
@@ -377,6 +378,11 @@ export class InvoiceComponent implements OnInit {
     console.log('@@@@@@@@', data);
     this.copyStoreData = data;
     this.storeData = data;
+    if(data.status==5 || data.status==6){
+      this.moreStatus=data.status;
+    }else{
+      this.moreStatus="";
+    }
     if (this.storeData.balanceDue == 0) {
       this.rpyment = false
     }else {
@@ -619,7 +625,12 @@ export class InvoiceComponent implements OnInit {
     }else{
       this.rpyment =true
     }
-    this.recordData = data;
+    if(data.status==5 || data.status==6){
+      this.moreStatus=data.status;
+    }else{
+      this.moreStatus="";
+    }   
+     this.recordData = data;
     console.log(data);
     this.storeData = data;
     const obj = {
