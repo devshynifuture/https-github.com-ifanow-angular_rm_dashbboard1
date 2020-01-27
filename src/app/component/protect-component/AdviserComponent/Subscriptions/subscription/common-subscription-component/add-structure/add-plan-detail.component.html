@@ -17,22 +17,22 @@
             <h5>Plan name</h5>
           </div>
           <div class="col-md-5">
-            <div class="form-group mb-0">
-              <input #planName class="form-control br-2" formControlName="planName" maxlength="40"
-                     type="email">
-            </div>
-            <div class="row">
-              <div class="col-md-8">
-                <mat-error
-                  [ngClass]="{'v-h': !(isPlanValid && getFormControl().planName.invalid || getFormControl().planName.touched && getFormControl().planName.invalid)}"
-                  class="f-12 pt-4">
-                  Plan name is required
-                </mat-error>
-              </div>
-              <div class="col-md-4">
-                <p class="mb-0 f-12 text-custom text-right pt-4">{{planName.value.length}}/40</p>
-              </div>
-            </div>
+            <mat-form-field>
+
+              <input #planName class="form-control br-2" formControlName="planName" maxlength="40" matInput
+                type="email">
+
+
+              <mat-error
+                [ngClass]="{'v-h': !(isPlanValid && getFormControl().planName.invalid || getFormControl().planName.touched && getFormControl().planName.invalid)}"
+                class="f-12 pt-4">
+                Plan name is required
+              </mat-error>
+
+
+              <mat-hint align="end" class="f-12">{{planName.value.length}}/10</mat-hint>
+            </mat-form-field>
+
           </div>
         </div>
         <div class="row pt-24">
@@ -43,10 +43,9 @@
             <div class="form-group mb-0">
               <mat-form-field>
                 <input #code [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="10"
-                       appInputValueValidation class="form-control br-0 text-left" formControlName="code" matInput
-                       (changedValue)="getFormControl().code.setValue($event)" type="text">
-                <mat-error
-                  class="f-12">{{'Invalid code'}}</mat-error>
+                  appInputValueValidation class="form-control br-0 text-left" formControlName="code" matInput
+                  (changedValue)="getFormControl().code.setValue($event)" type="text">
+                <mat-error class="f-12">{{'Invalid code'}}</mat-error>
                 <mat-hint align="end" class="f-12">{{code.value.length}}/10</mat-hint>
               </mat-form-field>
             </div>
@@ -58,22 +57,17 @@
             <h5>Description</h5>
           </div>
           <div class="col-md-5">
-            <div class="form-group mb-0">
-                            <textarea class="form-control br-2" #description maxlength="160"
-                                      formControlName="description" rows="5"></textarea>
-            </div>
-            <div class="row">
-              <div class="col-md-8">
-                <mat-error
-                  [ngClass]="{'d-n': !(isDescValid && getFormControl().description.invalid || getFormControl().description.touched && getFormControl().description.invalid)}"
-                  class="f-12">
-                  Description is required
-                </mat-error>
-              </div>
-              <div class="col-md-4">
-                <p class="mb-0 f-12 text-custom text-right pt-4">{{description.value.length}}/160</p>
-              </div>
-            </div>
+            <mat-form-field>
+              <textarea class="form-control br-2" #description maxlength="160" matInput formControlName="description"
+                rows="5"></textarea>
+              <mat-error
+                [ngClass]="{'d-n': !(isDescValid && getFormControl().description.invalid || getFormControl().description.touched && getFormControl().description.invalid)}"
+                class="f-12">
+                Description is required
+              </mat-error>
+              <mat-hint align="end" class="f-12">{{description.value.length}}/10</mat-hint>
+
+            </mat-form-field>
           </div>
         </div>
       </form>

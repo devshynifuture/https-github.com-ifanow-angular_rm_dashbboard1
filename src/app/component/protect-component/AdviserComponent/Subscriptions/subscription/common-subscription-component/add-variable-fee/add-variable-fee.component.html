@@ -18,21 +18,17 @@
     </div>
     <div class="col-md-5 pr-0">
       <div class="form-group mb-0">
-        <input type="text" maxlength="{{getFormControl().serviceName.maxLength}}" formControlName="serviceName"
-               class="form-control br-0">
-      </div>
-      <div class="row">
-        <div class="col-md-8">
-          <mat-error class="f-12 pt-4"
-                     [ngClass]="{'v-h':!(isServiceValid && getFormControl().serviceName.invalid || (getFormControl().serviceName.touched && getFormControl().serviceName.invalid))}">
-            Service Name is required
-          </mat-error>
-        </div>
-        <div class="col-md-4">
-          <p class="mb-0 f-12 text-custom text-right pt-4">
-            {{getFormControl().serviceName.value?.length ? getFormControl().serviceName.value.length : 0}}
-            /{{getFormControl().serviceName.maxLength}}</p>
-        </div>
+        <mat-form-field>
+          <input type="text" maxlength="{{getFormControl().serviceName.maxLength}}" formControlName="serviceName"
+                 class="form-control br-0" matInput>
+                 <mat-error class="f-12 pt-4"
+                            [ngClass]="{'v-h':!(isServiceValid && getFormControl().serviceName.invalid || (getFormControl().serviceName.touched && getFormControl().serviceName.invalid))}">
+                   Service Name is required
+                 </mat-error>
+                 <mat-hint align="end" class="f-12">{{getFormControl().serviceName.value?.length ? getFormControl().serviceName.value.length : 0}}
+                  /{{getFormControl().serviceName.maxLength}}</mat-hint>
+
+        </mat-form-field>
       </div>
     </div>
   </div>
@@ -59,24 +55,15 @@
       <h5 class="text-right pt-12 mb-0">Description</h5>
     </div>
     <div class="col-md-5 pr-0">
-
-      <div class="form-group mb-0">
+      <mat-form-field>
         <textarea class="form-control br-0" maxlength="{{getFormControl().description.maxLength}}"
-                  formControlName="description" rows="3"></textarea>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <p class="mb-0 f-12 text-custom">optional</p>
-        </div>
-        <div class="col-md-6">
-          <p class="mb-0 f-12 text-custom text-right">
-            {{getFormControl().description.value?.length ? getFormControl().description.value.length : 0}}
-            /{{getFormControl().description.maxLength}}
-          </p>
-        </div>
+        matInput formControlName="description" rows="3"></textarea>
+        
+      <mat-hint align="end" class="f-12">{{getFormControl().description.value?.length ? getFormControl().description.value.length : 0}}
+        /{{getFormControl().description.maxLength}}</mat-hint>
+        <mat-hint align="start" class="f-12">Optional</mat-hint>
 
-      </div>
-
+      </mat-form-field>
     </div>
   </div>
   <div class="row pt-28">
@@ -84,30 +71,33 @@
       <h5 class="text-right pt-12 mb-0">Bill every</h5>
     </div>
     <div class="col-md-7">
-      <div class="row">
-        <div class="col-md-5 p-0">
-          <div class="form-group mb-0">
-            <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="2" appInputValueValidation
-                   (changedValue)="getFormControl().billEvery.setValue($event)" class="form-control br-0 br-none"
-                   formControlName="billEvery"
-                   type="text">
+      <mat-form-field>
+
+        <div class="row">
+          <div class="col-md-5 p-0">
+            <div class="form-group mb-0">
+              <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="2" appInputValueValidation 
+              matInput  (changedValue)="getFormControl().billEvery.setValue($event)" class="form-control br-0 br-none"
+                     formControlName="billEvery"
+                     type="text">
+            </div>
           </div>
-        </div>
-        <div class="col-md-5 p-0">
-          <div class="form-group">
-            <mat-form-field>
-              <mat-select class="form-control br-0" formControlName="Duration" id="sel1">
-                <mat-option value="1">Months</mat-option>
-                <mat-option value="2">Years</mat-option>
-              </mat-select>
-            </mat-form-field>
+          <div class="col-md-5 p-0">
+            <div class="form-group">
+              <mat-form-field>
+                <mat-select class="form-control br-0" formControlName="Duration" id="sel1">
+                  <mat-option value="1">Months</mat-option>
+                  <mat-option value="2">Years</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
           </div>
         </div>
         <mat-error class="f-12 pt-4"
                    [ngClass]="{'v-h':!(isBillValid && getFormControl().billEvery.invalid || getFormControl().billEvery.touched && getFormControl().billEvery.invalid)}">
           Billevery is required
         </mat-error>
-      </div>
+      </mat-form-field>
     </div>
   </div>
   <div #htmlTag class="row pt-28">
