@@ -37,7 +37,7 @@
             </div>
             <div class="col-md-10 b-a p-0 min-height" [ngSwitch]="viewMode">
                 <div *ngSwitchCase="'tab1'">
-                    <div *ngIf="billerProfileData == undefined">
+                    <div *ngIf="billerProfileData">
                         <div class="wrapper-16 pt-20 skeletonAnimation"
                             *ngFor="let singleBillerProfile of billerProfileData" appSkeletonLoading
                             [appSkeletonLoading]="isLoading">
