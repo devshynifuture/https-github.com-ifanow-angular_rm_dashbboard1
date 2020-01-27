@@ -59,6 +59,7 @@
                   <mat-form-field>
                     <input #gstinNum [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation autofocus
                            class="form-control br-0 text-left" formControlName="gstinNum" matInput
+                           (changedValue)="getFormControlProfile().gstinNum.setValue($event)"
                            maxLength="{{getFormControlProfile().gstinNum.maxLength}}" type="text">
                     <mat-error class="f-12">GSTIN number is required</mat-error>
                     <mat-hint align="end" class="f-12">{{gstinNum.value.length}}/15</mat-hint>
@@ -78,17 +79,18 @@
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <input #panNum [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
+                           (changedValue)="getFormControlProfile().panNum.setValue($event)"
                            appInputValueValidation class="form-control br-0" formControlName="panNum" matInput
                            type="text">
                     <!-- <mat-error class="f-12">PAN is required</mat-error> -->
                     <mat-error
-                    *ngIf="profileDetailsForm.get('panNum').errors?.required && profileDetailsForm.get('panNum').touched"
-                    class="f-12 pt-4">
-                    This field is required
-                </mat-error>
-                <mat-error *ngIf="(profileDetailsForm.get('panNum').errors?.pattern)" class="f-12 pt-4">
-                    Enter valid pan
-                </mat-error>
+                      *ngIf="profileDetailsForm.get('panNum').errors?.required && profileDetailsForm.get('panNum').touched"
+                      class="f-12 pt-4">
+                      This field is required
+                    </mat-error>
+                    <mat-error *ngIf="(profileDetailsForm.get('panNum').errors?.pattern)" class="f-12 pt-4">
+                      Enter valid pan
+                    </mat-error>
                     <mat-hint align="end" class="f-12">{{panNum.value.length}}/10</mat-hint>
 
                   </mat-form-field>
@@ -103,6 +105,7 @@
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <textarea #Address matInput class="form-control br-0" formControlName='Address'
+
                               maxLength="{{getFormControlProfile().Address.maxLength}}" rows="5"></textarea>
                     <mat-error class="f-12">Address is required</mat-error>
                     <mat-hint align="end" class="f-12">{{Address.value.length}}/150</mat-hint>
@@ -118,6 +121,7 @@
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <input #state [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
+                           (changedValue)="getFormControlProfile().state.setValue($event)"
                            class="form-control br-0 text-left" formControlName="state" matInput maxLength="30"
                            type="text">
                     <mat-error class="f-12">State is required</mat-error>
@@ -134,6 +138,7 @@
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <input #pincode [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
+                           (changedValue)="getFormControlProfile().pincode.setValue($event)"
                            [maxLength]="6" class="form-control br-0 text-left" formControlName="pincode" matInput
                            minlength="6" type="text">
                     <mat-error
@@ -151,6 +156,8 @@
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <input #country [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
+
+                           (changedValue)="getFormControlProfile().country.setValue($event)"
                            class="form-control br-0 text-left" formControlName="country" matInput maxLength="30"
                            type="text">
                     <mat-error class="f-12">Country is required</mat-error>
@@ -168,6 +175,8 @@
                   <mat-form-field>
                     <input #city [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
                            class="form-control br-0 text-left" formControlName="city" matInput maxLength="30"
+                           (changedValue)="getFormControlProfile().city.setValue($event)"
+
                            type="text">
                     <mat-error class="f-12">City is required</mat-error>
                     <mat-hint align="end" class="f-12">{{city.value.length}}/30</mat-hint>
