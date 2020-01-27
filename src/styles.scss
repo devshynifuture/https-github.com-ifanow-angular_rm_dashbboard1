@@ -1249,6 +1249,10 @@ textarea {
     justify-content: flex-end;
 }
 
+.textRight .mat-sort-header-container button {
+    text-align: right;
+}
+
 .example-container {
     height: 400px;
     overflow: auto;

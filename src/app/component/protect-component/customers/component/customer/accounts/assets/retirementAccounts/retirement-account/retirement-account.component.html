@@ -270,22 +270,22 @@
             <td *matFooterCellDef class="br t-15  text-right" mat-footer-cell> </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-sort-header="currentValuation" mat-sort-header="currentValuation" mat-header-cell *matHeaderCellDef class="br text-right t-12"> Current value
+            <th mat-sort-header="currentValuation" mat-sort-header="currentValuation" mat-header-cell *matHeaderCellDef class="br textRight text-right t-12"> Current value
             </th>
-            <td mat-cell *matCellDef="let element" class="br text-right t-12">
+            <td mat-cell *matCellDef="let element" class="br text-right amt t-12">
                 <div class="bar" appFormatNumber> {{element.currentValuation || ' '}} </div>
             </td>
-            <td mat-footer-cell *matFooterCellDef class="br t-12 p-8 f-600 text-right" appFormatNumber [value]="totalCurrentValue">
+            <td mat-footer-cell *matFooterCellDef class="br t-12 p-8 f-600 amt text-right" appFormatNumber [value]="totalCurrentValue">
                 {{totalCurrentValue}}</td>
         </ng-container>
         <ng-container matColumnDef="total">
-            <th mat-sort-header="contributionAmount" mat-header-cell *matHeaderCellDef class="br t-15 text-right">
+            <th mat-sort-header="contributionAmount" mat-header-cell *matHeaderCellDef class="br t-15 textRight text-right">
                 Total contribution
             </th>
-            <td mat-cell *matCellDef="let element" class="br t-15 text-right">
+            <td mat-cell *matCellDef="let element" class="br amt t-15 text-right">
                 <div class="bar" appFormatNumber> {{element.contributionAmount}} </div>
             </td>
-            <td mat-footer-cell *matFooterCellDef class="br p-8 f-600  t-15 text-right" appFormatNumber [value]="totalContribution">
+            <td mat-footer-cell *matFooterCellDef class="br amt p-8 f-600  t-15 text-right" appFormatNumber [value]="totalContribution">
                 {{totalContribution}}</td>
         </ng-container>
         <ng-container matColumnDef="scheme">
@@ -489,7 +489,7 @@
                 <td *matCellDef="let element" class="br amt text-right t-12" mat-cell>
                     <div class="bar" appFormatNumber> {{element.amountReceived}} </div>
                 </td>
-                <td *matFooterCellDef [value]="sumOfAmountReceived" appFormatNumber class="br f-600 p-8 t-12 text-right" mat-footer-cell>
+                <td *matFooterCellDef [value]="sumOfAmountReceived" appFormatNumber class="br amt f-600 p-8 t-12 text-right" mat-footer-cell>
                     <div class="bar"> {{ sumOfAmountReceived || ' '}} </div>
                 </td>
             </ng-container>
@@ -574,7 +574,7 @@
             </button>
         </div>
     </div>
-    <div class="example-container col-md-12 p-0 mt-8 real-estate" #SUPERANNUATION #Superannuation>
+    <div class="example-container overflow-hidden col-md-12 p-0 mt-8 real-estate" #SUPERANNUATION #Superannuation>
         <table *ngIf="dataSuperannuationList.filteredData.length > 0" #superAnnuationListTable="matSort" [dataSource]="dataSuperannuationList" id="table-low" mat-table matSort class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="no">
                 <th *matHeaderCellDef class="br t-2" mat-header-cell mat-sort-header="no"> No</th>
@@ -593,13 +593,13 @@
                 <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell> </td>
             </ng-container>
             <ng-container matColumnDef="aemp">
-                <th *matHeaderCellDef class="br text-right t-12" mat-header-cell mat-sort-header="annualEmployerContribution" matTooltip="Annual employer contribution" aria-label="Button that displays a tooltip when focused or hovered over">
+                <th *matHeaderCellDef class="br textRight text-right t-12" mat-header-cell mat-sort-header="annualEmployerContribution" matTooltip="Annual employer contribution" aria-label="Button that displays a tooltip when focused or hovered over">
                     Annual emp...
                 </th>
-                <td *matCellDef="let element" class="br text-right t-12" mat-cell>
+                <td *matCellDef="let element" class="br amt text-right t-12" mat-cell>
                     <div class="bar" appFormatNumber> {{element.annualEmployerContribution}} </div>
                 </td>
-                <td *matFooterCellDef [value]="sumOfAnnualEmployerContribution" appFormatNumber class="br t-12 f-600 p-8 text-right" mat-footer-cell>
+                <td *matFooterCellDef [value]="sumOfAnnualEmployerContribution" appFormatNumber class="br amt t-12 f-600 p-8 text-right" mat-footer-cell>
                     <div class="bar"> {{sumOfAnnualEmployerContribution || ' '}} </div>
                 </td>
             </ng-container>
@@ -607,33 +607,33 @@
                 <th *matHeaderCellDef class="br text-right t-12" mat-header-cell mat-sort-header="annualEmployeeContribution" matTooltip="Annual employee contribution" aria-label="Button that displays a tooltip when focused or hovered over">
                     Annual emp...
                 </th>
-                <td *matCellDef="let element" class="br text-right t-12" mat-cell>
+                <td *matCellDef="let element" class="br textRight text-right t-12" mat-cell>
                     <div class="bar" appFormatNumber> {{element.annualEmployeeContribution}} </div>
                 </td>
-                <td *matFooterCellDef [value]="sumOfAnnualEmployeeContribution" appFormatNumber class="br t-12 f-600 p-8 text-right" mat-footer-cell>
+                <td *matFooterCellDef [value]="sumOfAnnualEmployeeContribution" appFormatNumber class="br amt t-12 f-600 p-8 text-right" mat-footer-cell>
                     {{sumOfAnnualEmployeeContribution || ' '}}</td>
             </ng-container>
             <ng-container matColumnDef="rate">
-                <th *matHeaderCellDef class="br text-right t-12" mat-header-cell mat-sort-header="assumedRateOfReturn" matTooltip="Assumed rate of return" aria-label="Button that displays a tooltip when focused or hovered over">
+                <th *matHeaderCellDef class="br text-right textRight t-12" mat-header-cell mat-sort-header="assumedRateOfReturn" matTooltip="Assumed rate of return" aria-label="Button that displays a tooltip when focused or hovered over">
                     Assumed rate...
                 </th>
-                <td *matCellDef="let element" class="br text-right t-12" mat-cell>
+                <td *matCellDef="let element" class="br amt text-right t-12" mat-cell>
                     <div class="bar"> {{element.assumedRateOfReturn}} </div>
                 </td>
                 <td *matFooterCellDef mat-footer-cell></td>
             </ng-container>
             <ng-container matColumnDef="grate">
-                <th *matHeaderCellDef class="br text-right t-12" mat-header-cell mat-sort-header="growthRateEmployerContribution" matTooltip="Growth rate employer contribution" aria-label="Button that displays a tooltip when focused or hovered over"> Growth rate...
+                <th *matHeaderCellDef class="br text-right textRight t-12" mat-header-cell mat-sort-header="growthRateEmployerContribution" matTooltip="Growth rate employer contribution" aria-label="Button that displays a tooltip when focused or hovered over"> Growth rate...
                 </th>
-                <td *matCellDef="let element" class="br text-right t-12" mat-cell>
+                <td *matCellDef="let element" class="br amt text-right t-12" mat-cell>
                     <div class="bar" appFormatNumber> {{element.growthRateEmployerContribution}} </div>
                 </td>
                 <td *matFooterCellDef mat-footer-cell></td>
             </ng-container>
             <ng-container matColumnDef="grateemp">
-                <th *matHeaderCellDef class="br text-left t-12" mat-header-cell mat-sort-header="growthRateEmployeeContribution" matTooltip="Growth rate employee contribution" aria-label="Button that displays a tooltip when focused or hovered over"> Growth rate...
+                <th *matHeaderCellDef class="br text-left textRight t-12" mat-header-cell mat-sort-header="growthRateEmployeeContribution" matTooltip="Growth rate employee contribution" aria-label="Button that displays a tooltip when focused or hovered over"> Growth rate...
                 </th>
-                <td *matCellDef="let element" class="br text-left t-12" mat-cell>
+                <td *matCellDef="let element" class="br amt text-right t-12" mat-cell>
                     <div class="bar"> {{element.growthRateEmployeeContribution}} </div>
                 </td>
                 <td *matFooterCellDef mat-footer-cell></td>
@@ -741,7 +741,7 @@
                 <td *matCellDef="let element" class="br text-right amt t-12" mat-cell>
                     <div class="bar" appFormatNumber> {{element.notionalValue || ' '}} </div>
                 </td>
-                <td *matFooterCellDef [value]="totalNotionalValue" appFormatNumber class="br f-600 p-8 t-12 text-right" mat-footer-cell>
+                <td *matFooterCellDef [value]="totalNotionalValue" appFormatNumber class="br amt f-600 p-8 t-12 text-right" mat-footer-cell>
                     <div class="bar"> {{totalNotionalValue}} </div>
                 </td>
             </ng-container>
@@ -755,13 +755,13 @@
                 <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
             </ng-container>
             <ng-container matColumnDef="amt">
-                <th *matHeaderCellDef class="br text-right t-18" mat-header-cell mat-sort-header="pensionAmount">
+                <th *matHeaderCellDef class="br textRight text-right t-18" mat-header-cell mat-sort-header="pensionAmount">
                     Pension amount
                 </th>
-                <td *matCellDef="let element" class="br text-right t-18" mat-cell>
+                <td *matCellDef="let element" class="br amt text-right t-18" mat-cell>
                     <div class="bar" appFormatNumber> {{element.pensionAmount || ' '}} </div>
                 </td>
-                <td *matFooterCellDef [value]="totalPensionAmount" appFormatNumber class="br t-18 f-600 p-8 text-right" mat-footer-cell>
+                <td *matFooterCellDef [value]="totalPensionAmount" appFormatNumber class="br amt t-18 f-600 p-8 text-right" mat-footer-cell>
                     <div class="bar"> {{totalPensionAmount}} </div>
                 </td>
             </ng-container>
@@ -774,7 +774,7 @@
                         {{isLoading ? ' ' : (element.pensionPayoutFrequencyId == '1') ? 'Daily' : (element.pensionPayoutFrequencyId == '2') ? 'Monthly' : (element.pensionPayoutFrequencyId == '3') ? 'Quarterly' : (element.pensionPayoutFrequencyId == '4') ? 'Semi annually' : 'Annually'}}
                     </div>
                 </td>
-                <td *matFooterCellDef mat-footer-cell></td>
+                <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
             </ng-container>
             <ng-container matColumnDef="desc">
                 <th *matHeaderCellDef class="br t-18" mat-header-cell mat-sort-header="description"> Description
@@ -782,14 +782,14 @@
                 <td *matCellDef="let element" class="br t-18" mat-cell>
                     <div class="bar"> {{element.description}} </div>
                 </td>
-                <td *matFooterCellDef mat-footer-cell></td>
+                <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
             </ng-container>
             <ng-container matColumnDef="status">
                 <th *matHeaderCellDef class="br t-5" mat-header-cell mat-sort-header="active"> Status</th>
                 <td *matCellDef="let element" class="br t-5 text-primary" mat-cell>
                     <div class="bar"> {{element.statusId}} </div>
                 </td>
-                <td *matFooterCellDef mat-footer-cell></td>
+                <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
             </ng-container>
             <ng-container matColumnDef="icons">
                 <th *matHeaderCellDef class="t-2" mat-header-cell></th>
