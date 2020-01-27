@@ -1,11 +1,11 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {LoginComponent} from './component/no-protected/login/login.component';
-import {SelectivePreloadingStrategyService} from './services/selective-preloading-strategy.service';
-import {ErrorPageComponent} from './component/protect-component/common-component/error-page/error-page.component';
-import {DataNotFoundComponent} from './component/protect-component/common-component/data-not-found/data-not-found.component';
-import {AuthGuard} from './guards/auth.guard';
-import {FormTestComponent} from './test/form-test/form-test.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { LoginComponent } from './component/no-protected/login/login.component';
+import { SelectivePreloadingStrategyService } from './services/selective-preloading-strategy.service';
+import { ErrorPageComponent } from './component/protect-component/common-component/error-page/error-page.component';
+import { DataNotFoundComponent } from './component/protect-component/common-component/data-not-found/data-not-found.component';
+import { AuthGuard } from './guards/auth.guard';
+import { FormTestComponent } from './test/form-test/form-test.component';
 
 const routes: Routes = [
   {
@@ -47,7 +47,10 @@ const routes: Routes = [
     canActivate: [AuthGuard],
 
   },
-
+  {
+    path: 'support',
+    loadChildren: () => import('./component/protect-component/SupportComponent/support.module').then(m => m.SupportModule)
+  },
   {
     path: 'gmail-redirect',
     // outlet: 'mainrouter',

@@ -13,7 +13,7 @@
         <div class="col-md-10">
             <div class="row pt-28">
                 <div class="col-md-12">
-                    <button mat-stroked-button (click)="open('addInvestment')" class="br-0 text-primary">Rahul
+                    <button mat-stroked-button class="br-0 text-primary">Rahul
                         Jain</button>
                     <button mat-button class="br-0 text-custom">Shilpa Jain</button>
                 </div>
@@ -76,7 +76,9 @@
                         </ng-container>
                         <ng-container matColumnDef="status">
                             <th mat-header-cell *matHeaderCellDef> Status </th>
-                            <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                            <td mat-cell *matCellDef="let element" class="c-p" (click)="openDep('open')">
+                                {{element.status}}
+                            </td>
                         </ng-container>
                         <ng-container matColumnDef="icons">
                             <th mat-header-cell *matHeaderCellDef> </th>

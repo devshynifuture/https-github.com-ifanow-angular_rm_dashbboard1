@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { SetupLumpsumDeploymentComponent } from './add-investment-plan/setup-lumpsum-deployment/setup-lumpsum-deployment.component';
 
 @Component({
   selector: 'app-investments-plan',
@@ -15,11 +16,12 @@ export class InvestmentsPlanComponent implements OnInit {
   ngOnInit() {
   }
 
-  open(flagValue) {
+  openDep(flagValue) {
     const fragmentData = {
       flag: flagValue,
       id: 1,
-      state: 'open70'
+      state: 'open70',
+      componentName: SetupLumpsumDeploymentComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

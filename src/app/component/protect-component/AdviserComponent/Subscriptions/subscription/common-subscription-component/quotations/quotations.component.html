@@ -2,29 +2,37 @@
     <div *ngIf="quotationDesign=='true' && dataSource.data.length > 0" class="bg-white">
         <div class="wrapper-40  pr-20">
             <div class="row pt-180">
-                <div class="col-md-1 p-0">
-                    <button [matMenuTriggerFor]="menu" class="b-a pr-0" mat-button>Actions <i [matMenuTriggerFor]="menu"
-                            [matMenuTriggerFor]="belowMenu" class="material-icons c-p iconscolors">
-                            arrow_drop_down
-                        </i>
-                    </button>
-                    <mat-menu #menu="matMenu">
-                        <button *ngIf="dataCount == 0" mat-menu-item>Select Quotation to see more actions</button>
-                        <button *ngIf="dataCount != 0" (click)="openSendEmail('')" mat-menu-item>Email
-                            only
-                        </button>
-                        <button (click)="deleteModal(null)" *ngIf="dataCount != 0" class="b-t" mat-menu-item>Delete
-                            Quotations
-                        </button>
-                    </mat-menu>
+                <div class="col-md-9 p-0">
+                    <div class="row">
+                        <div class="col-md-1 p-0">
+                            <button [matMenuTriggerFor]="menu" class="b-a pr-0" mat-button>Actions <i
+                                    [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu"
+                                    class="material-icons c-p iconscolors">
+                                    arrow_drop_down
+                                </i>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button *ngIf="dataCount == 0" mat-menu-item>Select Quotation to see more
+                                    actions</button>
+                                <button *ngIf="dataCount != 0" (click)="openSendEmail('')" mat-menu-item>Email
+                                    only
+                                </button>
+                                <button (click)="deleteModal(null)" *ngIf="dataCount != 0" class="b-t" mat-menu-item>Delete
+                                    Quotations
+                                </button>
+                            </mat-menu>
+                        </div>
+                        <div class="col-md-9 p-0 ml-32" *ngIf="dataSource.data.length > 0 && dataCount > 0">
+                            <p class="m-0 text-black text-left pt-10" *ngIf="dataCount == 1">{{dataCount}} quotation selected
+                            </p>
+                            <p class="m-0 text-black text-left pt-10" *ngIf="dataCount > 1">{{dataCount}} quotations selected
+                            </p>
+                        </div>
+                    </div>
+
                 </div>
-                <div class="col-md-9 p-0 ml-8" *ngIf="dataSource.data.length > 0 && dataCount > 0">
-                    <p class="m-0 text-black text-left pt-10" *ngIf="dataCount == 1">{{dataCount}} quotation selected
-                    </p>
-                    <p class="m-0 text-black text-left pt-10" *ngIf="dataCount > 1">{{dataCount}} quotations selected
-                    </p>
-                </div>
-                <div class="col-md-11 right text-right p-0">
+
+                <div class="col-md-3 right text-right p-0">
                     <i class="material-icons mr-12 icon-light c-p v-sub">
                         search
                     </i>

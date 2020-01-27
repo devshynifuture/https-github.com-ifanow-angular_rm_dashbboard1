@@ -1,134 +1,134 @@
 <div *ngIf="showActivityLog==false">
-  <div class="row bb-1 popup-header-fix-60">
-    <div class="col-md-10 p-0" >
-      <h4 class="mb-0 wrapper-20 l-22 text-left" *ngIf="storeData!=null && storeData.clientName==undefined">{{storeData.name}}</h4>
-      <h4 class="mb-0 wrapper-20 l-22 text-left" *ngIf="storeData!=null && storeData.clientName!=undefined">{{storeData.clientName}}</h4>
+    <div class="row bb-1 popup-header-fix-60">
+        <div class="col-md-10 p-0">
+            <h4 class="mb-0 wrapper-20 l-22 text-left" *ngIf="storeData!=null && storeData.clientName==undefined">
+                {{storeData.name}}</h4>
+            <h4 class="mb-0 wrapper-20 l-22 text-left" *ngIf="storeData!=null && storeData.clientName!=undefined">
+                {{storeData.clientName}}</h4>
+        </div>
+        <div class="col-md-2 text-right">
+            <i class="material-icons pt-16 pr-8 c-p" (click)="Close('close',false)"> clear</i></div>
     </div>
-    <div class="col-md-2 text-right">
-      <i class="material-icons pt-16 pr-8 c-p" (click)="Close('close',false)"> clear</i></div>
-  </div>
-  <div class="row pt-72 bb-1">
-    <div class="col-md-8 pt-4 pb-12">
-      <img src="assets/images/svg/mail-light.svg" class="b-a c-p" (click)="openSendEmail()">
-      <img (click)="generatePdf()" class="b-a" src="assets/images/svg/pdf-icons.svg">
-      <img src="assets/images/svg/printer.svg" class="b-a">
-      <img src="assets/images/svg/attech-light.svg" class="wrapper-9 b-a">
-      <img src="assets/images/svg/delete.svg" (click)="deleteModal('DOCUMENT')" class="b-a wrapper-9 ml-8">
-    </div>
-    <!--    <ng-template *ngIf="true" #renderElement></ng-template>-->
+    <div class="row pt-72 bb-1">
+        <div class="col-md-8 pt-4 pb-12">
+            <img src="assets/images/svg/mail-light.svg" class="b-a c-p" (click)="openSendEmail()">
+            <img (click)="generatePdf()" class="b-a" src="assets/images/svg/pdf-icons.svg">
+            <img src="assets/images/svg/printer.svg" class="b-a">
+            <img src="assets/images/svg/attech-light.svg" class="wrapper-9 b-a">
+            <img src="assets/images/svg/delete.svg" (click)="deleteModal('DOCUMENT')" class="b-a wrapper-9 ml-8">
+        </div>
+        <!--    <ng-template *ngIf="true" #renderElement></ng-template>-->
 
-    <div class="col-md-4 pt-4 pb-12">
-      <p class="m-0 text-black text-right c-p pr-16 pt-8" (click)="openFroala()">Activity log</p>
+        <div class="col-md-4 pt-4 pb-12">
+            <p class="m-0 text-black text-right c-p pr-16 pt-8" (click)="openFroala()">Activity log</p>
+        </div>
     </div>
-  </div>
-  <div class="wrapper-20">
-    <div class="row">
-      <div class="col-md-9 p-0" *ngIf="storeData!=null">
-        <h3 class="mb-8 mt-20"  >{{storeData.documentName}}</h3>
-        <!-- <textarea [froalaEditor]="config" (froalaModelChange)="onChange($event)" [(froalaModel)]="model"></textarea> -->
-        <app-froala (modelChange)="saveData($event)" [(model)]="storeData.documentText"></app-froala>
-        <!-- <div id="ui-froala">
+    <div class="wrapper-20">
+        <div class="row">
+            <div class="col-md-12 p-0" *ngIf="storeData!=null">
+                <h3 class="mb-8 mt-20">{{storeData.documentName}}</h3>
+                <!-- <textarea [froalaEditor]="config" (froalaModelChange)="onChange($event)" [(froalaModel)]="model"></textarea> -->
+                <app-froala (modelChange)="saveData($event)" [(model)]="storeData.documentText"></app-froala>
+                <!-- <div id="ui-froala">
                 <div [froalaEditor] formControlName="mail_body">Hello, Froala!</div>
           <button type="submit" (click)="onSubmit()" [disabled]="!mailForm.valid" mat-stroked-button
                   class="mt-16 btn-primary br-0">Submit
           </button>
         </div> -->
-      </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 <div *ngIf="showActivityLog==true">
-  <div class="row bb-1 popup-header-fix-60">
-    <div class="col-md-10 p-0">
-      <h3 class="mb-0 wrapper-20">SUB-0001</h3>
+    <div class="row bb-1 popup-header-fix-60">
+        <div class="col-md-10 p-0">
+            <h3 class="mb-0 wrapper-20">SUB-0001</h3>
+        </div>
+        <div class="col-md-2 text-right">
+            <i class="material-icons pt-16 pr-8 c-p" (click)="cancel()"> clear</i></div>
     </div>
-    <div class="col-md-2 text-right">
-      <i class="material-icons pt-16 pr-8 c-p" (click)="cancel()"> clear</i></div>
-  </div>
-  <div class="row bb-1">
-    <div class="col-md-12 text-right">
-      <p class="mb-0 wrapper-20 c-p">Activity log</p>
+    <div class="row bb-1">
+        <div class="col-md-12 text-right">
+            <p class="mb-0 wrapper-20 c-p">Activity log</p>
+        </div>
     </div>
-  </div>
-  <div class="container mt-24 mb-24">
-    <div class="row">
-      <div class="col-md-3 p-0">
-        <p class="mb-16 text-right pt-40 pb-44">03/09/2019 3:55 PM</p>
-        <p class="mb-16 text-right pt-44 pb-44">04/09/2019 6:00 AM</p>
-        <p class="mb-16 text-right pt-44">05/09/2019 12:15 PM</p>
-      </div>
-      <div class="col-md-9 p-0">
-        <ul class="timeline">
-          <li>
-            <p class="m-0">Invoice INV-19-20-103201 was created and email has been sent.</p>
-            <span>by Ronak Hindocha</span>
+    <div class="container mt-24 mb-24">
+        <div class="row">
+            <div class="col-md-3 p-0">
+                <p class="mb-16 text-right pt-40 pb-44">03/09/2019 3:55 PM</p>
+                <p class="mb-16 text-right pt-44 pb-44">04/09/2019 6:00 AM</p>
+                <p class="mb-16 text-right pt-44">05/09/2019 12:15 PM</p>
+            </div>
+            <div class="col-md-9 p-0">
+                <ul class="timeline">
+                    <li>
+                        <p class="m-0">Invoice INV-19-20-103201 was created and email has been sent.</p>
+                        <span>by Ronak Hindocha</span>
 
-          </li>
-        </ul>
-        <ul class="timeline">
-          <li>
-            <p class="m-0">Invoice INV-19-20-103201 was created and email has been sent.</p>
-            <span>by Ronak Hindocha</span>
-          </li>
-        </ul>
-        <ul class="timeline">
-          <li>
-            <p class="m-0">Invoice INV-19-20-103201 was created and email has been sent.</p>
-            <span>by Ronak Hindocha</span>
-          </li>
-        </ul>
-      </div>
+                    </li>
+                </ul>
+                <ul class="timeline">
+                    <li>
+                        <p class="m-0">Invoice INV-19-20-103201 was created and email has been sent.</p>
+                        <span>by Ronak Hindocha</span>
+                    </li>
+                </ul>
+                <ul class="timeline">
+                    <li>
+                        <p class="m-0">Invoice INV-19-20-103201 was created and email has been sent.</p>
+                        <span>by Ronak Hindocha</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 <div class="bottom-fixed wrapper-12" *ngIf="changeFooter!='viewDoc'">
-  <div class="row">
-    <div class="col-md-4">
-      <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close',false)">Cancel</h5>
-    </div>
-    <div class="col-md-8 right text-right">
-      <button mat-button class="btn-bottom br-0 text-inherit" (click)="save()" *ngIf="changeFooter=='emailQuotation'">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close',false)">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="save()" *ngIf="changeFooter=='emailQuotation'">
         SAVE
       </button>
-      <div *ngIf="changeFooter!='emailQuotation' || changeEmailOnly!=undefined">
-        <!--      <div *ngIf="changeFooter!='emailQuotation' || changeEmailOnly!=undefined || screenType!=undefined">-->
-        <button mat-button class="btn-bottom br-0 text-inherit mr-20" *ngIf="changeEmailOnly=='openEmailQuot'">Email
+            <div *ngIf="changeFooter!='emailQuotation' || changeEmailOnly!=undefined">
+                <!--      <div *ngIf="changeFooter!='emailQuotation' || changeEmailOnly!=undefined || screenType!=undefined">-->
+                <button mat-button class="btn-bottom br-0 text-inherit mr-20" *ngIf="changeEmailOnly=='openEmailQuot'">Email
           only <i class="material-icons">
             arrow_drop_up
           </i></button>
-        <!-- <button mat-button class="btn-bottom br-0 text-inherit" *ngIf="changeFooter=='viewQuotation' "
+                <!-- <button mat-button class="btn-bottom br-0 text-inherit" *ngIf="changeFooter=='viewQuotation' "
                 (click)="Open('eSignRequest','open',element)">Email with eSign Request <i
           class="material-icons">
           arrow_drop_up
         </i></button> -->
-        <button mat-button class="btn-bottom br-0 text-inherit" *ngIf="changeFooter=='viewQuotation' "
-          (click)="save()">SAVE
+                <button mat-button class="btn-bottom br-0 text-inherit" *ngIf="changeFooter=='viewQuotation' " (click)="save()">SAVE
         </button>
-        <button mat-button class="btn-bottom br-0 text-inherit" *ngIf="changeFooter!='viewQuotation'"
-          (click)="Open('eSignRequestDocuments','open',null)">Email with eSign Request <i class="material-icons">
+                <button mat-button class="btn-bottom br-0 text-inherit" *ngIf="changeFooter!='viewQuotation'" (click)="Open('eSignRequestDocuments','open',null)">Email with eSign Request <i class="material-icons">
             arrow_drop_up
           </i></button>
 
-      </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 <div class="bottom-fixed wrapper-12">
-  <div class="row">
-    <div class="col-md-4">
-      <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close',false)">Cancel</h5>
-    </div>
-    <div class="col-md-8 right text-right">
-      <button mat-button class="btn-bottom br-0 text-inherit pr-4 pl-4" (click)="save()">SAVE</button>
-      <button mat-button class="btn-bottom p-0 mw-40 " [matMenuTriggerFor]="menu"><i class="material-icons">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close',false)">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+            <button mat-button class="btn-bottom br-0 text-inherit pr-4 pl-4" (click)="save()">SAVE</button>
+            <button mat-button class="btn-bottom p-0 mw-40 " [matMenuTriggerFor]="menu"><i class="material-icons">
           keyboard_arrow_up
         </i></button>
-      <mat-menu #menu="matMenu">
-        <button class="btn-bottom br-0 text-inherit" (click)="saveSendEsign()" mat-menu-item>SAVE & SEND WITH
+            <mat-menu #menu="matMenu">
+                <button class="btn-bottom br-0 text-inherit" (click)="saveSendEsign()" mat-menu-item>SAVE & SEND WITH
           ESIGN</button>
-      </mat-menu>
+            </mat-menu>
+        </div>
     </div>
-  </div>
 </div>
 
 <div #renderElement *ngIf="true" [hidden]="true"></div>

@@ -52,7 +52,8 @@ export class DeleteSubscriptionComponent implements OnInit {
     console.log('data:', data);
     if (data == true) {
       this.eventService.openSnackBar('Cancelled successfully!', 'dismiss');
-      this.dialogClose();
+      this.dialogRef.close(data);
+
     }
   }
 }
