@@ -172,6 +172,6 @@
     <app-terms-agreement [quotationDesignE]="quotationDesignEmail" *ngIf="invoiceDesign=='emailInvoices'" (valueChange)='display($event)'></app-terms-agreement>
 </div>
 <div class="pt-180">
-    <app-add-edit-subscription-invoice (cancelAddInvoice)="getCancelInvoiceSubscription($event)" [invoiceValue]="invoiceDesign" [data]="uperDataToClient" *ngIf="invoiceDesign=='edit'" (valueChange)='display($event)'>
+    <app-add-edit-subscription-invoice (cancelAddInvoice)="getCancelInvoiceSubscription($event)" [invoiceValue]="invoiceDesign" [data]="uperDataToClient" [upperData]="this.upperData" *ngIf="invoiceDesign=='edit'" (valueChange)='display($event)'>
     </app-add-edit-subscription-invoice>
 </div>
