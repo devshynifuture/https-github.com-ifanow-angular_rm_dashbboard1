@@ -36,9 +36,13 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
   isFilter:boolean = false;
   chips = [
-    { name: 'UNPAID', value: 1 },
-    { name: 'PAID', value: 2 },
-    { name: 'OVERDUE', value: 3 }
+    { name: 'UNPAID', value: 0 },
+    { name: 'PAID', value: 1 },
+    { name: 'OVERDUE', value: 2 },
+    { name: 'PARTIALLY PAID', value: 3 },
+    { name: 'SENT', value: 4 },
+    { name: 'VOID', value: 5 },
+    { name: 'WRITEOFF', value: 6 }
   ];
   dateChips = [
     { name: 'Date', value: 1 },
@@ -467,6 +471,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
   getFiterRes(data){
     console.log(data , "data for filter");
+    this.filterDataArr = [];
     this.filterStatus = data.statusFilterJson;
     this.filterDate = data.dateFilterArr;
     this.selectedDateRange = data.dateFilterJson;
