@@ -69,14 +69,15 @@
                         <img matTooltip="Print" (click)="printPage(invoiceTemplate)" class="b-a c-p" src="assets/images/svg/printer.svg">
                         <img matTooltip="Delete" (click)="deleteModal('INVOICE',storeData.id)" class="b-a wrapper-9 ml-8 c-p" src="assets/images/svg/delete.svg">
                     </div>
-                    <div class="col-md-3 right text-right">
+                    <div class="right text-right" [ngClass]="storeData.status !=1? 'col-md-3' : 'col-md-5'" >
                         <button (click)="recordPayment()" class="btn-primary br-0 mb-12" *ngIf="rpyment==true" mat-stroked-button>RECORD
                             PAYMENT
                         </button>
                     </div>
-                    <div class="col-md-2 right text-right">
+                    <div class="col-md-2 right text-right" *ngIf="storeData.status!=1" >
                         <mat-form-field>
-                            <mat-select (selectionChange)="addStatus(storeData,$event)" class="form-control br-0" id="sel1">
+                            <mat-select (selectionChange)="addStatus(storeData,$event)" [(ngModel)]="moreStatus" class="form-control br-0" id="sel1">
+                                <mat-option [value]="''" disabled >Label more</mat-option>
                                 <mat-option [value]="5">Void</mat-option>
                                 <mat-option [value]="6">Write off</mat-option>
                             </mat-select>
@@ -302,14 +303,15 @@
             <img matTooltip="Print" (click)="printPage(invoiceTemplate)" class="b-a c-p" src="assets/images/svg/printer.svg">
             <img matTooltip="Delete" (click)="deleteModal('INVOICE',element)" class="b-a wrapper-9 ml-8 c-p" src="assets/images/svg/delete.svg">
         </div>
-        <div class="col-md-3 right text-right">
+        <div class="right text-right" [ngClass]="storeData.status !=1? 'col-md-3' : 'col-md-5'" >
             <button (click)="recordPayment()" class="btn-primary br-0 mb-8" *ngIf="rpyment==true" mat-stroked-button>RECORD
                 PAYMENT
             </button>
         </div>
-        <div class="col-md-2 right text-right">
+        <div class="col-md-2 right text-right" *ngIf="storeData.status!=1">
             <mat-form-field>
-                <mat-select (selectionChange)="addStatus(storeData,$event)" class="form-control br-0" id="sel1">
+                <mat-select (selectionChange)="addStatus(storeData,$event)" [(ngModel)]="moreStatus" class="form-control br-0" id="sel1">
+                    <mat-option [value]="''" selected disabled>Label more</mat-option>
                     <mat-option [value]="5">Void</mat-option>
                     <mat-option [value]="6">Write off</mat-option>
                 </mat-select>
