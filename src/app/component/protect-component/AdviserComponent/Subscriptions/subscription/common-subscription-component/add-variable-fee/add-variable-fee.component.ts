@@ -31,6 +31,7 @@ export class AddVariableFeeComponent implements OnInit {
   data: any;
   restrictMoreThan100Val;
   @ViewChild('htmlTag', { static: true }) htmltag: ElementRef
+  otherAssetDataId: any;
   @Input() set variableFee(data) {
     if (data == "") {
       // this.otherAssetData=UtilService.
@@ -39,6 +40,7 @@ export class AddVariableFeeComponent implements OnInit {
     }
     else {
       this.ischeckVariableData = data
+      this.otherAssetData = Object.assign([], this.enumService.getOtherAssetData());
       this.getFeeFormUpperData(data)
     }
   }
@@ -127,7 +129,11 @@ export class AddVariableFeeComponent implements OnInit {
         otherAssetClassFees: [data.servicePricing.pricingList[2].serviceSubAssets],
         pricing: [data.servicePricing.pricingList[2].pricing, [Validators.required]]
       });
-      this.otherAssetData = data.servicePricing.pricingList[2].serviceSubAssets
+      if(data.servicePricing.pricingList[2].serviceSubAssets!=undefined){
+        this.otherAssetData = data.servicePricing.pricingList[2].serviceSubAssets
+      }
+      // this.otherAssetData = data.servicePricing.pricingList[2].serviceSubAssets
+      // this.otherAssetData = data.servicePricing.pricingList[2].serviceSubAssets
       this.otherAssetData.forEach(element => {
         if (element.isActive == 1) {
           this.selectedOtherAssets.push(element.subAssetClassId)
@@ -142,6 +148,10 @@ export class AddVariableFeeComponent implements OnInit {
 
   Close(state) {
     this.subInjectService.changeUpperRightSliderState({ state: 'close' });
+   
+    this.otherAssetData.forEach(element => {
+      element.isActive=0
+    });
     this.setValidation(false);
     this.createVariableFeeForm('')
   }
