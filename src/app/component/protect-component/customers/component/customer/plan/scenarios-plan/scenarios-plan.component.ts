@@ -1,8 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
+import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
 import * as Highcharts from 'highcharts';
-import {SeriesColumnOptions} from 'highcharts';
+import { SeriesColumnOptions } from 'highcharts';
+import { AddScenariosComponent } from './add-scenarios/add-scenarios.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-scenarios-plan',
@@ -12,7 +14,7 @@ import {SeriesColumnOptions} from 'highcharts';
 export class ScenariosPlanComponent implements OnInit {
 
 
-  constructor(private subInjectService: SubscriptionInject) {
+  constructor(private subInjectService: SubscriptionInject, public dialog: MatDialog) {
   }
 
   displayedColumns: string[] = ['description', 'year', 'month', 'lumpsum'];
@@ -223,6 +225,16 @@ export class ScenariosPlanComponent implements OnInit {
       }]
     });
   }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AddScenariosComponent, {
+      width: '670px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
   open(flagValue) {
     const fragmentData = {
       flag: flagValue,
@@ -254,11 +266,11 @@ export interface PeriodicElement {
 
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {description: 'Retirement', year: '2037 - 2067', month: '35,000', lumpsum: '1,25,67,900'},
-  {description: 'Retirement', year: '2037 - 2067', month: '35,000', lumpsum: '1,25,67,900'},
-  {description: 'Retirement', year: '2037 - 2067', month: '35,000', lumpsum: '1,25,67,900'},
-  {description: 'Retirement', year: '2037 - 2067', month: '35,000', lumpsum: '1,25,67,900'},
-  {description: 'Retirement', year: '2037 - 2067', month: '35,000', lumpsum: '1,25,67,900'},
+  { description: 'Retirement', year: '2037 - 2067', month: '35,000', lumpsum: '1,25,67,900' },
+  { description: 'Retirement', year: '2037 - 2067', month: '35,000', lumpsum: '1,25,67,900' },
+  { description: 'Retirement', year: '2037 - 2067', month: '35,000', lumpsum: '1,25,67,900' },
+  { description: 'Retirement', year: '2037 - 2067', month: '35,000', lumpsum: '1,25,67,900' },
+  { description: 'Retirement', year: '2037 - 2067', month: '35,000', lumpsum: '1,25,67,900' },
 ];
 
 
@@ -270,9 +282,9 @@ export interface PeriodicElement2 {
 
 
 const ELEMENT_DATA2: PeriodicElement2[] = [
-  {member: 'Rahul Jain', year: '2020 - 21', status: 'No impact'},
-  {member: 'Shilpa Jain', year: '2020 - 21', status: '30,000'},
-  {member: 'Aryan Jain', year: '2020 - 21', status: 'Not applicable'},
-  {member: 'Shreya Jain', year: '2020 - 21', status: 'Not applicable'},
-  {member: 'Aryan Jain ', year: '2020 - 21', status: 'Not applicable'},
+  { member: 'Rahul Jain', year: '2020 - 21', status: 'No impact' },
+  { member: 'Shilpa Jain', year: '2020 - 21', status: '30,000' },
+  { member: 'Aryan Jain', year: '2020 - 21', status: 'Not applicable' },
+  { member: 'Shreya Jain', year: '2020 - 21', status: 'Not applicable' },
+  { member: 'Aryan Jain ', year: '2020 - 21', status: 'Not applicable' },
 ];
