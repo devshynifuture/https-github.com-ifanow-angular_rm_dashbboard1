@@ -159,3 +159,15 @@
 .highcharts-data-table tr:hover {
   background: #f1f7ff;
 }
+
+.cancel {
+  background-color: #C4C4C4;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
+  text-align: right;
+  top: -12px;
+  right: 0px;
+}

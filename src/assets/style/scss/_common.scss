@@ -638,3 +638,11 @@ button.primary-sm {
 .bottom-10 {
   bottom: 10px;
 }
+
+.ws-nowrap {
+  white-space: nowrap !important;
+}
+
+.mat-card:not([class*=mat-elevation-z]) {
+  box-shadow: none !important;
+}

@@ -18,6 +18,7 @@ import { AddProfilePlanComponent } from './profile-plan/add-profile-plan/add-pro
 import { HistoryRiskProfileComponent } from './profile-plan/history-risk-profile/history-risk-profile.component';
 // import {BrowserModule} from '@angular/platform-browser';
 import { PlanRoutingModule } from "./plan-routing.module";
+// import { AddInsurancePlanningComponent } from './insurance-plan/add-insurance-planning/add-insurance-planning.component';
 // import { EditApplicableTaxComponent } from './texes-plan/edit-applicable-tax/edit-applicable-tax.component';
 // import { SetupLumpsumDeploymentComponent } from './investments-plan/add-investment-plan/setup-lumpsum-deployment/setup-lumpsum-deployment.component';
 //import { EditTaxComputationComponent } from './texes-plan/edit-tax-computation/edit-tax-computation.component';
@@ -50,6 +51,7 @@ import { PlanRoutingModule } from "./plan-routing.module";
     TexesPlanComponent,
     AddScenariosComponent,
     AddInvestmentPlanComponent,
+    // AddInsurancePlanningComponent,
     // EditApplicableTaxComponent,
     // SetupLumpsumDeploymentComponent,
     //EditTaxComputationComponent,

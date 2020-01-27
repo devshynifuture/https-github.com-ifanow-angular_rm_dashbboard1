@@ -654,7 +654,8 @@ mat-tab-group[vertical] {
 #ui-profile-plan,
 #ui-planinsurance,
 #ui-goal,
-#ui-texes {
+#ui-texes,
+#ui-scenarios {
   padding-top: 120px !important;
   //font-family: "Proxima Nova ", sans-serif;
 }
@@ -991,7 +992,8 @@ mat-tab-group[vertical] {
 .texestable2,
 .deployment,
 .lumpsumtables,
-.taxplanning {
+.taxplanning,
+.insurance-planning-rightside {
   tr.mat-header-row {
     height: 40px;
     padding: 10px 8px !important;

@@ -5,7 +5,8 @@
     <div class="wrapper-20 pb-0 pr-0">
         <div class="row">
 
-            <div *ngIf="planSettingData != undefined && planSettingData.length > 0" (click)="openFragment('','plan')" class="col-md-4 pr-20 pb-20 pl-0 c-p">
+            <div *ngIf="planSettingData != undefined && planSettingData.length > 0" (click)="openFragment('','plan')"
+                class="col-md-4 pr-20 pb-20 pl-0 c-p">
                 <mat-card class="example-card b-a height-470 bg-grey lter bd-1">
                     <mat-card-content>
                         <p class="text-center">
@@ -15,7 +16,8 @@
                 </mat-card>
             </div>
 
-            <div class="col-md-4  pr-20 pb-20 pl-0 d-flex skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngFor="let singlePlan of planSettingData">
+            <div class="col-md-4  pr-20 pb-20 pl-0 d-flex skeletonAnimation" appSkeletonLoading
+                [appSkeletonLoading]="isLoading" *ngFor="let singlePlan of planSettingData">
                 <mat-card class="example-card b-a  bg-grey lter p-0 flex-fill">
                     <mat-card-header class="overflow-hidden">
                         <div class="wrapper-20 pb-10 height120 width100per">
@@ -65,18 +67,21 @@
                     </mat-card-content>
 
                     <mat-card-actions class=" d-flex height100 align-items-center justify-content-center">
-                        <button mat-stroked-button class="btn-header addon m-0 br-0" (click)="openFragment(singlePlan,'plan')">INFO
+                        <button mat-stroked-button class="btn-header addon m-0 br-0"
+                            (click)="openFragment(singlePlan,'plan')">INFO
                         </button>
                     </mat-card-actions>
 
                 </mat-card>
             </div>
 
-            <div *ngIf="planSettingData == undefined || planSettingData.length == 0" class="col-md-12 d-flex align-items-center flex-column justify-content-center">
+            <div *ngIf="planSettingData == undefined || planSettingData.length == 0"
+                class="col-md-12 d-flex align-items-center flex-column justify-content-center">
 
                 <img class="width200" src="assets/images/svg/new-add-plan.svg">
                 <p class="f-22 f-600 pt-28">Create Plan </p>
-                <p class="f-16 text-center l-21"> You start by creating Plans first. Plans are your core offerings. You can have <br> multiple plans for different types of clients. Each plan will have sub offerings, also
+                <p class="f-16 text-center l-21"> You start by creating Plans first. Plans are your core offerings. You
+                    can have <br> multiple plans for different types of clients. Each plan will have sub offerings, also
                     <br> known as Services (explained in next slide). </p>
 
                 <button (click)="openFragment('','plan')" class="btn-primary d-flex align-items-center">
