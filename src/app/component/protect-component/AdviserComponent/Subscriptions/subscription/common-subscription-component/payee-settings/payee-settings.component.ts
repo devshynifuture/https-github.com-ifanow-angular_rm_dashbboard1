@@ -5,6 +5,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
 import {AuthService} from 'src/app/auth-service/authService';
 import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import { PostalService } from 'src/app/services/postal.service';
 
 @Component({
   selector: 'app-payee-settings',
@@ -67,7 +68,7 @@ export class PayeeSettingsComponent implements OnInit {
   showGstin: any;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private eventService: EventService,
-              private subService: SubscriptionService, private fb: FormBuilder) {
+              private subService: SubscriptionService, private fb: FormBuilder, private postalService: PostalService,) {
   }
 
   get data() {
@@ -95,6 +96,22 @@ export class PayeeSettingsComponent implements OnInit {
     this.subService.getListOfFamilyByClient(obj).subscribe(
       data => this.getListOfFamilyByClientRes(data)
     );
+  }
+  getPostalPin(value) {
+    let obj = {
+      zipCode: value
+    }
+    if (value.length > 5) {
+      this.postalService.getPostalPin(value).subscribe(data => {
+        console.log('postal 121221', data)
+        this.PinData(data)
+      })
+    }
+  }
+  PinData(data) { 
+      this.getFormControl().city.setValue(data[0].PostOffice[0].District)
+      this.getFormControl().country.setValue(data[0].PostOffice[0].Country)
+      this.getFormControl().state.setValue(data[0].PostOffice[0].Circle)
   }
   gstTreatmentRemove(value){
   this.showGstin = value
