@@ -18,21 +18,15 @@
           </div>
           <div class="col-md-5">
             <mat-form-field>
-
               <input #planName class="form-control br-2" formControlName="planName" maxlength="40" matInput
                 type="email">
-
-
               <mat-error
                 [ngClass]="{'v-h': !(isPlanValid && getFormControl().planName.invalid || getFormControl().planName.touched && getFormControl().planName.invalid)}"
                 class="f-12 pt-4">
                 Plan name is required
               </mat-error>
-
-
               <mat-hint align="end" class="f-12">{{planName.value.length}}/10</mat-hint>
             </mat-form-field>
-
           </div>
         </div>
         <div class="row pt-24">
