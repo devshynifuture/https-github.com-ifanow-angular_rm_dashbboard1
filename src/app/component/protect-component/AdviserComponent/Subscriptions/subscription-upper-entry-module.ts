@@ -43,6 +43,7 @@ import { DeleteSubscriptionComponent } from './subscription/common-subscription-
 import { AddQuotationComponent } from './subscription/common-subscription-component/add-quotation/add-quotation.component';
 import { AddQuotationSubscriptionComponent } from '../../customers/component/common-component/add-quotation-subscription/add-quotation-subscription.component';
 import { HowToUseDialogComponent } from './subscription/common-subscription-component/how-to-use-dialog/how-to-use-dialog.component';
+import { DocumentPreviewComponent } from './subscription/common-subscription-component/document-preview/document-preview.component';
 
 export const componentList = [
   OverviewComponent,
@@ -83,7 +84,8 @@ export const componentList = [
   AddEditSubscriptionInvoiceComponent,
   AddQuotationComponent,
   AddQuotationSubscriptionComponent,
-  HowToUseDialogComponent
+  HowToUseDialogComponent,
+  DocumentPreviewComponent
 ]
 
 @NgModule({
@@ -100,7 +102,7 @@ export const componentList = [
 
   ],
   exports: [componentList],
-  entryComponents: [componentList, SubscriptionPopupComponent, AddDocumentComponent,HowToUseDialogComponent]
+  entryComponents: [componentList, SubscriptionPopupComponent, AddDocumentComponent, HowToUseDialogComponent]
 })
 
 export class SubscriptionUpperEntry {

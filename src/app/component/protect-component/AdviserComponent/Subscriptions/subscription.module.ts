@@ -117,7 +117,7 @@ export const componentList = [SubscriptionComponent,
   ],
   exports: componentList,
   entryComponents: [
-    
+
     PreferenceEmailInvoiceComponent,
     ModifyFeeDialogComponent, ConsentTandCComponent, HowItWorksComponent, SetDateFooter],
   providers: [
