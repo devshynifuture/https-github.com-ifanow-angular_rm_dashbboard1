@@ -1,4 +1,6 @@
-<div class="bg-white" id="ui-subs">
+<div class="bg-white  pt-72">
+
+    <!-- <div id="ui-subs"> </div> -->
     <!-- (scroll)="scrollCall(true)" -->
     <div *ngIf="dataSource.data.length > 0 || isFilter" class="bg-white p-20 pb-0 filterBox">
         <div class="row">
@@ -35,7 +37,8 @@
                 </ng-container>
 
                 <ng-container matColumnDef="service">
-                    <th *matHeaderCellDef class="f-18 t-20" mat-header-cell mat-sort-header="serviceName"> Service name
+                    <th *matHeaderCellDef class="f-18 t-20" mat-header-cell mat-sort-header="serviceName">
+                        Service name
                     </th>
                     <td *matCellDef="let element" class="c-p t-20" mat-cell>
                         <div class="bar"> {{element.serviceName}} </div>
@@ -58,7 +61,8 @@
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="sub">
-                    <th *matHeaderCellDef class="f-18 t-10" mat-header-cell mat-sort-header="subscriptionNumber"> Subs #
+                    <th *matHeaderCellDef class="f-18 t-10" mat-header-cell mat-sort-header="subscriptionNumber">
+                        Subs #
                     </th>
                     <td (click)="openPlanSlider('SUBSCRIPTIONS','open',element)" *matCellDef="let element" class="t-10 c-p" mat-cell>
                         <div class="bar"> {{element.subscriptionNumber}} </div>
@@ -78,11 +82,13 @@
                 </ng-container>
                 <!-- Weight Column -->
                 <ng-container matColumnDef="activation">
-                    <th *matHeaderCellDef class="f-18 t-6" mat-header-cell mat-sort-header="startsOn"> Activation date
+                    <th *matHeaderCellDef class="f-18 t-6" mat-header-cell mat-sort-header="startsOn">
+                        Activation date
                     </th>
                     <td *matCellDef="let element" mat-cell>
                         <div class="bar">
-                            <div *ngIf="element.status!=1" class="text-left"> {{element.startsOn | date:'dd/MM/yyyy'}}
+                            <div *ngIf="element.status!=1" class="text-left">
+                                {{element.startsOn | date:'dd/MM/yyyy'}}
                             </div>
                             <div (click)="openPlanSlider('createSub','open',element)" *ngIf="element.status==1">
                                 <button class="btn-header btn-xs ml-8 br-0 btn-sm c-p" mat-stroked-button>START
@@ -95,7 +101,8 @@
 
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="lastbilling">
-                    <th *matHeaderCellDef class="f-18 t-10" mat-header-cell mat-sort-header="prevBillingDate"> Last billing date
+                    <th *matHeaderCellDef class="f-18 t-10" mat-header-cell mat-sort-header="prevBillingDate">
+                        Last billing date
                     </th>
                     <td *matCellDef="let element" class="t-10" mat-cell>
                         <div class="bar"> {{element.prevBillingDate | date:'dd/MM/yyyy'}} </div>
@@ -156,11 +163,12 @@
     </div>
 
 
-</div>
 
-<div class="row" *ngIf="dataSource.data.length == 0">
-    <div class="col-md-12  d-flex align-items-center flex-column justify-content-center">
-        <img class="width400" src="assets/images/svg/clients-img.svg">
-        <p class="f-22 f-600 pt-28"> No Data Found </p>
+    <div class="row" *ngIf="dataSource.data.length == 0">
+        <div class="col-md-12  d-flex align-items-center flex-column justify-content-center">
+            <img class="width400" src="assets/images/svg/clients-img.svg">
+            <p class="f-22 f-600 pt-28"> No Data Found </p>
+        </div>
     </div>
+
 </div>
