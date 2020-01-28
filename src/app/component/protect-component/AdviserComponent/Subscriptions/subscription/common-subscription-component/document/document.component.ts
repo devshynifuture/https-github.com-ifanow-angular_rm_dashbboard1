@@ -54,8 +54,8 @@ export class DocumentComponent implements OnInit {
 
   /*@Input()*/
   documentDesign;
-  planDocumentData: Array<any> = [{}, {}, {}];
-  serviceDocumentData;
+  planDocumentData = [{ selected: false }, { selected: false }, { selected: false }];
+  serviceDocumentData = [{ selected: false }, { selected: false }, { selected: false }];
   mappedData = [];
   dataCount;
   sendESign: boolean = true;
@@ -491,6 +491,7 @@ export class DocumentComponent implements OnInit {
   }
 
   getServiceDocumentData() {
+    this.isLoading = true;
     const obj = {
       advisorId: this.advisorId,
       serviceId: this.upperData.id
@@ -504,6 +505,7 @@ export class DocumentComponent implements OnInit {
   }
 
   getServiceDocumentDataResponse(data) {
+    this.isLoading = false;
     if (data && data !== undefined) {
       console.log('service Documents', data.documentList);
       this.serviceDocumentData = data.documentList;
