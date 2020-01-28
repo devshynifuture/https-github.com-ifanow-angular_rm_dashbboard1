@@ -52,10 +52,14 @@
         </div>
         <div class="col-md-5 pr-0">
             <mat-form-field>
-                <textarea class="form-control br-0" maxlength="{{getFormControl().description.maxLength}}" formControlName="description" rows="3"></textarea>
+                <textarea class="form-control br-0" matInput maxlength="{{getFormControl().description.maxLength}}" formControlName="description" rows="3"></textarea>
+                <mat-hint align="end" class="f-12 ">
+                    {{getFormControl().description.value?.length ? getFormControl().description.value.length : 0}}
+                    /{{getFormControl().description.maxLength}}</mat-hint>
+                <mat-hint align="start" class="f-12">Optional</mat-hint>
             </mat-form-field>
         </div>
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-md-6">
                 <p class="mb-0 f-12 text-custom">Optional</p>
             </div>
@@ -65,7 +69,7 @@
                 </p>
             </div>
 
-        </div>
+        </div> -->
 
 
     </div>

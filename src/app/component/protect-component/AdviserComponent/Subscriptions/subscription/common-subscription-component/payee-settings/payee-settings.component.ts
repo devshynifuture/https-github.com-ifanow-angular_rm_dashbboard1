@@ -232,7 +232,7 @@ export class PayeeSettingsComponent implements OnInit {
           customerTypeId: (this.payeeSettingsForm.controls.customerType.value == 'Business') ? 1 : 2,
           email: this.payeeSettingsForm.controls.emailId.value,
           gstTreatmentId: (this.payeeSettingsForm.controls.gstTreatment.value == 'Registered Business - Regular') ? 1 : (this.payeeSettingsForm.controls.gstTreatment.value == 'Registered Business - Composition') ? 2 : 3,
-          gstin: this.payeeSettingsForm.controls.gstIn.value,
+          gstin: (this.payeeSettingsForm.controls.gstIn.value == null)?0:this.payeeSettingsForm.controls.gstIn.value,
           payeeTypeId: 1,
           paymentTermsId: 1,
           billerAddress: this.payeeSettingsForm.controls.billingAddress.value,
@@ -251,7 +251,7 @@ export class PayeeSettingsComponent implements OnInit {
 
         const obj = {
           customerName: this.getFormControl().customerName.value,
-          gstin: this.getFormControl().gstIn.value,
+          gstin: (this.getFormControl().gstIn.value == null)?0:this.payeeSettingsForm.controls.gstIn.value,
           familyMemberId :  this.familyMemberId ,
           gstTreatmentId: (this.getFormControl().gstTreatment.value == 'Registered Business - Regular') ? 1 : (this.payeeSettingsForm.controls.gstTreatment.value == 'Registered Business - Composition') ? 2 : 3,
           email: this.getFormControl().emailId.value,

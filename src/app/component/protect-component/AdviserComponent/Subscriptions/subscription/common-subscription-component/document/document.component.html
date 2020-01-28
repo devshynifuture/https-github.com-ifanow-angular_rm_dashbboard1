@@ -57,10 +57,12 @@
 
                                 <mat-card-actions class="mb-0 p-0 bg-grey lter">
                                     <div class="row">
-                                        <div class="col-md-10 titleClass">
-                                            <h4 class="f-18 p-0 text-left mb-0"> {{documentData.name}} </h4>
-                                            <p class="pt-8 d-block pb-0 mb-0 text-left f-16">
-                                                {{documentData.code}} </p>
+                                        <div class="col-md-10 titleClass relClass">
+                                            <div class="bar" [ngClass]="{'height24': isLoading}">
+                                                <h4 class="f-16 p-0 text-left mb-0"> {{documentData.name}} </h4>
+                                                <p class="pt-8 d-block pb-0 mb-0 text-left f-14">
+                                                    {{documentData.code}} </p>
+                                            </div>
                                         </div>
                                         <div class="col-md-2">
                                             <p class="text-white f-16">{{documentData.type}}
@@ -148,13 +150,15 @@
                             </div>
                             <mat-card-actions class="mb-0 p-0 bg-grey lter">
                                 <div class="row">
-                                    <div class="col-md-10 titleClass">
-                                        <h4 class="f-18 p-0 text-left mb-0"> {{documentData.name}} </h4>
-                                        <p class="pt-8 d-block pb-0 mb-0 text-left f-16">
-                                            {{documentData.code}} </p>
+                                    <div class="col-md-10 titleClass relClass">
+                                        <div class="bar" [ngClass]="{'height24': isLoading}">
+                                            <h4 class="f-16 p-0 text-left mb-0"> {{document.name}} </h4>
+                                            <p class="pt-8 d-block pb-0 mb-0 text-left f-14">
+                                                {{document.code}} </p>
+                                        </div>
                                     </div>
                                     <div class="col-md-2">
-                                        <p class="text-white f-16">{{documentData.type}}
+                                        <p class="text-white f-16"> {{document.type}}
                                         </p>
                                     </div>
                                 </div>
