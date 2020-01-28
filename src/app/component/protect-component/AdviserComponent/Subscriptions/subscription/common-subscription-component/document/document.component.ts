@@ -54,7 +54,7 @@ export class DocumentComponent implements OnInit {
 
   /*@Input()*/
   documentDesign;
-  planDocumentData: Array<any> = [{}, {}, {}];
+  planDocumentData;
   serviceDocumentData;
   mappedData = [];
   dataCount;

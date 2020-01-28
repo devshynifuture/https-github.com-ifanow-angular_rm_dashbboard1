@@ -7,7 +7,7 @@
 <div class="bg-white pt-72">
     <div class="row text-right pt-130">
         <div class="col-md-7 p-0 pt-4">
-            <p>Map Plans to the selected service.</p>
+            <p class="f-16">Map Plans to the selected service.</p>
         </div>
         <div class="col-md-1 text-left">
             <img src="/assets/images/svg/info.svg" class="c-p">
@@ -17,23 +17,27 @@
         </div>
     </div>
     <div *ngIf="servicePlanData" class="wrapper-100 pt-44">
-        <div class="row">
-            <div class="col-md-4 pb-40 c-p" *ngFor="let singleServicePlan of servicePlanData">
+        <div class="row skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+
+
+            <div class="col-md-4 pb-40 c-p " *ngFor="let singleServicePlan of servicePlanData">
                 <div class="example-card">
-                    <mat-card class="p-0 b-ua" (click)="selectServicePlan(singleServicePlan)"
-                        [ngClass]="{'p-0': singleServicePlan.selected==false,'b-ua':singleServicePlan.selected==false,'ba-blue':singleServicePlan.selected==true}">
+                    <mat-card class="p-0 b-ua" (click)="selectServicePlan(singleServicePlan)" [ngClass]="{'p-0': singleServicePlan.selected==false,'b-ua':singleServicePlan.selected==false,'ba-blue':singleServicePlan.selected==true}">
                         <div class="row bg-grey lter">
                             <div class="col-md-12 heightplan">
-                                <mat-checkbox
-                                    [ngStyle]="{'pointer-events':(singleServicePlan.selected==false)?'none':'all'}"
-                                    class="custom-checkbox positionAbsulate" checked="false"
-                                    [ngClass]="{'v-h': singleServicePlan.selected==false}">
+                                <mat-checkbox [ngStyle]="{'pointer-events':(singleServicePlan.selected==false)?'none':'all'}" class="custom-checkbox positionAbsulate" checked="false" [ngClass]="{'v-h': singleServicePlan.selected==false}">
                                 </mat-checkbox>
-                                <h3 class="mb-10 l-26 playairFont f-24" matTooltip="Plan name">{{singleServicePlan.name}}</h3>
+                                <div class="relClass">
+                                    <div class="bar">
+                                        <h3 class="mb-10 l-26 playairFont f-24" matTooltip="Plan name">
+                                            {{singleServicePlan.name}}</h3>
+                                    </div>
+                                </div>
+
                                 <h5 class="m-0" matTooltip="Plan code">{{singleServicePlan.code}}</h5>
                             </div>
                         </div>
-                        <div class="wrapper-20">
+                        <div class="wrapper-20 height160">
                             <div class="row">
                                 <div class="col-md-12 p-0">
                                     <p class="f-12 mb-0">DESCRIPTION</p>
@@ -51,9 +55,7 @@
             <img class="width200" src="assets/images/svg/add-services-img.svg">
             <p class="f-22 f-600 pt-28">Create Services </p>
             <p class="f-16 text-center l-21">
-                Next up, you create Services. More than one Service can be added to a Plan. E.g. <br> Plan could be
-                Financial Planning. It’s Services could be 1) Planning fees 2) <br> Implementation services 3) Retainer
-                services.
+                Next up, you create Services. More than one Service can be added to a Plan. E.g. <br> Plan could be Financial Planning. It’s Services could be 1) Planning fees 2) <br> Implementation services 3) Retainer services.
             </p>
             <!-- 
             <button (click)="openFragment('','services')" class="btn-primary d-flex align-items-center">
