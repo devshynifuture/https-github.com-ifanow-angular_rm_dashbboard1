@@ -12,6 +12,19 @@ export class ProgressButtonComponent implements AfterViewInit {
   @Input() options: MatProgressButtonOptions;
   @Output() btnClick: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
 
+  _logEvent:any;
+  @Input() set logEvent(logEvent){
+    this._logEvent = logEvent;
+    if(this._logEvent == 13){
+
+      this.onClick(null);
+      console.log(this._logEvent,"event hostlistner 2"); 
+    }
+  }
+
+  get logEvent(){
+    return this._logEvent
+  }
   /*@ViewChild('progressBar', {
     static: false, read: ElementRef,
   }) progressBar: ElementRef;*/
@@ -20,6 +33,8 @@ export class ProgressButtonComponent implements AfterViewInit {
 
   @HostListener('click', ['$event'])
   public onClick(event: MouseEvent) {
+    console.log(event,"event hostlistner");
+    
     if (!this.options.disabled && !this.options.active) {
       this.btnClick.emit(event);
     } else if (this.options.active) {
@@ -27,6 +42,7 @@ export class ProgressButtonComponent implements AfterViewInit {
       // console.log(' progressBar nativeElement : ', this.progressBar.nativeElement);
     }
   }
+  
 
   ngAfterViewInit(): void {
     // this.progressBarStyle = '{\'background-color\': \'red\'}';

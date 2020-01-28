@@ -9,7 +9,7 @@
                     <div class="form-group1">
                         <mat-form-field>
                             <h5 class="pt-12">User Name</h5>
-                            <input class="form-control br-0" formControlName="name" matInput>
+                            <input (keypress)="enterEvent($event)" class="form-control br-0" formControlName="name" matInput>
                         </mat-form-field>
                     </div>
                 </div>
@@ -28,8 +28,10 @@
 
             </div>
             <div class="row right pt-16">
-                <div class="col-md-12 blue">
-                    <app-progress-button (btnClick)="progressButtonClick()" [options]="barButtonOptions">
+
+                <div class="col-md-8 errorM" [ngStyle]="errorStyle" >Invalid username and/or password</div>
+                <div class="col-md-4 blue">
+                    <app-progress-button (btnClick)="progressButtonClick($event)" [options]="barButtonOptions" [logEvent] = "passEvent">
                     </app-progress-button>
                     <!-- <button class="p-0" type="submit" [disabled]="!loginForm.valid" (click)="onSubmit($event)"
                mat-stroked-button color="primary">
@@ -40,6 +42,7 @@
                </span>
            </button>-->
                 </div>
+                
             </div>
 
 

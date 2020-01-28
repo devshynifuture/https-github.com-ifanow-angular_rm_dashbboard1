@@ -17,6 +17,12 @@
     background-color: #fff;
 }
 
+.errorM{color: red; font-size: 14px; display: block; 
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear;
+}
+
 h3 {
     text-align: center;
     margin-bottom: 15px;
