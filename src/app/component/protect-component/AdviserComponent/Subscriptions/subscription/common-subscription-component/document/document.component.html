@@ -40,29 +40,27 @@
                 </div>
             </div>
             <div class="wrapper-40">
-                <div class="row text-center padder-80">
-                    <div class="col-md-4 pr-20 pb-20 pl-0  " *ngFor="let documentData of planDocumentData">
+                <div class="row   padder-80">
+
+                    <div class="col-md-4 pr-20 pb-20 pl-0 skeletonAnimation" *ngFor="let documentData of planDocumentData" appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <div (click)="selectDocument(documentData)">
+                            <mat-card [ngClass]="{'ba-blue': documentData.selected,'active': documentData.selected,'b-ua':documentData.selected==false}" class="example-card overflow-hidden p-0 c-p">
+                                <div class="relClass">
+                                    <div class="bar180">
+                                        <mat-card-header class="m-0 height180  hide-card-text">
+                                            <!-- [isChecked]="documentData.selected" -->
+                                            <app-custom-html [isChecked]="documentData.selected" [data]="documentData.docText" id="ui-appcustomhtml" class="">
+                                            </app-custom-html>
+                                        </mat-card-header>
+                                    </div>
+                                </div>
 
-                            <mat-card [ngClass]="{'ba-blue': documentData.selected,'active': documentData.selected,'b-ua':documentData.selected==false}" class="example-card bg-grey lter p-0 c-p">
-                                <mat-card-header class="m-0 height180 hide-card-text">
-                                    <!-- [isChecked]="documentData.selected" -->
-                                    <app-custom-html [isChecked]="documentData.selected" [data]="documentData.docText" id="ui-appcustomhtml" class="bg-white">
-
-                                    </app-custom-html>
-                                </mat-card-header>
-
-                                <mat-card-actions class="pb-20 mb-0 p-0">
-                                    <div class="row wrapper-8">
-                                        <div class="col-md-10">
-                                            <mat-card-header>
-                                                <mat-card-title class="f-18 p-0 mb-0" matTooltip="Document name">
-                                                    {{documentData.name}}
-                                                </mat-card-title>
-                                                <mat-card-subtitle class="pt-8 pb-12 mb-0 text-left f-16">
-                                                    {{documentData.code}}</mat-card-subtitle>
-
-                                            </mat-card-header>
+                                <mat-card-actions class="mb-0 p-0 bg-grey lter">
+                                    <div class="row">
+                                        <div class="col-md-10 titleClass">
+                                            <h4 class="f-18 p-0 text-left mb-0"> {{documentData.name}} </h4>
+                                            <p class="pt-8 d-block pb-0 mb-0 text-left f-16">
+                                                {{documentData.code}} </p>
                                         </div>
                                         <div class="col-md-2">
                                             <p class="text-white f-16">{{documentData.type}}
@@ -135,34 +133,32 @@
             </div>
         </div>
         <div class="wrapper-40">
-            <div class="row text-center padder-80">
-                <div class="col-md-4 pr-20 pb-20 pl-0" *ngFor="let document of serviceDocumentData">
+            <div class="row padder-80">
+                <div class="col-md-4 pr-20 pb-20 pl-0 skeletonAnimation" *ngFor="let document of serviceDocumentData" appSkeletonLoading [appSkeletonLoading]="isLoading">
                     <div (click)="selectDocument(document)">
-                        <mat-card [ngClass]="{'ba-blue': document.selected,'b-ua':document.selected==false}" class="example-card bg-grey lter p-0 c-p  ">
-                            <mat-card-header class="m-0">
-                                <!-- [isChecked]="document.selected"  -->
-                                <app-custom-html [isChecked]="document.selected" [data]="document.docText" id="ui-appcustomhtml" class="bg-white">
-
-                                </app-custom-html>
-                            </mat-card-header>
-                            <mat-card-actions class="pb-20 mb-0 p-0">
-                                <div class="row wrapper-8">
-                                    <div class="col-md-10">
-                                        <mat-card-header>
-                                            <mat-card-title class="f-18 p-0 mb-0 pt-12" matTooltip="Document name">
-                                                {{document.name}}
-                                            </mat-card-title>
-                                            <mat-card-subtitle class="pt-8 pb-12 mb-0 text-left f-16">
-                                                {{document.code}}</mat-card-subtitle>
-
-                                        </mat-card-header>
+                        <mat-card [ngClass]="{'ba-blue': document.selected,'b-ua':document.selected==false}" class="example-card overflow-hidden p-0 c-p  ">
+                            <div class="relClass">
+                                <div class="bar180">
+                                    <mat-card-header class="m-0 height180  hide-card-text">
+                                        <!-- [isChecked]="document.selected"  -->
+                                        <app-custom-html [isChecked]="document.selected" [data]="document.docText" id="ui-appcustomhtml" class="">
+                                        </app-custom-html>
+                                    </mat-card-header>
+                                </div>
+                            </div>
+                            <mat-card-actions class="mb-0 p-0 bg-grey lter">
+                                <div class="row">
+                                    <div class="col-md-10 titleClass">
+                                        <h4 class="f-18 p-0 text-left mb-0"> {{documentData.name}} </h4>
+                                        <p class="pt-8 d-block pb-0 mb-0 text-left f-16">
+                                            {{documentData.code}} </p>
                                     </div>
                                     <div class="col-md-2">
-                                        <p class="text-white f-16">{{document.type}}</p>
+                                        <p class="text-white f-16">{{documentData.type}}
+                                        </p>
                                     </div>
                                 </div>
                             </mat-card-actions>
-
                         </mat-card>
                     </div>
                 </div>

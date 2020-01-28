@@ -70,6 +70,7 @@ export class PlansComponent implements OnInit {
     );
   }
   getPlansMapped() {
+    this.isLoading = true;
     const obj = {
       // advisorid: 12345,
       advisorId: this.advisorId,
@@ -81,6 +82,7 @@ export class PlansComponent implements OnInit {
   }
 
   getPlansMappedResponse(data) {
+    this.isLoading = false;
     console.log(data)
     // if(this.servicePlanData && this.servicePlanData !== null && this.servicePlanData !== undefined){
     this.servicePlanData = data;

@@ -142,10 +142,20 @@ label {
 
 .height180 {
     height: 180px;
+    overflow: hidden;
+}
+
+.titleClass {
+    height: 70px;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .skeletonAnimation .relClass {
     position: relative;
+    background-color: #fff;
     .bar180 {
         background-color: #E7E7E7;
         width: 100%;
@@ -165,4 +175,9 @@ label {
             animation: loading 1s infinite;
         }
     }
+}
+
+::ng-deep #ui-appcustomhtml p {
+    width: 100%;
+    padding-top: 15px;
 }
