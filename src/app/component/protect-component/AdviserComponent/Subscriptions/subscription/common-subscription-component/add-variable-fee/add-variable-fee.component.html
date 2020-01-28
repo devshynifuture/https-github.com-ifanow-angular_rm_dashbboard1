@@ -176,8 +176,8 @@
                     <div class="b-grey wrapper-12">
                         <mat-chip-list aria-label="Fish selection">
                             <mat-chip (click)="select(assets)" *ngFor="let assets of otherAssetData" [ngClass]="{'btn-primary':assets.isActive==1}" class="f-13 f-400 wrapper-16"><i class="material-icons mr-8 text-grey f-16">
-                  check
-                </i>
+                                    check
+                                </i>
                                 <div *ngIf="assets">{{assets.subAssetClassName}}</div>
                             </mat-chip>
                         </mat-chip-list>
