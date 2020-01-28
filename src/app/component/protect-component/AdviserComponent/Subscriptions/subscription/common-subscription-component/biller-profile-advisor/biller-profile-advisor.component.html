@@ -26,7 +26,7 @@
                     <input #companyDisplayName autofocus class="form-control br-0 text-left"
                       formControlName="companyDisplayName" matInput
                       maxLength="{{getFormControlProfile().companyDisplayName.maxLength}}" type="text">
-                    <mat-error class="f-12">Company display name is required</mat-error>
+                    <mat-error class="f-12">Company Display Name is required</mat-error>
                     <mat-hint align="end" class="f-12">{{companyDisplayName.value.length}}/50</mat-hint>
                   </mat-form-field>
                 </div>
@@ -107,6 +107,7 @@
                   </mat-form-field>
                 </div>
               </div>
+
             </div>
             <div class="row pt-44">
               <div class="col-md-5">
@@ -271,11 +272,11 @@
             <div class="col-md-5">
               <h5 class="text-right m-0 pt-8">Bank address</h5>
             </div>
-            <div class="col-md-7">
+            <div class="col-md-7 height75">
               <div class="form-group mb-0">
                 <mat-form-field>
-                  <textarea #address class="form-control br-0" formControlName="address" matInput
-                    maxLength="{{getFormControlBank().address.maxLength}}" rows="5"></textarea>
+                  <textarea #address class="form-control br-0" rows="4" formControlName="address" matInput
+                    maxLength="{{getFormControlBank().address.maxLength}}"></textarea>
                   <mat-error class="f-12">This field is required</mat-error>
                   <mat-hint align="end" class="f-12">{{address.value.length}}/150</mat-hint>
                 </mat-form-field>
@@ -296,6 +297,9 @@
                   <mat-hint align="end" class="f-12">{{pincodeB.value.length}}/6</mat-hint>
                 </mat-form-field>
               </div>
+            </div>
+            <div class="col-md-2">
+              Loading
             </div>
           </div>
           <div class="row pt-44">
@@ -357,7 +361,7 @@
               <h5 class="text-right m-0 pt-8">Footnote Description</h5>
               <span class="text-right">This will appear in invoices</span>
             </div>
-            <div class="col-md-7">
+            <div class="col-md-7 height90">
               <div class="form-group mb-0">
                 <mat-form-field>
                   <textarea #footnote class="form-control br-0" formControlName="footnote" matInput
@@ -373,11 +377,11 @@
               <h5 class="text-right m-0 pt-8">Terms & Conditions</h5>
               <span class="text-right">This will appear in invoices</span>
             </div>
-            <div class="col-md-7">
+            <div class="col-md-7 height90">
               <div class="form-group mb-0">
                 <mat-form-field>
                   <textarea #terms class="form-control br-0" formControlName="terms" matInput
-                    maxLength="{{getFrormControlMisc().terms.maxLength}}" rows="5"></textarea>
+                    maxLength="{{getFrormControlMisc().terms.maxLength}}" rows="4"></textarea>
                   <mat-error class="f-12">This field is required</mat-error>
                   <mat-hint align="end" class="f-12">{{terms.value.length}}/160</mat-hint>
                 </mat-form-field>

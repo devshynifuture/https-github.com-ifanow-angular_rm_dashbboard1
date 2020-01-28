@@ -41,11 +41,24 @@ export class ProgressButtonComponent implements AfterViewInit {
       // console.log(' progressBar : ', this.progressBar);
       // console.log(' progressBar nativeElement : ', this.progressBar.nativeElement);
     }
+    this.setTimeOutRecursiveForProgressValue(10);
+
+  }
+
+  setTimeOutRecursiveForProgressValue(progressValue) {
+    setTimeout(() => {
+      if (this.options.active && progressValue < 100) {
+        this.options.value = progressValue;
+        this.setTimeOutRecursiveForProgressValue(progressValue + 10);
+      } else {
+        this.options.value = 10;
+
+      }
+    }, 100);
   }
   
 
   ngAfterViewInit(): void {
-    // this.progressBarStyle = '{\'background-color\': \'red\'}';
 
   }
 
