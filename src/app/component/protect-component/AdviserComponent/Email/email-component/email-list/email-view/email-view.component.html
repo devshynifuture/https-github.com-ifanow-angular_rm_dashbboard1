@@ -13,7 +13,9 @@
 </mat-toolbar>
 <div class="chatBox">
     <h2>{{ subject }}</h2>
-
+    <button mat-stroke-button (click)="createNewFile()">
+        create file
+    </button>
     <p *ngIf="raw" [innerHTML]="raw">
     </p>
     <div class="messengerDiv" *ngFor="let part of body; let i=index">

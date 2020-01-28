@@ -14,6 +14,8 @@ import { EmailUtilService } from 'src/app/services/email-util.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 
+import { saveAs } from 'file-saver';
+
 @Component({
   selector: 'app-email-view',
   templateUrl: './email-view.component.html',
@@ -32,6 +34,7 @@ export class EmailViewComponent implements OnInit, OnDestroy {
   decodedPart;
   attachmentBase64: string = null;
   private _htmlString: string;
+  downloadFilePath: string;
 
   constructor(private emailService: EmailServiceService,
     private _bottomSheet: MatBottomSheet,
@@ -57,6 +60,31 @@ export class EmailViewComponent implements OnInit, OnDestroy {
     }
   }
 
+  createNewFile(fileData) {
+    const { fileContent, fileName, fileType, base64 } = fileData;
+    if (fileType === 'image/jpeg') {
+      const imageBlob = this.dataURItoBlob(fileContent);
+      const imageFile = new File([imageBlob], fileName, { type: 'image/jpeg' });
+      console.log(imageFile);
+    } else {
+      const newFile = new Blob([`${fileContent}`], { type: `${fileType}; charset=utf-8` });
+      // console.log(fileName, fileType, fileContent);
+      saveAs(newFile, fileName);
+      console.log('new file created');
+    }
+  }
+
+  dataURItoBlob(dataURI) {
+    const byteString = window.atob(dataURI);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array], { type: 'image/jpeg' });
+    return blob;
+  }
+
   // getSanitizedHtml(): SafeHtml {
   //   return this._sanitizer.bypassSecurityTrustHtml(this._htmlString)
   // }
@@ -66,21 +94,23 @@ export class EmailViewComponent implements OnInit, OnDestroy {
     this.emailService.gmailMessageDetail(id)
       .subscribe((response) => {
 
-        console.log("this is response of detailed api:::::::::::::::", response)
-
         this.raw = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(response.raw);
-        this.extractValuesFromDetailView();
+        let fileData = this.extractValuesFromDetailView();
         this.attachmentBase64 = "data: image/jpeg; base64," + this.raw.match(/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=|[A-Za-z0-9+\/]{4})$/gm);
+        let fileDataObj = {
+          ...fileData,
+          base64: this.raw.match(/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=|[A-Za-z0-9+\/]{4})$/gm),
+          fileContent: this.attachmentBase64
+        }
+        // if()
+        this.createNewFile(fileDataObj);
         // this._htmlString = '<img [src]="attachmentBase64" />';
         this.isLoading = false;
 
-        console.log("this is attachment base64::::::::::::::: ", this.attachmentBase64);
         // this.attachmentBase64Code = this.raw.forEach(part => {
         //   part.item
         // });
 
-        console.log('response of detailed gmail threadL:::::::', response);
-        console.log("this is raw of detail api...::::::::::::", this.raw);
 
       });
   }
@@ -92,15 +122,12 @@ export class EmailViewComponent implements OnInit, OnDestroy {
         this.eventService.openSnackBar("No Email Data !", "DISMISS");
         this.router.navigate(['../'], { relativeTo: this.activatedRoute });
       }
-      console.log("this is email Object passed from list component ->>>  ", this.emailObj);
       if (this.emailObj) {
 
         if (this.emailObj.parsedData.decodedPart.length === 0 || this.ifDecodedPartIsEmptyString()) {
           this.emailObj.idsOfMessages.forEach((element, index) => {
             const id = element;
             this.getGmailDetailMessageRaw(id);
-
-            console.log('detailed api data merged ::::::::', this.emailObj);
             //       console.log("this is result of async await", res);
             //       part.body.data = res;
           });
@@ -159,8 +186,6 @@ export class EmailViewComponent implements OnInit, OnDestroy {
 
         let { messageDates } = this.emailObj;
 
-        console.log("this are message dates", messageDates);
-        console.log("this is decoded part : >>>>>", decodedPart);
         let extractHtmlValue;
         if (decodedPart.length > 2) {
 
@@ -180,12 +205,6 @@ export class EmailViewComponent implements OnInit, OnDestroy {
 
         this.body = extractHtmlValue;
 
-        console.log(this.body);
-
-        console.log('this is single thread response ->>>>>>>>>>>>>')
-
-        console.log(response);
-
         this.subject = subject[0]['value'];
         this.from = from[0]['value'];
         // console.log(response);
@@ -195,13 +214,19 @@ export class EmailViewComponent implements OnInit, OnDestroy {
   }
 
   extractValuesFromDetailView() {
-    const keyValueRegex = /([^:\s]+):([^:\s]+)/g;
-    let keys = [];
-    let values = [];
 
     let base64Value = this.raw.split('Content-ID')[1];
     let messageValue = this.raw.split('Content-ID')[0];
+    let lastContentTypeIndex = messageValue.lastIndexOf('Content-Type');
+    let nameIndex = messageValue.indexOf('name');
+    let fileTypeString = messageValue.slice(lastContentTypeIndex, nameIndex).split(":")[1].slice(0, -2);
 
+    let filenameIndex = messageValue.indexOf('filename');
+    let contentTransferIndex = messageValue.indexOf('Content-Transfer');
+    let filenameString = messageValue.slice(filenameIndex, contentTransferIndex).split('=')[1].slice(1, -3);
+    console.log("this is filename ::::::::::::::", filenameString, fileTypeString);
+
+    return { fileName: filenameString, fileType: fileTypeString }
 
     // while ((m = keyValueRegex.exec(messageValue)) !== null) {
     //   keys.push(m[1]);
