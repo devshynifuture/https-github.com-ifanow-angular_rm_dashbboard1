@@ -87,7 +87,7 @@ export class InsuranceComponent implements OnInit {
     this.cusService.getInsuranceData(obj).subscribe(
       data => this.getInsuranceDataRes(data)
       // , (error) => {
-      //   this.eventService.openSnackBar('Something went worng!', 'dismiss');
+      //   this.eventService.openSnackBar('Something went wrong!', 'dismiss');
       //   this.dataSource.data = [];
       //   this.isLoading = false;
       // }
