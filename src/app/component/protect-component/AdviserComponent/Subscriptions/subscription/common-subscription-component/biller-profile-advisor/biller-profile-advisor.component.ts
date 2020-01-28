@@ -4,10 +4,11 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
 import {AuthService} from '../../../../../../../auth-service/authService';
 import {EventService} from 'src/app/Data-service/event.service';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {PhotoCloudinaryUploadService} from '../../../../../../../services/photo-cloudinary-upload.service';
 import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
 import {UtilService, ValidatorType} from '../../../../../../../services/util.service';
+import { PostalService } from 'src/app/services/postal.service';
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -45,11 +46,16 @@ export class BillerProfileAdvisorComponent implements OnInit {
   logoImg: any;
   imageData: File;
   uploadedImage: any;
+  postalData: Object;
+  postOfficeData: any;
+  postOfficeDataDistrict: any;
+  postOfficeDataCircle: any;
+  postOfficeDataCountry: any;
 
   // validatorType = ValidatorType;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private fb: FormBuilder,
-              private subService: SubscriptionService,
+              private subService: SubscriptionService, private postalService: PostalService,
               private eventService: EventService, private http: HttpClient) {
   }
 
@@ -86,7 +92,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     return this.profileDetailsForm.controls;
   }
 
-  getFrormControlBank() {
+  getFormControlBank() {
     return this.bankDetailsForm.controls;
   }
 
@@ -162,7 +168,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
       companyDisplayName: [data.companyDisplayName, [Validators.required]],
       // companyName: [data.companyName, [Validators.required]],
       gstinNum: [(data.gstin), [Validators.required]],
-      panNum: [(data.pan), [Validators.required,Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-z]{1}")]],
+      panNum: [(data.pan), [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-z]{1}")]],
       Address: [(data.billerAddress), [Validators.required]],
       state: [(data.state), [Validators.required]],
       pincode: [(data.zipCode), [Validators.required, Validators.minLength(6)]],
@@ -192,18 +198,18 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.getFormControlProfile().companyDisplayName.maxLength = 50;
     this.getFormControlProfile().panNum.maxLength = 10;
     this.getFormControlProfile().Address.maxLength = 150;
-    this.getFrormControlBank().nameOnBank.maxLength = 25;
-    this.getFrormControlBank().bankName.maxLength = 35;
-    this.getFrormControlBank().acNo.maxLength = 16;
-    this.getFrormControlBank().ifscCode.maxLength = 11;
-    this.getFrormControlBank().address.maxLength = 150;
+    this.getFormControlBank().nameOnBank.maxLength = 25;
+    this.getFormControlBank().bankName.maxLength = 35;
+    this.getFormControlBank().acNo.maxLength = 16;
+    this.getFormControlBank().ifscCode.maxLength = 11;
+    this.getFormControlBank().address.maxLength = 150;
     this.getFrormControlMisc().footnote.maxLength = 160;
     this.getFrormControlMisc().terms.maxLength = 160;
     this.logoImg = data.logoUrl;
   }
 
   Close(data) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
   }
 
   nextStep(value, eventName) {
@@ -225,6 +231,23 @@ export class BillerProfileAdvisorComponent implements OnInit {
         this.submitBillerForm();
     }
   }
+getPostalPin(value){
+  let obj = {
+    zipCode : value
+  }
+  if(value.length > 5){
+    this.postalService.getPostalPin(value).subscribe(data=>{
+      console.log('postal 121221',data)
+      this.PinData(data)
+    })
+  }
+
+}
+PinData(data){
+  this.postOfficeDataCircle = data[0].PostOffice[0].Circle;
+  this.postOfficeDataCountry = data[0].PostOffice[0].Country;
+  this.postOfficeDataDistrict = data[0].PostOffice[0].District;
+}
 
   back() {
     this.selected--;
@@ -257,17 +280,21 @@ export class BillerProfileAdvisorComponent implements OnInit {
       return;
     } /*else if (this.logUrl.controls.url.invalid) {
       return;
-    } */ else if (this.bankDetailsForm.controls.acNo.invalid) {
-      this.isAcNo = true;
-      return;
-    } else if (this.bankDetailsForm.controls.nameOnBank.invalid) {
+    } */
+    else if (this.bankDetailsForm.controls.nameOnBank.invalid) {
       this.isNameOnBank = true;
       return;
-    } else if (this.bankDetailsForm.controls.address.invalid) {
-      this.isaddress = true;
+    } else if (this.bankDetailsForm.controls.bankName.invalid) {
+      this.isBankName = true;
+      return;
+    } else if (this.bankDetailsForm.controls.acNo.invalid) {
+      this.isAcNo = true;
       return;
     } else if (this.bankDetailsForm.controls.ifscCode.invalid) {
       this.isIFSC = true;
+      return;
+    } else if (this.bankDetailsForm.controls.address.invalid) {
+      this.isaddress = true;
       return;
     } else if (this.bankDetailsForm.controls.city.invalid) {
       this.isCity = true;
@@ -275,14 +302,11 @@ export class BillerProfileAdvisorComponent implements OnInit {
     } else if (this.bankDetailsForm.controls.state.invalid) {
       this.isState = true;
       return;
-    } else if (this.bankDetailsForm.controls.country.invalid) {
-      this.isCountry = true;
-      return;
     } else if (this.bankDetailsForm.controls.pincode.invalid) {
       this.isZipCode = true;
       return;
-    } else if (this.bankDetailsForm.controls.bankName.invalid) {
-      this.isBankName = true;
+    } else if (this.bankDetailsForm.controls.country.invalid) {
+      this.isCountry = true;
       return;
     } else {
       const obj = {
@@ -326,7 +350,9 @@ export class BillerProfileAdvisorComponent implements OnInit {
 
     }
   }
-
+  getPostalRes(data){
+    console.log('data posta 123345566')
+  }
   closeTab(data) {
     if (data == true) {
       this.Close(data);

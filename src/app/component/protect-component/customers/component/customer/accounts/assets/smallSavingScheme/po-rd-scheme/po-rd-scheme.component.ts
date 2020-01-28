@@ -101,6 +101,7 @@ export class PoRdSchemeComponent implements OnInit {
       this.sumOfMaturityValue = data.sumOfMaturityValue;
       this.pordData = data;
     } else {
+      this.dataSource = undefined
       this.noData = 'No scheme found';
     }
 

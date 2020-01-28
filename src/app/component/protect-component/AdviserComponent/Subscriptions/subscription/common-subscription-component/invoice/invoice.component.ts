@@ -40,6 +40,8 @@ export class InvoiceComponent implements OnInit {
   service: { serviceName: any; averageFees: any; description: any; fromDate: any; toDate: any; }[];
   feeCalc: boolean;
   rpyment = true;
+  showDateError: string;
+  moreStatus: any;
 
   [x: string]: any;
 
@@ -367,15 +369,24 @@ export class InvoiceComponent implements OnInit {
 
   getRecordPayment(data) {
     this.recordData = data
-    this.getPayReceive(data.id);
+    if(data!=""){
+      this.getPayReceive(data.id);
+    }
   }
 
   getInvoiceData(data) {
     console.log('@@@@@@@@', data);
     this.copyStoreData = data;
     this.storeData = data;
+    if(data.status==5 || data.status==6){
+      this.moreStatus=data.status;
+    }else{
+      this.moreStatus="";
+    }
     if (this.storeData.balanceDue == 0) {
       this.rpyment = false
+    }else {
+      this.rpyment = true;
     }
     this.clientId = AuthService.getClientId();
     this.auto = this.storeData.auto;
@@ -609,7 +620,17 @@ export class InvoiceComponent implements OnInit {
   }
 
   passInvoice(data, index, event) {
-    this.recordData = data;
+    if (data.balanceDue == 0) {
+      this.rpyment = false
+    }else{
+      this.rpyment =true
+    }
+    if(data.status==5 || data.status==6){
+      this.moreStatus=data.status;
+    }else{
+      this.moreStatus="";
+    }   
+     this.recordData = data;
     console.log(data);
     this.storeData = data;
     const obj = {

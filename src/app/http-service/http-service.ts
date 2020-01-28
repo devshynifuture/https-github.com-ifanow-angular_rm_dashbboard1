@@ -233,8 +233,7 @@ export class HttpService {
       params
     };
     url = url.trim();
-    return this._http
-      .get(this.baseUrl + url, httpOptions).pipe(
+    return this.getHttpClient(this.baseUrl + url, httpOptions).pipe(
         catchError(err => {
           console.log('Handling error locally and rethrowing it...', err);
           return throwError(err);
@@ -258,6 +257,10 @@ export class HttpService {
       });
   }
 
+  getHttpClient(url,httpOptions?){
+    return this._http
+    .get(url,httpOptions);
+  }
   // created by sarvesh
 
   changeBase64Data(params): string {

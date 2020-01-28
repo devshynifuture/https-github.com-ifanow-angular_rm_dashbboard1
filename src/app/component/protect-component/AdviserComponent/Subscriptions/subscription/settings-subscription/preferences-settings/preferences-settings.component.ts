@@ -24,11 +24,11 @@ export class PreferencesSettingsComponent implements OnInit {
 
   constructor(public subService: SubscriptionService, private fb: FormBuilder,
     public dialog: MatDialog, private subscription: SubscriptionService,
-    public subInjectService: SubscriptionInject, private eventService: EventService) {
+    public subInjectService: SubscriptionInject, private eventService: EventService, private utilservice: UtilService) {
   }
   prefixData;
   isLoading = false;
-  billerProfileData: Array<any> = [{ isPrimary: false }];
+  billerProfileData: Array<any>;
   // PrefixData;
 
   selected;
@@ -37,6 +37,7 @@ export class PreferencesSettingsComponent implements OnInit {
 
     this.viewMode = 'tab1';
     this.advisorId = AuthService.getAdvisorId();
+    (this.utilservice.checkSubscriptionastepData(2) == false) ? this.billerProfileData = undefined : this.billerProfileData = [{}, {}, {}]
     this.getProfileBillerData();
     this.getTemplate();
   }
@@ -59,7 +60,7 @@ export class PreferencesSettingsComponent implements OnInit {
 
   getProfileBillerData() {
     this.isLoading = true;
-    this.billerProfileData = [{ isPrimary: false }];
+    // this.billerProfileData = [{ isPrimary: false }];
     this.subscription.getPreferenceBillerProfile(this.advisorId).subscribe(
       data => this.getProfileBillerDataResponse(data), (error) => {
         this.eventService.showErrorMessage(error);

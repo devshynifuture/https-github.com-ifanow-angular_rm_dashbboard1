@@ -15,23 +15,21 @@
     </div>
     <div class="col-md-5">
       <div class="form-group mb-0">
-
+        <mat-form-field>
+          <mat-select class="form-control br-0" formControlName="docType" id="sel1">
+            <mat-option value="1">Letter of engagement</mat-option>
+            <mat-option value="2">Details of client</mat-option>
+            <mat-option value="3">Material information about advisor/company</mat-option>
+            <mat-option value="4">Redressal of grievance</mat-option>
+            <mat-option value="5">Scope of services</mat-option>
+            <mat-option value="6">Termination of services</mat-option>
+            <mat-option value="7">Quotation</mat-option>
+  
+          </mat-select>
+          <mat-error [ngClass]="{'v-h':!(isDocType && getFormControl().docType.invalid || getFormControl().docType.touched && getFormControl().docType.invalid)}" class="f-12 pt-4">Document type is required</mat-error>
+        </mat-form-field>
         <!-- <input type="email" formControlName="docType" class="form-control br-0"> -->
-        <mat-select class="form-control br-0" formControlName="docType" id="sel1">
-          <mat-option value="1">Letter of engagement</mat-option>
-          <mat-option value="2">Details of client</mat-option>
-          <mat-option value="3">Material information about advisor/company</mat-option>
-          <mat-option value="4">Redressal of grievance</mat-option>
-          <mat-option value="5">Scope of services</mat-option>
-          <mat-option value="6">Termination of services</mat-option>
-          <mat-option value="7">Quotation</mat-option>
-
-        </mat-select>
-        <div
-          [ngClass]="{'v-h':!(isDocType && getFormControl().docType.invalid || getFormControl().docType.touched && getFormControl().docType.invalid)}"
-          class="col-md-12">
-          <mat-error class="f-12 pt-4">Document type is required</mat-error>
-        </div>
+        
       </div>
     </div>
   </div>
@@ -40,20 +38,11 @@
       <h5 class="m-0 text-right pt-8">Document name</h5>
     </div>
     <div class="col-md-5">
-      <div class="form-group mb-0">
-
-        <input type="email" #docName formControlName="docName" maxlength="40" class="form-control br-0">
-      </div>
-      <div class="row">
-        <div
-          [ngClass]="{'v-h':!(isDocName && getFormControl().docName.invalid || getFormControl().docName.touched && getFormControl().docName.invalid)}"
-          class="col-md-8">
-          <mat-error class="f-12 pt-4">Document name is required</mat-error>
-        </div>
-        <div class="col-md-4 text-right">
-          <p class="f-12 m-0 text-custom pt-4">{{docName.value.length}} / 40</p>
-        </div>
-      </div>
+      <mat-form-field>
+        <input type="email" matInput #docName formControlName="docName" maxlength="40" class="form-control br-0">
+        <mat-error  [ngClass]="{'v-h':!(isDocName && getFormControl().docName.invalid || getFormControl().docName.touched && getFormControl().docName.invalid)}" class="f-12 pt-4">Document name is required</mat-error>
+        <mat-hint align="end" class="f-12">{{docName.value.length}} / 40</mat-hint>
+      </mat-form-field>
     </div>
   </div>
   <div class="row pt-44" *ngIf="_inputData.documentType!='quotation'">

@@ -8,7 +8,7 @@ import { AuthService } from '../../../../../../auth-service/authService';
 import { UtilService, ValidatorType } from '../../../../../../services/util.service';
 import { DatePipe } from '@angular/common';
 import { element } from 'protractor';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 
 export interface PeriodicElement {
@@ -20,7 +20,7 @@ export interface PeriodicElement {
   duedate: string;
   amt: string;
   balance: string;
-  
+
 }
 
 @Component({
@@ -34,11 +34,15 @@ export interface PeriodicElement {
 export class InvoicesSubscriptionComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  isFilter:boolean = false;
+  isFilter: boolean = false;
   chips = [
-    { name: 'UNPAID', value: 1 },
-    { name: 'PAID', value: 2 },
-    { name: 'OVERDUE', value: 3 }
+    { name: 'UNPAID', value: 0 },
+    { name: 'PAID', value: 1 },
+    { name: 'OVERDUE', value: 2 },
+    { name: 'PARTIALLY PAID', value: 3 },
+    { name: 'SENT', value: 4 },
+    { name: 'VOID', value: 5 },
+    { name: 'WRITEOFF', value: 6 }
   ];
   dateChips = [
     { name: 'Date', value: 1 },
@@ -70,15 +74,15 @@ export class InvoicesSubscriptionComponent implements OnInit {
   scrollPosition;
   lastDataId;
   tableData = [];
- passFilterData ={
-   data:"",
-   selectedCount:"",
-   statusFilter:this.chips,
-   dateFilter:this.dateChips
- };
+  passFilterData = {
+    data: "",
+    selectedCount: "",
+    statusFilter: this.chips,
+    dateFilter: this.dateChips
+  };
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject, private subService: SubscriptionService,
-    private eventService: EventService, public subscription: SubscriptionService, private datePipe: DatePipe, private router: Router) {
+    private eventService: EventService, public subscription: SubscriptionService, private datePipe: DatePipe, private router: Router, private utilservice: UtilService) {
     // this.ngOnInit();
   }
 
@@ -93,19 +97,20 @@ export class InvoicesSubscriptionComponent implements OnInit {
   singleInvoiceData;
   // showLoader = true;
   advisorId;
-  displayedColumns: string[] = ['checkbox', 'date', 'invoicenum', 'name', 'email','status','duedate', 'amt', 'balance'];
+  displayedColumns: string[] = ['checkbox', 'date', 'invoicenum', 'name', 'email', 'status', 'duedate', 'amt', 'balance'];
   @Input() invoiceValue;
 
   ngOnInit() {
     // this.dataSource = [{}, {}, {}];
     this.advisorId = AuthService.getAdvisorId();
+    (this.utilservice.checkSubscriptionastepData(6) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}]
     this.getInvoiceSubData(false);
     this.showEdit = false;
     this.invoiceSubscription = 'false';
     this.invoiceDesign = 'true';
     this.dataCount = 0;
     console.log(this.router.url, "this.router.isActive");
-     
+
   }
 
   scrollCall(scrollLoader) {
@@ -295,8 +300,8 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
   display(data) {
 
-    if (data.closingState) {
-      console.log(data, "edited data invoice");
+    console.log(data, "edited data invoice");
+    if (data.closingState ) {
       this.dataSource.data = [{}, {}, {}]
       this.tableData = [];
       this.getInvoiceSubData(false);
@@ -307,9 +312,18 @@ export class InvoicesSubscriptionComponent implements OnInit {
     // this.ngOnInit();
   }
   getCancelInvoiceSubscription(data) {
-    console.log(data);
-    this.ngOnInit();
+    this.invoiceSubscription = 'false';
+
+    if (data) {
+      this.dataSource.data = [{}, {}, {}]
+      this.tableData = [];
+      this.getInvoiceSubData(false);
+      this.dataCount = 0;
+    }
+    console.log(data, "cancel data invoice");
+    // this.ngOnInit();
   }
+
   showFilters(showFilter) {
     if (showFilter == true) {
       this.showFilter = false;
@@ -321,7 +335,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
   }
 
-  
+
   callFilter(scrollLoader) {
     this.dataCount = 0;
     if (this.filterStatus && this.filterStatus.length > 0) {
@@ -420,14 +434,14 @@ export class InvoicesSubscriptionComponent implements OnInit {
   addFiltersDate(dateFilter) {
     this.filterDate = [];
     this.dataSource.data = [{}, {}, {}]
-      this.isLoading = true;
+    this.isLoading = true;
     if (this.filterDate.length >= 1) {
       this.filterDate = [];
     }
     this.filterDataArr = [];
     this.lastFilterDataId = 0;
     this.filterDate.push((dateFilter == '1: Object') ? 1 : (dateFilter == '2: Object') ? 2 : 3);
-    console.log(this.selectedDateFilter,'addFilters', dateFilter);
+    console.log(this.selectedDateFilter, 'addFilters', dateFilter);
     const beginDate = new Date();
     beginDate.setMonth(beginDate.getMonth() - 1);
     UtilService.getStartOfTheDay(beginDate);
@@ -465,15 +479,16 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
   }
 
-  getFiterRes(data){
-    console.log(data , "data for filter");
+  getFiterRes(data) {
+    console.log(data, "data for filter");
+    this.filterDataArr = [];
     this.filterStatus = data.statusFilterJson;
     this.filterDate = data.dateFilterArr;
     this.selectedDateRange = data.dateFilterJson;
     this.lastFilterDataId = 0;
     this.dataSource.data = [{}, {}, {}];
-      this.isLoading = true;
-      this.isFilter = true;
+    this.isLoading = true;
+    this.isFilter = true;
     this.callFilter(false);
   }
 

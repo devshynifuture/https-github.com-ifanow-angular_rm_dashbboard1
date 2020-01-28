@@ -17,21 +17,20 @@
             <p class="m-0 text-custom f-12 right roboto">This name will appear in invoices</p>
         </div>
         <div class="col-md-5 pr-0">
-            <div class="form-group mb-0">
-                <input type="text" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" class="form-control br-0" formControlName="serviceName" maxlength="{{getFormControl().serviceName.maxLength}}">
-            </div>
-            <div class="row">
-                <div class="col-md-8">
-                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isServiceValid && getFormControl().serviceName.invalid || (getFormControl().serviceName.touched && getFormControl().serviceName.invalid))}">
-                        Service name is required
-                    </mat-error>
-                </div>
-                <div class="col-md-4">
-                    <p class="mb-0 f-12 text-custom text-right pt-4">
-                        {{getFormControl().serviceName.value?.length ? getFormControl().serviceName.value.length : 0}} /{{getFormControl().serviceName.maxLength}}
-                    </p>
-                </div>
-            </div>
+            <mat-form-field class="w-100">
+                <input (changedValue)="getFormControl().serviceName.setValue($event)"
+                    [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation class="form-control br-0"
+                    formControlName="serviceName" matInput maxLength="{{getFormControl().serviceName.maxLength}}"
+                    type="text">
+                <mat-error class="f-12 pt-4"
+                    [ngClass]="{'v-h':!(isServiceValid && getFormControl().serviceName.invalid || (getFormControl().serviceName.touched && getFormControl().serviceName.invalid))}">
+                    Service name is required
+                </mat-error>
+                <mat-hint align="end" class="f-12">
+                    {{getFormControl().serviceName.value?.length ? getFormControl().serviceName.value.length : 0}}
+                    /{{getFormControl().serviceName.maxLength}}</mat-hint>
+
+            </mat-form-field>
         </div>
     </div>
     <div class="row pt-28">
@@ -41,49 +40,50 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input #code [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="10" appInputValueValidation class="form-control br-0 text-left" formControlName="code" matInput type="text">
+                    <input #code (changedValue)="getFormControl().code.setValue($event)"
+                        [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="10"
+                        appInputValueValidation class="form-control br-0 text-left" formControlName="code" matInput
+                        type="text">
                     <mat-error class="f-12">{{'Invalid code'}}</mat-error>
                     <mat-hint align="end" class="f-12">{{code.value.length}}/10</mat-hint>
                 </mat-form-field>
             </div>
         </div>
     </div>
-    <div class="row pt-28">
+    <div class="row pt-28 pb-28">
         <div class="col-md-5">
             <h5 class="text-right pt-12 mb-0">Description</h5>
         </div>
         <div class="col-md-5 pr-0">
-
-            <div class="form-group mb-0">
-                <textarea class="form-control br-0" maxlength="{{getFormControl().description.maxLength}}" formControlName="description" rows="3"></textarea>
-            </div>
-            <div class="row">
-                <div class="col-md-8">
-                    <p class="mb-0 f-12 text-custom">Optional</p>
-                </div>
-                <div class="col-md-4">
-                    <p class="mb-0 f-12 text-custom text-right">
-                        {{getFormControl().description.value?.length ? getFormControl().description.value.length : 0}} /{{getFormControl().description.maxLength}}
-                    </p>
-                </div>
-
-            </div>
-
+            <mat-form-field>
+                <textarea class="form-control br-2" matInput maxlength="{{getFormControl().description.maxLength}}"
+                    formControlName="description" rows="3"></textarea>
+                <!-- <mat-error class="f-12 pt-4" *ngIf="getFormControl().description.touched && getFormControl().description.invalid">
+                        Description name is required
+                    </mat-error> -->
+                <mat-hint align="end" class="f-12 ">
+                    {{getFormControl().description.value?.length ? getFormControl().description.value.length : 0}}
+                    /{{getFormControl().description.maxLength}}</mat-hint>
+                <mat-hint align="start" class="f-12">Optional</mat-hint>
+            </mat-form-field>
         </div>
     </div>
     <div class="row pt-28">
         <div class="col-md-5">
-            <h5 class="text-right pt-8 mb-0">Fees1</h5>
+            <h5 class="text-right pt-8 mb-0">Fees</h5>
         </div>
         <div class="col-md-5 pr-0">
             <div class="form-group mb-0">
                 <!-- <input type="number" (keypress)="utils.keyPress($event)" maxlength="10" formControlName="fees"
           class="form-control br-0"> -->
-                <input #feesRef type="text" class="form-control br-0" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" formControlName="fees">
+                <input #feesRef (changedValue)="getFormControl().fees.setValue($event)"
+                    [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" appInputValueValidation
+                    class="form-control br-0" formControlName="fees" type="text">
             </div>
             <div class="row">
                 <div class="col-md-8">
-                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isFeesValid && getFormControl().fees.invalid || getFormControl().fees.touched && getFormControl().fees.invalid)}">
+                    <mat-error class="f-12 pt-4"
+                        [ngClass]="{'v-h':!(isFeesValid && getFormControl().fees.invalid || getFormControl().fees.touched && getFormControl().fees.invalid)}">
                         Fees is Required
                     </mat-error>
                 </div>
@@ -100,9 +100,13 @@
         </div>
         <div class="col-md-6">
             <mat-radio-group formControlName="billingNature">
-                <mat-radio-button value="1" [ngClass]="{'b-a-custom': fixedFeeData.get('billingNature').value==1,'text-primary':fixedFeeData.get('billingNature').value==1,'b-a':fixedFeeData.get('billingNature').value==2}" class="b-a-custom text-primary pt-8 pb-8 pr-52 pl-20 custom-radio">Recurring
+                <mat-radio-button value="1"
+                    [ngClass]="{'b-a-custom': fixedFeeData.get('billingNature').value==1,'text-primary':fixedFeeData.get('billingNature').value==1,'b-a':fixedFeeData.get('billingNature').value==2}"
+                    class="b-a-custom text-primary pt-8 pb-8 pr-52 pl-20 custom-radio">Recurring
                 </mat-radio-button>
-                <mat-radio-button value="2" [ngClass]="{'b-a-custom': fixedFeeData.get('billingNature').value==2,'text-primary':fixedFeeData.get('billingNature').value==2,'b-a':fixedFeeData.get('billingNature').value==1}" class="b-a pt-8 pr-40 pl-20 pr-76 pb-8">Once
+                <mat-radio-button value="2"
+                    [ngClass]="{'b-a-custom': fixedFeeData.get('billingNature').value==2,'text-primary':fixedFeeData.get('billingNature').value==2,'b-a':fixedFeeData.get('billingNature').value==1}"
+                    class="b-a pt-8 pr-40 pl-20 pr-76 pb-8">Once
                 </mat-radio-button>
             </mat-radio-group>
         </div>
@@ -113,23 +117,29 @@
         </div>
         <div class="col-md-7">
             <div class="row">
-                <div class="col-md-5 p-0">
-                    <div class="form-group mb-0">
-                        <input type="text" appNumberOnly [maxLength]="2" formControlName="billEvery" class="form-control br-0 br-none">
-                    </div>
-                </div>
+                <mat-form-field>
 
-                <div class="col-md-5 p-0">
-                    <div class="form-group mb-0">
-                        <select class="form-control br-0" formControlName="Duration" id="sel1">
-              <option value="1">Monthly</option>
-              <option value="2">Yearly</option>
-            </select>
+                    <div class="col-md-5 p-0">
+                        <div class="form-group mb-0">
+
+                            <input type="text" matInput appNumberOnly [maxLength]="2" formControlName="billEvery"
+                                class="form-control br-0 br-none">
+                        </div>
                     </div>
-                </div>
-                <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isbillEvery && getFormControl().billEvery.invalid || getFormControl().billEvery.touched && getFormControl().billEvery.invalid)}">
-                    Field is Required
-                </mat-error>
+
+                    <div class="col-md-5 p-0">
+                        <div class="form-group mb-0">
+                            <select class="form-control br-0" formControlName="Duration" id="sel1">
+                                <option value="1">Monthly</option>
+                                <option value="2">Yearly</option>
+                            </select>
+                        </div>
+                    </div>
+                    <mat-error class="f-12 pt-4"
+                        [ngClass]="{'v-h':!(isbillEvery && getFormControl().billEvery.invalid || getFormControl().billEvery.touched && getFormControl().billEvery.invalid)}">
+                        Field is Required
+                    </mat-error>
+                </mat-form-field>
             </div>
         </div>
 
@@ -140,9 +150,13 @@
         </div>
         <div class="col-md-7">
             <mat-radio-group formControlName="billingMode">
-                <mat-radio-button value="1" [ngClass]="{'b-a-custom text-primary':fixedFeeData.get('billingMode').value==1,'b-a':fixedFeeData.get('billingMode').value==2}" class="text-custom wrapper-8">Start of period
+                <mat-radio-button value="1"
+                    [ngClass]="{'b-a-custom text-primary':fixedFeeData.get('billingMode').value==1,'b-a':fixedFeeData.get('billingMode').value==2}"
+                    class="text-custom wrapper-8">Start of period
                 </mat-radio-button>
-                <mat-radio-button value="2" [ngClass]="{'b-a-custom text-primary':fixedFeeData.get('billingMode').value==2,'b-a':fixedFeeData.get('billingMode').value==1}" class="text-custom wrapper-8">End of period
+                <mat-radio-button value="2"
+                    [ngClass]="{'b-a-custom text-primary':fixedFeeData.get('billingMode').value==2,'b-a':fixedFeeData.get('billingMode').value==1}"
+                    class="text-custom wrapper-8">End of period
                 </mat-radio-button>
             </mat-radio-group>
         </div>

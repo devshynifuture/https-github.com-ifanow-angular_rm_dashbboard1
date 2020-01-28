@@ -71,6 +71,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.upperData)
     this.advisorId = AuthService.getAdvisorId();
     this.getClients();
     this.showErr = false;
@@ -357,7 +358,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   getClients() {
     const obj = {
       advisorId: this.advisorId,
-      clientId :(this.storeData.id == undefined)? 0:this.storeData.id
+      clientId :(this.upperData == undefined)? 0:this.upperData.id
     };
     this.subService.getClientList(obj).subscribe(
       data => this.getClientListRes(data)
@@ -399,7 +400,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   addInvoiceRes(data) {
     console.log('addInvoiceRes', data);
     if (data == 1) {
-      this.cancelAddInvoice.emit(false);
+      this.cancelAddInvoice.emit(true);
       // this.Close('close', true);
     }
   }
@@ -453,7 +454,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
 
   closeEditInv() {
     // this.editPayment.reset();
-    if (this.invoiceValue == 'EditInInvoice' || this.invoiceValue == 'edit') {
+    if (this.storeData.invoiceNumber == undefined) {
       this.valueChange.emit(false);
       this.cancelAddInvoice.emit(false);
     } else {

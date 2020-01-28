@@ -30,8 +30,8 @@
             <form [formGroup]="mailForm" class="mt-20">
                 <app-froala [(model)]="storeData.body" modelChange="saveData($event)"></app-froala>
                 <!--                      (click)="onSubmit()"-->
-                <button type="submit" [disabled]="!mailForm.valid" mat-stroked-button class="mt-16 btn-primary br-0">Submit
-                  </button>
+                <!-- <button type="submit" [disabled]="!mailForm.valid" mat-stroked-button class="mt-16 btn-primary br-0">Submit
+                  </button> -->
             </form>
         </div>
         <div class="col-md-3 pr-0" id="ui-tc-insert">

@@ -15,7 +15,7 @@ import { SubscriptionUpperSliderComponent } from '../../common-subscription-comp
 export class PlansSettingsComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private subService: SubscriptionService,
-    private dataService: EventService, private eventService: EventService, private subinject: SubscriptionInject) {
+    private dataService: EventService, private eventService: EventService, private subinject: SubscriptionInject, private utilservice: UtilService) {
   }
 
   button: any;
@@ -29,6 +29,7 @@ export class PlansSettingsComponent implements OnInit {
   ngOnInit() {
 
     this.advisorId = AuthService.getAdvisorId();
+    (this.utilservice.checkSubscriptionastepData(1) == false) ? this.planSettingData = undefined : this.planSettingData = [{}, {}, {}]
     this.getSettingsPlanData();
     // this.openFragment('', 'plan');
   }
@@ -40,8 +41,6 @@ export class PlansSettingsComponent implements OnInit {
       advisorId: this.advisorId,
       mapped: false
     };
-    this.planSettingData = [{}, {}];
-
     this.subService.getSubscriptionPlanSettingsData(obj).subscribe(
       data => this.getSettingsPlanResponse(data), (error) => {
         this.eventService.showErrorMessage(error);
