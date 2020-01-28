@@ -17,9 +17,9 @@
         </div>
     </div>
     <div *ngIf="servicePlanData" class="wrapper-100 pt-44">
-        <div class="row skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+        <div class="row ">
 
-            <div class="col-md-4 pb-40 c-p " *ngFor="let singleServicePlan of servicePlanData">
+            <div class="col-md-4 pb-40 c-p skeletonAnimation" *ngFor="let singleServicePlan of servicePlanData" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <div class="example-card ">
                     <mat-card class="p-0 b-ua" (click)="selectServicePlan(singleServicePlan)" [ngClass]="{'p-0': singleServicePlan.selected==false,'b-ua':singleServicePlan.selected==false,'ba-blue':singleServicePlan.selected==true}">
                         <div class="row bg-grey lter  ">

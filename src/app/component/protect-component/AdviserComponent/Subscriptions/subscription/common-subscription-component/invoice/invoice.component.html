@@ -77,7 +77,7 @@
                     <div class="col-md-2 right text-right" *ngIf="storeData.status!=1" >
                         <mat-form-field>
                             <mat-select (selectionChange)="addStatus(storeData,$event)" [(ngModel)]="moreStatus" class="form-control br-0" id="sel1">
-                                <mat-option [value]="''" disabled >Label more</mat-option>
+                                <mat-option [value]="''" disabled >More</mat-option>
                                 <mat-option [value]="5">Void</mat-option>
                                 <mat-option [value]="6">Write off</mat-option>
                             </mat-select>
@@ -311,7 +311,7 @@
         <div class="col-md-2 right text-right" *ngIf="storeData.status!=1">
             <mat-form-field>
                 <mat-select (selectionChange)="addStatus(storeData,$event)" [(ngModel)]="moreStatus" class="form-control br-0" id="sel1">
-                    <mat-option [value]="''" selected disabled>Label more</mat-option>
+                    <mat-option [value]="''" selected disabled>More</mat-option>
                     <mat-option [value]="5">Void</mat-option>
                     <mat-option [value]="6">Write off</mat-option>
                 </mat-select>

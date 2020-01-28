@@ -75,6 +75,7 @@ export class SettingsComponent implements OnInit {
     this.isLoading = false;
     if (data == undefined) {
       this.noData = 'No Data Found';
+      this.SettingProfileData = []
     } else {
       console.log('getData biller', data);
       this.SettingProfileData = data;

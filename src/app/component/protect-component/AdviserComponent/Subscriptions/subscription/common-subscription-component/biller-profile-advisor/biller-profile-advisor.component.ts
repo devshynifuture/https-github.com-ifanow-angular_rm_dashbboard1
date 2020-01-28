@@ -184,7 +184,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
       bankName: [(data.bankName), [Validators.required]],
       acNo: [(data.acNumber), [Validators.required]],
       ifscCode: [(data.ifscCode), [Validators.required]],
-      address: [(data.address), [Validators.required]],
+      address: [(data.branchAddress), [Validators.required]],
       stateB: [(data.bankState), [Validators.required]],
       pincodeB: [(data.bankZipCode), [Validators.required, Validators.minLength(6)]],
       cityB: [(data.bankCity), Validators.required],
