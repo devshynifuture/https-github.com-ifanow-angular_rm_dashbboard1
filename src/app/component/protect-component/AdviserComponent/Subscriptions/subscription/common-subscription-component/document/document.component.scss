@@ -107,9 +107,6 @@ label {
         box-shadow: none;
         padding: 0;
     }
-    .mat-card {
-        height: 300px !important;
-    }
     // img{
     //     width: 400px !important;
     // }
@@ -155,7 +152,6 @@ label {
 
 .skeletonAnimation .relClass {
     position: relative;
-    background-color: #fff;
     .bar180 {
         background-color: #E7E7E7;
         width: 100%;
@@ -180,4 +176,8 @@ label {
 ::ng-deep #ui-appcustomhtml p {
     width: 100%;
     padding-top: 15px;
+}
+
+.height24 {
+    height: 24px;
 }

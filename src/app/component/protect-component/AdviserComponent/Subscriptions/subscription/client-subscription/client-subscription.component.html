@@ -1,68 +1,66 @@
-<div class="bg-white  pt-72">
-    <div class="wrapper-20">
-
-        <div [ngClass]="dataSource.data.length > 0 ? 'block' : 'none'">
-            <div class="row">
-                <div class="col-md-8 p-0">
-                    <h4 class="pt-8 mb-0"></h4>
-                </div>
-                <div class="col-md-4 right text-right p-0">
-
-                    <button (click)="Open('clientHelp','open35',Questions)" class="btn-default br-0 help-btn" mat-stroked-button>HELP
-                    </button>
-                </div>
+<div class="bg-white pl-20 pr-20  pt-72">
+    <div [ngClass]="dataSource.data.length > 0 ? 'block' : 'none'">
+        <div class="row pt-20">
+            <div class="col-md-8 p-0">
+                <h4 class="pt-8 mb-0"></h4>
             </div>
+            <div class="col-md-4 right text-right p-0">
 
-            <div class="example-container">
-                <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="mt-8 skeletonAnimation" id="table-low" mat-table matSort>
-                    <ng-container matColumnDef="name">
-                        <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="name"> Client name</th>
-                        <td (click)="openFragment('clients',element)" *matCellDef="let element" class="c-p" mat-cell>
-                            <div class="bar"> {{element.name}} </div>
-                        </td>
-                    </ng-container>
-
-                    <!-- Name Column -->
-                    <ng-container matColumnDef="email">
-                        <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="userEmailId"> Email</th>
-                        <td (click)="openFragment('clients',element)" *matCellDef="let element" class="c-p" mat-cell>
-                            <div class="bar"> {{element.userEmailId}} </div>
-                        </td>
-                    </ng-container>
-
-                    <!-- Weight Column -->
-                    <ng-container matColumnDef="num">
-                        <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="mobileNumber"> Contact no.
-                        </th>
-                        <td (click)="openFragment('clients',element)" *matCellDef="let element" class="c-p" mat-cell>
-                            <div class="bar"> {{element.mobileNumber}} </div>
-                        </td>
-                    </ng-container>
-
-                    <!-- Symbol Column -->
-                    <ng-container matColumnDef="balance">
-                        <th *matHeaderCellDef class="f-18 right bb-0" mat-header-cell mat-sort-header="balanceDue">
-                            Balance due
-                        </th>
-                        <td (click)="openFragment('clients',element)" *matCellDef="let element" class="c-p text-right amt" mat-cell>
-                            <div class="bar" *ngIf="element.balanceDue != undefined">₹<span appFormatNumber>{{element.balanceDue}}</span></div>
-                            <div class="bar" *ngIf="element.balanceDue == undefined">{{!isLoading? "₹0" : ""}} </div>
-                        </td>
-                    </ng-container>
-
-                    <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
-                    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
-                </table>
-
-                <!-- <h4 *ngIf="dataSource==undefined" class="text-center pt-72">{{noData}}</h4> -->
+                <button (click)="Open('clientHelp','open35',Questions)" class="btn-default br-0 help-btn" mat-stroked-button>HELP
+                </button>
             </div>
         </div>
 
-        <div *ngIf="dataSource.data.length == 0" class="row">
-            <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
-                <img class="width400" src="assets/images/svg/clients-img.svg">
-                <p class="f-22 f-600 pt-28"> No Data Found </p>
-            </div>
+        <div class="example-container">
+            <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="mt-8 skeletonAnimation" id="table-low" mat-table matSort>
+                <ng-container matColumnDef="name">
+                    <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="name"> Client name</th>
+                    <td (click)="openFragment('clients',element)" *matCellDef="let element" class="c-p" mat-cell>
+                        <div class="bar"> {{element.name}} </div>
+                    </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="email">
+                    <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="userEmailId"> Email</th>
+                    <td (click)="openFragment('clients',element)" *matCellDef="let element" class="c-p" mat-cell>
+                        <div class="bar"> {{element.userEmailId}} </div>
+                    </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="num">
+                    <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="mobileNumber"> Contact no.
+                    </th>
+                    <td (click)="openFragment('clients',element)" *matCellDef="let element" class="c-p" mat-cell>
+                        <div class="bar"> {{element.mobileNumber}} </div>
+                    </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="balance">
+                    <th *matHeaderCellDef class="f-18 right bb-0" mat-header-cell mat-sort-header="balanceDue">
+                        Balance due
+                    </th>
+                    <td (click)="openFragment('clients',element)" *matCellDef="let element" class="c-p text-right amt" mat-cell>
+                        <div class="bar" *ngIf="element.balanceDue != undefined">₹<span appFormatNumber>{{element.balanceDue}}</span></div>
+                        <div class="bar" *ngIf="element.balanceDue == undefined">{{!isLoading? "₹0" : ""}} </div>
+                    </td>
+                </ng-container>
+
+                <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
+                <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+            </table>
+
+            <!-- <h4 *ngIf="dataSource==undefined" class="text-center pt-72">{{noData}}</h4> -->
         </div>
     </div>
+
+    <div *ngIf="dataSource.data.length == 0" class="row">
+        <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
+            <img class="width400" src="assets/images/svg/clients-img.svg">
+            <p class="f-22 f-600 pt-28"> No Data Found </p>
+        </div>
+    </div>
+
 </div>

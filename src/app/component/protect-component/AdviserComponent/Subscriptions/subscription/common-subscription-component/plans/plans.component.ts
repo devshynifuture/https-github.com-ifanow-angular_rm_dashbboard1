@@ -30,7 +30,7 @@ export class PlansComponent implements OnInit {
 
   @Input() componentFlag: string;
   // @Input() upperData;
-  servicePlanData;
+  servicePlanData = [{ selected: false }, { selected: false }, { selected: false }];
   isLoading = false;
   mappedPlan = [];
   advisorId;
