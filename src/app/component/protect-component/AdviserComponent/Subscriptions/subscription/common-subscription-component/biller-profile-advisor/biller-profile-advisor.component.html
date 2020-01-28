@@ -212,7 +212,7 @@
                     [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" appInputValueValidation
                     maxLength="{{getFormControlBank().nameOnBank.maxLength}}" type="text">
                   <mat-error class="f-12">This field is required</mat-error>
-                  <mat-hint align="end" class="f-12">{{city.value.length}}/30</mat-hint>
+                  <mat-hint align="end" class="f-12">{{nameOnBank.value.length}}/30</mat-hint>
                 </mat-form-field>
               </div>
             </div>
@@ -229,7 +229,7 @@
                     [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" appInputValueValidation
                     maxLength="{{getFormControlBank().bankName.maxLength}}" type="text">
                   <mat-error class="f-12">This field is required</mat-error>
-                  <mat-hint align="end" class="f-12">{{city.value.length}}/30</mat-hint>
+                  <mat-hint align="end" class="f-12">{{bankName.value.length}}/30</mat-hint>
                 </mat-form-field>
               </div>
             </div>
@@ -246,7 +246,7 @@
                     [maxLength]="getFormControlBank().acNo.maxLength" appInputValueValidation
                     class="form-control br-0 text-left" formControlName="acNo" matInput type="number">
                   <mat-error class="f-12">This field is required</mat-error>
-                  <mat-hint align="end" class="f-12">{{city.value.length}}/16</mat-hint>
+                  <mat-hint align="end" class="f-12">{{acNo.value.length}}/16</mat-hint>
                 </mat-form-field>
               </div>
             </div>
@@ -263,7 +263,7 @@
                     formControlName="ifscCode" matInput maxLength="{{getFormControlBank().ifscCode.maxLength}}"
                     type="text">
                   <mat-error class="f-12">City is required</mat-error>
-                  <mat-hint align="end" class="f-12">{{city.value.length}}/11</mat-hint>
+                  <mat-hint align="end" class="f-12">{{ifscCode.value.length}}/11</mat-hint>
                 </mat-form-field>
               </div>
             </div>
