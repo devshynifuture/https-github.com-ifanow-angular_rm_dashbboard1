@@ -42,18 +42,10 @@
           <div class="col-md-3">
             <div class="form-group mb-0">
               <mat-form-field>
-<<<<<<< HEAD
                 <input #code [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="10"
                   appInputValueValidation class="form-control br-0 text-left" formControlName="code" matInput
                   (changedValue)="getFormControl().code.setValue($event)" type="text">
                 <mat-error class="f-12">{{'Invalid code'}}</mat-error>
-=======
-                <input #code [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="10"maxlength="10"
-                       appInputValueValidation class="form-control br-0 text-left" formControlName="code" matInput
-                       (changedValue)="getFormControl().code.setValue($event)" type="text">
-                <mat-error
-                  class="f-12">{{'Invalid code'}}</mat-error>
->>>>>>> 16cc9fa93a1954201808e07862bf20bf726530c4
                 <mat-hint align="end" class="f-12">{{code.value.length}}/10</mat-hint>
               </mat-form-field>
             </div>
