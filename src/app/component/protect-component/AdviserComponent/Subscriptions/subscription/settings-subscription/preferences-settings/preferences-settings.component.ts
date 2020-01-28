@@ -206,22 +206,56 @@ export class PreferencesSettingsComponent implements OnInit {
     });
   }
 
+  // openEmailInvoice(data) {
+  //   const Fragmentdata = {
+  //     flag: data,
+  //     id: 1
+  //   };
+
+  //   const dialogRef = this.dialog.open(PreferenceEmailInvoiceComponent, {
+  //     width: '1400px',
+  //     data: Fragmentdata,
+  //     autoFocus: false,
+  //     panelClass: 'dialogBox',
+  //   });
+
+  //   dialogRef.afterClosed().subscribe(result => {
+
+  //   });
+  // }
   openEmailInvoice(data) {
-    const Fragmentdata = {
-      flag: data,
-      id: 1
+    /* const fragmentData = {
+       flag: 'emailOnly',
+       data: clientData,
+       id: 1,
+       state: 'open'
+     };
+     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+       sideBarData => {
+         console.log('this is sidebardata in subs subs : ', sideBarData);
+         if (UtilService.isDialogClose(sideBarData)) {
+           console.log('this is sidebardata in subs subs 2: ',);
+           rightSideDataSub.unsubscribe();
+         }
+       }
+     );*/
+    const fragmentData = {
+      flag: 'app-preference-email-invoice',
+      id: 1,
+      data,
+      direction: 'top',
+      componentName: PreferenceEmailInvoiceComponent,
+      state: 'open'
     };
 
-    const dialogRef = this.dialog.open(PreferenceEmailInvoiceComponent, {
-      width: '1400px',
-      data: Fragmentdata,
-      autoFocus: false,
-      panelClass: 'dialogBox',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-
-    });
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getClientSubscriptionList();
+          subscription.unsubscribe();
+        }
+      }
+    );
   }
 
 }
