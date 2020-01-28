@@ -241,7 +241,7 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <mat-form-field>
-                  <input #accNo [inputValidator]="validatorType.NUMBER_ONLY"
+                  <input #acNo [inputValidator]="validatorType.NUMBER_ONLY"
                     (changedValue)="getFormControlBank().acNo.setValue($event)"
                     [maxLength]="getFormControlBank().acNo.maxLength" appInputValueValidation
                     class="form-control br-0 text-left" formControlName="acNo" matInput type="number">
