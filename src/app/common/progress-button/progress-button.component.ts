@@ -1,5 +1,5 @@
-import {AfterViewInit, Component, EventEmitter, HostListener, Input, Output} from '@angular/core';
-import {ProgressSpinnerMode, ThemePalette} from '@angular/material';
+import { AfterViewInit, Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { ProgressSpinnerMode, ThemePalette } from '@angular/material';
 
 // import { MatProgressButtonOptions } from '../../mat-progress-buttons.interface';
 
@@ -12,17 +12,17 @@ export class ProgressButtonComponent implements AfterViewInit {
   @Input() options: MatProgressButtonOptions;
   @Output() btnClick: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
 
-  _logEvent:any;
-  @Input() set logEvent(logEvent){
+  _logEvent: any;
+  @Input() set logEvent(logEvent) {
     this._logEvent = logEvent;
-    if(this._logEvent == 13){
+    if (this._logEvent == 13) {
 
       this.onClick(null);
-      console.log(this._logEvent,"event hostlistner 2"); 
+      console.log(this._logEvent, "event hostlistner 2");
     }
   }
 
-  get logEvent(){
+  get logEvent() {
     return this._logEvent
   }
   /*@ViewChild('progressBar', {
@@ -33,30 +33,32 @@ export class ProgressButtonComponent implements AfterViewInit {
 
   @HostListener('click', ['$event'])
   public onClick(event: MouseEvent) {
-    console.log(event,"event hostlistner");
-    
+    console.log(event, "event hostlistner");
+
     if (!this.options.disabled && !this.options.active) {
       this.btnClick.emit(event);
     } else if (this.options.active) {
       // console.log(' progressBar : ', this.progressBar);
       // console.log(' progressBar nativeElement : ', this.progressBar.nativeElement);
     }
-    this.setTimeOutRecursiveForProgressValue(10);
+    this.setTimeOutRecursiveForProgressValue();
 
   }
 
-  setTimeOutRecursiveForProgressValue(progressValue) {
-    setTimeout(() => {
-      if (this.options.active && progressValue < 100) {
-        this.options.value = progressValue;
-        this.setTimeOutRecursiveForProgressValue(progressValue + 10);
-      } else {
-        this.options.value = 10;
+  setTimeOutRecursiveForProgressValue() {
+    if (this.options.active) {
+      setTimeout(() => {
+        if (this.options.active && this.options.value < 100) {
+          this.options.value = this.options.value + 3;
+          this.setTimeOutRecursiveForProgressValue();
+        } else {
+          // this.options.value = 0;
 
-      }
-    }, 100);
+        }
+      }, 50);
+    }
   }
-  
+
 
   ngAfterViewInit(): void {
 

@@ -45,9 +45,9 @@ export class LoginComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   }
-
-  errorMsg:boolean =false;
-  errorStyle = {  }
+  errorRequired:boolean = false;
+  errorMsg: boolean = false;
+  errorStyle = {}
   constructor(
     private formBuilder: FormBuilder, private eventService: EventService,
     public backOfficeService: BackOfficeService,
@@ -99,12 +99,12 @@ export class LoginComponent implements OnInit {
     this.loginForm.reset();
   }
 
-  passEvent:any;
+  passEvent: any;
   enterEvent(event) {
     this.errorMsg = false;
     this.errorStyle = {
-      'visibility':this.errorMsg? 'visible' : 'hidden',
-      'opacity':this.errorMsg? '1' : '0',
+      'visibility': this.errorMsg ? 'visible' : 'hidden',
+      'opacity': this.errorMsg ? '1' : '0',
     }
     if (event.keyCode === 13) {
       this.passEvent = event.keyCode;
@@ -112,7 +112,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-   
+
     if (this.loginForm.valid) {
       const loginData = {
         userName: this.loginForm.controls.name.value,
@@ -122,7 +122,7 @@ export class LoginComponent implements OnInit {
       this.isLoading = true;
       this.backOfficeService.loginApi(loginData).subscribe(
         data => {
-         
+
           if (data) {
             console.log('data: ', data);
             this.authService.setToken(data.token);
@@ -136,12 +136,12 @@ export class LoginComponent implements OnInit {
             });
 
           }
-          else{
+          else {
             this.passEvent = "";
             this.errorMsg = true;
             this.errorStyle = {
-              'visibility':this.errorMsg? 'visible' : 'hidden',
-              'opacity':this.errorMsg? '1' : '0',
+              'visibility': this.errorMsg ? 'visible' : 'hidden',
+              'opacity': this.errorMsg ? '1' : '0',
             }
             this.barButtonOptions.active = false;
           }
@@ -193,16 +193,24 @@ export class LoginComponent implements OnInit {
   }
 
   progressButtonClick(event) {
-    this.errorMsg = false;
-    this.errorStyle = {
-      'visibility':this.errorMsg? 'visible' : 'hidden',
-      'opacity':this.errorMsg? '1' : '0',
-    }
+    console.log(this.loginForm.value, "this.loginForm.value.name");
+    if (this.loginForm.value.name != "" && this.loginForm.value.password != "") {
+      this.errorMsg = false;
+      this.errorStyle = {
+        'visibility': this.errorMsg ? 'visible' : 'hidden',
+        'opacity': this.errorMsg ? '1' : '0',
+      }
       this.barButtonOptions.active = true;
+      this.barButtonOptions.value = 20;
       this.onSubmit();
+    } else {
+      this.loginForm.get('name').markAsTouched();
+      this.loginForm.get('password').markAsTouched();
+      this.barButtonOptions.active = false;
+    }
   }
 
-  
+
 
 }
 
