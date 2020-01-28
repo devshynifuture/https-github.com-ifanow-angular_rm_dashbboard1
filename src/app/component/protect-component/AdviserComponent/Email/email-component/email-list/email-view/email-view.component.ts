@@ -35,6 +35,7 @@ export class EmailViewComponent implements OnInit, OnDestroy {
   attachmentBase64: string = null;
   private _htmlString: string;
   downloadFilePath: string;
+  generatedImage: string;
 
   constructor(private emailService: EmailServiceService,
     private _bottomSheet: MatBottomSheet,
@@ -60,34 +61,26 @@ export class EmailViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  createNewFile(fileData) {
-    const { fileContent, fileName, fileType, base64 } = fileData;
-    if (fileType === 'image/jpeg') {
-      const imageBlob = this.dataURItoBlob(fileContent);
-      const imageFile = new File([imageBlob], fileName, { type: 'image/jpeg' });
-      console.log(imageFile);
-    } else {
-      const newFile = new Blob([`${fileContent}`], { type: `${fileType}; charset=utf-8` });
-      // console.log(fileName, fileType, fileContent);
-      saveAs(newFile, fileName);
-      console.log('new file created');
-    }
-  }
+  convertBase64ToBlobData(base64Data: string, contentType: string, sliceSize = 512) {
+    const byteCharacters = atob(base64Data);
+    const byteArrays = [];
 
-  dataURItoBlob(dataURI) {
-    const byteString = window.atob(dataURI);
-    const arrayBuffer = new ArrayBuffer(byteString.length);
-    const int8Array = new Uint8Array(arrayBuffer);
-    for (let i = 0; i < byteString.length; i++) {
-      int8Array[i] = byteString.charCodeAt(i);
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+
+      byteArrays.push(byteArray);
     }
-    const blob = new Blob([int8Array], { type: 'image/jpeg' });
+
+    const blob = new Blob(byteArrays, { type: contentType });
     return blob;
   }
-
-  // getSanitizedHtml(): SafeHtml {
-  //   return this._sanitizer.bypassSecurityTrustHtml(this._htmlString)
-  // }
 
   getGmailDetailMessageRaw(id) {
 
@@ -97,14 +90,26 @@ export class EmailViewComponent implements OnInit, OnDestroy {
         this.raw = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(response.raw);
         let fileData = this.extractValuesFromDetailView();
         this.attachmentBase64 = "data: image/jpeg; base64," + this.raw.match(/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=|[A-Za-z0-9+\/]{4})$/gm);
-        let fileDataObj = {
-          ...fileData,
-          base64: this.raw.match(/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=|[A-Za-z0-9+\/]{4})$/gm),
-          fileContent: this.attachmentBase64
-        }
+        let base64Data = this.raw.match(/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=|[A-Za-z0-9+\/]{4})$/gm).join("")
+        // let fileDataObj = {
+        //   ...fileData,
+        //   base64: base64Data,
+        //   fileContent: this.attachmentBase64
+        // }
         // if()
-        this.createNewFile(fileDataObj);
-        // this._htmlString = '<img [src]="attachmentBase64" />';
+        let blobData = this.convertBase64ToBlobData(base64Data, fileData.fileType);
+        if (window.navigator && window.navigator.msSaveOrOpenBlob) { //IE
+          window.navigator.msSaveOrOpenBlob(blobData, fileData.fileName);
+        } else { // chrome
+          const blob = new Blob([blobData], { type: fileData.fileType });
+          const url = window.URL.createObjectURL(blob);
+          // window.open(url);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = fileData.fileName;
+          link.click();
+        }
+
         this.isLoading = false;
 
         // this.attachmentBase64Code = this.raw.forEach(part => {
