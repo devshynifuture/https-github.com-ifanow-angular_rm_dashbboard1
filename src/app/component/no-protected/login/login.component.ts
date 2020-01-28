@@ -46,6 +46,8 @@ export class LoginComponent implements OnInit {
     // }
   }
 
+  errorMsg:boolean =false;
+  errorStyle = {  }
   constructor(
     private formBuilder: FormBuilder, private eventService: EventService,
     public backOfficeService: BackOfficeService,
@@ -97,9 +99,17 @@ export class LoginComponent implements OnInit {
     this.loginForm.reset();
   }
 
+  passEvent:any;
   enterEvent(event) {
+    console.log(event, "keyup");
+    this.errorMsg = false;
+    this.errorStyle = {
+      'visibility':this.errorMsg? 'visible' : 'hidden',
+      'opacity':this.errorMsg? '1' : '0',
+    }
     if (event.keyCode === 13) {
       // this.onSubmit();
+      this.passEvent = event.keyCode;
     }
   }
 
@@ -109,6 +119,7 @@ export class LoginComponent implements OnInit {
     // this.authService.setToken('12333nhsdhdh1233');
     // this.authService.setUserInfo('https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png');
     // this.router.navigate(['/admin/subscription']);
+    
     if (this.loginForm.valid) {
       const loginData = {
         userName: this.loginForm.controls.name.value,
@@ -137,6 +148,14 @@ export class LoginComponent implements OnInit {
               id: 2978, name: 'Aryendra Kumar Saxena'
             });
 
+          }
+          else{
+            this.passEvent = "";
+            this.errorMsg = true;
+          }
+          this.errorStyle = {
+            'visibility':this.errorMsg? 'visible' : 'hidden',
+            'opacity':this.errorMsg? '1' : '0',
           }
         },
         err => {
@@ -196,18 +215,22 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  progressButtonClick() {
-    this.barButtonOptions.active = true;
-    // this.barButtonOptions.disabled = true;
-    this.barButtonOptions.value = 0;
-    this.setTimeOutRecursiveForProgressValue(0);
-    this.onSubmit();
-    // this.barButtonOptions.text = 'Saving Data...';
-    /* setTimeout(() => {
-       this.barButtonOptions.active = false;
-       // this.barButtonOptions.disabled = true;
-       // this.barButtonOptions.text = 'Login';
-     }, 3500);*/
+  progressButtonClick(event) {
+    console.log(event, "key 123");
+    
+   
+      this.barButtonOptions.active = true;
+      // this.barButtonOptions.disabled = true;
+      this.barButtonOptions.value = 0;
+      this.setTimeOutRecursiveForProgressValue(0);
+      this.onSubmit();
+      // this.barButtonOptions.text = 'Saving Data...';
+      /* setTimeout(() => {
+         this.barButtonOptions.active = false;
+         // this.barButtonOptions.disabled = true;
+         // this.barButtonOptions.text = 'Login';
+       }, 3500);*/
+    
   }
 
   setTimeOutRecursiveForProgressValue(progressValue) {
