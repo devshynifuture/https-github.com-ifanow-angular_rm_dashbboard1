@@ -1,15 +1,15 @@
-import { BehaviorSubject } from 'rxjs';
-import { Injectable } from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SubscriptionInject {
 
-  private newRightSliderData = new BehaviorSubject<object>({ state: 'close', fragmentData: {}, flag: '' });
+  private newRightSliderData = new BehaviorSubject<any>({state: 'close', fragmentData: {}, flag: ''});
   newRightSliderDataObs = this.newRightSliderData.asObservable();
 
-  private upperRightSliderData = new BehaviorSubject<any>({ state: 'close', fragmentData: {}, flag: '' });
+  private upperRightSliderData = new BehaviorSubject<any>({state: 'close', fragmentData: {}, flag: ''});
   upperRightSliderDataObs = this.upperRightSliderData.asObservable();
   // right slider part
   private openCloseRightSlider = new BehaviorSubject<any>('close');
@@ -77,6 +77,7 @@ export class SubscriptionInject {
     this.upperRightSliderData.next(sliderState);
     return this.upperRightSliderDataObs;
   }
+
   addEvent(data: object) {
     this.specialEvent.next(data)
   }

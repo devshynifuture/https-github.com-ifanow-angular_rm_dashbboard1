@@ -6,6 +6,7 @@ import { ErrorPageComponent } from './component/protect-component/common-compone
 import { DataNotFoundComponent } from './component/protect-component/common-component/data-not-found/data-not-found.component';
 import { AuthGuard } from './guards/auth.guard';
 import { FormTestComponent } from './test/form-test/form-test.component';
+import { SubscriptionUpperSliderComponent } from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/upper-slider/subscription-upper-slider.component';
 
 const routes: Routes = [
   {
@@ -50,6 +51,10 @@ const routes: Routes = [
   {
     path: 'support',
     loadChildren: () => import('./component/protect-component/SupportComponent/support.module').then(m => m.SupportModule)
+  },
+  {
+    path: 'subscription-upper',
+    component: SubscriptionUpperSliderComponent
   },
   {
     path: 'gmail-redirect',

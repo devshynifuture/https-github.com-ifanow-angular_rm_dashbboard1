@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { PostalService } from 'src/app/services/postal.service';
 
 @Component({
@@ -14,7 +14,6 @@ import { PostalService } from 'src/app/services/postal.service';
 })
 export class PayeeSettingsComponent implements OnInit {
   clientId: any;
-  @Input() upperData;
   @Output() totalPayeeData = new EventEmitter<Object>();
   settingsModal;
   payeeSettingsForm;
@@ -66,9 +65,10 @@ export class PayeeSettingsComponent implements OnInit {
   family: any;
   familyMemberId: any;
   showGstin: any;
+  clientData: any;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private eventService: EventService,
-              private subService: SubscriptionService, private fb: FormBuilder, private postalService: PostalService,) {
+    private subService: SubscriptionService, private fb: FormBuilder, private postalService: PostalService, ) {
   }
 
   get data() {
@@ -78,7 +78,7 @@ export class PayeeSettingsComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
-    this.clientId = AuthService.getClientId()
+    // this.clientId = AuthService.getClientId()
     this.getClientPayeeSettings(data);
   }
 
@@ -91,7 +91,7 @@ export class PayeeSettingsComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     const obj = {
       advisorId: this.advisorId,
-      clientId: this.upperData.id
+      clientId: this.clientData.id
     };
     this.subService.getListOfFamilyByClient(obj).subscribe(
       data => this.getListOfFamilyByClientRes(data)
@@ -108,19 +108,19 @@ export class PayeeSettingsComponent implements OnInit {
       })
     }
   }
-  PinData(data) { 
-      this.getFormControl().city.setValue(data[0].PostOffice[0].District)
-      this.getFormControl().country.setValue(data[0].PostOffice[0].Country)
-      this.getFormControl().state.setValue(data[0].PostOffice[0].Circle)
+  PinData(data) {
+    this.getFormControl().city.setValue(data[0].PostOffice[0].District)
+    this.getFormControl().country.setValue(data[0].PostOffice[0].Country)
+    this.getFormControl().state.setValue(data[0].PostOffice[0].Circle)
   }
-  gstTreatmentRemove(value){
-  this.showGstin = value
+  gstTreatmentRemove(value) {
+    this.showGstin = value
   }
   getListOfFamilyByClientRes(data) {
     console.log('family Memebers', data)
     this.family = data.familyMembersList
   }
-  getOwnerName(data){
+  getOwnerName(data) {
     this.familyMemberId = data.id
   }
   getFormControl() {
@@ -128,7 +128,8 @@ export class PayeeSettingsComponent implements OnInit {
   }
 
   getClientPayeeSettings(data) {
-    data = data.data;
+    (data == 'Add') ? data = {} : data
+    this.clientData = data.clientData;
     console.log('payee data', data);
     this.payeeSettingsForm = this.fb.group({
       customerName: [data.name, [Validators.required]],
@@ -137,7 +138,7 @@ export class PayeeSettingsComponent implements OnInit {
       companyName: [data.companyName, [Validators.required]],
       emailId: [data.email, [Validators.required]],
       primaryContact: [data.primaryContact, [Validators.required]],
-      pan: [data.pan, [Validators.required,Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-z]{1}")]],
+      pan: [data.pan, [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-z]{1}")]],
       gstTreatment: [(data.gstTreatmentId == 1) ? 'Registered Business - Regular' : (data.gstTreatmentId == 2) ? 'Registered Business - Composition' : 'Unregistered Business'],
       gstIn: [data.gstin, [Validators.required]],
       billingAddress: [data.billerAddress, [Validators.required]],
@@ -169,7 +170,7 @@ export class PayeeSettingsComponent implements OnInit {
 
   getChangePayeeSetting() {
     this.subService.changePayeeSetting(this.obj).subscribe(
-        data => this.changePayeeSettingData(data)
+      data => this.changePayeeSettingData(data)
     );
   }
 
@@ -180,7 +181,7 @@ export class PayeeSettingsComponent implements OnInit {
   Close(data) {
     // this.subInjectService.rightSliderData(state)
     // this.subInjectService.rightSideData(state);
-    this.subInjectService.changeUpperRightSliderState({state: 'close', data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
   }
 
   savePayeeSettings() {
@@ -194,10 +195,10 @@ export class PayeeSettingsComponent implements OnInit {
     } else if (this.payeeSettingsForm.get('companyName').invalid) {
       this.payeeSettingsForm.get('companyName').markAsTouched();
       return
-    }  else if(this.payeeSettingsForm.get('emailId').invalid) {
+    } else if (this.payeeSettingsForm.get('emailId').invalid) {
       this.payeeSettingsForm.get('emailId').markAsTouched();
       return
-    }else if (this.payeeSettingsForm.get('pan').invalid) {
+    } else if (this.payeeSettingsForm.get('pan').invalid) {
       this.payeeSettingsForm.get('pan').markAsTouched();
       return
     } else if (this.payeeSettingsForm.get('pincode').invalid) {
@@ -206,7 +207,7 @@ export class PayeeSettingsComponent implements OnInit {
     } else if (this.payeeSettingsForm.get('primaryContact').invalid) {
       this.payeeSettingsForm.get('primaryContact').markAsTouched();
       return
-    }else if (this.payeeSettingsForm.get('billingAddress').invalid) {
+    } else if (this.payeeSettingsForm.get('billingAddress').invalid) {
       this.payeeSettingsForm.get('billingAddress').markAsTouched();
       return
     } else if (this.payeeSettingsForm.get('city').invalid) {
@@ -225,14 +226,14 @@ export class PayeeSettingsComponent implements OnInit {
           city: this.payeeSettingsForm.controls.city.value,
           clientBillerId: 1,
           companyDisplayName: this.payeeSettingsForm.controls.displayName.value,
-          familyMemberId :  this.familyMemberId,
+          familyMemberId: this.familyMemberId,
           companyName: this.payeeSettingsForm.controls.companyName.value,
           country: this.payeeSettingsForm.controls.country.value,
           currency: 'string',
           customerTypeId: (this.payeeSettingsForm.controls.customerType.value == 'Business') ? 1 : 2,
           email: this.payeeSettingsForm.controls.emailId.value,
           gstTreatmentId: (this.payeeSettingsForm.controls.gstTreatment.value == 'Registered Business - Regular') ? 1 : (this.payeeSettingsForm.controls.gstTreatment.value == 'Registered Business - Composition') ? 2 : 3,
-          gstin: (this.payeeSettingsForm.controls.gstIn.value == null)?0:this.payeeSettingsForm.controls.gstIn.value,
+          gstin: (this.payeeSettingsForm.controls.gstIn.value == null) ? 0 : this.payeeSettingsForm.controls.gstIn.value,
           payeeTypeId: 1,
           paymentTermsId: 1,
           billerAddress: this.payeeSettingsForm.controls.billingAddress.value,
@@ -240,19 +241,19 @@ export class PayeeSettingsComponent implements OnInit {
           state: this.payeeSettingsForm.controls.state.value,
           zipCode: this.payeeSettingsForm.controls.pincode.value,
           id: this.payeeSettingsForm.controls.id.value,
-          clientId: this.upperData.id
+          clientId: this.clientData.id
         };
         this.sendData = obj1;
         this.subService.editPayeeSettings(obj1).subscribe(
-            data => this.editSettingResData(data)
+          data => this.editSettingResData(data)
         );
 
       } else {
 
         const obj = {
           customerName: this.getFormControl().customerName.value,
-          gstin: (this.getFormControl().gstIn.value == null)?0:this.payeeSettingsForm.controls.gstIn.value,
-          familyMemberId :  this.familyMemberId ,
+          gstin: (this.getFormControl().gstIn.value == null) ? 0 : this.payeeSettingsForm.controls.gstIn.value,
+          familyMemberId: this.familyMemberId,
           gstTreatmentId: (this.getFormControl().gstTreatment.value == 'Registered Business - Regular') ? 1 : (this.payeeSettingsForm.controls.gstTreatment.value == 'Registered Business - Composition') ? 2 : 3,
           email: this.getFormControl().emailId.value,
           customerTypeId: (this.getFormControl().customerType.value == 'Business') ? '1' : '2',
@@ -265,11 +266,11 @@ export class PayeeSettingsComponent implements OnInit {
           pan: this.getFormControl().pan.value,
           country: this.getFormControl().country.value,
           zipCode: this.getFormControl().pincode.value,
-          clientId:  this.upperData.id,
+          clientId: this.clientData.id,
 
         };
         this.subService.addClientBillerProfile(obj).subscribe(
-            data => this.addClientBillerProfileRes(data)
+          data => this.addClientBillerProfileRes(data)
         );
 
       }
@@ -285,20 +286,20 @@ export class PayeeSettingsComponent implements OnInit {
         flag: true
       }
       this.subInjectService.addEvent(obj)
-      this.subInjectService.changeUpperRightSliderState({state: 'close', data});
+      this.subInjectService.changeNewRightSliderState({ state: 'close', data });
       this.eventService.openSnackBar('Client profile added Successfully', 'OK');
     } else {
       console.log('addClientBillerProfileRes', data);
       this.updatedData = data;
       this.closeTab(data);
-      this.subInjectService.changeUpperRightSliderState({state: 'close', data});
+      this.subInjectService.changeNewRightSliderState({ state: 'close', data });
       this.eventService.openSnackBar('Client profile added Successfully', 'OK');
     }
   }
 
   editSettingResData(data) {
     if (data.status == 1) {
-      this.subInjectService.changeUpperRightSliderState({state: 'close', data});
+      this.subInjectService.changeNewRightSliderState({ state: 'close', data });
       this.eventService.openSnackBar('Client profile update Successfully', 'OK');
       this.getEditData.emit(this.sendData);
       this.closeTab(data);

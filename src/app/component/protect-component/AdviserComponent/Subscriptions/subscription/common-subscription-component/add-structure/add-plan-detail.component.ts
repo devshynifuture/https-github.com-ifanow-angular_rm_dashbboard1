@@ -21,7 +21,7 @@ export class AddPlanDetailComponent implements OnInit {
     private fb: FormBuilder, private subService: SubscriptionService) {
   }
 
-  @Input() set planData(data) {
+  @Input() set data(data) {
     this.isCheckPlanData = data;
     this.getSinglePlanData(data);
   }
@@ -119,12 +119,12 @@ export class AddPlanDetailComponent implements OnInit {
     // console.log(obj);
     this.planOuputData.emit(data);
     (!this.editApiCall) ? this.eventService.openSnackBar('Plan is created', 'OK') : this.eventService.openSnackBar('Plan is edited', 'OK');
-    this.subinject.changeUpperRightSliderState({ state: 'close' });
+    this.subinject.changeNewRightSliderState({ state: 'close', data: data });
 
   }
 
   closeNav(state) {
-    this.subinject.changeUpperRightSliderState({ state: 'close' });
+    this.subinject.changeNewRightSliderState({ state: 'close' });
     this.planDataForm.reset();
     this.isPlanValid = false;
     this.isCodeValid = false;

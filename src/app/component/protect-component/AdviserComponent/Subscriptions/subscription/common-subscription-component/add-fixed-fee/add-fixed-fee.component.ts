@@ -14,8 +14,8 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
 export class AddFixedFeeComponent implements OnInit {
   serviceId: any;
   dataToSend: {};
-  data: any;
   validatorType = ValidatorType;
+  _data: any;
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private subService: SubscriptionService, private eventService: EventService) {
   }
@@ -37,7 +37,7 @@ export class AddFixedFeeComponent implements OnInit {
     billEvery: [, [Validators.required]],
     billingMode: [1]
   });
-  @Input() set fixedFee(data) {
+  @Input() set data(data) {
     this.ischeckFixedData = data
     this.getFeeFormData(data)
   }
@@ -82,7 +82,7 @@ export class AddFixedFeeComponent implements OnInit {
       this.createFixedFeeForm('')
       return;
     } else {
-      this.data = data;
+      this._data = data;
       this.serviceId = data.id;
       // data.servicePricing.billingNature = '1';
       console.log(' this isa snd;kasljdlkajsdlkashdlaksd ', data.servicePricing.billingNature);
@@ -109,7 +109,7 @@ export class AddFixedFeeComponent implements OnInit {
   }
 
   Close(state) {
-    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
     this.setValidation(false);
     this.createFixedFeeForm('');
   }
@@ -145,7 +145,7 @@ export class AddFixedFeeComponent implements OnInit {
         serviceCode: this.fixedFeeData.controls.code.value,
         serviceName: this.fixedFeeData.controls.serviceName.value,
         servicePricing: {
-          id: (this.data) ? this.data.servicePricing.id : '',
+          id: (this._data) ? this._data.servicePricing.id : '',
           // autoRenew: 0,
           billEvery: this.fixedFeeData.controls.billEvery.value,
           billingCycle: this.fixedFeeData.get('Duration').value,
@@ -154,7 +154,7 @@ export class AddFixedFeeComponent implements OnInit {
           feeTypeId: parseInt(feeType),
           pricingList: [
             {
-              id: (this.data) ? this.data.servicePricing.pricingList[0].id : '',
+              id: (this._data) ? this._data.servicePricing.pricingList[0].id : '',
               pricing: this.fixedFeeData.controls.fees.value,
               assetClassId: 1
             }
@@ -178,13 +178,13 @@ export class AddFixedFeeComponent implements OnInit {
   }
 
   saveFeeTypeDataResponse(data, state) {
-    this.outputFixedData.emit(data)
+    // this.outputFixedData.emit(data)
     this.eventService.openSnackBar('Service is Created', 'OK');
-    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data: data });
   }
   saveFeeTypeDataEditResponse(data, state) {
-    this.outputFixedData.emit(this.dataToSend)
+    // this.outputFixedData.emit(this.dataToSend)
     this.eventService.openSnackBar('Service is Created', 'OK');
-    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data: this.dataToSend });
   }
 }

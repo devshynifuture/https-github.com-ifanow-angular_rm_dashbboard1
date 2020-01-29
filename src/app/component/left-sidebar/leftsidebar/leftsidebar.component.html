@@ -1,11 +1,4 @@
-<div *ngIf="isOverlayVisible" [@dialogContainer]="dialogState" class="custom-overlay">
-</div>
-<div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
-  <ng-template #dynamicUpper></ng-template>
-</div>
-<div [@openClose]="currentState" class="right_sidenav">
-  <ng-template #dynamic></ng-template>
-</div>
+
 <mat-sidenav-container (window:resize)="onResize()" class="sidenav-container">
   <mat-sidenav #sidenav mode="side" opened role="navigation">
     <mat-nav-list class="width-230 pt-0" id="d">
@@ -188,5 +181,12 @@
   </mat-sidenav-content>
 
 </mat-sidenav-container>
-
+<div *ngIf="isOverlayVisible" [@dialogContainer]="dialogState" class="custom-overlay">
+</div>
+<div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
+  <ng-template #dynamicUpper></ng-template>
+</div>
+<div [@openClose]="currentState" class="right_sidenav">
+  <ng-template #dynamic></ng-template>
+</div>
 <!--<app-dialog-container [parentComponentName]="'leftSideBar'"></app-dialog-container>-->

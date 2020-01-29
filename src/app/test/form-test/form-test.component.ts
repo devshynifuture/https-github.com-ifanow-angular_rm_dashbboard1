@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ValidatorType } from '../../services/util.service';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './form-test.component.html',
   styleUrls: ['./form-test.component.scss']
 })
-export class FormTestComponent implements OnInit {
+export class FormTestComponent implements OnInit, OnDestroy {
 
   // email = new FormControl('', [Validators.required, Validators.email]);
   // inputName = new FormControl('', [Validators.required, Validators.email]);
@@ -26,8 +26,9 @@ export class FormTestComponent implements OnInit {
   // numKeyValidator = ValidatorType.NUMBER_KEY_ONLY;
   ngOnInit() {
     console.log("Document preview", window.history.state)
-    this.inputString = this.sanitizer.bypassSecurityTrustHtml(window.history.state.docText);
-    (this.inputString.changingThisBreaksApplicationSecurity) ? this.inputString : this.inputString = { changingThisBreaksApplicationSecurity: "Go Back To documents to view Pdf" };
+    // this.inputString = this.sanitizer.bypassSecurityTrustHtml(window.history.state.docText);
+    // (this.inputString.changingThisBreaksApplicationSecurity) ? this.inputString : this.inputString = { changingThisBreaksApplicationSecurity: "Go Back To documents to view Pdf" };
+    this.inputString = localStorage.getItem('docText')
     console.log(this.inputString)
     this.testForm = this.fb.group({
       id: [],
@@ -35,7 +36,9 @@ export class FormTestComponent implements OnInit {
       inputName: [, [Validators.required]],
       inputNumber: [, [Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY)]],
     });
-
+  }
+  ngOnDestroy() {
+    localStorage.removeItem('docText')
   }
 
   getErrorMessage() {
