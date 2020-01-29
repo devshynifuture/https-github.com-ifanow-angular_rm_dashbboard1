@@ -480,14 +480,18 @@
                 </div> -->
             </div>
             <!-- <p class="f-12 text-custom m-0 roboto">Maximum 2 scenarios can be compared</p> -->
-            <p class="m-0 text-black roboto"> Select a module you’d like to do comparision on</p>
-            <div class="form-group mb-0">
-                <mat-form-field class="form-control br-0 b-0">
-                    <mat-select>
-                        <mat-option value="option">Life cash flows</mat-option>
+            <p class="m-0 text-black roboto pt-28"> Select a module you’d like to do comparision on</p>
+            <div class="form-group pt-8">
+                <mat-form-field>
+                    <mat-select class="form-control br-0" formControlName="Duration" id="sel1">
+                        <mat-option value="1">Months</mat-option>
+                        <mat-option value="2">Years</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
+            <button mat-raised-button class="btn-primitive mt-12">PROCEED</button>
+
         </div>
+        <button mat-raised-button class="btn-primary mt-12" (click)="openDialog()">Modal</button>
     </div>
 </div>
