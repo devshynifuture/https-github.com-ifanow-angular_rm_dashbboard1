@@ -603,6 +603,7 @@ export class InvoiceComponent implements OnInit {
   cancel(value) {
     if (value != undefined) {
       this.storeData.balanceDue = value.balanceDue;
+      this.storeData.status=value.status;
     }
     this.showRecord = false;
     const obj = {
