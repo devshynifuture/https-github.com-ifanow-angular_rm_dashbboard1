@@ -71,7 +71,7 @@ import { PlanRoutingModule } from "./plan-routing.module";
   ],
   // exports: [PlanComponent, AddScenariosComponent, AddInvestmentPlanComponent,
   //   AddProfilePlanComponent, HistoryRiskProfileComponent, RiskProfileComponent],
-  entryComponents: []
+  entryComponents: [AddScenariosComponent]
 })
 export class PlanModule {
 }

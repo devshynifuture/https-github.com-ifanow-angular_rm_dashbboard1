@@ -5,8 +5,8 @@
     </div>
     <div class="col-md-2 text-right">
         <i (click)="Close('close')" class="material-icons pt-16 c-p pr-16">
-            clear
-        </i>
+      clear
+    </i>
     </div>
 </div>
 <hr class="right-line">
@@ -25,8 +25,7 @@
                                     <mat-form-field>
                                         <input #companyDisplayName autofocus class="form-control br-0 text-left" formControlName="companyDisplayName" matInput maxLength="{{getFormControlProfile().companyDisplayName.maxLength}}" type="text">
                                         <mat-error class="f-12">Company Display Name is required</mat-error>
-                                        <mat-hint align="end" class="f-12">{{companyDisplayName.value.length}}/50
-                                        </mat-hint>
+                                        <mat-hint align="end" class="f-12">{{companyDisplayName.value.length}}/50</mat-hint>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -158,17 +157,17 @@
                                 <img *ngIf="logoImg" class="t-70 b-a" src="{{logoImg}}">
                                 <div (click)="file.click()" *ngIf="logoImg==undefined" class="imgBox">
                                     <i class="material-icons c-p" style="font-size: 100px;">
-                                        insert_photo
-                                    </i>
+                    insert_photo
+                  </i>
                                 </div>
                                 <div class="row pt-16">
                                     <div class="col-md-12 p-0">
                                         <!-- (click)="file.click()"-->
                                         <button [disabled]="logoImg==undefined" (click)="uploadImage()" class="br-0 btn-primary mr-12" mat-stroked-button>UPLOAD
-                                            LOGO
-                                        </button>
+                      LOGO
+                    </button>
                                         <button *ngIf="logoImg" (click)="cancelImageUpload()" class="br-0 mr-12" mat-stroked-button>CANCEL
-                                        </button>
+                    </button>
                                     </div>
                                     <input #file (change)="onChange($event)" [ngClass]="{'v-h': true}" accept='image/*' formControlName="url" type="file">
                                 </div>
@@ -192,7 +191,7 @@
                                     <input #nameOnBank matInput autofocus class="form-control br-0 text-left" formControlName="nameOnBank" (changedValue)="getFormControlBank().nameOnBank.setValue($event)" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" appInputValueValidation
                                         maxLength="{{getFormControlBank().nameOnBank.maxLength}}" type="text">
                                     <mat-error class="f-12">This field is required</mat-error>
-                                    <mat-hint align="end" class="f-12">{{city.value.length}}/30</mat-hint>
+                                    <mat-hint align="end" class="f-12">{{nameOnBank.value.length}}/30</mat-hint>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -207,7 +206,7 @@
                                     <input #bankName matInput class="form-control br-0 text-left" formControlName="bankName" (changedValue)="getFormControlBank().bankName.setValue($event)" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" appInputValueValidation maxLength="{{getFormControlBank().bankName.maxLength}}"
                                         type="text">
                                     <mat-error class="f-12">This field is required</mat-error>
-                                    <mat-hint align="end" class="f-12">{{city.value.length}}/30</mat-hint>
+                                    <mat-hint align="end" class="f-12">{{bankName.value.length}}/30</mat-hint>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -219,10 +218,10 @@
                         <div class="col-md-7">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <input #accNo [inputValidator]="validatorType.NUMBER_ONLY" (changedValue)="getFormControlBank().acNo.setValue($event)" [maxLength]="getFormControlBank().acNo.maxLength" appInputValueValidation class="form-control br-0 text-left" formControlName="acNo"
+                                    <input #acNo [inputValidator]="validatorType.NUMBER_ONLY" (changedValue)="getFormControlBank().acNo.setValue($event)" [maxLength]="getFormControlBank().acNo.maxLength" appInputValueValidation class="form-control br-0 text-left" formControlName="acNo"
                                         matInput type="number">
                                     <mat-error class="f-12">This field is required</mat-error>
-                                    <mat-hint align="end" class="f-12">{{city.value.length}}/16</mat-hint>
+                                    <mat-hint align="end" class="f-12">{{acNo.value.length}}/16</mat-hint>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -237,7 +236,7 @@
                                     <input #ifscCode [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation (changedValue)="getFormControlBank().ifscCode.setValue($event)" class="form-control br-0 text-left" formControlName="ifscCode" matInput maxLength="{{getFormControlBank().ifscCode.maxLength}}"
                                         type="text">
                                     <mat-error class="f-12">City is required</mat-error>
-                                    <mat-hint align="end" class="f-12">{{city.value.length}}/11</mat-hint>
+                                    <mat-hint align="end" class="f-12">{{ifscCode.value.length}}/11</mat-hint>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -365,11 +364,11 @@
         </div>
         <div class="col-md-8 right text-right">
             <button (click)="back()" *ngIf="selected!=0" class="mr-20 br-0 text-inherit" mat-button mat-raised-button>PREVIOUS
-            </button>
+      </button>
             <button (click)="nextStep(selected,'Save&Next')" [disabled]="logoImg==undefined && selected==1" *ngIf="selected!=3" class="btn-bottom br-0 text-inherit" mat-button>SAVE & NEXT
-            </button>
+      </button>
             <button (click)="nextStep(selected,'Save&Next')" *ngIf="selected==3" class="btn-bottom br-0 text-inherit" mat-button>SAVE
-            </button>
+      </button>
             <!-- logoImg -->
         </div>
     </div>

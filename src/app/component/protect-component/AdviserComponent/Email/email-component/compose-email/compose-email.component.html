@@ -8,27 +8,27 @@
                 <!--        <i class="material-icons text-white pr-4 c-p">-->
                 <!--          remove-->
                 <!--        </i>-->
-                <i class="material-icons text-white c-p" (click)="close()">
+                <i class="material-icons text-white c-p" (click)="closeWithDraftCreateOrUpdate()">
                     clear
                 </i>
             </div>
         </div>
     </div>
-    <form [formGroup]="emailForm" #formRef (change)="didFormChanged = true;" (ngSubmit)="onSendEmail()">
+    <form [formGroup]="emailForm" #formRef (change)="didFormChanged = true">
         <div class="wrapper-8 pt-12">
             <div class="row">
                 <div class="col-md-1">
                     <p class="m-0 text-custom">From</p>
                 </div>
                 <div class="col-md-9">
-                    <!-- <p class="m-0 text-black">
+                    <p class="m-0 text-black">
                         {{ from }}
-                    </p> -->
-                    <input type="text" [(ngModel)]="from" formControlName="sender">
-                    <div *ngIf="!emailForm.controls['sender'].valid && emailForm.controls['sender'].touched"
-                        [ngClass]="emailForm.controls['sender'].valid && emailForm.controls['sender'].touched ? '': 'is-invalid'">
+                    </p>
+                    <!-- <input type="text" [(ngModel)]="from" formControlName="sender"> -->
+                    <!-- <div *ngIf="!emailForm.get('sender').valid && emailForm.get('sender').touched"
+                        [ngClass]="emailForm.get('sender').valid && emailForm.get('sender').touched ? '': 'is-invalid'">
                         invalid email
-                    </div>
+                    </div> -->
                 </div>
                 <div class="col-md-2 pr-0">
                     <ul class="text-custom right f-14 pr-8 f-500">
@@ -44,11 +44,23 @@
                     <p class="m-0 text-custom">To</p>
                 </div>
                 <div class="col-md-11">
-                    <input type="text" [(ngModel)]="to" formControlName="receiver" />
-                    <div *ngIf="!emailForm.controls['receiver'].valid && emailForm.controls['receiver'].touched"
+                    <mat-form-field class="example-chip-list h-auto">
+                        <mat-chip-list #chipList aria-label="Email Selection">
+                            <mat-chip *ngFor="let receipient of receipients" [selectable]="selectable"
+                                [removable]="removable" (removed)="remove(receipient, receipients)">
+                                {{receipient}}
+                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                            </mat-chip>
+                            <input placeholder="Receipient" [matChipInputFor]="chipList"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                                (matChipInputTokenEnd)="add($event, receipients)">
+                        </mat-chip-list>
+                    </mat-form-field>
+                    <!-- <input type="text" [(ngModel)]="to" formControlName="receiver" /> -->
+                    <!-- <div *ngIf="!emailForm.controls['receiver'].valid && emailForm.controls['receiver'].touched"
                         [ngClass]="emailForm.controls['receiver'].valid && emailForm.controls['receiver'].touched ? '': 'is-invalid'">
                         invalid email
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="row pt-16" *ngIf="isCcSelected">
@@ -56,11 +68,23 @@
                     <p class="m-1 text-custom">CC</p>
                 </div>
                 <div class="col-md-11">
-                    <input type="text" formControlName="carbonCopy" *ngIf="isCcSelected">
-                    <div *ngIf="!emailForm.controls['carbonCopy'].valid && emailForm.controls['carbonCopy'].touched"
-                        [ngClass]="emailForm.controls['carbonCopy'].valid && emailForm.controls['carbonCopy'].touched ? '': 'is-invalid'">
+                    <mat-form-field class="example-chip-list h-auto">
+                        <mat-chip-list #chipList1 aria-label="CC Email Selection">
+                            <mat-chip *ngFor="let cc of ccArray" [selectable]="selectable" [removable]="removable"
+                                (removed)="remove(cc, ccArray)">
+                                {{cc}}
+                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                            </mat-chip>
+                            <input placeholder="CC" [matChipInputFor]="chipList1"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                                (matChipInputTokenEnd)="add($event, ccArray)">
+                        </mat-chip-list>
+                    </mat-form-field>
+                    <!-- <input type="text" formControlName="carbonCopy" *ngIf="isCcSelected">
+                    <div *ngIf="!emailForm.get('carbonCopy').valid && emailForm.get('carbonCopy').touched"
+                        [ngClass]="emailForm.get('carbonCopy').valid && emailForm.get('carbonCopy').touched ? '': 'is-invalid'">
                         invalid email
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
@@ -69,11 +93,23 @@
                     <p class="m-1 text-custom">BCC</p>
                 </div>
                 <div class="col-md-11">
-                    <input type="text" formControlName="blindCarbonCopy" *ngIf="isBccSelected">
-                    <div *ngIf="!emailForm.controls['blindCarbonCopy'].valid && emailForm.controls['blindCarbonCopy'].touched"
-                        [ngClass]="emailForm.controls['carbonCopy'].valid && emailForm.controls['carbonCopy'].touched ? '': 'is-invalid'">
+                    <mat-form-field class="example-chip-list h-auto">
+                        <mat-chip-list #chipList2 aria-label="BCC Email Selection">
+                            <mat-chip *ngFor="let bcc of bccArray" [selectable]="selectable" [removable]="removable"
+                                (removed)="remove(bcc, bccArray)">
+                                {{bcc}}
+                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                            </mat-chip>
+                            <input placeholder="BCC" [matChipInputFor]="chipList2"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                                (matChipInputTokenEnd)="add($event, bccArray)">
+                        </mat-chip-list>
+                    </mat-form-field>
+                    <!-- <input type="text" formControlName="blindCarbonCopy" *ngIf="isBccSelected">
+                    <div *ngIf="!emailForm.get('blindCarbonCopy').valid && emailForm.get('blindCarbonCopy').touched"
+                        [ngClass]="emailForm.get('carbonCopy').valid && emailForm.get('carbonCopy').touched ? '': 'is-invalid'">
                         invalid email
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
@@ -92,16 +128,27 @@
             </div>
         </div>
         <div class="row btl-1 pt-16">
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <mat-chip-list #chipList aria-label="docName selection">
                     <!-- <mat-chip *ngFor="let doc of docObj ; let i = index" (removed)="remove(i)">
                     {{doc.documentName}}
                     <mat-icon matChipRemove>cancel</mat-icon>
                 </mat-chip> -->
                 </mat-chip-list>
-                <div class="row">
+                <div class="row bb-1 pt-12" *ngFor="let attachment of emailAttachments">
+                    <div class="col-md-11">
+                        <p class="m-0 c-p" (click)="downloadAttachment(attachment)">{{attachment.filename}}</p>
+                    </div>
+                    <div class="col-md-1 pl-0">
+                        <img src="/assets/images/svg/delete.svg" class="c-p" style="vertical-align: super;"
+                            (click)="removeFileFromCollections(attachment)">
+                    </div>
+                </div>
+
+                <div class="row pt-12">
                     <div class="col-md-4">
-                        <button type="submit" mat-stroked-button class="btn-primary br-0">Send</button>
+                        <button type="submit" mat-stroked-button class="btn-primary br-0"
+                            (click)="onSendEmail()">Send</button>
                     </div>
                     <div class="col-md-8">
                         <button mat-icon-button (click)="fileInput.click()">

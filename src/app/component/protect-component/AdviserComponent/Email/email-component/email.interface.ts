@@ -13,6 +13,13 @@ export interface GmailInboxResponseI {
     messages: GmailSingleMessageI[]
 }
 
+export interface EmailAttachmentI {
+    filename: string,
+    size: number,
+    mimeType: string,
+    data: string
+}
+
 export interface GmailSingleMessageI {
     historyId: string,
     id: string,

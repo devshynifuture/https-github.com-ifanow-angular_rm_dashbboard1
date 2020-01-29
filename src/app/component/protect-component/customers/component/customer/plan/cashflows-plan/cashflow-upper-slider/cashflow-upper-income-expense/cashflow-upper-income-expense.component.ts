@@ -38,24 +38,31 @@ export class CashflowUpperIncomeExpenseComponent implements OnInit {
     }
   }
 
-  alterTable(table: UpperTableBox[], field: string, value: string): UpperTableBox[] {
-    return table.map((item: UpperTableBox): UpperTableBox => {
-      item[field] = value;
-      return item;
-    });
+  alterTable(table: UpperTableBox[], field: string, value: string, index: number): UpperTableBox[] {
+    table[index][field] = value;
+    this.updateTotal(table[index]);
+    return table;
   }
 
-  changeTableTdValue(value: string, field: string) {
+  updateTotal(object: UpperTableBox) {
+    let sum = 0;
+    for (let i = 1; i <= 12; i++) {
+      sum = sum + parseInt(object[`month${i}`]);
+    }
+    object['total'] = String(sum);
+  }
+
+  changeTableTdValue(value: string, field: string, index: number) {
     if (ValidatorType.NUMBER_ONLY.test(value)) {
       switch (this.cashflowCategory) {
         case 'income':
-          ELEMENT_DATA = this.alterTable(ELEMENT_DATA, field, value);
+          ELEMENT_DATA = this.alterTable(ELEMENT_DATA, field, value, index);
           break;
         case 'expenses':
-          ELEMENT_DATA1 = this.alterTable(ELEMENT_DATA1, field, value);
+          ELEMENT_DATA1 = this.alterTable(ELEMENT_DATA1, field, value, index);
           break;
         case 'liabilities':
-          ELEMENT_DATA2 = this.alterTable(ELEMENT_DATA2, field, value);
+          ELEMENT_DATA2 = this.alterTable(ELEMENT_DATA2, field, value, index);
           break;
       }
     } else {
@@ -88,7 +95,13 @@ export class CashflowUpperIncomeExpenseComponent implements OnInit {
 
 // for Income
 let ELEMENT_DATA: UpperTableBox[] = [
-  { description: '2020', month1: '25', month2: '21', month3: '2,10,000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
+  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
+  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
+  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
+  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
+  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
+  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
+  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
 ];
 
 // for expense
