@@ -129,13 +129,13 @@
                         <div class="bar" appFormatNumber> {{ element.maturityValue}} </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br text-right proximaFont f-600 p-8" appFormatNumber [value]="sumMaturityValue">
-                        <div class="bar"> {{ sumMaturityValue || '-'}} </div>
+                        <div class="bar"> {{isLoading ? '' :  sumMaturityValue || '-'}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="number">
                     <th mat-sort-header="fdNumber" mat-header-cell *matHeaderCellDef class="br"> FD number</th>
                     <td mat-cell *matCellDef="let element" class="br">
-                        <div class="bar"> {{element.fdNumber}} </div>
+                        <div class="bar"> {{isLoading ? '' : element.fdNumber || '-'}} </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef>
                     </td>
@@ -143,7 +143,7 @@
                 <ng-container matColumnDef="desc">
                     <th mat-header-cell *matHeaderCellDef class="br"> Description</th>
                     <td mat-cell *matCellDef="let element" class="br">
-                        <div class="bar"> {{element.description || ' '}} </div>
+                        <div class="bar"> {{isLoading ? '' : element.description || '-'}} </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef></td>
                 </ng-container>
@@ -288,7 +288,7 @@
                 <ng-container matColumnDef="number">
                     <th mat-sort-header="rdNumber" mat-header-cell *matHeaderCellDef class="br"> RD number</th>
                     <td mat-cell *matCellDef="let element" class="br">
-                        <div class="bar"> {{element.rdNumber}} </div>
+                        <div class="bar"> {{isLoading ? '' : element.rdNumber || '-'}} </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br  text-right"></td>
                 </ng-container>
@@ -296,7 +296,7 @@
                     <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br t-30"> Description
                     </th>
                     <td mat-cell *matCellDef="let element" class="br t-30">
-                        <div class="bar text-break "> {{element.description || ' '}} </div>
+                        <div class="bar text-break "> {{isLoading ? '' : element.description || '-'}} </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br  text-right"></td>
                 </ng-container>
@@ -392,7 +392,7 @@
                             <div class="bar" appFormatNumber> {{ element.currentValue }} </div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 t-17 text-right" appFormatNumber [value]="sumCurrentValueB">
-                            <div class="bar"> {{ sumCurrentValueB || ' '}} </div>
+                            <div class="bar"> {{isLoading ? '' : sumCurrentValueB || '-'}} </div>
                         </td>
                     </ng-container>
 
@@ -416,7 +416,7 @@
                             <div class="bar" appFormatNumber> {{ element.amountInvested }} </div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 text-right" appFormatNumber [value]="sumAmountInvestedB">
-                            <div class="bar"> {{ sumAmountInvestedB || '-'}} </div>
+                            <div class="bar"> {{isLoading ? '' :  sumAmountInvestedB || '-'}} </div>
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="cdate">
@@ -462,7 +462,7 @@
                     <ng-container matColumnDef="desc">
                         <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br"> Description</th>
                         <td mat-cell *matCellDef="let element" class="br">
-                            <div class="bar"> {{element.description || ' '}} </div>
+                            <div class="bar"> {{isLoading ? '' : element.description || '-'}} </div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef></td>
                     </ng-container>

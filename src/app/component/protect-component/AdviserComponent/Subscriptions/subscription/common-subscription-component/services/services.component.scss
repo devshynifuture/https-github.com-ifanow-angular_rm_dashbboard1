@@ -91,5 +91,9 @@ label {
 }
 
 .baBlue {
-    border: 3px solid #008FFF;
+    outline: 3px solid #008FFF;
+}
+
+::ng-deep .example-card:hover {
+    box-shadow: none;
 }
