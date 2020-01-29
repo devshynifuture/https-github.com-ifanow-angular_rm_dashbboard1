@@ -60,7 +60,7 @@ export class ServicesSettingsComponent implements OnInit {
     (singleService == '') ? singleService = '' : singleService.flag = data;
     console.log('hello mf button clicked');
     const fragmentData = {
-      flag: 'openUpper',
+      flag: 'service',
       id: 1,
       data: singleService,
       // direction: 'top',
@@ -68,6 +68,7 @@ export class ServicesSettingsComponent implements OnInit {
       // state: 'open'
     };
     this.router.navigate(['/subscription-upper'], { state: { ...fragmentData } })
+    sessionStorage.setItem("subUpperData", JSON.stringify(fragmentData))
     // const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
     //   upperSliderData => {
     //     if (UtilService.isDialogClose(upperSliderData)) {

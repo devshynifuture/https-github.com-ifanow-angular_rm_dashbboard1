@@ -100,7 +100,7 @@ export class DocumentsSettingsComponent implements OnInit {
     (singleDocument == null) ? singleDocument = data : singleDocument.flag = data
     console.log('hello mf button clicked');
     const fragmentData = {
-      flag: 'openUpper',
+      flag: 'document',
       id: 1,
       data: singleDocument,
       // direction: 'top',
@@ -108,6 +108,8 @@ export class DocumentsSettingsComponent implements OnInit {
       // state: 'open'
     };
     this.router.navigate(['/subscription-upper'], { state: { ...fragmentData } })
+    sessionStorage.setItem("subUpperData", JSON.stringify(fragmentData))
+
     // const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
     //   upperSliderData => {
     //     if (UtilService.isDialogClose(upperSliderData)) {

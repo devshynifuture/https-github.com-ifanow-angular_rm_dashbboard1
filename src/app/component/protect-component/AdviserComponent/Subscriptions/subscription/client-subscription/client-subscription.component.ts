@@ -111,7 +111,7 @@ export class ClientSubscriptionComponent implements OnInit {
     data.flag = flag
     console.log('hello mf button clicked');
     const fragmentData = {
-      flag: 'openUpper',
+      flag: 'clietns',
       id: 1,
       data,
       // direction: 'top',
@@ -119,6 +119,7 @@ export class ClientSubscriptionComponent implements OnInit {
       // state: 'open'
     };
     this.router.navigate(['/subscription-upper'], { state: { ...fragmentData } })
+    sessionStorage.setItem("subUpperData", JSON.stringify(fragmentData))
     // const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
     //   upperSliderData => {
     //     if (UtilService.isDialogClose(upperSliderData)) {

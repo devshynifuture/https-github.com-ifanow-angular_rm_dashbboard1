@@ -96,7 +96,7 @@ export class PlansSettingsComponent implements OnInit {
     (singlePlan == '') ? singlePlan = data : singlePlan.flag = data
     console.log('hello mf button clicked');
     const fragmentData = {
-      flag: 'openUpper',
+      flag: 'plan',
       id: 1,
       data: singlePlan,
       // direction: 'top',
@@ -104,6 +104,7 @@ export class PlansSettingsComponent implements OnInit {
       // state: 'open'
     };
     this.router.navigate(['/subscription-upper'], { state: { ...fragmentData } })
+    sessionStorage.setItem("subUpperData", JSON.stringify(fragmentData))
     // const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
     //   upperSliderData => {
     //     if (UtilService.isDialogClose(upperSliderData)) {
