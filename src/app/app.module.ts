@@ -29,6 +29,8 @@ import 'zone.js/dist/zone';
 // import { SubscriptionUpperEntry } from './component/protect-component/AdviserComponent/Subscriptions/subscription-upper-entry-module';
 import { FormTestComponent } from "./test/form-test/form-test.component";
 import { CustomDirectiveModule } from "./common/directives/common-directive.module";
+import { SubscriptionUpperSliderComponent } from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/upper-slider/subscription-upper-slider.component';
+import { SubscriptionUpperEntry } from './component/protect-component/AdviserComponent/Subscriptions/subscription-upper-entry-module';
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
@@ -47,7 +49,7 @@ import { CustomDirectiveModule } from "./common/directives/common-directive.modu
     // CustomDialogContainerComponent,
     // AddLiabilitiesComponent,
     // AddInsuranceComponent
-
+    SubscriptionUpperSliderComponent,
     FormTestComponent
 
   ],
@@ -76,6 +78,7 @@ import { CustomDirectiveModule } from "./common/directives/common-directive.modu
     EmailEntryModule,
     AppRoutingModule,
     CustomDirectiveModule,
+    SubscriptionUpperEntry
   ],
   providers: [AuthService, HttpService, DatePipe, DynamicComponentService],
   bootstrap: [AppComponent]

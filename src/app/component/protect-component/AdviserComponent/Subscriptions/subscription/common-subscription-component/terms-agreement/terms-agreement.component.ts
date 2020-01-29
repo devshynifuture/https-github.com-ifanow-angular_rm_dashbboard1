@@ -12,6 +12,7 @@ import { escapeRegExp } from '@angular/compiler/src/util';
 import { HttpClient } from '@angular/common/http';
 import { tableHtml } from './document-preview';
 import { DocumentPreviewComponent } from '../document-preview/document-preview.component';
+import { AddEditDocumentComponent } from '../add-edit-document/add-edit-document.component';
 
 @Component({
   selector: 'app-terms-agreement',
@@ -33,7 +34,7 @@ export class TermsAgreementComponent implements OnInit {
   dataTerms: any;
   advisorId: () => any;
   serviceData: any;
-
+  @Output() changePlanData = new EventEmitter();
   constructor(private route: Router, public subInjectService: SubscriptionInject, public dialog: MatDialog,
     public subService: SubscriptionService, private eventService: EventService, private render: Renderer2,
     private http: HttpClient, private utilservice: UtilService) {
@@ -192,12 +193,18 @@ export class TermsAgreementComponent implements OnInit {
       flag: 'quotations',
       data: this._upperData.documentData,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName: AddEditDocumentComponent
     };
-    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         // console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          if (sideBarData.data) {
+            this.upperData = sideBarData.data
+            this._upperData = sideBarData.data
+            this.changePlanData.emit(this.upperData)
+          }
           // console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }

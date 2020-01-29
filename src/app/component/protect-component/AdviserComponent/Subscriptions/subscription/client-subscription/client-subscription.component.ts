@@ -1,12 +1,13 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from '../../subscription-inject.service';
-import {SubscriptionService} from '../../subscription.service';
-import {UtilService} from "../../../../../../services/util.service";
-import {AuthService} from "../../../../../../auth-service/authService";
-import {HelpComponent} from '../common-subscription-component/help/help.component';
-import {SubscriptionUpperSliderComponent} from '../common-subscription-component/upper-slider/subscription-upper-slider.component';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from '../../subscription-inject.service';
+import { SubscriptionService } from '../../subscription.service';
+import { UtilService } from "../../../../../../services/util.service";
+import { AuthService } from "../../../../../../auth-service/authService";
+import { HelpComponent } from '../common-subscription-component/help/help.component';
+import { SubscriptionUpperSliderComponent } from '../common-subscription-component/upper-slider/subscription-upper-slider.component';
+import { Router } from '@angular/router';
 
 export interface PeriodicElement {
   name: string;
@@ -32,7 +33,7 @@ export class ClientSubscriptionComponent implements OnInit {
   noData: string;
 
   constructor(public dialog: MatDialog, public eventService: EventService, public subInjectService: SubscriptionInject,
-    private subService: SubscriptionService) {
+    private subService: SubscriptionService, private router: Router) {
   }
 
   @Input() upperData: any;
@@ -113,20 +114,18 @@ export class ClientSubscriptionComponent implements OnInit {
       flag: 'openUpper',
       id: 1,
       data,
-      direction: 'top',
-      componentName: SubscriptionUpperSliderComponent,
-      state: 'open'
+      // direction: 'top',
+      // componentName: SubscriptionUpperSliderComponent,
+      // state: 'open'
     };
-
-
-
-    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-      upperSliderData => {
-        if (UtilService.isDialogClose(upperSliderData)) {
-          // this.getClientSubscriptionList();
-          subscription.unsubscribe();
-        }
-      }
-    );
+    this.router.navigate(['/subscription-upper'], { state: { ...fragmentData } })
+    // const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+    //   upperSliderData => {
+    //     if (UtilService.isDialogClose(upperSliderData)) {
+    //       // this.getClientSubscriptionList();
+    //       subscription.unsubscribe();
+    //     }
+    //   }
+    // );
   }
 }

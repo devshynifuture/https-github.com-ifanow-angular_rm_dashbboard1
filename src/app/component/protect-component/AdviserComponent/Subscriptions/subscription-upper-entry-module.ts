@@ -44,12 +44,14 @@ import { AddQuotationComponent } from './subscription/common-subscription-compon
 import { AddQuotationSubscriptionComponent } from '../../customers/component/common-component/add-quotation-subscription/add-quotation-subscription.component';
 import { HowToUseDialogComponent } from './subscription/common-subscription-component/how-to-use-dialog/how-to-use-dialog.component';
 import { DocumentPreviewComponent } from './subscription/common-subscription-component/document-preview/document-preview.component';
+import { DynamicComponentService } from 'src/app/services/dynamic-component.service';
+import { SubscriptionInject } from './subscription-inject.service';
 
 export const componentList = [
   OverviewComponent,
   ServicesComponent,
   DocumentComponent,
-  SubscriptionUpperSliderComponent,
+  // SubscriptionUpperSliderComponent,
   TermsAgreementComponent,
   EmailOnlyComponent,
   FeeStructureComponent,
@@ -102,7 +104,8 @@ export const componentList = [
 
   ],
   exports: [componentList],
-  entryComponents: [componentList, SubscriptionPopupComponent, AddDocumentComponent, HowToUseDialogComponent]
+  entryComponents: [componentList, SubscriptionPopupComponent, AddDocumentComponent, HowToUseDialogComponent],
+  providers: [DynamicComponentService, SubscriptionInject]
 })
 
 export class SubscriptionUpperEntry {

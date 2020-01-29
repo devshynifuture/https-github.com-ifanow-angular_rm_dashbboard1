@@ -2,9 +2,11 @@ import {
   ComponentFactoryResolver,
   Injectable,
 } from '@angular/core';
-import {DataComponent} from '../interfaces/data.component';
+import { DataComponent } from '../interfaces/data.component';
 
-@Injectable()
+@Injectable(
+  { providedIn: 'root' }
+)
 export class DynamicComponentService {
 
   constructor(private factoryResolver: ComponentFactoryResolver) {

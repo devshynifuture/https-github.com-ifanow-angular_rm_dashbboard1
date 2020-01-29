@@ -6,6 +6,7 @@ import { SubscriptionInject } from '../../../subscription-inject.service';
 import { AuthService } from "../../../../../../../auth-service/authService";
 import { UtilService } from "../../../../../../../services/util.service";
 import { SubscriptionUpperSliderComponent } from '../../common-subscription-component/upper-slider/subscription-upper-slider.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-plans-settings',
@@ -15,7 +16,7 @@ import { SubscriptionUpperSliderComponent } from '../../common-subscription-comp
 export class PlansSettingsComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private subService: SubscriptionService,
-    private dataService: EventService, private eventService: EventService, private subinject: SubscriptionInject, private utilservice: UtilService) {
+    private dataService: EventService, private eventService: EventService, private subinject: SubscriptionInject, private utilservice: UtilService, private router: Router) {
   }
 
   button: any;
@@ -97,20 +98,20 @@ export class PlansSettingsComponent implements OnInit {
       flag: 'openUpper',
       id: 1,
       data: singlePlan,
-      direction: 'top',
-      componentName: SubscriptionUpperSliderComponent,
-      state: 'open'
+      // direction: 'top',
+      // componentName: SubscriptionUpperSliderComponent,
+      // state: 'open'
     };
+    this.router.navigate(['/subscription-upper'], { state: { ...fragmentData } })
+    // const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+    //   upperSliderData => {
+    //     if (UtilService.isDialogClose(upperSliderData)) {
+    //       // this.getClientSubscriptionList();
+    //       this.getSettingsPlanData();
 
-    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-      upperSliderData => {
-        if (UtilService.isDialogClose(upperSliderData)) {
-          // this.getClientSubscriptionList();
-          this.getSettingsPlanData();
-
-          subscription.unsubscribe();
-        }
-      }
-    );
+    //       subscription.unsubscribe();
+    //     }
+    //   }
+    // );
   }
 }

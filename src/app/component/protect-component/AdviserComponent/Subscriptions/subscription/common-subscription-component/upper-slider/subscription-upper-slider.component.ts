@@ -1,73 +1,82 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 // import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../../../../auth-service/authService';
+import { DialogContainerComponent } from 'src/app/common/dialog-container/dialog-container.component';
+import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } from 'src/app/animation/animation';
+import { DynamicComponentService } from 'src/app/services/dynamic-component.service';
 
 @Component({
   selector: 'app-subscription-upper-slider',
   templateUrl: './subscription-upper-slider.component.html',
-  styleUrls: ['./subscription-upper-slider.component.scss']
+  styleUrls: ['./subscription-upper-slider.component.scss'],
+  animations: [
+    dialogContainerOpacity,
+    rightSliderAnimation,
+    // getRightSliderAnimation(40),
+    upperSliderAnimation
+  ]
 })
 
-export class SubscriptionUpperSliderComponent implements OnInit {
-  fragmentData;
+export class SubscriptionUpperSliderComponent extends DialogContainerComponent implements OnInit {
+  fragmentDataSubsUpper;
   selectedServiceTab = 0;
   upperRightSideInputData;
-
   constructor(private router: Router, private authService: AuthService,
-    private eventService: EventService, private subinject: SubscriptionInject
+    protected eventService: EventService, protected subinject: SubscriptionInject, protected dynamicComponentService: DynamicComponentService
     // public dialogRef: MatDialogRef<UpperSliderComponent>,
-    // @Inject(MAT_DIALOG_DATA) public fragmentData: any
+    // @Inject(MAT_DIALOG_DATA) public fragmentDataSubsUpper: any
   ) {
-    this.eventService.rightSliderData.subscribe(
-      data => this.setRightSliderFlag(data)
-    );
-    this.subinject.upperRightSliderDataObs.subscribe(data => {
-      const rightSliderFragData = data;
-      this.upperRightSideInputData = data;
-      this.setRightSliderFlag(rightSliderFragData.flag);
-      this.getStateData(data.state);
-    });
-    this.subinject.rightslider.subscribe(
-      data => this.getStateData(data)
-    );
-    this.subinject.upperData.subscribe(
-      data => this.getUpperDataValue(data)
-    );
-    this.eventService.upperSliderDataObs.subscribe(
-      data => {
+    super(eventService, subinject, dynamicComponentService);
+    // this.eventService.rightSliderData.subscribe(
+    //   data => this.setRightSliderFlag(data)
+    // );
+    // this.subinject.upperRightSliderDataObs.subscribe(data => {
+    //   const rightSliderFragData = data;
+    //   this.upperRightSideInputData = data;
+    //   this.setRightSliderFlag(rightSliderFragData.flag);
+    //   this.getStateData(data.state);
+    // });
+    // this.subinject.rightslider.subscribe(
+    //   data => this.getStateData(data)
+    // );
+    // this.subinject.upperDataSubsUpper.subscribe(
+    //   data => this.getUpperDataValue(data)
+    // );
+    // this.eventService.upperSliderDataObs.subscribe(
+    //   data => {
 
-        console.log('DialogContainerComponent constructor upperSliderDataObs: ', data);
+    //     console.log('DialogContainerComponent constructor upperSliderDataObs: ', data);
 
-        this.fragmentData = data;
-        console.log('UpperSlider constructor ngOnInit: ', this.fragmentData);
+    //     this.fragmentDataSubsUpper = data;
+    //     console.log('UpperSlider constructor ngOnInit: ', this.fragmentDataSubsUpper);
 
-        this.State = 'close';
+    //     this.State = 'close';
 
-        this.upperData = this.fragmentData.data;
+    //     this.upperDataSubsUpper = this.fragmentDataSubsUpper.data;
 
-        console.log('upperData: ', this.upperData);
-        console.log(this.fragmentData);
-      }
-    );
+    //     console.log('upperDataSubsUpper: ', this.upperDataSubsUpper);
+    //     console.log(this.fragmentDataSubsUpper);
+    //   }
+    // );
   }
 
   get data() {
-    return this.fragmentData;
+    return this.fragmentDataSubsUpper;
   }
 
   set data(data) {
     console.log('SubscriptionUpperSliderComponent data : ', data);
-    this.fragmentData = { data };
+    this.fragmentDataSubsUpper = { data };
   }
 
   subscriptionTab: any;
 
   State;
   rightSliderFlag;
-  upperData;
+  upperDataSubsUpper;
 
   flag = 'planOverview';
   plan = 'planServices';
@@ -81,21 +90,32 @@ export class SubscriptionUpperSliderComponent implements OnInit {
   headerDataDocuments = 'EMAIL DOCS WITH E-SIGN REQUEST';
 
   ngOnInit() {
-
+    console.log(history.state)
+    this.fragmentDataSubsUpper = history.state
+    this.upperDataSubsUpper = this.fragmentDataSubsUpper.data;
   }
 
   dialogClose() {
-    this.eventService.changeUpperSliderState({ state: 'close' });
+    // this.eventService.changeUpperSliderState({ state: 'close' });
     // this.dialogRef.close();
+    this.router.navigate(['/admin/subscription/settings'])
   }
 
   getStateData(data) {
     this.State = data;
   }
-
+  getPlanData(data) {
+    this.upperDataSubsUpper = data;
+  }
+  getServiceData(data) {
+    this.upperDataSubsUpper = data;
+  }
+  getDocumentData(data) {
+    this.upperDataSubsUpper = data;
+  }
   getUpperDataValue(data) {
-    this.upperData = data;
-    console.log('upperData', this.upperData);
+    this.upperDataSubsUpper = data;
+    console.log('upperDataSubsUpper', this.upperDataSubsUpper);
   }
   getCancelInvoiceSubscription(data) {
     console.log(data);
@@ -114,8 +134,8 @@ export class SubscriptionUpperSliderComponent implements OnInit {
   }
 
   // openClientDetails() {
-  //   this.authService.setClientData(this.fragmentData.data);
-  //   this.router.navigateByUrl('/customer/detail', {state: this.fragmentData.data});
+  //   this.authService.setClientData(this.fragmentDataSubsUpper.data);
+  //   this.router.navigateByUrl('/customer/detail', {state: this.fragmentDataSubsUpper.data});
   //   this.dialogClose();
 
   // }

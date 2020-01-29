@@ -1,9 +1,7 @@
 import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class SubscriptionInject {
 
   private newRightSliderData = new BehaviorSubject<object>({ state: 'close', fragmentData: {}, flag: '' });

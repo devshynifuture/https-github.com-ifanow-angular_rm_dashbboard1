@@ -1,13 +1,19 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort} from '@angular/material';
-import {DeleteSubscriptionComponent} from '../delete-subscription/delete-subscription.component';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {UtilService} from 'src/app/services/util.service';
-import {MatTableDataSource} from '@angular/material/table';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort } from '@angular/material';
+import { DeleteSubscriptionComponent } from '../delete-subscription/delete-subscription.component';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { UtilService } from 'src/app/services/util.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { FixedFeeComponent } from '../fixed-fee/fixed-fee.component';
+import { VariableFeeComponent } from '../variable-fee/variable-fee.component';
+import { BillerSettingsComponent } from '../biller-settings/biller-settings.component';
+import { ChangePayeeComponent } from '../change-payee/change-payee.component';
+import { CreateSubscriptionComponent } from '../create-subscription/create-subscription.component';
+import { PlanRightsliderComponent } from '../plan-rightslider/plan-rightslider.component';
 // import { element } from 'protractor';
 export interface PeriodicElement {
   service: string;
@@ -37,10 +43,10 @@ export class ClientUpperSubscriptionComponent implements OnInit {
   // newArray: any[];
   clientData;
   advisorId;
-  subscriptionData: Array<any> = [{subscriptions: [{}, {}, {}], planName: ''}];
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  subscriptionData: Array<any> = [{ subscriptions: [{}, {}, {}], planName: '' }];
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService,
-              public dialog: MatDialog, public subscription: SubscriptionService) {
+    public dialog: MatDialog, public subscription: SubscriptionService) {
   }
   ELEMENT_DATA;
   // dataSource: any;
@@ -57,26 +63,35 @@ export class ClientUpperSubscriptionComponent implements OnInit {
     if (this.isLoading) {
       return;
     }
+    let component;
     if (data) {
       if (value == 'billerSettings' || value == 'changePayee' || value == null) {
+        (value == 'billerSettings') ? component = BillerSettingsComponent : (value == 'changePayee') ? component = ChangePayeeComponent : '';
       } else if (data.subscriptionPricing.feeTypeId == 1) {
         value = 'createSubFixed';
+        component = CreateSubscriptionComponent
         data.subFlag = 'createSubFixed';
       } else {
         value = 'createSubVariable';
+        component = CreateSubscriptionComponent
         data.subFlag = 'createSubVariable';
       }
       data.clientId = this.clientData.id;
       data.isCreateSub = false;
       data.isSaveBtn = false;
     }
+    else {
+      data = this.clientData;
+      component = PlanRightsliderComponent;
+    }
     const fragmentData = {
       flag: value,
       data,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName: component
     };
-    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
@@ -102,7 +117,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
       offset: 0,
       order: 0,
     };
-    this.subscriptionData = [{subscriptions: [{}, {}, {}], planName: ''}];
+    this.subscriptionData = [{ subscriptions: [{}, {}, {}], planName: '' }];
     this.subscription.getSubSummary(obj).subscribe(
       data => this.getSubSummaryRes(data), (error) => {
         this.eventService.showErrorMessage(error);
@@ -113,17 +128,20 @@ export class ClientUpperSubscriptionComponent implements OnInit {
   }
   Open(state, data) {
     let feeMode;
+    let component;
     data.isCreateSub = true;
     (data.subscriptionPricing.feeTypeId == 1) ? feeMode = 'fixedModifyFees' : feeMode = 'variableModifyFees';
+    (data.subscriptionPricing.feeTypeId == 1) ? component = FixedFeeComponent : component = VariableFeeComponent
     const fragmentData = {
       flag: feeMode,
       data,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName: component
     };
-    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ',  UtilService.isRefreshRequired(sideBarData));
+        console.log('this is sidebardata in subs subs : ', UtilService.isRefreshRequired(sideBarData));
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getSummaryDataClient();
@@ -186,7 +204,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
         let singlePlanWiseArray: Array<any> = planWiseMap[d.planName];
         if (!singlePlanWiseArray) {
           singlePlanWiseArray = [];
-          this.subscriptionData.push({planName: d.planName, subscriptions: singlePlanWiseArray});
+          this.subscriptionData.push({ planName: d.planName, subscriptions: singlePlanWiseArray });
           planWiseMap[d.planName] = singlePlanWiseArray;
         }
         singlePlanWiseArray.push(d);
@@ -237,7 +255,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
           data => {
             this.deletedData(data);
             dialogRef.close(subData);
-            
+
           }
         );
       },
@@ -252,8 +270,8 @@ export class ClientUpperSubscriptionComponent implements OnInit {
       autoFocus: false,
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result,planSubArr,"delete result");
-      if(result != undefined){
+      console.log(result, planSubArr, "delete result");
+      if (result != undefined) {
         const tempList = []
         planSubArr.forEach(singleElement => {
           if (singleElement.id != result.id) {
@@ -277,8 +295,8 @@ export class ClientUpperSubscriptionComponent implements OnInit {
         autoFocus: false,
       });
       dialogRef.afterClosed().subscribe(result => {
-        console.log(result,"cancel was close");
-        if(result != undefined){
+        console.log(result, "cancel was close");
+        if (result != undefined) {
           this.getSummaryDataClient();
         }
       });

@@ -37,6 +37,7 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { SudscriptionTableFilterComponent } from './subscription/common-subscription-component/sudscription-table-filter/sudscription-table-filter.component';
 import { SetDateFooter } from './subscription/common-subscription-component/sudscription-table-filter/set-date-footer.component';
+import { SubscriptionInject } from './subscription-inject.service';
 
 
 export const componentList = [SubscriptionComponent,
@@ -123,7 +124,7 @@ export const componentList = [SubscriptionComponent,
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
 
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 }, SubscriptionInject
   ],
 })
 export class SubscriptionModule {
