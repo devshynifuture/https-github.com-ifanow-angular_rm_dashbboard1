@@ -1,7 +1,9 @@
 import {BehaviorSubject} from 'rxjs';
 import {Injectable} from '@angular/core';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class SubscriptionInject {
 
   private newRightSliderData = new BehaviorSubject<any>({state: 'close', fragmentData: {}, flag: ''});
@@ -75,6 +77,7 @@ export class SubscriptionInject {
     this.upperRightSliderData.next(sliderState);
     return this.upperRightSliderDataObs;
   }
+
   addEvent(data: object) {
     this.specialEvent.next(data)
   }
