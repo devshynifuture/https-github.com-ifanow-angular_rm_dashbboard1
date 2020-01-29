@@ -93,7 +93,8 @@ export class EmailServiceService {
     });
   }
 
-  getMailInboxList(labelIds: string, maxResults: number = 50, pageToken: string = '') {
+  getMailInboxList(data) {
+    const { labelIds, maxResults, pageToken } = data;
     const userInfo = AuthService.getUserInfo();
     return this.http.get(apiConfig.GMAIL_URL + appConfig.GET_GMAIL_INBOX_LIST, {
       email: userInfo.emailId,
@@ -296,6 +297,14 @@ export class EmailServiceService {
     });
   }
 
+  sendEmail(data) {
+    return this.http.post(apiConfig.GMAIL_URL + appConfig.SEND_EMAIL, data);
+  }
+
+  getAttachmentFiles(data) {
+    return this.http.get(apiConfig.GMAIL_URL + appConfig.GET_ATTACHMENTS, data);
+  }
+
   createUpdateDraft(body) {
     const userInfo = AuthService.getUserInfo();
     // console.log(apiConfig.GMAIL_URL + appConfig.CREATE_DRAFT, " \n http params \n", {
@@ -304,18 +313,26 @@ export class EmailServiceService {
     //   ...body
     // });
 
-    console.log("draft obj ->>>>>>>>>>", {
-      email: userInfo.emailId,
-      userId: userInfo.advisorId,
-      ...body
-    });
+    // console.log("draft obj ->>>>>>>>>>", {
+    //   email: userInfo.emailId,
+    //   userId: userInfo.advisorId,
+    //   ...body
+    // });
 
+    if (body.id) {
+      return this.http.post(apiConfig.GMAIL_URL + appConfig.UPDATE_DRAFT, {
+        email: userInfo.emailId,
+        userId: userInfo.advisorId,
+        ...body
+      })
+    } else if (body.id === null) {
+      return this.http.post(apiConfig.GMAIL_URL + appConfig.CREATE_DRAFT, {
+        email: userInfo.emailId,
+        userId: userInfo.advisorId,
+        ...body
+      });
+    }
 
-    return this.http.post(apiConfig.GMAIL_URL + appConfig.CREATE_DRAFT, {
-      email: userInfo.emailId,
-      userId: userInfo.advisorId,
-      ...body
-    });
   }
 
   openEmailAddTask(data, componentName) {

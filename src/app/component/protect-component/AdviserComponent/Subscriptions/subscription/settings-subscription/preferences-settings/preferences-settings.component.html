@@ -37,7 +37,7 @@
             </div>
             <div class="col-md-10 b-a p-0 min-height" [ngSwitch]="viewMode">
                 <div *ngSwitchCase="'tab1'">
-                    <div *ngIf="billerProfileData == undefined">
+                    <div *ngIf="billerProfileData">
                         <div class="wrapper-16 pt-20 skeletonAnimation"
                             *ngFor="let singleBillerProfile of billerProfileData" appSkeletonLoading
                             [appSkeletonLoading]="isLoading">
@@ -50,7 +50,7 @@
 
                                 <div class="col-md-3 d-flex justify-content-end align-items-center">
                                     <button mat-stroked-button
-                                        *ngIf="singleBillerProfile.isPrimary == true && billerProfileData.length > 1"
+                                        *ngIf="singleBillerProfile.isPrimary == true"
                                         class="text-primary br-0  ml-12"> PRIMARY </button>
                                     <i class="material-icons text-right right text-custom f-28 c-p"
                                         [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">

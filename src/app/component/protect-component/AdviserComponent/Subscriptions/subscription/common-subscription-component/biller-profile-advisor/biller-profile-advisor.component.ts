@@ -1,13 +1,13 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {PhotoCloudinaryUploadService} from '../../../../../../../services/photo-cloudinary-upload.service';
-import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
-import {UtilService, ValidatorType} from '../../../../../../../services/util.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { PhotoCloudinaryUploadService } from '../../../../../../../services/photo-cloudinary-upload.service';
+import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { UtilService, ValidatorType } from '../../../../../../../services/util.service';
 import { PostalService } from 'src/app/services/postal.service';
 
 @Component({
@@ -55,8 +55,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
   // validatorType = ValidatorType;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private fb: FormBuilder,
-              private subService: SubscriptionService, private postalService: PostalService,
-              private eventService: EventService, private http: HttpClient) {
+    private subService: SubscriptionService, private postalService: PostalService,
+    private eventService: EventService, private http: HttpClient) {
   }
 
   @Input() Selected;
@@ -184,11 +184,11 @@ export class BillerProfileAdvisorComponent implements OnInit {
       bankName: [(data.bankName), [Validators.required]],
       acNo: [(data.acNumber), [Validators.required]],
       ifscCode: [(data.ifscCode), [Validators.required]],
-      address: [(data.bankCity), [Validators.required]],
-      state: [(data.state), [Validators.required]],
-      pincode: [(data.bankZipCode), [Validators.required, Validators.minLength(6)]],
-      city: [(data.city), Validators.required],
-      country: [(data.country), [Validators.required]],
+      address: [(data.branchAddress), [Validators.required]],
+      stateB: [(data.bankState), [Validators.required]],
+      pincodeB: [(data.bankZipCode), [Validators.required, Validators.minLength(6)]],
+      cityB: [(data.bankCity), Validators.required],
+      countryB: [(data.bankCountry), [Validators.required]],
     }),
       this.MiscellaneousData = this.fb.group({
         footnote: [(data.footnote), [Validators.required]],
@@ -231,23 +231,28 @@ export class BillerProfileAdvisorComponent implements OnInit {
         this.submitBillerForm();
     }
   }
-getPostalPin(value){
-  let obj = {
-    zipCode : value
+  getPostalPin(value, state) {
+    let obj = {
+      zipCode: value
+    }
+    if (value.length > 5) {
+      this.postalService.getPostalPin(value).subscribe(data => {
+        console.log('postal 121221', data)
+        this.PinData(data, state)
+      })
+    }
   }
-  if(value.length > 5){
-    this.postalService.getPostalPin(value).subscribe(data=>{
-      console.log('postal 121221',data)
-      this.PinData(data)
-    })
+  PinData(data, state) {
+    if (state == 'bankDetailsForm') {
+      this.getFormControlBank().cityB.setValue(data[0].PostOffice[0].District)
+      this.getFormControlBank().countryB.setValue(data[0].PostOffice[0].Country)
+      this.getFormControlBank().stateB.setValue(data[0].PostOffice[0].Circle)
+    } else {
+      this.getFormControlProfile().city.setValue(data[0].PostOffice[0].District);
+      this.getFormControlProfile().country.setValue(data[0].PostOffice[0].Country);
+      this.getFormControlProfile().state.setValue(data[0].PostOffice[0].Circle);
+    }
   }
-
-}
-PinData(data){
-  this.postOfficeDataCircle = data[0].PostOffice[0].Circle;
-  this.postOfficeDataCountry = data[0].PostOffice[0].Country;
-  this.postOfficeDataDistrict = data[0].PostOffice[0].District;
-}
 
   back() {
     this.selected--;
@@ -296,27 +301,27 @@ PinData(data){
     } else if (this.bankDetailsForm.controls.address.invalid) {
       this.isaddress = true;
       return;
-    } else if (this.bankDetailsForm.controls.city.invalid) {
+    } else if (this.bankDetailsForm.controls.cityB.invalid) {
       this.isCity = true;
       return;
-    } else if (this.bankDetailsForm.controls.state.invalid) {
+    } else if (this.bankDetailsForm.controls.stateB.invalid) {
       this.isState = true;
       return;
-    } else if (this.bankDetailsForm.controls.pincode.invalid) {
+    } else if (this.bankDetailsForm.controls.pincodeB.invalid) {
       this.isZipCode = true;
       return;
-    } else if (this.bankDetailsForm.controls.country.invalid) {
+    } else if (this.bankDetailsForm.controls.countryB.invalid) {
       this.isCountry = true;
       return;
     } else {
       const obj = {
         acNumber: this.bankDetailsForm.controls.acNo.value,
         advisorId: this.advisorId,
-        bankCity: this.bankDetailsForm.controls.city.value,
-        bankCountry: this.bankDetailsForm.controls.country.value,
+        bankCity: this.bankDetailsForm.controls.cityB.value,
+        bankCountry: this.bankDetailsForm.controls.countryB.value,
         bankName: this.bankDetailsForm.controls.bankName.value,
-        bankState: this.bankDetailsForm.controls.state.value,
-        bankZipCode: this.bankDetailsForm.controls.pincode.value,
+        bankState: this.bankDetailsForm.controls.stateB.value,
+        bankZipCode: this.bankDetailsForm.controls.pincodeB.value,
         billerAddress: this.profileDetailsForm.controls.Address.value,
         branchAddress: this.bankDetailsForm.controls.address.value,
         city: this.profileDetailsForm.controls.city.value,
@@ -350,7 +355,7 @@ PinData(data){
 
     }
   }
-  getPostalRes(data){
+  getPostalRes(data) {
     console.log('data posta 123345566')
   }
   closeTab(data) {

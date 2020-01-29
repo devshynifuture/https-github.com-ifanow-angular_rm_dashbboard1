@@ -142,19 +142,13 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     }
     this.editPayment.controls.finalAmount.valueChanges.subscribe(val => {
       if (val == null) {
-        // val = 0;
-        // this.editPayment.controls.finalAmount.setValue(val);
       } else if (val < this.editPayment.value.discount) {
-        // val = this.editPayment.value.finalAmount;
         this.editPayment.controls.discount.setValue(val);
       }
       this.changeTaxStatus(val, this.editPayment.value.discount, this.editPayment.value.taxStatus);
     });
     this.editPayment.controls.discount.valueChanges.subscribe(val => {
-      // console.log('this.editPayment.controls.discount : ', val);
       if (val == null) {
-        // val = 0;
-        // this.editPayment.controls.discount.setValue(val);
       } else if (val > this.editPayment.value.finalAmount) {
         val = this.editPayment.value.finalAmount;
         this.editPayment.controls.discount.setValue(val);
@@ -164,9 +158,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     this.editPayment.controls.taxStatus.valueChanges.subscribe(val => {
       this.changeTaxStatus(this.editPayment.value.finalAmount, this.editPayment.value.discount, val);
     });
-
     this.editPayment.controls.clientName.valueChanges.subscribe(value => {
-      // this.selectClient(value);
     });
   }
 
@@ -316,7 +308,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       let service;
       if (this.storeData.id == 0 || this.storeData.id == null) {
           obj['advisorBillerProfileId'] = (!this.storeData.advisorBillerProfileId) ? this.advisorBillerProfileId : this.storeData.advisorBillerProfileId,
-          obj['clientId'] = (this.upperData == undefined) ? this.clientId : this.upperData,
+          obj['clientId'] = (this.upperData == undefined) ? this.clientId : this.upperData.id,
           obj['advisorId'] = this.advisorId,
           obj['clientBillerId'] = this.storeData.clientBillerId,
           service = [{
@@ -400,7 +392,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   addInvoiceRes(data) {
     console.log('addInvoiceRes', data);
     if (data == 1) {
-      this.cancelAddInvoice.emit(false);
+      this.cancelAddInvoice.emit(true);
       // this.Close('close', true);
     }
   }
@@ -454,7 +446,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
 
   closeEditInv() {
     // this.editPayment.reset();
-    if (this.invoiceValue == 'EditInInvoice' || this.invoiceValue == 'edit') {
+    if (this.storeData.invoiceNumber == undefined) {
       this.valueChange.emit(false);
       this.cancelAddInvoice.emit(false);
     } else {

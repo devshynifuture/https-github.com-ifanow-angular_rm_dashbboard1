@@ -137,7 +137,7 @@ export class InputValueValidationDirective /*implements Validator*/ {
     if (!isNaN(currValue)) {
       // console.log('InputValueValidationDirective onInputChange isNaN : ', currValue);
       if (this._maxValue && this._maxValue < currValue) {
-        console.log('InputValueValidationDirective input this.maxValue  : ', this._maxValue, ' currentValue : ', currValue);
+        console.log('InputValueValidationDirective input this.maxValue  : ', this._maxValue, ' currentValue 1 : ', currValue);
         currValue = this._maxValue;
         return false;
       } else if (this.minValue && this.minValue > currValue) {

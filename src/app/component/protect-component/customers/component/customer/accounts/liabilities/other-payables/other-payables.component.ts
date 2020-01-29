@@ -110,7 +110,7 @@ export class OtherPayablesComponent implements OnInit {
     this.dataSource.data = [{}, {}, {}];
     this.custmService.getOtherPayables(obj).subscribe(
       data => this.getOtherPayablesRes(data), (error) => {
-        this.eventService.openSnackBar('Something went worng!', 'dismiss');
+        this.eventService.openSnackBar('Something went wrong!', 'dismiss');
         this.dataSource.data = [];
         this.isLoading = false;
       }

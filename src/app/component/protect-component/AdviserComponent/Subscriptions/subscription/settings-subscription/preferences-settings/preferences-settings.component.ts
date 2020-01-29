@@ -37,7 +37,7 @@ export class PreferencesSettingsComponent implements OnInit {
 
     this.viewMode = 'tab1';
     this.advisorId = AuthService.getAdvisorId();
-    (this.utilservice.checkSubscriptionastepData(2) == false) ? this.billerProfileData = undefined : this.billerProfileData = [{ isPrimary: false }]
+    (this.utilservice.checkSubscriptionastepData(2) == false) ? this.billerProfileData = undefined : this.billerProfileData = [{}, {}, {}]
     this.getProfileBillerData();
     this.getTemplate();
   }
@@ -205,23 +205,24 @@ export class PreferencesSettingsComponent implements OnInit {
 
     });
   }
-
   openEmailInvoice(data) {
-    const Fragmentdata = {
-      flag: data,
-      id: 1
+    const fragmentData = {
+      flag: 'app-preference-email-invoice',
+      id: 1,
+      data,
+      direction: 'top',
+      componentName: PreferenceEmailInvoiceComponent,
+      state: 'open'
     };
 
-    const dialogRef = this.dialog.open(PreferenceEmailInvoiceComponent, {
-      width: '1400px',
-      data: Fragmentdata,
-      autoFocus: false,
-      panelClass: 'dialogBox',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-
-    });
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getClientSubscriptionList();
+          subscription.unsubscribe();
+        }
+      }
+    );
   }
 
 }

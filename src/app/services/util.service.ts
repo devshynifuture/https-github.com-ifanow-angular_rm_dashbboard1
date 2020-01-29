@@ -16,12 +16,6 @@ export class UtilService {
   advisorId: any;
 
   constructor(private eventService: EventService, private http: HttpClient, private subService: SubscriptionService) {
-    this.advisorId = AuthService.getAdvisorId();
-    this.subService.getDashboardSubscriptionResponse(this.advisorId).subscribe(
-      data => {
-        this.subscriptionStepData = data.advisorAccomplishedSubscriptionFinalList;
-      }
-    );
   }
   subscriptionStepData;
   getFamilyMemberData: any;
@@ -54,6 +48,9 @@ export class UtilService {
 
   static isDialogClose(data) {
     return data && data.state && data.state === 'close';
+  }
+  setSubscriptionStepData(data) {
+    this.subscriptionStepData = data
   }
   checkSubscriptionastepData(stepNo) {
     let tempData;

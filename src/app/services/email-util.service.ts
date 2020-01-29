@@ -70,10 +70,7 @@ export class EmailUtilService {
       const { snippet } = message;
       if (parts && parts.length !== 0 && parts !== null) {
         parts.forEach((part) => {
-          console.log("this is the part of the body::::::::::::", part);
           const data = part.body.data;
-
-          console.log("this is part body and data of a message :::::::::::::::::::::::: 124", part.body, data);
 
           if (part.body.data) {
             let decodedValue = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data)

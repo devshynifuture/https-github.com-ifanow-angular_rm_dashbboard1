@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialog} from '@angular/material';
 import {EventService} from '../../../../../../../Data-service/event.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
@@ -22,15 +22,24 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
 
   });
   heading: string;
+  fragmentData: any;
 
-  constructor(private eventService: EventService, public subService: SubscriptionService, public dialogRef: MatDialogRef<PreferenceEmailInvoiceComponent>, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public fragmentData: any) {
-    console.log('ModifyFeeDialogComponent constructor: ', this.fragmentData);
-    this.heading = (this.fragmentData.flag.id == 1) ? 'Invoice' : (this.fragmentData.flag.id == 2) ? 'Quotations' : (this.fragmentData.flag.id == 3) ? ' Documents with eSign request' : ' Documents without eSign request';
-    this.storeData = this.fragmentData.flag;
+  constructor(private eventService: EventService, public subService: SubscriptionService,public dialog: MatDialog) {
+
   }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+  }
+  get data() {
+    return this.fragmentData;
+  }
+
+  set data(data) {
+    console.log('SubscriptionUpperSliderComponent data : ', data);
+    this.fragmentData = { data };
+    this.heading = (this.fragmentData.data.id == 1) ? 'Invoice' : (this.fragmentData.data.id == 2) ? 'Quotations' : (this.fragmentData.data.id == 3) ? ' Documents with eSign request' : ' Documents without eSign request';
+    this.storeData = this.fragmentData.data;
   }
 
 // Begin ControlValueAccesor methods.
@@ -52,9 +61,14 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
     this.onTouched = fn;
   }
 
+  // dialogClose() {
+  //   this.dialogRef.close();
+  // }
   dialogClose() {
-    this.dialogRef.close();
+    this.eventService.changeUpperSliderState({ state: 'close' });
+    // this.dialogRef.close();
   }
+
 
   saveData(data) {
     console.log(data);

@@ -38,14 +38,16 @@ export class LoginComponent implements OnInit {
     raised: true,
     stroked: false,
     mode: 'determinate',
-    value: 0,
+    value: 10,
     disabled: false,
     fullWidth: false,
     // buttonIcon: {
     //   fontIcon: 'favorite'
     // }
   }
-
+  errorRequired:boolean = false;
+  errorMsg: boolean = false;
+  errorStyle = {}
   constructor(
     private formBuilder: FormBuilder, private eventService: EventService,
     public backOfficeService: BackOfficeService,
@@ -97,18 +99,20 @@ export class LoginComponent implements OnInit {
     this.loginForm.reset();
   }
 
+  passEvent: any;
   enterEvent(event) {
+    this.errorMsg = false;
+    this.errorStyle = {
+      'visibility': this.errorMsg ? 'visible' : 'hidden',
+      'opacity': this.errorMsg ? '1' : '0',
+    }
     if (event.keyCode === 13) {
-      // this.onSubmit();
+      this.passEvent = event.keyCode;
     }
   }
 
   onSubmit() {
-    // console.log(event)
 
-    // this.authService.setToken('12333nhsdhdh1233');
-    // this.authService.setUserInfo('https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png');
-    // this.router.navigate(['/admin/subscription']);
     if (this.loginForm.valid) {
       const loginData = {
         userName: this.loginForm.controls.name.value,
@@ -116,13 +120,9 @@ export class LoginComponent implements OnInit {
         roleId: 1
       };
       this.isLoading = true;
-      // this.hardCodeLoginForTest();
       this.backOfficeService.loginApi(loginData).subscribe(
         data => {
-          this.isLoading = false;
-          this.barButtonOptions.active = false;
 
-          // this.setTimeOutRecursive(event, 100)
           if (data) {
             console.log('data: ', data);
             this.authService.setToken(data.token);
@@ -130,35 +130,31 @@ export class LoginComponent implements OnInit {
               data.advisorId = data.adminAdvisorId;
             }
             this.authService.setUserInfo(data);
-            // this.eventService.openSnackBar('Login SuccessFully', 'dismiss');
             this.router.navigate(['admin', 'subscription', 'dashboard']);
-            // Hard coded client login for testing
             this.authService.setClientData({
               id: 2978, name: 'Aryendra Kumar Saxena'
             });
 
           }
+          else {
+            this.passEvent = "";
+            this.errorMsg = true;
+            this.errorStyle = {
+              'visibility': this.errorMsg ? 'visible' : 'hidden',
+              'opacity': this.errorMsg ? '1' : '0',
+            }
+            this.barButtonOptions.active = false;
+          }
         },
         err => {
           this.isLoading = false;
+          this.barButtonOptions.active = false;
           console.log('error on login: ', err);
           this.eventService.openSnackBar(err, 'dismiss');
         }
       );
     }
   }
-
-  // setTimeOutRecursive(event, widthPercent) {
-  //   setTimeout(() => {
-  //     if (this.isLoading && widthPercent <= 90) {
-  //       $(event.toElement).animate({width: widthPercent + '%'}, '500ms').css({width: '0%'});
-  //       this.setTimeOutRecursive(event, widthPercent + 10);
-  //       // this.animationSpan.nativeElement.animate({width: i + '%'}, '100ms');
-  //     } else if (!this.isLoading) {
-  //       $(event.toElement).animate({width: '100%'}, '500ms').css({width: '0%'});
-  //     }
-  //   }, 500);
-  // }
 
   onEnterPressed() {
     console.log(" on enter pressed sdkvjasbhkdj");
@@ -196,31 +192,25 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  progressButtonClick() {
-    this.barButtonOptions.active = true;
-    // this.barButtonOptions.disabled = true;
-    this.barButtonOptions.value = 0;
-    this.setTimeOutRecursiveForProgressValue(0);
-    this.onSubmit();
-    // this.barButtonOptions.text = 'Saving Data...';
-    /* setTimeout(() => {
-       this.barButtonOptions.active = false;
-       // this.barButtonOptions.disabled = true;
-       // this.barButtonOptions.text = 'Login';
-     }, 3500);*/
-  }
-
-  setTimeOutRecursiveForProgressValue(progressValue) {
-    setTimeout(() => {
-      if (this.barButtonOptions.active && progressValue < 100) {
-        this.barButtonOptions.value = progressValue;
-        this.setTimeOutRecursiveForProgressValue(progressValue + 10);
-      } else {
-        this.barButtonOptions.value = 0;
-
+  progressButtonClick(event) {
+    console.log(this.loginForm.value, "this.loginForm.value.name");
+    if (this.loginForm.value.name != "" && this.loginForm.value.password != "") {
+      this.errorMsg = false;
+      this.errorStyle = {
+        'visibility': this.errorMsg ? 'visible' : 'hidden',
+        'opacity': this.errorMsg ? '1' : '0',
       }
-    }, 250);
+      this.barButtonOptions.active = true;
+      this.barButtonOptions.value = 20;
+      this.onSubmit();
+    } else {
+      this.loginForm.get('name').markAsTouched();
+      this.loginForm.get('password').markAsTouched();
+      this.barButtonOptions.active = false;
+    }
   }
+
+
 
 }
 

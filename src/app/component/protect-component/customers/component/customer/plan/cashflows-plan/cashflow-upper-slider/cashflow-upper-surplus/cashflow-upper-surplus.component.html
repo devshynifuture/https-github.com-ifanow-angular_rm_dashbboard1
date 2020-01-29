@@ -10,8 +10,15 @@
     <table mat-table [dataSource]="dataSource" id="table-low" class=" ">
         <ng-container matColumnDef="description">
             <th class="br-grey f-400 f-14" mat-header-cell *matHeaderCellDef> Description </th>
-            <td class="br-grey f-14" mat-cell *matCellDef="let element">
-                {{ element.description }} <img src="/assets/images/svg/cash-flow-edit-icon.svg">
+            <td class="br-grey f-14" mat-cell *matCellDef="let element; let i = index" appCashflowTableEdit
+                [editModeTable]="editMode">
+                <span class="tableValue">
+                    {{ element.description }}
+                </span>
+                <span class="inputValue d-none">
+                    <input type="text" #descRef (input)="changeTableTdValue(descRef.value, 'description', i)">
+                </span>
+                <img src="/assets/images/svg/cash-flow-edit-icon.svg">
             </td>
         </ng-container>
 
@@ -20,16 +27,13 @@
             <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
                 Apr-{{ year.slice(-2) }}
             </th>
-            <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
-                <span *ngIf="shouldShowIcon">
-                    <button mat-icon-button>
-                        <mat-icon>
-                            add_circle_outline
-                        </mat-icon>
-                    </button>
-                </span>
-                <span>
+            <td class="br-grey text-right f-14" mat-cell *matCellDef="let element; let i = index" appCashflowTableEdit
+                [editModeTable]="editMode">
+                <span class="tableValue">
                     {{ element.month1 }}
+                </span>
+                <span class="inputValue d-none">
+                    <input type="text" #month1Ref (input)="changeTableTdValue(month1Ref.value, 'month1', i)">
                 </span>
             </td>
         </ng-container>
@@ -39,30 +43,58 @@
             <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
                 May-{{ year.slice(-2) }}
             </th>
-            <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
-                {{ element.month2 }} </td>
+            <td class="br-grey text-right f-14" mat-cell *matCellDef="let element; let i = index" appCashflowTableEdit
+                [editModeTable]="editMode">
+                <span class="tableValue">
+                    {{ element.month2 }}
+                </span>
+                <span class="inputValue d-none">
+                    <input type="text" #month2Ref (input)="changeTableTdValue(month2Ref.value, 'month2', i)">
+                </span>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="month3">
             <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
                 Jun-{{ year.slice(-2) }}
             </th>
-            <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
-                {{ element.month3 }} </td>
+            <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element; let i = index"
+                appCashflowTableEdit [editModeTable]="editMode">
+                <span class="tableValue">
+                    {{ element.month3 }}
+                </span>
+                <span class="inputValue d-none">
+                    <input type="text" #month3Ref (input)="changeTableTdValue(month3Ref.value, 'month3', i)">
+                </span>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="month4">
             <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Jul-{{ year.slice(-2) }}
             </th>
-            <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
-                {{ element.month4 }} </td>
+            <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element; let i = index"
+                appCashflowTableEdit [editModeTable]="editMode">
+                <span class="tableValue">
+                    {{ element.month4 }}
+                </span>
+                <span class="inputValue d-none">
+                    <input type="text" #month4Ref (input)="changeTableTdValue(month4Ref.value, 'month4', i)">
+                </span>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="month5">
             <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Aug-{{ year.slice(-2) }}
             </th>
-            <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
-                {{ element.month5 }} </td>
+            <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element; let i = index"
+                appCashflowTableEdit [editModeTable]="editMode">
+                <span class="tableValue">
+                    {{ element.month5 }}
+                </span>
+                <span class="inputValue d-none">
+                    <input type="text" #month5Ref (input)="changeTableTdValue(month5Ref.value, 'month5', i)">
+                </span>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="groupHeader">
@@ -74,50 +106,99 @@
         <ng-container matColumnDef="month6">
             <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Sep-{{ year.slice(-2) }}
             </th>
-            <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
-                {{ element.month6 }} </td>
+            <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element; let i = index"
+                appCashflowTableEdit [editModeTable]="editMode">
+                <span class="tableValue">
+                    {{ element.month6 }}
+                </span>
+                <span class="inputValue d-none">
+                    <input type="text" #month6Ref (input)="changeTableTdValue(month6Ref.value, 'month6', i)">
+                </span>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="month7">
             <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Oct-{{ year.slice(-2) }}
             </th>
-            <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
-                {{ element.month7 }} </td>
+            <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element; let i = index"
+                appCashflowTableEdit [editModeTable]="editMode">
+                <span class="tableValue">
+                    {{ element.month7 }}
+                </span>
+                <span class="inputValue d-none">
+                    <input type="text" #month7Ref (input)="changeTableTdValue(month7Ref.value, 'month7', i)">
+                </span>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="month8">
             <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Nov-{{ year.slice(-2) }}
             </th>
-            <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
-                {{ element.month8 }} </td>
+            <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element; let i = index"
+                appCashflowTableEdit [editModeTable]="editMode">
+                <span class="tableValue">
+                    {{ element.month8 }}
+                </span>
+                <span class="inputValue d-none">
+                    <input type="text" #month8Ref (input)="changeTableTdValue(month8Ref.value, 'month8', i)">
+                </span>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="month9">
             <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Dec-{{ year.slice(-2) }}
             </th>
-            <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
-                {{ element.month9 }}</td>
+            <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element; let i = index"
+                appCashflowTableEdit [editModeTable]="editMode">
+                <span class="tableValue">
+                    {{ element.month9 }}
+                </span>
+                <span class="inputValue d-none">
+                    <input type="text" #month9Ref (input)="changeTableTdValue(month9Ref.value, 'month9', i)">
+                </span>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="month10">
             <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Jan-{{ year.slice(-2) }}
             </th>
-            <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
-                {{ element.month10 }} </td>
+            <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element; let i = index"
+                appCashflowTableEdit [editModeTable]="editMode">
+                <span class="tableValue">
+                    {{ element.month10 }}
+                </span>
+                <span class="inputValue d-none">
+                    <input type="text" #month10Ref (input)="changeTableTdValue(month10Ref.value, 'month10', i)">
+                </span>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="month11">
             <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Feb-{{ year.slice(-2) }}
             </th>
-            <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
-                {{element.month11}} </td>
+            <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element; let i = index"
+                appCashflowTableEdit [editModeTable]="editMode">
+                <span class="tableValue">
+                    {{ element.month11 }}
+                </span>
+                <span class="inputValue d-none">
+                    <input type="text" #month11Ref (input)="changeTableTdValue(month11Ref.value, 'month11', i)">
+                </span>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="month12">
             <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Mar-{{ year.slice(-2) }}
             </th>
-            <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
-                {{ element.month12 }}</td>
+            <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element; let i = index"
+                appCashflowTableEdit [editModeTable]="editMode">
+                <span class="tableValue">
+                    {{ element.month12 }}
+                </span>
+                <span class="inputValue d-none">
+                    <input type="text" #month12Ref (input)="changeTableTdValue(month12Ref.value, 'month12', i)">
+                </span>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="total">

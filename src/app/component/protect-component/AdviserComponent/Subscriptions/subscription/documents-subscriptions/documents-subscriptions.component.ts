@@ -290,7 +290,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
         console.log(data, 'clientdata');
 
       }, (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.openSnackBar('Somthing went wrong!', 'dismiss');
       }
     );
   }

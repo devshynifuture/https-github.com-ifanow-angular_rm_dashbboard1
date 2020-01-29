@@ -5,6 +5,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
 import {AuthService} from 'src/app/auth-service/authService';
 import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import { PostalService } from 'src/app/services/postal.service';
 
 @Component({
   selector: 'app-payee-settings',
@@ -67,7 +68,7 @@ export class PayeeSettingsComponent implements OnInit {
   showGstin: any;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private eventService: EventService,
-              private subService: SubscriptionService, private fb: FormBuilder) {
+              private subService: SubscriptionService, private fb: FormBuilder, private postalService: PostalService,) {
   }
 
   get data() {
@@ -95,6 +96,22 @@ export class PayeeSettingsComponent implements OnInit {
     this.subService.getListOfFamilyByClient(obj).subscribe(
       data => this.getListOfFamilyByClientRes(data)
     );
+  }
+  getPostalPin(value) {
+    let obj = {
+      zipCode: value
+    }
+    if (value.length > 5) {
+      this.postalService.getPostalPin(value).subscribe(data => {
+        console.log('postal 121221', data)
+        this.PinData(data)
+      })
+    }
+  }
+  PinData(data) { 
+      this.getFormControl().city.setValue(data[0].PostOffice[0].District)
+      this.getFormControl().country.setValue(data[0].PostOffice[0].Country)
+      this.getFormControl().state.setValue(data[0].PostOffice[0].Circle)
   }
   gstTreatmentRemove(value){
   this.showGstin = value
@@ -215,7 +232,7 @@ export class PayeeSettingsComponent implements OnInit {
           customerTypeId: (this.payeeSettingsForm.controls.customerType.value == 'Business') ? 1 : 2,
           email: this.payeeSettingsForm.controls.emailId.value,
           gstTreatmentId: (this.payeeSettingsForm.controls.gstTreatment.value == 'Registered Business - Regular') ? 1 : (this.payeeSettingsForm.controls.gstTreatment.value == 'Registered Business - Composition') ? 2 : 3,
-          gstin: this.payeeSettingsForm.controls.gstIn.value,
+          gstin: (this.payeeSettingsForm.controls.gstIn.value == null)?0:this.payeeSettingsForm.controls.gstIn.value,
           payeeTypeId: 1,
           paymentTermsId: 1,
           billerAddress: this.payeeSettingsForm.controls.billingAddress.value,
@@ -234,7 +251,7 @@ export class PayeeSettingsComponent implements OnInit {
 
         const obj = {
           customerName: this.getFormControl().customerName.value,
-          gstin: this.getFormControl().gstIn.value,
+          gstin: (this.getFormControl().gstIn.value == null)?0:this.payeeSettingsForm.controls.gstIn.value,
           familyMemberId :  this.familyMemberId ,
           gstTreatmentId: (this.getFormControl().gstTreatment.value == 'Registered Business - Regular') ? 1 : (this.payeeSettingsForm.controls.gstTreatment.value == 'Registered Business - Composition') ? 2 : 3,
           email: this.getFormControl().emailId.value,
