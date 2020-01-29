@@ -89,8 +89,8 @@ export class BillerSettingsComponent implements OnInit {
   }
 
   Close(flag) {
-    this.subInjectService.changeUpperRightSliderState({ state: 'close',refreshRequired:flag });
-    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag });
+    this.subInjectService.changeUpperRightSliderState({ state: 'close', refreshRequired: flag });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
   editProfileData(data) {

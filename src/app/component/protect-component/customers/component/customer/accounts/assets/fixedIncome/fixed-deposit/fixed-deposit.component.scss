@@ -9,11 +9,15 @@
 ::ng-deep .mat-datepicker-toggle {
     position: absolute;
     right: 8px !important;
-    top: -16px !important;
+    top: 10px !important;
     left: auto !important;
 }
 
 .classBlue {
     border: 1px solid #008FFF;
     color: #008FFF;
+}
+
+::ng-deep .mat-form-field-suffix {
+    position: inherit !important;
 }
