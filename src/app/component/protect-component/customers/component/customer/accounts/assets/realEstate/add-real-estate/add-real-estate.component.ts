@@ -52,6 +52,7 @@ export class AddRealEstateComponent implements OnInit {
   showErrorOwner = false;
   familyMemberId: any;
   ownerDataName: any;
+  ownershipPerc: any;
   constructor(public custumService: CustomerService, public subInjectService: SubscriptionInject, private fb: FormBuilder, public custmService: CustomerService, public eventService: EventService, public utils: UtilService) { }
   // set inputData(inputData) {
   //   this._inputData = inputData;
@@ -248,17 +249,15 @@ export class AddRealEstateComponent implements OnInit {
   }
   getCoOwnerDetails(item){
     console.log(item);
-    // this.ownerDataName=this.getCoOwner.value[this.getCoOwner.value.length-1];
-    // this.addrealEstateForm.value.getCoOwnerName.forEach(element => {
-    //   if(element.ownershipPerc==null){
-    //     this.getCoOwner.setValue([
-    //       { ownerName: element.ownerName, ownershipPerc:(element.ownershipPerc)?element.ownershipPerc:null, familyMemberId: (element.familyMemberId)?element.familyMemberId:item.id},
-    //     ]);
-    //   }
+    this.ownerDataName=this.getCoOwner.value[this.getCoOwner.value.length-1];
+    this.addrealEstateForm.value.getCoOwnerName.forEach(element => {
+      if(element.ownershipPerc==null){
+        this.getCoOwner.setValue([
+          { ownerName: item.userName, ownershipPerc:null, familyMemberId: item.id},
+        ]);
+      }
       
-    // });
-
-    // console.log(this.addrealEstateForm.value.getCoOwnerName[this.getCoOwner.value.length-1].setValue(item.id))
+    });
   }
   onChange(data) {
     if (data == 'owner') {

@@ -85,7 +85,7 @@
         <ng-container matColumnDef="desc">
             <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br t-10"> Description </th>
             <td mat-cell *matCellDef="let element" class="br t-10">
-                <div class="bar"> {{element.description}} </div>
+                <div class="bar"> {{isLoading ? '' : element.description || '-'}} </div>
             </td>
             <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
