@@ -70,7 +70,7 @@
             <th mat-sort-header="number" mat-header-cell *matHeaderCellDef class="br textRight text-right t-7"> Account number
             </th>
             <td mat-cell *matCellDef="let element" class="br amt text-right t-7">
-                <div class="bar"> {{element.linkedBankAccount}} </div>
+                <div class="bar"> {{isLoading ? '' : element.linkedBankAccount || '-'}} </div>
             </td>
             <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
