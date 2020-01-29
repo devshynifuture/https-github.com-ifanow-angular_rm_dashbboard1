@@ -109,8 +109,9 @@
 
                 <ng-container matColumnDef="rate">
                     <th mat-sort-header="rateOfReturns" mat-header-cell *matHeaderCellDef
-                        class="br t-18 text-right t-7">
-                        Rate of returns
+                        class="br t-18 text-right t-7" matTooltip="Rate of returns"
+                        aria-label="Button that displays a tooltip when focused or hovered over"> 
+                        Rate...
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right t-7 amt">
                         <div class="bar"> {{element.rateOfReturn}} </div>
@@ -119,8 +120,9 @@
                 </ng-container>
                 <ng-container matColumnDef="bal">
                     <th mat-sort-header="currentEpfBalance" mat-header-cell *matHeaderCellDef
-                        class="br t-18 text-right">
-                        Balance mentioned
+                        class="br t-18 text-right" matTooltip="Balance mentioned"
+                        aria-label="Button that displays a tooltip when focused or hovered over">
+                        Balance ment...
                     </th>
                     <td mat-cell *matCellDef="let element" class="br t-18 text-right amt">
                         <div class="bar" appFormatNumber> {{ element.currentEpfBalance }} </div>

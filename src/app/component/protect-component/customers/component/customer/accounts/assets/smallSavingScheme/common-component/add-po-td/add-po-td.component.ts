@@ -68,6 +68,8 @@ export class AddPoTdComponent implements OnInit {
       ownerName: [data.ownerName, [Validators.required]],
       amtInvested: [data.amountInvested, [Validators.required, Validators.min(200)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
+      description: [data.description, [Validators.required]],
+      
       tenure: [data.tenure+"", [Validators.required]],
       ownershipType: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]]
     })

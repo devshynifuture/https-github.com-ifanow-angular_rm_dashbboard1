@@ -157,7 +157,7 @@ export class AddEPFComponent implements OnInit {
         balanceAsOnDate: this.datePipe.transform(this.epf.controls.balanceAsOn.value, 'yyyy-MM-dd'),
         epfNo: this.epf.controls.EPFNo.value,
         bankAccountNumber: this.epf.controls.bankAcNo.value,
-        description: this.epf.controls.maturityYear.value,
+        description: this.epf.controls.description.value,
         id: this.epf.controls.id.value
       }
       if (this.epf.controls.id.value == undefined) {

@@ -78,7 +78,7 @@
                         <div class="bar" appFormatNumber> {{element.marketValue}} </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" appFormatNumber [value]="sumOfMarketValue">
-                        <div class="bar"> {{sumOfMarketValue || ' '}} </div>
+                        <div class="bar"> {{isLoading ? '' : sumOfMarketValue || '-'}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="pvalue">
@@ -88,13 +88,13 @@
                         <div class="bar" appFormatNumber> {{element.approximatePurchaseValue}} </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 p-8 f-500 text-right" appFormatNumber [value]="sumOfPurchaseValue">
-                        <div class="bar"> {{sumOfPurchaseValue || ' '}} </div>
+                        <div class="bar"> {{isLoading ? '' : sumOfPurchaseValue || '-'}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="desc">
                     <th mat-sort-header="desc" mat-header-cell *matHeaderCellDef class="br"> Description </th>
                     <td mat-cell *matCellDef="let element" class="br">
-                        <div class="bar"> {{element.description}} </div>
+                        <div class="bar"> {{isLoading ? '' : element.description || '-'}} </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>
@@ -225,7 +225,7 @@
                 <ng-container matColumnDef="desc">
                     <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br"> Description </th>
                     <td mat-cell *matCellDef="let element" class="br">
-                        <div class="bar"> {{element.description}} </div>
+                        <div class="bar"> {{isLoading ? '' : element.description || '-'}} </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>
