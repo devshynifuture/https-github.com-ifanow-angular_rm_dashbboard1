@@ -461,7 +461,9 @@ export class AddRealEstateComponent implements OnInit {
       if (obj.id == undefined) {
         console.log(obj);
         this.custumService.addRealEstate(obj).subscribe(
-          data => this.addRealEstateRes(data)
+          data => this.addRealEstateRes(data), (error) => {
+            this.eventService.showErrorMessage(error);
+          }
         );
       } else {
 

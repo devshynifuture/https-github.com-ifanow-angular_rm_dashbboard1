@@ -210,7 +210,7 @@
                     <th mat-sort-header="dateOfPurchase" mat-header-cell *matHeaderCellDef class="br text-left t-8">
                         Date of purchase </th>
                     <td mat-cell *matCellDef="let element" class="br text-left t-8">
-                        <div class="bar"> {{element.dateOfPurchase | date:'dd/MM/yyyy'}} </div>
+                        <div class="bar"> {{isLoading ? '' : element.dateOfPurchase | date:'dd/MM/yyyy' || '-'}} </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>

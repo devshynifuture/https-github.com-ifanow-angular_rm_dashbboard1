@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -6,6 +6,8 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionService } from '../../../subscription.service';
+import { AddPlanDetailComponent } from '../add-structure/add-plan-detail.component';
+import { AddEditDocumentComponent } from '../add-edit-document/add-edit-document.component';
 
 @Component({
   selector: 'app-overview',
@@ -15,7 +17,7 @@ import { SubscriptionService } from '../../../subscription.service';
 export class OverviewComponent implements OnInit {
   overviewDesign: any = 'true';
   advisorId: any;
-
+  @Output() changePlanData = new EventEmitter();
   constructor(public dialog: MatDialog, private subService: SubscriptionService,
     private eventService: EventService,
     private subinject: SubscriptionInject, public subInjectService: SubscriptionInject) {
@@ -54,16 +56,24 @@ export class OverviewComponent implements OnInit {
   }
 
   openForm(data, value) {
+    let component;
+    (value == "addPlan") ? component = AddPlanDetailComponent : component = AddEditDocumentComponent
     const fragmentData = {
       flag: value,
       data,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName: component
     };
-    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         // console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          if (sideBarData.data) {
+            this.upperData = sideBarData.data
+            this._upperData = sideBarData.data
+            this.changePlanData.emit(this.upperData)
+          }
           // console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }

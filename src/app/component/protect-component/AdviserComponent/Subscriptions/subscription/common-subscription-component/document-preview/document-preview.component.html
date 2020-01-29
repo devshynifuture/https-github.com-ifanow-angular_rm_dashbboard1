@@ -1,0 +1,18 @@
+<mat-toolbar class="bg-black">
+    <div>
+        <button (click)="downloadDocumentAsPDF()" mat-button><i class="material-icons f-30 c-p color-white">
+                cloud_download
+            </i></button>
+    </div>
+</mat-toolbar>
+
+<div class="row height-preview">
+    <div class="col-md-4 bg-gray">
+    </div>
+    <div class="col-md-4">
+        <div innerHTML={{data.data}}>
+        </div>
+    </div>
+    <div class="col-md-4 bg-gray">
+    </div>
+</div>

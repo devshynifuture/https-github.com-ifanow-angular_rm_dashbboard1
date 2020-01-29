@@ -50,7 +50,9 @@ export class DialogContainerComponent implements OnInit {
       }
     );
     this.subinject.rightSideBarData.subscribe(
-      data => this.getRightSliderData(data)
+      data => {
+        this.getRightSliderData(data);
+      }
     );
     this.eventService.sidebarSubscribeData.subscribe(
       data => this.getFileResponseDataAum(data)
@@ -101,6 +103,7 @@ export class DialogContainerComponent implements OnInit {
   }
 
   getRightSliderData(value) {
+    console.log('getRightSliderData dialog container comp currentState', value);
     this.currentState = value;
   }
 
@@ -128,8 +131,9 @@ export class DialogContainerComponent implements OnInit {
   }
 
   closeUpperDynamicElement() {
-    if (this.viewContainerRefUpper)
+    if (this.viewContainerRefUpper) {
       this.viewContainerRefUpper.clear();
+    }
   }
 
   addDynamicComponentService(viewContainerRef, inputData) {

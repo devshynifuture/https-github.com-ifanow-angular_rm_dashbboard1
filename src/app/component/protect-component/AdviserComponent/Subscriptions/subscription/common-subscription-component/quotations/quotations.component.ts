@@ -1,15 +1,17 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {SubscriptionPopupComponent} from '../subscription-popup/subscription-popup.component';
-import {SubscriptionService} from '../../../subscription.service';
-import {ConsentTandCComponent} from '../consent-tand-c/consent-tand-c.component';
-import {UtilService} from '../../../../../../../services/util.service';
-import {AuthService} from '../../../../../../../auth-service/authService';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { SubscriptionPopupComponent } from '../subscription-popup/subscription-popup.component';
+import { SubscriptionService } from '../../../subscription.service';
+import { ConsentTandCComponent } from '../consent-tand-c/consent-tand-c.component';
+import { UtilService } from '../../../../../../../services/util.service';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { AddQuotationSubscriptionComponent } from 'src/app/component/protect-component/customers/component/common-component/add-quotation-subscription/add-quotation-subscription.component';
+import { CommonFroalaComponent } from '../common-froala/common-froala.component';
 
 export interface PeriodicElement {
   document: string;
@@ -69,23 +71,24 @@ export class QuotationsComponent implements OnInit {
     // this.getQuotationsList();
     this.dataCount = 0;
   }
-  changeSelect(){
-    
+  changeSelect() {
+
   }
 
   addQuotation(value) {
     const fragmentData = {
       flag: value,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName: AddQuotationSubscriptionComponent
     };
-    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isRefreshRequired(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ');
           // this.getQuotationsList();
-          
+
         }
         rightSideDataSub.unsubscribe();
       }
@@ -100,9 +103,10 @@ export class QuotationsComponent implements OnInit {
       data: data,
       id: 1,
       state,
+      componentName: CommonFroalaComponent
     };
     data.userEmailId = this._clientData.userEmailId
-    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
@@ -192,19 +196,19 @@ export class QuotationsComponent implements OnInit {
     this.quotationDesignEmail = this.quotationDesign;
   }
 
- list:any = [];
+  list: any = [];
 
   deleteModal(data) {
     this.list = [];
-    if(data == null){
+    if (data == null) {
       this.dataSource.filteredData.forEach(singleElement => {
         if (singleElement.selected) {
           this.list.push(singleElement.documentRepositoryId);
         }
       });
     }
-    else{
-     this.list = [data.documentRepositoryId];
+    else {
+      this.list = [data.documentRepositoryId];
     }
     const dialogData = {
       data: 'QUOTATION',
@@ -238,8 +242,8 @@ export class QuotationsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result,this.dataSource.data,"delete result");
-      if(this.list.length > 0){
+      console.log(result, this.dataSource.data, "delete result");
+      if (this.list.length > 0) {
         const tempList = []
         this.dataSource.data.forEach(singleElement => {
           if (!singleElement.selected) {
