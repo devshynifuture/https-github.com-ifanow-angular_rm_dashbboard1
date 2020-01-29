@@ -1,129 +1,129 @@
-        .chatBox {
-            // background: #f5f7f7;
-            height: 100vh;
+.chatBox {
+    // background: #f5f7f7;
+    height: 100vh;
+    padding: 10px;
+    position: relative;
+    overflow: auto;
+}
+
+// .messengerDiv {
+//     max-height: 450px;
+//     overflow-y: auto;
+// }
+
+.userOne {
+    width: 80%;
+    margin-bottom: 20px;
+    float: left;
+    .avatar {
+        margin-right: 10px;
+        img {
+            width: 35px;
+            height: 35px;
+            margin-top: 8px;
+            border-radius: 50%;
+        }
+    }
+    .chatMsgBox {
+        width: 100%;
+        overflow-wrap: break-word;
+        p {
+            margin: 0px;
+            font-size: 13px;
+            background: #edffff;
+            border-radius: 5px;
             padding: 10px;
-            position: relative;
-            overflow: auto;
-        }
-        
-        // .messengerDiv {
-        //     max-height: 450px;
-        //     overflow-y: auto;
-        // }
-        
-        .userOne {
-            width: 80%;
-            margin-bottom: 20px;
-            float: left;
-            .avatar {
-                margin-right: 10px;
-                img {
-                    width: 35px;
-                    height: 35px;
-                    margin-top: 8px;
-                    border-radius: 50%;
-                }
-            }
-            .chatMsgBox {
-                width: 100%;
-                overflow-wrap: break-word;
-                p {
-                    margin: 0px;
-                    font-size: 13px;
-                    background: #edffff;
-                    border-radius: 5px;
-                    padding: 10px;
-                    span {
-                        float: right;
-                        text-align: right;
-                        font-size: 11px;
-                    }
-                }
-                h2 {
-                    font-size: 13px;
-                    margin: 0px;
-                    font-weight: 400;
-                    color: #000;
-                    span {
-                        font-size: 10px;
-                        color: #838884;
-                    }
-                }
+            span {
+                float: right;
+                text-align: right;
+                font-size: 11px;
             }
         }
-        
-        .typeMessageBox {
-            position: fixed;
-            bottom: 0px;
-            width: 67%;
-            .example-width {
-                background: #fff;
-            }
-            .enterButton {
-                display: flex;
-                align-items: center;
-                background: #25753b;
-                border-radius: 50%;
-                width: 35px;
-                height: 35px;
-                justify-content: center;
-                i {
-                    transform: rotate(45deg);
-                    font-size: 23px;
-                    cursor: pointer;
-                    color: #ffffff;
-                }
+        h2 {
+            font-size: 13px;
+            margin: 0px;
+            font-weight: 400;
+            color: #000;
+            span {
+                font-size: 10px;
+                color: #838884;
             }
         }
-        
-         ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
-            padding: 0 !important;
+    }
+}
+
+.typeMessageBox {
+    position: fixed;
+    bottom: 0px;
+    width: 67%;
+    .example-width {
+        background: #fff;
+    }
+    .enterButton {
+        display: flex;
+        align-items: center;
+        background: #25753b;
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        justify-content: center;
+        i {
+            transform: rotate(45deg);
+            font-size: 23px;
+            cursor: pointer;
+            color: #ffffff;
         }
-        
-        // .userOne {
-        //     padding: 10px;
-        //     &:hover {
-        //         -webkit-box-shadow: 0px 1px 7px 0px #a2a2a2;
-        //         -moz-box-shadow: 0px 1px 7px 0px #a2a2a2;
-        //         box-shadow: 0px 1px 7px 0px #a2a2a2;
-        //     }
-        // }
-        .userTwo {
-            width: 80%;
-            margin-bottom: 20px;
-            .avatar {
-                margin-right: 10px;
-                img {
-                    width: 35px;
-                    height: 35px;
-                    margin-top: 8px;
-                    border-radius: 50%;
-                }
-            }
-            .chatMsgBox {
-                width: 100%;
-                overflow-wrap: break-word;
-                p {
-                    margin: 0px;
-                    font-size: 13px;
-                    background: #edffff;
-                    border-radius: 5px;
-                    padding: 10px;
-                    text-align: left;
-                    span {
-                        float: right;
-                        text-align: right;
-                    }
-                }
-                h2 {
-                    font-size: 13px;
-                    margin: 0px;
-                    font-weight: 400;
-                    color: #000;
-                    span {
-                        font-size: 10px;
-                        color: #838884;
-                    }
-                }
+    }
+}
+
+    ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: 0 !important;
+}
+
+// .userOne {
+//     padding: 10px;
+//     &:hover {
+//         -webkit-box-shadow: 0px 1px 7px 0px #a2a2a2;
+//         -moz-box-shadow: 0px 1px 7px 0px #a2a2a2;
+//         box-shadow: 0px 1px 7px 0px #a2a2a2;
+//     }
+// }
+.userTwo {
+    width: 80%;
+    margin-bottom: 20px;
+    .avatar {
+        margin-right: 10px;
+        img {
+            width: 35px;
+            height: 35px;
+            margin-top: 8px;
+            border-radius: 50%;
+        }
+    }
+    .chatMsgBox {
+        width: 100%;
+        overflow-wrap: break-word;
+        p {
+            margin: 0px;
+            font-size: 13px;
+            background: #edffff;
+            border-radius: 5px;
+            padding: 10px;
+            text-align: left;
+            span {
+                float: right;
+                text-align: right;
             }
         }
+        h2 {
+            font-size: 13px;
+            margin: 0px;
+            font-weight: 400;
+            color: #000;
+            span {
+                font-size: 10px;
+                color: #838884;
+            }
+        }
+    }
+}
