@@ -12,6 +12,9 @@ import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { EmailUtilService } from 'src/app/services/email-util.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
+
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-email-view',
@@ -24,16 +27,23 @@ export class EmailViewComponent implements OnInit, OnDestroy {
   from: string;
   body;
   raw;
+  attachmentBase64Code;
   emailSubscription: Subscription;
-  isLoading: boolean = true;
+  isLoading: boolean = false;
   messagesHeaders: string[];
+  decodedPart;
+  attachmentBase64: string = null;
+  private _htmlString: string;
+  downloadFilePath: string;
+  generatedImage: string;
 
   constructor(private emailService: EmailServiceService,
     private _bottomSheet: MatBottomSheet,
     private location: Location,
     private eventService: EventService,
     private router: Router,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute,
+    private _sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.getEmailThread();
@@ -51,18 +61,61 @@ export class EmailViewComponent implements OnInit, OnDestroy {
     }
   }
 
+  convertBase64ToBlobData(base64Data: string, contentType: string, sliceSize = 512) {
+    const byteCharacters = atob(base64Data);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+
+      byteArrays.push(byteArray);
+    }
+
+    const blob = new Blob(byteArrays, { type: contentType });
+    return blob;
+  }
+
   getGmailDetailMessageRaw(id) {
 
     this.emailService.gmailMessageDetail(id)
       .subscribe((response) => {
 
-        console.log("this is response of detailed api:::::::::::::::", response)
-
         this.raw = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(response.raw);
+        let fileData = this.extractValuesFromDetailView();
+        this.attachmentBase64 = "data: image/jpeg; base64," + this.raw.match(/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=|[A-Za-z0-9+\/]{4})$/gm);
+        let base64Data = this.raw.match(/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=|[A-Za-z0-9+\/]{4})$/gm).join("")
+        // let fileDataObj = {
+        //   ...fileData,
+        //   base64: base64Data,
+        //   fileContent: this.attachmentBase64
+        // }
+        // if()
+        let blobData = this.convertBase64ToBlobData(base64Data, fileData.fileType);
+        if (window.navigator && window.navigator.msSaveOrOpenBlob) { //IE
+          window.navigator.msSaveOrOpenBlob(blobData, fileData.fileName);
+        } else { // chrome
+          const blob = new Blob([blobData], { type: fileData.fileType });
+          const url = window.URL.createObjectURL(blob);
+          // window.open(url);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = fileData.fileName;
+          link.click();
+        }
+
         this.isLoading = false;
 
-        console.log('response of detailed gmail threadL:::::::', response);
-        console.log("this is raw of detail api...::::::::::::", this.raw);
+        // this.attachmentBase64Code = this.raw.forEach(part => {
+        //   part.item
+        // });
+
 
       });
   }
@@ -74,15 +127,12 @@ export class EmailViewComponent implements OnInit, OnDestroy {
         this.eventService.openSnackBar("No Email Data !", "DISMISS");
         this.router.navigate(['../'], { relativeTo: this.activatedRoute });
       }
-      console.log("this is email Object passed from list component ->>>  ", this.emailObj);
       if (this.emailObj) {
 
         if (this.emailObj.parsedData.decodedPart.length === 0 || this.ifDecodedPartIsEmptyString()) {
           this.emailObj.idsOfMessages.forEach((element, index) => {
             const id = element;
             this.getGmailDetailMessageRaw(id);
-
-            console.log('detailed api data merged ::::::::', this.emailObj);
             //       console.log("this is result of async await", res);
             //       part.body.data = res;
           });
@@ -137,17 +187,22 @@ export class EmailViewComponent implements OnInit, OnDestroy {
         })
 
         let { parsedData: { decodedPart } } = this.emailObj;
+        this.decodedPart = decodedPart;
 
         let { messageDates } = this.emailObj;
 
-        console.log("this are message dates", messageDates);
-        console.log("this is decoded part : >>>>>", decodedPart);
+        let extractHtmlValue;
+        if (decodedPart.length > 2) {
 
-        let extractHtmlValue = decodedPart.filter((part, index) => {
-          if (index % 2 === 1) {
-            return part;
-          }
-        });
+          extractHtmlValue = decodedPart.filter((part, index) => {
+            if (index % 2 === 1) {
+              return part;
+            }
+          });
+
+        } else {
+          extractHtmlValue = decodedPart;
+        }
 
         extractHtmlValue = extractHtmlValue.map((item, index) => {
           return { item, date: messageDates[index] }
@@ -155,18 +210,36 @@ export class EmailViewComponent implements OnInit, OnDestroy {
 
         this.body = extractHtmlValue;
 
-        console.log(this.body);
-
-        console.log('this is single thread response ->>>>>>>>>>>>>')
-
-        console.log(response);
-
         this.subject = subject[0]['value'];
         this.from = from[0]['value'];
         // console.log(response);
 
       }
     });
+  }
+
+  extractValuesFromDetailView() {
+
+    let base64Value = this.raw.split('Content-ID')[1];
+    let messageValue = this.raw.split('Content-ID')[0];
+    let lastContentTypeIndex = messageValue.lastIndexOf('Content-Type');
+    let nameIndex = messageValue.indexOf('name');
+    let fileTypeString = messageValue.slice(lastContentTypeIndex, nameIndex).split(":")[1].slice(0, -2);
+
+    let filenameIndex = messageValue.indexOf('filename');
+    let contentTransferIndex = messageValue.indexOf('Content-Transfer');
+    let filenameString = messageValue.slice(filenameIndex, contentTransferIndex).split('=')[1].slice(1, -3);
+    console.log("this is filename ::::::::::::::", filenameString, fileTypeString);
+
+    return { fileName: filenameString, fileType: fileTypeString }
+
+    // while ((m = keyValueRegex.exec(messageValue)) !== null) {
+    //   keys.push(m[1]);
+    //   values.push(m[2]);
+    // }
+
+    // console.log(keys);
+    // console.log(values);
   }
 
   moveMessageToTrash() {

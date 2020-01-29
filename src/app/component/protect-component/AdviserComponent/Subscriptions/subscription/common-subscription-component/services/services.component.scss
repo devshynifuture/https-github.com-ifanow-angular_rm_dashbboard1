@@ -89,3 +89,11 @@ label {
 .height24 {
     height: 24px;
 }
+
+.baBlue {
+    outline: 3px solid #008FFF;
+}
+
+::ng-deep .example-card:hover {
+    box-shadow: none;
+}

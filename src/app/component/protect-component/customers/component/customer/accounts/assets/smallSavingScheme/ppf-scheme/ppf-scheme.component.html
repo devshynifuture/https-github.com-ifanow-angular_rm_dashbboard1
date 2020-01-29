@@ -46,7 +46,7 @@
         <ng-container matColumnDef="amt">
             <th mat-header-cell *matHeaderCellDef class="br textRight text-right" matTooltip="Total amount invested" aria-label="Button that displays a tooltip when focused or hovered over"> Total amt... </th>
             <td mat-cell *matCellDef="let element" class="br amt text-right">
-                <div class="bar"> {{element.amt}} </div>
+                <div class="bar"> {{isLoading ? '' : element.amt || '-'}} </div>
             </td>
             <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
         </ng-container>
@@ -69,14 +69,14 @@
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef class="br t-10"> Description </th>
             <td mat-cell *matCellDef="let element" class="br t-10">
-                <div class="bar"> {{element.description}} </div>
+                <div class="bar"> {{isLoading ? '' : element.description || '-'}} </div>
             </td>
             <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
         </ng-container>
         <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
             <td mat-cell *matCellDef="let element" class="br text-primary">
-                <div class="bar"> {{element.status}} </div>
+                <div class="bar"> {{element.statusId}} </div>
             </td>
             <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
         </ng-container>

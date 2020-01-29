@@ -353,7 +353,7 @@ export class RetirementAccountComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-        
+
       }
     );
   }
@@ -376,7 +376,7 @@ export class RetirementAccountComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-       
+
       }
     );
   }
@@ -470,7 +470,7 @@ export class RetirementAccountComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-        
+
       }
     );
   }
@@ -565,6 +565,15 @@ export class RetirementAccountComponent implements OnInit {
     else if (data.listOfEpf) {
       this.dataEPFList.data = data.listOfEpf;
       this.dataEPFList.sort = this.epfListTableSort;
+      var d = new Date();
+      const n = d.getFullYear();
+      this.dataEPFList.filteredData.forEach(element => {
+        if (element.maturityYear < n) {
+          element.statusId = 'MATURED';
+        } else {
+          element.statusId = 'LIVE';
+        }
+      });
       this.sumOfcurrentEpfBalance = data.sumOfcurrentEpfBalance;
       this.sumOfcurrentValue = data.sumOfcurrentValue;
       this.sumOfemployeesMonthlyContribution = data.sumOfemployeesMonthlyContribution;
@@ -595,6 +604,7 @@ export class RetirementAccountComponent implements OnInit {
     if (data.gratuityList) {
       this.dataGratuityList.data = data.gratuityList;
       this.dataGratuityList.sort = this.gratuityListTableSort;
+      UtilService.checkStatusId(this.dataGratuityList.filteredData);
       this.sumOfAmountReceived = data.sumOfAmountReceived;
     }
     else {
@@ -622,6 +632,7 @@ export class RetirementAccountComponent implements OnInit {
     if (data.npsList) {
       this.dataNPSList.data = data.npsList;
       this.dataNPSList.sort = this.npsListTableSort;
+      UtilService.checkStatusId(this.dataNPSList.filteredData);
       this.totalContribution = data.totalContribution;
       this.totalCurrentValue = data.totalCurrentValue;
     }
@@ -649,6 +660,7 @@ export class RetirementAccountComponent implements OnInit {
     if (data.superannuationList) {
       this.dataSuperannuationList.data = data.superannuationList;
       this.dataSuperannuationList.sort = this.superAnnuationListTableSort;
+      UtilService.checkStatusId(this.dataSuperannuationList.filteredData);
       this.sumOfAnnualEmployeeContribution = data.sumOfAnnualEmployeeContribution;
       this.sumOfAnnualEmployerContribution = data.sumOfAnnualEmployerContribution;
     }
@@ -676,6 +688,7 @@ export class RetirementAccountComponent implements OnInit {
     if (data.epsList) {
       this.EPSList.data = data.epsList;
       this.EPSList.sort = this.epsListTableSort;
+      UtilService.checkStatusId(this.EPSList.filteredData);
       this.totalNotionalValue = data.totalNotionalValue;
       this.totalPensionAmount = data.totalPensionAmount;
     }

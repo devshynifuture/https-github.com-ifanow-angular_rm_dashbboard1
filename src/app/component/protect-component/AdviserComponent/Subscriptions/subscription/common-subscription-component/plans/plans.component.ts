@@ -10,6 +10,7 @@ import { AuthService } from '../../../../../../../auth-service/authService';
 })
 export class PlansComponent implements OnInit {
   _upperData: any;
+  flag: any;
 
   constructor(private subService: SubscriptionService, private eventService: EventService) {
   }
@@ -17,7 +18,7 @@ export class PlansComponent implements OnInit {
   @Input()
   set upperData(upperData) {
     console.log('FeeStructureComponent upperData set : ', this.upperData);
-
+    this.flag = upperData.flag
     this._upperData = upperData;
     // setTimeout(() => {
     //   this.openPlanSliderFee(upperData, 'fixedFee', 'open');
@@ -30,7 +31,8 @@ export class PlansComponent implements OnInit {
 
   @Input() componentFlag: string;
   // @Input() upperData;
-  servicePlanData;
+  servicePlanData = [{ selected: false }, { selected: false }, { selected: false }];
+  isLoading = false;
   mappedPlan = [];
   advisorId;
 
@@ -69,6 +71,7 @@ export class PlansComponent implements OnInit {
     );
   }
   getPlansMapped() {
+    this.isLoading = true;
     const obj = {
       // advisorid: 12345,
       advisorId: this.advisorId,
@@ -80,6 +83,7 @@ export class PlansComponent implements OnInit {
   }
 
   getPlansMappedResponse(data) {
+    this.isLoading = false;
     console.log(data)
     // if(this.servicePlanData && this.servicePlanData !== null && this.servicePlanData !== undefined){
     this.servicePlanData = data;
@@ -92,6 +96,7 @@ export class PlansComponent implements OnInit {
 
   }
   getPlansMappedToDocument() {
+    this.isLoading = true;
     const obj = {
       // advisorid: 12345,`
       advisorId: this.advisorId,
@@ -103,6 +108,7 @@ export class PlansComponent implements OnInit {
   }
 
   getPlansMappedToAdvisorResponse(data) {
+    this.isLoading = false;
     console.log('service plan data', data);
     if (data && data !== undefined && data !== null) {
       this.servicePlanData = data;

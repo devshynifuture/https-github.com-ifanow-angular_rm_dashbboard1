@@ -85,6 +85,7 @@ export class ServicesSettingsComponent implements OnInit {
       advisorId: this.advisorId,
 
     };
+    this.serviceSettingData = [{}, {}, {}];
     this.subService.getSubscriptionServiceSettingsData(obj).subscribe(
       data => this.getServiceSettingSubResponse(data), (error) => {
         this.eventService.showErrorMessage(error);

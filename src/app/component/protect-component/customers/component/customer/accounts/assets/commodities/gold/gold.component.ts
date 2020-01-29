@@ -129,6 +129,7 @@ export class GoldComponent implements OnInit {
         ownerName: (this.ownerName == undefined) ? this.gold.controls.ownerName.value : this.ownerName,
         approximatePurchaseValue: this.gold.controls.appPurValue.value,
         gramsOrTola: this.gold.controls.totalsGrams.value,
+        balanceAsOn:this.gold.controls.balanceAsOn.value,
         purchasedGramsOrTola: this.gold.controls.noTolasGramsPur.value,
         totalsGrams: this.gold.controls.totalsGrams.value,
         purchaseYear: this.gold.controls.tenure.value,

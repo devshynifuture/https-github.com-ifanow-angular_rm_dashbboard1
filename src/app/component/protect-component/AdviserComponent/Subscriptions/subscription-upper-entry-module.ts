@@ -43,7 +43,7 @@ import { DeleteSubscriptionComponent } from './subscription/common-subscription-
 import { AddQuotationComponent } from './subscription/common-subscription-component/add-quotation/add-quotation.component';
 import { AddQuotationSubscriptionComponent } from '../../customers/component/common-component/add-quotation-subscription/add-quotation-subscription.component';
 import { HowToUseDialogComponent } from './subscription/common-subscription-component/how-to-use-dialog/how-to-use-dialog.component';
-import { DocumentPreviewComponent } from './subscription/common-subscription-component/document-preview/document-preview.component';
+import { PreferenceEmailInvoiceComponent } from './subscription/common-subscription-component/preference-email-invoice/preference-email-invoice.component';
 import { DynamicComponentService } from 'src/app/services/dynamic-component.service';
 import { SubscriptionInject } from './subscription-inject.service';
 
@@ -87,7 +87,7 @@ export const componentList = [
   AddQuotationComponent,
   AddQuotationSubscriptionComponent,
   HowToUseDialogComponent,
-  DocumentPreviewComponent
+  PreferenceEmailInvoiceComponent
 ]
 
 @NgModule({

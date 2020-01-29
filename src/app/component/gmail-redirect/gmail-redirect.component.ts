@@ -29,9 +29,7 @@ export class GmailRedirectComponent implements OnInit {
   isSuccess: boolean = false;
 
   constructor(private route: ActivatedRoute,
-    private httpService: HttpService,
-    private subInjectService: SubscriptionInject,
-    private emailService: EmailServiceService) {
+    private httpService: HttpService) {
   }
 
   ngOnInit() {

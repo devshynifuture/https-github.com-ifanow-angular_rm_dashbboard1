@@ -23,6 +23,8 @@
         background-color: red !important;
       }*/
         }
+
+        
         mat-icon {
             padding-right: 5px;
             &.is-mat-icon {
@@ -46,6 +48,7 @@
     //mat-progress-bar
 }
 
-// ::ng-deep .mat-progress-bar-buffer {
-//     background-color: red !important;
-// }
+
+::ng-deep .mat-progress-bar.mat-accent .mat-progress-bar-fill::after {
+    background-color: green;
+}

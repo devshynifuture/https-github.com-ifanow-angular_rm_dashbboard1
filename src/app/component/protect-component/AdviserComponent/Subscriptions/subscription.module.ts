@@ -16,7 +16,6 @@ import { ClientSubscriptionComponent } from './subscription/client-subscription/
 import { ConsentTandCComponent } from './subscription/common-subscription-component/consent-tand-c/consent-tand-c.component';
 import { HowItWorksComponent } from './subscription/common-subscription-component/how-it-works/how-it-works.component';
 import { ModifyFeeDialogComponent } from './subscription/common-subscription-component/modify-fee-dialog/modify-fee-dialog.component';
-import { PreferenceEmailInvoiceComponent } from './subscription/common-subscription-component/preference-email-invoice/preference-email-invoice.component';
 import { SingleDocumentViewComponent } from './subscription/common-subscription-component/single-document-view/single-document-view.component';
 import { ClientsDashboardComponent } from './subscription/dashboard-subscription/clients-dashboard/clients-dashboard.component';
 import { DashboardSubscriptionComponent } from './subscription/dashboard-subscription/dashboard-subscription.component';
@@ -77,7 +76,6 @@ export const componentList = [SubscriptionComponent,
   // AddFixedFeeComponent,
   // AddEditDocumentComponent,
   ModifyFeeDialogComponent,
-  PreferenceEmailInvoiceComponent,
   ConsentTandCComponent,
   // EmailOnlyComponent,
   SingleDocumentViewComponent,
@@ -119,7 +117,6 @@ export const componentList = [SubscriptionComponent,
   exports: componentList,
   entryComponents: [
 
-    PreferenceEmailInvoiceComponent,
     ModifyFeeDialogComponent, ConsentTandCComponent, HowItWorksComponent, SetDateFooter],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

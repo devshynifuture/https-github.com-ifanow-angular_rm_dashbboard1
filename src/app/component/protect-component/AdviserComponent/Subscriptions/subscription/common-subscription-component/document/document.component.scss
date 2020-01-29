@@ -107,9 +107,6 @@ label {
         box-shadow: none;
         padding: 0;
     }
-    .mat-card {
-        height: 300px !important;
-    }
     // img{
     //     width: 400px !important;
     // }
@@ -142,6 +139,15 @@ label {
 
 .height180 {
     height: 180px;
+    overflow: hidden;
+}
+
+.titleClass {
+    height: 70px;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .skeletonAnimation .relClass {
@@ -165,4 +171,13 @@ label {
             animation: loading 1s infinite;
         }
     }
+}
+
+::ng-deep #ui-appcustomhtml p {
+    width: 100%;
+    padding-top: 15px;
+}
+
+.height24 {
+    height: 24px;
 }
