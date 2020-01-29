@@ -9,9 +9,13 @@
 ::ng-deep .mat-datepicker-toggle {
     position: absolute;
     right: 8px !important;
-    top: -16px !important;
+    top: 10px !important;
 }
 
 ::ng-deep .mat-form-field {
     width: 100%;
+}
+
+::ng-deep .mat-form-field-suffix {
+    position: inherit !important;
 }

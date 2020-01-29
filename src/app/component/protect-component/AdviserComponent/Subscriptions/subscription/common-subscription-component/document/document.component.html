@@ -147,7 +147,8 @@
                     appSkeletonLoading [appSkeletonLoading]="isLoading">
                     <div (click)="selectDocument(document)">
                         <mat-card [ngClass]="{'ba-blue': document.selected,'b-ua':document.selected==false}"
-                            class="example-card overflow-hidden p-0 c-p  ">
+                            class="example-card  p-0 c-p  ">
+
                             <div class="relClass">
                                 <div class="bar180">
                                     <mat-card-header class="m-0 height180  hide-card-text">
@@ -173,6 +174,7 @@
                                     </div>
                                 </div>
                             </mat-card-actions>
+
                         </mat-card>
                     </div>
                 </div>

@@ -307,11 +307,11 @@
                 </ng-container>
                 <ng-container matColumnDef="total">
                     <th mat-sort-header="contributionAmount" mat-header-cell *matHeaderCellDef
-                        class="br t-15 textRight text-right">
+                        class="br t-15 textRight textRight">
                         Total contribution
                     </th>
                     <td mat-cell *matCellDef="let element" class="br amt t-15 text-right">
-                        <div class="bar" appFormatNumber> {{element.contributionAmount}} </div>
+                        <div class="bar amt" appFormatNumber> {{element.contributionAmount}} </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br amt p-8 f-600  t-15 text-right" appFormatNumber
                         [value]="totalContribution">
@@ -650,13 +650,13 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="aempe">
-                <th *matHeaderCellDef class="br text-right t-12" mat-header-cell
+                <th *matHeaderCellDef class="br textRight t-12" mat-header-cell
                     mat-sort-header="annualEmployeeContribution" matTooltip="Annual employee contribution"
                     aria-label="Button that displays a tooltip when focused or hovered over">
                     Annual emp...
                 </th>
                 <td *matCellDef="let element" class="br textRight text-right t-12" mat-cell>
-                    <div class="bar" appFormatNumber> {{element.annualEmployeeContribution}} </div>
+                    <div class="bar amt" appFormatNumber> {{element.annualEmployeeContribution}} </div>
                 </td>
                 <td *matFooterCellDef [value]="sumOfAnnualEmployeeContribution" appFormatNumber
                     class="br amt t-12 f-600 p-8 text-right" mat-footer-cell>
@@ -798,12 +798,12 @@
                     mat-sort-header="notionalValue">
                     Notional value
                 </th>
-                <td *matCellDef="let element" class="br text-right amt t-12" mat-cell>
+                <td *matCellDef="let element" class="br textRight amt t-12" mat-cell>
                     <div class="bar" appFormatNumber> {{element.notionalValue || '-'}} </div>
                 </td>
                 <td *matFooterCellDef [value]="totalNotionalValue" appFormatNumber
                     class="br amt f-600 p-8 t-12 text-right" mat-footer-cell>
-                    <div class="bar"> {{totalNotionalValue}} </div>
+                    <div class="bar amt"> {{totalNotionalValue}} </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="date">

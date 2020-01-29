@@ -60,6 +60,7 @@ export class PlansComponent implements OnInit {
   }
 
   getPlansMappedToAdvisor() {
+    this.isLoading = true;
     const obj = {
       // advisorid: 12345,
       advisorId: this.advisorId,

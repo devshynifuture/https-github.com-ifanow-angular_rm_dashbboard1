@@ -1,7 +1,7 @@
 ::ng-deep .mat-datepicker-toggle {
     position: absolute;
     right: 8px !important;
-    top: -16px !important;
+    top: 10px !important;
 }
 
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
@@ -12,4 +12,8 @@
     padding: 7px 8px !important;
     font-weight: 600;
     font-size: 13px !important;
+}
+
+::ng-deep .mat-form-field-suffix {
+    position: inherit !important;
 }

@@ -19,11 +19,10 @@
 
         <div class="col-md-3 pr-0">
 
-             <mat-form-field class="w-100">
-                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
-                    [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+            <mat-form-field class="w-100">
+                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Search family members</mat-option>
-                    <mat-option *ngFor="let f of nomineesListFM"  (click)="ownerList(f)"  [value]="f.userName">
+                    <mat-option *ngFor="let f of nomineesListFM" (click)="ownerList(f)" [value]="f.userName">
                         <span>{{f.userName}}</span>
                     </mat-option>
                 </mat-select>
@@ -36,10 +35,8 @@
         <div class="col-md-2">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput class=" form-control br-0" type="number" formControlName="ownerPercent"
-                        (keyup)="onChange('owner')">
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isOwnerPercent && getFormControl().ownerPercent.invalid || getFormControl().ownerPercent.touched && getFormControl().ownerPercent.invalid)}">
+                    <input matInput class=" form-control br-0" type="number" formControlName="ownerPercent" (keyup)="onChange('owner')">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isOwnerPercent && getFormControl().ownerPercent.invalid || getFormControl().ownerPercent.touched && getFormControl().ownerPercent.invalid)}">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -51,16 +48,14 @@
     </div>
 
     <div formArrayName="getCoOwnerName" *ngIf="addOwner==true">
-        <div class="row pt-24" *ngFor="let obj of getCoOwner.controls; let pointIndex=index"
-            [formGroupName]="pointIndex">
+        <div class="row pt-36" *ngFor="let obj of getCoOwner.controls; let pointIndex=index" [formGroupName]="pointIndex">
             <div class="col-md-5 pr-0 text-righutilst">
                 <h5 class="m-0 pt-8 ">Co-owner{{pointIndex+1}}</h5>
             </div>
             <div class="col-md-3 pr-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput aria-label="State" (click)="nomineesList()" [matAutocomplete]="auto"
-                            list="userName" class="form-control br-0 pl-8" formControlName="ownerName">
+                        <input matInput aria-label="State" (click)="nomineesList()" [matAutocomplete]="auto" list="userName" class="form-control br-0 pl-8" formControlName="ownerName">
                         <mat-autocomplete #auto="matAutocomplete">
                             <mat-option *ngFor="let item of familyList" (click)="getCoOwnerDetails(item)" [value]="item.userName">
                                 <span>{{item.userName}}</span>
@@ -72,8 +67,7 @@
             <div class="col-md-2">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput class="form-control br-0" type="number" formControlName="ownershipPerc"
-                            (keyup)="onChange('owner')">
+                        <input matInput class="form-control br-0" type="number" formControlName="ownershipPerc" (keyup)="onChange('owner')">
                         <mat-error class="f-12 pt-4">
                             This field is required
                         </mat-error>
@@ -92,7 +86,8 @@
     <mat-error class="f-12 pt-4  text-right" *ngIf="showErrorOwner== true">
         Percent cannot be more than 100%
     </mat-error>
-    <div class="row pt-20">
+
+    <div class="row pt-36">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Type</h5>
         </div>
@@ -106,17 +101,15 @@
                         <mat-option value="2">Secondary</mat-option>
                         <mat-option value="3">Commercial</mat-option>
                     </mat-select>
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isTypeValid && getFormControl().type.invalid || getFormControl().type.touched && getFormControl().type.invalid)}">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isTypeValid && getFormControl().type.invalid || getFormControl().type.touched && getFormControl().type.invalid)}">
                         This field is required
                     </mat-error>
                 </mat-form-field>
 
             </div>
         </div>
-
     </div>
-    <div class="row pt-24">
+    <div class="row pt-36">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Market value</h5>
             <p class="m-0 f-12 text-custom">Market value has to be<br> updated manually
@@ -125,10 +118,8 @@
         <div class="col-md-3 pr-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #marketValue type="text" class="form-control rupess br-0"
-                        (keypress)="utils.keyPress($event)" formControlName="marketValue" maxlength="10">
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isMvValid && getFormControl().marketValue.invalid || getFormControl().marketValue.touched && getFormControl().marketValue.invalid)}">
+                    <input matInput #marketValue type="text" class="form-control rupess br-0" (keypress)="utils.keyPress($event)" formControlName="marketValue" maxlength="10">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isMvValid && getFormControl().marketValue.invalid || getFormControl().marketValue.touched && getFormControl().marketValue.invalid)}">
                         This field is required
                         <!-- [ngClass]="{'v-h':!(isLoanAmount && getFormControl().marketValue.invalid || getFormControl().marketValue.touched && getFormControl().marketValue.invalid)}" -->
                     </mat-error>
@@ -138,65 +129,18 @@
         </div>
 
     </div>
-    <div class="row">
+
+    <div class="row pt-32">
         <div class="col-md-5 text-right">
-            <h5 class="pt-20 text-custom m-0 c-p" (click)="showMore()" *ngIf="showMoreData==false">+ Add more [optional
-                data]
+            <h5 class="pt-20 text-custom m-0 c-p" (click)="showMore()" *ngIf="showMoreData==false">+ Add more [optional data]
             </h5>
             <h5 class="pt-20 text-custom m-0 c-p" (click)="showLess()" *ngIf="showMoreData==true">Show less</h5>
         </div>
     </div>
+
     <div *ngIf="showMoreData==true">
-        <!-- <div class="row pt-24">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-36">Purchase period</h5>
-            </div>
-            <div class="col-md-3"> -->
-                <!-- <div class="row">
-                    <div class="col-md-4 pr-0 pl-0">
-                        <h5 class="m-0 pb-8">Year</h5>
-                        <div class="form-group mb-0">
-                            <input type="text" class="form-control br-0" value="₹" formControlName="year">
-                        </div>
-                        <div class="col-md-12 p-0">
-                            <p class="m-0 f-12 text-custom pt-4">Optional</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 pr-0">
-                        <h5 class="m-0 pb-8">Month</h5>
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <mat-select class="form-control br-0" formControlName="month">
-                                    <mat-option *ngFor="let M of estateMonths ;  index as i" [value]="i">{{M}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
 
-                        </div>
-                    </div>
-                    <div class="col-md-4 pr-0">
-                        <h5 class="m-0 pb-8">Days</h5>
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <mat-select class="form-control br-0" formControlName="days">
-                                    <mat-option *ngFor="let D of estateDays" [value]="D">{{D}}</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-
-                        </div>
-                    </div>
-                </div> -->
-                <!-- <mat-form-field>
-                    <input class="form-control br-0" matInput (focus)="picker.open()" (input)="preventDefault($event)" [matDatepicker]="picker" formControlName="purchasePeriod" readonly>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                    <mat-error class="f-12 pt-4">
-                      This field is required
-                    </mat-error>
-                  </mat-form-field>
-            </div>
-        </div> -->
-        <div class="row pt-24">
+        <div class="row pt-36">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Purchase period</h5>
             </div>
@@ -208,15 +152,15 @@
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-error class="f-12 pt-4">
-                          This field is required
+                            This field is required
                         </mat-error>
-                      </mat-form-field>
+                    </mat-form-field>
 
                 </div>
             </div>
         </div>
 
-        <div class="row pt-24">
+        <div class="row pt-44">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Purchase value</h5>
             </div>
@@ -225,8 +169,7 @@
                     <div class="col-md-3 p-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput #purchaseValue maxlength="10" type="text" class="form-control br-0 "
-                                    formControlName="purchaseValue">
+                                <input matInput #purchaseValue maxlength="10" type="text" class="form-control br-0 " formControlName="purchaseValue">
                                 <mat-hint align="start" class="f-12">Optional</mat-hint>
                                 <mat-hint align="end" class="f-12">{{purchaseValue.value.length}}/10</mat-hint>
                             </mat-form-field>
@@ -239,7 +182,8 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-24" *ngIf="showArea==true">
+
+        <div class="row pt-44" *ngIf="showArea==true">
             <div class="col-md-5 text-right">
                 <h5 class="m-0 pt-36">Area details</h5>
             </div>
@@ -249,8 +193,7 @@
                         <h5 class="m-0 pb-8">Unit</h5>
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput #unit maxlength="10" type="text" class="form-control br-0 "
-                                    formControlName="unit">
+                                <input matInput #unit maxlength="10" type="text" class="form-control br-0 " formControlName="unit">
                                 <mat-hint align="start" class="f-12">Optional</mat-hint>
                                 <mat-hint align="end" class="f-12">{{unit.value.length}}/10</mat-hint>
                             </mat-form-field>
@@ -292,8 +235,7 @@
             </div>
         </div>
 
-
-        <div class="row pt-24">
+        <div class="row pt-44">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Charges</h5>
                 <p class="m-0 f-12 text-custom">Market value has to be<br /> updated manually
@@ -305,8 +247,7 @@
                         <h5 class="m-0 pb-8">Stamp duty</h5>
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput #stampDuty maxlength="10" type="text" class="form-control br-0 "
-                                    formControlName="stampDuty">
+                                <input matInput #stampDuty maxlength="10" type="text" class="form-control br-0 " formControlName="stampDuty">
                                 <mat-hint align="start" class="f-12">Optional</mat-hint>
                                 <mat-hint align="end" class="f-12">{{stampDuty.value.length}}/10</mat-hint>
                             </mat-form-field>
@@ -316,8 +257,7 @@
                         <h5 class="m-0 pb-8">Registration</h5>
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput #registration maxlength="10" type="text" class="form-control br-0 "
-                                    formControlName="registration">
+                                <input matInput #registration maxlength="10" type="text" class="form-control br-0 " formControlName="registration">
                                 <!-- <mat-hint align="start" class="f-12">Optional</mat-hint> -->
                                 <mat-hint align="end" class="f-12">{{registration.value.length}}/10</mat-hint>
                             </mat-form-field>
@@ -328,8 +268,7 @@
                         <h5 class="m-0 pb-8">GST</h5>
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput #gst maxlength="10" type="text" class="form-control br-0 "
-                                    formControlName="gst">
+                                <input matInput #gst maxlength="10" type="text" class="form-control br-0 " formControlName="gst">
                                 <!-- <mat-hint align="start" class="f-12">Optional</mat-hint> -->
                                 <mat-hint align="end" class="f-12">{{gst.value.length}}/10</mat-hint>
                             </mat-form-field>
@@ -338,7 +277,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-24">
+        <div class="row pt-44">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Location</h5>
             </div>
@@ -346,8 +285,7 @@
                 <div class="form-group mb-0">
 
                     <mat-form-field>
-                        <input matInput #location maxlength="20" type="text" class="form-control br-0 "
-                            formControlName="location">
+                        <input matInput #location maxlength="20" type="text" class="form-control br-0 " formControlName="location">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{location.value.length}}/20</mat-hint>
                     </mat-form-field>
@@ -355,15 +293,14 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-24">
+        <div class="row pt-44">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Description</h5>
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #description maxlength="60" type="text" class="form-control br-0"
-                            formControlName="description">
+                        <input matInput #description maxlength="60" type="text" class="form-control br-0" formControlName="description">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                     </mat-form-field>
@@ -371,8 +308,7 @@
             </div>
         </div>
         <div formArrayName="getNomineeName">
-            <div class="row pt-24" *ngFor="let obj of getNominee.controls; let pointIndex=index"
-                [formGroupName]="pointIndex">
+            <div class="row pt-44" *ngFor="let obj of getNominee.controls; let pointIndex=index" [formGroupName]="pointIndex">
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-8 " *ngIf="pointIndex==0">Nominee</h5>
                     <h5 class="m-0 pt-8 " *ngIf="pointIndex!=0">Nominee{{pointIndex}}</h5>
@@ -380,8 +316,7 @@
                 <div class="col-md-3">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput aria-label="State" (click)="nomineesList()" [matAutocomplete]="auto"
-                                list="userName" class="form-control br-0 pl-8" formControlName="name">
+                            <input matInput aria-label="State" (click)="nomineesList()" [matAutocomplete]="auto" list="userName" class="form-control br-0 pl-8" formControlName="name">
                             <mat-autocomplete #auto="matAutocomplete">
                                 <mat-option *ngFor="let item of familyList" [value]="item.userName">
                                     <span>{{item.userName}}</span>
@@ -397,8 +332,7 @@
                 <div class="col-md-1 p-0">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput type="number" class="br-0 form-control" formControlName="ownershipPer"
-                                (keyup)="onChange('nominee')">
+                            <input matInput type="number" class="br-0 form-control" formControlName="ownershipPer" (keyup)="onChange('nominee')">
                         </mat-form-field>
                     </div>
                 </div>
