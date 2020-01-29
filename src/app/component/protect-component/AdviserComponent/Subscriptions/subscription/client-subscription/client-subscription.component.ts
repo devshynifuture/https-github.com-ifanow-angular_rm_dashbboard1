@@ -1,12 +1,13 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from '../../subscription-inject.service';
-import {SubscriptionService} from '../../subscription.service';
-import {UtilService} from "../../../../../../services/util.service";
-import {AuthService} from "../../../../../../auth-service/authService";
-import {HelpComponent} from '../common-subscription-component/help/help.component';
-import {SubscriptionUpperSliderComponent} from '../common-subscription-component/upper-slider/subscription-upper-slider.component';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from '../../subscription-inject.service';
+import { SubscriptionService } from '../../subscription.service';
+import { UtilService } from "../../../../../../services/util.service";
+import { AuthService } from "../../../../../../auth-service/authService";
+import { HelpComponent } from '../common-subscription-component/help/help.component';
+import { SubscriptionUpperSliderComponent } from '../common-subscription-component/upper-slider/subscription-upper-slider.component';
+import { ErrPageOpenComponent } from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
 
 export interface PeriodicElement {
   name: string;
@@ -44,7 +45,21 @@ export class ClientSubscriptionComponent implements OnInit {
     //this.dataSource = [{}, {}, {}];
     this.advisorId = AuthService.getAdvisorId();
     console.log('clients');
-    this.getClientSubscriptionList();
+    this.getClientSubData();
+  }
+
+
+  getClientSubData() {
+    this.getClientSubscriptionList().subscribe(
+      data => {
+        this.getClientListResponse(data)
+        this.errorMessage();
+      }, (error) => {
+        this.eventService.showErrorMessage(error);
+        this.dataSource.data = [];
+        this.isLoading = false;
+      }
+    )
   }
 
   getClientSubscriptionList() {
@@ -52,16 +67,41 @@ export class ClientSubscriptionComponent implements OnInit {
       id: this.advisorId
     };
     this.isLoading = true;
-    this.subService.getSubscriptionClientsList(obj).subscribe(
-      data => this.getClientListResponse(data), (error) => {
-        this.eventService.showErrorMessage(error);
-        this.dataSource.data = [];
-        this.isLoading = false;
+    return this.subService.getSubscriptionClientsList(obj);
+  }
+  errorMessage() {
+    const fragmentData = {
+      flag: 'app-err-page-open',
+      data: {},
+      id: 1,
+      // data,
+      direction: 'top',
+      componentName: ErrPageOpenComponent,
+      state: 'open',
+    };
+    fragmentData.data = {
+      positiveMethod: () => {
+        this.getClientSubscriptionList().subscribe(
+          data => {
+            this.getClientListResponse(data);
+            this.eventService.changeUpperSliderState({ state: 'close' })
+            // this.errorMessage();
+          }, (error) => {
+
+          }
+        )
+      },
+    }
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // subscription.unsubscribe();
+        }
       }
     );
   }
-
   getClientListResponse(data) {
+
     this.isLoading = false;
 
     if (data && data.length > 0) {
