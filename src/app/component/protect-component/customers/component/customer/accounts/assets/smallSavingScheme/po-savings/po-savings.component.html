@@ -86,7 +86,7 @@
         <ng-container matColumnDef="status">
             <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="status"> Status</th>
             <td *matCellDef="let element" class="br text-primary" mat-cell>
-                <div class="bar"> {{isLoading ? '' : LIVE }}</div>
+                <div class="bar"> {{isLoading ? '' : 'LIVE' }}</div>
             </td>
             <td *matFooterCellDef mat-footer-cell></td>
         </ng-container>

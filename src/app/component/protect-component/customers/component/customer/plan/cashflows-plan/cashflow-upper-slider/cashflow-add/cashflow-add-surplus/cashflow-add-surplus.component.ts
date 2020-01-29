@@ -1,3 +1,6 @@
+import { EventService } from './../../../../../../../../../../Data-service/event.service';
+import { ValidatorType } from './../../../../../../../../../../services/util.service';
+import { UpperTableBox } from './../../../cashflow.interface';
 import { Component, OnInit } from '@angular/core';
 import { GoalTableI, loanTableI } from '../../../cashflow.interface';
 
@@ -7,7 +10,6 @@ import { GoalTableI, loanTableI } from '../../../cashflow.interface';
   styleUrls: ['./cashflow-add-surplus.component.scss']
 })
 export class CashflowAddSurplusComponent implements OnInit {
-
   constructor() { }
 
   dataSource1: GoalTableI[] = ELEMENT_DATA1;
@@ -18,9 +20,8 @@ export class CashflowAddSurplusComponent implements OnInit {
   ngOnInit() {
   }
 
+
 }
-
-
 
 export const ELEMENT_DATA1: GoalTableI[] = [
   { goal: 'deasvikandk', goalYear: '2020', monthlyRequired: '83494', lumpsumRequired: '2409809', allocate: "" }

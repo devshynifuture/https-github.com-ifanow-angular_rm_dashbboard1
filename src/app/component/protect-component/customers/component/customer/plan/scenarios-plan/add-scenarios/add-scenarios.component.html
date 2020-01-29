@@ -1,4 +1,4 @@
-<div class="popup-header-fix-60">
+<!-- <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
             <h4 class="mb-0 wrapper-20 ng-star-inserted">SCENARIO CONFLICT ANALYSIS</h4>
@@ -17,22 +17,17 @@
         <div class="financialGoalsTable">
             <table mat-table [dataSource]="dataSource" id="table-low">
 
-                <!--- Note that these columns can be defined in any order.
-                              The actual rendered columns are set as a property on the row definition" -->
-
-                <!-- Position Column -->
                 <ng-container matColumnDef="name">
                     <th class="border-right-1" at-header-cell *matHeaderCellDef> Section </th>
                     <td class="border-right-1" mat-cell *matCellDef="let element"> {{element.name}} </td>
                 </ng-container>
 
-                <!-- Name Column -->
+
                 <ng-container matColumnDef="scenario">
                     <th class="border-right-1" mat-header-cell *matHeaderCellDef> Scenario </th>
                     <td class="border-right-1" mat-cell *matCellDef="let element"> {{element.scenario}} </td>
                 </ng-container>
 
-                <!-- Weight Column -->
                 <ng-container matColumnDef="conflicting">
                     <th mat-header-cell *matHeaderCellDef> Conflicting advice </th>
                     <td mat-cell *matCellDef="let element"> {{element.conflicting}} </td>
@@ -50,22 +45,17 @@
         <div class="financialGoalsTable">
             <table mat-table [dataSource]="dataSource" id="table-low">
 
-                <!--- Note that these columns can be defined in any order.
-                              The actual rendered columns are set as a property on the row definition" -->
-
-                <!-- Position Column -->
                 <ng-container matColumnDef="name">
                     <th class="border-right-1" at-header-cell *matHeaderCellDef> Section </th>
                     <td class="border-right-1" mat-cell *matCellDef="let element"> {{element.name}} </td>
                 </ng-container>
 
-                <!-- Name Column -->
                 <ng-container matColumnDef="scenario">
                     <th class="border-right-1" mat-header-cell *matHeaderCellDef> Scenario </th>
                     <td class="border-right-1" mat-cell *matCellDef="let element"> {{element.scenario}} </td>
                 </ng-container>
 
-                <!-- Weight Column -->
+
                 <ng-container matColumnDef="conflicting">
                     <th mat-header-cell *matHeaderCellDef> Conflicting advice </th>
                     <td mat-cell *matCellDef="let element"> {{element.conflicting}} </td>
@@ -76,4 +66,7 @@
             </table>
         </div>
     </div>
+</div> -->
+<div class="p-20 pl-24 pr-24">
+    <h3 class="m-0 f-500 text-black">Add scenario</h3>
 </div>

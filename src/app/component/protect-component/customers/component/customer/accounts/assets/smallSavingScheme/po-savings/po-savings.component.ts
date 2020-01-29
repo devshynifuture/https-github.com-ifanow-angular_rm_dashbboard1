@@ -91,6 +91,7 @@ export class PoSavingsComponent implements OnInit {
     if (data && data.PostOfficeSavingsList.length != 0) {
       this.datasource.data = data.PostOfficeSavingsList;
       this.datasource.sort = this.sort;
+      UtilService.checkStatusId(this.datasource.filteredData);
       this.currentValueSum = data.currentValueSum;
       this.balanceMentionedSum = data.balanceMentionedSum;
       this.posavingdata = data;

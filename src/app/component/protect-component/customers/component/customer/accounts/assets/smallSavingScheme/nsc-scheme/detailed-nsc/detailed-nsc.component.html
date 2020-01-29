@@ -18,18 +18,34 @@
             <div class="insurance-ui bt">
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Owner Name
+                        Owner name
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{data.ownerName}}
+                        {{(data.ownerName)?data.ownerName:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Amount invested
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{data.amountInvested}}
+                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                        {{(data.amountInvested)?data.amountInvested:'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Current value
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                        {{(data.currentValue)?data.currentValue:'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Maturity value
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                        {{(data.maturityValue)?data.maturityValue:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -37,7 +53,15 @@
                         Commencement date
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{data.commencementDate | date:'dd/MM/yyyy'}}
+                        {{(data.commencementDate)?(data.commencementDate | date:'dd/MM/yyyy'):'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Maturity date
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(data.maturityDate)?(data.maturityDate | date:'dd/MM/yyyy'):'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -45,7 +69,7 @@
                         Tenure(in months)
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{data.tenure}}
+                        {{(data.tenure)?data.tenure:'-'}}
                     </div>
                 </div>
                 <!-- <div class="row bb p-8 b-l br">
@@ -61,7 +85,7 @@
                         Ownership type
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{data.ownerTypeId}}
+                        {{(data.ownerTypeId=='1')?'Joint':(data.ownerTypeId=='2')?'Single':'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -69,7 +93,7 @@
                         Certificate Number
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{data.certificateNumber}}
+                        {{(data.certificateNumber)?data.certificateNumber:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -77,23 +101,23 @@
                         PO branch
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{data.postOfficeBranch}}
+                        {{(data.postOfficeBranch)?data.postOfficeBranch:'-'}}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br">
+                <div class="row bb p-8 b-l br" *ngFor="let data of nominee; let i = index">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Nominee
+                        Nominee {{i+1}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{data.nominee}}
+                        {{data.name}}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br">
+                <div class="row bb p-8 b-l br" >
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Linked bank account
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{data.bankAccountNumber}}
+                        {{(data.bankAccountNumber)?data.bankAccountNumber:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -101,7 +125,7 @@
                         Description
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{data.description}}
+                        {{(data.description)?data.description:'-'}}
                     </div>
                 </div>
             </div>
