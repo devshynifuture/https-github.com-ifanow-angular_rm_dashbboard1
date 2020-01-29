@@ -20,23 +20,39 @@
         <div class="row ">
 
             <div class="col-md-4 pb-40 c-p skeletonAnimation" *ngFor="let singleServicePlan of servicePlanData" appSkeletonLoading [appSkeletonLoading]="isLoading">
-                <div class="example-card ">
+                <div class="example-card  ">
                     <mat-card class="p-0 b-ua" (click)="selectServicePlan(singleServicePlan)" [ngClass]="{'p-0': singleServicePlan.selected==false,'b-ua':singleServicePlan.selected==false,'ba-blue':singleServicePlan.selected==true}">
-                        <div class="row bg-grey lter  ">
-                            <div class="col-md-12 heightplan">
-                                <mat-checkbox [ngStyle]="{'pointer-events':(singleServicePlan.selected==false)?'none':'all'}" class="custom-checkbox positionAbsulate" checked="false" [ngClass]="{'v-h': singleServicePlan.selected==false}">
-                                </mat-checkbox>
-                                <h3 class="mb-10 l-26 playairFont f-24" matTooltip="Plan name">
-                                    {{singleServicePlan.name}}</h3>
-                                <h5 class="m-0" matTooltip="Plan code">
-                                    {{singleServicePlan.code}}</h5>
+                        <div class="overflow-hidden">
+                            <div class="row bg-grey lter">
+                                <div class="col-md-12 heightplan">
+                                    <mat-checkbox [ngStyle]="{'pointer-events':(singleServicePlan.selected==false)?'none':'all'}" class="custom-checkbox positionAbsulate" checked="false" [ngClass]="{'v-h': singleServicePlan.selected==false}">
+                                    </mat-checkbox>
+                                    <div class="relClass">
+                                        <div class="bar mb-10" [ngClass]="{'height24': isLoading}">
+                                            <h3 class=" m-0 l-26 playairFont f-24" matTooltip="Plan name">
+                                                {{singleServicePlan.name}}</h3>
+                                        </div>
+                                    </div>
+
+                                    <div class="relClass">
+                                        <div class="bar" [ngClass]="{'height24': isLoading}">
+                                            <h5 class="m-0" matTooltip="Plan code">
+                                                {{singleServicePlan.code}}</h5>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
-                        </div>
-                        <div class="wrapper-20 height160">
-                            <div class="row">
-                                <div class="col-md-12 p-0">
-                                    <p class="f-12 mb-0">DESCRIPTION</p>
-                                    <h5 class="mb-0">{{singleServicePlan.description}}</h5>
+                            <div class="wrapper-20 height160">
+                                <div class="row">
+                                    <div class="col-md-12 p-0">
+                                        <p class="f-12 mb-0">DESCRIPTION</p>
+                                        <div class="relClass">
+                                            <div class="bar" [ngClass]="{'height24': isLoading}">
+                                                <h5 class="mb-0 text-wrap">{{singleServicePlan.description}}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

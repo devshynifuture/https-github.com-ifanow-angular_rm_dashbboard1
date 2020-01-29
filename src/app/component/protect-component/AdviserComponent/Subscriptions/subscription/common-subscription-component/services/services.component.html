@@ -32,7 +32,7 @@
         </div>
         <div class="wrapper-40">
             <div class="row text-center padder-80">
-                <div *ngFor="let serviceData of planServiceData; index as i" appSkeletonLoading [appSkeletonLoading]="isLoading" class="col-md-4 c-p pl-10 pr-10 pb-28  skeletonAnimation">
+                <div *ngFor="let serviceData of planServiceData; index as i" appSkeletonLoading [appSkeletonLoading]="isLoading" class="col-md-4 c-p pl-10 pr-10 pb-28  ">
                     <div class="example-card b-a">
                         <div [ngClass]="{'baBlue':serviceData.selected,'b-ua':serviceData.selected==false }" (click)="selectService(serviceData,i)" class="overflow-hidden">
                             <div class="bg-grey lter text-left">
