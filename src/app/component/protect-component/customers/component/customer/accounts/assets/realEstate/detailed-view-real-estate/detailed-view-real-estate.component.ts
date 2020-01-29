@@ -11,6 +11,8 @@ export class DetailedViewRealEstateComponent implements OnInit {
   _data: any;
   ownerName: any;
   realEstate: any;
+  nominee: any;
+  owners: any;
 
   constructor(private subInjectService: SubscriptionInject) {
   }
@@ -20,6 +22,8 @@ export class DetailedViewRealEstateComponent implements OnInit {
     this._data = inputData;
     console.log('AddLiabilitiesComponent Input data : ', this._data);
     this.realEstate = this._data
+    this.nominee=this._data.nominees;
+    this.owners=this._data.realEstateOwners;
 
   }
 
