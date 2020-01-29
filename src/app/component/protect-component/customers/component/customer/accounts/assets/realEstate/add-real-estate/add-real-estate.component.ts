@@ -249,15 +249,15 @@ export class AddRealEstateComponent implements OnInit {
   }
   getCoOwnerDetails(item){
     console.log(item);
-    this.ownerDataName=this.getCoOwner.value[this.getCoOwner.value.length-1];
-    this.addrealEstateForm.value.getCoOwnerName.forEach(element => {
-      if(element.ownershipPerc==null){
-        this.getCoOwner.setValue([
-          { ownerName: item.userName, ownershipPerc:null, familyMemberId: item.id},
-        ]);
-      }
+    // this.ownerDataName=this.getCoOwner.value[this.getCoOwner.value.length-1];
+    // this.addrealEstateForm.value.getCoOwnerName.forEach(element => {
+    //   if(element.ownershipPerc==null){
+    //     this.getCoOwner.setValue([
+    //       { ownerName: item.userName, ownershipPerc:null, familyMemberId: item.id},
+    //     ]);
+    //   }
       
-    });
+    // });
   }
   onChange(data) {
     if (data == 'owner') {

@@ -270,7 +270,7 @@ export class CreateSubscriptionComponent implements OnInit {
         dueDateFrequency: this.subscriptionDetails.get('dueDateFrequency').value,
         startsOn: UtilService.convertDateObjectToDateString(this.datepipe, this.subscriptionDetails.get('activationDate').value),
         subscriptionNumber: this.feeStructureData.subscriptionNo,
-        feeMode: this.subscriptionDetails.get('invoiceSendingMode').value,
+        feeMode: this.subscriptionDetails.get('feeCollectionMode').value,
         Status: 1,
         subscriptionPricing: {
           autoRenew: 0,
@@ -278,7 +278,7 @@ export class CreateSubscriptionComponent implements OnInit {
           billingCycle: (this.clientData.billingNature == '2') ? 0 : this.clientData.billingCycle,
           billingMode: this.clientData.billingMode,
           billingNature: (this.clientData.billingNature == '2') ? 0 : this.clientData.billingNature,
-          feeTypeId: this.subscriptionDetails.get('feeCollectionMode').value,
+          feeTypeId: this.subscriptionDetails.get('invoiceSendingMode').value,
           subscriptionAssetPricingList: [
             {
               assetClassId: 1,
