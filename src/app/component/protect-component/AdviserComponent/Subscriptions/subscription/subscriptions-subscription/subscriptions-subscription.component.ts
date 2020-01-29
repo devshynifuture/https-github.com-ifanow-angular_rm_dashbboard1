@@ -147,7 +147,13 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
     // console.log("feeeee...",this.feeCollectionMode);
-    (this.utilservice.checkSubscriptionastepData(3) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}]
+    if(this.utilservice.checkSubscriptionastepData(3)==undefined)
+    {
+      this.dataSource.data = [{}, {}, {}]
+    }
+    else{
+      (this.utilservice.checkSubscriptionastepData(3) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}]
+    }
     this.getSummaryDataAdvisor(false);
     console.log('upperData', this.upperData);
 

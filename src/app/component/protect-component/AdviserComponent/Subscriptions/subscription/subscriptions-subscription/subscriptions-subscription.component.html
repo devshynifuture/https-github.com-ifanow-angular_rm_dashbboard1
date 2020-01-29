@@ -54,7 +54,7 @@
                             ₹<span appFormatNumber>{{element.subscriptionPricing.subscriptionAssetPricingList[0].pricing}}</span>
                         </div>
                         <div *ngIf="element.startsOn && element.subscriptionPricing.feeTypeId==2">
-                            ₹<span appFormatNumber>{{element.subscriptionPricing.subscriptionAssetPricingList[2].pricing}}</span>
+                            <span appFormatNumber>{{element.subscriptionPricing.subscriptionAssetPricingList[2].pricing}}</span>%
                         </div>
                     </td>
                 </ng-container>

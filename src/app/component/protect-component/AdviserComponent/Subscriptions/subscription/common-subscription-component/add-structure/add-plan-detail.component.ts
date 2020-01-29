@@ -5,6 +5,7 @@ import { SubscriptionService } from '../../../subscription.service';
 import { AuthService } from '../../../../../../../auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ValidatorType } from '../../../../../../../services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-plan-detail',
@@ -12,6 +13,21 @@ import { ValidatorType } from '../../../../../../../services/util.service';
   styleUrls: ['./add-plan-detail.component.scss']
 })
 export class AddPlanDetailComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'primary',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  }
   editApiCall;
   @Output() planOuputData = new EventEmitter();
   isCheckPlanData: any;
@@ -97,7 +113,15 @@ export class AddPlanDetailComponent implements OnInit {
           code: this.getFormControl().code.value
         };
         this.subService.addSettingPlanOverviewData(obj).subscribe(
-          data => this.addPlanDataResponse(data, obj, state)
+          data =>{
+            this.addPlanDataResponse(data, obj, state);
+            this.barButtonOptions.active = false;
+          },
+          err =>{
+            this.barButtonOptions.active = false;
+            console.log(err,"error");
+            
+          }
         );
       } else {
         const obj = {
@@ -107,10 +131,29 @@ export class AddPlanDetailComponent implements OnInit {
           id: this.editApiCall.id
         };
         this.subService.editPlanSettings(obj).subscribe(
-          data => this.addPlanDataResponse(data, obj, state)
+          data =>{
+           this.addPlanDataResponse(data, obj, state);
+           this.barButtonOptions.active = false;
+
+          },
+          err =>{
+            this.barButtonOptions.active = false;
+            console.log(err,"error");
+          }
         );
       }
 
+    }
+  }
+
+  progressButtonClick(state){
+    if(this.planDataForm.valid){
+      this.barButtonOptions.active = true;
+      this.addPlanData(state);
+    }else{
+      this.planDataForm.get('planName').markAsTouched();
+      this.planDataForm.get('code').markAsTouched();
+      this.planDataForm.get('description').markAsTouched();
     }
   }
 

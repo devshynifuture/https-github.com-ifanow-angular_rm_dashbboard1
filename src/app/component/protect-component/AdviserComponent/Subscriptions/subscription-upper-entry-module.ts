@@ -44,6 +44,7 @@ import { AddQuotationComponent } from './subscription/common-subscription-compon
 import { AddQuotationSubscriptionComponent } from '../../customers/component/common-component/add-quotation-subscription/add-quotation-subscription.component';
 import { HowToUseDialogComponent } from './subscription/common-subscription-component/how-to-use-dialog/how-to-use-dialog.component';
 import { PreferenceEmailInvoiceComponent } from './subscription/common-subscription-component/preference-email-invoice/preference-email-invoice.component';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
 
 export const componentList = [
   OverviewComponent,
@@ -99,7 +100,7 @@ export const componentList = [
     CommonComponentModule,
     CustomHtmlModule,
     CustomDirectiveModule,
-
+    CustomCommonModule
   ],
   exports: [componentList],
   entryComponents: [componentList, SubscriptionPopupComponent, AddDocumentComponent,HowToUseDialogComponent]

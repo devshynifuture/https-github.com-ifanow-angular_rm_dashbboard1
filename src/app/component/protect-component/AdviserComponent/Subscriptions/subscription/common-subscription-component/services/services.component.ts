@@ -160,6 +160,8 @@ export class ServicesComponent implements OnInit {
     // console.log(this.mappedData.length);
   }
 
+  
+
   savePlanMapToService() {
     if (this.componentFlag === 'services') {
       this.mapDocumentToPlan()
