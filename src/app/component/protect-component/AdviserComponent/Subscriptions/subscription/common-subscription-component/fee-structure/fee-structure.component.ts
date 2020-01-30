@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
@@ -6,6 +6,8 @@ import { MatDialog } from '@angular/material';
 import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionService } from '../../../subscription.service';
+import { AddFixedFeeComponent } from '../add-fixed-fee/add-fixed-fee.component';
+import { AddVariableFeeComponent } from '../add-variable-fee/add-variable-fee.component';
 
 @Component({
   selector: 'app-fee-structure',
@@ -15,7 +17,7 @@ import { SubscriptionService } from '../../../subscription.service';
 export class FeeStructureComponent implements OnInit {
   advisorId: any;
 
-  constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject, private eventService: EventService,private subService:SubscriptionService) {
+  constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject, private eventService: EventService, private subService: SubscriptionService) {
   }
 
   _upperData;
@@ -24,7 +26,7 @@ export class FeeStructureComponent implements OnInit {
   ngOnInit() {
     console.log('FeeStructureComponent init', this.upperData);
   }
-
+  @Output() changeServiceData = new EventEmitter();
   @Input()
   set upperData(upperData) {
     console.log('FeeStructureComponent upperData set : ', this.upperData);
@@ -44,17 +46,24 @@ export class FeeStructureComponent implements OnInit {
   }
 
   openPlanSliderFee(data, value) {
+    let component
+    (value == 'fixedFee') ? component = AddFixedFeeComponent : component = AddVariableFeeComponent
     const fragmentData = {
       flag: value,
       data,
       id: 1,
-      state: 'open'
-      
+      state: 'open',
+      componentName: component
     };
-    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          if (sideBarData.data) {
+            this.upperData = sideBarData.data
+            this._upperData = sideBarData.data
+            this.changeServiceData.emit(this.upperData)
+          }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }
@@ -75,15 +84,16 @@ export class FeeStructureComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        const obj={
-          advisorId:this.advisorId,
-          id:this.singleService.id
+        const obj = {
+          advisorId: this.advisorId,
+          id: this.singleService.id
         }
-       this.subService.deleteService(obj).subscribe(
-         data =>{this.deletedData(data);
-          dialogRef.close();
-        }
-       )
+        this.subService.deleteService(obj).subscribe(
+          data => {
+            this.deletedData(data);
+            dialogRef.close();
+          }
+        )
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -103,13 +113,13 @@ export class FeeStructureComponent implements OnInit {
     });
   }
   Close() {
-    this.eventService.changeUpperSliderState({state: 'close'});
+    this.eventService.changeUpperSliderState({ state: 'close' });
 
   }
   deletedData(data) {
     if (data == true) {
-      this.eventService.changeUpperSliderState({state: 'close'});
-      this.eventService.openSnackBar('Deleted successfully!', 'dismiss');  
+      this.eventService.changeUpperSliderState({ state: 'close' });
+      this.eventService.openSnackBar('Deleted successfully!', 'dismiss');
     }
   }
 }

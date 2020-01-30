@@ -3,6 +3,7 @@ import { SubscriptionInject } from '../../../subscription-inject.service';
 import { SubscriptionService } from '../../../subscription.service';
 import { AuthService } from "../../../../../../../auth-service/authService";
 import { element } from 'protractor';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-plan-rightslider',
@@ -12,10 +13,12 @@ import { element } from 'protractor';
 export class PlanRightsliderComponent implements OnInit {
   planSettingData;
   selectedPlan;
-  @Input() clientData;
+  clientData;
   advisorId;
-
-  constructor(public subInjectService: SubscriptionInject, private subService: SubscriptionService) {
+  set data(data) {
+    this.clientData = data;
+  }
+  constructor(private eventservice: EventService, public subInjectService: SubscriptionInject, private subService: SubscriptionService) {
   }
 
   ngOnInit() {
@@ -49,6 +52,7 @@ export class PlanRightsliderComponent implements OnInit {
     }
   }
   createSubscriptionResponse(data) {
+    this.eventservice.openSnackBar("plan is created", "dismiss")
     this.Close(true);
   }
 
@@ -64,6 +68,6 @@ export class PlanRightsliderComponent implements OnInit {
     })
   }
   Close(flag) {
-    this.subInjectService.changeUpperRightSliderState({ state: 'close', refreshRequired: flag });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 }

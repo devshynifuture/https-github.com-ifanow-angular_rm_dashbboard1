@@ -1,16 +1,18 @@
-import {Component, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2} from '@angular/core';
-import {FormControl, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {HowToUseDialogComponent} from '../how-to-use-dialog/how-to-use-dialog.component';
-import {MatDialog, TooltipPosition} from '@angular/material';
-import {SubscriptionService} from '../../../subscription.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService} from 'src/app/services/util.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {Router} from '@angular/router';
-import {escapeRegExp} from '@angular/compiler/src/util';
-import {HttpClient} from '@angular/common/http';
-import {tableHtml} from './document-preview';
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2 } from '@angular/core';
+import { FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { HowToUseDialogComponent } from '../how-to-use-dialog/how-to-use-dialog.component';
+import { MatDialog, TooltipPosition } from '@angular/material';
+import { SubscriptionService } from '../../../subscription.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { Router } from '@angular/router';
+import { escapeRegExp } from '@angular/compiler/src/util';
+import { HttpClient } from '@angular/common/http';
+import { tableHtml } from './document-preview';
+import { DocumentPreviewComponent } from '../document-preview/document-preview.component';
+import { AddEditDocumentComponent } from '../add-edit-document/add-edit-document.component';
 
 @Component({
   selector: 'app-terms-agreement',
@@ -32,10 +34,10 @@ export class TermsAgreementComponent implements OnInit {
   dataTerms: any;
   advisorId: () => any;
   serviceData: any;
-
+  @Output() changePlanData = new EventEmitter();
   constructor(private route: Router, public subInjectService: SubscriptionInject, public dialog: MatDialog,
-              public subService: SubscriptionService, private eventService: EventService, private render: Renderer2,
-              private http: HttpClient) {
+    public subService: SubscriptionService, private eventService: EventService, private render: Renderer2,
+    private http: HttpClient, private utilservice: UtilService) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
       data => this.getcommanFroalaData(data)
     );
@@ -91,7 +93,7 @@ export class TermsAgreementComponent implements OnInit {
   Close() {
     // this.subInjectService.rightSideData(value);
     // this.valueChange.emit(this.quotationDesignE);
-    this.eventService.changeUpperSliderState({state: 'close'});
+    this.eventService.changeUpperSliderState({ state: 'close' });
 
   }
 
@@ -131,12 +133,13 @@ export class TermsAgreementComponent implements OnInit {
   }
 
   openDocumentPreview() {
-    const obj = {
-      documentRepositoryId: this._upperData.documentData.documentRepositoryId
-    };
-    this.subService.getQuotationServiceData(obj).subscribe(
-      data => console.log(data)
-    );
+    // const obj = {
+    //   documentRepositoryId: this._upperData.documentData.documentRepositoryId
+    // };
+    // this.subService.getQuotationServiceData(obj).subscribe(
+    //   data => console.log(data)
+    // );
+    let d = new Date();
     this.serviceData.forEach(element => {
       this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp('$(service_' + element.id + ')'), 'g'),
         element.serviceName);
@@ -144,8 +147,27 @@ export class TermsAgreementComponent implements OnInit {
         'Ronak Hindocha');
       this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp('$(service_fee_' + element.id + ')'), 'g'),
         tableHtml);
+      this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp('$(advisor_name)'), 'g'), 'Ronak Hindocha')
+      this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp('$(date)'), 'g'),
+        d.getDate() + "/" + d.getMonth() + 1 + "/" + d.getFullYear())
     });
-    this.route.navigate(['test'], {state: {...this.dataTerms}});
+    let obj =
+    {
+      data: this.dataTerms.docText,
+      cancelButton: () => {
+        this.utilservice.htmlToPdf(this.dataTerms.docText, 'document');
+        dialogRef.close();
+      }
+    }
+    const dialogRef = this.dialog.open(DocumentPreviewComponent, {
+      width: '1800px',
+      height: '900px',
+      data: obj,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
 
   }
 
@@ -171,12 +193,18 @@ export class TermsAgreementComponent implements OnInit {
       flag: 'quotations',
       data: this._upperData.documentData,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName: AddEditDocumentComponent
     };
-    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         // console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          if (sideBarData.data) {
+            this.upperData = sideBarData.data
+            this._upperData = sideBarData.data
+            this.changePlanData.emit(this.upperData)
+          }
           // console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }
@@ -204,7 +232,7 @@ export class TermsAgreementComponent implements OnInit {
     if (data == 1) {
       this.eventService.openSnackBar('Document added successfully', 'OK');
     }
-    this.eventService.changeUpperSliderState({state: 'close'});
+    this.eventService.changeUpperSliderState({ state: 'close' });
   }
 
   // Begin ControlValueAccesor methods.

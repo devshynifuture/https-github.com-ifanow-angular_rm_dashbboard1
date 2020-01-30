@@ -248,8 +248,10 @@
                     <div class="col-md-8 right text-right">
                         <button (click)="goBack()" class="btn-default mr-12 br-0 text-inherit" mat-raised-button>PREVIOUS
                         </button>
-                        <button (click)="startSubscription()" [disabled]="totalSelectedPayeeShare!=100" class="btn-bottom br-0 text-inherit text-uppercase" mat-button>CREATE
-                        </button>
+                        <app-progress-button (btnClick)="progressButtonClick($event)" [options]="barButtonOptions" >
+                        </app-progress-button>
+                        <!-- <button (click)="startSubscription()" [disabled]="totalSelectedPayeeShare!=100" class="btn-bottom br-0 text-inherit text-uppercase" mat-button>CREATE
+                        </button> -->
                     </div>
                 </div>
             </div>

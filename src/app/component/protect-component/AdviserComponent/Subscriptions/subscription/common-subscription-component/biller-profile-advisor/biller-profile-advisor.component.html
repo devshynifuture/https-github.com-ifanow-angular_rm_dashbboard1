@@ -1,414 +1,375 @@
 <div class="row bb-1 popup-header-fix-60">
-  <div class="col-md-10 p-0">
-    <h4 *ngIf="display=='Add'" class="mb-0 l-22 wrapper-20">ADD BILLER PROFILE</h4>
-    <h4 *ngIf="display!='Add'" class="mb-0 l-22 wrapper-20">EDIT BILLER PROFILE</h4>
-  </div>
-  <div class="col-md-2 text-right">
-    <i (click)="Close('close')" class="material-icons pt-16 c-p pr-16">
+    <div class="col-md-10 p-0">
+        <h4 *ngIf="display=='Add'" class="mb-0 l-22 wrapper-20">ADD BILLER PROFILE</h4>
+        <h4 *ngIf="display!='Add'" class="mb-0 l-22 wrapper-20">EDIT BILLER PROFILE</h4>
+    </div>
+    <div class="col-md-2 text-right">
+        <i (click)="Close('close')" class="material-icons pt-16 c-p pr-16">
       clear
     </i>
-  </div>
+    </div>
 </div>
 <hr class="right-line">
 <div class="wrapper-40 pt-72" id="ui-biller">
-  <mat-tab-group [selectedIndex]="selected" animationDuration="0ms" class="event-none" id="ui-biller-tabs">
-    <mat-tab class="active " label="Profile">
-      <div [formGroup]="profileDetailsForm" class="">
-        <div class="row pt-40 pb-44">
-          <div class="col-md-12">
-            <div class="row pt-20">
-              <div class="col-md-5 pr-0">
-                <h5 class="text-right m-0 pt-16">Company display name</h5>
-              </div>
-              <div class="col-md-7">
-                <div class="form-group mb-0">
-                  <mat-form-field>
-                    <input #companyDisplayName autofocus class="form-control br-0 text-left"
-                      formControlName="companyDisplayName" matInput
-                      maxLength="{{getFormControlProfile().companyDisplayName.maxLength}}" type="text">
-                    <mat-error class="f-12">Company Display Name is required</mat-error>
-                    <mat-hint align="end" class="f-12">{{companyDisplayName.value.length}}/50</mat-hint>
-                  </mat-form-field>
-                </div>
-              </div>
-            </div>
-            <div class="row pt-44">
-              <div class="col-md-5 pr-0">
-                <h5 class="text-right m-0 pt-16">GSTIN number</h5>
-              </div>
-              <div class="col-md-7">
-                <div class="form-group mb-0">
-                  <mat-form-field>
-                    <input #gstinNum [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation autofocus
-                      class="form-control br-0 text-left" formControlName="gstinNum" matInput
-                      (changedValue)="getFormControlProfile().gstinNum.setValue($event)"
-                      maxLength="{{getFormControlProfile().gstinNum.maxLength}}" type="text">
-                    <mat-error class="f-12">GSTIN number is required</mat-error>
-                    <mat-hint align="end" class="f-12">{{gstinNum.value.length}}/15</mat-hint>
-                  </mat-form-field>
-                </div>
-                <div class="row pt-0">
-                  <div class="col-md-8">
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row pt-44">
-              <div class="col-md-5">
-                <h5 class="text-right m-0 pt-16">PAN</h5>
-              </div>
-              <div class="col-md-7">
-                <div class="form-group mb-0">
-                  <mat-form-field>
-                    <input #panNum [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
-                      (changedValue)="getFormControlProfile().panNum.setValue($event)" appInputValueValidation
-                      class="form-control br-0" formControlName="panNum" matInput type="text">
-                    <mat-error
-                      *ngIf="profileDetailsForm.get('panNum').errors?.required && profileDetailsForm.get('panNum').touched"
-                      class="f-12 pt-4">
-                      This field is required
-                    </mat-error>
-                    <mat-error *ngIf="(profileDetailsForm.get('panNum').errors?.pattern)" class="f-12 pt-4">
-                      Enter valid PAN
-                    </mat-error>
-                    <mat-hint align="end" class="f-12">{{panNum.value.length}}/10</mat-hint>
+    <mat-tab-group [selectedIndex]="selected" animationDuration="0ms" class="event-none" id="ui-biller-tabs">
+        <mat-tab class="active " label="Profile">
+            <div [formGroup]="profileDetailsForm" class="">
+                <div class="row pt-40 pb-44">
+                    <div class="col-md-12">
+                        <div class="row pt-20">
+                            <div class="col-md-5 pr-0">
+                                <h5 class="text-right m-0 pt-16">Company display name</h5>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="form-group mb-0">
+                                    <mat-form-field>
+                                        <input #companyDisplayName autofocus class="form-control br-0 text-left" formControlName="companyDisplayName" matInput maxLength="{{getFormControlProfile().companyDisplayName.maxLength}}" type="text">
+                                        <mat-error class="f-12">Company Display Name is required</mat-error>
+                                        <mat-hint align="end" class="f-12">{{companyDisplayName.value.length}}/50</mat-hint>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pt-44">
+                            <div class="col-md-5 pr-0">
+                                <h5 class="text-right m-0 pt-16">GSTIN number</h5>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="form-group mb-0">
+                                    <mat-form-field>
+                                        <input #gstinNum [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation autofocus class="form-control br-0 text-left" formControlName="gstinNum" matInput (changedValue)="getFormControlProfile().gstinNum.setValue($event)" maxLength="{{getFormControlProfile().gstinNum.maxLength}}"
+                                            type="text">
+                                        <mat-error class="f-12">GSTIN number is required</mat-error>
+                                        <mat-hint align="end" class="f-12">{{gstinNum.value.length}}/15</mat-hint>
+                                    </mat-form-field>
+                                </div>
+                                <div class="row pt-0">
+                                    <div class="col-md-8">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pt-44">
+                            <div class="col-md-5">
+                                <h5 class="text-right m-0 pt-16">PAN</h5>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="form-group mb-0">
+                                    <mat-form-field>
+                                        <input #panNum [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10" (changedValue)="getFormControlProfile().panNum.setValue($event)" appInputValueValidation class="form-control br-0" formControlName="panNum" matInput type="text">
+                                        <mat-error *ngIf="profileDetailsForm.get('panNum').errors?.required && profileDetailsForm.get('panNum').touched" class="f-12 pt-4">
+                                            This field is required
+                                        </mat-error>
+                                        <mat-error *ngIf="(profileDetailsForm.get('panNum').errors?.pattern)" class="f-12 pt-4">
+                                            Enter valid PAN
+                                        </mat-error>
+                                        <mat-hint align="end" class="f-12">{{panNum.value.length}}/10</mat-hint>
 
-                  </mat-form-field>
-                </div>
-              </div>
-            </div>
-            <div class="row pt-44 pb-44">
-              <div class="col-md-5">
-                <h5 class="text-right m-0 pt-16">Address</h5>
-              </div>
-              <div class="col-md-7">
-                <div class="form-group mb-0">
-                  <mat-form-field>
-                    <textarea #Address matInput class="form-control br-0" formControlName='Address'
-                      maxLength="{{getFormControlProfile().Address.maxLength}}" rows="5"></textarea>
-                    <mat-error class="f-12">Address is required</mat-error>
-                    <mat-hint align="end" class="f-12">{{Address.value.length}}/150</mat-hint>
-                  </mat-form-field>
-                </div>
-              </div>
-            </div>
-            <div class="row pt-44">
-              <div class="col-md-5">
-                <h5 class="text-right m-0 pt-16">Pincode</h5>
-              </div>
-              <div class="col-md-5">
-                <div class="form-group mb-0">
-                  <mat-form-field>
-                    <input #pincode [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation [maxLength]="6"
-                      class="form-control br-0 text-left" formControlName="pincode" matInput minlength="6" type="text"
-                      (change)="getPostalPin($event.target.value,'profileDetailsForm')">
-                    <mat-error class="f-12">{{'Invalid Pincode'}}</mat-error>
-                    <mat-hint align="end" class="f-12">{{pincode.value.length}}/6</mat-hint>
-                  </mat-form-field>
-                </div>
-              </div>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pt-44 pb-44">
+                            <div class="col-md-5">
+                                <h5 class="text-right m-0 pt-16">Address</h5>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="form-group mb-0">
+                                    <mat-form-field>
+                                        <textarea #Address matInput class="form-control br-0" formControlName='Address' maxLength="{{getFormControlProfile().Address.maxLength}}" rows="5"></textarea>
+                                        <mat-error class="f-12">Address is required</mat-error>
+                                        <mat-hint align="end" class="f-12">{{Address.value.length}}/150</mat-hint>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pt-44">
+                            <div class="col-md-5">
+                                <h5 class="text-right m-0 pt-16">Pincode</h5>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group mb-0">
+                                    <mat-form-field>
+                                        <input #pincode [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation [maxLength]="6" class="form-control br-0 text-left" formControlName="pincode" matInput minlength="6" type="text" (change)="getPostalPin($event.target.value,'profileDetailsForm')">
+                                        <mat-error class="f-12">{{'Invalid Pincode'}}</mat-error>
+                                        <mat-hint align="end" class="f-12">{{pincode.value.length}}/6</mat-hint>
+                                    </mat-form-field>
+                                </div>
+                            </div>
 
-            </div>
-            <div class="row pt-44">
-              <div class="col-md-5">
-                <h5 class="text-right m-0 pt-16">City</h5>
-              </div>
-              <div class="col-md-5">
-                <div class="form-group mb-0">
-                  <mat-form-field>
-                    <input #city [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="30" appInputValueValidation
-                      class="form-control br-0 text-left" formControlName="city" matInput
-                      (changedValue)="getFormControlProfile().city.setValue($event)" type="text">
-                    <mat-error class="f-12">City is required</mat-error>
-                    <mat-hint align="end" class="f-12">{{city.value.length}}/30</mat-hint>
-                  </mat-form-field>
+                        </div>
+                        <div class="row pt-44">
+                            <div class="col-md-5">
+                                <h5 class="text-right m-0 pt-16">City</h5>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group mb-0">
+                                    <mat-form-field>
+                                        <input #city [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="30" appInputValueValidation class="form-control br-0 text-left" formControlName="city" matInput (changedValue)="getFormControlProfile().city.setValue($event)" type="text">
+                                        <mat-error class="f-12">City is required</mat-error>
+                                        <mat-hint align="end" class="f-12">{{city.value.length}}/30</mat-hint>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pt-44">
+                            <div class="col-md-5">
+                                <h5 class="text-right m-0 pt-16">State </h5>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group mb-0">
+                                    <mat-form-field>
+                                        <input #state [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation (changedValue)="getFormControlProfile().state.setValue($event)" class="form-control br-0 text-left" formControlName="state" matInput maxLength="30" type="text">
+                                        <mat-error class="f-12">State is required</mat-error>
+                                        <mat-hint align="end" class="f-12">{{state.value.length}}/30</mat-hint>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pt-44">
+                            <div class="col-md-5">
+                                <h5 class="text-right m-0 pt-16">Country</h5>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group mb-0">
+                                    <mat-form-field>
+                                        <input #country [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation (changedValue)="getFormControlProfile().country.setValue($event)" class="form-control br-0 text-left" formControlName="country" matInput maxLength="30" type="text">
+                                        <mat-error class="f-12">Country is required</mat-error>
+                                        <mat-hint align="end" class="f-12">{{country.value.length}}/30</mat-hint>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-            <div class="row pt-44">
-              <div class="col-md-5">
-                <h5 class="text-right m-0 pt-16">State </h5>
-              </div>
-              <div class="col-md-5">
-                <div class="form-group mb-0">
-                  <mat-form-field>
-                    <input #state [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
-                      (changedValue)="getFormControlProfile().state.setValue($event)"
-                      class="form-control br-0 text-left" formControlName="state" matInput maxLength="30" type="text">
-                    <mat-error class="f-12">State is required</mat-error>
-                    <mat-hint align="end" class="f-12">{{state.value.length}}/30</mat-hint>
-                  </mat-form-field>
-                </div>
-              </div>
-            </div>
-            <div class="row pt-44">
-              <div class="col-md-5">
-                <h5 class="text-right m-0 pt-16">Country</h5>
-              </div>
-              <div class="col-md-5">
-                <div class="form-group mb-0">
-                  <mat-form-field>
-                    <input #country [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
-                      (changedValue)="getFormControlProfile().country.setValue($event)"
-                      class="form-control br-0 text-left" formControlName="country" matInput maxLength="30" type="text">
-                    <mat-error class="f-12">Country is required</mat-error>
-                    <mat-hint align="end" class="f-12">{{country.value.length}}/30</mat-hint>
-                  </mat-form-field>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </mat-tab>
-    <mat-tab label="Logo">
-      <div [formGroup]="logUrl" class="wrapper-40">
-        <div class="row pt-40">
-          <div class="col-md-12">
-            <div class="row">
-              <div class="col-md-5">
-                <h5 class="text-right m-0 pt-8">Your logo</h5>
-              </div>
-              <div class="col-md-7">
-                <!-- <app-photo-upload></app-photo-upload>-->
-                <img *ngIf="logoImg" class="t-70 b-a" src="{{logoImg}}">
-                <div (click)="file.click()" *ngIf="logoImg==undefined" class="imgBox">
-                  <i class="material-icons c-p" style="font-size: 100px;">
+        </mat-tab>
+        <mat-tab label="Logo">
+            <div [formGroup]="logUrl" class="wrapper-40">
+                <div class="row pt-40">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <h5 class="text-right m-0 pt-8">Your logo</h5>
+                            </div>
+                            <div class="col-md-7">
+                                <!-- <app-photo-upload></app-photo-upload>-->
+                                <img *ngIf="logoImg" class="t-70 b-a" src="{{logoImg}}">
+                                <div (click)="file.click()" *ngIf="logoImg==undefined" class="imgBox">
+                                    <i class="material-icons c-p" style="font-size: 100px;">
                     insert_photo
                   </i>
-                </div>
-                <div class="row pt-16">
-                  <div class="col-md-12 p-0">
-                    <!-- (click)="file.click()"-->
-                    <button [disabled]="logoImg==undefined" (click)="uploadImage()" class="br-0 btn-primary mr-12"
-                      mat-stroked-button>UPLOAD
+                                </div>
+                                <div class="row pt-16">
+                                    <div class="col-md-12 p-0">
+                                        <!-- (click)="file.click()"-->
+                                        <button [disabled]="logoImg==undefined" (click)="uploadImage()" class="br-0 btn-primary mr-12" mat-stroked-button>UPLOAD
                       LOGO
                     </button>
-                    <button *ngIf="logoImg" (click)="cancelImageUpload()" class="br-0 mr-12" mat-stroked-button>CANCEL
+                                        <button *ngIf="logoImg" (click)="cancelImageUpload()" class="br-0 mr-12" mat-stroked-button>CANCEL
                     </button>
-                  </div>
-                  <input #file (change)="onChange($event)" [ngClass]="{'v-h': true}" accept='image/*'
-                    formControlName="url" type="file">
-                </div>
-              </div>
+                                    </div>
+                                    <input #file (change)="onChange($event)" [ngClass]="{'v-h': true}" accept='image/*' formControlName="url" type="file">
+                                </div>
+                            </div>
 
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </mat-tab>
-    <mat-tab label="Bank details">
-      <div [formGroup]="bankDetailsForm" class="row pt-40 pb-32">
-        <div class="col-md-12">
-          <div class="row pt-44">
-            <div class="col-md-5">
-              <h5 class="text-right m-0 pt-8">Name on bank A/C</h5>
+        </mat-tab>
+        <mat-tab label="Bank details">
+            <div [formGroup]="bankDetailsForm" class="row pt-40 pb-32">
+                <div class="col-md-12">
+                    <div class="row pt-44">
+                        <div class="col-md-5">
+                            <h5 class="text-right m-0 pt-8">Name on bank A/C</h5>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input #nameOnBank matInput autofocus class="form-control br-0 text-left" formControlName="nameOnBank" (changedValue)="getFormControlBank().nameOnBank.setValue($event)" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" appInputValueValidation
+                                        maxLength="{{getFormControlBank().nameOnBank.maxLength}}" type="text">
+                                    <mat-error class="f-12">This field is required</mat-error>
+                                    <mat-hint align="end" class="f-12">{{nameOnBank.value.length}}/30</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-5">
+                            <h5 class="text-right m-0 pt-8">Bank name </h5>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input #bankName matInput class="form-control br-0 text-left" formControlName="bankName" (changedValue)="getFormControlBank().bankName.setValue($event)" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" appInputValueValidation maxLength="{{getFormControlBank().bankName.maxLength}}"
+                                        type="text">
+                                    <mat-error class="f-12">This field is required</mat-error>
+                                    <mat-hint align="end" class="f-12">{{bankName.value.length}}/30</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-5">
+                            <h5 class="text-right m-0 pt-8">Account no.</h5>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input #acNo [inputValidator]="validatorType.NUMBER_ONLY" (changedValue)="getFormControlBank().acNo.setValue($event)" [maxLength]="getFormControlBank().acNo.maxLength" appInputValueValidation class="form-control br-0 text-left" formControlName="acNo"
+                                        matInput type="number">
+                                    <mat-error class="f-12">This field is required</mat-error>
+                                    <mat-hint align="end" class="f-12">{{acNo.value.length}}/16</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-5">
+                            <h5 class="text-right m-0 pt-8">IFSC code </h5>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input #ifscCode [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation (changedValue)="getFormControlBank().ifscCode.setValue($event)" class="form-control br-0 text-left" formControlName="ifscCode" matInput maxLength="{{getFormControlBank().ifscCode.maxLength}}"
+                                        type="text">
+                                    <mat-error class="f-12">City is required</mat-error>
+                                    <mat-hint align="end" class="f-12">{{ifscCode.value.length}}/11</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-5">
+                            <h5 class="text-right m-0 pt-8">Bank address</h5>
+                        </div>
+                        <div class="col-md-7 height75">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <textarea #address class="form-control br-0" rows="4" formControlName="address" matInput maxLength="{{getFormControlBank().address.maxLength}}"></textarea>
+                                    <mat-error class="f-12">This field is required</mat-error>
+                                    <mat-hint align="end" class="f-12">{{address.value.length}}/150</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-5">
+                            <h5 class="text-right m-0 pt-8">Pincode</h5>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input #pincodeB [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" (change)="getPostalPin($event.target.value,'bankDetailsForm')" appInputValueValidation class="form-control br-0 text-left" formControlName="pincodeB" matInput minlength="6"
+                                        type="text">
+                                    <mat-error class="f-12">{{'Invalid pincodeB'}}</mat-error>
+                                    <mat-hint align="end" class="f-12">{{pincodeB.value.length}}/6</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            Loading
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-5">
+                            <h5 class="text-right m-0 pt-8">City </h5>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input #cityB (changedValue)="getFormControlBank().cityB.setValue($event)" [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="30" appInputValueValidation class="form-control br-0 text-left" formControlName="cityB" matInput type="text">
+                                    <mat-error class="f-12">This field is required</mat-error>
+                                    <mat-hint align="end" class="f-12">{{cityB.value.length}}/30</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-5">
+                            <h5 class="text-right m-0 pt-8">State </h5>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input #stateB [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation (changedValue)="getFormControlBank().stateB.setValue($event)" class="form-control br-0 text-left" formControlName="stateB" matInput maxLength="30" type="text">
+                                    <mat-error class="f-12">This field is required</mat-error>
+                                    <mat-hint align="end" class="f-12">{{stateB.value.length}}/30</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-5">
+                            <h5 class="text-right m-0 pt-8">Country </h5>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input #countryB [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation (changedValue)="getFormControlBank().countryB.setValue($event)" class="form-control br-0 text-left" formControlName="countryB" matInput maxLength="30" type="text">
+                                    <mat-error class="f-12">This field is required</mat-error>
+                                    <mat-hint align="end" class="f-12">{{countryB.value.length}}/30</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-7">
-              <div class="form-group mb-0">
-                <mat-form-field>
-                  <input #nameOnBank matInput autofocus class="form-control br-0 text-left" formControlName="nameOnBank"
-                    (changedValue)="getFormControlBank().nameOnBank.setValue($event)"
-                    [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" appInputValueValidation
-                    maxLength="{{getFormControlBank().nameOnBank.maxLength}}" type="text">
-                  <mat-error class="f-12">This field is required</mat-error>
-                  <mat-hint align="end" class="f-12">{{nameOnBank.value.length}}/30</mat-hint>
-                </mat-form-field>
-              </div>
+        </mat-tab>
+        <mat-tab label="Miscellaneous">
+            <div [formGroup]="MiscellaneousData" class="row pt-40 pb-40">
+                <div class="col-md-12">
+                    <div class="row pt-44">
+                        <div class="col-md-5">
+                            <h5 class="text-right m-0 pt-8">Footnote Description</h5>
+                            <span class="text-right">This will appear in invoices</span>
+                        </div>
+                        <div class="col-md-7 height90">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <textarea #footnote class="form-control br-0" formControlName="footnote" matInput maxLength="{{getFrormControlMisc().footnote.maxLength}}" rows="5"></textarea>
+                                    <mat-error class="f-12">This field is required</mat-error>
+                                    <mat-hint align="end" class="f-12">{{footnote.value.length}}/160</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-5">
+                            <h5 class="text-right m-0 pt-8">Terms & Conditions</h5>
+                            <span class="text-right">This will appear in invoices</span>
+                        </div>
+                        <div class="col-md-7 height90">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <textarea #terms class="form-control br-0" formControlName="terms" matInput maxLength="{{getFrormControlMisc().terms.maxLength}}" rows="4"></textarea>
+                                    <mat-error class="f-12">This field is required</mat-error>
+                                    <mat-hint align="end" class="f-12">{{terms.value.length}}/160</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="row pt-44">
-            <div class="col-md-5">
-              <h5 class="text-right m-0 pt-8">Bank name </h5>
-            </div>
-            <div class="col-md-7">
-              <div class="form-group mb-0">
-                <mat-form-field>
-                  <input #bankName matInput class="form-control br-0 text-left" formControlName="bankName"
-                    (changedValue)="getFormControlBank().bankName.setValue($event)"
-                    [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" appInputValueValidation
-                    maxLength="{{getFormControlBank().bankName.maxLength}}" type="text">
-                  <mat-error class="f-12">This field is required</mat-error>
-                  <mat-hint align="end" class="f-12">{{bankName.value.length}}/30</mat-hint>
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
-          <div class="row pt-44">
-            <div class="col-md-5">
-              <h5 class="text-right m-0 pt-8">Account no.</h5>
-            </div>
-            <div class="col-md-7">
-              <div class="form-group mb-0">
-                <mat-form-field>
-                  <input #acNo [inputValidator]="validatorType.NUMBER_ONLY"
-                    (changedValue)="getFormControlBank().acNo.setValue($event)"
-                    [maxLength]="getFormControlBank().acNo.maxLength" appInputValueValidation
-                    class="form-control br-0 text-left" formControlName="acNo" matInput type="number">
-                  <mat-error class="f-12">This field is required</mat-error>
-                  <mat-hint align="end" class="f-12">{{acNo.value.length}}/16</mat-hint>
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
-          <div class="row pt-44">
-            <div class="col-md-5">
-              <h5 class="text-right m-0 pt-8">IFSC code </h5>
-            </div>
-            <div class="col-md-7">
-              <div class="form-group mb-0">
-                <mat-form-field>
-                  <input #ifscCode [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
-                    (changedValue)="getFormControlBank().ifscCode.setValue($event)" class="form-control br-0 text-left"
-                    formControlName="ifscCode" matInput maxLength="{{getFormControlBank().ifscCode.maxLength}}"
-                    type="text">
-                  <mat-error class="f-12">City is required</mat-error>
-                  <mat-hint align="end" class="f-12">{{ifscCode.value.length}}/11</mat-hint>
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
-          <div class="row pt-44">
-            <div class="col-md-5">
-              <h5 class="text-right m-0 pt-8">Bank address</h5>
-            </div>
-            <div class="col-md-7 height75">
-              <div class="form-group mb-0">
-                <mat-form-field>
-                  <textarea #address class="form-control br-0" rows="4" formControlName="address" matInput
-                    maxLength="{{getFormControlBank().address.maxLength}}"></textarea>
-                  <mat-error class="f-12">This field is required</mat-error>
-                  <mat-hint align="end" class="f-12">{{address.value.length}}/150</mat-hint>
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
-          <div class="row pt-44">
-            <div class="col-md-5">
-              <h5 class="text-right m-0 pt-8">Pincode</h5>
-            </div>
-            <div class="col-md-5">
-              <div class="form-group mb-0">
-                <mat-form-field>
-                  <input #pincodeB [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6"
-                    (change)="getPostalPin($event.target.value,'bankDetailsForm')" appInputValueValidation
-                    class="form-control br-0 text-left" formControlName="pincodeB" matInput minlength="6" type="text">
-                  <mat-error class="f-12">{{'Invalid pincodeB'}}</mat-error>
-                  <mat-hint align="end" class="f-12">{{pincodeB.value.length}}/6</mat-hint>
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="col-md-2">
-              Loading
-            </div>
-          </div>
-          <div class="row pt-44">
-            <div class="col-md-5">
-              <h5 class="text-right m-0 pt-8">City </h5>
-            </div>
-            <div class="col-md-5">
-              <div class="form-group mb-0">
-                <mat-form-field>
-                  <input #cityB (changedValue)="getFormControlBank().cityB.setValue($event)"
-                    [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="30" appInputValueValidation
-                    class="form-control br-0 text-left" formControlName="cityB" matInput type="text">
-                  <mat-error class="f-12">This field is required</mat-error>
-                  <mat-hint align="end" class="f-12">{{cityB.value.length}}/30</mat-hint>
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
-          <div class="row pt-44">
-            <div class="col-md-5">
-              <h5 class="text-right m-0 pt-8">State </h5>
-            </div>
-            <div class="col-md-5">
-              <div class="form-group mb-0">
-                <mat-form-field>
-                  <input #stateB [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
-                    (changedValue)="getFormControlBank().stateB.setValue($event)" class="form-control br-0 text-left"
-                    formControlName="stateB" matInput maxLength="30" type="text">
-                  <mat-error class="f-12">This field is required</mat-error>
-                  <mat-hint align="end" class="f-12">{{stateB.value.length}}/30</mat-hint>
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
-          <div class="row pt-44">
-            <div class="col-md-5">
-              <h5 class="text-right m-0 pt-8">Country </h5>
-            </div>
-            <div class="col-md-5">
-              <div class="form-group mb-0">
-                <mat-form-field>
-                  <input #countryB [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
-                    (changedValue)="getFormControlBank().countryB.setValue($event)" class="form-control br-0 text-left"
-                    formControlName="countryB" matInput maxLength="30" type="text">
-                  <mat-error class="f-12">This field is required</mat-error>
-                  <mat-hint align="end" class="f-12">{{countryB.value.length}}/30</mat-hint>
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </mat-tab>
-    <mat-tab label="Miscellaneous">
-      <div [formGroup]="MiscellaneousData" class="row pt-40 pb-40">
-        <div class="col-md-12">
-          <div class="row pt-44">
-            <div class="col-md-5">
-              <h5 class="text-right m-0 pt-8">Footnote Description</h5>
-              <span class="text-right">This will appear in invoices</span>
-            </div>
-            <div class="col-md-7 height90">
-              <div class="form-group mb-0">
-                <mat-form-field>
-                  <textarea #footnote class="form-control br-0" formControlName="footnote" matInput
-                    maxLength="{{getFrormControlMisc().footnote.maxLength}}" rows="5"></textarea>
-                  <mat-error class="f-12">This field is required</mat-error>
-                  <mat-hint align="end" class="f-12">{{footnote.value.length}}/160</mat-hint>
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
-          <div class="row pt-44">
-            <div class="col-md-5">
-              <h5 class="text-right m-0 pt-8">Terms & Conditions</h5>
-              <span class="text-right">This will appear in invoices</span>
-            </div>
-            <div class="col-md-7 height90">
-              <div class="form-group mb-0">
-                <mat-form-field>
-                  <textarea #terms class="form-control br-0" formControlName="terms" matInput
-                    maxLength="{{getFrormControlMisc().terms.maxLength}}" rows="4"></textarea>
-                  <mat-error class="f-12">This field is required</mat-error>
-                  <mat-hint align="end" class="f-12">{{terms.value.length}}/160</mat-hint>
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </mat-tab>
-  </mat-tab-group>
+        </mat-tab>
+    </mat-tab-group>
 
 </div>
 <div class="bottom-fixed wrapper-16">
-  <div class="row">
-    <div class="col-md-4 pl-8">
-      <h5 (click)="Close('close')" class="mb-0 pt-8 text-white c-p">Cancel</h5>
+    <div class="row">
+        <div class="col-md-4 pl-8">
+            <h5 (click)="Close('close')" class="mb-0 pt-8 text-white c-p">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+            <button (click)="back()" *ngIf="selected!=0" class="mr-20 br-0 text-inherit" mat-button mat-raised-button>PREVIOUS
+      </button>
+            <button (click)="nextStep(selected,'Save&Next')" [disabled]="logoImg==undefined && selected==1" *ngIf="selected!=3" class="btn-bottom br-0 text-inherit" mat-button>SAVE & NEXT
+      </button>
+            <button (click)="nextStep(selected,'Save&Next')" *ngIf="selected==3" class="btn-bottom br-0 text-inherit" mat-button>SAVE
+      </button>
+            <!-- logoImg -->
+        </div>
     </div>
-    <div class="col-md-8 right text-right">
-      <button (click)="back()" *ngIf="selected!=0" class="mr-20 br-0 text-inherit" mat-button mat-raised-button>PREVIOUS
-      </button>
-      <button (click)="nextStep(selected,'Save&Next')" [disabled]="logoImg==undefined && selected==1"
-        *ngIf="selected!=3" class="btn-bottom br-0 text-inherit" mat-button>SAVE & NEXT
-      </button>
-      <button (click)="nextStep(selected,'Save&Next')" *ngIf="selected==3" class="btn-bottom br-0 text-inherit"
-        mat-button>SAVE
-      </button>
-      <!-- logoImg -->
-    </div>
-  </div>
 </div>

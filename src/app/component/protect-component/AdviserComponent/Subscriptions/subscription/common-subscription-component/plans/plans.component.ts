@@ -10,6 +10,7 @@ import { AuthService } from '../../../../../../../auth-service/authService';
 })
 export class PlansComponent implements OnInit {
   _upperData: any;
+  flag: any;
 
   constructor(private subService: SubscriptionService, private eventService: EventService) {
   }
@@ -17,7 +18,7 @@ export class PlansComponent implements OnInit {
   @Input()
   set upperData(upperData) {
     console.log('FeeStructureComponent upperData set : ', this.upperData);
-
+    this.flag = upperData.flag
     this._upperData = upperData;
     // setTimeout(() => {
     //   this.openPlanSliderFee(upperData, 'fixedFee', 'open');
@@ -59,6 +60,7 @@ export class PlansComponent implements OnInit {
   }
 
   getPlansMappedToAdvisor() {
+    this.isLoading = true;
     const obj = {
       // advisorid: 12345,
       advisorId: this.advisorId,

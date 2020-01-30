@@ -15,7 +15,7 @@ export class ServicesComponent implements OnInit {
   advisorId;
 
   @Input() componentFlag: string;
-  planServiceData: Array<any> = [{}, {}, {}];
+  planServiceData: Array<any> = [{ selected: false }, { selected: false }, { selected: false }];
   mappedData = [];
   mappedPlan = [];
   @Input() planData;
@@ -93,13 +93,13 @@ export class ServicesComponent implements OnInit {
     }
   }
   getServicesMapped() {
-
+    this.isLoading = true;
     const obj = {
       // advisorid: 12345,
       advisorId: this.advisorId,
       docRepoId: this.upperData ? this.upperData.documentData.documentRepositoryId : null
     };
-    this.planServiceData = [{ selected: false }];
+    // this.planServiceData = [{}, {}, {}];
     this.subService.servicesMapped(obj).subscribe(
       data => this.servicesMappedRes(data)
     );
@@ -159,6 +159,8 @@ export class ServicesComponent implements OnInit {
     console.log(data);
     // console.log(this.mappedData.length);
   }
+
+  
 
   savePlanMapToService() {
     if (this.componentFlag === 'services') {

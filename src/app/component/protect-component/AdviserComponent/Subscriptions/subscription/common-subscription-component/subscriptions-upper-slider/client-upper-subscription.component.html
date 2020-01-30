@@ -123,7 +123,7 @@
                     <th *matHeaderCellDef class="f-18" mat-header-cell matTooltip="Fee collection mode" aria-label="Button that displays a tooltip when focused or hovered over">Fee coll...</th>
                     <td *matCellDef="let element" mat-cell>
                         <div class="bar">
-                            {{(element.subscriptionPricing)?getFeeTypeName(element.subscriptionPricing.feeTypeId):' ' }}
+                            {{getFeeTypeName(element.feeMode)}}
                         </div>
                     </td>
                 </ng-container>

@@ -11,6 +11,7 @@ import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { DatePipe } from '@angular/common';
 import { UtilService } from '../../../../../../../services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 
 @Component({
@@ -22,7 +23,21 @@ import { UtilService } from '../../../../../../../services/util.service';
   ],
 })
 export class CreateSubscriptionComponent implements OnInit {
-
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'CREATE',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  }
   feeModeData: any;
   isFlagPayee: boolean;
   payeeSettingData: any = null;
@@ -105,9 +120,9 @@ export class CreateSubscriptionComponent implements OnInit {
     console.log(this.feeCollectionMode, "fee mood");
   }
   getPayeeFlagData(data) {
-    console.log(data)
     this.isFlagPayee = data.flag
     this.payeeSettingData = data
+    console.log(data, this.payeeSettingData , "abc 77")
   }
 
   preventDefault(e) {
@@ -270,7 +285,7 @@ export class CreateSubscriptionComponent implements OnInit {
         dueDateFrequency: this.subscriptionDetails.get('dueDateFrequency').value,
         startsOn: UtilService.convertDateObjectToDateString(this.datepipe, this.subscriptionDetails.get('activationDate').value),
         subscriptionNumber: this.feeStructureData.subscriptionNo,
-        feeMode: this.subscriptionDetails.get('invoiceSendingMode').value,
+        feeMode: this.subscriptionDetails.get('feeCollectionMode').value,
         Status: 1,
         subscriptionPricing: {
           autoRenew: 0,
@@ -278,7 +293,7 @@ export class CreateSubscriptionComponent implements OnInit {
           billingCycle: (this.clientData.billingNature == '2') ? 0 : this.clientData.billingCycle,
           billingMode: this.clientData.billingMode,
           billingNature: (this.clientData.billingNature == '2') ? 0 : this.clientData.billingNature,
-          feeTypeId: this.subscriptionDetails.get('feeCollectionMode').value,
+          feeTypeId: this.clientData.feeTypeId,
           subscriptionAssetPricingList: [
             {
               assetClassId: 1,
@@ -309,7 +324,7 @@ export class CreateSubscriptionComponent implements OnInit {
         dueDateFrequency: this.subscriptionDetails.get('dueDateFrequency').value,
         startsOn: UtilService.convertDateObjectToDateString(this.datepipe, this.subscriptionDetails.get('activationDate').value),
         subscriptionNumber: this.feeStructureData.subscriptionNo,
-        feeMode: this.subscriptionDetails.get('invoiceSendingMode').value,
+        feeMode: this.subscriptionDetails.get('feeCollectionMode').value,
         Status: 1,
         subscriptionPricing: {
           autoRenew: 0,
@@ -343,12 +358,23 @@ export class CreateSubscriptionComponent implements OnInit {
       };
       console.log(obj, 'start subscription');
       this.subService.startSubscription(obj).subscribe(
-        data => this.startSubscriptionResponse(data)
+        data =>{ this.startSubscriptionResponse(data)},
+        err => {
+          this.barButtonOptions.active = false;
+          console.log('error on login: ', err);
+        }
       );
     }
   }
 
+  progressButtonClick(event) {
+    this.barButtonOptions.active = true;
+    this.startSubscription();
+  }
+
   startSubscriptionResponse(data) {
+    this.barButtonOptions.active = false;
+
     console.log(data);
     this.Close(true);
   }

@@ -38,11 +38,11 @@ export const componentList = [
     SubscriptionUpperEntry
   ],
   exports: [componentList],
-  entryComponents: [componentList],
+  // entryComponents: [componentList],
   providers: [
-    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
 
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
 
