@@ -43,7 +43,7 @@ export class PlansSettingsComponent implements OnInit {
       advisorId: this.advisorId,
       mapped: false
     };
-    this.planSettingData = [{}, {}];
+    // this.planSettingData = [{}, {}];
     this.subService.getSubscriptionPlanSettingsData(obj).subscribe(
       data => this.getSettingsPlanResponse(data), (error) => {
         this.eventService.showErrorMessage(error);
