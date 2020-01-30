@@ -91,14 +91,15 @@ export class NscSchemeComponent implements OnInit {
   }
 
   getNscSchemedataResponse(data) {
-    console.log(data, 'NSC');
     this.isLoading = false;
-    if (data && data.NationalSavingCertificate.length != 0) {
+    if (data == undefined) {
+      this.noData = 'No scheme found';
+      this.datasource.data = [];
+    }else if (data && data.NationalSavingCertificate.length != 0) {
+      console.log(data, 'getNscSchemedataResponse');
       this.datasource.data = data.NationalSavingCertificate;
       this.datasource.sort = this.sort;
        UtilService.checkStatusId(this.datasource.filteredData)
-      // this.sumOfMaturityValue = data.SumOfMaturityValue;
-      // this.sumOfCurrentValue = data.SumOfCurrentValue;
       this.nscData = data;
     } else {
       this.noData = 'No scheme found';

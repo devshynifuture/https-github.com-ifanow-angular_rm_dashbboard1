@@ -18,14 +18,13 @@
         </div>
         <div class="col-md-5">
             <mat-form-field class="w-100">
-                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
-                    [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Search family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
                         <span>{{f.userName}}</span>
                     </mat-option>
                 </mat-select>
-                <mat-error class="f-12 pt-4">
+                <mat-error class="f-12">
                     This field is required
                 </mat-error>
             </mat-form-field>
@@ -39,10 +38,10 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input matInput #cashBalance type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0" formControlName="cashBalance">
-                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isCashBalance && getFormControl().cashBalance.invalid || getFormControl().cashBalance.touched && getFormControl().cashBalance.invalid)}">
-                           This field is required
-                        </mat-error>
-                        <mat-hint align="end" class="f-12">{{cashBalance.value.length}}/10</mat-hint>
+                    <mat-error class="f-12" [ngClass]="{'v-h':!(isCashBalance && getFormControl().cashBalance.invalid || getFormControl().cashBalance.touched && getFormControl().cashBalance.invalid)}">
+                        This field is required
+                    </mat-error>
+                    <mat-hint align="end" class="f-12">{{cashBalance.value.length}}/10</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -56,9 +55,9 @@
                 <input matInput formControlName="balanceAsOn" class="form-control br-0" [matDatepicker]="picker" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-                <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isBalanceAsOn && getFormControl().balanceAsOn.invalid || getFormControl().balanceAsOn.touched && getFormControl().balanceAsOn.invalid)}">
-                        This field is required
-                    </mat-error>
+                <mat-error class="f-12" [ngClass]="{'v-h':!(isBalanceAsOn && getFormControl().balanceAsOn.invalid || getFormControl().balanceAsOn.touched && getFormControl().balanceAsOn.invalid)}">
+                    This field is required
+                </mat-error>
             </mat-form-field>
 
         </div>

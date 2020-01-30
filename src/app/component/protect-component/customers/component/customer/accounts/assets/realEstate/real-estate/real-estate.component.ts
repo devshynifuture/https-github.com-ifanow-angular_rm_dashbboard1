@@ -89,19 +89,15 @@ export class RealEstateComponent implements OnInit {
 
   getRealEstateRes(data) {
     this.isLoading = false;
-    console.log(data);
-
     if (data == undefined) {
       this.noData = 'No data found';
       this.datasource3.data = [];
     }
     else if (data.realEstateList.length > 0) {
+      console.log('getRealEstateRes', data);
       data.realEstateList.forEach(element => {
         if (element.realEstateOwners.length != 0) {
           const array = element.realEstateOwners;
-          // const ownerName = _.filter(array, function (n) {
-          //   return n.owner == true;
-          // });
           const ownerName = array.filter(element => element.owner != false)
           if (ownerName.length != 0) {
             this.ownerName = ownerName[0].ownerName;
@@ -174,7 +170,7 @@ export class RealEstateComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-  
+
       }
     );
   }
@@ -192,7 +188,7 @@ export class RealEstateComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isRefreshRequired(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          
+
         }
         rightSideDataSub.unsubscribe();
       }

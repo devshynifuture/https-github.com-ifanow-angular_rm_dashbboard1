@@ -19,6 +19,7 @@ import { DatePipe } from '@angular/common';
   ]
 })
 export class AddSsyComponent implements OnInit {
+  maxDate = new Date();
   inputData: any;
   ownerName: any;
   familyMemberId: any;

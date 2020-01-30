@@ -5,8 +5,8 @@
     </div>
     <div class="col-md-2 text-right">
         <i (click)="Close('close')" class="material-icons pt-16 c-p pr-16">
-      clear
-    </i>
+            clear
+        </i>
     </div>
 </div>
 <hr class="right-line">
@@ -25,7 +25,8 @@
                                     <mat-form-field>
                                         <input #companyDisplayName autofocus class="form-control br-0 text-left" formControlName="companyDisplayName" matInput maxLength="{{getFormControlProfile().companyDisplayName.maxLength}}" type="text">
                                         <mat-error class="f-12">Company Display Name is required</mat-error>
-                                        <mat-hint align="end" class="f-12">{{companyDisplayName.value.length}}/50</mat-hint>
+                                        <mat-hint align="end" class="f-12">{{companyDisplayName.value.length}}/50
+                                        </mat-hint>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -57,10 +58,10 @@
                                 <div class="form-group mb-0">
                                     <mat-form-field>
                                         <input #panNum [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10" (changedValue)="getFormControlProfile().panNum.setValue($event)" appInputValueValidation class="form-control br-0" formControlName="panNum" matInput type="text">
-                                        <mat-error *ngIf="profileDetailsForm.get('panNum').errors?.required && profileDetailsForm.get('panNum').touched" class="f-12 pt-4">
+                                        <mat-error *ngIf="profileDetailsForm.get('panNum').errors?.required && profileDetailsForm.get('panNum').touched" class="f-12">
                                             This field is required
                                         </mat-error>
-                                        <mat-error *ngIf="(profileDetailsForm.get('panNum').errors?.pattern)" class="f-12 pt-4">
+                                        <mat-error *ngIf="(profileDetailsForm.get('panNum').errors?.pattern)" class="f-12">
                                             Enter valid PAN
                                         </mat-error>
                                         <mat-hint align="end" class="f-12">{{panNum.value.length}}/10</mat-hint>
@@ -157,17 +158,17 @@
                                 <img *ngIf="logoImg" class="t-70 b-a" src="{{logoImg}}">
                                 <div (click)="file.click()" *ngIf="logoImg==undefined" class="imgBox">
                                     <i class="material-icons c-p" style="font-size: 100px;">
-                    insert_photo
-                  </i>
+                                        insert_photo
+                                    </i>
                                 </div>
                                 <div class="row pt-16">
                                     <div class="col-md-12 p-0">
                                         <!-- (click)="file.click()"-->
                                         <button [disabled]="logoImg==undefined" (click)="uploadImage()" class="br-0 btn-primary mr-12" mat-stroked-button>UPLOAD
-                      LOGO
-                    </button>
+                                            LOGO
+                                        </button>
                                         <button *ngIf="logoImg" (click)="cancelImageUpload()" class="br-0 mr-12" mat-stroked-button>CANCEL
-                    </button>
+                                        </button>
                                     </div>
                                     <input #file (change)="onChange($event)" [ngClass]="{'v-h': true}" accept='image/*' formControlName="url" type="file">
                                 </div>

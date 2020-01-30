@@ -556,13 +556,12 @@ export class RetirementAccountComponent implements OnInit {
   }
   getEPFRes(data) {
     this.isLoading = false;
-    console.log('getEPFRes =', data);
-    this.isLoading = false;
     if (data == undefined) {
       this.noData = "No scheme found";
       this.dataEPFList.data = [];
     }
     else if (data.listOfEpf) {
+      console.log('getEPFRes =', data);
       this.dataEPFList.data = data.listOfEpf;
       this.dataEPFList.sort = this.epfListTableSort;
       var d = new Date();
@@ -599,9 +598,13 @@ export class RetirementAccountComponent implements OnInit {
 
   }
   getGrauityRes(data) {
-    console.log('getGrauityRes =', data);
     this.isLoading = false;
-    if (data.gratuityList) {
+    if (data == undefined) {
+      this.noData = 'No data found';
+      this.dataGratuityList.data = []
+    }
+    else if (data.gratuityList) {
+      console.log('getGrauityRes =', data);
       this.dataGratuityList.data = data.gratuityList;
       this.dataGratuityList.sort = this.gratuityListTableSort;
       UtilService.checkStatusId(this.dataGratuityList.filteredData);
@@ -627,9 +630,11 @@ export class RetirementAccountComponent implements OnInit {
   }
   getNPSRes(data) {
     this.isLoading = false;
-    console.log('getNPSRes =', data);
-    //this.isLoading = false;
-    if (data.npsList) {
+    if (data == undefined) {
+      this.noData = 'No data found';
+      this.dataNPSList.data = []
+    } else if (data.npsList) {
+      console.log('getNPSRes =', data);
       this.dataNPSList.data = data.npsList;
       this.dataNPSList.sort = this.npsListTableSort;
       UtilService.checkStatusId(this.dataNPSList.filteredData);
@@ -655,9 +660,12 @@ export class RetirementAccountComponent implements OnInit {
     );
   }
   getSuperannuationRes(data) {
-    console.log('getSuperannuationRes =', data);
     this.isLoading = false;
-    if (data.superannuationList) {
+    if (data == undefined) {
+      this.noData = 'No data found';
+      this.dataSuperannuationList.data = []
+    }else if (data.superannuationList) {
+      console.log('getSuperannuationRes =', data);
       this.dataSuperannuationList.data = data.superannuationList;
       this.dataSuperannuationList.sort = this.superAnnuationListTableSort;
       UtilService.checkStatusId(this.dataSuperannuationList.filteredData);
@@ -683,9 +691,12 @@ export class RetirementAccountComponent implements OnInit {
     );
   }
   getEPSRes(data) {
-    console.log('getEPSRes =', data);
     this.isLoading = false;
-    if (data.epsList) {
+    if (data == undefined) {
+      this.noData = 'No data found';
+      this.EPSList.data = []
+    }else if (data.epsList) {
+      console.log('getEPSRes =', data);
       this.EPSList.data = data.epsList;
       this.EPSList.sort = this.epsListTableSort;
       UtilService.checkStatusId(this.EPSList.filteredData);

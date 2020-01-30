@@ -7,6 +7,7 @@ import { AuthService } from "../../../../../../../auth-service/authService";
 import { UtilService } from "../../../../../../../services/util.service";
 import { SubscriptionUpperSliderComponent } from '../../common-subscription-component/upper-slider/subscription-upper-slider.component';
 import { Router } from '@angular/router';
+import { SubscriptionDataService } from '../../../subscription-data.service';
 
 @Component({
   selector: 'app-plans-settings',
@@ -30,7 +31,7 @@ export class PlansSettingsComponent implements OnInit {
   ngOnInit() {
 
     this.advisorId = AuthService.getAdvisorId();
-    (this.utilservice.checkSubscriptionastepData(1) == false) ? this.planSettingData = undefined : this.planSettingData = [{}, {}, {}]
+    (SubscriptionDataService.getLoderFlag(5) == false) ? this.planSettingData = undefined : this.planSettingData = [{}, {}, {}]
     this.getSettingsPlanData();
     // this.openFragment('', 'plan');
   }
@@ -42,7 +43,7 @@ export class PlansSettingsComponent implements OnInit {
       advisorId: this.advisorId,
       mapped: false
     };
-    this.planSettingData = [{}, {}];
+    // this.planSettingData = [{}, {}];
     this.subService.getSubscriptionPlanSettingsData(obj).subscribe(
       data => this.getSettingsPlanResponse(data), (error) => {
         this.eventService.showErrorMessage(error);
@@ -104,7 +105,7 @@ export class PlansSettingsComponent implements OnInit {
       // state: 'open'
     };
     this.router.navigate(['/subscription-upper'], { state: { ...fragmentData } })
-    sessionStorage.setItem("subUpperData", JSON.stringify(fragmentData))
+    AuthService.setSubscriptionUpperSliderData(fragmentData)
     // const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
     //   upperSliderData => {
     //     if (UtilService.isDialogClose(upperSliderData)) {
