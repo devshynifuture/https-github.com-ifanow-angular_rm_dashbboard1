@@ -54,8 +54,14 @@ export class UtilService {
   }
   checkSubscriptionastepData(stepNo) {
     let tempData;
-    tempData = Object.assign([], this.subscriptionStepData)
-    tempData = tempData.filter(element => element.stepTypeId == stepNo)
+    tempData = Object.assign([], this.subscriptionStepData);
+    tempData = tempData.filter(element => element.stepTypeId == stepNo);
+    if (tempData == undefined) {
+      tempData =
+        [{
+          completed: true
+        }]
+    }
     return tempData[0].completed;
   }
   static isRefreshRequired(data) {

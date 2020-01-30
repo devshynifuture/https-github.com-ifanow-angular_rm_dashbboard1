@@ -104,7 +104,7 @@ export class PlansSettingsComponent implements OnInit {
       // state: 'open'
     };
     this.router.navigate(['/subscription-upper'], { state: { ...fragmentData } })
-    sessionStorage.setItem("subUpperData", JSON.stringify(fragmentData))
+    AuthService.setSubscriptionUpperSliderData(fragmentData)
     // const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
     //   upperSliderData => {
     //     if (UtilService.isDialogClose(upperSliderData)) {
