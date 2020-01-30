@@ -54,7 +54,7 @@ const routes: Routes = [
   },
   {
     path: 'subscription-upper',
-    component: SubscriptionUpperSliderComponent
+    loadChildren: () => import('./component/protect-component/AdviserComponent/Subscriptions/subscription-upper-entry-module').then(m => m.SubscriptionUpperEntry)
   },
   {
     path: 'gmail-redirect',

@@ -47,12 +47,14 @@ import { DynamicComponentService } from 'src/app/services/dynamic-component.serv
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
 import { ErrPageOpenComponent } from '../../customers/component/common-component/err-page-open/err-page-open.component';
 import { DocumentPreviewComponent } from './subscription/common-subscription-component/document-preview/document-preview.component';
+import { SubscriptionUpperRoutingModule } from './subscription-upper-routing-routing.module';
+import { SubscriptionUpperSliderComponent } from './subscription/common-subscription-component/upper-slider/subscription-upper-slider.component';
 
 export const componentList = [
   OverviewComponent,
   ServicesComponent,
   DocumentComponent,
-  // SubscriptionUpperSliderComponent,
+  SubscriptionUpperSliderComponent,
   TermsAgreementComponent,
   EmailOnlyComponent,
   FeeStructureComponent,
@@ -97,6 +99,7 @@ export const componentList = [
   declarations: componentList,
   imports: [
     CommonModule,
+    SubscriptionUpperRoutingModule,
     MaterialModule,
     ChartModule,
     FormsModule,
