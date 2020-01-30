@@ -77,7 +77,7 @@
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <input matInput formControlName="commencementDate" [matDatepicker]="picker" readonly>
+                <input matInput formControlName="commencementDate" [max]="maxDate"[matDatepicker]="picker" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error class="f-12 pt-4">

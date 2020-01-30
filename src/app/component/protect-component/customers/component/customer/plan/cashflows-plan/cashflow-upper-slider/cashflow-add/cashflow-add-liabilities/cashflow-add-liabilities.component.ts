@@ -9,7 +9,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
   styleUrls: ['./cashflow-add-liabilities.component.scss']
 })
 export class CashflowAddLiabilitiesComponent implements OnInit {
-
+  maxDate = new Date();
   constructor(
     public dialogRef: MatDialogRef<CashflowAddLiabilitiesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,

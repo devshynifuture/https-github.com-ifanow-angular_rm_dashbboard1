@@ -12,6 +12,7 @@ import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS } from 'saturn-datepicker';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { CommonFroalaComponent } from '../common-subscription-component/common-froala/common-froala.component';
+import { SubscriptionDataService } from '../../subscription-data.service';
 
 export interface PeriodicElement {
   name: string;
@@ -87,7 +88,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.dataCount = 0;
-    (this.utilservice.checkSubscriptionastepData(5) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}];
+    (SubscriptionDataService.getLoderFlag(5) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}];
     this.getdocumentSubData(false);
     this.getClientSubscriptionList();
   }

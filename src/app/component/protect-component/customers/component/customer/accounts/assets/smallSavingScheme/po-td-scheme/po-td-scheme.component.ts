@@ -85,9 +85,12 @@ export class PoTdSchemeComponent implements OnInit {
   }
 
   getPoTdSchemedataResponse(data) {
-    console.log(data);
     this.isLoading = false;
-    if (data && data.postOfficeTdList.length != 0) {
+    if (data == undefined) {
+      this.noData = 'No scheme found';
+      this.dataSource.data = [];
+    }else if (data && data.postOfficeTdList.length != 0) {
+      console.log('getPoTdSchemedataResponse',data);
       this.dataSource.data = data.postOfficeTdList;
       this.dataSource.sort = this.sort;
       UtilService.checkStatusId(this.dataSource.filteredData);

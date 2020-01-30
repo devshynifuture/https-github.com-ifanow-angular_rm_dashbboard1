@@ -21,7 +21,7 @@ import {UtilService} from 'src/app/services/util.service';
 export class AddLiabilitiesComponent implements OnInit, DataComponent {
   displayedColumns: string[] = ['name', 'amountTable'];
   dataSource = ELEMENT_DATA;
-
+  maxDate = new Date();
   displayedColumns1: string[] = ['year', 'principal', 'interest', 'totalPaid', 'balance'];
   dataSource1 = ELEMENT_DATA1;
   productForm: FormGroup;

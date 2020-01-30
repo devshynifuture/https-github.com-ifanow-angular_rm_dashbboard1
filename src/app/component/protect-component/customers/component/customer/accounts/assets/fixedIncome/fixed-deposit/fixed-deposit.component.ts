@@ -23,6 +23,7 @@ import {UtilService} from 'src/app/services/util.service';
   ],
 })
 export class FixedDepositComponent implements OnInit {
+  maxDate = new Date();
   showHide = false;
   isownerName = false;
   showTenure = false;

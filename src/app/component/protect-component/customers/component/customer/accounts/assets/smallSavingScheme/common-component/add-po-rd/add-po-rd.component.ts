@@ -17,6 +17,7 @@ import {UtilService} from 'src/app/services/util.service';
   ]
 })
 export class AddPoRdComponent implements OnInit {
+  maxDate = new Date();
   isOptionalField: any;
   inputData: any;
   ownerName: any;

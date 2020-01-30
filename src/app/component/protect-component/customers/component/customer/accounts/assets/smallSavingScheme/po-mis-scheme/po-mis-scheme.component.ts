@@ -95,9 +95,12 @@ export class PoMisSchemeComponent implements OnInit {
   }
 
   getPoMisSchemedataResponse(data: any) {
-    console.log(data);
     this.isLoading = false;
-    if (data && data.poMisList && data.poMisList.length != 0) {
+    if (data == undefined) {
+      this.noData = 'No scheme found';
+      this.datasource.data = [];
+    }else if (data && data.poMisList && data.poMisList.length != 0) {
+      console.log('getPoMisSchemedataResponse',data);
       this.datasource.data = data.poMisList;
       this.datasource.sort = this.sort;
       UtilService.checkStatusId(this.datasource.filteredData);

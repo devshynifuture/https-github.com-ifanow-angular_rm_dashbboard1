@@ -28,6 +28,7 @@ import { ValidatorType } from 'src/app/services/util.service';
   ],
 })
 export class AddInsuranceComponent implements OnInit, DataComponent {
+  maxDate = new Date();
   /*_data;
   @Input()
   set data(inputData) {
