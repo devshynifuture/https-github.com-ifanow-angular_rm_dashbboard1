@@ -12,6 +12,7 @@ import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS } from 'saturn-datepicker';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { CommonFroalaComponent } from '../common-subscription-component/common-froala/common-froala.component';
+import { ErrPageOpenComponent } from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
 
 export interface PeriodicElement {
   name: string;
@@ -43,7 +44,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   filterStatus = [];
   filterDate = [];
   statusIdList = [];
-
+  scrollLoad=false;
   lastFilterDataId: any;
   filterDataArr = [];
   statusIdLength: any = 0;
@@ -88,10 +89,22 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.dataCount = 0;
     (this.utilservice.checkSubscriptionastepData(5) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}];
-    this.getdocumentSubData(false);
+    this.getClientSubData(this.scrollLoad);  
     this.getClientSubscriptionList();
   }
-
+  getClientSubData(boolean) {
+    this.dataSource.data = [{}, {}, {}]
+    this.getdocumentSubData(boolean).subscribe(
+      data => {
+        this.getdocumentResponseData(data)
+      }, (error) => {
+        this.errorMessage();
+        // this.eventService.showErrorMessage(error);
+        this.dataSource.data = [];
+        this.isLoading = false;
+      }
+    )
+  }
   changeSelect() {
     this.dataCount = 0;
     this.dataSource.filteredData.forEach(item => {
@@ -100,7 +113,37 @@ export class DocumentsSubscriptionsComponent implements OnInit {
       }
     });
   }
-
+  errorMessage() {
+    const fragmentData = {
+      flag: 'app-err-page-open',
+      data: {},
+      id: 1,
+      // data,
+      direction: 'top',
+      componentName: ErrPageOpenComponent,
+      state: 'open',
+    };
+    fragmentData.data = {
+      positiveMethod: () => {
+        this.getdocumentSubData(false).subscribe(
+          data => {
+            this.getdocumentResponseData(data);
+            this.eventService.changeUpperSliderState({ state: 'close' })
+            // this.errorMessage();
+          }, (error) => {
+            this.eventService.openSnackBar('Wait sometime....', 'dismiss');
+          }
+        )
+      },
+    }
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // subscription.unsubscribe();
+        }
+      }
+    );
+  }
   selectAll(event) {
     // if(this.dataCount > 0 && this.dataCount != this.dataSource.data.length){
     //   this.dataSource.filteredData.forEach(item => {
@@ -170,7 +213,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getdocumentSubData(false);
+            this.getClientSubData(false);
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -271,13 +314,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     this.dataCount = 0;
     this.isLoading = true;
     // this.dataSource.data = [{}, {}, {}];
-    this.subscription.getDocumentData(obj).subscribe(
-      data => this.getdocumentResponseData(data), (error) => {
-        this.eventService.showErrorMessage(error);
-        this.dataSource.data = [];
-        this.isLoading = false;
-      }
-    );
+   return  this.subscription.getDocumentData(obj);
   }
 
   getClientSubscriptionList() {
@@ -398,7 +435,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     };
     console.log('this.callFilter req obj : ', obj, this.statusIdList);
     if (obj.statusIdList.length == 0 && obj.fromDate == null) {
-      this.getdocumentSubData(false);
+      this.getClientSubData(false);
     } else {
       this.subService.filterSubscription(obj).subscribe(
         (data) => {

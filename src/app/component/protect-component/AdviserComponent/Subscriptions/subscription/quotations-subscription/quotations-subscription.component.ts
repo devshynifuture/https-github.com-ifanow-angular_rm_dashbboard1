@@ -12,6 +12,7 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AddQuotationComponent } from '../common-subscription-component/add-quotation/add-quotation.component';
 import { CommonFroalaComponent } from '../common-subscription-component/common-froala/common-froala.component';
 import { AddQuotationSubscriptionComponent } from 'src/app/component/protect-component/customers/component/common-component/add-quotation-subscription/add-quotation-subscription.component';
+import { ErrPageOpenComponent } from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
 
 export interface PeriodicElement {
   name: string;
@@ -61,7 +62,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
   statusIdLength = 0;
   showFilter = false;
   selectedDateRange: { begin: Date; end: Date; };
-
+  scrollLoad = false;
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   list: any[];
@@ -102,11 +103,59 @@ export class QuotationsSubscriptionComponent implements OnInit {
   ngOnInit() {
     // this.dataSource = [{}, {}, {}];
     this.advisorId = AuthService.getAdvisorId();
-    (this.utilservice.checkSubscriptionastepData(5) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}]
-    this.getQuotationsData(false);
+    if (this.utilservice.checkSubscriptionastepData(5) == undefined) {
+      this.dataSource.data = [{}, {}, {}]
+    }
+    else {
+      (this.utilservice.checkSubscriptionastepData(5) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}]
+    }
+    this.getClientSubData(this.scrollLoad);
     this.dataCount = 0;
   }
-
+  getClientSubData(boolean) {
+    this.dataSource.data = [{}, {}, {}]
+    this.getQuotationsData(boolean).subscribe(
+      data => {
+        this.getQuotationsDataResponse(data)
+      }, (error) => {
+        this.errorMessage();
+        // this.eventService.showErrorMessage(error);
+        this.dataSource.data = [];
+        this.isLoading = false;
+      }
+    )
+  }
+  errorMessage() {
+    const fragmentData = {
+      flag: 'app-err-page-open',
+      data: {},
+      id: 1,
+      // data,
+      direction: 'top',
+      componentName: ErrPageOpenComponent,
+      state: 'open',
+    };
+    fragmentData.data = {
+      positiveMethod: () => {
+        this.getQuotationsData(false).subscribe(
+          data => {
+            this.getQuotationsDataResponse(data);
+            this.eventService.changeUpperSliderState({ state: 'close' })
+            // this.errorMessage();
+          }, (error) => {
+            this.eventService.openSnackBar('Wait sometime....', 'dismiss');
+          }
+        )
+      },
+    }
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // subscription.unsubscribe();
+        }
+      }
+    );
+  }
   changeSelect() {
     this.dataCount = 0;
     this.dataSource.filteredData.forEach(item => {
@@ -165,7 +214,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
       if (this.statusIdList.length <= 0) {
 
-        this.getQuotationsData(scrollLoader);
+        this.getClientSubData(scrollLoader);
       } else {
         // this.callFilter(scrollLoader);
       }
@@ -183,7 +232,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     this.dataSource.data = [{}, {}, {}];
     this.isFilter = true;
     this.isLoading = true;
-    this.getQuotationsData(false);
+    this.getClientSubData(false);
   }
 
   orgValueChange(selectedDateRange) {
@@ -195,7 +244,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
     this.selectedDateRange = { begin: selectedDateRange.begin, end: selectedDateRange.end };
-    this.getQuotationsData(false);
+    this.getClientSubData(false);
   }
 
   getQuotationsData(scrollLoader) {
@@ -211,13 +260,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
     this.isLoading = true;
     // this.dataSource.data = [{}, {}, {}];
-    this.subService.getSubscriptionQuotationData(obj).subscribe(
-      data => this.getQuotationsDataResponse(data), (error) => {
-        this.eventService.showErrorMessage(error);
-        this.dataSource.data = [];
-        this.isLoading = false;
-      }
-    );
+    return this.subService.getSubscriptionQuotationData(obj);
   }
 
 
@@ -314,7 +357,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     // !_.includes(this.filterStatus, addFilters)
     if (this.filterStatus.find(element => element.name == addFilters.name) == undefined) {
       this.filterStatus.push(addFilters);
-      this.getQuotationsData(false);
+      this.getClientSubData(false);
     } else {
       // _.remove(this.filterStatus, this.senddataTo);
     }
@@ -342,7 +385,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
     this.selectedDateRange = { begin: beginDate, end: endDate };
 
-    this.getQuotationsData(false);
+    this.getClientSubData(false);
   }
 
   openPopup(data) {
@@ -363,7 +406,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
   removeDate(item) {
     this.filterDate.splice(item, 1);
-    this.getQuotationsData(false);
+    this.getClientSubData(false);
 
   }
 
@@ -383,7 +426,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getQuotationsData(false);
+            this.getClientSubData(false);
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -410,7 +453,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getQuotationsData(false);
+            this.getClientSubData(false);
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }

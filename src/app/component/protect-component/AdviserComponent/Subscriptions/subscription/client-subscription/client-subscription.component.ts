@@ -54,8 +54,8 @@ export class ClientSubscriptionComponent implements OnInit {
     this.getClientSubscriptionList().subscribe(
       data => {
         this.getClientListResponse(data)
-        this.errorMessage();
       }, (error) => {
+        this.errorMessage();
         this.eventService.showErrorMessage(error);
         this.dataSource.data = [];
         this.isLoading = false;
@@ -88,7 +88,7 @@ export class ClientSubscriptionComponent implements OnInit {
             this.eventService.changeUpperSliderState({ state: 'close' })
             // this.errorMessage();
           }, (error) => {
-
+            this.eventService.openSnackBar('Wait sometime....', 'dismiss');
           }
         )
       },
