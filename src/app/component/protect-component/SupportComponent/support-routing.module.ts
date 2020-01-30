@@ -29,15 +29,15 @@ const routes: Routes = [
       },
       {
         path: 'aum-reconciliation',
-        component: SupportAumReconciliationComponent
+        loadChildren: () => import('./support-aum-reconciliation/support-aum-reconciliation.module').then(m => m.SupportAumReconciliationModule)
       },
       {
         path: 'file-ordering',
-        component: FileOrderingUploadComponent
+        loadChildren: () => import('./file-ordering-upload/file-ordering-upload.module').then(m => m.FileOrderingUploadModule)
       },
       {
         path: 'reports',
-        component: SupportReportsComponent
+        loadChildren: () => import('./support-reports/support-reports.module').then(m => m.SupportReportsModule)
       },
       {
         path: 'miscellaneous',
