@@ -1,119 +1,111 @@
 <div id="ui-account-summary">
 
-  <div class="row">
-    <div class="col-md-2 p-0 bg-white pb-44">
+    <div class="row">
+        <div class="col-md-2 p-0 bg-white pb-44">
 
-      <div class="wrapper-16 bb-2 c-p">
-        <p class="m-0 text-black roboto">NET WORTH</p>
-        <h1 class="f-35 m-0 text-black pt-8">₹1,25,35,470</h1>
+            <div class="wrapper-16 bb-2 c-p">
+                <p class="m-0 text-black roboto">NET WORTH</p>
+                <h1 class="f-35 m-0 text-black pt-8">₹1,25,35,470</h1>
 
-        <div class="row pt-20">
-          <div class="col-md-6 p-0">
-            <p class="text-black f-12 m-0 roboto">ASSETS</p>
-          </div>
-          <div class="col-md-6 p-0">
-            <p class="text-black f-12 m-0 text-right roboto">₹1,78,57,250</p>
-          </div>
-          <div class="col-md-12 p-0 pt-4">
-            <mat-progress-bar class="light-blue" mode="determinate" value="70"></mat-progress-bar>
-          </div>
-        </div>
-        <div class="row pt-20">
-          <div class="col-md-6 p-0">
-            <p class="text-black f-12 m-0 roboto">LIABILITIES</p>
-          </div>
-          <div class="col-md-6 p-0">
-            <p class="text-black f-12 m-0 text-right roboto">₹53,21,780</p>
-          </div>
-          <div class="col-md-12 p-0 pt-4">
-            <mat-progress-bar class="light-red" mode="determinate" value="40"></mat-progress-bar>
-          </div>
-        </div>
-      </div>
-      <div class="height-700">
-        <div class="row bb c-p">
-          <div class="col-md-6 pr-0">
-            <a [queryParams]="{ tab: 'tab1'}" class="text-black m-0 roboto"
-              routerLink="/customer/detail/account/assets">Mutual funds</a>
-          </div>
-          <div class="col-md-6 pl-0 text-right">
-            <p class="text-black m-0 roboto">₹57,22,896</p>
-            <p class="text-success m-0 roboto">12.23%</p>
-          </div>
-        </div>
-        <div class="row bb c-p">
-          <div class="col-md-6 pr-0">
-            <a [queryParams]="{ tab: 'tab2'}" class="text-black m-0 roboto"
-              routerLink="/customer/detail/account/assets">Stocks</a>
-          </div>
-          <div class="col-md-6 pl-0 text-right">
-            <p class="text-black m-0  roboto">₹57,22,896</p>
-            <p class="text-danger m-0 roboto">-5.76%</p>
-          </div>
-        </div>
-        <div class="row bb c-p">
-          <div class="col-md-6 pr-0">
-            <a [queryParams]="{ tab: 'tab3'}" class="text-black m-0 roboto"
-              routerLink="/customer/detail/account/assets">Fixed income</a>
-          </div>
-          <div class="col-md-6 pl-0 text-right">
-            <p class="text-black m-0 roboto">₹57,22,896</p>
-            <p class="text-success m-0 roboto">12.23%</p>
-          </div>
-        </div>
-        <div class="row bb c-p">
-          <div class="col-md-6 pr-0">
-            <p class="text-black m-0 roboto"></p>
-            <a [queryParams]="{ tab: 'tab4'}" class="text-black m-0 roboto"
-              routerLink="/customer/detail/account/assets">Real estate</a>
-          </div>
-          <div class="col-md-6 pl-0 text-right">
-            <p class="text-black m-0 roboto">₹57,22,896</p>
-            <p class="text-success m-0 roboto">12.23%</p>
-          </div>
-        </div>
-        <div class="row bb c-p">
-          <div class="col-md-6 pr-0">
-            <a [queryParams]="{ tab: 'tab5'}" class="text-black m-0 roboto"
-              routerLink="/customer/detail/account/assets">Retirement a/c</a>
-          </div>
-          <div class="col-md-6 pl-0 text-right">
-            <p class="text-black m-0 f-500 roboto pr-8">-</p>
-            <p class="text-success m-0 roboto pr-8">-%</p>
-          </div>
-        </div>
-        <div class="row bb c-p">
-          <div class="col-md-6 pr-0">
-            <a [queryParams]="{ tab: 'tab6'}" class="text-black m-0 roboto"
-              routerLink="/customer/detail/account/assets">Small savings</a>
-          </div>
-          <div class="col-md-6 pl-0 text-right">
-            <p class="text-black m-0 roboto">₹57,22,896</p>
-            <p class="text-success m-0 roboto">12.23%</p>
-          </div>
-        </div>
-        <div class="row bb c-p">
-          <div class="col-md-6 pr-0">
-            <a [queryParams]="{ tab: 'tab7'}" class="text-black m-0 roboto"
-              routerLink="/customer/detail/account/assets">Cash & Bank</a>
-          </div>
-          <div class="col-md-6 pl-0 text-right">
-            <p class="text-black m-0 roboto">₹57,22,896</p>
-            <p class="text-success m-0 roboto">12.23%</p>
-          </div>
-        </div>
-        <div class="row bb c-p">
-          <div class="col-md-6 pr-0">
-            <a [queryParams]="{ tab: 'tab8'}" class="text-black m-0 roboto"
-              routerLink="/customer/detail/account/assets">Commodities</a>
-          </div>
-          <div class="col-md-6 pl-0 text-right">
-            <p class="text-black m-0 f-500 roboto pr-8">-</p>
-            <p class="text-success m-0 roboto pr-8">-%</p>
-          </div>
-        </div>
+                <div class="row pt-20">
+                    <div class="col-md-6 p-0">
+                        <p class="text-black f-12 m-0 roboto">ASSETS</p>
+                    </div>
+                    <div class="col-md-6 p-0">
+                        <p class="text-black f-12 m-0 text-right roboto">₹1,78,57,250</p>
+                    </div>
+                    <div class="col-md-12 p-0 pt-4">
+                        <mat-progress-bar class="light-blue" mode="determinate" value="70"></mat-progress-bar>
+                    </div>
+                </div>
+                <div class="row pt-20">
+                    <div class="col-md-6 p-0">
+                        <p class="text-black f-12 m-0 roboto">LIABILITIES</p>
+                    </div>
+                    <div class="col-md-6 p-0">
+                        <p class="text-black f-12 m-0 text-right roboto">₹53,21,780</p>
+                    </div>
+                    <div class="col-md-12 p-0 pt-4">
+                        <mat-progress-bar class="light-red" mode="determinate" value="40"></mat-progress-bar>
+                    </div>
+                </div>
+            </div>
+            <div class="height-700">
+                <div class="row bb c-p">
+                    <div class="col-md-6 pr-0">
+                        <a [queryParams]="{ tab: 'tab1'}" class="text-black m-0 roboto" routerLink="/customer/detail/account/assets">Mutual funds</a>
+                    </div>
+                    <div class="col-md-6 pl-0 text-right">
+                        <p class="text-black m-0 roboto">₹57,22,896</p>
+                        <p class="text-success m-0 roboto">12.23%</p>
+                    </div>
+                </div>
+                <div class="row bb c-p">
+                    <div class="col-md-6 pr-0">
+                        <a [queryParams]="{ tab: 'tab2'}" class="text-black m-0 roboto" routerLink="/customer/detail/account/assets">Stocks</a>
+                    </div>
+                    <div class="col-md-6 pl-0 text-right">
+                        <p class="text-black m-0  roboto">₹57,22,896</p>
+                        <p class="text-danger m-0 roboto">-5.76%</p>
+                    </div>
+                </div>
+                <div class="row bb c-p">
+                    <div class="col-md-6 pr-0">
+                        <a [queryParams]="{ tab: 'tab3'}" class="text-black m-0 roboto" routerLink="/customer/detail/account/assets">Fixed income</a>
+                    </div>
+                    <div class="col-md-6 pl-0 text-right">
+                        <p class="text-black m-0 roboto">₹57,22,896</p>
+                        <p class="text-success m-0 roboto">12.23%</p>
+                    </div>
+                </div>
+                <div class="row bb c-p">
+                    <div class="col-md-6 pr-0">
+                        <p class="text-black m-0 roboto"></p>
+                        <a [queryParams]="{ tab: 'tab4'}" class="text-black m-0 roboto" routerLink="/customer/detail/account/assets">Real estate</a>
+                    </div>
+                    <div class="col-md-6 pl-0 text-right">
+                        <p class="text-black m-0 roboto">₹57,22,896</p>
+                        <p class="text-success m-0 roboto">12.23%</p>
+                    </div>
+                </div>
+                <div class="row bb c-p">
+                    <div class="col-md-6 pr-0">
+                        <a [queryParams]="{ tab: 'tab5'}" class="text-black m-0 roboto" routerLink="/customer/detail/account/assets">Retirement a/c</a>
+                    </div>
+                    <div class="col-md-6 pl-0 text-right">
+                        <p class="text-black m-0 f-500 roboto pr-8">-</p>
+                        <p class="text-success m-0 roboto pr-8">-%</p>
+                    </div>
+                </div>
+                <div class="row bb c-p">
+                    <div class="col-md-6 pr-0">
+                        <a [queryParams]="{ tab: 'tab6'}" class="text-black m-0 roboto" routerLink="/customer/detail/account/assets">Small savings</a>
+                    </div>
+                    <div class="col-md-6 pl-0 text-right">
+                        <p class="text-black m-0 roboto">₹57,22,896</p>
+                        <p class="text-success m-0 roboto">12.23%</p>
+                    </div>
+                </div>
+                <div class="row bb c-p">
+                    <div class="col-md-6 pr-0">
+                        <a [queryParams]="{ tab: 'tab7'}" class="text-black m-0 roboto" routerLink="/customer/detail/account/assets">Cash & Bank</a>
+                    </div>
+                    <div class="col-md-6 pl-0 text-right">
+                        <p class="text-black m-0 roboto">₹57,22,896</p>
+                        <p class="text-success m-0 roboto">12.23%</p>
+                    </div>
+                </div>
+                <div class="row bb c-p">
+                    <div class="col-md-6 pr-0">
+                        <a [queryParams]="{ tab: 'tab8'}" class="text-black m-0 roboto" routerLink="/customer/detail/account/assets">Commodities</a>
+                    </div>
+                    <div class="col-md-6 pl-0 text-right">
+                        <p class="text-black m-0 f-500 roboto pr-8">-</p>
+                        <p class="text-success m-0 roboto pr-8">-%</p>
+                    </div>
+                </div>
 
-        <!-- <div class="row c-p">
+                <!-- <div class="row c-p">
             <div class="col-md-6 pr-0">
                 <p class="text-black m-0 roboto">Miscellaneous</p>
             </div>
@@ -122,275 +114,275 @@
                 <p class="text-success m-0 roboto pb-8">12.23%</p>
             </div>
         </div> -->
-      </div>
-    </div>
-    <div class="col-md-8 p-0 b-l">
-      <div class="row b-b">
-        <div class="col-md-8 p-0">
-          <h3 class="m-0 roboto wrapper-20 f-500 text-black">Portfolio Summary</h3>
+            </div>
         </div>
-        <div class="col-md-4 pl-0">
-          <button [matMenuTriggerFor]="menu" class="right text-right b-a mt-12 br-0" mat-button>As on
+        <div class="col-md-8 p-0 b-l">
+            <div class="row b-b">
+                <div class="col-md-8 p-0">
+                    <h3 class="m-0 roboto wrapper-20 f-500 text-black">Portfolio Summary</h3>
+                </div>
+                <div class="col-md-4 pl-0">
+                    <button [matMenuTriggerFor]="menu" class="right text-right b-a mt-12 br-0" mat-button>As on
             03/10/2019 <i class="material-icons text-custom">
               keyboard_arrow_down
             </i></button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item>Item 1</button>
-            <button mat-menu-item>Item 2</button>
-          </mat-menu>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-7 pr-8">
-          <div class="b-a mt-20">
-            <div class="row">
-              <div class="col-md-6 p-0">
-                <h4 class="m-0 wrapper-20">Net worth</h4>
-              </div>
-              <div class="col-md-6 p-0">
-                <h2 class="m-0 text-primary text-right f-300 wrapper-20">₹1,25,35,470</h2>
-              </div>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item>Item 1</button>
+                        <button mat-menu-item>Item 2</button>
+                    </mat-menu>
+                </div>
             </div>
             <div class="row">
-              <div class="col-md-12 p-0">
-                <div class="highcharts-figure" id="container"></div>
-                <!-- <img src="assets/images/svg/summary.svg" class="w-100"> -->
-                <ul class="pl-20 pb-20">
-                  <li class="pr-4 text-black">90-days</li>
-                  <li class="text-success pr-24">₹7,25,872</li>
-                  <li class="pr-4 text-black">1-days</li>
-                  <li class="text-danger">₹23,250</li>
-                </ul>
-              </div>
+                <div class="col-md-7 pr-8">
+                    <div class="b-a mt-20">
+                        <div class="row">
+                            <div class="col-md-6 p-0">
+                                <h4 class="m-0 wrapper-20">Net worth</h4>
+                            </div>
+                            <div class="col-md-6 p-0">
+                                <h2 class="m-0 text-primary text-right f-300 wrapper-20">₹1,25,35,470</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 p-0">
+                                <div class="highcharts-figure" id="container"></div>
+                                <!-- <img src="assets/images/svg/summary.svg" class="w-100"> -->
+                                <ul class="pl-20 pb-20">
+                                    <li class="pr-4 text-black">90-days</li>
+                                    <li class="text-success pr-24">₹7,25,872</li>
+                                    <li class="pr-4 text-black">1-days</li>
+                                    <li class="text-danger">₹23,250</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 pl-8">
+                    <div class="b-a mt-20">
+                        <h4 class="m-0 wrapper-20 pb-0">Asset allocation</h4>
+                        <div class="highcharts-figure" id="piechartMutualFund"></div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="col-md-5 pl-8">
-          <div class="b-a mt-20">
-            <h4 class="m-0 wrapper-20 pb-0">Asset allocation</h4>
-            <div class="highcharts-figure" id="piechartMutualFund"></div>
-          </div>
-        </div>
-      </div>
-      <div class="b-a wrapper-12 m-16">
-        <div class="row">
-          <div class="col-md-4 p-0">
-            <h4 class="m-0 pt-8 pl-8">Net cash flow</h4>
-          </div>
-          <div class="col-md-4 b-a">
+            <div class="b-a wrapper-12 m-16">
+                <div class="row">
+                    <div class="col-md-4 p-0">
+                        <h4 class="m-0 pt-8 pl-8">Net cash flow</h4>
+                    </div>
+                    <div class="col-md-4 b-a">
 
-            <div class="row">
-              <div class="col-md-6 p-0 border-right-1 pt-8 pb-8 pr-4">
-                <mat-checkbox checked="false">Inflows</mat-checkbox>
-              </div>
-              <div class="col-md-6 p-0 pt-8 pb-8 pr-4 pl-16">
-                <mat-checkbox checked="false">Outflows</mat-checkbox>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-2 pt-4">
-            <button [matMenuTriggerFor]="menu" class="b-a pr-4 br-0" mat-button>All bank a/c <i
+                        <div class="row">
+                            <div class="col-md-6 p-0 border-right-1 pt-8 pb-8 pr-4">
+                                <mat-checkbox checked="false">Inflows</mat-checkbox>
+                            </div>
+                            <div class="col-md-6 p-0 pt-8 pb-8 pr-4 pl-16">
+                                <mat-checkbox checked="false">Outflows</mat-checkbox>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 pt-4">
+                        <button [matMenuTriggerFor]="menu" class="b-a pr-4 br-0" mat-button>All bank a/c <i
                 class="material-icons text-custom">
                 keyboard_arrow_down
               </i></button>
-            <mat-menu #menu="matMenu">
-              <button mat-menu-item>Item 1</button>
-              <button mat-menu-item>Item 2</button>
-            </mat-menu>
-          </div>
-          <div class="col-md-2 pt-4">
-            <button [matMenuTriggerFor]="menu" class="b-a pr-4 br-0" mat-button>All family <i
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item>Item 1</button>
+                            <button mat-menu-item>Item 2</button>
+                        </mat-menu>
+                    </div>
+                    <div class="col-md-2 pt-4">
+                        <button [matMenuTriggerFor]="menu" class="b-a pr-4 br-0" mat-button>All family <i
                 class="material-icons text-custom">
                 keyboard_arrow_down
               </i></button>
-            <mat-menu #menu="matMenu">
-              <button mat-menu-item>Item 1</button>
-              <button mat-menu-item>Item 2</button>
-            </mat-menu>
-          </div>
-        </div>
-        <div class="row pt-20">
-          <div class="col-md-7 pl-8">
-            <div class="row b-grey">
-              <div class="col-md-7 p-0 br-grey">
-                <h5 class="m-0 roboto pt-8 pl-4 pb-8 text-black f-500 bb-grey">Description</h5>
-                <p class="m-0 p-4 pb-0">Aditya Birla Sun Life Frontline Equity Fund - Regular - Growth
-                  <span class="text-custom">987987/08</span>
-                </p>
-                <p class="m-0 p-4"><strong>MF</strong> Rahul Jain</p>
-              </div>
-              <div class="col-md-3 p-0 br-grey">
-                <h5 class="m-0 roboto pt-8 pl-4 pb-8 text-black f-500 bb-grey">Date</h5>
-                <p class="m-0 p-4 pt-16">06/10/2019</p>
-              </div>
-              <div class="col-md-2 p-0">
-                <h5 class="m-0 roboto pt-8 pl-4 pb-8 text-black f-500 bb-grey">Amount</h5>
-                <p class="m-0 text-danger p-4 pt-16">5,000</p>
-              </div>
-              <div class="col-md-7 p-0 br-grey">
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item>Item 1</button>
+                            <button mat-menu-item>Item 2</button>
+                        </mat-menu>
+                    </div>
+                </div>
+                <div class="row pt-20">
+                    <div class="col-md-7 pl-8">
+                        <div class="row b-grey">
+                            <div class="col-md-7 p-0 br-grey">
+                                <h5 class="m-0 roboto pt-8 pl-4 pb-8 text-black f-500 bb-grey">Description</h5>
+                                <p class="m-0 p-4 pb-0">Aditya Birla Sun Life Frontline Equity Fund - Regular - Growth
+                                    <span class="text-custom">987987/08</span>
+                                </p>
+                                <p class="m-0 p-4"><strong>MF</strong> Rahul Jain</p>
+                            </div>
+                            <div class="col-md-3 p-0 br-grey">
+                                <h5 class="m-0 roboto pt-8 pl-4 pb-8 text-black f-500 bb-grey">Date</h5>
+                                <p class="m-0 p-4 pt-16">06/10/2019</p>
+                            </div>
+                            <div class="col-md-2 p-0">
+                                <h5 class="m-0 roboto pt-8 pl-4 pb-8 text-black f-500 bb-grey">Amount</h5>
+                                <p class="m-0 text-danger p-4 pt-16">5,000</p>
+                            </div>
+                            <div class="col-md-7 p-0 br-grey">
 
-                <p class="m-0 p-4 pb-0 bt-grey">ICICI Bank FD
-                  <span class="text-custom">09809809809</span>
-                </p>
-                <p class="m-0 p-4"><strong>FD</strong> Rahul Jain</p>
-              </div>
-              <div class="col-md-3 p-0 br-grey">
+                                <p class="m-0 p-4 pb-0 bt-grey">ICICI Bank FD
+                                    <span class="text-custom">09809809809</span>
+                                </p>
+                                <p class="m-0 p-4"><strong>FD</strong> Rahul Jain</p>
+                            </div>
+                            <div class="col-md-3 p-0 br-grey">
 
-                <p class="m-0 p-4 bt-grey pt-16">06/10/2019</p>
-              </div>
-              <div class="col-md-2 p-0">
+                                <p class="m-0 p-4 bt-grey pt-16">06/10/2019</p>
+                            </div>
+                            <div class="col-md-2 p-0">
 
-                <p class="m-0 text-success p-4 bt-grey pt-16">5,000</p>
-              </div>
-              <div class="col-md-7 p-0 br-grey">
+                                <p class="m-0 text-success p-4 bt-grey pt-16">5,000</p>
+                            </div>
+                            <div class="col-md-7 p-0 br-grey">
 
-                <p class="m-0 p-4 pb-0 bt-grey">ICICI Bank FD
-                  <span class="text-custom">09809809809</span>
-                </p>
-                <p class="m-0 p-4"><strong>FD</strong> Rahul Jain</p>
-              </div>
-              <div class="col-md-3 p-0 br-grey">
+                                <p class="m-0 p-4 pb-0 bt-grey">ICICI Bank FD
+                                    <span class="text-custom">09809809809</span>
+                                </p>
+                                <p class="m-0 p-4"><strong>FD</strong> Rahul Jain</p>
+                            </div>
+                            <div class="col-md-3 p-0 br-grey">
 
-                <p class="m-0 p-4 bt-grey pt-16">06/10/2019</p>
-              </div>
-              <div class="col-md-2 p-0">
+                                <p class="m-0 p-4 bt-grey pt-16">06/10/2019</p>
+                            </div>
+                            <div class="col-md-2 p-0">
 
-                <p class="m-0 text-danger p-4 bt-grey pt-16">5,000</p>
-              </div>
-              <div class="col-md-7 p-0 br-grey">
+                                <p class="m-0 text-danger p-4 bt-grey pt-16">5,000</p>
+                            </div>
+                            <div class="col-md-7 p-0 br-grey">
 
-                <p class="m-0 p-4 pb-0 bt-grey">ICICI Bank FD
-                  <span class="text-custom">09809809809</span>
-                </p>
-                <p class="m-0 p-4"><strong>FD</strong> Rahul Jain</p>
-              </div>
-              <div class="col-md-3 p-0 br-grey">
+                                <p class="m-0 p-4 pb-0 bt-grey">ICICI Bank FD
+                                    <span class="text-custom">09809809809</span>
+                                </p>
+                                <p class="m-0 p-4"><strong>FD</strong> Rahul Jain</p>
+                            </div>
+                            <div class="col-md-3 p-0 br-grey">
 
-                <p class="m-0 p-4 bt-grey pt-16">06/10/2019</p>
-              </div>
-              <div class="col-md-2 p-0">
+                                <p class="m-0 p-4 bt-grey pt-16">06/10/2019</p>
+                            </div>
+                            <div class="col-md-2 p-0">
 
-                <p class="m-0 text-success p-4 bt-grey pt-16">5,000</p>
-              </div>
+                                <p class="m-0 text-success p-4 bt-grey pt-16">5,000</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div id="cashFlow"></div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="col-md-5">
-            <div id="cashFlow"></div>
-          </div>
         </div>
-      </div>
+
+        <div class="col-md-2 p-0">
+            <div class="b-a">
+                <div class="row b-b">
+                    <div class="col-md-3 p-0">
+                        <img class="t-85 pt-16 pb-20 pl-8 rounded-circle" src="http://localhost:4200/assets/images/img1.jpg">
+                    </div>
+                    <div class="col-md-9 p-0 text-left">
+                        <p class="text-black m-0 f-500 pt-20">Acme Financial Advisors</p>
+                        <p class="text-custom m-0">Contact</p>
+                    </div>
+                </div>
+                <div class="wrapper-20 pl-12 pr-12">
+                    <div class="row">
+                        <div class="col-md-8 p-0">
+                            <h5 class="m-0">Market summary</h5>
+                        </div>
+                        <div class="col-md-4 p-0">
+                            <p class="f-12 m-0 text-custom pl-4 pt-4">03/10/2019</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="pb-12">
+                    <div class="row">
+                        <div class="col-md-12 p-0 text-center">
+                            <mat-button-toggle-group>
+                                <mat-button-toggle class="br-0" value="Equities">Equities</mat-button-toggle>
+                                <mat-button-toggle class="br-0" value="Debt">Debt</mat-button-toggle>
+                                <mat-button-toggle class="br-0" value="C&M">C&M</mat-button-toggle>
+                            </mat-button-toggle-group>
+                        </div>
+                    </div>
+                </div>
+                <div class="row b-b pb-20 pt-12">
+                    <div class="col-md-6 p-0">
+                        <p class="text-black m-0 pl-16 pb-8 f-300">BSE Sensex</p>
+                    </div>
+                    <div class="col-md-3 p-0">
+                        <p class="m-0 text-success">+0.23%</p>
+                    </div>
+                    <div class="col-md-3 p-0">
+                        <p class="m-0 text-black f-500">38,968</p>
+                    </div>
+                    <div class="col-md-6 p-0">
+                        <p class="text-black m-0 pl-16 pb-8 f-300">Nifty 50</p>
+                    </div>
+                    <div class="col-md-3 p-0">
+                        <p class="m-0 text-success">+0.28%</p>
+                    </div>
+                    <div class="col-md-3 p-0">
+                        <p class="m-0 text-black f-500">11,241</p>
+                    </div>
+                    <div class="col-md-6 p-0">
+                        <p class="text-black m-0 pl-16 pb-8 f-300">Nifty 500</p>
+                    </div>
+                    <div class="col-md-3 p-0">
+                        <p class="m-0 text-success">+0.14%</p>
+                    </div>
+                    <div class="col-md-3 p-0">
+                        <p class="m-0 text-black f-500">9,395</p>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="wrapper-20 pl-12 pr-12">
+                        <div class="row">
+                            <div class="col-md-12 p-0">
+                                <h5 class="m-0 text-black pb-12">Activity log</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 p-0">
+                                <p class="m-0 f-13 f-300 text-black">Fixed deposit - 980787870909 -
+                                    <br>ICICI FD was created manually.</p>
+                                <p class="text-custom m-0 f-13 pt-4 f-300">by Acme Financial Advisors</p>
+                                <p class="m-0 text-black f-12 text-right f-300">04/09/2019 6:00 AM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wrapper-20 pl-12 pt-12 pr-12 pb-12 bt-1">
+                        <div class="row">
+                            <div class="col-md-12 p-0">
+                                <p class="m-0 f-13 f-300 text-black">Fixed deposit - 980787870909 -
+                                    <br>ICICI FD was created manually.</p>
+                                <p class="text-custom m-0 f-13 pt-4 f-300">by Acme Financial Advisors</p>
+                                <p class="m-0 text-black f-12 pb-12 text-right f-300">04/09/2019 6:00 AM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wrapper-20 pl-12 pt-12 pb-12 pr-12 bt-1">
+                        <div class="row">
+                            <div class="col-md-12 p-0">
+                                <p class="m-0 f-13 f-300 text-black">Fixed deposit - 980787870909 -
+                                    <br>ICICI FD was created manually.</p>
+                                <p class="text-custom m-0 pt-4 f-13 f-300">by Acme Financial Advisors</p>
+                                <p class="m-0 text-black f-12 pb-12 text-right f-300">04/09/2019 6:00 AM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wrapper-20 pl-12 pt-12 pb-12 pr-12 bt-1">
+                        <div class="row">
+                            <div class="col-md-12 p-0">
+                                <p class="m-0 f-13 f-300 text-black">Fixed deposit - 980787870909 -
+                                    <br>ICICI FD was created manually.</p>
+                                <p class="text-custom m-0 pt-4 f-300">by Acme Financial Advisors</p>
+                                <p class="m-0 text-black f-12 pb-12 text-right f-300">04/09/2019 6:00 AM</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="col-md-2 p-0">
-      <div class="b-a">
-        <div class="row b-b">
-          <div class="col-md-3 p-0">
-            <img class="t-85 pt-16 pb-20 pl-8 rounded-circle" src="http://localhost:4200/assets/images/img1.jpg">
-          </div>
-          <div class="col-md-9 p-0 text-left">
-            <p class="text-black m-0 f-500 pt-20">Acme Financial Advisors</p>
-            <p class="text-custom m-0">Contact</p>
-          </div>
-        </div>
-        <div class="wrapper-20 pl-12 pr-12">
-          <div class="row">
-            <div class="col-md-8 p-0">
-              <h5 class="m-0">Market summary</h5>
-            </div>
-            <div class="col-md-4 p-0">
-              <p class="f-12 m-0 text-custom pl-4 pt-4">03/10/2019</p>
-            </div>
-          </div>
-        </div>
-        <div class="pb-12">
-          <div class="row">
-            <div class="col-md-12 p-0 text-center">
-              <mat-button-toggle-group>
-                <mat-button-toggle class="br-0" value="Equities">Equities</mat-button-toggle>
-                <mat-button-toggle class="br-0" value="Debt">Debt</mat-button-toggle>
-                <mat-button-toggle class="br-0" value="C&M">C&M</mat-button-toggle>
-              </mat-button-toggle-group>
-            </div>
-          </div>
-        </div>
-        <div class="row b-b pb-20 pt-12">
-          <div class="col-md-6 p-0">
-            <p class="text-black m-0 pl-16 pb-8 f-300">BSE Sensex</p>
-          </div>
-          <div class="col-md-3 p-0">
-            <p class="m-0 text-success">+0.23%</p>
-          </div>
-          <div class="col-md-3 p-0">
-            <p class="m-0 text-black f-500">38,968</p>
-          </div>
-          <div class="col-md-6 p-0">
-            <p class="text-black m-0 pl-16 pb-8 f-300">Nifty 50</p>
-          </div>
-          <div class="col-md-3 p-0">
-            <p class="m-0 text-success">+0.28%</p>
-          </div>
-          <div class="col-md-3 p-0">
-            <p class="m-0 text-black f-500">11,241</p>
-          </div>
-          <div class="col-md-6 p-0">
-            <p class="text-black m-0 pl-16 pb-8 f-300">Nifty 500</p>
-          </div>
-          <div class="col-md-3 p-0">
-            <p class="m-0 text-success">+0.14%</p>
-          </div>
-          <div class="col-md-3 p-0">
-            <p class="m-0 text-black f-500">9,395</p>
-          </div>
-        </div>
-        <div class="">
-          <div class="wrapper-20 pl-12 pr-12">
-            <div class="row">
-              <div class="col-md-12 p-0">
-                <h5 class="m-0 text-black pb-12">Activity log</h5>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12 p-0">
-                <p class="m-0 f-13 f-300 text-black">Fixed deposit - 980787870909 -
-                  <br>ICICI FD was created manually.</p>
-                <p class="text-custom m-0 f-13 pt-4 f-300">by Acme Financial Advisors</p>
-                <p class="m-0 text-black f-12 pt-4 text-right f-300">04/09/2019 6:00 AM</p>
-              </div>
-            </div>
-          </div>
-          <div class="wrapper-20 pl-12 pt-12 pr-12 pb-12 bt-1">
-            <div class="row">
-              <div class="col-md-12 p-0">
-                <p class="m-0 f-13 f-300 text-black">Fixed deposit - 980787870909 -
-                  <br>ICICI FD was created manually.</p>
-                <p class="text-custom m-0 f-13 pt-4 f-300">by Acme Financial Advisors</p>
-                <p class="m-0 text-black f-12 pt-4 pb-12 text-right f-300">04/09/2019 6:00 AM</p>
-              </div>
-            </div>
-          </div>
-          <div class="wrapper-20 pl-12 pt-12 pb-12 pr-12 bt-1">
-            <div class="row">
-              <div class="col-md-12 p-0">
-                <p class="m-0 f-13 f-300 text-black">Fixed deposit - 980787870909 -
-                  <br>ICICI FD was created manually.</p>
-                <p class="text-custom m-0 pt-4 f-13 f-300">by Acme Financial Advisors</p>
-                <p class="m-0 text-black f-12 pt-4 pb-12 text-right f-300">04/09/2019 6:00 AM</p>
-              </div>
-            </div>
-          </div>
-          <div class="wrapper-20 pl-12 pt-12 pb-12 pr-12 bt-1">
-            <div class="row">
-              <div class="col-md-12 p-0">
-                <p class="m-0 f-13 f-300 text-black">Fixed deposit - 980787870909 -
-                  <br>ICICI FD was created manually.</p>
-                <p class="text-custom m-0 pt-4 f-300">by Acme Financial Advisors</p>
-                <p class="m-0 text-black f-12 pt-4 pb-12 text-right f-300">04/09/2019 6:00 AM</p>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
 </div>

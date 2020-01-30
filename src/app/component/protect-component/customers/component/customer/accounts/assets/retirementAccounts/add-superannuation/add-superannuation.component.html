@@ -18,14 +18,13 @@
         </div>
         <div class="col-md-5">
             <mat-form-field class="w-100">
-                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
-                    [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Search family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
                         <span>{{f.userName}}</span>
                     </mat-option>
                 </mat-select>
-                <mat-error class="f-12 pt-4">
+                <mat-error class="f-12">
                     This field is required
                 </mat-error>
             </mat-form-field>
@@ -39,7 +38,7 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input matInput #employeeContry type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0 rupess" formControlName="employeeContry">
-                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isEmployeeContry && getFormControl().employeeContry.invalid || getFormControl().employeeContry.touched && getFormControl().employeeContry.invalid)}">
+                    <mat-error class="f-12" [ngClass]="{'v-h':!(isEmployeeContry && getFormControl().employeeContry.invalid || getFormControl().employeeContry.touched && getFormControl().employeeContry.invalid)}">
                         This field is required
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{employeeContry.value.length}}/10</mat-hint>
@@ -56,7 +55,7 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input matInput #employerContry type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0 rupess" formControlName="employerContry">
-                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isEmployerContry && getFormControl().employerContry.invalid || getFormControl().employerContry.touched && getFormControl().employerContry.invalid)}">
+                    <mat-error class="f-12" [ngClass]="{'v-h':!(isEmployerContry && getFormControl().employerContry.invalid || getFormControl().employerContry.touched && getFormControl().employerContry.invalid)}">
                         This field is required
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{employerContry.value.length}}/10</mat-hint>
@@ -71,8 +70,8 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #assumedRateReturn type="text" (keyup)="onChange($event,'assumedRateReturn')"  (keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="assumedRateReturn">
-                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isAssumedRateReturn && getFormControl().assumedRateReturn.invalid || getFormControl().assumedRateReturn.touched && getFormControl().assumedRateReturn.invalid)}">
+                    <input matInput #assumedRateReturn type="text" (keyup)="onChange($event,'assumedRateReturn')" (keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="assumedRateReturn">
+                    <mat-error class="f-12" [ngClass]="{'v-h':!(isAssumedRateReturn && getFormControl().assumedRateReturn.invalid || getFormControl().assumedRateReturn.touched && getFormControl().assumedRateReturn.invalid)}">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -86,8 +85,8 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput type="text"  (keyup)="onChange($event,'growthEmployer')" (keypress)="utils.keyPress($event)" class="form-control br-0 percentage" formControlName="growthEmployer">
-                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isGrowthEmployer && getFormControl().growthEmployer.invalid || getFormControl().growthEmployer.touched && getFormControl().growthEmployer.invalid)}">
+                    <input matInput type="text" (keyup)="onChange($event,'growthEmployer')" (keypress)="utils.keyPress($event)" class="form-control br-0 percentage" formControlName="growthEmployer">
+                    <mat-error class="f-12" [ngClass]="{'v-h':!(isGrowthEmployer && getFormControl().growthEmployer.invalid || getFormControl().growthEmployer.touched && getFormControl().growthEmployer.invalid)}">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -102,7 +101,7 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input matInput type="text" (keyup)="onChange($event,'growthEmployee')" (keypress)="utils.keyPress($event)" class="form-control br-0 percentage" formControlName="growthEmployee">
-                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isGrowthEmployee && getFormControl().growthEmployee.invalid || getFormControl().growthEmployee.touched && getFormControl().growthEmployee.invalid)}">
+                    <mat-error class="f-12" [ngClass]="{'v-h':!(isGrowthEmployee && getFormControl().growthEmployee.invalid || getFormControl().growthEmployee.touched && getFormControl().growthEmployee.invalid)}">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -118,7 +117,7 @@
                 <input matInput formControlName="firstDateContry" class="form-control br-0" [matDatepicker]="picker" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-                <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isFirstDateContry && getFormControl().firstDateContry.invalid || getFormControl().firstDateContry.touched && getFormControl().firstDateContry.invalid)}">
+                <mat-error class="f-12" [ngClass]="{'v-h':!(isFirstDateContry && getFormControl().firstDateContry.invalid || getFormControl().firstDateContry.touched && getFormControl().firstDateContry.invalid)}">
                     This field is required
                 </mat-error>
             </mat-form-field>

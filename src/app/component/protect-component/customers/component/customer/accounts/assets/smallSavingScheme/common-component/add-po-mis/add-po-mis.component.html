@@ -25,7 +25,7 @@
                         <mat-option>Search family members</mat-option>
                         <mat-option> <span>DFASDFSD</span> </mat-option>
                     </mat-select>
-                    <mat-error class="f-12 pt-4"> This field is required </mat-error>
+                    <mat-error class="f-12"> This field is required </mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -37,14 +37,13 @@
         </div>
         <div class="col-md-5">
             <mat-form-field class="w-100">
-                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
-                    [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Search family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
                         <span>{{f.userName}}</span>
                     </mat-option>
                 </mat-select>
-                <mat-error class="f-12 pt-4">
+                <mat-error class="f-12">
                     This field is required
                 </mat-error>
             </mat-form-field>
@@ -57,14 +56,11 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput type="text" (keypress)="utils.keyPress($event)" autocomplete="off" #amtInvested
-                        maxlength="10" class="form-control br-0 rupess" formControlName="amtInvested">
-                    <mat-error
-                        *ngIf="pomisForm.get('amtInvested').errors?.required && pomisForm.get('amtInvested').touched"
-                        class="f-12 pt-4">
+                    <input matInput type="text" (keypress)="utils.keyPress($event)" autocomplete="off" #amtInvested maxlength="10" class="form-control br-0 rupess" formControlName="amtInvested">
+                    <mat-error *ngIf="pomisForm.get('amtInvested').errors?.required && pomisForm.get('amtInvested').touched" class="f-12">
                         This field is required
                     </mat-error>
-                    <mat-error *ngIf="(pomisForm.get('amtInvested').errors?.min)" class="f-12 pt-4">
+                    <mat-error *ngIf="(pomisForm.get('amtInvested').errors?.min)" class="f-12">
                         Should be greater than 200
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{amtInvested.value.length}}/10</mat-hint>
@@ -79,11 +75,10 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput [matDatepicker]="KVPpicker" class="form-control br-0"
-                        formControlName="commencementdate" readonly>
+                    <input matInput [matDatepicker]="KVPpicker" class="form-control br-0" formControlName="commencementdate" readonly>
                     <mat-datepicker-toggle matSuffix [for]="KVPpicker"></mat-datepicker-toggle>
                     <mat-datepicker #KVPpicker></mat-datepicker>
-                    <mat-error class="f-12 pt-4" *ngIf="pomisForm.get('commencementdate').errors?.required">
+                    <mat-error class="f-12" *ngIf="pomisForm.get('commencementdate').errors?.required">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -101,7 +96,7 @@
                     <mat-option value="0"> Joint </mat-option>
                     <mat-option value="1">Single </mat-option>
                 </mat-select>
-                <mat-error class="f-12 pt-4" *ngIf="pomisForm.get('ownershipType').errors?.required">
+                <mat-error class="f-12" *ngIf="pomisForm.get('ownershipType').errors?.required">
                     This field is required
                 </mat-error>
             </mat-form-field>
@@ -122,15 +117,15 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #poBranch type="text" maxlength="20" class="form-control br-0"
-                            formControlName="poBranch">
+                        <input matInput #poBranch type="text" maxlength="20" class="form-control br-0" formControlName="poBranch">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{poBranch.value.length}}/20</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
         </div>
-        <app-add-nominee [ownerName]="ownerName" [data]="pomisData" (outputEvent)="getFormData($event)"></app-add-nominee>
+        <app-add-nominee [ownerName]="ownerName" [data]="pomisData" (outputEvent)="getFormData($event)">
+        </app-add-nominee>
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Bank account number</h5>
@@ -138,8 +133,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input type="text" (keypress)="utils.keyPress($event)" matInput #accNumber maxlength="16"
-                            class="form-control br-0" formControlName="accNumber">
+                        <input type="text" (keypress)="utils.keyPress($event)" matInput #accNumber maxlength="16" class="form-control br-0" formControlName="accNumber">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{accNumber.value.length}}/16</mat-hint>
                     </mat-form-field>
@@ -153,8 +147,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #description maxlength="60" class="form-control br-0"
-                            formControlName="description">
+                        <input matInput #description maxlength="60" class="form-control br-0" formControlName="description">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                     </mat-form-field>
@@ -171,8 +164,7 @@
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close(false)">Cancel</h5>
         </div>
-        <div class="col-md-8 right text-right"> <button mat-button class="btn-bottom br-0 text-inherit"
-                (click)="saveFormData('close')">Save</button>
+        <div class="col-md-8 right text-right"> <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveFormData('close')">Save</button>
         </div>
     </div>
 </div>
