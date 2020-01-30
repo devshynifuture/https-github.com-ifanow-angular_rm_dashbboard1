@@ -19,7 +19,7 @@
             <mat-card class="example-card bg-grey lter p-0 b-a ">
                 <div class="bar">
                     <mat-card-header class="overflow-hidden">
-                        <div class="wrapper-20 height130">
+                        <div class="wrapper-20 height130 mb-5">
                             <mat-card-title class="mb-10 l-26 text-break text-lighter relClass f-24">
                                 <div class="bar" [ngClass]="{'height23': isLoading}" matTooltip="Service name">
                                     {{singleService.serviceName}} </div>
@@ -98,15 +98,15 @@
 
 
                         <div class="row wrapper-20 bt-1 bb-1 overflow-hidden">
-                            <div class="col-md-4 p1-0">
-                                <p class="f-14 text-primitive">PLANS</p>
+                            <div class="col-md-4 pl-0">
+                                <p class="f-14 mb-8 text-primitive">PLANS</p>
                                 <div class="f-24 relClass">
                                     <div class="bar" [ngClass]="{'height23': isLoading}"> {{singleService.planCount}}
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4 p-0">
-                                <p class="f-14 text-primitive">MODULES</p>
+                                <p class="f-14 mb-8 text-primitive">MODULES</p>
                                 <div class="f-24 relClass">
                                     <div class="bar" [ngClass]="{'heightMar23': isLoading}">
                                         {{singleService.moduleCount}}
@@ -114,7 +114,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4 pr-0">
-                                <p class="f-14 text-primitive">DOCUMENTS</p>
+                                <p class="f-14 mb-8 text-primitive">DOCUMENTS</p>
                                 <div class="f-24 relClass">
                                     <div class="bar" [ngClass]="{'heightMar23': isLoading}">
                                         {{singleService.docCount}}

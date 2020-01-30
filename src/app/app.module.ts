@@ -30,6 +30,7 @@ import {FormTestComponent} from "./test/form-test/form-test.component";
 import {CustomDirectiveModule} from "./common/directives/common-directive.module";
 import {SubscriptionUpperSliderComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/upper-slider/subscription-upper-slider.component';
 import {SubscriptionUpperEntry} from './component/protect-component/AdviserComponent/Subscriptions/subscription-upper-entry-module';
+import { BackofficeDashboardComponent } from './component/protect-component/AdviserComponent/backOffice/backoffice-dashboard/backoffice-dashboard.component';
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
@@ -49,7 +50,8 @@ import {SubscriptionUpperEntry} from './component/protect-component/AdviserCompo
     // AddLiabilitiesComponent,
     // AddInsuranceComponent
     SubscriptionUpperSliderComponent,
-    FormTestComponent
+    FormTestComponent,
+    BackofficeDashboardComponent
 
   ],
   imports: [
