@@ -52,18 +52,18 @@ export class UtilService {
   setSubscriptionStepData(data) {
     this.subscriptionStepData = data
   }
-  checkSubscriptionastepData(stepNo) {
-    let tempData;
-    tempData = Object.assign([], this.subscriptionStepData);
-    tempData = tempData.filter(element => element.stepTypeId == stepNo);
-    if (tempData == undefined) {
-      tempData =
-        [{
-          completed: true
-        }]
-    }
-    return tempData[0].completed;
-  }
+  // checkSubscriptionastepData(stepNo) {
+  //   let tempData;
+  //   tempData = Object.assign([], this.subscriptionStepData);
+  //   tempData = tempData.filter(element => element.stepTypeId == stepNo);
+  //   if (tempData == undefined) {
+  //     tempData =
+  //       [{
+  //         completed: true
+  //       }]
+  //   }
+  //   return tempData[0].completed;
+  // }
   static isRefreshRequired(data) {
     // let closeState = {
     //   "state": data.state,

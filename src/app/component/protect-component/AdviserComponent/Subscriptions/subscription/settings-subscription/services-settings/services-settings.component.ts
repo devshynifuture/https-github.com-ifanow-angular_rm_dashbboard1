@@ -6,6 +6,7 @@ import { AuthService } from '../../../../../../../auth-service/authService';
 import { UtilService } from '../../../../../../../services/util.service';
 import { SubscriptionUpperSliderComponent } from '../../common-subscription-component/upper-slider/subscription-upper-slider.component';
 import { Router } from '@angular/router';
+import { SubscriptionDataService } from '../../../subscription-data.service';
 
 @Component({
   selector: 'app-services-settings',
@@ -31,7 +32,7 @@ export class ServicesSettingsComponent implements OnInit {
 
     this.advisorId = AuthService.getAdvisorId();
     this.feesDisplay = true;
-    (this.utilservice.checkSubscriptionastepData(1) == false) ? this.serviceSettingData = undefined : this.serviceSettingData = [{}, {}, {}]
+    (SubscriptionDataService.getLoderFlag(5) == false) ? this.serviceSettingData = undefined : this.serviceSettingData = [{}, {}, {}]
     this.getServiceSettingSubData();
   }
 

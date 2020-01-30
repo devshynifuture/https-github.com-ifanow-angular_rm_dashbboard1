@@ -12,6 +12,7 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AddQuotationComponent } from '../common-subscription-component/add-quotation/add-quotation.component';
 import { CommonFroalaComponent } from '../common-subscription-component/common-froala/common-froala.component';
 import { AddQuotationSubscriptionComponent } from 'src/app/component/protect-component/customers/component/common-component/add-quotation-subscription/add-quotation-subscription.component';
+import { SubscriptionDataService } from '../../subscription-data.service';
 
 export interface PeriodicElement {
   name: string;
@@ -102,7 +103,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
   ngOnInit() {
     // this.dataSource = [{}, {}, {}];
     this.advisorId = AuthService.getAdvisorId();
-    (this.utilservice.checkSubscriptionastepData(5) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}]
+    (SubscriptionDataService.getLoderFlag(5) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}]
     this.getQuotationsData(false);
     this.dataCount = 0;
   }

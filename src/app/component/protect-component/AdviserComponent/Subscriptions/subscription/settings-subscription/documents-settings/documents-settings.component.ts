@@ -8,6 +8,7 @@ import { UtilService } from "../../../../../../../services/util.service";
 import { SubscriptionUpperSliderComponent } from '../../common-subscription-component/upper-slider/subscription-upper-slider.component';
 import { HelpComponent } from '../../common-subscription-component/help/help.component';
 import { Router } from '@angular/router';
+import { SubscriptionDataService } from '../../../subscription-data.service';
 
 // import {CustomHtmlComponent} from "../../../../../../../common/customhtml.component";
 
@@ -34,7 +35,7 @@ export class DocumentsSettingsComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     // this.openFragment('documents');
-    (this.utilservice.checkSubscriptionastepData(1) == false) ? this.documentSettingData = undefined : this.documentSettingData = [{}, {}, {}]
+    (SubscriptionDataService.getLoderFlag(5) == false) ? this.documentSettingData = undefined : this.documentSettingData = [{}, {}, {}]
     this.getDocumentsSetting();
   }
 
