@@ -19,6 +19,7 @@ import {DatePipe} from '@angular/common';
   ]
 })
 export class AddNscComponent implements OnInit {
+  maxDate = new Date();
   advisorId: any;
   inputData: any;
   ownerData: any;

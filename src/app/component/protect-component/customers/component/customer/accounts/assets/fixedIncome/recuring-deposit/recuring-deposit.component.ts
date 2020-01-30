@@ -22,7 +22,7 @@ import { UtilService,ValidatorType } from 'src/app/services/util.service';
 })
 export class RecuringDepositComponent implements OnInit {
   validatorType = ValidatorType;
-
+  maxDate = new Date();
   advisorId: any;
   showHide = false;
   dataSource: any;

@@ -117,7 +117,7 @@
             <div class="col-md-3">
                 <div class="form-group form-group_one mb-0">
                     <mat-form-field>
-                        <input matInput formControlName="commencementDate" class="form-control br-0"
+                        <input matInput formControlName="commencementDate" [max]="maxDate" class="form-control br-0"
                             [matDatepicker]="CommencementPicker" (focus)="CommencementPicker.open()"
                             (input)="preventDefault($event)">
                         <mat-datepicker-toggle matSuffix [for]="CommencementPicker"></mat-datepicker-toggle>
