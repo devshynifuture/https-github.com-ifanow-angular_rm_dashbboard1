@@ -269,172 +269,51 @@
                 </div>
             </div>
             <div class="row pt-20">
-                <div class="col-md-6 pl-0">
-                    <mat-card class="p-0 b-a mb-20">
-                        <div class="bg-grey lter p-24">
+                <div class="col-md-6 pl-0 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                    <mat-card class="p-0 b-a mb-20 relClass">
+
+                        <div class="bg-grey lter p-24 ">
                             <div class="row">
                                 <div class="col-md-4 pl-0">
-                                    <h2 class="m-0 f-24 wb">Scenario 1</h2>
+                                    <h2 class="m-0 f-24 wb ">
+                                        <div class="bar">Scenario 1</div>
+                                    </h2>
                                 </div>
                                 <div class="col-md-8">
-                                    <button mat-stroked-button class="warning-sm">UNAPPROVED</button>
+                                    <div class="bar"> <button mat-stroked-button class="warning-sm">UNAPPROVED</button>
+                                    </div>
                                 </div>
                                 <div class="col-md-12 p-0 pt-12">
-                                    <p class="m-0 roboto text-light">In this scenario we have assumed continuation of
-                                        most
-                                        products.</p>
+                                    <div class="bar">
+                                        <p class="m-0 roboto text-light">In this scenario we have assumed continuation
+                                            of
+                                            most
+                                            products.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
                         <div class="p-24">
                             <mat-card-content>
                                 <p class="f-12 m-0 roboto text-custom">
                                     PLANNER NOTES
                                 </p>
-                                <p class="m-0 roboto">This plan is ideal for young people who are just starting off
-                                    their financial journey and want to start saving with a smaller investment amount.
-                                </p>
+                                <div class="m-0 roboto f-14">
+                                    <div class="bar">This plan is ideal for young people who are just starting off
+                                        their financial journey and want to start saving with a smaller investment
+                                        amount.
+                                    </div>
+                                </div>
                                 <p class="f-12 m-0 pt-24 roboto text-custom">
                                     PLANNER NOTES
                                 </p>
-                                <p class="m-0 roboto">This plan is ideal for young people who are just starting off
-                                    their financial journey and want to start saving with a smaller investment amount.
-                                </p>
-                            </mat-card-content>
-                            <mat-card-actions class="bt-1 pt-12 mb-0 pb-0">
-                                <div class="row">
-                                    <div class="col-md-9 p-0">
-                                        <button mat-button class="btn-black">Mark as approved</button>
-                                    </div>
-                                    <div class="col-md-3 p-0 pt-4">
-                                        <mat-checkbox>Compare</mat-checkbox>
-                                    </div>
+                                <div class="f-14 m-0 roboto">
+                                    <div class="bar">
+                                        This plan is ideal for young people who are just starting off
+                                        their financial journey and want to start saving with a smaller investment
+                                        amount.</div>
                                 </div>
-                            </mat-card-actions>
-                        </div>
-                    </mat-card>
-                </div>
-                <div class="col-md-6 pr-0">
-                    <mat-card class="p-0 b-a mb-20">
-                        <div class="bg-grey lter p-24">
-                            <div class="row">
-                                <div class="col-md-4 pl-0">
-                                    <h2 class="m-0 f-24 wb">Scenario 2</h2>
-                                </div>
-                                <div class="col-md-8">
-                                    <button mat-stroked-button class="warning-sm">UNAPPROVED</button>
-                                </div>
-                                <div class="col-md-12 p-0 pt-12">
-                                    <p class="m-0 roboto text-light">In this scenario we have assumed continuation of
-                                        most
-                                        products.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-24">
-                            <mat-card-content>
-                                <p class="f-12 m-0 roboto text-custom">
-                                    PLANNER NOTES
-                                </p>
-                                <p class="m-0 roboto">This plan is ideal for young people who are just starting off
-                                    their financial journey and want to start saving with a smaller investment amount.
-                                </p>
-                                <p class="f-12 m-0 pt-24 roboto text-custom">
-                                    PLANNER NOTES
-                                </p>
-                                <p class="m-0 roboto">This plan is ideal for young people who are just starting off
-                                    their financial journey and want to start saving with a smaller investment amount.
-                                </p>
-                            </mat-card-content>
-                            <mat-card-actions class="bt-1 pt-12 mb-0 pb-0">
-                                <div class="row">
-                                    <div class="col-md-9 p-0">
-                                        <button mat-button class="btn-black">Mark as approved</button>
-                                    </div>
-                                    <div class="col-md-3 p-0 pt-4">
-                                        <mat-checkbox>Compare</mat-checkbox>
-                                    </div>
-                                </div>
-                            </mat-card-actions>
-                        </div>
-                    </mat-card>
-                </div>
-                <div class="col-md-6 pl-0">
-                    <mat-card class="p-0 b-a mb-20">
-                        <div class="bg-grey lter p-24">
-                            <div class="row">
-                                <div class="col-md-4 pl-0">
-                                    <h2 class="m-0 f-24 wb">Scenario 3</h2>
-                                </div>
-                                <div class="col-md-8">
-                                    <button mat-stroked-button class="warning-sm">UNAPPROVED</button>
-                                </div>
-                                <div class="col-md-12 p-0 pt-12">
-                                    <p class="m-0 roboto text-light">In this scenario we have assumed continuation of
-                                        most
-                                        products.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-24">
-                            <mat-card-content>
-                                <p class="f-12 m-0 roboto text-custom">
-                                    PLANNER NOTES
-                                </p>
-                                <p class="m-0 roboto">This plan is ideal for young people who are just starting off
-                                    their financial journey and want to start saving with a smaller investment amount.
-                                </p>
-                                <p class="f-12 m-0 pt-24 roboto text-custom">
-                                    PLANNER NOTES
-                                </p>
-                                <p class="m-0 roboto">This plan is ideal for young people who are just starting off
-                                    their financial journey and want to start saving with a smaller investment amount.
-                                </p>
-                            </mat-card-content>
-                            <mat-card-actions class="bt-1 pt-12 mb-0 pb-0">
-                                <div class="row">
-                                    <div class="col-md-9 p-0">
-                                        <button mat-button class="btn-black">Mark as approved</button>
-                                    </div>
-                                    <div class="col-md-3 p-0 pt-4">
-                                        <mat-checkbox>Compare</mat-checkbox>
-                                    </div>
-                                </div>
-                            </mat-card-actions>
-                        </div>
-                    </mat-card>
-                </div>
-                <div class="col-md-6 pr-0">
-                    <mat-card class="p-0 b-a mb-20">
-                        <div class="bg-grey lter p-24">
-                            <div class="row">
-                                <div class="col-md-4 pl-0">
-                                    <h2 class="m-0 f-24 wb">Scenario 4</h2>
-                                </div>
-                                <div class="col-md-8">
-                                    <button mat-stroked-button class="warning-sm">UNAPPROVED</button>
-                                </div>
-                                <div class="col-md-12 p-0 pt-12">
-                                    <p class="m-0 roboto text-light">In this scenario we have assumed continuation of
-                                        most
-                                        products.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-24">
-                            <mat-card-content>
-                                <p class="f-12 m-0 roboto text-custom">
-                                    PLANNER NOTES
-                                </p>
-                                <p class="m-0 roboto">This plan is ideal for young people who are just starting off
-                                    their financial journey and want to start saving with a smaller investment amount.
-                                </p>
-                                <p class="f-12 m-0 pt-24 roboto text-custom">
-                                    PLANNER NOTES
-                                </p>
-                                <p class="m-0 roboto">This plan is ideal for young people who are just starting off
-                                    their financial journey and want to start saving with a smaller investment amount.
-                                </p>
                             </mat-card-content>
                             <mat-card-actions class="bt-1 pt-12 mb-0 pb-0">
                                 <div class="row">
@@ -492,6 +371,6 @@
             <button mat-raised-button class="btn-primitive mt-12">PROCEED</button>
 
         </div>
-        <button mat-raised-button class="btn-primary mt-12" (click)="openDialog()">Modal</button>
+        <!-- <button mat-raised-button class="btn-primary mt-12" (click)="openDialog()">Modal</button> -->
     </div>
 </div>
