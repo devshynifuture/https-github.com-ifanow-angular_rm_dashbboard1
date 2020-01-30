@@ -6,6 +6,7 @@ import { EnumServiceService } from '../../../../../../../services/enum-service.s
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from "../../../../../../../auth-service/authService";
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-variable-fee',
@@ -13,7 +14,21 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
   styleUrls: ['./add-variable-fee.component.scss']
 })
 export class AddVariableFeeComponent implements OnInit {
-
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'primary',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  }
   mutualFundFees;
   validatorType = ValidatorType;
   isServiceValid;
@@ -164,16 +179,10 @@ export class AddVariableFeeComponent implements OnInit {
   }
 
   saveVariableFeeData(feeType) {
-
-    if (this.variableFeeData.controls.serviceName.invalid) {
-      this.isServiceValid = true;
-      return;
-    } else if (this.variableFeeData.controls.code.invalid) {
-      this.isCodeValid = true;
-      return;
-    } else if (this.variableFeeData.controls.billEvery.invalid) {
-      this.isBillValid = true;
-      return;
+    if (this.variableFeeData.invalid) {
+      this.variableFeeData.get('serviceName').markAsTouched();
+      this.variableFeeData.get('code').markAsTouched();
+      this.variableFeeData.get('billEvery').markAsTouched();
     } else if (this.variableFeeData.controls.directFees.invalid || this.variableFeeData.controls.regularFees.invalid) {
       this.mutualFundFees = true;
       return;
@@ -184,6 +193,7 @@ export class AddVariableFeeComponent implements OnInit {
       this.pricing = true;
       return;
     } else {
+      this.barButtonOptions.active = true;
       let obj = {
         serviceRepoId: this.serviceId,
         advisorId: this.advisorId,
@@ -226,11 +236,26 @@ export class AddVariableFeeComponent implements OnInit {
       console.log('jifsdfoisd', obj);
       if (this.serviceId == undefined) {
         this.subService.createSettingService(obj).subscribe(
-          data => this.saveVariableFeeDataResponse(data, obj)
+          data =>{
+            this.saveVariableFeeDataResponse(data, obj);
+            this.barButtonOptions.active = false;
+          },
+          err =>{
+            console.log("error createSettingService", err);
+            this.barButtonOptions.active = false;
+          }
         );
       } else {
         this.subService.editSettingService(obj).subscribe(
-          data => this.saveFeeTypeDataEditResponse(data)
+          data =>{
+            this.saveFeeTypeDataEditResponse(data);
+            this.barButtonOptions.active = false;
+
+          },
+          err =>{
+            this.barButtonOptions.active = false;
+            console.log("error editSettingService", err);
+          }
         );
       }
 

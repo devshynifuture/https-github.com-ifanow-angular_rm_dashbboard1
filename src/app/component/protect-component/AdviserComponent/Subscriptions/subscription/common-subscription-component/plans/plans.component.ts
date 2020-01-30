@@ -2,6 +2,7 @@ import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { SubscriptionService } from '../../../subscription.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from '../../../../../../../auth-service/authService';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-plans',
@@ -9,6 +10,21 @@ import { AuthService } from '../../../../../../../auth-service/authService';
   styleUrls: ['./plans.component.scss']
 })
 export class PlansComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'primary',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  }
   _upperData: any;
   flag: any;
 
@@ -146,6 +162,8 @@ export class PlansComponent implements OnInit {
   }
 
   saveMapping() {
+    this.barButtonOptions.active = true;
+
     if (this.componentFlag === 'documents') {
       this.saveDocumentPlanMapping();
     } else if (this.componentFlag === 'plans') {
@@ -181,14 +199,23 @@ export class PlansComponent implements OnInit {
       ]
     }
     this.subService.mapDocumentToService(obj).subscribe(
-      data => this.mapPlanToServiceRes(data)
+      data =>{
+        this.barButtonOptions.active = false;
+        this.mapPlanToServiceRes(data);
+      },
+      err =>{
+        this.barButtonOptions.active = false;
+        console.log(err, "error mapDocumentToService");
+      }
     );
   }
+
   mapPlanToServiceRes(data) {
     this.dialogClose()
     console.log(data)
     this.eventService.openSnackBar('Service is mapped', 'OK');
   }
+
   saveDocumentPlanMapping() {
     let obj = [];
     if (this.mappedPlan && this.mappedPlan !== undefined && this.mappedPlan !== null) {
@@ -211,7 +238,14 @@ export class PlansComponent implements OnInit {
       ]
     }
     this.subService.mapPlanToServiceSettings(obj).subscribe(
-      data => this.saveMappedPlansResponse(data)
+      data =>{
+        this.barButtonOptions.active = false;
+        this.saveMappedPlansResponse(data);
+      },
+      err =>{
+        this.barButtonOptions.active = false;
+        console.log(err, "error mapPlanToServiceSettings");
+      }
     );
   }
 
@@ -242,7 +276,14 @@ export class PlansComponent implements OnInit {
     console.log('Mapped Plans', obj);
 
     this.subService.mapPlanToServiceSettings(obj).subscribe(
-      data => this.saveMappedPlansResponse(data)
+      data =>{
+        this.barButtonOptions.active = false;
+        this.saveMappedPlansResponse(data);
+      },
+      err=>{
+        this.barButtonOptions.active = false;
+        console.log(err, "error mapPlanToServiceSettings");
+      }
     );
   }
 

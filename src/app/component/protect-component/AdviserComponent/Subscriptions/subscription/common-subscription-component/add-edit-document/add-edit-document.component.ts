@@ -6,6 +6,7 @@ import { AuthService } from '../../../../../../../auth-service/authService';
 import { UtilService } from '../../../../../../../services/util.service';
 import { EventService } from '../../../../../../../Data-service/event.service';
 import { SubscriptionUpperSliderComponent } from '../upper-slider/subscription-upper-slider.component';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-edit-document',
@@ -13,7 +14,21 @@ import { SubscriptionUpperSliderComponent } from '../upper-slider/subscription-u
   styleUrls: ['./add-edit-document.component.scss']
 })
 export class AddEditDocumentComponent implements OnInit {
-
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'PROCEED',
+    buttonColor: 'primary',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  }
   advisorId;
 
   blankOverview: any;
@@ -95,13 +110,12 @@ export class AddEditDocumentComponent implements OnInit {
   }
 
   saveDocuments() {
-    if (this.blankDocumentProperties.controls.docType.invalid) {
-      this.isDocType = true;
-      return;
-    } else if (this.blankDocumentProperties.controls.docName.invalid) {
-      this.isDocName = true;
-      return;
-    } else {
+    if(this.blankDocumentProperties.invalid){
+      this.blankDocumentProperties.get('docType').markAsTouched();
+      this.blankDocumentProperties.get('docName').markAsTouched();
+    }
+     else {
+      this.barButtonOptions.active = true;
       if (this._inputData.documentRepositoryId == undefined) {
         const obj = {
           advisorId: this.advisorId,
@@ -125,6 +139,11 @@ export class AddEditDocumentComponent implements OnInit {
             console.log(data);
             this.subInjectService.changeNewRightSliderState({ state: 'close', data: { documentData: data } });
             // this.sendDataToParentUpperFrag(data);
+            this.barButtonOptions.active = false;
+          },
+          err=>{
+            this.barButtonOptions.active = false;
+            console.log(err, "error changeNewRightSliderState");
           }
         );
       } else {
@@ -143,6 +162,12 @@ export class AddEditDocumentComponent implements OnInit {
             obj['id'] = data;
             this.subInjectService.changeNewRightSliderState({ state: 'close', data: { documentData: obj } });
             this.sendDataToParentUpperFrag(data);
+            this.barButtonOptions.active = false;
+          },
+          err =>{
+            this.barButtonOptions.active = false;
+            console.log(err, "error changeNewRightSliderState");
+            
           }
         );
       }

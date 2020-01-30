@@ -230,7 +230,9 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('Close')">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveVariableFeeData('2')">Save</button>
+            <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveVariableFeeData('2')">Save</button> -->
+            <app-progress-button (btnClick)="saveVariableFeeData('2')" [options]="barButtonOptions" >
+            </app-progress-button>
         </div>
     </div>
 </div>
