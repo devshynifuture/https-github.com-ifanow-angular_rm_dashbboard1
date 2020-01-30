@@ -17,6 +17,7 @@ import { UtilService } from 'src/app/services/util.service';
   ]
 })
 export class AddPoTdComponent implements OnInit {
+  maxDate = new Date();
   inputData: any;
   ownerName: any;
   familyMemberId: any;
@@ -178,7 +179,6 @@ export class AddPoTdComponent implements OnInit {
           "tdNumber": this.POTDOptionalForm.get('tdNum').value,
           "bankAccountNumber": this.POTDOptionalForm.get('bankAccNum').value,
           "description": this.POTDOptionalForm.get('description').value,
-          "postOfficeTdTransactionList": finalTransctList
         }
         this.cusService.addPOTD(obj).subscribe(
           data => this.response(data),

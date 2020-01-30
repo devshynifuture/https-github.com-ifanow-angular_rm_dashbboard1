@@ -17,6 +17,7 @@ import { UtilService } from 'src/app/services/util.service';
   ],
 })
 export class AddPoMisComponent implements OnInit {
+  maxDate = new Date();
   show: boolean;
   _inputData: any;
   pomisForm: any;

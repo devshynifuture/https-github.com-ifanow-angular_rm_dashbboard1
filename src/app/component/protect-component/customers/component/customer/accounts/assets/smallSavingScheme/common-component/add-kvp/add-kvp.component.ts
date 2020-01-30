@@ -17,6 +17,7 @@ import {UtilService} from 'src/app/services/util.service';
   ]
 })
 export class AddKvpComponent implements OnInit {
+  maxDate = new Date();
   inputData: any;
   advisorId: any;
   clientId: any;

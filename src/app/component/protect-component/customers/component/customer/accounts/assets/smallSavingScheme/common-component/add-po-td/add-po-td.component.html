@@ -60,7 +60,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput formControlName="commDate" [matDatepicker]="KVPpicker" class="form-control br-0"
+                        <input matInput formControlName="commDate" [max]="maxDate"[matDatepicker]="KVPpicker" class="form-control br-0"
                             readonly>
                         <mat-datepicker-toggle matSuffix [for]="KVPpicker"></mat-datepicker-toggle>
                         <mat-datepicker #KVPpicker></mat-datepicker>
@@ -178,7 +178,7 @@
     <div>
 
     </div>
-    <app-add-transaction (outputEvent)="getFormData($event)"></app-add-transaction>
+    <!-- <app-add-transaction (outputEvent)="getFormData($event)"></app-add-transaction> -->
 
 </div>
 <div class="bottom-fixed wrapper-12 pt-16">
