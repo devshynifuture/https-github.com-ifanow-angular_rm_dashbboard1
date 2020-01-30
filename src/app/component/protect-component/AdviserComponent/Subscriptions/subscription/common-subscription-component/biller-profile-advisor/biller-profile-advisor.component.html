@@ -164,10 +164,12 @@
                                 <div class="row pt-16">
                                     <div class="col-md-12 p-0">
                                         <!-- (click)="file.click()"-->
-                                        <button [disabled]="logoImg==undefined" (click)="uploadImage()" class="br-0 btn-primary mr-12" mat-stroked-button>UPLOAD
+                                        <app-progress-button  *ngIf="logoImg!=undefined" (btnClick)="uploadImage()" [options]="barButtonOptions" >
+                                        </app-progress-button>
+                                        <!-- <button *ngIf="logoImg!=undefined" (click)="uploadImage()" class="br-0 btn-primary mr-12" mat-stroked-button>UPLOAD
                                             LOGO
-                                        </button>
-                                        <button *ngIf="logoImg" (click)="cancelImageUpload()" class="br-0 mr-12" mat-stroked-button>CANCEL
+                                        </button> -->
+                                        <button *ngIf="logoImg" (click)="cancelImageUpload()" class="br-0 mr-12 ml-12" mat-stroked-button>CANCEL
                                         </button>
                                     </div>
                                     <input #file (change)="onChange($event)" [ngClass]="{'v-h': true}" accept='image/*' formControlName="url" type="file">
@@ -263,7 +265,7 @@
                         <div class="col-md-5">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <input #pincodeB [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" (change)="getPostalPin($event.target.value,'bankDetailsForm')" appInputValueValidation class="form-control br-0 text-left" formControlName="pincodeB" matInput minlength="6"
+                                    <input #pincodeB [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" (focusout)="getPostalPin($event.target.value,'bankDetailsForm')" appInputValueValidation class="form-control br-0 text-left" formControlName="pincodeB" matInput minlength="6"
                                         type="text">
                                     <mat-error class="f-12">{{'Invalid pincodeB'}}</mat-error>
                                     <mat-hint align="end" class="f-12">{{pincodeB.value.length}}/6</mat-hint>
@@ -364,15 +366,15 @@
             <h5 (click)="Close('close')" class="mb-0 pt-8 text-white c-p">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button (click)="back()" *ngIf="selected!=0" class="mr-20 br-0 text-inherit" mat-button mat-raised-button>PREVIOUS
+        <button (click)="back()" *ngIf="selected!=0" class="mr-20 br-0 text-inherit" mat-button mat-raised-button>PREVIOUS
       </button>
-      <!-- <app-progress-button  *ngIf="selected!=3" (btnClick)="nextStep(selected,'Save&Next')" [options]="barButtonOptions" >
-    </app-progress-button>
+      <!-- <app-progress-button  *ngIf="selected!=3" (btnClick)="nextStep(selected,'Save&Next')" [options]="barButtonOptions" [disabled]="logoImg==undefined && selected==1">
+    </app-progress-button> -->
 
     <app-progress-button *ngIf="selected==3" (btnClick)="nextStep(selected,'Save&Next')" [options]="barButtonOptions" >
-    </app-progress-button> -->
-            <!-- <button (click)="nextStep(selected,'Save&Next')" [disabled]="logoImg==undefined && selected==1" *ngIf="selected!=3" class="btn-bottom br-0 text-inherit" mat-button>SAVE & NEXT
-      </button> -->
+    </app-progress-button>
+            <button (click)="nextStep(selected,'Save&Next')" [disabled]="logoImg==undefined && selected==1" *ngIf="selected!=3" class="btn-bottom br-0 text-inherit" mat-button>SAVE & NEXT
+      </button>
      
             <!-- <button (click)="nextStep(selected,'Save&Next')" *ngIf="selected==3" class="btn-bottom br-0 text-inherit" mat-button>SAVE
       </button> -->

@@ -126,12 +126,15 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
 
   uploadImage() {
+    this.barButtonOptions.active = true;
+
     if (this.imageData.type == 'image/png' || this.imageData.type == 'image/jpeg') {
       const files = [this.imageData];
       const tags = this.advisorId + ',biller_profile_logo,';
       PhotoCloudinaryUploadService.uploadFileToCloudinary(files, 'biller_profile_logo', tags,
         (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
           if (status == 200) {
+            this.barButtonOptions.active = false;
             const responseObject = JSON.parse(response);
             console.log('onChange file upload success response url : ', responseObject.url);
             this.logoImg = responseObject.url;
@@ -233,10 +236,11 @@ export class BillerProfileAdvisorComponent implements OnInit {
     switch (true) {
       case (this.profileDetailsForm.valid && value == 0):
         this.selected = 1;
-        this.barButtonOptions.text = "SAVE & NEXT";
+        this.barButtonOptions.text = "UPLOAD LOGO";
         break;
       case (/*this.logUrl.valid &&*/ value == 1):
         this.selected = 2;
+        this.barButtonOptions.text = "SAVE & NEXT";
         break;
       case (this.bankDetailsForm.valid && value == 2):
         this.selected = 3;
@@ -273,67 +277,40 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
 
   back() {
+    console.log(this.selected, "this.selected 123");
     this.selected--;
+    if(this.selected == 2){
+      this.barButtonOptions.text = "UPLOAD LOGO";
+    }
+
   }
 
   
 
   submitBillerForm() {
-    if (this.profileDetailsForm.controls.companyDisplayName.invalid) {
-      this.profileDetailsForm.controls.companyDisplayName.markAsTouched();
-      return;
-    } else if (this.profileDetailsForm.controls.gstinNum.invalid) {
-      this.profileDetailsForm.controls.gstinNum.markAsTouched();
-      return;
-    } else if (this.profileDetailsForm.controls.panNum.invalid) {
-      this.profileDetailsForm.controls.panNum.markAsTouched();
-      return;
-    } else if (this.profileDetailsForm.controls.Address.invalid) {
-      this.profileDetailsForm.controls.Address.markAsTouched();
-      return;
-    } else if (this.profileDetailsForm.controls.city.invalid) {
-      this.profileDetailsForm.controls.city.markAsTouched();
-      return;
-    } else if (this.profileDetailsForm.controls.state.invalid) {
-      this.profileDetailsForm.controls.state.markAsTouched();
-      return;
-    } else if (this.profileDetailsForm.controls.country.invalid) {
-      this.profileDetailsForm.controls.country.markAsTouched();
-      return;
-    } else if (this.profileDetailsForm.controls.pincode.invalid) {
-      this.profileDetailsForm.controls.pincode.markAsTouched();
-      return;
-    } /*else if (this.logUrl.controls.url.invalid) {
-      return;
-    } */
-    else if (this.bankDetailsForm.controls.nameOnBank.invalid) {
-      this.isNameOnBank = true;
-      return;
-    } else if (this.bankDetailsForm.controls.bankName.invalid) {
-      this.isBankName = true;
-      return;
-    } else if (this.bankDetailsForm.controls.acNo.invalid) {
-      this.isAcNo = true;
-      return;
-    } else if (this.bankDetailsForm.controls.ifscCode.invalid) {
-      this.isIFSC = true;
-      return;
-    } else if (this.bankDetailsForm.controls.address.invalid) {
-      this.isaddress = true;
-      return;
-    } else if (this.bankDetailsForm.controls.cityB.invalid) {
-      this.isCity = true;
-      return;
-    } else if (this.bankDetailsForm.controls.stateB.invalid) {
-      this.isState = true;
-      return;
-    } else if (this.bankDetailsForm.controls.pincodeB.invalid) {
-      this.isZipCode = true;
-      return;
-    } else if (this.bankDetailsForm.controls.countryB.invalid) {
-      this.isCountry = true;
-      return;
-    } else {
+    if(this.profileDetailsForm.invalid){
+      this.profileDetailsForm.get("companyDisplayName").markAsTouched();
+      this.profileDetailsForm.get("gstinNum").markAsTouched();
+      this.profileDetailsForm.get("panNum").markAsTouched();
+      this.profileDetailsForm.get("Address").markAsTouched();
+      this.profileDetailsForm.get("city").markAsTouched();
+      this.profileDetailsForm.get("state").markAsTouched();
+      this.profileDetailsForm.get("country").markAsTouched();
+      this.profileDetailsForm.get("pincode").markAsTouched();
+    }
+    else if(this.bankDetailsForm.invalid){
+      this.bankDetailsForm.get("nameOnBank").markAsTouched();
+      this.bankDetailsForm.get("bankName").markAsTouched();
+      this.bankDetailsForm.get("acNo").markAsTouched();
+      this.bankDetailsForm.get("ifscCode").markAsTouched();
+      this.bankDetailsForm.get("address").markAsTouched();
+      this.bankDetailsForm.get("cityB").markAsTouched();
+      this.bankDetailsForm.get("stateB").markAsTouched();
+      this.bankDetailsForm.get("pincodeB").markAsTouched();
+      this.bankDetailsForm.get("countryB").markAsTouched();
+    }
+     else {
+      this.barButtonOptions.active = true;
       const obj = {
         acNumber: this.bankDetailsForm.controls.acNo.value,
         advisorId: this.advisorId,
@@ -363,13 +340,19 @@ export class BillerProfileAdvisorComponent implements OnInit {
       if (this.profileDetailsForm.controls.id.value == undefined) {
         this.subService.saveBillerProfileSettings(obj).subscribe(
           data => this.closeTab(data),
-          error => this.eventService.showErrorMessage(error)
+          error =>{
+            this.barButtonOptions.active = false;
+            this.eventService.showErrorMessage(error);
+          }
         );
 
       } else {
         this.subService.updateBillerProfileSettings(obj).subscribe(
           data => this.closeTab(data),
-          error => this.eventService.showErrorMessage(error)
+          error =>{
+            this.barButtonOptions.active = false;
+            this.eventService.showErrorMessage(error);
+          }
         );
       }
 
@@ -379,6 +362,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
     console.log('data posta 123345566')
   }
   closeTab(data) {
+    console.log(data, "closeTab data 123");
+    this.barButtonOptions.active = false;
     if (data == true) {
       this.Close(data);
       (this.profileDetailsForm.controls.id.value == undefined) ?
