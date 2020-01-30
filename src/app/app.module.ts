@@ -29,6 +29,7 @@ import 'zone.js/dist/zone';
 import { FormTestComponent } from "./test/form-test/form-test.component";
 import { CustomDirectiveModule } from "./common/directives/common-directive.module";
 import { SubscriptionUpperEntry } from './component/protect-component/AdviserComponent/Subscriptions/subscription-upper-entry-module';
+import { BackofficeDashboardComponent } from './component/protect-component/AdviserComponent/backOffice/backoffice-dashboard/backoffice-dashboard.component';
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
@@ -47,7 +48,8 @@ import { SubscriptionUpperEntry } from './component/protect-component/AdviserCom
     // CustomDialogContainerComponent,
     // AddLiabilitiesComponent,
     // AddInsuranceComponent
-    FormTestComponent
+    FormTestComponent,
+    BackofficeDashboardComponent
 
   ],
   imports: [
