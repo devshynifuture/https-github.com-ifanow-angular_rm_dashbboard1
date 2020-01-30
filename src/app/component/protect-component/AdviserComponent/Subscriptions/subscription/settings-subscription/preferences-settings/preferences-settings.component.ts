@@ -9,6 +9,7 @@ import { PreferenceEmailInvoiceComponent } from '../../common-subscription-compo
 import { AuthService } from '../../../../../../../auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
 import { BillerProfileAdvisorComponent } from '../../common-subscription-component/biller-profile-advisor/biller-profile-advisor.component';
+import { SubscriptionDataService } from '../../../subscription-data.service';
 
 @Component({
   selector: 'app-preferences-settings',
@@ -37,7 +38,7 @@ export class PreferencesSettingsComponent implements OnInit {
 
     this.viewMode = 'tab1';
     this.advisorId = AuthService.getAdvisorId();
-    (this.utilservice.checkSubscriptionastepData(2) == false) ? this.billerProfileData = undefined : this.billerProfileData = [{}, {}, {}]
+    (SubscriptionDataService.getLoderFlag(5) == false) ? this.billerProfileData = undefined : this.billerProfileData = [{}, {}, {}]
     this.getProfileBillerData();
     this.getTemplate();
   }

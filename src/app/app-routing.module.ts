@@ -7,6 +7,7 @@ import { DataNotFoundComponent } from './component/protect-component/common-comp
 import { AuthGuard } from './guards/auth.guard';
 import { FormTestComponent } from './test/form-test/form-test.component';
 import { SubscriptionUpperSliderComponent } from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/upper-slider/subscription-upper-slider.component';
+import { BackofficeDashboardComponent } from './component/protect-component/AdviserComponent/backOffice/backoffice-dashboard/backoffice-dashboard.component';
 
 const routes: Routes = [
   {
@@ -54,7 +55,7 @@ const routes: Routes = [
   },
   {
     path: 'subscription-upper',
-    component: SubscriptionUpperSliderComponent
+    loadChildren: () => import('./component/protect-component/AdviserComponent/Subscriptions/subscription-upper-entry-module').then(m => m.SubscriptionUpperEntry)
   },
   {
     path: 'gmail-redirect',
@@ -62,7 +63,10 @@ const routes: Routes = [
     loadChildren: () => import('./component/gmail-redirect/gmail-redirect.module')
       .then(m => m.GmailRedirectModule)
   },
-
+  {
+    path: 'backoffice',
+    component: BackofficeDashboardComponent
+  },
   {
     path: '',
     redirectTo: '/login',

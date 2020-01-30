@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionService } from '../subscription.service';
+import { SubscriptionDataService } from '../subscription-data.service';
 
 @Component({
   selector: 'app-subscription',
@@ -58,7 +59,7 @@ export class SubscriptionComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.subService.getDashboardSubscriptionResponse(this.advisorId).subscribe(
       data => {
-        this.utilservice.setSubscriptionStepData(data.advisorAccomplishedSubscriptionFinalList);
+        SubscriptionDataService.setLoderFlag(data.advisorAccomplishedSubscriptionFinalList);
       }
     );
     // this.selected = 6;

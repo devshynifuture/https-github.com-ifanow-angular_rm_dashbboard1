@@ -16,6 +16,7 @@ import { CreateSubscriptionComponent } from '../common-subscription-component/cr
 import { BillerSettingsComponent } from '../common-subscription-component/biller-settings/biller-settings.component';
 import { InvoiceHistoryComponent } from '../common-subscription-component/invoice-history/invoice-history.component';
 import { ChangePayeeComponent } from '../common-subscription-component/change-payee/change-payee.component';
+import { SubscriptionDataService } from '../../subscription-data.service';
 
 // declare var window
 // export const MY_FORMATS = {
@@ -147,13 +148,9 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
     // console.log("feeeee...",this.feeCollectionMode);
-    if(this.utilservice.checkSubscriptionastepData(3)==undefined)
-    {
-      this.dataSource.data = [{}, {}, {}]
-    }
-    else{
-      (this.utilservice.checkSubscriptionastepData(3) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}]
-    }
+
+    (SubscriptionDataService.getLoderFlag(5) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}]
+
     this.getSummaryDataAdvisor(false);
     console.log('upperData', this.upperData);
 
