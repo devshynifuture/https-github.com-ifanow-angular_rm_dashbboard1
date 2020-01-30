@@ -1,8 +1,8 @@
 <div class="wrapper-20">
     <div class="row">
         <div class="col-md-6 p-0">
-            <button mat-stroked-button class="btn-primary mr-12 br-0"
-                (click)="openselectAdvice(null)">Advice given</button>
+            <button mat-stroked-button class="btn-primary mr-12 br-0" (click)="openselectAdvice(null)">Advice
+                given</button>
             <button mat-stroked-button class="text-primary br-0 b-priamry">All Fixed income</button>
         </div>
         <div class="col-md-6 p-0 text-right">
@@ -54,10 +54,10 @@
             <h5 class="m-0 text-black pt-8">Fixed deposit</h5>
         </div>
         <div class="col-md-6 p-0 text-right">
-            <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img
-                    src="/assets/images/svg/addon-three.svg" class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 "><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new MF</button>
+            <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
+                    class="pr-8">Filters</button>
+            <button mat-stroked-button class="btn-primary br-0 pl-8 "><img src="/assets/images/svg/plus.svg"
+                    class="pr-8">Suggest new MF</button>
         </div>
     </div>
     <table mat-table [dataSource]="dataSource3" class="mt-8" id="table-low">
@@ -119,13 +119,13 @@
             <h5 class="m-0 text-black pt-8">Recurring deposit</h5>
         </div>
         <div class="col-md-6 p-0 text-right">
-            <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img
-                    src="/assets/images/svg/addon-three.svg" class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 "><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new RD</button>
+            <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
+                    class="pr-8">Filters</button>
+            <button mat-stroked-button class="btn-primary br-0 pl-8 "><img src="/assets/images/svg/plus.svg"
+                    class="pr-8">Suggest new RD</button>
         </div>
     </div>
-    <table mat-table [dataSource]="dataSource4" class="mt-8" id="table-low">
+    <table mat-table [dataSource]="dataSource3" class="mt-8" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox></mat-checkbox>
@@ -180,21 +180,21 @@
                 </mat-menu>
             </td>
         </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns4"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns4;"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
     </table>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
             <h5 class="m-0 text-black pt-8">Bonds</h5>
         </div>
         <div class="col-md-6 p-0 text-right">
-            <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img
-                    src="/assets/images/svg/addon-three.svg" class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 "><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new Bond</button>
+            <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
+                    class="pr-8">Filters</button>
+            <button mat-stroked-button class="btn-primary br-0 pl-8 "><img src="/assets/images/svg/plus.svg"
+                    class="pr-8">Suggest new Bond</button>
         </div>
     </div>
-    <table mat-table [dataSource]="dataSource5" class="mt-8" id="table-low">
+    <table mat-table [dataSource]="dataSource3" class="mt-8" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox></mat-checkbox>
@@ -243,7 +243,7 @@
                 </mat-menu>
             </td>
         </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns5"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns5;"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
     </table>
 </div>
