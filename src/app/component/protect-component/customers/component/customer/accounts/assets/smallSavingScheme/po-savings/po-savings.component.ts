@@ -86,9 +86,12 @@ export class PoSavingsComponent implements OnInit {
   }
 
   getPoSavingSchemedataResponse(data) {
-    console.log(data);
     this.isLoading = false;
-    if (data && data.PostOfficeSavingsList.length != 0) {
+    if (data == undefined) {
+      this.noData = 'No scheme found';
+      this.datasource.data = [];
+    }else if (data && data.PostOfficeSavingsList.length != 0) {
+      console.log('getPoSavingSchemedataResponse',data);
       this.datasource.data = data.PostOfficeSavingsList;
       this.datasource.sort = this.sort;
       UtilService.checkStatusId(this.datasource.filteredData);

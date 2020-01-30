@@ -32,8 +32,8 @@ export class FixedIncomeComponent implements OnInit {
   sumAmountInvested: any;
   sumCurrentValue: any;
   sumMaturityValue: any;
-  totalCurrentValue=0;
-  totalMarketValue=0;
+  totalCurrentValue = 0;
+  totalMarketValue = 0;
   sumAmountInvestedB: any;
   sumCouponAmount: any;
   sumCurrentValueB: any;
@@ -231,22 +231,22 @@ export class FixedIncomeComponent implements OnInit {
   getFixedDepositRes(data) {
     this.isLoading = false;
     console.log('getFixedDepositRes ********** ', data);
-
-    if (data.fixedDepositList) {
+    if (data == undefined) {
+      this.noData = "No scheme found";
+      this.dataSourceFixed.data = [];
+    } else if (data.fixedDepositList) {
       this.dataSourceFixed.data = data.fixedDepositList;
       this.dataSourceFixed.sort = this.fixedIncomeTableSort;
       console.log('soted &&&&&&&&&', this.dataSourceFixed);
       UtilService.checkStatusId(this.dataSourceFixed.filteredData);
       this.sumCurrentValue = 0;
       this.dataSourceFixed.filteredData.forEach((o) => {
-        console.log('1128313618361836183618316836&&&&&&&&&', this.sumCurrentValue);
-
         if (o.nomineePercentageShare) {
           this.sumCurrentValue += o.nomineePercentageShare;
         }
 
       });
-      console.log('&&&&&&&&&', this.sumCurrentValue);
+      console.log('sumCurrentValue', this.sumCurrentValue);
       this.sumAmountInvested = data.sumAmountInvested;
       this.sumCurrentValue = data.sumCurrentValue;
       this.sumMaturityValue = data.sumMaturityValue;
@@ -275,26 +275,20 @@ export class FixedIncomeComponent implements OnInit {
 
 
   getRecurringDepositRes(data) {
-    if (data == undefined) {
-      this.noData = 'No scheme found';
-      this.dataSourceRecurring.data = [];
-    }
     this.isLoading = false;
-    console.log('FixedIncomeComponent getRecuringDepositRes data *** ', data);
     if (data == undefined) {
       this.noData = 'No scheme found';
       this.dataSourceRecurring.data = [];
     }
     else if (data.recurringDeposits) {
+      console.log('FixedIncomeComponent getRecuringDepositRes data *** ', data);
       this.dataSourceRecurring.data = data.recurringDeposits;
       this.dataSourceRecurring.sort = this.recurringDepositTableSort;
       UtilService.checkStatusId(this.dataSourceRecurring.filteredData);
       data.recurringDeposits.forEach(element => {
         this.totalCurrentValue += element.currentValue
-        this.totalMarketValue+=element.monthlyContribution
+        this.totalMarketValue += element.monthlyContribution
       });
-      // this.totalCurrentValue = data.totalCurrentValue;
-      // this.totalMarketValue = data.totalMarketValue;
     } else {
       this.noData = 'No scheme found';
       this.dataSourceRecurring.data = [];
@@ -319,9 +313,11 @@ export class FixedIncomeComponent implements OnInit {
 
   getBondsRes(data) {
     this.isLoading = false;
-    console.log('getBondsRes ******** ', data);
-
-    if (data.bondList) {
+    if (data == undefined) {
+      this.noData = 'No scheme found';
+      this.dataSourceBond.data = [];
+    } else if (data.bondList) {
+      console.log('getBondsRes ******** ', data);
       this.dataSourceBond.data = data.bondList;
       this.dataSourceBond.sort = this.bondListTableSort;
       UtilService.checkStatusId(this.dataSourceBond.filteredData);
@@ -409,7 +405,7 @@ export class FixedIncomeComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-        
+
       }
     );
   }
@@ -425,10 +421,10 @@ export class FixedIncomeComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
-        
+
         if (UtilService.isRefreshRequired(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          
+
         }
         rightSideDataSub.unsubscribe();
       }
@@ -488,7 +484,7 @@ export class FixedIncomeComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-        
+
       }
     );
   }
@@ -506,7 +502,7 @@ export class FixedIncomeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isRefreshRequired(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          
+
         }
         rightSideDataSub.unsubscribe();
       }

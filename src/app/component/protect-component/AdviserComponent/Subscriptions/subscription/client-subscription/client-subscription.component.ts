@@ -7,8 +7,8 @@ import { UtilService } from "../../../../../../services/util.service";
 import { AuthService } from "../../../../../../auth-service/authService";
 import { HelpComponent } from '../common-subscription-component/help/help.component';
 import { SubscriptionUpperSliderComponent } from '../common-subscription-component/upper-slider/subscription-upper-slider.component';
-import { ErrPageOpenComponent } from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
 import { Router } from '@angular/router';
+import { ErrPageOpenComponent } from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
 
 export interface PeriodicElement {
   name: string;
@@ -54,9 +54,8 @@ export class ClientSubscriptionComponent implements OnInit {
     this.getClientSubscriptionList().subscribe(
       data => {
         this.getClientListResponse(data)
-        this.errorMessage();
       }, (error) => {
-        this.eventService.showErrorMessage(error);
+        this.errorMessage();
         this.dataSource.data = [];
         this.isLoading = false;
       }
@@ -88,7 +87,7 @@ export class ClientSubscriptionComponent implements OnInit {
             this.eventService.changeUpperSliderState({ state: 'close' })
             // this.errorMessage();
           }, (error) => {
-
+            this.eventService.showErrorMessage(error);
           }
         )
       },
@@ -158,8 +157,8 @@ export class ClientSubscriptionComponent implements OnInit {
       // componentName: SubscriptionUpperSliderComponent,
       // state: 'open'
     };
-    this.router.navigate(['/subscription-upper'], { state: { ...fragmentData } })
-    sessionStorage.setItem("subUpperData", JSON.stringify(fragmentData))
+    this.router.navigate(['/subscription-upper'])
+    AuthService.setSubscriptionUpperSliderData(fragmentData)
     // const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
     //   upperSliderData => {
     //     if (UtilService.isDialogClose(upperSliderData)) {

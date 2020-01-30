@@ -58,7 +58,7 @@
                 <div class="col-md-3">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input [matDatepicker]="commpicker" class="form-control br-0" formControlName="commDate" matInput readonly>
+                            <input [matDatepicker]="commpicker" [max]="maxDate" class="form-control br-0" formControlName="commDate" matInput readonly>
                             <mat-datepicker-toggle matSuffix [for]="commpicker"></mat-datepicker-toggle>
                             <mat-datepicker #commpicker></mat-datepicker>
                             <mat-error *ngIf="nscFormField.get('commDate').errors?.required" class="f-12">

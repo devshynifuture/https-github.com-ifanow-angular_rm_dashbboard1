@@ -10,6 +10,7 @@ import { DatePipe } from '@angular/common';
 import { element } from 'protractor';
 import { Router } from '@angular/router';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { SubscriptionDataService } from '../../subscription-data.service';
 
 export interface PeriodicElement {
   date: string;
@@ -103,7 +104,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
   ngOnInit() {
     // this.dataSource = [{}, {}, {}];
     this.advisorId = AuthService.getAdvisorId();
-    (this.utilservice.checkSubscriptionastepData(6) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}]
+    (SubscriptionDataService.getLoderFlag(5) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}]
     this.getInvoiceSubData(false);
     this.showEdit = false;
     this.invoiceSubscription = 'false';
@@ -301,7 +302,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
   display(data) {
 
     console.log(data, "edited data invoice");
-    if (data.closingState ) {
+    if (data.closingState) {
       this.dataSource.data = [{}, {}, {}]
       this.tableData = [];
       this.getInvoiceSubData(false);

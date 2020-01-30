@@ -81,7 +81,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input [matDatepicker]="SSYpicker" class="form-control br-0" formControlName="commDate" matInput readonly>
+                        <input [matDatepicker]="SSYpicker" [max]="maxDate" class="form-control br-0" formControlName="commDate" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="SSYpicker"></mat-datepicker-toggle>
                         <mat-datepicker #SSYpicker></mat-datepicker>
                         <mat-error class="f-12">

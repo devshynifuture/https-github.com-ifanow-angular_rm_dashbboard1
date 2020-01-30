@@ -129,9 +129,12 @@ export class ScssSchemeComponent implements OnInit {
   }
 
   getKvpSchemedataResponse(data: any) {
-    console.log(data);
     this.isLoading = false;
-    if (data && data.scssList && data.scssList.length > 0) {
+    if (data == undefined) {
+      this.noData = 'No scheme found';
+      this.datasource.data = [];
+    }else if (data && data.scssList && data.scssList.length > 0) {
+      console.log('getKvpSchemedataResponse',data);
       this.datasource.data = data.scssList;
       this.datasource.sort = this.sort;
       UtilService.checkStatusId(this.datasource.filteredData);
