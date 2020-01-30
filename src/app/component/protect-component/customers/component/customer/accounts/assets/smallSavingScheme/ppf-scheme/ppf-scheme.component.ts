@@ -49,10 +49,12 @@ export class PPFSchemeComponent implements OnInit {
       });
   }
   getPpfSchemeDataResponse(data) {
-
-    console.log(data);
     this.isLoading = false;
-    if (data && data.PPFList && data.PPFList.length > 0) {
+    if (data == undefined) {
+      this.noData = 'No scheme found';
+      this.dataSource.data = [];
+    } else if (data && data.PPFList && data.PPFList.length > 0) {
+      console.log('getPpfSchemeDataResponse',data);
       this.dataSource.data = data.PPFList;
       this.dataSource.sort = this.sort;
       UtilService.checkStatusId(this.dataSource.filteredData);
@@ -116,7 +118,7 @@ export class PPFSchemeComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-        
+
       }
     );
   }
