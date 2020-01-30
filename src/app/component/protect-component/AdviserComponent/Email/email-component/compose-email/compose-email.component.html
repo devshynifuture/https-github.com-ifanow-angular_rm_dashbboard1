@@ -137,7 +137,7 @@
                 </mat-chip-list>
                 <div class="row bb-1 pt-12" *ngFor="let attachment of emailAttachments">
                     <div class="col-md-11">
-                        <p class="m-0 c-p" (click)="downloadAttachment(attachment)">{{attachment.filename}}</p>
+                        <p class="m-0 c-p" (click)="attachmentDownload(attachment)">{{attachment.filename}}</p>
                     </div>
                     <div class="col-md-1 pl-0">
                         <img src="/assets/images/svg/delete.svg" class="c-p" style="vertical-align: super;"

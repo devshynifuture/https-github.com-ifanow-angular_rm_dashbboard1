@@ -31,12 +31,10 @@
     </div>
 
     <div class="col-md-5"></div>
-    <div class="col-md-3">
-        <!-- <span class="paginator-ranges">
-            {{ currentPage }} - {{ toShowMaxThreadsLength }} of {{ paginatorLength }}
-        </span> -->
-        <span>
-            {{ currentList }} - {{ maxListRes }} : {{ paginatorLength }}
+    <div class="col-md-3 float-right">
+
+        <span class="text-primitive">
+            {{ currentList }} - {{ maxListRes }} of {{ paginatorLength }}
         </span>
         <span>
             <button mat-icon-button (click)="previousPagesList()">
