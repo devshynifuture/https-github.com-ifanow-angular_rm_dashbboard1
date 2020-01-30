@@ -9,6 +9,7 @@ import { AddDocumentComponent } from '../add-document/add-document.component';
 // import { SubscriptionUpperSliderComponent } from '../../common-subscription-component/upper-slider/subscription-upper-slider.component';
 import { AuthService } from '../../../../../../../auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 // import { window } from 'rxjs/operators';
 
 // import {element} from 'protractor';
@@ -46,7 +47,21 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class DocumentComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'primary',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  }
   quotationDesignEmail: any;
   // @Input() upperData;
 
@@ -667,7 +682,7 @@ export class DocumentComponent implements OnInit {
   }
 
   saveMappingDocumentToPlans() {
-
+    this.barButtonOptions.active = true;
     let obj = [];
     if (this.mappedData) {
       this.mappedData.forEach(element => {
@@ -697,7 +712,12 @@ export class DocumentComponent implements OnInit {
         }
         else if (data === 204) {
           this.eventService.openSnackBar('No Documents Created', 'dismiss');
+          this.barButtonOptions.active = false;
         }
+      },
+      err =>{
+        console.log("error mapDocumentsToPlanData", err);
+        this.barButtonOptions.active = false;
       }
     );
 
@@ -711,6 +731,7 @@ export class DocumentComponent implements OnInit {
     } else {
       this.eventService.openSnackBar('Document is mapped', 'OK');
     }
+    this.barButtonOptions.active = false;
   }
 
   savePlanMapToDocument() {
@@ -738,6 +759,7 @@ export class DocumentComponent implements OnInit {
   }
 
   mapDocumentToService() {
+    this.barButtonOptions.active = true;
     let obj = [];
     if (this.mappedData.length == 0) {
       const data = {
@@ -768,7 +790,12 @@ export class DocumentComponent implements OnInit {
 
     this.subService.mapDocumentToService(obj).subscribe(
       data => {
+        this.barButtonOptions.active = false;
         this.mapDocumentToServiceResponse(data);
+      },
+      err =>{
+        this.barButtonOptions.active = false;
+        console.log(err, "error mapDocumentToServiceResponse");
       }
     );
 

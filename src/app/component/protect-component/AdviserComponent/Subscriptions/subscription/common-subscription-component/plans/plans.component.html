@@ -72,10 +72,12 @@
 <mat-toolbar class="bottom-fixed">
     <div class="row w-100">
         <div class="col-md-6 text-left">
-            <p class="text-white f-16 mb-0 pt-12 c-p" (click)="dialogClose()">Cancel</p>
+            <!-- <p class="text-white f-16 mb-0 pt-12 c-p" (click)="dialogClose()">Cancel</p> -->
         </div>
         <div class="col-md-6 text-right">
-            <button type="button" mat-stroked-button class="btn-bottom br-0" (click)="saveMapping()">Save</button>
+            <!-- <button type="button" mat-stroked-button class="btn-bottom br-0" (click)="saveMapping()">Save</button> -->
+            <app-progress-button (btnClick)="saveMapping()" [options]="barButtonOptions" >
+            </app-progress-button>
         </div>
     </div>
 </mat-toolbar>

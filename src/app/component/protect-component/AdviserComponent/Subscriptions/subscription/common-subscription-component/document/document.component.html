@@ -2,11 +2,13 @@
     <div class="bottom-fixed wrapper-12">
         <div class="row">
             <div class="col-md-4">
-                <h5 class="mb-0 pt-8 text-white c-p" (click)="dialogClose()">Cancel</h5>
+                <!-- <h5 class="mb-0 pt-8 text-white c-p" (click)="dialogClose()">Cancel</h5> -->
             </div>
             <div class="col-md-8 right text-right">
-                <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveMappingDocumentToPlans()">Save
-                </button>
+                <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveMappingDocumentToPlans()">Save
+                </button> -->
+                <app-progress-button (btnClick)="saveMappingDocumentToPlans()" [options]="barButtonOptions" >
+                </app-progress-button>
             </div>
         </div>
     </div>
@@ -107,8 +109,10 @@
                 <p class="text-white f-16 mb-0 pt-12 c-p" (click)="dialogClose()">Cancel</p>
             </div>
             <div class="col-md-6 text-right">
-                <button type="button" mat-stroked-button class="btn-bottom br-0" (click)="mapDocumentToService()">Save
-                </button>
+                <!-- <button type="button" mat-stroked-button class="btn-bottom br-0" (click)="mapDocumentToService()">Save
+                </button> -->
+                <app-progress-button (btnClick)="mapDocumentToService()" [options]="barButtonOptions" >
+                </app-progress-button>
             </div>
         </div>
     </mat-toolbar>

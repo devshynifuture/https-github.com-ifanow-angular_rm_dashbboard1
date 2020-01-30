@@ -20,7 +20,7 @@
             <mat-form-field class="w-100">
                 <input (changedValue)="getFormControl().serviceName.setValue($event)" [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation class="form-control br-0" formControlName="serviceName" matInput maxLength="{{getFormControl().serviceName.maxLength}}"
                     type="text">
-                <mat-error class="f-12" [ngClass]="{'v-h':!(isServiceValid && getFormControl().serviceName.invalid || (getFormControl().serviceName.touched && getFormControl().serviceName.invalid))}">
+                <mat-error class="f-12 " *ngIf="getFormControl().serviceName.touched" >
                     Service name is required
                 </mat-error>
                 <mat-hint align="end" class="f-12">
@@ -141,7 +141,9 @@
             <h5 class="mb-0  text-white c-p" (click)="Close('close')">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveFeeTypeData('1','close')">Save</button>
+            <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveFeeTypeData('1','close')">Save</button> -->
+            <app-progress-button (btnClick)="saveFeeTypeData('1','close')" [options]="barButtonOptions" >
+            </app-progress-button>
         </div>
     </div>
 </div>
