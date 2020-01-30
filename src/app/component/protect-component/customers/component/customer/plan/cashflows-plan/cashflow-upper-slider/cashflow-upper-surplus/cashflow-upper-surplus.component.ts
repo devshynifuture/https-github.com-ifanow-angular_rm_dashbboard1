@@ -83,9 +83,13 @@ export class CashflowUpperSurplusComponent implements OnInit {
   toggleEditMode() {
     this.editMode = !this.editMode;
   }
+
+  deleteEntryCashFlow(element: UpperTableBox) {
+    ELEMENT_DATA3.splice(ELEMENT_DATA3.indexOf(element), 1);
+  }
 }
 
-export const ELEMENT_DATA3: (UpperTableBox | Group)[] = [
+export let ELEMENT_DATA3: (UpperTableBox | Group)[] = [
   { groupName: 'NET SURPLUS & ROLLING BALANCE' },
   { description: 'Ad hoc', month1: '25', month2: '21', month3: '2,10,000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
   { description: 'Recurring', month1: '25', month2: '21', month3: '2,10,000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },

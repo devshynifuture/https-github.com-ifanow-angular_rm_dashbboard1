@@ -90,9 +90,12 @@ export class PoRdSchemeComponent implements OnInit {
   }
 
   getPoRdSchemedataResponse(data) {
-    console.log(data);
     this.isLoading = false;
-    if (data && data.postOfficeRDList.length != 0) {
+    if (data == undefined) {
+      this.noData = 'No scheme found';
+      this.dataSource.data = [];
+    }else if (data && data.postOfficeRDList.length != 0) {
+      console.log('getPoRdSchemedataResponse',data);
       this.dataSource.data = data.postOfficeRDList;
       this.dataSource.sort = this.sort;
       UtilService.checkStatusId(this.dataSource.filteredData);

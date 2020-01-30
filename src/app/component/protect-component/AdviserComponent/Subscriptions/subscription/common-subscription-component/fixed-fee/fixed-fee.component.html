@@ -5,8 +5,8 @@
     <div class="col-md-4 text-right" *ngIf="subData.status == 2 || subData.status == 3">
         <div class="wrapper-12 pb-10">
             <button [ngClass]="{'v-h':!isSave}" mat-stroked-button class="br-0 btn-primary mr-20" (click)="enableForm()">
-        EDIT
-      </button>
+                EDIT
+            </button>
             <i class="material-icons c-p v-middle" (click)="Close(false)"> clear</i>
         </div>
     </div>
@@ -23,7 +23,7 @@
                 <div class="form-group mb-0">
                     <input type="number" formControlName="fees" class="form-control br-0">
                 </div>
-                <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isFeeValid && getFixedFee().fees.invalid || getFixedFee().fees.touched && getFixedFee().fees.invalid)}">
+                <mat-error class="f-12" [ngClass]="{'v-h':!(isFeeValid && getFixedFee().fees.invalid || getFixedFee().fees.touched && getFixedFee().fees.invalid)}">
                     Code is Required
                 </mat-error>
             </div>
@@ -53,7 +53,7 @@
                         <div class="form-group mb-0">
                             <input type="text" appNumberOnly [maxLength]="2" formControlName="billEvery" class="form-control br-0 br-none">
                         </div>
-                        <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isBillValid && getFixedFee().billEvery.invalid || getFixedFee().billEvery.touched && getFixedFee().billEvery.invalid)}">
+                        <mat-error class="f-12" [ngClass]="{'v-h':!(isBillValid && getFixedFee().billEvery.invalid || getFixedFee().billEvery.touched && getFixedFee().billEvery.invalid)}">
                             Code is Required
                         </mat-error>
 
@@ -61,9 +61,9 @@
                     <div class="col-md-5 p-0">
                         <div class="form-group">
                             <select formControlName='Duration' class="form-control br-0" f id="sel1">
-                <option value="1">Months</option>
-                <option value="2">Yearly</option>
-              </select>
+                                <option value="1">Months</option>
+                                <option value="2">Yearly</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
         </div>
         <div *ngIf="fixedFeeStructureForm.get('billingNature').value==1" class="row pt-28">
             <div class="col-md-5">
-                <h5 class="text-right pt-12 mb-0">Billing Mode</h5>
+                <h5 class="text-right pt-12 mb-0">Billing mode</h5>
             </div>
             <div class="col-md-7">
                 <mat-radio-group formControlName="billingMode">

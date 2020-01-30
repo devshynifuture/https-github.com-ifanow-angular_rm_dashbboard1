@@ -17,6 +17,7 @@ import { BillerSettingsComponent } from '../common-subscription-component/biller
 import { InvoiceHistoryComponent } from '../common-subscription-component/invoice-history/invoice-history.component';
 import { ChangePayeeComponent } from '../common-subscription-component/change-payee/change-payee.component';
 import { ErrPageOpenComponent } from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
+import { SubscriptionDataService } from '../../subscription-data.service';
 
 // declare var window
 // export const MY_FORMATS = {

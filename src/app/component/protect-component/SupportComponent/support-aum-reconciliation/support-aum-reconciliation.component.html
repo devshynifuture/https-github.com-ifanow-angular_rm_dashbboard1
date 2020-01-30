@@ -2,6 +2,14 @@
     <div class="sub-header-fix">
         <div class="bg-white">
             <h1 class="cusotm-haeding-main">AUM reconciliation</h1>
+            <nav class="text-right" id="ui-customer-secondhead" mat-align-tabs="end" mat-tab-nav-bar>
+                <a routerLink="/support/aum-reconciliation/all-rta" mat-tab-link routerLinkActive="active">ALL RTA</a>
+                <a routerLink="/support/aum-reconciliation/cams" mat-tab-link routerLinkActive="active">CAMS</a>
+                <a routerLink="/support/aum-reconciliation/karvy" mat-tab-link routerLinkActive="active">KARVY</a>
+                <a routerLink="/support/aum-reconciliation/franklin" mat-tab-link routerLinkActive="active">FRANKLIN</a>
+            </nav>
+
+            <router-outlet></router-outlet>
         </div>
     </div>
 </div>

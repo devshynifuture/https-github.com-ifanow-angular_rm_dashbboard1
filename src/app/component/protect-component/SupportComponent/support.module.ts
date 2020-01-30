@@ -11,10 +11,14 @@ import { SupportAumReconciliationComponent } from './support-aum-reconciliation/
 import { FileOrderingUploadComponent } from './file-ordering-upload/file-ordering-upload.component';
 import { SupportReportsComponent } from './support-reports/support-reports.component';
 import { SupportMiscellaneousComponent } from './support-miscellaneous/support-miscellaneous.component';
+import { FileOrderingHistoricalComponent } from './file-ordering-upload/file-ordering-historical/file-ordering-historical.component';
+import { FileOrderingBulkComponent } from './file-ordering-upload/file-ordering-bulk/file-ordering-bulk.component';
+import { ReportReceivablesComponent } from './support-reports/report-receivables/report-receivables.component';
+import { ReportUpsellingsComponent } from './support-reports/report-upsellings/report-upsellings.component';
 
 
 @NgModule({
-  declarations: [SupportSidebarComponent, SupportDashboardComponent, MyIfasComponent, IfaOnboardingComponent, SupportAumReconciliationComponent, FileOrderingUploadComponent, SupportReportsComponent, SupportMiscellaneousComponent],
+  declarations: [SupportSidebarComponent, SupportDashboardComponent, MyIfasComponent, IfaOnboardingComponent, SupportMiscellaneousComponent],
   imports: [
     CommonModule,
     SupportRoutingModule,

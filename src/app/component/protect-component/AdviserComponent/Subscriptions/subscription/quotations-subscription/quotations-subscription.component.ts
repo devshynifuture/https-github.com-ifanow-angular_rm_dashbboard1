@@ -13,6 +13,7 @@ import { AddQuotationComponent } from '../common-subscription-component/add-quot
 import { CommonFroalaComponent } from '../common-subscription-component/common-froala/common-froala.component';
 import { AddQuotationSubscriptionComponent } from 'src/app/component/protect-component/customers/component/common-component/add-quotation-subscription/add-quotation-subscription.component';
 import { ErrPageOpenComponent } from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
+import { SubscriptionDataService } from '../../subscription-data.service';
 
 export interface PeriodicElement {
   name: string;

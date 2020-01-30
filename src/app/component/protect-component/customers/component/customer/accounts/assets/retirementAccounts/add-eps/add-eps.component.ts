@@ -19,6 +19,7 @@ import { UtilService } from 'src/app/services/util.service';
   ],
 })
 export class AddEPSComponent implements OnInit {
+  maxDate = new Date();
   inputData: any;
   advisorId: any;
   ownerName: any;

@@ -19,14 +19,13 @@
         </div>
         <div class="col-md-5">
             <mat-form-field class="w-100">
-                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
-                    [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Search family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
                         <span>{{f.userName}}</span>
                     </mat-option>
                 </mat-select>
-                <mat-error class="f-12 pt-4">
+                <mat-error class="f-12">
                     This field is required
                 </mat-error>
             </mat-form-field>
@@ -39,10 +38,8 @@
         <div class="col-md-3 ">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #employeeContry type="text" (keypress)="utils.keyPress($event)" maxlength="10"
-                        class="form-control br-0 rupess" formControlName="employeeContry">
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isEmployeeContry && getFormControl().employeeContry.invalid || getFormControl().employeeContry.touched && getFormControl().employeeContry.invalid)}">
+                    <input matInput #employeeContry type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0 rupess" formControlName="employeeContry">
+                    <mat-error class="f-12" [ngClass]="{'v-h':!(isEmployeeContry && getFormControl().employeeContry.invalid || getFormControl().employeeContry.touched && getFormControl().employeeContry.invalid)}">
                         This field is required
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{employeeContry.value.length}}/10</mat-hint>
@@ -58,10 +55,8 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #employerContry type="text" (keypress)="utils.keyPress($event)" maxlength="10"
-                        class="form-control br-0 rupess" formControlName="employerContry">
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isEmployerContry && getFormControl().employerContry.invalid || getFormControl().employerContry.touched && getFormControl().employerContry.invalid)}">
+                    <input matInput #employerContry type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0 rupess" formControlName="employerContry">
+                    <mat-error class="f-12" [ngClass]="{'v-h':!(isEmployerContry && getFormControl().employerContry.invalid || getFormControl().employerContry.touched && getFormControl().employerContry.invalid)}">
                         This field is required
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{employerContry.value.length}}/10</mat-hint>
@@ -76,10 +71,8 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #currentEPFBal type="text" (keypress)="utils.keyPress($event)" maxlength="10"
-                        class="form-control br-0 rupess" formControlName="currentEPFBal">
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isCurrentEPFBal && getFormControl().currentEPFBal.invalid || getFormControl().currentEPFBal.touched && getFormControl().currentEPFBal.invalid)}">
+                    <input matInput #currentEPFBal type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0 rupess" formControlName="currentEPFBal">
+                    <mat-error class="f-12" [ngClass]="{'v-h':!(isCurrentEPFBal && getFormControl().currentEPFBal.invalid || getFormControl().currentEPFBal.touched && getFormControl().currentEPFBal.invalid)}">
                         This field is required
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{currentEPFBal.value.length}}/10</mat-hint>
@@ -93,12 +86,10 @@
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <input matInput formControlName="balanceAsOn" class="form-control br-0" [matDatepicker]="picker"
-                    readonly>
+                <input matInput formControlName="balanceAsOn" class="form-control br-0" [matDatepicker]="picker" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-                <mat-error class="f-12 pt-4"
-                    [ngClass]="{'v-h':!(isBalanceAsOn && getFormControl().balanceAsOn.invalid || getFormControl().balanceAsOn.touched && getFormControl().balanceAsOn.invalid)}">
+                <mat-error class="f-12" [ngClass]="{'v-h':!(isBalanceAsOn && getFormControl().balanceAsOn.invalid || getFormControl().balanceAsOn.touched && getFormControl().balanceAsOn.invalid)}">
                     This field is required
                 </mat-error>
             </mat-form-field>
@@ -112,11 +103,8 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #annualSalGrowth type="text" (keyup)="onChange($event)"
-                        (keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 percentage"
-                        formControlName="annualSalGrowth">
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isAnnualSalGrowth && getFormControl().annualSalGrowth.invalid || getFormControl().annualSalGrowth.touched && getFormControl().annualSalGrowth.invalid)}">
+                    <input matInput #annualSalGrowth type="text" (keyup)="onChange($event)" (keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 percentage" formControlName="annualSalGrowth">
+                    <mat-error class="f-12" [ngClass]="{'v-h':!(isAnnualSalGrowth && getFormControl().annualSalGrowth.invalid || getFormControl().annualSalGrowth.touched && getFormControl().annualSalGrowth.invalid)}">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -142,8 +130,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #maturityYear type="number" (keypress)="utils.keyPress($event)" maxlength="30"
-                            class="form-control br-0" formControlName="maturityYear">
+                        <input matInput #maturityYear type="number" (keypress)="utils.keyPress($event)" maxlength="30" class="form-control br-0" formControlName="maturityYear">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -156,8 +143,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput type="text" (keypress)="utils.keyPress($event)" #EPFNo maxlength="20"
-                            class="form-control br-0" formControlName="EPFNo">
+                        <input matInput type="text" (keypress)="utils.keyPress($event)" #EPFNo maxlength="20" class="form-control br-0" formControlName="EPFNo">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{EPFNo.value.length}}/20</mat-hint>
                     </mat-form-field>
@@ -171,8 +157,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #bankAcNo type="text" (keypress)="utils.keyPress($event)" maxlength="16"
-                            class="form-control br-0" formControlName="bankAcNo">
+                        <input matInput #bankAcNo type="text" (keypress)="utils.keyPress($event)" maxlength="16" class="form-control br-0" formControlName="bankAcNo">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{bankAcNo.value.length}}/16</mat-hint>
                     </mat-form-field>
@@ -186,8 +171,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #description maxlength="60" class="form-control br-0"
-                            formControlName="description">
+                        <input matInput #description maxlength="60" class="form-control br-0" formControlName="description">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                     </mat-form-field>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, Input } from '@angular/core';
 import { Validators, FormBuilder, FormArray } from '@angular/forms';
 import { EventEmitter } from '@angular/core';
 
@@ -9,8 +9,11 @@ import { EventEmitter } from '@angular/core';
 })
 export class AddTransactionComponent implements OnInit {
   addTransactionList: any;
+  maxDate = new Date();
   transactionForm: any;
+  @Input() commencementDate;
   @Output() outputEvent=new EventEmitter();
+  minDate: Date;
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
@@ -23,6 +26,8 @@ export class AddTransactionComponent implements OnInit {
   get getTransFormList() { return this.getTransForm.transactionFormList as FormArray; }
   addTransaction() {
     console.log(this.getTransFormList)
+    console.log('commencementDate == ',this.commencementDate) 
+    this.minDate  = new Date(this.commencementDate)
     this.getTransFormList.push(this.fb.group({
       transactionType: [, [Validators.required]],
       date: [, [Validators.required]],

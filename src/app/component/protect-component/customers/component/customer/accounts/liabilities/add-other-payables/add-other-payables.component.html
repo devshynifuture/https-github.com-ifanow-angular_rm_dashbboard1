@@ -22,7 +22,7 @@
           <div class="form-group mb-0">
               <mat-form-field>
                   <input matInput #ownerName class="form-control br-0" formControlName="ownerName">
-                  <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isOwner && getFormControl().ownerName.invalid || getFormControl().ownerName.touched && getFormControl().ownerName.invalid)}">
+                  <mat-error class="f-12" [ngClass]="{'v-h':!(isOwner && getFormControl().ownerName.invalid || getFormControl().ownerName.touched && getFormControl().ownerName.invalid)}">
                       Owner name is required
                   </mat-error>
                   <mat-hint align="end" class="f-12">{{ownerName.value.length}}/40</mat-hint>
@@ -36,14 +36,13 @@
         </div>
         <div class="col-md-5">
             <mat-form-field class="w-100">
-                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
-                    [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Search family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
                         <span>{{f.userName}}</span>
                     </mat-option>
                 </mat-select>
-                <mat-error class="f-12 pt-4">
+                <mat-error class="f-12">
                     This field is required
                 </mat-error>
             </mat-form-field>
@@ -55,12 +54,10 @@
         </div>
         <div class="col-md-3 pl-0">
             <mat-form-field>
-                <input class="form-control br-0" matInput [matDatepicker]="picker" formControlName="dateOfReceipt"
-                    readonly>
+                <input class="form-control br-0" matInput [matDatepicker]="picker" formControlName="dateOfReceipt" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-                <mat-error class="f-12 pt-4"
-                    *ngIf="isdateValid && getFormControl().dateOfReceipt.invalid || (getFormControl().dateOfReceipt.touched && getFormControl().dateOfReceipt.invalid)">
+                <mat-error class="f-12" *ngIf="isdateValid && getFormControl().dateOfReceipt.invalid || (getFormControl().dateOfReceipt.touched && getFormControl().dateOfReceipt.invalid)">
                     This field is required
                 </mat-error>
             </mat-form-field>
@@ -74,10 +71,8 @@
         <div class="col-md-3 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #creditorName class="form-control br-0" formControlName="creditorName"
-                        maxlength="{{getFormControl().creditorName.maxLength}}">
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isCreditorName && getFormControl().creditorName.invalid || getFormControl().creditorName.touched && getFormControl().creditorName.invalid)}">
+                    <input matInput #creditorName class="form-control br-0" formControlName="creditorName" maxlength="{{getFormControl().creditorName.maxLength}}">
+                    <mat-error class="f-12" [ngClass]="{'v-h':!(isCreditorName && getFormControl().creditorName.invalid || getFormControl().creditorName.touched && getFormControl().creditorName.invalid)}">
                         This field is required
 
                     </mat-error>
@@ -93,10 +88,8 @@
         <div class="col-md-3 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #amtBorrowed class="form-control br-0" (keypress)="keyPress($event)"
-                        formControlName="amtBorrowed" maxlength="{{getFormControl().amtBorrowed.maxLength}}">
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isAmtBorrowed && getFormControl().amtBorrowed.invalid || getFormControl().amtBorrowed.touched && getFormControl().amtBorrowed.invalid)}">
+                    <input matInput #amtBorrowed class="form-control br-0" (keypress)="keyPress($event)" formControlName="amtBorrowed" maxlength="{{getFormControl().amtBorrowed.maxLength}}">
+                    <mat-error class="f-12" [ngClass]="{'v-h':!(isAmtBorrowed && getFormControl().amtBorrowed.invalid || getFormControl().amtBorrowed.touched && getFormControl().amtBorrowed.invalid)}">
                         This field is required
 
                     </mat-error>
@@ -112,9 +105,8 @@
         <div class="col-md-3 pl-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #interest class="form-control br-0 percentage" (keyup)="onChange($event)"
-                        (keypress)="keyPress($event)" formControlName="interest">
-                    <mat-error class="f-12 pt-4">
+                    <input matInput #interest class="form-control br-0 percentage" (keyup)="onChange($event)" (keypress)="keyPress($event)" formControlName="interest">
+                    <mat-error class="f-12">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -128,11 +120,10 @@
         </div>
         <div class="col-md-3 pl-0">
             <mat-form-field>
-                <input [matDatepicker]="picker2" class="form-control br-0" formControlName="dateOfRepayment" matInput
-                    readonly>
+                <input [matDatepicker]="picker2" class="form-control br-0" formControlName="dateOfRepayment" matInput readonly>
                 <mat-datepicker-toggle [for]="picker2" matSuffix></mat-datepicker-toggle>
                 <mat-datepicker #picker2></mat-datepicker>
-                <mat-error class="f-12 pt-4">This field is required
+                <mat-error class="f-12">This field is required
 
                 </mat-error>
             </mat-form-field>
@@ -146,10 +137,8 @@
         <div class="col-md-3 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #balance class="form-control br-0" (keypress)="keyPress($event)"
-                        formControlName="balance" maxlength="{{getFormControl().balance.maxLength}}">
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isBalance && getFormControl().balance.invalid || getFormControl().balance.touched && getFormControl().balance.invalid)}">
+                    <input matInput #balance class="form-control br-0" (keypress)="keyPress($event)" formControlName="balance" maxlength="{{getFormControl().balance.maxLength}}">
+                    <mat-error class="f-12" [ngClass]="{'v-h':!(isBalance && getFormControl().balance.invalid || getFormControl().balance.touched && getFormControl().balance.invalid)}">
                         This field is required
 
                     </mat-error>
@@ -182,8 +171,7 @@
             <div class="col-md-3 pl-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #collateral class="form-control br-0" formControlName="collateral"
-                            maxlength="{{getFormControl().collateral.maxLength}}">
+                        <input matInput #collateral class="form-control br-0" formControlName="collateral" maxlength="{{getFormControl().collateral.maxLength}}">
                         <mat-hint align="start" class="f-12">Option</mat-hint>
                         <mat-hint align="end" class="f-12">{{collateral.value.length}}/20</mat-hint>
                     </mat-form-field>

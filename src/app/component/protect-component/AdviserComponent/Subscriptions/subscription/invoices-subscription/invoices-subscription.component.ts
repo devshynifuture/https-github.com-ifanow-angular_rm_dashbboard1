@@ -11,6 +11,7 @@ import { element } from 'protractor';
 import { Router } from '@angular/router';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { ErrPageOpenComponent } from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
+import { SubscriptionDataService } from '../../subscription-data.service';
 
 export interface PeriodicElement {
   date: string;
@@ -344,7 +345,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
   display(data) {
 
     console.log(data, "edited data invoice");
-    if (data.closingState ) {
+    if (data.closingState) {
       this.dataSource.data = [{}, {}, {}]
       this.tableData = [];
       this.getClientSubData(false);

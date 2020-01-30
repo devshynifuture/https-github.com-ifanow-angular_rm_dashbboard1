@@ -181,7 +181,11 @@ export class CommoditiesComponent implements OnInit {
 
     console.log('getGoldList @@@@', data);
     this.isLoading = false;
-    if (data.goldList.length != 0) {
+    if (data == undefined) {
+      this.noData = 'No data found';
+      this.goldList.data = []
+    }
+    else if (data.goldList.length != 0) {
       this.goldList.data = data.goldList;
       this.goldList.sort = this.goldListTableSort;
       this.sumOfMarketValue = data.sumOfMarketValue
@@ -208,9 +212,11 @@ export class CommoditiesComponent implements OnInit {
   }
   getOthersRes(data) {
     this.isLoading = false;
-    console.log('getOthersRes @@@@', data);
-
-    if (data.otherCommodityList.length != 0) {
+    if (data == undefined) {
+      this.noData = 'No data found';
+      this.otherCommodityList.data = []
+    } else if (data.otherCommodityList.length != 0) {
+      console.log('getOthersRes @@@@', data);
       this.otherCommodityList.data = data.otherCommodityList;
       this.otherCommodityList.sort = this.otherListTableSort;
       this.sumOfMarketValueOther = data.sumOfMarketValue
@@ -246,7 +252,7 @@ export class CommoditiesComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-        
+
       }
     );
   }
@@ -275,7 +281,7 @@ export class CommoditiesComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-        
+
       }
     );
   }

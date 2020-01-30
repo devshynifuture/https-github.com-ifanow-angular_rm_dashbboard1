@@ -17,6 +17,7 @@ import {UtilService} from 'src/app/services/util.service';
   ]
 })
 export class AddScssComponent implements OnInit {
+  maxDate = new Date();
   inputData: any;
   familyMemberId: any;
   ownerName: any;

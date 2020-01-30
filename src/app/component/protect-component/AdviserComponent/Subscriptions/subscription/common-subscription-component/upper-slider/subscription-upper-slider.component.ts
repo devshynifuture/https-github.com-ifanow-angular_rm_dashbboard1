@@ -92,7 +92,7 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
 
   ngOnInit() {
     console.log(history.state)
-    this.sessionData = JSON.parse(sessionStorage.getItem('subUpperData'))
+    this.sessionData = AuthService.getSubscriptionUpperSliderData();
     this.fragmentDataSubsUpper = this.sessionData
     this.upperDataSubsUpper = this.sessionData.data;
   }

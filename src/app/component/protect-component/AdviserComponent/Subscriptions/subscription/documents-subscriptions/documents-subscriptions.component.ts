@@ -13,6 +13,7 @@ import { MAT_DATE_FORMATS } from 'saturn-datepicker';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { CommonFroalaComponent } from '../common-subscription-component/common-froala/common-froala.component';
 import { ErrPageOpenComponent } from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
+import { SubscriptionDataService } from '../../subscription-data.service';
 
 export interface PeriodicElement {
   name: string;
@@ -88,7 +89,12 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.dataCount = 0;
-    (this.utilservice.checkSubscriptionastepData(5) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}];
+    if (this.utilservice.checkSubscriptionastepData(5) == undefined) {
+      this.dataSource.data = [{}, {}, {}]
+    }
+    else {
+      (this.utilservice.checkSubscriptionastepData(5) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}]
+    }
     this.getClientSubData(this.scrollLoad);  
     this.getClientSubscriptionList();
   }
@@ -327,7 +333,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
         console.log(data, 'clientdata');
 
       }, (error) => {
-        this.eventService.openSnackBar('Somthing went wrong!', 'dismiss');
+        this.eventService.openSnackBar('Something went wrong!', 'dismiss');
       }
     );
   }

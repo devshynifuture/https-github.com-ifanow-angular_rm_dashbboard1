@@ -21,6 +21,7 @@ import { UtilService } from 'src/app/services/util.service';
   ],
 })
 export class BondsComponent implements OnInit {
+  maxDate = new Date();
   dataSource: any;
   bonds: any;
   showHide = false;

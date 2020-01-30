@@ -32,8 +32,7 @@
         </div>
         <div class="col-md-6">
             <mat-form-field class="w-100">
-                <input #displayName class="form-control br-0" formControlName="displayName" matInput maxlength="40"
-                    type="text">
+                <input #displayName class="form-control br-0" formControlName="displayName" matInput maxlength="40" type="text">
                 <mat-error class="f-12">
                     This field is required
                 </mat-error>
@@ -63,8 +62,7 @@
         </div>
         <div class="col-md-6">
             <mat-form-field class="w-100">
-                <input #companyName class="form-control br-0" formControlName="companyName" matInput maxlength="50"
-                    type="text">
+                <input #companyName class="form-control br-0" formControlName="companyName" matInput maxlength="50" type="text">
                 <mat-error class="f-12">
                     This field is required
                 </mat-error>
@@ -92,8 +90,7 @@
         </div>
         <div class="col-md-6">
             <mat-form-field class="w-100">
-                <input #primaryContact class="form-control br-0" formControlName="primaryContact" (keypress)="utils.keyPress($event)" matInput
-                    maxlength="10" type="text">
+                <input #primaryContact class="form-control br-0" formControlName="primaryContact" (keypress)="utils.keyPress($event)" matInput maxlength="10" type="text">
                 <mat-error class="f-12">
                     This field is required
                 </mat-error>
@@ -109,16 +106,13 @@
         </div>
         <div class="col-md-6">
             <mat-form-field class="w-100">
-                <input #pan class="form-control br-0"  formControlName="pan"
-                    matInput maxlength="10" type="text">
-                  <mat-error
-                        *ngIf="payeeSettingsForm.get('pan').errors?.required && payeeSettingsForm.get('pan').touched"
-                        class="f-12 pt-4">
-                        This field is required
-                    </mat-error>
-                    <mat-error *ngIf="(payeeSettingsForm.get('pan').errors?.pattern)" class="f-12 pt-4">
-                        Enter valid PAN
-                    </mat-error>
+                <input #pan class="form-control br-0" formControlName="pan" matInput maxlength="10" type="text">
+                <mat-error *ngIf="payeeSettingsForm.get('pan').errors?.required && payeeSettingsForm.get('pan').touched" class="f-12">
+                    This field is required
+                </mat-error>
+                <mat-error *ngIf="(payeeSettingsForm.get('pan').errors?.pattern)" class="f-12">
+                    Enter valid PAN
+                </mat-error>
                 <mat-hint align="end" class="f-12">{{pan.value.length}}/10</mat-hint>
             </mat-form-field>
         </div>
@@ -129,7 +123,7 @@
         </div>
         <div class="col-md-6">
             <mat-form-field class="w-100">
-                <mat-select formControlName="customerType" (ngModelChange)="gstTreatmentRemove($event)"class="form-control br-0" id="sel1">
+                <mat-select formControlName="customerType" (ngModelChange)="gstTreatmentRemove($event)" class="form-control br-0" id="sel1">
                     <mat-option [value]=1>Registered Business - Regular</mat-option>
                     <mat-option [value]=2>Registered Business - Composition</mat-option>
                     <mat-option [value]=3>Unregistered Business</mat-option>
@@ -146,8 +140,7 @@
         </div>
         <div class="col-md-6">
             <mat-form-field class="w-100">
-                <input #gstIn class="form-control br-0" (keypress)="utils.alphaNumric($event)" formControlName="gstIn"
-                    matInput maxlength="16" type="text">
+                <input #gstIn class="form-control br-0" (keypress)="utils.alphaNumric($event)" formControlName="gstIn" matInput maxlength="16" type="text">
                 <mat-error class="f-12">
                     This field is required
                 </mat-error>
@@ -163,8 +156,7 @@
         <div class="col-md-6">
             <div class="form-group mb-0">
                 <mat-form-field class="w-100">
-                    <textarea matInput class="form-control" formControlName="billingAddress" rows="5"
-                        maxlength="{{getFormControl().billingAddress.maxLength}}"></textarea>
+                    <textarea matInput class="form-control" formControlName="billingAddress" rows="5" maxlength="{{getFormControl().billingAddress.maxLength}}"></textarea>
                     <mat-error class="f-12">
                         This field is required
                     </mat-error>
@@ -177,14 +169,11 @@
             <h5 class="m-0">Pin code</h5>
         </div>
         <div class="col-md-6">
-          <mat-form-field>
-            <input #pincode [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" (change)="getPostalPin($event.target.value)"
-                   appInputValueValidation class="form-control br-0 text-left" formControlName="pincode" matInput
-                   minlength="6" type="text">
-            <mat-error
-              class="f-12">{{'Invalid Pincode'}}</mat-error>
-            <mat-hint align="end" class="f-12">{{pincode.value.length}}/6</mat-hint>
-          </mat-form-field>
+            <mat-form-field>
+                <input #pincode [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" (change)="getPostalPin($event.target.value)" appInputValueValidation class="form-control br-0 text-left" formControlName="pincode" matInput minlength="6" type="text">
+                <mat-error class="f-12">{{'Invalid Pincode'}}</mat-error>
+                <mat-hint align="end" class="f-12">{{pincode.value.length}}/6</mat-hint>
+            </mat-form-field>
         </div>
     </div>
     <div class="row">
@@ -193,8 +182,7 @@
         </div>
         <div class="col-md-6">
             <mat-form-field class="w-100">
-                <input #city class="form-control br-0" (keypress)="utils.onlyText($event)" formControlName="city"
-                    matInput maxlength="30" type="text">
+                <input #city class="form-control br-0" (keypress)="utils.onlyText($event)" formControlName="city" matInput maxlength="30" type="text">
                 <mat-error class="f-12">
                     This field is required
                 </mat-error>
@@ -208,8 +196,7 @@
         </div>
         <div class="col-md-6">
             <mat-form-field class="w-100">
-                <input #state class="form-control br-0" (keypress)="utils.onlyText($event)" formControlName="state"
-                    matInput maxlength="30" type="text">
+                <input #state class="form-control br-0" (keypress)="utils.onlyText($event)" formControlName="state" matInput maxlength="30" type="text">
                 <mat-error class="f-12">
                     This field is required
                 </mat-error>
@@ -223,8 +210,7 @@
         </div>
         <div class="col-md-6">
             <mat-form-field class="w-100">
-                <input #country class="form-control br-0" (keypress)="utils.onlyText($event)" formControlName="country"
-                    matInput maxlength="30" type="text">
+                <input #country class="form-control br-0" (keypress)="utils.onlyText($event)" formControlName="country" matInput maxlength="30" type="text">
                 <mat-error class="f-12">
                     This field is required
                 </mat-error>

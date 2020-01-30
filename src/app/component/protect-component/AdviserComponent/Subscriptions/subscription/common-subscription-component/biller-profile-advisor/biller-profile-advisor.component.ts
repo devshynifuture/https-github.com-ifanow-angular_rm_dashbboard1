@@ -9,6 +9,7 @@ import { PhotoCloudinaryUploadService } from '../../../../../../../services/phot
 import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { UtilService, ValidatorType } from '../../../../../../../services/util.service';
 import { PostalService } from 'src/app/services/postal.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -17,6 +18,21 @@ import { PostalService } from 'src/app/services/postal.service';
   styleUrls: ['./biller-profile-advisor.component.scss']
 })
 export class BillerProfileAdvisorComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'primary',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  }
 
   validatorType = ValidatorType;
   billerProfileForm: any;
@@ -217,12 +233,14 @@ export class BillerProfileAdvisorComponent implements OnInit {
     switch (true) {
       case (this.profileDetailsForm.valid && value == 0):
         this.selected = 1;
+        this.barButtonOptions.text = "SAVE & NEXT";
         break;
       case (/*this.logUrl.valid &&*/ value == 1):
         this.selected = 2;
         break;
       case (this.bankDetailsForm.valid && value == 2):
         this.selected = 3;
+        this.barButtonOptions.text = "SAVE";
         break;
       case (this.MiscellaneousData.valid && value == 3):
         this.submitBillerForm();
@@ -257,6 +275,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
   back() {
     this.selected--;
   }
+
+  
 
   submitBillerForm() {
     if (this.profileDetailsForm.controls.companyDisplayName.invalid) {
