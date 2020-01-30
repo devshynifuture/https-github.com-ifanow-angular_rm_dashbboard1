@@ -10,6 +10,7 @@ import { DatePipe } from '@angular/common';
 import { element } from 'protractor';
 import { Router } from '@angular/router';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { ErrPageOpenComponent } from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
 import { SubscriptionDataService } from '../../subscription-data.service';
 
 export interface PeriodicElement {
@@ -62,6 +63,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
   lastFilterDataId;
   statusIdLength = 0;
   showFilter = false;
+  scrollLoad = false;
   selectedDateRange: { begin: Date; end: Date; };
 
   data: Array<any> = [{}, {}, {}];
@@ -104,8 +106,14 @@ export class InvoicesSubscriptionComponent implements OnInit {
   ngOnInit() {
     // this.dataSource = [{}, {}, {}];
     this.advisorId = AuthService.getAdvisorId();
-    (SubscriptionDataService.getLoderFlag(5) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}]
-    this.getInvoiceSubData(false);
+    if (this.utilservice.checkSubscriptionastepData(6) == undefined) {
+      this.dataSource.data = [{}, {}, {}]
+    }
+    else {
+      (this.utilservice.checkSubscriptionastepData(6) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}]
+    }
+    // (this.utilservice.checkSubscriptionastepData(6) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}]
+    this.getClientSubData(this.scrollLoad);
     this.showEdit = false;
     this.invoiceSubscription = 'false';
     this.invoiceDesign = 'true';
@@ -113,7 +121,66 @@ export class InvoicesSubscriptionComponent implements OnInit {
     console.log(this.router.url, "this.router.isActive");
 
   }
+  getClientSubData(boolean) {
+    this.dataSource.data = [{}, {}, {}]
+    this.getInvoiceSubData(boolean).subscribe(
+      data => {
+        this.getData = data;
+        this.isLoading = false;
 
+        if (data != undefined) {
+          this.lastDataId = data[data.length - 1].id;
+          this.tableData = data;
+        } else {
+        }
+        this.getInvoiceResponseData(this.tableData);
+      }, (error) => {
+        this.errorMessage();
+        // this.eventService.showErrorMessage(error);
+        this.dataSource.data = [];
+        this.isLoading = false;
+      }
+    )
+  }
+  errorMessage() {
+    const fragmentData = {
+      flag: 'app-err-page-open',
+      data: {},
+      id: 1,
+      // data,
+      direction: 'top',
+      componentName: ErrPageOpenComponent,
+      state: 'open',
+    };
+    fragmentData.data = {
+      positiveMethod: () => {
+        this.getInvoiceSubData(false).subscribe(
+          data => {
+            this.getData = data;
+            this.isLoading = false;
+    
+            if (data != undefined) {
+              this.lastDataId = data[data.length - 1].id;
+              this.tableData = data;
+            } else {
+            }
+            this.getInvoiceResponseData(this.tableData);
+            this.eventService.changeUpperSliderState({ state: 'close' })
+            // this.errorMessage();
+          }, (error) => {
+            this.eventService.openSnackBar('Wait sometime....', 'dismiss');
+          }
+        )
+      },
+    }
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // subscription.unsubscribe();
+        }
+      }
+    );
+  }
   scrollCall(scrollLoader) {
     const uisubs = document.getElementById('ui-subs');
     const wrapper = document.getElementById('wrapper');
@@ -137,7 +204,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
       if (this.statusIdList.length <= 0) {
 
-        this.getInvoiceSubData(scrollLoader);
+        this.getClientSubData(scrollLoader);
       } else {
         this.callFilter(scrollLoader);
       }
@@ -156,33 +223,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
     this.isLoading = true;
     this.dataCount = 0;
 
-    this.subscription.getInvoices(obj).subscribe(
-      data => {
-        this.getData = data;
-        this.isLoading = false;
-
-        if (data != undefined) {
-          this.lastDataId = data[data.length - 1].id;
-          // obj.offset = this.lastDataId;
-          // console.log(this.lastDataId, obj, "data check");
-          this.tableData = data;
-          // if (this.tableData.length <= 0) {
-          //   this.tableData = data;
-          // } else {
-          //   console.log(this.tableData, 'this.tableData 123');
-
-          //   this.tableData = this.tableData.concat(data);
-          //   console.log(this.tableData, 'this.tableData 123');
-          // }
-        } else {
-        }
-        this.getInvoiceResponseData(this.tableData);
-      }, (error) => {
-        this.eventService.showErrorMessage(error);
-        this.dataSource.data = [];
-        this.isLoading = false;
-      }
-    );
+    return this.subscription.getInvoices(obj);
   }
 
   addInvoice(edit) {
@@ -217,8 +258,10 @@ export class InvoicesSubscriptionComponent implements OnInit {
       this.invoiceClientData = data;
       this.dataSource.data = data;
       this.dataSource.sort = this.sort;
-      uisubs.scrollTo(0, this.scrollPosition);
-      console.log(uisubs.scrollTop, this.scrollPosition, 'this.yoffset');
+      if(this.scrollPosition!=undefined){
+        uisubs.scrollTo(0, this.scrollPosition);
+      }
+      // console.log(uisubs.scrollTop, this.scrollPosition, 'this.yoffset');
 
       this.scrollCallData = true;
       // this.DataToSend = data;
@@ -305,7 +348,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
     if (data.closingState) {
       this.dataSource.data = [{}, {}, {}]
       this.tableData = [];
-      this.getInvoiceSubData(false);
+      this.getClientSubData(false);
       this.dataCount = 0;
     }
     this.invoiceSubscription = 'false';
@@ -318,7 +361,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
     if (data) {
       this.dataSource.data = [{}, {}, {}]
       this.tableData = [];
-      this.getInvoiceSubData(false);
+      this.getClientSubData(false);
       this.dataCount = 0;
     }
     console.log(data, "cancel data invoice");
@@ -365,7 +408,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
     };
     console.log('this.callFilter req obj : ', obj);
     if (obj.statusIdList.length == 0 && obj.fromDate == null) {
-      this.getInvoiceSubData(false);
+      this.getClientSubData(false);
     } else {
       this.subService.filterInvoices(obj).subscribe(
         (data) => {

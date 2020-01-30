@@ -87,7 +87,8 @@ export class ClientSubscriptionComponent implements OnInit {
             this.eventService.changeUpperSliderState({ state: 'close' })
             // this.errorMessage();
           }, (error) => {
-            this.eventService.showErrorMessage(error);
+            this.eventService.openSnackBar('Wait sometime....', 'dismiss');
+            // this.eventService.showErrorMessage(error);
           }
         )
       },

@@ -65,10 +65,10 @@
         <div class="col-md-5">
             <h5 class="text-right pt-8 mb-0">Fees</h5>
         </div>
-        <div class="col-md-5 pr-0">
+        <div class="col-md-3 pr-0 iconRupess">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input #feesRef (changedValue)="getFormControl().fees.setValue($event)" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" matInput appInputValueValidation class="form-control br-0" formControlName="fees" type="text">
+                    <input #feesRef (changedValue)="getFormControl().fees.setValue($event)" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" matInput appInputValueValidation class="form-control br-0 rupess" formControlName="fees" type="text">
                     <mat-error class="f-12" [ngClass]="{'v-h':!(isFeesValid && getFormControl().fees.invalid || getFormControl().fees.touched && getFormControl().fees.invalid)}">
                         Fees is Required
                     </mat-error>
