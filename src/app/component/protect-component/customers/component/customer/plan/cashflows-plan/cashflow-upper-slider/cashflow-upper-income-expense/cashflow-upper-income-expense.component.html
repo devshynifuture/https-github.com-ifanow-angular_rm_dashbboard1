@@ -214,7 +214,8 @@
 
         <ng-container matColumnDef="remove">
             <th mat-header-cell *matHeaderCellDef> </th>
-            <td class="br-grey text-center f-14 " mat-cell *matCellDef="let element">
+            <td class="br-grey text-center f-14 " mat-cell *matCellDef="let element"
+                (click)="deleteEntryCashFlow(element)">
                 <i class="material-icons text-danger f-18 ">
                     delete_outline
                 </i> </td>

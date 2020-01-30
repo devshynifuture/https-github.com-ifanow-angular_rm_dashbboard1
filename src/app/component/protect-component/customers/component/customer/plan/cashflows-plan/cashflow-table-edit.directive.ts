@@ -9,6 +9,14 @@ export class CashflowTableEditDirective {
   constructor(private el: ElementRef, private renderer: Renderer2) { }
 
   @HostListener('click') editTableTdValue() {
+    this.editTableData();
+  }
+
+  @HostListener('keydown.enter') editTableTdValueOnEnter() {
+    this.editTableData();
+  }
+
+  editTableData() {
     this.editMode = !this.editMode;
     if (this.editModeTable) {
 

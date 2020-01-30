@@ -3,7 +3,7 @@ import { EventService } from './../../../../../../../Data-service/event.service'
 import { ComposeEmailComponent } from './../../compose-email/compose-email.component';
 // import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 // import { UtilService } from '../../../../../../../services/util.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { EmailServiceService } from '../../../email-service.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { EmailReplyComponent } from '../email-reply/email-reply.component';
@@ -12,9 +12,8 @@ import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { EmailUtilService } from 'src/app/services/email-util.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
+// import { DomSanitizer } from '@angular/platform-browser';
 
-import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-email-view',
@@ -33,17 +32,16 @@ export class EmailViewComponent implements OnInit, OnDestroy {
   messagesHeaders: string[];
   decodedPart;
   attachmentBase64: string = null;
-  private _htmlString: string;
   downloadFilePath: string;
   generatedImage: string;
+  attachmentArray: {}[] = [];
 
   constructor(private emailService: EmailServiceService,
     private _bottomSheet: MatBottomSheet,
     private location: Location,
     private eventService: EventService,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private _sanitizer: DomSanitizer) { }
+    private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.getEmailThread();
@@ -96,7 +94,7 @@ export class EmailViewComponent implements OnInit, OnDestroy {
         //   base64: base64Data,
         //   fileContent: this.attachmentBase64
         // }
-        // if()
+        // if() 
         let blobData = this.convertBase64ToBlobData(base64Data, fileData.fileType);
         if (window.navigator && window.navigator.msSaveOrOpenBlob) { //IE
           window.navigator.msSaveOrOpenBlob(blobData, fileData.fileName);
@@ -104,10 +102,14 @@ export class EmailViewComponent implements OnInit, OnDestroy {
           const blob = new Blob([blobData], { type: fileData.fileType });
           const url = window.URL.createObjectURL(blob);
           // window.open(url);
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = fileData.fileName;
-          link.click();
+          this.attachmentArray.push({
+            filename: fileData.fileName,
+            downloadUrl: url
+          });
+
+          // link.href = url;
+          // link.download = fileData.fileName;
+          // link.click();
         }
 
         this.isLoading = false;
@@ -116,8 +118,14 @@ export class EmailViewComponent implements OnInit, OnDestroy {
         //   part.item
         // });
 
-
       });
+  }
+
+  attachmentDownload(element: any) {
+    const link = document.createElement('a');
+    link.href = element.downloadUrl;
+    link.download = element.filename;
+    link.click();
   }
 
   getEmailThread() {
@@ -218,6 +226,14 @@ export class EmailViewComponent implements OnInit, OnDestroy {
     });
   }
 
+  replyToMessage(part) {
+    console.log("some values to handle", part)
+  }
+
+  forwardMessage(part) {
+    console.log('needs to handle', part);
+  }
+
   extractValuesFromDetailView() {
 
     let base64Value = this.raw.split('Content-ID')[1];
@@ -232,14 +248,6 @@ export class EmailViewComponent implements OnInit, OnDestroy {
     console.log("this is filename ::::::::::::::", filenameString, fileTypeString);
 
     return { fileName: filenameString, fileType: fileTypeString }
-
-    // while ((m = keyValueRegex.exec(messageValue)) !== null) {
-    //   keys.push(m[1]);
-    //   values.push(m[2]);
-    // }
-
-    // console.log(keys);
-    // console.log(values);
   }
 
   moveMessageToTrash() {

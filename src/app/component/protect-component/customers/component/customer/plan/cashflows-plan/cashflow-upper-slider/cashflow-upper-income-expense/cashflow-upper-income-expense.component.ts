@@ -24,8 +24,12 @@ export class CashflowUpperIncomeExpenseComponent implements OnInit {
   onlyNumbers = '';
 
   ngOnInit() {
+    this.refreshTableData();
+  }
+
+  refreshTableData() {
     this.cashflowCategory = this.data.tableInUse;
-    console.log("this is data sent from upper slider", this.data);
+
     this.year = this.data.year;
     if (this.cashflowCategory === 'expenses') {
       this.dataSource = ELEMENT_DATA1;
@@ -42,6 +46,21 @@ export class CashflowUpperIncomeExpenseComponent implements OnInit {
     table[index][field] = value;
     this.updateTotal(table[index]);
     return table;
+  }
+
+  deleteEntryCashFlow(element: UpperTableBox) {
+    let whichTable;
+    (this.cashflowCategory === 'income') ?
+      whichTable = ELEMENT_DATA :
+      (this.cashflowCategory === 'expenses') ?
+        whichTable = ELEMENT_DATA1 :
+        (this.cashflowCategory === 'liabilities') ?
+          whichTable = ELEMENT_DATA2 : whichTable = '';
+
+    let el;
+    (whichTable !== '') ? el = whichTable.splice(whichTable.indexOf(element), 1) : null;
+    console.log("this element deleted:0000 ", el);
+    this.refreshTableData();
   }
 
   updateTotal(object: UpperTableBox) {

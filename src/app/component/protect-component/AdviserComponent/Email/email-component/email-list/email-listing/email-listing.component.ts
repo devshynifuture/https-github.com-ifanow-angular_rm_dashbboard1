@@ -354,53 +354,63 @@ export class EmailListingComponent implements OnInit {
       this.maxListRes = 50;
     }
     this.isLoading = true;
-    this.getGmailList('INBOX', 'next');
+    this.getGmailList(this.router.url.split('/')[3].toUpperCase(), 'next');
   }
 
   previousPagesList() {
+    this.totalListSize = this.totalListSize + 50;
+    this.currentList = this.maxListRes - 1;
+    this.maxListRes = this.maxListRes - 50;
+    if (this.maxListRes <= this.paginatorLength) {
+      this.maxListRes = this.paginatorLength;
+    }
+    if (this.currentList <= this.paginatorLength) {
+      this.currentList = 1;
+      this.maxListRes = 50;
+    }
     this.isLoading = true;
-    this.getGmailList('INBOX', 'prev');
+    this.getGmailList(this.router.url.split('/')[3].toUpperCase(), 'prev');
   }
 
-  getFileDetails(e): void {
-    console.log('LeftSidebarComponent getFileDetails e : ', e.target.files[0]);
-    const singleFile = e.target.files[0];
+  // getFileDetails(e): void {
+  //   console.log('LeftSidebarComponent getFileDetails e : ', e.target.files[0]);
+  //   const singleFile = e.target.files[0];
 
-    const fileData = [];
+  //   const fileData = [];
 
-    EmailUtilService.getBase64FromFile(singleFile, (successData) => {
-      fileData.push({
-        filename: singleFile.name,
-        size: singleFile.size,
-        mimeType: singleFile.type,
-        data: successData
-      });
-      this.createUpdateDraft(null, ['gaurav@futurewise.co.in'],
-        'This is a test message', 'This is a test message body', fileData);
-    });
+  //   EmailUtilService.getBase64FromFile(singleFile, (successData) => {
+  //     fileData.push({
+  //       filename: singleFile.name,
+  //       size: singleFile.size,
+  //       mimeType: singleFile.type,
+  //       data: successData
+  //     });
+  //     this.createUpdateDraft(null, ['gaurav@futurewise.co.in'],
+  //       'This is a test message', 'This is a test message body', fileData);
+  //   });
 
-  }
+  // }
 
-  createUpdateDraft(id: string, toAddress: Array<any>, subject: string, bodyMessage: string, fileData: Array<any>) {
-    const requestJson = {
-      id,
-      toAddress,
-      subject: subject,
-      message: bodyMessage,
-      fileData
-    };
+  // createUpdateDraft(id: string, toAddress: Array<any>, subject: string, bodyMessage: string, fileData: Array<any>) {
+  //   const requestJson = {
+  //     id,
+  //     toAddress,
+  //     subject: subject,
+  //     message: bodyMessage,
+  //     fileData
+  //   };
 
-    console.log('LeftSidebarComponent createUpdateDraft requestJson : ', requestJson);
-    const createUpdateDraftSubscription = this.emailService.createUpdateDraft(requestJson)
-      .subscribe((responseJson) => {
-        console.log(requestJson);
-        console.log("+++++++++++++++");
-        console.log(responseJson);
-        createUpdateDraftSubscription.unsubscribe();
-      }, (error) => {
-        console.error(error);
-      });
-  }
+  //   // console.log('LeftSidebarComponent createUpdateDraft requestJson : ', requestJson);
+  //   const createUpdateDraftSubscription = this.emailService.createUpdateDraft(requestJson, null)
+  //     .subscribe((responseJson) => {
+  //       // console.log(requestJson);
+  //       console.log("+++++++++++++++");
+  //       console.log(responseJson);
+  //       createUpdateDraftSubscription.unsubscribe();
+  //     }, (error) => {
+  //       console.error(error);
+  //     });
+  // }
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -471,10 +481,5 @@ export class EmailListingComponent implements OnInit {
     }
 
   }
-
-
-  // multipleDeletes() {
-  //   this.selectedThreadsArray
-  // }
 
 }
