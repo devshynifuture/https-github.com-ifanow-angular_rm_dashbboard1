@@ -13,11 +13,14 @@
     display: block;
     margin: 40px auto;
     padding: 30px;
-    height: 300px;
+    height: 320px;
     background-color: #fff;
 }
 
-.errorM{color: red; font-size: 14px; display: block; 
+.errorM {
+    color: red;
+    font-size: 14px;
+    display: block;
     visibility: hidden;
     opacity: 0;
     transition: visibility 0s, opacity 0.5s linear;
@@ -80,14 +83,12 @@ input.mat-input-element {
     }
 }
 
-.login_window_wrapper .mat-form-field {
-    height: auto !important;
-}
-
-::ng-deep .mat-form-field-appearance-legacy .mat-form-field-wrapper {
-    padding-bottom: 0px !important;
-}
-
+// .login_window_wrapper .mat-form-field {
+//     height: auto !important;
+// }
+// ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+//     padding-bottom: 0px !important;
+// }
 .animationBox {
     display: block;
     background-color: lightskyblue;

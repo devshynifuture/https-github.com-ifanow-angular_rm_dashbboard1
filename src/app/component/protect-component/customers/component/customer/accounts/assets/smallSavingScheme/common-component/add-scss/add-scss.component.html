@@ -4,7 +4,8 @@
             <h4 class="mb-0 wrapper-20">ADD SENIOR CITIZEN SAVINGS SCHEME (SCSS)</h4>
         </div>
         <div class="col-md-4 text-right">
-            <div class="wrapper-12"> <i class="material-icons c-p pt-8 v-middle" (click)="close(false)"> clear</i> </div>
+            <div class="wrapper-12"> <i class="material-icons c-p pt-8 v-middle" (click)="close(false)"> clear</i>
+            </div>
         </div>
     </div>
 </div>
@@ -17,14 +18,13 @@
             </div>
             <div class="col-md-5">
                 <mat-form-field class="w-100">
-                    <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
-                        [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                    <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                         <mat-option value=''>Search family members</mat-option>
                         <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
                             <span>{{f.userName}}</span>
                         </mat-option>
                     </mat-select>
-                    <mat-error class="f-12 pt-4">
+                    <mat-error class="f-12">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -37,18 +37,14 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput autocomplete="off" formControlName="amtInvested"
-                            (keypress)="utils.keyPress($event)" #amountInvest type="text" maxlength="7"
-                            class="form-control br-0 rupess">
-                        <mat-error
-                            *ngIf="scssSchemeForm.get('amtInvested').errors?.required && scssSchemeForm.get('amtInvested').touched"
-                            class="f-12 pt-4">
+                        <input matInput autocomplete="off" formControlName="amtInvested" (keypress)="utils.keyPress($event)" #amountInvest type="text" maxlength="7" class="form-control br-0 rupess">
+                        <mat-error *ngIf="scssSchemeForm.get('amtInvested').errors?.required && scssSchemeForm.get('amtInvested').touched" class="f-12">
                             This field is required
                         </mat-error>
-                        <mat-error *ngIf="(scssSchemeForm.get('amtInvested').errors?.min)" class="f-12 pt-4">
+                        <mat-error *ngIf="(scssSchemeForm.get('amtInvested').errors?.min)" class="f-12">
                             Should be greater than 1500
                         </mat-error>
-                        <mat-error *ngIf="(scssSchemeForm.get('amtInvested').errors?.max)" class="f-12 pt-4">
+                        <mat-error *ngIf="(scssSchemeForm.get('amtInvested').errors?.max)" class="f-12">
                             Should be less than 1500000
                         </mat-error>
                         <mat-hint align="end" class="f-12">{{amountInvest.value.length}}/7</mat-hint>
@@ -63,11 +59,10 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput formControlName="commDate" [max]="maxDate"[matDatepicker]="KVPpicker" class="form-control br-0"
-                            readonly>
+                        <input matInput formControlName="commDate" [max]="maxDate" [matDatepicker]="KVPpicker" class="form-control br-0" readonly>
                         <mat-datepicker-toggle matSuffix [for]="KVPpicker"></mat-datepicker-toggle>
                         <mat-datepicker #KVPpicker></mat-datepicker>
-                        <mat-error class="f-12 pt-4">
+                        <mat-error class="f-12">
                             This field is required
                         </mat-error>
                     </mat-form-field>
@@ -84,7 +79,7 @@
                         <mat-option value="1"> Joint </mat-option>
                         <mat-option value="2">Single </mat-option>
                     </mat-select>
-                    <mat-error class="f-12 pt-4">
+                    <mat-error class="f-12">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -108,23 +103,22 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input matInput formControlName="poBranch" #poBranch type="text" maxlength="20"
-                            class="form-control br-0">
+                    <mat-form-field> <input matInput formControlName="poBranch" #poBranch type="text" maxlength="20" class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{poBranch.value.length}}/20</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
         </div>
-        <app-add-nominee [ownerName]="ownerName" [data]="scssData" (outputEvent)="getFormDataNominee($event)"></app-add-nominee>
+        <app-add-nominee [ownerName]="ownerName" [data]="scssData" (outputEvent)="getFormDataNominee($event)">
+        </app-add-nominee>
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Bank account number</h5>
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input matInput formControlName="bankAccNumber" type="text"
-                            (keypress)="utils.keyPress($event)" #bankAccNumber maxlength="16" class="form-control br-0">
+                    <mat-form-field> <input matInput formControlName="bankAccNumber" type="text" (keypress)="utils.keyPress($event)" #bankAccNumber maxlength="16" class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{bankAccNumber.value.length}}/16</mat-hint>
                     </mat-form-field>
@@ -137,8 +131,7 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input matInput formControlName="description" #description maxlength="60"
-                            class="form-control br-0" type="text">
+                    <mat-form-field> <input matInput formControlName="description" #description maxlength="60" class="form-control br-0" type="text">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                     </mat-form-field>
@@ -155,8 +148,7 @@
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close(false)">Cancel</h5>
         </div>
-        <div (click)="addScss()" class="col-md-8 right text-right"> <button mat-button
-                class="btn-bottom br-0 text-inherit">Save</button>
+        <div (click)="addScss()" class="col-md-8 right text-right"> <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
         </div>
     </div>
 </div>
