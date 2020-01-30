@@ -78,7 +78,7 @@
             <div class="col-md-3">
                 <div class="form-group form-group_one mb-0">
                     <mat-form-field>
-                        <input autocomplete="off" [matDatepicker]="CommencementPicker" class="form-control br-0" formControlName="commencementDate" matInput readonly>
+                        <input autocomplete="off" [matDatepicker]="CommencementPicker" (dateChange)="setCommencementDate($event.target.value)"class="form-control br-0" formControlName="commencementDate" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="CommencementPicker"></mat-datepicker-toggle>
                         <mat-datepicker #CommencementPicker></mat-datepicker>
                         <mat-error class="f-12 pt-4">This field is required
@@ -181,7 +181,7 @@
         <app-add-nominee [ownerName]="ownerName" [data]="ppfData" (outputEvent)="getFormDataNominee($event)">
         </app-add-nominee>
     </div>
-    <app-add-transaction (outputEvent)="getFormData($event)"></app-add-transaction>
+    <app-add-transaction (outputEvent)="getFormData($event)" [commencementDate] = "commencementDate" ></app-add-transaction>
 </div>
 <div class="bottom-fixed wrapper-12 pt-16">
     <div class="row">

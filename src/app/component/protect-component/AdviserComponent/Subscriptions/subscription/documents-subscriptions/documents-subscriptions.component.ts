@@ -291,7 +291,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
         console.log(data, 'clientdata');
 
       }, (error) => {
-        this.eventService.openSnackBar('Somthing went wrong!', 'dismiss');
+        this.eventService.openSnackBar('Something went wrong!', 'dismiss');
       }
     );
   }

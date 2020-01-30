@@ -35,6 +35,7 @@ export class AddSsyComponent implements OnInit {
   ssyData: any;
   nomineesList: any;
   nominees: any[];
+  commencementDate: any;
 
   constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService,private datePipe: DatePipe) { }
 
@@ -58,6 +59,9 @@ export class AddSsyComponent implements OnInit {
   getFormDataNominee(data) {
     console.log(data)
     this.nomineesList = data.controls
+  }
+  setCommencementDate(date){
+    this.commencementDate = date
   }
   getdataForm(data) {
     if (data == undefined) {
@@ -95,6 +99,7 @@ export class AddSsyComponent implements OnInit {
   }
   getFormData(data) {
     console.log(data)
+    this.commencementDate = this.ssySchemeForm.controls.commencementDate.value;
     this.transactionData = data.controls
   }
 

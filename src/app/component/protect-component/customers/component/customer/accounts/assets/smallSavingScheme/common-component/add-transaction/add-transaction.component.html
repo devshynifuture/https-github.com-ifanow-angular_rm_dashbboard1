@@ -39,7 +39,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input class="form-control br-0" matInput formControlName="date" [matDatepicker]="picker" readonly>
+                        <input class="form-control br-0" [min]="minDate" [max]="maxDate" matInput formControlName="date" [matDatepicker]="picker" readonly>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-error class="f-12 pt-4">
