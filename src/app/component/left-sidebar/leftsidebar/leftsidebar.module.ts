@@ -17,13 +17,13 @@ import {DynamicComponentService} from "../../../services/dynamic-component.servi
     LeftsidebarComponent
   ],
   imports: [
-    SubscriptionEntry,
-    SubscriptionUpperEntry,
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
     CustomCommonModule,
+    SubscriptionEntry,
+    SubscriptionUpperEntry,
     LeftsidebarRoutingModule,
     CalendarModule
   ],

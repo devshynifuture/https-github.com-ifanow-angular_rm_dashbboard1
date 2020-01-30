@@ -5,6 +5,7 @@ import { SubscriptionService } from '../../../subscription.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from '../../../../../../../auth-service/authService';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-fixed-fee',
@@ -16,6 +17,21 @@ export class AddFixedFeeComponent implements OnInit {
   dataToSend: {};
   validatorType = ValidatorType;
   _data: any;
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'primary',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  }
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private subService: SubscriptionService, private eventService: EventService) {
   }
@@ -52,7 +68,7 @@ export class AddFixedFeeComponent implements OnInit {
     this.fixedFeeData = this.fb.group({
       serviceName: [data, [Validators.required, Validators.maxLength(40)]],
       code: [data, [Validators.required]],
-      description: [data, [Validators.required]],
+      description: [data],
       Duration: ['1'],
       fees: [data, [Validators.required]],
       billingNature: ['1'],
@@ -122,20 +138,14 @@ export class AddFixedFeeComponent implements OnInit {
 
   saveFeeTypeData(feeType, state) {
 
-    if (this.fixedFeeData.controls.serviceName.invalid) {
-      this.isServiceValid = true;
-      return;
-    } else if (this.fixedFeeData.controls.code.invalid) {
-      this.isCodeValid = true;
-      return;
-    } else if (this.fixedFeeData.controls.fees.invalid) {
-      this.isFeesValid = true;
-      return;
-    } else if (this.fixedFeeData.controls.billEvery.invalid) {
-      this.isbillEvery = true;
-      return;
-    } else {
-
+    if (this.fixedFeeData.invalid) {
+      this.fixedFeeData.get('serviceName').markAsTouched();
+      this.fixedFeeData.get('code').markAsTouched();
+      this.fixedFeeData.get('fees').markAsTouched();
+      this.fixedFeeData.get('billEvery').markAsTouched();
+    }
+    else {
+      this.barButtonOptions.active = true;
       const obj = {
         serviceRepoId: this.serviceId,
         advisorId: this.advisorId,
@@ -166,11 +176,25 @@ export class AddFixedFeeComponent implements OnInit {
       Object.assign(this.dataToSend, { id: this.serviceId });
       if (this.serviceId == undefined) {
         this.subService.createSettingService(obj).subscribe(
-          data => this.saveFeeTypeDataResponse(data, state)
+          data =>{
+            this.barButtonOptions.active = false;
+            this.saveFeeTypeDataResponse(data, state);
+          }, 
+          err =>{
+            this.barButtonOptions.active = false;
+            console.log(err, "error createSettingService");
+          }
         );
       } else {
         this.subService.editSettingService(obj).subscribe(
-          data => this.saveFeeTypeDataEditResponse(data, state)
+          data =>{
+            this.barButtonOptions.active = false;
+            this.saveFeeTypeDataEditResponse(data, state);
+          },
+          err =>{
+            this.barButtonOptions.active = false;
+            console.log(err, "error editSettingService");
+          }
         );
       }
 

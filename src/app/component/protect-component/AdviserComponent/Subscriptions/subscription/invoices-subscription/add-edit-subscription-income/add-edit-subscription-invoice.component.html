@@ -27,8 +27,8 @@
                                         <span>{{c.clientName}}</span>
                                     </mat-option>
                                 </mat-autocomplete>
-                                <mat-error *ngIf="getFormControlEdit().clientName.invalid || (getFormControlEdit().clientName.touched && getFormControlEdit().clientName.invalid)" class="f-12 pt-4">
-                                        Display name is required
+                                <mat-error *ngIf="getFormControlEdit().clientName.invalid || (getFormControlEdit().clientName.touched && getFormControlEdit().clientName.invalid)" class="f-12">
+                                    Display name is required
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -38,7 +38,8 @@
             <div class="row pt-10">
                 <div class="col-md-6 pl-0">
                     <p class="m-0 text-custom f-12">BILLER ADDRESS</p>
-                    <p *ngIf="editAdd1 == false"  class="m-0 text-black text-break w-90 l-21">{{getFormControlEdit().billerAddress.value}}
+                    <p *ngIf="editAdd1 == false" class="m-0 text-black text-break w-90 l-21">
+                        {{getFormControlEdit().billerAddress.value}}
                     </p>
                     <textarea *ngIf="editAdd1 == true" class="form-control f-14 br-0" formControlName="billerAddress" maxlength="150" rows="5"></textarea>
                     <div class="row">
@@ -85,7 +86,7 @@
                                 <input class="form-control br-0" formControlName="invoiceNumber" maxlength="20" type="text">
                             </div>
                             <div class="col-md-12 pl-0">
-                                <mat-error *ngIf="getFormControlEdit().invoiceNumber.invalid || (getFormControlEdit().invoiceNumber.touched && getFormControlEdit().invoiceNumber.invalid)" class="f-12 pt-4">
+                                <mat-error *ngIf="getFormControlEdit().invoiceNumber.invalid || (getFormControlEdit().invoiceNumber.touched && getFormControlEdit().invoiceNumber.invalid)" class="f-12">
                                     Invoice no. is required
                                 </mat-error>
                             </div>
@@ -108,7 +109,7 @@
                                     <input (click)="picker.open()" (dateChange)="checkDateDiff($event)" [matDatepicker]="picker" class="form-control b-0" formControlName="invoiceDate" matInput readonly>
                                     <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                                     <mat-datepicker #picker></mat-datepicker>
-                                    <mat-error class="f-12 pt-4">Invoice date is required
+                                    <mat-error class="f-12">Invoice date is required
                                     </mat-error>
                                 </mat-form-field>
                             </div>
@@ -127,10 +128,10 @@
                                     <input (click)="dueDatePicker.open()" (dateChange)="checkDateDiff($event)" [matDatepicker]="dueDatePicker" class="form-control b-0" formControlName="dueDate" matInput readonly>
                                     <mat-datepicker-toggle [for]="dueDatePicker" matSuffix></mat-datepicker-toggle>
                                     <mat-datepicker #dueDatePicker></mat-datepicker>
-                                    <mat-error class="f-12 pt-4">Invoice date is required
+                                    <mat-error class="f-12">Invoice date is required
                                     </mat-error>
                                 </mat-form-field>
-                                <mat-error [ngClass]="{'v-h': showDateError==undefined}" class="f-12 pt-4">
+                                <mat-error [ngClass]="{'v-h': showDateError==undefined}" class="f-12">
                                     {{showDateError}}
                                 </mat-error>
                             </div>
@@ -165,7 +166,7 @@
                                 </mat-autocomplete>
                             </div>
                             <div class="col-md-8">
-                                <mat-error *ngIf="getFormControlEdit().serviceName.touched && getFormControlEdit().serviceName.invalid" class="f-12 pt-4">
+                                <mat-error *ngIf="getFormControlEdit().serviceName.touched && getFormControlEdit().serviceName.invalid" class="f-12">
                                     Service name is required
                                 </mat-error>
                             </div>
@@ -174,7 +175,7 @@
                     <div class="col-md-2 pl-0">
                         <input #finalAmountInput [(ngModel)]="finalAmount" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation class="form-control br-0" formControlName="finalAmount" type="number">
                         <div class="col-md-8">
-                            <mat-error *ngIf=" getFormControlEdit().finalAmount.invalid || (getFormControlEdit().finalAmount.touched && getFormControlEdit().finalAmount.invalid)" class="f-12 pt-4">
+                            <mat-error *ngIf=" getFormControlEdit().finalAmount.invalid || (getFormControlEdit().finalAmount.touched && getFormControlEdit().finalAmount.invalid)" class="f-12">
                                 Price is required
                             </mat-error>
                         </div>
@@ -187,7 +188,7 @@
                             <option value="SGST(9%)|CGST(9%)">SGST(9%) | CGST(9%)</option>
                         </select>
                         <div class="col-md-8">
-                            <mat-error *ngIf=" getFormControlEdit().taxStatus.invalid || (getFormControlEdit().taxStatus.touched && getFormControlEdit().taxStatus.invalid)" class="f-12 pt-4">
+                            <mat-error *ngIf=" getFormControlEdit().taxStatus.invalid || (getFormControlEdit().taxStatus.touched && getFormControlEdit().taxStatus.invalid)" class="f-12">
                                 Tax status is required
                             </mat-error>
                         </div>
@@ -212,7 +213,7 @@
             <h5 class="m-0">Sub total</h5>
         </div>
         <div class="col-md-2 pr-24">
-            <h5 class="m-0 text-right pr-8">₹<span  [value]="finalAmount" appFormatNumber >{{finalAmount}}</span></h5>
+            <h5 class="m-0 text-right pr-8">₹<span [value]="finalAmount" appFormatNumber>{{finalAmount}}</span></h5>
         </div>
     </div>
     <div class="row pt-20">
@@ -233,10 +234,10 @@
             <h5 class="m-0">SGST(9%)</h5>
         </div>
         <div *ngIf="taxStatus == 'IGST(18%)'" class="col-md-2 pr-24">
-            <h5 class="m-0 text-right pr-8">₹<span [value]="igstTaxAmount" appFormatNumber >{{igstTaxAmount}}</span></h5>
+            <h5 class="m-0 text-right pr-8">₹<span [value]="igstTaxAmount" appFormatNumber>{{igstTaxAmount}}</span></h5>
         </div>
         <div *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'" class="col-md-2 pr-24">
-            <h5 class="m-0 text-right pr-8">₹<span [value]="sgstTaxAmount" appFormatNumber >{{sgstTaxAmount}}</span></h5>
+            <h5 class="m-0 text-right pr-8">₹<span [value]="sgstTaxAmount" appFormatNumber>{{sgstTaxAmount}}</span></h5>
         </div>
     </div>
     <div class="row pt-20 pb-12">
@@ -245,7 +246,7 @@
             <h5 class="m-0">CGST(9%)</h5>
         </div>
         <div *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'" class="col-md-2 pr-24">
-            <h5 class="m-0 text-right pr-8">₹<span [value]="cgstTaxAmount" appFormatNumber >{{cgstTaxAmount}}</span></h5>
+            <h5 class="m-0 text-right pr-8">₹<span [value]="cgstTaxAmount" appFormatNumber>{{cgstTaxAmount}}</span></h5>
             <!--      | number:'1.2-2'-->
         </div>
     </div>
@@ -259,7 +260,7 @@
         <div class="col-md-2 pt-4 pl-0 pr-24">
             <div class="bt-grey">
                 <h5 class="m-0 text-right pr-8 pt-8 text-black f-500">
-                    ₹<span  [value]="finAmount" appFormatNumber  >{{finAmount}}</span>
+                    ₹<span [value]="finAmount" appFormatNumber>{{finAmount}}</span>
                 </h5>
             </div>
         </div>

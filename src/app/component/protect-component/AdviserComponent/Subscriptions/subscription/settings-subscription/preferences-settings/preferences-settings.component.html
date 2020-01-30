@@ -1,9 +1,9 @@
 <div id="ui-perferences" class="bg-white">
     <div class="wrapper-20">
-        <div class="pb-20" >
+        <div class="pb-20">
             <div class="row" *ngIf="billerProfileData">
                 <div class="col-md-12 right text-right pr-0">
-                    <button (click)="Open('Add','addbillerProfile')" mat-stroked-button class="btn-primary addon">ADD
+                    <button *ngIf="viewMode =='tab1'" (click)="Open('Add','addbillerProfile')" mat-stroked-button class="btn-primary addon">ADD
                         NEW
                     </button>
                 </div>
@@ -131,7 +131,7 @@
                         </div>
                     </div>
 
-                    <div class="row" *ngIf="billerProfileData == undefined">
+                    <div class="row" [hidden]="billerProfileData !== undefined">
                         <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
                             <img class="pt-20 width200" src="assets/images/svg/buiness-shop.svg">
 
