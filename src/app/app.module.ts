@@ -77,7 +77,7 @@ import { BackofficeDashboardComponent } from './component/protect-component/Advi
     EmailEntryModule,
     AppRoutingModule,
     CustomDirectiveModule,
-    SubscriptionUpperEntry
+    // SubscriptionUpperEntry
   ],
   providers: [AuthService, HttpService, DatePipe],
   bootstrap: [AppComponent]
