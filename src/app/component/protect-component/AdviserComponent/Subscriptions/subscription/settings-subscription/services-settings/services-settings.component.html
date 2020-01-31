@@ -15,7 +15,7 @@
                 </mat-card-content>
             </mat-card>
         </div>
-        <div [hidden]="serviceSettingData==undefined" *ngFor="let singleService of serviceSettingData" [appSkeletonLoading]="isLoading" appSkeletonLoading class="col-md-4 pr-20 pb-20 pl-0 skeletonAnimation">
+        <div *ngIf="serviceSettingData !== undefined" *ngFor="let singleService of serviceSettingData" [appSkeletonLoading]="isLoading" appSkeletonLoading class="col-md-4 pr-20 pb-20 pl-0 skeletonAnimation">
             <mat-card class="example-card bg-grey lter p-0 b-a ">
                 <div class="bar">
                     <mat-card-header class="overflow-hidden">
