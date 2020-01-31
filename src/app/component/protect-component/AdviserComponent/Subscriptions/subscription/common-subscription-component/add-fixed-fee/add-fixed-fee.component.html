@@ -20,7 +20,7 @@
             <mat-form-field class="w-100">
                 <input (changedValue)="getFormControl().serviceName.setValue($event)" [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation class="form-control br-0" formControlName="serviceName" matInput maxLength="{{getFormControl().serviceName.maxLength}}"
                     type="text">
-                <mat-error class="f-12 " *ngIf="getFormControl().serviceName.touched" >
+                <mat-error class="f-12 " *ngIf="getFormControl().serviceName.touched">
                     Service name is required
                 </mat-error>
                 <mat-hint align="end" class="f-12">
@@ -86,9 +86,9 @@
         </div>
         <div class="col-md-6">
             <mat-radio-group formControlName="billingNature">
-                <mat-radio-button value="1" [ngClass]="{'b-a-custom': fixedFeeData.get('billingNature').value==1,'text-primary':fixedFeeData.get('billingNature').value==1,'b-a':fixedFeeData.get('billingNature').value==2}" class="b-a-custom text-primary wrapper-8 custom-radio">Recurring
+                <mat-radio-button value="1" [ngClass]="{'b-a-custom': fixedFeeData.get('billingNature').value==1,'text-primary':fixedFeeData.get('billingNature').value==1,'b-a':fixedFeeData.get('billingNature').value==2}" class="b-a-custom radioBtn text-primary custom-radio">Recurring
                 </mat-radio-button>
-                <mat-radio-button value="2" [ngClass]="{'b-a-custom': fixedFeeData.get('billingNature').value==2,'text-primary':fixedFeeData.get('billingNature').value==2,'b-a':fixedFeeData.get('billingNature').value==1}" class="b-a wrapper-8">Once
+                <mat-radio-button value="2" [ngClass]="{'b-a-custom': fixedFeeData.get('billingNature').value==2,'text-primary':fixedFeeData.get('billingNature').value==2,'b-a':fixedFeeData.get('billingNature').value==1}" class="b-a radioBtn ">Once
                 </mat-radio-button>
             </mat-radio-group>
         </div>
@@ -127,9 +127,9 @@
         </div>
         <div class="col-md-7">
             <mat-radio-group formControlName="billingMode">
-                <mat-radio-button value="1" [ngClass]="{'b-a-custom text-primary':fixedFeeData.get('billingMode').value==1,'b-a':fixedFeeData.get('billingMode').value==2}" class="text-custom wrapper-8">Start of period
+                <mat-radio-button value="1" [ngClass]="{'b-a-custom text-primary':fixedFeeData.get('billingMode').value==1,'b-a':fixedFeeData.get('billingMode').value==2}" class="text-custom radioBtn">Start of period
                 </mat-radio-button>
-                <mat-radio-button value="2" [ngClass]="{'b-a-custom text-primary':fixedFeeData.get('billingMode').value==2,'b-a':fixedFeeData.get('billingMode').value==1}" class="text-custom wrapper-8">End of period
+                <mat-radio-button value="2" [ngClass]="{'b-a-custom text-primary':fixedFeeData.get('billingMode').value==2,'b-a':fixedFeeData.get('billingMode').value==1}" class="text-custom radioBtn">End of period
                 </mat-radio-button>
             </mat-radio-group>
         </div>
@@ -142,7 +142,7 @@
         </div>
         <div class="col-md-8 right text-right">
             <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveFeeTypeData('1','close')">Save</button> -->
-            <app-progress-button (btnClick)="saveFeeTypeData('1','close')" [options]="barButtonOptions" >
+            <app-progress-button (btnClick)="saveFeeTypeData('1','close')" [options]="barButtonOptions">
             </app-progress-button>
         </div>
     </div>

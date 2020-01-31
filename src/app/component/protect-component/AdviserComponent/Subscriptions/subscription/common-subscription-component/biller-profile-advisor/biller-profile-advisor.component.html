@@ -164,7 +164,7 @@
                                 <div class="row pt-16">
                                     <div class="col-md-12 p-0">
                                         <!-- (click)="file.click()"-->
-                                        <app-progress-button  *ngIf="logoImg!=undefined" (btnClick)="uploadImage()" [options]="barButtonOptions" >
+                                        <app-progress-button *ngIf="logoImg!=undefined" (btnClick)="uploadImage()" [options]="barButtonOptions">
                                         </app-progress-button>
                                         <!-- <button *ngIf="logoImg!=undefined" (click)="uploadImage()" class="br-0 btn-primary mr-12" mat-stroked-button>UPLOAD
                                             LOGO
@@ -194,7 +194,7 @@
                                     <input #nameOnBank matInput autofocus class="form-control br-0 text-left" formControlName="nameOnBank" (changedValue)="getFormControlBank().nameOnBank.setValue($event)" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" appInputValueValidation
                                         maxLength="{{getFormControlBank().nameOnBank.maxLength}}" type="text">
                                     <mat-error class="f-12">This field is required</mat-error>
-                                    <mat-hint align="end" class="f-12">{{nameOnBank.value.length}}/30</mat-hint>
+                                    <mat-hint align="end" class="f-12">{{nameOnBank.value.length}}/25</mat-hint>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -209,7 +209,7 @@
                                     <input #bankName matInput class="form-control br-0 text-left" formControlName="bankName" (changedValue)="getFormControlBank().bankName.setValue($event)" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" appInputValueValidation maxLength="{{getFormControlBank().bankName.maxLength}}"
                                         type="text">
                                     <mat-error class="f-12">This field is required</mat-error>
-                                    <mat-hint align="end" class="f-12">{{bankName.value.length}}/30</mat-hint>
+                                    <mat-hint align="end" class="f-12">{{bankName.value.length}}/35</mat-hint>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -272,9 +272,7 @@
                                 </mat-form-field>
                             </div>
                         </div>
-                        <div class="col-md-2">
-                            Loading
-                        </div>
+
                     </div>
                     <div class="row pt-44">
                         <div class="col-md-5">
@@ -366,9 +364,9 @@
             <h5 (click)="Close('close')" class="mb-0 pt-8 text-white c-p">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-        <button (click)="back()" *ngIf="selected!=0" class="mr-20 br-0 text-inherit" mat-button mat-raised-button>PREVIOUS
-      </button>
-      <!-- <app-progress-button  *ngIf="selected!=3" (btnClick)="nextStep(selected,'Save&Next')" [options]="barButtonOptions" [disabled]="logoImg==undefined && selected==1">
+            <button (click)="back()" *ngIf="selected!=0" class="mr-20 br-0 text-inherit" mat-button mat-raised-button>PREVIOUS
+            </button>
+            <!-- <app-progress-button  *ngIf="selected!=3" (btnClick)="nextStep(selected,'Save&Next')" [options]="barButtonOptions" [disabled]="logoImg==undefined && selected==1">
     </app-progress-button> -->
 
     <app-progress-button *ngIf="selected==3" (btnClick)="nextStep(selected,'Save&Next')" [options]="barButtonOptions" >

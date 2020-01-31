@@ -83,3 +83,12 @@ h3 {
 .height120 {
     height: 120px;
 }
+
+::ng-deep .radioBtn .mat-radio-label {
+    min-width: 152px;
+    height: 45px;
+    display: flex !important;
+    justify-content: left;
+    align-items: center;
+    padding-left: 10px !important;
+}
