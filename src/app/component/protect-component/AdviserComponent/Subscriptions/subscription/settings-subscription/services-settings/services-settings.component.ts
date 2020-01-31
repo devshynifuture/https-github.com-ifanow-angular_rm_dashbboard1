@@ -102,6 +102,7 @@ export class ServicesSettingsComponent implements OnInit {
     this.isLoading = false;
     this.feesDisplay = false
     this.serviceSettingData = data;
+
     // this.showLoader = false;
   }
 

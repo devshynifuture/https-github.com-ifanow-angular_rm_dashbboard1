@@ -10,6 +10,9 @@ import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { UtilService, ValidatorType } from '../../../../../../../services/util.service';
 import { PostalService } from 'src/app/services/postal.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { promise } from 'protractor';
+import { resolve } from 'dns';
+import { rejects } from 'assert';
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -59,7 +62,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   profileDetailsForm: any;
   bankDetailsForm: any;
   MiscellaneousData: any;
-  logoImg: any;
+  logoImg: any = "";
   imageData: File;
   uploadedImage: any;
   postalData: Object;
@@ -125,6 +128,10 @@ export class BillerProfileAdvisorComponent implements OnInit {
     }
   }
 
+  uploadImgOnSave(){
+    
+  }
+
   uploadImage() {
     this.barButtonOptions.active = true;
 
@@ -134,7 +141,6 @@ export class BillerProfileAdvisorComponent implements OnInit {
       PhotoCloudinaryUploadService.uploadFileToCloudinary(files, 'biller_profile_logo', tags,
         (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
           if (status == 200) {
-            this.barButtonOptions.active = false;
             const responseObject = JSON.parse(response);
             console.log('onChange file upload success response url : ', responseObject.url);
             this.logoImg = responseObject.url;
@@ -142,10 +148,15 @@ export class BillerProfileAdvisorComponent implements OnInit {
             // this.logUrl.controls.url.setValue(this.imageData);
             this.uploadedImage = JSON.stringify(responseObject);
             this.eventService.openSnackBar('Image uploaded sucessfully', 'dismiss');
+            if(this.selected == 3){
+              this.addEditBillerForm();
+            }else{
+              this.barButtonOptions.active = false;
+            }
           }
 
         });
-
+        
     } else {
       console.log('asfasdas');
     }
@@ -253,26 +264,51 @@ export class BillerProfileAdvisorComponent implements OnInit {
         this.submitBillerForm();
     }
   }
+
+  pinInvalid:boolean = false;
+
   getPostalPin(value, state) {
     let obj = {
       zipCode: value
     }
-    if (value.length > 5) {
+    console.log(value,"check value");
+    if(value != ""){
       this.postalService.getPostalPin(value).subscribe(data => {
         console.log('postal 121221', data)
         this.PinData(data, state)
       })
     }
+    else{
+      this.pinInvalid = false;
+    }
   }
   PinData(data, state) {
-    if (state == 'bankDetailsForm') {
+    if(data[0].Status == "Error"){
+      this.pinInvalid = true;
+      if (state == 'bankDetailsForm'){
+        this.getFormControlBank().pincodeB.setErrors(this.pinInvalid);
+        this.getFormControlBank().cityB.setValue("")
+        this.getFormControlBank().countryB.setValue("")
+        this.getFormControlBank().stateB.setValue("")
+      }
+      else{
+        this.getFormControlProfile().pincode.setErrors(this.pinInvalid);
+        this.getFormControlProfile().city.setValue("");
+        this.getFormControlProfile().country.setValue("");
+        this.getFormControlProfile().state.setValue("");
+      }
+    }
+    else if (state == 'bankDetailsForm') {
       this.getFormControlBank().cityB.setValue(data[0].PostOffice[0].District)
       this.getFormControlBank().countryB.setValue(data[0].PostOffice[0].Country)
       this.getFormControlBank().stateB.setValue(data[0].PostOffice[0].Circle)
+      this.pinInvalid = false;
     } else {
       this.getFormControlProfile().city.setValue(data[0].PostOffice[0].District);
       this.getFormControlProfile().country.setValue(data[0].PostOffice[0].Country);
       this.getFormControlProfile().state.setValue(data[0].PostOffice[0].Circle);
+      this.pinInvalid = false;
+
     }
   }
 
@@ -283,6 +319,16 @@ export class BillerProfileAdvisorComponent implements OnInit {
       this.barButtonOptions.text = "UPLOAD LOGO";
     }
 
+  }
+
+  validURL(str) {
+    var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+      '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+    return !!pattern.test(str);
   }
 
   
@@ -311,51 +357,63 @@ export class BillerProfileAdvisorComponent implements OnInit {
     }
      else {
       this.barButtonOptions.active = true;
-      const obj = {
-        acNumber: this.bankDetailsForm.controls.acNo.value,
-        advisorId: this.advisorId,
-        bankCity: this.bankDetailsForm.controls.cityB.value,
-        bankCountry: this.bankDetailsForm.controls.countryB.value,
-        bankName: this.bankDetailsForm.controls.bankName.value,
-        bankState: this.bankDetailsForm.controls.stateB.value,
-        bankZipCode: this.bankDetailsForm.controls.pincodeB.value,
-        billerAddress: this.profileDetailsForm.controls.Address.value,
-        branchAddress: this.bankDetailsForm.controls.address.value,
-        city: this.profileDetailsForm.controls.city.value,
-        companyDisplayName: this.profileDetailsForm.controls.companyDisplayName.value,
-        country: this.profileDetailsForm.controls.country.value,
-        footnote: this.MiscellaneousData.controls.footnote.value,
-        gstin: this.profileDetailsForm.controls.gstinNum.value,
-        ifscCode: this.bankDetailsForm.controls.ifscCode.value,
-        logoUrl: this.logoImg,
-        nameAsPerBank: this.bankDetailsForm.controls.nameOnBank.value,
-        pan: this.profileDetailsForm.controls.panNum.value,
-        state: this.profileDetailsForm.controls.state.value,
-        terms: this.MiscellaneousData.controls.terms.value,
-        zipCode: this.profileDetailsForm.controls.pincode.value,
-        id: this.profileDetailsForm.controls.id.value,
-        cloudinary_json: this.uploadedImage
-      };
-      console.log(obj);
-      if (this.profileDetailsForm.controls.id.value == undefined) {
-        this.subService.saveBillerProfileSettings(obj).subscribe(
-          data => this.closeTab(data),
-          error =>{
-            this.barButtonOptions.active = false;
-            this.eventService.showErrorMessage(error);
-          }
-        );
-
-      } else {
-        this.subService.updateBillerProfileSettings(obj).subscribe(
-          data => this.closeTab(data),
-          error =>{
-            this.barButtonOptions.active = false;
-            this.eventService.showErrorMessage(error);
-          }
-        );
+      
+      console.log("img url check", this.validURL(this.logoImg ), this.logoImg);
+      if(!this.validURL(this.logoImg ) && this.logoImg != undefined){
+        this.uploadImage();
       }
+      else{
+        this.addEditBillerForm();
+        
+      }
+    }
+  }
 
+  addEditBillerForm(){
+    const obj = {
+      acNumber: this.bankDetailsForm.controls.acNo.value,
+      advisorId: this.advisorId,
+      bankCity: this.bankDetailsForm.controls.cityB.value,
+      bankCountry: this.bankDetailsForm.controls.countryB.value,
+      bankName: this.bankDetailsForm.controls.bankName.value,
+      bankState: this.bankDetailsForm.controls.stateB.value,
+      bankZipCode: this.bankDetailsForm.controls.pincodeB.value,
+      billerAddress: this.profileDetailsForm.controls.Address.value,
+      branchAddress: this.bankDetailsForm.controls.address.value,
+      city: this.profileDetailsForm.controls.city.value,
+      companyDisplayName: this.profileDetailsForm.controls.companyDisplayName.value,
+      country: this.profileDetailsForm.controls.country.value,
+      footnote: this.MiscellaneousData.controls.footnote.value,
+      gstin: this.profileDetailsForm.controls.gstinNum.value,
+      ifscCode: this.bankDetailsForm.controls.ifscCode.value,
+      logoUrl: this.logoImg,
+      nameAsPerBank: this.bankDetailsForm.controls.nameOnBank.value,
+      pan: this.profileDetailsForm.controls.panNum.value,
+      state: this.profileDetailsForm.controls.state.value,
+      terms: this.MiscellaneousData.controls.terms.value,
+      zipCode: this.profileDetailsForm.controls.pincode.value,
+      id: this.profileDetailsForm.controls.id.value,
+      cloudinary_json: this.uploadedImage
+    };
+    console.log("biller odj", obj);
+
+    if (this.profileDetailsForm.controls.id.value == undefined) {
+      this.subService.saveBillerProfileSettings(obj).subscribe(
+        data => this.closeTab(data),
+        error =>{
+          this.barButtonOptions.active = false;
+          this.eventService.showErrorMessage(error);
+        }
+      );
+
+    } else {
+      this.subService.updateBillerProfileSettings(obj).subscribe(
+        data => this.closeTab(data),
+        error =>{
+          this.barButtonOptions.active = false;
+          this.eventService.showErrorMessage(error);
+        }
+      );
     }
   }
   getPostalRes(data) {

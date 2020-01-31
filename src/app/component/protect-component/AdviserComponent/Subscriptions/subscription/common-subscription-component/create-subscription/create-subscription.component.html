@@ -57,9 +57,9 @@
                     <div class="col-md-6">
                         <mat-radio-group aria-label="Select an option" formControlName="invoiceSendingMode">
                             <mat-radio-button value="1" [ngClass]="{'b-a-custom':subscriptionDetails.get('invoiceSendingMode').value==1,'text-primary':subscriptionDetails.get('invoiceSendingMode').value==1,'b-a':subscriptionDetails.get('invoiceSendingMode').value==2}" checked="true"
-                                class="pt-8 pb-8 pr-40 pl-20 custom-radio">Automatic
+                                class="radioBtn custom-radio">Automatic
                             </mat-radio-button>
-                            <mat-radio-button value="2" [ngClass]="{'b-a-custom':subscriptionDetails.get('invoiceSendingMode').value==2,'text-primary':subscriptionDetails.get('invoiceSendingMode').value==2,'b-a':subscriptionDetails.get('invoiceSendingMode').value==1}" class=" pt-8 pr-40 pb-8 pl-20 custom-radio">Manual
+                            <mat-radio-button value="2" [ngClass]="{'b-a-custom':subscriptionDetails.get('invoiceSendingMode').value==2,'text-primary':subscriptionDetails.get('invoiceSendingMode').value==2,'b-a':subscriptionDetails.get('invoiceSendingMode').value==1}" class="radioBtn custom-radio">Manual
                             </mat-radio-button>
                         </mat-radio-group>
                     </div>
@@ -122,7 +122,7 @@
                         <p class="m-0 text-right text-custom roboto">Select a biller profile</p>
                     </div>
                 </div>
-                <div class="row pt-16">
+                <div class="row pt-16" *ngIf="billersData.length !== 0">
                     <div (click)="select('biller',singleBiller)" *ngFor="let singleBiller of billersData" class="col-md-6 mt-20">
                         <mat-card [ngClass]="{'ba-blue':singleBiller.selected==1,'mb-20':true ,'b-ua':singleBiller.selected==0}" class="p-0">
                             <div class="row bg-grey lter">
@@ -151,8 +151,8 @@
                         </mat-card>
                     </div>
                 </div>
-                <div class="row" *ngIf="billersData.length == 0">
-                    <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
+                <div class="row" *ngIf="billersData">
+                    <div class="col-md-12 d-flex align-items-center flex-column justify-content-center" *ngIf="billersData.length == 0">
                         <img class="pt-20 width200" src="assets/images/svg/buiness-shop.svg">
 
                         <p class="f-22 f-600 pt-28 pb-16 t-dark">Set up biller profile</p>
@@ -161,6 +161,8 @@
                             <br> for your client's financial freedom. We do the background work for you - create
                             <br> invoices, bill clients, execute agreements and so on.
                         </p>
+                        <button (click)="Open('Add','billerProfile')" class="btn-primary d-flex align-items-center">
+                            ADD NEW</button>
                     </div>
                 </div>
             </div>
