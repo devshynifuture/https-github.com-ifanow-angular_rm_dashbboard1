@@ -15,7 +15,7 @@
                 </mat-card>
             </div>
 
-            <div [hidden]="planSettingData==undefined" class="col-md-4  pr-20 pb-20 pl-0 d-flex skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngFor="let singlePlan of planSettingData">
+            <div [hidden]="planSettingData !== undefined" class="col-md-4  pr-20 pb-20 pl-0 d-flex skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngFor="let singlePlan of planSettingData">
                 <mat-card class="example-card b-a  bg-grey lter p-0 flex-fill">
                     <mat-card-header class="overflow-hidden">
                         <div class="wrapper-20 pb-10 height120 width100per">
@@ -72,7 +72,7 @@
                 </mat-card>
             </div>
 
-            <div *ngIf="planSettingData == undefined" class="col-md-12 d-flex align-items-center flex-column justify-content-center">
+            <div [hidden]="planSettingData == undefined" class="col-md-12 d-flex align-items-center flex-column justify-content-center">
                 <img class="width200" src="assets/images/svg/new-add-plan.svg">
                 <p class="f-22 f-600 pt-28">Create Plan </p>
                 <p class="f-16 text-center l-21"> You start by creating Plans first. Plans are your core offerings. You can have <br> multiple plans for different types of clients. Each plan will have sub offerings, also

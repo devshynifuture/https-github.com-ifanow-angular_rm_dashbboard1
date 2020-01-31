@@ -36,9 +36,9 @@
             </div>
             <div class="col-md-7">
                 <mat-radio-group formControlName="billingNature">
-                    <mat-radio-button value="1" [ngClass]="{'b-a-custom': fixedFeeStructureForm.get('billingNature').value==1,'text-primary':fixedFeeStructureForm.get('billingNature').value==1,'b-a':fixedFeeStructureForm.get('billingNature').value==2}" class="pt-8 pb-8 pr-52 pl-20 custom-radio">Recurring
+                    <mat-radio-button value="1" [ngClass]="{'b-a-custom': fixedFeeStructureForm.get('billingNature').value==1,'text-primary':fixedFeeStructureForm.get('billingNature').value==1,'b-a':fixedFeeStructureForm.get('billingNature').value==2}" class="radioBtn custom-radio">Recurring
                     </mat-radio-button>
-                    <mat-radio-button value="2" [ngClass]="{'b-a-custom': fixedFeeStructureForm.get('billingNature').value==2,'text-primary':fixedFeeStructureForm.get('billingNature').value==2,'b-a':fixedFeeStructureForm.get('billingNature').value==1}" class="b-a pt-8 pr-40 pl-20 pr-76 pb-8">Once
+                    <mat-radio-button value="2" [ngClass]="{'b-a-custom': fixedFeeStructureForm.get('billingNature').value==2,'text-primary':fixedFeeStructureForm.get('billingNature').value==2,'b-a':fixedFeeStructureForm.get('billingNature').value==1}" class="b-a radioBtn">Once
                     </mat-radio-button>
                 </mat-radio-group>
             </div>
@@ -75,9 +75,9 @@
             </div>
             <div class="col-md-7">
                 <mat-radio-group formControlName="billingMode">
-                    <mat-radio-button value="1" [ngClass]="{'b-a-custom': fixedFeeStructureForm.get('billingMode').value==1,'text-primary':fixedFeeStructureForm.get('billingMode').value==1,'b-a':fixedFeeStructureForm.get('billingMode').value==2}" class="text-custom b-a wrapper-8">Start of period
+                    <mat-radio-button value="1" [ngClass]="{'b-a-custom': fixedFeeStructureForm.get('billingMode').value==1,'text-primary':fixedFeeStructureForm.get('billingMode').value==1,'b-a':fixedFeeStructureForm.get('billingMode').value==2}" class="text-custom radioBtn b-a">Start of period
                     </mat-radio-button>
-                    <mat-radio-button value="2" [ngClass]="{'b-a-custom': fixedFeeStructureForm.get('billingMode').value==2,'text-primary':fixedFeeStructureForm.get('billingMode').value==2,'b-a':fixedFeeStructureForm.get('billingMode').value==1}" class="text-custom b-a wrapper-8">End of period
+                    <mat-radio-button value="2" [ngClass]="{'b-a-custom': fixedFeeStructureForm.get('billingMode').value==2,'text-primary':fixedFeeStructureForm.get('billingMode').value==2,'b-a':fixedFeeStructureForm.get('billingMode').value==1}" class="text-custom radioBtn b-a">End of period
                     </mat-radio-button>
                 </mat-radio-group>
             </div>

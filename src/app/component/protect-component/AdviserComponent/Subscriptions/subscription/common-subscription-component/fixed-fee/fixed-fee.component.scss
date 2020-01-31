@@ -1,33 +1,47 @@
-.custom-chips-color{
-    background:#00FFA1 !important;
+.custom-chips-color {
+    background: #00FFA1 !important;
     color: #000 !important;
-    .mat-icons{
-     color:  rgba(0, 0, 0, 0.54) !important;
+    .mat-icons {
+        color: rgba(0, 0, 0, 0.54) !important;
     }
 }
-.mat-standard-chip{
+
+.mat-standard-chip {
     font-size: 13px !important;
     cursor: pointer;
 }
+
 ::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
-      /*click effect color change*/
+    /*click effect color change*/
     background-color: #008FFF !important;
 }
 
 ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
-    background-color: #008FFF !important;   /*inner circle color change*/
+    background-color: #008FFF !important;
+    /*inner circle color change*/
 }
+
 // ::ng-deep .mat-radio-outer-circle:nth-child(1){
 //     border-color: #008FFF !important;
 // }
-::ng-deep.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-   border-color: #008FFF !important; /*outer ring color change*/
+::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: #008FFF !important;
+    /*outer ring color change*/
 }
-.min-39{
+
+.min-39 {
     min-height: 39px !important;
 }
-.pr-72{
+
+.pr-72 {
     padding-right: 72px !important;
 }
 
-
+::ng-deep .radioBtn .mat-radio-label {
+    min-width: 152px;
+    height: 45px;
+    display: flex !important;
+    justify-content: left;
+    align-items: center;
+    padding-left: 10px !important;
+}
