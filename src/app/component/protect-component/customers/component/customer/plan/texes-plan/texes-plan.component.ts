@@ -16,7 +16,7 @@ export class TexesPlanComponent implements OnInit {
   displayedColumns1: string[] = ['position', 'name', 'symbol', 'icons'];
   dataSource1 = ELEMENT_DATA1;
   constructor(public subInjectService: SubscriptionInject, ) { }
-
+  isLoading = false;
   ngOnInit() {
   }
   openIncome(value) {

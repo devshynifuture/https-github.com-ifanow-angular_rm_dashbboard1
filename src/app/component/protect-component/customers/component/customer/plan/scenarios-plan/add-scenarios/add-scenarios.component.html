@@ -69,4 +69,66 @@
 </div> -->
 <div class="p-20 pl-24 pr-24">
     <h3 class="m-0 f-500 text-black">Add scenario</h3>
+    <h5 class="m-0 f-500 text-black pt-20">How would you like to add a new scenario?</h5>
+
+    <p class="m-0 roboto text-black pt-20">You can either pickup an existing scenario and modify it (recommended) or
+        create a
+        scenario from scratch.</p>
+    <div class="row">
+        <div class="col-md-12 p-0 pt-24">
+            <mat-radio-group aria-label="Select an option">
+                <mat-radio-button value="1" class="bu-primary text-primary pr-20 pl-20 p-12" checked="false">Copy from
+                    existing
+                </mat-radio-button>
+                <mat-radio-button value="2" class="b-ua pr-20 pl-20 p-12 text-custom">Create from scratch
+                </mat-radio-button>
+            </mat-radio-group>
+        </div>
+    </div>
+    <div class="row pt-28">
+        <div class="col-md-4 pr-4 text-right">
+            <h5 class="m-0 text-black pt-16">Select base scenario</h5>
+        </div>
+        <div class="col-md-4 pr-4">
+            <div class="form-group pt-8 mb-0">
+                <mat-form-field>
+                    <mat-select class="form-control br-0" formControlName="Duration" id="sel1">
+                        <mat-option value="1">Scenario 1</mat-option>
+                        <mat-option value="2">Scenario 2</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <h5 class="m-0 f-500 text-black pt-28">The following elements will be copied from the base scenario:</h5>
+    <ul class="points">
+        <li>All Advice on Assets/Insurance/Liabilities where the status is set to
+            Given/Awaiting consent/Declined/Pending/System generated</li>
+        <li>All records in the insurance planning section</li>
+        <li>All records in goals section where goals status is Live</li>
+        <li>All records in the tax planning for the applicable years</li>
+        <li>All records in the cash flows section</li>
+    </ul>
+    <div class="row pt-28">
+        <div class="col-md-2">
+            <h5 class="m-0 pt-8">Description</h5>
+        </div>
+        <div class="col-md-10">
+            <!-- <div class="form-control">
+                <mat-form-field>
+                    <input matInput class="form-group" value="Add description...">
+                </mat-form-field>
+            </div> -->
+            <div class="form-group relClass">
+                <input type="text" class="form-control br-0" formControlName="prefix" value="Add description...">
+
+            </div>
+        </div>
+    </div>
+    <div class="row pt-28">
+        <div class="col-md-12 text-right p-0">
+            <button mat-button class="text-custom">Cancel</button>
+            <button mat-button class="text-primary">Save</button>
+        </div>
+    </div>
 </div>

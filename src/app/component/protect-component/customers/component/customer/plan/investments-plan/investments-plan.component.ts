@@ -12,7 +12,7 @@ export class InvestmentsPlanComponent implements OnInit {
   displayedColumns: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'debt', 'status', 'icons'];
   dataSource = ELEMENT_DATA;
   constructor(private subInjectService: SubscriptionInject) { }
-
+  isLoading = false;
   ngOnInit() {
   }
 
