@@ -3,6 +3,7 @@ import { SubscriptionService } from '../../../subscription.service';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { EventService } from '../../../../../../../Data-service/event.service';
 import { AuthService } from "../../../../../../../auth-service/authService";
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-services',
@@ -11,11 +12,25 @@ import { AuthService } from "../../../../../../../auth-service/authService";
 })
 
 export class ServicesComponent implements OnInit {
-
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'primary',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  }
   advisorId;
 
   @Input() componentFlag: string;
-  planServiceData: Array<any> = [{}, {}, {}];
+  planServiceData: Array<any> = [{ selected: false }, { selected: false }, { selected: false }];
   mappedData = [];
   mappedPlan = [];
   @Input() planData;
@@ -93,13 +108,13 @@ export class ServicesComponent implements OnInit {
     }
   }
   getServicesMapped() {
-
+    this.isLoading = true;
     const obj = {
       // advisorid: 12345,
       advisorId: this.advisorId,
       docRepoId: this.upperData ? this.upperData.documentData.documentRepositoryId : null
     };
-    this.planServiceData = [{ selected: false }];
+    // this.planServiceData = [{}, {}, {}];
     this.subService.servicesMapped(obj).subscribe(
       data => this.servicesMappedRes(data)
     );
@@ -160,7 +175,10 @@ export class ServicesComponent implements OnInit {
     // console.log(this.mappedData.length);
   }
 
+  
+
   savePlanMapToService() {
+    this.barButtonOptions.active = true;
     if (this.componentFlag === 'services') {
       this.mapDocumentToPlan()
     } else {
@@ -168,6 +186,7 @@ export class ServicesComponent implements OnInit {
     }
 
   }
+
   mapDocumentToPlan() {
     const obj = [];
     this.mappedData.forEach(planData => {
@@ -181,14 +200,20 @@ export class ServicesComponent implements OnInit {
       obj.push(data);
     });
     this.subService.mapDocumentToService(obj).subscribe(
-      data => this.mapPlanToServiceRes(data)
+      data =>{
+        this.mapPlanToServiceRes(data)
+      },
+      err =>{
+        console.log(err,"error mapPlanToServiceRes");
+        this.barButtonOptions.active = false;
+      }
     );
   }
   mapPlanToServiceRes(data) {
     console.log(data)
     this.eventService.openSnackBar('Service is mapped', 'OK');
+    this.barButtonOptions.active = false;
     this.dialogClose()
-
   }
   savePlanMapToServiceResponse(data) {
     console.log("map plan to service Data", data)
@@ -199,6 +224,7 @@ export class ServicesComponent implements OnInit {
       this.eventService.openSnackBar('Service is mapped', 'OK');
 
     }
+    this.barButtonOptions.active = false;
   }
   saveServicePlanMapping() {
     const obj = [];
@@ -226,7 +252,13 @@ export class ServicesComponent implements OnInit {
 
     console.log(obj);
     this.subService.mapServiceToPlanData(obj).subscribe(
-      data => this.savePlanMapToServiceResponse(data)
+      data =>{
+        this.savePlanMapToServiceResponse(data);
+      },
+      err =>{
+        console.log(err,"error savePlanMapToServiceResponse");
+        this.barButtonOptions.active = false;
+      }
     );
   }
 }

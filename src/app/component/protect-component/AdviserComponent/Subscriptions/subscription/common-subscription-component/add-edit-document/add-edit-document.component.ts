@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionService } from '../../../subscription.service';
@@ -6,6 +6,7 @@ import { AuthService } from '../../../../../../../auth-service/authService';
 import { UtilService } from '../../../../../../../services/util.service';
 import { EventService } from '../../../../../../../Data-service/event.service';
 import { SubscriptionUpperSliderComponent } from '../upper-slider/subscription-upper-slider.component';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-edit-document',
@@ -13,7 +14,21 @@ import { SubscriptionUpperSliderComponent } from '../upper-slider/subscription-u
   styleUrls: ['./add-edit-document.component.scss']
 })
 export class AddEditDocumentComponent implements OnInit {
-
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'PROCEED',
+    buttonColor: 'primary',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  }
   advisorId;
 
   blankOverview: any;
@@ -30,8 +45,9 @@ export class AddEditDocumentComponent implements OnInit {
     selectPlan: []
   });
   @Input() documentType;
+  @Output() changeDocumentData = new EventEmitter();
   @Input()
-  set inputData(inputData) {
+  set data(inputData) {
     this._inputData = inputData;
     this.documentType;
     // obj.outstandingCheck.toString();
@@ -83,7 +99,7 @@ export class AddEditDocumentComponent implements OnInit {
   }
 
   Close(state) {
-    this.subInjectService.rightSliderData(state);
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
   selectDocument(value) {
@@ -94,13 +110,12 @@ export class AddEditDocumentComponent implements OnInit {
   }
 
   saveDocuments() {
-    if (this.blankDocumentProperties.controls.docType.invalid) {
-      this.isDocType = true;
-      return;
-    } else if (this.blankDocumentProperties.controls.docName.invalid) {
-      this.isDocName = true;
-      return;
-    } else {
+    if(this.blankDocumentProperties.invalid){
+      this.blankDocumentProperties.get('docType').markAsTouched();
+      this.blankDocumentProperties.get('docName').markAsTouched();
+    }
+     else {
+      this.barButtonOptions.active = true;
       if (this._inputData.documentRepositoryId == undefined) {
         const obj = {
           advisorId: this.advisorId,
@@ -122,8 +137,13 @@ export class AddEditDocumentComponent implements OnInit {
         this.subService.addSettingDocument(obj).subscribe(
           data => {
             console.log(data);
-            this.subInjectService.changeUpperRightSliderState({ state: 'close', data });
-            this.sendDataToParentUpperFrag(data);
+            this.subInjectService.changeNewRightSliderState({ state: 'close', data: { documentData: data } });
+            // this.sendDataToParentUpperFrag(data);
+            this.barButtonOptions.active = false;
+          },
+          err=>{
+            this.barButtonOptions.active = false;
+            console.log(err, "error changeNewRightSliderState");
           }
         );
       } else {
@@ -139,9 +159,15 @@ export class AddEditDocumentComponent implements OnInit {
         this.subService.updateDocumentData(obj).subscribe(
           data => {
             console.log(data);
-            data = obj;
-            this.subInjectService.changeUpperRightSliderState({ state: 'close', data });
+            obj['id'] = data;
+            this.subInjectService.changeNewRightSliderState({ state: 'close', data: { documentData: obj } });
             this.sendDataToParentUpperFrag(data);
+            this.barButtonOptions.active = false;
+          },
+          err =>{
+            this.barButtonOptions.active = false;
+            console.log(err, "error changeNewRightSliderState");
+            
           }
         );
       }
@@ -160,7 +186,7 @@ export class AddEditDocumentComponent implements OnInit {
     //   this.subService.updateDocumentData(obj).subscribe(
     //     data => 
     //     {
-    //       this.subInjectService.changeUpperRightSliderState({ state: 'close', data });
+    //       this.subInjectService.changeNewRightSliderState({ state: 'close', data });
     //       this.sendDataToParentUpperFrag(data)
     //     }
     //   );
@@ -169,32 +195,33 @@ export class AddEditDocumentComponent implements OnInit {
   }
 
   sendDataToParentUpperFrag(data) {
-    if (!this.fragmentData.data) {
-      this.fragmentData.data = {};
-    }
+    // this.subInjectService.changeNewRightSliderState({ state: 'close', documentData: data, flag: 'documents' });
+    // if (!this.fragmentData.data) {
+    //   this.fragmentData.data = {};
+    // }
     // this.fragmentData.data.documentData = data;
 
-    const fragmentData = {
-      flag: 'openUpper',
-      data: { documentData: data, flag: 'documents' },
-      direction: 'top',
-      id: 1,
-      componentName: SubscriptionUpperSliderComponent,
+    // const fragmentData = {
+    //   flag: 'openUpper',
+    //   data: { documentData: data, flag: 'documents' },
+    //   direction: 'top',
+    //   id: 1,
+    //   componentName: SubscriptionUpperSliderComponent,
 
-      state: 'open'
+    //   state: 'open'
 
-    };
+    // };
 
     /*this.eventService.upperSliderDataObs.subscribe((upperData) => {
     });*/
-    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-      upperSliderData => {
-        if (UtilService.isDialogClose(upperSliderData)) {
-          // this.getClientSubscriptionList();
-          subscription.unsubscribe();
-        }
-      }
-    );
+    // const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+    //   upperSliderData => {
+    //     if (UtilService.isDialogClose(upperSliderData)) {
+    //       // this.getClientSubscriptionList();
+    //       subscription.unsubscribe();
+    //     }
+    //   }
+    // );
   }
 
 

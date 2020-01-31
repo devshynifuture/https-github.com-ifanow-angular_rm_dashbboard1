@@ -12,6 +12,7 @@ import {CustomDirectiveModule} from '../../../../common/directives/common-direct
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import {MY_FORMATS2} from '../../../../constants/date-format.constant';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
 
 export const componentList = [
   // VariableFeeComponent,
@@ -35,14 +36,16 @@ export const componentList = [
     ReactiveFormsModule,
     CommonComponentModule,
     CustomDirectiveModule,
-    SubscriptionUpperEntry
+    SubscriptionUpperEntry,
+    CustomCommonModule
+
   ],
   exports: [componentList],
-  entryComponents: [componentList],
+  // entryComponents: [componentList],
   providers: [
-    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
 
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
 

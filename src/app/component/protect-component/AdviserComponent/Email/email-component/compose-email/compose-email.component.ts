@@ -313,17 +313,17 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
     if ((!this.data && this.data === null) && this.didFormChanged) {
       // call create api from compose
 
-      let Obj = {
-        to: '',
-        from: '',
-        emailBody: '',
-        attachments: '',
-        subject: ''
-      }
-      this.emailService.createDraft(Obj)
-        .subscribe(response => console.log(response), error => console.error(error));
-      console.log("created");
-      console.log("call create api from compose");
+      console.log(this.emailForm);
+      const requestJson = {
+        toAddress: this.emailForm.get('receiver').value ? this.emailForm.get('receiver').value : [''],
+        subject: this.emailForm.get('subject').value ? this.emailForm.get('subject').value : '',
+        message: this.emailForm.get('messageBody').value ? this.emailForm.get('messageBody').value : '',
+        fileData: this.emailForm.get('attachments').value ? this.emailForm.get('attachments').value : []
+      };
+      this.emailService.createUpdateDraft(requestJson, null).subscribe(res => {
+        console.log(res);
+      })
+
     } else if ((this.data && this.data !== null) && this.didFormChanged) {
       // call update api
       console.log("call update api from detail view");
@@ -331,37 +331,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
       // close the dialog
       console.log("close the dialog");
     }
-    // let Obj;
-    // if (this.toCreateOrUpdate === 'create') {
-    //   Obj = {
-    //     to: '',
-    //     from: '',
-    //     emailBody: '',
-    //     attachments: '',
-    //     subject: ''
-    //   }
-    //   this.emailService.createDraft(Obj)
-    //     .subscribe(response => console.log(response), error => console.error(error));
-    //   console.log("created");
-    // } else if (this.toCreateOrUpdate === 'update') {
-    //   Obj = {
-    //     to: this.to,
-    //     from: this.from,
-    //     emailBody: this.emailBody,
-    //     attachments: '',
-    //     subject: this.subject,
-    //   }
-    //   this.emailService.updateDraft(Obj)
-    //     .subscribe(response => console.log(response), error => console.error(error));
 
-    //   console.log("updated");
-    // } else {
-    //   this.subInjectService.changeUpperRightSliderState({ state: 'close' });
-    //   this.subInjectService.changeNewRightSliderState({ state: 'close' });
-    //   console.log("closed...");
-    // }
-
-    // this.valueChange.emit(this.emailSend);
     this.subInjectService.changeUpperRightSliderState({ state: 'close' });
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
@@ -382,22 +352,21 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   saveData(event): void {
     this.emailForm.get('messageBody').setValue(event);
   }
-
+  // made by gaurav 
   createUpdateDraft(id: string, toAddress: Array<any>, subject: string, bodyMessage: string, fileData: Array<any>) {
-    let encodedSubject = EmailUtilService.changeStringToBase64(subject);
-    let encodedMessage = EmailUtilService.changeStringToBase64(bodyMessage);
+    // let encodedSubject = EmailUtilService.changeStringToBase64(subject);
+    // let encodedMessage = EmailUtilService.changeStringToBase64(bodyMessage);
     const requestJson = {
       id,
       toAddress,
-      subject: encodedSubject,
-      message: encodedMessage,
+      subject: subject,
+      message: bodyMessage,
       fileData
     };
 
     console.log('LeftSidebarComponent createUpdateDraft requestJson : ', requestJson);
-    this.emailService.createUpdateDraft(requestJson)
+    this.emailService.createUpdateDraft(requestJson, null)
       .subscribe((responseJson) => {
-        console.log("+++++++++++++++");
         console.log(responseJson);
       }, (error) => {
         console.error(error);

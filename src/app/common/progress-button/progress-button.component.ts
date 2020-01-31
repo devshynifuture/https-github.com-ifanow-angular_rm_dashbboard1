@@ -22,6 +22,10 @@ export class ProgressButtonComponent implements AfterViewInit {
     }
   }
 
+  @Input() set disabled(disabled){
+    this.options.disabled = disabled;
+  };
+
   get logEvent() {
     return this._logEvent
   }

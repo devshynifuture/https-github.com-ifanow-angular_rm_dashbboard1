@@ -6,6 +6,7 @@ import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { UtilService } from 'src/app/services/util.service';
+import { PayeeSettingsComponent } from '../payee-settings/payee-settings.component';
 
 @Component({
   selector: 'app-settings',
@@ -30,6 +31,7 @@ export class SettingsComponent implements OnInit {
   @Input() upperData;
 
   ngOnInit() {
+    console.log(this.upperData)
     this.getSettingProfileData();
   }
 
@@ -83,13 +85,16 @@ export class SettingsComponent implements OnInit {
   }
 
   openPayeeSettings(profileData, value, state) {
+    (profileData == "Add") ? profileData = { flag: profileData } : ''
+    profileData['clientData'] = this.upperData
     const fragmentData = {
       flag: value,
       data: profileData,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName: PayeeSettingsComponent
     };
-    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         this.getSettingProfileData();

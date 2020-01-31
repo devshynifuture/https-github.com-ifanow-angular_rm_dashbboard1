@@ -52,6 +52,7 @@ export class AddRealEstateComponent implements OnInit {
   showErrorOwner = false;
   familyMemberId: any;
   ownerDataName: any;
+  ownershipPerc: any;
   constructor(public custumService: CustomerService, public subInjectService: SubscriptionInject, private fb: FormBuilder, public custmService: CustomerService, public eventService: EventService, public utils: UtilService) { }
   // set inputData(inputData) {
   //   this._inputData = inputData;
@@ -252,13 +253,11 @@ export class AddRealEstateComponent implements OnInit {
     // this.addrealEstateForm.value.getCoOwnerName.forEach(element => {
     //   if(element.ownershipPerc==null){
     //     this.getCoOwner.setValue([
-    //       { ownerName: element.ownerName, ownershipPerc:(element.ownershipPerc)?element.ownershipPerc:null, familyMemberId: (element.familyMemberId)?element.familyMemberId:item.id},
+    //       { ownerName: item.userName, ownershipPerc:null, familyMemberId: item.id},
     //     ]);
     //   }
       
     // });
-
-    // console.log(this.addrealEstateForm.value.getCoOwnerName[this.getCoOwner.value.length-1].setValue(item.id))
   }
   onChange(data) {
     if (data == 'owner') {
@@ -462,7 +461,9 @@ export class AddRealEstateComponent implements OnInit {
       if (obj.id == undefined) {
         console.log(obj);
         this.custumService.addRealEstate(obj).subscribe(
-          data => this.addRealEstateRes(data)
+          data => this.addRealEstateRes(data), (error) => {
+            this.eventService.showErrorMessage(error);
+          }
         );
       } else {
 

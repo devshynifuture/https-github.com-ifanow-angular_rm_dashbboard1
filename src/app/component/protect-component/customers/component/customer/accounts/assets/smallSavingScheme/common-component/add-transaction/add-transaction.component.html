@@ -31,7 +31,7 @@
                         <mat-option value="1">Deposit</mat-option>
                         <mat-option value="2">Withdrawl</mat-option>
                     </mat-select>
-                    <mat-error class="f-12 pt-4">
+                    <mat-error class="f-12">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -39,10 +39,10 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input class="form-control br-0" matInput formControlName="date" [matDatepicker]="picker" readonly>
+                        <input class="form-control br-0" [min]="minDate" [max]="maxDate" matInput formControlName="date" [matDatepicker]="picker" readonly>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
-                        <mat-error class="f-12 pt-4">
+                        <mat-error class="f-12">
                             This field is required
                         </mat-error>
                     </mat-form-field>
@@ -52,7 +52,7 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input matInput type="text" formControlName="amount" maxlength="10" #partPayment class="form-control br-0">
-                        <mat-error class="f-12 pt-4">
+                        <mat-error class="f-12">
                             This field is required
                         </mat-error>
                         <mat-hint align="end" class="f-12">{{partPayment.value.length}}/10</mat-hint>

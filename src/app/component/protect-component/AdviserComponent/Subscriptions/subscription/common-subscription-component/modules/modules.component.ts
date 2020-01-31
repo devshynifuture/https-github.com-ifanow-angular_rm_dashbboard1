@@ -4,6 +4,7 @@ import { SubscriptionService } from '../../../subscription.service';
 import { SubscriptionUpperSliderComponent } from '../upper-slider/subscription-upper-slider.component';
 import { EventService } from 'src/app/Data-service/event.service';
 import { element } from 'protractor';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-modules',
@@ -12,7 +13,21 @@ import { element } from 'protractor';
 })
 export class ModulesComponent implements OnInit {
   _upperData: any;
-
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'primary',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  }
   constructor(private subService: SubscriptionService, private eventService: EventService) {
   }
   @Input()
@@ -79,6 +94,7 @@ export class ModulesComponent implements OnInit {
   }
 
   mapModuleToPlan() {
+    this.barButtonOptions.active = true;
     const data = {
       serviceModuleMappingList: []
     };
@@ -101,7 +117,14 @@ export class ModulesComponent implements OnInit {
     }
 
     this.subService.mapModuleToplanData(data).subscribe(
-      data => this.mapModuleToPlanResponse(data)
+      data =>{
+        this.barButtonOptions.active = false;
+        this.mapModuleToPlanResponse(data);
+      },
+      err =>{
+        this.barButtonOptions.active = false;
+        console.log(err, "error mapModuleToplanData");
+      }
     );
   }
 

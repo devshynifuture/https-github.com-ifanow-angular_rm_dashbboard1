@@ -7,9 +7,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SubscriptionEntry} from '../../protect-component/AdviserComponent/Subscriptions/subscription.entry.module';
 import {SubscriptionUpperEntry} from '../../protect-component/AdviserComponent/Subscriptions/subscription-upper-entry-module';
 import {LeftsidebarComponent} from './leftsidebar.component';
-import {CustomCommonModule} from '../../../common/custom.common.module';
-import {DynamicComponentService} from '../../../services/dynamic-component.service';
-import { CalendarModule } from '../../protect-component/AdviserComponent/Activities/calendar/calendar.module';
+import {CalendarModule} from '../../protect-component/AdviserComponent/Activities/calendar/calendar.module';
+import {DynamicComponentService} from "../../../services/dynamic-component.service";
 
 
 @NgModule({
@@ -17,18 +16,18 @@ import { CalendarModule } from '../../protect-component/AdviserComponent/Activit
     LeftsidebarComponent
   ],
   imports: [
-    SubscriptionEntry,
-    SubscriptionUpperEntry,
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    CustomCommonModule,
+    SubscriptionEntry,
+    SubscriptionUpperEntry,
     LeftsidebarRoutingModule,
     CalendarModule
   ],
-  entryComponents: [SubscriptionEntry.getComponentList(), SubscriptionUpperEntry.getComponentList()],
+  entryComponents: [SubscriptionEntry.getComponentList()],
   providers: [DynamicComponentService]
+  // providers: [DynamicComponentService]
 })
 export class LeftsidebarModule {
 }

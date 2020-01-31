@@ -6,8 +6,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput aria-label="State" (click)="nomineesList()" 
-                        [matAutocomplete]="auto" list="userName" class="form-control br-0 pl-8" formControlName="name">
+                    <input matInput aria-label="State" (click)="nomineesList()" [matAutocomplete]="auto" list="userName" class="form-control br-0 pl-8" formControlName="name">
                     <mat-autocomplete #auto="matAutocomplete">
                         <mat-option *ngFor="let f of familyList" [value]="f.userName">
                             <span>{{f.userName}}</span>
@@ -19,19 +18,17 @@
         <div class="col-md-2">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" formControlName="sharePercentage" (keyup)="onChange()" class="form-control br-0" matInput
-                        maxlength="10" type="text">
+                    <input autocomplete="off" formControlName="sharePercentage" (keyup)="onChange()" class="form-control br-0" matInput maxlength="10" type="text">
                 </mat-form-field>
             </div>
         </div>
         <div class="pt-8">
-            <i class="material-icons text-primitive c-p float-left" *ngIf="i==getNomineeList.controls.length-1"
-                (click)="addNominee()">add</i>
+            <i class="material-icons text-primitive c-p float-left" *ngIf="i==getNomineeList.controls.length-1" (click)="addNominee()">add</i>
             <i class="material-icons text-primitive c-p " (click)="removeNominee(i)">remove</i>
         </div>
-      
+
     </div>
-    <mat-error class="f-12 pt-4  text-right" *ngIf="showError== true">
+    <mat-error class="f-12  text-right" *ngIf="showError== true">
         Percent cannot be more than 100%
     </mat-error>
 </div>

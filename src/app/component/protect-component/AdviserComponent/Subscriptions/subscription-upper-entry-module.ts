@@ -7,7 +7,6 @@ import { MaterialModule } from '../../../../material/material';
 import { OverviewComponent } from './subscription/common-subscription-component/overview/overview.component';
 import { ServicesComponent } from './subscription/common-subscription-component/services/services.component';
 import { DocumentComponent } from './subscription/common-subscription-component/document/document.component';
-import { SubscriptionUpperSliderComponent } from './subscription/common-subscription-component/upper-slider/subscription-upper-slider.component';
 import { TermsAgreementComponent } from './subscription/common-subscription-component/terms-agreement/terms-agreement.component';
 import { EmailOnlyComponent } from './subscription/common-subscription-component/email-only/email-only.component';
 import { FeeStructureComponent } from './subscription/common-subscription-component/fee-structure/fee-structure.component';
@@ -44,6 +43,12 @@ import { AddQuotationComponent } from './subscription/common-subscription-compon
 import { AddQuotationSubscriptionComponent } from '../../customers/component/common-component/add-quotation-subscription/add-quotation-subscription.component';
 import { HowToUseDialogComponent } from './subscription/common-subscription-component/how-to-use-dialog/how-to-use-dialog.component';
 import { PreferenceEmailInvoiceComponent } from './subscription/common-subscription-component/preference-email-invoice/preference-email-invoice.component';
+import { DynamicComponentService } from 'src/app/services/dynamic-component.service';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
+import { ErrPageOpenComponent } from '../../customers/component/common-component/err-page-open/err-page-open.component';
+import { DocumentPreviewComponent } from './subscription/common-subscription-component/document-preview/document-preview.component';
+import { SubscriptionUpperRoutingModule } from './subscription-upper-routing-routing.module';
+import { SubscriptionUpperSliderComponent } from './subscription/common-subscription-component/upper-slider/subscription-upper-slider.component';
 
 export const componentList = [
   OverviewComponent,
@@ -85,13 +90,16 @@ export const componentList = [
   AddQuotationComponent,
   AddQuotationSubscriptionComponent,
   HowToUseDialogComponent,
-  PreferenceEmailInvoiceComponent
+  PreferenceEmailInvoiceComponent,
+  ErrPageOpenComponent,
+  DocumentPreviewComponent
 ]
 
 @NgModule({
   declarations: componentList,
   imports: [
     CommonModule,
+    SubscriptionUpperRoutingModule,
     MaterialModule,
     ChartModule,
     FormsModule,
@@ -99,10 +107,11 @@ export const componentList = [
     CommonComponentModule,
     CustomHtmlModule,
     CustomDirectiveModule,
-
+    CustomCommonModule
   ],
   exports: [componentList],
-  entryComponents: [componentList, SubscriptionPopupComponent, AddDocumentComponent,HowToUseDialogComponent]
+  entryComponents: [componentList, SubscriptionPopupComponent, AddDocumentComponent, HowToUseDialogComponent, ErrPageOpenComponent, DocumentPreviewComponent],
+  providers: [DynamicComponentService]
 })
 
 export class SubscriptionUpperEntry {

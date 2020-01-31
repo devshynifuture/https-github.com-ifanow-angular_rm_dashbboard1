@@ -17,6 +17,7 @@ import {UtilService} from 'src/app/services/util.service';
   ]
 })
 export class AddPpfComponent implements OnInit {
+  maxDate = new Date();
   isOptionalField: boolean;
   advisorId: any;
   ownerName: any;
@@ -40,6 +41,7 @@ export class AddPpfComponent implements OnInit {
   nomineesList: any;
   ppfData: any;
   nominees: any[];
+  commencementDate: any;
   constructor(public utils: UtilService,private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
   @Input()
@@ -72,6 +74,10 @@ export class AddPpfComponent implements OnInit {
   getFormDataNominee(data) {
     console.log(data)
     this.nomineesList = data.controls
+  }
+  setCommencementDate(date){
+    console.log('commencentDAte',date)
+    this.commencementDate = date
   }
   getdataForm(data) {
     if (data == undefined) {
@@ -106,7 +112,9 @@ export class AddPpfComponent implements OnInit {
 
   getFormData(data) {
     console.log(data)
+    this.commencementDate = this.ppfSchemeForm.controls.commencementDate.value;
     this.transactionData = data.controls
+    return 
   }
   addPPF() {
     let finalTransctList = []

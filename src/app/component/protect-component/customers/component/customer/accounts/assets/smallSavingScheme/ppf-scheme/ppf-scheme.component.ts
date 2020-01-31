@@ -1,12 +1,12 @@
 import { AddPpfComponent } from './../common-component/add-ppf/add-ppf.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatTableDataSource, MatSort } from '@angular/material';
 import { ExcelService } from '../../../../excel.service';
 
 @Component({
@@ -14,6 +14,7 @@ import { ExcelService } from '../../../../excel.service';
   templateUrl: './ppf-scheme.component.html',
   styleUrls: ['./ppf-scheme.component.scss']
 })
+
 export class PPFSchemeComponent implements OnInit {
   advisorId: any;
   clientId: number;
@@ -22,6 +23,7 @@ export class PPFSchemeComponent implements OnInit {
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
 
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(private excel: ExcelService, public dialog: MatDialog, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
   displayedColumns = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
 
@@ -47,11 +49,15 @@ export class PPFSchemeComponent implements OnInit {
       });
   }
   getPpfSchemeDataResponse(data) {
-
-    console.log(data);
     this.isLoading = false;
-    if (data && data.PPFList && data.PPFList.length > 0) {
+    if (data == undefined) {
+      this.noData = 'No scheme found';
+      this.dataSource.data = [];
+    } else if (data && data.PPFList && data.PPFList.length > 0) {
+      console.log('getPpfSchemeDataResponse',data);
       this.dataSource.data = data.PPFList;
+      this.dataSource.sort = this.sort;
+      UtilService.checkStatusId(this.dataSource.filteredData);
 
     } else {
       this.noData = 'No scheme found';
@@ -112,7 +118,7 @@ export class PPFSchemeComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-        
+
       }
     );
   }

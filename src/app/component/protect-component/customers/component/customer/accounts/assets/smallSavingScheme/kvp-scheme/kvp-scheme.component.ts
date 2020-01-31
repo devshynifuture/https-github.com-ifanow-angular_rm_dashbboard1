@@ -86,9 +86,12 @@ export class KvpSchemeComponent implements OnInit {
   }
 
   getKvpSchemedataResponse(data) {
-    console.log(data);
     this.isLoading = false;
-    if (data && data.KVPList && data.KVPList.length != 0) {
+    if (data == undefined) {
+      this.noData = 'No scheme found';
+      this.datasource.data = [];
+    }else if (data && data.KVPList && data.KVPList.length != 0) {
+      console.log('getKvpSchemedataResponse',data);
       this.datasource.data = data.KVPList;
       this.datasource.sort = this.sort;
       UtilService.checkStatusId(this.datasource.filteredData);

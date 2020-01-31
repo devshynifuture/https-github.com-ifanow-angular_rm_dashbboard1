@@ -81,7 +81,7 @@ export class AddGratuityComponent implements OnInit {
       noOfcompleteYrs: [(data == undefined) ? '' : data.yearsCompleted, [Validators.required]],
       amountRecived: [(data == undefined) ? '' : data.amountReceived, [Validators.required]],
       nameOfOrg: [(data == undefined) ? '' : data.organizationName, [Validators.required]],
-      yearOfReceipt : [(data == undefined) ? '' : data.yearReceipt, [Validators.required]],
+      yearOfReceipt : [(data == undefined) ? '' : data.yearOfReceipt, [Validators.required]],
       resonOfRecipt: [(data == undefined) ? '' : data.reasonOfReceipt, [Validators.required]],
       bankAcNo: [(data == undefined) ? '' : data.bankAccountNumber, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],

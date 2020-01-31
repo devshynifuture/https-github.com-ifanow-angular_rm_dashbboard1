@@ -87,13 +87,15 @@
 <div class="bottom-fixed wrapper-12 w-100">
     <div class="row pt-4">
         <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="dialogClose()">Cancel</h5>
+            <!-- <h5 class="mb-0 pt-8 text-white c-p" (click)="dialogClose()">Cancel</h5> -->
         </div>
         <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white text-center">Help</h5>
+            <!-- <h5 class="mb-0 pt-8 text-white text-center">Help</h5> -->
         </div>
         <div class="col-md-4 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="mapModuleToPlan()">SAVE</button>
+            <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="mapModuleToPlan()">SAVE</button> -->
+            <app-progress-button (btnClick)="mapModuleToPlan()" [options]="barButtonOptions" >
+            </app-progress-button>
         </div>
     </div>
 </div>

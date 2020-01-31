@@ -13,9 +13,7 @@
 </mat-toolbar>
 <div class="chatBox">
     <h2>{{ subject }}</h2>
-    <button mat-stroke-button (click)="createNewFile()">
-        create file
-    </button>
+
     <p *ngIf="raw" [innerHTML]="raw">
     </p>
     <div class="messengerDiv" *ngFor="let part of body; let i=index">
@@ -44,6 +42,12 @@
                 <p>
                     <span>{{ part.date | date: "medium" }}</span>
                 </p>
+                <button class="text-primitive" mat-stroked-button (click)="replyToMessage(body)">
+                    <mat-icon>reply</mat-icon> Reply
+                </button>
+                <button class="text-primitive" mat-stroked-button (click)="forwardMessage(body)">
+                    Forward <mat-icon>forward</mat-icon>
+                </button>
             </div>
         </div>
 
@@ -65,7 +69,7 @@
 
     </div>
 
-    <div class="typeMessageBox">
+    <!-- <div class="typeMessageBox">
         <div class="row">
             <div class="col-md-11">
                 <mat-form-field class="example-width">
@@ -80,12 +84,22 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 <div class="row">
-    <div *ngFor="let attachment of attachments" class="col-md-3 h-100">
-        {{ attachment }}
-    </div>
+    <mat-action-list class="p-12 w-100">
+        <button mat-list-item class="c-p" *ngFor="let attachment of attachmentArray"
+            (click)="attachmentDownload(attachment)">
+            <div class="col-md-11 text-primary">
+                {{ attachment.filename }}
+            </div>
+            <div class="col-md-1 float-right text-primary">
+                <mat-icon>
+                    arrow_downward
+                </mat-icon>
+            </div>
+        </button>
+    </mat-action-list>
 </div>
 
 <div *ngIf="isLoading">

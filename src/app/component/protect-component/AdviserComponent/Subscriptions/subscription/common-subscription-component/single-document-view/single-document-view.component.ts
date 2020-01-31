@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {MatDialog} from '@angular/material';
-import {UtilService} from "../../../../../../../services/util.service";
-import {EventService} from "../../../../../../../Data-service/event.service";
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {SubscriptionUpperSliderComponent} from '../upper-slider/subscription-upper-slider.component';
-import {SubscriptionService} from '../../../subscription.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { UtilService } from "../../../../../../../services/util.service";
+import { EventService } from "../../../../../../../Data-service/event.service";
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { SubscriptionUpperSliderComponent } from '../upper-slider/subscription-upper-slider.component';
+import { SubscriptionService } from '../../../subscription.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,7 +16,7 @@ import {SubscriptionService} from '../../../subscription.service';
 export class SingleDocumentViewComponent implements OnInit {
 
 
-  constructor(public dialog: MatDialog, private eventService: EventService,private subService:SubscriptionService) {
+  constructor(public dialog: MatDialog, private eventService: EventService, private subService: SubscriptionService, private router: Router) {
   }
 
   @Input() singleDocument;
@@ -63,21 +64,20 @@ export class SingleDocumentViewComponent implements OnInit {
       flag: 'openUpper',
       id: 1,
       data: { documentData: this.singleDocument, flag: 'documents' },
-      direction: 'top',
-      componentName: SubscriptionUpperSliderComponent,
-      state: 'open'
+      // direction: 'top',
+      // componentName: SubscriptionUpperSliderComponent,
+      // state: 'open'
     };
-
-    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-      upperSliderData => {
-        if (UtilService.isDialogClose(upperSliderData)) {
-          this.valueChange.emit('close');
-
-          // this.getClientSubscriptionList();
-          subscription.unsubscribe();
-        }
-      }
-    );
+    this.router.navigate(['/subscription-upper'], { state: { ...fragmentData } })
+    sessionStorage.setItem("subUpperData", JSON.stringify(fragmentData))
+    // const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+    //   upperSliderData => {
+    //     if (UtilService.isDialogClose(upperSliderData)) {
+    //       this.valueChange.emit('close');
+    //       subscription.unsubscribe();
+    //     }
+    //   }
+    // );
   }
 
   // deleteModal(value,element) {

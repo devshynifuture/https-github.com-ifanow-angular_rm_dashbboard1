@@ -6,6 +6,7 @@ import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { InvoiceComponent } from '../invoice/invoice.component';
 
 export interface PeriodicElement {
   Invoicenumber: string;
@@ -150,7 +151,7 @@ export class InvoicesComponent implements OnInit {
       id: 1,
       state: 'open'
     };
-    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
@@ -180,9 +181,10 @@ export class InvoicesComponent implements OnInit {
       flag: value,
       data: data,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName: InvoiceComponent
     };
-    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         this.dataTOget = sideBarData;

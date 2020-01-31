@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
     active: false,
     text: 'Login',
     buttonColor: 'accent',
-    barColor: 'primary',
+    barColor: 'accent',
     raised: true,
     stroked: false,
     mode: 'determinate',

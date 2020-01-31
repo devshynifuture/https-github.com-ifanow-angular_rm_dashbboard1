@@ -17,6 +17,7 @@ import { UtilService } from 'src/app/services/util.service';
   ]
 })
 export class AddPoTdComponent implements OnInit {
+  maxDate = new Date();
   inputData: any;
   ownerName: any;
   familyMemberId: any;
@@ -68,6 +69,8 @@ export class AddPoTdComponent implements OnInit {
       ownerName: [data.ownerName, [Validators.required]],
       amtInvested: [data.amountInvested, [Validators.required, Validators.min(200)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
+      description: [data.description, [Validators.required]],
+      
       tenure: [data.tenure+"", [Validators.required]],
       ownershipType: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]]
     })
@@ -176,7 +179,6 @@ export class AddPoTdComponent implements OnInit {
           "tdNumber": this.POTDOptionalForm.get('tdNum').value,
           "bankAccountNumber": this.POTDOptionalForm.get('bankAccNum').value,
           "description": this.POTDOptionalForm.get('description').value,
-          "postOfficeTdTransactionList": finalTransctList
         }
         this.cusService.addPOTD(obj).subscribe(
           data => this.response(data),

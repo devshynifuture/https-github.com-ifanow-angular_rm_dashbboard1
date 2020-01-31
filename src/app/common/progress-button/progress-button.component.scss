@@ -12,7 +12,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: green;
+            background-color: yellow;
             /*.mat-progress-bar-background {
         animation: none;
         background-color: green;
@@ -46,6 +46,10 @@
     //mat-progress-bar
 }
 
-// ::ng-deep .mat-progress-bar-buffer {
-//     background-color: red !important;
-// }
+::ng-deep .mat-progress-bar.mat-accent .mat-progress-bar-fill::after {
+    background-color: #277ec1;
+}
+
+::ng-deep .mat-progress-bar-buffer {
+    background-color: #3098ea !important;
+}

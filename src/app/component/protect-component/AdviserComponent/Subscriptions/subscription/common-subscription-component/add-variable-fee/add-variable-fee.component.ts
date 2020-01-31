@@ -6,6 +6,7 @@ import { EnumServiceService } from '../../../../../../../services/enum-service.s
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from "../../../../../../../auth-service/authService";
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-variable-fee',
@@ -13,7 +14,21 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
   styleUrls: ['./add-variable-fee.component.scss']
 })
 export class AddVariableFeeComponent implements OnInit {
-
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'primary',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  }
   mutualFundFees;
   validatorType = ValidatorType;
   isServiceValid;
@@ -28,11 +43,11 @@ export class AddVariableFeeComponent implements OnInit {
   ischeckVariableData
   serviceId: any;
   dataToSend: any;
-  data: any;
   restrictMoreThan100Val;
   @ViewChild('htmlTag', { static: true }) htmltag: ElementRef
   otherAssetDataId: any;
-  @Input() set variableFee(data) {
+  _data: any;
+  @Input() set data(data) {
     if (data == "") {
       // this.otherAssetData=UtilService.
       this.otherAssetData = Object.assign([], this.enumService.getOtherAssetData());
@@ -108,7 +123,7 @@ export class AddVariableFeeComponent implements OnInit {
       this.createVariableFeeForm('')
       return;
     } else {
-      this.data = data;
+      this._data = data;
       this.serviceId = data.id;
       this.variableFeeData = this.fb.group({
         serviceName: [data.serviceName, [Validators.required]],
@@ -129,7 +144,7 @@ export class AddVariableFeeComponent implements OnInit {
         otherAssetClassFees: [data.servicePricing.pricingList[2].serviceSubAssets],
         pricing: [data.servicePricing.pricingList[2].pricing, [Validators.required]]
       });
-      if(data.servicePricing.pricingList[2].serviceSubAssets!=undefined){
+      if (data.servicePricing.pricingList[2].serviceSubAssets != undefined) {
         this.otherAssetData = data.servicePricing.pricingList[2].serviceSubAssets
       }
       // this.otherAssetData = data.servicePricing.pricingList[2].serviceSubAssets
@@ -147,10 +162,10 @@ export class AddVariableFeeComponent implements OnInit {
   }
 
   Close(state) {
-    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
-   
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+
     this.otherAssetData.forEach(element => {
-      element.isActive=0
+      element.isActive = 0
     });
     this.setValidation(false);
     this.createVariableFeeForm('')
@@ -164,16 +179,10 @@ export class AddVariableFeeComponent implements OnInit {
   }
 
   saveVariableFeeData(feeType) {
-
-    if (this.variableFeeData.controls.serviceName.invalid) {
-      this.isServiceValid = true;
-      return;
-    } else if (this.variableFeeData.controls.code.invalid) {
-      this.isCodeValid = true;
-      return;
-    } else if (this.variableFeeData.controls.billEvery.invalid) {
-      this.isBillValid = true;
-      return;
+    if (this.variableFeeData.invalid) {
+      this.variableFeeData.get('serviceName').markAsTouched();
+      this.variableFeeData.get('code').markAsTouched();
+      this.variableFeeData.get('billEvery').markAsTouched();
     } else if (this.variableFeeData.controls.directFees.invalid || this.variableFeeData.controls.regularFees.invalid) {
       this.mutualFundFees = true;
       return;
@@ -184,6 +193,7 @@ export class AddVariableFeeComponent implements OnInit {
       this.pricing = true;
       return;
     } else {
+      this.barButtonOptions.active = true;
       let obj = {
         serviceRepoId: this.serviceId,
         advisorId: this.advisorId,
@@ -192,20 +202,20 @@ export class AddVariableFeeComponent implements OnInit {
         serviceCode: this.variableFeeData.controls.code.value,
         serviceName: this.variableFeeData.controls.serviceName.value,
         servicePricing: {
-          id: (this.data != undefined) ? this.data.servicePricing.id : '',
+          id: (this._data != undefined) ? this._data.servicePricing.id : '',
           billEvery: this.variableFeeData.controls.billEvery.value,
           billingCycle: this.variableFeeData.controls.Duration.value,
           feeTypeId: parseInt(feeType),
           pricingList: [
             {
-              id: (this.data != undefined) ? this.data.servicePricing.id : '',
+              id: (this._data != undefined) ? this._data.servicePricing.id : '',
               directRegular: 1,
               assetClassId: 1,
               debtAllocation: this.variableFeeData.controls.directFees.controls.debt.value,
               equityAllocation: this.variableFeeData.controls.directFees.controls.equity.value,
               liquidAllocation: this.variableFeeData.controls.directFees.controls.liquid.value,
             }, {
-              id: (this.data != undefined) ? this.data.servicePricing.pricingList[1].id : '',
+              id: (this._data != undefined) ? this._data.servicePricing.pricingList[1].id : '',
               directRegular: 2,
               assetClassId: 1,
               debtAllocation: this.variableFeeData.controls.regularFees.controls.debt.value,
@@ -213,7 +223,7 @@ export class AddVariableFeeComponent implements OnInit {
               liquidAllocation: this.variableFeeData.controls.regularFees.controls.liquid.value,
             },
             {
-              id: (this.data != undefined) ? this.data.servicePricing.pricingList[2].id : '',
+              id: (this._data != undefined) ? this._data.servicePricing.pricingList[2].id : '',
               assetClassId: 2,
               otherAssets: this.selectedOtherAssets,
               pricing: this.variableFeeData.controls.pricing.value
@@ -226,11 +236,26 @@ export class AddVariableFeeComponent implements OnInit {
       console.log('jifsdfoisd', obj);
       if (this.serviceId == undefined) {
         this.subService.createSettingService(obj).subscribe(
-          data => this.saveVariableFeeDataResponse(data, obj)
+          data =>{
+            this.saveVariableFeeDataResponse(data, obj);
+            this.barButtonOptions.active = false;
+          },
+          err =>{
+            console.log("error createSettingService", err);
+            this.barButtonOptions.active = false;
+          }
         );
       } else {
         this.subService.editSettingService(obj).subscribe(
-          data => this.saveFeeTypeDataEditResponse(data)
+          data =>{
+            this.saveFeeTypeDataEditResponse(data);
+            this.barButtonOptions.active = false;
+
+          },
+          err =>{
+            this.barButtonOptions.active = false;
+            console.log("error editSettingService", err);
+          }
         );
       }
 
@@ -239,16 +264,14 @@ export class AddVariableFeeComponent implements OnInit {
   }
 
   saveVariableFeeDataResponse(data, obj) {
-    this.outputVariableData.emit(data)
     this.eventService.openSnackBar('Service is Created', 'OK');
-    this.subInjectService.changeUpperRightSliderState({ flag: 'added', state: 'close', data });
+    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data: data });
   }
 
   saveFeeTypeDataEditResponse(data) {
     this.dataToSend.servicePricing.pricingList[2].serviceSubAssets = this.otherAssetData;
-    this.outputVariableData.emit(this.dataToSend);
     this.eventService.openSnackBar('Service is Edited', 'OK');
-    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data: this.dataToSend });
   }
 
   select(assetData) {

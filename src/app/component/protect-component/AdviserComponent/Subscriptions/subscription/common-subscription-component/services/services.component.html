@@ -32,9 +32,9 @@
         </div>
         <div class="wrapper-40">
             <div class="row text-center padder-80">
-                <div *ngFor="let serviceData of planServiceData; index as i" appSkeletonLoading [appSkeletonLoading]="isLoading" class="col-md-4 c-p pl-10 pr-10 pb-28 overflow-hidden skeletonAnimation">
+                <div *ngFor="let serviceData of planServiceData; index as i" appSkeletonLoading [appSkeletonLoading]="isLoading" class="col-md-4 c-p pl-10 pr-10 pb-28  ">
                     <div class="example-card b-a">
-                        <div [ngClass]="{'baBlue':serviceData.selected,'b-ua':serviceData.selected==false }" (click)="selectService(serviceData,i)">
+                        <div [ngClass]="{'baBlue':serviceData.selected,'b-ua':serviceData.selected==false }" (click)="selectService(serviceData,i)" class="overflow-hidden">
                             <div class="bg-grey lter text-left">
                                 <div *ngIf="!isLoading">
                                     <mat-checkbox class="custom-checkbox" [ngStyle]="{'pointer-events':(serviceData.selected)?'none':'all'}" checked="false" [ngClass]="{'v-h':serviceData.selected==false }"></mat-checkbox>
@@ -146,10 +146,12 @@
     <div class="row">
         <div class="col-md-4">
             <!--(click)="Close('close')"-->
-            <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
+            <!-- <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5> -->
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="savePlanMapToService()">Save</button>
+            <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="savePlanMapToService()">Save</button> -->
+            <app-progress-button (btnClick)="savePlanMapToService()" [options]="barButtonOptions" >
+            </app-progress-button>
         </div>
     </div>
 </div>

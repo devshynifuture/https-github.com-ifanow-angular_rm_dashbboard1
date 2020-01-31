@@ -1,10 +1,8 @@
-import {
-  ComponentFactoryResolver,
-  Injectable,
-} from '@angular/core';
-import {DataComponent} from '../interfaces/data.component';
+import {ComponentFactoryResolver, Injectable,} from '@angular/core';
 
-@Injectable()
+@Injectable(
+  // { providedIn: 'root' }
+)
 export class DynamicComponentService {
 
   constructor(private factoryResolver: ComponentFactoryResolver) {
