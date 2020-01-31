@@ -689,7 +689,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   openSendEmail(input) {
-    console.log('invoiceComponent openSendEmail this.invoiceTemplate.nativeElement.innerHTML : ', this.invoiceTemplate.nativeElement.innerHTML);
+    // console.log('invoiceComponent openSendEmail this.invoiceTemplate.nativeElement.innerHTML : ', this.invoiceTemplate.nativeElement.innerHTML);
     const data = {
       advisorId: this.advisorId,
       clientData: this.storeData,
