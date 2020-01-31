@@ -19,6 +19,9 @@ import { EmailAttachmentI } from '../email.interface';
   styleUrls: ['./compose-email.component.scss']
 })
 export class ComposeEmailComponent implements OnInit, OnDestroy {
+  attachmentsIdArray: { filename: string, mimeType: string, attachmentId: string }[] = [];
+  attachmentsBase64Data: { filename: string, size: number, attachmentBase64Data: string, mimeType: string }[] = [];
+  attachmentArrayDetail: { filename: string, size: number, mimeType: string, data: string, downloadUrl: string }[] = [];
 
   constructor(private subInjectService: SubscriptionInject,
     public subscription: SubscriptionService,
@@ -31,7 +34,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   emailBody: string = '';
   from: string = AuthService.getUserInfo().emailId;
   to: string = "";
-  idOfMessage;
+  idOfMessage = null;
   date;
   doc: [];
   docObj: [];
@@ -64,6 +67,9 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.createEmailForm();
+    if (this.idOfMessage) {
+      this.messageDetailApi(this.idOfMessage);
+    }
     this.prevStateOfForm = this.emailForm.value;
     this.emailForm.valueChanges.subscribe(res => this.emailFormValueChange = res);
 
@@ -71,10 +77,90 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
       if (!this.areTwoObjectsEquivalent(this.prevStateOfForm, this.emailFormValueChange)) {
         console.log("auto saved!!");
         // call update or create draft api
+        const requestJson = {
+          toAddress: this.emailForm.get('receiver').value ? this.emailForm.get('receiver').value : [''],
+          subject: this.emailForm.get('subject').value ? this.emailForm.get('subject').value : '',
+          message: this.emailForm.get('messageBody').value ? this.emailForm.get('messageBody').value : '',
+          fileData: this.emailForm.get('attachments').value ? this.emailForm.get('attachments').value : []
+        };
+        this.emailService.createUpdateDraft(requestJson, (this.idOfMessage !== null ? this.idOfMessage : null)).subscribe(res => {
+          console.log(res);
+        });
         console.log("this values are saved::::::::::::", this.emailForm.value);
         this.prevStateOfForm = this.emailFormValueChange;
       }
     }, 4000);
+  }
+
+  messageDetailApi(id) {
+    console.log(" mnessage idf::::::::::  ", id);
+    this.emailService.gmailMessageDetail(id).subscribe(res => {
+
+      // based on gmail api explorer response
+
+      console.log("this is something i need::::::::::", res);
+      // const { payload: parts } = res;
+      // parts.forEach(part => {
+      //   if (part.mimeType === 'multipart/alternative') {
+      //     const { parts } = part;
+      //     parts.forEach(part => {
+      //       if (part.filename !== '') {
+      //         this.attachmentsIdArray.push({
+      //           filename: part.filename,
+      //           mimeType: part.mimeType,
+      //           attachmentId: part.body.atatchmentId
+      //         });
+      //       }
+      //     });
+      //   }
+      // });
+    })
+
+    // get attachment files...
+    this.attachmentsIdArray.forEach(attachment => {
+      const obj = {
+        userId: AuthService.getUserInfo().advisorId,
+        email: AuthService.getUserInfo().emailId,
+        attachmentId: attachment.attachmentId,
+        messageId: this.idOfMessage
+      }
+      this.emailService.getAttachmentFiles(obj).subscribe(res => {
+        // according to gmail attachment get 
+        this.attachmentsBase64Data.push({
+          filename: attachment.filename,
+          mimeType: attachment.mimeType,
+          size: res.size,
+          attachmentBase64Data: res.body.replace(/\-/g, '+').replace(/_/g, '/')
+        })
+      })
+
+      this.attachmentsBase64Data.forEach(attachment => {
+        let blobData = EmailUtilService.convertBase64ToBlobData(attachment.attachmentBase64Data, attachment.mimeType);
+
+        if (window.navigator && window.navigator.msSaveOrOpenBlob) { //IE
+          window.navigator.msSaveOrOpenBlob(blobData, attachment.filename);
+        } else { // chrome
+          const blob = new Blob([blobData], { type: attachment.mimeType });
+          const url = window.URL.createObjectURL(blob);
+          // window.open(url);
+
+          this.emailAttachments.push({
+            filename: attachment.filename,
+            size: attachment.size,
+            mimeType: attachment.mimeType,
+            data: attachment.attachmentBase64Data,
+            downloadUrl: url
+          });
+        }
+      });
+    });
+  }
+
+  attachmentDownload(element: any) {
+    const link = document.createElement('a');
+    link.href = element.downloadUrl;
+    link.download = element.filename;
+    link.click();
   }
 
   removeFileFromCollections(attachment) {
@@ -278,16 +364,17 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
 
   getAttachmentDetails(data) {
     console.log("hello i have some data ::::::::::::::", data);
+
     if (data !== null) {
-      const { dataObj: { attachmentFiles } } = data;
-      attachmentFiles.forEach(attachment => {
-        const { headers } = attachment;
-        headers.forEach(header => {
-          if (header.name === 'X-Attachment-Id') {
-            this.attachmentIdsArray.push(header.value);
-          }
-        });
-      });
+      // const { dataObj: { attachmentFiles } } = data;
+      // attachmentFiles.forEach(attachment => {
+      //   const { headers } = attachment;
+      //   headers.forEach(header => {
+      //     if (header.name === 'X-Attachment-Id') {
+      //       this.attachmentIdsArray.push(header.value);
+      //     }
+      //   });
+      // });
     }
     // this.emailService.
     this.attachmentIdsArray.forEach(attachmentId => {
@@ -326,7 +413,18 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
 
     } else if ((this.data && this.data !== null) && this.didFormChanged) {
       // call update api
+      console.log(this.emailForm);
+      const requestJson = {
+        toAddress: this.emailForm.get('receiver').value ? this.emailForm.get('receiver').value : [''],
+        subject: this.emailForm.get('subject').value ? this.emailForm.get('subject').value : '',
+        message: this.emailForm.get('messageBody').value ? this.emailForm.get('messageBody').value : '',
+        fileData: this.emailForm.get('attachments').value ? this.emailForm.get('attachments').value : []
+      };
+      this.emailService.createUpdateDraft(requestJson, this.idOfMessage).subscribe(res => {
+        console.log(res);
+      })
       console.log("call update api from detail view");
+
     } else if ((this.data && this.data !== null) && !this.didFormChanged) {
       // close the dialog
       console.log("close the dialog");
@@ -335,10 +433,6 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
     this.subInjectService.changeUpperRightSliderState({ state: 'close' });
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
-
-  // onSendEmail(): void {
-  //   console.log(this.emailForm.value);
-  // }
 
   // handleCloseMail() {
 
@@ -377,15 +471,23 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
     console.log('LeftSidebarComponent getFileDetails e : ', e.target.files[0]);
     const singleFile = e.target.files[0];
 
-    console.log("tjhis is simethuin to be seen ::::::::::::::::", singleFile);
-
     EmailUtilService.getBase64FromFile(singleFile, (successData) => {
-      this.emailAttachments.push({
-        filename: singleFile.name,
-        size: singleFile.size,
-        mimeType: singleFile.type,
-        data: successData
-      });
+      let blobData = EmailUtilService.convertBase64ToBlobData(successData.split(',')[1], singleFile.type);
+      if (window.navigator && window.navigator.msSaveOrOpenBlob) { //IE
+        window.navigator.msSaveOrOpenBlob(blobData, singleFile.filename);
+      } else {
+        // chrome
+        const blob = new Blob([blobData], { type: singleFile.type });
+        const url = window.URL.createObjectURL(blob);
+
+        this.emailAttachments.push({
+          filename: singleFile.name,
+          size: singleFile.size,
+          mimeType: singleFile.type,
+          data: successData,
+          downloadUrl: url
+        });
+      }
 
       // this.createUpdateDraft(null, ['gaurav@futurewise.co.in'],
       //   'This is a test message', 'This is a test message body', fileData);
@@ -394,7 +496,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
     });
 
     // this.emailAttachments = fileData;
-    console.log(this.emailAttachments);
+    // console.log(this.emailAttachments);
   }
 
   onSendEmail() {
@@ -409,7 +511,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
       attachments: this.emailAttachments
     }
 
-    console.log(body);
+
     this.emailService.sendEmail(body).subscribe(res => {
       console.log(res);
       this.close();

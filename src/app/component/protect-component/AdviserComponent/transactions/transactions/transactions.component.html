@@ -23,7 +23,16 @@
             </nav>
 
             <router-outlet></router-outlet>
-
+            <div class="pt-100 right">
+                <button mat-stroked-button (click)="openNewTransaction()">
+                    New Transaction
+                </button>
+            </div>
+            <!-- <button mat-button (click)="close()">
+                <mat-icon>
+                    close
+                </mat-icon>
+            </button> -->
         </div>
     </div>
 </div>

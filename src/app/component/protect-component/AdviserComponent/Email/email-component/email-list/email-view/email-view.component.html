@@ -42,12 +42,12 @@
                 <p>
                     <span>{{ part.date | date: "medium" }}</span>
                 </p>
-                <button class="text-primitive" mat-stroked-button (click)="replyToMessage(body)">
+                <!-- <button class="text-primitive" mat-stroked-button (click)="replyToMessage(body)">
                     <mat-icon>reply</mat-icon> Reply
                 </button>
                 <button class="text-primitive" mat-stroked-button (click)="forwardMessage(body)">
                     Forward <mat-icon>forward</mat-icon>
-                </button>
+                </button> -->
             </div>
         </div>
 
@@ -88,6 +88,7 @@
 </div>
 <div class="row">
     <mat-action-list class="p-12 w-100">
+        <!-- just need to replace attachmentArray with attachmentArrayDetail -->
         <button mat-list-item class="c-p" *ngFor="let attachment of attachmentArray"
             (click)="attachmentDownload(attachment)">
             <div class="col-md-11 text-primary">
