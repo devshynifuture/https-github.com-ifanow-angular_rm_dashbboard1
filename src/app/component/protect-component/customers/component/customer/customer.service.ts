@@ -554,5 +554,7 @@ export class CustomerService {
   searchFile(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.SEARCH_FILE, data);
   }
-
+  getAdviceFd(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_FD, data)
+  }
 }
