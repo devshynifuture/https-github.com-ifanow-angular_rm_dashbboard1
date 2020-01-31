@@ -206,7 +206,6 @@ export const componentList = [
   SelectAdviceComponent,
   AddNomineeComponent,
   AddBudgetComponent,
-  TransactionAddComponent
 
   // ComposeEmailComponent
 ];
