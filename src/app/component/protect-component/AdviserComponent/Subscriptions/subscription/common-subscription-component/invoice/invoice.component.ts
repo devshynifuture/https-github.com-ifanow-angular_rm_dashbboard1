@@ -675,8 +675,9 @@ export class InvoiceComponent implements OnInit {
     } else if (this.feeCalc == true) {
       this.feeCalc = false;
     } else {
-
       (this.invoiceTab == 'invoiceUpperSlider') ? this.subInjectService.rightSliderData(state) : this.subInjectService.rightSideData(state);
+      this.subInjectService.changeNewRightSliderState({ state: 'close'});
+      this.subInjectService.changeUpperRightSliderState({ state: 'close'});
       this.valueChange.emit(closeObj);
     }
 
