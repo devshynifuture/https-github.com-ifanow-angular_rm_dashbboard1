@@ -52,11 +52,12 @@ export class PreferencesSettingsComponent implements OnInit {
 
   ngOnInit() {
 
-    this.viewMode = 'tab1';
+    // this.viewMode = 'tab1';
     this.advisorId = AuthService.getAdvisorId();
     (SubscriptionDataService.getLoderFlag(5) == false) ? this.billerProfileData = undefined : this.billerProfileData = [{}, {}, {}]
     this.getProfileBillerData();
     this.getTemplate();
+    this.getPrefixData(1);
   }
 
   getTemplate() {
