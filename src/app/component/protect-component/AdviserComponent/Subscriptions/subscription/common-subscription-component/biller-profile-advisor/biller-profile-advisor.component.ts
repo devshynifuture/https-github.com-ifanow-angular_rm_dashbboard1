@@ -10,6 +10,9 @@ import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { UtilService, ValidatorType } from '../../../../../../../services/util.service';
 import { PostalService } from 'src/app/services/postal.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { promise } from 'protractor';
+import { resolve } from 'dns';
+import { rejects } from 'assert';
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -125,6 +128,10 @@ export class BillerProfileAdvisorComponent implements OnInit {
     }
   }
 
+  uploadImgOnSave(){
+    
+  }
+
   uploadImage() {
     this.barButtonOptions.active = true;
 
@@ -142,10 +149,13 @@ export class BillerProfileAdvisorComponent implements OnInit {
             // this.logUrl.controls.url.setValue(this.imageData);
             this.uploadedImage = JSON.stringify(responseObject);
             this.eventService.openSnackBar('Image uploaded sucessfully', 'dismiss');
+            if(this.selected == 3){
+              this.addEditBillerForm();
+            }
           }
 
         });
-
+        
     } else {
       console.log('asfasdas');
     }
@@ -310,6 +320,16 @@ export class BillerProfileAdvisorComponent implements OnInit {
 
   }
 
+  validURL(str) {
+    var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+      '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+    return !!pattern.test(str);
+  }
+
   
 
   submitBillerForm() {
@@ -336,51 +356,62 @@ export class BillerProfileAdvisorComponent implements OnInit {
     }
      else {
       this.barButtonOptions.active = true;
-      const obj = {
-        acNumber: this.bankDetailsForm.controls.acNo.value,
-        advisorId: this.advisorId,
-        bankCity: this.bankDetailsForm.controls.cityB.value,
-        bankCountry: this.bankDetailsForm.controls.countryB.value,
-        bankName: this.bankDetailsForm.controls.bankName.value,
-        bankState: this.bankDetailsForm.controls.stateB.value,
-        bankZipCode: this.bankDetailsForm.controls.pincodeB.value,
-        billerAddress: this.profileDetailsForm.controls.Address.value,
-        branchAddress: this.bankDetailsForm.controls.address.value,
-        city: this.profileDetailsForm.controls.city.value,
-        companyDisplayName: this.profileDetailsForm.controls.companyDisplayName.value,
-        country: this.profileDetailsForm.controls.country.value,
-        footnote: this.MiscellaneousData.controls.footnote.value,
-        gstin: this.profileDetailsForm.controls.gstinNum.value,
-        ifscCode: this.bankDetailsForm.controls.ifscCode.value,
-        logoUrl: this.logoImg,
-        nameAsPerBank: this.bankDetailsForm.controls.nameOnBank.value,
-        pan: this.profileDetailsForm.controls.panNum.value,
-        state: this.profileDetailsForm.controls.state.value,
-        terms: this.MiscellaneousData.controls.terms.value,
-        zipCode: this.profileDetailsForm.controls.pincode.value,
-        id: this.profileDetailsForm.controls.id.value,
-        cloudinary_json: this.uploadedImage
-      };
-      console.log(obj);
-      if (this.profileDetailsForm.controls.id.value == undefined) {
-        this.subService.saveBillerProfileSettings(obj).subscribe(
-          data => this.closeTab(data),
-          error =>{
-            this.barButtonOptions.active = false;
-            this.eventService.showErrorMessage(error);
-          }
-        );
-
-      } else {
-        this.subService.updateBillerProfileSettings(obj).subscribe(
-          data => this.closeTab(data),
-          error =>{
-            this.barButtonOptions.active = false;
-            this.eventService.showErrorMessage(error);
-          }
-        );
+      
+      console.log("img url check", this.validURL(this.logoImg ));
+      if(!this.validURL(this.logoImg )){
+        this.uploadImage();
       }
+      else{
+        this.addEditBillerForm();
+      }
+    }
+  }
 
+  addEditBillerForm(){
+    const obj = {
+      acNumber: this.bankDetailsForm.controls.acNo.value,
+      advisorId: this.advisorId,
+      bankCity: this.bankDetailsForm.controls.cityB.value,
+      bankCountry: this.bankDetailsForm.controls.countryB.value,
+      bankName: this.bankDetailsForm.controls.bankName.value,
+      bankState: this.bankDetailsForm.controls.stateB.value,
+      bankZipCode: this.bankDetailsForm.controls.pincodeB.value,
+      billerAddress: this.profileDetailsForm.controls.Address.value,
+      branchAddress: this.bankDetailsForm.controls.address.value,
+      city: this.profileDetailsForm.controls.city.value,
+      companyDisplayName: this.profileDetailsForm.controls.companyDisplayName.value,
+      country: this.profileDetailsForm.controls.country.value,
+      footnote: this.MiscellaneousData.controls.footnote.value,
+      gstin: this.profileDetailsForm.controls.gstinNum.value,
+      ifscCode: this.bankDetailsForm.controls.ifscCode.value,
+      logoUrl: this.logoImg,
+      nameAsPerBank: this.bankDetailsForm.controls.nameOnBank.value,
+      pan: this.profileDetailsForm.controls.panNum.value,
+      state: this.profileDetailsForm.controls.state.value,
+      terms: this.MiscellaneousData.controls.terms.value,
+      zipCode: this.profileDetailsForm.controls.pincode.value,
+      id: this.profileDetailsForm.controls.id.value,
+      cloudinary_json: this.uploadedImage
+    };
+    console.log("biller odj", obj);
+
+    if (this.profileDetailsForm.controls.id.value == undefined) {
+      this.subService.saveBillerProfileSettings(obj).subscribe(
+        data => this.closeTab(data),
+        error =>{
+          this.barButtonOptions.active = false;
+          this.eventService.showErrorMessage(error);
+        }
+      );
+
+    } else {
+      this.subService.updateBillerProfileSettings(obj).subscribe(
+        data => this.closeTab(data),
+        error =>{
+          this.barButtonOptions.active = false;
+          this.eventService.showErrorMessage(error);
+        }
+      );
     }
   }
   getPostalRes(data) {
