@@ -26,7 +26,7 @@
                             <span>{{f.userName}}</span>
                         </mat-option>
                     </mat-select>
-                    <mat-error class="f-12 pt-4">
+                    <mat-error class="f-12">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -42,10 +42,10 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input #accBal (keypress)="utils.keyPress($event)" autocomplete="off" class="form-control rupess br-0" formControlName="accountBalance" matInput type="text" maxlength="10">
-                        <mat-error *ngIf="ppfSchemeForm.get('accountBalance').errors?.required" class="f-12 pt-4">
+                        <mat-error *ngIf="ppfSchemeForm.get('accountBalance').errors?.required" class="f-12">
                             This field is required
                         </mat-error>
-                        <mat-error *ngIf="(ppfSchemeForm.get('accountBalance').errors?.min)" class="f-12 pt-4">
+                        <mat-error *ngIf="(ppfSchemeForm.get('accountBalance').errors?.min)" class="f-12">
                             Should be greater than 500
                         </mat-error>
                         <mat-hint align="end" class="f-12">{{accBal.value.length}}/10</mat-hint>
@@ -65,7 +65,7 @@
                         <input [matDatepicker]="balanceAsOn" class="form-control br-0" formControlName="balanceAsOn" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                         <mat-datepicker #balanceAsOn></mat-datepicker>
-                        <mat-error class="f-12 pt-4">This field is required
+                        <mat-error class="f-12">This field is required
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -78,10 +78,10 @@
             <div class="col-md-3">
                 <div class="form-group form-group_one mb-0">
                     <mat-form-field>
-                        <input autocomplete="off" [matDatepicker]="CommencementPicker" class="form-control br-0" formControlName="commencementDate" matInput readonly>
+                        <input autocomplete="off" [matDatepicker]="CommencementPicker" (dateChange)="setCommencementDate($event.target.value)"class="form-control br-0" formControlName="commencementDate" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="CommencementPicker"></mat-datepicker-toggle>
                         <mat-datepicker #CommencementPicker></mat-datepicker>
-                        <mat-error class="f-12 pt-4">This field is required
+                        <mat-error class="f-12">This field is required
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -95,7 +95,7 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input autocomplete="off" (keypress)="utils.keyPress($event)" #futureContribution class="form-control rupess br-0" formControlName="futureContribution" matInput maxlength="20" type="text">
-                        <mat-error class="f-12 pt-4">
+                        <mat-error class="f-12">
                             This field is required
                         </mat-error>
                         <mat-hint align="end" class="f-12">{{futureContribution.value.length}}/20</mat-hint>
@@ -116,7 +116,7 @@
                             <mat-option value="6">Semi annually</mat-option>
                             <mat-option value="12">Annually</mat-option>
                         </mat-select>
-                        <mat-error class="f-12 pt-4">
+                        <mat-error class="f-12">
                             This field is required
                         </mat-error>
                     </mat-form-field>
@@ -181,7 +181,7 @@
         <app-add-nominee [ownerName]="ownerName" [data]="ppfData" (outputEvent)="getFormDataNominee($event)">
         </app-add-nominee>
     </div>
-    <app-add-transaction (outputEvent)="getFormData($event)"></app-add-transaction>
+    <app-add-transaction (outputEvent)="getFormData($event)" [commencementDate] = "commencementDate" ></app-add-transaction>
 </div>
 <div class="bottom-fixed wrapper-12 pt-16">
     <div class="row">

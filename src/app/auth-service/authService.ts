@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 // import {Router} from '@angular/router';
 
@@ -63,6 +63,11 @@ export class AuthService {
 
     console.log('setClientData : ', clientData);
   }
-
+  static setSubscriptionUpperSliderData(data) {
+    sessionStorage.setItem("subUpperData", JSON.stringify(data))
+  }
+  static getSubscriptionUpperSliderData() {
+    return JSON.parse(sessionStorage.getItem('subUpperData'))
+  }
   // static get
 }

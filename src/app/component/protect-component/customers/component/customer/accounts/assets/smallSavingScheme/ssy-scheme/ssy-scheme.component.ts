@@ -85,10 +85,12 @@ export class SsySchemeComponent implements OnInit {
   }
 
   getSsySchemedataResponse(data) {
-    console.log(data);
-
     this.isLoading = false;
-    if (data && data.SSYList.length != 0) {
+    if (data == undefined) {
+      this.noData = 'No scheme found';
+      this.datasource.data = [];
+    }else if (data && data.SSYList.length != 0) {
+      console.log('getSsySchemedataResponse',data);
       this.datasource.data = data.SSYList;
       this.datasource.sort = this.sort;
       UtilService.checkStatusId(this.datasource.filteredData);

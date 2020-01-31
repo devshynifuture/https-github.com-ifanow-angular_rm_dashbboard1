@@ -19,14 +19,13 @@
         </div>
         <div class="col-md-5">
             <mat-form-field class="w-100">
-                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
-                    [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Search family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
                         <span>{{f.userName}}</span>
                     </mat-option>
                 </mat-select>
-                <mat-error class="f-12 pt-4">
+                <mat-error class="f-12">
                     This field is required
                 </mat-error>
             </mat-form-field>
@@ -50,8 +49,7 @@
                         <mat-option value="7">Diamond</mat-option>
                         <mat-option value="8">Other</mat-option>
                     </mat-select>
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isTypeOfCommodity && getFormControl().typeOfCommodity.invalid || getFormControl().typeOfCommodity.touched && getFormControl().typeOfCommodity.invalid)}">
+                    <mat-error class="f-12" [ngClass]="{'v-h':!(isTypeOfCommodity && getFormControl().typeOfCommodity.invalid || getFormControl().typeOfCommodity.touched && getFormControl().typeOfCommodity.invalid)}">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -65,10 +63,8 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #marketValue type="text" (keypress)="utils.keyPress($event)" maxlength="10"
-                        class="form-control br-0" formControlName="marketValue">
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isMarketValue && getFormControl().marketValue.invalid || getFormControl().marketValue.touched && getFormControl().marketValue.invalid)}">
+                    <input matInput #marketValue type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0" formControlName="marketValue">
+                    <mat-error class="f-12" [ngClass]="{'v-h':!(isMarketValue && getFormControl().marketValue.invalid || getFormControl().marketValue.touched && getFormControl().marketValue.invalid)}">
                         This field is required
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{marketValue.value.length}}/10</mat-hint>
@@ -96,8 +92,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #purchaseValue type="text" (keypress)="utils.keyPress($event)" maxlength="10"
-                            class="form-control br-0" formControlName="purchaseValue">
+                        <input matInput #purchaseValue type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0" formControlName="purchaseValue">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{purchaseValue.value.length}}/10</mat-hint>
                     </mat-form-field>
@@ -110,8 +105,7 @@
             </div>
             <div class="col-md-3">
                 <mat-form-field>
-                    <input matInput formControlName="dateOfPurchase" class="form-control br-0" [matDatepicker]="picker"
-                        readonly>
+                    <input matInput formControlName="dateOfPurchase" class="form-control br-0" [matDatepicker]="picker" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-hint align="start" class="f-12">Optional</mat-hint>
@@ -126,9 +120,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #growthRate type="number" (keyup)="onChange($event)"
-                            (keypress)="utils.keyPress($event)" maxlength="30" class="form-control br-0"
-                            formControlName="growthRate">
+                        <input matInput #growthRate type="number" (keyup)="onChange($event)" (keypress)="utils.keyPress($event)" maxlength="30" class="form-control br-0" formControlName="growthRate">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -141,8 +133,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #description maxlength="60" class="form-control br-0"
-                            formControlName="description">
+                        <input matInput #description maxlength="60" class="form-control br-0" formControlName="description">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                     </mat-form-field>

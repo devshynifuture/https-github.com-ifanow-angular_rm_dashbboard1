@@ -16,6 +16,8 @@ import { CreateSubscriptionComponent } from '../common-subscription-component/cr
 import { BillerSettingsComponent } from '../common-subscription-component/biller-settings/biller-settings.component';
 import { InvoiceHistoryComponent } from '../common-subscription-component/invoice-history/invoice-history.component';
 import { ChangePayeeComponent } from '../common-subscription-component/change-payee/change-payee.component';
+import { ErrPageOpenComponent } from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
+import { SubscriptionDataService } from '../../subscription-data.service';
 
 // declare var window
 // export const MY_FORMATS = {
@@ -92,6 +94,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   // DataToSend;
   scrollCallData = true;
   isLoading = false;
+  isFirstCall=true
   chips = [
     { name: 'LIVE', value: 2 },
     { name: 'FUTURE', value: 3 },
@@ -127,6 +130,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   getDate2: string;
   selectedDateRange = { begin: new Date(), end: new Date() };
   noData: string;
+  scrollLoad = false;
   lastDataId;
   statusIdLength = 0;
   tableData = [];
@@ -147,19 +151,98 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
     // console.log("feeeee...",this.feeCollectionMode);
-    if(this.utilservice.checkSubscriptionastepData(3)==undefined)
-    {
+    if (this.utilservice.checkSubscriptionastepData(3) == undefined) {
       this.dataSource.data = [{}, {}, {}]
     }
-    else{
+    else {
       (this.utilservice.checkSubscriptionastepData(3) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}]
     }
-    this.getSummaryDataAdvisor(false);
+    this.getClientSubData(this.scrollLoad,this.isFirstCall);
     console.log('upperData', this.upperData);
 
   }
 
+  getClientSubData(boolean,firstLoad) {
+    this.dataSource.data = [{}, {}, {}]
+    this.getSummaryDataAdvisor(boolean,firstLoad).subscribe(
+      data => {
+        this.getData = data;
+        if (data != undefined) {
+          this.lastDataId = data[data.length - 1].id;
+          // obj.offset = this.lastDataId;
+          // console.log(this.lastDataId, obj, "data check");
+          if (this.tableData.length <= 0) {
+            this.tableData = data;
+          } else {
+            this.tableData = this.tableData.concat(data);
+            console.log(this.tableData, 'this.tableData 123');
+          }
+        } else {
+          this.isLoading = false;
+          // getSubSummarySubscription.unsubscribe();
+        }
+        this.getSubSummaryRes(this.tableData);
 
+      }, (error) => {
+        this.errorMessage();
+        // this.eventService.showErrorMessage(error);
+        this.dataSource.data = [];
+        this.isLoading = false;
+      }
+    )
+  }
+  errorMessage() {
+    const fragmentData = {
+      flag: 'app-err-page-open',
+      data: {},
+      id: 1,
+      // data,
+      direction: 'top',
+      componentName: ErrPageOpenComponent,
+      state: 'open',
+    };
+    fragmentData.data = {
+      positiveMethod: () => {
+        this.isFirstCall=false;
+        this.getSummaryDataAdvisor(false,this.isFirstCall).subscribe(
+          data => {
+            this.getData = data;
+            if (data != undefined) {
+              if(this.isFirstCall==false){
+                this.lastDataId=0;
+              }else{
+                this.lastDataId = data[data.length - 1].id;
+              }
+              // obj.offset = this.lastDataId;
+              // console.log(this.lastDataId, obj, "data check");
+              if (this.tableData.length <= 0) {
+                this.tableData = data;
+              } else {
+                this.tableData = this.tableData.concat(data);
+                console.log(this.tableData, 'this.tableData 123');
+              }
+            } else {
+              this.isLoading = false;
+              // getSubSummarySubscription.unsubscribe();
+            }
+            this.eventService.changeUpperSliderState({ state: 'close' })
+            this.getSubSummaryRes(this.tableData);
+            // this.eventService.openSnackBar('Wait sometime....', 'dismiss');
+            // this.errorMessage();
+          }, (error) => {
+            this.eventService.openSnackBar('Wait sometime....', 'dismiss');
+          }
+        )
+      },
+    }
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // subscription.unsubscribe();
+        }
+      }
+    );
+  }
   scrollCall(scrollLoader) {
     const uisubs = document.getElementById('ui-subs');
     const wrapper = document.getElementById('wrapper');
@@ -183,7 +266,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
       if (this.statusIdList.length <= 0) {
 
-        this.getSummaryDataAdvisor(scrollLoader);
+        this.getClientSubData(scrollLoader,false);
       } else {
         this.callFilter(scrollLoader);
       }
@@ -192,8 +275,10 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   }
 
 
-  getSummaryDataAdvisor(scrollLoader) {
-
+  getSummaryDataAdvisor(scrollLoader,isFirstCall) {
+    if(isFirstCall!=true){
+      this.lastDataId=0;
+    }
     const obj = {
       advisorId: this.advisorId,
       clientId: 0,
@@ -208,31 +293,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       this.isLoading = true;
     }
 
-    const getSubSummarySubscription = this.subService.getSubSummary(obj).subscribe(
-      (data) => {
-        this.getData = data;
-        if (data != undefined) {
-          this.lastDataId = data[data.length - 1].id;
-          obj.offset = this.lastDataId;
-          // console.log(this.lastDataId, obj, "data check");
-          if (this.tableData.length <= 0) {
-            this.tableData = data;
-          } else {
-            this.tableData = this.tableData.concat(data);
-            console.log(this.tableData, 'this.tableData 123');
-          }
-        } else {
-          this.isLoading = false;
-          getSubSummarySubscription.unsubscribe();
-        }
-        this.getSubSummaryRes(this.tableData);
-      }, (error) => {
-        this.eventService.showErrorMessage(error);
-        this.dataSource.data = [];
-        this.isLoading = false;
-      }
-    );
-
+   return this.subService.getSubSummary(obj);
   }
 
 
@@ -301,7 +362,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
           if (UtilService.isRefreshRequired(sideBarData)) {
             setTimeout(() => {
               this.lastDataId = 0;
-              this.getSummaryDataAdvisor(false);
+              this.getClientSubData(false,true);
             }, 1000);
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
@@ -364,7 +425,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getSummaryDataAdvisor(false);
+            this.getClientSubData(false,false);
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -574,7 +635,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     };
     console.log('this.callFilter req obj : ', obj, this.statusIdList);
     if (obj.statusIdList.length == 0 && obj.fromDate == null) {
-      this.getSummaryDataAdvisor(false);
+      this.getClientSubData(false,false);
     } else {
       this.subService.filterSubscription(obj).subscribe(
         (data) => {

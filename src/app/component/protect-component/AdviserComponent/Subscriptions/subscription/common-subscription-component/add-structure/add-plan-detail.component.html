@@ -5,8 +5,8 @@
         </div>
         <div class="col-md-2">
             <i (click)="closeNav('close')" class="material-icons right pt-16 pb-12 c-p">
-        close
-      </i>
+                close
+            </i>
         </div>
     </div>
     <div class="row pt-40">
@@ -19,10 +19,10 @@
                     <div class="col-md-5">
                         <mat-form-field>
                             <input #planName class="form-control br-2" formControlName="planName" maxlength="10" matInput type="email">
-                            <mat-error [ngClass]="{'v-h': !(isPlanValid && getFormControl().planName.invalid || getFormControl().planName.touched && getFormControl().planName.invalid)}" class="f-12 pt-4">
+                            <mat-error [ngClass]="{'v-h': !(isPlanValid && getFormControl().planName.invalid || getFormControl().planName.touched && getFormControl().planName.invalid)}" class="f-12">
                                 Plan name is required
                             </mat-error>
-                            <mat-hint align="end" class="f-12">{{planName.value.length}}/10</mat-hint>
+                            <mat-hint align="end" class="f-12">{{planName.value.length}}/40</mat-hint>
                         </mat-form-field>
                     </div>
                 </div>
@@ -66,9 +66,9 @@
             <h4 (click)="closeNav('close')" class="mb-0 pt-8 text-white c-p f-16">Cancel</h4>
         </div>
         <div class="col-md-8 right text-right">
-            <app-progress-button (btnClick)="progressButtonClick('close')" [options]="barButtonOptions" [disabled]="!planDataForm.valid" >
+            <app-progress-button (btnClick)="progressButtonClick('close')" [options]="barButtonOptions" > 
             </app-progress-button>
-            <!-- <button (click)="addPlanData('close')" class="btn-bottom br-0 text-inherit" mat-button>Save</button> -->
+            <!-- <button (click)="addPlanData('close')" class="btn-bottom br-0 text-inherit" mat-button>Save</button> [disabled]="!planDataForm.valid" -->
         </div>
     </div>
 </div>

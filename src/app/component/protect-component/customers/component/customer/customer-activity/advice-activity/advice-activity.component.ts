@@ -12,7 +12,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
   styleUrls: ['./advice-activity.component.scss']
 })
 export class AdviceActivityComponent implements OnInit {
-  displayedColumns: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'status', 'date', 'icons'];
+  displayedColumns: string[] = [ 'position', 'name', 'weight', 'symbol', 'icons'];
   dataSource = ELEMENT_DATA;
 
   displayedColumns1: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'status', 'date', 'adate', 'icons'];
@@ -61,14 +61,12 @@ export interface PeriodicElement {
   position: string;
   weight: string;
   symbol: string;
-  status: string;
-  date: string;
 
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 'Rahul Jain', name: 'Surplus from life csh flows (Lumpsum)', weight: '35, 000', symbol: 'Invest towards Shreya’s Higher education and Rahul’s Retirement goal', status: 'Given', date: '23/12/2019' },
-  { position: 'Rahul Jain', name: 'Surplus from life csh flows (Lumpsum)', weight: '35, 000', symbol: 'Invest towards Shreya’s Higher education and Rahul’s Retirement goal', status: 'Given', date: '23/12/2019' },
+  { position: 'Rahul Jain', name: 'Surplus from life csh flows (Lumpsum)', weight: '35, 000', symbol: 'Invest towards Shreya’s Higher education and Rahul’s Retirement goal', },
+  { position: 'Rahul Jain', name: 'Surplus from life csh flows (Lumpsum)', weight: '35, 000', symbol: 'Invest towards Shreya’s Higher education and Rahul’s Retirement goal', },
 
 ];
 export interface PeriodicElement1 {

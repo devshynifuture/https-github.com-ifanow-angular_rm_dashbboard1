@@ -1,1 +1,12 @@
-<p>support-reports works!</p>
+<div id="ui-subscriptions">
+    <div class="sub-header-fix">
+        <div class="bg-white">
+            <h1 class="cusotm-haeding-main">Reports</h1>
+            <nav class="text-right" id="ui-customer-secondhead" mat-align-tabs="end" mat-tab-nav-bar>
+                <a routerLink="/support/reports/receivables" mat-tab-link routerLinkActive="active">RECEIVABLES</a>
+                <a routerLink="/support/reports/upsellings" mat-tab-link routerLinkActive="active">UPSELLINGS</a>
+            </nav>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
