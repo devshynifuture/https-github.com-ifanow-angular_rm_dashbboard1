@@ -1,8 +1,10 @@
+import { EntryComponentsModule } from './../../../../entry.components.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { TransactionRoutingModule } from './transaction-routing.module';
 import { OverviewTransactionsComponent } from './overview-transactions/overview-transactions.component';
+
 // import { TransactionsComponent } from './t/transactions.component';
 
 
@@ -12,7 +14,8 @@ import { OverviewTransactionsComponent } from './overview-transactions/overview-
   declarations: [TransactionsComponent, OverviewTransactionsComponent],
   imports: [
     CommonModule,
-    TransactionRoutingModule
+    TransactionRoutingModule,
+    EntryComponentsModule
   ], exports: [
 
     TransactionsComponent

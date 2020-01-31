@@ -77,6 +77,8 @@ export class EmailViewComponent implements OnInit, OnDestroy {
     this.emailService.gmailMessageDetail(id)
       .subscribe((response) => {
 
+        console.log("this is gmail detail message response::::", response);
+
         // gmail api explorer based integration
         const { id } = response;
         this.messageId = id;
@@ -106,15 +108,16 @@ export class EmailViewComponent implements OnInit, OnDestroy {
 
         parts.forEach(part => {
           if (part.mimeType !== 'multipart/alternative') {
-            const { parts } = part;
-            parts.forEach(part => {
-              if (part.mimeType === 'text/html') {
-                this.decodedPartsDetail.push(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data));
-              }
-            });
-            if (part.filename !== '') {
+
+            // const { parts } = part;
+            // parts.forEach(part => {
+            if (part.mimeType === 'text/html') {
+              this.decodedPartsDetail.push(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data));
+            }
+            // });
+            if (part.filename !== null) {
               this.attachmentsArray.push({
-                filename: part.filename,
+                filename: part.fileName,
                 mimeType: part.mimeType,
                 attachmentId: part.body.attachmentId
               });

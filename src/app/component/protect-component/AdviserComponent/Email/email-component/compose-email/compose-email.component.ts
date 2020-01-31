@@ -68,7 +68,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.createEmailForm();
     if (this.idOfMessage) {
-      // this.messageDetailApi(this.idOfMessage);
+      this.messageDetailApi(this.idOfMessage);
     }
     this.prevStateOfForm = this.emailForm.value;
     this.emailForm.valueChanges.subscribe(res => this.emailFormValueChange = res);
@@ -92,66 +92,69 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
     }, 4000);
   }
 
-  // messageDetailApi(id) {
-  //   this.emailService.gmailMessageDetail(id).subscribe(res => {
+  messageDetailApi(id) {
+    console.log(" mnessage idf::::::::::  ", id);
+    this.emailService.gmailMessageDetail(id).subscribe(res => {
 
-  //     // based on gmail api explorer response
-  //     const { payload: parts } = res;
-  //     parts.forEach(part => {
-  //       if (part.mimeType === 'multipart/alternative') {
-  //         const { parts } = part;
-  //         parts.forEach(part => {
-  //           if (part.filename !== '') {
-  //             this.attachmentsIdArray.push({
-  //               filename: part.filename,
-  //               mimeType: part.mimeType,
-  //               attachmentId: part.body.atatchmentId
-  //             });
-  //           }
-  //         });
-  //       }
-  //     });
-  //   })
+      // based on gmail api explorer response
 
-  //   // get attachment files...
-  //   this.attachmentsIdArray.forEach(attachment => {
-  //     const obj = {
-  //       userId: AuthService.getUserInfo().advisorId,
-  //       email: AuthService.getUserInfo().emailId,
-  //       attachmentId: attachment.attachmentId,
-  //       messageId: this.idOfMessage
-  //     }
-  //     this.emailService.getAttachmentFiles(attachment.attachmentId).subscribe(res => {
-  //       // according to gmail attachment get 
-  //       this.attachmentsBase64Data.push({
-  //         filename: attachment.filename,
-  //         mimeType: attachment.mimeType,
-  //         size: res.size,
-  //         attachmentBase64Data: res.body.replace(/\-/g, '+').replace(/_/g, '/')
-  //       })
-  //     })
+      console.log("this is something i need::::::::::", res);
+      // const { payload: parts } = res;
+      // parts.forEach(part => {
+      //   if (part.mimeType === 'multipart/alternative') {
+      //     const { parts } = part;
+      //     parts.forEach(part => {
+      //       if (part.filename !== '') {
+      //         this.attachmentsIdArray.push({
+      //           filename: part.filename,
+      //           mimeType: part.mimeType,
+      //           attachmentId: part.body.atatchmentId
+      //         });
+      //       }
+      //     });
+      //   }
+      // });
+    })
 
-  //     this.attachmentsBase64Data.forEach(attachment => {
-  //       let blobData = EmailUtilService.convertBase64ToBlobData(attachment.attachmentBase64Data, attachment.mimeType);
+    // get attachment files...
+    this.attachmentsIdArray.forEach(attachment => {
+      const obj = {
+        userId: AuthService.getUserInfo().advisorId,
+        email: AuthService.getUserInfo().emailId,
+        attachmentId: attachment.attachmentId,
+        messageId: this.idOfMessage
+      }
+      this.emailService.getAttachmentFiles(obj).subscribe(res => {
+        // according to gmail attachment get 
+        this.attachmentsBase64Data.push({
+          filename: attachment.filename,
+          mimeType: attachment.mimeType,
+          size: res.size,
+          attachmentBase64Data: res.body.replace(/\-/g, '+').replace(/_/g, '/')
+        })
+      })
 
-  //       if (window.navigator && window.navigator.msSaveOrOpenBlob) { //IE
-  //         window.navigator.msSaveOrOpenBlob(blobData, attachment.filename);
-  //       } else { // chrome
-  //         const blob = new Blob([blobData], { type: attachment.mimeType });
-  //         const url = window.URL.createObjectURL(blob);
-  //         // window.open(url);
+      this.attachmentsBase64Data.forEach(attachment => {
+        let blobData = EmailUtilService.convertBase64ToBlobData(attachment.attachmentBase64Data, attachment.mimeType);
 
-  //         this.emailAttachments.push({
-  //           filename: attachment.filename,
-  //           size: attachment.size,
-  //           mimeType: attachment.mimeType,
-  //           data: attachment.attachmentBase64Data,
-  //           downloadUrl: url
-  //         });
-  //       }
-  //     });
-  //   });
-  // }
+        if (window.navigator && window.navigator.msSaveOrOpenBlob) { //IE
+          window.navigator.msSaveOrOpenBlob(blobData, attachment.filename);
+        } else { // chrome
+          const blob = new Blob([blobData], { type: attachment.mimeType });
+          const url = window.URL.createObjectURL(blob);
+          // window.open(url);
+
+          this.emailAttachments.push({
+            filename: attachment.filename,
+            size: attachment.size,
+            mimeType: attachment.mimeType,
+            data: attachment.attachmentBase64Data,
+            downloadUrl: url
+          });
+        }
+      });
+    });
+  }
 
   attachmentDownload(element: any) {
     const link = document.createElement('a');
@@ -508,7 +511,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
       attachments: this.emailAttachments
     }
 
-    console.log(body);
+
     this.emailService.sendEmail(body).subscribe(res => {
       console.log(res);
       this.close();
