@@ -38,6 +38,12 @@ const routes: Routes = [
         data: { animation: 'Tab1', preload: true }
       },
       {
+        path: 'transactions',
+        loadChildren: () => import('src/app/component/protect-component/AdviserComponent/transactions/transactions.module').then(m => m.TransactionsModule),
+        data: { animation: 'Tab1', preload: true }
+        //  TransactionsComponent
+      },
+      {
         path: 'backoffice-mis',
         loadChildren: () => import('src/app/component/protect-component/AdviserComponent/backOffice/backoffice-mis/backoffice-mis.module').then(m => m.BackofficeMisModule)
       },

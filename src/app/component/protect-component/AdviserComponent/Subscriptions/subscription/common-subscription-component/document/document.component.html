@@ -183,7 +183,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+    </div>
     </div>
 </div>
 <div *ngIf="componentFlag=='clientDocuments'">
@@ -220,20 +220,24 @@
                                         </button>
                                         <button mat-menu-item *ngIf="dataCount == 1 && sendESign"
                                             (click)="openEsignDocument(null)">Email
-                                            with eSign
+                                            with esign
                                             request
                                         </button>
-                                        <button (click)="openSendEmail()" *ngIf="dataCount > 0" mat-menu-item>Email
+                                        <button (click)="openSendEmail()" *ngIf="dataCount == 1" mat-menu-item>Email
                                             only
                                         </button>
-                                        <button (click)="deleteModal('DOCUMENT')" *ngIf="dataCount >0" class="b-t"
+                                        <button (click)="deleteModal('DOCUMENT')" *ngIf="dataCount==1" class="b-t"
+                                            mat-menu-item>Delete
+                                            document
+                                        </button>
+                                        <button (click)="deleteModal('DOCUMENTS')" *ngIf="dataCount >1" class="b-t"
                                             mat-menu-item>Delete
                                             documents
                                         </button>
                                     </mat-menu>
                                 </div>
 
-                                <div class="col-md-9 ml-32 p-0" *ngIf="dataCount > 1">
+                                <div class="col-md-9 ml-32 p-0" >
                                     <p class="m-0 text-black text-left pt-12" *ngIf="dataCount == 1">{{dataCount}}
                                         document selected
                                     </p>
@@ -351,17 +355,19 @@
                                         <mat-menu #menu="matMenu">
                                             <!-- <a mat-menu-item (click)="changeDisplay('documentUpper',element)">View & Modify
                     document</a> -->
-                                            <a mat-menu-item (click)="open('viewDocuments',element)">View & Modify
+                                            <a mat-menu-item (click)="open('viewDocuments',element)">View & modify
                                                 document</a>
                                             <a mat-menu-item class="bt-1" (click)="deleteModal('DOCUMENT')">Delete
                                                 document</a>
                                             <a mat-menu-item *ngIf="element.signed" class="bt-1"
-                                                (click)="downloadEsign(element)">Download eSigned
+                                                (click)="downloadEsign(element)">Download esigned
                                                 document</a>
                                             <a mat-menu-item *ngIf="!element.signed" class="bt-1"
                                                 (click)="openEsignDocument(element)">Email
-                                                with eSign
+                                                with esign
                                                 request</a>
+                                                <a mat-menu-item 
+                                                (click)="openSendEmail()">Email only</a>
                                         </mat-menu>
                                     </div>
                                 </td>

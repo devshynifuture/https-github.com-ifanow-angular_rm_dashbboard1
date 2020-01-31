@@ -71,9 +71,14 @@ export class QuotationsComponent implements OnInit {
     // this.getQuotationsList();
     this.dataCount = 0;
   }
-  changeSelect() {
-
-  }
+    changeSelect() {
+      this.dataCount = 0;
+      this.dataSource.filteredData.forEach(item => {
+        if (item.selected) {
+          this.dataCount++;
+        }
+      });
+    }
 
   addQuotation(value) {
     const fragmentData = {

@@ -8,6 +8,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { FormTestComponent } from './test/form-test/form-test.component';
 import { SubscriptionUpperSliderComponent } from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/upper-slider/subscription-upper-slider.component';
 import { BackofficeDashboardComponent } from './component/protect-component/AdviserComponent/backOffice/backoffice-dashboard/backoffice-dashboard.component';
+import { TransactionsComponent } from './component/protect-component/customers/component/common-component/transactions/transactions.component';
 
 const routes: Routes = [
   {
@@ -99,6 +100,7 @@ const routes: Routes = [
     path: 'test',
     component: FormTestComponent
   },
+
   {
     path: '**',
     redirectTo: 'not-found'

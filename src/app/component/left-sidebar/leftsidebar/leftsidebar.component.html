@@ -1,4 +1,3 @@
-
 <mat-sidenav-container (window:resize)="onResize()" class="sidenav-container">
   <mat-sidenav #sidenav mode="side" opened role="navigation">
     <mat-nav-list class="width-230 pt-0" id="d">
@@ -39,7 +38,7 @@
           <img src="assets/images/svg/mail.svg">
           <span *ngIf="showTabs" class="title" mat-line>Email</span>
         </a>
-        <a class="sidenav-link" mat-list-item>
+        <a class="sidenav-link" mat-list-item routerLink="./transactions">
           <img src="assets/images/svg/cart.svg">
           <span *ngIf="showTabs" class="title" mat-line>Transactions</span>
         </a>
