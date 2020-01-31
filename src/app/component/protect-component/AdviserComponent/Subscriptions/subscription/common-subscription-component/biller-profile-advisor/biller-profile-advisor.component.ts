@@ -253,26 +253,51 @@ export class BillerProfileAdvisorComponent implements OnInit {
         this.submitBillerForm();
     }
   }
+
+  pinInvalid:boolean = false;
+
   getPostalPin(value, state) {
     let obj = {
       zipCode: value
     }
-    if (value.length > 5) {
+    console.log(value,"check value");
+    if(value != ""){
       this.postalService.getPostalPin(value).subscribe(data => {
         console.log('postal 121221', data)
         this.PinData(data, state)
       })
     }
+    else{
+      this.pinInvalid = false;
+    }
   }
   PinData(data, state) {
-    if (state == 'bankDetailsForm') {
+    if(data[0].Status == "Error"){
+      this.pinInvalid = true;
+      if (state == 'bankDetailsForm'){
+        this.getFormControlBank().pincodeB.setErrors(this.pinInvalid);
+        this.getFormControlBank().cityB.setValue("")
+        this.getFormControlBank().countryB.setValue("")
+        this.getFormControlBank().stateB.setValue("")
+      }
+      else{
+        this.getFormControlProfile().pincode.setErrors(this.pinInvalid);
+        this.getFormControlProfile().city.setValue("");
+        this.getFormControlProfile().country.setValue("");
+        this.getFormControlProfile().state.setValue("");
+      }
+    }
+    else if (state == 'bankDetailsForm') {
       this.getFormControlBank().cityB.setValue(data[0].PostOffice[0].District)
       this.getFormControlBank().countryB.setValue(data[0].PostOffice[0].Country)
       this.getFormControlBank().stateB.setValue(data[0].PostOffice[0].Circle)
+      this.pinInvalid = false;
     } else {
       this.getFormControlProfile().city.setValue(data[0].PostOffice[0].District);
       this.getFormControlProfile().country.setValue(data[0].PostOffice[0].Country);
       this.getFormControlProfile().state.setValue(data[0].PostOffice[0].Circle);
+      this.pinInvalid = false;
+
     }
   }
 

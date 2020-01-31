@@ -24,7 +24,7 @@
                                 <div class="form-group mb-0">
                                     <mat-form-field>
                                         <input #companyDisplayName autofocus class="form-control br-0 text-left" formControlName="companyDisplayName" matInput maxLength="{{getFormControlProfile().companyDisplayName.maxLength}}" type="text">
-                                        <mat-error class="f-12">Company Display Name is required</mat-error>
+                                        <mat-error class="f-12">Company display name is required</mat-error>
                                         <mat-hint align="end" class="f-12">{{companyDisplayName.value.length}}/50
                                         </mat-hint>
                                     </mat-form-field>
@@ -59,7 +59,7 @@
                                     <mat-form-field>
                                         <input #panNum [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10" (changedValue)="getFormControlProfile().panNum.setValue($event)" appInputValueValidation class="form-control br-0" formControlName="panNum" matInput type="text">
                                         <mat-error *ngIf="profileDetailsForm.get('panNum').errors?.required && profileDetailsForm.get('panNum').touched" class="f-12">
-                                            This field is required
+                                            PAN is required
                                         </mat-error>
                                         <mat-error *ngIf="(profileDetailsForm.get('panNum').errors?.pattern)" class="f-12">
                                             Enter valid PAN
@@ -91,8 +91,8 @@
                             <div class="col-md-5">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <input #pincode [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation [maxLength]="6" class="form-control br-0 text-left" formControlName="pincode" matInput minlength="6" type="text" (change)="getPostalPin($event.target.value,'profileDetailsForm')">
-                                        <mat-error class="f-12">{{'Invalid Pincode'}}</mat-error>
+                                        <input #pincode [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation [maxLength]="6" class="form-control br-0 text-left" formControlName="pincode" matInput minlength="6" type="text" (focusout)="getPostalPin($event.target.value,'profileDetailsForm')">
+                                        <mat-error class="f-12">{{pinInvalid?'Invalid pincode':'Pincode is required'}}</mat-error>
                                         <mat-hint align="end" class="f-12">{{pincode.value.length}}/6</mat-hint>
                                     </mat-form-field>
                                 </div>
@@ -267,7 +267,7 @@
                                 <mat-form-field>
                                     <input #pincodeB [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" (focusout)="getPostalPin($event.target.value,'bankDetailsForm')" appInputValueValidation class="form-control br-0 text-left" formControlName="pincodeB" matInput minlength="6"
                                         type="text">
-                                    <mat-error class="f-12">{{'Invalid pincodeB'}}</mat-error>
+                                    <mat-error class="f-12">{{pinInvalid?'Invalid pincode':'Pincode is required'}}</mat-error>
                                     <mat-hint align="end" class="f-12">{{pincodeB.value.length}}/6</mat-hint>
                                 </mat-form-field>
                             </div>
