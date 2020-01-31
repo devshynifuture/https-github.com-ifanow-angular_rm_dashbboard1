@@ -12,7 +12,7 @@ import { SelectAdviceComponent } from '../select-advice/select-advice.component'
 export class AdviceFixedIncomeComponent implements OnInit {
   displayedColumns3: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'advice', 'astatus', 'adate', 'icon'];
   dataSource3 = ELEMENT_DATA3;
-  constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject,private utilService :UtilService) { }
+  constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private utilService: UtilService) { }
 
   ngOnInit() {
   }
@@ -36,6 +36,7 @@ export class AdviceFixedIncomeComponent implements OnInit {
     );
   }
 }
+
 export interface PeriodicElement3 {
   name: string;
   position: string;
