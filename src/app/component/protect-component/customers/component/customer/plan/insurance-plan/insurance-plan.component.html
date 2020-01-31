@@ -88,8 +88,7 @@
                     <h3 class="m-0 text-black pt-4">Insurance</h3>
                 </div>
                 <div class="col-md-4">
-                    <button mat-stroked-button class="btn-primary br-2"
-                        (click)="insuranceplanning('open70')">Setup</button>
+                    <button mat-stroked-button class="btn-primary br-2" (click)="insuranceplanning('open70')">Setup</button>
                 </div>
                 <div class="col-md-1 p-0">
                     <i class="material-icons pt-4 text-black">
@@ -362,9 +361,9 @@
 
         <!-- Health insurance - Manu Jain -->
         <div class="col-md-9 pb-44 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
-            <div class="row pb-12 pt-32 bb-grey relClass">
-                <div class="col-md-10 p-0">
-                    <div class="bar">
+            <div class="row pb-12 pt-32 bb-grey ">
+                <div class="col-md-10 p-0 relClass">
+                    <div class="bar" [ngClass]="{'height23': isLoading}">
                         <h3 class="m-0">Health insurance - Manu Jain</h3>
                     </div>
                 </div>
@@ -396,12 +395,8 @@
                     <div class="row pt-24">
                         <div class="col-md-12 p-0">
                             <h5 class="m-0 f-500">Planner notes</h5>
-                            <p class="m-0 text-black b-a p-8 mt-8 roboto">With increasing medical costs you are strongly
-                                advised to increase your sum assured. We suggest an additional sum assured of
-                                Rs.7,00,000. We have compared and suggested two of the best policies currently available
-                                in the market.
-                                We have done a comprehensive feature anlaysis of the same and presented a detailed
-                                feature analysis for your review.</p>
+                            <p class="m-0 text-black b-a p-8 mt-8 roboto">With increasing medical costs you are strongly advised to increase your sum assured. We suggest an additional sum assured of Rs.7,00,000. We have compared and suggested two of the best policies currently available in the market.
+                                We have done a comprehensive feature anlaysis of the same and presented a detailed feature analysis for your review.</p>
                             <h5 class="m-0 f-500 pt-28">Suggested policies</h5>
                             <div class="mt-8 insurance-table">
                                 <table mat-table [dataSource]="dataSource" id="table-low">
@@ -427,8 +422,7 @@
                                     </ng-container>
                                     <ng-container matColumnDef="icons">
                                         <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;"></th>
-                                        <td mat-cell *matCellDef="let element" style="width: 2%;"><i
-                                                class="material-icons c-p text-black">
+                                        <td mat-cell *matCellDef="let element" style="width: 2%;"><i class="material-icons c-p text-black">
                                                 keyboard_arrow_down
 
                                             </i>
@@ -443,8 +437,7 @@
                         <div class="row">
                             <div class="col-md-12 p-0">
                                 <div class="p-8 b-a bt-0">
-                                    <p class="m-0">HDFC Ergo My Health Suraksha comes with a host of benefits. We have
-                                        listed down the following to name a few:</p>
+                                    <p class="m-0">HDFC Ergo My Health Suraksha comes with a host of benefits. We have listed down the following to name a few:</p>
                                     <ul class="b-block">
                                         <li>Copay : 0%</li>
                                         <li>Room rent : No limit on room rent</li>
@@ -496,8 +489,7 @@
                     <img src="/assets/images/svg/insurance-right1.svg" class="pt-20">
                     <div class="row pt-20">
                         <div class="col-md-12 pl-0">
-                            <button (click)="openAddPlanInsurance(null)" mat-stroked-button
-                                class="in-btn pl-8 mr-16"><img src="/assets/images/svg/btn-links.svg" class="pr-8">Needs
+                            <button (click)="openAddPlanInsurance(null)" mat-stroked-button class="in-btn pl-8 mr-16"><img src="/assets/images/svg/btn-links.svg" class="pr-8">Needs
                                 analysis</button>
                             <button (click)="opensuggestpolicy(null)" mat-stroked-button class="in-btn mt-20 pl-8"><img
                                     src="/assets/images/svg/btn-links.svg" class="pr-12 ">Suggest policy</button>

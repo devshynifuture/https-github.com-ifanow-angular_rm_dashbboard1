@@ -1,7 +1,5 @@
 <div class="bg-white  pt-72">
 
-    <!-- <div id="ui-subs"> </div> -->
-    <!-- (scroll)="scrollCall(true)" -->
     <div *ngIf="dataSource.data.length > 0 || isFilter" class="bg-white p-20 pb-0 filterBox">
         <div class="row">
             <div class="col-md-8 p-0">
@@ -161,8 +159,6 @@
             </table>
         </div>
     </div>
-
-
 
     <div class="row" *ngIf="dataSource.data.length == 0">
         <div class="col-md-12  d-flex align-items-center flex-column justify-content-center">

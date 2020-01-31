@@ -3,8 +3,8 @@
         <mat-chip-list>
             <mat-chip *ngFor="let status of filterStatus; let ind = index" class="bg-white b-a c-p f-400 p-12">
                 {{status.name}}<i (click)="remove(ind)" class="material-icons f-16 text-custom ml-12">
-          cancel
-        </i></mat-chip>
+                    cancel
+                </i></mat-chip>
             <mat-chip-list class="newDateIcon">
                 <mat-chip *ngFor="let dateFilter of filterDate; let i = index" class="bg-white b-a c-p f-400 p-12">
                     <p>{{dateFilter.name}}</p>
@@ -13,8 +13,8 @@
                     </sat-datepicker>
                     <sat-datepicker-toggle [for]="picker2" matSuffix></sat-datepicker-toggle>
                     <i (click)="removeDate(i)" class="material-icons f-16 text-custom c-p">
-            cancel
-          </i>
+                        cancel
+                    </i>
                 </mat-chip>
             </mat-chip-list>
         </mat-chip-list>
@@ -23,7 +23,7 @@
         <div class="row">
             <div class="col-md-6 pr-0" *ngIf="!onlyDateFilter">
                 <mat-form-field>
-                    <mat-select (selectionChange)="addFilters(selectedStatusFilter)" [(ngModel)]='selectedStatusFilter' class="form-control f-16 br-0" id="sel11">
+                    <mat-select (selectionChange)="addFilters(selectedStatusFilter)" [(ngModel)]='selectedStatusFilter' class="form-control f-14 br-0" id="sel11">
                         <mat-option [disabled]="true" value="statusFilter">FILTER ONE</mat-option>
                         <mat-option *ngFor="let chip of chipStatus" [value]="chip">{{chip.name}}</mat-option>
                     </mat-select>
@@ -31,7 +31,7 @@
             </div>
             <div class="col-md-6 pr-0" *ngIf="!onlyDateFilter">
                 <mat-form-field>
-                    <mat-select (selectionChange)="addFiltersDate($event)" [(ngModel)]='selectedDateFilter' class="form-control br-0" id="sel12">
+                    <mat-select (selectionChange)="addFiltersDate($event)" [(ngModel)]='selectedDateFilter' class="form-control f-14 br-0" id="sel12">
                         <mat-option [disabled]="true" value="dateFilter">FILTER TWO</mat-option>
                         <mat-option *ngFor="let dateAdd of chipDate" [value]="dateAdd">{{dateAdd.name}}
                         </mat-option>

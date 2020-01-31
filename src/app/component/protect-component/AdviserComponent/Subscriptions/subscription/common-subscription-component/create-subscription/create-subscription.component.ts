@@ -12,6 +12,7 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { DatePipe } from '@angular/common';
 import { UtilService } from '../../../../../../../services/util.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { BillerProfileAdvisorComponent } from '../biller-profile-advisor/biller-profile-advisor.component';
 
 
 @Component({
@@ -122,7 +123,7 @@ export class CreateSubscriptionComponent implements OnInit {
   getPayeeFlagData(data) {
     this.isFlagPayee = data.flag
     this.payeeSettingData = data
-    console.log(data, this.payeeSettingData , "abc 77")
+    console.log(data, this.payeeSettingData, "abc 77")
   }
 
   preventDefault(e) {
@@ -217,6 +218,30 @@ export class CreateSubscriptionComponent implements OnInit {
       this.goForward();
       console.log(this.feeStructureFormData, 'feeStructureData');
     }
+  }
+
+
+  Open(singleProfile, value) {
+    // this.selected = 0;
+    const fragmentData = {
+      flag: value,
+      data: singleProfile,
+      id: 1,
+      state: 'open',
+      componentName: BillerProfileAdvisorComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          // this.getProfileBillerData()
+          console.log('this is sidebardata in subs subs 2: ');
+          rightSideDataSub.unsubscribe();
+        }
+      }
+
+    );
+    // this.billerProfileData = this.dataTOget.data
   }
 
   select(value, data) {
@@ -358,7 +383,7 @@ export class CreateSubscriptionComponent implements OnInit {
       };
       console.log(obj, 'start subscription');
       this.subService.startSubscription(obj).subscribe(
-        data =>{ this.startSubscriptionResponse(data)},
+        data => { this.startSubscriptionResponse(data) },
         err => {
           this.barButtonOptions.active = false;
           console.log('error on login: ', err);
