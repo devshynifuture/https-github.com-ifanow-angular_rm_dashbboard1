@@ -78,7 +78,7 @@ export class PreferencesSettingsComponent implements OnInit {
 
   getProfileBillerData() {
     this.isLoading = true;
-    // this.billerProfileData = [{ isPrimary: false }];
+    this.billerProfileData = [{ isPrimary: false }];
     this.subscription.getPreferenceBillerProfile(this.advisorId).subscribe(
       data => this.getProfileBillerDataResponse(data), (error) => {
         this.eventService.showErrorMessage(error);
