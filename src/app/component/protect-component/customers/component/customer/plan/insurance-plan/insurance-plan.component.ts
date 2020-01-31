@@ -28,6 +28,7 @@ export class InsurancePlanComponent implements OnInit {
   }
 
   openAddPlanInsurance(data) {
+    this.isLoading = true;
     const fragmentData = {
       flag: 'addPlanInsurance',
       data,
@@ -41,6 +42,7 @@ export class InsurancePlanComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
+          this.isLoading = false;
 
         }
       }
@@ -48,6 +50,7 @@ export class InsurancePlanComponent implements OnInit {
   }
 
   insuranceplanning(data) {
+    this.isLoading = true;
     const fragmentData = {
       flag: 'addPlanInsurance',
       data,
@@ -61,6 +64,7 @@ export class InsurancePlanComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
+          this.isLoading = false;
 
         }
       }
@@ -68,6 +72,7 @@ export class InsurancePlanComponent implements OnInit {
   }
 
   opensuggestpolicy(data) {
+    this.isLoading = true;
     const fragmentData = {
       flag: 'opensuggestpolicy',
       data,
@@ -81,6 +86,7 @@ export class InsurancePlanComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
+          this.isLoading = false;
 
         }
       }
@@ -88,6 +94,7 @@ export class InsurancePlanComponent implements OnInit {
   }
 
   opencurrentpolicies(data) {
+    this.isLoading = true;
     const fragmentData = {
       flag: 'opencurrentpolicies',
       data,
@@ -101,6 +108,7 @@ export class InsurancePlanComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
+          this.isLoading = false;
 
         }
       }

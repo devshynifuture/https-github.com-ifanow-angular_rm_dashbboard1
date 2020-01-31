@@ -1,112 +1,106 @@
 .ima {
-  //background-image: url(/assets/images/svg/Receivablessummary.svg);
-  background-position: left;
-  background-size: cover;
-  min-height: 200px;
-  width: 100%;
+    //background-image: url(/assets/images/svg/Receivablessummary.svg);
+    background-position: left;
+    background-size: cover;
+    min-height: 200px;
+    width: 100%;
 }
 
 hr {
-  border-bottom: 1px solid #DADCE0;
-  width: 90%;
-  margin: 0 auto;
-  display: block;
+    border-bottom: 1px solid #DADCE0;
+    width: 90%;
+    margin: 0 auto;
+    display: block;
 }
 
 .bg-red {
-  background-color: #FFD8D8
+    background-color: #FFD8D8
 }
 
 ::ng-deep .h-290 {
-  height: 290px;
-  overflow-x: auto;
-
-  ::-webkit-scrollbar-track {
-    margin-top: 0px !important;
-  }
+    height: 290px;
+    overflow-x: auto;
+     ::-webkit-scrollbar-track {
+        margin-top: 0px !important;
+    }
 }
 
 .full-lights {
-  background-color: #F7F8F9;
+    background-color: #F7F8F9;
 }
 
 .btn-red {
-  background-color: #D01010;
-  color: #FFD5D5 !important;
-  font-size: 20px;
-  font-family: "Roboto", sans-serif;
-  letter-spacing: 0.2px;
+    background-color: #D01010;
+    color: #FFD5D5 !important;
+    font-size: 20px;
+    font-family: "Roboto", sans-serif;
+    letter-spacing: 0.2px;
 }
 
 h1 {
-  font-family: "Playfair Display";
-  font-style: normal;
-  font-weight: normal;
-  padding-top: 16px;
-  line-height: 40px;
-  letter-spacing: 0.2px;
-  margin-bottom: 0;
-  color: #D01010 !important;
+    font-family: "Playfair Display";
+    font-style: normal;
+    font-weight: normal;
+    padding-top: 16px;
+    line-height: 40px;
+    letter-spacing: 0.2px;
+    margin-bottom: 0;
+    color: #D01010 !important;
 }
 
 p {
-  font-family: "Roboto", sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 130%;
-  letter-spacing: 0.2px;
-  color: #004164;
+    font-family: "Roboto", sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 130%;
+    letter-spacing: 0.2px;
+    color: #004164;
 }
 
 .btn-red .material-icons {
-  margin-left: 2px;
-  padding-top: 2px;
+    margin-left: 2px;
+    padding-top: 2px;
 }
 
 .dashboard-img {
-  position: relative;
-  margin-top: -85px;
+    position: relative;
+    margin-top: -85px;
 }
 
 #ui-subscription-completeness {
-  padding-top: 50px;
-
-  .done-icons {
-    background: #02B875;
-    border-radius: 50%;
-    padding: 5px;
-    color: #fff;
-    font-size: 30px;
-    margin-top: 2px;
-    text-align: center;
-  }
-
-  .default-icons {
-    background: #BCC6CA;
-    border-radius: 50%;
-    padding: 5px;
-    color: #fff;
-    font-size: 30px;
-    margin-top: 2px;
-    text-align: center;
-  }
-
-  .mat-card:not([class*=mat-elevation-z]) {
-    box-shadow: none !important;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    padding: 0;
-  }
-
-  .w-110 {
-    width: 110px !important;
-  }
+    padding-top: 50px;
+    .done-icons {
+        background: #02B875;
+        border-radius: 50%;
+        padding: 5px;
+        color: #fff;
+        font-size: 30px;
+        margin-top: 2px;
+        text-align: center;
+    }
+    .default-icons {
+        background: #BCC6CA;
+        border-radius: 50%;
+        padding: 5px;
+        color: #fff;
+        font-size: 30px;
+        margin-top: 2px;
+        text-align: center;
+    }
+    .mat-card:not([class*=mat-elevation-z]) {
+        box-shadow: none !important;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 0;
+    }
+    .w-110 {
+        width: 110px !important;
+    }
 }
 
 // ::-webkit-scrollbar-track {
 //   margin-top: 8px !important;
 // }
-
 //::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
 //
 //    background-color: #008FFF !important;
@@ -123,27 +117,47 @@ p {
 //    pointer-events: none !important;
 //  }
 .chart {
-  height: 200px;
+    height: 200px;
 }
 
 .noDataFound {
-  width: 100%;
-  text-align: center;
-  padding: 10px;
-
-  img {
-    width: 200px;
-  }
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    img {
+        width: 200px;
+    }
 }
 
 ::ng-deep #table-low tbody td {
-  padding: 9px 8px !important;
+    padding: 9px 8px !important;
 }
 
 .font100 {
-  font-size: 100px;
+    font-size: 100px;
 }
 
 .height23 {
-  height: 23px;
+    height: 23px;
+}
+
+.h-290::-webkit-scrollbar {
+    width: 4px;
+    cursor: pointer;
+}
+
+.h-290::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.h-290::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.h-290::-webkit-scrollbar-thumb:window-inactive {
+    background: #555;
+}
+
+.h-290::-webkit-scrollbar-button:horizontal:decrement:hover {
+    background: #555;
 }
