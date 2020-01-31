@@ -141,7 +141,6 @@ export class BillerProfileAdvisorComponent implements OnInit {
       PhotoCloudinaryUploadService.uploadFileToCloudinary(files, 'biller_profile_logo', tags,
         (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
           if (status == 200) {
-            this.barButtonOptions.active = false;
             const responseObject = JSON.parse(response);
             console.log('onChange file upload success response url : ', responseObject.url);
             this.logoImg = responseObject.url;
@@ -151,6 +150,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
             this.eventService.openSnackBar('Image uploaded sucessfully', 'dismiss');
             if(this.selected == 3){
               this.addEditBillerForm();
+            }else{
+              this.barButtonOptions.active = false;
             }
           }
 
