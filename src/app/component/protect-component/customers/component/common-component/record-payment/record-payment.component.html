@@ -1,5 +1,5 @@
 <div class="wrapper-20 max-height-100">
-    <h4 class="mb-0 pt-14">Record payment</h4>
+    <h4 class="mb-0 pt-16">Record payment</h4>
     <div [formGroup]="rPayment" class="pt-40">
         <div class="row">
             <div class="col-md-5">
@@ -59,9 +59,9 @@
                 </div>
                 <div class="row">
                     <div class="col-md-10 pr-0">
-                        <mat-error class="f-12" *ngIf="rPayment.get('tds').errors?.required && rPayment.get('tds').touched && showError==false">
+                        <!-- <mat-error class="f-12" *ngIf="rPayment.get('tds').errors?.required && rPayment.get('tds').touched && showError==false">
                             This field is required
-                        </mat-error>
+                        </mat-error> -->
                         <mat-error *ngIf="showError==true" class="f-12">
                             Should be less than or equal to {{this.tdsAmt}}
                         </mat-error>
