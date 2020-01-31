@@ -22,6 +22,10 @@ export class TransactionsComponent implements OnInit {
     this._value = value;
   }
 
+  close() {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  }
+
   openNewTransaction() {
     const fragmentData = {
       flag: 'addNewTransaction',
