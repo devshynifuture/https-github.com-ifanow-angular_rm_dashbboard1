@@ -162,9 +162,15 @@ export class PreferencesSettingsComponent implements OnInit {
   savePrefixResponse(data) {
     console.log(data, "prefixData check");  
     this.barButtonOptions.active = false;
-    this.prefixData.get('nextNo').setValue(data.prefix);
+    this.prefixData.get('prefix').setValue(data.prefix);
     this.prefixData.get('nextNo').setValue(data.nextNumber);
     // this.prefixData = data;
+  }
+
+  resetPrefix(){
+
+    this.prefixData.get('prefix').setValue(this.saveUpdateFlag.prefix);
+    this.prefixData.get('nextNo').setValue(this.saveUpdateFlag.nextNumber);
   }
 
   getProfileBillerDataResponse(data) {
