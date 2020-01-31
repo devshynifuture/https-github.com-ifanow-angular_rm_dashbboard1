@@ -24,7 +24,7 @@ export class CashflowsPlanComponent implements OnInit {
 
   constructor(private eventService: EventService,
   ) { }
-
+  isLoading = false;
   ngOnInit() {
     this.cashFlow('surplus');
     this.filterCashFlowTableUsing('income');

@@ -12,7 +12,7 @@ export class ProfilePlanComponent implements OnInit {
 
   viewMode;
   constructor(private subInjectService: SubscriptionInject) { }
-
+  isLoading = false;
   ngOnInit() {
     this.viewMode = "tab5";
     console.log(this.viewMode);
