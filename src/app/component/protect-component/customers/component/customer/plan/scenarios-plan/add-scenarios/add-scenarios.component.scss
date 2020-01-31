@@ -1,9 +1,22 @@
 .financialGoalsTable {
-    tr.mat-row {
-        // padding: 3px 5px !important;
-        height: 30px !important;
-    }
-    tr.mat-header-row {
-        height: 40px !important;
-    }
+  tr.mat-row {
+    // padding: 3px 5px !important;
+    height: 30px !important;
+  }
+
+  tr.mat-header-row {
+    height: 40px !important;
+  }
+}
+
+.points {
+  display: block;
+  list-style-type: disc;
+  padding-left: 20px;
+  padding-top: 12px;
+
+  li {
+    text-align: left;
+
+  }
 }
