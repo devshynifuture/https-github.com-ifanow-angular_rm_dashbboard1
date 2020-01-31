@@ -155,8 +155,8 @@
                             <div class="col-md-3 pr-0 mr-40">
                                 <h5 class="m-0 mb-5 f-14 text-black">Invoice prefix</h5>
                                 <div class="form-group relClass">
-                                    <mat-form-field *ngIf="!isLoading" >
-                                        <input matInput type="text"  class="form-control br-0" formControlName="prefix">
+                                    <mat-form-field *ngIf="!isLoading">
+                                        <input matInput type="text" class="form-control br-0" formControlName="prefix">
                                         <mat-error class="f-12">Invoice prefix required</mat-error>
                                     </mat-form-field>
                                     <div class="bar height23" *ngIf="isLoading"> </div>
@@ -166,8 +166,8 @@
                                 <h5 class="m-0 mb-5 f-14 text-black">Invoice next number</h5>
                                 <div class="form-group relClass">
                                     <mat-form-field *ngIf="!isLoading">
-                                        <input matInput  class="form-control br-0" formControlName="nextNo" type="text">
-                                        <mat-error class="f-12" >Invoice next number required</mat-error>
+                                        <input matInput class="form-control br-0" formControlName="nextNo" type="text">
+                                        <mat-error class="f-12">Invoice next number required</mat-error>
                                     </mat-form-field>
                                     <div class="bar height23" *ngIf="isLoading"> </div>
                                 </div>
@@ -175,7 +175,7 @@
                             <div class="col-md-12 pt-44 ">
                                 <!-- <button mat-stroked-button class="btn-primary br-0 mr-8" (click)="savePrefix(1)">SAVE
                                 </button> -->
-                                <app-progress-button class="btn-primary br-0 mr-8" (btnClick)="savePrefix(1)" [options]="barButtonOptions" >
+                                <app-progress-button class="btn-primary br-0 mr-8" (btnClick)="savePrefix(1)" [options]="barButtonOptions">
                                 </app-progress-button>
                                 <button mat-stroked-button class="text-primary br-0" (click)="resetPrefix()">CANCEL</button>
                             </div>
@@ -191,8 +191,8 @@
                             <div class="col-md-3 pr-0 mr-40">
                                 <h5 class="m-0 mb-5 f-14 text-black">Quotation prefix</h5>
                                 <div class="form-group relClass">
-                                    <mat-form-field *ngIf="!isLoading" >
-                                        <input matInput type="text"  class="form-control br-0" formControlName="prefix">
+                                    <mat-form-field *ngIf="!isLoading">
+                                        <input matInput type="text" class="form-control br-0" formControlName="prefix">
                                         <mat-error class="f-12">Quotation prefix required</mat-error>
                                     </mat-form-field>
                                     <div class="bar height23" *ngIf="isLoading"> </div>
@@ -202,8 +202,8 @@
                                 <h5 class="m-0 mb-5 f-14 text-black">Quotation next number</h5>
                                 <div class="form-group relClass">
                                     <mat-form-field *ngIf="!isLoading">
-                                        <input matInput  class="form-control br-0" formControlName="nextNo" type="text">
-                                        <mat-error class="f-12" >Quotation next number required</mat-error>
+                                        <input matInput class="form-control br-0" formControlName="nextNo" type="text">
+                                        <mat-error class="f-12">Quotation next number required</mat-error>
                                     </mat-form-field>
                                     <div class="bar height23" *ngIf="isLoading"> </div>
                                 </div>
@@ -211,12 +211,12 @@
                             <div class="col-md-12 pt-44 ">
                                 <!-- <button mat-stroked-button class="btn-primary br-0 mr-8" (click)="savePrefix(1)">SAVE
                                 </button> -->
-                                <app-progress-button class="btn-primary br-0 mr-8" (btnClick)="savePrefix(2)" [options]="barButtonOptions" >
+                                <app-progress-button class="btn-primary br-0 mr-8" (btnClick)="savePrefix(2)" [options]="barButtonOptions">
                                 </app-progress-button>
-                                <button mat-stroked-button class="text-primary br-0" (click)="resetPrefix()" >CANCEL</button>
+                                <button mat-stroked-button class="text-primary br-0" (click)="resetPrefix()">CANCEL</button>
                             </div>
                         </div>
-                       
+
                     </div>
                 </div>
                 <div *ngSwitchCase="'tab4'">
@@ -226,8 +226,8 @@
                             <div class="col-md-3 pr-0 mr-40">
                                 <h5 class="m-0 mb-5 f-14 text-black">Subscription prefix</h5>
                                 <div class="form-group relClass">
-                                    <mat-form-field *ngIf="!isLoading" >
-                                        <input matInput type="text"  class="form-control br-0" formControlName="prefix">
+                                    <mat-form-field *ngIf="!isLoading">
+                                        <input matInput type="text" class="form-control br-0" formControlName="prefix">
                                         <mat-error class="f-12">Subscription prefix required</mat-error>
                                     </mat-form-field>
                                     <div class="bar height23" *ngIf="isLoading"> </div>
@@ -237,8 +237,8 @@
                                 <h5 class="m-0 mb-5 f-14 text-black">Subscription next number</h5>
                                 <div class="form-group relClass">
                                     <mat-form-field *ngIf="!isLoading">
-                                        <input matInput  class="form-control br-0" formControlName="nextNo" type="text">
-                                        <mat-error class="f-12" >Subscription next number required</mat-error>
+                                        <input matInput class="form-control br-0" formControlName="nextNo" type="text">
+                                        <mat-error class="f-12">Subscription next number required</mat-error>
                                     </mat-form-field>
                                     <div class="bar height23" *ngIf="isLoading"> </div>
                                 </div>
@@ -246,12 +246,12 @@
                             <div class="col-md-12 pt-44 ">
                                 <!-- <button mat-stroked-button class="btn-primary br-0 mr-8" (click)="savePrefix(1)">SAVE
                                 </button> -->
-                                <app-progress-button class="btn-primary br-0 mr-8" (btnClick)="savePrefix(3)" [options]="barButtonOptions" >
+                                <app-progress-button class="btn-primary br-0 mr-8" (btnClick)="savePrefix(3)" [options]="barButtonOptions">
                                 </app-progress-button>
-                                <button mat-stroked-button class="text-primary br-0" (click)="resetPrefix()" >CANCEL</button>
+                                <button mat-stroked-button class="text-primary br-0" (click)="resetPrefix()">CANCEL</button>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
                 <div *ngSwitchCase="'tab5'">
@@ -331,7 +331,7 @@
                                         <div class="bg-grey lter wrapper-16 pl-24">
                                             <div class="row">
                                                 <div class="col-md-11 p-0">
-                                                    <h3 class="f-20 l-26"> Documents with eSign request</h3>
+                                                    <h3 class="f-20 l-26"> Documents with esign request</h3>
                                                 </div>
                                                 <div class="col-md-1 p-0 text-right">
                                                     <i class="material-icons  text-custom f-32">

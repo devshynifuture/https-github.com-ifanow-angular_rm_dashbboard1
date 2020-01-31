@@ -43,7 +43,7 @@ export class PreferencesSettingsComponent implements OnInit {
     public dialog: MatDialog, private subscription: SubscriptionService,
     public subInjectService: SubscriptionInject, private eventService: EventService, private utilservice: UtilService) {
   }
-  prefixData:FormGroup;
+  prefixData: FormGroup;
   isLoading = false;
   billerProfileData: Array<any>;
   // PrefixData;
@@ -78,7 +78,7 @@ export class PreferencesSettingsComponent implements OnInit {
 
   getProfileBillerData() {
     this.isLoading = true;
-    // this.billerProfileData = [{ isPrimary: false }];
+    this.billerProfileData = [{ isPrimary: false }];
     this.subscription.getPreferenceBillerProfile(this.advisorId).subscribe(
       data => this.getProfileBillerDataResponse(data), (error) => {
         this.eventService.showErrorMessage(error);
@@ -121,11 +121,11 @@ export class PreferencesSettingsComponent implements OnInit {
   }
 
   savePrefix(data) {
-    if(this.prefixData.invalid){
+    if (this.prefixData.invalid) {
       this.prefixData.get('prefix').markAsTouched();
       this.prefixData.get('nextNo').markAsTouched();
     }
-    else{
+    else {
       this.barButtonOptions.active = true;
       const obj = {
         // advisorId: 2735,
@@ -137,38 +137,37 @@ export class PreferencesSettingsComponent implements OnInit {
       };
       if (this.saveUpdateFlag.prefix != undefined && this.saveUpdateFlag.nextNumber != undefined) {
         this.subscription.updatePreferenceInvoiceQuotationsSubscription(obj).subscribe(
-          data =>{
+          data => {
             this.savePrefixResponse(data);
           },
-          err=>{
+          err => {
             console.log(err, "updatePreferenceInvoiceQuotationsSubscription error");
             this.barButtonOptions.active = false;
           }
         );
       } else {
         this.subscription.savePreferenceInvoiceQuotationsSubscription(obj).subscribe(
-          data =>{
+          data => {
             this.savePrefixResponse(data);
           },
-          err=>{
+          err => {
             console.log(err, "savePreferenceInvoiceQuotationsSubscription error");
             this.barButtonOptions.active = false;
           }
         );
       }
     }
-
   }
 
   savePrefixResponse(data) {
-    console.log(data, "prefixData check");  
+    console.log(data, "prefixData check");
     this.barButtonOptions.active = false;
     this.prefixData.get('prefix').setValue(data.prefix);
     this.prefixData.get('nextNo').setValue(data.nextNumber);
     // this.prefixData = data;
   }
 
-  resetPrefix(){
+  resetPrefix() {
 
     this.prefixData.get('prefix').setValue(this.saveUpdateFlag.prefix);
     this.prefixData.get('nextNo').setValue(this.saveUpdateFlag.nextNumber);
