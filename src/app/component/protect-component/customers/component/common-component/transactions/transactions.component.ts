@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./transactions.component.scss']
 })
 export class TransactionsComponent implements OnInit {
-  displayedColumns = ['srno', 'type', 'date', 'amt','nav','unit','bunit','days','icons'];
+  displayedColumns = ['srno', 'type', 'date', 'amt', 'nav', 'unit', 'bunit', 'days', 'icons'];
   dataSource = ELEMENT_DATA;
 
   constructor() { }
@@ -20,14 +20,14 @@ export interface PeriodicElement {
   type: string;
   date: string;
   amt: string;
-  nav:string;
-  unit:string;
-  bunit:string;
-  days:string;
+  nav: string;
+  unit: string;
+  bunit: string;
+  days: string;
 
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {srno: '1', type: 'Purchase', date: '14/05/2015', amt: '2,500',nav:'10.20',unit:'129.24',bunit:'129.24',days:'180'},
-  {srno: '2', type: 'SIP', date: '14/05/2015', amt: '2,500',nav:'10.20',unit:'129.24',bunit:'129.24',days:'180'},
+  { srno: '1', type: 'Purchase', date: '14/05/2015', amt: '2,500', nav: '10.20', unit: '129.24', bunit: '129.24', days: '180' },
+  { srno: '2', type: 'SIP', date: '14/05/2015', amt: '2,500', nav: '10.20', unit: '129.24', bunit: '129.24', days: '180' },
 ];
