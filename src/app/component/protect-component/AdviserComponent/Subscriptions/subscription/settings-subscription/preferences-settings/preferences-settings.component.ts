@@ -130,15 +130,14 @@ export class PreferencesSettingsComponent implements OnInit {
         // advisorId: 2735,
         advisorId: this.advisorId,
         id: 0,
-        nextNumber: parseInt(this.prefixData.controls.nextNo.value),
-        prefix: this.prefixData.controls.prefix.value,
+        nextNumber: parseInt(this.prefixData.value.nextNo),
+        prefix: this.prefixData.value.prefix,
         type: data
       };
       if (this.saveUpdateFlag.prefix != undefined && this.saveUpdateFlag.nextNumber != undefined) {
         this.subscription.updatePreferenceInvoiceQuotationsSubscription(obj).subscribe(
           data =>{
             this.savePrefixResponse(data);
-            this.barButtonOptions.active = false;
           },
           err=>{
             console.log(err, "updatePreferenceInvoiceQuotationsSubscription error");
@@ -149,7 +148,6 @@ export class PreferencesSettingsComponent implements OnInit {
         this.subscription.savePreferenceInvoiceQuotationsSubscription(obj).subscribe(
           data =>{
             this.savePrefixResponse(data);
-            this.barButtonOptions.active = false;
           },
           err=>{
             console.log(err, "savePreferenceInvoiceQuotationsSubscription error");
@@ -163,7 +161,10 @@ export class PreferencesSettingsComponent implements OnInit {
 
   savePrefixResponse(data) {
     console.log(data, "prefixData check");  
-    this.prefixData = data;
+    this.barButtonOptions.active = false;
+    this.prefixData.get('nextNo').setValue(data.prefix);
+    this.prefixData.get('nextNo').setValue(data.nextNumber);
+    // this.prefixData = data;
   }
 
   getProfileBillerDataResponse(data) {
