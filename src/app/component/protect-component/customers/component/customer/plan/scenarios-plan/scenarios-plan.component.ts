@@ -21,7 +21,7 @@ export class ScenariosPlanComponent implements OnInit {
   dataSource = ELEMENT_DATA;
   displayedColumns2: string[] = ['member', 'year', 'status'];
   dataSource2 = ELEMENT_DATA2;
-
+  isLoading = false;
   ngOnInit() {
     // this.flowCash('')
     this.pieChartProposed('');
