@@ -37,9 +37,9 @@ export class RecordPaymentComponent implements OnInit {
   ];
   ngOnInit() {
     console.log(this.padding);
+    this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
     this.advisorId = AuthService.getAdvisorId();
     this.getRecordPayment(this.InvRecordData);
-    this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
   }
   getRecordPayment(data) {
     this.balDue = data.balanceDue

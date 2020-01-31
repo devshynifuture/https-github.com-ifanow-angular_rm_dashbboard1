@@ -230,15 +230,16 @@ export class InvoiceComponent implements OnInit {
       this.showPaymentRecive = true;
     }
     if (data) {
-
-      this.feeCollectionMode.forEach(o => {
-        o.value = parseInt(o.value);
-        this.dataSource.forEach(sub => {
-          if (o.value == sub.paymentMode) {
-            sub.paymentMode = o.name;
-          }
+      if(this.feeCollectionMode!=undefined){
+        this.feeCollectionMode.forEach(o => {
+          o.value = parseInt(o.value);
+          this.dataSource.forEach(sub => {
+            if (o.value == sub.paymentMode) {
+              sub.paymentMode = o.name;
+            }
+          });
         });
-      });
+      }
     }
   }
 
@@ -675,8 +676,9 @@ export class InvoiceComponent implements OnInit {
     } else if (this.feeCalc == true) {
       this.feeCalc = false;
     } else {
-
       (this.invoiceTab == 'invoiceUpperSlider') ? this.subInjectService.rightSliderData(state) : this.subInjectService.rightSideData(state);
+      this.subInjectService.changeNewRightSliderState({ state: 'close'});
+      this.subInjectService.changeUpperRightSliderState({ state: 'close'});
       this.valueChange.emit(closeObj);
     }
 
