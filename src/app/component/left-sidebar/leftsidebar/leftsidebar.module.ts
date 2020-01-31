@@ -8,7 +8,7 @@ import {SubscriptionEntry} from '../../protect-component/AdviserComponent/Subscr
 import {SubscriptionUpperEntry} from '../../protect-component/AdviserComponent/Subscriptions/subscription-upper-entry-module';
 import {LeftsidebarComponent} from './leftsidebar.component';
 import {CalendarModule} from '../../protect-component/AdviserComponent/Activities/calendar/calendar.module';
-import {DynamicComponentService} from "../../../services/dynamic-component.service";
+import {DynamicComponentService} from '../../../services/dynamic-component.service';
 
 
 @NgModule({
