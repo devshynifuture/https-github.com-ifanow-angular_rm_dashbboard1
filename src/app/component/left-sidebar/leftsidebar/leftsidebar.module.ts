@@ -7,7 +7,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SubscriptionEntry} from '../../protect-component/AdviserComponent/Subscriptions/subscription.entry.module';
 import {SubscriptionUpperEntry} from '../../protect-component/AdviserComponent/Subscriptions/subscription-upper-entry-module';
 import {LeftsidebarComponent} from './leftsidebar.component';
-import {CustomCommonModule} from '../../../common/custom.common.module';
 import {CalendarModule} from '../../protect-component/AdviserComponent/Activities/calendar/calendar.module';
 import {DynamicComponentService} from "../../../services/dynamic-component.service";
 
@@ -21,7 +20,6 @@ import {DynamicComponentService} from "../../../services/dynamic-component.servi
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    CustomCommonModule,
     SubscriptionEntry,
     SubscriptionUpperEntry,
     LeftsidebarRoutingModule,

@@ -36,7 +36,9 @@ export const componentList = [
     ReactiveFormsModule,
     CommonComponentModule,
     CustomDirectiveModule,
-    SubscriptionUpperEntry
+    SubscriptionUpperEntry,
+    CustomCommonModule
+
   ],
   exports: [componentList],
   // entryComponents: [componentList],

@@ -33,12 +33,12 @@
                 </div>
 
                 <div class="col-md-3 right text-right p-0">
-                    <i class="material-icons mr-12 icon-light c-p v-sub">
+                    <!-- <i class="material-icons mr-12 icon-light c-p v-sub">
                         search
                     </i>
                     <button (click)="showFilters(showFilter)" class="btn-default addon mr-12" mat-stroked-button><i
                             class="material-icons">filter_list</i>FILTERS
-                    </button>
+                    </button> -->
                     <button class="btn-primary addon" mat-stroked-button (click)="addQuotation('addQuotation')"> ADD NEW
                     </button>
                 </div>
@@ -145,7 +145,7 @@
 
     <div class="row" *ngIf="dataSource.data.length == 0">
         <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
-            <img class="width200" src="assets/images/svg/no-data-found.svg">
+            <img class="width200" src="assets/images/svg/noDataFound.svg">
             <p class="f-22 f-600 pt-28"> No Data Found </p>
             <button mat-stroked-button class="btn-primary mt-20 br-0 right text-right addon" (click)="addQuotation('addQuotation')"> ADD
                 QUOTATION
