@@ -3,6 +3,9 @@ import { MatDialog } from '@angular/material';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { SelectAdviceComponent } from '../select-advice/select-advice.component';
+import { FixedDepositComponent } from '../../../accounts/assets/fixedIncome/fixed-deposit/fixed-deposit.component';
+import { RecuringDepositComponent } from '../../../accounts/assets/fixedIncome/recuring-deposit/recuring-deposit.component';
+import { BondsComponent } from '../../../accounts/assets/fixedIncome/bonds/bonds.component';
 
 @Component({
   selector: 'app-advice-fixed-income',
@@ -12,7 +15,7 @@ import { SelectAdviceComponent } from '../select-advice/select-advice.component'
 export class AdviceFixedIncomeComponent implements OnInit {
   displayedColumns3: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'advice', 'astatus', 'adate', 'icon'];
   dataSource3 = ELEMENT_DATA3;
-  constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject,private utilService :UtilService) { }
+  constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private utilService: UtilService) { }
 
   ngOnInit() {
   }
@@ -35,7 +38,77 @@ export class AdviceFixedIncomeComponent implements OnInit {
       }
     );
   }
+  openFixedDeposit(value,data){
+    const fragmentData = {
+      flag: value,
+      data,
+      id: 1,
+      state: 'open',
+      componentName: FixedDepositComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            // this.getFixedDepositList();
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
+          rightSideDataSub.unsubscribe();
+        }
+
+      }
+    );
+  }
+  openRecurringDeposit(value,data){
+    const fragmentData = {
+      flag: value,
+      data,
+      id: 1,
+      state: 'open',
+      componentName: RecuringDepositComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            // this.getFixedDepositList();
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
+          rightSideDataSub.unsubscribe();
+        }
+
+      }
+    );
+  }
+  openBond(value,data){
+    const fragmentData = {
+      flag: value,
+      data,
+      id: 1,
+      state: 'open',
+      componentName: BondsComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            // this.getFixedDepositList();
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
+          rightSideDataSub.unsubscribe();
+        }
+
+      }
+    );
+  }
 }
+
 export interface PeriodicElement3 {
   name: string;
   position: string;

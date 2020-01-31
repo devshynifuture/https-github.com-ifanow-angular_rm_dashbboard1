@@ -61,7 +61,7 @@ export class SingleDocumentViewComponent implements OnInit {
   editDocument() {
     console.log('hello mf button clicked');
     const fragmentData = {
-      flag: 'openUpper',
+      flag: 'document',
       id: 1,
       data: { documentData: this.singleDocument, flag: 'documents' },
       // direction: 'top',

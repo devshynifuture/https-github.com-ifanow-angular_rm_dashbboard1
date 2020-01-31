@@ -36,6 +36,7 @@ import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
 import {SudscriptionTableFilterComponent} from './subscription/common-subscription-component/sudscription-table-filter/sudscription-table-filter.component';
 import {SetDateFooter} from './subscription/common-subscription-component/sudscription-table-filter/set-date-footer.component';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
 
 
 export const componentList = [SubscriptionComponent,
@@ -104,13 +105,13 @@ export const componentList = [SubscriptionComponent,
     }),
     ChartModule, SatDatepickerModule, SatNativeDateModule,
     FroalaEditorModule.forRoot(), FroalaViewModule.forRoot(),
+    SubscriptionEntry,
     CustomHtmlModule,
     CommonComponentModule,
     CustomDirectiveModule,
     SubscriptionRoutingModule,
-    SubscriptionEntry,
     SubscriptionUpperEntry,
-    // CustomCommonModule
+    CustomCommonModule
     // AppModule
   ],
   exports: componentList,

@@ -21,7 +21,9 @@ export class InsurancePlanComponent implements OnInit {
 
   constructor(private subInjectService: SubscriptionInject) {
   }
-  isLoading = false;
+
+  isLoading = true;
+
   ngOnInit() {
   }
 
@@ -68,6 +70,7 @@ export class InsurancePlanComponent implements OnInit {
       }
     );
   }
+
   opensuggestpolicy(data) {
     this.isLoading = true;
     const fragmentData = {
@@ -89,6 +92,7 @@ export class InsurancePlanComponent implements OnInit {
       }
     );
   }
+
   opencurrentpolicies(data) {
     this.isLoading = true;
     const fragmentData = {
