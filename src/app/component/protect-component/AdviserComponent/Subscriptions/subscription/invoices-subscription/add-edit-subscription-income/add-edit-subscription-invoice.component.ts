@@ -5,6 +5,7 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { SubscriptionService } from '../../../subscription.service';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-edit-subscription-invoice',
@@ -12,6 +13,21 @@ import { EnumServiceService } from 'src/app/services/enum-service.service';
   styleUrls: ['./add-edit-subscription-invoice.component.scss']
 })
 export class AddEditSubscriptionInvoiceComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'primary',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  }
   validatorType = ValidatorType;
   editPayment: FormGroup;
   igstTaxAmount: any;
@@ -285,6 +301,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       this.showErr = true;
       return;
     } else {
+      this.barButtonOptions.active = true;
       let obj = {
         clientName: this.editPayment.value.clientName,
         billerAddress: this.editPayment.value.billerAddress,
@@ -342,6 +359,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   updateInvoiceInfoRes(data) {
     console.log('updateInvoiceInfoRes', data);
     if (data == 1) {
+      this.barButtonOptions.active = false;
       this.cancelAddInvoice.emit(false);
       this.Close('close', true);
     }
@@ -363,7 +381,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     // console.log(service,'pricing ====== ',service.price)
   }
   getClientListRes(data) {
-    console.log('getClientListRes', data.payees);
+    console.log('getClientListRes', data);
     this.clientList = data.payees;
     this.billerName = data.biller.companyDisplayName
     this.defaultVal = data;
@@ -392,6 +410,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   addInvoiceRes(data) {
     console.log('addInvoiceRes', data);
     if (data == 1) {
+      this.barButtonOptions.active = false;
       this.cancelAddInvoice.emit(true);
       // this.Close('close', true);
     }
