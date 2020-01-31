@@ -24,7 +24,10 @@ export class RecordPaymentComponent implements OnInit {
   balDue: any;
   tdsAmt: any;
   showError = false;
-
+  feeMode=[{name:"Cheque",selected:false,value:1},{name:"NEFT",selected:false,value:2},
+  {name:"Cash",selected:false,value:3},{name:"ECS mandate",selected:false,value:4},{name:"Bank transfer",selected:false,value:5},
+  {name:"Debit card",selected:false,value:6},{name:"Credit card",selected:false,value:7},{name:"NACH mandate",selected:false,value:8}]
+  
   constructor(public subService: SubscriptionService, private fb: FormBuilder, public enumService: EnumServiceService, public AuthService: AuthService, public utils: UtilService) { }
   @Input() InvRecordData;
   @Input() padding;
@@ -38,6 +41,9 @@ export class RecordPaymentComponent implements OnInit {
   ngOnInit() {
     console.log(this.padding);
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
+    if(this.feeCollectionMode==undefined){
+      this.feeCollectionMode=this.feeMode
+    }
     this.advisorId = AuthService.getAdvisorId();
     this.getRecordPayment(this.InvRecordData);
   }
