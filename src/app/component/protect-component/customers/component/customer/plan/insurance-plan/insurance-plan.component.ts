@@ -21,7 +21,7 @@ export class InsurancePlanComponent implements OnInit {
 
   constructor(private subInjectService: SubscriptionInject) {
   }
-  isLoading: true;
+  isLoading = false;
   ngOnInit() {
   }
 
