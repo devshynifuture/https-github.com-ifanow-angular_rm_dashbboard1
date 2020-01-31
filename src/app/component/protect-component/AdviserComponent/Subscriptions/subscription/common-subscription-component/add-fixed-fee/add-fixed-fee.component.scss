@@ -27,3 +27,12 @@
 .height38 {
     height: 38px;
 }
+
+::ng-deep .radioBtn .mat-radio-label {
+    min-width: 152px;
+    height: 45px;
+    display: flex !important;
+    justify-content: left;
+    align-items: center;
+    padding-left: 10px !important;
+}

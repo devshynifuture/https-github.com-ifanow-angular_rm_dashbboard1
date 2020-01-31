@@ -70,7 +70,7 @@
                         <img matTooltip="Delete" (click)="deleteModal('INVOICE',storeData.id)" class="b-a wrapper-9 ml-8 c-p" src="assets/images/svg/delete.svg">
                     </div>
                     <div class="right text-right" [ngClass]="storeData.status !=1? 'col-md-3' : 'col-md-5'">
-                        <button (click)="recordPayment()" class="btn-primary br-0 mb-12" *ngIf="rpyment==true" mat-stroked-button>RECORD
+                        <button (click)="recordPayment()" class="btn-primary br-0 " *ngIf="rpyment==true" mat-stroked-button>RECORD
                             PAYMENT
                         </button>
                     </div>
@@ -84,7 +84,7 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div #invoiceTemplate id="template" *ngIf="showRecord==false && feeCalc==false" class="b-a m-20 pb-28 scrollArrow max-height-100">
+                <div #invoiceTemplate id="template" *ngIf="showRecord==false && feeCalc==false" class="b-a m-16 mt-12 pb-28 scrollArrow max-height-100">
                     <div class="p-16">
                         <div class="row">
                             <div class="col-md-8">

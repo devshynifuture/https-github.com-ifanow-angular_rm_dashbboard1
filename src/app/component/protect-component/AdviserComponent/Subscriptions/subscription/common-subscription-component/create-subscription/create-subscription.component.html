@@ -57,9 +57,9 @@
                     <div class="col-md-6">
                         <mat-radio-group aria-label="Select an option" formControlName="invoiceSendingMode">
                             <mat-radio-button value="1" [ngClass]="{'b-a-custom':subscriptionDetails.get('invoiceSendingMode').value==1,'text-primary':subscriptionDetails.get('invoiceSendingMode').value==1,'b-a':subscriptionDetails.get('invoiceSendingMode').value==2}" checked="true"
-                                class="wrapper-8 custom-radio">Automatic
+                                class="radioBtn custom-radio">Automatic
                             </mat-radio-button>
-                            <mat-radio-button value="2" [ngClass]="{'b-a-custom':subscriptionDetails.get('invoiceSendingMode').value==2,'text-primary':subscriptionDetails.get('invoiceSendingMode').value==2,'b-a':subscriptionDetails.get('invoiceSendingMode').value==1}" class="wrapper-8 custom-radio">Manual
+                            <mat-radio-button value="2" [ngClass]="{'b-a-custom':subscriptionDetails.get('invoiceSendingMode').value==2,'text-primary':subscriptionDetails.get('invoiceSendingMode').value==2,'b-a':subscriptionDetails.get('invoiceSendingMode').value==1}" class="radioBtn custom-radio">Manual
                             </mat-radio-button>
                         </mat-radio-group>
                     </div>
