@@ -4,12 +4,13 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { PreferenceEmailInvoiceComponent } from '../../common-subscription-component/preference-email-invoice/preference-email-invoice.component';
 import { AuthService } from '../../../../../../../auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
 import { BillerProfileAdvisorComponent } from '../../common-subscription-component/biller-profile-advisor/biller-profile-advisor.component';
 import { SubscriptionDataService } from '../../../subscription-data.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-preferences-settings',
@@ -17,6 +18,21 @@ import { SubscriptionDataService } from '../../../subscription-data.service';
   styleUrls: ['./preferences-settings.component.scss']
 })
 export class PreferencesSettingsComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE',
+    buttonColor: 'primary',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  }
   storeData: any;
   advisorId;
   viewMode = 'tab1';
@@ -27,7 +43,7 @@ export class PreferencesSettingsComponent implements OnInit {
     public dialog: MatDialog, private subscription: SubscriptionService,
     public subInjectService: SubscriptionInject, private eventService: EventService, private utilservice: UtilService) {
   }
-  prefixData;
+  prefixData:FormGroup;
   isLoading = false;
   billerProfileData: Array<any>;
   // PrefixData;
@@ -104,28 +120,51 @@ export class PreferencesSettingsComponent implements OnInit {
   }
 
   savePrefix(data) {
-    const obj = {
-      // advisorId: 2735,
-      advisorId: this.advisorId,
-      id: 0,
-      nextNumber: parseInt(this.prefixData.controls.nextNo.value),
-      prefix: this.prefixData.controls.prefix.value,
-      type: data
-    };
-    if (this.saveUpdateFlag.prefix != undefined && this.saveUpdateFlag.prefix != undefined) {
-      this.subscription.updatePreferenceInvoiceQuotationsSubscription(obj).subscribe(
-        data => this.savePrefixResponse(data)
-      );
-    } else {
-      this.subscription.savePreferenceInvoiceQuotationsSubscription(obj).subscribe(
-        data => this.savePrefixResponse(data)
-      );
+    if(this.prefixData.invalid){
+      this.prefixData.get('prefix').markAsTouched();
+      this.prefixData.get('nextNo').markAsTouched();
+    }
+    else{
+      this.barButtonOptions.active = true;
+      const obj = {
+        // advisorId: 2735,
+        advisorId: this.advisorId,
+        id: 0,
+        nextNumber: parseInt(this.prefixData.value.nextNo),
+        prefix: this.prefixData.value.prefix,
+        type: data
+      };
+      if (this.saveUpdateFlag.prefix != undefined && this.saveUpdateFlag.nextNumber != undefined) {
+        this.subscription.updatePreferenceInvoiceQuotationsSubscription(obj).subscribe(
+          data =>{
+            this.savePrefixResponse(data);
+          },
+          err=>{
+            console.log(err, "updatePreferenceInvoiceQuotationsSubscription error");
+            this.barButtonOptions.active = false;
+          }
+        );
+      } else {
+        this.subscription.savePreferenceInvoiceQuotationsSubscription(obj).subscribe(
+          data =>{
+            this.savePrefixResponse(data);
+          },
+          err=>{
+            console.log(err, "savePreferenceInvoiceQuotationsSubscription error");
+            this.barButtonOptions.active = false;
+          }
+        );
+      }
     }
 
   }
 
   savePrefixResponse(data) {
-    this.prefixData = data;
+    console.log(data, "prefixData check");  
+    this.barButtonOptions.active = false;
+    this.prefixData.get('nextNo').setValue(data.prefix);
+    this.prefixData.get('nextNo').setValue(data.nextNumber);
+    // this.prefixData = data;
   }
 
   getProfileBillerDataResponse(data) {
@@ -138,8 +177,8 @@ export class PreferencesSettingsComponent implements OnInit {
     this.isLoading = false;
     this.saveUpdateFlag = data;
     this.prefixData = this.fb.group({
-      prefix: [data.prefix],
-      nextNo: [data.nextNumber]
+      prefix: [data.prefix, [Validators.required]],
+      nextNo: [data.nextNumber, [Validators.required]]
     });
 
   }
