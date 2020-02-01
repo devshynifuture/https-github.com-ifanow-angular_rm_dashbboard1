@@ -12,7 +12,7 @@ import { BankAccountsComponent } from '../../../accounts/assets/cash&bank/bank-a
   styleUrls: ['./advice-cash-and-hand.component.scss']
 })
 export class AdviceCashAndHandComponent implements OnInit {
-  displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'advice', 'astatus', 'adate', 'icon'];
+  displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'balance','advice', 'astatus', 'adate', 'icon'];
   dataSource3 = ELEMENT_DATA1;
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, ) { }
 
@@ -69,6 +69,7 @@ export class AdviceCashAndHandComponent implements OnInit {
 export interface PeriodicElement1 {
   name: string;
   desc: string;
+  balance: string;
   advice: string;
   adate: string;
   astatus: string;
@@ -76,7 +77,7 @@ export interface PeriodicElement1 {
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
-  { name: 'Rahul Jain', desc: '1', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-  { name: 'Rahul Jain', desc: '2', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
+  { name: 'Rahul Jain', desc: '1',balance:'20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
+  { name: 'Rahul Jain', desc: '2',balance:'20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
 
 ];

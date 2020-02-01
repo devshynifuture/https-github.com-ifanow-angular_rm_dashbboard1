@@ -78,6 +78,10 @@
             <th mat-header-cell *matHeaderCellDef> Description </th>
             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
         </ng-container>
+        <ng-container matColumnDef="balance">
+            <th mat-header-cell *matHeaderCellDef> Balance mentioned </th>
+            <td mat-cell *matCellDef="let element"> {{element.balance}} </td>
+        </ng-container>
         <ng-container matColumnDef="advice">
             <th mat-header-cell *matHeaderCellDef> Advice </th>
             <td mat-cell *matCellDef="let element"> {{element.astatus}} </td>
@@ -133,6 +137,10 @@
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef> Description </th>
             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="balance">
+            <th mat-header-cell *matHeaderCellDef> Cash balance </th>
+            <td mat-cell *matCellDef="let element"> {{element.balance}} </td>
         </ng-container>
         <ng-container matColumnDef="advice">
             <th mat-header-cell *matHeaderCellDef> Advice </th>
