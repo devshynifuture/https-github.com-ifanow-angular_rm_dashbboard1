@@ -229,7 +229,8 @@
   }
 }
 
-#ui-subscriptions {
+#ui-subscriptions,
+#ui-transactions {
   h3.top-head {
     padding-left: 20px !important;
     padding-top: 20px !important;
@@ -947,7 +948,7 @@ mat-tab-group[vertical] {
 
   .mat-tab-link {
     height: auto;
-    color: #fff !important;
+    color: #fff;
     padding: 0;
     min-width: 110px !important;
     opacity: 1;
