@@ -5,7 +5,7 @@
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle" (click)="Close('close');fixedFeeData.reset()"> clear</i>
+                <i (click)="Close()" class="material-icons c-p pt-8 v-middle"> clear</i>
             </div>
         </div>
     </div>
@@ -149,8 +149,8 @@
             <h5 class="m-0 pt-28">Enter amount</h5>
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #employeeContry type="text" (keypress)="utils.keyPress($event)" maxlength="10"
-                        class="form-control br-0 rupess" formControlName="employeeContry">
+                  <input #employeeContry matInput maxlength="10" type="text"
+                         class="form-control br-0 rupess" formControlName="employeeContry">
 
                 </mat-form-field>
                 <p class="m-0 f-12 text-custom">Min amount: ₹500</p>

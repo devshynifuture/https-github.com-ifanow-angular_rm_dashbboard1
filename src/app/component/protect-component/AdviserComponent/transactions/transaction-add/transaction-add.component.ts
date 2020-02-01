@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-transaction-add',
@@ -6,10 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./transaction-add.component.scss']
 })
 export class TransactionAddComponent implements OnInit {
+  myControl;
+  option;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
 
+  Close() {
+
+  }
 }
