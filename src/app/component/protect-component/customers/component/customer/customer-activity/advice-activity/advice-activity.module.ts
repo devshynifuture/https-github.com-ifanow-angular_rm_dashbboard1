@@ -18,10 +18,16 @@ import { AdviceGeneralInsuranceComponent } from './advice-general-insurance/advi
 import { AdviceMutualFundComponent } from './advice-mutual-fund/advice-mutual-fund.component';
 import { AdviceAssetsComponent } from './advice-assets/advice-assets.component';
 import { AdviceStocksComponent } from './advice-stocks/advice-stocks.component';
+import { AllAdviceFixedDepositComponent } from './advice-fixed-income/all-advice-fixed-deposit/all-advice-fixed-deposit.component';
+import { AllAdviceRealAssetComponent } from './advice-real-asset/all-advice-real-asset/all-advice-real-asset.component';
+import { AllRetrirementAssetComponent } from './advice-retirement-account/all-retrirement-asset/all-retrirement-asset.component';
+import { AllAdviceSmallSavingsSchemeComponent } from './advice-small-saving-scheme/all-advice-small-savings-scheme/all-advice-small-savings-scheme.component';
+import { AllAdviceCashAndHandComponent } from './advice-cash-and-hand/all-advice-cash-and-hand/all-advice-cash-and-hand.component';
+import { AllAdviceCommoditiesComponent } from './advice-commodities/all-advice-commodities/all-advice-commodities.component';
 
 
 @NgModule({
-  declarations: [AdviceActivityComponent, AdviceFixedIncomeComponent, AdviceRealAssetComponent, AdviceAllPortfolioComponent, AdviceRetirementAccountComponent, AdviceSmallSavingSchemeComponent, AdviceCommoditiesComponent, AdviceCashAndHandComponent, AdviceLibilitiesComponent, AdviceLifeInsuranceComponent, AdviceGeneralInsuranceComponent, AdviceMutualFundComponent, AdviceAssetsComponent, AdviceStocksComponent],
+  declarations: [AdviceActivityComponent, AdviceFixedIncomeComponent, AdviceRealAssetComponent, AdviceAllPortfolioComponent, AdviceRetirementAccountComponent, AdviceSmallSavingSchemeComponent, AdviceCommoditiesComponent, AdviceCashAndHandComponent, AdviceLibilitiesComponent, AdviceLifeInsuranceComponent, AdviceGeneralInsuranceComponent, AdviceMutualFundComponent, AdviceAssetsComponent, AdviceStocksComponent, AllAdviceFixedDepositComponent, AllAdviceRealAssetComponent, AllRetrirementAssetComponent, AllAdviceSmallSavingsSchemeComponent, AllAdviceCashAndHandComponent, AllAdviceCommoditiesComponent],
   imports: [
     CommonModule,
     AdviceActivityRoutingModule,

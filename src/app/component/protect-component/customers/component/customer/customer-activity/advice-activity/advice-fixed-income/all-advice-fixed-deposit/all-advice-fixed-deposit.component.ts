@@ -2,24 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
-import { SelectAdviceComponent } from '../select-advice/select-advice.component';
-import { FixedDepositComponent } from '../../../accounts/assets/fixedIncome/fixed-deposit/fixed-deposit.component';
-import { RecuringDepositComponent } from '../../../accounts/assets/fixedIncome/recuring-deposit/recuring-deposit.component';
-import { BondsComponent } from '../../../accounts/assets/fixedIncome/bonds/bonds.component';
+import { SelectAdviceComponent } from '../../select-advice/select-advice.component';
+import { FixedDepositComponent } from '../../../../accounts/assets/fixedIncome/fixed-deposit/fixed-deposit.component';
+import { RecuringDepositComponent } from '../../../../accounts/assets/fixedIncome/recuring-deposit/recuring-deposit.component';
+import { BondsComponent } from '../../../../accounts/assets/fixedIncome/bonds/bonds.component';
 
 @Component({
-  selector: 'app-advice-fixed-income',
-  templateUrl: './advice-fixed-income.component.html',
-  styleUrls: ['./advice-fixed-income.component.scss']
+  selector: 'app-all-advice-fixed-deposit',
+  templateUrl: './all-advice-fixed-deposit.component.html',
+  styleUrls: ['./all-advice-fixed-deposit.component.scss']
 })
+export class AllAdviceFixedDepositComponent implements OnInit {
 
-export class AdviceFixedIncomeComponent implements OnInit {
   displayedColumns3: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'advice', 'astatus', 'adate', 'icon'];
   dataSource3 = ELEMENT_DATA3;
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private utilService: UtilService) { }
-  allAdvice = false;
+
   ngOnInit() {
   }
+  allAdvice = true;
   openselectAdvice(data) {
     const fragmentData = {
       flag: 'openselectAdvice',

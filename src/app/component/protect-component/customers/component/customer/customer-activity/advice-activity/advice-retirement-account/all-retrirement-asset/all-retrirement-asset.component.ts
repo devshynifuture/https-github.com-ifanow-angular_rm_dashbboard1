@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { NpsSummaryPortfolioComponent } from '../../../accounts/assets/retirementAccounts/add-nps/nps-summary-portfolio/nps-summary-portfolio.component';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { NpsSchemeHoldingComponent } from '../../../accounts/assets/retirementAccounts/add-nps/nps-scheme-holding/nps-scheme-holding.component';
-import { AddEPFComponent } from '../../../accounts/assets/retirementAccounts/add-epf/add-epf.component';
-import { AddGratuityComponent } from '../../../accounts/assets/retirementAccounts/add-gratuity/add-gratuity.component';
-import { AddSuperannuationComponent } from '../../../accounts/assets/retirementAccounts/add-superannuation/add-superannuation.component';
-import { AddEPSComponent } from '../../../accounts/assets/retirementAccounts/add-eps/add-eps.component';
+import { AddEPFComponent } from '../../../../accounts/assets/retirementAccounts/add-epf/add-epf.component';
+import { NpsSchemeHoldingComponent } from '../../../../accounts/assets/retirementAccounts/add-nps/nps-scheme-holding/nps-scheme-holding.component';
+import { NpsSummaryPortfolioComponent } from '../../../../accounts/assets/retirementAccounts/add-nps/nps-summary-portfolio/nps-summary-portfolio.component';
+import { AddGratuityComponent } from '../../../../accounts/assets/retirementAccounts/add-gratuity/add-gratuity.component';
+import { AddSuperannuationComponent } from '../../../../accounts/assets/retirementAccounts/add-superannuation/add-superannuation.component';
+import { AddEPSComponent } from '../../../../accounts/assets/retirementAccounts/add-eps/add-eps.component';
 
 @Component({
-  selector: 'app-advice-retirement-account',
-  templateUrl: './advice-retirement-account.component.html',
-  styleUrls: ['./advice-retirement-account.component.scss']
+  selector: 'app-all-retrirement-asset',
+  templateUrl: './all-retrirement-asset.component.html',
+  styleUrls: ['./all-retrirement-asset.component.scss']
 })
-export class AdviceRetirementAccountComponent implements OnInit {
+export class AllRetrirementAssetComponent implements OnInit {
   displayedColumns: string[] = ['checkbox', 'name', 'desc', 'cvalue', 'empcon', 'emprcon', 'advice', 'astatus', 'adate', 'icon'];
   dataSource = ELEMENT_DATA;
   displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'advice', 'astatus', 'adate', 'icon'];
@@ -22,7 +22,7 @@ export class AdviceRetirementAccountComponent implements OnInit {
 
   ngOnInit() {
   }
-  allAdvice = false;
+  allAdvice = true;
   openAddEPF(data) {
     const fragmentData = {
       flag: 'addEPF',

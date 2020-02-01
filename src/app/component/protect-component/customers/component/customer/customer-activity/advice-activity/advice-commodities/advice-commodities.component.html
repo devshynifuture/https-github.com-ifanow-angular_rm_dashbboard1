@@ -1,9 +1,9 @@
-<div class="wrapper-20">
+<div class="wrapper-20" *ngIf="allAdvice == false">
     <div class="row">
         <div class="col-md-6 p-0">
-            <button mat-stroked-button class="btn-primary mr-12 br-0" (click)="openselectAdvice(null)">Advice
+            <button mat-stroked-button class="btn-primary mr-12 br-0" >Advice
                 given</button>
-            <button mat-stroked-button class="text-primary br-0 b-priamry">All Fixed income</button>
+            <button mat-stroked-button class="text-primary br-0 b-priamry " (click) = "allAdvice = true">All commodities</button>
         </div>
         <div class="col-md-6 p-0 text-right">
             <button mat-button [matMenuTriggerFor]="menu" class="right b-a br-0 pr-8">Scenario 2<i
@@ -169,4 +169,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
     </table>
+</div>
+<div *ngIf="allAdvice == true"> 
+    <app-all-advice-commodities></app-all-advice-commodities>
 </div>

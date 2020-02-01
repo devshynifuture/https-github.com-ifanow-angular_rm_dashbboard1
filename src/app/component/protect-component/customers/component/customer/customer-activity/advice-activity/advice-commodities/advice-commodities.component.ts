@@ -16,6 +16,7 @@ export class AdviceCommoditiesComponent implements OnInit {
 
   ngOnInit() {
   }
+  allAdvice = false
   openCommodities(value, state, data) {
     const fragmentData = {
       flag: value,
