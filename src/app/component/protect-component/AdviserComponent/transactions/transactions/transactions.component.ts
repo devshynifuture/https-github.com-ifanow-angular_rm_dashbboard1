@@ -1,8 +1,8 @@
-import { UtilService } from './../../../../../services/util.service';
-import { SubscriptionInject } from './../../Subscriptions/subscription-inject.service';
-import { Component, OnInit } from '@angular/core';
-import { EventService } from 'src/app/Data-service/event.service';
-import { TransactionAddComponent } from './../transaction-add/transaction-add.component';
+import {UtilService} from './../../../../../services/util.service';
+import {SubscriptionInject} from './../../Subscriptions/subscription-inject.service';
+import {Component, OnInit} from '@angular/core';
+import {EventService} from 'src/app/Data-service/event.service';
+import {TransactionAddComponent} from './../transaction-add/transaction-add.component';
 
 @Component({
   selector: 'app-transactions',
@@ -11,19 +11,21 @@ import { TransactionAddComponent } from './../transaction-add/transaction-add.co
 })
 export class TransactionsComponent implements OnInit {
 
-  constructor(private eventService: EventService, private subInjectService: SubscriptionInject) { }
-
-  ngOnInit() {
+  constructor(private eventService: EventService, private subInjectService: SubscriptionInject) {
   }
 
   _value: number;
+
   set value(value: number) {
     console.log('now value is ->>>>', value);
     this._value = value;
   }
 
+  ngOnInit() {
+  }
+
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 
   openNewTransaction() {
@@ -44,5 +46,9 @@ export class TransactionsComponent implements OnInit {
         }
       }
     );
+  }
+
+  tabClick(event) {
+
   }
 }
