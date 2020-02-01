@@ -136,7 +136,7 @@
                                 more_vert
                             </i>
                             <mat-menu #menu="matMenu">
-                                <a (click)="openPlanSlider('SUBSCRIPTIONS','open',element)" mat-menu-item>
+                                <a (click)="Open('open',element)" mat-menu-item>
                                     View fee structure</a>
                                 <a class="bt-1" (click)="openPlanSlider('billerSettings','open',element)" *ngIf="element.status!=4" mat-menu-item>Change
                                     Biller</a>
