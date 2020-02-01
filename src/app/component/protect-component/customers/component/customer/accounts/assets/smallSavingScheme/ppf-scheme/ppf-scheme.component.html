@@ -89,7 +89,7 @@
                     </i>
                     <mat-menu #menubank="matMenu">
                         <button mat-menu-item (click)="openAddPPF(element)">Edit</button>
-                        <button mat-menu-item>Detailed view</button>
+                        <button mat-menu-item (click)="openDetailPPF(element)">Detailed view</button>
                         <button mat-menu-item>Activity</button>
                         <button mat-menu-item (click)="deleteModal('SUBSCRIPTION',element)">Delete</button>
                     </mat-menu>

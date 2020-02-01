@@ -8,6 +8,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog, MatTableDataSource, MatSort } from '@angular/material';
 import { ExcelService } from '../../../../excel.service';
+import { DetailedPpfComponent } from './detailed-ppf/detailed-ppf.component';
 
 @Component({
   selector: 'app-ppf-scheme',
@@ -98,6 +99,31 @@ export class PPFSchemeComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
 
     });
+  }
+  openDetailPPF(data) {
+
+    console.log('this is detailed potd data', data);
+    const fragmentData = {
+      flag: 'detailPoTd',
+      data,
+      id: 1,
+      state: 'open35',
+      componentName: DetailedPpfComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getPpfSchemeData();
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
+          rightSideDataSub.unsubscribe();
+        }
+        
+      }
+    );
   }
   openAddPPF(data) {
     const fragmentData = {
