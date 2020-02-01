@@ -45,7 +45,7 @@
 
         </div>
     </div>
-    <div class="example-container mt-8 p-0 col-md-12 real-estate">
+    <div class="mt-8 p-0 col-md-12 real-estate">
         <div class="overflow-hidden">
             <table *ngIf="datasource3.filteredData.length > 0" matSort mat-table [dataSource]="datasource3" id="table-low" class=" skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no">
@@ -136,8 +136,8 @@
             </table>
         </div>
         <div *ngIf="datasource3.filteredData.length == 0" class="d-flex flex-column align-items-center">
-            <img class="width400" src="assets/images/svg/clients-img.svg">
-            <h4 class="text-center pt-72">{{noData}}</h4>
+            <img class="width400" src="assets/images/svg/noDataFound.svg">
+            <h4 class="text-center pt-12">{{noData}}</h4>
             <button mat-stroked-button class="btn-primary addon v-middle" (click)="open('realEstate','')">
                 ADD NEW</button>
         </div>

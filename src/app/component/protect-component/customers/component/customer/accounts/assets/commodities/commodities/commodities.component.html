@@ -30,7 +30,7 @@
                 <button mat-stroked-button class="btn-primary addon v-middle" (click)="openCommodities('addGold','open',null)"> ADD NEW</button>
             </div>
         </div>
-        <div class="example-container overflow-hidden col-md-12 p-0 mt-8 overflow-hidden real-estate">
+        <div class=" overflow-hidden col-md-12 p-0 mt-8 overflow-hidden real-estate">
             <table *ngIf="goldList.filteredData.length > 0" matSort #goldListTable="matSort" mat-table [dataSource]="goldList" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no">
                     <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
@@ -128,9 +128,9 @@
                 <tr mat-footer-row *matFooterRowDef="displayedColumns9;sticky: true" [hidden]="isLoading"></tr>
             </table>
             <div *ngIf="goldList.filteredData.length == 0" class="d-flex flex-column align-items-center">
-                <img class="width400" src="assets/images/svg/clients-img.svg">
+                <img class="width400" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12">{{noData}}</h4>
-                <button mat-stroked-button class="btn-primary addon v-middle mt-20" (click)="openCommodities('addGold','open',null)"> ADD NEW</button>
+                <button mat-stroked-button class="btn-primary addon v-middle  " (click)="openCommodities('addGold','open',null)"> ADD NEW</button>
             </div>
         </div>
     </div>
@@ -159,7 +159,7 @@
                     ADD NEW</button>
             </div>
         </div>
-        <div class="example-container mt-8 col-md-12 overflow-hidden p-0 real-estate">
+        <div class=" mt-8 col-md-12 overflow-hidden p-0 real-estate">
             <table *ngIf="otherCommodityList.filteredData.length > 0" matSort #otherListTable="matSort" mat-table [dataSource]="otherCommodityList" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no">
                     <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
@@ -258,7 +258,7 @@
                 <tr mat-footer-row *matFooterRowDef="displayedColumns10;sticky: true" [hidden]="isLoading"></tr>
             </table>
             <div *ngIf="otherCommodityList.filteredData.length == 0" class="d-flex flex-column align-items-center">
-                <img class="width400" src="assets/images/svg/clients-img.svg">
+                <img class="width400" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12">{{noData}}</h4>
                 <button mat-stroked-button class="btn-primary addon v-middle mt-20" (click)="openOthers('addOthers','open',null)"> ADD
                     NEW</button>
