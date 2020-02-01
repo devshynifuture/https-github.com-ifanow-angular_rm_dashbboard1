@@ -366,7 +366,8 @@
 }
 
 #ui-subscriptions,
-#ui-plans {
+#ui-plans,
+#ui-transactions {
   @extend .mt-60;
 
   .example-card .mat-card-header-text {

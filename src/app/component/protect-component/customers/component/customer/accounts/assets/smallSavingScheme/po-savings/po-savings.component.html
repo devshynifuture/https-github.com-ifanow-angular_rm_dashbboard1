@@ -24,7 +24,7 @@
         </button>
     </div>
 </div>
-<div class="example-container mt-8 overflow-hidden col-md-12 p-0 real-estate">
+<div class="mt-8 overflow-hidden col-md-12 p-0 real-estate">
     <table *ngIf="datasource.filteredData.length > 0" [appSkeletonLoading]="isLoading" [dataSource]="datasource" appSkeletonLoading class="skeletonAnimation" id="table-low" mat-table matSort>
 
         <ng-container matColumnDef="no">
@@ -112,7 +112,7 @@
         <tr *matFooterRowDef="footerRowColumn;sticky: true" [hidden]="datasource.data.length==0" mat-footer-row></tr>
     </table>
     <div *ngIf="datasource.filteredData.length == 0" class="d-flex flex-column align-items-center">
-        <img class="width400" src="assets/images/svg/clients-img.svg">
+        <img class="width400" src="assets/images/svg/noDataFound.svg">
         <h4 class="text-center pt-12">No Scheme Found</h4>
         <button (click)="openAddPOSAVING(null)" class="btn-primary addon v-middle" mat-stroked-button>
             ADD NEW

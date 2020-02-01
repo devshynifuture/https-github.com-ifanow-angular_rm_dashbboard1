@@ -21,7 +21,7 @@
         </button>
     </div>
 </div>
-<div class="example-container overflow-hidden mt-8 col-md-12 p-0 real-estate">
+<div class=" overflow-hidden mt-8 col-md-12 p-0 real-estate">
     <table *ngIf="datasource.filteredData.length > 0" matSort mat-table [dataSource]="datasource" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
         <ng-container matColumnDef="no">
             <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
@@ -118,7 +118,7 @@
         <tr mat-footer-row *matFooterRowDef="displayedColumns16;sticky: true" [hidden]="isLoading"></tr>
     </table>
     <div *ngIf="datasource.filteredData.length == 0" class="d-flex flex-column align-items-center">
-        <img class="width400" src="assets/images/svg/clients-img.svg">
+        <img class="width400" src="assets/images/svg/noDataFound.svg">
         <h4 class="text-center pt-12">No Scheme Found</h4>
         <button mat-stroked-button class="btn-primary addon v-middle" (click)="addOpenSSY(null,'addSsy')">ADD
             NEW</button>

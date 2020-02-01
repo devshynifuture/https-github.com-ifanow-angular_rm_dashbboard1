@@ -105,7 +105,8 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   close(flag) {
     if (this.data) {
       if (this._data.loanTypeId == undefined) {
-        const data = this._data;
+        // const data = this._data;
+        const data = this.addLiabilityForm.get('loanType').value;
         this.subInjectService.changeNewRightSliderState({ state: 'close', data,refreshRequired:flag});
       } else {
         const data = this._data.showFilter;
