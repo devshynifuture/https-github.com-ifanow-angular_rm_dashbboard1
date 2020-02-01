@@ -17,7 +17,8 @@ export interface EmailAttachmentI {
     filename: string,
     size: number,
     mimeType: string,
-    data: string
+    data: string,
+    downloadUrl: string
 }
 
 export interface GmailSingleMessageI {

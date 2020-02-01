@@ -1,0 +1,296 @@
+<div class="popup-header-fix w-65">
+    <div class="row bb-1">
+        <div class="col-md-8 p-0">
+            <h4 class="mb-2 wrapper-20">NEW TRANSACTION</h4>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12">
+                <i (click)="Close()" class="material-icons c-p pt-8 v-middle"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="pt-90 pr-40 pl-40 pb-40">
+    <!-- first page -->
+    <!-- <div class="row">
+        <div class="col-md-8 p-0">
+            <h5 class="m-0 text-black pb-12">Select an investor from the search box below...</h5>
+            <div class="form-control mb-0 add-transactions">
+
+                <input type="text" aria-label="Number" class="form-group h-0" matInput [formControl]="myControl"
+                    [matAutocomplete]="auto" value="Start typing to see investor names">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option [value]="option">
+                        rahul jain
+                    </mat-option>
+                </mat-autocomplete>
+
+            </div>
+        </div>
+    </div> -->
+
+    <!-- second click -->
+
+    <!-- <div class="row pt-60">
+        <div class="col-md-12 pl-8">
+            <h5 class="m-0 text-black">Great! Next, select a transaction type from the below given options...</h5>
+        </div>
+    </div>
+    <div class="row pt-12">
+        <div class="col-md-4 pl-8 pr-8">
+            <mat-checkbox class="checked" checked="false"></mat-checkbox>
+            <div class="row pt-20 pb-20 bg-grey lter b-a-custom">
+                <div class="col-md-4 text-right">
+                    <img src="/assets/images/svg/shopping-blue.svg" class="pt-4">
+                </div>
+                <div class="col-md-8 pl-0">
+                    <h3 class="m-0 text-primary"> Purchase</h3>
+                    <p class="m-0 roboto text-custom pt-4 f-13 text-primary">Invest a lumpsum amount in a jiffy</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 pl-8 pr-8">
+            <div class="row pt-20 pb-20 bg-grey lter">
+                <div class="col-md-4 text-right">
+                    <img src="/assets/images/svg/switch-icons.svg" class="pt-4">
+                </div>
+                <div class="col-md-8 pl-0">
+                    <h3 class="m-0"> Switch</h3>
+                    <p class="m-0 roboto text-custom pt-4 f-13">Switch lumpsum from one scheme to another</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 pl-8 pr-8">
+            <div class="row pt-20 pb-20 bg-grey lter">
+                <div class="col-md-4 text-right">
+                    <img src="/assets/images/svg/reedem-icons.svg" class="pt-4">
+                </div>
+                <div class="col-md-8 pl-0">
+                    <h3 class="m-0"> Redeem</h3>
+                    <p class="m-0 roboto text-custom pt-4 f-13">Redeem from your existing schemes</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row pt-12">
+        <div class="col-md-4 pl-8 pr-8">
+            <div class="row pt-20 pb-20 bg-grey lter">
+                <div class="col-md-4 text-right">
+                    <img src="/assets/images/svg/sip.svg" class="pt-4">
+                </div>
+                <div class="col-md-8 pl-0">
+                    <h3 class="m-0"> SIP</h3>
+                    <p class="m-0 roboto text-custom pt-4 f-13">Start a systematic investment plan</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 pl-8 pr-8">
+            <div class="row pt-20 pb-20 bg-grey lter">
+                <div class="col-md-4 text-right">
+                    <img src="/assets/images/svg/switch-icons.svg" class="pt-4">
+                </div>
+                <div class="col-md-8 pl-0">
+                    <h3 class="m-0"> STP</h3>
+                    <p class="m-0 roboto text-custom pt-4 f-13">Systematic transfer from one scheme to another</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 pl-8 pr-8">
+            <div class="row pt-20 pb-20 bg-grey lter">
+                <div class="col-md-4 text-right">
+                    <img src="/assets/images/svg/reedem-icons.svg" class="pt-4">
+                </div>
+                <div class="col-md-8 pl-0">
+                    <h3 class="m-0"> SWP</h3>
+                    <p class="m-0 roboto text-custom pt-4 f-13">Systematic withdrawal from a scheme</p>
+                </div>
+            </div>
+        </div>
+
+    </div> -->
+
+    <!-- third click -->
+    <div class="row">
+        <div class="col-md-12 p-0">
+            <h5 class="m-0 text-balack"> <img src="/assets/images/svg/back-arrow.svg" class="v-initial pr-12">Investor
+                name:
+                Rahul Jain</h5>
+        </div>
+    </div>
+    <div class="row pt-20 pb-44">
+        <div class="col-md-8 pl-0">
+            <h5 class="m-0 pb-10">Select from the following options</h5>
+            <mat-radio-group aria-label="Select an option">
+                <mat-radio-button value="1" class="b-a-custom text-primary"> Invest in existing scheme
+                </mat-radio-button>
+                <mat-radio-button value="2" class="b-a text-primitive">Select a new scheme</mat-radio-button>
+            </mat-radio-group>
+            <h5 class="m-0 pt-28">Select a scheme to invest in</h5>
+            <div class="form-control mb-0 add-transactions">
+
+                <input type="text" aria-label="Number" class="form-group h-0" matInput [formControl]="myControl"
+                    [matAutocomplete]="auto" value="Start typing to see investor names">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option [value]="option">
+                        rahul jain
+                    </mat-option>
+                </mat-autocomplete>
+                <p class="m-0 f-12 text-custom pt-8">Last closing NAV: 390.27</p>
+
+            </div>
+            <h5 class="m-0 pt-28">Select folio</h5>
+            <mat-radio-group aria-label="Select an option">
+                <mat-radio-button value="1" class="b-a-custom text-primary"> Existing
+                </mat-radio-button>
+                <mat-radio-button value="2" class="b-a text-primitive">New </mat-radio-button>
+            </mat-radio-group>
+            <h5 class="m-0 pt-28">Enter amount</h5>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                  <input #employeeContry matInput maxlength="10" type="text"
+                         class="form-control br-0 rupess" formControlName="employeeContry">
+
+                </mat-form-field>
+                <p class="m-0 f-12 text-custom">Min amount: ₹500</p>
+            </div>
+
+            <h5 class="m-0 pt-28">Select investment account</h5>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <mat-select class="form-control">
+                        <mat-option value="option">Option</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <h5 class="m-0 pt-40">Select mode of payment</h5>
+            <mat-radio-group aria-label="Select an option">
+                <mat-radio-button value="1" class="b-a-custom text-primary"> Net banking
+                </mat-radio-button>
+                <mat-radio-button value="2" class="b-a text-primitive">Debit mandate </mat-radio-button>
+            </mat-radio-group>
+            <h5 class="m-0 pt-40">Select bank account</h5>
+            <mat-form-field>
+                <mat-select class="form-control">
+                    <mat-option value="option">Option</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4 bg-grey lter p-0">
+            <mat-tab-group animationDuration="0ms" mat-align-tabs="center">
+                <mat-tab label="Transaction summary">
+                    <div class="row b-h-dashed pt-16 pb-16">
+                        <div class="col-md-9">
+                            <p class="m-0 roboto text-custom">Transaction platform</p>
+                            <h5 class="m-0">NSE NMF II</h5>
+                        </div>
+                        <div class="col-md-2">
+                            <button mat-stroked-button class="primary-sm">Edit</button>
+                        </div>
+
+                    </div>
+                    <div class="row b-h-dashed pt-16 pb-16">
+                        <div class="col-md-9">
+                            <p class="m-0 roboto text-custom">Investor details</p>
+                            <h5 class="m-0">Rahul Jain</h5>
+                            <h5 class="m-0"> IIN 5011102595 (Joint)</h5>
+                        </div>
+                        <div class="col-md-2">
+                            <button mat-stroked-button class="primary-sm">Edit</button>
+                        </div>
+
+                    </div>
+                    <div class="row b-h-dashed pt-16 pb-16">
+                        <div class="col-md-9">
+                            <p class="m-0 roboto text-custom">ARN/RIA and EUIN</p>
+                            <h5 class="m-0">ARN-83866
+                            </h5>
+                            <h5 class="m-0"> E023539 - Ankit Mehta</h5>
+                        </div>
+                        <div class="col-md-2">
+                            <button mat-stroked-button class="primary-sm">Edit</button>
+                        </div>
+
+                    </div>
+                    <div class="row b-h-dashed pt-16 pb-16">
+                        <div class="col-md-9">
+                            <p class="m-0 roboto text-custom">Scheme, folio and amount</p>
+                            <h5 class="m-0">Scheme: Axis Liquid Fund -Regular Plan -
+                                Weekly Dividend Option</h5>
+                            <h5 class="m-0"> Folio: 91032325824</h5>
+                            <h5 class="m-0"> Amount: ₹5,00,000/Lumpsum</h5>
+                        </div>
+
+
+                    </div>
+                    <div class="row b-h-dashed pt-16 pb-16">
+                        <div class="col-md-9">
+                            <p class="m-0 roboto text-custom">TRANSACTION INITIATION</p>
+                            <h5 class="m-0">Immediate</h5>
+                        </div>
+                        <div class="col-md-2">
+                            <button mat-stroked-button class="primary-sm">Edit</button>
+                        </div>
+
+                    </div>
+                    <div class="row b-h-dashed pt-16 pb-16">
+                        <div class="col-md-9">
+                            <p class="m-0 roboto text-custom">Mode of payment</p>
+                            <h5 class="m-0">Net banking</h5>
+                        </div>
+                        <!-- <div class="col-md-2">
+                            <button mat-stroked-button class="primary-sm">Edit</button>
+                        </div> -->
+
+                    </div>
+                    <div class="row b-h-dashed pt-16 pb-16">
+                        <div class="col-md-9">
+                            <p class="m-0 roboto text-custom">Bank A/c details</p>
+                            <h5 class="m-0">ICICI Bank</h5>
+                            <h5 class="m-0"> Saving A/c 1032*****710</h5>
+                        </div>
+                        <div class="col-md-2">
+                            <button mat-stroked-button class="primary-sm">Edit</button>
+                        </div>
+
+                    </div>
+                </mat-tab>
+                <mat-tab label="Rationale">
+                    <div class="p-20">
+                        <p class="m-0 roboto text-custom">The scheme seeks to generate long-term capital appreciation
+                            from a
+                            diversified portfolio of
+                            predominantly equity and equity related instruments.</p>
+
+                        <p class="m-0 roboto text-custom"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                            do
+                            eiusmod tempor incididunt ut labore
+                            et dolore magna aliqua. Sit amet nulla facilisi morbi tempus iaculis. Dui ut ornare lectus
+                            sit
+                            amet
+                            est placerat in egestas. Sed turpis tincidunt id aliquet risus feugiat in. Magna sit amet
+                            purus
+                            gravida quis blandit turpis cursus.</p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button mat-stroked-button><img src="/assets/images/svg/attech-light.svg">Fact
+                                    sheet.pdf<img src="/assets/images/svg/s-cross.svg"></button>
+                                <button mat-stroked-button class="primary-sm mt-16">Edit</button>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+
+    </div>
+</div>
+<div class="bottom-fixed wrapper-12 pt-16 w-65">
+    <div class="row">
+        <div class="col-md-4 pt-8">
+            <h5 class="mb-0  text-white c-p" (click)="Close()">Cancel</h5>
+        </div>
+
+    </div>
+</div>

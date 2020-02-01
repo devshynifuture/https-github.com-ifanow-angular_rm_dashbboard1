@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionService } from '../../../subscription.service';
 import { AddPlanDetailComponent } from '../add-structure/add-plan-detail.component';
 import { AddEditDocumentComponent } from '../add-edit-document/add-edit-document.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-overview',
@@ -18,7 +19,7 @@ export class OverviewComponent implements OnInit {
   overviewDesign: any = 'true';
   advisorId: any;
   @Output() changePlanData = new EventEmitter();
-  constructor(public dialog: MatDialog, private subService: SubscriptionService,
+  constructor(public dialog: MatDialog, private subService: SubscriptionService, private router: Router,
     private eventService: EventService,
     private subinject: SubscriptionInject, public subInjectService: SubscriptionInject) {
   }
@@ -124,7 +125,9 @@ export class OverviewComponent implements OnInit {
 
   deletedData(data) {
     if (data == true) {
-      this.eventService.changeUpperSliderState({ state: 'close' });
+      // this.upperData = "plan";
+      this.router.navigate(['/admin/subscription/settings'])
+      // this.eventService.changeUpperSliderState({ state: 'close' });
       this.eventService.openSnackBar('Deleted successfully!', 'dismiss');
     }
   }

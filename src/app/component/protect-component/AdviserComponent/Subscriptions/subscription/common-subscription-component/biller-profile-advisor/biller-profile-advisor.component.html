@@ -369,11 +369,11 @@
             <!-- <app-progress-button  *ngIf="selected!=3" (btnClick)="nextStep(selected,'Save&Next')" [options]="barButtonOptions" [disabled]="logoImg==undefined && selected==1">
     </app-progress-button> -->
 
-            <app-progress-button *ngIf="selected==3" (btnClick)="nextStep(selected,'Save&Next')" [options]="barButtonOptions">
-            </app-progress-button>
-            <button (click)="nextStep(selected,'Save&Next')" [disabled]="logoImg==undefined && selected==1" *ngIf="selected!=3" class="btn-bottom br-0 text-inherit" mat-button>SAVE & NEXT
-            </button>
-
+    <app-progress-button *ngIf="selected==3" (btnClick)="nextStep(selected,'Save&Next')" [options]="barButtonOptions" >
+    </app-progress-button>
+            <button (click)="nextStep(selected,'Save&Next')" *ngIf="selected!=3" class="btn-bottom br-0 text-inherit" mat-button>SAVE & NEXT
+      </button>
+     
             <!-- <button (click)="nextStep(selected,'Save&Next')" *ngIf="selected==3" class="btn-bottom br-0 text-inherit" mat-button>SAVE
       </button> -->
             <!-- logoImg -->

@@ -234,14 +234,12 @@ export class HttpService {
     };
     url = url.trim();
     return this.getHttpClient(this.baseUrl + url, httpOptions).pipe(
-        catchError(err => {
-          console.log('Handling error locally and rethrowing it...', err);
-          return throwError(err);
-        })
-      )
+      catchError(err => {
+        console.log('Handling error locally and rethrowing it...', err);
+        return throwError(err);
+      })
+    )
       .map((res: any) => {
-        // console.log(res);
-
         if (res.status === 200) {
           const resData = this.changeBase64ToString(res);
           // console.log('decoded resData', resData);
@@ -257,9 +255,9 @@ export class HttpService {
       });
   }
 
-  getHttpClient(url,httpOptions?){
+  getHttpClient(url, httpOptions?) {
     return this._http
-    .get(url,httpOptions);
+      .get(url, httpOptions);
   }
   // created by sarvesh
 

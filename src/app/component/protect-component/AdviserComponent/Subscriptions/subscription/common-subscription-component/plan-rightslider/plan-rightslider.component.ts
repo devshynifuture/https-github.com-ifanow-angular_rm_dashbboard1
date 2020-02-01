@@ -4,6 +4,7 @@ import { SubscriptionService } from '../../../subscription.service';
 import { AuthService } from "../../../../../../../auth-service/authService";
 import { element } from 'protractor';
 import { EventService } from 'src/app/Data-service/event.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-plan-rightslider',
@@ -11,6 +12,21 @@ import { EventService } from 'src/app/Data-service/event.service';
   styleUrls: ['./plan-rightslider.component.scss']
 })
 export class PlanRightsliderComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'primary',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  }
   planSettingData;
   selectedPlan;
   clientData;
@@ -37,6 +53,7 @@ export class PlanRightsliderComponent implements OnInit {
 
   createSubscription() {
     if (this.selectedPlan) {
+      this.barButtonOptions.active = true;
       const data = [{
         advisorId: this.advisorId,
         planId: this.selectedPlan.id,
@@ -52,6 +69,7 @@ export class PlanRightsliderComponent implements OnInit {
     }
   }
   createSubscriptionResponse(data) {
+    this.barButtonOptions.active = false;
     this.eventservice.openSnackBar("plan is created", "dismiss")
     this.Close(true);
   }

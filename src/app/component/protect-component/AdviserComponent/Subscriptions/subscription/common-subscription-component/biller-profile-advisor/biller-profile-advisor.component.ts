@@ -62,7 +62,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   profileDetailsForm: any;
   bankDetailsForm: any;
   MiscellaneousData: any;
-  logoImg: any;
+  logoImg: any = "";
   imageData: File;
   uploadedImage: any;
   postalData: Object;
@@ -358,12 +358,13 @@ export class BillerProfileAdvisorComponent implements OnInit {
      else {
       this.barButtonOptions.active = true;
       
-      console.log("img url check", this.validURL(this.logoImg ));
-      if(!this.validURL(this.logoImg )){
+      console.log("img url check", this.validURL(this.logoImg ), this.logoImg);
+      if(!this.validURL(this.logoImg ) && this.logoImg != undefined){
         this.uploadImage();
       }
       else{
         this.addEditBillerForm();
+        
       }
     }
   }

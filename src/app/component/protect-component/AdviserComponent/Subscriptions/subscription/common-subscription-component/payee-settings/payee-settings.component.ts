@@ -6,6 +6,7 @@ import { SubscriptionService } from '../../../subscription.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { PostalService } from 'src/app/services/postal.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-payee-settings',
@@ -13,6 +14,21 @@ import { PostalService } from 'src/app/services/postal.service';
   styleUrls: ['./payee-settings.component.scss']
 })
 export class PayeeSettingsComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'primary',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  }
   clientId: any;
   @Output() totalPayeeData = new EventEmitter<Object>();
   settingsModal;
@@ -97,22 +113,44 @@ export class PayeeSettingsComponent implements OnInit {
       data => this.getListOfFamilyByClientRes(data)
     );
   }
-  getPostalPin(value) {
+
+  pinInvalid:boolean = false;
+
+  getPostalPin(value, state) {
     let obj = {
       zipCode: value
     }
-    if (value.length > 5) {
+    console.log(value,"check value");
+    if(value != ""){
       this.postalService.getPostalPin(value).subscribe(data => {
         console.log('postal 121221', data)
-        this.PinData(data)
+        this.PinData(data, state)
       })
     }
+    else{
+      this.pinInvalid = false;
+    }
   }
-  PinData(data) {
-    this.getFormControl().city.setValue(data[0].PostOffice[0].District)
-    this.getFormControl().country.setValue(data[0].PostOffice[0].Country)
-    this.getFormControl().state.setValue(data[0].PostOffice[0].Circle)
+
+  PinData(data, state) {
+    if(data[0].Status == "Error"){
+      this.pinInvalid = true;
+      
+        this.getFormControl().pincode.setErrors(this.pinInvalid);
+        this.getFormControl().city.setValue("");
+        this.getFormControl().country.setValue("");
+        this.getFormControl().state.setValue("");
+      
+    }
+    else{
+      this.getFormControl().city.setValue(data[0].PostOffice[0].District);
+      this.getFormControl().country.setValue(data[0].PostOffice[0].Country);
+      this.getFormControl().state.setValue(data[0].PostOffice[0].Circle);
+      this.pinInvalid = false;
+    }
   }
+
+ 
   gstTreatmentRemove(value) {
     this.showGstin = value
   }
@@ -186,40 +224,21 @@ export class PayeeSettingsComponent implements OnInit {
 
   savePayeeSettings() {
     this.inputData
-    if (this.payeeSettingsForm.get('customerName').invalid) {
+    if (this.payeeSettingsForm.invalid) {
       this.payeeSettingsForm.get('customerName').markAsTouched();
-      return
-    } else if (this.payeeSettingsForm.get('customerName').invalid) {
-      this.payeeSettingsForm.get('customerName').markAsTouched();
-      return
-    } else if (this.payeeSettingsForm.get('companyName').invalid) {
+      this.payeeSettingsForm.get('displayName').markAsTouched();
       this.payeeSettingsForm.get('companyName').markAsTouched();
-      return
-    } else if (this.payeeSettingsForm.get('emailId').invalid) {
       this.payeeSettingsForm.get('emailId').markAsTouched();
-      return
-    } else if (this.payeeSettingsForm.get('pan').invalid) {
       this.payeeSettingsForm.get('pan').markAsTouched();
-      return
-    } else if (this.payeeSettingsForm.get('pincode').invalid) {
+      this.payeeSettingsForm.get('gstIn').markAsTouched();
       this.payeeSettingsForm.get('pincode').markAsTouched();
-      return
-    } else if (this.payeeSettingsForm.get('primaryContact').invalid) {
       this.payeeSettingsForm.get('primaryContact').markAsTouched();
-      return
-    } else if (this.payeeSettingsForm.get('billingAddress').invalid) {
       this.payeeSettingsForm.get('billingAddress').markAsTouched();
-      return
-    } else if (this.payeeSettingsForm.get('city').invalid) {
       this.payeeSettingsForm.get('city').markAsTouched();
-      return
-    } else if (this.payeeSettingsForm.get('country').invalid) {
       this.payeeSettingsForm.get('country').markAsTouched();
-      return
-    } else if (this.payeeSettingsForm.get('state').invalid) {
       this.payeeSettingsForm.get('state').markAsTouched();
-      return
     } else {
+      this.barButtonOptions.active = true;
       if (this.payeeSettingsForm.controls.id.value != undefined) {
         const obj1 = {
           customerName: this.payeeSettingsForm.controls.customerName.value,
@@ -245,7 +264,12 @@ export class PayeeSettingsComponent implements OnInit {
         };
         this.sendData = obj1;
         this.subService.editPayeeSettings(obj1).subscribe(
-          data => this.editSettingResData(data)
+          data =>{
+            this.editSettingResData(data)
+          },
+          err=>{
+            console.log(err, "editPayeeSettings error");
+          }
         );
 
       } else {
@@ -270,7 +294,12 @@ export class PayeeSettingsComponent implements OnInit {
 
         };
         this.subService.addClientBillerProfile(obj).subscribe(
-          data => this.addClientBillerProfileRes(data)
+          data =>{
+            this.addClientBillerProfileRes(data);
+          },
+        err=>{
+          console.log(err, "addClientBillerProfileRes error");
+        }
         );
 
       }
@@ -279,6 +308,8 @@ export class PayeeSettingsComponent implements OnInit {
   }
 
   addClientBillerProfileRes(data) {
+    this.barButtonOptions.active = false;
+
     if (this.inputData.data == "Add") {
       // this.totalPayeeData.emit(true)obj=
       let obj = {
@@ -298,6 +329,7 @@ export class PayeeSettingsComponent implements OnInit {
   }
 
   editSettingResData(data) {
+    this.barButtonOptions.active = false;
     if (data.status == 1) {
       this.subInjectService.changeNewRightSliderState({ state: 'close', data });
       this.eventService.openSnackBar('Client profile update Successfully', 'OK');
