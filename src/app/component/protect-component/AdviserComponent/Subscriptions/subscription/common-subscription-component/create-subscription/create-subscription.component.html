@@ -122,7 +122,7 @@
                         <p class="m-0 text-right text-custom roboto">Select a biller profile</p>
                     </div>
                 </div>
-                <div class="row pt-16" *ngIf="billersData.length !== 0">
+                <div class="row pt-16" *ngIf="billerData && billersData.length !== 0">
                     <div (click)="select('biller',singleBiller)" *ngFor="let singleBiller of billersData" class="col-md-6 mt-20">
                         <mat-card [ngClass]="{'ba-blue':singleBiller.selected==1,'mb-20':true ,'b-ua':singleBiller.selected==0}" class="p-0">
                             <div class="row bg-grey lter">
@@ -151,8 +151,8 @@
                         </mat-card>
                     </div>
                 </div>
-                <div class="row" *ngIf="billersData">
-                    <div class="col-md-12 d-flex align-items-center flex-column justify-content-center" *ngIf="billersData.length == 0">
+                <div class="row" *ngIf="billersData && billersData.length == 0">
+                    <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
                         <img class="pt-20 width200" src="assets/images/svg/buiness-shop.svg">
 
                         <p class="f-22 f-600 pt-28 pb-16 t-dark">Set up biller profile</p>

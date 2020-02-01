@@ -2,6 +2,55 @@
   padding-top: 120px;
   background-color: #F5F7F7;
   height: 100vh;
+}
 
+#ui-addtransaction-tabs {
+  .mat-tab-label {
+    height: 40px !important;
+    font-weight: 500 !important;
+    opacity: 1 !important;
+    color: #595252 !important;
+  }
 
+  .mat-ink-bar {
+    height: 2px !important;
+  }
+
+  .mat-tab-header {
+    border-bottom: 0px !important;
+  }
+
+  .mat-tab-label-active {
+    color: #008FFF !important;
+    letter-spacing: 0.75px !important;
+  }
+
+  .transaction-summary {
+    .row {
+      border-bottom: 0.5px dashed #83959D;
+    }
+
+    .col-md-9 {
+      padding: 0px;
+    }
+
+    .col-md-3 {
+      padding-right: 0px;
+    }
+
+    h5 {
+      color: #3F3F3F;
+    }
+
+    p {
+      text-transform: uppercase;
+      padding-bottom: 6px;
+    }
+  }
+
+  .rationaletabs {
+    p {
+      text-transform: initial;
+    }
+  }
 }

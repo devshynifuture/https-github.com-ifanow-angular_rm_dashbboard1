@@ -47,9 +47,9 @@ export class AddPlanDetailComponent implements OnInit {
   isDescValid = false;
   advisorId;
   planDataForm = this.fb.group({
-    planName: [, [Validators.required]],
-    code: [, [Validators.required]],
-    description: [, [Validators.required]]
+    planName: ['', [Validators.required]],
+    code: ['', [Validators.required]],
+    description: ['', [Validators.required]]
   });
 
   // planName = {maxLength: 20, placeholder: '', formControlName: 'planName', data: ''};
@@ -82,25 +82,19 @@ export class AddPlanDetailComponent implements OnInit {
       return;
     } else {
       this.editApiCall = data;
-      this.planDataForm = this.fb.group({
-        planName: [data.name, [Validators.required]],
-        code: [data.code, [Validators.required]],
-        description: [data.description, [Validators.required]]
-      });
+      this.planDataForm.get('planName').setValue(data.name);
+      this.planDataForm.get('code').setValue(data.code);
+      this.planDataForm.get('description').setValue(data.description);
     }
   }
 
   addPlanData(state) {
-    if (this.planDataForm.controls.planName.invalid) {
-      this.isPlanValid = true;
-      return;
-    } else if (this.planDataForm.controls.code.invalid) {
-      this.isCodeValid = true;
-      return;
-    } else if (this.planDataForm.controls.description.invalid) {
-      this.isDescValid = true;
-      return;
-    } else {
+    if(this.planDataForm.invalid){
+      this.planDataForm.get('planName').markAsTouched();
+      this.planDataForm.get('code').markAsTouched();
+    }
+    else {
+      this.barButtonOptions.active = true;
       if (!this.editApiCall) {
         const obj = {
           name: this.getFormControl().planName.value,
@@ -146,16 +140,16 @@ export class AddPlanDetailComponent implements OnInit {
     }
   }
 
-  progressButtonClick(state){
-    if(this.planDataForm.valid){
-      this.barButtonOptions.active = true;
-      this.addPlanData(state);
-    }else{
-      this.planDataForm.get('planName').markAsTouched();
-      this.planDataForm.get('code').markAsTouched();
-      this.planDataForm.get('description').markAsTouched();
-    }
-  }
+  // progressButtonClick(state){
+  //   if(this.planDataForm.valid){
+  //     this.barButtonOptions.active = true;
+  //     this.addPlanData(state);
+  //   }else{
+  //     this.planDataForm.get('planName').markAsTouched();
+  //     this.planDataForm.get('code').markAsTouched();
+  //     this.planDataForm.get('description').markAsTouched();
+  //   }
+  // }
 
   addPlanDataResponse(data, obj, state) {
     // obj.id = (this.editApiCall == '') ? data : data.id
