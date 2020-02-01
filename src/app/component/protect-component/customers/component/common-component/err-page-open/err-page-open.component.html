@@ -12,7 +12,9 @@
                 post<br>
                 in
                 your browser, just in case.</h5>
-            <button mat-stroked-button class="btn-primary" (click)="close()">RETRY</button>
+            <!-- <button mat-stroked-button class="btn-primary" (click)="close()">RETRY</button> -->
+            <app-progress-button (btnClick)="close()" [options]="barButtonOptions" >
+            </app-progress-button>
         </div>
     </div>
 </div>
