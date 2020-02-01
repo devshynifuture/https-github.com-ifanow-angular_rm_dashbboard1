@@ -117,7 +117,7 @@ export class EmailViewComponent implements OnInit, OnDestroy {
             // });
             if (part.filename !== null) {
               this.attachmentsArray.push({
-                filename: part.fileName,
+                filename: part.filename,
                 mimeType: part.mimeType,
                 attachmentId: part.body.attachmentId
               });
@@ -131,45 +131,56 @@ export class EmailViewComponent implements OnInit, OnDestroy {
         // hit attachment get apis as per attachment ids got from gmail api explorer
 
         this.attachmentsArray.forEach((attachment) => {
+
           const obj = {
             userId: AuthService.getUserInfo().advisorId,
             email: AuthService.getUserInfo().emailId,
             attachmentId: attachment.attachmentId,
             messageId: this.messageId
           }
+
+          console.log("this is parameters for file get attachment", obj);
+
           this.emailService.getAttachmentFiles(obj).subscribe(res => {
+
+            console.log("this is some response from gmail attachment api:::::::::::", res);
             // according to google attachment get api its response is coming in base64url format having size and data
             // {
             //   size: number,
             //   data: string
             // }
 
+            // as the response is base64Url encoded we only need base64 data 
             this.attachmentsBase64Data.push({
               filename: attachment.filename,
               mimeType: attachment.mimeType,
-              // as the response is base64Url encoded we only need base64 data 
               base64Data: res.body.replace(/\-/g, '+').replace(/_/g, '/')
             });
+
+
+            console.log("this is attachmentbase64 data", this.attachmentsBase64Data);
           })
         });
 
         // converting attachments to file with url
-        this.attachmentsBase64Data.forEach(attachment => {
-          let blobData = EmailUtilService.convertBase64ToBlobData(attachment.base64Data, attachment.mimeType);
+        if (this.attachmentsBase64Data) {
+          this.attachmentsBase64Data.forEach(attachment => {
+            let blobData = EmailUtilService.convertBase64ToBlobData(attachment.base64Data, attachment.mimeType);
 
-          if (window.navigator && window.navigator.msSaveOrOpenBlob) { //IE
-            window.navigator.msSaveOrOpenBlob(blobData, attachment.filename);
-          } else { // chrome
-            const blob = new Blob([blobData], { type: attachment.mimeType });
-            const url = window.URL.createObjectURL(blob);
-            // window.open(url);
+            if (window.navigator && window.navigator.msSaveOrOpenBlob) { //IE
+              window.navigator.msSaveOrOpenBlob(blobData, attachment.filename);
+            } else { // chrome
+              const blob = new Blob([blobData], { type: attachment.mimeType });
+              const url = window.URL.createObjectURL(blob);
+              // window.open(url);
 
-            this.attachmentArrayDetail.push({
-              filename: attachment.filename,
-              downloadUrl: url
-            });
-          }
-        });
+              this.attachmentArrayDetail.push({
+                filename: attachment.filename,
+                downloadUrl: url
+              });
+            }
+          });
+        }
 
 
 
@@ -178,34 +189,34 @@ export class EmailViewComponent implements OnInit, OnDestroy {
 
 
         // based on response coming from backend  
-        this.raw = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(response.raw);
-        let fileData = this.extractValuesFromDetailView();
-        this.attachmentBase64 = "data: image/jpeg; base64," + this.raw.match(/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=|[A-Za-z0-9+\/]{4})$/gm);
-        let base64Data = this.raw.match(/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=|[A-Za-z0-9+\/]{4})$/gm).join("")
+        // this.raw = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(response.raw);
+        // let fileData = this.extractValuesFromDetailView();
+        // this.attachmentBase64 = "data: image/jpeg; base64," + this.raw.match(/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=|[A-Za-z0-9+\/]{4})$/gm);
+        // let base64Data = this.raw.match(/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=|[A-Za-z0-9+\/]{4})$/gm).join("")
         // let fileDataObj = {
         //   ...fileData,
         //   base64: base64Data,
         //   fileContent: this.attachmentBase64
         // }
         // if() 
-        let blobData = EmailUtilService.convertBase64ToBlobData(base64Data, fileData.fileType);
-        if (window.navigator && window.navigator.msSaveOrOpenBlob) { //IE
-          window.navigator.msSaveOrOpenBlob(blobData, fileData.fileName);
-        } else { // chrome
-          const blob = new Blob([blobData], { type: fileData.fileType });
-          const url = window.URL.createObjectURL(blob);
-          // window.open(url);
-          this.attachmentArray.push({
-            filename: fileData.fileName,
-            downloadUrl: url
-          });
+        // let blobData = EmailUtilService.convertBase64ToBlobData(base64Data, fileData.fileType);
+        // if (window.navigator && window.navigator.msSaveOrOpenBlob) { //IE
+        //   window.navigator.msSaveOrOpenBlob(blobData, fileData.fileName);
+        // } else { // chrome
+        //   const blob = new Blob([blobData], { type: fileData.fileType });
+        //   const url = window.URL.createObjectURL(blob);
+        //   // window.open(url);
+        //   this.attachmentArray.push({
+        //     filename: fileData.fileName,
+        //     downloadUrl: url
+        //   });
 
-          // link.href = url;
-          // link.download = fileData.fileName;
-          // link.click();
-        }
+        // link.href = url;
+        // link.download = fileData.fileName;
+        // link.click();
+        // }
 
-        this.isLoading = false;
+        // this.isLoading = false;
 
         // this.attachmentBase64Code = this.raw.forEach(part => {
         //   part.item
@@ -325,22 +336,6 @@ export class EmailViewComponent implements OnInit, OnDestroy {
 
   forwardMessage(part) {
     console.log('needs to handle', part);
-  }
-
-  extractValuesFromDetailView() {
-
-    let base64Value = this.raw.split('Content-ID')[1];
-    let messageValue = this.raw.split('Content-ID')[0];
-    let lastContentTypeIndex = messageValue.lastIndexOf('Content-Type');
-    let nameIndex = messageValue.indexOf('name');
-    let fileTypeString = messageValue.slice(lastContentTypeIndex, nameIndex).split(":")[1].slice(0, -2);
-
-    let filenameIndex = messageValue.indexOf('filename');
-    let contentTransferIndex = messageValue.indexOf('Content-Transfer');
-    let filenameString = messageValue.slice(filenameIndex, contentTransferIndex).split('=')[1].slice(1, -3);
-    console.log("this is filename ::::::::::::::", filenameString, fileTypeString);
-
-    return { fileName: filenameString, fileType: fileTypeString }
   }
 
   moveMessageToTrash() {
