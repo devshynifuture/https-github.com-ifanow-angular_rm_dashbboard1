@@ -1,8 +1,8 @@
-import { MaterialModule } from './../../../../../material/material';
+import { MaterialModule } from '../../../../../material/material';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { TransactionAddComponent } from './../transaction-add/transaction-add.component';
+import { TransactionAddComponent } from '../transaction-add/transaction-add.component';
 
 export const componentList = [
     TransactionAddComponent
