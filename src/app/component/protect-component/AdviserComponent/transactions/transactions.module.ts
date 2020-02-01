@@ -10,6 +10,7 @@ import { MandatesTransactionsComponent } from './mandates-transactions/mandates-
 import { KycTransactionsComponent } from './kyc-transactions/kyc-transactions.component';
 import { SettingsTransactionsComponent } from './settings-transactions/settings-transactions.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MaterialModule } from 'src/app/material/material';
 
 // import { TransactionsComponent } from './t/transactions.component';
 
@@ -23,7 +24,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
     TransactionRoutingModule,
-    EntryComponentsModule
+    EntryComponentsModule,
+    MaterialModule
   ], exports: [
 
     TransactionsComponent

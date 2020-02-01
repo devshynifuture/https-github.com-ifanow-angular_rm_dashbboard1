@@ -7,12 +7,16 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
   styleUrls: ['./detailed-ssy.component.scss']
 })
 export class DetailedSsyComponent implements OnInit {
+  nominee: any;
 
   constructor(private subInjectService: SubscriptionInject) { }
   data;
   ngOnInit() {
     console.log('DetailedSsysComponent ngOnInit data : ',this.data)
+    this.nominee=this.data.nominees;
+
   }
+  
   close() {
     this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
