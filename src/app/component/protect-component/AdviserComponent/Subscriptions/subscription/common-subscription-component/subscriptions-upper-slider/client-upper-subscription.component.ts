@@ -14,6 +14,7 @@ import { BillerSettingsComponent } from '../biller-settings/biller-settings.comp
 import { ChangePayeeComponent } from '../change-payee/change-payee.component';
 import { CreateSubscriptionComponent } from '../create-subscription/create-subscription.component';
 import { PlanRightsliderComponent } from '../plan-rightslider/plan-rightslider.component';
+import { SubscriptionDetailsComponent } from '../biller-profile-advisor/subscription-details/subscription-details.component';
 // import { element } from 'protractor';
 export interface PeriodicElement {
   service: string;
@@ -65,8 +66,8 @@ export class ClientUpperSubscriptionComponent implements OnInit {
     }
     let component;
     if (data) {
-      if (value == 'billerSettings' || value == 'changePayee' || value == null) {
-        (value == 'billerSettings') ? component = BillerSettingsComponent : (value == 'changePayee') ? component = ChangePayeeComponent : '';
+      if (value == 'billerSettings' || value == 'changePayee' || value == null || value == 'subscriptionDetails') {
+        (value == 'billerSettings') ? component = BillerSettingsComponent : (value == 'changePayee') ? component = ChangePayeeComponent : component = SubscriptionDetailsComponent;
       } else if (data.subscriptionPricing.feeTypeId == 1) {
         value = 'createSubFixed';
         component = CreateSubscriptionComponent
