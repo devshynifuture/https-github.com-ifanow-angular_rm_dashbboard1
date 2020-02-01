@@ -20,7 +20,7 @@ export class AddKvpComponent implements OnInit {
   maxDate = new Date();
   inputData: any;
   advisorId: any;
-  clientId: any;
+  clientId: any;Outstanding 
   familyMemberId: any;
   ownerName: any;
   editApi: any;
@@ -128,7 +128,7 @@ export class AddKvpComponent implements OnInit {
           "bankAccountNumber": this.KVPOptionalFormScheme.get('bankAccNum').value,
           "description": this.KVPOptionalFormScheme.get('description').value
         }
-      if (this.editApi) {
+      if (this.editApi!=undefined) {
         obj['id']=this.editApi.id
         this.cusService.editKVP(obj).subscribe(
           data => this.addKVPResponse(data),
@@ -144,7 +144,7 @@ export class AddKvpComponent implements OnInit {
     }
   }
   addKVPResponse(data) {
-    (this.editApi) ? this.eventService.openSnackBar("KVP is added", "dismiss") : this.eventService.openSnackBar("KVP is edited", "added")
+    (this.editApi) ? this.eventService.openSnackBar("KVP is edited", "dismiss") : this.eventService.openSnackBar("KVP is added", "added")
    console.log(data)
    this.close(true);
   }
