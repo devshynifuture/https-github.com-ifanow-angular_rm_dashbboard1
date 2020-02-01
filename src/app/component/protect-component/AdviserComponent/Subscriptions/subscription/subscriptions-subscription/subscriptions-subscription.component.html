@@ -142,6 +142,8 @@
                                     Biller</a>
                                 <a (click)="openPlanSlider('changePayee','open',element)" *ngIf="element.status!=4" mat-menu-item>Change
                                     Payee</a>
+                                <a (click)="openPlanSlider('subscriptionDetails','open',element)" *ngIf="element.status!=4" mat-menu-item>Change
+                                    subscription details</a>
                                 <div class="bt-1">
 
                                     <a (click)="delete('cancelSubscription',element)" *ngIf="element.status==2 || element.status == 3" mat-menu-item>Cancel

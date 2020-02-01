@@ -18,6 +18,7 @@ import { InvoiceHistoryComponent } from '../common-subscription-component/invoic
 import { ChangePayeeComponent } from '../common-subscription-component/change-payee/change-payee.component';
 import { ErrPageOpenComponent } from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
 import { SubscriptionDataService } from '../../subscription-data.service';
+import { SubscriptionDetailsComponent } from '../common-subscription-component/biller-profile-advisor/subscription-details/subscription-details.component';
 
 // declare var window
 // export const MY_FORMATS = {
@@ -340,8 +341,8 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     }
     let component;
     if (data) {
-      if (value == 'billerSettings' || value == 'changePayee' || value == null) {
-        (value == 'billerSettings') ? component = BillerSettingsComponent : (value == 'changePayee') ? component = ChangePayeeComponent : '';
+      if (value == 'billerSettings' || value == 'changePayee' || value == null || value == 'subscriptionDetails') {
+        (value == 'billerSettings') ? component = BillerSettingsComponent : (value == 'changePayee') ? component = ChangePayeeComponent : component = SubscriptionDetailsComponent;
       } else if (data.subscriptionPricing.feeTypeId == 1) {
         value = 'createSubFixed';
         component = CreateSubscriptionComponent
