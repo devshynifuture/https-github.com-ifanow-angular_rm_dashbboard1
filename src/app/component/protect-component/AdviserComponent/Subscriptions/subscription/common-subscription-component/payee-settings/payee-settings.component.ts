@@ -113,22 +113,44 @@ export class PayeeSettingsComponent implements OnInit {
       data => this.getListOfFamilyByClientRes(data)
     );
   }
-  getPostalPin(value) {
+
+  pinInvalid:boolean = false;
+
+  getPostalPin(value, state) {
     let obj = {
       zipCode: value
     }
-    if (value.length > 5) {
+    console.log(value,"check value");
+    if(value != ""){
       this.postalService.getPostalPin(value).subscribe(data => {
         console.log('postal 121221', data)
-        this.PinData(data)
+        this.PinData(data, state)
       })
     }
+    else{
+      this.pinInvalid = false;
+    }
   }
-  PinData(data) {
-    this.getFormControl().city.setValue(data[0].PostOffice[0].District)
-    this.getFormControl().country.setValue(data[0].PostOffice[0].Country)
-    this.getFormControl().state.setValue(data[0].PostOffice[0].Circle)
+
+  PinData(data, state) {
+    if(data[0].Status == "Error"){
+      this.pinInvalid = true;
+      
+        this.getFormControl().pincode.setErrors(this.pinInvalid);
+        this.getFormControl().city.setValue("");
+        this.getFormControl().country.setValue("");
+        this.getFormControl().state.setValue("");
+      
+    }
+    else{
+      this.getFormControl().city.setValue(data[0].PostOffice[0].District);
+      this.getFormControl().country.setValue(data[0].PostOffice[0].Country);
+      this.getFormControl().state.setValue(data[0].PostOffice[0].Circle);
+      this.pinInvalid = false;
+    }
   }
+
+ 
   gstTreatmentRemove(value) {
     this.showGstin = value
   }
@@ -204,10 +226,11 @@ export class PayeeSettingsComponent implements OnInit {
     this.inputData
     if (this.payeeSettingsForm.invalid) {
       this.payeeSettingsForm.get('customerName').markAsTouched();
-      this.payeeSettingsForm.get('customerName').markAsTouched();
+      this.payeeSettingsForm.get('displayName').markAsTouched();
       this.payeeSettingsForm.get('companyName').markAsTouched();
       this.payeeSettingsForm.get('emailId').markAsTouched();
       this.payeeSettingsForm.get('pan').markAsTouched();
+      this.payeeSettingsForm.get('gstIn').markAsTouched();
       this.payeeSettingsForm.get('pincode').markAsTouched();
       this.payeeSettingsForm.get('primaryContact').markAsTouched();
       this.payeeSettingsForm.get('billingAddress').markAsTouched();

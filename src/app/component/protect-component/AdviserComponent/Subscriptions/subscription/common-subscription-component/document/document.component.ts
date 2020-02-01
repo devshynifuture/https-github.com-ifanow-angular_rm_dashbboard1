@@ -10,6 +10,8 @@ import { AddDocumentComponent } from '../add-document/add-document.component';
 import { AuthService } from '../../../../../../../auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { CommonFroalaComponent } from '../common-froala/common-froala.component';
+import { EmailOnlyComponent } from '../email-only/email-only.component';
 // import { window } from 'rxjs/operators';
 
 // import {element} from 'protractor';
@@ -326,7 +328,7 @@ export class DocumentComponent implements OnInit {
         }
       });
     }
-    this.open('eSignDocument', data);
+    this.openSendEmailComponent('eSignDocument', data);
   }
 
   openSendEmail() {
@@ -341,26 +343,24 @@ export class DocumentComponent implements OnInit {
         data.documentList.push(singleElement);
       }
     });
-    this.open('email', data);
+    this.openSendEmailComponent('email', data);
   }
-
-  open(value, data) {
-
-    // this.eventService.sliderData(value);
-    // this.subInjectService.rightSliderData(state);
-    // this.subInjectService.addSingleProfile(data);
-
+  openSendEmailComponent(value, data) {
+    if (this.isLoading) {
+      return
+    }
     const fragmentData = {
       flag: value,
       data: data,
       id: 1,
       state: 'open',
-      documentList: data
+      componentName: EmailOnlyComponent
     };
     fragmentData.data.clientName = this._clientData.name;
     fragmentData.data.isDocument = true;
-    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getdocumentSubData();
@@ -371,8 +371,64 @@ export class DocumentComponent implements OnInit {
         }
       }
     );
-  }
 
+  }
+  // open(value, data) {
+
+  //   // this.eventService.sliderData(value);
+  //   // this.subInjectService.rightSliderData(state);
+  //   // this.subInjectService.addSingleProfile(data);
+
+  //   const fragmentData = {
+  //     flag: value,
+  //     data: data,
+  //     id: 1,
+  //     state: 'open',
+  //     documentList: data
+  //   };
+  //   fragmentData.data.clientName = this._clientData.name;
+  //   fragmentData.data.isDocument = true;
+  //   const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+  //     sideBarData => {
+  //       if (UtilService.isDialogClose(sideBarData)) {
+  //         if (UtilService.isRefreshRequired(sideBarData)) {
+  //           this.getdocumentSubData();
+  //           console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+  //         }
+  //         rightSideDataSub.unsubscribe();
+  //       }
+  //     }
+  //   );
+  // }
+  open(value, data) {
+    if (this.isLoading) {
+      return
+    }
+    const fragmentData = {
+      flag: value,
+      data: data,
+      id: 1,
+      state: 'open',
+      componentName: CommonFroalaComponent
+    };
+    fragmentData.data.clientName = this._clientData.name;
+    fragmentData.data.isDocument = true;
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getdocumentSubData();
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+
+  }
   getplanDocumentDataResponse(data) {
     this.isLoading = false;
     if (data !== undefined) {
@@ -715,7 +771,7 @@ export class DocumentComponent implements OnInit {
           this.barButtonOptions.active = false;
         }
       },
-      err =>{
+      err => {
         console.log("error mapDocumentsToPlanData", err);
         this.barButtonOptions.active = false;
       }
@@ -793,7 +849,7 @@ export class DocumentComponent implements OnInit {
         this.barButtonOptions.active = false;
         this.mapDocumentToServiceResponse(data);
       },
-      err =>{
+      err => {
         this.barButtonOptions.active = false;
         console.log(err, "error mapDocumentToServiceResponse");
       }
