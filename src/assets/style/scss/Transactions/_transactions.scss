@@ -1,5 +1,26 @@
+#ui-transactions {
+  // margin-top: 60px;
+
+  .mat-tab-link.active {
+    background-color: transparent !important;
+    border-bottom: 4px solid #008FFF !important;
+    color: #008FFF !important;
+
+  }
+
+  .mat-tab-link {
+    color: #595252 !important;
+    border-bottom: 4px solid transparent;
+    width: 120px !important;
+    background: transparent !important;
+    font-family: "roboto" !important;
+    letter-spacing: 0.75px !important;
+  }
+
+}
+
 #ui-overview-transactions {
-  padding-top: 120px;
+  padding-top: 72px;
   background-color: #F5F7F7;
   height: 100vh;
 }
@@ -53,4 +74,5 @@
       text-transform: initial;
     }
   }
+
 }

@@ -18,6 +18,7 @@ import { InvoiceHistoryComponent } from '../common-subscription-component/invoic
 import { ChangePayeeComponent } from '../common-subscription-component/change-payee/change-payee.component';
 import { ErrPageOpenComponent } from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
 import { SubscriptionDataService } from '../../subscription-data.service';
+import { SubscriptionDetailsComponent } from '../common-subscription-component/biller-profile-advisor/subscription-details/subscription-details.component';
 
 // declare var window
 // export const MY_FORMATS = {
@@ -335,44 +336,51 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   }
 
   openPlanSlider(value, state, data) {
-    console.log('call get 123');
     if (this.isLoading) {
       return;
     }
-    let componentName;
-    (value == 'billerSettings') ? componentName = BillerSettingsComponent : (value == 'changePayee') ? componentName = ChangePayeeComponent :
-      (value == 'SUBSCRIPTIONS') ? componentName = InvoiceHistoryComponent : (data.subscriptionPricing.feeTypeId == 1) ?
-        data.subFlag = 'createSubFixed' : data.subFlag = 'createSubVariable';
-    if (data.subFlag) {
-      componentName = CreateSubscriptionComponent;
+    let component;
+    if (data) {
+      if (value == 'billerSettings' || value == 'changePayee' || value == null || value == 'subscriptionDetails') {
+        (value == 'billerSettings') ? component = BillerSettingsComponent : (value == 'changePayee') ? component = ChangePayeeComponent : component = SubscriptionDetailsComponent;
+      } else if (data.subscriptionPricing.feeTypeId == 1) {
+        value = 'createSubFixed';
+        component = CreateSubscriptionComponent
+        data.subFlag = 'createSubFixed';
+      } else {
+        value = 'createSubVariable';
+        component = CreateSubscriptionComponent
+        data.subFlag = 'createSubVariable';
+      }
+      data.isCreateSub = false;
+      data.isSaveBtn = false;
     }
-    data.isCreateSub = false;
-    data.isSaveBtn = false;
+    // else {
+    //   component = PlanRightsliderComponent;
+    // }
     const fragmentData = {
       flag: value,
       data,
       id: 1,
       state: 'open',
-      componentName
+      componentName: component
     };
+    console.log(fragmentData,  "fragmentData json");
+    
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            setTimeout(() => {
-              this.lastDataId = 0;
-              this.getClientSubData(false,true);
-            }, 1000);
+            this.getClientSubData(false, false);
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
           rightSideDataSub.unsubscribe();
         }
-
       }
     );
-
+    // this.subInjectService.pushUpperData(data)
   }
 
   getFeeTypeName(ch) {
@@ -407,6 +415,34 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     }
 
     return feeModeName;
+  }
+
+  Open(state, data) {
+    let feeMode;
+    let component;
+    data.isCreateSub = true;
+    (data.subscriptionPricing.feeTypeId == 1) ? feeMode = 'fixedModifyFees' : feeMode = 'variableModifyFees';
+    (data.subscriptionPricing.feeTypeId == 1) ? component = FixedFeeComponent : component = VariableFeeComponent
+    const fragmentData = {
+      flag: feeMode,
+      data,
+      id: 1,
+      state: 'open',
+      componentName: component
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', UtilService.isRefreshRequired(sideBarData));
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getClientSubData(false,false);
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
   }
 
   openFeeEditor(data) {

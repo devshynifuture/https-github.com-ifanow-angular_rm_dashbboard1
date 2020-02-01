@@ -49,6 +49,7 @@ import { ErrPageOpenComponent } from '../../customers/component/common-component
 import { DocumentPreviewComponent } from './subscription/common-subscription-component/document-preview/document-preview.component';
 import { SubscriptionUpperRoutingModule } from './subscription-upper-routing-routing.module';
 import { SubscriptionUpperSliderComponent } from './subscription/common-subscription-component/upper-slider/subscription-upper-slider.component';
+import { SubscriptionDetailsComponent } from './subscription/common-subscription-component/biller-profile-advisor/subscription-details/subscription-details.component';
 
 export const componentList = [
   OverviewComponent,
@@ -74,6 +75,7 @@ export const componentList = [
   ClientUpperSubscriptionComponent,
   CreateSubscriptionComponent,
   AddFixedFeeComponent,
+  SubscriptionDetailsComponent,
   AddEditDocumentComponent,
   BillerSettingsComponent,
   FixedFeeComponent,

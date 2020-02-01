@@ -21,3 +21,12 @@
 ::ng-deep .mat-form-field-suffix {
     position: inherit !important;
 }
+
+::ng-deep .radioBtn .mat-radio-label {
+    min-width: 152px;
+    height: 45px;
+    display: flex !important;
+    justify-content: left;
+    align-items: center;
+    padding-left: 10px !important;
+}
