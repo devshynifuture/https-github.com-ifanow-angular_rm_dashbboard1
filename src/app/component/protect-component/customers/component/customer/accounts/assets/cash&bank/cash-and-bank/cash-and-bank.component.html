@@ -36,7 +36,7 @@
                 </button>
             </div>
         </div>
-        <div class="example-container overflow-hidden mt-8 col-md-12 p-0 real-estate">
+        <div class="overflow-hidden mt-8 col-md-12 p-0 real-estate">
             <table *ngIf="bankAccountList.filteredData.length > 0" matSort #bankAccountListTable="matSort" [dataSource]="bankAccountList" id="table-low" mat-table class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no">
                     <th mat-sort-header="no" *matHeaderCellDef class="br" mat-header-cell> No</th>
@@ -90,7 +90,8 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="account">
-                    <th mat-sort-header="account" *matHeaderCellDef class="br textRight" mat-header-cell> Account number</th>
+                    <th mat-sort-header="account" *matHeaderCellDef class="br textRight" mat-header-cell> Account number
+                    </th>
                     <td *matCellDef="let element" class="br amt" mat-cell>
                         <div class="bar"> {{isLoading ? '' : element.accountNo || '-'}} </div>
                     </td>
@@ -140,7 +141,7 @@
                 <tr *matFooterRowDef="displayedColumns7;sticky: true" mat-footer-row></tr>
             </table>
             <div *ngIf="bankAccountList.filteredData.length == 0" class="d-flex flex-column align-items-center">
-                <img class="width400" src="assets/images/svg/clients-img.svg">
+                <img class="width400" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12">{{noData}}</h4>
                 <button (click)="openCashAndBank('')" class="btn-primary addon v-middle" mat-stroked-button>ADD NEW
                 </button>
@@ -173,7 +174,7 @@
                 </button>
             </div>
         </div>
-        <div class="example-container mt-8 overflow-hidden col-md-12 p-0 real-estate">
+        <div class=" mt-8 overflow-hidden col-md-12 p-0 real-estate">
             <table *ngIf="cashInHandList.filteredData.length > 0" matSort #cashInHandListTable="matSort" [dataSource]="cashInHandList" id="table-low" mat-table class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
                 <ng-container matColumnDef="no">
@@ -199,7 +200,7 @@
                         <div class="bar amt" appFormatNumber> {{isLoading ? ' ' : element.cashValue}} </div>
                     </td>
                     <td *matFooterCellDef class="br t-20 p-8 f-500 text-right" mat-footer-cell appFormatNumber [value]="sumOfCashValue">
-                        <div class="bar"> {{isLoading ? '' :  sumOfCashValue || '-'}} </div>
+                        <div class="bar"> {{isLoading ? '' : sumOfCashValue || '-'}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="bal">
@@ -249,7 +250,7 @@
                 <tr mat-footer-row *matFooterRowDef="displayedColumns8;sticky: true" [hidden]="isLoading"></tr>
             </table>
             <div *ngIf="cashInHandList.filteredData.length == 0" class="d-flex flex-column align-items-center">
-                <img class="width400" src="assets/images/svg/clients-img.svg">
+                <img class="width400" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12">{{noData}}</h4>
                 <button (click)="openCashInHand(null)" class="btn-primary addon v-middle mt-20" mat-stroked-button>ADD
                     NEW

@@ -697,7 +697,8 @@ export class InvoiceComponent implements OnInit {
       documentList: [{
         ...this.storeData,
         documentName: this.storeData.invoiceNumber,
-        docText: this.invoiceTemplate.nativeElement.innerHTML
+        // docText: this.invoiceTemplate.nativeElement.innerHTML
+        docText:'',
       }],
       isInv: true
     }
@@ -721,29 +722,59 @@ export class InvoiceComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ');
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
           rightSideDataSub.unsubscribe();
         }
       }
     );
   }
 
+  // OpenEmailUpper(data, value) {
+  //   const fragmentData = {
+  //     flag: value,
+  //     data,
+  //     id: 1,
+  //     state: 'open',
+  //     componentName:EmailOnlyComponent
+  //   };
+  //   const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+  //     sideBarData => {
+  //       console.log('this is sidebardata in subs subs : ', sideBarData);
+  //       if (UtilService.isDialogClose(sideBarData)) {
+  //         console.log('this is sidebardata in subs subs 2: ');
+  //         rightSideDataSub.unsubscribe();
+  //       }
+  //     }
+  //   );
+  // }
   OpenEmailUpper(data, value) {
+    if (this.isLoading) {
+      return
+    }
     const fragmentData = {
       flag: value,
-      data,
+      data: data,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName: EmailOnlyComponent
     };
-    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ');
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
           rightSideDataSub.unsubscribe();
         }
       }
     );
+
   }
 
   deleteModal(value, data) {

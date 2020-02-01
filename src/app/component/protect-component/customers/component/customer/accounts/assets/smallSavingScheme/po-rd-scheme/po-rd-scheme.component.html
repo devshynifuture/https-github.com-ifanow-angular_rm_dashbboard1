@@ -21,10 +21,9 @@
             ADD NEW</button>
     </div>
 </div>
-<div class="example-container mt-8 overflow-hidden real-estate">
+<div class=" mt-8 overflow-hidden real-estate">
     <!-- "dataSource" Property 'dataSource' does not exist on type 'PoTdSchemeComponent'. Did you mean 'dataSource'?-->
-    <table class="skeletonAnimation" *ngIf="dataSource" matSort mat-table [dataSource]="dataSource" id="table-low"
-        appSkeletonLoading [appSkeletonLoading]="isLoading">
+    <table class="skeletonAnimation" *ngIf="dataSource" matSort mat-table [dataSource]="dataSource" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
         <ng-container matColumnDef="no">
             <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
@@ -43,8 +42,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-14 text-right"> Current
-                value </th>
+            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-14 text-right"> Current value </th>
             <td mat-cell *matCellDef="let element" class="br t-14 text-right">
                 <div class="bar" appFormatNumber>{{element.currentValue}}</div>
             </td>
@@ -66,12 +64,10 @@
             <td mat-cell *matCellDef="let element" class="br text-right t-18">
                 <div class="bar" appFormatNumber> {{element.deposit}} </div>
             </td>
-            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef appFormatNumber
-                [value]="sumOfMonthlyDeposit">{{sumOfMonthlyDeposit}}</td>
+            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef appFormatNumber [value]="sumOfMonthlyDeposit">{{sumOfMonthlyDeposit}}</td>
         </ng-container>
         <ng-container matColumnDef="mvalue">
-            <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br text-right t-15">Maturity
-                value </th>
+            <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br text-right t-15">Maturity value </th>
             <td mat-cell *matCellDef="let element" class="br text-right t-15">
                 <div class="bar" appFormatNumber> {{element.maturityValue}} </div>
             </td>
@@ -80,8 +76,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="mdate">
-            <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef class="br text-right t-15">Maturity
-                date </th>
+            <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef class="br text-right t-15">Maturity date </th>
             <td mat-cell *matCellDef="let element" class="br text-right t-15">
                 <div class="bar"> {{element.maturityDate | date:'dd/MM/yyyy'}} </div>
 
@@ -132,7 +127,7 @@
     </table>
 
     <div *ngIf="dataSource == undefined" class="d-flex flex-column align-items-center">
-        <img class="width400" src="assets/images/svg/clients-img.svg">
+        <img class="width400" src="assets/images/svg/noDataFound.svg">
         <h4 class="text-center pt-12">No Scheme Found</h4>
         <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPORD(null)">
             ADD NEW</button>

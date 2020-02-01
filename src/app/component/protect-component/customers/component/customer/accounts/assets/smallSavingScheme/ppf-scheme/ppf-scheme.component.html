@@ -12,7 +12,7 @@
         <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPPF(null)">ADD NEW</button>
     </div>
 </div>
-<div class="example-container overflow-hidden mt-8 real-estate">
+<div class="overflow-hidden mt-8 real-estate">
     <table *ngIf="dataSource.data.length > 0" mat-table [dataSource]="dataSource" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
         <ng-container matColumnDef="no">
             <th mat-header-cell *matHeaderCellDef class="br"> No </th>
@@ -102,7 +102,7 @@
         <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true"></tr>
     </table>
     <div *ngIf="dataSource.data.length == 0" class="d-flex flex-column align-items-center">
-        <img class="width400" src="assets/images/svg/clients-img.svg">
+        <img class="width400" src="assets/images/svg/noDataFound.svg">
         <h4 class="pt-12">No Scheme Found</h4>
         <button mat-stroked-button class="btn-primary addon v-middle mt-20" (click)="openAddPPF(null)">
             ADD NEW</button>

@@ -7,6 +7,7 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { InvoiceComponent } from '../invoice/invoice.component';
+import { EmailOnlyComponent } from '../email-only/email-only.component';
 
 export interface PeriodicElement {
   Invoicenumber: string;
@@ -143,23 +144,51 @@ export class InvoicesComponent implements OnInit {
     this.open(data, 'email');
   }
 
-  open(data, value) {
+  // open(data, value) {
 
+  //   const fragmentData = {
+  //     flag: value,
+  //     data: data,
+  //     id: 1,
+  //     state: 'open',
+  //     componenName:EmailOnlyComponent
+  //   };
+  //   const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+  //     sideBarData => {
+  //       console.log('this is sidebardata in subs subs : ', sideBarData);
+  //       if (UtilService.isDialogClose(sideBarData)) {
+  //         console.log('this is sidebardata in subs subs 2: ');
+  //         rightSideDataSub.unsubscribe();
+  //       }
+  //     }
+  //   );
+  // }
+  open(data, value) {
+    if (this.isLoading) {
+      return
+    }
     const fragmentData = {
       flag: value,
       data: data,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName: EmailOnlyComponent
     };
+
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ');
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getInvoiceList();
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
           rightSideDataSub.unsubscribe();
         }
       }
     );
+
   }
   formatter(data) {
     data = Math.round(data);

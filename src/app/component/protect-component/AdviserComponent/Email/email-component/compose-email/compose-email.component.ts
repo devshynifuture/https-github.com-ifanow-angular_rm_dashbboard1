@@ -99,21 +99,23 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
       // based on gmail api explorer response
 
       console.log("this is something i need::::::::::", res);
-      // const { payload: parts } = res;
-      // parts.forEach(part => {
-      //   if (part.mimeType === 'multipart/alternative') {
-      //     const { parts } = part;
-      //     parts.forEach(part => {
-      //       if (part.filename !== '') {
-      //         this.attachmentsIdArray.push({
-      //           filename: part.filename,
-      //           mimeType: part.mimeType,
-      //           attachmentId: part.body.atatchmentId
-      //         });
-      //       }
-      //     });
-      //   }
-      // });
+      const { payload: parts } = res;
+      if (parts) {
+        parts.forEach(part => {
+          if (part.mimeType === 'multipart/alternative') {
+            // const { parts } = part;
+            // parts.forEach(part => {
+            if (part.filename !== '') {
+              this.attachmentsIdArray.push({
+                filename: part.filename,
+                mimeType: part.mimeType,
+                attachmentId: part.body.atatchmentId
+              });
+            }
+            // });
+          }
+        });
+      }
     })
 
     // get attachment files...
@@ -407,6 +409,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
         message: this.emailForm.get('messageBody').value ? this.emailForm.get('messageBody').value : '',
         fileData: this.emailForm.get('attachments').value ? this.emailForm.get('attachments').value : []
       };
+
       this.emailService.createUpdateDraft(requestJson, null).subscribe(res => {
         console.log(res);
       })
