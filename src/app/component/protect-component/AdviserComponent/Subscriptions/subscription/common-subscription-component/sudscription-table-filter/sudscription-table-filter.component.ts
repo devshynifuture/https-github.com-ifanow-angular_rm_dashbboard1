@@ -55,7 +55,7 @@ export class SudscriptionTableFilterComponent implements OnInit {
     // !_.includes(this.filterStatus, addFilters)
     if (this.filterStatus.find(element => element.name == addFilters.name) == undefined) {
       // this.lastFilterDataId = 0;
-      this.filterStatus.push(addFilters);
+      this.filterStatus[0]= addFilters;
       this.filterDataArr = [];
       console.log(this.filterStatus);
     } else {

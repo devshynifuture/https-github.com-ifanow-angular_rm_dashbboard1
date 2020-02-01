@@ -1,3 +1,5 @@
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { SubscriptionInject } from './../../Subscriptions/subscription-inject.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +8,28 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./transaction-add.component.scss']
 })
 export class TransactionAddComponent implements OnInit {
+  myControl;
+  option;
 
-  constructor() { }
+  transactionAddForm: FormGroup = this.fb.group({
+    'schemeSelection': [,],
+    'investor': [,],
+    'folioSelection': [,],
+    'employeeContry': [,],
+    'investmentAccountSelection': [,],
+    'modeOfPaymentSelection': [,],
+    'bankAccountSelection': [,],
+
+  })
+
+  constructor(private subInjectService: SubscriptionInject,
+    private fb: FormBuilder) {
+  }
 
   ngOnInit() {
   }
 
+  close() {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  }
 }
