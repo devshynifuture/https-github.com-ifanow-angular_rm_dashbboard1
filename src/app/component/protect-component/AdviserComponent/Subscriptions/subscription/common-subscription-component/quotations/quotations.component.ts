@@ -12,6 +12,7 @@ import { UtilService } from '../../../../../../../services/util.service';
 import { AuthService } from '../../../../../../../auth-service/authService';
 import { AddQuotationSubscriptionComponent } from 'src/app/component/protect-component/customers/component/common-component/add-quotation-subscription/add-quotation-subscription.component';
 import { CommonFroalaComponent } from '../common-froala/common-froala.component';
+import { EmailOnlyComponent } from '../email-only/email-only.component';
 
 export interface PeriodicElement {
   document: string;
@@ -282,19 +283,43 @@ export class QuotationsComponent implements OnInit {
     this.open(data, 'emailOnly');
   }
 
+  // open(data, value) {
+  //   const fragmentData = {
+  //     flag: value,
+  //     data,
+  //     id: 1,
+  //     state: 'open',
+  //     componentName:EmailOnlyComponent
+  //   };
+  //   const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+  //     sideBarData => {
+  //       console.log('this is sidebardata in subs subs : ', sideBarData);
+  //       if (UtilService.isDialogClose(sideBarData)) {
+  //         if (UtilService.isRefreshRequired(sideBarData)) {
+  //           this.getQuotationsList();
+  //           console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+  //         }
+  //         rightSideDataSub.unsubscribe();
+  //       }
+  //     }
+  //   );
+  // }
   open(data, value) {
     const fragmentData = {
       flag: value,
       data,
       id: 1,
+      componentName: EmailOnlyComponent,
       state: 'open'
     };
-    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getQuotationsList();
+
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -303,7 +328,6 @@ export class QuotationsComponent implements OnInit {
       }
     );
   }
-
   openPopup(data) {
     const Fragmentdata = {
       flag: data,
