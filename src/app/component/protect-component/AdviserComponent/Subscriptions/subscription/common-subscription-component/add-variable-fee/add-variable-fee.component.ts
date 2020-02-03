@@ -39,7 +39,8 @@ export class AddVariableFeeComponent implements OnInit {
   advisorId;
   otherAssetData;
   selectedOtherAssets = [];
-  pricing = false
+  pricing = false;
+  isSelectOtherAssets:boolean=false;
   ischeckVariableData
   serviceId: any;
   dataToSend: any;
@@ -97,9 +98,9 @@ export class AddVariableFeeComponent implements OnInit {
     this.variableFeeData = this.fb.group({
       serviceName: [, [Validators.required]],
       code: [, [Validators.required]],
-      description: [, [Validators.required]],
+      description: [""],
       billEvery: [, [Validators.required]],
-      Duration: [1],
+      Duration: ["1"],
       directFees: this.fb.group({
         equity: [, [Validators.required]],
         debt: [, [Validators.required]],
@@ -111,8 +112,9 @@ export class AddVariableFeeComponent implements OnInit {
         liquid: [, [Validators.required]]
       }),
       otherAssetClassFees: [],
-      pricing: [, [Validators.required, Validators.min(0.01), Validators.max(99)]]
+      pricing: [, [Validators.required, Validators.min(0.01)]]
     });
+    // , Validators.max(99) 
     this.getFormControl().serviceName.maxLength = 40;
     this.getFormControl().code.maxLength = 10;
     this.getFormControl().description.maxLength = 160;
@@ -128,7 +130,7 @@ export class AddVariableFeeComponent implements OnInit {
       this.variableFeeData = this.fb.group({
         serviceName: [data.serviceName, [Validators.required]],
         code: [data.serviceCode, [Validators.required]],
-        description: [data.description, [Validators.required]],
+        description: [data.description],
         billEvery: [data.servicePricing.billEvery, [Validators.required]],
         Duration: [String(data.servicePricing.billingCycle)],
         directFees: this.fb.group({
@@ -190,7 +192,7 @@ export class AddVariableFeeComponent implements OnInit {
       this.pricing = true;
       return;
     } else if (this.selectedOtherAssets.length == 0) {
-      this.pricing = true;
+      this.isSelectOtherAssets = true;
       return;
     } else {
       this.barButtonOptions.active = true;
@@ -211,22 +213,22 @@ export class AddVariableFeeComponent implements OnInit {
               id: (this._data != undefined) ? this._data.servicePricing.id : '',
               directRegular: 1,
               assetClassId: 1,
-              debtAllocation: this.variableFeeData.controls.directFees.controls.debt.value,
-              equityAllocation: this.variableFeeData.controls.directFees.controls.equity.value,
-              liquidAllocation: this.variableFeeData.controls.directFees.controls.liquid.value,
+              debtAllocation: this.variableFeeData.controls.directFees.controls.debt.value > 100? 100 : this.variableFeeData.controls.directFees.controls.debt.value,
+              equityAllocation: this.variableFeeData.controls.directFees.controls.equity.value > 100? 100 : this.variableFeeData.controls.directFees.controls.equity.value,
+              liquidAllocation: this.variableFeeData.controls.directFees.controls.liquid.value > 100? 100 : this.variableFeeData.controls.directFees.controls.liquid.value,
             }, {
               id: (this._data != undefined) ? this._data.servicePricing.pricingList[1].id : '',
               directRegular: 2,
               assetClassId: 1,
-              debtAllocation: this.variableFeeData.controls.regularFees.controls.debt.value,
-              equityAllocation: this.variableFeeData.controls.regularFees.controls.equity.value,
-              liquidAllocation: this.variableFeeData.controls.regularFees.controls.liquid.value,
+              debtAllocation: this.variableFeeData.controls.regularFees.controls.debt.value > 100? 100 : this.variableFeeData.controls.regularFees.controls.debt.value,
+              equityAllocation: this.variableFeeData.controls.regularFees.controls.equity.value > 100? 100 : this.variableFeeData.controls.regularFees.controls.equity.value,
+              liquidAllocation: this.variableFeeData.controls.regularFees.controls.liquid.value > 100? 100 : this.variableFeeData.controls.regularFees.controls.liquid.value,
             },
             {
               id: (this._data != undefined) ? this._data.servicePricing.pricingList[2].id : '',
               assetClassId: 2,
               otherAssets: this.selectedOtherAssets,
-              pricing: this.variableFeeData.controls.pricing.value
+              pricing: this.variableFeeData.controls.pricing.value > 100 ? 100 : this.variableFeeData.controls.pricing.value
             }
           ]
         }

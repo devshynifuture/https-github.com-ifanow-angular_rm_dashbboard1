@@ -1,33 +1,26 @@
 <div id="ui-transactions">
     <div class="sub-header-fix">
         <div class="bg-white">
-            <h1 class="cusotm-haeding-main">Subscriptions</h1>
-
-            <nav (selectedTabChange)="tabClick($event)" class="text-right" id="ui-customer-secondhead"
+            <h1 class="cusotm-haeding-main">Transactions</h1>
+            <nav (selectedTabChange)="tabClick($event)" id="ui-customer-secondhead" class="text-right"
                 mat-align-tabs="end" mat-tab-nav-bar>
                 <a (click)="value=1" [ngClass]="_value == 1 ? 'active': ''" [routerLink]="'./overview'" mat-tab-link
-                    routerLinkActive="active">DASHBOARD</a>
-                <a (click)="value=2" [ngClass]="_value == 2 ? 'active': ''" [routerLink]="'./clients'" mat-tab-link
-                    routerLinkActive="active">CLIENTS</a>
-                <a (click)="value=3" [ngClass]="_value == 3 ? 'active': ''" [routerLink]="'./subscriptions'"
-                    mat-tab-link routerLinkActive="active">SUBSCRIPTIONS</a>
-                <a (click)="value=4" [ngClass]="_value == 4 ? 'active': ''" [routerLink]="'./quotations'" mat-tab-link
-                    routerLinkActive="active">QUOTATIONS</a>
+                    routerLinkActive="active">OVERVIEW</a>
+                <a (click)="value=2" [ngClass]="_value == 2 ? 'active': ''" [routerLink]="'./transactions'" mat-tab-link
+                    routerLinkActive="active">TRANSACTIONS</a>
+                <a (click)="value=3" [ngClass]="_value == 3 ? 'active': ''" [routerLink]="'./investors'" mat-tab-link
+                    routerLinkActive="active">INVESTORS</a>
+                <a (click)="value=4" [ngClass]="_value == 4 ? 'active': ''" [routerLink]="'./mandates'" mat-tab-link
+                    routerLinkActive="active">MANDATES</a>
                 <!-- <a mat-tab-link [routerLink]="'expenses'">EXPENSES</a> -->
-                <a (click)="value=5" [ngClass]="_value == 5 ? 'active': ''" [routerLink]="'./invoices'" mat-tab-link
-                    routerLinkActive="active">INVOICES</a>
-                <a (click)="value=6" [ngClass]="_value == 6 ? 'active': ''" [routerLink]="'./documents'" mat-tab-link
-                    routerLinkActive="active">DOCUMENTS</a>
-                <a (click)="value=7" [ngClass]="_value == 7 ? 'active': ''" [routerLink]="'./settings'"
+                <a (click)="value=5" [ngClass]="_value == 5 ? 'active': ''" [routerLink]="'./kyc'" mat-tab-link
+                    routerLinkActive="active">KYC</a>
+                <a (click)="value=6" [ngClass]="_value == 6 ? 'active': ''" [routerLink]="'./settings'"
                     [state]="{ example: 0 }" mat-tab-link routerLinkActive="active">SETTINGS</a>
             </nav>
 
             <router-outlet></router-outlet>
-            <div class="pt-100 right">
-                <button mat-stroked-button (click)="openNewTransaction()">
-                    New Transaction
-                </button>
-            </div>
+
             <!-- <button mat-button (click)="close()">
                 <mat-icon>
                     close

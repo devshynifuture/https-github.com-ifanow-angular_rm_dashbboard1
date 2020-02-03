@@ -86,7 +86,7 @@
                             <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="2" appInputValueValidation matInput (changedValue)="getFormControl().billEvery.setValue($event)" class="form-control br-0 height38 br-none" formControlName="billEvery" type="text">
                         </div>
                         <div class="col-md-4 p-0">
-                            <mat-select class="form-control br-0" formControlName="Duration" id="sel1">
+                            <mat-select class="form-control br-0"  formControlName="Duration" id="sel1">
                                 <mat-option value="1">Months</mat-option>
                                 <mat-option value="2">Years</mat-option>
                             </mat-select>
@@ -187,6 +187,9 @@
                     <input [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)" [maxLength]="4" appInputValueValidation formControlName="pricing" placeholder="%" type="text" class="form-control bl-0 br-0 h-39 br-grey">
                     <mat-error *ngIf="pricing == true" class="f-12">
                         Should be between than 0 to 99
+                    </mat-error>
+                    <mat-error *ngIf="isSelectOtherAssets" class="f-12">
+                       Please select atlest one other asset class fees
                     </mat-error>
                 </div>
             </div>

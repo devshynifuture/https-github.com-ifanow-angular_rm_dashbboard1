@@ -326,6 +326,11 @@ export class EmailServiceService {
         ...body
       })
     } else if (id === null) {
+      console.log("create draft api::: response", {
+        email: userInfo.emailId,
+        userId: userInfo.advisorId,
+        ...body
+      })
       return this.http.post(apiConfig.GMAIL_URL + appConfig.CREATE_DRAFT, {
         email: userInfo.emailId,
         userId: userInfo.advisorId,
