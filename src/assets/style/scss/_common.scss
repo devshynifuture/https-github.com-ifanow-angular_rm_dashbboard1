@@ -53,6 +53,16 @@ h5 {
   font-family: "Roboto", sans-serif !important;
 }
 
+.proxima,
+.proximaFont,
+.mat-table {
+  font-family: "Proxima Nova", sans-serif !important;
+}
+
+.playairFont {
+  font-family: "Playfair Display" !important;
+}
+
 .mat-radio-disabled .mat-radio-label,
 label {
   margin: 0 !important;
@@ -113,9 +123,6 @@ a:hover {
   color: #757575 !important;
 }
 
-.bb-2 {
-  border-bottom: 2px solid #ddd !important;
-}
 
 .text-underline {
   text-decoration: underline !important;
@@ -207,10 +214,6 @@ ul {
   border-radius: 0px !important;
 }
 
-.pl-50 {
-  padding-left: 50px !important;
-}
-
 .loader {
   margin: 0 auto;
   top: 50%;
@@ -275,12 +278,17 @@ ul {
   vertical-align: super !important;
 }
 
+.v-baseline,
 .v-base {
   vertical-align: baseline !important;
 }
 
 .v-initial {
   vertical-align: initial;
+}
+
+.v-h {
+  visibility: hidden !important;
 }
 
 .l-22 {
@@ -417,9 +425,6 @@ ul {
   // }
 }
 
-.v-h {
-  visibility: hidden !important;
-}
 
 .label {
   background: #004164;
@@ -541,7 +546,7 @@ ul {
   height: 100%;
   width: 100%;
   position: fixed;
-  z-index: 100;
+  z-index: 777;
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 1);
@@ -612,9 +617,6 @@ button.primary-sm {
   line-height: 0 !important;
 }
 
-.playairFont {
-  font-family: "Playfair Display" !important;
-}
 
 .bottom-footer {
   overflow: hidden;

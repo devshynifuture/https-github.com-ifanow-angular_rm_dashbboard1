@@ -38,6 +38,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
   familyList: any;
   nexNomineePer = 0;
   showError = false;
+  flag: any;
 
   constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) { }
   @Input()
@@ -105,6 +106,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
   }
 
   getdataForm(data) {
+    this.flag=data;
     if (data == undefined) {
       data = {}
     }
@@ -293,17 +295,31 @@ export class NpsSchemeHoldingComponent implements OnInit {
         }
         obj.nominees = this.schemeHoldingsNPS.controls.nominees.value;
       });
-      if (this.schemeHoldingsNPS.controls.id.value == undefined) {
+      let adviceObj = {
+        advice_id: this.advisorId,
+        adviceStatusId: 5,
+        stringObject: obj,
+        adviceDescription: "manualAssetDescription"
+      }
+      if (this.schemeHoldingsNPS.controls.id.value == undefined && this.flag!='adviceNPSSchemeHolding') {
         this.custumService.addNPS(obj).subscribe(
           data => this.addNPSRes(data)
         );
-      } else {
+      } else if(this.flag=='adviceNPSSchemeHolding'){
+        this.custumService.getAdviceNps(adviceObj).subscribe(
+          data => this.getAdviceNscSchemeLevelRes(data),
+        );
+      }else {
         //edit call
         this.custumService.editNPS(obj).subscribe(
           data => this.editNPSRes(data)
         );
       }
     }
+  }
+  getAdviceNscSchemeLevelRes(data){
+    this.event.openSnackBar('NPS added successfully!', 'dismiss');
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }
   addNPSRes(data) {
     this.event.openSnackBar('Added successfully!', 'dismiss');

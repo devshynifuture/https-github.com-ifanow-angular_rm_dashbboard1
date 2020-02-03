@@ -10,6 +10,8 @@ import { SettingsClientSettingsComponent } from './settings-client-settings/sett
 import { SettingsEmpanelledAmcComponent } from './settings-empanelled-amc/settings-empanelled-amc.component';
 import { ArnRiaCredentialsComponent } from './settings-manage-credentials/arn-ria-credentials/arn-ria-credentials.component';
 import { SubBrokerTeamMemberComponent } from './settings-manage-credentials/sub-broker-team-member/sub-broker-team-member.component';
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+
 
 
 @NgModule({
@@ -21,13 +23,17 @@ import { SubBrokerTeamMemberComponent } from './settings-manage-credentials/sub-
         SettingsClientSettingsComponent,
         SettingsEmpanelledAmcComponent,
         ArnRiaCredentialsComponent,
-        SubBrokerTeamMemberComponent
+        SubBrokerTeamMemberComponent,
+
+
+
     ],
     imports: [
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
-        SettingsTransactionRoutingModule
+        SettingsTransactionRoutingModule,
+        CustomDirectiveModule
     ],
     exports: [
 

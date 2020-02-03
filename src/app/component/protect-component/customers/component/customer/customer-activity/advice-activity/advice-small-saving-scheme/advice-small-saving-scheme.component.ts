@@ -23,15 +23,15 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
   dataSource2 = ELEMENT_DATA2;
   displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'advice', 'astatus', 'adate', 'icon'];
   dataSource3 = ELEMENT_DATA1;
-  displayedColumns4: string[] = ['checkbox', 'name', 'desc','cvalue', 'advice', 'astatus', 'adate', 'icon'];
+  displayedColumns4: string[] = ['checkbox', 'name', 'desc', 'cvalue', 'advice', 'astatus', 'adate', 'icon'];
   dataSource4 = ELEMENT_DATA4;
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject) { }
   allAdvice = false
   ngOnInit() {
   }
-  openAddPPF(data) {
+  openAddPPF(data, value) {
     const fragmentData = {
-      flag: 'addPpf',
+      flag: value,
       data,
       id: 1,
       state: 'open',
@@ -50,12 +50,12 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
       }
     );
   }
-  openAddNSC(data, flag) {
+  openAddNSC(data, value) {
     const fragmentData = {
-      flag: 'addNsc',
+      flag: value,
       data,
       id: 1,
-      state: (flag == 'detailedNsc') ? 'open35' : 'open',
+      state: 'open',
       componentName: AddNscComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -69,17 +69,17 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-       
+
       }
     );
   }
-  openAddKVP(data, flag) {
+  openAddKVP(data, value) {
     const fragmentData = {
-      flag: 'addKVP',
+      flag: value,
       data,
       id: 1,
-      state: (flag == 'detailedKvp') ? 'open35' : 'open',
-      componentName : AddKvpComponent
+      state: 'open',
+      componentName: AddKvpComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -92,17 +92,17 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-       
+
       }
     );
   }
-  openAddSCSS(data, flag) {
+  openAddSCSS(data, value) {
     const fragmentData = {
-      flag: 'addSCSS',
+      flag: value,
       data,
       id: 1,
-      state: (flag == 'detailedScss') ? 'open35' : 'open',
-      componentName:  AddScssComponent
+      state: 'open',
+      componentName: AddScssComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -115,13 +115,13 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-       
+
       }
     );
   }
-  openAddPOMIS(data) {
+  openAddPOMIS(data,value) {
     const fragmentData = {
-      flag: 'addPOMIS',
+      flag: value,
       data,
       id: 1,
       state: 'open',
@@ -138,13 +138,13 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-        
+
       }
     );
   }
-  openAddPORD(data) {
+  openAddPORD(data, value) {
     const fragmentData = {
-      flag: 'addPORD',
+      flag: value,
       data,
       id: 1,
       state: 'open',
@@ -164,9 +164,9 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
       }
     );
   }
-  openAddPOTD(data) {
+  openAddPOTD(data, value) {
     const fragmentData = {
-      flag: 'addPoTd',
+      flag: value,
       data,
       id: 1,
       state: 'open',
@@ -183,13 +183,13 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-        
+
       }
     );
   }
-  openAddPOSAVING(data) {
+  openAddPOSAVING(data, value) {
     const fragmentData = {
-      flag: 'addPOSAVING',
+      flag: value,
       data,
       id: 1,
       state: 'open',
@@ -206,16 +206,16 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-        
+
       }
     );
   }
-  addOpenSSY(data, flag) {
+  addOpenSSY(data, value) {
     const fragmentData = {
-      flag: 'addSyss',
+      flag: value,
       data,
       id: 1,
-      state: (flag == 'detailedSsy') ? 'open35' : 'open',
+      state: 'open',
       componentName: AddSsyComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -280,7 +280,7 @@ const ELEMENT_DATA2: PeriodicElement2[] = [
   { name: 'Rahul Jain', desc: '2', cvalue: 'This is', emprcon: '23123', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
 
 ];
-export interface PeriodicElement4{
+export interface PeriodicElement4 {
   name: string;
   desc: string;
   cvalue: string;
@@ -291,7 +291,7 @@ export interface PeriodicElement4{
 }
 
 const ELEMENT_DATA4: PeriodicElement4[] = [
-  { name: 'Rahul Jain', desc: '1', cvalue:'20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-  { name: 'Rahul Jain', desc: '2', cvalue:'20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
+  { name: 'Rahul Jain', desc: '1', cvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
+  { name: 'Rahul Jain', desc: '2', cvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
 
 ];

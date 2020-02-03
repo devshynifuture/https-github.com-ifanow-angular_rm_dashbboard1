@@ -12,4 +12,4 @@ export class SettingsClientSettingsComponent implements OnInit {
   ngOnInit() {
   }
 
-}
+} 

@@ -19,9 +19,9 @@ export class AdviceCashAndHandComponent implements OnInit {
   ngOnInit() {
   }
   allAdvice =  false
-  openCashAndBank(data) {
+  openCashAndBank(data,value) {
     const fragmentData = {
-      flag: '',
+      flag: value,
       data,
       id: 1,
       state: 'open',
@@ -43,9 +43,9 @@ export class AdviceCashAndHandComponent implements OnInit {
     );
   }
 
-  openCashInHand(data) {
+  openCashInHand(data,value) {
     const fragmentData = {
-      flag: 'addCashInHand',
+      flag: value,
       data,
       id: 1,
       state: 'open',

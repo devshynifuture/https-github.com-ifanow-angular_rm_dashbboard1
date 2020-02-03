@@ -9,6 +9,8 @@ import { HelpComponent } from '../common-subscription-component/help/help.compon
 import { SubscriptionUpperSliderComponent } from '../common-subscription-component/upper-slider/subscription-upper-slider.component';
 import { Router } from '@angular/router';
 import { ErrPageOpenComponent } from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
+import { Location } from '@angular/common';
+
 
 export interface PeriodicElement {
   name: string;
@@ -34,7 +36,7 @@ export class ClientSubscriptionComponent implements OnInit {
   noData: string;
 
   constructor(public dialog: MatDialog, public eventService: EventService, public subInjectService: SubscriptionInject,
-    private subService: SubscriptionService, private router: Router) {
+    private subService: SubscriptionService, private router: Router, private location: Location) {
   }
 
   @Input() upperData: any;
@@ -148,25 +150,26 @@ export class ClientSubscriptionComponent implements OnInit {
 
 
   openFragment(flag, data) {
+    this.location.replaceState('/subscription-upper');
     data.flag = flag
     console.log('hello mf button clicked');
     const fragmentData = {
       flag: 'clietns',
       id: 1,
       data,
-      // direction: 'top',
-      // componentName: SubscriptionUpperSliderComponent,
-      // state: 'open'
+      direction: 'top',
+      componentName: SubscriptionUpperSliderComponent,
+      state: 'open'
     };
-    this.router.navigate(['/subscription-upper'])
-    AuthService.setSubscriptionUpperSliderData(fragmentData)
-    // const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-    //   upperSliderData => {
-    //     if (UtilService.isDialogClose(upperSliderData)) {
-    //       // this.getClientSubscriptionList();
-    //       subscription.unsubscribe();
-    //     }
-    //   }
-    // );
+    // this.router.navigate(['/subscription-upper'])
+    AuthService.setSubscriptionUpperSliderData(fragmentData);
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getClientSubscriptionList();
+          subscription.unsubscribe();
+        }
+      }
+    );
   }
 }

@@ -205,7 +205,7 @@ export const componentList = [
   MultiYearGoalComponent,
   SelectAdviceComponent,
   AddNomineeComponent,
-  AddBudgetComponent
+  AddBudgetComponent,
 
 
   // ComposeEmailComponent

@@ -12,13 +12,23 @@ import { SettingsTransactionsComponent } from './settings-transactions/settings-
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material/material';
 import { SettingsTransactionsModule } from './settings-transactions/settings-transactions.module';
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
+
 // import { TransactionsComponent } from './t/transactions.component';
 
 
 
 
 @NgModule({
-  declarations: [TransactionsComponent, OverviewTransactionsComponent, TransactionsListComponent, InvestorsTransactionsComponent, MandatesTransactionsComponent, KycTransactionsComponent],
+  declarations: [
+    TransactionsComponent,
+    OverviewTransactionsComponent,
+    TransactionsListComponent,
+    InvestorsTransactionsComponent,
+    MandatesTransactionsComponent,
+    KycTransactionsComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -26,7 +36,9 @@ import { SettingsTransactionsModule } from './settings-transactions/settings-tra
     TransactionRoutingModule,
     EntryComponentsModule,
     MaterialModule,
-    SettingsTransactionsModule
+    CustomDirectiveModule,
+    CustomCommonModule,
+    SettingsTransactionsModule,
   ], exports: [
 
     TransactionsComponent

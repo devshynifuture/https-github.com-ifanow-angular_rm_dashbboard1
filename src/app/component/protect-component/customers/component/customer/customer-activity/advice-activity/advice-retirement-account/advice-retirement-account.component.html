@@ -57,7 +57,7 @@
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
             <button mat-stroked-button class="btn-primary br-0 pl-8 "
-                (click)="openAddEPF('adviceFixedDeposit','adviceFixedDeposit')"><img src="/assets/images/svg/plus.svg"
+                (click)="openAddEPF('adviceEPF','adviceEPF')"><img src="/assets/images/svg/plus.svg"
                     class="pr-8">Suggest new EPF</button>
         </div>
     </div>
@@ -127,7 +127,7 @@
             <button [matMenuTriggerFor]="menu1" mat-stroked-button class="btn-primary br-0 pl-8 "><img
                     src="/assets/images/svg/plus.svg" class="pr-8">Suggest new RD</button>
             <mat-menu #menu1="matMenu" class="add-new">
-                <button (click)="openAddSummaryPort(null)" class="b-b" mat-menu-item>
+                <button (click)="openAddSummaryPort('adviceNPSSummary','adviceNPSSummary')" class="b-b" mat-menu-item>
                     <div class="row">
                         <div class="col-md-2 pr-8 text-right">
                             <img src="assets/images/svg/dark-three-dot.svg">
@@ -140,7 +140,7 @@
                         </div>
                     </div>
                 </button>
-                <button (click)="openAddSchemeHolding(null)" class="b-b" mat-menu-item>
+                <button (click)="openAddSchemeHolding('adviceNPSSchemeHolding','adviceNPSSchemeHolding')" class="b-b" mat-menu-item>
                     <div class="row">
                         <div class="col-md-2 pr-8 text-right">
                             <img src="assets/images/svg/scheme-icon.svg">
@@ -208,7 +208,7 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddGratuity(null)"><img
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddGratuity('adviceGratuity','adviceGratuity')"><img
                     src="/assets/images/svg/plus.svg" class="pr-8">Suggest new gratuity</button>
         </div>
     </div>
@@ -264,7 +264,7 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddSuperannuation(null)"><img
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddSuperannuation('adviceSuperAnnuation','adviceSuperAnnuation')"><img
                     src="/assets/images/svg/plus.svg" class="pr-8">Suggest new supperannuation</button>
         </div>
     </div>
@@ -331,7 +331,7 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEPS(null)"><img
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEPS('adviceEPS','adviceEPS')"><img
                     src="/assets/images/svg/plus.svg" class="pr-8">Suggest new eps</button>
         </div>
     </div>

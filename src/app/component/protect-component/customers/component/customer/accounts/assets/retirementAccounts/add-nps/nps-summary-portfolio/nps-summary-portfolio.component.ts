@@ -44,6 +44,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   familyList: any;
   dataFM: any[];
   showHide = false;
+  flag: any;
   constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) {
     this.summaryNPS = this.fb.group({
       published: true,
@@ -110,6 +111,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     }
   }
   getdataForm(data) {
+    this.flag=data;
     if (data == undefined) {
       data = {}
     }
@@ -267,17 +269,31 @@ export class NpsSummaryPortfolioComponent implements OnInit {
         }
         obj.nominees = this.summaryNPS.controls.nominees.value;
       });
-      if (this.summaryNPS.controls.id.value == undefined) {
+      let adviceObj = {
+        advice_id: this.advisorId,
+        adviceStatusId: 5,
+        stringObject: obj,
+        adviceDescription: "manualAssetDescription"
+      }
+      if (this.summaryNPS.controls.id.value == undefined && this.flag!='adviceNPSSummary') {
         this.custumService.addNPS(obj).subscribe(
           data => this.addNPSRes(data)
         );
-      } else {
+      } else if(this.flag == 'adviceNPSSummary'){
+        this.custumService.getAdviceNps(adviceObj).subscribe(
+          data => this.getAdviceNscSummaryRes(data),
+        );
+      }else {
         //edit call
         this.custumService.editNPS(obj).subscribe(
           data => this.editNPSRes(data)
         );
       }
     }
+  }
+  getAdviceNscSummaryRes(data){
+    this.event.openSnackBar('NSC added successfully!', 'dismiss');
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }
   addNPSRes(data) {
     this.event.openSnackBar('Added successfully!', 'dismiss');
