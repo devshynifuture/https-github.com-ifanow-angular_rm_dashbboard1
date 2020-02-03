@@ -96,9 +96,11 @@
                         <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
                     </div>
                     <div class="col-md-8 right text-right">
-                        <button *ngIf="isEdite" mat-button class="btn-bottom br-0 text-inherit" [disabled]="subscriptionDetails.invalid"
+                        <app-progress-button *ngIf="selected==3" (btnClick)="saveChangePayeeSetting()" [options]="barButtonOptions" >
+                        </app-progress-button>
+                        <!-- <button *ngIf="isEdite" mat-button class="btn-bottom br-0 text-inherit" [disabled]="subscriptionDetails.invalid"
                             (click)="saveChangePayeeSetting()">Save
-                        </button>
+                        </button> -->
                     </div>
                 </div>
             </div>
