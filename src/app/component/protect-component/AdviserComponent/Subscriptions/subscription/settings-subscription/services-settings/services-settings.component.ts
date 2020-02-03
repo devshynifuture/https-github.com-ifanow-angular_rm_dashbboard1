@@ -69,7 +69,8 @@ export class ServicesSettingsComponent implements OnInit {
       data: singleService,
       direction: 'top',
       componentName: SubscriptionUpperSliderComponent,
-      state: 'open'
+      state: 'open',
+      Name: 'service-upper-slider'
     };
     // this.router.navigate(['/subscription-upper'], { state: { ...fragmentData } })
     AuthService.setSubscriptionUpperSliderData(fragmentData)
