@@ -33,6 +33,7 @@ export class BankAccountsComponent implements OnInit {
   advisorId: any;
   clientId: any;
   nomineesListFM: any;
+  flag: any;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public utils: UtilService,public eventService:EventService) { }
 
@@ -75,6 +76,7 @@ export class BankAccountsComponent implements OnInit {
     return ((k > 64 && k < 91) || (k == 32) || (k > 96 && k < 123) || k == 8);
   }
   getdataForm(data) {
+    this.flag=data;
     if (data == undefined) {
       data = {}
     }
@@ -140,17 +142,31 @@ export class BankAccountsComponent implements OnInit {
         description: this.bankAccounts.controls.description.value,
         id: this.bankAccounts.controls.id.value
       }
-      if (this.bankAccounts.controls.id.value == undefined) {
+      let adviceObj = {
+        advice_id: this.advisorId,
+        adviceStatusId: 5,
+        stringObject: obj,
+        adviceDescription: "manualAssetDescription"
+      }
+      if (this.bankAccounts.controls.id.value == null && this.flag!='adviceBankAccount') {
         this.custumService.addBankAccounts(obj).subscribe(
           data => this.addBankAccountsRes(data)
         );
-      } else {
+      } else if(this.flag=='adviceBankAccount'){
+        this.custumService.getAdviceBankAccount(adviceObj).subscribe(
+          data => this.getAdviceBankAccountRes(data),
+        );
+      }else {
         //edit call
         this.custumService.editBankAcounts(obj).subscribe(
           data => this.editBankAcountsRes(data)
         );
       }
     }
+  }
+  getAdviceBankAccountRes(data){
+    this.eventService.openSnackBar('Bank account added successfully', 'OK');
+    this.subInjectService.changeNewRightSliderState({flag:'addedbankAc', state: 'close', data,refreshRequired:true })
   }
   addBankAccountsRes(data) {
     console.log('addrecuringDepositRes', data)

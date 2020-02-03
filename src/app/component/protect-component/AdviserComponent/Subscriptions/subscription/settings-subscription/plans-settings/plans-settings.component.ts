@@ -104,7 +104,8 @@ export class PlansSettingsComponent implements OnInit {
       data: singlePlan,
       direction: 'top',
       componentName: SubscriptionUpperSliderComponent,
-      state: 'open'
+      state: 'open',
+      Name: 'plan-upper-slider'
     };
     // this.router.navigate(['/subscription-upper'], { state: { ...fragmentData } })
     AuthService.setSubscriptionUpperSliderData(fragmentData)

@@ -21,7 +21,7 @@ export class AdviceRealAssetComponent implements OnInit {
   ngOnInit() {
   }
   allAdvice = false;
-  openRealEstate(value, data) {
+  openRealEstate(data, value) {
     const fragmentData = {
       flag: value,
       data,
