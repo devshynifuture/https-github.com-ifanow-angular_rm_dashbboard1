@@ -37,6 +37,7 @@ export class AddEPFComponent implements OnInit {
   nomineesListFM: any;
   dataFM = [];
   familyList: any;
+  flag: any;
 
   constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) { }
   @Input()
@@ -98,6 +99,7 @@ export class AddEPFComponent implements OnInit {
     }
   }
   getdataForm(data) {
+    this.flag = data;
     if (data == undefined) {
       data = {}
     }
@@ -160,9 +162,19 @@ export class AddEPFComponent implements OnInit {
         description: this.epf.controls.description.value,
         id: this.epf.controls.id.value
       }
-      if (this.epf.controls.id.value == undefined) {
+      let adviceObj = {
+        advice_id: this.advisorId,
+        adviceStatusId: 5,
+        stringObject: obj,
+        adviceDescription: "manualAssetDescription"
+      }
+      if (this.epf.controls.id.value == undefined && this.flag != 'adviceEPF') {
         this.custumService.addEPF(obj).subscribe(
           data => this.addEPFRes(data)
+        );
+      } else if (this.flag == 'adviceEPF') {
+        this.custumService.getAdviceEpf(adviceObj).subscribe(
+          data => this.getAdviceEpfRes(data),
         );
       } else {
         //edit call
@@ -171,6 +183,11 @@ export class AddEPFComponent implements OnInit {
         );
       }
     }
+  }
+  getAdviceEpfRes(data) {
+    this.event.openSnackBar('EPF added successfully!', 'dismiss');
+    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
+
   }
   addEPFRes(data) {
     console.log('addrecuringDepositRes', data)

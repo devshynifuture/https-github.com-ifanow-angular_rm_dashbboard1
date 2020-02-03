@@ -77,7 +77,11 @@
 
 }
 
-.arn-ria {
+.arn-ria,
+.clientsetting-transactions,
+.folio-mapping,
+.client-mapping,
+.folio-mapping-popuptable {
   tr.mat-header-row {
     height: 44px !important;
   }

@@ -9,7 +9,7 @@ import { AddArnRiaCredentialsComponent } from './add-arn-ria-credentials/add-arn
   styleUrls: ['./arn-ria-credentials.component.scss']
 })
 export class ArnRiaCredentialsComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'code', 'euin', 'icons'];
+  displayedColumns: string[] = ['position', 'name', 'weight', 'aid', 'mid', 'apip', 'euin', 'set', 'icons'];
   dataSource = ELEMENT_DATA;
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject) { }
   isLoading = false;
@@ -20,7 +20,7 @@ export class ArnRiaCredentialsComponent implements OnInit {
       flag: 'addNsc',
       data,
       id: 1,
-      state: (flag == 'detailedNsc') ? 'open35' : 'open',
+      state: (flag == 'detailedNsc') ? 'open35' : 'open35',
       componentName: AddArnRiaCredentialsComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -34,7 +34,7 @@ export class ArnRiaCredentialsComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-       
+
       }
     );
   }
@@ -43,13 +43,16 @@ export interface PeriodicElement {
   name: string;
   position: string;
   weight: string;
-  symbol: string;
-  code: string;
+
+  aid: string;
+  mid: string;
+  apip: string;
   euin: string;
+
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 'NSE', name: 'ARN', weight: 'ARN-83865', symbol: 'Ankit Mehta', code: 'ABC123', euin: 'E983726' },
-  { position: 'NSE', name: 'ARN', weight: 'ARN-83865', symbol: 'Ankit Mehta', code: 'ABC123', euin: 'E983726' },
+  { position: 'NSE', name: 'ARN', weight: 'ARN-83865', aid: 'MFS83865', mid: 'ABC123', apip: '****', euin: 'E983726' },
+
 
 ];

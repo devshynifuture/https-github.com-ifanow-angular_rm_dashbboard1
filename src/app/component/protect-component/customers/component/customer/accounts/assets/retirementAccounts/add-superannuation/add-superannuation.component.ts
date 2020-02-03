@@ -35,6 +35,7 @@ export class AddSuperannuationComponent implements OnInit {
   isFirstDateContry = false
   clientId: any;
   nomineesListFM: any;
+  flag: any;
 
   constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) { }
 
@@ -83,6 +84,7 @@ export class AddSuperannuationComponent implements OnInit {
   //   return this.getDate;
   // }
   getdataForm(data) {
+    this.flag=data;
     if (data == undefined) {
       data = {}
     }
@@ -146,9 +148,19 @@ export class AddSuperannuationComponent implements OnInit {
         description: this.superannuation.controls.description.value,
         id: this.superannuation.controls.id.value
       }
-      if (this.superannuation.controls.id.value == undefined) {
+      let adviceObj = {
+        advice_id: this.advisorId,
+        adviceStatusId: 5,
+        stringObject: obj,
+        adviceDescription: "manualAssetDescription"
+      }
+      if (this.superannuation.controls.id.value == undefined && this.flag!='adviceSuperAnnuation') {
         this.custumService.addSuperannuation(obj).subscribe(
           data => this.addSuperannuationRes(data)
+        );
+      } else if(this.flag=='adviceSuperAnnuation'){
+        this.custumService.getAdviceSuperannuation(adviceObj).subscribe(
+          data => this.getAdviceSuperAnnuationRes(data),
         );
       } else {
         //edit call
@@ -157,6 +169,10 @@ export class AddSuperannuationComponent implements OnInit {
         );
       }
     }
+  }
+  getAdviceSuperAnnuationRes(data){
+    this.event.openSnackBar('Superannuation added successfully!', 'dismiss');
+    this.subInjectService.changeNewRightSliderState({ flag: 'addedSuperannuation', state: 'close', data,refreshRequired:true })
   }
   addSuperannuationRes(data) {
     console.log('addrecuringDepositRes', data)

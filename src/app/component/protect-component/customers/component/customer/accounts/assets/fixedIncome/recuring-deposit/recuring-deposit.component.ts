@@ -52,6 +52,7 @@ export class RecuringDepositComponent implements OnInit {
   familyMemberId: any;
   clientId: any;
   nomineesListFM: any;
+  flag: any;
 
   constructor(private event: EventService, private fb: FormBuilder, private custumService: CustomerService,
     public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) {
@@ -114,6 +115,7 @@ export class RecuringDepositComponent implements OnInit {
   }
 
   getdataForm(data) {
+    this.flag = data
     if (data == undefined) {
       data = {}
     }
@@ -195,8 +197,20 @@ export class RecuringDepositComponent implements OnInit {
         id: this.recuringDeposit.controls.id.value
       }
       console.log('recuringDeposit', obj)
-      this.dataSource = obj
-      if (this.recuringDeposit.controls.id.value == undefined) {
+      this.dataSource = obj;
+      let adviceObj = {
+        advice_id: this.advisorId,
+        adviceStatusId: 5,
+        stringObject: obj,
+        adviceDescription: "manualAssetDescription"
+      }
+      if (this.flag == 'adviceRecurringDeposit') {
+        this.custumService.getAdviceRd(adviceObj).subscribe(
+          data => this.getAdviceRdRes(data),
+          err => this.event.openSnackBar(err, "dismiss")
+        );
+      }
+      else if (this.recuringDeposit.controls.id.value == undefined) {
         this.custumService.addRecurringDeposit(obj).subscribe(
           data => this.addrecuringDepositRes(data),
           err => this.event.openSnackBar(err, "dismiss")
@@ -216,6 +230,9 @@ export class RecuringDepositComponent implements OnInit {
       event.target.value = "100";
       this.recuringDeposit.get('interestRate').setValue(event.target.value);
     }
+  }
+  getAdviceRdRes(data){
+    console.log(data);
   }
   addrecuringDepositRes(data) {
     console.log('addrecuringDepositRes', data)

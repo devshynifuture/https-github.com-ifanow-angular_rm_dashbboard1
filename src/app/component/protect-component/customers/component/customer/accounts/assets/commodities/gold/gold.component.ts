@@ -35,6 +35,7 @@ export class GoldComponent implements OnInit {
   fdYears: string[];
   clientId: any;
   nomineesListFM: any;
+  flag: any;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public utils: UtilService,public eventService:EventService) { }
 
@@ -75,6 +76,7 @@ export class GoldComponent implements OnInit {
     }
   }
   getdataForm(data) {
+    this.flag=data;
     if (data == undefined) {
       data = {}
     }
@@ -138,17 +140,31 @@ export class GoldComponent implements OnInit {
         description: this.gold.controls.description.value,
         id: this.gold.controls.id.value
       }
-      if (this.gold.controls.id.value == undefined) {
-        this.custumService.addGold(obj).subscribe(
+      let adviceObj = {
+        advice_id: this.advisorId,
+        adviceStatusId: 5,
+        stringObject: obj,
+        adviceDescription: "manualAssetDescription"
+      }
+      if (this.gold.controls.id.value == undefined && this.flag!='adviceGOLD') {
+        this.custumService.addGold(obj).subscribe( 
           data => this.addGoldRes(data)
         );
-      } else {
+      }else if(this.flag=='adviceGOLD'){
+        this.custumService.getAdviceGold(adviceObj).subscribe(
+          data => this.getAdviceGoldRes(data),
+        );
+      }else {
         //edit call
         this.custumService.editGold(obj).subscribe(
           data => this.editGoldRes(data)
         );
       }
     }
+  }
+  getAdviceGoldRes(data){
+    this.eventService.openSnackBar('Gold added successfully', 'OK');
+    this.subInjectService.changeNewRightSliderState({flag:'addedGold', state: 'close', data,refreshRequired:true })
   }
   addGoldRes(data) {
     console.log('addrecuringDepositRes', data)

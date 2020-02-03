@@ -9,8 +9,12 @@ import { SubscriptionInject } from '../../../../Subscriptions/subscription-injec
   styleUrls: ['./sub-broker-team-member.component.scss']
 })
 export class SubBrokerTeamMemberComponent implements OnInit {
-
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'code', 'euin', 'icons'];
+  dataSource = ELEMENT_DATA;
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject) { }
+  isLoading = false;
+
+
 
   ngOnInit() {
   }
@@ -33,8 +37,22 @@ export class SubBrokerTeamMemberComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-       
+
       }
     );
   }
 }
+export interface PeriodicElement {
+  name: string;
+  position: string;
+  weight: string;
+  symbol: string;
+  code: string;
+  euin: string;
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  { position: 'NSE', name: 'ARN', weight: 'ARN-83865', symbol: 'Ankit Mehta', code: 'ABC123', euin: 'E983726' },
+  { position: 'NSE', name: 'ARN', weight: 'ARN-83865', symbol: 'Ankit Mehta', code: 'ABC123', euin: 'E983726' },
+
+];
