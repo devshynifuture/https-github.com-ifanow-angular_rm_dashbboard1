@@ -42,7 +42,7 @@ export class EmailViewComponent implements OnInit, OnDestroy {
   date: any;
   fromDetailMessage: any;
   toDetailMessage: any;
-  decodedPartsDetail: string[] = [];
+  decodedPartsDetail: {}[] = [];
   attachmentsArray: { filename: string, mimeType: 'string', attachmentId: 'string' }[] = [];
   messageId: any;
   attachmentsData: any;
@@ -87,12 +87,15 @@ export class EmailViewComponent implements OnInit, OnDestroy {
         const { payload: { headers } } = response;
         const { payload: { parts } } = response;
         headers.forEach(header => {
+          console.log(header);
           if (header.name === 'Delivered-To') {
             this.deliveredTo = header.value;
           }
+
           if (header.name === 'Reply-To') {
             this.replyTo = header.value;
           }
+
           if (header.name === 'Date') {
             this.date = header.value;
           }
@@ -126,8 +129,20 @@ export class EmailViewComponent implements OnInit, OnDestroy {
               });
 
             }
-          } else if (part.mimeType === 'text/html') {
-            this.decodedPartsDetail.push(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data))
+          } else if (part.mimeType === 'multipart/alternative') {
+            if (part.parts !== null) {
+              console.log("im here");
+              const { parts } = part;
+              parts.forEach(part => {
+                console.log("there is something going on here:::::::::::")
+                if (part.mimeType === 'text/html') {
+                  this.decodedPartsDetail.push({
+                    item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data),
+                    date: this.date
+                  })
+                }
+              });
+            }
           }
         });
 

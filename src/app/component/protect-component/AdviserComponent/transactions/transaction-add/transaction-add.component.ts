@@ -1,6 +1,6 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from './../../Subscriptions/subscription-inject.service';
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ValidatorType } from 'src/app/services/util.service';
 
 @Component({
@@ -31,8 +31,8 @@ export class TransactionAddComponent implements OnInit {
     'schemeType': [,],
     'scheme': [,],
     'folio': [,],
-    'employeeContry': [,],
-    'investmentAccountSelection': [,],
+    'employeeContry': [, Validators.min(500)],
+    'investmentAccountType': [,],
     'modeOfPayment': [,],
     'bankAccountType': [,],
 
@@ -60,8 +60,10 @@ export class TransactionAddComponent implements OnInit {
   }
 
   saveAndAddAnother() {
-    this.isSaveAndAddClicked = true;
-    console.log(this.transactionAddForm);
+    if (this.transactionAddForm.valid) {
+      this.isSaveAndAddClicked = true;
+      console.log(this.transactionAddForm);
+    }
   }
 
   onAddTransaction() {
