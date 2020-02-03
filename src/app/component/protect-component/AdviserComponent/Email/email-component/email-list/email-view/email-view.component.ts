@@ -47,7 +47,8 @@ export class EmailViewComponent implements OnInit, OnDestroy {
   messageId: any;
   attachmentsData: any;
   attachmentsBase64Data: { filename: string, mimeType: 'string', base64Data: 'string' }[];
-  attachmentArrayDetail: {}[];
+  attachmentArrayDetail: Array<any> = [];
+  isAttachmentBasedEmail: boolean = false;
 
   constructor(private emailService: EmailServiceService,
     private _bottomSheet: MatBottomSheet,
@@ -73,7 +74,7 @@ export class EmailViewComponent implements OnInit, OnDestroy {
   }
 
   getGmailDetailMessageRaw(id) {
-
+    this.isAttachmentBasedEmail = true;
     this.emailService.gmailMessageDetail(id)
       .subscribe((response) => {
 
@@ -107,122 +108,50 @@ export class EmailViewComponent implements OnInit, OnDestroy {
         });
 
         parts.forEach(part => {
+          console.log("this is part::::::::::::", part);
           if (part.mimeType !== 'multipart/alternative') {
 
-            // const { parts } = part;
-            // parts.forEach(part => {
-            if (part.mimeType === 'text/html') {
-              this.decodedPartsDetail.push(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data));
-            }
-            // });
             if (part.filename !== null) {
-              this.attachmentsArray.push({
-                filename: part.filename,
-                mimeType: part.mimeType,
-                attachmentId: part.body.attachmentId
+              const obj = {
+                userId: AuthService.getUserInfo().advisorId,
+                email: AuthService.getUserInfo().emailId,
+                attachmentId: part.body.attachmentId,
+                messageId: this.messageId
+              }
+
+              this.emailService.getAttachmentFiles(obj).subscribe(res => {
+                const resBase64 = res.data.replace(/\-/g, '+').replace(/_/g, '/');
+                this.creationOfUrlAndBase64File(resBase64, part)
+
               });
+
             }
           } else if (part.mimeType === 'text/html') {
             this.decodedPartsDetail.push(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data))
           }
         });
 
-
-        // hit attachment get apis as per attachment ids got from gmail api explorer
-
-        this.attachmentsArray.forEach((attachment) => {
-
-          const obj = {
-            userId: AuthService.getUserInfo().advisorId,
-            email: AuthService.getUserInfo().emailId,
-            attachmentId: attachment.attachmentId,
-            messageId: this.messageId
-          }
-
-          console.log("this is parameters for file get attachment", obj);
-
-          this.emailService.getAttachmentFiles(obj).subscribe(res => {
-
-            console.log("this is some response from gmail attachment api:::::::::::", res);
-            // according to google attachment get api its response is coming in base64url format having size and data
-            // {
-            //   size: number,
-            //   data: string
-            // }
-
-            // as the response is base64Url encoded we only need base64 data 
-            this.attachmentsBase64Data.push({
-              filename: attachment.filename,
-              mimeType: attachment.mimeType,
-              base64Data: res.body.replace(/\-/g, '+').replace(/_/g, '/')
-            });
-
-
-            console.log("this is attachmentbase64 data", this.attachmentsBase64Data);
-          })
-        });
-
-        // converting attachments to file with url
-        if (this.attachmentsBase64Data) {
-          this.attachmentsBase64Data.forEach(attachment => {
-            let blobData = EmailUtilService.convertBase64ToBlobData(attachment.base64Data, attachment.mimeType);
-
-            if (window.navigator && window.navigator.msSaveOrOpenBlob) { //IE
-              window.navigator.msSaveOrOpenBlob(blobData, attachment.filename);
-            } else { // chrome
-              const blob = new Blob([blobData], { type: attachment.mimeType });
-              const url = window.URL.createObjectURL(blob);
-              // window.open(url);
-
-              this.attachmentArrayDetail.push({
-                filename: attachment.filename,
-                downloadUrl: url
-              });
-            }
-          });
-        }
-
-
-
-
-
-
-
-        // based on response coming from backend  
-        // this.raw = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(response.raw);
-        // let fileData = this.extractValuesFromDetailView();
-        // this.attachmentBase64 = "data: image/jpeg; base64," + this.raw.match(/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=|[A-Za-z0-9+\/]{4})$/gm);
-        // let base64Data = this.raw.match(/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=|[A-Za-z0-9+\/]{4})$/gm).join("")
-        // let fileDataObj = {
-        //   ...fileData,
-        //   base64: base64Data,
-        //   fileContent: this.attachmentBase64
-        // }
-        // if() 
-        // let blobData = EmailUtilService.convertBase64ToBlobData(base64Data, fileData.fileType);
-        // if (window.navigator && window.navigator.msSaveOrOpenBlob) { //IE
-        //   window.navigator.msSaveOrOpenBlob(blobData, fileData.fileName);
-        // } else { // chrome
-        //   const blob = new Blob([blobData], { type: fileData.fileType });
-        //   const url = window.URL.createObjectURL(blob);
-        //   // window.open(url);
-        //   this.attachmentArray.push({
-        //     filename: fileData.fileName,
-        //     downloadUrl: url
-        //   });
-
-        // link.href = url;
-        // link.download = fileData.fileName;
-        // link.click();
-        // }
-
-        // this.isLoading = false;
-
-        // this.attachmentBase64Code = this.raw.forEach(part => {
-        //   part.item
-        // });
+        console.log(this.decodedPartsDetail);
 
       });
+  }
+
+  creationOfUrlAndBase64File(resBase64, part) {
+    let blobData = EmailUtilService.convertBase64ToBlobData(resBase64, part.mimeType);
+
+    if (window.navigator && window.navigator.msSaveOrOpenBlob) { //IE
+      window.navigator.msSaveOrOpenBlob(blobData, part.filename);
+    } else { // chrome
+      const blob = new Blob([blobData], { type: part.mimeType });
+      const url = window.URL.createObjectURL(blob);
+      // window.open(url);
+
+      this.attachmentArrayDetail.push({
+        filename: part.filename,
+        downloadUrl: url
+      });
+    }
+    console.log(this.attachmentArrayDetail);
   }
 
   attachmentDownload(element: any) {

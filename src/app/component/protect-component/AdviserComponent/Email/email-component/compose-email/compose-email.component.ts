@@ -126,17 +126,19 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
         attachmentId: attachment.attachmentId,
         messageId: this.idOfMessage
       }
+      let attachmentBase64Array = [];
       this.emailService.getAttachmentFiles(obj).subscribe(res => {
         // according to gmail attachment get 
-        this.attachmentsBase64Data.push({
+        const obj = {
           filename: attachment.filename,
           mimeType: attachment.mimeType,
           size: res.size,
           attachmentBase64Data: res.body.replace(/\-/g, '+').replace(/_/g, '/')
-        })
+        }
+        attachmentBase64Array.push(obj);
       })
 
-      this.attachmentsBase64Data.forEach(attachment => {
+      attachmentBase64Array.forEach(attachment => {
         let blobData = EmailUtilService.convertBase64ToBlobData(attachment.attachmentBase64Data, attachment.mimeType);
 
         if (window.navigator && window.navigator.msSaveOrOpenBlob) { //IE

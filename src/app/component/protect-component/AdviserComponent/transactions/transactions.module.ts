@@ -11,6 +11,7 @@ import { KycTransactionsComponent } from './kyc-transactions/kyc-transactions.co
 import { SettingsTransactionsComponent } from './settings-transactions/settings-transactions.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material/material';
+import { SettingsTransactionsModule } from './settings-transactions/settings-transactions.module';
 
 // import { TransactionsComponent } from './t/transactions.component';
 
@@ -18,14 +19,16 @@ import { MaterialModule } from 'src/app/material/material';
 
 
 @NgModule({
-  declarations: [TransactionsComponent, OverviewTransactionsComponent, TransactionsListComponent, InvestorsTransactionsComponent, MandatesTransactionsComponent, KycTransactionsComponent, SettingsTransactionsComponent],
+  declarations: [TransactionsComponent, OverviewTransactionsComponent, TransactionsListComponent, InvestorsTransactionsComponent, MandatesTransactionsComponent, KycTransactionsComponent],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     TransactionRoutingModule,
     EntryComponentsModule,
-    MaterialModule
+    MaterialModule,
+    SettingsTransactionsModule,
+
   ], exports: [
 
     TransactionsComponent
