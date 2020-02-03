@@ -17,8 +17,8 @@ export class TransactionAddComponent implements OnInit {
   isSaveAndAddClicked: boolean = false;
 
   transactionAddForm: FormGroup = this.fb.group({
-    'selectedInvestor': [, Validators.required],
-    'transactionType': [,],
+    'selectInvestor': [, Validators.required],
+    'transactionType': [, Validators.required],
     'schemeSelection': [,],
     'investor': [,],
     'folioSelection': [,],
@@ -61,15 +61,15 @@ export class TransactionAddComponent implements OnInit {
 
   saveAndNext() {
     console.log(this.formStep);
-    if (this.transactionAddForm.valid) {
+    if (this.transactionAddForm.get('selectInvestor').valid) {
       if (this.formStep == 'step-1') {
         this.formStep = 'step-2';
-      } else if (this.formStep == 'step-2') {
+      } else if (this.transactionAddForm.get('transactionType').valid && this.formStep == 'step-2') {
         this.formStep = 'step-3';
       }
     } else {
       if (this.formStep == 'step-1') {
-        this.transactionAddForm.get('selectedInvestor').markAsTouched();
+        this.transactionAddForm.get('selectInvestor').markAsTouched();
       } else if (this.formStep === 'step-2') {
         this.transactionAddForm.get('transactionType').markAsTouched();
       } else if (this.formStep === 'step-3') {
