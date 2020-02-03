@@ -20,7 +20,7 @@ export class ArnRiaCredentialsComponent implements OnInit {
       flag: 'addNsc',
       data,
       id: 1,
-      state: (flag == 'detailedNsc') ? 'open35' : 'open',
+      state: (flag == 'detailedNsc') ? 'open35' : 'open35',
       componentName: AddArnRiaCredentialsComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -34,7 +34,7 @@ export class ArnRiaCredentialsComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-       
+
       }
     );
   }

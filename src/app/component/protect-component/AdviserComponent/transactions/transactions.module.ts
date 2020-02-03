@@ -12,6 +12,7 @@ import { SettingsTransactionsComponent } from './settings-transactions/settings-
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material/material';
 import { SettingsTransactionsModule } from './settings-transactions/settings-transactions.module';
+import { AddClientMappingComponent } from './settings-transactions/settings-client-mapping/add-client-mapping/add-client-mapping.component';
 
 // import { TransactionsComponent } from './t/transactions.component';
 
@@ -19,7 +20,7 @@ import { SettingsTransactionsModule } from './settings-transactions/settings-tra
 
 
 @NgModule({
-  declarations: [TransactionsComponent, OverviewTransactionsComponent, TransactionsListComponent, InvestorsTransactionsComponent, MandatesTransactionsComponent, KycTransactionsComponent],
+  declarations: [TransactionsComponent, OverviewTransactionsComponent, TransactionsListComponent, InvestorsTransactionsComponent, MandatesTransactionsComponent, KycTransactionsComponent, AddClientMappingComponent],
   imports: [
     CommonModule,
     FormsModule,
