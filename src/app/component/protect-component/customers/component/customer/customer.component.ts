@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {AuthService} from '../../../../../auth-service/authService';
-import {DialogContainerComponent} from '../../../../../common/dialog-container/dialog-container.component';
-import {EventService} from '../../../../../Data-service/event.service';
-import {SubscriptionInject} from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import {DynamicComponentService} from '../../../../../services/dynamic-component.service';
-import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from '../../../../../animation/animation';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../../../../auth-service/authService';
+import { DialogContainerComponent } from '../../../../../common/dialog-container/dialog-container.component';
+import { EventService } from '../../../../../Data-service/event.service';
+import { SubscriptionInject } from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import { DynamicComponentService } from '../../../../../services/dynamic-component.service';
+import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } from '../../../../../animation/animation';
 
 @Component({
   selector: 'app-customer',
@@ -24,9 +24,9 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
   status = false;
 
   constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
-              protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute,
-              private authService: AuthService) {
-    super(eventService, subinject, dynamicComponentService);
+    protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute,
+    private authService: AuthService) {
+    super(eventService, subinject, dynamicComponentService, 'CustomerComponent');
     console.log(router.getCurrentNavigation().extras.state);
     if (router.getCurrentNavigation().extras.state && router.getCurrentNavigation().extras.state.id) {
       this.authService.setClientData(router.getCurrentNavigation().extras.state);
