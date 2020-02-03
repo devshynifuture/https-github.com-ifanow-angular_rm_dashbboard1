@@ -39,7 +39,8 @@ const routes: Routes = [{
       component: DocumentsSubscriptionsComponent
     },
     {
-      path: 'settings',
+      path: 'settings/:label',
+      // loadChildren: () => import('./subscription/settings-subscription/settings-subscription.module').then(m => m.SettingsSubscriptionModule)
       component: SettingsSubscriptionComponent
     },
     /* {
