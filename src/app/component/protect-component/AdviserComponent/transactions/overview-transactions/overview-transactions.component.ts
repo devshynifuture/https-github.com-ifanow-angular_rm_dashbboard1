@@ -2,6 +2,7 @@ import { UtilService } from '../../../../../services/util.service';
 import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
 import { Component, OnInit } from '@angular/core';
 import { TransactionAddComponent } from '../transaction-add/transaction-add.component';
+import { OnlineTrasactionComponent } from './doTransaction/online-trasaction/online-trasaction.component';
 
 @Component({
   selector: 'app-overview-transactions',
@@ -25,7 +26,7 @@ export class OverviewTransactionsComponent implements OnInit {
       data: null,
       id: 1,
       state: 'open65',
-      componentName: TransactionAddComponent,
+      componentName: OnlineTrasactionComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

@@ -13,6 +13,8 @@ import { SettingsTransactionsComponent } from './settings-transactions/settings-
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material/material';
 import { SettingsTransactionsModule } from './settings-transactions/settings-transactions.module';
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
 
 // import { TransactionsComponent } from './t/transactions.component';
 
@@ -35,6 +37,8 @@ import { SettingsTransactionsModule } from './settings-transactions/settings-tra
     TransactionRoutingModule,
     EntryComponentsModule,
     MaterialModule,
+    CustomDirectiveModule,
+    CustomCommonModule,
     SettingsTransactionsModule,
   ], exports: [
 

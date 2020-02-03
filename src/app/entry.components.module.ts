@@ -82,8 +82,6 @@ import { HistoryRiskProfileComponent } from './component/protect-component/custo
 import { CustomDirectiveModule } from './common/directives/common-directive.module';
 import { AddNomineeComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/add-nominee/add-nominee.component';
 import { AddBudgetComponent } from './component/protect-component/customers/component/common-component/add-budget/add-budget/add-budget.component';
-import { AddArnRiaCredentialsComponent } from './component/protect-component/AdviserComponent/transactions/settings-transactions/settings-manage-credentials/arn-ria-credentials/add-arn-ria-credentials/add-arn-ria-credentials.component';
-import { AddSubBrokerCredentialsComponent } from './component/protect-component/AdviserComponent/transactions/settings-transactions/settings-manage-credentials/sub-broker-team-member/add-sub-broker-credentials/add-sub-broker-credentials.component';
 //import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
 
@@ -208,8 +206,6 @@ export const componentList = [
   SelectAdviceComponent,
   AddNomineeComponent,
   AddBudgetComponent,
-  AddArnRiaCredentialsComponent,
-  AddSubBrokerCredentialsComponent
 
 
   // ComposeEmailComponent
