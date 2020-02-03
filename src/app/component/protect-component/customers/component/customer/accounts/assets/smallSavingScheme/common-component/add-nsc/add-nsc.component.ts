@@ -35,6 +35,8 @@ export class AddNscComponent implements OnInit {
   nscData: any;
   nomineesList: any;
   nominees: any;
+  flag: any;
+  dataSource: { "id": any; "familyMemberId": any; "ownerName": any; "amountInvested": any; "commencementDate": string; "tenure": any; "certificateNumber": any; "postOfficeBranch": any; "bankAccountNumber": any; "ownerTypeId": number; "nominees": any; "description": any; };
   @Input()
   set data(data) {
     this.inputData = data;
@@ -64,6 +66,7 @@ export class AddNscComponent implements OnInit {
     this.nomineesList = data.controls
   }
   getdataForm(data) {
+    this.flag=data;
     if (data == undefined) {
       data = {};
     }
@@ -146,7 +149,7 @@ export class AddNscComponent implements OnInit {
       return
     }
     else {
-      if (this.editApi) {
+      if (this.editApi!='adviceNSC') {
         let obj =
         {
           "id": this.editApi.id,
@@ -185,12 +188,30 @@ export class AddNscComponent implements OnInit {
           "description": this.nscFormOptionalField.get('description').value
         }
         console.log(obj)
-        this.cusService.addNSCScheme(obj).subscribe(
-          data => this.addNSCResponse(data),
-          error => this.eventService.showErrorMessage(error)
-        )
+        let adviceObj = {
+          advice_id: this.advisorId,
+          adviceStatusId: 5,
+          stringObject: obj,
+          adviceDescription: "manualAssetDescription"
+        }
+        if (this.flag == 'adviceNSC') {
+          this.cusService.getAdviceNsc(adviceObj).subscribe(
+            data => this.getAdviceNscRes(data),
+            err => this.eventService.openSnackBar(err, "dismiss")
+          );
+        }else{
+          this.cusService.addNSCScheme(obj).subscribe(
+            data => this.addNSCResponse(data),
+            error => this.eventService.showErrorMessage(error)
+          )
+        }
       }
     }
+  }
+  getAdviceNscRes(data){
+    console.log(data);
+    this.eventService.openSnackBar("NSC is added", "ok") 
+    this.close(true);
   }
   addNSCResponse(data) {
     (this.editApi) ? this.eventService.openSnackBar("NSC is edited", "dismiss") : this.eventService.openSnackBar("NSC is added", "dismiss")

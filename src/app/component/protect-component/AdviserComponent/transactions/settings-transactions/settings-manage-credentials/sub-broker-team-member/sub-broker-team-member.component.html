@@ -1,0 +1,70 @@
+<div class="p-20 arn-ria">
+    <div class="row">
+        <div class="col-md-6 p-0">
+            <h4 class="m-0 pt-8">Sub broker/Team member</h4>
+        </div>
+        <div class="col-md-6 text-right p-0">
+            <button mat-stroked-button class="btn-primary pl-8"><i class="material-icons text-white pr-8">
+                    add
+                </i>ADD NEW</button>
+        </div>
+    </div>
+    <table mat-table [dataSource]="dataSource" class="mt-8 skeletonAnimation" id="table-low" appSkeletonLoading
+        [appSkeletonLoading]="isLoading">
+        <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef class="br"> Platform </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">
+                    {{element.position}}
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef class="br"> Account type </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar"> {{element.name}} </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="weight">
+            <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar"> {{element.weight}}
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="symbol">
+            <th mat-header-cell *matHeaderCellDef class="br"> Sub broker/Team member name </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">{{element.symbol}} </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="code">
+            <th mat-header-cell *matHeaderCellDef class="br"> Sub broker code </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar"> {{element.code}}</div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="euin">
+            <th mat-header-cell *matHeaderCellDef class="br"> EUIN </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar"> {{element.euin}}</div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="icons">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let element">
+
+                <i class="material-icons c-p">
+                    more_vert
+                </i>
+
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+</div>

@@ -30,6 +30,7 @@ export class CashInHandComponent implements OnInit {
   advisorId: any;
   private clientId: any;
   nomineesListFM: any;
+  flag: any;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService,
               public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService,public eventService:EventService) {
@@ -74,6 +75,7 @@ export class CashInHandComponent implements OnInit {
   }
 
   getdataForm(data) {
+    this.flag=data;
     if (data == undefined) {
       data = {};
     }
@@ -117,11 +119,21 @@ export class CashInHandComponent implements OnInit {
         description: this.cashInHand.controls.description.value,
         id: this.cashInHand.controls.id.value
       };
-      if (this.cashInHand.controls.id.value == undefined) {
+      let adviceObj = {
+        advice_id: this.advisorId,
+        adviceStatusId: 5,
+        stringObject: obj,
+        adviceDescription: "manualAssetDescription"
+      }
+      if (this.cashInHand.controls.id.value == undefined && this.flag!='adviceCashInHand') {
         this.custumService.addCashInHand(obj).subscribe(
           data => this.addCashInHandRes(data)
         );
-      } else {
+      }else if(this.flag=='adviceCashInHand'){
+        this.custumService.getAdviceCashInHand(adviceObj).subscribe(
+          data => this.getAdviceCashInHandRes(data),
+        );
+      }else {
         // edit call
         this.custumService.editCashInHand(obj).subscribe(
           data => this.editCashInHandRes(data)
@@ -129,7 +141,11 @@ export class CashInHandComponent implements OnInit {
       }
     }
   }
+  getAdviceCashInHandRes(data){
+    this.eventService.openSnackBar('Cash In Hand added successfully', 'OK');
+    this.subInjectService.changeNewRightSliderState({state: 'close', data,refreshRequired:true});
 
+  }
   addCashInHandRes(data) {
     console.log('addrecuringDepositRes', data);
     this.subInjectService.changeNewRightSliderState({state: 'close', data,refreshRequired:true});

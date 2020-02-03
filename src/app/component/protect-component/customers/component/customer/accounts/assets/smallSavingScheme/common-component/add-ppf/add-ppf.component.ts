@@ -42,6 +42,8 @@ export class AddPpfComponent implements OnInit {
   ppfData: any;
   nominees: any[];
   commencementDate: any;
+  flag: any;
+  dataSource: { "advisorId": any; "clientId": number; "ownerName": any; "familyMemberId": any; "accountBalance": any; "balanceAsOn": any; "commencementDate": any; "description": any; "bankName": any; "linkedBankAccount": any; "nominees": any[]; "frequency": any; "futureApproxcontribution": any; "publicprovidendfundtransactionlist": any[]; };
   constructor(public utils: UtilService,private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
   @Input()
@@ -80,6 +82,7 @@ export class AddPpfComponent implements OnInit {
     this.commencementDate = date
   }
   getdataForm(data) {
+    this.flag=data;
     if (data == undefined) {
       data = {};
     }
@@ -181,7 +184,19 @@ export class AddPpfComponent implements OnInit {
         "futureApproxcontribution": this.ppfSchemeForm.get('futureContribution').value,
         "publicprovidendfundtransactionlist": finalTransctList,
       }
-      if (this.editApi) {
+      this.dataSource = obj;
+      let adviceObj = {
+        advice_id: this.advisorId,
+        adviceStatusId: 5,
+        stringObject: obj,
+        adviceDescription: "manualAssetDescription"
+      }
+      if (this.flag == 'advicePPF') {
+        this.cusService.getAdvicePpf(adviceObj).subscribe(
+          data => this.getAdvicePpfRes(data),
+          err => this.eventService.openSnackBar(err, "dismiss")
+        );
+      } else if (this.editApi!='advicePPF') {
         obj['id'] = this.editApi.id
         this.cusService.editPPF(obj).subscribe(
           data => this.addPPFResponse(data),
@@ -195,6 +210,12 @@ export class AddPpfComponent implements OnInit {
         )
       }
     }
+  }
+  getAdvicePpfRes(data){
+    console.log(data)
+    this.eventService.openSnackBar("PPF is added", "dismiss") 
+    this.close(true);
+
   }
   addPPFResponse(data) {
     (this.editApi) ? this.eventService.openSnackBar("PPF is edited", "dismiss") : this.eventService.openSnackBar("PPF is added", "dismiss")

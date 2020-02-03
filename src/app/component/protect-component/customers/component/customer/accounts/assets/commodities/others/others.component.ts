@@ -7,6 +7,7 @@ import {MAT_DATE_FORMATS} from '@angular/material';
 import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
 import {AuthService} from 'src/app/auth-service/authService';
 import {UtilService} from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-others',
@@ -28,8 +29,9 @@ export class OthersComponent implements OnInit {
   advisorId: any;
   clientId: any;
   nomineesListFM: any;
+  flag: any;
 
-  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) {
+  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService,public eventService:EventService) {
   }
 
   @Input()
@@ -77,6 +79,7 @@ export class OthersComponent implements OnInit {
   }
 
   getdataForm(data) {
+    this.flag=data;
     if (data == undefined) {
       data = {};
     }
@@ -125,11 +128,20 @@ export class OthersComponent implements OnInit {
         description: this.others.controls.description.value,
         id: this.others.controls.id.value
       };
-
-      if (this.others.controls.id.value == undefined) {
+      let adviceObj = {
+        advice_id: this.advisorId,
+        adviceStatusId: 5,
+        stringObject: obj,
+        adviceDescription: "manualAssetDescription"
+      }
+      if (this.others.controls.id.value == undefined && this.flag!='adviceOTHERS') {
         delete obj.id;
         this.custumService.addOthers(obj).subscribe(
           data => this.addOthersRes(data)
+        );
+      }else if(this.flag=='adviceOTHERS'){
+        this.custumService.getAdviceOthers(adviceObj).subscribe(
+          data => this.getAdviceOthersRes(data),
         );
       } else {
         // edit call
@@ -139,7 +151,11 @@ export class OthersComponent implements OnInit {
       }
     }
   }
+  getAdviceOthersRes(data){
+    this.eventService.openSnackBar('Others added successfully', 'OK');
+    this.subInjectService.changeNewRightSliderState({state: 'close', data ,refreshRequired:true});
 
+  }
   addOthersRes(data) {
     console.log('addrecuringDepositRes', data);
     this.subInjectService.changeNewRightSliderState({state: 'close', data ,refreshRequired:true});

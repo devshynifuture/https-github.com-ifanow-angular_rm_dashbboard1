@@ -76,3 +76,23 @@
   }
 
 }
+
+.arn-ria,
+.clientsetting-transactions,
+.folio-mapping,
+.client-mapping,
+.folio-mapping-popuptable {
+  tr.mat-header-row {
+    height: 44px !important;
+  }
+
+  #table-low {
+    tbody tr {
+      height: 36px !important;
+    }
+
+    tbody td {
+      padding: 4px 6px !important;
+    }
+  }
+}
