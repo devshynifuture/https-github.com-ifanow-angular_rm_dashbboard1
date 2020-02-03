@@ -15,7 +15,7 @@
 @import'./assets/style/scss/fixing';
 @import'./assets/style/scss/height-width';
 @import'./assets/style/scss/progressbar';
-@import'./assets/style/loaders';
+@import'./assets/style/scss/loaders';
 @import'./assets/style/scss/_footer';
 @import'./assets/style/scss/Crm/_crm';
 @import'./assets/style/scss/Advice/_advice';
@@ -1285,7 +1285,6 @@ mat-tab-group[vertical] {
   }
 }
 
-
 .skeletonAnimation td {
   position: relative;
 
@@ -1347,17 +1346,9 @@ textarea {
   resize: none;
 }
 
-.width200 {
-  width: 200px;
-}
-
 .form-control:disabled,
 .form-control[readonly] {
   background-color: #ffffff;
-}
-
-.width400 {
-  width: 400px;
 }
 
 #ui-account-container,
@@ -1409,8 +1400,4 @@ textarea {
 
 .example-container::-webkit-scrollbar-button:horizontal:decrement:hover {
   background: #555;
-}
-
-.h-100 {
-  height: 100px;
 }
