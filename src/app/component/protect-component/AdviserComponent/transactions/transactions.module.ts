@@ -1,3 +1,4 @@
+import { CustomDirectiveModule } from './../../../../common/directives/common-directive.module';
 import { EntryComponentsModule } from '../../../../entry.components.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -20,7 +21,14 @@ import { AddClientMappingComponent } from './settings-transactions/settings-clie
 
 
 @NgModule({
-  declarations: [TransactionsComponent, OverviewTransactionsComponent, TransactionsListComponent, InvestorsTransactionsComponent, MandatesTransactionsComponent, KycTransactionsComponent, AddClientMappingComponent],
+  declarations: [
+    TransactionsComponent,
+    OverviewTransactionsComponent,
+    TransactionsListComponent,
+    InvestorsTransactionsComponent,
+    MandatesTransactionsComponent,
+    KycTransactionsComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -29,7 +37,6 @@ import { AddClientMappingComponent } from './settings-transactions/settings-clie
     EntryComponentsModule,
     MaterialModule,
     SettingsTransactionsModule,
-
   ], exports: [
 
     TransactionsComponent

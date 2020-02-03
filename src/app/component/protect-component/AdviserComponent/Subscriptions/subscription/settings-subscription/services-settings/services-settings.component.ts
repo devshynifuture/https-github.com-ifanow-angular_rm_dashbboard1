@@ -7,6 +7,8 @@ import { UtilService } from '../../../../../../../services/util.service';
 import { SubscriptionUpperSliderComponent } from '../../common-subscription-component/upper-slider/subscription-upper-slider.component';
 import { Router } from '@angular/router';
 import { SubscriptionDataService } from '../../../subscription-data.service';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-services-settings',
@@ -17,7 +19,7 @@ export class ServicesSettingsComponent implements OnInit {
   feesDisplay: boolean;
 
   constructor(public dialog: MatDialog, private subService: SubscriptionService,
-    private dataService: EventService, private eventService: EventService, private utilservice: UtilService, private router: Router) {
+    private dataService: EventService, private eventService: EventService, private utilservice: UtilService, private router: Router, private location: Location) {
   }
 
   button: any;
@@ -58,26 +60,27 @@ export class ServicesSettingsComponent implements OnInit {
   // }
 
   openFragment(singleService, data) {
+    this.location.replaceState('/subscription-upper');
     (singleService == '') ? singleService = '' : singleService.flag = data;
     console.log('hello mf button clicked');
     const fragmentData = {
       flag: 'service',
       id: 1,
       data: singleService,
-      // direction: 'top',
-      // componentName: SubscriptionUpperSliderComponent,
-      // state: 'open'
+      direction: 'top',
+      componentName: SubscriptionUpperSliderComponent,
+      state: 'open'
     };
-    this.router.navigate(['/subscription-upper'], { state: { ...fragmentData } })
+    // this.router.navigate(['/subscription-upper'], { state: { ...fragmentData } })
     AuthService.setSubscriptionUpperSliderData(fragmentData)
-    // const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-    //   upperSliderData => {
-    //     if (UtilService.isDialogClose(upperSliderData)) {
-    //       this.getServiceSettingSubData();
-    //       subscription.unsubscribe();
-    //     }
-    //   }
-    // );
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          this.getServiceSettingSubData();
+          subscription.unsubscribe();
+        }
+      }
+    );
   }
 
   getServiceSettingSubData() {

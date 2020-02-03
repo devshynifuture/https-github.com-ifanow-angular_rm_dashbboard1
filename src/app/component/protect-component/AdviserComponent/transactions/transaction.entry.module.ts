@@ -1,8 +1,9 @@
-import { MaterialModule } from '../../../../../material/material';
+import { CustomDirectiveModule } from './../../../../common/directives/common-directive.module';
+import { MaterialModule } from '../../../../material/material';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { TransactionAddComponent } from '../transaction-add/transaction-add.component';
+import { TransactionAddComponent } from './transaction-add/transaction-add.component';
 
 export const componentList = [
     TransactionAddComponent
@@ -13,7 +14,8 @@ export const componentList = [
         CommonModule,
         MaterialModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        CustomDirectiveModule
     ],
     exports: [
         FormsModule,
