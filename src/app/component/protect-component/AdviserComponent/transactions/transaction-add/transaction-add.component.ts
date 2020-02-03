@@ -31,8 +31,8 @@ export class TransactionAddComponent implements OnInit {
     'schemeType': [,],
     'scheme': [,],
     'folio': [,],
-    'employeeContry': [,],
-    'investmentAccountSelection': [,],
+    'employeeContry': [, Validators.min(500)],
+    'investmentAccountType': [,],
     'modeOfPayment': [,],
     'bankAccountType': [,],
 
@@ -93,8 +93,8 @@ export class TransactionAddComponent implements OnInit {
     }
     this.transactionAddForm = this.fb.group({
       ownerName: [(!data) ? '' : data.ownerName, [Validators.required]],
-      transactionType:[(!data) ? '' : data.transactionType, [Validators.required]],
-      bankAccountSelection:[(!data) ? '' : data.bankAccountSelection, [Validators.required]],
+      transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
+      bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
     });
 
     this.ownerData = this.transactionAddForm.controls;
@@ -114,8 +114,10 @@ export class TransactionAddComponent implements OnInit {
   }
 
   saveAndAddAnother() {
-    this.isSaveAndAddClicked = true;
-    console.log(this.transactionAddForm);
+    if (this.transactionAddForm.valid) {
+      this.isSaveAndAddClicked = true;
+      console.log(this.transactionAddForm);
+    }
   }
 
   onAddTransaction() {
