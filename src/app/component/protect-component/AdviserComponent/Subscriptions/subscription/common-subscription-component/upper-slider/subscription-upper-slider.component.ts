@@ -33,7 +33,7 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
     // public dialogRef: MatDialogRef<UpperSliderComponent>,
     // @Inject(MAT_DIALOG_DATA) public fragmentDataSubsUpper: any
   ) {
-    super(eventService, subinject, dynamicComponentService);
+    super(eventService, subinject, dynamicComponentService, 'SubscriptionUpperSliderComponent');
     // this.eventService.rightSliderData.subscribe(
     //   data => this.setRightSliderFlag(data)
     // );
@@ -119,8 +119,9 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
       this.router.navigate(['/admin/subscription/settings','documents'])
       break;
       default:
-        // this.router.navigate(['/admin/subscription/clients'])
-        this.location.replaceState('/admin/subscription/clients');
+        this.router.navigate(['/admin/subscription/clients'])
+        // this.location.replaceState('/admin/subscription/clients');
+        break;
     }
     sessionStorage.removeItem('subUpperData')
     this.eventService.changeUpperSliderState({ state: 'close' });
