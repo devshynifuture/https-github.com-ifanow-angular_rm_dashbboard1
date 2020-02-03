@@ -25,6 +25,7 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
   selectedServiceTab = 0;
   upperRightSideInputData;
   sessionData: any;
+  upperState: string;
   constructor(private router: Router, private authService: AuthService,
     protected eventService: EventService, protected subinject: SubscriptionInject, protected dynamicComponentService: DynamicComponentService
     // public dialogRef: MatDialogRef<UpperSliderComponent>,
@@ -95,8 +96,11 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
     this.sessionData = AuthService.getSubscriptionUpperSliderData();
     this.fragmentDataSubsUpper = this.sessionData
     this.upperDataSubsUpper = this.sessionData.data;
+    this.upperState = "open";
   }
-
+  ngAfterViewInit() {
+    this.upperState = "close"
+  }
   dialogClose() {
     // this.eventService.changeUpperSliderState({ state: 'close' });
     // this.dialogRef.close();
@@ -106,8 +110,8 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
         break;
       default:
         this.router.navigate(['/admin/subscription/clients'])
-
     }
+    this.upperState = "open";
 
     sessionStorage.removeItem('subUpperData')
   }

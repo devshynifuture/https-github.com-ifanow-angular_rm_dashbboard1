@@ -20,7 +20,7 @@
                 <div class="form-control mb-0 add-transactions">
                     <mat-form-field>
                         <input type="text" aria-label="Number" class="form-group h-0" matInput
-                            formControlName="selectedInvestor" [matAutocomplete]="auto"
+                            formControlName="selectInvestor" [matAutocomplete]="auto"
                             value="Start typing to see investor names">
                         <mat-autocomplete #auto="matAutocomplete">
                             <mat-option [value]="item" *ngFor="let item of investorsArray">
@@ -162,9 +162,13 @@
             <div class="col-md-8 pl-0 pr-20" *ngIf="!isSaveAndAddClicked">
                 <h5 class="m-0 pb-10 text-black">Select from the following options</h5>
                 <mat-radio-group aria-label="Select an option" formControlName="schemeSelection">
-                    <mat-radio-button value="1" class="bu-primary text-primary"> Invest in existing scheme
+                    <mat-radio-button value="1"
+                        [ngClass]="value == 1 ? 'text-primary bu-primary': 'b-a text-primitive'"> Invest in
+                        existing scheme
                     </mat-radio-button>
-                    <mat-radio-button value="2" class="b-a text-primitive">Select a new scheme</mat-radio-button>
+                    <mat-radio-button value="2"
+                        [ngClass]="value == 2 ? 'text-primary bu-primary': 'b-a text-primitive'">Select a new
+                        scheme</mat-radio-button>
                 </mat-radio-group>
                 <h5 class="m-0 pt-28 text-black pb-12">Select a scheme to invest in</h5>
                 <div class="form-control mb-0 add-transactions">
