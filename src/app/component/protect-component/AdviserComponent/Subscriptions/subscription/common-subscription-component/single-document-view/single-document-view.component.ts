@@ -6,6 +6,7 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { SubscriptionUpperSliderComponent } from '../upper-slider/subscription-upper-slider.component';
 import { SubscriptionService } from '../../../subscription.service';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -16,7 +17,7 @@ import { Router } from '@angular/router';
 export class SingleDocumentViewComponent implements OnInit {
 
 
-  constructor(public dialog: MatDialog, private eventService: EventService, private subService: SubscriptionService, private router: Router) {
+  constructor(public dialog: MatDialog, private eventService: EventService, private subService: SubscriptionService, private router: Router, private location: Location) {
   }
 
   @Input() singleDocument;
@@ -59,6 +60,7 @@ export class SingleDocumentViewComponent implements OnInit {
   // }
 
   editDocument() {
+    this.location.replaceState('/subscription-upper');
     console.log('hello mf button clicked');
     const fragmentData = {
       flag: 'document',
@@ -69,7 +71,7 @@ export class SingleDocumentViewComponent implements OnInit {
       state: 'open'
     };
     // this.router.navigate(['/subscription-upper'], { state: { ...fragmentData } })
-    // sessionStorage.setItem("subUpperData", JSON.stringify(fragmentData))
+    sessionStorage.setItem("subUpperData", JSON.stringify(fragmentData))
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {

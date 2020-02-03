@@ -8,6 +8,7 @@ import { UtilService } from "../../../../../../../services/util.service";
 import { SubscriptionUpperSliderComponent } from '../../common-subscription-component/upper-slider/subscription-upper-slider.component';
 import { Router } from '@angular/router';
 import { SubscriptionDataService } from '../../../subscription-data.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-plans-settings',
@@ -17,7 +18,7 @@ import { SubscriptionDataService } from '../../../subscription-data.service';
 export class PlansSettingsComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private subService: SubscriptionService,
-    private dataService: EventService, private eventService: EventService, private subinject: SubscriptionInject, private utilservice: UtilService, private router: Router) {
+    private dataService: EventService, private eventService: EventService, private subinject: SubscriptionInject, private utilservice: UtilService, private router: Router, private location: Location) {
   }
 
   button: any;
@@ -94,6 +95,7 @@ export class PlansSettingsComponent implements OnInit {
   //  });*/
 
   openFragment(singlePlan, data) {
+    this.location.replaceState('/subscription-upper');
     (singlePlan == '') ? singlePlan = data : singlePlan.flag = data
     console.log('hello mf button clicked');
     const fragmentData = {
@@ -105,7 +107,7 @@ export class PlansSettingsComponent implements OnInit {
       state: 'open'
     };
     // this.router.navigate(['/subscription-upper'], { state: { ...fragmentData } })
-    // AuthService.setSubscriptionUpperSliderData(fragmentData)
+    AuthService.setSubscriptionUpperSliderData(fragmentData)
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
