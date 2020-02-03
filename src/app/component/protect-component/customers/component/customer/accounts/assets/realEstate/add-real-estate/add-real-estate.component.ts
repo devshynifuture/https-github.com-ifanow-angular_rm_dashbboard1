@@ -53,6 +53,7 @@ export class AddRealEstateComponent implements OnInit {
   familyMemberId: any;
   ownerDataName: any;
   ownershipPerc: any;
+  flag: any;
   constructor(public custumService: CustomerService, public subInjectService: SubscriptionInject, private fb: FormBuilder, public custmService: CustomerService, public eventService: EventService, public utils: UtilService) { }
   // set inputData(inputData) {
   //   this._inputData = inputData;
@@ -226,7 +227,7 @@ export class AddRealEstateComponent implements OnInit {
     if (this.addOwner == data) {
       if (this.showErrorOwner == false) {
         this.getCoOwner.push(this.fb.group({
-          ownerName: null, ownershipPerc: null,familyMemberId:null
+          ownerName: null, ownershipPerc: null, familyMemberId: null
         }));
       }
     } else {
@@ -234,7 +235,7 @@ export class AddRealEstateComponent implements OnInit {
         this.addOwner = data;
         if (this.getCoOwner.value.length == 0) {
           this.getCoOwner.push(this.fb.group({
-            ownerName: null, ownershipPerc: null,familyMemberId:null
+            ownerName: null, ownershipPerc: null, familyMemberId: null
           }));
         }
       }
@@ -243,11 +244,11 @@ export class AddRealEstateComponent implements OnInit {
   removeCoOwner(item) {
     this.getCoOwner.removeAt(item);
   }
-  ownerList(value){
+  ownerList(value) {
     console.log(value)
-    this.familyMemberId=value.id
+    this.familyMemberId = value.id
   }
-  getCoOwnerDetails(item){
+  getCoOwnerDetails(item) {
     console.log(item);
     // this.ownerDataName=this.getCoOwner.value[this.getCoOwner.value.length-1];
     // this.addrealEstateForm.value.getCoOwnerName.forEach(element => {
@@ -256,7 +257,7 @@ export class AddRealEstateComponent implements OnInit {
     //       { ownerName: item.userName, ownershipPerc:null, familyMemberId: item.id},
     //     ]);
     //   }
-      
+
     // });
   }
   onChange(data) {
@@ -294,6 +295,7 @@ export class AddRealEstateComponent implements OnInit {
     }
   }
   getRealEstate(data) {
+    this.flag=data;
     // if (data == undefined) {
     //   data ={};
     // }
@@ -304,16 +306,16 @@ export class AddRealEstateComponent implements OnInit {
       getCoOwnerName: this.fb.array([this.fb.group({
         ownerName: null,
         ownershipPerc: null,
-        familyMemberId:null
+        familyMemberId: null
       })]),
       ownerPercent: [data.ownerPerc, [Validators.required]],
-      familyMemberId:[this.familyMemberId,],
+      familyMemberId: [this.familyMemberId,],
       type: [(data.typeId == undefined) ? '' : (data.typeId) + "", [Validators.required]],
       marketValue: [data.marketValue, [Validators.required]],
       year: [data.year],
       month: [data.month, [Validators.required]],
       days: [data.days, [Validators.required]],
-      purchasePeriod:[(data.purchasePeriod==undefined)?null:(data.purchasePeriod)],
+      purchasePeriod: [(data.purchasePeriod == undefined) ? null : (data.purchasePeriod)],
       purchaseValue: [data.purchaseValue, [Validators.required]],
       unit: [data.unitId, [Validators.required]],
       ratePerUnit: [data.ratePerUnit, [Validators.required]],
@@ -331,48 +333,51 @@ export class AddRealEstateComponent implements OnInit {
     if (data == "") {
       data = {};
     } else {
-      if (data.realEstateOwners.length != 0) {
-        // var ownerName = _.reject(data.realEstateOwners, function (n) {
-        //   return n.owner == false;
-        // });
-        const ownerName = data.realEstateOwners.filter(element => element.owner != false)
-        if (ownerName.length != 0) {
-          this.addrealEstateForm.controls.ownerName.setValue(ownerName[0].ownerName);
-          this.ownerName = ownerName[0].ownerName;
-          this.addrealEstateForm.controls.ownerPercent.setValue(ownerName[0].ownershipPerc);
-          // this.familyMemId = ownerName[0].familyMemberId
-          this.id = ownerName[0].id;
+      if (data.realEstateOwners != undefined) {
+        if (data.realEstateOwners.length != 0) {
+          const ownerName = data.realEstateOwners.filter(element => element.owner != false)
+          if (ownerName.length != 0) {
+            this.addrealEstateForm.controls.ownerName.setValue(ownerName[0].ownerName);
+            this.ownerName = ownerName[0].ownerName;
+            this.addrealEstateForm.controls.ownerPercent.setValue(ownerName[0].ownershipPerc);
+            // this.familyMemId = ownerName[0].familyMemberId
+            this.id = ownerName[0].id;
+          }
         }
       }
 
-      if (data.nominees.length != 0) {
-        data.nominees.forEach(element => {
-          this.addrealEstateForm.controls.getNomineeName.push(this.fb.group({
-            id: element.id,
-            name: [(element.name) ? (element.name) + "" : '', [Validators.required]],
-            ownershipPer: [(element.sharePercentage + ""), Validators.required]
-          }))
-        })
-        this.getNominee.removeAt(0);
-        console.log(this.addrealEstateForm.controls.getNomineeName.value)
+      if (data.nominees != undefined) {
+        if (data.nominees.length != 0) {
+          data.nominees.forEach(element => {
+            this.addrealEstateForm.controls.getNomineeName.push(this.fb.group({
+              id: element.id,
+              name: [(element.name) ? (element.name) + "" : '', [Validators.required]],
+              ownershipPer: [(element.sharePercentage + ""), Validators.required]
+            }))
+          })
+          this.getNominee.removeAt(0);
+          console.log(this.addrealEstateForm.controls.getNomineeName.value)
+        }
+
       }
-      if (data.realEstateOwners.length != 0) {
-        // const ownerName = _.reject(data.realEstateOwners, function (n) {
-        //   return n.owner == true;
-        // });
-        const ownerName = data.realEstateOwners.filter(element => element.owner != true)
-        ownerName.forEach(element => {
-          this.addrealEstateForm.controls.getCoOwnerName.push(this.fb.group({
-            id: element.id,
-            ownerName: [(element.ownerName) + "", [Validators.required]],
-            ownershipPerc: [(element.ownershipPerc + ""), Validators.required],
-            familyMemberId:[element.familyMemberId],
-          }))
-        })
-        this.getCoOwner.removeAt(0);
+      if (data.realEstateOwners != undefined) {
+        if (data.realEstateOwners.length != 0) {
+          const ownerName = data.realEstateOwners.filter(element => element.owner != true)
+            ownerName.forEach(element => {
+            this.addrealEstateForm.controls.getCoOwnerName.push(this.fb.group({
+              id: element.id,
+              ownerName: [(element.ownerName) + "", [Validators.required]],
+              ownershipPerc: [(element.ownershipPerc + ""), Validators.required],
+              familyMemberId: [element.familyMemberId],
+            }))
+          })
+          this.getCoOwner.removeAt(0);
+        }
       }
-      if (data.realEstateOwners.length != 0) {
-        this.addOwner = true;
+      if (data.realEstateOwners != undefined) {
+        if(data.realEstateOwners.length != 0){
+          this.addOwner = true;
+        }
       }
       // this.ownerData = this.addrealEstateForm.controls;
 
@@ -412,7 +417,7 @@ export class AddRealEstateComponent implements OnInit {
         id: this._data == undefined ? 0 : this._data.id,
         typeId: this.addrealEstateForm.controls.type.value,
         marketValue: this.addrealEstateForm.controls.marketValue.value,
-        purchasePeriod:(this.addrealEstateForm.controls.purchasePeriod.value)?this.addrealEstateForm.controls.purchasePeriod.value.toISOString().slice(0, 10):null,
+        purchasePeriod: (this.addrealEstateForm.controls.purchasePeriod.value) ? this.addrealEstateForm.controls.purchasePeriod.value.toISOString().slice(0, 10) : null,
         purchaseValue: this.addrealEstateForm.controls.purchaseValue.value,
         unitId: this.addrealEstateForm.controls.unit.value,
         ratePerUnit: this.addrealEstateForm.controls.ratePerUnit.value,
@@ -458,21 +463,35 @@ export class AddRealEstateComponent implements OnInit {
         'isOwner': true
       }
       obj.realEstateOwners.push(obj1)
-      if (obj.id == undefined) {
+      if (obj.id == undefined && this.flag!='adviceRealEstate') {
         console.log(obj);
         this.custumService.addRealEstate(obj).subscribe(
           data => this.addRealEstateRes(data), (error) => {
             this.eventService.showErrorMessage(error);
           }
         );
+      } else if(this.flag=='adviceRealEstate'){
+        let adviceObj = {
+          advice_id: this.advisorId,
+          adviceStatusId: 5,
+          stringObject: obj,
+          adviceDescription: "manualAssetDescription"
+        }
+          this.custumService.getAdviceRealEstate(adviceObj).subscribe(
+            data => this.getAdviceRealEstateRes(data),
+          );
       } else {
-
         console.log(obj);
         this.custumService.editRealEstate(obj).subscribe(
           data => this.editRealEstateRes(data)
         );
       }
     }
+  }
+  getAdviceRealEstateRes(data){
+    this.eventService.openSnackBar('Real Estate added successfully', 'OK');
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true })
+
   }
   addRealEstateRes(data) {
     console.log(data);
@@ -482,7 +501,7 @@ export class AddRealEstateComponent implements OnInit {
       this.eventService.openSnackBar('Real Estate added successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'dismiss');
-
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true })
     }
   }
   editRealEstateRes(data) {

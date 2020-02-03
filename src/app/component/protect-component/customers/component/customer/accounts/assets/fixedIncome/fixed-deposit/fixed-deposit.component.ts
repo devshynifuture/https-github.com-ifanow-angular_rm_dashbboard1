@@ -291,6 +291,7 @@ export class FixedDepositComponent implements OnInit {
         stringObject: obj,
         adviceDescription: "manualAssetDescription"
       }
+
       if (this.flag == 'adviceFixedDeposit') {
         this.custumService.getAdviceFd(adviceObj).subscribe(
           data => this.getAdviceFdRes(data),

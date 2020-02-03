@@ -1,19 +1,19 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {FormBuilder, Validators} from '@angular/forms';
-import {CustomerService} from '../../../../../customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {MAT_DATE_FORMATS} from '@angular/material';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {UtilService} from 'src/app/services/util.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { FormBuilder, Validators } from '@angular/forms';
+import { CustomerService } from '../../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { MAT_DATE_FORMATS } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-po-rd',
   templateUrl: './add-po-rd.component.html',
   styleUrls: ['./add-po-rd.component.scss'],
   providers: [
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ]
 })
 export class AddPoRdComponent implements OnInit {
@@ -32,9 +32,10 @@ export class AddPoRdComponent implements OnInit {
   pordData: any;
   nomineesList: any;
   nominees: any[];
+  flag: any;
 
-  constructor(public utils: UtilService,private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService,
-              private subInjectService: SubscriptionInject) {
+  constructor(public utils: UtilService, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService,
+    private subInjectService: SubscriptionInject) {
   }
 
   ngOnInit() {
@@ -72,12 +73,13 @@ export class AddPoRdComponent implements OnInit {
     this.nomineesList = data.controls
   }
   getdataForm(data) {
+    this.flag = data;
     if (data == undefined) {
       data = {};
     } else {
       this.editApi = data;
     }
-    this.pordData=data;
+    this.pordData = data;
     this.PORDForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
       monthlyContribution: [data.monthlyContribution, [Validators.required, Validators.min(10)]],
@@ -103,8 +105,8 @@ export class AddPoRdComponent implements OnInit {
         let obj = {
           "name": element.controls.name.value,
           "sharePercentage": element.controls.sharePercentage.value,
-          "id":element.controls.id.value,
-          "familyMemberId":element.controls.familyMemberId.value
+          "id": element.controls.id.value,
+          "familyMemberId": element.controls.familyMemberId.value
         }
         this.nominees.push(obj)
       });
@@ -122,7 +124,7 @@ export class AddPoRdComponent implements OnInit {
       this.PORDForm.get('ownership').markAsTouched();
       return;
     } else {
-      if (this.editApi) {
+      if (this.editApi != 'advicePORD') {
         const obj = {
           monthlyContribution: this.PORDForm.get('monthlyContribution').value,
           commencementDate: this.PORDForm.get('commDate').value,
@@ -154,22 +156,38 @@ export class AddPoRdComponent implements OnInit {
           description: this.PORDFormoptionalForm.get('description').value
 
         };
-        this.cusService.addPORDScheme(obj).subscribe(
-          data => this.addPORDResponse(data),
-          error => this.eventService.showErrorMessage(error)
-        );
+        let adviceObj = {
+          advice_id: this.advisorId,
+          adviceStatusId: 5,
+          stringObject: obj,
+          adviceDescription: "manualAssetDescription"
+        }
+        if (this.flag == 'advicePORD') {
+          this.cusService.getAdvicePord(adviceObj).subscribe(
+            data => this.getAdvicePordRes(data),
+            err => this.eventService.openSnackBar(err, "dismiss")
+          );
+        } else {
+          this.cusService.addPORDScheme(obj).subscribe(
+            data => this.addPORDResponse(data),
+            error => this.eventService.showErrorMessage(error)
+          );
+        }
       }
     }
   }
-
+  getAdvicePordRes(data) {
+    this.eventService.openSnackBar('PO_RD is added', 'added');
+    this.close(true);
+  }
   addPORDResponse(data) {
-    (this.editApi) ? this.eventService.openSnackBar('PO_RD is edited', 'dismiss') : this.eventService.openSnackBar('PO_RD is edited', 'added');
+    (this.editApi) ? this.eventService.openSnackBar('PO_RD is edited', 'dismiss') : this.eventService.openSnackBar('PO_RD is added', 'added');
     console.log(data);
     this.close(true);
   }
 
   close(flag) {
     this.isOptionalField = true;
-    this.subInjectService.changeNewRightSliderState({state: 'close',refreshRequired:flag});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 }

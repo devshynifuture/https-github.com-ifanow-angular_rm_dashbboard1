@@ -34,6 +34,8 @@ export class AddPoMisComponent implements OnInit {
   nomineesList: any;
   nomineesListFM: any;
   pomisData: any;
+  flag: any;
+  editApi: any;
 
   constructor(public utils: UtilService, private fb: FormBuilder, public subInjectService: SubscriptionInject,
     public custumService: CustomerService, public eventService: EventService) {
@@ -71,9 +73,12 @@ export class AddPoMisComponent implements OnInit {
     this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
   getPomisData(data) {
-    this.pomisData=data;
+    this.flag = data;
+    this.pomisData = data;
     if (data == undefined) {
       data = {};
+    } else {
+      this.editApi = data;
     }
     this.pomisForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
@@ -111,8 +116,8 @@ export class AddPoMisComponent implements OnInit {
         let obj = {
           "name": element.controls.name.value,
           "sharePercentage": element.controls.sharePercentage.value,
-          "id":element.id,
-          "familyMemberId":element.familyMemberId
+          "id": element.id,
+          "familyMemberId": element.familyMemberId
         }
         this.nominees.push(obj)
       });
@@ -149,27 +154,7 @@ export class AddPoMisComponent implements OnInit {
       obj.commencementdate = obj.commencementdate.toISOString().slice(0, 10);
 
 
-      if (this._inputData == 'Add') {
-        const objToSend = {
-          id: this._inputData.id,
-          advisorId: this.advisorId,
-          clientId: this.clientId,
-          familyMemberId: obj.familyMemberId,
-          ownerName: obj.ownerName,
-          amountInvested: obj.amtInvested,
-          commencementDate: obj.commencementdate,
-          postOfficeBranch: obj.poBranch,
-          bankAccountNumber: obj.accNumber,
-          ownerTypeId: obj.ownershipType,
-          nominees: obj.nominees,
-          description: obj.description,
-          // "createdDate":obj.createdDate,
-        };
-        console.log('obj', obj);
-        this.custumService.addPOMIS(objToSend).subscribe(
-          data => this.addPOMISRes(data)
-        );
-      } else {
+      if (this.editApi != 'advicePOMIS') {
         const editObj = {
           id: this._inputData.id,
           clientId: this.clientId,
@@ -188,10 +173,47 @@ export class AddPoMisComponent implements OnInit {
         this.custumService.editPOMIS(editObj).subscribe(
           data => this.editPOMISRes(data)
         );
+      } else {
+        const objToSend = {
+          id: this._inputData.id,
+          advisorId: this.advisorId,
+          clientId: this.clientId,
+          familyMemberId: obj.familyMemberId,
+          ownerName: obj.ownerName,
+          amountInvested: obj.amtInvested,
+          commencementDate: obj.commencementdate,
+          postOfficeBranch: obj.poBranch,
+          bankAccountNumber: obj.accNumber,
+          ownerTypeId: obj.ownershipType,
+          nominees: obj.nominees,
+          description: obj.description,
+          // "createdDate":obj.createdDate,
+        };
+        let adviceObj = {
+          advice_id: this.advisorId,
+          adviceStatusId: 5,
+          stringObject: obj,
+          adviceDescription: "manualAssetDescription"
+        }
+        console.log('obj', obj);
+        if (this.flag == 'advicePOMIS') {
+          this.custumService.getAdvicePomis(adviceObj).subscribe(
+            data => this.getAdvicePomisRes(data),
+            err => this.eventService.openSnackBar(err, "dismiss")
+          );
+        } else {
+          this.custumService.addPOMIS(objToSend).subscribe(
+            data => this.addPOMISRes(data)
+          );
+        }
+
       }
     }
   }
-
+  getAdvicePomisRes(data) {
+    this.eventService.openSnackBar('Pomis added successfully', 'OK');
+    this.close(true);
+  }
   addPOMISRes(data) {
     console.log(data);
     if (data) {

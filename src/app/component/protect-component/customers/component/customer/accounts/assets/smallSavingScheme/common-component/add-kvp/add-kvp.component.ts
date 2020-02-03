@@ -1,26 +1,26 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {CustomerService} from '../../../../../customer.service';
-import {MAT_DATE_FORMATS} from '@angular/material';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {UtilService} from 'src/app/services/util.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { CustomerService } from '../../../../../customer.service';
+import { MAT_DATE_FORMATS } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-kvp',
   templateUrl: './add-kvp.component.html',
   styleUrls: ['./add-kvp.component.scss'],
   providers: [
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ]
 })
 export class AddKvpComponent implements OnInit {
   maxDate = new Date();
   inputData: any;
   advisorId: any;
-  clientId: any;Outstanding 
+  clientId: any; Outstanding
   familyMemberId: any;
   ownerName: any;
   editApi: any;
@@ -32,7 +32,8 @@ export class AddKvpComponent implements OnInit {
   nomineesList: any;
   nominees: any[];
   kvpData;
-  constructor(public utils: UtilService,private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
+  flag: any;
+  constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   ngOnInit() {
     this.isOptionalField = true;
     this.advisorId = AuthService.getAdvisorId();
@@ -63,6 +64,7 @@ export class AddKvpComponent implements OnInit {
     this.nomineesList = data.controls
   }
   getdataForm(data) {
+    this.flag = data;
     if (data == undefined) {
       data = {};
     }
@@ -71,9 +73,9 @@ export class AddKvpComponent implements OnInit {
     }
     this.KVPFormScheme = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
-      amtInvested: [data.amountInvested, [Validators.required,Validators.min(1000)]],
+      amtInvested: [data.amountInvested, [Validators.required, Validators.min(1000)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
-      ownerType: [data.ownershipTypeId?String(data.ownershipTypeId):'1', [Validators.required]],
+      ownerType: [data.ownershipTypeId ? String(data.ownershipTypeId) : '1', [Validators.required]],
     })
     this.KVPOptionalFormScheme = this.fb.group({
       poBranch: [, [Validators.required]],
@@ -92,8 +94,8 @@ export class AddKvpComponent implements OnInit {
         let obj = {
           "name": element.controls.name.value,
           "sharePercentage": element.controls.sharePercentage.value,
-          "id":element.id,
-          "familyMemberId":element.familyMemberId
+          "id": element.id,
+          "familyMemberId": element.familyMemberId
         }
         this.nominees.push(obj)
       });
@@ -115,21 +117,32 @@ export class AddKvpComponent implements OnInit {
     }
     else {
       let obj =
-        {
-          "clientId": this.clientId,
-          "advisorId": this.advisorId,
-          "familyMemberId": this.familyMemberId,
-          "ownerName": this.ownerName,
-          "amountInvested": this.KVPFormScheme.get('amtInvested').value,
-          "commencementDate": this.KVPFormScheme.get('commDate').value,
-          "postOfficeBranch": this.KVPOptionalFormScheme.get('poBranch').value,
-          "ownershipTypeId": this.KVPFormScheme.get('ownerType').value,
-          "nominees": this.nominees,
-          "bankAccountNumber": this.KVPOptionalFormScheme.get('bankAccNum').value,
-          "description": this.KVPOptionalFormScheme.get('description').value
-        }
-      if (this.editApi!=undefined) {
-        obj['id']=this.editApi.id
+      {
+        "clientId": this.clientId,
+        "advisorId": this.advisorId,
+        "familyMemberId": this.familyMemberId,
+        "ownerName": this.ownerName,
+        "amountInvested": this.KVPFormScheme.get('amtInvested').value,
+        "commencementDate": this.KVPFormScheme.get('commDate').value,
+        "postOfficeBranch": this.KVPOptionalFormScheme.get('poBranch').value,
+        "ownershipTypeId": this.KVPFormScheme.get('ownerType').value,
+        "nominees": this.nominees,
+        "bankAccountNumber": this.KVPOptionalFormScheme.get('bankAccNum').value,
+        "description": this.KVPOptionalFormScheme.get('description').value
+      }
+      let adviceObj = {
+        advice_id: this.advisorId,
+        adviceStatusId: 5,
+        stringObject: obj,
+        adviceDescription: "manualAssetDescription"
+      }
+      if (this.flag == 'adviceKVP') {
+        this.cusService.getAdviceKvp(adviceObj).subscribe(
+          data => this.getAdviceKvpRes(data),
+          err => this.eventService.openSnackBar(err, "dismiss")
+        );
+      } else if (this.editApi != 'adviceKVP') {
+        obj['id'] = this.editApi.id
         this.cusService.editKVP(obj).subscribe(
           data => this.addKVPResponse(data),
           error => this.eventService.showErrorMessage(error)
@@ -143,13 +156,18 @@ export class AddKvpComponent implements OnInit {
       }
     }
   }
+  getAdviceKvpRes(data){
+    console.log(data);
+    this.eventService.openSnackBar("KVP is added", "ok")
+    this.close(true);
+  }
   addKVPResponse(data) {
     (this.editApi) ? this.eventService.openSnackBar("KVP is edited", "dismiss") : this.eventService.openSnackBar("KVP is added", "added")
-   console.log(data)
-   this.close(true);
+    console.log(data)
+    this.close(true);
   }
   close(flag) {
     this.isOptionalField = true
-    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 }

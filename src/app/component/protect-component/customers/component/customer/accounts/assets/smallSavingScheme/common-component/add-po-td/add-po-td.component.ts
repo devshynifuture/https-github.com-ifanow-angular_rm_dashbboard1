@@ -33,6 +33,7 @@ export class AddPoTdComponent implements OnInit {
   nomineesList: any;
   nominees: any[];
   potdData: any;
+  flag: any;
 
   constructor(public utils: UtilService, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
   @Input()
@@ -58,6 +59,7 @@ export class AddPoTdComponent implements OnInit {
     this.nomineesList = data.controls
   }
   getdataForm(data) {
+    this.flag=data;
     if (data == undefined) {
       data = {};
     }
@@ -143,7 +145,7 @@ export class AddPoTdComponent implements OnInit {
       return
     }
     else {
-      if (this.editApi) {
+      if (this.editApi!='advicePOTD') {
         let obj = {
           
             "familyMemberId":this.familyMemberId,
@@ -180,12 +182,30 @@ export class AddPoTdComponent implements OnInit {
           "bankAccountNumber": this.POTDOptionalForm.get('bankAccNum').value,
           "description": this.POTDOptionalForm.get('description').value,
         }
-        this.cusService.addPOTD(obj).subscribe(
-          data => this.response(data),
-          error => this.eventService.showErrorMessage(error)
-        )
+        let adviceObj = {
+          advice_id: this.advisorId,
+          adviceStatusId: 5,
+          stringObject: obj,
+          adviceDescription: "manualAssetDescription"
+        }
+        if (this.flag == 'advicePOTD') {
+          this.cusService.getAdvicePord(adviceObj).subscribe(
+            data => this.getAdvicePotdRes(data),
+            err => this.eventService.openSnackBar(err, "dismiss")
+          );
+        } else{
+          this.cusService.addPOTD(obj).subscribe(
+            data => this.response(data),
+            error => this.eventService.showErrorMessage(error)
+          )
+        }
       }
     }
+  }
+  getAdvicePotdRes(data){
+    this.eventService.openSnackBar("PO_TD is added", "added");
+    this.close(true);
+
   }
   response(data) {
     (this.editApi) ? this.eventService.openSnackBar("PO_TD is edited", "dismiss") : this.eventService.openSnackBar("PO_TD is added", "added")
