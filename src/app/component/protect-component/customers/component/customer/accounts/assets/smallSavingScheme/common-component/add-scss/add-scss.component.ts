@@ -32,6 +32,7 @@ export class AddScssComponent implements OnInit {
   scssData: any;
   nomineesList: any;
   nominees: any[];
+  flag: any;
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
               private cusService: CustomerService, private eventService: EventService,public utils: UtilService) {
@@ -64,6 +65,7 @@ export class AddScssComponent implements OnInit {
     this.nomineesList = data.controls
   }
   getdataForm(data) {
+    this.flag=data;
     if (data == undefined) {
       data = {};
     } else {
@@ -130,7 +132,18 @@ export class AddScssComponent implements OnInit {
         nominees: this.nominees,
         description: this.scssOptionalSchemeForm.get('description').value
       };
-      if (this.editApi) {
+      let adviceObj = {
+        advice_id: this.advisorId,
+        adviceStatusId: 5,
+        stringObject: obj,
+        adviceDescription: "manualAssetDescription"
+      }
+      if (this.flag == 'adviceSCSS') {
+        this.cusService.getAdviceScss(adviceObj).subscribe(
+          data => this.getAdviceScssRes(data),
+          err => this.eventService.openSnackBar(err, "dismiss")
+        );
+      } else if (this.editApi!='adviceSCSS') {
         obj.id = this.editApi.id;
         this.cusService.editSCSSData(obj).subscribe(
           data => this.addScssResponse(data),
@@ -144,7 +157,11 @@ export class AddScssComponent implements OnInit {
       }
     }
   }
+  getAdviceScssRes(data){
+    this.eventService.openSnackBar('Scss is added', "dismiss");
+    this.close(true);
 
+  }
   addScssResponse(data) {
     console.log(data);
     this.close(true);

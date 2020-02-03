@@ -32,6 +32,7 @@ export class AddPoSavingComponent implements OnInit {
   posavingData: any;
   nomineesList: any;
   nominees: any[];
+  flag: any;
 
   constructor(public utils: UtilService,private fb: FormBuilder, private cusService: CustomerService,
               private eventService: EventService, private subInjectService: SubscriptionInject) {
@@ -74,6 +75,7 @@ export class AddPoSavingComponent implements OnInit {
     this.nomineesList = data.controls
   }
   getdataForm(data) {
+    this.flag=data;
     if (data == undefined) {
       data = {
         ownerTypeId: 1
@@ -132,7 +134,7 @@ export class AddPoSavingComponent implements OnInit {
       this.poSavingForm.get('ownershipType').markAsTouched();
       return;
     } else {
-      if (this.editApi) {
+      if (this.editApi!='advicePoSaving') {
         const obj = {
           id: this.editApi.id,
           familyMemberId: this.familyMemberId,
@@ -163,14 +165,30 @@ export class AddPoSavingComponent implements OnInit {
           description: this.poSavingOptionalForm.get('description').value,
           ownerName: this.ownerName
         };
-        this.cusService.addPOSAVINGScheme(obj).subscribe(
-          data => this.addPOSavingResponse(data),
-          error => this.eventService.showErrorMessage(error)
-        );
+        let adviceObj = {
+          advice_id: this.advisorId,
+          adviceStatusId: 5,
+          stringObject: obj,
+          adviceDescription: "manualAssetDescription"
+        }
+        if (this.flag == 'advicePoSaving') {
+          this.cusService.getAdvicePoSaving(adviceObj).subscribe(
+            data => this.getAdvicePosavingRes(data),
+            err => this.eventService.openSnackBar(err, "dismiss")
+          );
+        }else{
+          this.cusService.addPOSAVINGScheme(obj).subscribe(
+            data => this.addPOSavingResponse(data),
+            error => this.eventService.showErrorMessage(error)
+          );
+        }
       }
     }
   }
-
+  getAdvicePosavingRes(data){
+    this.eventService.openSnackBar('PO_SAVING is edited', 'added');
+    this.close(true);
+  }
   addPOSavingResponse(data) {
     this.close(true);
     console.log(data);

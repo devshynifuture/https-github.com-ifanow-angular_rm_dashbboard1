@@ -316,6 +316,15 @@ export const appConfig = {
 
   ADVICE_ADD_FD: 'advice/asset/fixed-income/suggest-new-fd/add',
   ADVICE_ADD_RD: 'advice/advice/asset/fixed-income/recurring-deposit/add',
+  ADVICE_ADD_PPF:'advice/asset/small-saving-scheme/suggest-new-PPF/add',
+  ADVICE_ADD_NSC:'advice/asset/saving-scheme/suggest-new-nsc/add',
+  ADVICE_ADD_SSY:'advice/asset/small-saving-scheme/suggest-new-SSY/add',
+  ADVICE_ADD_KVP:'advice/asset/saving-scheme/suggest-new-kvp/add',
+  ADVICE_ADD_SCSS:'advice/advice/asset/saving-scheme/scss/add',
+  ADVICE_ADD_POSAVING:'advice/advice/asset/saving-scheme/po-saving/add',
+  ADVICE_ADD_PORD:'advice/asset/saving-scheme/suggest-new-pord/add',
+  ADVICE_ADD_POTD:'advice/advice/asset/saving-scheme/po-td/add',
+  ADVICE_ADD_POMIS:'advice/asset/saving-scheme/suggest-new-pomis/add',
   GET_ADVICE_BY_CATEGORY:'advice/assetType/get',
 
   // gmail

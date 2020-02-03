@@ -557,4 +557,34 @@ export class CustomerService {
   getAdviceFd(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_FD, data)
   }
+  getAdviceRd(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_RD, data)
+  }
+  getAdvicePpf(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_PPF, data)
+  }
+  getAdviceNsc(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_NSC, data)
+  }
+  getAdviceSsy(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_SSY, data)
+  }
+  getAdviceKvp(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_KVP, data)
+  }
+  getAdviceScss(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_SCSS, data)
+  }
+  getAdvicePoSaving(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_POSAVING, data)
+  }
+  getAdvicePord(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_PORD, data)
+  }
+  getAdvicePotd(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_POTD, data)
+  }
+  getAdvicePomis(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_POMIS, data)
+  }
 }

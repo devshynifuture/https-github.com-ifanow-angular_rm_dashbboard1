@@ -36,6 +36,7 @@ export class AddSsyComponent implements OnInit {
   nomineesList: any;
   nominees: any[];
   commencementDate: any;
+  flag: any;
 
   constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService,private datePipe: DatePipe) { }
 
@@ -64,6 +65,7 @@ export class AddSsyComponent implements OnInit {
     this.commencementDate = date
   }
   getdataForm(data) {
+    this.flag=data;
     if (data == undefined) {
       data = {};
     }
@@ -156,7 +158,7 @@ export class AddSsyComponent implements OnInit {
       return
     }
     else {
-      if (this.editApi) {
+      if (this.editApi!='adviceSSY') {
         let obj = {
           "id": this.editApi.id,
           "familyMemberId": this.familyMemberId,
@@ -198,12 +200,32 @@ export class AddSsyComponent implements OnInit {
           }],
           "ssyTransactionList": finalTransctList
         }
-        this.cusService.addSSYScheme(obj).subscribe(
-          data => this.addSSYSchemeResponse(data),
-          error => this.eventService.showErrorMessage(error)
-        )
+        let adviceObj = {
+          advice_id: this.advisorId,
+          adviceStatusId: 5,
+          stringObject: obj,
+          adviceDescription: "manualAssetDescription"
+        }
+        if (this.flag == 'adviceSSY') {
+          this.cusService.getAdviceSsy(adviceObj).subscribe(
+            data => this.getAdviceSsyRes(data),
+            err => this.eventService.openSnackBar(err, "dismiss")
+          );
+        }else{
+          this.cusService.addSSYScheme(obj).subscribe(
+            data => this.addSSYSchemeResponse(data),
+            error => this.eventService.showErrorMessage(error)
+          )
+        } 
+       
       }
     }
+  }
+  getAdviceSsyRes(data){
+    console.log(data);
+    this.eventService.openSnackBar("SSY is added", "dismiss");
+    this.close(true)
+
   }
   addSSYSchemeResponse(data) {
     (this.editApi) ? this.eventService.openSnackBar("SSY is edited", "dismiss") : this.eventService.openSnackBar("SSY is added", "added")
