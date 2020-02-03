@@ -81,11 +81,11 @@ export const dialogContainerOpacity = trigger('dialogContainer', [
 
 export const upperSliderAnimation = trigger('upperSliderOpenClose', [
   state('open', style({
-    top: '-100%'
+    top: '0%'
   })),
   state('close', style({
     // width:'0%'
-    top: '0%'
+    top: '-100%'
   })),
 
   transition('close => open', [animate('0.3s')]),

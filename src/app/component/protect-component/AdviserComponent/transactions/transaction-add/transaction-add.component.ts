@@ -1,6 +1,7 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from './../../Subscriptions/subscription-inject.service';
 import { Component, OnInit, ElementRef } from '@angular/core';
+import { ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-transaction-add',
@@ -14,18 +15,26 @@ export class TransactionAddComponent implements OnInit {
     'ajdbvkja'
   ];
 
+  validatorType = ValidatorType;
+  schemes: string[] = [
+    'Scheme 1',
+    'Scheme 2',
+    'Scheme 3',
+    'Scheme 4'
+  ]
+
   isSaveAndAddClicked: boolean = false;
 
   transactionAddForm: FormGroup = this.fb.group({
     'selectInvestor': [, Validators.required],
     'transactionType': [, Validators.required],
-    'schemeSelection': [,],
-    'investor': [,],
-    'folioSelection': [,],
+    'schemeType': [,],
+    'scheme': [,],
+    'folio': [,],
     'employeeContry': [,],
     'investmentAccountSelection': [,],
-    'modeOfPaymentSelection': [,],
-    'bankAccountSelection': [,],
+    'modeOfPayment': [,],
+    'bankAccountType': [,],
 
   })
   selectedDiv: string = 'div1';
