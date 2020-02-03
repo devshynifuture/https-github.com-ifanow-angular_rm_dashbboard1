@@ -100,21 +100,20 @@ export class PlansSettingsComponent implements OnInit {
       flag: 'plan',
       id: 1,
       data: singlePlan,
-      // direction: 'top',
-      // componentName: SubscriptionUpperSliderComponent,
-      // state: 'open'
+      direction: 'top',
+      componentName: SubscriptionUpperSliderComponent,
+      state: 'open'
     };
-    this.router.navigate(['/subscription-upper'], { state: { ...fragmentData } })
-    AuthService.setSubscriptionUpperSliderData(fragmentData)
-    // const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-    //   upperSliderData => {
-    //     if (UtilService.isDialogClose(upperSliderData)) {
-    //       // this.getClientSubscriptionList();
-    //       this.getSettingsPlanData();
-
-    //       subscription.unsubscribe();
-    //     }
-    //   }
-    // );
+    // this.router.navigate(['/subscription-upper'], { state: { ...fragmentData } })
+    // AuthService.setSubscriptionUpperSliderData(fragmentData)
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getClientSubscriptionList();
+          this.getSettingsPlanData();
+          subscription.unsubscribe();
+        }
+      }
+    );
   }
 }

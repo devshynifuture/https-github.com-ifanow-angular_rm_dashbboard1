@@ -64,20 +64,20 @@ export class SingleDocumentViewComponent implements OnInit {
       flag: 'document',
       id: 1,
       data: { documentData: this.singleDocument, flag: 'documents' },
-      // direction: 'top',
-      // componentName: SubscriptionUpperSliderComponent,
-      // state: 'open'
+      direction: 'top',
+      componentName: SubscriptionUpperSliderComponent,
+      state: 'open'
     };
-    this.router.navigate(['/subscription-upper'], { state: { ...fragmentData } })
-    sessionStorage.setItem("subUpperData", JSON.stringify(fragmentData))
-    // const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-    //   upperSliderData => {
-    //     if (UtilService.isDialogClose(upperSliderData)) {
-    //       this.valueChange.emit('close');
-    //       subscription.unsubscribe();
-    //     }
-    //   }
-    // );
+    // this.router.navigate(['/subscription-upper'], { state: { ...fragmentData } })
+    // sessionStorage.setItem("subUpperData", JSON.stringify(fragmentData))
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          this.valueChange.emit('close');
+          subscription.unsubscribe();
+        }
+      }
+    );
   }
 
   // deleteModal(value,element) {

@@ -182,9 +182,10 @@
 </mat-sidenav-container>
 <div *ngIf="isOverlayVisible" [@dialogContainer]="dialogState" class="custom-overlay">
 </div>
-<!-- <div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
+<!-- class="upper_slider" -->
+<div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
   <ng-template #dynamicUpper></ng-template>
-</div> -->
+</div>
 <div [@openClose]="currentState" class="right_sidenav">
   <ng-template #dynamic></ng-template>
 </div>

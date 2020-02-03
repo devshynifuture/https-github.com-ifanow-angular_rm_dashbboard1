@@ -104,21 +104,21 @@ export class DocumentsSettingsComponent implements OnInit {
       flag: 'document',
       id: 1,
       data: singleDocument,
-      // direction: 'top',
-      // componentName: SubscriptionUpperSliderComponent,
-      // state: 'open'
+      direction: 'top',
+      componentName: SubscriptionUpperSliderComponent,
+      state: 'open'
     };
-    this.router.navigate(['/subscription-upper'], { state: { ...fragmentData } })
-    AuthService.setSubscriptionUpperSliderData(fragmentData)
+    // this.router.navigate(['/subscription-upper'], { state: { ...fragmentData } })
+    // AuthService.setSubscriptionUpperSliderData(fragmentData)
 
-    // const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-    //   upperSliderData => {
-    //     if (UtilService.isDialogClose(upperSliderData)) {
-    //       this.getDocumentsSetting();
-    //       subscription.unsubscribe();
-    //     }
-    //   }
-    // );
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          this.getDocumentsSetting();
+          subscription.unsubscribe();
+        }
+      }
+    );
   }
 
   // openFragment(data, singleDocument) {
