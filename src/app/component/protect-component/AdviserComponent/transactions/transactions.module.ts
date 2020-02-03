@@ -1,4 +1,4 @@
-import { CustomDirectiveModule } from './../../../../common/directives/common-directive.module';
+
 import { EntryComponentsModule } from '../../../../entry.components.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -13,7 +13,8 @@ import { SettingsTransactionsComponent } from './settings-transactions/settings-
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material/material';
 import { SettingsTransactionsModule } from './settings-transactions/settings-transactions.module';
-import { AddClientMappingComponent } from './settings-transactions/settings-client-mapping/add-client-mapping/add-client-mapping.component';
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
 
 // import { TransactionsComponent } from './t/transactions.component';
 
@@ -36,6 +37,8 @@ import { AddClientMappingComponent } from './settings-transactions/settings-clie
     TransactionRoutingModule,
     EntryComponentsModule,
     MaterialModule,
+    CustomDirectiveModule,
+    CustomCommonModule,
     SettingsTransactionsModule,
   ], exports: [
 

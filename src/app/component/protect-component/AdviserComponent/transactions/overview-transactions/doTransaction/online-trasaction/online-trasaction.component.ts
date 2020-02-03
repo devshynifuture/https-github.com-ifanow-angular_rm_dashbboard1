@@ -1,40 +1,34 @@
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from './../../Subscriptions/subscription-inject.service';
-import { Component, OnInit, ElementRef, Input } from '@angular/core';
-import { ValidatorType } from 'src/app/services/util.service';
+import { Component, OnInit, Input } from '@angular/core';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
+import { PurchaseTrasactionComponent } from '../purchase-trasaction/purchase-trasaction.component';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
-  selector: 'app-transaction-add',
-  templateUrl: './transaction-add.component.html',
-  styleUrls: ['./transaction-add.component.scss']
+  selector: 'app-online-trasaction',
+  templateUrl: './online-trasaction.component.html',
+  styleUrls: ['./online-trasaction.component.scss']
 })
-export class TransactionAddComponent implements OnInit {
+export class OnlineTrasactionComponent implements OnInit {
+
   formStep: string = 'step-1';
   investorsArray: string[] = [
     'Rahul Jain',
     'ajdbvkja'
   ];
 
-  validatorType = ValidatorType;
-  schemes: string[] = [
-    'Scheme 1',
-    'Scheme 2',
-    'Scheme 3',
-    'Scheme 4'
-  ]
-
   isSaveAndAddClicked: boolean = false;
 
   transactionAddForm: FormGroup = this.fb.group({
     'selectInvestor': [, Validators.required],
     'transactionType': [, Validators.required],
-    'schemeType': [,],
-    'scheme': [,],
-    'folio': [,],
+    'schemeSelection': [,],
+    'investor': [,],
+    'folioSelection': [,],
     'employeeContry': [,],
     'investmentAccountSelection': [,],
-    'modeOfPayment': [,],
-    'bankAccountType': [,],
+    'modeOfPaymentSelection': [,],
+    'bankAccountSelection': [,],
 
   })
   selectedDiv: string = 'div1';
@@ -84,6 +78,7 @@ export class TransactionAddComponent implements OnInit {
     console.log(value)
     this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
+  
   getdataForm(data) {
     if (!data) {
       data = {};
@@ -95,6 +90,13 @@ export class TransactionAddComponent implements OnInit {
       ownerName: [(!data) ? '' : data.ownerName, [Validators.required]],
       transactionType:[(!data) ? '' : data.transactionType, [Validators.required]],
       bankAccountSelection:[(!data) ? '' : data.bankAccountSelection, [Validators.required]],
+      schemeSelection:[(!data) ? '' : data.schemeSelection, [Validators.required]],
+      investor:[(!data) ? '' : data.investor, [Validators.required]],
+      employeeContry:[(!data) ? '' : data.employeeContry, [Validators.required]],
+      investmentAccountSelection:[(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      modeOfPaymentSelection:[(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      folioSelection:[(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      selectInvestor:[(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
     });
 
     this.ownerData = this.transactionAddForm.controls;
@@ -102,6 +104,29 @@ export class TransactionAddComponent implements OnInit {
 
   getFormControl(): any {
     return this.transactionAddForm.controls;
+  }
+  openPurchaseTransaction(value,data){
+    const fragmentData = {
+      flag: 'addNsc',
+      data,
+      id: 1,
+      state: 'open65',
+      componentName: PurchaseTrasactionComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            // this.getNscSchemedata();
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
+          rightSideDataSub.unsubscribe();
+        }
+       
+      }
+    );
   }
   selectTransactionType(value: string) {
     // let obj = {
@@ -128,7 +153,7 @@ export class TransactionAddComponent implements OnInit {
       if (this.formStep == 'step-1') {
         this.formStep = 'step-2';
       } else if (this.transactionAddForm.get('transactionType').valid && this.formStep == 'step-2') {
-        this.formStep = 'step-3';
+       this.openPurchaseTransaction('addPurchase','')
       }
     } else {
       if (this.formStep == 'step-1') {
