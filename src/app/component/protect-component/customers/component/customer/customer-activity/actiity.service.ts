@@ -13,4 +13,7 @@ export class ActiityService {
   getAdviceFd(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_FD, data)
   }
+  getAllAdviceByCategory(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ADVICE_BY_CATEGORY, data);
+  }
 }

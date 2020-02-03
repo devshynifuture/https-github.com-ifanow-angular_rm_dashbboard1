@@ -6,6 +6,7 @@ import { SelectAdviceComponent } from '../select-advice/select-advice.component'
 import { FixedDepositComponent } from '../../../accounts/assets/fixedIncome/fixed-deposit/fixed-deposit.component';
 import { RecuringDepositComponent } from '../../../accounts/assets/fixedIncome/recuring-deposit/recuring-deposit.component';
 import { BondsComponent } from '../../../accounts/assets/fixedIncome/bonds/bonds.component';
+import { ActiityService } from '../../actiity.service';
 
 @Component({
   selector: 'app-advice-fixed-income',
@@ -16,9 +17,23 @@ import { BondsComponent } from '../../../accounts/assets/fixedIncome/bonds/bonds
 export class AdviceFixedIncomeComponent implements OnInit {
   displayedColumns3: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'advice', 'astatus', 'adate', 'icon'];
   dataSource3 = ELEMENT_DATA3;
-  constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private utilService: UtilService) { }
+  constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private utilService: UtilService, private activityService : ActiityService) { }
   allAdvice = false;
   ngOnInit() {
+  }
+  getAdviceByAsset(){
+    let obj = {
+      
+    }
+    this.activityService.getAllAdviceByCategory(obj).subscribe(
+      data => this.getSsySchemedataRes(data), (error) => {
+        // this.datasource.data = [];
+        // this.isLoading = false;
+      }
+    );
+  }
+  getSsySchemedataRes(data){
+    console.log('data',data)
   }
   openselectAdvice(data) {
     const fragmentData = {

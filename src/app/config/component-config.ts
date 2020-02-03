@@ -316,8 +316,7 @@ export const appConfig = {
 
   ADVICE_ADD_FD: 'advice/asset/fixed-income/suggest-new-fd/add',
   ADVICE_ADD_RD: 'advice/advice/asset/fixed-income/recurring-deposit/add',
-  ADVICE_ADD_BOND: '',
-
+  GET_ADVICE_BY_CATEGORY:'advice/assetType/get',
 
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
