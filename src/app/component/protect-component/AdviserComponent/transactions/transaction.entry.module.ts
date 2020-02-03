@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TransactionAddComponent } from './transaction-add/transaction-add.component';
+import { AddClientMappingComponent } from './settings-transactions/settings-client-mapping/add-client-mapping/add-client-mapping.component';
 
 export const componentList = [
     TransactionAddComponent
@@ -15,7 +16,8 @@ export const componentList = [
         MaterialModule,
         FormsModule,
         ReactiveFormsModule,
-        CustomDirectiveModule
+        CustomDirectiveModule,
+
     ],
     exports: [
         FormsModule,

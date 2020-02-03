@@ -15,29 +15,29 @@ export class SettingsClientMappingComponent implements OnInit {
 
   ngOnInit() {
   }
-  // openAddMappiing(data, flag) {
-  //   const fragmentData = {
-  //     flag: 'addNsc',
-  //     data,
-  //     id: 1,
-  //     state: (flag == 'detailedNsc') ? 'open35' : 'open35',
-  //     componentName: AddClientMappingComponent
-  //   };
-  //   const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-  //     sideBarData => {
-  //       console.log('this is sidebardata in subs subs : ', sideBarData);
-  //       if (UtilService.isDialogClose(sideBarData)) {
-  //         if (UtilService.isRefreshRequired(sideBarData)) {
-  //           // this.getNscSchemedata();
-  //           console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+  openAddMappiing(data, flag) {
+    const fragmentData = {
+      flag: 'addNsc',
+      data,
+      id: 1,
+      state: (flag == 'detailedNsc') ? 'open35' : 'open35',
+      componentName: AddClientMappingComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            // this.getNscSchemedata();
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
-  //         }
-  //         rightSideDataSub.unsubscribe();
-  //       }
+          }
+          rightSideDataSub.unsubscribe();
+        }
 
-  //     }
-  //   );
-  // }
+      }
+    );
+  }
 }
 export interface PeriodicElement {
   name: string;

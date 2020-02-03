@@ -84,6 +84,7 @@ import { AddNomineeComponent } from './component/protect-component/customers/com
 import { AddBudgetComponent } from './component/protect-component/customers/component/common-component/add-budget/add-budget/add-budget.component';
 import { AddArnRiaCredentialsComponent } from './component/protect-component/AdviserComponent/transactions/settings-transactions/settings-manage-credentials/arn-ria-credentials/add-arn-ria-credentials/add-arn-ria-credentials.component';
 import { AddSubBrokerCredentialsComponent } from './component/protect-component/AdviserComponent/transactions/settings-transactions/settings-manage-credentials/sub-broker-team-member/add-sub-broker-credentials/add-sub-broker-credentials.component';
+import { AddClientMappingComponent } from './component/protect-component/AdviserComponent/transactions/settings-transactions/settings-client-mapping/add-client-mapping/add-client-mapping.component';
 //import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
 
@@ -209,7 +210,8 @@ export const componentList = [
   AddNomineeComponent,
   AddBudgetComponent,
   AddArnRiaCredentialsComponent,
-  AddSubBrokerCredentialsComponent
+  AddSubBrokerCredentialsComponent,
+  AddClientMappingComponent
 
 
   // ComposeEmailComponent
