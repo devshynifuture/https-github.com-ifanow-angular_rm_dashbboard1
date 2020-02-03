@@ -46,7 +46,7 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
   upperSliderDataObsSubscription: Subscription;
   newRightSliderDataObsSubscription: Subscription;
   constructor(protected eventService: EventService, protected subinject: SubscriptionInject,
-    protected dynamicComponentService: DynamicComponentService, private componentName: string) {
+    protected dynamicComponentService: DynamicComponentService, private componentName: String) {
     // this.eventService.overlayVisibleData.subscribe(
     //   data => {
     //     this.isOverlayVisible = data;
