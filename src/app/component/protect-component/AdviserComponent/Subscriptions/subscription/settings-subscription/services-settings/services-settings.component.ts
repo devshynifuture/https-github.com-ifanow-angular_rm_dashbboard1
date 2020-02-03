@@ -64,20 +64,20 @@ export class ServicesSettingsComponent implements OnInit {
       flag: 'service',
       id: 1,
       data: singleService,
-      // direction: 'top',
-      // componentName: SubscriptionUpperSliderComponent,
-      // state: 'open'
+      direction: 'top',
+      componentName: SubscriptionUpperSliderComponent,
+      state: 'open'
     };
-    this.router.navigate(['/subscription-upper'], { state: { ...fragmentData } })
-    AuthService.setSubscriptionUpperSliderData(fragmentData)
-    // const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-    //   upperSliderData => {
-    //     if (UtilService.isDialogClose(upperSliderData)) {
-    //       this.getServiceSettingSubData();
-    //       subscription.unsubscribe();
-    //     }
-    //   }
-    // );
+    // this.router.navigate(['/subscription-upper'], { state: { ...fragmentData } })
+    // AuthService.setSubscriptionUpperSliderData(fragmentData)
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          this.getServiceSettingSubData();
+          subscription.unsubscribe();
+        }
+      }
+    );
   }
 
   getServiceSettingSubData() {

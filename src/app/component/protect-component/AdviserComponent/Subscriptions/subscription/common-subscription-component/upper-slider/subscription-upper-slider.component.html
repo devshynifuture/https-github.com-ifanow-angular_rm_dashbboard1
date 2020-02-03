@@ -1,4 +1,4 @@
-<div [@upperSliderOpenClose]="upperState" class="upper_slider">
+<div>
   <div class="dialogclose">
     <div class="row popup-header-fix-100">
       <div class="col-md-2 border-right-1 p-0">
@@ -40,18 +40,18 @@
         <mat-tab #tab delay="500" label="OVERVIEW" placement="left" tooltip="tootip on left">
           <ng-template matTabContent>
             <app-overview [componentFlag]='flag' (changePlanData)="getPlanData($event)"
-              [upperData]="upperDataSubsUpper">
+              [upperData]="fragmentDataSubsUpper.data">
             </app-overview>
           </ng-template>
         </mat-tab>
-        <mat-tab #tab [disabled]='upperDataSubsUpper=="plan"' label="SERVICES">
+        <mat-tab #tab [disabled]='fragmentDataSubsUpper.data=="plan"' label="SERVICES">
           <ng-template matTabContent>
-            <app-services [componentFlag]='flag' [planData]="upperDataSubsUpper"></app-services>
+            <app-services [componentFlag]='flag' [planData]="fragmentDataSubsUpper.data"></app-services>
           </ng-template>
         </mat-tab>
-        <mat-tab #tab [disabled]='upperDataSubsUpper=="plan"' label="DOCUMENTS">
+        <mat-tab #tab [disabled]='fragmentDataSubsUpper.data=="plan"' label="DOCUMENTS">
           <ng-template matTabContent>
-            <app-document [componentFlag1]='documents' [upperData]="upperDataSubsUpper"></app-document>
+            <app-document [componentFlag1]='documents' [upperData]="fragmentDataSubsUpper.data"></app-document>
           </ng-template>
         </mat-tab>
 
@@ -63,25 +63,25 @@
       <mat-tab-group (selectedTabChange)="tabClick($event)" [selectedIndex]="selectedServiceTab" animationDuration="0ms"
         class="popup-header-fix-tabs" mat-align-tabs="center">
         <mat-tab label="FEE STRUCTURE">
-          <app-fee-structure (changeServiceData)="getServiceData($event)" [upperData]="upperDataSubsUpper">
+          <app-fee-structure (changeServiceData)="getServiceData($event)" [upperData]="fragmentDataSubsUpper.data">
           </app-fee-structure>
         </mat-tab>
         <mat-tab #tab [disabled]='upperDataSubsUpper==""' label="PLANS">
           <ng-template matTabContent>
             <!--*ngIf="subscriptionTab=='PLANS'"-->
-            <app-plans *ngIf="upperDataSubsUpper" [componentFlag]='plans' [upperData]="upperDataSubsUpper">
+            <app-plans *ngIf="upperDataSubsUpper" [componentFlag]='plans' [upperData]="fragmentDataSubsUpper.data">
             </app-plans>
           </ng-template>
         </mat-tab>
         <mat-tab #tab [disabled]='upperDataSubsUpper==""' label="DOCUMENTS">
           <ng-template matTabContent>
             <app-document *ngIf="upperDataSubsUpper" [componentFlag1]='servicesDocuments'
-              [upperData]="upperDataSubsUpper"></app-document>
+              [upperData]="fragmentDataSubsUpper.data"></app-document>
           </ng-template>
         </mat-tab>
         <mat-tab #tab [disabled]='upperDataSubsUpper==""' label="MODULES">
           <ng-template matTabContent>
-            <app-modules *ngIf="subscriptionTab=='MODULES'" [upperData]="upperDataSubsUpper"></app-modules>
+            <app-modules *ngIf="subscriptionTab=='MODULES'" [upperData]="fragmentDataSubsUpper.data"></app-modules>
           </ng-template>
         </mat-tab>
       </mat-tab-group>
@@ -92,19 +92,20 @@
       <mat-tab-group animationDuration="0ms" class="popup-header-fix-tabs" mat-align-tabs="center">
         <mat-tab label="OVERVIEW">
           <ng-template matTabContent>
-            <app-overview (changePlanData)="getDocumentData($event)" [upperData]="upperDataSubsUpper"></app-overview>
+            <app-overview (changePlanData)="getDocumentData($event)" [upperData]="fragmentDataSubsUpper.data">
+            </app-overview>
           </ng-template>
         </mat-tab>
         <mat-tab label="PLANS"
           *ngIf="upperDataSubsUpper && upperDataSubsUpper.documentData && upperDataSubsUpper.documentData.availableAt == 1 && upperDataSubsUpper.documentData.planId==0">
           <ng-template matTabContent>
-            <app-plans [componentFlag]='"plans"' [upperData]="upperDataSubsUpper"></app-plans>
+            <app-plans [componentFlag]='"plans"' [upperData]="fragmentDataSubsUpper.data"></app-plans>
           </ng-template>
         </mat-tab>
         <mat-tab label="SERVICES"
           *ngIf="upperDataSubsUpper && upperDataSubsUpper.documentData && upperDataSubsUpper.documentData.availableAt == 2">
           <ng-template matTabContent>
-            <app-services [componentFlag]='"services"' [upperData]="upperDataSubsUpper"></app-services>
+            <app-services [componentFlag]='"services"' [upperData]="fragmentDataSubsUpper.data"></app-services>
           </ng-template>
         </mat-tab>
 
@@ -120,7 +121,7 @@
         <mat-tab label="SUBSCRIPTIONS">
           <ng-template matTabContent>
             <div class="wrapper-20 bg-grey lter heading-fix b-a">
-              <h3 class="m-0 text-center head-common">{{upperDataSubsUpper.name}}</h3>
+              <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.data.name}}</h3>
             </div>
             <app-client-upper-subscription [upperData]="fragmentDataSubsUpper.data">
             </app-client-upper-subscription>
@@ -134,7 +135,7 @@
           <!--                                               *ngIf="subscriptionTab=='QUOTATIONS'"></app-quotations-subscription>-->
           <ng-template matTabContent>
             <div class="wrapper-20 bg-grey lter heading-fix b-a">
-              <h3 class="m-0 text-center head-common">{{upperDataSubsUpper.name}}</h3>
+              <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.data.name}}</h3>
             </div>
             <app-quotations [clientData]="fragmentDataSubsUpper.data">
             </app-quotations>
@@ -143,7 +144,7 @@
         <mat-tab label="INVOICES">
           <ng-template matTabContent>
             <div class="wrapper-20 bg-grey lter heading-fix b-a">
-              <h3 class="m-0 text-center head-common">{{upperDataSubsUpper.name}}</h3>
+              <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.data.name}}</h3>
             </div>
             <app-invoices [upperData]="fragmentDataSubsUpper.data">
             </app-invoices>
@@ -152,7 +153,7 @@
         <mat-tab label="DOCUMENTS">
           <ng-template matTabContent>
             <div class="wrapper-20 bg-grey lter heading-fix b-a">
-              <h3 class="m-0 text-center head-common">{{upperDataSubsUpper.name}}</h3>
+              <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.data.name}}</h3>
             </div>
             <app-document [clientData]="fragmentDataSubsUpper.data" [componentFlag1]='clientDocuments'
               [upperData]="fragmentDataSubsUpper.data">
@@ -162,7 +163,7 @@
         <mat-tab label="SETTINGS">
           <ng-template matTabContent>
             <div class="wrapper-20 bg-grey lter heading-fix b-a">
-              <h3 class="m-0 text-center head-common">{{upperDataSubsUpper.name}}</h3>
+              <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.datas.name}}</h3>
             </div>
             <app-settings [upperData]="fragmentDataSubsUpper.data">
             </app-settings>
@@ -176,9 +177,9 @@
 
 <div *ngIf="isOverlayVisible" [@dialogContainer]="upperState" class="custom-overlay">
 </div>
-<!-- <div >
+<div [@upperSliderOpenClose]="upperState" class="upper_slider">
   <ng-template #dynamicUpper></ng-template>
-</div> -->
+</div>
 <div [@openClose]="currentState" class="right_sidenav">
   <ng-template #dynamic></ng-template>
 </div>

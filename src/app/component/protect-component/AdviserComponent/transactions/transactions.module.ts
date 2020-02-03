@@ -13,6 +13,7 @@ import { SettingsTransactionsComponent } from './settings-transactions/settings-
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material/material';
 import { SettingsTransactionsModule } from './settings-transactions/settings-transactions.module';
+
 // import { TransactionsComponent } from './t/transactions.component';
 
 
