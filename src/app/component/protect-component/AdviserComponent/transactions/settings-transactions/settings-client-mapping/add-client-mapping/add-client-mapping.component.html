@@ -19,7 +19,8 @@
             <div class="form-group">
                 <form>
                     <mat-form-field>
-                        <input type="text" aria-label="Number" matInput [formControl]="myControl"
+                        <!-- [formControl]="myControl" removed for prod build -->
+                        <input type="text" aria-label="Number" matInput 
                             [matAutocomplete]="auto" class="form-control" value="Start typing to see investor name">
                         <mat-autocomplete #auto="matAutocomplete">
                             <mat-option value="Sneha Vishal Shah">Sneha Vishal Shah</mat-option>
