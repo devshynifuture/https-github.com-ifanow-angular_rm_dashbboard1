@@ -66,20 +66,20 @@
           <app-fee-structure (changeServiceData)="getServiceData($event)" [upperData]="fragmentDataSubsUpper.data">
           </app-fee-structure>
         </mat-tab>
-        <mat-tab #tab [disabled]='upperDataSubsUpper==""' label="PLANS">
+        <mat-tab #tab [disabled]='fragmentDataSubsUpper.data==""' label="PLANS">
           <ng-template matTabContent>
             <!--*ngIf="subscriptionTab=='PLANS'"-->
-            <app-plans *ngIf="upperDataSubsUpper" [componentFlag]='plans' [upperData]="fragmentDataSubsUpper.data">
+            <app-plans *ngIf="fragmentDataSubsUpper" [componentFlag]='plans' [upperData]="fragmentDataSubsUpper.data">
             </app-plans>
           </ng-template>
         </mat-tab>
-        <mat-tab #tab [disabled]='upperDataSubsUpper==""' label="DOCUMENTS">
+        <mat-tab #tab [disabled]='fragmentDataSubsUpper.data==""' label="DOCUMENTS">
           <ng-template matTabContent>
-            <app-document *ngIf="upperDataSubsUpper" [componentFlag1]='servicesDocuments'
+            <app-document *ngIf="fragmentDataSubsUpper" [componentFlag1]='servicesDocuments'
               [upperData]="fragmentDataSubsUpper.data"></app-document>
           </ng-template>
         </mat-tab>
-        <mat-tab #tab [disabled]='upperDataSubsUpper==""' label="MODULES">
+        <mat-tab #tab [disabled]='fragmentDataSubsUpper.data==""' label="MODULES">
           <ng-template matTabContent>
             <app-modules *ngIf="subscriptionTab=='MODULES'" [upperData]="fragmentDataSubsUpper.data"></app-modules>
           </ng-template>
@@ -163,7 +163,7 @@
         <mat-tab label="SETTINGS">
           <ng-template matTabContent>
             <div class="wrapper-20 bg-grey lter heading-fix b-a">
-              <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.datas.name}}</h3>
+              <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.data.name}}</h3>
             </div>
             <app-settings [upperData]="fragmentDataSubsUpper.data">
             </app-settings>

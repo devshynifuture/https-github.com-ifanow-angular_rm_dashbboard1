@@ -39,6 +39,7 @@ export class OnlineTrasactionComponent implements OnInit {
   dataSource: any;
   inputData: any;
   isViewInitCalled: any;
+  selectedFamilyMember: any;
 
   constructor(private subInjectService: SubscriptionInject,
     private fb: FormBuilder) {
@@ -100,6 +101,7 @@ export class OnlineTrasactionComponent implements OnInit {
     });
 
     this.ownerData = this.transactionAddForm.controls;
+    this.selectedFamilyMember = this.ownerData.ownerName.value
   }
 
   getFormControl(): any {
@@ -153,7 +155,10 @@ export class OnlineTrasactionComponent implements OnInit {
       if (this.formStep == 'step-1') {
         this.formStep = 'step-2';
       } else if (this.transactionAddForm.get('transactionType').valid && this.formStep == 'step-2') {
-       this.openPurchaseTransaction('addPurchase','')
+        let data = {
+          selectedFamilyMember : this.ownerData.ownerName.value,
+        }
+       this.openPurchaseTransaction('addPurchase',data)
       }
     } else {
       if (this.formStep == 'step-1') {
