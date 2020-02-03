@@ -1,22 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { AddPpfComponent } from '../../../accounts/assets/smallSavingScheme/common-component/add-ppf/add-ppf.component';
+import { AddPpfComponent } from '../../../../accounts/assets/smallSavingScheme/common-component/add-ppf/add-ppf.component';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { AddNscComponent } from '../../../accounts/assets/smallSavingScheme/common-component/add-nsc/add-nsc.component';
-import { AddKvpComponent } from '../../../accounts/assets/smallSavingScheme/common-component/add-kvp/add-kvp.component';
-import { AddScssComponent } from '../../../accounts/assets/smallSavingScheme/common-component/add-scss/add-scss.component';
-import { AddPoMisComponent } from '../../../accounts/assets/smallSavingScheme/common-component/add-po-mis/add-po-mis.component';
-import { AddPoRdComponent } from '../../../accounts/assets/smallSavingScheme/common-component/add-po-rd/add-po-rd.component';
-import { AddPoTdComponent } from '../../../accounts/assets/smallSavingScheme/common-component/add-po-td/add-po-td.component';
-import { AddPoSavingComponent } from '../../../accounts/assets/smallSavingScheme/common-component/add-po-saving/add-po-saving.component';
-import { AddSsyComponent } from '../../../accounts/assets/smallSavingScheme/common-component/add-ssy/add-ssy.component';
+import { AddSsyComponent } from '../../../../accounts/assets/smallSavingScheme/common-component/add-ssy/add-ssy.component';
+import { AddPoSavingComponent } from '../../../../accounts/assets/smallSavingScheme/common-component/add-po-saving/add-po-saving.component';
+import { AddPoTdComponent } from '../../../../accounts/assets/smallSavingScheme/common-component/add-po-td/add-po-td.component';
+import { AddPoRdComponent } from '../../../../accounts/assets/smallSavingScheme/common-component/add-po-rd/add-po-rd.component';
+import { AddPoMisComponent } from '../../../../accounts/assets/smallSavingScheme/common-component/add-po-mis/add-po-mis.component';
+import { AddScssComponent } from '../../../../accounts/assets/smallSavingScheme/common-component/add-scss/add-scss.component';
+import { AddKvpComponent } from '../../../../accounts/assets/smallSavingScheme/common-component/add-kvp/add-kvp.component';
+import { AddNscComponent } from '../../../../accounts/assets/smallSavingScheme/common-component/add-nsc/add-nsc.component';
 
 @Component({
-  selector: 'app-advice-small-saving-scheme',
-  templateUrl: './advice-small-saving-scheme.component.html',
-  styleUrls: ['./advice-small-saving-scheme.component.scss']
+  selector: 'app-all-advice-small-savings-scheme',
+  templateUrl: './all-advice-small-savings-scheme.component.html',
+  styleUrls: ['./all-advice-small-savings-scheme.component.scss']
 })
-export class AdviceSmallSavingSchemeComponent implements OnInit {
+export class AllAdviceSmallSavingsSchemeComponent implements OnInit {
+
   displayedColumns: string[] = ['checkbox', 'name', 'desc', 'cvalue', 'empcon', 'emprcon', 'advice', 'astatus', 'adate', 'icon'];
   dataSource = ELEMENT_DATA;
   displayedColumns2: string[] = ['checkbox', 'name', 'desc', 'cvalue', 'emprcon', 'advice', 'astatus', 'adate', 'icon'];
@@ -26,7 +27,7 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
   displayedColumns4: string[] = ['checkbox', 'name', 'desc','cvalue', 'advice', 'astatus', 'adate', 'icon'];
   dataSource4 = ELEMENT_DATA4;
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject) { }
-  allAdvice = false
+  allAdvice = true
   ngOnInit() {
   }
   openAddPPF(data) {

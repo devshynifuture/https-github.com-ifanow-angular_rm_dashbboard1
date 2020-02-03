@@ -1,16 +1,17 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {CustomerService} from '../../../../customer.service';
-import {MAT_DATE_FORMATS} from '@angular/material';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {AuthService} from 'src/app/auth-service/authService';
-import {DatePipe} from '@angular/common';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {Observable} from 'rxjs/Observable';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { CustomerService } from '../../../../customer.service';
+import { MAT_DATE_FORMATS } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { AuthService } from 'src/app/auth-service/authService';
+import { DatePipe } from '@angular/common';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { Observable } from 'rxjs/Observable';
 import * as moment from 'moment';
-import {Router} from '@angular/router';
-import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService} from 'src/app/services/util.service';
+import { Router } from '@angular/router';
+import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService } from 'src/app/services/util.service';
+import { ActiityService } from '../../../../customer-activity/actiity.service';
 
 
 @Component({
@@ -19,7 +20,7 @@ import {UtilService} from 'src/app/services/util.service';
   styleUrls: ['./fixed-deposit.component.scss'],
   providers: [
     [DatePipe],
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
 export class FixedDepositComponent implements OnInit {
@@ -73,10 +74,11 @@ export class FixedDepositComponent implements OnInit {
   clientId: any;
   isViewInitCalled = false;
   nomineesListFM: any;
+  flag: string;
 
-  constructor( public utils: UtilService,private event: EventService, private router: Router,
+  constructor(public utils: UtilService, private event: EventService, private router: Router,
     private fb: FormBuilder, private custumService: CustomerService,
-    public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
+    public subInjectService: SubscriptionInject, private datePipe: DatePipe, public activityService: ActiityService) {
 
     console.log('This is constructor of FixedDepositComponent');
   }
@@ -125,7 +127,7 @@ export class FixedDepositComponent implements OnInit {
     console.log('familymember', data);
   }
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
   display(value) {
@@ -133,8 +135,8 @@ export class FixedDepositComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id;
   }
-  ownerDetails(value){
-    this.familyMemberId=value.id;
+  ownerDetails(value) {
+    this.familyMemberId = value.id;
   }
   lisNominee(value) {
     console.log(value)
@@ -151,14 +153,14 @@ export class FixedDepositComponent implements OnInit {
   intrestPayout(value) {
     if (value == 2) {
       this.showFreqPayOpt = true;
-    }else{
-      this.showFreqPayOpt=false;
+    } else {
+      this.showFreqPayOpt = false;
     }
   }
 
   keyPress(event: any) {
     var k = event.keyCode;
-    return ((k > 64 && k < 91) || (k > 96 && k < 123) || k==45 || k==47 || k == 8 || (k >= 48 && k <= 57));
+    return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 45 || k == 47 || k == 8 || (k >= 48 && k <= 57));
   }
 
   haveMaturity(maturity) {
@@ -170,23 +172,17 @@ export class FixedDepositComponent implements OnInit {
   }
 
   getDateYMD() {
-    // if(this.fixedDeposit.controls.maturityDate.invalid == true){
-    //  let now = moment();
+    ;
     this.tenure = moment(this.fixedDeposit.controls.commencementDate.value).add(this.fixedDeposit.controls.tenureM.value, 'months');
-      this.tenure = moment(this.tenure).add(this.fixedDeposit.controls.tenureY.value, 'years');
-      this.tenure = moment(this.tenure).add(this.fixedDeposit.controls.tenureD.value, 'days');
+    this.tenure = moment(this.tenure).add(this.fixedDeposit.controls.tenureY.value, 'years');
+    this.tenure = moment(this.tenure).add(this.fixedDeposit.controls.tenureD.value, 'days');
     this.getDate = this.datePipe.transform(this.tenure, 'yyyy-MM-dd');
     return this.getDate;
-    // }else{
-    //   this.tenure = this.fixedDeposit.controls.commencementDate.value.add(this.fixedDeposit.controls.tenureM.value, 'months');
-    //   this.tenure = this.fixedDeposit.controls.commencementDate.value.add(this.fixedDeposit.controls.tenureY.value, 'years');
-    //   this.tenure = this.fixedDeposit.controls.commencementDate.value.add(this.fixedDeposit.controls.tenureD.value, 'days');
-    //   this.getDate = this.datePipe.transform(this.tenure, 'yyyy-MM-dd')
-    //   return this.getDate;
-    // }
+
   }
 
   getdataForm(data) {
+    this.flag = data
     if (!data) {
       data = {};
     }
@@ -264,8 +260,8 @@ export class FixedDepositComponent implements OnInit {
       return
     }
     else if (this.showFreqPayOpt == true && this.fixedDeposit.get('frequencyOfPayoutPerYear').invalid) {
-        this.fixedDeposit.get('frequencyOfPayoutPerYear').markAsTouched();
-        return
+      this.fixedDeposit.get('frequencyOfPayoutPerYear').markAsTouched();
+      return
     } else {
       const obj = {
         advisorId: this.advisorId,
@@ -278,7 +274,7 @@ export class FixedDepositComponent implements OnInit {
         commencementDate: this.datePipe.transform(this.fixedDeposit.controls.commencementDate.value, 'yyyy-MM-dd'),
         institutionName: this.fixedDeposit.controls.institution.value,
         description: this.fixedDeposit.controls.description.value,
-        frequencyOfPayoutPerYear: (this.fixedDeposit.controls.frequencyOfPayoutPerYear.value!="")?this.fixedDeposit.controls.frequencyOfPayoutPerYear.value:null,
+        frequencyOfPayoutPerYear: (this.fixedDeposit.controls.frequencyOfPayoutPerYear.value != "") ? this.fixedDeposit.controls.frequencyOfPayoutPerYear.value : null,
         maturityDate: this.datePipe.transform(this.maturityDate, 'yyyy-MM-dd'),
         interestPayoutOption: this.fixedDeposit.controls.payOpt.value,
         bankAcNumber: this.fixedDeposit.controls.bankACNo.value,
@@ -289,8 +285,19 @@ export class FixedDepositComponent implements OnInit {
       };
       console.log('fixedDeposit', obj);
       this.dataSource = obj;
-      // this.getdataForm();
-      if (this.fixedDeposit.controls.id.value) {
+      let adviceObj = {
+        advice_id: this.advisorId,
+        adviceStatusId: 5,
+        stringObject: obj,
+        adviceDescription: "manualAssetDescription"
+      }
+      if (this.flag == 'adviceFixedDeposit') {
+        this.custumService.getAdviceFd(adviceObj).subscribe(
+          data => this.getAdviceFdRes(data),
+          err => this.event.openSnackBar(err, "dismiss")
+        );
+      }
+      else if (this.fixedDeposit.controls.id.value) {
         // edit call
         this.custumService.editFixedDeposit(obj).subscribe(
           data => this.editFixedDepositRes(data),
@@ -302,8 +309,10 @@ export class FixedDepositComponent implements OnInit {
           err => this.event.openSnackBar(err, "dismiss")
         );
       }
-
     }
+  }
+  getAdviceFdRes(data) {
+    console.log('advice activity res ==>', data)
   }
   onChange(event) {
     if (parseInt(event.target.value) > 100) {
@@ -314,11 +323,11 @@ export class FixedDepositComponent implements OnInit {
   addFixedDepositRes(data) {
     console.log('addFixedDepositRes', data);
     this.event.openSnackBar('Added successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data,refreshRequired:true });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
 
   editFixedDepositRes(data) {
     this.event.openSnackBar('Updated successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data,refreshRequired:true });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
 }

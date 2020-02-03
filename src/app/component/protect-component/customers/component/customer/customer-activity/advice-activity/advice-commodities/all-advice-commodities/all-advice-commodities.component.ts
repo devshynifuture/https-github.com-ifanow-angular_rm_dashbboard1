@@ -1,41 +1,44 @@
 import { Component, OnInit } from '@angular/core';
-import { SelectAdviceComponent } from '../select-advice/select-advice.component';
 import { UtilService } from 'src/app/services/util.service';
-import { CustomerService } from '../../../customer.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { MatDialog } from '@angular/material';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { AddRealEstateComponent } from '../../../accounts/assets/realEstate/add-real-estate/add-real-estate.component';
+import { GoldComponent } from '../../../../accounts/assets/commodities/gold/gold.component';
+import { OthersComponent } from '../../../../accounts/assets/commodities/others/others.component';
 
 @Component({
-  selector: 'app-advice-real-asset',
-  templateUrl: './advice-real-asset.component.html',
-  styleUrls: ['./advice-real-asset.component.scss']
+  selector: 'app-all-advice-commodities',
+  templateUrl: './all-advice-commodities.component.html',
+  styleUrls: ['./all-advice-commodities.component.scss']
 })
-export class AdviceRealAssetComponent implements OnInit {
+export class AllAdviceCommoditiesComponent implements OnInit {
+
   displayedColumns3: string[] = ['checkbox', 'name', 'desc','mvalue', 'advice', 'astatus', 'adate', 'icon'];
   dataSource3 = ELEMENT_DATA1;
-  constructor(private eventService: EventService, public dialog: MatDialog, private subInjectService: SubscriptionInject,
-    private cusService: CustomerService) { }
+  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject) { }
 
   ngOnInit() {
   }
-  allAdvice = false;
-  openRealEstate(value, data) {
+  allAdvice = true
+  openCommodities(value, state, data) {
     const fragmentData = {
       flag: value,
-      data,
+      data: data,
       id: 1,
       state: 'open',
-      componentName: AddRealEstateComponent
+      componentName: GoldComponent,
+
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
+
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getFixedDepositList();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+            // if (value == 'addGold') {
+            //   this.getGoldList()
+            // } else {
+            //   this.getOtherList()
+            // }
 
           }
           rightSideDataSub.unsubscribe();
@@ -44,22 +47,32 @@ export class AdviceRealAssetComponent implements OnInit {
       }
     );
   }
-  openselectAdvice(data) {
+  openOthers(value, state, data) {
     const fragmentData = {
-      flag: 'openselectAdvice',
-      data,
-      componentName: SelectAdviceComponent,
+      flag: value,
+      data: data,
+      id: 1,
+      state: 'open',
+      componentName: OthersComponent,
 
-      state: 'open65'
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
+
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          rightSideDataSub.unsubscribe();
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            // if (value == 'addGold') {
+            //   this.getGoldList()
+            // } else {
+            //   this.getOtherList()
+            // }
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
+          }
+          rightSideDataSub.unsubscribe();
         }
+
       }
     );
   }
