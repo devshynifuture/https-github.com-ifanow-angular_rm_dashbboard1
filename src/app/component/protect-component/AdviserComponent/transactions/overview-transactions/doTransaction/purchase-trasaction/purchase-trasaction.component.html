@@ -24,12 +24,14 @@
     <div class="row pt-20 pb-44">
         <div class="col-md-8 pl-0 pr-20">
             <h5 class="m-0 pb-10 text-black">Select from the following options</h5>
+            <!-- value == 1 -->
             <mat-radio-group aria-label="Select an option" formControlName="schemeSelection">
-                <mat-radio-button value="1" [ngClass]="value == 1 ? 'text-primary bu-primary': 'b-a text-primitive'">
+                <mat-radio-button value="1" [ngClass]=" purchaseTransaction.get('schemeSelection').value == 1 ? 'text-primary bu-primary': 'b-a text-primitive'"> 
                     Invest in
                     existing scheme
                 </mat-radio-button>
-                <mat-radio-button value="2" [ngClass]="value == 2 ? 'text-primary bu-primary': 'b-a text-primitive'">
+            <!-- value == 2 -->
+                <mat-radio-button value="2" [ngClass]="purchaseTransaction.get('schemeSelection').value == 2 ? 'text-primary bu-primary': 'b-a text-primitive'">
                     Select a new
                     scheme</mat-radio-button>
             </mat-radio-group>
@@ -75,11 +77,12 @@
             <h5 class="m-0 pt-40 pb-12 text-black">Select bank account</h5>
             <mat-form-field>
                 <mat-select class="form-control" formControlName="bankAccountSelection">
-                    <mat-option value="option">Option</mat-option>
+                    <mat-option value="'option'">Option</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
-        <div class="col-md-8 pl-0 pr-20" *ngIf="isSaveAndAddClicked">
+        <div class="col-md-8 pl-0 pr-20" > 
+            <!-- *ngIf="isSaveAndAddClicked removed for build prod" -->
             <div class="row">
                 <div class="col-md-12 p-0 text-center">
                     <img src="/assets/images/svg/last-step.svg" class="pt-28">
@@ -135,12 +138,13 @@
             <h5 class="mb-0 text-white c-p" (click)="saveAndNext()"> NEXT </h5>
         </div> -->
         <div class="col-md-8 right pt-8">
-            <button mat-button class="text-success" (click)="saveAndAddAnother()">
+            <!-- commented for prod build -->
+            <!-- <button mat-button class="text-success" (click)="saveAndAddAnother()">
                 SAVE & ADD ANOTHER
             </button>
             <button mat-button class="text-success" (click)="onAddTransaction()">
                 SAVE & PROCEED
-            </button>
+            </button> -->
         </div>
     </div>
 </div>

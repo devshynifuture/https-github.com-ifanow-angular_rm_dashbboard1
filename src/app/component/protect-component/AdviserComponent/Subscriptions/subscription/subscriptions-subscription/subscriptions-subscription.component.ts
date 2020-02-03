@@ -59,6 +59,7 @@ export interface PeriodicElement {
   feemode: string;
 }
 
+
 @Component({
   selector: 'app-subscriptions-subscription',
   templateUrl: './subscriptions-subscription.component.html',
@@ -77,6 +78,7 @@ export interface PeriodicElement {
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
+
 export class SubscriptionsSubscriptionComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   selector = '.wrapper-20';
