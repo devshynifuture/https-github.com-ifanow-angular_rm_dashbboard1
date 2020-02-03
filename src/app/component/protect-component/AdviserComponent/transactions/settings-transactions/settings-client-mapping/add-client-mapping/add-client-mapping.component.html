@@ -1,1 +1,120 @@
-<p>add-client-mapping works!</p>
+<div class="popup-header-fix w-50">
+    <div class="row bb-1">
+        <div class="col-md-8 p-0">
+            <h4 class="mb-2 wrapper-20">MAP FOLIO TO IIN/UCC</h4>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12">
+                <i class="material-icons c-p pt-8 v-middle"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="pt-90 pr-20 pl-20">
+    <h5 class="m-0">Mapping of Client code <b>5011012025</b> belonging to <b>Sneha Vishal Shah</b></h5>
+    <h5 class="m-0 pt-40">Select an investor from the search box below...</h5>
+    <div class="row pt-12">
+        <div class="col-md-10 p-0">
+            <div class="form-group">
+                <form>
+                    <mat-form-field>
+                        <input type="text" aria-label="Number" matInput [formControl]="myControl"
+                            [matAutocomplete]="auto" class="form-control" value="Start typing to see investor name">
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option value="Sneha Vishal Shah">Sneha Vishal Shah</mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </form>
+            </div>
+        </div>
+
+        <!-- <div class="col-md-12 pt-60 p-0">
+            <h5 class="m-0 f-500 pb-12">Following are the details of Sneha Vishal Shah</h5>
+            <div class="row b-a">
+                <div class="col-md-6 p-0 b-b">
+                    <p class="m-0 p-8">Full name</p>
+                </div>
+                <div class="col-md-6 p-0 b-b text-right">
+                    <p class="m-0 p-8">Sneha Vishal Shah</p>
+                </div>
+                <div class="col-md-6 p-0 b-b">
+                    <p class="m-0 p-8">Date of birth</p>
+                </div>
+                <div class="col-md-6 p-0 b-b text-right">
+                    <p class="m-0 p-8">23/09/2010</p>
+                </div>
+                <div class="col-md-6 p-0 b-b">
+                    <p class="m-0 p-8">PAN</p>
+                </div>
+                <div class="col-md-6 p-0 b-b text-right">
+                    <p class="m-0 p-8">-</p>
+                </div>
+                <div class="col-md-6 p-0 b-b">
+                    <p class="m-0 p-8">Mobile number</p>
+                </div>
+                <div class="col-md-6 p-0 b-b text-right">
+                    <p class="m-0 p-8">-</p>
+                </div>
+                <div class="col-md-6 p-0">
+                    <p class="m-0 p-8">Email</p>
+                </div>
+                <div class="col-md-6 p-0 text-right">
+                    <p class="m-0 p-8">-</p>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- <div class="col-md-12 pt-60 p-0 folio-mapping-popuptable">
+            <h5 class="m-0 f-500">Select an investment account you would like to map this folio to (multi select
+                allowed)</h5>
+            <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
+                <ng-container matColumnDef="checkbox">
+                    <th mat-header-cell *matHeaderCellDef class="br"> </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+
+                        <mat-checkbox></mat-checkbox>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Platform </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                </ng-container>
+
+             
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="weight">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Account number </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="symbol">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Holding nature </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
+                </ng-container>
+                <ng-container matColumnDef="hname">
+                    <th mat-header-cell *matHeaderCellDef> Joint holder names </th>
+                    <td mat-cell *matCellDef="let element"> {{element.hname}} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div> -->
+    </div>
+</div>
+
+<div class="bottom-fixed wrapper-12 w-50">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+            <button mat-button class="btn-bottom br-0 text-inherit">MAP
+            </button>
+        </div>
+    </div>
+</div>
