@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./arn-ria-credentials.component.scss']
 })
 export class ArnRiaCredentialsComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'code', 'euin', 'icons'];
+  displayedColumns: string[] = ['position', 'name', 'weight', 'aid', 'mid', 'apip', 'euin', 'set', 'icons'];
   dataSource = ELEMENT_DATA;
   constructor() { }
   isLoading = false;
@@ -18,13 +18,16 @@ export interface PeriodicElement {
   name: string;
   position: string;
   weight: string;
-  symbol: string;
-  code: string;
+
+  aid: string;
+  mid: string;
+  apip: string;
   euin: string;
+
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 'NSE', name: 'ARN', weight: 'ARN-83865', symbol: 'Ankit Mehta', code: 'ABC123', euin: 'E983726' },
-  { position: 'NSE', name: 'ARN', weight: 'ARN-83865', symbol: 'Ankit Mehta', code: 'ABC123', euin: 'E983726' },
+  { position: 'NSE', name: 'ARN', weight: 'ARN-83865', aid: 'MFS83865', mid: 'ABC123', apip: '****', euin: 'E983726' },
+
 
 ];
