@@ -471,7 +471,15 @@ export class AddRealEstateComponent implements OnInit {
           }
         );
       } else if(this.flag=='adviceRealEstate'){
-
+        let adviceObj = {
+          advice_id: this.advisorId,
+          adviceStatusId: 5,
+          stringObject: obj,
+          adviceDescription: "manualAssetDescription"
+        }
+          this.custumService.getAdviceRealEstate(adviceObj).subscribe(
+            data => this.getAdviceRealEstateRes(data),
+          );
       } else {
         console.log(obj);
         this.custumService.editRealEstate(obj).subscribe(
@@ -479,6 +487,11 @@ export class AddRealEstateComponent implements OnInit {
         );
       }
     }
+  }
+  getAdviceRealEstateRes(data){
+    this.eventService.openSnackBar('Real Estate added successfully', 'OK');
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true })
+
   }
   addRealEstateRes(data) {
     console.log(data);
@@ -488,7 +501,7 @@ export class AddRealEstateComponent implements OnInit {
       this.eventService.openSnackBar('Real Estate added successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'dismiss');
-
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true })
     }
   }
   editRealEstateRes(data) {

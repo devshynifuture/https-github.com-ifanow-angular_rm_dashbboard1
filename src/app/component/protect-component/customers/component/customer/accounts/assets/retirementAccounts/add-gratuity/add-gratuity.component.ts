@@ -24,14 +24,15 @@ export class AddGratuityComponent implements OnInit {
   familyMemberId: any;
   showHide = false;
   isNoOfcompleteYrs = false;
-  isAmountRecived =false;
+  isAmountRecived = false;
   inputData: any;
   advisorId: any;
   ownerName: any;
   clientId: any;
   nomineesListFM: any;
+  flag: any;
 
-  constructor(private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe,public utils: UtilService,public event:EventService) { }
+  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public event: EventService) { }
 
   @Input()
   set data(data) {
@@ -64,7 +65,7 @@ export class AddGratuityComponent implements OnInit {
     }
   }
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag })
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag })
   }
   // getDateYMD(){
   //   let now = moment();
@@ -73,6 +74,7 @@ export class AddGratuityComponent implements OnInit {
   //   return this.getDate;
   // }
   getdataForm(data) {
+    this.flag = data;
     if (data == undefined) {
       data = {}
     }
@@ -81,7 +83,7 @@ export class AddGratuityComponent implements OnInit {
       noOfcompleteYrs: [(data == undefined) ? '' : data.yearsCompleted, [Validators.required]],
       amountRecived: [(data == undefined) ? '' : data.amountReceived, [Validators.required]],
       nameOfOrg: [(data == undefined) ? '' : data.organizationName, [Validators.required]],
-      yearOfReceipt : [(data == undefined) ? '' : data.yearOfReceipt, [Validators.required]],
+      yearOfReceipt: [(data == undefined) ? '' : data.yearOfReceipt, [Validators.required]],
       resonOfRecipt: [(data == undefined) ? '' : data.reasonOfReceipt, [Validators.required]],
       bankAcNo: [(data == undefined) ? '' : data.bankAccountNumber, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
@@ -103,44 +105,59 @@ export class AddGratuityComponent implements OnInit {
     } else if (this.gratuity.get('ownerName').invalid) {
       this.gratuity.get('ownerName').markAsTouched();
       return
-    }else if (this.gratuity.get('amountRecived').invalid) {
+    } else if (this.gratuity.get('amountRecived').invalid) {
       this.gratuity.get('amountRecived').markAsTouched();
       return;
     } else {
-  
+
       let obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
         familyMemberId: this.familyMemberId,
-        ownerName: (this.ownerName == undefined)?this.gratuity.controls.ownerName.value:this.ownerName,
+        ownerName: (this.ownerName == undefined) ? this.gratuity.controls.ownerName.value : this.ownerName,
         yearsCompleted: this.gratuity.controls.noOfcompleteYrs.value,
         amountReceived: this.gratuity.controls.amountRecived.value,
         organizationName: this.gratuity.controls.nameOfOrg.value,
-        yearOfReceipt:this.gratuity.controls.yearOfReceipt.value,
+        yearOfReceipt: this.gratuity.controls.yearOfReceipt.value,
         reasonOfReceipt: this.gratuity.controls.resonOfRecipt.value,
         bankAccountNumber: this.gratuity.controls.bankAcNo.value,
         description: this.gratuity.controls.description.value,
         id: this.gratuity.controls.id.value
       }
-      if (this.gratuity.controls.id.value == undefined) {
+      let adviceObj = {
+        advice_id: this.advisorId,
+        adviceStatusId: 5,
+        stringObject: obj,
+        adviceDescription: "manualAssetDescription"
+      }
+      if (this.gratuity.controls.id.value == undefined && this.flag != 'adviceGratuity') {
         this.custumService.addGratuity(obj).subscribe(
           data => this.addGratuityRes(data)
+        );
+      } else if (this.flag == 'adviceGratuity') {
+        this.custumService.getAdviceGratuity(adviceObj).subscribe(
+          data => this.getAdviceGratuityRes(data),
         );
       } else {
         //edit call
         this.custumService.editGratuity(obj).subscribe(
           data => this.editGratuityRes(data)
         );
-      }   
+      }
     }
   }
-  addGratuityRes(data){
+  getAdviceGratuityRes(data) {
+    this.event.openSnackBar('Gratuity added successfully!', 'dismiss');
+    this.subInjectService.changeNewRightSliderState({ flag: 'addedGratuity', state: 'close', data, refreshRequired: true })
+
+  }
+  addGratuityRes(data) {
     console.log('addrecuringDepositRes', data)
-    this.subInjectService.changeNewRightSliderState({flag:'addedGratuity', state: 'close', data,refreshRequired:true })
+    this.subInjectService.changeNewRightSliderState({ flag: 'addedGratuity', state: 'close', data, refreshRequired: true })
     this.event.openSnackBar('Added successfully!', 'dismiss');
   }
-  editGratuityRes(data){
-    this.subInjectService.changeNewRightSliderState({flag:'addedGratuity', state: 'close', data,refreshRequired:true })
+  editGratuityRes(data) {
+    this.subInjectService.changeNewRightSliderState({ flag: 'addedGratuity', state: 'close', data, refreshRequired: true })
     this.event.openSnackBar('Updated successfully!', 'dismiss');
 
   }

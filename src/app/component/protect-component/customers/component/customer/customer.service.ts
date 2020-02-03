@@ -587,4 +587,34 @@ export class CustomerService {
   getAdvicePomis(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_POMIS, data)
   }
+  getAdviceRealEstate(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_REALESTATE, data)
+  }
+  getAdviceEpf(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_EPF, data)
+  }
+  getAdviceNps(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_NPS, data)
+  }
+  getAdviceGratuity(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_GRATUITY, data)
+  }
+  getAdviceSuperannuation(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_SUPERANNUATION, data)
+  }
+  getAdviceEps(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_EPS, data)
+  }
+  getAdviceBankAccount(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_BANKACCOUNT, data)
+  }
+  getAdviceCashInHand(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_CASHINHAND, data)
+  }
+  getAdviceGold(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_BANKACCOUNT, data)
+  }
+  getAdviceOthers(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_BANKACCOUNT, data)
+  }
 }

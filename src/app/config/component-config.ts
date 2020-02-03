@@ -325,6 +325,16 @@ export const appConfig = {
   ADVICE_ADD_PORD:'advice/asset/saving-scheme/suggest-new-pord/add',
   ADVICE_ADD_POTD:'advice/advice/asset/saving-scheme/po-td/add',
   ADVICE_ADD_POMIS:'advice/asset/saving-scheme/suggest-new-pomis/add',
+  ADVICE_ADD_REALESTATE:'advice/asset/suggest-new-real-estate/add',
+  ADVICE_ADD_EPF:'advice/asset/retirement-account/suggest-new-epf/add',
+  ADVICE_ADD_NPS:'advice/asset/retirement/suggest-new-nps/add',
+  ADVICE_ADD_GRATUITY:'advice/asset/retirement-account/suggest-new-gratuity/add',
+  ADVICE_ADD_SUPERANNUATION:'advice/asset/retirement/suggest-new-superannuation/add',
+  ADVICE_ADD_EPS:'advice/advice/asset/retirement/eps/add',
+  ADVICE_ADD_BANKACCOUNT:'advice/asset/cash-and-bank/suggest-new-bank-account/add',
+  ADVICE_ADD_CASHINHAND:'advice/asset/cash-and-bank/suggest-new-cash-in-hand/add',
+  ADVICE_ADD_GOLD:'advice/asset/commodity/suggest-new-gold/add',
+  ADVICE_ADD_OTHERS:'advice/asset/commodity/suggest-new-other/add',
   GET_ADVICE_BY_CATEGORY:'advice/assetType/get',
 
   // gmail

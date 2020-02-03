@@ -23,9 +23,9 @@ export class AdviceRetirementAccountComponent implements OnInit {
   ngOnInit() {
   }
   allAdvice = false;
-  openAddEPF(data) {
+  openAddEPF(data, value) {
     const fragmentData = {
-      flag: 'addEPF',
+      flag: value,
       data,
       id: 1,
       state: 'open',
@@ -135,9 +135,9 @@ export class AdviceRetirementAccountComponent implements OnInit {
       }
     );
   }
-  openAddEPS(data) {
+  openAddEPS(data, value) {
     const fragmentData = {
-      flag: 'addEPS',
+      flag: value,
       data,
       id: 1,
       state: 'open',

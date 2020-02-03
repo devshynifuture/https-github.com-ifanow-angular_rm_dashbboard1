@@ -225,9 +225,9 @@ export class CashAndBankComponent implements OnInit {
     }
   }
 
-  openCashAndBank(data) {
+  openCashAndBank(data,value) {
     const fragmentData = {
-      flag: '',
+      flag: value,
       data,
       id: 1,
       state: 'open',
@@ -249,9 +249,9 @@ export class CashAndBankComponent implements OnInit {
     );
   }
 
-  openCashInHand(data) {
+  openCashInHand(data,value) {
     const fragmentData = {
-      flag: 'addCashInHand',
+      flag: value,
       data,
       id: 1,
       state: 'open',
