@@ -6,7 +6,7 @@ import { TransactionsListComponent } from './transactions-list/transactions-list
 import { InvestorsTransactionsComponent } from './investors-transactions/investors-transactions.component';
 import { MandatesTransactionsComponent } from './mandates-transactions/mandates-transactions.component';
 import { KycTransactionsComponent } from './kyc-transactions/kyc-transactions.component';
-import { SettingsTransactionsComponent } from './settings-transactions/settings-transactions.component';
+
 const routes: Routes = [
     {
         path: '',
@@ -34,7 +34,8 @@ const routes: Routes = [
             },
             {
                 path: 'settings',
-                component: SettingsTransactionsComponent
+                loadChildren: () => import('./settings-transactions/settings-transactions.module').then(m => m.SettingsTransactionsModule),
+
             }
         ]
     }

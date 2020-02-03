@@ -20,7 +20,7 @@
                 <div class="form-control mb-0 add-transactions">
                     <mat-form-field>
                         <input type="text" aria-label="Number" class="form-group h-0" matInput
-                            formControlName="selectedInvestor" [matAutocomplete]="auto"
+                            formControlName="selectInvestor" [matAutocomplete]="auto"
                             value="Start typing to see investor names">
                         <mat-autocomplete #auto="matAutocomplete">
                             <mat-option [value]="item" *ngFor="let item of investorsArray">
