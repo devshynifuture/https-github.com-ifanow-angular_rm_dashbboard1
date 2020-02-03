@@ -33,7 +33,7 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
     // public dialogRef: MatDialogRef<UpperSliderComponent>,
     // @Inject(MAT_DIALOG_DATA) public fragmentDataSubsUpper: any
   ) {
-    super(eventService, subinject, dynamicComponentService, 'SubscriptionUpperSliderComponent');
+    super(eventService, subinject, dynamicComponentService);
     // this.eventService.rightSliderData.subscribe(
     //   data => this.setRightSliderFlag(data)
     // );

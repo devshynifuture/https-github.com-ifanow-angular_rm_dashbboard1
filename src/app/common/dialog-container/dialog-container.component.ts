@@ -39,14 +39,14 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
   currentState;
   subscriptionTab;
   dialogState;
-
+  componentName;
   upperSliderData;
   headerData = 'EMAIL QUOTATION';
   headerDataDocuments = 'EMAIL DOCS WITH E-SIGN REQUEST';
   upperSliderDataObsSubscription: Subscription;
   newRightSliderDataObsSubscription: Subscription;
   constructor(protected eventService: EventService, protected subinject: SubscriptionInject,
-    protected dynamicComponentService: DynamicComponentService, private componentName: String) {
+    protected dynamicComponentService: DynamicComponentService) {
     // this.eventService.overlayVisibleData.subscribe(
     //   data => {
     //     this.isOverlayVisible = data;
@@ -66,7 +66,7 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
     // );
     this.upperSliderDataObsSubscription = this.eventService.upperSliderDataObs.subscribe(
       data => {
-        console.log(componentName + ' DialogContainerComponent upper slider Subscription data', data);
+        console.log(this.componentName + ' DialogContainerComponent upper slider Subscription data', data);
 
         const tempData: any = data;
         if (tempData.componentName) {
@@ -85,7 +85,7 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
         this.openDynamicComponent(data);
       }
       this.fragmentData = data;
-      console.log(componentName + 'fragmentData dialog container: ', this.fragmentData);
+      console.log(this.componentName + 'fragmentData dialog container: ', this.fragmentData);
       this.getFileResponseDataAum(this.fragmentData.flag);
       this.inputData = this.fragmentData.data;
       this.handleChangeOfState(this.fragmentData.state);

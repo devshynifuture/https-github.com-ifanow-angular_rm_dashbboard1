@@ -46,7 +46,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     /*constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
       protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute,
       private authService: AuthService) {*/
-    super(eventService, subinject, dynamicComponentService, 'LeftsidebarComponent');
+    super(eventService, subinject, dynamicComponentService);
   }
 
   serachClientData(data) {

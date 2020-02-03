@@ -26,7 +26,7 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
   constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
     protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute,
     private authService: AuthService) {
-    super(eventService, subinject, dynamicComponentService, 'CustomerComponent');
+    super(eventService, subinject, dynamicComponentService);
     console.log(router.getCurrentNavigation().extras.state);
     if (router.getCurrentNavigation().extras.state && router.getCurrentNavigation().extras.state.id) {
       this.authService.setClientData(router.getCurrentNavigation().extras.state);
