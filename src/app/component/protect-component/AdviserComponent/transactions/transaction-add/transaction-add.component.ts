@@ -1,6 +1,6 @@
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from './../../Subscriptions/subscription-inject.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-transaction-add',
@@ -8,10 +8,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./transaction-add.component.scss']
 })
 export class TransactionAddComponent implements OnInit {
-  myControl;
-  option;
+  formStep: string = 'step-1';
+  investorsArray: string[] = [
+    'Rahul Jain',
+    'ajdbvkja'
+  ];
+
+  isSaveAndAddClicked: boolean = false;
 
   transactionAddForm: FormGroup = this.fb.group({
+    'selectedInvestor': [, Validators.required],
+    'transactionType': [,],
     'schemeSelection': [,],
     'investor': [,],
     'folioSelection': [,],
@@ -21,6 +28,7 @@ export class TransactionAddComponent implements OnInit {
     'bankAccountSelection': [,],
 
   })
+  selectedDiv: string = 'div1';
 
   constructor(private subInjectService: SubscriptionInject,
     private fb: FormBuilder) {
@@ -31,5 +39,42 @@ export class TransactionAddComponent implements OnInit {
 
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  }
+
+  selectTransactionType(value: string) {
+    this.selectedDiv = value;
+    this.transactionAddForm.patchValue({
+      'transactionType': value
+    });
+
+    console.log(this.transactionAddForm);
+  }
+
+  saveAndAddAnother() {
+    this.isSaveAndAddClicked = true;
+    console.log(this.transactionAddForm);
+  }
+
+  onAddTransaction() {
+    console.log(this.transactionAddForm);
+  }
+
+  saveAndNext() {
+    console.log(this.formStep);
+    if (this.transactionAddForm.valid) {
+      if (this.formStep == 'step-1') {
+        this.formStep = 'step-2';
+      } else if (this.formStep == 'step-2') {
+        this.formStep = 'step-3';
+      }
+    } else {
+      if (this.formStep == 'step-1') {
+        this.transactionAddForm.get('selectedInvestor').markAsTouched();
+      } else if (this.formStep === 'step-2') {
+        this.transactionAddForm.get('transactionType').markAsTouched();
+      } else if (this.formStep === 'step-3') {
+
+      }
+    }
   }
 }

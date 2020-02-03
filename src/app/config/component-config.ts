@@ -289,7 +289,7 @@ export const appConfig = {
   GET_TEMPLATE: 'subscription/emailtemplate/get',
   GET_EMAIL_TEMPLATE_FILTER: 'subscription/emailtemplate/get',
   // GET_DOCUMENT_MAPPED_PLAN: 'subscription/document/plan/map/get',
-  GET_DOCUMENT_MAPPED_PLAN:'subscription/document/plan/mapping/get',
+  GET_DOCUMENT_MAPPED_PLAN: 'subscription/document/plan/mapping/get',
   GET_DOCUMENT_MAPPED_SERVICE: 'subscription/document/service/map/get',
   GET_TOTAL_SALE_RECIVED: 'subscription/dashboard/totalsales/feerecieved/get',
   DELETE_SUB_SETTING_BILLER_PROFILE: 'subscription/setting/billerprofile/delete',
@@ -312,7 +312,11 @@ export const appConfig = {
   EDIT_INCOME_LIST: 'account/income/edit',
   GET_GLOBAL_GROWTH_RATE: 'account/income/growth/rate/global/get',
   DELETE_INCOME: 'account/income/delete?',
+  /////////////////////////Activity///////////////////////////////////
 
+  ADVICE_ADD_FD: 'advice/asset/fixed-income/suggest-new-fd/add',
+  ADVICE_ADD_RD: 'advice/advice/asset/fixed-income/recurring-deposit/add',
+  GET_ADVICE_BY_CATEGORY:'advice/assetType/get',
 
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
@@ -341,5 +345,5 @@ export const appConfig = {
   GET_DELETE: 'calendar/event/detele',
   ////////////////////////////// calendar////////////////////////////////////////////
   ///////////////////////////////Postal////////////////////////////////
- 
+
 };

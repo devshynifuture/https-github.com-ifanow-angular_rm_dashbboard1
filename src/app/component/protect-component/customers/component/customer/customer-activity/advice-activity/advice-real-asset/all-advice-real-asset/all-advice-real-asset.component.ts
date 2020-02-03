@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { SelectAdviceComponent } from '../select-advice/select-advice.component';
-import { UtilService } from 'src/app/services/util.service';
-import { CustomerService } from '../../../customer.service';
+import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatDialog } from '@angular/material';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { AddRealEstateComponent } from '../../../accounts/assets/realEstate/add-real-estate/add-real-estate.component';
+import { AddRealEstateComponent } from '../../../../accounts/assets/realEstate/add-real-estate/add-real-estate.component';
+import { UtilService } from 'src/app/services/util.service';
+import { SelectAdviceComponent } from '../../select-advice/select-advice.component';
 
 @Component({
-  selector: 'app-advice-real-asset',
-  templateUrl: './advice-real-asset.component.html',
-  styleUrls: ['./advice-real-asset.component.scss']
+  selector: 'app-all-advice-real-asset',
+  templateUrl: './all-advice-real-asset.component.html',
+  styleUrls: ['./all-advice-real-asset.component.scss']
 })
-export class AdviceRealAssetComponent implements OnInit {
+export class AllAdviceRealAssetComponent implements OnInit {
   displayedColumns3: string[] = ['checkbox', 'name', 'desc','mvalue', 'advice', 'astatus', 'adate', 'icon'];
   dataSource3 = ELEMENT_DATA1;
   constructor(private eventService: EventService, public dialog: MatDialog, private subInjectService: SubscriptionInject,
@@ -20,7 +20,7 @@ export class AdviceRealAssetComponent implements OnInit {
 
   ngOnInit() {
   }
-  allAdvice = false;
+  allAdvice = true;
   openRealEstate(value, data) {
     const fragmentData = {
       flag: value,

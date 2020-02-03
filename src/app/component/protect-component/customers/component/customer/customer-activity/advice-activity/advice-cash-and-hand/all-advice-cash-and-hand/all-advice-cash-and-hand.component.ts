@@ -1,24 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { AddEPSComponent } from '../../../accounts/assets/retirementAccounts/add-eps/add-eps.component';
-import { AddSuperannuationComponent } from '../../../accounts/assets/retirementAccounts/add-superannuation/add-superannuation.component';
-import { CashInHandComponent } from '../../../accounts/assets/cash&bank/cash-in-hand/cash-in-hand.component';
-import { BankAccountsComponent } from '../../../accounts/assets/cash&bank/bank-accounts/bank-accounts.component';
+import { BankAccountsComponent } from '../../../../accounts/assets/cash&bank/bank-accounts/bank-accounts.component';
+import { CashInHandComponent } from '../../../../accounts/assets/cash&bank/cash-in-hand/cash-in-hand.component';
 
 @Component({
-  selector: 'app-advice-cash-and-hand',
-  templateUrl: './advice-cash-and-hand.component.html',
-  styleUrls: ['./advice-cash-and-hand.component.scss']
+  selector: 'app-all-advice-cash-and-hand',
+  templateUrl: './all-advice-cash-and-hand.component.html',
+  styleUrls: ['./all-advice-cash-and-hand.component.scss']
 })
-export class AdviceCashAndHandComponent implements OnInit {
+export class AllAdviceCashAndHandComponent implements OnInit {
+
   displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'balance','advice', 'astatus', 'adate', 'icon'];
   dataSource3 = ELEMENT_DATA1;
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, ) { }
 
   ngOnInit() {
   }
-  allAdvice =  false
+  allAdvice = true
   openCashAndBank(data) {
     const fragmentData = {
       flag: '',
