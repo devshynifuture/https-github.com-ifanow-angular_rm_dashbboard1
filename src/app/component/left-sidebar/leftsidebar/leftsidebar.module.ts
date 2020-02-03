@@ -10,7 +10,7 @@ import { LeftsidebarComponent } from './leftsidebar.component';
 import { CalendarModule } from '../../protect-component/AdviserComponent/Activities/calendar/calendar.module';
 import { DynamicComponentService } from "../../../services/dynamic-component.service";
 import { TransactionsModule } from '../../protect-component/AdviserComponent/transactions/transactions.module';
-import { TransactionEntryModule } from '../../protect-component/AdviserComponent/transactions/transactions/transaction.entry.module';
+import { TransactionEntryModule } from '../../protect-component/AdviserComponent/transactions/transaction.entry.module';
 
 
 @NgModule({

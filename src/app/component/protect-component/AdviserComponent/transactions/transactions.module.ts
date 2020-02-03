@@ -1,3 +1,4 @@
+import { CustomDirectiveModule } from './../../../../common/directives/common-directive.module';
 import { EntryComponentsModule } from '../../../../entry.components.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -18,7 +19,14 @@ import { SettingsTransactionsModule } from './settings-transactions/settings-tra
 
 
 @NgModule({
-  declarations: [TransactionsComponent, OverviewTransactionsComponent, TransactionsListComponent, InvestorsTransactionsComponent, MandatesTransactionsComponent, KycTransactionsComponent],
+  declarations: [
+    TransactionsComponent,
+    OverviewTransactionsComponent,
+    TransactionsListComponent,
+    InvestorsTransactionsComponent,
+    MandatesTransactionsComponent,
+    KycTransactionsComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -26,7 +34,7 @@ import { SettingsTransactionsModule } from './settings-transactions/settings-tra
     TransactionRoutingModule,
     EntryComponentsModule,
     MaterialModule,
-    SettingsTransactionsModule
+    SettingsTransactionsModule,
   ], exports: [
 
     TransactionsComponent

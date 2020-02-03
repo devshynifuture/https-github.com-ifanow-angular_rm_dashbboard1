@@ -161,37 +161,44 @@
         <div class="row pt-20 pb-44">
             <div class="col-md-8 pl-0 pr-20" *ngIf="!isSaveAndAddClicked">
                 <h5 class="m-0 pb-10 text-black">Select from the following options</h5>
-                <mat-radio-group aria-label="Select an option" formControlName="schemeSelection">
-                    <mat-radio-button value="1"
-                        [ngClass]="value == 1 ? 'text-primary bu-primary': 'b-a text-primitive'"> Invest in
+                <mat-radio-group aria-label="Select an option" formControlName="schemeType">
+                    <mat-radio-button value="existing"
+                        [ngClass]="transactionAddForm.get('schemeType').value == 'existing' ? 'text-primary b-a-custom': 'b-a text-primitive'">
+                        Invest in
                         existing scheme
                     </mat-radio-button>
-                    <mat-radio-button value="2"
-                        [ngClass]="value == 2 ? 'text-primary bu-primary': 'b-a text-primitive'">Select a new
+                    <mat-radio-button value="new"
+                        [ngClass]="transactionAddForm.get('schemeType').value == 'new' ? 'text-primary b-a-custom': 'b-a text-primitive'">
+                        Select a new
                         scheme</mat-radio-button>
                 </mat-radio-group>
                 <h5 class="m-0 pt-28 text-black pb-12">Select a scheme to invest in</h5>
                 <div class="form-control mb-0 add-transactions">
-                    <input type="text" aria-label="Number" class="form-group h-0" matInput formControlName="investor"
-                        [matAutocomplete]="auto" value="Start typing to see investor names">
-                    <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option [value]="option">
-                            rahul jain
+                    <input type="text" aria-label="Number" class="form-group h-0" matInput formControlName="scheme"
+                        [matAutocomplete]="auto1" value="Start typing to see investor names">
+                    <mat-autocomplete #auto1="matAutocomplete">
+                        <mat-option [value]="item" *ngFor="let item of schemes">
+                            {{ item }}
                         </mat-option>
                     </mat-autocomplete>
                     <p class="m-0 f-12 text-custom pt-8">Last closing NAV: 390.27</p>
                 </div>
                 <h5 class="m-0 pt-28 text-black pb-12">Select folio</h5>
-                <mat-radio-group aria-label="Select an option" formControlName="folioSelection">
-                    <mat-radio-button value="1" class="b-a-custom text-primary"> Existing
+                <mat-radio-group aria-label="Select an option" formControlName="folio">
+                    <mat-radio-button value="existing"
+                        [ngClass]="transactionAddForm.get('folio').value == 'existing' ? 'b-a-custom text-primary': 'b-a text-primitive'">
+                        Existing
                     </mat-radio-button>
-                    <mat-radio-button value="2" class="b-a text-primitive">New </mat-radio-button>
+                    <mat-radio-button value="new"
+                        [ngClass]="transactionAddForm.get('folio').value == 'new' ? 'b-a-custom text-primary': 'b-a text-primitive'">
+                        New </mat-radio-button>
                 </mat-radio-group>
                 <h5 class="m-0 pt-28 text-black pb-12">Enter amount</h5>
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input #employeeContry matInput maxlength="10" type="text" class="form-control br-0 rupess"
-                            formControlName="employeeContry">
+                            formControlName="employeeContry" appInputValueValidation
+                            [inputValidator]="validatorType.NUMBER_ONLY" [minValue]="500">
                     </mat-form-field>
                     <p class="m-0 f-12 text-custom">Min amount: ₹500</p>
                 </div>
@@ -204,14 +211,18 @@
                     </mat-form-field>
                 </div>
                 <h5 class="m-0 pt-40 text-black pb-12">Select mode of payment</h5>
-                <mat-radio-group aria-label="Select an option" formControlName="modeOfPaymentSelection">
-                    <mat-radio-button value="1" class="b-a-custom text-primary"> Net banking
+                <mat-radio-group aria-label="Select an option" formControlName="modeOfPayment">
+                    <mat-radio-button value="net-banking"
+                        [ngClass]="transactionAddForm.get('modeOfPayment').value == 'net-banking' ? 'b-a-custom text-primary' : 'b-a text-primitive'"
+                        class="b-a-custom text-primary"> Net banking
                     </mat-radio-button>
-                    <mat-radio-button value="2" class="b-a text-primitive">Debit mandate </mat-radio-button>
+                    <mat-radio-button value="debate-mandate"
+                        [ngClass]="transactionAddForm.get('modeOfPayment').value == 'debate-mandate' ? 'b-a-custom text-primary' : 'b-a text-primitive'">
+                        Debit mandate </mat-radio-button>
                 </mat-radio-group>
                 <h5 class="m-0 pt-40 pb-12 text-black">Select bank account</h5>
                 <mat-form-field>
-                    <mat-select class="form-control" formControlName="bankAccountSelection">
+                    <mat-select class="form-control" formControlName="bankAccountType">
                         <mat-option value="option">Option</mat-option>
                     </mat-select>
                 </mat-form-field>
