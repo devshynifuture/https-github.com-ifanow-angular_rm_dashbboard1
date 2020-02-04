@@ -111,9 +111,14 @@ export class PlansSettingsComponent implements OnInit {
     AuthService.setSubscriptionUpperSliderData(fragmentData)
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
+        console.log(upperSliderData, 'show what happens');
+        
         if (UtilService.isDialogClose(upperSliderData)) {
+          if (UtilService.isRefreshRequired(upperSliderData)) {
+            this.planSettingData = [{}, {}];
+            this.getSettingsPlanData();
+          }
           // this.getClientSubscriptionList();
-          this.getSettingsPlanData();
           subscription.unsubscribe();
         }
       }

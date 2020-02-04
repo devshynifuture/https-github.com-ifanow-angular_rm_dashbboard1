@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { EventService } from 'src/app/Data-service/event.service';
 import { EnumDataService } from '../../../../../services/enum-data.service';
 import { MatTabGroup } from '@angular/material';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionService } from '../subscription.service';
@@ -23,7 +23,7 @@ export class SubscriptionComponent implements OnInit {
 
   @ViewChild(MatTabGroup, { static: true }) tabGroup: MatTabGroup;
 
-  constructor(private utilservice: UtilService, private eventService: EventService, private enumDataService: EnumDataService, private router: Router, private subService: SubscriptionService) {
+  constructor(private utilservice: UtilService, private eventService: EventService, private enumDataService: EnumDataService, private router: Router, private subService: SubscriptionService, private route: ActivatedRoute) {
     this.eventService.sidebarSubscribeData.subscribe(
       data => this.getFileResponseDataAum(data)
     );
@@ -33,10 +33,16 @@ export class SubscriptionComponent implements OnInit {
   }
 
   subscriptionTab;
-
+  setLabel:boolean = false;
   selected: any;
-
+  label:any = 'plans';
   ngOnInit() {
+    
+      
+    
+    // this.label = this.route.snapshot.paramMap.get("label")
+    console.log(this.label,"this.label check");
+    
     // this.currentState = 'close';
     this.enumDataService.getDataForSubscriptionEnumService();
     this.selected = 1;
@@ -64,6 +70,17 @@ export class SubscriptionComponent implements OnInit {
     );
     // this.selected = 6;
   }
+
+  // ngDoCheck(){
+  //   this.route.paramMap.subscribe(params => {
+  //     if(this.label == 'plans'){
+  //     this.label = params.get("label");
+  //     }else{
+  //       params.get("label")
+  //     }
+  //   })
+  //   console.log("i was called for check", this.label);
+  // }
   advisorId(advisorId: any) {
     throw new Error("Method not implemented.");
   }
