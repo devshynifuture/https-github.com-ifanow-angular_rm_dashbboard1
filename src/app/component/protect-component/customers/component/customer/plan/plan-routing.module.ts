@@ -1,6 +1,6 @@
 import { CashflowsPlanComponent } from './cashflows-plan/cashflows-plan.component';
 import { ScenariosPlanComponent } from './scenarios-plan/scenarios-plan.component';
-import { InvestmentsPlanComponent } from './investments-plan/investments-plan.component';
+import { DeploymentsPlanComponent } from './deployments-plan/deployments-plan.component';
 import { TexesPlanComponent } from './texes-plan/texes-plan.component';
 import { GoalsPlanComponent } from './goals-plan/goals-plan.component';
 import { InsurancePlanComponent } from './insurance-plan/insurance-plan.component';
@@ -42,7 +42,7 @@ const routes: Routes = [{
     },
     {
       path: 'investments',
-      component: InvestmentsPlanComponent
+      component: DeploymentsPlanComponent
     },
     {
       path: 'scenarios',
