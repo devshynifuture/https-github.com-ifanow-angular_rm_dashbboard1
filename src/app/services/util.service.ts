@@ -56,7 +56,7 @@ export class UtilService {
     let tempData;
     tempData = Object.assign([], this.subscriptionStepData)
     tempData = tempData.filter(element => element.stepTypeId == stepNo)
-    if(tempData.length!=0){
+    if (tempData.length != 0) {
       return tempData[0].completed;
     }
   }
@@ -85,7 +85,7 @@ export class UtilService {
 
   }
 
-  static convertDateObjectToDateString(datePipe: DatePipe, date: Date) {
+  static convertDateObjectToDateString(datePipe: DatePipe, date: any) {
     return datePipe.transform(date, 'yyyy-MM-dd');
   }
 

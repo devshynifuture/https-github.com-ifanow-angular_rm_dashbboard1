@@ -11,6 +11,7 @@ import { CalendarModule } from '../../protect-component/AdviserComponent/Activit
 import { DynamicComponentService } from "../../../services/dynamic-component.service";
 import { TransactionsModule } from '../../protect-component/AdviserComponent/transactions/transactions.module';
 import { TransactionEntryModule } from '../../protect-component/AdviserComponent/transactions/transaction.entry.module';
+import { SupportEntryModule } from '../../protect-component/SupportComponent/support.entry.module';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { TransactionEntryModule } from '../../protect-component/AdviserComponent
     LeftsidebarRoutingModule,
     CalendarModule,
     TransactionsModule,
-    TransactionEntryModule
+    TransactionEntryModule,
+    SupportEntryModule
   ],
   entryComponents: [SubscriptionEntry.getComponentList()],
   providers: [DynamicComponentService]

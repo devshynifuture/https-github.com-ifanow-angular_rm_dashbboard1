@@ -1,3 +1,5 @@
+import { AuthService } from './../../../../../../../../../../auth-service/authService';
+import { CashFlowsPlanService } from './../../../cashflows-plan.service';
 import { ValidatorType } from './../../../../../../../../../../services/util.service';
 import { EventService } from './../../../../../../../../../../Data-service/event.service';
 import { Component, OnInit, Inject } from '@angular/core';
@@ -14,7 +16,8 @@ export class CashflowAddIncomeComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<CashflowAddIncomeComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cashflowService: CashFlowsPlanService
   ) { }
 
   validatorType = ValidatorType;
@@ -41,7 +44,23 @@ export class CashflowAddIncomeComponent implements OnInit {
   }
 
   submitForm() {
+    //   "familyMemberId":5500000,
+    // "clientId":2978,
+    // "advisorId":2808,
+    const userInfo = AuthService.getUserInfo();
+    const requestJSON = {
+      familyMemberId: 5500000,
+      clientId: userInfo.clientId,
+      advisorId: userInfo.advisorId,
+      ...this.formIncome
+    }
+
     console.log('this is income form ', this.formIncome);
+    // this.cashflowService.cashFlowAddIncome(requestJSON).subscribe(res => {
+    //   console.log('this is res for cashflow add', res);
+    // }, err => {
+    //   console.error('this is some error in cashflow add::', err)
+    // })
   }
 
 }

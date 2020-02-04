@@ -1,3 +1,5 @@
+import { AuthService } from './../../../../../../../../../auth-service/authService';
+import { CashFlowsPlanService } from './../../cashflows-plan.service';
 import { EventService } from './../../../../../../../../../Data-service/event.service';
 import { ValidatorType } from './../../../../../../../../../services/util.service';
 import { CashflowAddComponent } from './../cashflow-add/cashflow-add.component';
@@ -11,9 +13,11 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./cashflow-upper-income-expense.component.scss']
 })
 export class CashflowUpperIncomeExpenseComponent implements OnInit {
+  incomeData: string;
 
   constructor(public dialog: MatDialog,
-    private eventService: EventService) { }
+    private eventService: EventService,
+    private cashflowService: CashFlowsPlanService) { }
 
   displayedColumns: string[] = ['description', 'month1', 'month2', 'month3', 'month4', 'month5', 'month6', 'month7', 'month8', 'month9', 'month10', 'month11', 'month12', 'total', 'remove'];
   dataSource = null;
@@ -46,6 +50,21 @@ export class CashflowUpperIncomeExpenseComponent implements OnInit {
     table[index][field] = value;
     this.updateTotal(table[index]);
     return table;
+  }
+
+  getMonthlyExpenseTableData() {
+    const data = {
+      advisorId: AuthService.getUserInfo().advisorId,
+      clientId: AuthService.getClientId(),
+      year: 2020
+    }
+    this.cashflowService.getMonthlyExpenseValues(data).subscribe(res => {
+      console.log("value of cashflow expense data, ", res);
+      const { familyMemberId } = res;
+
+    }, err => {
+      console.error("error in getting cashflow expense data, ", err)
+    });
   }
 
   deleteEntryCashFlow(element: UpperTableBox) {

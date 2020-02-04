@@ -1,8 +1,13 @@
+import { MatTableDataSource } from '@angular/material';
+import { PlanService } from './../plan.service';
+import { DatePipe } from '@angular/common';
+import { CashFlowsPlanService } from './cashflows-plan.service';
 import { UtilService } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { Component, OnInit } from '@angular/core';
 import { chart } from './highChart';
 import { CashflowUpperSliderComponent } from './cashflow-upper-slider/cashflow-upper-slider.component';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-cashflows-plan',
@@ -11,8 +16,8 @@ import { CashflowUpperSliderComponent } from './cashflow-upper-slider/cashflow-u
 })
 export class CashflowsPlanComponent implements OnInit {
 
-  displayedColumns: string[] = ['year', 'age', 'age2', 'total', 'view'];
-  dataSource = ELEMENT_DATA;
+  displayedColumns: string[] = ['year', 'groupHeadAge', 'spouseAge', 'monthlyIncome', 'view'];
+  dataSource;
 
   displayedColumns1: string[] = ['financialYear', 'ageH', 'ageW', 'originalSurplus', 'surplusAllocated', 'balanceSurplus', 'view'];
 
@@ -21,14 +26,103 @@ export class CashflowsPlanComponent implements OnInit {
   showSurplusTable: boolean = false;
 
   tableInUse: string = 'income';
+  cashflowIncomeValue: any;
+  groupHeadAge: number;
+  listOfIncomeArray: IncometableI[] = [];
 
-  constructor(private eventService: EventService,
+  constructor(
+    private eventService: EventService,
+    private cashflowService: CashFlowsPlanService,
+    private datePipe: DatePipe
   ) { }
   isLoading = false;
   ngOnInit() {
     this.cashFlow('surplus');
     this.filterCashFlowTableUsing('income');
+    this.getCashflowIncomeData();
+    this.getCashflowExpenseData();
   }
+
+  getCashflowExpenseData() {
+    const data = {
+      advisorId: AuthService.getUserInfo().advisorId,
+      clientId: AuthService.getClientId()
+    }
+    console.log(data);
+    this.cashflowService.getCashflowExpenseValues(data).subscribe(res => {
+      console.log("value of cashflow income data, ", res);
+    }, err => {
+      console.error("error in getting cashflow income data, ", err)
+    });
+  }
+
+  getCashflowIncomeData() {
+    const data = {
+      advisorId: AuthService.getUserInfo().advisorId,
+      clientId: AuthService.getClientId()
+    }
+    console.log(data.clientId);
+    this.cashflowService.getCashflowIncomeValues(data).subscribe(res => {
+      console.log("value of cashflow income data, ", res);
+      this.cashflowIncomeValue = res;
+
+      res.forEach(item => {
+        const { familyMemberId, monthlyIncome, incomeEndYear } = item;
+        this.getFamilyMemberDetailsAndCalculateAge(familyMemberId, { monthlyIncome, incomeEndYear });
+
+      });
+
+
+    }, err => {
+      console.error("error in getting cashflow income data, ", err)
+    });
+  }
+
+  getFamilyMemberDetailsAndCalculateAge(familyMemberId, data) {
+    // call family member detail api
+    const requestJSON = {
+      advisorId: AuthService.getUserInfo().advisorId,
+      clientId: AuthService.getClientId(),
+      familyMemberId,
+    }
+    let birthDate = [];
+    this.cashflowService.getFamilyMemberData(requestJSON).subscribe(res => {
+      // console.log(res);
+
+      res.familyMembersList.forEach(item => {
+        const { dateOfBirth } = item;
+        birthDate.push(
+          this.ageCalculation(
+            UtilService.convertDateObjectToDateString(this.datePipe, dateOfBirth).slice(0, 4)
+          )
+        );
+
+        this.groupHeadAge = Math.max(...birthDate);
+        if (item.relationshipId == 2) {
+          this.listOfIncomeArray.push({
+            year: data.incomeEndYear,
+            groupHeadAge: this.groupHeadAge,
+            spouseAge: item.relationshipId == 2 ? this.ageCalculation(
+              UtilService.convertDateObjectToDateString(this.datePipe, item.dateOfBirth).slice(0, 4)
+            ) : 0,
+            monthlyIncome: data.monthlyIncome,
+            view: 'view'
+          });
+        }
+      });
+
+      this.dataSource = new MatTableDataSource(this.listOfIncomeArray);
+      console.log(this.listOfIncomeArray);
+    });
+
+  }
+
+  ageCalculation(birthYear) {
+    const year = new Date().getFullYear();
+    return year - birthYear;
+  }
+
+  // get
 
   filterCashFlowTableUsing(flag: string): void {
     this.tableInUse = flag;
@@ -143,7 +237,13 @@ export class CashflowsPlanComponent implements OnInit {
   // }
 }
 
-
+export interface IncometableI {
+  year: number,
+  groupHeadAge: number,
+  spouseAge: number,
+  monthlyIncome: number,
+  view: string
+}
 
 export interface IncomeTableI {
   year: string;
