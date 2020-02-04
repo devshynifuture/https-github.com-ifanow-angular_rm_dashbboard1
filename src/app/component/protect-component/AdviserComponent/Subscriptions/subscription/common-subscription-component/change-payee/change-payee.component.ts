@@ -6,6 +6,7 @@ import { MatSliderChange } from '@angular/material';
 import { HAMMER_GESTURE_CONFIG } from "@angular/platform-browser";
 import { GestureConfig } from "@angular/material/core";
 import { UtilService } from 'src/app/services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-change-payee',
@@ -16,6 +17,21 @@ import { UtilService } from 'src/app/services/util.service';
   ]
 })
 export class ChangePayeeComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'primary',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  }
   payeeDataRes: any;
   noDataMessage: string;
   @Output() subStartNextBtn = new EventEmitter();
@@ -129,6 +145,7 @@ export class ChangePayeeComponent implements OnInit {
   }
 
   saveChangePayeeSetting() {
+    this.barButtonOptions.active = true;
     const obj = [];
     this.payeeDataRes.forEach(element => {
       if (element.selected == 1 || element.selected == true) {
@@ -142,7 +159,14 @@ export class ChangePayeeComponent implements OnInit {
     });
     console.log('obj ====', obj);
     this.subService.changePayeeSetting(obj).subscribe(
-      data => this.changePayeeSettingRes(data)
+      data =>{
+        this.barButtonOptions.active = false;
+        this.changePayeeSettingRes(data);
+      },
+      err =>{
+        this.barButtonOptions.active = false;
+        console.log(err, "error changePayeeSettingRes");
+      }
     );
   }
 

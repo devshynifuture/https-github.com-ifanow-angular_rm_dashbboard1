@@ -11,6 +11,7 @@ import { PurchaseTrasactionComponent } from './overview-transactions/doTransacti
 import { AddSubBrokerCredentialsComponent } from './settings-transactions/settings-manage-credentials/sub-broker-team-member/add-sub-broker-credentials/add-sub-broker-credentials.component';
 import { TransactionSummaryComponent } from './overview-transactions/doTransaction/transaction-summary/transaction-summary.component';
 import { AddClientMappingComponent } from './settings-transactions/settings-client-mapping/add-client-mapping/add-client-mapping.component';
+import { ConfirmationTransactionComponent } from './overview-transactions/doTransaction/confirmation-transaction/confirmation-transaction.component';
 
 export const componentList = [
     TransactionAddComponent,
@@ -19,7 +20,8 @@ export const componentList = [
     AddSubBrokerCredentialsComponent,
     PurchaseTrasactionComponent,
     TransactionSummaryComponent,
-    AddClientMappingComponent
+    AddClientMappingComponent,
+    ConfirmationTransactionComponent
 ]
 @NgModule({
     declarations: componentList,

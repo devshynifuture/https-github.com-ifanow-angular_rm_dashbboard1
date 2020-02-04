@@ -6,6 +6,7 @@ import { SubscriptionService } from '../../../../subscription.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 
 @Component({
@@ -14,6 +15,21 @@ import { EnumServiceService } from 'src/app/services/enum-service.service';
   styleUrls: ['./subscription-details.component.scss']
 })
 export class SubscriptionDetailsComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'primary',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  }
   payeeDataRes: any;
   noDataMessage: string;
   @Output() subStartNextBtn = new EventEmitter();
@@ -140,6 +156,7 @@ export class SubscriptionDetailsComponent implements OnInit {
   }
 
   saveChangePayeeSetting() {
+    this.barButtonOptions.active = true;
     const obj = [];
     this.payeeDataRes.forEach(element => {
       if (element.selected == 1 || element.selected == true) {
@@ -153,7 +170,14 @@ export class SubscriptionDetailsComponent implements OnInit {
     });
     console.log('obj ====', obj);
     this.subService.changePayeeSetting(obj).subscribe(
-      data => this.changePayeeSettingRes(data)
+      data => {
+        this.barButtonOptions.active = false;
+        this.changePayeeSettingRes(data)
+      },
+      err =>{
+        this.barButtonOptions.active = false;
+        console.log(err,"error changePayeeSetting");
+      }
     );
   }
 

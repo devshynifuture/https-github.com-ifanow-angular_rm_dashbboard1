@@ -7,6 +7,7 @@ import { FixedDepositComponent } from '../../../accounts/assets/fixedIncome/fixe
 import { RecuringDepositComponent } from '../../../accounts/assets/fixedIncome/recuring-deposit/recuring-deposit.component';
 import { BondsComponent } from '../../../accounts/assets/fixedIncome/bonds/bonds.component';
 import { ActiityService } from '../../actiity.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-advice-fixed-income',
@@ -17,13 +18,18 @@ import { ActiityService } from '../../actiity.service';
 export class AdviceFixedIncomeComponent implements OnInit {
   displayedColumns3: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'advice', 'astatus', 'adate', 'icon'];
   dataSource3 = ELEMENT_DATA3;
+  advisorId: any;
+  clientId: any;
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private utilService: UtilService, private activityService : ActiityService) { }
   allAdvice = false;
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    this.getAdviceByAsset();
   }
   getAdviceByAsset(){
     let obj = {
-      
+      id:this.advisorId,
     }
     this.activityService.getAllAdviceByCategory(obj).subscribe(
       data => this.getSsySchemedataRes(data), (error) => {

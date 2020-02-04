@@ -42,7 +42,7 @@ export class EmailViewComponent implements OnInit, OnDestroy {
   date: any;
   fromDetailMessage: any;
   toDetailMessage: any;
-  decodedPartsDetail: string[] = [];
+  decodedPartsDetail: {}[] = [];
   attachmentsArray: { filename: string, mimeType: 'string', attachmentId: 'string' }[] = [];
   messageId: any;
   attachmentsData: any;
@@ -86,13 +86,23 @@ export class EmailViewComponent implements OnInit, OnDestroy {
 
         const { payload: { headers } } = response;
         const { payload: { parts } } = response;
+        if (response.payload.body !== null) {
+          if (response.payload.mimeType === 'text/html') {
+            this.decodedPartsDetail.push({
+              item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(response.payload.body.data),
+            })
+          }
+        }
         headers.forEach(header => {
+          console.log(header);
           if (header.name === 'Delivered-To') {
             this.deliveredTo = header.value;
           }
+
           if (header.name === 'Reply-To') {
             this.replyTo = header.value;
           }
+
           if (header.name === 'Date') {
             this.date = header.value;
           }
@@ -107,29 +117,49 @@ export class EmailViewComponent implements OnInit, OnDestroy {
           }
         });
 
-        parts.forEach(part => {
-          console.log("this is part::::::::::::", part);
-          if (part.mimeType !== 'multipart/alternative') {
-
-            if (part.filename !== null) {
-              const obj = {
-                userId: AuthService.getUserInfo().advisorId,
-                email: AuthService.getUserInfo().emailId,
-                attachmentId: part.body.attachmentId,
-                messageId: this.messageId
-              }
-
-              this.emailService.getAttachmentFiles(obj).subscribe(res => {
-                const resBase64 = res.data.replace(/\-/g, '+').replace(/_/g, '/');
-                this.creationOfUrlAndBase64File(resBase64, part)
-
-              });
-
+        if (parts !== null) {
+          parts.forEach(part => {
+            console.log("this is part::::::::::::", part);
+            if (part.mimeType === 'text/html') {
+              this.decodedPartsDetail.push({
+                item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data),
+                date: this.date
+              })
             }
-          } else if (part.mimeType === 'text/html') {
-            this.decodedPartsDetail.push(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data))
-          }
-        });
+            if (part.mimeType !== 'multipart/alternative') {
+
+              if (part.filename !== null) {
+                const obj = {
+                  userId: AuthService.getUserInfo().advisorId,
+                  email: AuthService.getUserInfo().emailId,
+                  attachmentId: part.body.attachmentId,
+                  messageId: this.messageId
+                }
+
+                this.emailService.getAttachmentFiles(obj).subscribe(res => {
+                  const resBase64 = res.data.replace(/\-/g, '+').replace(/_/g, '/');
+                  this.creationOfUrlAndBase64File(resBase64, part)
+
+                });
+
+              }
+            } else if (part.mimeType === 'multipart/alternative') {
+              if (part.parts !== null) {
+                console.log("im here");
+                const { parts } = part;
+                parts.forEach(part => {
+                  console.log("there is something going on here:::::::::::")
+                  if (part.mimeType === 'text/html') {
+                    this.decodedPartsDetail.push({
+                      item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data),
+                      date: this.date
+                    })
+                  }
+                });
+              }
+            }
+          });
+        }
 
         console.log(this.decodedPartsDetail);
 

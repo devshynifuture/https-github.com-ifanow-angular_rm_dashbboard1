@@ -1,8 +1,9 @@
-import {Component, Input, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
-import {EventService} from '../../Data-service/event.service';
-import {SubscriptionInject} from '../../component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {DynamicComponentService} from '../../services/dynamic-component.service';
-import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from '../../animation/animation';
+import { Component, Input, OnInit, ViewChild, ViewContainerRef, OnDestroy } from '@angular/core';
+import { EventService } from '../../Data-service/event.service';
+import { SubscriptionInject } from '../../component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { DynamicComponentService } from '../../services/dynamic-component.service';
+import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } from '../../animation/animation';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dialog-container',
@@ -16,7 +17,8 @@ import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from
   ]
 })
 //
-export class DialogContainerComponent implements OnInit {
+export class DialogContainerComponent implements OnInit, OnDestroy {
+
   @ViewChild('dynamic', {
     read: ViewContainerRef,
     static: true
@@ -37,33 +39,34 @@ export class DialogContainerComponent implements OnInit {
   currentState;
   subscriptionTab;
   dialogState;
-
+  componentName;
   upperSliderData;
   headerData = 'EMAIL QUOTATION';
   headerDataDocuments = 'EMAIL DOCS WITH E-SIGN REQUEST';
-
+  upperSliderDataObsSubscription: Subscription;
+  newRightSliderDataObsSubscription: Subscription;
   constructor(protected eventService: EventService, protected subinject: SubscriptionInject,
-              protected dynamicComponentService: DynamicComponentService) {
-    this.eventService.overlayVisibleData.subscribe(
-      data => {
-        this.isOverlayVisible = data;
-      }
-    );
-    this.subinject.rightSideBarData.subscribe(
-      data => {
-        this.getRightSliderData(data);
-      }
-    );
-    this.eventService.sidebarSubscribeData.subscribe(
-      data => this.getFileResponseDataAum(data)
-    );
+    protected dynamicComponentService: DynamicComponentService) {
+    // this.eventService.overlayVisibleData.subscribe(
+    //   data => {
+    //     this.isOverlayVisible = data;
+    //   }
+    // );
+    // this.subinject.rightSideBarData.subscribe(
+    //   data => {
+    //     this.getRightSliderData(data);
+    //   }
+    // );
+    // this.eventService.sidebarSubscribeData.subscribe(
+    //   data => this.getFileResponseDataAum(data)
+    // );
 
-    this.eventService.tabChangeData.subscribe(
-      data => this.getSubscriptionTabChangeData(data)
-    );
-    this.eventService.upperSliderDataObs.subscribe(
+    // this.eventService.tabChangeData.subscribe(
+    //   data => this.getSubscriptionTabChangeData(data)
+    // );
+    this.upperSliderDataObsSubscription = this.eventService.upperSliderDataObs.subscribe(
       data => {
-        console.log(' DialogContainerComponent upper slider Subscription data', data);
+        console.log(this.componentName + ' DialogContainerComponent upper slider Subscription data', data);
 
         const tempData: any = data;
         if (tempData.componentName) {
@@ -76,13 +79,13 @@ export class DialogContainerComponent implements OnInit {
         // this.fragmentData = data;
       }
     );
-    this.subinject.newRightSliderDataObs.subscribe((data) => {
+    this.newRightSliderDataObsSubscription = this.subinject.newRightSliderDataObs.subscribe((data) => {
       const tempData: any = data;
       if (tempData.componentName) {
         this.openDynamicComponent(data);
       }
       this.fragmentData = data;
-      console.log('fragmentData dialog container: ', this.fragmentData);
+      console.log(this.componentName + 'fragmentData dialog container: ', this.fragmentData);
       this.getFileResponseDataAum(this.fragmentData.flag);
       this.inputData = this.fragmentData.data;
       this.handleChangeOfState(this.fragmentData.state);
@@ -103,7 +106,7 @@ export class DialogContainerComponent implements OnInit {
   }
 
   getRightSliderData(value) {
-    console.log('getRightSliderData dialog container comp currentState', value);
+    console.log(this.componentName + 'getRightSliderData dialog container comp currentState', value);
     this.currentState = value;
   }
 
@@ -117,7 +120,7 @@ export class DialogContainerComponent implements OnInit {
   }
 
   openDynamicComponent(inputData) {
-    console.log('dialog container inputData : ', inputData);
+    console.log(this.componentName + 'dialog container inputData : ', inputData);
 
     if (inputData.direction) {
       if (inputData.direction == 'top') {
@@ -137,10 +140,10 @@ export class DialogContainerComponent implements OnInit {
   }
 
   addDynamicComponentService(viewContainerRef, inputData) {
-    console.log('dialog container addDynamicComponentService viewContainerRef : ', viewContainerRef);
+    console.log(this.componentName + 'dialog container addDynamicComponentService viewContainerRef : ', viewContainerRef);
 
     if (viewContainerRef) {
-      console.log('dialog container addDynamicComponentService inputData : ', inputData);
+      console.log(this.componentName + 'dialog container addDynamicComponentService inputData : ', inputData);
 
       this.dynamicComponentService.addDynamicComponent(viewContainerRef, inputData.componentName, inputData.data);
       // this.handleChangeOfState(this.tempState);
@@ -148,10 +151,10 @@ export class DialogContainerComponent implements OnInit {
   }
 
   addUpperDynamicComponentService(viewContainerRef, inputData) {
-    console.log('dialog container addUpperDynamicComponentService viewContainerRef : ', viewContainerRef);
+    console.log(this.componentName + 'dialog container addUpperDynamicComponentService viewContainerRef : ', viewContainerRef);
 
     if (viewContainerRef) {
-      console.log('dialog container addUpperDynamicComponentService inputData : ', inputData);
+      console.log(this.componentName + 'dialog container addUpperDynamicComponentService inputData : ', inputData);
 
       this.dynamicComponentService.addDynamicComponent(viewContainerRef, inputData.componentName, inputData.data);
       // this._upperSliderCase = this.tempState;
@@ -159,7 +162,7 @@ export class DialogContainerComponent implements OnInit {
   }
 
   handleChangeOfState(value) {
-    console.log('DynamicComponentComponent handleChangeOfState: ', value);
+    console.log(this.componentName + 'DynamicComponentComponent handleChangeOfState: ', value);
     if (value === 'close') {
       this.currentState = value;
       setTimeout(() => {
@@ -174,5 +177,12 @@ export class DialogContainerComponent implements OnInit {
         this.isOverlayVisible = true;
       }, 100);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.upperSliderDataObsSubscription.unsubscribe();
+
+    this.newRightSliderDataObsSubscription.unsubscribe();
+    // throw new Error("Method not implemented.");
   }
 }

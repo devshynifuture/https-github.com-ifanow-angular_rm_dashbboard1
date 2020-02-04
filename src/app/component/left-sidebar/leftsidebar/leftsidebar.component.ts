@@ -1,14 +1,14 @@
-import {Component, ElementRef, NgZone, OnInit} from '@angular/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from '../../../Data-service/event.service';
-import {SubscriptionInject} from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {FormControl} from '@angular/forms';
-import {SubscriptionService} from '../../protect-component/AdviserComponent/Subscriptions/subscription.service';
-import {Router} from '@angular/router';
-import {map, startWith} from 'rxjs/operators';
-import {DialogContainerComponent} from '../../../common/dialog-container/dialog-container.component';
-import {DynamicComponentService} from '../../../services/dynamic-component.service';
-import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from '../../../animation/animation';
+import { Component, ElementRef, NgZone, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from '../../../Data-service/event.service';
+import { SubscriptionInject } from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { FormControl } from '@angular/forms';
+import { SubscriptionService } from '../../protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { Router } from '@angular/router';
+import { map, startWith } from 'rxjs/operators';
+import { DialogContainerComponent } from '../../../common/dialog-container/dialog-container.component';
+import { DynamicComponentService } from '../../../services/dynamic-component.service';
+import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } from '../../../animation/animation';
 
 @Component({
   selector: 'app-leftsidebar',
@@ -40,9 +40,9 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   logoText = 'Your Logo here';
 
   constructor(private authService: AuthService, private _eref: ElementRef,
-              protected eventService: EventService, protected subinject: SubscriptionInject,
-              private subService: SubscriptionService, private router: Router, private ngZone: NgZone,
-              protected dynamicComponentService: DynamicComponentService) {
+    protected eventService: EventService, protected subinject: SubscriptionInject,
+    private subService: SubscriptionService, private router: Router, private ngZone: NgZone,
+    protected dynamicComponentService: DynamicComponentService) {
     /*constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
       protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute,
       private authService: AuthService) {*/
@@ -83,7 +83,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   selectClient(singleClientData) {
     console.log(singleClientData);
     this.ngZone.run(() => {
-      this.router.navigate(['customer', 'detail', 'account', 'assets'], {state: {...singleClientData}});
+      this.router.navigate(['customer', 'detail', 'account', 'assets'], { state: { ...singleClientData } });
     });
   }
 

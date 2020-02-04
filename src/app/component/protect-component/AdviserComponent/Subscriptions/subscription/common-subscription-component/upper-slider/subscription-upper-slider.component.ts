@@ -109,13 +109,20 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
   dialogClose() {
     // this.dialogRef.close();
     switch (true) {
-      case (this.isRefreshData.flag == "plan" || this.isRefreshData.flag == "service" || this.isRefreshData.flag == "document"):
-        this.router.navigate(['/admin/subscription/settings'])
-        // this.location.replaceState('/admin/subscription/settings');
+      case (this.isRefreshData.flag == "plan" || this.isRefreshData == "plan"):
+        this.router.navigate(['/admin/subscription/settings/plans'])
+        break;
+      case (this.isRefreshData.flag == "services" || this.isRefreshData == ""):
+        this.router.navigate(['/admin/subscription/settings/services'])
+        break;
+      case (this.isRefreshData.flag == "documents" || this.isRefreshData == "documents"):
+        this.router.navigate(['/admin/subscription/settings/documents'])
         break;
       default:
         // this.router.navigate(['/admin/subscription/clients'])
-        this.location.replaceState('/admin/subscription/clients');
+        // this.location.replaceState('/admin/subscription/clients');
+        this.router.navigate(['/admin/subscription/clients'])
+        break;
     }
     sessionStorage.removeItem('subUpperData')
     this.eventService.changeUpperSliderState({ state: 'close' });

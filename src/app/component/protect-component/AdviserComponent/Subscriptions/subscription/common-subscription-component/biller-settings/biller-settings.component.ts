@@ -3,6 +3,7 @@ import { SubscriptionInject } from '../../../subscription-inject.service';
 import { SubscriptionService } from '../../../subscription.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from "../../../../../../../auth-service/authService";
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-biller-settings',
@@ -11,7 +12,21 @@ import { AuthService } from "../../../../../../../auth-service/authService";
 })
 export class BillerSettingsComponent implements OnInit {
   // obj1: { advisorId: number };
-
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'primary',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  }
   billerSettingData: any;
   dataSub: any;
   dataObj: any;
@@ -47,12 +62,20 @@ export class BillerSettingsComponent implements OnInit {
   }
 
   saveChangeBillerSetting() {
+    this.barButtonOptions.active = true;
     const obj = {
       id: this.isSelectedPlan.id,
       subscriptionId: this.getSubsciption.id
     };
     this.subService.changeBillerSetting(obj).subscribe(
-      data => this.changeBillerSettingData(data)
+      data =>{
+        this.barButtonOptions.active = false;
+        this.changeBillerSettingData(data)
+      },
+      err=>{
+        console.log(err,"error changeBillerSettingData");
+        this.barButtonOptions.active = false;
+      } 
     );
   }
 
