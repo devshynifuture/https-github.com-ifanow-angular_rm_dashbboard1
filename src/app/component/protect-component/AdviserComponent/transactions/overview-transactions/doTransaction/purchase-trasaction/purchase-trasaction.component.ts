@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { ConfirmationTransactionComponent } from '../confirmation-transaction/confirmation-transaction.component';
 
 @Component({
   selector: 'app-purchase-trasaction',
@@ -14,6 +16,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   inputData: any;
   isViewInitCalled = false;
   selectedFamilyMember: any;
+  confirmTrasaction = false
 
   constructor(private subInjectService: SubscriptionInject,
     private fb: FormBuilder) { }
@@ -34,6 +37,30 @@ export class PurchaseTrasactionComponent implements OnInit {
 
   ngOnInit() {
     this.getdataForm(this.inputData);
+  }
+  onAddTransaction(value,data){
+    this.confirmTrasaction = true
+    const fragmentData = {
+      flag: 'addNsc',
+      data,
+      id: 1,
+      state: 'open65',
+      componentName: ConfirmationTransactionComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            // this.getNscSchemedata();
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
+          rightSideDataSub.unsubscribe();
+        }
+       
+      }
+    );
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
