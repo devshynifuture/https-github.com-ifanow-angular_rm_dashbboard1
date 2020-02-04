@@ -96,12 +96,12 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
   headerDataDocuments = 'EMAIL DOCS WITH E-SIGN REQUEST';
 
   ngOnInit() {
-    console.log(history.state);
-    if (this.referenceData == undefined) {
+    console.log(history.state, "hi i was called again");
+    // if (this.referenceData == undefined) {
       this.referenceData = AuthService.getSubscriptionUpperSliderData();
       this.fragmentDataSubsUpper = this.referenceData
       this.upperDataSubsUpper = this.referenceData.data;
-    }
+    // }
     // this.upperState = "open";
   }
   ngAfterViewInit() {
@@ -109,23 +109,23 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
   }
   dialogClose() {
     // this.dialogRef.close();
-    console.log(this.fragmentDataSubsUpper,"13 this.fragmentDataSubsUpper");
+    console.log(this.fragmentDataSubsUpper, this.referenceData,"13 this.fragmentDataSubsUpper");
     
     switch (true) {
-      case (this.referenceData.flag == "plan" || this.referenceData == "plan"):
+      case (this.referenceData.flag == "plan"):
         this.router.navigate(['/admin/subscription/settings/plans'])
         this.location.replaceState('/admin/subscription/settings/plans');
         break;
-      case (this.referenceData.flag == "services" || this.referenceData == ""):
+      case (this.referenceData.flag == "services"):
         this.router.navigate(['/admin/subscription/settings/services'])
         this.location.replaceState('/admin/subscription/settings/services');
         break;
-      case (this.referenceData.flag == "documents" || this.referenceData == "documents"):
+      case (this.referenceData.flag == "documents"):
         this.router.navigate(['/admin/subscription/settings/documents'])
         this.location.replaceState('/admin/subscription/settings/documents');
         break;
       default:
-        this.router.navigate(['/admin/subscription/clients'])
+        // this.router.navigate(['/admin/subscription/clients'])
         this.location.replaceState('/admin/subscription/clients');
         // this.router.navigate(['/admin/subscription/clients'])
         break;
@@ -147,7 +147,7 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
   }
 
   getServiceData(event){
-    console.log(event, "data service");
+    console.log(event, "data overview");
     if(event != undefined){
       this.isRefreshData = true;
     }

@@ -66,6 +66,8 @@ export class OverviewComponent implements OnInit {
       state: 'open',
       componentName: component
     };
+    console.log(fragmentData,"check fragmentData");
+    
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         // console.log('this is sidebardata in subs subs : ', sideBarData);
