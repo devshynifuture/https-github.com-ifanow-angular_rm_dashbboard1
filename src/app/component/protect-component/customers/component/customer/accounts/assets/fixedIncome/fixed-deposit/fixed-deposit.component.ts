@@ -295,7 +295,6 @@ export class FixedDepositComponent implements OnInit {
       if (this.flag == 'adviceFixedDeposit') {
         this.custumService.getAdviceFd(adviceObj).subscribe(
           data => this.getAdviceFdRes(data),
-          err => this.event.openSnackBar(err, "dismiss")
         );
       }
       else if (this.fixedDeposit.controls.id.value) {
@@ -314,6 +313,8 @@ export class FixedDepositComponent implements OnInit {
   }
   getAdviceFdRes(data) {
     console.log('advice activity res ==>', data)
+    this.event.openSnackBar('Fixed deposite added successfully!', 'dismiss');
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
   onChange(event) {
     if (parseInt(event.target.value) > 100) {

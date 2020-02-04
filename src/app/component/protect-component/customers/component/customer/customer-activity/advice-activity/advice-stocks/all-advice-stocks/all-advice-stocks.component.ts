@@ -1,63 +1,42 @@
 import { Component, OnInit } from '@angular/core';
-import { SelectAdviceComponent } from '../select-advice/select-advice.component';
+import { ActiityService } from '../../../actiity.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
-import { CustomerService } from '../../../customer.service';
+import { AddAssetStocksComponent } from '../../../../accounts/assets/asset-stocks/add-asset-stocks/add-asset-stocks.component';
+import { SelectAdviceComponent } from '../../select-advice/select-advice.component';
+import { AssetStocksComponent } from '../../../../accounts/assets/asset-stocks/asset-stocks.component';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatDialog } from '@angular/material';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { AddRealEstateComponent } from '../../../accounts/assets/realEstate/add-real-estate/add-real-estate.component';
-import { AuthService } from 'src/app/auth-service/authService';
-import { ActiityService } from '../../actiity.service';
+import { CustomerService } from '../../../../customer.service';
 
 @Component({
-  selector: 'app-advice-real-asset',
-  templateUrl: './advice-real-asset.component.html',
-  styleUrls: ['./advice-real-asset.component.scss']
+  selector: 'app-all-advice-stocks',
+  templateUrl: './all-advice-stocks.component.html',
+  styleUrls: ['./all-advice-stocks.component.scss']
 })
-export class AdviceRealAssetComponent implements OnInit {
-  displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'mvalue', 'advice', 'astatus', 'adate', 'icon'];
+export class AllAdviceStocksComponent implements OnInit {
+  displayedColumns3: string[] = ['checkbox', 'name', 'desc','mvalue', 'advice', 'astatus', 'adate', 'icon'];
   dataSource3 = ELEMENT_DATA1;
-  advisorId: any;
-  clientId: any;
   constructor(private eventService: EventService, public dialog: MatDialog, private subInjectService: SubscriptionInject,
-    private cusService: CustomerService, private activityService: ActiityService) { }
+    private cusService: CustomerService) { }
 
   ngOnInit() {
-    this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId();
-    this.getAssetAll();
   }
-
-
-  allAdvice = false;
-  getAssetAll() {
-    let obj = {
-      advisorId: this.advisorId,
-      clientId: this.clientId,
-      assetCategory: 8
-    }
-    this.activityService.getAllAsset(obj).subscribe(
-      data => this.getAllAssetResponse(data), (error) => {
-      }
-    );
-  }
-  getAllAssetResponse(data){
-    console.log(data);
-  }
-  openRealEstate(data, value) {
+  allAdvice = true;
+  openRealEstate(value, data) {
     const fragmentData = {
       flag: value,
       data,
       id: 1,
       state: 'open',
-      componentName: AddRealEstateComponent
+      componentName: AssetStocksComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getAssetAll();
+            // this.getFixedDepositList();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -98,7 +77,7 @@ export interface PeriodicElement1 {
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
-  { name: 'Rahul Jain', desc: '1', mvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-  { name: 'Rahul Jain', desc: '2', mvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
+  { name: 'Rahul Jain', desc: '1', mvalue:'20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
+  { name: 'Rahul Jain', desc: '2', mvalue:'20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
 
 ];

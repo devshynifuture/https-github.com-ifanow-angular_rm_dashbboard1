@@ -313,7 +313,7 @@ export const appConfig = {
   GET_GLOBAL_GROWTH_RATE: 'account/income/growth/rate/global/get',
   DELETE_INCOME: 'account/income/delete?',
   /////////////////////////Activity///////////////////////////////////
-
+  ADVICE_GET_ALL:'advice/advice/asset/get',
   ADVICE_ADD_FD: 'advice/asset/fixed-income/suggest-new-fd/add',
   ADVICE_ADD_RD: 'advice/advice/asset/fixed-income/recurring-deposit/add',
   ADVICE_ADD_PPF:'advice/asset/small-saving-scheme/suggest-new-PPF/add',
@@ -336,6 +336,11 @@ export const appConfig = {
   ADVICE_ADD_GOLD:'advice/asset/commodity/suggest-new-gold/add',
   ADVICE_ADD_OTHERS:'advice/asset/commodity/suggest-new-other/add',
   GET_ADVICE_BY_CATEGORY:'advice/assetType/get',
+
+  ////////////////////////////////////OnlineTransaction///////////////////////////////////////
+  ADD_BSE_CREDENTIALS:'bse/user/save',
+  GET_BSE_CREDENTIALS:'bse/user/view',
+  GET_BSE_SUB_BROKER_CREDENTIALS:'bse/user/sub-broker/view',
 
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
