@@ -337,6 +337,11 @@ export const appConfig = {
   ADVICE_ADD_OTHERS:'advice/asset/commodity/suggest-new-other/add',
   GET_ADVICE_BY_CATEGORY:'advice/assetType/get',
 
+  ////////////////////////////////////OnlineTransaction///////////////////////////////////////
+  ADD_BSE_CREDENTIALS:'bse/user/save',
+  GET_BSE_CREDENTIALS:'bse/user/view',
+  GET_BSE_SUB_BROKER_CREDENTIALS:'bse/user/sub-broker/view',
+
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',
