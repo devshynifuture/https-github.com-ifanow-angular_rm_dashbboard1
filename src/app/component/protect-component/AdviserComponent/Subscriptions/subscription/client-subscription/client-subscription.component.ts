@@ -10,6 +10,7 @@ import { SubscriptionUpperSliderComponent } from '../common-subscription-compone
 import { Router } from '@angular/router';
 import { ErrPageOpenComponent } from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
 import { Location } from '@angular/common';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 
 export interface PeriodicElement {
@@ -72,9 +73,12 @@ export class ClientSubscriptionComponent implements OnInit {
     return this.subService.getSubscriptionClientsList(obj);
   }
   errorMessage() {
+
     const fragmentData = {
       flag: 'app-err-page-open',
-      data: {},
+      data: {
+
+      },
       id: 1,
       // data,
       direction: 'top',
@@ -82,13 +86,18 @@ export class ClientSubscriptionComponent implements OnInit {
       state: 'open',
     };
     fragmentData.data = {
-      positiveMethod: () => {
+      positiveMethod: (barButtonOption: MatProgressButtonOptions) => {
+        barButtonOption.active = true;
         this.getClientSubscriptionList().subscribe(
           data => {
+            barButtonOption.active = false;
+
             this.getClientListResponse(data);
             this.eventService.changeUpperSliderState({ state: 'close' })
             // this.errorMessage();
           }, (error) => {
+            barButtonOption.active = false;
+
             this.eventService.openSnackBar('Wait sometime....', 'dismiss');
             // this.eventService.showErrorMessage(error);
           }
