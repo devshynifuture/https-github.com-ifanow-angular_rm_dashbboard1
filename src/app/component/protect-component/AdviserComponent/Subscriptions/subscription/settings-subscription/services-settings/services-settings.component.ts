@@ -77,7 +77,10 @@ export class ServicesSettingsComponent implements OnInit {
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
-          this.getServiceSettingSubData();
+          if (UtilService.isRefreshRequired(upperSliderData)) {
+            this.serviceSettingData = [{}, {}]
+            this.getServiceSettingSubData();
+          }
           subscription.unsubscribe();
         }
       }

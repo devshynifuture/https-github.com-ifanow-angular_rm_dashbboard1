@@ -126,7 +126,7 @@ export class OverviewComponent implements OnInit {
   deletedData(data) {
     if (data == true) {
       // this.upperData = "plan";
-      this.router.navigate(['/admin/subscription/settings','plans'])
+      this.router.navigate(['/admin/subscription/settings','plans']);
       this.eventService.changeUpperSliderState({ state: 'close', refreshRequired:true });
       this.eventService.openSnackBar('Deleted successfully!', 'dismiss');
     }

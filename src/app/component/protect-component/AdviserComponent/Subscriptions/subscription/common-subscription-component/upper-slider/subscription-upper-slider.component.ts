@@ -125,7 +125,7 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
         this.location.replaceState('/admin/subscription/settings/documents');
         break;
       default:
-        // this.router.navigate(['/admin/subscription/clients'])
+        this.router.navigate(['/admin/subscription/clients'])
         this.location.replaceState('/admin/subscription/clients');
         // this.router.navigate(['/admin/subscription/clients'])
         break;
@@ -141,6 +141,13 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
 
   getPlanData(event){
     console.log(event, "data overview");
+    if(event != undefined){
+      this.isRefreshData = true;
+    }
+  }
+
+  getServiceData(event){
+    console.log(event, "data service");
     if(event != undefined){
       this.isRefreshData = true;
     }
