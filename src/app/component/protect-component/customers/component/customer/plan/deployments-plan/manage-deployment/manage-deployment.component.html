@@ -1,0 +1,49 @@
+<!-- <p>manage-deployment works!</p> -->
+<div class="p-24">
+    <h3>Manage deployment breakup</h3>
+    <div class="row">
+        <div class="col-md-4">
+            <h6>Deployment status</h6>
+            <div>
+                <table>
+                    <thead>
+                        <th>Available</th>
+                        <th>Remaining</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td *ngIf="data">{{data.availableAmount}}</td>
+                            <td>10000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <h6>Define asset allocation</h6>
+            <div [formGroup]="assetAllcation">
+                <div *ngFor="let singleAssetForm of getAssetList.controls;index as i" [formGroup]="singleAssetForm"
+                    class="row">
+                    <div class="col-md-5 form-group">
+                        <mat-select formControlName="name" class="form-control">
+                            <mat-option></mat-option>
+                        </mat-select>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <mat-form-field>
+                            <input formControlName="value" matInput autocomplete="off" class="form-control">
+                        </mat-form-field>
+                    </div>
+                    <div (click)="removeAsset()" class="col-md-2">
+                        Remove
+                    </div>
+                </div>
+            </div>
+            <div>
+                <i (click)="addAsset()" class="material-icons">
+                    add
+                </i>
+            </div>
+        </div>
+    </div>
+</div>

@@ -315,7 +315,7 @@ export class AddRealEstateComponent implements OnInit {
       year: [data.year],
       month: [data.month, [Validators.required]],
       days: [data.days, [Validators.required]],
-      purchasePeriod: [(data.purchasePeriod == undefined) ? null : (data.purchasePeriod)],
+      purchasePeriod: [(data.purchasePeriod == undefined) ? null : new Date(data.purchasePeriod)],
       purchaseValue: [data.purchaseValue, [Validators.required]],
       unit: [data.unitId, [Validators.required]],
       ratePerUnit: [data.ratePerUnit, [Validators.required]],

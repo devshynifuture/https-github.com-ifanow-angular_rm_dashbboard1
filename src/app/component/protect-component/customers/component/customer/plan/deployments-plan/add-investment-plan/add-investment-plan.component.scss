@@ -1,0 +1,23 @@
+.financialGoalsTable tr.mat-row {
+    height: 30px !important;
+}
+
+.financialGoalsTable tr.mat-header-row {
+    height: 40px !important;
+}
+
+::ng-deep .mat-form-field {
+    width: 100%;
+}
+
+.colorGreen {
+    color: #02B875;
+}
+
+.hrClass {
+    margin: 15px 0px;
+}
+
+.pt-85 {
+    padding-top: 85px;
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { OnlineTransactionService } from '../../../../online-transaction.service';
@@ -14,12 +14,30 @@ export class AddArnRiaCredentialsComponent implements OnInit {
   addCredential: any;
   dataSource: any;
   advisorId: any;
-
+  invalidEuinStart=false;
+  invalidEuinLen=false;
+  euinNumber=false;
+  euinAbsent=false;
+  inputData: any;
+  isViewInitCalled = false;
   constructor(private fb: FormBuilder, private utilService: UtilService, private onlineTransact: OnlineTransactionService, private subInjectService: SubscriptionInject) { }
 
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    console.log('This is Input data of FixedDepositComponent ', data);
+
+    if (this.isViewInitCalled) {
+      this.getdataForm(data);
+    }
+  }
+
+  get data() {
+    return this.inputData;
+  }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId()
-    this.getdataForm(null)
+    this.getdataForm(this.inputData)
   }
   euinChangeFun = function (value) {
     var test = value.slice(1, value.length + 1)
@@ -28,21 +46,28 @@ export class AddArnRiaCredentialsComponent implements OnInit {
       this.invalidEuinStart = true;
       return;
     }
-    if (value.length > 7) {
-      this.invalidEuinLen = true;
+    if(value.length > 7){
+     this.invalidEuinLen = true;
+     this.invalidEuinStart = false
+     this.euinNumber = false;
+     if(value.length == 7){
+      this.invalidEuinLen = false;
+     }
       return;
     }
-    if (value.length > 1) {
-      var exp = /^[0-9]{1,6}$/
-      if (exp.test(test) == false) {
-        this.euinNumber = true;
-        return;
-      }
-    }
-    if (value.length == 0) {
-      this.euinAbsent = true;
+  if(value.length > 1){
+    var exp = /^[0-9]{1,6}$/
+    if(exp.test(test) == false){
+      this.invalidEuinLen = false;
+      this.invalidEuinStart = false
+      this.euinNumber = true;
       return;
     }
+  }
+  if(value.length == 0){
+    this.euinAbsent = true;
+    return;
+  }
   }
   getdataForm(data) {
     if (!data) {
@@ -52,14 +77,14 @@ export class AddArnRiaCredentialsComponent implements OnInit {
       data = this.dataSource;
     }
     this.addCredential = this.fb.group({
-      platform: [(!data) ? '' : data.ownerName, [Validators.required]],
-      accType: [(!data) ? '' : data.transactionType, [Validators.required]],
+      platform: [(!data) ? '' : data.aggregatorType+'', [Validators.required]],
+      accType: [(!data) ? '' : data.accountType+'', [Validators.required]],
       brokerCode: [(!data) ? '' : data.brokerCode, [Validators.required]],
-      appId: [(!data) ? '' : data.transactionType, [Validators.required]],
+      appId: [(!data) ? '' : data.userId, [Validators.required]],
       memberId:[(!data) ? '' : data.memberId, [Validators.required]],
-      pwd: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
-      euin: [(!data) ? '' : data.transactionType, [Validators.required]],
-      setDefault: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
+      pwd: [(!data) ? '' : data.apiPassword, [Validators.required]],
+      euin: [(!data) ? '' : data.euin, [Validators.required,Validators.max(200),Validators.pattern( /^[0-9]{1,6}$/)]],
+      setDefault: [(!data) ? '' : data.defaultLogin, [Validators.required]],
     });
   }
 
@@ -98,7 +123,7 @@ export class AddArnRiaCredentialsComponent implements OnInit {
         advisorId : this.advisorId,
         aggregatorType : this.addCredential.controls.platform.value,
         brokerCode:this.addCredential.controls.brokerCode.value,
-        defaultLogin : 1,
+        defaultLogin : this.addCredential.controls.setDefault.value,
         euin : this.addCredential.controls.euin.value,
         memberId: (this.addCredential.controls.memberId == undefined)?'':this.addCredential.controls.memberId.value,
         id : (this.addCredential.controls.id== undefined)?'':this.addCredential.controls.memberId.value,
