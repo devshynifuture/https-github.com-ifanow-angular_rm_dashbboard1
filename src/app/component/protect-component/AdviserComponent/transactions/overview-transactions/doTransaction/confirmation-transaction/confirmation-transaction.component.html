@@ -1,0 +1,56 @@
+<div class="popup-header-fix w-65">
+    <div class="row bb-1">
+        <div class="col-md-8 p-0">
+            <h4 class="mb-2 wrapper-20">LUMSUM TRANSACTION STATUS</h4>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12">
+                <i (click)="close()" class="material-icons c-p pt-8 v-middle"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row pt-90 pr-40 pl-40 pb-40">
+    <div class="col-md-8 pl-0 pr-20">
+        <div class="row">
+            <div class="col-md-12 p-0 text-center">
+                <img src="/assets/images/svg/last-step.svg" class="pt-28">
+                <h3 class="m-0 text-primary pt-24">So far so good. One last step!</h3>
+                <h5 class="m-0 pt-12 pb-12 b-h-dashed">Your client needs to <b>authorize</b> the transaction
+                    to <b>complete</b> it.</h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="p-8">
+                    <p class="m-0 roboto pt-28"> An email has been sent to <b>registered email id.</b> Your
+                        client
+                        should
+                        review the <b>transaction
+                            details</b> and click on the <b>payment link</b> provided there.</p>
+
+
+                    <p class="m-0 roboto pt-28"> Next, your client will be redirected to the <b>net banking
+                            page.</b> The
+                        client needs to login and make
+                        the payment.</p>
+
+
+                    <p class="m-0 roboto pt-28"> Once the payment is done, NSE NMF will send a <b>confirmation
+                            email</b> to
+                        the registered email id.</p>
+
+
+                    <p class="m-0 roboto pt-28"> Additionally, the Purchase transaction has been added to the
+                        <u> Transaction List.</u></p>
+
+
+                    <p class="m-0 roboto pt-28"> Track transaction status - <u>Track.</u></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 bg-grey lter p-0">
+        <app-transaction-summary></app-transaction-summary>
+    </div>
+</div>
