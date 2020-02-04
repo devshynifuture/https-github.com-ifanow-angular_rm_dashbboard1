@@ -143,7 +143,7 @@ export class AddScssComponent implements OnInit {
           data => this.getAdviceScssRes(data),
           err => this.eventService.openSnackBar(err, "dismiss")
         );
-      } else if (this.editApi!='adviceSCSS') {
+      } else if (this.editApi!=undefined && this.editApi!='adviceSCSS') {
         obj.id = this.editApi.id;
         this.cusService.editSCSSData(obj).subscribe(
           data => this.addScssResponse(data),

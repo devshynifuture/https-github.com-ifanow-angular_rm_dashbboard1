@@ -141,7 +141,7 @@ export class AddKvpComponent implements OnInit {
           data => this.getAdviceKvpRes(data),
           err => this.eventService.openSnackBar(err, "dismiss")
         );
-      } else if (this.editApi != 'adviceKVP') {
+      } else if (this.editApi!=undefined && this.editApi != 'adviceKVP') {
         obj['id'] = this.editApi.id
         this.cusService.editKVP(obj).subscribe(
           data => this.addKVPResponse(data),

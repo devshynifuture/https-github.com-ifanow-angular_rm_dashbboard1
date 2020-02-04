@@ -134,7 +134,7 @@ export class AddPoSavingComponent implements OnInit {
       this.poSavingForm.get('ownershipType').markAsTouched();
       return;
     } else {
-      if (this.editApi!='advicePoSaving') {
+      if (this.editApi!=undefined && this.editApi!='advicePoSaving') {
         const obj = {
           id: this.editApi.id,
           familyMemberId: this.familyMemberId,
