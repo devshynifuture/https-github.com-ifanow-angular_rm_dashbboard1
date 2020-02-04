@@ -313,7 +313,7 @@ export const appConfig = {
   GET_GLOBAL_GROWTH_RATE: 'account/income/growth/rate/global/get',
   DELETE_INCOME: 'account/income/delete?',
   /////////////////////////Activity///////////////////////////////////
-
+  ADVICE_GET_ALL:'advice/advice/asset/get',
   ADVICE_ADD_FD: 'advice/asset/fixed-income/suggest-new-fd/add',
   ADVICE_ADD_RD: 'advice/advice/asset/fixed-income/recurring-deposit/add',
   ADVICE_ADD_PPF:'advice/asset/small-saving-scheme/suggest-new-PPF/add',

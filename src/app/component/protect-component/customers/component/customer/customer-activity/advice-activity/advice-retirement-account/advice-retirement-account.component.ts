@@ -7,6 +7,8 @@ import { AddEPFComponent } from '../../../accounts/assets/retirementAccounts/add
 import { AddGratuityComponent } from '../../../accounts/assets/retirementAccounts/add-gratuity/add-gratuity.component';
 import { AddSuperannuationComponent } from '../../../accounts/assets/retirementAccounts/add-superannuation/add-superannuation.component';
 import { AddEPSComponent } from '../../../accounts/assets/retirementAccounts/add-eps/add-eps.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { ActiityService } from '../../actiity.service';
 
 @Component({
   selector: 'app-advice-retirement-account',
@@ -18,11 +20,75 @@ export class AdviceRetirementAccountComponent implements OnInit {
   dataSource = ELEMENT_DATA;
   displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'advice', 'astatus', 'adate', 'icon'];
   dataSource3 = ELEMENT_DATA1;
-  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, ) { }
+  advisorId: any;
+  clientId: any;
+  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject,private activityService:ActiityService) { }
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    this.getAdviceByAsset();
   }
   allAdvice = false;
+  getAdviceByAsset() {
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      assetCategory: 9
+    }
+    // let obj1 = {
+    //   advisorId: this.advisorId,
+    //   clientId: this.clientId,
+    //   assetCategory: 16
+    // }
+    // let obj2 = {
+    //   advisorId: this.advisorId,
+    //   clientId: this.clientId,
+    //   assetCategory: 17
+    // }
+    // let obj3 = {
+    //   advisorId: this.advisorId,
+    //   clientId: this.clientId,
+    //   assetCategory: 18
+    // }
+    // let obj4 = {
+    //   advisorId: this.advisorId,
+    //   clientId: this.clientId,
+    //   assetCategory: 19
+    // }
+    // let obj5 = {
+    //   advisorId: this.advisorId,
+    //   clientId: this.clientId,
+    //   assetCategory: 20
+    // }
+    this.activityService.getAllAsset(obj).subscribe(
+      data => this.getAllSchemeResponse(data), (error) => {
+      }
+    );
+    // this.activityService.getAllAsset(obj1).subscribe(
+    //   data => this.getAllSchemeResponse(data), (error) => {
+    //   }
+    // );
+    // this.activityService.getAllAsset(obj2).subscribe(
+    //   data => this.getAllSchemeResponse(data), (error) => {
+    //   }
+    // );
+    // this.activityService.getAllAsset(obj3).subscribe(
+    //   data => this.getAllSchemeResponse(data), (error) => {
+    //   }
+    // );
+    // this.activityService.getAllAsset(obj4).subscribe(
+    //   data => this.getAllSchemeResponse(data), (error) => {
+    //   }
+    // );
+    // this.activityService.getAllAsset(obj5).subscribe(
+    //   data => this.getAllSchemeResponse(data), (error) => {
+    //   }
+    // );
+  }
+  getAllSchemeResponse(data){
+    console.log(data);
+  }
   openAddEPF(data, value) {
     const fragmentData = {
       flag: value,
@@ -36,7 +102,7 @@ export class AdviceRetirementAccountComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getListEPF();
+             this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -58,7 +124,7 @@ export class AdviceRetirementAccountComponent implements OnInit {
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getListNPS();
+             this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -81,7 +147,7 @@ export class AdviceRetirementAccountComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getListNPS();
+             this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -104,7 +170,7 @@ export class AdviceRetirementAccountComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getListGratuity();
+             this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -126,7 +192,7 @@ export class AdviceRetirementAccountComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getListSuperannuation();
+            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -148,7 +214,7 @@ export class AdviceRetirementAccountComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getListEPS();
+             this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
