@@ -14,6 +14,7 @@ import { CommonFroalaComponent } from '../common-subscription-component/common-f
 import { AddQuotationSubscriptionComponent } from 'src/app/component/protect-component/customers/component/common-component/add-quotation-subscription/add-quotation-subscription.component';
 import { ErrPageOpenComponent } from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
 import { SubscriptionDataService } from '../../subscription-data.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 export interface PeriodicElement {
   name: string;
@@ -137,13 +138,16 @@ export class QuotationsSubscriptionComponent implements OnInit {
       state: 'open',
     };
     fragmentData.data = {
-      positiveMethod: () => {
+      positiveMethod: (barButtonOption: MatProgressButtonOptions) => {
+        barButtonOption.active = true;
         this.getQuotationsData(false).subscribe(
           data => {
+            barButtonOption.active = false;
             this.getQuotationsDataResponse(data);
             this.eventService.changeUpperSliderState({ state: 'close' })
             // this.errorMessage();
           }, (error) => {
+            barButtonOption.active = false;
             this.eventService.openSnackBar('Wait sometime....', 'dismiss');
           }
         )

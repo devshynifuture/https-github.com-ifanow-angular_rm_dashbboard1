@@ -16,4 +16,7 @@ export class ActiityService {
   getAllAdviceByCategory(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ADVICE_BY_CATEGORY, data);
   }
+  getAllAsset(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.ADVICE_GET_ALL, data);
+  }
 }

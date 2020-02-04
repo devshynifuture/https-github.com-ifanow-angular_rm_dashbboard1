@@ -124,7 +124,7 @@ export class AddPoRdComponent implements OnInit {
       this.PORDForm.get('ownership').markAsTouched();
       return;
     } else {
-      if (this.editApi != 'advicePORD') {
+      if (this.editApi!=undefined && this.editApi != 'advicePORD') {
         const obj = {
           monthlyContribution: this.PORDForm.get('monthlyContribution').value,
           commencementDate: this.PORDForm.get('commDate').value,
