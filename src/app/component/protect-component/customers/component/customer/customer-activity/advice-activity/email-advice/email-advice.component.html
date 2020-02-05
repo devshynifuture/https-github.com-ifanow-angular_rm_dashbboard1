@@ -1,0 +1,63 @@
+<!-- <button (click)="OpenProceedConsent()" class="btn-primary">
+    PROCEED
+</button> -->
+<div class="popup-header-fix-60">
+    <div class="row bb-1">
+        <div class="col-md-8 p-0">
+            <h4 class="mb-0 wrapper-20">EMAIL ADVICE</h4>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12">
+                <i class="material-icons c-p pt-8 v-middle" (click)="close(false)"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pt-120 pl-40">
+    <div class="row">
+        <div class="col-md-1">
+            <p class="m-0 f-700 roboto">To</p>
+        </div>
+        <div class="col-md-10">
+            <p class="m-0 f-700 roboto">sarvesh@futurewise.co.in</p>
+        </div>
+        <div class="col-md-1 f-right">
+            <i class="material-icons m-0 c-p">
+                keyboard_arrow_down
+            </i>
+        </div>
+    </div>
+    <div>
+        <div class="row">
+            <div class="col-md-12">
+                <p class="pt-28  f-700 roboto">Request for advice consent from Acme Financial Advisors Pvt.Ltd.</p>
+                <p class="pt-28 roboto">Dear client name,</p>
+                <p class="pt-10 roboto">As discussed,we have reviewed your portfolio and given after thorough review &
+                    analysis
+                </p>
+                <p class="pt-10 roboto">You need to give your Consent in order to help us proceed further.You can go by
+                    clicking here or on
+                    the button below</p>
+                <button mat-stroked-button class="btn-primary">PROCEED</button>
+                <p class="pt-10 roboto">Consent link URL : http://www.my-planner/consent_confimramtion.html</p>
+                <p class="pt-10 ">Feel free to get back to us if you have any questions</p>
+                <i class="material-icons">
+                    more_horiz
+                </i>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="bottom-fixed wrapper-12 pt-16">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="close(false)">Cancel</h5>
+        </div>
+        <div (click)="sendEmail()" class="col-md-8 right text-right">
+            <button mat-button class="btn-bottom br-0 text-inherit">Send</button>
+        </div>
+    </div>
+</div>
+<!-- <div class="t-center">
+    <img src="/assets/images/svg/ballon.svg">
+</div> -->

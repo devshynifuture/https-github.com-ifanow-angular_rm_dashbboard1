@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CustomerComponent } from './component/customer/customer.component';
+import { EmailConsentComponent } from './component/customer/customer-activity/advice-activity/email-consent/email-consent.component';
 
 
 const routes: Routes = [
@@ -48,6 +49,10 @@ const routes: Routes = [
          pathMatch: 'full'
        }*/
     ]
+  },
+  {
+    path: 'email-consent',
+    component: EmailConsentComponent
   }
 ];
 
