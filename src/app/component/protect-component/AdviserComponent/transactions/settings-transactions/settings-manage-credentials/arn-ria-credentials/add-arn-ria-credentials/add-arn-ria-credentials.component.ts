@@ -1,9 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { OnlineTransactionService } from '../../../../online-transaction.service';
-import { Validators, FormBuilder } from '@angular/forms';
-import { AuthService } from 'src/app/auth-service/authService';
+import {Component, Input, OnInit} from '@angular/core';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {OnlineTransactionService} from '../../../../online-transaction.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {AuthService} from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-add-arn-ria-credentials',
@@ -11,16 +11,20 @@ import { AuthService } from 'src/app/auth-service/authService';
   styleUrls: ['./add-arn-ria-credentials.component.scss']
 })
 export class AddArnRiaCredentialsComponent implements OnInit {
+  memId;
+  euin;
   addCredential: any;
   dataSource: any;
   advisorId: any;
-  invalidEuinStart=false;
-  invalidEuinLen=false;
-  euinNumber=false;
-  euinAbsent=false;
+  invalidEuinStart = false;
+  invalidEuinLen = false;
+  euinNumber = false;
+  euinAbsent = false;
   inputData: any;
   isViewInitCalled = false;
-  constructor(private fb: FormBuilder, private utilService: UtilService, private onlineTransact: OnlineTransactionService, private subInjectService: SubscriptionInject) { }
+
+  constructor(private fb: FormBuilder, private utilService: UtilService, private onlineTransact: OnlineTransactionService, private subInjectService: SubscriptionInject) {
+  }
 
   @Input()
   set data(data) {

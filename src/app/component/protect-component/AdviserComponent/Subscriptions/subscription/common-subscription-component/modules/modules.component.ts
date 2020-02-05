@@ -1,10 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
-import { SubscriptionService } from '../../../subscription.service';
-import { SubscriptionUpperSliderComponent } from '../upper-slider/subscription-upper-slider.component';
-import { EventService } from 'src/app/Data-service/event.service';
-import { element } from 'protractor';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import {Component, Input, OnInit} from '@angular/core';
+import {SubscriptionService} from '../../../subscription.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-modules',

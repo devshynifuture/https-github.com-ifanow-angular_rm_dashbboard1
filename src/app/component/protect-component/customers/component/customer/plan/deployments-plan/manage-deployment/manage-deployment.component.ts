@@ -1,10 +1,7 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { ManageExclusionsComponent } from '../manage-exclusions/manage-exclusions.component';
-import { DialogData } from 'src/app/component/protect-component/AdviserComponent/Activities/calendar/calendar.component';
-import { FormBuilder, FormArray, Validators } from '@angular/forms';
-import { element } from 'protractor';
-import { of } from 'rxjs';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {DialogData} from 'src/app/component/protect-component/AdviserComponent/Activities/calendar/calendar.component';
+import {FormArray, FormBuilder, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-manage-deployment',
