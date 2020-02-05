@@ -1,12 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {CustomerService} from '../../../../customer.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {DatePipe} from '@angular/common';
-import {MAT_DATE_FORMATS} from '@angular/material';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {AuthService} from 'src/app/auth-service/authService';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { CustomerService } from '../../../../customer.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { DatePipe } from '@angular/common';
+import { MAT_DATE_FORMATS } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { AuthService } from 'src/app/auth-service/authService';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
@@ -14,11 +14,11 @@ import { EventService } from 'src/app/Data-service/event.service';
   templateUrl: './others.component.html',
   styleUrls: ['./others.component.scss'], providers: [
     [DatePipe],
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
 export class OthersComponent implements OnInit {
-  validatorType=ValidatorType
+  validatorType = ValidatorType
   inputData: any;
   ownerName: any;
   familyMemberId: any;
@@ -32,7 +32,7 @@ export class OthersComponent implements OnInit {
   nomineesListFM: any;
   flag: any;
 
-  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService,public eventService:EventService) {
+  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
   }
 
   @Input()
@@ -63,7 +63,7 @@ export class OthersComponent implements OnInit {
     this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({state: 'close',refreshRequired:flag});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
   onChange(event) {
     if (parseInt(event.target.value) > 100) {
@@ -80,7 +80,7 @@ export class OthersComponent implements OnInit {
   }
 
   getdataForm(data) {
-    this.flag=data;
+    this.flag = data;
     if (data == undefined) {
       data = {};
     }
@@ -106,7 +106,10 @@ export class OthersComponent implements OnInit {
   }
 
   saveOthers() {
-    if (this.others.get('typeOfCommodity').invalid) {
+    if (this.others.get('ownerName').invalid) {
+      this.others.get('ownerName').markAsTouched();
+      return;
+    } else if (this.others.get('typeOfCommodity').invalid) {
       this.others.get('typeOfCommodity').markAsTouched();
       return;
     } else if (this.others.get('ownerName').invalid) {
@@ -125,7 +128,7 @@ export class OthersComponent implements OnInit {
         marketValue: this.others.controls.marketValue.value,
         purchaseValue: this.others.controls.purchaseValue.value,
         growthRate: this.others.controls.growthRate.value,
-        dateOfPurchase: (this.others.controls.dateOfPurchase.touched)?this.datePipe.transform(this.others.controls.dateOfPurchase.value, 'yyyy-MM-dd'):this.others.controls.dateOfPurchase.value,
+        dateOfPurchase: (this.others.controls.dateOfPurchase.touched) ? this.datePipe.transform(this.others.controls.dateOfPurchase.value, 'yyyy-MM-dd') : this.others.controls.dateOfPurchase.value,
         description: this.others.controls.description.value,
         id: this.others.controls.id.value
       };
@@ -135,12 +138,12 @@ export class OthersComponent implements OnInit {
         stringObject: obj,
         adviceDescription: "manualAssetDescription"
       }
-      if (this.others.controls.id.value == undefined && this.flag!='adviceOTHERS') {
+      if (this.others.controls.id.value == undefined && this.flag != 'adviceOTHERS') {
         delete obj.id;
         this.custumService.addOthers(obj).subscribe(
           data => this.addOthersRes(data)
         );
-      }else if(this.flag=='adviceOTHERS'){
+      } else if (this.flag == 'adviceOTHERS') {
         this.custumService.getAdviceOthers(adviceObj).subscribe(
           data => this.getAdviceOthersRes(data),
         );
@@ -152,18 +155,18 @@ export class OthersComponent implements OnInit {
       }
     }
   }
-  getAdviceOthersRes(data){
+  getAdviceOthersRes(data) {
     this.eventService.openSnackBar('Others added successfully', 'OK');
-    this.subInjectService.changeNewRightSliderState({state: 'close', data ,refreshRequired:true});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
 
   }
   addOthersRes(data) {
     console.log('addrecuringDepositRes', data);
-    this.subInjectService.changeNewRightSliderState({state: 'close', data ,refreshRequired:true});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
 
   editOthersRes(data) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', data ,refreshRequired:true});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
 
 }

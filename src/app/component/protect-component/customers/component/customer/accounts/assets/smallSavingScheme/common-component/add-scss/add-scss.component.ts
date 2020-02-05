@@ -1,23 +1,23 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {AuthService} from 'src/app/auth-service/authService';
-import {CustomerService} from '../../../../../customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {MAT_DATE_FORMATS} from '@angular/material';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { MAT_DATE_FORMATS } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-scss',
   templateUrl: './add-scss.component.html',
   styleUrls: ['./add-scss.component.scss'],
   providers: [
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ]
 })
 export class AddScssComponent implements OnInit {
-  validatorType=ValidatorType
+  validatorType = ValidatorType
   maxDate = new Date();
   inputData: any;
   familyMemberId: any;
@@ -36,7 +36,7 @@ export class AddScssComponent implements OnInit {
   flag: any;
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
-              private cusService: CustomerService, private eventService: EventService,public utils: UtilService) {
+    private cusService: CustomerService, private eventService: EventService, public utils: UtilService) {
   }
 
   ngOnInit() {
@@ -66,13 +66,13 @@ export class AddScssComponent implements OnInit {
     this.nomineesList = data.controls
   }
   getdataForm(data) {
-    this.flag=data;
+    this.flag = data;
     if (data == undefined) {
       data = {};
     } else {
       this.editApi = data;
     }
-    this.scssData=data;
+    this.scssData = data;
     this.scssSchemeForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
       amtInvested: [data.amountInvested, [Validators.required, Validators.min(1500), Validators.max(1500000)]],
@@ -100,19 +100,22 @@ export class AddScssComponent implements OnInit {
         let obj = {
           "name": element.controls.name.value,
           "sharePercentage": element.controls.sharePercentage.value,
-          "id":element.id,
-          "familyMemberId":element.familyMemberId
+          "id": element.id,
+          "familyMemberId": element.familyMemberId
         }
         this.nominees.push(obj)
       });
     }
-    if (this.scssSchemeForm.get('amtInvested').invalid) {
-      this.scssSchemeForm.get('amtInvested').markAsTouched();
-      return;
-    }  else if (this.scssSchemeForm.get('ownerName').invalid) {
+    if (this.scssSchemeForm.get('ownerName').invalid) {
       this.scssSchemeForm.get('ownerName').markAsTouched();
       return;
-    }else if (this.scssSchemeForm.get('commDate').invalid) {
+    } else if (this.scssSchemeForm.get('amtInvested').invalid) {
+      this.scssSchemeForm.get('amtInvested').markAsTouched();
+      return;
+    } else if (this.scssSchemeForm.get('ownerName').invalid) {
+      this.scssSchemeForm.get('ownerName').markAsTouched();
+      return;
+    } else if (this.scssSchemeForm.get('commDate').invalid) {
       this.scssSchemeForm.get('commDate').markAsTouched();
       return;
     } else if (this.scssSchemeForm.get('ownershipType').invalid) {
@@ -144,7 +147,7 @@ export class AddScssComponent implements OnInit {
           data => this.getAdviceScssRes(data),
           err => this.eventService.openSnackBar(err, "dismiss")
         );
-      } else if (this.editApi!=undefined && this.editApi!='adviceSCSS') {
+      } else if (this.editApi != undefined && this.editApi != 'adviceSCSS') {
         obj.id = this.editApi.id;
         this.cusService.editSCSSData(obj).subscribe(
           data => this.addScssResponse(data),
@@ -158,7 +161,7 @@ export class AddScssComponent implements OnInit {
       }
     }
   }
-  getAdviceScssRes(data){
+  getAdviceScssRes(data) {
     this.eventService.openSnackBar('Scss is added', "dismiss");
     this.close(true);
 
@@ -170,6 +173,6 @@ export class AddScssComponent implements OnInit {
 
   close(flag) {
     this.isOptionalField = true;
-    this.subInjectService.changeNewRightSliderState({state: 'close',refreshRequired:flag});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 }

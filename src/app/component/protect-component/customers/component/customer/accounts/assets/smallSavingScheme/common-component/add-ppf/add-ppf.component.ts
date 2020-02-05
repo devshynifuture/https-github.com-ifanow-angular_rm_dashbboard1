@@ -1,23 +1,23 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {MAT_DATE_FORMATS} from '@angular/material';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {FormArray, FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {CustomerService} from '../../../../../customer.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { MAT_DATE_FORMATS } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { CustomerService } from '../../../../../customer.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-ppf',
   templateUrl: './add-ppf.component.html',
   styleUrls: ['./add-ppf.component.scss'],
   providers: [
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ]
 })
 export class AddPpfComponent implements OnInit {
-  validatorType=ValidatorType
+  validatorType = ValidatorType
   maxDate = new Date();
   isOptionalField: boolean;
   advisorId: any;
@@ -45,7 +45,7 @@ export class AddPpfComponent implements OnInit {
   commencementDate: any;
   flag: any;
   dataSource: { "advisorId": any; "clientId": number; "ownerName": any; "familyMemberId": any; "accountBalance": any; "balanceAsOn": any; "commencementDate": any; "description": any; "bankName": any; "linkedBankAccount": any; "nominees": any[]; "frequency": any; "futureApproxcontribution": any; "publicprovidendfundtransactionlist": any[]; };
-  constructor(public utils: UtilService,private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
+  constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
   @Input()
   set data(data) {
@@ -78,19 +78,19 @@ export class AddPpfComponent implements OnInit {
     console.log(data)
     this.nomineesList = data.controls
   }
-  setCommencementDate(date){
-    console.log('commencentDAte',date)
+  setCommencementDate(date) {
+    console.log('commencentDAte', date)
     this.commencementDate = date
   }
   getdataForm(data) {
-    this.flag=data;
+    this.flag = data;
     if (data == undefined) {
       data = {};
     }
     else {
       this.editApi = data
     }
-    this.ppfData=data;
+    this.ppfData = data;
     this.ppfSchemeForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
       accountBalance: [data.accountBalance, [Validators.required, Validators.min(500)]],
@@ -118,7 +118,7 @@ export class AddPpfComponent implements OnInit {
     console.log(data)
     this.commencementDate = this.ppfSchemeForm.controls.commencementDate.value;
     this.transactionData = data.controls
-    return 
+    return
   }
   addPPF() {
     let finalTransctList = []
@@ -139,13 +139,16 @@ export class AddPpfComponent implements OnInit {
         let obj = {
           "name": element.controls.name.value,
           "sharePercentage": element.controls.sharePercentage.value,
-          "id":(element.controls.id.value)?element.controls.id.value:0,
-          "familyMemberId":(element.controls.familyMemberId.value)?element.controls.familyMemberId.value:0
+          "id": (element.controls.id.value) ? element.controls.id.value : 0,
+          "familyMemberId": (element.controls.familyMemberId.value) ? element.controls.familyMemberId.value : 0
         }
         this.nominees.push(obj)
       });
     }
-    if (this.ppfSchemeForm.get('accountBalance').invalid) {
+    if (this.ppfSchemeForm.get('ownerName').invalid) {
+      this.ppfSchemeForm.get('ownerName').markAsTouched();
+      return;
+    } else if (this.ppfSchemeForm.get('accountBalance').invalid) {
       this.ppfSchemeForm.get('accountBalance').markAsTouched();
       return;
     } else if (this.ppfSchemeForm.get('ownerName').invalid) {
@@ -180,7 +183,7 @@ export class AddPpfComponent implements OnInit {
         "description": this.optionalppfSchemeForm.get('description').value,
         "bankName": this.optionalppfSchemeForm.get('bankName').value,
         "linkedBankAccount": this.optionalppfSchemeForm.get('linkedBankAccount').value,
-        "nominees":this.nominees,
+        "nominees": this.nominees,
         "frequency": this.ppfSchemeForm.get('frquency').value,
         "futureApproxcontribution": this.ppfSchemeForm.get('futureContribution').value,
         "publicprovidendfundtransactionlist": finalTransctList,
@@ -197,7 +200,7 @@ export class AddPpfComponent implements OnInit {
           data => this.getAdvicePpfRes(data),
           err => this.eventService.openSnackBar(err, "dismiss")
         );
-      } else if (this.editApi!=undefined && this.editApi!='advicePPF') {
+      } else if (this.editApi != undefined && this.editApi != 'advicePPF') {
         obj['id'] = this.editApi.id
         this.cusService.editPPF(obj).subscribe(
           data => this.addPPFResponse(data),
@@ -212,9 +215,9 @@ export class AddPpfComponent implements OnInit {
       }
     }
   }
-  getAdvicePpfRes(data){
+  getAdvicePpfRes(data) {
     console.log(data)
-    this.eventService.openSnackBar("PPF is added", "dismiss") 
+    this.eventService.openSnackBar("PPF is added", "dismiss")
     this.close(true);
 
   }
@@ -225,7 +228,7 @@ export class AddPpfComponent implements OnInit {
   }
   close(flag) {
     this.isOptionalField = true
-    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
 }

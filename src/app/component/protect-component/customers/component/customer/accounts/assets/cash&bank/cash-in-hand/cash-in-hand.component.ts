@@ -1,12 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {CustomerService} from '../../../../customer.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {DatePipe} from '@angular/common';
-import {MAT_DATE_FORMATS} from '@angular/material';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {AuthService} from 'src/app/auth-service/authService';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { CustomerService } from '../../../../customer.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { DatePipe } from '@angular/common';
+import { MAT_DATE_FORMATS } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { AuthService } from 'src/app/auth-service/authService';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
@@ -15,11 +15,11 @@ import { EventService } from 'src/app/Data-service/event.service';
   styleUrls: ['./cash-in-hand.component.scss'],
   providers: [
     [DatePipe],
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
 export class CashInHandComponent implements OnInit {
-  validatorType=ValidatorType
+  validatorType = ValidatorType
   inputData: any;
   ownerName: any;
   familyMemberId: any;
@@ -34,7 +34,7 @@ export class CashInHandComponent implements OnInit {
   flag: any;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService,
-              public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService,public eventService:EventService) {
+    public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
   }
 
   @Input()
@@ -64,7 +64,7 @@ export class CashInHandComponent implements OnInit {
     this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({state: 'close',refreshRequired:flag});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
   showLess(value) {
@@ -76,7 +76,7 @@ export class CashInHandComponent implements OnInit {
   }
 
   getdataForm(data) {
-    this.flag=data;
+    this.flag = data;
     if (data == undefined) {
       data = {};
     }
@@ -99,7 +99,10 @@ export class CashInHandComponent implements OnInit {
   }
 
   saveCashInHand() {
-    if (this.cashInHand.get('cashBalance').invalid) {
+    if (this.cashInHand.get('ownerName').invalid) {
+      this.cashInHand.get('ownerName').markAsTouched();
+      return;
+    } else if (this.cashInHand.get('cashBalance').invalid) {
       this.cashInHand.get('cashBalance').markAsTouched();
       return;
     } else if (this.cashInHand.get('ownerName').invalid) {
@@ -126,15 +129,15 @@ export class CashInHandComponent implements OnInit {
         stringObject: obj,
         adviceDescription: "manualAssetDescription"
       }
-      if (this.cashInHand.controls.id.value == undefined && this.flag!='adviceCashInHand') {
+      if (this.cashInHand.controls.id.value == undefined && this.flag != 'adviceCashInHand') {
         this.custumService.addCashInHand(obj).subscribe(
           data => this.addCashInHandRes(data)
         );
-      }else if(this.flag=='adviceCashInHand'){
+      } else if (this.flag == 'adviceCashInHand') {
         this.custumService.getAdviceCashInHand(adviceObj).subscribe(
           data => this.getAdviceCashInHandRes(data),
         );
-      }else {
+      } else {
         // edit call
         this.custumService.editCashInHand(obj).subscribe(
           data => this.editCashInHandRes(data)
@@ -142,20 +145,20 @@ export class CashInHandComponent implements OnInit {
       }
     }
   }
-  getAdviceCashInHandRes(data){
+  getAdviceCashInHandRes(data) {
     this.eventService.openSnackBar('Cash In Hand added successfully', 'OK');
-    this.subInjectService.changeNewRightSliderState({state: 'close', data,refreshRequired:true});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
 
   }
   addCashInHandRes(data) {
     console.log('addrecuringDepositRes', data);
-    this.subInjectService.changeNewRightSliderState({state: 'close', data,refreshRequired:true});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
     this.eventService.openSnackBar('Cash In Hand added successfully', 'OK');
 
   }
 
   editCashInHandRes(data) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', data,refreshRequired:true});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
     this.eventService.openSnackBar('Cash In Hand added successfully', 'OK');
 
   }
