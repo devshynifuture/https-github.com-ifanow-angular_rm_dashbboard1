@@ -29,6 +29,8 @@ export class CashflowsPlanComponent implements OnInit {
   cashflowIncomeValue: any;
   groupHeadAge: number;
   listOfIncomeArray: IncometableI[] = [];
+  advisorId = AuthService.getUserInfo().advisorId;
+  clientId = AuthService.getClientId()
 
   constructor(
     private eventService: EventService,
@@ -37,30 +39,31 @@ export class CashflowsPlanComponent implements OnInit {
   ) { }
   isLoading = false;
   ngOnInit() {
+    this.isLoading = true;
     this.cashFlow('surplus');
     this.filterCashFlowTableUsing('income');
   }
 
-  getCashflowExpenseData() {
-    const data = {
-      advisorId: AuthService.getUserInfo().advisorId,
-      clientId: AuthService.getClientId()
-    }
-    console.log(data);
-    this.cashflowService.getCashflowExpenseValues(data).subscribe(res => {
-      console.log("value of cashflow income data, ", res);
+  getCashflowLiabilitiesData() {
+    this.cashflowService.getCashflowYearlyLiabilitiesValues({ advisorId: this.advisorId, clientId: this.clientId }).subscribe(res => {
+      console.log("this is cashflow liabilities value::::::::", res);
+      this.dataSource = new MatTableDataSource(ELEMENT_DATA3);
+
     }, err => {
-      console.error("error in getting cashflow income data, ", err)
+      console.log(err);
+    });
+  }
+
+  getCashflowExpenseData() {
+    this.cashflowService.getCashflowYearlyExpensesValues({ advisorId: this.advisorId, clientId: this.clientId }).subscribe(res => {
+      console.log("value of cashflow expense Value data, ", res);
+    }, err => {
+      console.error("error in getting cashflow expenses data, ", err)
     });
   }
 
   getCashflowIncomeData() {
-    const data = {
-      advisorId: AuthService.getUserInfo().advisorId,
-      clientId: AuthService.getClientId()
-    }
-    console.log(data.clientId);
-    this.cashflowService.getCashflowIncomeValues(data).subscribe(res => {
+    this.cashflowService.getCashflowIncomeValues({ advisorId: this.advisorId, clientId: this.clientId }).subscribe(res => {
       console.log("value of cashflow income data, ", res);
       this.cashflowIncomeValue = res;
 
@@ -78,9 +81,10 @@ export class CashflowsPlanComponent implements OnInit {
 
   getFamilyMemberDetailsAndCalculateAge(familyMemberId, data) {
     // call family member detail api
+
     const requestJSON = {
-      advisorId: AuthService.getUserInfo().advisorId,
-      clientId: AuthService.getClientId(),
+      advisorId: this.advisorId,
+      clientId: this.clientId,
       familyMemberId,
     }
     let birthDate = [];
@@ -109,9 +113,12 @@ export class CashflowsPlanComponent implements OnInit {
         }
       });
 
+      // this.isLoading = false;
       this.dataSource = new MatTableDataSource(this.listOfIncomeArray);
+
       console.log(this.listOfIncomeArray);
     });
+    this.isLoading = false;
 
   }
 
@@ -130,13 +137,17 @@ export class CashflowsPlanComponent implements OnInit {
     }
 
     switch (flag) {
-      case 'income': this.getCashflowIncomeData();
+      case 'income':
+        this.listOfIncomeArray = [];
+        this.getCashflowIncomeData();
         break;
-      case 'expenses': this.getCashflowExpenseData();
+      case 'expenses':
+        this.listOfIncomeArray = [];
+        this.getCashflowExpenseData();
         break;
       case 'insurance': this.dataSource = ELEMENT_DATA2;
         break;
-      case 'liabilities': this.dataSource = ELEMENT_DATA3;
+      case 'liabilities': this.getCashflowLiabilitiesData();
         break;
       case 'assets': this.dataSource = ELEMENT_DATA4;
         break;
@@ -181,58 +192,7 @@ export class CashflowsPlanComponent implements OnInit {
   cashFlow(id) {
     chart();
   }
-  // cashFlow(id) {
-  //   var chart1 = new Highcharts.Chart('surplus', {
-  //     chart: {
-  //       type: 'bar'
-  //     },
-  //     title: {
-  //       text: 'Bar chart with negative values'
-  //     },
-  //     xAxis: {
-  //       categories: []
-  //     },
-  //     credits: {
-  //       enabled: false
-  //     },
-  //     plotOptions: {
-  //       series: {
-  //         stacking: 'normal',
-  //         pointWidth: 10
-  //       }
-  //     },
-  //     series: [{
-  //       name: 'Income',
-  //       data: [-1, -2, -2, -7, -2, -1, -1, -2, -3, -4, -5, -5, -6, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, 2, 3],
-  //       color: '#5DC644'
-  //     }, {
-  //       name: 'Expenses',
-  //       data: [1, 2, 2, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-  //       color: '#FFC100'
-  //     }, {
-  //       name: 'Liabilities',
-  //       data: [1, 2, 3, 4, 2, -1, -1, -1, -1, -1, -1, -1, -1, 1, 0, 0, 0, 0, 0, 0, 0, 0, -1, -2, -3, -3, -4, -5],
-  //       color: '#FF6823'
-  //     }, {
-  //       name: 'Insurance',
-  //       data: [1, 2, 3, 3, 2, 1, 2, 3, 4, 5, 5, 6, 6, 0, 0, 0, -1, -2, -3, -4, -5, -6, -7],
-  //       color: '#7B50FF'
-  //     }, {
-  //       name: 'Assets',
-  //       data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 3, 0, 7, 2],
-  //       color: '#BCC6CA'
-  //     }, {
-  //       type: 'spline',
-  //       name: 'Surplus',
-  //       marker: {
-  //         enabled: false
-  //       },
-  //       color: '#000000',
-  //       dashStyle: 'shortdot',
-  //       data: [1, 1, 1, 1., 1., 2, 1, 2, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1],
-  //     }]
-  //   });
-  // }
+
 }
 
 export interface IncometableI {
@@ -303,7 +263,7 @@ const ELEMENT_DATA2: IncomeTableI[] = [
   { year: '2125', age: '30', age2: '26', total: '2,80,000', view: 'view' },
   { year: '2126', age: '31', age2: '27', total: '2,20,000', view: 'view' },
 ];
-const ELEMENT_DATA3: IncomeTableI[] = [
+let ELEMENT_DATA3: IncomeTableI[] = [
   { year: '2020', age: '15', age2: '21', total: '2,10,000', view: 'view' },
   { year: '2021', age: '16', age2: '22', total: '2,10,400', view: 'view' },
   { year: '2022', age: '17', age2: '23', total: '2,30,000', view: 'view' },

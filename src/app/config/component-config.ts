@@ -345,8 +345,20 @@ export const appConfig = {
   // cashflow 
   CASHFLOW_ADD_INCOME: 'cashflow/income/add',
   CASHFLOW_GET_INCOME: 'cashflow/get',
-  CASHFLOW_GET_EXPENSE: 'cashflow/expense/list/get',
+  CASHFLOW_DELETE_INCOME: 'cashflow/income/delete',
+  CASHFLOW_EDIT_INCOME: 'cashflow/income/edit',
+  CASHFLOW_EDIT_MONTHLY_INCOME: 'cashflow/income/monthly/edit',
+  CASHFLOW_GET_YEARLY_EXPENSE: 'cashflow/expense/list/get',
   CASHFLOW_GET_MONTHLY_EXPENSE: 'cashflow/expense/monthly/list/get',
+  CASHFLOW_ADD_EXPENSES: 'cashflow/expense/add',
+  CASHFLOW_EDIT_EXPENSES: 'cashflow/expense/edit',
+  CASHFLOW_DELETE_EXPENSES: 'cashflow/expense/delete',
+  CASHFLOW_EDIT_MONTHLY_EXPENSE_DISTRIBUTION: 'cashflow/expense/monthly-distribution/edit',
+  CASHFLOW_GET_YEARLY_LIABILITIES: 'cashflow/liability/list/get',
+  CASHFLOW_GET_MONTHLY_LIABILITIES: 'cashflow/liability/monthly/list/get',
+  CASHFLOW_ADD_LIABILITIES: 'cashflow/liability/add',
+  CASHFLOW_EDIT_LIABILITIES: 'cashflow/liability/edit',
+  CASHFLOW_DELETE_LIABILITIES: 'cashflow/liability/delete',
 
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',

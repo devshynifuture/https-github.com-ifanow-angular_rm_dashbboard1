@@ -58,7 +58,7 @@ export class CashflowUpperIncomeExpenseComponent implements OnInit {
       clientId: AuthService.getClientId(),
       year: 2020
     }
-    this.cashflowService.getMonthlyExpenseValues(data).subscribe(res => {
+    this.cashflowService.getMonthlyExpensesValues(data).subscribe(res => {
       console.log("value of cashflow expense data, ", res);
       const { familyMemberId } = res;
 
