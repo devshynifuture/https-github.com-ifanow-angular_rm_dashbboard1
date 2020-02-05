@@ -22,15 +22,6 @@ export class AddRealEstateComponent implements OnInit {
   showLessData: boolean;
   showArea: boolean;
   showNominee: boolean;
-  estateDays: string[];
-  estateMonths: string[];
-  tenure: any;
-  getDate: any;
-  datePipe: any;
-  getValue: any;
-  year: any;
-  month: any;
-  days: any;
   purchasePeriod: any;
   family: any;
   _inputData: any;
@@ -55,15 +46,6 @@ export class AddRealEstateComponent implements OnInit {
   ownershipPerc: any;
   flag: any;
   constructor(public custumService: CustomerService, public subInjectService: SubscriptionInject, private fb: FormBuilder, public custmService: CustomerService, public eventService: EventService, public utils: UtilService) { }
-  // set inputData(inputData) {
-  //   this._inputData = inputData;
-  //   this.getRealEstate(inputData);
-  // }
-
-  // get inputData() {
-  //   return this._inputData;
-  // }
-
   @Input()
   set data(inputData) {
     this._data = inputData;
@@ -75,16 +57,12 @@ export class AddRealEstateComponent implements OnInit {
     return this._data;
   }
   ngOnInit() {
-    // this.addOwner = false;
     this.showMoreData = false;
     this.showArea = false;
     this.showNominee = false;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getListFamilyMem();
-
-    this.estateDays = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'];
-    this.estateMonths = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
   }
   lisNominee(value) {
     console.log(value)
@@ -96,9 +74,6 @@ export class AddRealEstateComponent implements OnInit {
     this.dataFM = this.nomineesListFM
     if (this.dataFM.length > 0) {
       let name = this.ownerName
-      // var evens = _.reject(this.dataFM, function (n) {
-      //   return n.userName == name;
-      // });
       let evens = this.dataFM.filter(deltData => deltData.userName != name)
       this.familyList = evens
     }
@@ -106,9 +81,6 @@ export class AddRealEstateComponent implements OnInit {
     console.log('familyList', this.familyList)
   }
   onNomineeChange(value) {
-    // this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
-    //   return o.ownershipPer;
-    // });
     this.nexNomineePer = 0
     this.getNominee.value.forEach(element => {
       this.nexNomineePer += element.ownershipPer
@@ -158,17 +130,10 @@ export class AddRealEstateComponent implements OnInit {
   removeArea() {
     this.showArea = false;
   }
-  getDateYMD() {
-    this.year = new Date(this.addrealEstateForm.controls.year.value, this.addrealEstateForm.controls.month.value, this.addrealEstateForm.controls.days.value);
-    this.purchasePeriod = this.year.toISOString().slice(0, 10);
-  }
   get getNominee() {
     return this.addrealEstateForm.get('getNomineeName') as FormArray;
   }
   addNominee() {
-    // this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
-    //   return o.ownershipPer;
-    // });
     this.nexNomineePer = 0;
     this.getNominee.value.forEach(element => {
       this.nexNomineePer += parseInt(element.ownershipPer)
@@ -185,29 +150,10 @@ export class AddRealEstateComponent implements OnInit {
       }));
     }
   }
-  // demo:boolean = true;
-  // demoDraft(){
-  //   if(this.demo){
-  //     this.demo = false;
-  //     console.log(this.demo,"call");
-  //     setTimeout(() => {
-  //     this.demo = true;
-
-  //       console.log(this.autoIncrement, "this.autoIncrement 123" );
-  //     }, 10000);
-  //   }
-  //   else{
-  //     return;
-  //   }
-  // }
-
   removeNominee(item) {
     if (this.getNominee.value.length > 1) {
       this.getNominee.removeAt(item);
     }
-    // this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
-    //   return o.ownershipPer;
-    // });
     this.nexNomineePer = 0;
     this.getNominee.value.forEach(element => {
       this.nexNomineePer += element.ownershipPer
@@ -263,9 +209,6 @@ export class AddRealEstateComponent implements OnInit {
   onChange(data) {
     if (data == 'owner') {
       this.nexNomineePer = 0;
-      // this.nexNomineePer = _.sumBy(this.getCoOwner.value, function (o) {
-      //   return o.ownershipPerc;
-      // });
       this.getCoOwner.value.forEach(element => {
         this.nexNomineePer += (element.ownershipPerc) ? parseInt(element.ownershipPerc) : null;
       });
@@ -278,9 +221,6 @@ export class AddRealEstateComponent implements OnInit {
         this.showErrorCoOwner = false;
       }
     } else {
-      // this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
-      //   return o.ownershipPer;
-      // });
       this.nexNomineePer = 0;
 
       this.getNominee.value.forEach(element => {
@@ -295,11 +235,7 @@ export class AddRealEstateComponent implements OnInit {
     }
   }
   getRealEstate(data) {
-    this.flag=data;
-    // if (data == undefined) {
-    //   data ={};
-    // }
-    // this.familyMemberId = data.familyMemberId
+    this.flag = data;
     this.addOwner = false;
     this.addrealEstateForm = this.fb.group({
       ownerName: this.ownerName,
@@ -312,9 +248,6 @@ export class AddRealEstateComponent implements OnInit {
       familyMemberId: [this.familyMemberId,],
       type: [(data.typeId == undefined) ? '' : (data.typeId) + "", [Validators.required]],
       marketValue: [data.marketValue, [Validators.required]],
-      year: [data.year],
-      month: [data.month, [Validators.required]],
-      days: [data.days, [Validators.required]],
       purchasePeriod: [(data.purchasePeriod == undefined) ? null : new Date(data.purchasePeriod)],
       purchaseValue: [data.purchaseValue, [Validators.required]],
       unit: [data.unitId, [Validators.required]],
@@ -324,7 +257,6 @@ export class AddRealEstateComponent implements OnInit {
       gst: [data.gstCharge],
       location: [data.location],
       description: [data.description],
-      // nominee: [data.nominee],
       getNomineeName: this.fb.array([this.fb.group({
         name: null,
         ownershipPer: null,
@@ -363,7 +295,7 @@ export class AddRealEstateComponent implements OnInit {
       if (data.realEstateOwners != undefined) {
         if (data.realEstateOwners.length != 0) {
           const ownerName = data.realEstateOwners.filter(element => element.owner != true)
-            ownerName.forEach(element => {
+          ownerName.forEach(element => {
             this.addrealEstateForm.controls.getCoOwnerName.push(this.fb.group({
               id: element.id,
               ownerName: [(element.ownerName) + "", [Validators.required]],
@@ -375,7 +307,7 @@ export class AddRealEstateComponent implements OnInit {
         }
       }
       if (data.realEstateOwners != undefined) {
-        if(data.realEstateOwners.length != 0){
+        if (data.realEstateOwners.length != 0) {
           this.addOwner = true;
         }
       }
@@ -384,15 +316,9 @@ export class AddRealEstateComponent implements OnInit {
     }
 
     this.ownerData = this.addrealEstateForm.controls;
-
-
-
-
   }
   saveFormData() {
     this.addrealEstateForm.controls.familyMemberId.setValue(this.familyMemberId)
-    this.getValue = this.getDateYMD()
-    console.log(this.getValue);
     if (this.addrealEstateForm.get('type').invalid) {
       this.addrealEstateForm.get('type').markAsTouched();
       return
@@ -426,7 +352,6 @@ export class AddRealEstateComponent implements OnInit {
         gstCharge: this.addrealEstateForm.controls.gst.value,
         location: this.addrealEstateForm.controls.location.value,
         description: this.addrealEstateForm.controls.description.value,
-        // nominee: this.addrealEstateForm.controls.nominee.value,
         nominees: [],
         realEstateOwners: [],
       }
@@ -463,23 +388,23 @@ export class AddRealEstateComponent implements OnInit {
         'isOwner': true
       }
       obj.realEstateOwners.push(obj1)
-      if (obj.id == undefined && this.flag!='adviceRealEstate') {
+      if (obj.id == undefined && this.flag != 'adviceRealEstate') {
         console.log(obj);
         this.custumService.addRealEstate(obj).subscribe(
           data => this.addRealEstateRes(data), (error) => {
             this.eventService.showErrorMessage(error);
           }
         );
-      } else if(this.flag=='adviceRealEstate'){
+      } else if (this.flag == 'adviceRealEstate') {
         let adviceObj = {
           advice_id: this.advisorId,
           adviceStatusId: 5,
           stringObject: obj,
           adviceDescription: "manualAssetDescription"
         }
-          this.custumService.getAdviceRealEstate(adviceObj).subscribe(
-            data => this.getAdviceRealEstateRes(data),
-          );
+        this.custumService.getAdviceRealEstate(adviceObj).subscribe(
+          data => this.getAdviceRealEstateRes(data),
+        );
       } else {
         console.log(obj);
         this.custumService.editRealEstate(obj).subscribe(
@@ -488,10 +413,9 @@ export class AddRealEstateComponent implements OnInit {
       }
     }
   }
-  getAdviceRealEstateRes(data){
+  getAdviceRealEstateRes(data) {
     this.eventService.openSnackBar('Real Estate added successfully', 'OK');
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true })
-
   }
   addRealEstateRes(data) {
     console.log(data);
