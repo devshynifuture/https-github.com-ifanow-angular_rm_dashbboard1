@@ -16,7 +16,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 export class AddEditDocumentComponent implements OnInit {
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'PROCEED',
+    text: 'SAVE & PROCEED',
     buttonColor: 'primary',
     barColor: 'accent',
     raised: true,

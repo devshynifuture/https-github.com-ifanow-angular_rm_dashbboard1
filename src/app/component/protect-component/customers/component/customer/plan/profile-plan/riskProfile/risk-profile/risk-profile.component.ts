@@ -6,11 +6,8 @@ import * as Highcharts from 'highcharts';
 import {AuthService} from 'src/app/auth-service/authService';
 import {HistoryRiskProfileComponent} from '../../history-risk-profile/history-risk-profile.component';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-
-/*const HighchartsMore = require('highcharts/highcharts-more.src');
-HighchartsMore(Highcharts);
-const HC_solid_gauge = require('highcharts/modules/solid-gauge.src');
-HC_solid_gauge(Highcharts);*/
+import more from 'highcharts/highcharts-more';
+more(Highcharts);
 
 @Component({
   selector: 'app-risk-profile',

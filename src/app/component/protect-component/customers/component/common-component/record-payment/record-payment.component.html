@@ -7,7 +7,7 @@
             </div>
             <div class="col-md-4">
                 <div class="form-group mb-0">
-                    <input #amountReceiveRef [maxLength]="10" (keypress)="utils.keyPress($event)" appInputValueValidation class="form-control" formControlName="amountReceived" matInput type="text">
+                    <input #amountReceiveRef [maxLength]="10" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control" formControlName="amountReceived" matInput type="text">
                 </div>
                 <div class="row">
                     <div class="col-md-10 pr-0">
@@ -32,7 +32,7 @@
             </div>
             <div class="col-md-4">
                 <div class="form-group mb-0">
-                    <input #chargesIfAnyRef [maxLength]="10" (keypress)="utils.keyPress($event)" appInputValueValidation class="form-control" formControlName="chargesIfAny" type="text">
+                    <input #chargesIfAnyRef [maxLength]="10" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation class="form-control" formControlName="chargesIfAny" type="text">
                 </div>
                 <div class="row">
                     <div class="col-md-10">
@@ -55,7 +55,7 @@
             </div>
             <div class="col-md-4">
                 <div class="form-group mb-0">
-                    <input #tdsRef [maxLength]="10" (keypress)="utils.keyPress($event)" (keyup)="onChange()" appInputValueValidation class="form-control" formControlName="tds" type="text">
+                    <input #tdsRef [maxLength]="10" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="onChange()" appInputValueValidation class="form-control" formControlName="tds" type="text">
                 </div>
                 <div class="row">
                     <div class="col-md-10 pr-0">

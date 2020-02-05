@@ -14,6 +14,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
   styleUrls: ['./payee-settings.component.scss']
 })
 export class PayeeSettingsComponent implements OnInit {
+  validatorType=ValidatorType
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'Save',
@@ -36,7 +37,6 @@ export class PayeeSettingsComponent implements OnInit {
   sendData;
   updatedData: any;
   inputData: any;
-  validatorType = ValidatorType;
 
   @Output() getEditData = new EventEmitter();
   obj = [

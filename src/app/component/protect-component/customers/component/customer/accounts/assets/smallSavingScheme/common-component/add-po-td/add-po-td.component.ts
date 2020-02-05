@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-po-td',
@@ -17,6 +17,7 @@ import { UtilService } from 'src/app/services/util.service';
   ]
 })
 export class AddPoTdComponent implements OnInit {
+  validatorType=ValidatorType
   maxDate = new Date();
   inputData: any;
   ownerName: any;

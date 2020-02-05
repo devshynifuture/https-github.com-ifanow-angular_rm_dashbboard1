@@ -6,7 +6,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { CustomerService } from '../../../../../customer.service';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-kvp',
@@ -17,6 +17,7 @@ import { UtilService } from 'src/app/services/util.service';
   ]
 })
 export class AddKvpComponent implements OnInit {
+  validatorType=ValidatorType
   maxDate = new Date();
   inputData: any;
   advisorId: any;

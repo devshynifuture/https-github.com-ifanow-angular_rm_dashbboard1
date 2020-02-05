@@ -38,7 +38,7 @@
         <div class="col-md-3 ">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #employeeContry type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0 rupess" formControlName="employeeContry">
+                    <input matInput #employeeContry type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess" formControlName="employeeContry">
                     <mat-error class="f-12" [ngClass]="{'v-h':!(isEmployeeContry && getFormControl().employeeContry.invalid || getFormControl().employeeContry.touched && getFormControl().employeeContry.invalid)}">
                         This field is required
                     </mat-error>
@@ -55,7 +55,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #employerContry type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0 rupess" formControlName="employerContry">
+                    <input matInput #employerContry type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess" formControlName="employerContry">
                     <mat-error class="f-12" [ngClass]="{'v-h':!(isEmployerContry && getFormControl().employerContry.invalid || getFormControl().employerContry.touched && getFormControl().employerContry.invalid)}">
                         This field is required
                     </mat-error>
@@ -71,7 +71,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #currentEPFBal type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0 rupess" formControlName="currentEPFBal">
+                    <input matInput #currentEPFBal type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess" formControlName="currentEPFBal">
                     <mat-error class="f-12" [ngClass]="{'v-h':!(isCurrentEPFBal && getFormControl().currentEPFBal.invalid || getFormControl().currentEPFBal.touched && getFormControl().currentEPFBal.invalid)}">
                         This field is required
                     </mat-error>
@@ -103,7 +103,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #annualSalGrowth type="text" (keyup)="onChange($event)" (keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 percentage" formControlName="annualSalGrowth">
+                    <input matInput #annualSalGrowth type="text" (keyup)="onChange($event)" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="20" class="form-control br-0 percentage" formControlName="annualSalGrowth">
                     <mat-error class="f-12" [ngClass]="{'v-h':!(isAnnualSalGrowth && getFormControl().annualSalGrowth.invalid || getFormControl().annualSalGrowth.touched && getFormControl().annualSalGrowth.invalid)}">
                         This field is required
                     </mat-error>
@@ -130,7 +130,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #maturityYear type="number" (keypress)="utils.keyPress($event)" maxlength="30" class="form-control br-0" formControlName="maturityYear">
+                        <input matInput #maturityYear type="number" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="30" class="form-control br-0" formControlName="maturityYear">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -143,7 +143,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput type="text" (keypress)="utils.keyPress($event)" #EPFNo maxlength="20" class="form-control br-0" formControlName="EPFNo">
+                        <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" #EPFNo maxlength="20" class="form-control br-0" formControlName="EPFNo">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{EPFNo.value.length}}/20</mat-hint>
                     </mat-form-field>
@@ -157,7 +157,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #bankAcNo type="text" (keypress)="utils.keyPress($event)" maxlength="16" class="form-control br-0" formControlName="bankAcNo">
+                        <input matInput #bankAcNo type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="16" class="form-control br-0" formControlName="bankAcNo">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{bankAcNo.value.length}}/16</mat-hint>
                     </mat-form-field>
