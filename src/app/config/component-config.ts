@@ -161,7 +161,7 @@ export const appConfig = {
   EDIT_SCRIP_HOLDING_TRANSACTION: 'account/asset/stock/holding/transaction/edit',
   ////////////////////////////////plan////////////////////////////
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
-  SUBMIT_RISK: 'plan/risk-assessment/submit',
+  SUBMIT_RISK: 'plan/risk-assessment/add',
   GET_GLOBAL_GOAL_DATA: 'goal-planning/goal/global-data/get',
   ADD_RETIREMENT_GOAL: '',
   ADD_HOUSE_GOAL: 'goal-planning/house/goal/add',
