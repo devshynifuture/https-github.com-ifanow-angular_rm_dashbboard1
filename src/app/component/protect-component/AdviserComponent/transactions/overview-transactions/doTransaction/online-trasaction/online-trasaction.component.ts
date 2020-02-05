@@ -3,6 +3,8 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 import { PurchaseTrasactionComponent } from '../purchase-trasaction/purchase-trasaction.component';
 import { UtilService } from 'src/app/services/util.service';
+import { RedemptionTransactionComponent } from '../redemption-transaction/redemption-transaction.component';
+import { SwitchTransactionComponent } from '../switch-transaction/switch-transaction.component';
 
 @Component({
   selector: 'app-online-trasaction',
@@ -79,7 +81,7 @@ export class OnlineTrasactionComponent implements OnInit {
     console.log(value)
     this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
-  
+
   getdataForm(data) {
     if (!data) {
       data = {};
@@ -89,15 +91,15 @@ export class OnlineTrasactionComponent implements OnInit {
     }
     this.transactionAddForm = this.fb.group({
       ownerName: [(!data) ? '' : data.ownerName, [Validators.required]],
-      transactionType:[(!data) ? '' : data.transactionType, [Validators.required]],
-      bankAccountSelection:[(!data) ? '' : data.bankAccountSelection, [Validators.required]],
-      schemeSelection:[(!data) ? '' : data.schemeSelection, [Validators.required]],
-      investor:[(!data) ? '' : data.investor, [Validators.required]],
-      employeeContry:[(!data) ? '' : data.employeeContry, [Validators.required]],
-      investmentAccountSelection:[(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
-      modeOfPaymentSelection:[(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
-      folioSelection:[(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
-      selectInvestor:[(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
+      bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
+      schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
+      investor: [(!data) ? '' : data.investor, [Validators.required]],
+      employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required]],
+      investmentAccountSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      modeOfPaymentSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      folioSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
     });
 
     this.ownerData = this.transactionAddForm.controls;
@@ -107,13 +109,13 @@ export class OnlineTrasactionComponent implements OnInit {
   getFormControl(): any {
     return this.transactionAddForm.controls;
   }
-  openPurchaseTransaction(value,data){
+  openPurchaseTransaction(value, data) {
     const fragmentData = {
       flag: 'addNsc',
       data,
       id: 1,
       state: 'open65',
-      componentName: PurchaseTrasactionComponent
+      componentName: (value == 'PURCHASE') ? PurchaseTrasactionComponent : (value == 'REDEMPTION') ? RedemptionTransactionComponent :(value == 'SIP') ? SwitchTransactionComponent:(value == 'SWP') ? RedemptionTransactionComponent:(value == 'STP') ? PurchaseTrasactionComponent:(value == 'SWITCH') ? SwitchTransactionComponent : ''
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -126,7 +128,7 @@ export class OnlineTrasactionComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-       
+
       }
     );
   }
@@ -156,9 +158,10 @@ export class OnlineTrasactionComponent implements OnInit {
         this.formStep = 'step-2';
       } else if (this.transactionAddForm.get('transactionType').valid && this.formStep == 'step-2') {
         let data = {
-          selectedFamilyMember : this.ownerData.ownerName.value,
+          selectedFamilyMember: this.ownerData.ownerName.value,
+          transactionType: this.transactionAddForm.controls.transactionType.value
         }
-       this.openPurchaseTransaction('addPurchase',data)
+        this.openPurchaseTransaction(data.transactionType, data)
       }
     } else {
       if (this.formStep == 'step-1') {
