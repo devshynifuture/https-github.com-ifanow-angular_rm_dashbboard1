@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {UtilService} from '../../../../../../../services/util.service';
-import {SetDateFooter} from './set-date-footer.component'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { UtilService } from '../../../../../../../services/util.service';
+import { SetDateFooter } from './set-date-footer.component'
 @Component({
   selector: 'app-sudscription-table-filter',
   templateUrl: './sudscription-table-filter.component.html',
@@ -25,18 +25,21 @@ export class SudscriptionTableFilterComponent implements OnInit {
     statusFilterJson: []
   }
   filterDate: any = []
-  onlyDateFilter:boolean = false;
+  onlyDateFilter: boolean = false;
   rangesFooter = SetDateFooter;
+
+  // needs to set value ask anuirudh;
+  maxDate = new Date();
   ngOnInit() {
     this.chipStatus = this.dataToFilter.statusFilter;
     this.chipDate = this.dataToFilter.dateFilter;
-    if(this.dataToFilter.filterQuotation != undefined){
+    if (this.dataToFilter.filterQuotation != undefined) {
       this.onlyDateFilter = this.dataToFilter.filterQuotation
     }
     console.log(this.dataToFilter, this.chipStatus, this.chipDate, " dataToFilter 123 ");
-  
+
   }
-  
+
 
   showFilters(showFilter) {
     if (showFilter == true) {
@@ -55,26 +58,26 @@ export class SudscriptionTableFilterComponent implements OnInit {
     // !_.includes(this.filterStatus, addFilters)
     if (this.filterStatus.find(element => element.name == addFilters.name) == undefined) {
       // this.lastFilterDataId = 0;
-      this.filterStatus[0]= addFilters;
+      this.filterStatus[0] = addFilters;
       this.filterDataArr = [];
       console.log(this.filterStatus);
     } else {
-      
+
     }
     this.filterJson.statusFilterJson = this.filterStatus;
     console.log(this.filterStatus, 'this.filterStatus 123');
     this.filterRes.emit(this.filterJson);
   }
 
-  selectedDateRange= {};
+  selectedDateRange = {};
 
   orgValueChange(selectedDateRange) {
-     
-    this.filterJson.dateFilterJson = {begin: selectedDateRange.begin, end: selectedDateRange.end};
+
+    this.filterJson.dateFilterJson = { begin: selectedDateRange.begin, end: selectedDateRange.end };
     this.filterRes.emit(this.filterJson);
     selectedDateRange = {};
 
-  
+
   }
 
   addFiltersDate(dateFilter) {
@@ -93,7 +96,7 @@ export class SudscriptionTableFilterComponent implements OnInit {
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
 
-    this.selectedDateRange = {begin: beginDate, end: endDate};
+    this.selectedDateRange = { begin: beginDate, end: endDate };
     console.log(this.filterDate, 'this.filterDate 123');
     // this.callFilter(false);
     this.filterJson.dateFilterJson = this.selectedDateRange;
@@ -105,7 +108,7 @@ export class SudscriptionTableFilterComponent implements OnInit {
     console.log(this.filterDate, 'this.filterDate 123 r');
     this.selectedDateFilter = 'dateFilter';
     this.filterDate.splice(item, 1);
-    
+
     this.filterRes.emit(this.filterJson);
 
   }
@@ -120,7 +123,7 @@ export class SudscriptionTableFilterComponent implements OnInit {
     this.filterDataArr = this.filterDataArr.filter((x) => {
       x.status != item.value;
     });
-   
+
     this.filterRes.emit(this.filterJson);
 
   }
