@@ -6,7 +6,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -19,6 +19,7 @@ import { DatePipe } from '@angular/common';
   ]
 })
 export class AddSsyComponent implements OnInit {
+  validatorType = ValidatorType;
   maxDate = new Date();
   inputData: any;
   ownerName: any;
@@ -38,7 +39,7 @@ export class AddSsyComponent implements OnInit {
   commencementDate: any;
   flag: any;
 
-  constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService,private datePipe: DatePipe) { }
+  constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService, private datePipe: DatePipe) { }
 
   @Input()
   set data(data) {
@@ -61,18 +62,18 @@ export class AddSsyComponent implements OnInit {
     console.log(data)
     this.nomineesList = data.controls
   }
-  setCommencementDate(date){
+  setCommencementDate(date) {
     this.commencementDate = date
   }
   getdataForm(data) {
-    this.flag=data;
+    this.flag = data;
     if (data == undefined) {
       data = {};
     }
     else {
       this.editApi = data
     }
-    this.ssyData=data;
+    this.ssyData = data;
     this.ssySchemeForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
       guardian: [data.guardianName, [Validators.required]],
@@ -124,13 +125,16 @@ export class AddSsyComponent implements OnInit {
         let obj = {
           "name": element.controls.name.value,
           "sharePercentage": element.controls.sharePercentage.value,
-          "id":element.id,
-          "familyMemberId":element.familyMemberId
+          "id": element.id,
+          "familyMemberId": element.familyMemberId
         }
         this.nominees.push(obj)
       });
     }
-    if (this.ssySchemeForm.get('guardian').invalid) {
+    if (this.ssySchemeForm.get('ownerName').invalid) {
+      this.ssySchemeForm.get('ownerName').markAsTouched();
+      return;
+    } else if (this.ssySchemeForm.get('guardian').invalid) {
       this.ssySchemeForm.get('guardian').markAsTouched();
       return
     } else if (this.ssySchemeForm.get('ownerName').invalid) {
@@ -158,11 +162,11 @@ export class AddSsyComponent implements OnInit {
       return
     }
     else {
-      if (this.editApi!='adviceSSY') {
+      if (this.editApi != undefined && this.editApi != 'adviceSSY') {
         let obj = {
           "id": this.editApi.id,
           "familyMemberId": this.familyMemberId,
-          "ownerName":(this.ownerName == null) ? this.ssySchemeForm.controls.ownerName.value : this.ownerName,
+          "ownerName": (this.ownerName == null) ? this.ssySchemeForm.controls.ownerName.value : this.ownerName,
           "accountBalance": this.ssySchemeForm.get('accBalance').value,
           "balanceAsOn": this.ssySchemeForm.get('balanceAsOn').value,
           "commencementDate": this.ssySchemeForm.get('commDate').value,
@@ -171,7 +175,7 @@ export class AddSsyComponent implements OnInit {
           "linkedBankAccount": this.ssySchemeOptionalForm.get('linkedAcc').value,
           "agentName": this.ssySchemeOptionalForm.get('agentName').value,
           "guardianName": this.ssySchemeForm.get('guardian').value,
-          "nominees":this.nominees
+          "nominees": this.nominees
         }
         this.cusService.editSSYData(obj).subscribe(
           data => this.addSSYSchemeResponse(data),
@@ -211,17 +215,17 @@ export class AddSsyComponent implements OnInit {
             data => this.getAdviceSsyRes(data),
             err => this.eventService.openSnackBar(err, "dismiss")
           );
-        }else{
+        } else {
           this.cusService.addSSYScheme(obj).subscribe(
             data => this.addSSYSchemeResponse(data),
             error => this.eventService.showErrorMessage(error)
           )
-        } 
-       
+        }
+
       }
     }
   }
-  getAdviceSsyRes(data){
+  getAdviceSsyRes(data) {
     console.log(data);
     this.eventService.openSnackBar("SSY is added", "dismiss");
     this.close(true)
@@ -235,6 +239,6 @@ export class AddSsyComponent implements OnInit {
 
   close(flag) {
     this.isOptionalField = true
-    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 }

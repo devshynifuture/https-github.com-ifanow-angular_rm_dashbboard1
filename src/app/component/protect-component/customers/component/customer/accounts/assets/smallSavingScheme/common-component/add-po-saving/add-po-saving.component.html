@@ -36,7 +36,7 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input autocomplete="off" (keypress)="utils.keyPress($event)" formControlName="accBal" type="text" matInput #accountBalance class="form-control rupess br-0" maxlength="7">
+                    <mat-form-field> <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="accBal" type="text" matInput #accountBalance class="form-control rupess br-0" maxlength="7">
                         <mat-error *ngIf="poSavingForm.get('accBal').errors?.required && poSavingForm.get('accBal').touched" class="f-12">
                             This field is required
                         </mat-error>
@@ -116,7 +116,7 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input type="text" matInput (keypress)="utils.keyPress($event)" formControlName="bankAccNo" #bankAccNo maxlength="16" class="form-control br-0">
+                    <mat-form-field> <input type="text" matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="bankAccNo" #bankAccNo maxlength="16" class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{bankAccNo.value.length}}/16</mat-hint>
                     </mat-form-field>

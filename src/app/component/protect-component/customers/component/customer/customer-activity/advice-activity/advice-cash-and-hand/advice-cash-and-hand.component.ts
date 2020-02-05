@@ -5,6 +5,8 @@ import { AddEPSComponent } from '../../../accounts/assets/retirementAccounts/add
 import { AddSuperannuationComponent } from '../../../accounts/assets/retirementAccounts/add-superannuation/add-superannuation.component';
 import { CashInHandComponent } from '../../../accounts/assets/cash&bank/cash-in-hand/cash-in-hand.component';
 import { BankAccountsComponent } from '../../../accounts/assets/cash&bank/bank-accounts/bank-accounts.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { ActiityService } from '../../actiity.service';
 
 @Component({
   selector: 'app-advice-cash-and-hand',
@@ -14,9 +16,28 @@ import { BankAccountsComponent } from '../../../accounts/assets/cash&bank/bank-a
 export class AdviceCashAndHandComponent implements OnInit {
   displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'balance','advice', 'astatus', 'adate', 'icon'];
   dataSource3 = ELEMENT_DATA1;
-  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, ) { }
+  advisorId: any;
+  clientId: any;
+  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject,private activityService:ActiityService) { }
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    this.getAdviceByAsset();
+  }
+  getAdviceByAsset() {
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      assetCategory: 11
+    }
+    this.activityService.getAllAsset(obj).subscribe(
+      data => this.getAllSchemeResponse(data), (error) => {
+      }
+    );
+  }
+  getAllSchemeResponse(data){
+    console.log(data);
   }
   allAdvice =  false
   openCashAndBank(data,value) {
@@ -32,7 +53,7 @@ export class AdviceCashAndHandComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getBankAccountList();
+            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -57,7 +78,7 @@ export class AdviceCashAndHandComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getCashInHandList();
+            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }

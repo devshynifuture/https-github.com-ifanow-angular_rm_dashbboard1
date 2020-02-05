@@ -52,9 +52,8 @@
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
             <button mat-stroked-button class="btn-primary br-0 pl-8 "
-               ><img src="/assets/images/svg/plus.svg"
-                    class="pr-8">Suggest new Stock
-                </button>
+                (click)="openRealEstate('adviceRealEstate','adviceRealEstate')"><img src="/assets/images/svg/plus.svg"
+                    class="pr-8">Suggest new Stock</button>
         </div>
     </div>
     <table mat-table [dataSource]="dataSource3" class="mt-8" id="table-low">
@@ -108,5 +107,5 @@
     </table>
 </div>
 <div  *ngIf="allAdvice == true">
-    <app-advice-stocks></app-advice-stocks>
+    <app-all-advice-stocks></app-all-advice-stocks>
 </div>

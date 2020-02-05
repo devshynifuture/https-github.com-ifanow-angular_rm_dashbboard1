@@ -109,7 +109,9 @@
         <div class="col-md-9 p-0">
         </div>
         <div class="col-md-3 p-0">
-          <button mat-button class="btn-bottom br-0 text-inherit" (click)="updateData(dataTerms)">SAVE</button>
+          <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="updateData(dataTerms)">SAVE</button> -->
+          <app-progress-button (btnClick)="updateData(dataTerms)" [options]="barButtonOptions" >
+          </app-progress-button>
         </div>
       </div>
     </div>

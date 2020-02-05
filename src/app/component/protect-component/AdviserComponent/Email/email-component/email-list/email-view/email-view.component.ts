@@ -1,19 +1,19 @@
-import { AuthService } from './../../../../../../../auth-service/authService';
-import { EventService } from './../../../../../../../Data-service/event.service';
+import {AuthService} from './../../../../../../../auth-service/authService';
+import {EventService} from './../../../../../../../Data-service/event.service';
 // import { EmailUtilService } from './../../../../../../../services/email-util.service';
-import { ComposeEmailComponent } from './../../compose-email/compose-email.component';
+import {ComposeEmailComponent} from './../../compose-email/compose-email.component';
 // import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 // import { UtilService } from '../../../../../../../services/util.service';
-import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
-import { EmailServiceService } from '../../../email-service.service';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { EmailReplyComponent } from '../email-reply/email-reply.component';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {EmailServiceService} from '../../../email-service.service';
+import {MatBottomSheet} from '@angular/material/bottom-sheet';
+import {EmailReplyComponent} from '../email-reply/email-reply.component';
 // import { EmailAddTaskComponent } from '../email-add-task/email-add-task.component';
-import { Location } from '@angular/common';
-import { Subscription } from 'rxjs';
-import { EmailUtilService } from 'src/app/services/email-util.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { EventHandlerVars } from '@angular/compiler/src/compiler_util/expression_converter';
+import {Location} from '@angular/common';
+import {Subscription} from 'rxjs';
+import {EmailUtilService} from 'src/app/services/email-util.service';
+import {ActivatedRoute, Router} from '@angular/router';
+
 // import { DomSanitizer } from '@angular/platform-browser';
 
 
@@ -221,7 +221,7 @@ export class EmailViewComponent implements OnInit, OnDestroy {
           //   message.payload.parts = newParts;
           // }
 
-          // if (message.payload.parts !== null){ 
+          // if (message.payload.parts !== null){
           //   const newParts = message.payload.parts.map((part) => {
           //     if (part.body.data == null) {
           //       // get message object;

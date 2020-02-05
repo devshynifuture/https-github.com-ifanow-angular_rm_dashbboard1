@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AddSubBrokerCredentialsComponent } from './add-sub-broker-credentials/add-sub-broker-credentials.component';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
+import { OnlineTransactionService } from '../../../online-transaction.service';
 
 @Component({
   selector: 'app-sub-broker-team-member',
@@ -10,13 +11,31 @@ import { SubscriptionInject } from '../../../../Subscriptions/subscription-injec
 })
 export class SubBrokerTeamMemberComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'code', 'euin', 'icons'];
-  dataSource = ELEMENT_DATA;
-  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject) { }
+  dataSource : Array<any> = [{}, {}, {}];
+  constructor(private onlineTransact: OnlineTransactionService, private utilService: UtilService, private subInjectService: SubscriptionInject) { }
   isLoading = false;
 
 
 
   ngOnInit() {
+    this.getBSESubBrokerCredentials()
+  }
+
+  getBSESubBrokerCredentials() {
+    this.isLoading = true;
+    let obj = {
+      advisorId: 414,
+      onlyBrokerCred: true
+    }
+    console.log('encode', obj)
+    this.onlineTransact.getBSESubBrokerCredentials(obj).subscribe(
+      data => this.getBSESubBrokerCredentialsRes(data)
+    );
+  }
+  getBSESubBrokerCredentialsRes(data) {
+    this.isLoading = false;
+    console.log('getBSESubBrokerCredentialsRes', data)
+    this.dataSource = data
   }
   openAddSubBrokerCredential(data, flag) {
     const fragmentData = {

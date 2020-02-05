@@ -38,7 +38,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #appPurValue type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0" formControlName="appPurValue">
+                    <input matInput #appPurValue type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0" formControlName="appPurValue">
                     <mat-error class="f-12" [ngClass]="{'v-h':!(iAppPurValue && getFormControl().appPurValue.invalid || getFormControl().appPurValue.touched && getFormControl().appPurValue.invalid)}">
                         This field is required
                     </mat-error>
@@ -55,7 +55,7 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <mat-select formControlName="totalsGrams" class="form-control br-0">
-                        <mat-option value="">Select option</mat-option>
+                        <mat-option value="" disabled>Select option</mat-option>
                         <mat-option value="1">Entry in tolas</mat-option>
                         <mat-option value="2">Entry in grams</mat-option>
                     </mat-select>
@@ -73,7 +73,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #noTolasGramsPur type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0" formControlName="noTolasGramsPur">
+                    <input matInput #noTolasGramsPur type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0" formControlName="noTolasGramsPur">
                     <mat-error class="f-12" [ngClass]="{'v-h':!(isNoTolasGramsPur && getFormControl().noTolasGramsPur.invalid || getFormControl().noTolasGramsPur.touched && getFormControl().noTolasGramsPur.invalid)}">
                         This field is required
                     </mat-error>
@@ -105,7 +105,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput type="text" (keypress)="utils.keyPress($event)" class="form-control br-0 " formControlName="tenure">
+                    <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 " formControlName="tenure">
                     <mat-error class="f-12" [ngClass]="{'v-h':!(isPurchaseYear && getFormControl().tenure.invalid || getFormControl().tenure.touched && getFormControl().tenure.invalid)}">
                         This field is required
                     </mat-error>
@@ -121,7 +121,7 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <mat-select formControlName="carats" class="form-control br-0">
-                        <mat-option value="">Select option</mat-option>
+                        <mat-option value="" disabled>Select option</mat-option>
                         <mat-option value="1">18</mat-option>
                         <mat-option value="2">22</mat-option>
                         <mat-option value="3">24</mat-option>
@@ -155,7 +155,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #marketValue type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0" formControlName="marketValue">
+                        <input matInput #marketValue type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0" formControlName="marketValue">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{marketValue.value.length}}/10</mat-hint>
                     </mat-form-field>
@@ -169,7 +169,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #bankAcNo type="text" (keypress)="utils.keyPress($event)" maxlength="16" class="form-control br-0" formControlName="bankAcNo">
+                        <input matInput #bankAcNo type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="16" class="form-control br-0" formControlName="bankAcNo">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{bankAcNo.value.length}}/16</mat-hint>
                     </mat-form-field>

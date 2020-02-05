@@ -17,12 +17,15 @@ export class PurchaseTrasactionComponent implements OnInit {
   isViewInitCalled = false;
   selectedFamilyMember: any;
   confirmTrasaction = false
+  transactionType: any;
+  folioSelection :[2] 
 
   constructor(private subInjectService: SubscriptionInject,
     private fb: FormBuilder) { }
   @Input()
   set data(data) {
     this.inputData = data;
+    this.transactionType =  data.transactionType
     this.selectedFamilyMember = data.selectedFamilyMember
     console.log('This is Input data of FixedDepositComponent ', data);
 
@@ -76,12 +79,12 @@ export class PurchaseTrasactionComponent implements OnInit {
       ownerName: [(!data) ? '' : data.ownerName, [Validators.required]],
       transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
-      schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
+      schemeSelection: ['2'],
       investor: [(!data) ? '' : data.investor, [Validators.required]],
       employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required]],
       investmentAccountSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
-      modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
-      folioSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      modeOfPaymentSelection: ['1'],
+      folioSelection: ['2'],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
     });
 

@@ -15,7 +15,7 @@
             <th mat-header-cell *matHeaderCellDef class="br"> Platform </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
-                    {{element.position}}
+                    {{isLoading ? '' :(element.aggregatorType == 1)?'NSE':(element.aggregatorType == 2)?'BSE':'-'}}
                 </div>
             </td>
         </ng-container>
@@ -23,14 +23,14 @@
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef class="br"> Account type </th>
             <td mat-cell *matCellDef="let element" class="br">
-                <div class="bar"> {{element.name}} </div>
+                <div class="bar"> {{isLoading ? '' :(element.accountType == 1)?'ARN':(element.accountType == 2)?'RIA':'-'}} </div>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="weight">
             <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
             <td mat-cell *matCellDef="let element" class="br">
-                <div class="bar"> {{element.weight}}
+                <div class="bar"> {{element.brokerCode}}
                 </div>
             </td>
         </ng-container>
@@ -38,13 +38,13 @@
         <ng-container matColumnDef="symbol">
             <th mat-header-cell *matHeaderCellDef class="br"> Sub broker/Team member name </th>
             <td mat-cell *matCellDef="let element" class="br">
-                <div class="bar">{{element.symbol}} </div>
+                <div class="bar">{{element.teamMember}} </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="code">
             <th mat-header-cell *matHeaderCellDef class="br"> Sub broker code </th>
             <td mat-cell *matCellDef="let element" class="br">
-                <div class="bar"> {{element.code}}</div>
+                <div class="bar"> {{element.suBrokerCode}}</div>
             </td>
         </ng-container>
         <ng-container matColumnDef="euin">

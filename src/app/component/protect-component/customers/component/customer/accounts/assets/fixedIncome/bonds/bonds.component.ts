@@ -8,7 +8,7 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import * as moment from 'moment';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 
 
 @Component({
@@ -21,6 +21,7 @@ import { UtilService } from 'src/app/services/util.service';
   ],
 })
 export class BondsComponent implements OnInit {
+  validatorType = ValidatorType
   maxDate = new Date();
   dataSource: any;
   bonds: any;
@@ -65,8 +66,8 @@ export class BondsComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
-  ownerDetails(value){
-    this.familyMemberId=value.id;
+  ownerDetails(value) {
+    this.familyMemberId = value.id;
   }
   lisNominee(value) {
     console.log(value)
@@ -138,7 +139,10 @@ export class BondsComponent implements OnInit {
   saveBonds() {
     // this.tenure = this.getDateYMD()
     // this.maturityDate = this.tenure
-    if (this.bonds.get('bondName').invalid) {
+    if (this.bonds.get('ownerName').invalid) {
+      this.bonds.get('ownerName').markAsTouched();
+      return;
+    } else if (this.bonds.get('bondName').invalid) {
       this.bonds.get('bondName').markAsTouched();
       return;
     } else if (this.bonds.get('couponOption').invalid) {

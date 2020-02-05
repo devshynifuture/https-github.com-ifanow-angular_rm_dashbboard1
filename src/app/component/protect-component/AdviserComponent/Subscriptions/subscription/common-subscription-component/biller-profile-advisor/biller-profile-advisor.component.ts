@@ -1,18 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionService } from '../../../subscription.service';
-import { AuthService } from '../../../../../../../auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { PhotoCloudinaryUploadService } from '../../../../../../../services/photo-cloudinary-upload.service';
-import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
-import { UtilService, ValidatorType } from '../../../../../../../services/util.service';
-import { PostalService } from 'src/app/services/postal.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { promise } from 'protractor';
-import { resolve } from 'dns';
-import { rejects } from 'assert';
+import {Component, Input, OnInit} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from '../../../../../../../auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
+import {HttpClient} from '@angular/common/http';
+import {PhotoCloudinaryUploadService} from '../../../../../../../services/photo-cloudinary-upload.service';
+import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
+import {UtilService, ValidatorType} from '../../../../../../../services/util.service';
+import {PostalService} from 'src/app/services/postal.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -129,7 +126,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
 
   uploadImgOnSave(){
-    
+
   }
 
   uploadImage() {
@@ -156,7 +153,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
           }
 
         });
-        
+
     } else {
       console.log('asfasdas');
     }
@@ -331,7 +328,6 @@ export class BillerProfileAdvisorComponent implements OnInit {
     return !!pattern.test(str);
   }
 
-  
 
   submitBillerForm() {
     if(this.profileDetailsForm.invalid){
@@ -357,14 +353,14 @@ export class BillerProfileAdvisorComponent implements OnInit {
     }
      else {
       this.barButtonOptions.active = true;
-      
+
       console.log("img url check", this.validURL(this.logoImg ), this.logoImg);
       if(!this.validURL(this.logoImg ) && this.logoImg != undefined){
         this.uploadImage();
       }
       else{
         this.addEditBillerForm();
-        
+
       }
     }
   }

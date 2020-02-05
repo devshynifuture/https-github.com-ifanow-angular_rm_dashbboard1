@@ -54,7 +54,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput type="text" (keypress)="utils.keyPress($event)" (keyup)="onChange($event)" class="form-control br-0 percentage" formControlName="interestRate">
+                    <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="onChange($event)" class="form-control br-0 percentage" formControlName="interestRate">
                     <mat-error class="f-12" [ngClass]="{'v-h':!(isInterestRate && getFormControl().interestRate.invalid || getFormControl().interestRate.touched && getFormControl().interestRate.invalid)}">
                         This field is required
                     </mat-error>
@@ -69,7 +69,7 @@
         <div class="col-md-3">
             <mat-form-field>
                 <mat-select formControlName="compound" class="form-control br-0">
-                    <mat-option value="">Select option</mat-option>
+                    <mat-option value="" disabled>Select option</mat-option>
                     <mat-option value="1">Daily</mat-option>
                     <mat-option value="2">Monthly</mat-option>
                     <mat-option value="3">Quarterly</mat-option>
@@ -107,7 +107,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput autocomplete="off" formControlName="tenure" (keypress)="utils.keyPress($event)" #tenure type="text" maxlength="" class="form-control br-0">
+                    <input matInput autocomplete="off" formControlName="tenure" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" #tenure type="text" maxlength="" class="form-control br-0">
                     <!-- <mat-select formControlName="tenure" class="form-control br-0 ">
                         <mat-option [value]="">Months</mat-option>
                         <mat-option *ngFor="let M of fdMonths" [value]="M">
@@ -157,7 +157,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #bankName (keypress)="utils.onlyText($event)" type="text" maxlength="40" class="form-control br-0" formControlName="bankName">
+                        <input matInput #bankName appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" type="text" maxlength="40" class="form-control br-0" formControlName="bankName">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{bankName.value.length}}/40</mat-hint>
                     </mat-form-field>
@@ -172,7 +172,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input type="text" matInput #linkBankAc appInputValueValidation (keypress)="utils.keyPress($event)" [maxLength]="16" class="form-control br-0" formControlName="linkBankAc">
+                        <input type="text" matInput #linkBankAc appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="16" class="form-control br-0" formControlName="linkBankAc">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{linkBankAc.value.length}}/16</mat-hint>
                     </mat-form-field>

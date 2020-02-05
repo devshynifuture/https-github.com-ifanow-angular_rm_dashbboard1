@@ -32,18 +32,18 @@ export class CommonFroalaComponent implements OnInit {
   }
 }
 */
-import { AfterViewInit, Component, ElementRef, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
-import { SubscriptionService } from '../../../subscription.service';
-import { UtilService } from 'src/app/services/util.service';
-import { EmailOnlyComponent } from '../email-only/email-only.component';
-import { AuthService } from '../../../../../../../auth-service/authService';
-import { PdfService } from '../../../../../../../services/pdf.service';
-import { escapeRegExp } from '@angular/compiler/src/util';
+import {AfterViewInit, Component, ElementRef, forwardRef, Input, OnInit, ViewChild} from '@angular/core';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
+import {SubscriptionService} from '../../../subscription.service';
+import {escapeRegExp, UtilService} from 'src/app/services/util.service';
+import {EmailOnlyComponent} from '../email-only/email-only.component';
+import {AuthService} from '../../../../../../../auth-service/authService';
+import {PdfService} from '../../../../../../../services/pdf.service';
+// import { escapeRegExp } from '';
 
 // import html2canvas from 'html2canvas';
 

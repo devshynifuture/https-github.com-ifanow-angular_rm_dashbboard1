@@ -18,7 +18,7 @@
           routerLinkActive="active">INVOICES</a>
         <a (click)="value=6" [ngClass]="_value == 6 ? 'active': ''" [routerLink]="'./documents'" mat-tab-link
           routerLinkActive="active">DOCUMENTS</a>
-        <a (click)="value=7" [ngClass]="_value == 7 ? 'active': ''" [routerLink]="['./settings', 'plans']"
+        <a (click)="value=7" [ngClass]="_value == 7 ? 'active': ''" [routerLink]="['./settings',label]"
           [state]="{ example: 0 }" mat-tab-link routerLinkActive="active">SETTINGS</a>
       </nav>
 

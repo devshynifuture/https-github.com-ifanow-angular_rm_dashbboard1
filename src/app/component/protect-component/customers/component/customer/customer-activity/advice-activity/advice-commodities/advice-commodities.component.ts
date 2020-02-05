@@ -3,6 +3,8 @@ import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { GoldComponent } from '../../../accounts/assets/commodities/gold/gold.component';
 import { OthersComponent } from '../../../accounts/assets/commodities/others/others.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { ActiityService } from '../../actiity.service';
 
 @Component({
   selector: 'app-advice-commodities',
@@ -10,14 +12,33 @@ import { OthersComponent } from '../../../accounts/assets/commodities/others/oth
   styleUrls: ['./advice-commodities.component.scss']
 })
 export class AdviceCommoditiesComponent implements OnInit {
-  displayedColumns3: string[] = ['checkbox', 'name', 'desc','mvalue', 'advice', 'astatus', 'adate', 'icon'];
+  displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'mvalue', 'advice', 'astatus', 'adate', 'icon'];
   dataSource3 = ELEMENT_DATA1;
-  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject) { }
+  advisorId: any;
+  clientId: any;
+  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    this.getAdviceByAsset();
   }
   allAdvice = false
-  openCommodities(data,value) {
+  getAdviceByAsset() {
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      assetCategory: 12
+    }
+    this.activityService.getAllAsset(obj).subscribe(
+      data => this.getAllSchemeResponse(data), (error) => {
+      }
+    );
+  }
+  getAllSchemeResponse(data) {
+    console.log(data);
+  }
+  openCommodities(data, value) {
     const fragmentData = {
       flag: value,
       data: data,
@@ -33,20 +54,15 @@ export class AdviceCommoditiesComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-            // if (value == 'addGold') {
-            //   this.getGoldList()
-            // } else {
-            //   this.getOtherList()
-            // }
-
           }
+          this.getAdviceByAsset();
           rightSideDataSub.unsubscribe();
         }
 
       }
     );
   }
-  openOthers(data,value) {
+  openOthers(data, value) {
     const fragmentData = {
       flag: value,
       data: data,
@@ -61,11 +77,7 @@ export class AdviceCommoditiesComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // if (value == 'addGold') {
-            //   this.getGoldList()
-            // } else {
-            //   this.getOtherList()
-            // }
+            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -87,7 +99,7 @@ export interface PeriodicElement1 {
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
-  { name: 'Rahul Jain', desc: '1', mvalue:'20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-  { name: 'Rahul Jain', desc: '2', mvalue:'20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
+  { name: 'Rahul Jain', desc: '1', mvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
+  { name: 'Rahul Jain', desc: '2', mvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
 
 ];
