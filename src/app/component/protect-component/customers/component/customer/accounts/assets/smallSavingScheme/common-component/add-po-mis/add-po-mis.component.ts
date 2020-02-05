@@ -17,7 +17,7 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
   ],
 })
 export class AddPoMisComponent implements OnInit {
-  validatorType=ValidatorType
+  validatorType = ValidatorType
   maxDate = new Date();
   show: boolean;
   _inputData: any;
@@ -123,7 +123,10 @@ export class AddPoMisComponent implements OnInit {
         this.nominees.push(obj)
       });
     }
-    if (this.pomisForm.controls.amtInvested.invalid) {
+    if (this.pomisForm.get('ownerName').invalid) {
+      this.pomisForm.get('ownerName').markAsTouched();
+      return;
+    } else if (this.pomisForm.controls.amtInvested.invalid) {
       this.pomisForm.get('amtInvested').markAsTouched();
       return;
     } else if (this.pomisForm.get('ownerName').invalid) {
@@ -155,7 +158,7 @@ export class AddPoMisComponent implements OnInit {
       obj.commencementdate = obj.commencementdate.toISOString().slice(0, 10);
 
 
-      if (this.editApi!='Add' && this.editApi != 'advicePOMIS') {
+      if (this.editApi != 'Add' && this.editApi != 'advicePOMIS') {
         const editObj = {
           id: this._inputData.id,
           clientId: this.clientId,

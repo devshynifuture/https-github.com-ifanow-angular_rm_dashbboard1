@@ -35,6 +35,8 @@ export class SettingsSubscriptionComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.label = params.get("label")
     })
+    console.log("i was called for check 1", this.label);
+    
     // this.label = this.route.snapshot.paramMap.get("label")
     switch (this.label) {
       case 'plans':
@@ -75,7 +77,8 @@ export class SettingsSubscriptionComponent implements OnInit {
       this.label = 'preferences'
       break;
     }
-    this.router.navigate(['/admin/subscription/settings',this.label])
+    
+    this.router.navigate(['/admin/subscription/settings',this.label]);
   }
 
 

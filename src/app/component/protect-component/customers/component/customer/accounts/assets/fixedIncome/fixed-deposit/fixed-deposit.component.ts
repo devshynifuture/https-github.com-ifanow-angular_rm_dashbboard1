@@ -24,7 +24,7 @@ import { ActiityService } from '../../../../customer-activity/actiity.service';
   ],
 })
 export class FixedDepositComponent implements OnInit {
-  validatorType=ValidatorType
+  validatorType = ValidatorType
   maxDate = new Date();
   showHide = false;
   isownerName = false;
@@ -208,13 +208,16 @@ export class FixedDepositComponent implements OnInit {
     return this.fixedDeposit.controls;
   }
   saveFixedDeposit() {
-    if (this.fixedDeposit.controls.maturityDate.invalid) {
+     if (this.showTenure==true) {
       this.tenure = this.getDateYMD();
       this.maturityDate = this.tenure;
     } else {
       this.maturityDate = this.fixedDeposit.controls.maturityDate.value;
     }
-    if (this.fixedDeposit.get('FDType').invalid) {
+    if (this.fixedDeposit.get('ownerName').invalid) {
+      this.fixedDeposit.get('ownerName').markAsTouched();
+      return;
+    } else if (this.fixedDeposit.get('FDType').invalid) {
       this.fixedDeposit.get('FDType').markAsTouched();
       return
     }

@@ -173,7 +173,10 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     }
   }
   saveFormData() {
-    if (this.addLiabilityForm.get('loanType').invalid) {
+    if (this.addLiabilityForm.get('ownerName').invalid) {
+      this.addLiabilityForm.get('ownerName').markAsTouched();
+      return;
+     } else if (this.addLiabilityForm.get('loanType').invalid) {
       this.addLiabilityForm.get('loanType').markAsTouched();
       return;
     } else if (this.addLiabilityForm.get('loanAmount').invalid) {

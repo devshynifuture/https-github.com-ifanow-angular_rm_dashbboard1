@@ -20,7 +20,7 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
   ],
 })
 export class AddSuperannuationComponent implements OnInit {
-  validatorType=ValidatorType
+  validatorType = ValidatorType
   showHide = false;
   inputData: any;
   ownerName: any;
@@ -63,7 +63,7 @@ export class AddSuperannuationComponent implements OnInit {
     this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag })
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag })
   }
   showLess(value) {
     if (value == true) {
@@ -85,7 +85,7 @@ export class AddSuperannuationComponent implements OnInit {
   //   return this.getDate;
   // }
   getdataForm(data) {
-    this.flag=data;
+    this.flag = data;
     if (data == undefined) {
       data = {}
     }
@@ -111,7 +111,10 @@ export class AddSuperannuationComponent implements OnInit {
     return this.superannuation.controls;
   }
   saveSuperannuation() {
-    if (this.superannuation.get('employeeContry').invalid) {
+    if (this.superannuation.get('ownerName').invalid) {
+      this.superannuation.get('ownerName').markAsTouched();
+      return;
+    } else if (this.superannuation.get('employeeContry').invalid) {
       this.superannuation.get('employeeContry').markAsTouched();
       return;
     } else if (this.superannuation.get('ownerName').invalid) {
@@ -155,11 +158,11 @@ export class AddSuperannuationComponent implements OnInit {
         stringObject: obj,
         adviceDescription: "manualAssetDescription"
       }
-      if (this.superannuation.controls.id.value == undefined && this.flag!='adviceSuperAnnuation') {
+      if (this.superannuation.controls.id.value == undefined && this.flag != 'adviceSuperAnnuation') {
         this.custumService.addSuperannuation(obj).subscribe(
           data => this.addSuperannuationRes(data)
         );
-      } else if(this.flag=='adviceSuperAnnuation'){
+      } else if (this.flag == 'adviceSuperAnnuation') {
         this.custumService.getAdviceSuperannuation(adviceObj).subscribe(
           data => this.getAdviceSuperAnnuationRes(data),
         );
@@ -171,17 +174,17 @@ export class AddSuperannuationComponent implements OnInit {
       }
     }
   }
-  getAdviceSuperAnnuationRes(data){
+  getAdviceSuperAnnuationRes(data) {
     this.event.openSnackBar('Superannuation added successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ flag: 'addedSuperannuation', state: 'close', data,refreshRequired:true })
+    this.subInjectService.changeNewRightSliderState({ flag: 'addedSuperannuation', state: 'close', data, refreshRequired: true })
   }
   addSuperannuationRes(data) {
     console.log('addrecuringDepositRes', data)
     this.event.openSnackBar('Added successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ flag: 'addedSuperannuation', state: 'close', data,refreshRequired:true })
+    this.subInjectService.changeNewRightSliderState({ flag: 'addedSuperannuation', state: 'close', data, refreshRequired: true })
   }
   editSuperannuationRes(data) {
     this.event.openSnackBar('Updated successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ flag: 'addedSuperannuation', state: 'close', data,refreshRequired:true })
+    this.subInjectService.changeNewRightSliderState({ flag: 'addedSuperannuation', state: 'close', data, refreshRequired: true })
   }
 }

@@ -23,6 +23,11 @@ import { ManageDeploymentComponent } from './deployments-plan/manage-deployment/
 import { ManageExclusionsComponent } from './deployments-plan/manage-exclusions/manage-exclusions.component';
 import { SelectAssetClassComponent } from './deployments-plan/select-asset-class/select-asset-class.component';
 import { DeploymentDetailsComponent } from './deployments-plan/deployment-details/deployment-details.component';
+import { CashflowPlanIncomeComponent } from './cashflows-plan/cashflow-plan-income/cashflow-plan-income.component';
+import { CashflowPlanExpenseComponent } from './cashflows-plan/cashflow-plan-expense/cashflow-plan-expense.component';
+import { CashflowPlanLiabilitiesComponent } from './cashflows-plan/cashflow-plan-liabilities/cashflow-plan-liabilities.component';
+import { CashflowPlanAssetsComponent } from './cashflows-plan/cashflow-plan-assets/cashflow-plan-assets.component';
+import { CashflowPlanInsuranceComponent } from './cashflows-plan/cashflow-plan-insurance/cashflow-plan-insurance.component';
 // import { AddInsurancePlanningComponent } from './insurance-plan/add-insurance-planning/add-insurance-planning.component';
 // import { EditApplicableTaxComponent } from './texes-plan/edit-applicable-tax/edit-applicable-tax.component';
 // import { SetupLumpsumDeploymentComponent } from './investments-plan/add-investment-plan/setup-lumpsum-deployment/setup-lumpsum-deployment.component';
@@ -58,6 +63,11 @@ import { DeploymentDetailsComponent } from './deployments-plan/deployment-detail
     AddInvestmentPlanComponent,
     ManageDeploymentComponent,
     ManageExclusionsComponent,
+    CashflowPlanIncomeComponent,
+    CashflowPlanExpenseComponent,
+    CashflowPlanLiabilitiesComponent,
+    CashflowPlanAssetsComponent,
+    CashflowPlanInsuranceComponent,
     // DeploymentDetailsComponent,
     // AddInsurancePlanningComponent,
     // EditApplicableTaxComponent,

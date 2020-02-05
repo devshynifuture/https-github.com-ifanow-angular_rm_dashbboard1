@@ -40,51 +40,51 @@
             </div>
         </div>
         <div class="row pt-12">
-            <div class="col-md-4 pl-8 pr-8 c-p" (click)="selectTransactionType('purchase')">
-                <mat-checkbox [ngStyle]="{'pointer-events': (selectedDiv == 'purchase') ? 'all': 'none'}"
-                    [ngClass]="{'v-h': selectedDiv != 'purchase' }" class="checked" checked="false"></mat-checkbox>
-                <div class="row pt-20 pb-20 bg-grey lter" [ngClass]="{'b-a-custom': selectedDiv == 'purchase'}">
+            <div class="col-md-4 pl-8 pr-8 c-p" (click)="selectTransactionType('PURCHASE')">
+                <mat-checkbox [ngStyle]="{'pointer-events': (selectedDiv == 'PURCHASE') ? 'all': 'none'}"
+                    [ngClass]="{'v-h': selectedDiv != 'PURCHASE' }" class="checked" checked="false"></mat-checkbox>
+                <div class="row pt-20 pb-20 bg-grey lter" [ngClass]="{'b-a-custom': selectedDiv == 'PURCHASE'}">
                     <div class="col-md-4 text-right">
-                        <img src="/assets/images/svg/shopping{{ (selectedDiv == 'purchase') ? '-blue': '-icons' }}.svg"
+                        <img src="/assets/images/svg/shopping{{ (selectedDiv == 'PURCHASE') ? '-blue': '-icons' }}.svg"
                             class="pt-4">
                     </div>
                     <div class="col-md-8 pl-0">
-                        <h3 class="m-0" [ngClass]="{ 'text-primary': selectedDiv == 'purchase' }"> Purchase</h3>
+                        <h3 class="m-0" [ngClass]="{ 'text-primary': selectedDiv == 'PURCHASE' }"> Purchase</h3>
                         <p class="m-0 roboto text-custom pt-4 f-13"
-                            [ngClass]="{ 'text-primary': selectedDiv == 'purchase' }">Invest a
+                            [ngClass]="{ 'text-primary': selectedDiv == 'PURCHASE' }">Invest a
                             lumpsum amount in a jiffy</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 pl-8 pr-8 c-p" (click)="selectTransactionType('switch')">
-                <mat-checkbox [ngStyle]=" {'pointer-events': (selectedDiv == 'switch') ? 'all': 'none'}"
-                    [ngClass]="{'v-h':selectedDiv != 'switch' }" class="checked" checked="false">
+            <div class="col-md-4 pl-8 pr-8 c-p" (click)="selectTransactionType('SWITCH')">
+                <mat-checkbox [ngStyle]=" {'pointer-events': (selectedDiv == 'SWITCH') ? 'all': 'none'}"
+                    [ngClass]="{'v-h':selectedDiv != 'SWITCH' }" class="checked" checked="false">
                 </mat-checkbox>
-                <div class="row pt-20 pb-20 bg-grey lter" [ngClass]="{'b-a-custom': selectedDiv == 'switch'}">
+                <div class="row pt-20 pb-20 bg-grey lter" [ngClass]="{'b-a-custom': selectedDiv == 'SWITCH'}">
                     <div class="col-md-4 text-right">
-                        <img src="/assets/images/svg/switch{{ (selectedDiv == 'switch') ? '-blue': '-icons' }}.svg"
+                        <img src="/assets/images/svg/switch{{ (selectedDiv == 'SWITCH') ? '-blue': '-icons' }}.svg"
                             class="pt-4">
                     </div>
                     <div class="col-md-8 pl-0">
-                        <h3 class="m-0" [ngClass]="{ 'text-primary': selectedDiv == 'switch' }"> Switch</h3>
+                        <h3 class="m-0" [ngClass]="{ 'text-primary': selectedDiv == 'SWITCH' }"> Switch</h3>
                         <p class="m-0 roboto text-custom pt-4 f-13"
-                            [ngClass]="{ 'text-primary': selectedDiv == 'switch' }">Switch lumpsum from one scheme to
+                            [ngClass]="{ 'text-primary': selectedDiv == 'SWITCH' }">Switch lumpsum from one scheme to
                             another</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 pl-8 pr-8 c-p" (click)="selectTransactionType('redeem')">
-                <mat-checkbox [ngStyle]="{'pointer-events': (selectedDiv == 'redeem') ? 'all': 'none'}"
-                    [ngClass]="{'v-h':selectedDiv != 'redeem' }" class="checked" checked="false"></mat-checkbox>
-                <div class="row pt-20 pb-20 bg-grey lter" [ngClass]="{'b-a-custom': selectedDiv == 'redeem'}">
+            <div class="col-md-4 pl-8 pr-8 c-p" (click)="selectTransactionType('REDEMPTION')">
+                <mat-checkbox [ngStyle]="{'pointer-events': (selectedDiv == 'REDEMPTION') ? 'all': 'none'}"
+                    [ngClass]="{'v-h':selectedDiv != 'REDEMPTION' }" class="checked" checked="false"></mat-checkbox>
+                <div class="row pt-20 pb-20 bg-grey lter" [ngClass]="{'b-a-custom': selectedDiv == 'REDEMPTION'}">
                     <div class="col-md-4 text-right">
-                        <img src="/assets/images/svg/reedem{{ (selectedDiv == 'redeem') ? '-blue': '-icons' }}.svg"
+                        <img src="/assets/images/svg/reedem{{ (selectedDiv == 'REDEMPTION') ? '-blue': '-icons' }}.svg"
                             class="pt-4">
                     </div>
                     <div class="col-md-8 pl-0">
-                        <h3 class="m-0" [ngClass]="{ 'text-primary': selectedDiv == 'redeem' }"> Redeem</h3>
+                        <h3 class="m-0" [ngClass]="{ 'text-primary': selectedDiv == 'REDEMPTION' }"> Redeem</h3>
                         <p class="m-0 roboto text-custom pt-4 f-13"
-                            [ngClass]="{ 'text-primary': selectedDiv == 'redeem' }">Redeem from your existing schemes
+                            [ngClass]="{ 'text-primary': selectedDiv == 'REDEMPTION' }">Redeem from your existing schemes
                         </p>
                     </div>
                 </div>
@@ -92,49 +92,49 @@
 
         </div>
         <div class="row pt-12">
-            <div class="col-md-4 pl-8 pr-8 c-p" (click)="selectTransactionType('sip')">
-                <mat-checkbox [ngStyle]="{'pointer-events': (selectedDiv == 'sip') ? 'all': 'none'}"
-                    [ngClass]="{'v-h':selectedDiv != 'sip' }" class="checked" checked="false"></mat-checkbox>
-                <div class="row pt-20 pb-20 bg-grey lter" [ngClass]="{'b-a-custom': selectedDiv == 'sip'}">
+            <div class="col-md-4 pl-8 pr-8 c-p" (click)="selectTransactionType('SIP')">
+                <mat-checkbox [ngStyle]="{'pointer-events': (selectedDiv == 'SIP') ? 'all': 'none'}"
+                    [ngClass]="{'v-h':selectedDiv != 'SIP' }" class="checked" checked="false"></mat-checkbox>
+                <div class="row pt-20 pb-20 bg-grey lter" [ngClass]="{'b-a-custom': selectedDiv == 'SIP'}">
                     <div class="col-md-4 text-right">
-                        <img src="/assets/images/svg/sip{{ (selectedDiv == 'sip') ? '-blue': '-icons' }}.svg"
+                        <img src="/assets/images/svg/sip{{ (selectedDiv == 'SIP') ? '-blue': '-icons' }}.svg"
                             class="pt-4">
                     </div>
                     <div class="col-md-8 pl-0">
-                        <h3 class="m-0" [ngClass]="{ 'text-primary': selectedDiv == 'sip' }"> SIP</h3>
+                        <h3 class="m-0" [ngClass]="{ 'text-primary': selectedDiv == 'SIP' }"> SIP</h3>
                         <p class="m-0 roboto text-custom pt-4 f-13"
-                            [ngClass]="{ 'text-primary': selectedDiv == 'sip' }">Start a systematic investment plan</p>
+                            [ngClass]="{ 'text-primary': selectedDiv == 'SIP' }">Start a systematic investment plan</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 pl-8 pr-8 c-p" (click)="selectTransactionType('stp')">
-                <mat-checkbox [ngStyle]="{'pointer-events':(selectedDiv == 'stp') ? 'all': 'none'}"
-                    [ngClass]="{'v-h':selectedDiv != 'stp' }" class="checked" checked="false"></mat-checkbox>
-                <div class="row pt-20 pb-20 bg-grey lter" [ngClass]="{'b-a-custom': selectedDiv == 'stp'}">
+            <div class="col-md-4 pl-8 pr-8 c-p" (click)="selectTransactionType('STP')">
+                <mat-checkbox [ngStyle]="{'pointer-events':(selectedDiv == 'STP') ? 'all': 'none'}"
+                    [ngClass]="{'v-h':selectedDiv != 'STP' }" class="checked" checked="false"></mat-checkbox>
+                <div class="row pt-20 pb-20 bg-grey lter" [ngClass]="{'b-a-custom': selectedDiv == 'STP'}">
                     <div class="col-md-4 text-right">
-                        <img src="/assets/images/svg/switch{{ (selectedDiv == 'stp') ? '-blue': '-icons' }}.svg"
+                        <img src="/assets/images/svg/switch{{ (selectedDiv == 'STP') ? '-blue': '-icons' }}.svg"
                             class="pt-4">
                     </div>
                     <div class="col-md-8 pl-0">
-                        <h3 class="m-0" [ngClass]="{ 'text-primary': selectedDiv == 'stp' }"> STP</h3>
+                        <h3 class="m-0" [ngClass]="{ 'text-primary': selectedDiv == 'STP' }"> STP</h3>
                         <p class="m-0 roboto text-custom pt-4 f-13"
-                            [ngClass]="{ 'text-primary': selectedDiv == 'stp' }">Systematic transfer from one scheme to
+                            [ngClass]="{ 'text-primary': selectedDiv == 'STP' }">Systematic transfer from one scheme to
                             another</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 pl-8 pr-8 c-p" (click)="selectTransactionType('swp')">
-                <mat-checkbox [ngStyle]="{'pointer-events':(selectedDiv == 'swp') ? 'all': 'none'}"
-                    [ngClass]="{'v-h':selectedDiv != 'swp' }" class="checked" checked="false"></mat-checkbox>
-                <div class="row pt-20 pb-20 bg-grey lter" [ngClass]="{'b-a-custom': selectedDiv == 'swp'}">
+            <div class="col-md-4 pl-8 pr-8 c-p" (click)="selectTransactionType('SWP')">
+                <mat-checkbox [ngStyle]="{'pointer-events':(selectedDiv == 'SWP') ? 'all': 'none'}"
+                    [ngClass]="{'v-h':selectedDiv != 'SWP' }" class="checked" checked="false"></mat-checkbox>
+                <div class="row pt-20 pb-20 bg-grey lter" [ngClass]="{'b-a-custom': selectedDiv == 'SWP'}">
                     <div class="col-md-4 text-right">
-                        <img src="/assets/images/svg/reedem{{ (selectedDiv == 'swp') ? '-blue': '-icons' }}.svg"
+                        <img src="/assets/images/svg/reedem{{ (selectedDiv == 'SWP') ? '-blue': '-icons' }}.svg"
                             class="pt-4">
                     </div>
                     <div class="col-md-8 pl-0">
-                        <h3 class="m-0" [ngClass]="{ 'text-primary': selectedDiv == 'swp' }"> SWP</h3>
+                        <h3 class="m-0" [ngClass]="{ 'text-primary': selectedDiv == 'SWP' }"> SWP</h3>
                         <p class="m-0 roboto text-custom pt-4 f-13"
-                            [ngClass]="{ 'text-primary': selectedDiv == 'swp' }">Systematic withdrawal from a scheme
+                            [ngClass]="{ 'text-primary': selectedDiv == 'SWP' }">Systematic withdrawal from a scheme
                         </p>
                     </div>
                 </div>

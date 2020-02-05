@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +33,8 @@ export class EventService {
     flag: '',
     componentName: ''
   });
+  
+  
   upperSliderDataObs = this.upperSliderData.asObservable();
 
   changeUpperSliderState(sliderState: object) {
@@ -62,6 +64,7 @@ export class EventService {
     this.sidebarValue.next(message);
     return this.sidebarSubscribeData;
   }
+
 
   tabData(message: string) {
     this.tabValue.next(message);

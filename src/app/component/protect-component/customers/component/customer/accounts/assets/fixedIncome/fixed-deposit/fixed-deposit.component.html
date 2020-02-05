@@ -43,7 +43,7 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <mat-select #FDType formControlName="FDType" class="form-control br-0">
-                        <mat-option value="">Select option</mat-option>
+                        <mat-option value="" disabled>Select option</mat-option>
                         <mat-option value="1">Bank FD</mat-option>
                         <mat-option value="2">Corporate FD</mat-option>
                     </mat-select>
@@ -110,7 +110,7 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <mat-select #compound formControlName="compound" class="form-control br-0">
-                        <mat-option value="">Select option</mat-option>
+                        <mat-option value="" disabled>Select option</mat-option>
                         <mat-option value="1">Daily</mat-option>
                         <mat-option value="2">Monthly</mat-option>
                         <mat-option value="3">Quarterly</mat-option>
@@ -223,7 +223,7 @@
         <div class="col-md-3 pr-0">
             <mat-form-field>
                 <mat-select #payOpt formControlName="payOpt" class="form-control br-0">
-                    <mat-option value=""> Select option</mat-option>
+                    <mat-option value="" disabled> Select option</mat-option>
                     <mat-option value="1"> Cumulative payout</mat-option>
                     <mat-option value="2" (click)="intrestPayout(2)">Interest payout</mat-option>
                 </mat-select>
@@ -240,7 +240,7 @@
         <div class="col-md-3 pr-0">
             <mat-form-field>
                 <mat-select #frequencyOfPayoutPerYear formControlName="frequencyOfPayoutPerYear" class="form-control br-0">
-                    <mat-option value=""> Select option</mat-option>
+                    <mat-option value="" disabled> Select option</mat-option>
                     <mat-option value="1"> Monthly</mat-option>
                     <mat-option value="2">quarterly</mat-option>
                     <mat-option value="3">semi-annually</mat-option>
@@ -260,7 +260,7 @@
         <div class="col-md-5">
             <mat-form-field>
                 <mat-select #ownerType class="form-control br-0" formControlName="ownerType">
-                    <mat-option value=""> Select option</mat-option>
+                    <mat-option value="" disabled> Select option</mat-option>
                     <mat-option value="1"> Joint</mat-option>
                     <mat-option value="2">Single</mat-option>
                 </mat-select>
