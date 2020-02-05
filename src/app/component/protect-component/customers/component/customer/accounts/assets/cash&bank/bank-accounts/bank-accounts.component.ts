@@ -19,7 +19,7 @@ import { EventService } from 'src/app/Data-service/event.service';
   ],
 })
 export class BankAccountsComponent implements OnInit {
-  validatorType=ValidatorType
+  validatorType = ValidatorType
   ownerName: any;
   inputData: any;
   familyMemberId: any;
@@ -36,7 +36,7 @@ export class BankAccountsComponent implements OnInit {
   nomineesListFM: any;
   flag: any;
 
-  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public utils: UtilService,public eventService:EventService) { }
+  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
 
   @Input()
   set data(data) {
@@ -70,14 +70,14 @@ export class BankAccountsComponent implements OnInit {
     }
   }
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag })
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag })
   }
   onlyTextNotSplChar(event: any) {
     var k = event.keyCode;
     return ((k > 64 && k < 91) || (k == 32) || (k > 96 && k < 123) || k == 8);
   }
   getdataForm(data) {
-    this.flag=data;
+    this.flag = data;
     if (data == undefined) {
       data = {}
     }
@@ -109,7 +109,10 @@ export class BankAccountsComponent implements OnInit {
   }
   saveCashInHand() {
 
-    if (this.bankAccounts.get('accountType').invalid) {
+    if (this.bankAccounts.get('ownerName').invalid) {
+      this.bankAccounts.get('ownerName').markAsTouched();
+      return;
+    } else if (this.bankAccounts.get('accountType').invalid) {
       this.bankAccounts.get('accountType').markAsTouched();
       return;
     } else if (this.bankAccounts.get('ownerName').invalid) {
@@ -127,18 +130,18 @@ export class BankAccountsComponent implements OnInit {
     } else if (this.bankAccounts.get('compound').invalid) {
       this.bankAccounts.get('compound').markAsTouched();
       return;
-    }  else {
+    } else {
       let obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
         familyMemberId: this.familyMemberId,
         ownerName: (this.ownerName == undefined) ? this.bankAccounts.controls.ownerName.value : this.ownerName,
         accountType: this.bankAccounts.controls.accountType.value,
-        balanceAsOn:this.datePipe.transform(this.bankAccounts.controls.balanceAsOn.value, 'yyyy-MM-dd'),
+        balanceAsOn: this.datePipe.transform(this.bankAccounts.controls.balanceAsOn.value, 'yyyy-MM-dd'),
         bankName: this.bankAccounts.controls.bankName.value,
         interestCompounding: this.bankAccounts.controls.compound.value,
         interestRate: this.bankAccounts.controls.interestRate.value,
-        accountBalance:this.bankAccounts.controls.accountBalance.value,
+        accountBalance: this.bankAccounts.controls.accountBalance.value,
         accountNo: this.bankAccounts.controls.bankAcNo.value,
         description: this.bankAccounts.controls.description.value,
         id: this.bankAccounts.controls.id.value
@@ -149,15 +152,15 @@ export class BankAccountsComponent implements OnInit {
         stringObject: obj,
         adviceDescription: "manualAssetDescription"
       }
-      if (this.bankAccounts.controls.id.value == null && this.flag!='adviceBankAccount') {
+      if (this.bankAccounts.controls.id.value == null && this.flag != 'adviceBankAccount') {
         this.custumService.addBankAccounts(obj).subscribe(
           data => this.addBankAccountsRes(data)
         );
-      } else if(this.flag=='adviceBankAccount'){
+      } else if (this.flag == 'adviceBankAccount') {
         this.custumService.getAdviceBankAccount(adviceObj).subscribe(
           data => this.getAdviceBankAccountRes(data),
         );
-      }else {
+      } else {
         //edit call
         this.custumService.editBankAcounts(obj).subscribe(
           data => this.editBankAcountsRes(data)
@@ -165,18 +168,18 @@ export class BankAccountsComponent implements OnInit {
       }
     }
   }
-  getAdviceBankAccountRes(data){
+  getAdviceBankAccountRes(data) {
     this.eventService.openSnackBar('Bank account added successfully', 'OK');
-    this.subInjectService.changeNewRightSliderState({flag:'addedbankAc', state: 'close', data,refreshRequired:true })
+    this.subInjectService.changeNewRightSliderState({ flag: 'addedbankAc', state: 'close', data, refreshRequired: true })
   }
   addBankAccountsRes(data) {
     console.log('addrecuringDepositRes', data)
-    this.subInjectService.changeNewRightSliderState({flag:'addedbankAc', state: 'close', data,refreshRequired:true })
+    this.subInjectService.changeNewRightSliderState({ flag: 'addedbankAc', state: 'close', data, refreshRequired: true })
     this.eventService.openSnackBar('Bank account added successfully', 'OK');
 
   }
   editBankAcountsRes(data) {
-    this.subInjectService.changeNewRightSliderState({flag:'addedbankAc', state: 'close', data,refreshRequired:true })
+    this.subInjectService.changeNewRightSliderState({ flag: 'addedbankAc', state: 'close', data, refreshRequired: true })
     this.eventService.openSnackBar('Bank account edited successfully', 'OK');
 
   }

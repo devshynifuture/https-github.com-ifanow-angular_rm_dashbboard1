@@ -17,7 +17,7 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
   ]
 })
 export class AddPoRdComponent implements OnInit {
-  validatorType=ValidatorType
+  validatorType = ValidatorType
   maxDate = new Date();
   isOptionalField: any;
   inputData: any;
@@ -112,7 +112,10 @@ export class AddPoRdComponent implements OnInit {
         this.nominees.push(obj)
       });
     }
-    if (this.PORDForm.get('monthlyContribution').invalid) {
+    if (this.PORDForm.get('ownerName').invalid) {
+      this.PORDForm.get('ownerName').markAsTouched();
+      return;
+    } else if (this.PORDForm.get('monthlyContribution').invalid) {
       this.PORDForm.get('monthlyContribution').markAsTouched();
       return;
     } else if (this.PORDForm.get('ownerName').invalid) {
@@ -125,7 +128,7 @@ export class AddPoRdComponent implements OnInit {
       this.PORDForm.get('ownership').markAsTouched();
       return;
     } else {
-      if (this.editApi!=undefined && this.editApi != 'advicePORD') {
+      if (this.editApi != undefined && this.editApi != 'advicePORD') {
         const obj = {
           monthlyContribution: this.PORDForm.get('monthlyContribution').value,
           commencementDate: this.PORDForm.get('commDate').value,

@@ -19,7 +19,7 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
   ],
 })
 export class NpsSummaryPortfolioComponent implements OnInit {
-  validatorType=ValidatorType
+  validatorType = ValidatorType
   myControl = new FormControl();
   ownerName: any;
   familyMemberId: any;
@@ -112,7 +112,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     }
   }
   getdataForm(data) {
-    this.flag=data;
+    this.flag = data;
     if (data == undefined) {
       data = {}
     }
@@ -233,7 +233,10 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     }
   }
   summaryNPSSave() {
-    if (this.summaryNPS.get('currentValue').invalid) {
+    if (this.summaryNPS.get('ownerName').invalid) {
+      this.summaryNPS.get('ownerName').markAsTouched();
+      return;
+    } else if (this.summaryNPS.get('currentValue').invalid) {
       this.summaryNPS.get('currentValue').markAsTouched();
       return;
     } else if (this.summaryNPS.get('ownerName').invalid) {
@@ -276,15 +279,15 @@ export class NpsSummaryPortfolioComponent implements OnInit {
         stringObject: obj,
         adviceDescription: "manualAssetDescription"
       }
-      if (this.summaryNPS.controls.id.value == undefined && this.flag!='adviceNPSSummary') {
+      if (this.summaryNPS.controls.id.value == undefined && this.flag != 'adviceNPSSummary') {
         this.custumService.addNPS(obj).subscribe(
           data => this.addNPSRes(data)
         );
-      } else if(this.flag == 'adviceNPSSummary'){
+      } else if (this.flag == 'adviceNPSSummary') {
         this.custumService.getAdviceNps(adviceObj).subscribe(
           data => this.getAdviceNscSummaryRes(data),
         );
-      }else {
+      } else {
         //edit call
         this.custumService.editNPS(obj).subscribe(
           data => this.editNPSRes(data)
@@ -292,7 +295,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
       }
     }
   }
-  getAdviceNscSummaryRes(data){
+  getAdviceNscSummaryRes(data) {
     this.event.openSnackBar('NSC added successfully!', 'dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }

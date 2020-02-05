@@ -1,25 +1,25 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {MAT_DATE_FORMATS} from '@angular/material';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {CustomerService} from '../../../../../customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {DatePipe} from '@angular/common';
+import { Component, Input, OnInit } from '@angular/core';
+import { MAT_DATE_FORMATS } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { CustomerService } from '../../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-nsc',
   templateUrl: './add-nsc.component.html',
   styleUrls: ['./add-nsc.component.scss'],
   providers: [
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
     [DatePipe],
   ]
 })
 export class AddNscComponent implements OnInit {
-  validatorType=ValidatorType
+  validatorType = ValidatorType
   maxDate = new Date();
   advisorId: any;
   inputData: any;
@@ -67,7 +67,7 @@ export class AddNscComponent implements OnInit {
     this.nomineesList = data.controls
   }
   getdataForm(data) {
-    this.flag=data;
+    this.flag = data;
     if (data == undefined) {
       data = {};
     }
@@ -75,7 +75,7 @@ export class AddNscComponent implements OnInit {
       this.editApi = data
       this.commDate = new Date(data.commencementDate)
     }
-    this.nscData=data
+    this.nscData = data
     this.nscFormField = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
       amountInvested: [data.amountInvested, [Validators.required, Validators.min(100)]],
@@ -113,8 +113,8 @@ export class AddNscComponent implements OnInit {
         let obj = {
           "name": element.controls.name.value,
           "sharePercentage": element.controls.sharePercentage.value,
-          "id":element.id,
-          "familyMemberId":element.familyMemberId
+          "id": element.id,
+          "familyMemberId": element.familyMemberId
         }
         this.nominees.push(obj)
       });
@@ -130,7 +130,10 @@ export class AddNscComponent implements OnInit {
     //     finalTransctList.push(obj)
     //   });
     // }
-    if (this.nscFormField.get('amountInvested').invalid) {
+    if (this.nscFormField.get('ownerName').invalid) {
+      this.nscFormField.get('ownerName').markAsTouched();
+      return;
+    } else if (this.nscFormField.get('amountInvested').invalid) {
       this.nscFormField.get('amountInvested').markAsTouched();
       return
     } else if (this.nscFormField.get('ownerName').invalid) {
@@ -150,7 +153,7 @@ export class AddNscComponent implements OnInit {
       return
     }
     else {
-      if (this.editApi!=undefined && this.editApi!='adviceNSC') {  
+      if (this.editApi != undefined && this.editApi != 'adviceNSC') {
         let obj =
         {
           "id": this.editApi.id,
@@ -185,7 +188,7 @@ export class AddNscComponent implements OnInit {
           "postOfficeBranch": this.nscFormOptionalField.get('poBranch').value,
           "bankAccountNumber": this.nscFormOptionalField.get('linkedBankAccount').value,
           "ownerTypeId": parseInt(this.nscFormField.get('ownershipType').value),
-          "nominees":this.nominees,
+          "nominees": this.nominees,
           "description": this.nscFormOptionalField.get('description').value
         }
         console.log(obj)
@@ -200,7 +203,7 @@ export class AddNscComponent implements OnInit {
             data => this.getAdviceNscRes(data),
             err => this.eventService.openSnackBar(err, "dismiss")
           );
-        }else{
+        } else {
           this.cusService.addNSCScheme(obj).subscribe(
             data => this.addNSCResponse(data),
             error => this.eventService.showErrorMessage(error)
@@ -209,9 +212,9 @@ export class AddNscComponent implements OnInit {
       }
     }
   }
-  getAdviceNscRes(data){
+  getAdviceNscRes(data) {
     console.log(data);
-    this.eventService.openSnackBar("NSC is added", "ok") 
+    this.eventService.openSnackBar("NSC is added", "ok")
     this.close(true);
   }
   addNSCResponse(data) {
@@ -221,6 +224,6 @@ export class AddNscComponent implements OnInit {
   }
   close(flag) {
     this.isOptionalField = true
-    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 }

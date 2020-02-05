@@ -17,7 +17,7 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
   ]
 })
 export class AddKvpComponent implements OnInit {
-  validatorType=ValidatorType
+  validatorType = ValidatorType
   maxDate = new Date();
   inputData: any;
   advisorId: any;
@@ -101,7 +101,10 @@ export class AddKvpComponent implements OnInit {
         this.nominees.push(obj)
       });
     }
-    if (this.KVPFormScheme.get('amtInvested').invalid) {
+    if (this.KVPFormScheme.get('ownerName').invalid) {
+      this.KVPFormScheme.get('ownerName').markAsTouched();
+      return;
+    } else if (this.KVPFormScheme.get('amtInvested').invalid) {
       this.KVPFormScheme.get('amtInvested').markAsTouched();
       return
     } else if (this.KVPFormScheme.get('ownerName').invalid) {
@@ -142,7 +145,7 @@ export class AddKvpComponent implements OnInit {
           data => this.getAdviceKvpRes(data),
           err => this.eventService.openSnackBar(err, "dismiss")
         );
-      } else if (this.editApi!=undefined && this.editApi != 'adviceKVP') {
+      } else if (this.editApi != undefined && this.editApi != 'adviceKVP') {
         obj['id'] = this.editApi.id
         this.cusService.editKVP(obj).subscribe(
           data => this.addKVPResponse(data),
@@ -157,7 +160,7 @@ export class AddKvpComponent implements OnInit {
       }
     }
   }
-  getAdviceKvpRes(data){
+  getAdviceKvpRes(data) {
     console.log(data);
     this.eventService.openSnackBar("KVP is added", "ok")
     this.close(true);

@@ -126,14 +126,14 @@ export class AddEPFComponent implements OnInit {
     return this.epf.controls;
   }
   saveEPF() {
-
-    if (this.epf.get('employeeContry').invalid) {
-      this.epf.get('employeeContry').markAsTouched();
-      return;
-    } else if (this.epf.get('ownerName').invalid) {
+     if (this.epf.get('ownerName').invalid) {
       this.epf.get('ownerName').markAsTouched();
       return;
-    } else if (this.epf.get('employerContry').invalid) {
+     }else if (this.epf.get('employeeContry').invalid) {
+      this.epf.get('employeeContry').markAsTouched();
+      return;
+    }
+     else if (this.epf.get('employerContry').invalid) {
       this.epf.get('employerContry').markAsTouched();
       return;
     } else if (this.epf.get('currentEPFBal').invalid) {

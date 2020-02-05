@@ -19,7 +19,7 @@ import { EventService } from 'src/app/Data-service/event.service';
   ],
 })
 export class AddGratuityComponent implements OnInit {
-  validatorType=ValidatorType
+  validatorType = ValidatorType
   gratuity: any;
   ownerData: any;
   familyMemberId: any;
@@ -100,7 +100,10 @@ export class AddGratuityComponent implements OnInit {
     return this.gratuity.controls;
   }
   saveEPF() {
-    if (this.gratuity.get('noOfcompleteYrs').invalid) {
+    if (this.gratuity.get('ownerName').invalid) {
+      this.gratuity.get('ownerName').markAsTouched();
+      return;
+    } else if (this.gratuity.get('noOfcompleteYrs').invalid) {
       this.gratuity.get('noOfcompleteYrs').markAsTouched();
       return;
     } else if (this.gratuity.get('ownerName').invalid) {

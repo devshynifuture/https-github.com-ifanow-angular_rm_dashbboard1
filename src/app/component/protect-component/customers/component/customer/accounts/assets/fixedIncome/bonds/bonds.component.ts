@@ -21,7 +21,7 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
   ],
 })
 export class BondsComponent implements OnInit {
-  validatorType=ValidatorType
+  validatorType = ValidatorType
   maxDate = new Date();
   dataSource: any;
   bonds: any;
@@ -66,8 +66,8 @@ export class BondsComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
-  ownerDetails(value){
-    this.familyMemberId=value.id;
+  ownerDetails(value) {
+    this.familyMemberId = value.id;
   }
   lisNominee(value) {
     console.log(value)
@@ -139,7 +139,10 @@ export class BondsComponent implements OnInit {
   saveBonds() {
     // this.tenure = this.getDateYMD()
     // this.maturityDate = this.tenure
-    if (this.bonds.get('bondName').invalid) {
+    if (this.bonds.get('ownerName').invalid) {
+      this.bonds.get('ownerName').markAsTouched();
+      return;
+    } else if (this.bonds.get('bondName').invalid) {
       this.bonds.get('bondName').markAsTouched();
       return;
     } else if (this.bonds.get('couponOption').invalid) {

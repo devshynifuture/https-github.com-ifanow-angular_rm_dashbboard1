@@ -19,7 +19,7 @@ import { EventService } from 'src/app/Data-service/event.service';
   ],
 })
 export class GoldComponent implements OnInit {
-  validatorType=ValidatorType
+  validatorType = ValidatorType
   inputData: any;
   familyMemberId: any;
   ownerName: any;
@@ -38,7 +38,7 @@ export class GoldComponent implements OnInit {
   nomineesListFM: any;
   flag: any;
 
-  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public utils: UtilService,public eventService:EventService) { }
+  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
 
   @Input()
   set data(data) {
@@ -54,7 +54,7 @@ export class GoldComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getdataForm(this.inputData);
     this.fdYears = [
-      '1950',	'1951',	'1952',	'1953',	'1954',	'1955',	'1956',	'1957',	'1958',	'1959',	'1960',	'1961',	'1962',	'1963',	'1964',	'1965',	'1966',	'1967',	'1968',	'1969',	'1970',	'1971',	'1972',	'1973',	'1974',	'1975',	'1976',	'1977',	'1978',	'1979',	'1980',	'1981',	'1982',	'1983',	'1984',	'1985',	'1986',	'1987',	'1988',	'1989',	'1990',	'1991',	'1992',	'1993',	'1994',	'1995',	'1996',	'1997',	'1998',	'1999',	'2000',	'2001',	'2002',	'2003',	'2004',	'2005',	'2006',	'2007',	'2008',	'2009',	'2010',	'2011',	'2012',	'2013',	'2014',	'2015',	'2016',	'2017',	'2018',	'2019']
+      '1950', '1951', '1952', '1953', '1954', '1955', '1956', '1957', '1958', '1959', '1960', '1961', '1962', '1963', '1964', '1965', '1966', '1967', '1968', '1969', '1970', '1971', '1972', '1973', '1974', '1975', '1976', '1977', '1978', '1979', '1980', '1981', '1982', '1983', '1984', '1985', '1986', '1987', '1988', '1989', '1990', '1991', '1992', '1993', '1994', '1995', '1996', '1997', '1998', '1999', '2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019']
   }
 
   display(value) {
@@ -67,7 +67,7 @@ export class GoldComponent implements OnInit {
     this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag })
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag })
   }
   showLess(value) {
     if (value == true) {
@@ -77,18 +77,18 @@ export class GoldComponent implements OnInit {
     }
   }
   getdataForm(data) {
-    this.flag=data;
+    this.flag = data;
     if (data == undefined) {
       data = {}
     }
     this.gold = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
-      appPurValue: [data.approximatePurchaseValue,[Validators.required]],
+      appPurValue: [data.approximatePurchaseValue, [Validators.required]],
       totalsGrams: [(data.gramsOrTola == undefined) ? '' : (data.gramsOrTola) + "", [Validators.required]],
       noTolasGramsPur: [(data == undefined) ? '' : (data.purchasedGramsOrTola), [Validators.required]],
       tenure: [(data == undefined) ? '' : (data.purchaseYear), [Validators.required]],
-      carats: [(data.carat == undefined) ? '' : (data.carat)+"", [Validators.required]],
-      balanceAsOn:[(data == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
+      carats: [(data.carat == undefined) ? '' : (data.carat) + "", [Validators.required]],
+      balanceAsOn: [(data == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
       marketValue: [(data == undefined) ? '' : data.marketValue, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       bankAcNo: [(data == undefined) ? '' : data.bankAcNo, [Validators.required]],
@@ -103,7 +103,10 @@ export class GoldComponent implements OnInit {
     return this.gold.controls;
   }
   saveGold() {
-    if (this.gold.get('appPurValue').invalid) {
+    if (this.gold.get('ownerName').invalid) {
+      this.gold.get('ownerName').markAsTouched();
+      return;
+    } else if (this.gold.get('appPurValue').invalid) {
       this.gold.get('appPurValue').markAsTouched();
       return;
     } else if (this.gold.get('ownerName').invalid) {
@@ -132,7 +135,7 @@ export class GoldComponent implements OnInit {
         ownerName: (this.ownerName == undefined) ? this.gold.controls.ownerName.value : this.ownerName,
         approximatePurchaseValue: this.gold.controls.appPurValue.value,
         gramsOrTola: this.gold.controls.totalsGrams.value,
-        balanceAsOn:this.gold.controls.balanceAsOn.value,
+        balanceAsOn: this.gold.controls.balanceAsOn.value,
         purchasedGramsOrTola: this.gold.controls.noTolasGramsPur.value,
         totalsGrams: this.gold.controls.totalsGrams.value,
         purchaseYear: this.gold.controls.tenure.value,
@@ -147,15 +150,15 @@ export class GoldComponent implements OnInit {
         stringObject: obj,
         adviceDescription: "manualAssetDescription"
       }
-      if (this.gold.controls.id.value == undefined && this.flag!='adviceGOLD') {
-        this.custumService.addGold(obj).subscribe( 
+      if (this.gold.controls.id.value == undefined && this.flag != 'adviceGOLD') {
+        this.custumService.addGold(obj).subscribe(
           data => this.addGoldRes(data)
         );
-      }else if(this.flag=='adviceGOLD'){
+      } else if (this.flag == 'adviceGOLD') {
         this.custumService.getAdviceGold(adviceObj).subscribe(
           data => this.getAdviceGoldRes(data),
         );
-      }else {
+      } else {
         //edit call
         this.custumService.editGold(obj).subscribe(
           data => this.editGoldRes(data)
@@ -163,18 +166,18 @@ export class GoldComponent implements OnInit {
       }
     }
   }
-  getAdviceGoldRes(data){
+  getAdviceGoldRes(data) {
     this.eventService.openSnackBar('Gold added successfully', 'OK');
-    this.subInjectService.changeNewRightSliderState({flag:'addedGold', state: 'close', data,refreshRequired:true })
+    this.subInjectService.changeNewRightSliderState({ flag: 'addedGold', state: 'close', data, refreshRequired: true })
   }
   addGoldRes(data) {
     console.log('addrecuringDepositRes', data)
-    this.subInjectService.changeNewRightSliderState({flag:'addedGold', state: 'close', data,refreshRequired:true })
+    this.subInjectService.changeNewRightSliderState({ flag: 'addedGold', state: 'close', data, refreshRequired: true })
     this.eventService.openSnackBar('Gold added successfully', 'OK');
 
   }
   editGoldRes(data) {
-    this.subInjectService.changeNewRightSliderState({flag:'addedGold', state: 'close', data,refreshRequired:true })
+    this.subInjectService.changeNewRightSliderState({ flag: 'addedGold', state: 'close', data, refreshRequired: true })
     this.eventService.openSnackBar('Gold edited successfully', 'OK');
 
   }
