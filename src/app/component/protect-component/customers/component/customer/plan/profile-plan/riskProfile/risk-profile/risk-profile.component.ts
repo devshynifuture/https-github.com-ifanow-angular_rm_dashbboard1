@@ -1,17 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { PlanService } from '../../../plan.service';
-import { FormBuilder } from '@angular/forms';
-import { UtilService } from 'src/app/services/util.service';
+import {Component, OnInit} from '@angular/core';
+import {PlanService} from '../../../plan.service';
+import {FormBuilder} from '@angular/forms';
+import {UtilService} from 'src/app/services/util.service';
 import * as Highcharts from 'highcharts';
-import { AuthService } from 'src/app/auth-service/authService';
-import { Container } from '@angular/compiler/src/i18n/i18n_ast';
-import { HistoryRiskProfileComponent } from '../../history-risk-profile/history-risk-profile.component';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {HistoryRiskProfileComponent} from '../../history-risk-profile/history-risk-profile.component';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
-const HighchartsMore = require('highcharts/highcharts-more.src');
+/*const HighchartsMore = require('highcharts/highcharts-more.src');
 HighchartsMore(Highcharts);
 const HC_solid_gauge = require('highcharts/modules/solid-gauge.src');
-HC_solid_gauge(Highcharts);
+HC_solid_gauge(Highcharts);*/
 
 @Component({
   selector: 'app-risk-profile',

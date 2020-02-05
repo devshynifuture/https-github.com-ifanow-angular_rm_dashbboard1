@@ -189,16 +189,17 @@ export class HttpService {
         })
       )
       .map((res: any) => {
-        if (res.status === 'AUTH_TOKEN_EXPIRED') {
-          window.alert('Invalid user, please login');
-          this._router.navigate(['login']);
-        } else {
-          const cache = new CacheEntry();
-          cache.exitTime = Date.now() + requestAge;
-          cache.request = objJson64;
-          cache.url = url;
-          this.cacheMap.set(url, cache);
-          return res;
+        if (res.status === 200) {
+          const resData = this.changeBase64ToString(res);
+          // console.log('decoded resData', resData);
+          return resData;
+        }
+        else if (res.status === 304) {
+          return res.status;
+        }
+        else {
+          // this._router.navigate(['login']);
+          return;
         }
       });
   }

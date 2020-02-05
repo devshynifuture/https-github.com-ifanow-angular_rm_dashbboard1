@@ -39,8 +39,6 @@ export class CashflowsPlanComponent implements OnInit {
   ngOnInit() {
     this.cashFlow('surplus');
     this.filterCashFlowTableUsing('income');
-    this.getCashflowIncomeData();
-    this.getCashflowExpenseData();
   }
 
   getCashflowExpenseData() {
@@ -132,9 +130,9 @@ export class CashflowsPlanComponent implements OnInit {
     }
 
     switch (flag) {
-      case 'income': this.dataSource = ELEMENT_DATA;
+      case 'income': this.getCashflowIncomeData();
         break;
-      case 'expenses': this.dataSource = ELEMENT_DATA1;
+      case 'expenses': this.getCashflowExpenseData();
         break;
       case 'insurance': this.dataSource = ELEMENT_DATA2;
         break;

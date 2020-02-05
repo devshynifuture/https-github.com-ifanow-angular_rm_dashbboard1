@@ -5,7 +5,7 @@
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle"> clear</i>
+                <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
             </div>
         </div>
     </div>
@@ -79,34 +79,7 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
             </table>
-            <h5 class="m-0 f-500 text-black pt-44">Added items</h5>
-            <p class="roboto m-0 f-500 text-black pt-20">EQUITY</p>
-            <table mat-table [dataSource]="dataSource2" class="mt-8" id="table-low">
 
-
-                <!-- Name Column -->
-                <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef> Scheme name </th>
-                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-                </ng-container>
-
-                <!-- Weight Column -->
-                <ng-container matColumnDef="weight">
-                    <th mat-header-cell *matHeaderCellDef> Amount </th>
-                    <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-                </ng-container>
-
-                <!-- Symbol Column -->
-                <ng-container matColumnDef="icons">
-                    <th mat-header-cell *matHeaderCellDef> </th>
-                    <td mat-cell *matCellDef="let element"><i class="material-icons text-custom">
-                            more_vert
-                        </i> </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
-            </table>
         </div>
         <div class="col-md-6 pr-0">
             <h5 class="m-0 text-black">Filter and add schemes <img src="/assets/images/svg/cash-flow-expenses-icon.svg">
@@ -224,11 +197,48 @@
             </div>
         </div>
     </div>
+    <h5 class="m-0 f-500 text-black pt-44">Added items</h5>
+    <p class="roboto m-0 f-500 text-black pt-20">EQUITY</p>
+    <table mat-table [dataSource]="dataSource2" class="mt-8" id="table-low">
+
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Scheme name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="weight">
+            <th mat-header-cell *matHeaderCellDef> Amount </th>
+            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="height">
+            <th mat-header-cell *matHeaderCellDef> Advice status </th>
+            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="test">
+            <th mat-header-cell *matHeaderCellDef> Action plan status </th>
+            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+        </ng-container>
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="icons">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let element"><i class="material-icons text-custom">
+                    more_vert
+                </i> </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+    </table>
 </div>
 <div class="bottom-fixed wrapper-12 w-70">
     <div class="row">
         <div class="col-md-4">
-            <h5 class="mb-0 pt-12 text-white c-p">Cancel</h5>
+            <h5 (click)="close()" class="mb-0 pt-12 text-white c-p">Cancel</h5>
         </div>
     </div>
 </div>

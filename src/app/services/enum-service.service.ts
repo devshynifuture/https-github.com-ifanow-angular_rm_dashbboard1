@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { element } from 'protractor';
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { ScenariosPlanComponent } from './scenarios-plan/scenarios-plan.component';
 import { CashflowsPlanComponent } from './cashflows-plan/cashflows-plan.component';
 import { ProfilePlanComponent } from './profile-plan/profile-plan.component';
-import { InvestmentsPlanComponent } from './investments-plan/investments-plan.component';
+import { DeploymentsPlanComponent } from './deployments-plan/deployments-plan.component';
 import { GoalsPlanComponent } from './goals-plan/goals-plan.component';
 import { SummaryPlanComponent } from './summary-plan/summary-plan.component';
 import { InsurancePlanComponent } from './insurance-plan/insurance-plan.component';
@@ -13,12 +13,16 @@ import { MaterialModule } from '../../../../../../material/material';
 import { ChartModule } from 'angular-highcharts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddScenariosComponent } from './scenarios-plan/add-scenarios/add-scenarios.component';
-import { AddInvestmentPlanComponent } from './investments-plan/add-investment-plan/add-investment-plan.component';
+import { AddInvestmentPlanComponent } from './deployments-plan/add-investment-plan/add-investment-plan.component';
 import { AddProfilePlanComponent } from './profile-plan/add-profile-plan/add-profile-plan.component';
 import { HistoryRiskProfileComponent } from './profile-plan/history-risk-profile/history-risk-profile.component';
 // import {BrowserModule} from '@angular/platform-browser';
 import { PlanRoutingModule } from "./plan-routing.module";
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+import { ManageDeploymentComponent } from './deployments-plan/manage-deployment/manage-deployment.component';
+import { ManageExclusionsComponent } from './deployments-plan/manage-exclusions/manage-exclusions.component';
+import { SelectAssetClassComponent } from './deployments-plan/select-asset-class/select-asset-class.component';
+import { DeploymentDetailsComponent } from './deployments-plan/deployment-details/deployment-details.component';
 // import { AddInsurancePlanningComponent } from './insurance-plan/add-insurance-planning/add-insurance-planning.component';
 // import { EditApplicableTaxComponent } from './texes-plan/edit-applicable-tax/edit-applicable-tax.component';
 // import { SetupLumpsumDeploymentComponent } from './investments-plan/add-investment-plan/setup-lumpsum-deployment/setup-lumpsum-deployment.component';
@@ -47,11 +51,14 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
     // InsurancePlanComponent,
     // GoalsPlanComponent,
     CashflowsPlanComponent,
-    InvestmentsPlanComponent,
+    DeploymentsPlanComponent,
     ScenariosPlanComponent,
     TexesPlanComponent,
     AddScenariosComponent,
     AddInvestmentPlanComponent,
+    ManageDeploymentComponent,
+    ManageExclusionsComponent,
+    // DeploymentDetailsComponent,
     // AddInsurancePlanningComponent,
     // EditApplicableTaxComponent,
     // SetupLumpsumDeploymentComponent,
@@ -73,7 +80,7 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
   ],
   // exports: [PlanComponent, AddScenariosComponent, AddInvestmentPlanComponent,
   //   AddProfilePlanComponent, HistoryRiskProfileComponent, RiskProfileComponent],
-  entryComponents: [AddScenariosComponent]
+  entryComponents: [AddScenariosComponent, ManageDeploymentComponent, ManageExclusionsComponent]
 })
 export class PlanModule {
 }

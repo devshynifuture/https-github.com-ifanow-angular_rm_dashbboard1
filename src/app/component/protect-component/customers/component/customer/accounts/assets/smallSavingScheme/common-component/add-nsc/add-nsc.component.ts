@@ -149,7 +149,7 @@ export class AddNscComponent implements OnInit {
       return
     }
     else {
-      if (this.editApi!='adviceNSC') {
+      if (this.editApi!=undefined && this.editApi!='adviceNSC') {  
         let obj =
         {
           "id": this.editApi.id,

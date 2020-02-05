@@ -1,10 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { SubscriptionService } from '../../../subscription.service';
-import { AuthService } from "../../../../../../../auth-service/authService";
-import { element } from 'protractor';
-import { EventService } from 'src/app/Data-service/event.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import {Component, OnInit} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from "../../../../../../../auth-service/authService";
+import {EventService} from 'src/app/Data-service/event.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-plan-rightslider',

@@ -20,26 +20,56 @@ export class AdviceFixedIncomeComponent implements OnInit {
   dataSource3 = ELEMENT_DATA3;
   advisorId: any;
   clientId: any;
-  constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private utilService: UtilService, private activityService : ActiityService) { }
+  constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private utilService: UtilService, private activityService: ActiityService) { }
   allAdvice = false;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getAdviceByAsset();
   }
-  getAdviceByAsset(){
+  getAdviceByAsset() {
     let obj = {
-      id:this.advisorId,
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      assetCategory: 7
     }
-    this.activityService.getAllAdviceByCategory(obj).subscribe(
-      data => this.getSsySchemedataRes(data), (error) => {
-        // this.datasource.data = [];
-        // this.isLoading = false;
+    // let obj1 = {
+    //   advisorId: this.advisorId,
+    //   clientId: this.clientId,
+    //   assetCategory: 13
+    // }
+    // let obj2 = {
+    //   advisorId: this.advisorId,
+    //   clientId: this.clientId,
+    //   assetCategory: 14
+    // }
+    // let obj3 = {
+    //   advisorId: this.advisorId,
+    //   clientId: this.clientId,
+    //   assetCategory: 15
+    // }
+    this.activityService.getAllAsset(obj).subscribe(
+      data => this.getAllSchemeResponse(data), (error) => {
       }
     );
+    // this.activityService.getAllAsset(obj1).subscribe(
+    //   data => this.getAllSchemeResponse(data), (error) => {
+    //   }
+    // );
+    // this.activityService.getAllAsset(obj2).subscribe(
+    //   data => this.getAllSchemeResponse(data), (error) => {
+    //   }
+    // );
+    // this.activityService.getAllAsset(obj3).subscribe(
+    //   data => this.getAllSchemeResponse(data), (error) => {
+    //   }
+    // );
   }
-  getSsySchemedataRes(data){
-    console.log('data',data)
+  getAllSchemeResponse(data) {
+    console.log('data', data)
+    data.BONDS;
+    data.FIXED_DEPOSIT;
+    data.RECURRING_DEPOSIT;
   }
   openselectAdvice(data) {
     const fragmentData = {
@@ -60,7 +90,7 @@ export class AdviceFixedIncomeComponent implements OnInit {
       }
     );
   }
-  openFixedDeposit(value,data){
+  openFixedDeposit(value, data) {
     const fragmentData = {
       flag: value,
       data,
@@ -73,17 +103,16 @@ export class AdviceFixedIncomeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getFixedDepositList();
+            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
-          rightSideDataSub.unsubscribe();
         }
 
       }
     );
   }
-  openRecurringDeposit(value,data){
+  openRecurringDeposit(value, data) {
     const fragmentData = {
       flag: value,
       data,
@@ -96,7 +125,7 @@ export class AdviceFixedIncomeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getFixedDepositList();
+            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -106,7 +135,7 @@ export class AdviceFixedIncomeComponent implements OnInit {
       }
     );
   }
-  openBond(value,data){
+  openBond(value, data) {
     const fragmentData = {
       flag: value,
       data,
@@ -119,7 +148,7 @@ export class AdviceFixedIncomeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getFixedDepositList();
+            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
