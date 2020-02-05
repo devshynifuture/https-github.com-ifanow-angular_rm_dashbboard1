@@ -27,9 +27,11 @@ import { AddIncomeComponent } from './profile-plan/income/add-income/add-income.
 import { AddIncomeFamilyMemberComponent } from './profile-plan/income/add-income-family-member/add-income-family-member.component';
 import { AddIncomeSourceComponent } from './profile-plan/income/add-income-source/add-income-source.component';
 import { IndividualIncomeInfoComponent } from './profile-plan/income/individual-income-info/individual-income-info.component';
-import { SetupLumpsumDeploymentComponent } from './investments-plan/add-investment-plan/setup-lumpsum-deployment/setup-lumpsum-deployment.component';
+import { SetupLumpsumDeploymentComponent } from './deployments-plan/add-investment-plan/setup-lumpsum-deployment/setup-lumpsum-deployment.component';
 import { EditApplicableTaxComponent } from './texes-plan/edit-applicable-tax/edit-applicable-tax.component';
 import { AddInsurancePlanningComponent } from './insurance-plan/add-insurance-planning/add-insurance-planning.component';
+import { DeploymentDetailsComponent } from './deployments-plan/deployment-details/deployment-details.component';
+import { SelectAssetClassComponent } from './deployments-plan/select-asset-class/select-asset-class.component';
 
 export const componentList = [
   PreferencesComponent,
@@ -52,8 +54,9 @@ export const componentList = [
   IndividualIncomeInfoComponent,
   SetupLumpsumDeploymentComponent,
   EditApplicableTaxComponent,
-  AddInsurancePlanningComponent
-
+  AddInsurancePlanningComponent,
+  DeploymentDetailsComponent,
+  SelectAssetClassComponent
 ];
 // import { AddPlaninsuranceComponent } from './insurance-plan/add-planinsurance/add-planinsurance.component';
 

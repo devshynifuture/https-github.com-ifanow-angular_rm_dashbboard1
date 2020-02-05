@@ -10,6 +10,8 @@ import { AddPoRdComponent } from '../../../accounts/assets/smallSavingScheme/com
 import { AddPoTdComponent } from '../../../accounts/assets/smallSavingScheme/common-component/add-po-td/add-po-td.component';
 import { AddPoSavingComponent } from '../../../accounts/assets/smallSavingScheme/common-component/add-po-saving/add-po-saving.component';
 import { AddSsyComponent } from '../../../accounts/assets/smallSavingScheme/common-component/add-ssy/add-ssy.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { ActiityService } from '../../actiity.service';
 
 @Component({
   selector: 'app-advice-small-saving-scheme',
@@ -25,9 +27,28 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
   dataSource3 = ELEMENT_DATA1;
   displayedColumns4: string[] = ['checkbox', 'name', 'desc', 'cvalue', 'advice', 'astatus', 'adate', 'icon'];
   dataSource4 = ELEMENT_DATA4;
-  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject) { }
+  advisorId: any;
+  clientId: any;
+  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject ,private activityService:ActiityService) { }
   allAdvice = false
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    this.getAdviceByAsset();
+  }
+  getAdviceByAsset() {
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      assetCategory: 10
+    }
+    this.activityService.getAllAsset(obj).subscribe(
+      data => this.getAllSchemeResponse(data), (error) => {
+      }
+    );
+  }
+  getAllSchemeResponse(data){
+    console.log(data)
   }
   openAddPPF(data, value) {
     const fragmentData = {
@@ -42,7 +63,7 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getPpfSchemeData();
+            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
           }
           rightSideDataSub.unsubscribe();
@@ -63,7 +84,7 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getNscSchemedata();
+            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -86,7 +107,7 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getKvpSchemedata();
+            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -109,7 +130,7 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getScssSchemedata();
+            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -132,7 +153,7 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getPoMisSchemedata();
+            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -155,7 +176,7 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getPoRdSchemedata();
+            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -177,7 +198,7 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getPoTdSchemedata();
+            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -200,7 +221,7 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getPoSavingSchemedata();
+            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -223,7 +244,7 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getSsySchemedata();
+            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }

@@ -19,6 +19,7 @@ import { ChangePayeeComponent } from '../common-subscription-component/change-pa
 import { ErrPageOpenComponent } from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
 import { SubscriptionDataService } from '../../subscription-data.service';
 import { SubscriptionDetailsComponent } from '../common-subscription-component/biller-profile-advisor/subscription-details/subscription-details.component';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 // declare var window
 // export const MY_FORMATS = {
@@ -59,6 +60,7 @@ export interface PeriodicElement {
   feemode: string;
 }
 
+
 @Component({
   selector: 'app-subscriptions-subscription',
   templateUrl: './subscriptions-subscription.component.html',
@@ -77,6 +79,7 @@ export interface PeriodicElement {
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
+
 export class SubscriptionsSubscriptionComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   selector = '.wrapper-20';
@@ -203,10 +206,12 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       state: 'open',
     };
     fragmentData.data = {
-      positiveMethod: () => {
+      positiveMethod: (barButtonOption: MatProgressButtonOptions) => {
+        barButtonOption.active = true;
         this.isFirstCall=false;
         this.getSummaryDataAdvisor(false,this.isFirstCall).subscribe(
           data => {
+            barButtonOption.active = false;
             this.getData = data;
             if (data != undefined) {
               if(this.isFirstCall==false){
@@ -231,6 +236,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
             // this.eventService.openSnackBar('Wait sometime....', 'dismiss');
             // this.errorMessage();
           }, (error) => {
+            barButtonOption.active = false;
             this.eventService.openSnackBar('Wait sometime....', 'dismiss');
           }
         )

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-setup-lumpsum-deployment',
@@ -10,13 +11,15 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
   dataSource = ELEMENT_DATA;
   displayedColumns1: string[] = ['position', 'name', 'weight', 'icons'];
   dataSource1 = ELEMENT_DATA1;
-  displayedColumns2: string[] = ['name', 'weight', 'icons'];
+  displayedColumns2: string[] = ['name', 'weight', 'height', 'test', 'icons'];
   dataSource2 = ELEMENT_DATA2;
-  constructor() { }
+  constructor(private subInjectService: SubscriptionInject) { }
 
   ngOnInit() {
   }
-
+  close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  }
 }
 export interface PeriodicElement {
   name: string;

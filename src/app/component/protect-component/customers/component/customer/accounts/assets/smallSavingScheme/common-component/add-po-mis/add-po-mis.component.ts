@@ -154,7 +154,7 @@ export class AddPoMisComponent implements OnInit {
       obj.commencementdate = obj.commencementdate.toISOString().slice(0, 10);
 
 
-      if (this.editApi != 'advicePOMIS') {
+      if (this.editApi!='Add' && this.editApi != 'advicePOMIS') {
         const editObj = {
           id: this._inputData.id,
           clientId: this.clientId,

@@ -1,0 +1,129 @@
+<div class="popup-header-fix w-70">
+    <div class="row bb-1">
+        <div class="col-md-8 p-0">
+            <h4 class="mb-0 wrapper-20">DEPLOYMENTS DETAILS</h4>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12">
+                <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pt-90 pl-20 pr-20 pb-44 mb-44 lumpsumtables">
+    <div class="row">
+        <div class="col-md-12 pl-0">
+            <h5 class="m-0">Deployment status</h5>
+            <table mat-table [dataSource]="dataSource" class="mt-12" id="table-low">
+
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Target </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="weight">
+                    <th mat-header-cell *matHeaderCellDef> Remaining </th>
+                    <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="icons">
+                    <th mat-header-cell *matHeaderCellDef> <i class="material-icons text-custom">
+                            more_vert
+                        </i> </th>
+                    <td mat-cell *matCellDef="let element"> <i class="material-icons text-custom">
+                            more_vert
+                        </i> </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <table mat-table [dataSource]="dataSource1" class="mt-20" id="table-low">
+
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef>Debt <img (click)="openSelectAsset()"
+                            src="/assets/images/svg/plus-rounded.svg" class="c-p"></th>
+                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> 60,000 </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="weight">
+                    <th mat-header-cell *matHeaderCellDef> 0 </th>
+                    <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="icons">
+                    <th mat-header-cell *matHeaderCellDef> <i class="material-icons text-custom">
+                            more_vert
+                        </i> </th>
+                    <td mat-cell *matCellDef="let element"> <i class="material-icons text-custom">
+                            more_vert
+                        </i> </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+            </table>
+
+        </div>
+    </div>
+    <h5 class="m-0 f-500 text-black pt-44">Added items</h5>
+    <p class="roboto m-0 f-500 text-black pt-20">EQUITY</p>
+    <table mat-table [dataSource]="dataSource2" class="mt-8" id="table-low">
+
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Scheme name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="weight">
+            <th mat-header-cell *matHeaderCellDef> Amount </th>
+            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="height">
+            <th mat-header-cell *matHeaderCellDef> Advice status </th>
+            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="test">
+            <th mat-header-cell *matHeaderCellDef> Action plan status </th>
+            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+        </ng-container>
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="icons">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let element"><i class="material-icons text-custom">
+                    more_vert
+                </i> </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+    </table>
+</div>
+<div class="bottom-fixed wrapper-12 w-70">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 (click)="close()" class="mb-0 pt-12 text-white c-p">Cancel</h5>
+        </div>
+    </div>
+</div>

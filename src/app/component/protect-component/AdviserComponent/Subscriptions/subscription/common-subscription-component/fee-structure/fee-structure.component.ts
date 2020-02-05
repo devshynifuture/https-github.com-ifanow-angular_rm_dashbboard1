@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionService } from '../../../subscription.service';
 import { AddFixedFeeComponent } from '../add-fixed-fee/add-fixed-fee.component';
 import { AddVariableFeeComponent } from '../add-variable-fee/add-variable-fee.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-fee-structure',
@@ -17,7 +18,7 @@ import { AddVariableFeeComponent } from '../add-variable-fee/add-variable-fee.co
 export class FeeStructureComponent implements OnInit {
   advisorId: any;
 
-  constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject, private eventService: EventService, private subService: SubscriptionService) {
+  constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject, private eventService: EventService,private router: Router, private subService: SubscriptionService) {
   }
 
   _upperData;
@@ -118,7 +119,8 @@ export class FeeStructureComponent implements OnInit {
   }
   deletedData(data) {
     if (data == true) {
-      this.eventService.changeUpperSliderState({ state: 'close' });
+      this.router.navigate(['/admin/subscription/settings','plans'])
+      this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
       this.eventService.openSnackBar('Deleted successfully!', 'dismiss');
     }
   }

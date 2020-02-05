@@ -617,4 +617,8 @@ export class CustomerService {
   getAdviceOthers(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_BANKACCOUNT, data)
   }
+  getAdviceDeploymentsData(data) {
+    let httpParams = new HttpParams().set('clientId', data.clientId).set("advisorId", data.advisorId).set("familyMemberId", data.familyMemberId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.ADVICE_GET_DEPLOYMENTS, httpParams)
+  }
 }

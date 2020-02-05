@@ -145,7 +145,7 @@ export class AddPoTdComponent implements OnInit {
       return
     }
     else {
-      if (this.editApi!='advicePOTD') {
+      if (this.editApi!=undefined && this.editApi!='advicePOTD') {
         let obj = {
           
             "familyMemberId":this.familyMemberId,

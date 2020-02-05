@@ -33,7 +33,7 @@
                     <div class="col-md-3">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input (focus)="picker.open()" [matDatepicker]="picker" (input)="preventDefault($event)" class="form-control br-0" formControlName="activationDate" matInput readonly>
+                                <input (focus)="picker.open()" [matDatepicker]="picker" class="form-control br-0" formControlName="activationDate" matInput readonly>
                                 <mat-datepicker-toggle  [for]="picker" matSuffix></mat-datepicker-toggle >
                                 <mat-datepicker [disabled]="!isEdite" #picker></mat-datepicker>
                             </mat-form-field>
@@ -96,9 +96,11 @@
                         <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
                     </div>
                     <div class="col-md-8 right text-right">
-                        <button *ngIf="isEdite" mat-button class="btn-bottom br-0 text-inherit" [disabled]="subscriptionDetails.invalid"
+                        <app-progress-button (btnClick)="saveChangePayeeSetting()" [options]="barButtonOptions" >
+                        </app-progress-button>
+                        <!-- <button *ngIf="isEdite" mat-button class="btn-bottom br-0 text-inherit" [disabled]="subscriptionDetails.invalid"
                             (click)="saveChangePayeeSetting()">Save
-                        </button>
+                        </button> -->
                     </div>
                 </div>
             </div>

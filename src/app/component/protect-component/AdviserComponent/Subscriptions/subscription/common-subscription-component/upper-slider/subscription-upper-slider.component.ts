@@ -27,7 +27,8 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
   upperRightSideInputData;
   sessionData: any;
   upperState: string = "close";
-  isRefreshData: any;
+  referenceData: any;
+  isRefreshData:boolean = false;
   constructor(private router: Router, private authService: AuthService,
     protected eventService: EventService, protected subinject: SubscriptionInject, protected dynamicComponentService: DynamicComponentService, private location: Location
     // public dialogRef: MatDialogRef<UpperSliderComponent>,
@@ -72,7 +73,7 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
   }
 
   set data(data) {
-    this.isRefreshData = data;
+    this.referenceData = data;
     console.log('SubscriptionUpperSliderComponent data : ', data);
     this.fragmentDataSubsUpper = { data };
   }
@@ -95,12 +96,12 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
   headerDataDocuments = 'EMAIL DOCS WITH E-SIGN REQUEST';
 
   ngOnInit() {
-    console.log(history.state);
-    if (this.isRefreshData == undefined) {
-      this.isRefreshData = AuthService.getSubscriptionUpperSliderData();
-      this.fragmentDataSubsUpper = this.isRefreshData
-      this.upperDataSubsUpper = this.isRefreshData.data;
-    }
+    console.log(history.state, "hi i was called again");
+    // if (this.referenceData == undefined) {
+      this.referenceData = AuthService.getSubscriptionUpperSliderData();
+      this.fragmentDataSubsUpper = this.referenceData
+      this.upperDataSubsUpper = this.referenceData.data;
+    // }
     // this.upperState = "open";
   }
   ngAfterViewInit() {
@@ -108,17 +109,48 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
   }
   dialogClose() {
     // this.dialogRef.close();
+    console.log(this.fragmentDataSubsUpper, this.referenceData,"13 this.fragmentDataSubsUpper");
+    
     switch (true) {
-      case (this.isRefreshData.flag == "plan" || this.isRefreshData.flag == "service" || this.isRefreshData.flag == "document"):
-        this.router.navigate(['/admin/subscription/settings'])
-        // this.location.replaceState('/admin/subscription/settings');
+      case (this.referenceData.flag == "plan"):
+        this.router.navigate(['/admin/subscription/settings/plans'])
+        this.location.replaceState('/admin/subscription/settings/plans');
+        break;
+      case (this.referenceData.flag == "services"):
+        this.router.navigate(['/admin/subscription/settings/services'])
+        this.location.replaceState('/admin/subscription/settings/services');
+        break;
+      case (this.referenceData.flag == "documents"):
+        this.router.navigate(['/admin/subscription/settings/documents'])
+        this.location.replaceState('/admin/subscription/settings/documents');
         break;
       default:
         // this.router.navigate(['/admin/subscription/clients'])
         this.location.replaceState('/admin/subscription/clients');
+        // this.router.navigate(['/admin/subscription/clients'])
+        break;
     }
     sessionStorage.removeItem('subUpperData')
-    this.eventService.changeUpperSliderState({ state: 'close' });
+    if(this.isRefreshData){
+      this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true});
+    }
+    else{
+      this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: false});
+    }
+  }
+
+  getPlanData(event){
+    console.log(event, "data overview");
+    if(event != undefined){
+      this.isRefreshData = true;
+    }
+  }
+
+  getServiceData(event){
+    console.log(event, "data overview");
+    if(event != undefined){
+      this.isRefreshData = true;
+    }
   }
 
   getStateData(data) {

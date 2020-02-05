@@ -116,7 +116,7 @@ export class PayeeSettingsComponent implements OnInit {
 
   pinInvalid:boolean = false;
 
-  getPostalPin(value, state) {
+  getPostalPin(value) {
     let obj = {
       zipCode: value
     }
@@ -124,7 +124,7 @@ export class PayeeSettingsComponent implements OnInit {
     if(value != ""){
       this.postalService.getPostalPin(value).subscribe(data => {
         console.log('postal 121221', data)
-        this.PinData(data, state)
+        this.PinData(data)
       })
     }
     else{
@@ -132,7 +132,7 @@ export class PayeeSettingsComponent implements OnInit {
     }
   }
 
-  PinData(data, state) {
+  PinData(data) {
     if(data[0].Status == "Error"){
       this.pinInvalid = true;
       
