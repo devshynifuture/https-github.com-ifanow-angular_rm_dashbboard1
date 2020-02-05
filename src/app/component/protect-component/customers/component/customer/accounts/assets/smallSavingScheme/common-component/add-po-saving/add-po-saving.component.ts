@@ -6,7 +6,7 @@ import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
 import {CustomerService} from '../../../../../customer.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-po-saving',
@@ -17,6 +17,7 @@ import {UtilService} from 'src/app/services/util.service';
   ]
 })
 export class AddPoSavingComponent implements OnInit {
+  validatorType=ValidatorType
   isOptionalField: any;
   advisorId: any;
   clientId: number;

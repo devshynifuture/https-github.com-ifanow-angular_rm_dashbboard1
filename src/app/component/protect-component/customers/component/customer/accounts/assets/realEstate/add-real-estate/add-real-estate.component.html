@@ -118,7 +118,7 @@
         <div class="col-md-3 pr-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #marketValue type="text" class="form-control rupess br-0" (keypress)="utils.keyPress($event)" formControlName="marketValue" maxlength="10">
+                    <input matInput #marketValue type="text" class="form-control rupess br-0" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="marketValue" maxlength="10">
                     <mat-error class="f-12" [ngClass]="{'v-h':!(isMvValid && getFormControl().marketValue.invalid || getFormControl().marketValue.touched && getFormControl().marketValue.invalid)}">
                         This field is required
                         <!-- [ngClass]="{'v-h':!(isLoanAmount && getFormControl().marketValue.invalid || getFormControl().marketValue.touched && getFormControl().marketValue.invalid)}" -->

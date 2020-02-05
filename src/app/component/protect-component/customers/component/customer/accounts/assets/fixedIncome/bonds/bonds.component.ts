@@ -8,7 +8,7 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import * as moment from 'moment';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 
 
 @Component({
@@ -21,6 +21,7 @@ import { UtilService } from 'src/app/services/util.service';
   ],
 })
 export class BondsComponent implements OnInit {
+  validatorType=ValidatorType
   maxDate = new Date();
   dataSource: any;
   bonds: any;

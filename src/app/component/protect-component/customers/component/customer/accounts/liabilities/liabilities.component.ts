@@ -58,13 +58,11 @@ export class LiabilitiesComponent implements OnInit {
   viewMode: string;
 
   ngOnInit() {
-
     this.viewMode = 'tab1';
     this.showFilter = 'tab1';
     //this.showLoader = true;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-
     this.getLiability('');
     this.getPayables();
     this.getGlobalLiabilities();
@@ -102,11 +100,9 @@ export class LiabilitiesComponent implements OnInit {
       data => this.getGlobalLiabilitiesRes(data)
     );
   }
-
   getGlobalLiabilitiesRes(data) {
     console.log(data);
   }
-
   getPayables() {
     const obj = {
       advisorId: this.advisorId,
@@ -116,7 +112,6 @@ export class LiabilitiesComponent implements OnInit {
       data => this.getOtherPayablesRes(data)
     );
   }
-
   getOtherPayablesRes(data) {
 
     console.log(data);
@@ -124,9 +119,7 @@ export class LiabilitiesComponent implements OnInit {
       this.OtherPayableData = data;
       this.OtherData = data.length;
     }
-
   }
-
   sortTable(data) {
     if (data == '' || data == undefined) {
       this.showFilter = 'tab1';
@@ -157,15 +150,6 @@ export class LiabilitiesComponent implements OnInit {
         this.totalLoanAmt = filterData.reduce((accumulator, currentElement) =>
           accumulator + currentElement.loanAmount
           , 0)
-        // _.sumBy(filterData, function (o) {
-        //   return o.loanAmount;
-        // });
-        // this.outStandingAmt = _.sumBy(filterData, function (o) {
-        //   if (o.outstandingAmount == "NaN") {
-        //     o.outstandingAmount = 0
-        //   }
-        //   return o.outstandingAmount;
-        // });
         this.outStandingAmt = filterData.reduce((accumulator, currentElement) =>
           accumulator + currentElement.outstandingAmount
           , 0)
@@ -260,8 +244,6 @@ export class LiabilitiesComponent implements OnInit {
       }
     );
   }
-
-
   addLiabilitiesDetail(flagValue, data) {
     const fragmentData = {
       flag: flagValue,
@@ -275,13 +257,11 @@ export class LiabilitiesComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isRefreshRequired(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          
         }
         rightSideDataSub.unsubscribe();
       }
     );
   }
-
   getLiability(data) {
     this.isLoading = true;
 
@@ -299,7 +279,6 @@ export class LiabilitiesComponent implements OnInit {
       }
     );
   }
-
   getLiabiltyRes(data) {
     this.isLoading = false;
     // this.showLoader = false;
@@ -329,8 +308,6 @@ export class LiabilitiesComponent implements OnInit {
       this.mortgage = [];
       this.dataStore = data.loans;
       this.dataSource = data.loans;
-      // this.dataSource = new MatTableDataSource(data.loans);
-      // this.dataSource.sort = this.sort;
       this.storeData = data.loans.length;
       this.dataStore.forEach(element => {
         if (element.loanTypeId == 1) {
@@ -349,20 +326,15 @@ export class LiabilitiesComponent implements OnInit {
       });
       this.sortTable(this.dataToShow);
     }
-
   }
-
   clickHandling() {
     console.log('something was clicked');
     this.open('openHelp', 'liabilityright');
   }
-
   display(data) {
     this.getPayables();
   }
-
 }
-
 export interface PeriodicElement {
   no: string;
   name: string;
@@ -375,5 +347,4 @@ export interface PeriodicElement {
   emi: string;
   fin: string;
   status: string;
-
 }

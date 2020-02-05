@@ -208,7 +208,8 @@ export class ValidatorType {
   static PERSON_NAME = new RegExp(/^[a-zA-Z]*[a-zA-Z]+[a-zA-Z ]*$/);
   // static PERSON_NAME = new RegExp(/^[a-zA-Z0-9]*[ a-zA-Z]+[a-zA-Z0-9]*$/);/*With Number*/
   static NUMBER_KEY_ONLY = new RegExp(/[^0-9.]+/g);
-  static TEXT_ONLY = new RegExp(/^[a-zA-Z ]/);
+  // static TEXT_ONLY = new RegExp(/^[a-zA-Z ]/);
+  static TEXT_ONLY = new RegExp(/^[a-zA-Z ]*$/);
   static TEXT_WITH_SPACE = new RegExp(/^[a-zA-Z ]/gi);
 
   static ALPHA_NUMERIC = new RegExp(/^[a-zA-Z0-9/-]*$/);

@@ -3,7 +3,7 @@ import { Validators, FormBuilder } from '@angular/forms';
 import { SubscriptionService } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { AuthService } from 'src/app/auth-service/authService';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-record-payment',
@@ -11,6 +11,7 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./record-payment.component.scss']
 })
 export class RecordPaymentComponent implements OnInit {
+  validatorType=ValidatorType
   rPayment;
   dataSource: any;
   showPaymentRecive: boolean;

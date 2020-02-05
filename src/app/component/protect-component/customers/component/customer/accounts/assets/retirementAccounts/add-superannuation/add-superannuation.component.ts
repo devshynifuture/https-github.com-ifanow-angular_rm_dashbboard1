@@ -8,7 +8,7 @@ import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-superannuation',
@@ -20,6 +20,7 @@ import { UtilService } from 'src/app/services/util.service';
   ],
 })
 export class AddSuperannuationComponent implements OnInit {
+  validatorType=ValidatorType
   showHide = false;
   inputData: any;
   ownerName: any;

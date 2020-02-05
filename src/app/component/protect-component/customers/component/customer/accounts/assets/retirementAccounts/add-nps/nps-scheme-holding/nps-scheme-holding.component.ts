@@ -8,7 +8,7 @@ import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-nps-scheme-holding',
@@ -21,6 +21,7 @@ import { UtilService } from 'src/app/services/util.service';
 
 })
 export class NpsSchemeHoldingComponent implements OnInit {
+  validatorType=ValidatorType
   inputData: any;
   familyMemberId: any;
   ownerName: any;
