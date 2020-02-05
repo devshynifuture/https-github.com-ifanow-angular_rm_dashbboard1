@@ -37,7 +37,6 @@ export class PayeeSettingsComponent implements OnInit {
   sendData;
   updatedData: any;
   inputData: any;
-  validatorType = ValidatorType;
 
   @Output() getEditData = new EventEmitter();
   obj = [
