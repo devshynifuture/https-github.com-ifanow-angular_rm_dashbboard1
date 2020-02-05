@@ -62,7 +62,7 @@
         <div class="col-md-3">
             <div class="form-group iconRupess mb-0">
                 <mat-form-field>
-                    <input matInput #amountInvest type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0 rupess" formControlName="amountInvest">
+                    <input matInput #amountInvest type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess" formControlName="amountInvest">
                     <mat-error class="f-12 pt-4">
                         This field is required
                     </mat-error>
@@ -94,7 +94,7 @@
         <div class="col-md-3 iconPetage">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input #interestRate matInput type="number" (keyup)="onChange($event)" (keypress)="utils.keyPress($event)" class="form-control br-0 percentage" formControlName="interestRate">
+                    <input #interestRate matInput type="number" (keyup)="onChange($event)" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage" formControlName="interestRate">
                     <mat-error class="f-12 pt-4">
                         This field is required
                     </mat-error>
@@ -305,7 +305,7 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput #bankACNo type="text" (keypress)="utils.keyPress($event)" maxlength="16" class="form-control br-0" formControlName="bankACNo">
+                            <input matInput #bankACNo type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="16" class="form-control br-0" formControlName="bankACNo">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
                             <mat-hint align="end" class="f-12">{{bankACNo.value.length}}/16</mat-hint>
                         </mat-form-field>

@@ -7,7 +7,7 @@ import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-eps',
@@ -19,6 +19,7 @@ import { UtilService } from 'src/app/services/util.service';
   ],
 })
 export class AddEPSComponent implements OnInit {
+  validatorType=ValidatorType
   maxDate = new Date();
   inputData: any;
   advisorId: any;

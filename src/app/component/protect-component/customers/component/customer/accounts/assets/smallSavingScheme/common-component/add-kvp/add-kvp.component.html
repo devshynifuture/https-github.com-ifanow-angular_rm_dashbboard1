@@ -37,7 +37,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput autocomplete="off" formControlName="amtInvested" #amountInvest type="text" maxlength="10" class="form-control br-0 rupess" (keypress)="utils.keyPress($event)">
+                        <input matInput autocomplete="off" formControlName="amtInvested" #amountInvest type="text" maxlength="10" class="form-control br-0 rupess" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY">
                         <mat-error *ngIf="KVPFormScheme.get('amtInvested').errors?.required" class="f-12">
                             Amount invested is required
                         </mat-error>
@@ -115,7 +115,7 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input type="text" matInput formControlName="bankAccNum" #bankAccNum maxlength="16" class="form-control br-0" (keypress)="utils.keyPress($event)">
+                    <mat-form-field> <input type="text" matInput formControlName="bankAccNum" #bankAccNum maxlength="16" class="form-control br-0" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{bankAccNum.value.length}}/16</mat-hint>
                     </mat-form-field>

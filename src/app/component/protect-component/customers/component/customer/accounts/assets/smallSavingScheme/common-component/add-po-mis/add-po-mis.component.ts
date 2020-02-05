@@ -6,7 +6,7 @@ import { CustomerService } from '../../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-po-mis',
@@ -17,6 +17,7 @@ import { UtilService } from 'src/app/services/util.service';
   ],
 })
 export class AddPoMisComponent implements OnInit {
+  validatorType=ValidatorType
   maxDate = new Date();
   show: boolean;
   _inputData: any;

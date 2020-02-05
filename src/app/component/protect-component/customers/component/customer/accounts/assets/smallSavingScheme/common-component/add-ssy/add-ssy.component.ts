@@ -6,7 +6,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -19,6 +19,7 @@ import { DatePipe } from '@angular/common';
   ]
 })
 export class AddSsyComponent implements OnInit {
+  validatorType = ValidatorType;
   maxDate = new Date();
   inputData: any;
   ownerName: any;

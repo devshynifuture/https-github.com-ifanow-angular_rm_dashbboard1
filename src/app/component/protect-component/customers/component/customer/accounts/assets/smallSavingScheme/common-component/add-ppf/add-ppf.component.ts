@@ -6,7 +6,7 @@ import {SubscriptionInject} from 'src/app/component/protect-component/AdviserCom
 import {CustomerService} from '../../../../../customer.service';
 import {AuthService} from 'src/app/auth-service/authService';
 import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService} from 'src/app/services/util.service';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-ppf',
@@ -17,6 +17,7 @@ import {UtilService} from 'src/app/services/util.service';
   ]
 })
 export class AddPpfComponent implements OnInit {
+  validatorType=ValidatorType
   maxDate = new Date();
   isOptionalField: boolean;
   advisorId: any;

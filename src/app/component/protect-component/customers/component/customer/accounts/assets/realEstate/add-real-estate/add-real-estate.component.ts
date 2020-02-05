@@ -4,7 +4,7 @@ import { Validators, FormBuilder, FormArray } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-real-estate',
@@ -12,6 +12,7 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./add-real-estate.component.scss']
 })
 export class AddRealEstateComponent implements OnInit {
+  validatorType=ValidatorType
   addrealEstateForm: any;
   ownerData: any;
   ownerName: any;

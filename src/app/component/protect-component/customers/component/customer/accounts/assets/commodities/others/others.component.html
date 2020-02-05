@@ -63,7 +63,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #marketValue type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0" formControlName="marketValue">
+                    <input matInput #marketValue type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0" formControlName="marketValue">
                     <mat-error class="f-12" [ngClass]="{'v-h':!(isMarketValue && getFormControl().marketValue.invalid || getFormControl().marketValue.touched && getFormControl().marketValue.invalid)}">
                         This field is required
                     </mat-error>
@@ -92,7 +92,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #purchaseValue type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0" formControlName="purchaseValue">
+                        <input matInput #purchaseValue type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0" formControlName="purchaseValue">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{purchaseValue.value.length}}/10</mat-hint>
                     </mat-form-field>
@@ -120,7 +120,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #growthRate type="number" (keyup)="onChange($event)" (keypress)="utils.keyPress($event)" maxlength="30" class="form-control br-0" formControlName="growthRate">
+                        <input matInput #growthRate type="number" (keyup)="onChange($event)" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="30" class="form-control br-0" formControlName="growthRate">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>

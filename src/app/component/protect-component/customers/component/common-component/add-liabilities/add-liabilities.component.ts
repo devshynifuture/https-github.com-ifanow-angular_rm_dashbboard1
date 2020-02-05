@@ -7,7 +7,7 @@ import { CustomerService } from '../../customer/customer.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { DataComponent } from '../../../../../../interfaces/data.component';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-liabilities',
@@ -19,6 +19,7 @@ import { UtilService } from 'src/app/services/util.service';
 
 })
 export class AddLiabilitiesComponent implements OnInit, DataComponent {
+  validatorType = ValidatorType;
   productForm: FormGroup;
   show: boolean;
   showTransact: boolean;

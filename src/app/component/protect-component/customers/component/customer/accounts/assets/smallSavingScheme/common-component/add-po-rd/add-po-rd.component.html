@@ -37,7 +37,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput type="text" (keypress)="utils.keyPress($event)" formControlName="monthlyContribution" #amountInvest maxlength="10" class="form-control br-0 rupess">
+                        <input matInput type="text" formControlName="monthlyContribution" #amountInvest maxlength="10" class="form-control br-0 rupess" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY">
                         <mat-error *ngIf="PORDForm.get('monthlyContribution').errors?.required && PORDForm.get('monthlyContribution').touched" class="f-12">
                             This field is required
                         </mat-error>
@@ -128,7 +128,7 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input type="text" matInput (keypress)="utils.keyPress($event)" formControlName="linkedBankAcc" #linkedBankAcc maxlength="16" class="form-control br-0">
+                    <mat-form-field> <input type="text" matInput  formControlName="linkedBankAcc" #linkedBankAcc maxlength="16" class="form-control br-0" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{linkedBankAcc.value.length}}/16</mat-hint>
                     </mat-form-field>

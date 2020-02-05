@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { ActiityService } from '../../../../customer-activity/actiity.service';
 
 
@@ -24,6 +24,7 @@ import { ActiityService } from '../../../../customer-activity/actiity.service';
   ],
 })
 export class FixedDepositComponent implements OnInit {
+  validatorType=ValidatorType
   maxDate = new Date();
   showHide = false;
   isownerName = false;

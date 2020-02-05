@@ -7,7 +7,7 @@ import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS, MatSort } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 @Component({
   selector: 'app-add-epf',
@@ -19,6 +19,7 @@ import { EventService } from 'src/app/Data-service/event.service';
   ],
 })
 export class AddEPFComponent implements OnInit {
+  validatorType=ValidatorType
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   isBalanceAsOn = false;
   isAnnualSalGrowth = false;
