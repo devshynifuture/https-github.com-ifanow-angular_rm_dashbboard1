@@ -138,14 +138,7 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
     }
   }
 
-  getPlanData(event){
-    console.log(event, "data overview");
-    if(event != undefined){
-      this.isRefreshData = true;
-    }
-  }
-
-  getServiceData(event){
+  getData(event){
     console.log(event, "data overview");
     if(event != undefined){
       this.isRefreshData = true;
