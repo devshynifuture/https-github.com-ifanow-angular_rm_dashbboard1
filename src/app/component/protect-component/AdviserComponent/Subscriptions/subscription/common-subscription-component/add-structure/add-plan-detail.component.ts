@@ -95,7 +95,9 @@ export class AddPlanDetailComponent implements OnInit {
     }
     else {
       this.barButtonOptions.active = true;
-      if (this.editApiCall.id == undefined) {
+      console.log(this.editApiCall, this.editApiCall == undefined,"check editApiCall");
+      
+      if (this.editApiCall == undefined) {
         const obj = {
           name: this.getFormControl().planName.value,
           description: this.getFormControl().description.value,

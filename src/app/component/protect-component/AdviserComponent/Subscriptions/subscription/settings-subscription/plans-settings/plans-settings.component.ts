@@ -24,7 +24,7 @@ export class PlansSettingsComponent implements OnInit {
   button: any;
 
   //showLoader;
-
+  read:boolean = false;
   planSettingData = [{}, {}];
   isLoading = false;
   advisorId;
@@ -93,6 +93,15 @@ export class PlansSettingsComponent implements OnInit {
   //  dialogRef.afterClosed().subscribe(result => {
   //
   //  });*/
+
+  readMore(){
+    if(this.read){
+      this.read = false;
+    }
+    else{
+      this.read = true;
+    }
+  }
 
   openFragment(singlePlan, data) {
     this.location.replaceState('/subscription-upper');
