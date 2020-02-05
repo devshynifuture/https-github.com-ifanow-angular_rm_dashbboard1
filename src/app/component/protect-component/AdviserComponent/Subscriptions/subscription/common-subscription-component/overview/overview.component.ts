@@ -70,7 +70,7 @@ export class OverviewComponent implements OnInit {
     
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        // console.log('this is sidebardata in subs subs : ', sideBarData);
+        console.log('this is sidebardata in subs subs', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (sideBarData.data) {
             this.upperData = sideBarData.data

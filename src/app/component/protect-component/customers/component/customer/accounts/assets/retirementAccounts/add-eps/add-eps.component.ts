@@ -7,7 +7,7 @@ import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-eps',
@@ -19,6 +19,7 @@ import { UtilService } from 'src/app/services/util.service';
   ],
 })
 export class AddEPSComponent implements OnInit {
+  validatorType = ValidatorType
   maxDate = new Date();
   inputData: any;
   advisorId: any;
@@ -34,7 +35,7 @@ export class AddEPSComponent implements OnInit {
   nomineesListFM: any;
   flag: any;
 
-  constructor(private event: EventService,private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe,public utils: UtilService) { }
+  constructor(private event: EventService, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) { }
 
   @Input()
   set data(data) {
@@ -66,7 +67,7 @@ export class AddEPSComponent implements OnInit {
     }
   }
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag })
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag })
   }
   // getDateYMD(){
   //   let now = moment();
@@ -75,15 +76,15 @@ export class AddEPSComponent implements OnInit {
   //   return this.getDate;
   // }
   getdataForm(data) {
-    this.flag=data;
+    this.flag = data;
     if (data == undefined) {
       data = {}
     }
     this.eps = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
-      commencementDate: [(data == undefined) ? '' :new Date(data.commencementDate), [Validators.required]],
+      commencementDate: [(data == undefined) ? '' : new Date(data.commencementDate), [Validators.required]],
       pensionAmount: [(data == undefined) ? '' : data.pensionAmount, [Validators.required]],
-      pensionPayFreq: [(data.pensionPayoutFrequencyId == undefined) ? '' : (data.pensionPayoutFrequencyId)+"", [Validators.required]],
+      pensionPayFreq: [(data.pensionPayoutFrequencyId == undefined) ? '' : (data.pensionPayoutFrequencyId) + "", [Validators.required]],
       bankAcNo: [(data == undefined) ? '' : data.linkedBankAccount, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
@@ -97,9 +98,12 @@ export class AddEPSComponent implements OnInit {
   getFormControl(): any {
     return this.eps.controls;
   }
-  
+
   saveEPF() {
-    if (this.eps.get('commencementDate').invalid) {
+    if (this.eps.get('ownerName').invalid) {
+      this.eps.get('ownerName').markAsTouched();
+      return;
+    } else if (this.eps.get('commencementDate').invalid) {
       this.eps.get('commencementDate').markAsTouched();
       return;
     } else if (this.eps.get('ownerName').invalid) {
@@ -116,7 +120,7 @@ export class AddEPSComponent implements OnInit {
         advisorId: this.advisorId,
         clientId: this.clientId,
         familyMemberId: this.familyMemberId,
-        ownerName: (this.ownerName == undefined)?this.eps.controls.ownerName.value:this.ownerName,
+        ownerName: (this.ownerName == undefined) ? this.eps.controls.ownerName.value : this.ownerName,
         commencementDate: this.eps.controls.commencementDate.value,
         pensionAmount: this.eps.controls.pensionAmount.value,
         pensionPayoutFrequencyId: this.eps.controls.pensionPayFreq.value,
@@ -130,33 +134,33 @@ export class AddEPSComponent implements OnInit {
         stringObject: obj,
         adviceDescription: "manualAssetDescription"
       }
-      if (this.eps.controls.id.value == undefined && this.flag!='adviceEPS') {
+      if (this.eps.controls.id.value == undefined && this.flag != 'adviceEPS') {
         this.custumService.addEPS(obj).subscribe(
           data => this.addEPSRes(data)
         );
-      } else if(this.flag=='adviceEPS'){
+      } else if (this.flag == 'adviceEPS') {
         this.custumService.getAdviceEps(adviceObj).subscribe(
           data => this.getAdviceEpsRes(data),
         );
-      }else {
+      } else {
         //edit call
         this.custumService.editEPS(obj).subscribe(
           data => this.editEPSRes(data)
         );
-      }   
+      }
     }
   }
-  getAdviceEpsRes(data){
+  getAdviceEpsRes(data) {
     this.event.openSnackBar('EPS added successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({flag:'addedEps', state: 'close', data ,refreshRequired:true })
+    this.subInjectService.changeNewRightSliderState({ flag: 'addedEps', state: 'close', data, refreshRequired: true })
   }
-  addEPSRes(data){
+  addEPSRes(data) {
     console.log('addrecuringDepositRes', data)
-     this.event.openSnackBar('Added successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({flag:'addedEps', state: 'close', data ,refreshRequired:true })
+    this.event.openSnackBar('Added successfully!', 'dismiss');
+    this.subInjectService.changeNewRightSliderState({ flag: 'addedEps', state: 'close', data, refreshRequired: true })
   }
-  editEPSRes(data){
-     this.event.openSnackBar('Updated successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({flag:'addedEps', state: 'close', data ,refreshRequired:true })
+  editEPSRes(data) {
+    this.event.openSnackBar('Updated successfully!', 'dismiss');
+    this.subInjectService.changeNewRightSliderState({ flag: 'addedEps', state: 'close', data, refreshRequired: true })
   }
 }

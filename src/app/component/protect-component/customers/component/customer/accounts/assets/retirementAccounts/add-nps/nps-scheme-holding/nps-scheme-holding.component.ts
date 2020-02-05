@@ -8,7 +8,7 @@ import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-nps-scheme-holding',
@@ -21,6 +21,7 @@ import { UtilService } from 'src/app/services/util.service';
 
 })
 export class NpsSchemeHoldingComponent implements OnInit {
+  validatorType = ValidatorType
   inputData: any;
   familyMemberId: any;
   ownerName: any;
@@ -106,7 +107,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
   }
 
   getdataForm(data) {
-    this.flag=data;
+    this.flag = data;
     if (data == undefined) {
       data = {}
     }
@@ -264,7 +265,10 @@ export class NpsSchemeHoldingComponent implements OnInit {
     console.log(this.schemeHoldingsNPS.get('holdingList').invalid)
     console.log(this.schemeHoldingsNPS.get('futureContributionList').invalid)
     console.log(this.schemeHoldingsNPS.get('nominees').invalid)
-    if (this.schemeHoldingsNPS.get('pran').invalid) {
+    if (this.schemeHoldingsNPS.get('ownerName').invalid) {
+      this.schemeHoldingsNPS.get('ownerName').markAsTouched();
+      return;
+    } else if (this.schemeHoldingsNPS.get('pran').invalid) {
       this.schemeHoldingsNPS.get('pran').markAsTouched();
       return;
     } else if (this.schemeHoldingsNPS.get('ownerName').invalid) {
@@ -301,15 +305,15 @@ export class NpsSchemeHoldingComponent implements OnInit {
         stringObject: obj,
         adviceDescription: "manualAssetDescription"
       }
-      if (this.schemeHoldingsNPS.controls.id.value == undefined && this.flag!='adviceNPSSchemeHolding') {
+      if (this.schemeHoldingsNPS.controls.id.value == undefined && this.flag != 'adviceNPSSchemeHolding') {
         this.custumService.addNPS(obj).subscribe(
           data => this.addNPSRes(data)
         );
-      } else if(this.flag=='adviceNPSSchemeHolding'){
+      } else if (this.flag == 'adviceNPSSchemeHolding') {
         this.custumService.getAdviceNps(adviceObj).subscribe(
           data => this.getAdviceNscSchemeLevelRes(data),
         );
-      }else {
+      } else {
         //edit call
         this.custumService.editNPS(obj).subscribe(
           data => this.editNPSRes(data)
@@ -317,7 +321,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
       }
     }
   }
-  getAdviceNscSchemeLevelRes(data){
+  getAdviceNscSchemeLevelRes(data) {
     this.event.openSnackBar('NPS added successfully!', 'dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }

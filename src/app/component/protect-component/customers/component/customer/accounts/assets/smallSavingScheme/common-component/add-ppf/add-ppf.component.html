@@ -41,7 +41,7 @@
             <div class="col-md-3 pr-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input #accBal (keypress)="utils.keyPress($event)" autocomplete="off" class="form-control rupess br-0" formControlName="accountBalance" matInput type="text" maxlength="10">
+                        <input #accBal appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" autocomplete="off" class="form-control rupess br-0" formControlName="accountBalance" matInput type="text" maxlength="10">
                         <mat-error *ngIf="ppfSchemeForm.get('accountBalance').errors?.required" class="f-12">
                             This field is required
                         </mat-error>
@@ -94,7 +94,7 @@
             <div class="col-md-3 pr-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input autocomplete="off" (keypress)="utils.keyPress($event)" #futureContribution class="form-control rupess br-0" formControlName="futureContribution" matInput maxlength="20" type="text">
+                        <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" #futureContribution class="form-control rupess br-0" formControlName="futureContribution" matInput maxlength="20" type="text">
                         <mat-error class="f-12">
                             This field is required
                         </mat-error>
@@ -157,7 +157,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input autocomplete="off" #bankACNo class="form-control br-0" #bankName formControlName="bankName" matInput maxlength="40" type="text" (keypress)="utils.onlyText($event)">
+                        <input autocomplete="off" #bankACNo class="form-control br-0" #bankName formControlName="bankName" matInput maxlength="40" type="text" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{bankName.value.length}}/40</mat-hint>
                     </mat-form-field>
@@ -171,7 +171,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input autocomplete="off" (keypress)="utils.keyPress($event)" #linkedBankAccount class="form-control br-0" formControlName="linkedBankAccount" matInput maxlength="20">
+                        <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" #linkedBankAccount class="form-control br-0" formControlName="linkedBankAccount" matInput maxlength="20">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{linkedBankAccount.value.length}}/20</mat-hint>
                     </mat-form-field>

@@ -12,6 +12,7 @@ import {HttpClient} from '@angular/common/http';
 import {tableHtml} from './document-preview';
 import {DocumentPreviewComponent} from '../document-preview/document-preview.component';
 import {AddEditDocumentComponent} from '../add-edit-document/add-edit-document.component';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-terms-agreement',
@@ -26,6 +27,21 @@ import {AddEditDocumentComponent} from '../add-edit-document/add-edit-document.c
   ]
 })
 export class TermsAgreementComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE',
+    buttonColor: 'primary',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  }
   model: any;
   dataSub: any;
   storeData: any;
@@ -213,6 +229,7 @@ export class TermsAgreementComponent implements OnInit {
   }
 
   updateData(data) {
+    this.barButtonOptions.active = true;
     const obj = {
       advisorId: data.advisorId,
       availableAt: data.availableAt,
@@ -223,16 +240,23 @@ export class TermsAgreementComponent implements OnInit {
       name: data.name,
     };
     this.subService.updateDocumentData(obj).subscribe(
-      responseData => this.getResponseData(responseData)
+      responseData =>{
+        this.getResponseData(responseData)
+      },
+      err =>{
+        this.barButtonOptions.active = false;
+        console.log(err, "updateDocumentData error");
+      }
     );
   }
 
   getResponseData(data) {
     console.log(data);
+    this.barButtonOptions.active = false;
     if (data == 1) {
       this.eventService.openSnackBar('Document added successfully', 'OK');
     }
-    this.eventService.changeUpperSliderState({state: 'close'});
+    this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
   }
 
   // Begin ControlValueAccesor methods.

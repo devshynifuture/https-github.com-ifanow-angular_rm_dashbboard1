@@ -51,7 +51,7 @@
             </div>
             <div class="col-md-3 pr-0">
                 <div class="form-group mb-0">
-                    <mat-form-field><input #accountBalance class="form-control rupess br-0" (keypress)="utils.keyPress($event)" formControlName="accBalance" matInput maxlength="10" type="text">
+                    <mat-form-field><input #accountBalance class="form-control rupess br-0" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="accBalance" matInput maxlength="10" type="text">
                         <mat-error class="f-12"> This field is required</mat-error>
                         <mat-hint align="end" class="f-12">{{accountBalance.value.length}}/10</mat-hint>
                     </mat-form-field>
@@ -99,7 +99,7 @@
             <div class="col-md-3 pr-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input #futureContribution class="form-control rupess br-0" (keypress)="utils.keyPress($event)" formControlName="futureAppx" matInput maxlength="10" type="text">
+                        <input #futureContribution class="form-control rupess br-0" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="futureAppx" matInput maxlength="10" type="text">
                         <mat-error class="f-12">
                             This field is required
                         </mat-error>
@@ -157,7 +157,7 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field><input type="text" #linkedAcc class="form-control br-0" (keypress)="utils.keyPress($event)" formControlName="linkedAcc" matInput maxlength="16">
+                    <mat-form-field><input type="text" #linkedAcc class="form-control br-0" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="linkedAcc" matInput maxlength="16">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{linkedAcc.value.length}}/16</mat-hint>
                     </mat-form-field>

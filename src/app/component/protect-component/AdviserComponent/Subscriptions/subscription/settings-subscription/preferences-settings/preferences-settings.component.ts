@@ -72,7 +72,7 @@ export class PreferencesSettingsComponent implements OnInit {
   }
 
   getTemplateDate(data) {
-    console.log(data);
+    console.log(data,"storeData email");
     this.storeData = data;
   }
 

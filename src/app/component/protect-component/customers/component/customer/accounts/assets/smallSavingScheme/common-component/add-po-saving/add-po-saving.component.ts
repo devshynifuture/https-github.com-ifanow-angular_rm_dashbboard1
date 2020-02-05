@@ -1,22 +1,23 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {FormBuilder, Validators} from '@angular/forms';
-import {MAT_DATE_FORMATS} from '@angular/material';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {CustomerService} from '../../../../../customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { FormBuilder, Validators } from '@angular/forms';
+import { MAT_DATE_FORMATS } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { CustomerService } from '../../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-po-saving',
   templateUrl: './add-po-saving.component.html',
   styleUrls: ['./add-po-saving.component.scss'],
   providers: [
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ]
 })
 export class AddPoSavingComponent implements OnInit {
+  validatorType = ValidatorType
   isOptionalField: any;
   advisorId: any;
   clientId: number;
@@ -34,8 +35,8 @@ export class AddPoSavingComponent implements OnInit {
   nominees: any[];
   flag: any;
 
-  constructor(public utils: UtilService,private fb: FormBuilder, private cusService: CustomerService,
-              private eventService: EventService, private subInjectService: SubscriptionInject) {
+  constructor(public utils: UtilService, private fb: FormBuilder, private cusService: CustomerService,
+    private eventService: EventService, private subInjectService: SubscriptionInject) {
   }
 
   @Input()
@@ -60,7 +61,7 @@ export class AddPoSavingComponent implements OnInit {
   }
   changeAccountBalance(data) {
     (this.poSavingForm.get('ownershipType').value == 1) ? (this.accBalance = 1500000,
-        this.poSavingForm.get('ownershipType').setValidators([Validators.max(1500000)])
+      this.poSavingForm.get('ownershipType').setValidators([Validators.max(1500000)])
     ) : this.accBalance = 200000;
   }
 
@@ -75,7 +76,7 @@ export class AddPoSavingComponent implements OnInit {
     this.nomineesList = data.controls
   }
   getdataForm(data) {
-    this.flag=data;
+    this.flag = data;
     if (data == undefined) {
       data = {
         ownerTypeId: 1
@@ -83,7 +84,7 @@ export class AddPoSavingComponent implements OnInit {
     } else {
       this.editApi = data;
     }
-    this.posavingData=data
+    this.posavingData = data
     this.poSavingForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
       accBal: [data.accountBalance, [Validators.required, Validators.min(50), Validators.max(1500000)]],
@@ -100,7 +101,7 @@ export class AddPoSavingComponent implements OnInit {
     });
     this.ownerData = this.poSavingForm.controls;
     this.familyMemberId = this.poSavingForm.controls.familyMemberId.value,
-    this.familyMemberId = this.familyMemberId[0];
+      this.familyMemberId = this.familyMemberId[0];
   }
 
   moreFields() {
@@ -115,13 +116,16 @@ export class AddPoSavingComponent implements OnInit {
         let obj = {
           "name": element.controls.name.value,
           "sharePercentage": element.controls.sharePercentage.value,
-          "id":element.id,
-          "familyMemberId":element.familyMemberId
+          "id": element.id,
+          "familyMemberId": element.familyMemberId
         }
         this.nominees.push(obj)
       });
     }
-    if (this.poSavingForm.get('accBal').invalid) {
+    if (this.poSavingForm.get('ownerName').invalid) {
+      this.poSavingForm.get('ownerName').markAsTouched();
+      return;
+    } else if (this.poSavingForm.get('accBal').invalid) {
       this.poSavingForm.get('accBal').markAsTouched();
       return;
     } else if (this.poSavingForm.get('ownerName').invalid) {
@@ -134,7 +138,7 @@ export class AddPoSavingComponent implements OnInit {
       this.poSavingForm.get('ownershipType').markAsTouched();
       return;
     } else {
-      if (this.editApi!=undefined && this.editApi!='advicePoSaving') {
+      if (this.editApi != undefined && this.editApi != 'advicePoSaving') {
         const obj = {
           id: this.editApi.id,
           familyMemberId: this.familyMemberId,
@@ -145,7 +149,7 @@ export class AddPoSavingComponent implements OnInit {
           nominees: this.nominees,
           acNumber: this.poSavingOptionalForm.get('bankAccNo').value,
           description: this.poSavingOptionalForm.get('description').value,
-          ownerName:  (this.ownerName == undefined) ? this.poSavingForm.controls.ownerName.value : this.ownerName
+          ownerName: (this.ownerName == undefined) ? this.poSavingForm.controls.ownerName.value : this.ownerName
         };
         this.cusService.editPOSAVINGData(obj).subscribe(
           data => this.addPOSavingResponse(data),
@@ -176,7 +180,7 @@ export class AddPoSavingComponent implements OnInit {
             data => this.getAdvicePosavingRes(data),
             err => this.eventService.openSnackBar(err, "dismiss")
           );
-        }else{
+        } else {
           this.cusService.addPOSAVINGScheme(obj).subscribe(
             data => this.addPOSavingResponse(data),
             error => this.eventService.showErrorMessage(error)
@@ -185,7 +189,7 @@ export class AddPoSavingComponent implements OnInit {
       }
     }
   }
-  getAdvicePosavingRes(data){
+  getAdvicePosavingRes(data) {
     this.eventService.openSnackBar('PO_SAVING is edited', 'added');
     this.close(true);
   }
@@ -198,6 +202,6 @@ export class AddPoSavingComponent implements OnInit {
 
   close(flag) {
     this.isOptionalField = true;
-    this.subInjectService.changeNewRightSliderState({state: 'close',refreshRequired:flag});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 }

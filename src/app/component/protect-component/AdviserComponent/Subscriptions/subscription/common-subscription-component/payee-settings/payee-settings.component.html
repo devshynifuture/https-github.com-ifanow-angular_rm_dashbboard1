@@ -90,7 +90,7 @@
         </div>
         <div class="col-md-6">
             <mat-form-field class="w-100">
-                <input #primaryContact class="form-control br-0" formControlName="primaryContact" (keypress)="utils.keyPress($event)" matInput maxlength="10" type="text">
+                <input #primaryContact class="form-control br-0" formControlName="primaryContact" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" matInput maxlength="10" type="text">
                 <mat-error class="f-12">
                     This field is required
                 </mat-error>
@@ -140,7 +140,7 @@
         </div>
         <div class="col-md-6">
             <mat-form-field class="w-100">
-                <input #gstIn class="form-control br-0" (keypress)="utils.alphaNumric($event)" formControlName="gstIn" matInput maxlength="16" type="text">
+                <input #gstIn class="form-control br-0" appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="gstIn" matInput maxlength="16" type="text">
                 <mat-error class="f-12">
                     This field is required
                 </mat-error>
@@ -182,7 +182,7 @@
         </div>
         <div class="col-md-6">
             <mat-form-field class="w-100">
-                <input #city class="form-control br-0" (keypress)="utils.onlyText($event)" formControlName="city" matInput maxlength="30" type="text">
+                <input #city class="form-control br-0" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" formControlName="city" matInput maxlength="30" type="text">
                 <mat-error class="f-12">
                     This field is required
                 </mat-error>
@@ -196,7 +196,7 @@
         </div>
         <div class="col-md-6">
             <mat-form-field class="w-100">
-                <input #state class="form-control br-0" (keypress)="utils.onlyText($event)" formControlName="state" matInput maxlength="30" type="text">
+                <input #state class="form-control br-0" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" formControlName="state" matInput maxlength="30" type="text">
                 <mat-error class="f-12">
                     This field is required
                 </mat-error>
@@ -210,7 +210,7 @@
         </div>
         <div class="col-md-6">
             <mat-form-field class="w-100">
-                <input #country class="form-control br-0" (keypress)="utils.onlyText($event)" formControlName="country" matInput maxlength="30" type="text">
+                <input #country class="form-control br-0" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" formControlName="country" matInput maxlength="30" type="text">
                 <mat-error class="f-12">
                     This field is required
                 </mat-error>

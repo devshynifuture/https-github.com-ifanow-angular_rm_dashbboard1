@@ -129,7 +129,10 @@ export class AddOtherPayablesComponent implements OnInit {
   }
 
   saveFormData() {
-    if (this.otherLiabilityForm.get('dateOfReceipt').invalid) {
+    if (this.otherLiabilityForm.get('ownerName').invalid) {
+      this.otherLiabilityForm.get('ownerName').markAsTouched();
+      return;
+     } else if (this.otherLiabilityForm.get('dateOfReceipt').invalid) {
       this.otherLiabilityForm.get('dateOfReceipt').markAsTouched();
       return;
     } else if (this.otherLiabilityForm.get('ownerName').invalid) {

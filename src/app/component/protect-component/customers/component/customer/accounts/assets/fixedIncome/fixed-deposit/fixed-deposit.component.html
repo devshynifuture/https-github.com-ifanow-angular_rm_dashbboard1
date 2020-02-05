@@ -43,7 +43,7 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <mat-select #FDType formControlName="FDType" class="form-control br-0">
-                        <mat-option value="">Select option</mat-option>
+                        <mat-option value="" disabled>Select option</mat-option>
                         <mat-option value="1">Bank FD</mat-option>
                         <mat-option value="2">Corporate FD</mat-option>
                     </mat-select>
@@ -62,7 +62,7 @@
         <div class="col-md-3">
             <div class="form-group iconRupess mb-0">
                 <mat-form-field>
-                    <input matInput #amountInvest type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0 rupess" formControlName="amountInvest">
+                    <input matInput #amountInvest type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess" formControlName="amountInvest">
                     <mat-error class="f-12 pt-4">
                         This field is required
                     </mat-error>
@@ -94,7 +94,7 @@
         <div class="col-md-3 iconPetage">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input #interestRate matInput type="number" (keyup)="onChange($event)" (keypress)="utils.keyPress($event)" class="form-control br-0 percentage" formControlName="interestRate">
+                    <input #interestRate matInput type="number" (keyup)="onChange($event)" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage" formControlName="interestRate">
                     <mat-error class="f-12 pt-4">
                         This field is required
                     </mat-error>
@@ -110,7 +110,7 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <mat-select #compound formControlName="compound" class="form-control br-0">
-                        <mat-option value="">Select option</mat-option>
+                        <mat-option value="" disabled>Select option</mat-option>
                         <mat-option value="1">Daily</mat-option>
                         <mat-option value="2">Monthly</mat-option>
                         <mat-option value="3">Quarterly</mat-option>
@@ -223,7 +223,7 @@
         <div class="col-md-3 pr-0">
             <mat-form-field>
                 <mat-select #payOpt formControlName="payOpt" class="form-control br-0">
-                    <mat-option value=""> Select option</mat-option>
+                    <mat-option value="" disabled> Select option</mat-option>
                     <mat-option value="1"> Cumulative payout</mat-option>
                     <mat-option value="2" (click)="intrestPayout(2)">Interest payout</mat-option>
                 </mat-select>
@@ -240,7 +240,7 @@
         <div class="col-md-3 pr-0">
             <mat-form-field>
                 <mat-select #frequencyOfPayoutPerYear formControlName="frequencyOfPayoutPerYear" class="form-control br-0">
-                    <mat-option value=""> Select option</mat-option>
+                    <mat-option value="" disabled> Select option</mat-option>
                     <mat-option value="1"> Monthly</mat-option>
                     <mat-option value="2">quarterly</mat-option>
                     <mat-option value="3">semi-annually</mat-option>
@@ -260,7 +260,7 @@
         <div class="col-md-5">
             <mat-form-field>
                 <mat-select #ownerType class="form-control br-0" formControlName="ownerType">
-                    <mat-option value=""> Select option</mat-option>
+                    <mat-option value="" disabled> Select option</mat-option>
                     <mat-option value="1"> Joint</mat-option>
                     <mat-option value="2">Single</mat-option>
                 </mat-select>
@@ -305,7 +305,7 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput #bankACNo type="text" (keypress)="utils.keyPress($event)" maxlength="16" class="form-control br-0" formControlName="bankACNo">
+                            <input matInput #bankACNo type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="16" class="form-control br-0" formControlName="bankACNo">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
                             <mat-hint align="end" class="f-12">{{bankACNo.value.length}}/16</mat-hint>
                         </mat-form-field>
