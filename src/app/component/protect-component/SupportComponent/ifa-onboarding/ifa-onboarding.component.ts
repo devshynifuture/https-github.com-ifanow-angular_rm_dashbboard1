@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./ifa-onboarding.component.scss']
 })
 export class IfaOnboardingComponent implements OnInit {
+  isLoading = false;
 
   constructor() { }
 

@@ -17,14 +17,18 @@ import { ReportReceivablesComponent } from './support-reports/report-receivables
 import { ReportUpsellingsComponent } from './support-reports/report-upsellings/report-upsellings.component';
 import { AddStockMasterComponent } from './support-dashboard/add-stock-master/add-stock-master.component';
 import { AddLifeInsuranceMasterComponent } from './support-dashboard/add-life-insurance-master/add-life-insurance-master.component';
+import { SchemeMappingComponent } from './support-dashboard/scheme-mapping/scheme-mapping.component';
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+
 
 
 @NgModule({
-  declarations: [SupportSidebarComponent, SupportDashboardComponent, MyIfasComponent, IfaOnboardingComponent, SupportMiscellaneousComponent, AddStockMasterComponent, AddLifeInsuranceMasterComponent],
+  declarations: [SupportSidebarComponent, SupportDashboardComponent, MyIfasComponent, IfaOnboardingComponent, SupportMiscellaneousComponent, AddStockMasterComponent, AddLifeInsuranceMasterComponent, SchemeMappingComponent,],
   imports: [
     CommonModule,
     SupportRoutingModule,
-    MaterialModule
+    MaterialModule,
+    CustomDirectiveModule
   ]
 })
 export class SupportModule { }
