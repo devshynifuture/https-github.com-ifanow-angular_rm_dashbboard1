@@ -44,11 +44,20 @@ h3 p {
     line-height: .7;
 }
 
+.read-more{
+    text-align: right;
+    color: #008FFF;
+    margin-bottom: -18px;
+    font-size: 14px;
+}
+.height80{height: 80px;  overflow: hidden;  }
 .content {
     position: relative;
     right: 20%;
 }
-
+.l-h{
+    line-height: 20px;
+}
 .box {
     box-sizing: border-box;
     border-radius: 4px;

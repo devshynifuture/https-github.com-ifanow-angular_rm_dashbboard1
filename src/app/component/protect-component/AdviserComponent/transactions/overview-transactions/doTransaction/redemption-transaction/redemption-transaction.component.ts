@@ -1,45 +1,44 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Validators, FormBuilder } from '@angular/forms';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ConfirmationTransactionComponent } from '../confirmation-transaction/confirmation-transaction.component';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
-  selector: 'app-purchase-trasaction',
-  templateUrl: './purchase-trasaction.component.html',
-  styleUrls: ['./purchase-trasaction.component.scss']
+  selector: 'app-redemption-transaction',
+  templateUrl: './redemption-transaction.component.html',
+  styleUrls: ['./redemption-transaction.component.scss']
 })
-export class PurchaseTrasactionComponent implements OnInit {
-  purchaseTransaction: any;
+export class RedemptionTransactionComponent implements OnInit {
+  confirmTrasaction: boolean;
   dataSource: any;
   ownerData: any;
+  redemptionTransaction: any;
   inputData: any;
-  isViewInitCalled = false;
   selectedFamilyMember: any;
-  confirmTrasaction = false
+  isViewInitCalled=false;
   transactionType: any;
-  folioSelection :[2] 
 
   constructor(private subInjectService: SubscriptionInject,
     private fb: FormBuilder) { }
-  @Input()
-  set data(data) {
-    this.inputData = data;
-    this.transactionType =  data.transactionType
-    this.selectedFamilyMember = data.selectedFamilyMember
-    console.log('This is Input data of FixedDepositComponent ', data);
-
-    if (this.isViewInitCalled) {
-      this.getdataForm('');
+    @Input()
+    set data(data) {
+      this.inputData = data;
+      this.transactionType =  data.transactionType
+      this.selectedFamilyMember = data.selectedFamilyMember
+      console.log('This is Input data of FixedDepositComponent ', data);
+  
+      if (this.isViewInitCalled) {
+        this.getdataForm('');
+      }
     }
-  }
-
-  get data() {
-    return this.inputData;
-  }
-
+  
+    get data() {
+      return this.inputData;
+    }
+  
   ngOnInit() {
-    this.getdataForm(this.inputData);
+    this.getdataForm(this.inputData)
   }
   onAddTransaction(value,data){
     this.confirmTrasaction = true
@@ -75,23 +74,23 @@ export class PurchaseTrasactionComponent implements OnInit {
     if (this.dataSource) {
       data = this.dataSource;
     }
-    this.purchaseTransaction = this.fb.group({
+    this.redemptionTransaction = this.fb.group({
       ownerName: [(!data) ? '' : data.ownerName, [Validators.required]],
       transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
-      schemeSelection: ['2'],
+      schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
       investor: [(!data) ? '' : data.investor, [Validators.required]],
       employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required]],
       investmentAccountSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
-      modeOfPaymentSelection: ['1'],
-      folioSelection: ['2'],
+      modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
+      folioSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
     });
 
-    this.ownerData = this.purchaseTransaction.controls;
+    this.ownerData = this.redemptionTransaction.controls;
   }
 
   getFormControl(): any {
-    return this.purchaseTransaction.controls;
+    return this.redemptionTransaction.controls;
   }
 }

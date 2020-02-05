@@ -131,7 +131,10 @@ export class AddSsyComponent implements OnInit {
         this.nominees.push(obj)
       });
     }
-    if (this.ssySchemeForm.get('guardian').invalid) {
+    if (this.ssySchemeForm.get('ownerName').invalid) {
+      this.ssySchemeForm.get('ownerName').markAsTouched();
+      return;
+    } else if (this.ssySchemeForm.get('guardian').invalid) {
       this.ssySchemeForm.get('guardian').markAsTouched();
       return
     } else if (this.ssySchemeForm.get('ownerName').invalid) {

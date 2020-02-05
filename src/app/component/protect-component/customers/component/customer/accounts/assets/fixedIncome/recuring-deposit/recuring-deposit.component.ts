@@ -122,7 +122,7 @@ export class RecuringDepositComponent implements OnInit {
     this.recuringDeposit = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       monthlyContribution: [(data == undefined) ? '' : data.monthlyContribution, [Validators.required]],
-      commencementDate: [(data == undefined) ? '' : new Date(data.commencementDate), [Validators.required]],
+      commencementDate: [(data.commencementDate == undefined) ? null : new Date(data.commencementDate), [Validators.required]],
       interestRate: [(data == undefined) ? '' : data.interestRate, [Validators.required]],
       compound: [(data.interestCompounding == undefined) ? '' : (data.interestCompounding) + "", [Validators.required]],
       linkBankAc: [(data == undefined) ? '' : data.linkedBankAccount, [Validators.required]],
@@ -152,9 +152,14 @@ export class RecuringDepositComponent implements OnInit {
   }
 
   saveRecuringDeposit() {
-    this.tenure = this.getDateYMD()
-    this.maturityDate = this.tenure
-    if (this.recuringDeposit.get('monthlyContribution').invalid) {
+    if(this.recuringDeposit.controls.commencementDate.value!=null || this.recuringDeposit.controls.tenure.value!=null){
+      this.tenure = this.getDateYMD()
+      this.maturityDate = this.tenure
+    }
+    if (this.recuringDeposit.get('ownerName').invalid) {
+      this.recuringDeposit.get('ownerName').markAsTouched();
+      return;
+     } else if (this.recuringDeposit.get('monthlyContribution').invalid) {
       this.recuringDeposit.get('monthlyContribution').markAsTouched();
       this.isMonthlyContribution = true;
       return;
