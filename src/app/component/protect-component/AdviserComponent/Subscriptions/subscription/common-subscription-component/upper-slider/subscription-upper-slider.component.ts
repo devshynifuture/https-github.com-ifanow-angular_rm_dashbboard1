@@ -124,7 +124,7 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
         this.location.replaceState('/admin/subscription/settings/documents');
         break;
       default:
-        // this.router.navigate(['/admin/subscription/clients'])
+        this.router.navigate(['/admin/subscription/clients'])
         this.location.replaceState('/admin/subscription/clients');
         // this.router.navigate(['/admin/subscription/clients'])
         break;
