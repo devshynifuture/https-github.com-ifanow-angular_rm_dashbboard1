@@ -7,13 +7,26 @@
   border-bottom: 4px solid #008FFF !important;
   color: #008FFF !important;
 
+
+}
+
+::ng-deep .subnav-fixed {
+  right: 0;
+  position: fixed;
+  margin-right: 24px;
+
 }
 
 #ui-subscriptions .mat-tab-link {
   color: #595252 !important;
   border-bottom: 4px solid transparent;
-  width: 120px !important;
+  padding: 0 0px !important;
+  min-width: 10% !important;
   background: transparent !important;
   font-family: "roboto" !important;
   letter-spacing: 0.75px !important;
+  opacity: 1 !important;
+  height: 60px !important;
+  padding-right: 15px !important;
+  padding-left: 15px !important;
 }

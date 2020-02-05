@@ -20,6 +20,8 @@
 @import'./assets/style/scss/Crm/_crm';
 @import'./assets/style/scss/Advice/_advice';
 @import'./assets/style/scss/Transactions/transactions';
+// responsive style
+@import'./assets/style/scss/responsive/subscriptions';
 
 @mixin heading {
   padding-left: 20px !important;
@@ -229,7 +231,21 @@
   }
 }
 
-#ui-subscriptions,
+#ui-subscriptions {
+  position: fixed;
+  margin-top: 4px;
+  float: right;
+  width: 100%;
+  padding-right: 0px;
+  // right: 0;
+  z-index: 10;
+  background: #fff !important;
+  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2),
+    0px 1px 0px rgba(0, 0, 0, 0.12),
+    0px 3px 3px rgba(0, 0, 0, 0.14);
+  height: 60px;
+}
+
 #ui-transactions {
   h3.top-head {
     padding-left: 20px !important;
@@ -274,10 +290,10 @@
 
   .mat-tab-header {
     position: fixed;
-    margin-top: 4px;
     float: right;
     width: 100%;
     padding-right: 0px;
+
     // right: 0;
     z-index: 10;
     background: #fff !important;
@@ -367,7 +383,8 @@
 
 #ui-subscriptions,
 #ui-plans,
-#ui-transactions {
+#ui-transactions,
+#ui-settingsHeaders {
   @extend .mt-60;
 
   .example-card .mat-card-header-text {
