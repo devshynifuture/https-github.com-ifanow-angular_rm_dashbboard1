@@ -5,6 +5,9 @@ import { PurchaseTrasactionComponent } from '../purchase-trasaction/purchase-tra
 import { UtilService } from 'src/app/services/util.service';
 import { RedemptionTransactionComponent } from '../redemption-transaction/redemption-transaction.component';
 import { SwitchTransactionComponent } from '../switch-transaction/switch-transaction.component';
+import { SipTransactionComponent } from '../sip-transaction/sip-transaction.component';
+import { StpTransactionComponent } from '../stp-transaction/stp-transaction.component';
+import { SwpTransactionComponent } from '../swp-transaction/swp-transaction.component';
 
 @Component({
   selector: 'app-online-trasaction',
@@ -115,7 +118,7 @@ export class OnlineTrasactionComponent implements OnInit {
       data,
       id: 1,
       state: 'open65',
-      componentName: (value == 'PURCHASE') ? PurchaseTrasactionComponent : (value == 'REDEMPTION') ? RedemptionTransactionComponent :(value == 'SIP') ? SwitchTransactionComponent:(value == 'SWP') ? RedemptionTransactionComponent:(value == 'STP') ? PurchaseTrasactionComponent:(value == 'SWITCH') ? SwitchTransactionComponent : ''
+      componentName: (value == 'PURCHASE') ? PurchaseTrasactionComponent : (value == 'REDEMPTION') ? RedemptionTransactionComponent :(value == 'SIP') ? SipTransactionComponent:(value == 'SWP') ? SwpTransactionComponent:(value == 'STP') ? StpTransactionComponent:(value == 'SWITCH') ? SwitchTransactionComponent : ''
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
