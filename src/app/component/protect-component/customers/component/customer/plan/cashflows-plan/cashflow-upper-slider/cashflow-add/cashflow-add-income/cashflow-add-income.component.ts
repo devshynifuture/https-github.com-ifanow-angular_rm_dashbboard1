@@ -20,6 +20,9 @@ export class CashflowAddIncomeComponent implements OnInit {
     private cashflowService: CashFlowsPlanService
   ) { }
 
+  advisorId = AuthService.getAdvisorId();
+  clientId = AuthService.getClientId();
+
   validatorType = ValidatorType;
   formIncome = this.fb.group({
     "earning-member": [, Validators.required],
@@ -37,6 +40,16 @@ export class CashflowAddIncomeComponent implements OnInit {
   });
 
   ngOnInit() {
+  }
+
+  addCashflowIncome() {
+    this.cashflowService
+      .cashFlowAddIncome({ advisorId: this.advisorId, clientId: this.clientId })
+      .subscribe(res => {
+        console.log(res);
+      }, err => {
+        console.error(err);
+      })
   }
 
   closeDialog() {
