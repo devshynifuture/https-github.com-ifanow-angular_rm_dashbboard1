@@ -66,9 +66,9 @@ export class MutualFundOverviewComponent implements OnInit {
     this.calculatePercentage(data);//for Calculating MF categories percentage
     this.pieChart('piechartMutualFund');//pie chart data after calculating percentage
     this.getCashFlowStatus();//Used for cashFlow status
-    this.getsubCategorywiseAllocation(data);//For subCategoryWiseAllocation
-    this.getFamilyMemberWiseAllocation(data)//for FamilyMemberWiseAllocation
-    this.schemeWiseAllocation(data);//for shemeWiseAllocation
+    // this.getsubCategorywiseAllocation(data);//For subCategoryWiseAllocation
+    // this.getFamilyMemberWiseAllocation(data)//for FamilyMemberWiseAllocation
+    // this.schemeWiseAllocation(data);//for shemeWiseAllocation
   }
   //function for calculating percentage
   calculatePercentage(data) {
@@ -134,21 +134,21 @@ export class MutualFundOverviewComponent implements OnInit {
 
     });
   }
-  getsubCategorywiseAllocation(data){
-    let subCategoryArray=[];
-    data.mutualFundCategoryMastersList.forEach(element => {
-      element.mutualFundSubCategoryMaster.forEach(obj => {
-        console.log(obj);
-        subCategoryArray.push(obj);
-      });
-    });
-  }
-  getFamilyMemberWiseAllocation(data){
+  // getsubCategorywiseAllocation(data){
+  //   let subCategoryArray=[];
+  //   data.mutualFundCategoryMastersList.forEach(element => {
+  //     element.mutualFundSubCategoryMaster.forEach(obj => {
+  //       console.log(obj);
+  //       subCategoryArray.push(obj);
+  //     });
+  //   });
+  // }
+  // getFamilyMemberWiseAllocation(data){
 
-  }
-  schemeWiseAllocation(data){
+  // }
+  // schemeWiseAllocation(data){
 
-  }
+  // }
   onClick(referenceKeyName) {
     alert(referenceKeyName.id);
   }
