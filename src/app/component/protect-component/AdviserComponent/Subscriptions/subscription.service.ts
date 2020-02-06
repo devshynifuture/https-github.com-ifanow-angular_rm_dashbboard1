@@ -268,6 +268,11 @@ export class SubscriptionService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BILLER_PROFILE, httpParams);
   }
 
+  getBankAddress(data) {
+    const httpParams = new HttpParams().set('ifsc', data.ifsc);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BANK_ADDRESS, httpParams);
+  }
+
   getPayeerProfile(data) {
     const httpParams = new HttpParams().set('clientId', data.clientId).set('subId', data.subId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PAYEE_PROFILE, httpParams);

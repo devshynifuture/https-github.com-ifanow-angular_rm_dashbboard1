@@ -239,7 +239,7 @@
                         <div class="col-md-7">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <input #ifscCode [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation (changedValue)="getFormControlBank().ifscCode.setValue($event)" class="form-control br-0 text-left" formControlName="ifscCode" matInput maxLength="{{getFormControlBank().ifscCode.maxLength}}"
+                                    <input #ifscCode [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation (changedValue)="getFormControlBank().ifscCode.setValue($event)" class="form-control br-0 text-left" formControlName="ifscCode" matInput maxLength="{{getFormControlBank().ifscCode.maxLength}}" (focusout)="getBankAddress(getFormControlBank().ifscCode.value)"
                                         type="text">
                                     <mat-error class="f-12">City is required</mat-error>
                                     <mat-hint align="end" class="f-12">{{ifscCode.value.length}}/11</mat-hint>

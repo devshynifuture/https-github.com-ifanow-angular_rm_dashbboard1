@@ -262,6 +262,22 @@ export class BillerProfileAdvisorComponent implements OnInit {
     }
   }
 
+  getBankAddress(ifsc){
+    let obj = {
+      ifsc: ifsc
+    }
+    console.log('ifsc 121221', obj)
+
+    if(ifsc != ""){
+      this.subService.getBankAddress(obj).subscribe(data => {
+        console.log('postal 121221', data)
+        this.bankData(data)  
+        // this.PinData(data, 'bankDetailsForm')
+
+      })
+    }
+  }
+
   pinInvalid:boolean = false;
 
   getPostalPin(value, state) {
@@ -287,6 +303,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
         this.getFormControlBank().cityB.setValue("")
         this.getFormControlBank().countryB.setValue("")
         this.getFormControlBank().stateB.setValue("")
+        this.getFormControlBank().address.setValue("")
       }
       else{
         this.getFormControlProfile().pincode.setErrors(this.pinInvalid);
@@ -296,9 +313,10 @@ export class BillerProfileAdvisorComponent implements OnInit {
       }
     }
     else if (state == 'bankDetailsForm') {
-      this.getFormControlBank().cityB.setValue(data[0].PostOffice[0].District)
-      this.getFormControlBank().countryB.setValue(data[0].PostOffice[0].Country)
-      this.getFormControlBank().stateB.setValue(data[0].PostOffice[0].Circle)
+      this.getFormControlBank().cityB.setValue(data.district)
+      this.getFormControlBank().countryB.setValue("India")
+      this.getFormControlBank().stateB.setValue(data.state)
+      this.getFormControlBank().address.setValue(data.address)
       this.pinInvalid = false;
     } else {
       this.getFormControlProfile().city.setValue(data[0].PostOffice[0].District);
@@ -306,6 +324,24 @@ export class BillerProfileAdvisorComponent implements OnInit {
       this.getFormControlProfile().state.setValue(data[0].PostOffice[0].Circle);
       this.pinInvalid = false;
 
+    }
+  }
+
+  bankData(data){
+    if(data.ifsc == undefined){
+      this.pinInvalid = true;
+        this.getFormControlBank().pincodeB.setErrors(this.pinInvalid);
+        this.getFormControlBank().cityB.setValue("")
+        this.getFormControlBank().countryB.setValue("")
+        this.getFormControlBank().stateB.setValue("")
+        this.getFormControlBank().address.setValue("")
+      }
+    else {
+      this.getFormControlBank().cityB.setValue(data.district)
+      this.getFormControlBank().countryB.setValue("India")
+      this.getFormControlBank().stateB.setValue(data.state)
+      this.getFormControlBank().address.setValue(data.address)
+      this.pinInvalid = false;
     }
   }
 

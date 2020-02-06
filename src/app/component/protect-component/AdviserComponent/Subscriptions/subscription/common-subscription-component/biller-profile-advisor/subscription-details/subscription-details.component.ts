@@ -120,10 +120,10 @@ export class SubscriptionDetailsComponent implements OnInit {
 
   changeSubsDetails(data) {
     console.log('changeSubsDetails', data);
-    if (data == 1) {
+    
       this.eventService.openSnackBar('Details updated successfully', 'OK');
       this.Close(true);
-    }
+    
   }
 
 }
