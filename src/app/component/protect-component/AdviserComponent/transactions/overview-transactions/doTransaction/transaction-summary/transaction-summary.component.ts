@@ -14,13 +14,15 @@ export class TransactionSummaryComponent implements OnInit {
   inputData: any;
   isViewInitCalled: any;
   selectedFamilyMember: any;
-
+  platformType = 2
+  transactionSummary: any;
   constructor(private processTransaction :ProcessTransactionService) { }
   showPlatform = false
   @Input()
   set data(data) {
     this.inputData = data;
     console.log('This is Input data of FixedDepositComponent ', data);
+    this.transactionSummary = data
     if (this.isViewInitCalled) {
       // this.getdataForm('');
     }
@@ -32,8 +34,9 @@ export class TransactionSummaryComponent implements OnInit {
   ngOnInit() {
     this.investorList = this.processTransaction.getIINList()
     console.log('iinList == ',this.investorList)
-    console.log('selectedFamilyMem ==',this.inputData)
-    this.selectedFamilyMember = this.inputData
+    this.transactionSummary = this.inputData
+    console.log('transactionSummary',this.transactionSummary)
+   
   }
   setPlatform(value) {
     this.selectedPlatform = value.value

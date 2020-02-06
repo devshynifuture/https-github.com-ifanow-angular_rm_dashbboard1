@@ -628,10 +628,13 @@ export class CustomerService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.GENERATE_GROUP_ID, data)
   }
   getAdviceConsent(data) {
-    let httpParams = new HttpParams().set("adviceGroupId", data);
+    let httpParams = new HttpParams().set('adviceUuid', data);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_CONSENT, httpParams);
   }
   updateAssetConsent(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_ASSET_CONSENT, data)
+  }
+  sentEmailConsent(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.SENT_EMAIL_CONSENT, data)
   }
 }

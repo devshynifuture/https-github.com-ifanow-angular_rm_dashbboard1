@@ -1,0 +1,165 @@
+<div class="popup-header-fix w-65">
+    <div class="row bb-1">
+        <div class="col-md-8 p-0">
+            <h4 class="mb-2 wrapper-20">{{transactionType}} TRANSACTION</h4>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12">
+                <i (click)="close()" class="material-icons c-p pt-8 v-middle"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+<div [formGroup]="sipTransaction">
+
+    <div class="pt-90 pr-20 pl-20 pb-44">
+        <div class="row">
+            <div class="col-md-12 p-0">
+                <h5 class="m-0 text-black"> <img src="/assets/images/svg/back-arrow.svg"
+                        class="v-initial pr-12">Investor
+                    name: {{selectedFamilyMember}}
+                </h5>
+            </div>
+        </div>
+        <div class="row pt-20 pb-44">
+            <div class="col-md-8 pl-0 pr-20">
+                <div class="row">
+                    <div class="col-md-12 p-0 text-left">
+                        <h5 class="m-0 pb-10 text-black">Select from the following options</h5>
+                        <mat-radio-group aria-label="Select an option" formControlName="schemeSelection">
+                            <mat-radio-button value="1"
+                                [ngClass]=" sipTransaction.get('schemeSelection').value == 1 ? 'text-primary bu-primary': 'b-a text-primitive'">
+                                Invest in
+                                existing scheme
+                            </mat-radio-button>
+                            <!-- value == 2 -->
+                            <mat-radio-button value="2" checked="true"
+                                [ngClass]="sipTransaction.get('schemeSelection').value == 2 ? 'text-primary bu-primary': sipTransaction.get('schemeSelection').value == 1 ?'b-a text-primitive':'text-primary bu-primary'">
+                                Select a new
+                                scheme</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <!-- value == 1 -->
+                <div class="row">
+                    <div class="col-md-12 p-0 text-left">
+                        <h5 class="m-0 pt-28 text-black pb-12">Select a scheme to invest in</h5>
+                    </div>
+                    <div class="col-md-12 p-0">
+                        <div class="form-control mb-0 add-transactions">
+                            <input type="text" aria-label="Number" class="form-group h-0" matInput
+                                formControlName="investor" [matAutocomplete]="auto"
+                                value="Start typing to see investor names">
+                            <mat-autocomplete #auto="matAutocomplete">
+                                <mat-option>
+                                    rahul jain
+                                </mat-option>
+                            </mat-autocomplete>
+                            <p class="m-0 f-12 text-custom pt-8">Last closing NAV: 390.27</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 p-0 text-left">
+                        <h5 class="m-0 pt-28 text-black pb-12">Select folio</h5>
+                    </div>
+                    <div class="col-md-12 p-0">
+                        <mat-radio-group aria-label="Select an option" formControlName="folioSelection">
+                            <mat-radio-button value="1"
+                                [ngClass]=" sipTransaction.get('folioSelection').value == 1 ? 'text-primary bu-primary': 'b-a text-primitive'">
+                                Existing
+                            </mat-radio-button>
+                            <mat-radio-button value="2" checked="true"
+                                [ngClass]="sipTransaction.get('folioSelection').value == 2 ? 'text-primary bu-primary': sipTransaction.get('folioSelection').value == 1 ?'b-a text-primitive':'text-primary bu-primary'">
+                                New </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 p-0 text-left">
+                        <h5 class="m-0 pt-28 text-black pb-12">Enter amount</h5>
+                    </div>
+
+                    <div class="col-md-5 p-0">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <input #employeeContry matInput maxlength="10" type="text"
+                                    class="form-control br-0 rupess" formControlName="employeeContry">
+                            </mat-form-field>
+                            <p class="m-0 f-12 text-custom">Min amount: ₹500</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 p-0 text-left">
+                        <h5 class="m-0 pt-28 text-black pb-12">Select investment account</h5>
+                    </div>
+                    <div class="col-md-7 p-0">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <mat-select class="form-control" formControlName="investmentAccountSelection">
+                                    <mat-option value="option">Option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 p-0 text-left">
+                        <h5 class="m-0 pt-40 text-black pb-12">Select mode of payment</h5>
+                    </div>
+
+                    <div class="col-md-12 p-0">
+                        <mat-radio-group aria-label="Select an option" formControlName="modeOfPaymentSelection">
+                            <mat-radio-button value="1" checked="true"
+                                [ngClass]="sipTransaction.get('modeOfPaymentSelection').value == 1 ? 'text-primary bu-primary': sipTransaction.get('modeOfPaymentSelection').value == 2 ?'b-a text-primitive':'text-primary bu-primary'">
+                                Net banking
+                            </mat-radio-button>
+                            <mat-radio-button value="2"
+                                [ngClass]=" sipTransaction.get('modeOfPaymentSelection').value == 2 ? 'text-primary bu-primary': 'b-a text-primitive'">
+                                Debit mandate </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 p-0 text-left">
+                        <h5 class="m-0 pt-40 pb-12 text-black">Select bank account</h5>
+                    </div>
+
+                    <div class="col-md-7 p-0">
+                        <mat-form-field>
+                            <mat-select class="form-control" formControlName="bankAccountSelection">
+                                <mat-option value="'option'">Option</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 bg-grey lter p-0">
+                <app-transaction-summary></app-transaction-summary>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="bottom-fixed wrapper-12 pt-16 w-65">
+    <div class="row">
+        <div class="col-md-4 pt-8">
+            <h5 class="mb-0  text-white c-p" (click)="close()">Cancel</h5>
+        </div>
+        <!-- <div class="col-md-8 right pt-8" *ngIf="formStep == 'step-1' || formStep == 'step-2'">
+
+            <h5 class="mb-0 text-white c-p" (click)="saveAndNext()"> NEXT </h5>
+        </div> -->
+        <div class="col-md-8 right pt-8">
+            <!-- commented for prod build -->
+            <button mat-button class="text-success">
+                SAVE & ADD ANOTHER
+            </button>
+            <button mat-button class="text-success" (click)="onAddTransaction('confirm',null)">
+                SAVE & PROCEED
+            </button>
+        </div>
+    </div>
+</div>
