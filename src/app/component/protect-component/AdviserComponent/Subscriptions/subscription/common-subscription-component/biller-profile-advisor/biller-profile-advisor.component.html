@@ -40,7 +40,10 @@
                                     <mat-form-field>
                                         <input #gstinNum [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation autofocus class="form-control br-0 text-left" formControlName="gstinNum" matInput (changedValue)="getFormControlProfile().gstinNum.setValue($event)" maxLength="{{getFormControlProfile().gstinNum.maxLength}}"
                                             type="text">
-                                        <mat-error class="f-12">GSTIN number is required</mat-error>
+                                        <mat-error *ngIf="profileDetailsForm.get('gstinNum').errors?.required" class="f-12">GSTIN number is required</mat-error>
+                                        <mat-error *ngIf="(profileDetailsForm.get('gstinNum').errors?.pattern)" class="f-12">
+                                            Enter valid GSTIN number
+                                        </mat-error>
                                         <mat-hint align="end" class="f-12">{{gstinNum.value.length}}/15</mat-hint>
                                     </mat-form-field>
                                 </div>
