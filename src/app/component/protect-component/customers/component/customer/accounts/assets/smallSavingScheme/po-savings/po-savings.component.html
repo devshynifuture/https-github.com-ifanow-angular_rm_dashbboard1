@@ -25,7 +25,8 @@
     </div>
 </div>
 <div class="mt-8 overflow-hidden col-md-12 p-0 real-estate">
-    <table *ngIf="datasource.filteredData.length > 0" [appSkeletonLoading]="isLoading" [dataSource]="datasource" appSkeletonLoading class="skeletonAnimation" id="table-low" mat-table matSort>
+    <table *ngIf="datasource.filteredData.length > 0" [appSkeletonLoading]="isLoading" [dataSource]="datasource"
+        appSkeletonLoading class="skeletonAnimation" id="table-low" mat-table matSort>
 
         <ng-container matColumnDef="no">
             <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="no"> No</th>
@@ -33,7 +34,7 @@
                 <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
             </td>
             <td *matFooterCellDef class=" pl-4 f-500 text-left t-7" mat-footer-cell>
-                <div class="bar"> {{isLoading ? '' : Total }} </div>
+                <div class="bar"> {{isLoading ? '' : 'Total' }} </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="owner">
@@ -44,12 +45,14 @@
             <td *matFooterCellDef class="br text-left t-7" mat-footer-cell></td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th *matHeaderCellDef class="br t-14 text-right" mat-header-cell mat-sort-header="currentValue"> Current value
+            <th *matHeaderCellDef class="br t-14 text-right" mat-header-cell mat-sort-header="currentValue"> Current
+                value
             </th>
             <td *matCellDef="let element" class="br t-14 text-right" mat-cell>
                 <div class="bar" appFormatNumber> {{element.currentValue}} </div>
             </td>
-            <td *matFooterCellDef [value]="currentValueSum" appFormatNumber class="br text-right f-500 p-8 t-7" mat-footer-cell>
+            <td *matFooterCellDef [value]="currentValueSum" appFormatNumber class="br text-right f-500 p-8 t-7"
+                mat-footer-cell>
                 <div class="bar"> {{currentValueSum}} </div>
             </td>
         </ng-container>
@@ -67,7 +70,8 @@
             <td *matCellDef="let element" class="br text-right" mat-cell>
                 <div class="bar" appFormatNumber> {{element.accountBalance}} </div>
             </td>
-            <td *matFooterCellDef [value]="balanceMentionedSum" appFormatNumber class="br text-right f-500 p-8 t-7" mat-footer-cell>{{balanceMentionedSum}}</td>
+            <td *matFooterCellDef [value]="balanceMentionedSum" appFormatNumber class="br text-right f-500 p-8 t-7"
+                mat-footer-cell>{{balanceMentionedSum}}</td>
         </ng-container>
         <ng-container matColumnDef="balAs">
             <th *matHeaderCellDef class="br text-right" mat-header-cell mat-sort-header="balanceAsOn">Balance as on</th>

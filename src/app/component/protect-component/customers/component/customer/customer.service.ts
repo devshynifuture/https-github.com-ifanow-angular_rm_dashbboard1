@@ -551,6 +551,9 @@ export class CustomerService {
   editScriplevelHoldingAndTransaction(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_SCRIP_HOLDING_TRANSACTION, data);
   }
+  getMutualFund(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_GET, data);
+  }
   searchFile(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.SEARCH_FILE, data);
   }
@@ -612,10 +615,10 @@ export class CustomerService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_CASHINHAND, data)
   }
   getAdviceGold(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_BANKACCOUNT, data)
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_GOLD, data)
   }
   getAdviceOthers(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_BANKACCOUNT, data)
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_OTHERS, data)
   }
   getAdviceDeploymentsData(data) {
     let httpParams = new HttpParams().set('clientId', data.clientId).set("advisorId", data.advisorId).set("familyMemberId", data.familyMemberId);

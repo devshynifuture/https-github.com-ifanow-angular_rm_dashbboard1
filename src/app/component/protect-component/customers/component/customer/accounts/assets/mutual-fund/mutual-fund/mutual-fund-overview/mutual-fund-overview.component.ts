@@ -7,6 +7,7 @@ import {SubscriptionInject} from 'src/app/component/protect-component/AdviserCom
 import {UtilService} from 'src/app/services/util.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import * as Highcharts from 'highcharts';
+import { CustomerService } from '../../../../../customer.service';
 // const HighchartsMore = require('highcharts/highcharts-more.src');
 // HighchartsMore(Highcharts);
 
@@ -16,9 +17,12 @@ import * as Highcharts from 'highcharts';
   styleUrls: ['./mutual-fund-overview.component.scss']
 })
 export class MutualFundOverviewComponent implements OnInit {
+  
+  mfData: any;
+
 
   constructor(public subInjectService: SubscriptionInject, public UtilService: UtilService,
-              public eventService: EventService) {
+              public eventService: EventService,private custumService:CustomerService) {
   }
 
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
@@ -28,9 +32,25 @@ export class MutualFundOverviewComponent implements OnInit {
   datasource1 = ELEMENT_DATA1;
 
   ngOnInit() {
-    this.pieChart('piechartMutualFund')
+    this.pieChart('piechartMutualFund');
+    this.getMutualFundData();
   }
-
+ 
+  getMutualFundData(){
+    const obj={
+      advisorId:3967,
+      clientId:2982
+    }
+    this.custumService.getMutualFund(obj).subscribe(
+      data => this.getMutualFundResponse(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+    );
+  }
+  getMutualFundResponse(data){
+    console.log(data)
+    this.mfData=data;
+  }
   onClick(referenceKeyName) {
     alert(referenceKeyName.id);
   }

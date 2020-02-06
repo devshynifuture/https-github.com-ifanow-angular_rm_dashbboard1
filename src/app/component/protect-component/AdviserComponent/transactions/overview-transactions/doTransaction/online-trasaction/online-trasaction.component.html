@@ -175,7 +175,7 @@
                     <input type="text" aria-label="Number" class="form-group h-0" matInput formControlName="investor"
                         [matAutocomplete]="auto" value="Start typing to see investor names">
                     <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option [value]="option" *ngFor="let options of investorsArray">
+                        <mat-option [value]="options" *ngFor="let options of investorsArray">
                             rahul jain
                         </mat-option>
                     </mat-autocomplete>

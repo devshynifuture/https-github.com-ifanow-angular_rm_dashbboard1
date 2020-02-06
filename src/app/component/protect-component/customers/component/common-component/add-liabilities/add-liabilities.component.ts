@@ -35,7 +35,6 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   loanTypeView: any;
   clientId: any;
   nomineesListFM: any;
-  // needs to check with gayatri 
   maxDate = new Date();
 
   constructor(public utils: UtilService, private subInjectService: SubscriptionInject, private fb: FormBuilder,

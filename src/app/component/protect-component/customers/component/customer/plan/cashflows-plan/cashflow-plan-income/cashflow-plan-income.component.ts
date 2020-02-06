@@ -16,7 +16,7 @@ export class CashflowPlanIncomeComponent implements OnInit {
   isLoading: boolean = false;
 
   dataSource: MatTableDataSource<IncometableI>;
-  displayColumns: string[] = ['year', 'groupHeadAge', 'spouseAge', 'monthlyIncome', 'view'];
+  displayedColumns: string[] = ['year', 'groupHeadAge', 'spouseAge', 'monthlyIncome', 'view'];
   tableInUse: string = 'income';
   ngOnInit() {
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
