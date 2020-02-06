@@ -20,9 +20,9 @@
                     </div>
                     <div class="col-md-3">
                         <div class="form-group mb-0">
-                            <input [readonly]="!isEdite" class="form-control br-0" formControlName="subscription" placeholder="SUB-0001" type="text">
+                            <input [readonly]="!isEdite" class="form-control br-0" formControlName="subscriptionNumber" placeholder="SUB-0001" type="text">
                         </div>
-                        <mat-error [ngClass]="{'v-h':subscriptionDetails.get('subscription').untouched || subscriptionDetails.get('subscription').valid}" class="f-12">Subscription code is required
+                        <mat-error [ngClass]="{'v-h':subscriptionDetails.get('subscriptionNumber').untouched || subscriptionDetails.get('subscriptionNumber').valid}" class="f-12">Subscription code is required
                         </mat-error>
                     </div>
                 </div>
@@ -33,12 +33,12 @@
                     <div class="col-md-3">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input (focus)="picker.open()" [matDatepicker]="picker" class="form-control br-0" formControlName="activationDate" matInput readonly>
+                                <input (focus)="picker.open()" [matDatepicker]="picker" class="form-control br-0" formControlName="startsOn" matInput readonly>
                                 <mat-datepicker-toggle  [for]="picker" matSuffix></mat-datepicker-toggle >
                                 <mat-datepicker [disabled]="!isEdite" #picker></mat-datepicker>
                             </mat-form-field>
                         </div>
-                        <mat-error [ngClass]="{'v-h':subscriptionDetails.get('activationDate').untouched || subscriptionDetails.get('activationDate').valid}" class="f-12">Activation date is required
+                        <mat-error [ngClass]="{'v-h':subscriptionDetails.get('startsOn').untouched || subscriptionDetails.get('startsOn').valid}" class="f-12">Activation date is required
                         </mat-error>
                     </div>
                 </div>
@@ -47,11 +47,11 @@
                         <h5 class="text-right m-0 pt-8">Invoice sending mode</h5>
                     </div>
                     <div class="col-md-6">
-                        <mat-radio-group [disabled]="!isEdite" aria-label="Select an option" formControlName="invoiceSendingMode">
-                            <mat-radio-button value="1" [ngClass]="{'b-a-custom':subscriptionDetails.get('invoiceSendingMode').value==1,'text-primary':subscriptionDetails.get('invoiceSendingMode').value==1,'b-a':subscriptionDetails.get('invoiceSendingMode').value==2}" checked="true"
+                        <mat-radio-group [disabled]="!isEdite" aria-label="Select an option" formControlName="invoiceSending">
+                            <mat-radio-button value="1" [ngClass]="{'b-a-custom':subscriptionDetails.get('invoiceSending').value==1,'text-primary':subscriptionDetails.get('invoiceSending').value==1,'b-a':subscriptionDetails.get('invoiceSending').value==2}" checked="true"
                                 class="radioBtn custom-radio">Automatic
                             </mat-radio-button>
-                            <mat-radio-button value="2" [ngClass]="{'b-a-custom':subscriptionDetails.get('invoiceSendingMode').value==2,'text-primary':subscriptionDetails.get('invoiceSendingMode').value==2,'b-a':subscriptionDetails.get('invoiceSendingMode').value==1}" class="radioBtn custom-radio">Manual
+                            <mat-radio-button value="2" [ngClass]="{'b-a-custom':subscriptionDetails.get('invoiceSending').value==2,'text-primary':subscriptionDetails.get('invoiceSending').value==2,'b-a':subscriptionDetails.get('invoiceSending').value==1}" class="radioBtn custom-radio">Manual
                             </mat-radio-button>
                         </mat-radio-group>
                     </div>
@@ -63,12 +63,12 @@
                     <div class="col-md-3 mb-0">
                         <div class="form-group mb-0">
                             <!-- <input readonly *ngIf="!isEdite" class="form-control br-0" formControlName="feeCollectionMode"  type="text"> -->
-                            <select class="form-control br-0" formControlName="feeCollectionMode" id="Category" id="sel1">
-                                <option *ngFor="let feeMode of feeCollectionMode" [disabled]="!isEdite && _payeeData.feeMode != feeMode.value" value="{{feeMode.value}}">
+                            <select class="form-control br-0" formControlName="feeMode" id="Category" id="sel1">
+                                <option *ngFor="let feeMode of feeMode" [disabled]="!isEdite && _payeeData.feeMode != feeMode.value" value="{{feeMode.value}}">
                                     {{feeMode.name}}</option>
                             </select>
                         </div>
-                        <mat-error [ngClass]="{'v-h':subscriptionDetails.get('feeCollectionMode').untouched || subscriptionDetails.get('feeCollectionMode').valid}" class="f-12 ">Fee mode is required
+                        <mat-error [ngClass]="{'v-h':subscriptionDetails.get('feeMode').untouched || subscriptionDetails.get('feeMode').valid}" class="f-12 ">Fee mode is required
                         </mat-error>
                     </div>
                 </div>
@@ -96,7 +96,7 @@
                         <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
                     </div>
                     <div class="col-md-8 right text-right">
-                        <app-progress-button (btnClick)="saveChangePayeeSetting()" [options]="barButtonOptions" >
+                        <app-progress-button (btnClick)="saveChangeSubsDetails()" [options]="barButtonOptions" >
                         </app-progress-button>
                         <!-- <button *ngIf="isEdite" mat-button class="btn-bottom br-0 text-inherit" [disabled]="subscriptionDetails.invalid"
                             (click)="saveChangePayeeSetting()">Save

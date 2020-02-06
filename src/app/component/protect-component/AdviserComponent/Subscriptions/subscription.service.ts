@@ -219,6 +219,10 @@ export class SubscriptionService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.CHANGE_PAYEE_SETTING, data);
   }
 
+  changeSubsDetails(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.CHANGE_SUBSCRIPTION_DETAILS, data);
+  }
+
   changeBillerSetting(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.CHANGE_BILLER_SETTING, data);
   }

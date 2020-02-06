@@ -17,7 +17,7 @@
 
             <div class="col-md-4  pr-20 pb-20 pl-0 d-flex skeletonAnimation" appSkeletonLoading
                 [appSkeletonLoading]="isLoading" *ngFor="let singlePlan of planSettingData">
-                <mat-card class="example-card b-a  bg-grey lter p-0 flex-fill">
+                <mat-card class="example-card b-a  bg-grey lter p-0 flex-fill" >
                     <mat-card-header class="overflow-hidden">
                         <div class="wrapper-20 pb-10 height120 width100per">
 
@@ -42,7 +42,7 @@
                                         <div class="l-h" [ngClass]="read? '':'height80'" >
                                             {{singlePlan.description}}
                                         </div>
-                                        <div (click)="readMore()" class="read-more c-p" *ngIf="singlePlan.description.length > 200">{{read?'read less':'read more'}}</div>
+                                        <div (click)="readMore()" class="read-more c-p" *ngIf="singlePlan.description && singlePlan.description.length > 200">{{read?'read less':'read more'}}</div>
                                     </div>
                                 </div>
                             </div>

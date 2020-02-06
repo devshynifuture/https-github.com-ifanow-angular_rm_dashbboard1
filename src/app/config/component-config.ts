@@ -262,6 +262,7 @@ export const appConfig = {
   MAP_PLAN_TO_SERVICE_SETTING: 'subscription/map/plan/service',
   UPDATE_INVOICE: 'subscription/invoice/edit',
   CHANGE_PAYEE_SETTING: 'subscription/client-biller/setting/subscription/update',
+  CHANGE_SUBSCRIPTION_DETAILS: 'subscription/edit',
   CHANGE_BILLER_SETTING: 'subscription/change/biller-setting/subscription',
   EDIT_PLAN_SETTING: 'subscription/plan/edit',
   GET_SERVICE_MODULE: 'subscription/service/module/get',
