@@ -49,7 +49,17 @@ export class CashflowAddIncomeComponent implements OnInit {
         console.log(res);
       }, err => {
         console.error(err);
-      })
+      });
+  }
+
+  deleteCashflowIncome(id) {
+    this.cashflowService
+      .cashFlowDeleteIncome(id)
+      .subscribe(res => {
+        console.log(res);
+      }, err => {
+        console.error(err);
+      });
   }
 
   closeDialog() {
