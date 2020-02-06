@@ -190,6 +190,12 @@ export class AddVariableFeeComponent implements OnInit {
       this.variableFeeData.get('code').markAsTouched();
       this.variableFeeData.get('billEvery').markAsTouched();
       this.variableFeeData.get('pricing').markAsTouched();
+      this.getFormControl().regularFees.controls.equity.markAsTouched();
+      this.getFormControl().regularFees.controls.debt.markAsTouched();
+      this.getFormControl().regularFees.controls.liquid.markAsTouched();
+      this.getFormControl().directFees.controls.equity.markAsTouched();
+      this.getFormControl().directFees.controls.debt.markAsTouched();
+      this.getFormControl().directFees.controls.liquid.markAsTouched();
     } else if (this.variableFeeData.controls.directFees.invalid || this.variableFeeData.controls.regularFees.invalid) {
       this.mutualFundFees = true;
       return;
