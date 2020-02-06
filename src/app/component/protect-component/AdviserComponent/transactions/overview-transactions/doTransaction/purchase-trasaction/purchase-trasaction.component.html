@@ -27,18 +27,23 @@
                     <div class="col-md-12 p-0 text-left">
                         <h5 class="m-0 pb-10 text-black">Select from the following options</h5>
                         <mat-radio-group aria-label="Select an option" formControlName="schemeSelection">
-                            <mat-radio-button value="1"
+                            <!-- <mat-radio-button [value]="option.value" (click)="selectSchemeOption(option)"
+                            [ngClass]="{'b-a-custom': purchaseTransaction.get('schemeSelection').value==1,'text-primary':purchaseTransaction.get('schemeSelection').value==1,'b-a':purchaseTransaction.get('schemeSelection').value==2}"
+                                class="b-a-custom radioBtn text-primary custom-radio"
+                                *ngFor="let option of schemeSelection">
+                                {{option.select}}
+                            </mat-radio-button> -->
+                        </mat-radio-group>
+                        <mat-radio-group aria-label="Select an option" formControlName="schemeSelection" (ngModelChange)="selectSchemeOption($event)">
+                            <mat-radio-button [value]="1"
                                 [ngClass]="{'b-a-custom': purchaseTransaction.get('schemeSelection').value==1,'text-primary':purchaseTransaction.get('schemeSelection').value==1,'b-a':purchaseTransaction.get('schemeSelection').value==2}"
                                 class="b-a-custom radioBtn text-primary custom-radio">
-                                Invest in
-                                existing scheme
+                                Invest in existing scheme
                             </mat-radio-button>
-                            <!-- value == 2 -->
-                            <mat-radio-button value="2"
+                            <mat-radio-button [value]="2"
                                 [ngClass]="{'b-a-custom': purchaseTransaction.get('schemeSelection').value==2,'text-primary':purchaseTransaction.get('schemeSelection').value==2,'b-a':purchaseTransaction.get('schemeSelection').value==1}"
                                 class="b-a radioBtn ">
-                                Select a new
-                                scheme</mat-radio-button>
+                                Select a new scheme</mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
@@ -51,13 +56,29 @@
                         <div class="form-control mb-0 add-transactions">
                             <input type="text" aria-label="Number" class="form-group h-0" matInput
                                 formControlName="investor" [matAutocomplete]="auto"
-                                value="Start typing to see investor names">
+                                (keyup)="getSchemeList($event.target.value)" value="Start typing to see investor names">
                             <mat-autocomplete #auto="matAutocomplete">
-                                <mat-option>
-                                    rahul jain
+                                <mat-option (onSelectionChange)="selectedScheme(scheme)"
+                                    *ngFor="let scheme of schemeList" [value]="scheme.schemeName">
+                                    {{scheme.schemeName}}
                                 </mat-option>
                             </mat-autocomplete>
-                            <p class="m-0 f-12 text-custom pt-8">Last closing NAV: 390.27</p>
+                            <p class="m-0 f-12 text-custom pt-8">Last closing NAV: {{navOfSelectedScheme}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="reInvestmentOpt.length > 1">
+                    <div class="col-md-12 p-0 text-left">
+                        <h5 class="m-0 pt-28 text-black pb-12">Select re-investment</h5>
+                    </div>
+                    <div class="col-md-5 p-0">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <mat-select class="form-control" formControlName="investmentAccountSelection" >
+                                    <mat-option value="option" *ngFor="let flag of reInvestmentOpt" (click)="reinvest(flag)">
+                                        {{(flag.dividendReinvestmentFlag == 0)?'Dividend payout':'Dividend reinvestment'}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
                         </div>
                     </div>
                 </div>
@@ -66,17 +87,31 @@
                         <h5 class="m-0 pt-28 text-black pb-12">Select folio</h5>
                     </div>
                     <div class="col-md-12 p-0">
-                        <mat-radio-group aria-label="Select an option" formControlName="folioSelection">
-                            <mat-radio-button value="1"
+                        <mat-radio-group aria-label="Select an option" formControlName="folioSelection" (ngModelChange)="selectExistingOrNew($event)">
+                            <mat-radio-button [value]="1"
                                 [ngClass]="{'b-a-custom': purchaseTransaction.get('folioSelection').value==1,'text-primary':purchaseTransaction.get('folioSelection').value==1,'b-a':purchaseTransaction.get('folioSelection').value==2}"
                                 class="b-a-custom radioBtn text-primary custom-radio">
                                 Existing
                             </mat-radio-button>
-                            <mat-radio-button value="2"
+                            <mat-radio-button [value]="2"
                                 [ngClass]="{'b-a-custom': purchaseTransaction.get('folioSelection').value==2,'text-primary':purchaseTransaction.get('folioSelection').value==2,'b-a':purchaseTransaction.get('folioSelection').value==1}"
                                 class="b-a radioBtn ">
                                 New </mat-radio-button>
                         </mat-radio-group>
+                    </div>
+                </div>
+                <div class="row" *ngIf="ExistingOrNew == 1">
+                    <div class="col-md-6 p-0 text-left">
+                        <h5 class="m-0 pt-28 text-black pb-12">Select scheme folio</h5>
+                    </div>
+                    <div class="col-md-7 p-0">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <mat-select class="form-control" formControlName="investmentAccountSelection">
+                                    <mat-option value="option">Option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -90,25 +125,13 @@
                                 <input #employeeContry matInput maxlength="10" type="text"
                                     class="form-control br-0 rupess" formControlName="employeeContry">
                             </mat-form-field>
-                            <p class="m-0 f-12 text-custom">Min amount: ₹500</p>
+                            <p class="m-0 f-12 text-custom">Min amount:
+                                ₹{{(schemeDetails == undefined)?'-':schemeDetails.minimumPurchaseAmount }}
+                            </p>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6 p-0 text-left">
-                        <h5 class="m-0 pt-28 text-black pb-12">Select investment account</h5>
-                    </div>
-                    <div class="col-md-7 p-0">
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <mat-select class="form-control" formControlName="investmentAccountSelection">
-                                    <mat-option value="option">Option</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
+                <div class="row" *ngIf="platformType == 1">
                     <div class="col-md-5 p-0 text-left">
                         <h5 class="m-0 pt-40 text-black pb-12">Select mode of payment</h5>
                     </div>
@@ -126,7 +149,7 @@
                         </mat-radio-group>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" *ngIf="platformType == 1">
                     <div class="col-md-12 p-0 text-left">
                         <h5 class="m-0 pt-40 pb-12 text-black">Select bank account</h5>
                     </div>
@@ -140,7 +163,7 @@
                 </div>
             </div>
             <div class="col-md-4 bg-grey lter p-0">
-                <app-transaction-summary [data] = "selectedFamilyMember" ></app-transaction-summary>
+                <app-transaction-summary [data]="transactionSummary"></app-transaction-summary>
             </div>
         </div>
     </div>

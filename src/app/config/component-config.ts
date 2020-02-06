@@ -344,6 +344,8 @@ export const appConfig = {
   ADD_BSE_CREDENTIALS: 'bse/user/save',
   GET_BSE_CREDENTIALS: 'bse/user/view',
   GET_BSE_SUB_BROKER_CREDENTIALS: 'bse/user/sub-broker/view',
+  GET_NEW_SCHEMES : 'mutual-fund/search',
+  GET_SCHEME_DETAILS:'mutual-fund/product-limit/get',
 
   // cashflow 
   CASHFLOW_ADD_INCOME: 'cashflow/income/add',

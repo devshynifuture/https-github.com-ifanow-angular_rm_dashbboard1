@@ -150,7 +150,9 @@ export class OnlineTrasactionComponent implements OnInit {
   onAddTransaction() {
     console.log(this.transactionAddForm);
   }
-
+  baackToSelectTransaction(){
+    this.formStep = 'step-2';
+  }
   saveAndNext() {
     console.log(this.formStep);
     if (this.transactionAddForm.get('ownerName').valid) {
