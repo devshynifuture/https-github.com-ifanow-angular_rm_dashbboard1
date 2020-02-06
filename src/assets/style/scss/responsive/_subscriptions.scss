@@ -1,1 +1,33 @@
-@media(max-width:1248px) {}
+@media(max-width:1224px) {
+  #ui-subscriptions {
+    h3 {
+      font-size: 18px;
+    }
+
+    .mat-tab-link {
+      font-size: 12px !important;
+      padding-right: 10px !important;
+      padding-left: 10px !important;
+      min-width: 100px !important;
+    }
+
+    .subnav-fixed {
+      margin-right: 8px !important;
+    }
+  }
+}
+
+@media(max-width:1142px) {
+  #ui-subscriptions {
+    h3 {
+      font-size: 16px;
+    }
+
+    .mat-tab-link {
+      font-size: 11px !important;
+      height: 54px !important;
+      min-width: 90px !important;
+
+    }
+  }
+}

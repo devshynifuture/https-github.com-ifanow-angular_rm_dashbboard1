@@ -1,4 +1,4 @@
-<div class="bg-white pl-20 pr-20  pt-72">
+<div class="bg-white pl-20 pr-20  pt-130">
 
     <div [ngClass]="dataSource.data.length > 0 || isFilter ? 'block' : 'none'">
         <div class="row pt-20">
@@ -17,10 +17,12 @@
                                 actions
                             </button>
 
-                            <button (click)="deleteModal(null)" *ngIf="dataCount != 0 && dataCount > 1" mat-menu-item>Delete
+                            <button (click)="deleteModal(null)" *ngIf="dataCount != 0 && dataCount > 1"
+                                mat-menu-item>Delete
                                 Documents
                             </button>
-                            <button (click)="deleteModal(null)" *ngIf="dataCount != 0 && dataCount <= 1" mat-menu-item>Delete
+                            <button (click)="deleteModal(null)" *ngIf="dataCount != 0 && dataCount <= 1"
+                                mat-menu-item>Delete
                                 Document
                             </button>
                         </mat-menu>
@@ -50,10 +52,13 @@
 
     <div class="example-container" [ngClass]="dataSource.data.length > 0 ? 'block' : 'none'">
         <!-- {{dataCount == dataSource.data.length}} -->
-        <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class=" skeletonAnimation" id="table-low" mat-table matSort>
+        <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class=" skeletonAnimation"
+            id="table-low" mat-table matSort>
             <ng-container matColumnDef="checkbox">
                 <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;">
-                    <mat-checkbox (change)="selectAll($event)" name="selectAll" [checked]="dataCount == dataSource.data.length" [indeterminate]="dataCount > 0 && dataCount != dataSource.data.length"></mat-checkbox>
+                    <mat-checkbox (change)="selectAll($event)" name="selectAll"
+                        [checked]="dataCount == dataSource.data.length"
+                        [indeterminate]="dataCount > 0 && dataCount != dataSource.data.length"></mat-checkbox>
                 </th>
                 <td mat-cell *matCellDef="let element" style="width: 2%;" class="c-p">
                     <mat-checkbox name="selectedData" [(ngModel)]="element.selected" (change)="changeSelect()">
@@ -107,7 +112,9 @@
             </ng-container>
             <!-- Symbol Column -->
             <ng-container matColumnDef="clientsign">
-                <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="clientsign" matTooltip="Client signature date" aria-label="Button that displays a tooltip when focused or hovered over"> Client sign...
+                <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="clientsign"
+                    matTooltip="Client signature date"
+                    aria-label="Button that displays a tooltip when focused or hovered over"> Client sign...
                 </th>
                 <td *matCellDef="let element" mat-cell>
                     <div class="bar"> {{element.clientsign | date:'dd/MM/yyyy'}} </div>
@@ -120,9 +127,9 @@
                         <span>
                             <span *ngIf="element.status==0" class="text-primary t-10 f-500 c-p">READY TO
                                 SEND</span>
-                        <span *ngIf="element.status==1" class="text-primary t-10 f-500 c-p">SENT</span>
-                        <span *ngIf="element.status==2" class="text-danger t-10 f-500 c-p">NOT APPROVED</span>
-                        <span *ngIf="element.status==3" class="text-success t-10 f-500 c-p">APPROVED</span>
+                            <span *ngIf="element.status==1" class="text-primary t-10 f-500 c-p">SENT</span>
+                            <span *ngIf="element.status==2" class="text-danger t-10 f-500 c-p">NOT APPROVED</span>
+                            <span *ngIf="element.status==3" class="text-success t-10 f-500 c-p">APPROVED</span>
                         </span>
                     </div>
                 </td>
@@ -137,7 +144,8 @@
                         <mat-menu #menu="matMenu">
                             <a (click)="openViewDocument('viewDoc',element)" mat-menu-item>View & Edit
                                 document</a>
-                            <a (click)="downloadEsign(element)" *ngIf="element.signed" class="bt-1" mat-menu-item>Download eSigned
+                            <a (click)="downloadEsign(element)" *ngIf="element.signed" class="bt-1"
+                                mat-menu-item>Download eSigned
                                 document</a>
                             <a (click)="deleteModal(element)" mat-menu-item>Delete document</a>
                         </mat-menu>

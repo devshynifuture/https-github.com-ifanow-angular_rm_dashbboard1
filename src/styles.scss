@@ -126,10 +126,10 @@
   }
 }
 
-#ui-subscriptions,
+
 #ui-transactions {
   .custom-heading-main {
-    position: fixed;
+    // position: fixed;
     z-index: 1111;
     padding: 25px;
     font-family: "Roboto";
@@ -181,7 +181,8 @@
   }
 }
 
-.invoice-history {
+.invoice-history,
+.client-sub {
   tr.mat-header-row {
     height: 52px;
   }
@@ -413,6 +414,12 @@
     line-height: 19px;
     color: #3F3F3F;
   }
+
+  .mat-card-actions {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    padding: 0;
+  }
 }
 
 #ui-service-documents {
@@ -457,6 +464,12 @@
   height: 480px;
 }
 
+.example-card.height-434 {
+  //height: 100%;
+  //height: 457px;
+  height: 434px;
+}
+
 .icon-center {
   position: absolute;
   transform: translate(-50%, -50%);
@@ -484,6 +497,30 @@
 
 #ui-subscriptions .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
   display: none;
+}
+
+#ui-subscriptions {
+  .mat-tab-link {
+    color: #595252 !important;
+    border-bottom: 4px solid transparent;
+    padding: 0 0px !important;
+    min-width: 110px;
+    background: transparent !important;
+    font-family: "roboto" !important;
+    letter-spacing: 0.75px !important;
+    opacity: 1 !important;
+    height: 60px !important;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  .mat-tab-link.active {
+    background-color: transparent !important;
+    border-bottom: 4px solid #008FFF !important;
+    color: #008FFF !important;
+
+
+  }
 }
 
 #upper .mat-tab-labels {
@@ -514,6 +551,7 @@
   .mat-tab-label {
     color: #595252;
     opacity: 1 !important;
+    font-weight: 500;
   }
 
   .mat-tab-label.mat-tab-label-active {
@@ -521,6 +559,13 @@
     width: auto;
     background: transparent;
     color: #008FFF;
+
+  }
+}
+
+#ui-settings-subs {
+  .mat-tab-label {
+    padding: 0 16px !important;
   }
 }
 
@@ -662,6 +707,8 @@ mat-tab-group[vertical] {
     box-shadow: none !important;
   }
 }
+
+
 
 #ui-account-summary,
 #scenariosPlan,
@@ -1396,6 +1443,8 @@ textarea {
   overflow: auto;
   overflow-x: hidden;
   margin-top: 8px;
+  // border-top: 1xp solid #ddd;
+  // border-left: 1px solid #ddd;
 }
 
 .example-container::-webkit-scrollbar {

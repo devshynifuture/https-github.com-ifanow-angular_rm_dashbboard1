@@ -1,4 +1,4 @@
-<div class="bg-white pl-20 pr-20  pt-72">
+<div class="bg-white pl-20 pr-20  pt-130">
     <div [ngClass]="dataSource.data.length > 0 ? 'block' : 'none'">
         <div class="row pt-20">
             <div class="col-md-8 p-0">
@@ -6,13 +6,15 @@
             </div>
             <div class="col-md-4 right text-right p-0">
 
-                <button (click)="Open('clientHelp','open35',Questions)" class="btn-default br-0 help-btn" mat-stroked-button>HELP
+                <button (click)="Open('clientHelp','open35',Questions)" class="btn-default br-0 help-btn"
+                    mat-stroked-button>HELP
                 </button>
             </div>
         </div>
 
-        <div class="example-container">
-            <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="mt-8 skeletonAnimation" id="table-low" mat-table matSort>
+        <div class="client-sub mt-8">
+            <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
+                class="skeletonAnimation" id="table-low" mat-table matSort>
                 <ng-container matColumnDef="name">
                     <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="name"> Client name</th>
                     <td (click)="openFragment('clients',element)" *matCellDef="let element" class="c-p" mat-cell>
@@ -42,8 +44,10 @@
                     <th *matHeaderCellDef class="f-18 right bb-0" mat-header-cell mat-sort-header="balanceDue">
                         Balance due
                     </th>
-                    <td (click)="openFragment('clients',element)" *matCellDef="let element" class="c-p text-right amt" mat-cell>
-                        <div class="bar" *ngIf="element.balanceDue != undefined">₹<span appFormatNumber>{{element.balanceDue}}</span></div>
+                    <td (click)="openFragment('clients',element)" *matCellDef="let element" class="c-p text-right amt"
+                        mat-cell>
+                        <div class="bar" *ngIf="element.balanceDue != undefined">₹<span
+                                appFormatNumber>{{element.balanceDue}}</span></div>
                         <div class="bar" *ngIf="element.balanceDue == undefined">{{!isLoading? "₹0" : ""}} </div>
                     </td>
                 </ng-container>

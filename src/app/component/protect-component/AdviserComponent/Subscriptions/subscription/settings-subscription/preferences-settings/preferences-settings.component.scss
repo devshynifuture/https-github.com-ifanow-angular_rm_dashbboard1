@@ -1,104 +1,105 @@
 h3 {
-    font-family: "Playfair Display";
-    font-style: normal;
-    font-weight: normal;
-    font-size: 24px;
-    line-height: 32px;
-    letter-spacing: 0.2px;
-    color: #3F3F3F;
+  font-family: "Playfair Display";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: 0.2px;
+  color: #3F3F3F;
 }
 
 p {
-    margin-bottom: 0;
-    color: #83959D;
-    line-height: 15px;
+  margin-bottom: 0;
+  color: #83959D;
+  line-height: 15px;
 }
 
 h5 {
-    font-family: "Proxima Nova", sans-serif;
-    font-size: 16px;
-    line-height: 19px;
-    letter-spacing: 0.2px;
-    color: #3F3F3F;
-    font-weight: 200;
+  font-family: "Proxima Nova", sans-serif;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 0.2px;
+  color: #3F3F3F;
+  font-weight: 200;
 }
 
 .img-icons {
-    padding-top: 36px;
-    display: block;
-    margin: auto;
-    text-align: center;
-    width: 70%;
+  // padding-top: 36px;
+  display: block;
+  margin: auto;
+  text-align: center;
+  width: 70%;
 }
 
 .notes {
-    font-family: "Roboto", sans-serif;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 19px;
-    color: #3F3F3F;
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 19px;
+  color: #3F3F3F;
 }
 
 .form-control {
-    height: 50px;
+  height: 50px;
 }
 
 .form-control:focus {
-    box-shadow: none !important;
-    border-color: #ced4da !important;
+  box-shadow: none !important;
+  border-color: #ced4da !important;
 }
 
 .ba-danger {
-    border: 1px solid #FF6823;
-    border-radius: 2px;
-    padding: 1px;
+  border: 1px solid #FF6823;
+  border-radius: 2px;
+  padding: 1px;
 }
 
 .min-height {
-    min-height: 965px;
+  min-height: 965px;
 }
 
 .active {
-    background-color: #d90000;
-    color: #fff;
+  background-color: #d90000;
+  color: #fff;
 }
 
 .mat-card:not([class*=mat-elevation-z]) {
-    box-shadow: none !important;
+  box-shadow: none !important;
 }
 
 .b-outline {
-    outline: 1px solid #dee5e7 !important;
-    position: relative;
-    &::before {
-        content: '';
-        width: 10px;
-        height: 40px;
-        z-index: 2;
-        background: #fff;
-        position: absolute;
-        right: -5px;
-        top: 0px;
-    }
+  outline: 1px solid #dee5e7 !important;
+  position: relative;
+
+  &::before {
+    content: '';
+    width: 10px;
+    height: 40px;
+    z-index: 2;
+    background: #fff;
+    position: absolute;
+    right: -5px;
+    top: 0px;
+  }
 }
 
 .preferencesMenuList {
-    .vertical-menu {
-        li {
-            padding: 10px 12px !important;
-        }
+  .vertical-menu {
+    li {
+      padding: 10px 12px !important;
     }
+  }
 }
 
 .width350 {
-    width: 350px;
+  width: 350px;
 }
 
 .height20 {
-    height: 20px;
+  height: 20px;
 }
 
 .height23 {
-    height: 23px;
+  height: 23px;
 }

@@ -14,13 +14,13 @@
                     </mat-card-subtitle>
                 </mat-card-header>
             </div>
-            <div class="col-md-2 pt-8" *ngIf="singleDocument.mappedType == 1">
+            <div class="col-md-2 pt-8 pr-0" *ngIf="singleDocument.mappedType == 1">
                 <p class="blue text-white f-16" matTooltip="Plan document">P</p>
             </div>
-            <div class="col-md-2 pt-8" *ngIf="singleDocument.mappedType == 3">
+            <div class="col-md-2 pt-8 pr-0" *ngIf="singleDocument.mappedType == 3">
                 <p class="green text-white f-16" matTooltip="Global document">G</p>
             </div>
-            <div class="col-md-2 pt-8" *ngIf="singleDocument.mappedType == 2">
+            <div class="col-md-2 pt-8 pr-0" *ngIf="singleDocument.mappedType == 2">
                 <p class="green text-white f-16" matTooltip="Service document">S</p>
             </div>
             <div class="col-md-10 text-center" (click)="editDocument()">
@@ -32,7 +32,8 @@
                 </i>
                 <mat-menu #menu="matMenu">
                     <a mat-menu-item (click)="editDocument()">Edit Document</a>
-                    <a mat-menu-item class="bt-1" (click)="deleteModal('DOCUMENT',singleDocument.documentRepositoryId)">Delete Document</a>
+                    <a mat-menu-item class="bt-1"
+                        (click)="deleteModal('DOCUMENT',singleDocument.documentRepositoryId)">Delete Document</a>
                 </mat-menu>
             </div>
         </div>
