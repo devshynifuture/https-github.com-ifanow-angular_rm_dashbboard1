@@ -21,7 +21,7 @@
             <div class="row  pt-16 pb-16">
                 <div class="col-md-9">
                     <p class="m-0 roboto text-custom">Investor details</p>
-                    <h5 class="m-0">{{transactionSummary.selectedFamilyMember}}</h5>
+                    <h5 class="m-0">{{(!transactionSummary)? '-': transactionSummary.selectedFamilyMember}}</h5>
                     <div *ngIf="showInvestor == false">
                         <h5 class="m-0"> IIN {{selectedInvestor}} (Joint)</h5>
                     </div>
