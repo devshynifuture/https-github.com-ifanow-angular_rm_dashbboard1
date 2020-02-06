@@ -42,14 +42,15 @@
     </div>
 </div>
 <div class="liabilities wrapper-8 overflow-hidden">
-    <table matSort mat-table [dataSource]="dataSource" id="table-low" *ngIf="dataSource.filteredData.length > 0" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+    <table matSort mat-table [dataSource]="dataSource" id="table-low" *ngIf="dataSource.filteredData.length > 0"
+        class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
         <ng-container matColumnDef="no">
             <th *matHeaderCellDef class="br" mat-header-cell> No.</th>
             <td *matCellDef="let element; let i = index;" class="br" mat-cell>
                 <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
             </td>
             <td *matFooterCellDef class="br t-10 f-600" mat-footer-cell>
-                <div class="bar"> {{isLoading ? '' : TOTAL }} </div>
+                <div class="bar"> {{isLoading ? '' : 'Total' }} </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -78,7 +79,8 @@
             <td *matCellDef="let element" appFormatNumber class="br text-right" mat-cell>
                 <div class="bar"> {{util.formatter(element.amountBorrowed)}} </div>
             </td>
-            <td *matFooterCellDef [value]="totalAmountBorrowed" appFormatNumber class="br text-right t-10 f-600 p-8 " mat-footer-cell>{{util.formatter(totalAmountBorrowed)}}</td>
+            <td *matFooterCellDef [value]="totalAmountBorrowed" appFormatNumber class="br text-right t-10 f-600 p-8 "
+                mat-footer-cell>{{util.formatter(totalAmountBorrowed)}}</td>
         </ng-container>
         <ng-container matColumnDef="interest">
             <th mat-sort-header="interest" mat-header-cell *matHeaderCellDef class="br t-14">Interest
@@ -96,12 +98,14 @@
             <td *matFooterCellDef class="br text-right t-10" mat-footer-cell></td>
         </ng-container>
         <ng-container matColumnDef="outstandingBalance">
-            <th *matHeaderCellDef class="br t-14" mat-header-cell mat-sort-header="outstandingBalance">Outstanding balance
+            <th *matHeaderCellDef class="br t-14" mat-header-cell mat-sort-header="outstandingBalance">Outstanding
+                balance
             </th>
             <td *matCellDef="let element" appFormatNumber class="br t-14 text-right" mat-cell>
                 <div class="bar"> {{util.formatter(element.outstandingBalance)}} </div>
             </td>
-            <td *matFooterCellDef [value]="totalAmountOutstandingBalance" appFormatNumber class="br text-right t-10 f-600 p-8" mat-footer-cell> {{util.formatter(totalAmountOutstandingBalance)}}
+            <td *matFooterCellDef [value]="totalAmountOutstandingBalance" appFormatNumber
+                class="br text-right t-10 f-600 p-8" mat-footer-cell> {{util.formatter(totalAmountOutstandingBalance)}}
             </td>
         </ng-container>
         <ng-container matColumnDef="description">

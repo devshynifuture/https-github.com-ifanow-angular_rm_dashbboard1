@@ -1,7 +1,7 @@
 <div class="wrapper-20" *ngIf="allAdvice == true">
     <div class="row">
         <div class="col-md-6 p-0">
-            <button mat-stroked-button class="text-primary mr-12  b-priamry br-0" (click) = "allAdvice = false">Advice
+            <button mat-stroked-button class="text-primary mr-12  b-priamry br-0" (click)="allAdvice = false">Advice
                 given</button>
             <button mat-stroked-button class="btn-primary br-0">All Retriment account</button>
         </div>
@@ -45,9 +45,8 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 "
-                (click)="openAddEPF('adviceFixedDeposit','adviceFixedDeposit')"><img src="/assets/images/svg/plus.svg"
-                    class="pr-8">Suggest new EPF</button>
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEPF('adviceFixedDeposit')"><img
+                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new EPF</button>
         </div>
     </div>
     <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">

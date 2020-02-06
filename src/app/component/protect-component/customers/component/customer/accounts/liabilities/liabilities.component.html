@@ -2,50 +2,58 @@
     <div class="row">
         <div class="col-md-2 p-0 pt-8 bg-grey lter">
             <ul class="vertical-menu">
-                <li (click)="viewMode ='tab1'" (click)="sortTable('tab1')" [ngClass]="{'activeColor':showFilter =='tab1'}" class="c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('tab1')"
+                    [ngClass]="{'activeColor':showFilter =='tab1'}" class="c-p">
                     <div class="row">
                         <div class="col-md-10 p-0 f-700">LIABILITIES</div>
                         <div class="col-md-2 p-0 text-custom">{{this.storeData}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('1')" [ngClass]="{'activeColor':showFilter =='1'}" class="c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('1')" [ngClass]="{'activeColor':showFilter =='1'}"
+                    class="c-p">
                     <div class="row">
                         <div class="col-md-10 p-0">Home</div>
                         <div class="col-md-2 p-0 text-custom">{{this.home.length}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('2')" [ngClass]="{'activeColor':showFilter =='2'}" class="c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('2')" [ngClass]="{'activeColor':showFilter =='2'}"
+                    class="c-p">
                     <div class="row">
                         <div class="col-md-10 p-0">Vehicle</div>
                         <div class="col-md-2 p-0 text-custom">{{this.vehicle.length}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('3')" [ngClass]="{'activeColor':showFilter  =='3'}" class=" c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('3')" [ngClass]="{'activeColor':showFilter  =='3'}"
+                    class=" c-p">
                     <div class="row">
                         <div class="col-md-10 p-0">Education</div>
                         <div class="col-md-2 p-0 text-custom">{{this.education.length}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('5')" [ngClass]="{'activeColor':showFilter =='5'}" class=" c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('5')" [ngClass]="{'activeColor':showFilter =='5'}"
+                    class=" c-p">
                     <div class="row">
                         <div class="col-md-10 p-0">Personal</div>
                         <div class="col-md-2 p-0 text-custom">{{this.personal.length}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('7')" [ngClass]="{'activeColor':showFilter =='7'}" class=" c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('7')" [ngClass]="{'activeColor':showFilter =='7'}"
+                    class=" c-p">
                     <div class="row">
                         <div class="col-md-10 p-0">Durables</div>
                         <div class="col-md-2 p-0 text-custom">{{0}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('4')" [ngClass]="{'activeColor':showFilter =='4'}" class=" c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('4')" [ngClass]="{'activeColor':showFilter =='4'}"
+                    class=" c-p">
                     <div class="row">
                         <div class="col-md-10 p-0">Credit card</div>
                         <div class="col-md-2 p-0 text-custom">{{this.creditCard.length}}</div>
 
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('6')" [ngClass]="{'activeColor':showFilter =='6'}" class=" c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('6')" [ngClass]="{'activeColor':showFilter =='6'}"
+                    class=" c-p">
                     <div class="row">
                         <div class="col-md-10 p-0">Mortgage</div>
                         <div class="col-md-2 p-0 text-custom">{{this.mortgage.length}}</div>
@@ -102,15 +110,18 @@
                                 <button mat-menu-item (click)="ExportTOExcel('Liabilities')">XLS</button>
                             </mat-menu>
                             <img src="assets/images/svg/up-down.svg" class="c-p">
-                            <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu" class="c-p mr-12">
+                            <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu"
+                                class="c-p mr-12">
                             <mat-menu #menu="matMenu">
                                 <button mat-menu-item>Email report</button>
                                 <button mat-menu-item>Option 1</button>
                                 <button mat-menu-item>Option 2</button>
                             </mat-menu>
-                            <button mat-stroked-button class="btn-default addon mr-12 v-middle" (click)="clickHandling()"><i class="material-icons">filter_list</i>FILTERS
+                            <button mat-stroked-button class="btn-default addon mr-12 v-middle"
+                                (click)="clickHandling()"><i class="material-icons">filter_list</i>FILTERS
                             </button>
-                            <button (click)="open('addLiabilities',showFilter)" mat-stroked-button class="btn-primary addon v-middle"> ADD NEW
+                            <button (click)="open('addLiabilities',showFilter)" mat-stroked-button
+                                class="btn-primary addon v-middle"> ADD NEW
                             </button>
                         </div>
                     </div>
@@ -119,7 +130,9 @@
                 <div class="liabilities wrapper-8">
                     <div class="row">
                         <div class="col-md-12 overflow-hidden p-0">
-                            <table matSort mat-table [dataSource]="dataSource" *ngIf="dataSource.filteredData.length > 0" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                            <table matSort mat-table [dataSource]="dataSource"
+                                *ngIf="dataSource.filteredData.length > 0" id="table-low" class="skeletonAnimation"
+                                appSkeletonLoading [appSkeletonLoading]="isLoading">
                                 <ng-container matColumnDef="no">
                                     <th mat-header-cell *matHeaderCellDef class="br"> No.</th>
                                     <td mat-cell *matCellDef="let element; let i = index;" class="br">
@@ -135,8 +148,9 @@
                                     <td mat-cell *matCellDef="let element" class="br">
                                         <div class="bar">{{element.ownerName}} </div>
                                     </td>
-                                    <td mat-footer-cell *matFooterCellDef class="br text-left pl-8 f-600" [hidden]="dataSource==undefined">
-                                        <div class="bar"> {{isLoading ? '' : Total }} </div>
+                                    <td mat-footer-cell *matFooterCellDef class="br text-left pl-8 f-600"
+                                        [hidden]="dataSource==undefined">
+                                        <div class="bar"> {{isLoading ? '' : 'Total' }} </div>
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="type">
@@ -150,14 +164,16 @@
                                     <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="loan">
-                                    <th mat-sort-header="loanAmount" mat-header-cell *matHeaderCellDef class="br textRight">
+                                    <th mat-sort-header="loanAmount" mat-header-cell *matHeaderCellDef
+                                        class="br textRight">
                                         Loan amount</th>
                                     <td mat-cell *matCellDef="let element" class="br text-right">
                                         <div class="bar" appFormatNumber>
                                             {{(element.loanAmount)?util.formatter(element.loanAmount):''}}
                                         </div>
                                     </td>
-                                    <td mat-footer-cell *matFooterCellDef class="br text-right pr-8 f-600" [hidden]="dataSource==undefined" appFormatNumber [value]="totalLoanAmt">
+                                    <td mat-footer-cell *matFooterCellDef class="br text-right pr-8 f-600"
+                                        [hidden]="dataSource==undefined" appFormatNumber [value]="totalLoanAmt">
                                         <div class="bar">
                                             {{util.formatter(totalLoanAmt) || '-'}}
                                         </div>
@@ -173,19 +189,22 @@
                                     <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="today">
-                                    <th mat-sort-header="outstandingAmount" mat-header-cell *matHeaderCellDef class="br textRight"> Outstanding <br> as on today
+                                    <th mat-sort-header="outstandingAmount" mat-header-cell *matHeaderCellDef
+                                        class="br textRight"> Outstanding <br> as on today
                                     </th>
                                     <td mat-cell *matCellDef="let element" class="br text-right">
                                         <div class="bar" appFormatNumber>
                                             {{element.outstandingAmount}}
                                         </div>
                                     </td>
-                                    <td mat-footer-cell *matFooterCellDef class="br text-right pr-8 f-600" [hidden]="dataSource==undefined" appFormatNumber [value]="outStandingAmt">
+                                    <td mat-footer-cell *matFooterCellDef class="br text-right pr-8 f-600"
+                                        [hidden]="dataSource==undefined" appFormatNumber [value]="outStandingAmt">
                                         <div class="bar"> {{util.formatter(outStandingAmt) || '-'}} </div>
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="ten">
-                                    <th mat-sort-header="loanTenure" mat-header-cell *matHeaderCellDef class="br textRight">
+                                    <th mat-sort-header="loanTenure" mat-header-cell *matHeaderCellDef
+                                        class="br textRight">
                                         Tenure <br> remaining</th>
                                     <td mat-cell *matCellDef="let element" class="br text-right">
                                         <div class="bar"> {{element.loanTenure}} </div>
@@ -193,7 +212,8 @@
                                     <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="rate">
-                                    <th mat-sort-header="annualInterestRate" mat-header-cell *matHeaderCellDef class="br textRight"> Annual <br> interest rate</th>
+                                    <th mat-sort-header="annualInterestRate" mat-header-cell *matHeaderCellDef
+                                        class="br textRight"> Annual <br> interest rate</th>
                                     <td mat-cell *matCellDef="let element" class="br text-right">
                                         <div class="bar"> {{element.annualInterestRate}} </div>
                                     </td>
@@ -209,7 +229,8 @@
                                     <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="fin">
-                                    <th mat-sort-header="financialInstitution" mat-header-cell *matHeaderCellDef class="br text-left">
+                                    <th mat-sort-header="financialInstitution" mat-header-cell *matHeaderCellDef
+                                        class="br text-left">
                                         Financial <br> institution</th>
                                     <td mat-cell *matCellDef="let element" class="br">
                                         <div class="bar"> {{element.financialInstitution}} </div>
@@ -232,11 +253,14 @@
                                                 more_vert
                                             </i>
                                             <mat-menu #menu4="matMenu">
-                                                <button mat-menu-item (click)="open('addLiabilities',element)">Edit</button>
-                                                <button mat-menu-item (click)="addLiabilitiesDetail('addLiabilitiesDetail',element)">Deatiled
+                                                <button mat-menu-item
+                                                    (click)="open('addLiabilities',element)">Edit</button>
+                                                <button mat-menu-item
+                                                    (click)="addLiabilitiesDetail('addLiabilitiesDetail',element)">Deatiled
                                                     View</button>
                                                 <button mat-menu-item>Activity</button>
-                                                <button mat-menu-item (click)="deleteModal('LIABILITIES',element)">Delete</button>
+                                                <button mat-menu-item
+                                                    (click)="deleteModal('LIABILITIES',element)">Delete</button>
                                             </mat-menu>
                                         </div>
                                     </td>
@@ -247,10 +271,12 @@
                                 <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
                             </table>
 
-                            <div *ngIf="dataSource.filteredData.length == 0" class="d-flex flex-column align-items-center">
+                            <div *ngIf="dataSource.filteredData.length == 0"
+                                class="d-flex flex-column align-items-center">
                                 <img class="width400" src="assets/images/svg/noDataFound.svg">
                                 <h4 class="text-center pt-12">No Data Found</h4>
-                                <button mat-stroked-button class="btn-primary addon v-middle" (click)="open('addLiabilities',showFilter)"> ADD NEW</button>
+                                <button mat-stroked-button class="btn-primary addon v-middle"
+                                    (click)="open('addLiabilities',showFilter)"> ADD NEW</button>
                             </div>
                         </div>
                     </div>

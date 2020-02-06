@@ -125,7 +125,7 @@ export class AddKvpComponent implements OnInit {
         "clientId": this.clientId,
         "advisorId": this.advisorId,
         "familyMemberId": this.familyMemberId,
-        "ownerName": this.ownerName,
+        "ownerName": (this.ownerName == undefined) ? this.KVPFormScheme.controls.ownerName.value : this.ownerName,
         "amountInvested": this.KVPFormScheme.get('amtInvested').value,
         "commencementDate": this.KVPFormScheme.get('commDate').value,
         "postOfficeBranch": this.KVPOptionalFormScheme.get('poBranch').value,
