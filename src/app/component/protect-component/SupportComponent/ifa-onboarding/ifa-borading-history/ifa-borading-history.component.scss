@@ -1,0 +1,27 @@
+::ng-deep .radioBtn .mat-radio-label {
+    min-width: 105px;
+    height: 45px;
+    display: flex !important;
+    justify-content: left;
+    align-items: center;
+    padding-left: 10px !important;
+}
+
+::ng-deep .mat-radio-button {
+    min-width: 105px;
+}
+
+::ng-deep .mat-datepicker-toggle {
+    position: absolute;
+    right: 8px !important;
+    top: 10px !important;
+    left: auto !important;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
+    width: 1.5em !important;
+}
+
+::ng-deep .mat-form-field-suffix {
+    position: inherit !important;
+}

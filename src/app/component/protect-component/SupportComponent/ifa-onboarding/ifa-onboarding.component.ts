@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { IfaBoradingHistoryComponent } from './ifa-borading-history/ifa-borading-history.component';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from '../../AdviserComponent/Subscriptions/subscription-inject.service';
+import { AdminDetailsComponent } from './admin-details/admin-details.component';
 
 @Component({
   selector: 'app-ifa-onboarding',
@@ -8,7 +12,8 @@ import { Component, OnInit } from '@angular/core';
 export class IfaOnboardingComponent implements OnInit {
   isLoading = false;
 
-  constructor() { }
+
+  constructor(private subInjectService: SubscriptionInject) { }
 
   dataSource = ELEMENT_DATA;
   displayedColumns = ['adminName', 'email', 'mobile', 'rmName', 'stage', 'usingSince', 'plan', 'team', 'arn', 'menu']
@@ -20,18 +25,70 @@ export class IfaOnboardingComponent implements OnInit {
     console.log("this is some function")
   }
 
+
+  openIfaHistory(value, data) {
+    const fragmentData = {
+      flag: value,
+      data,
+      id: 1,
+      state: 'open',
+      componentName: IfaBoradingHistoryComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
+          rightSideDataSub.unsubscribe();
+        }
+
+      }
+    );
+  }
+
+
+
+  openAdminDetails(value, data) {
+    const fragmentData = {
+      flag: value,
+      data,
+      id: 1,
+      state: 'open',
+      componentName: AdminDetailsComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
+          rightSideDataSub.unsubscribe();
+        }
+
+      }
+    );
+  }
+
+
+
+
+
 }
 
 
 const ELEMENT_DATA = [
-  { adminName: 'Admin Name', email: 'Hydrogen', mobile: 1.0079, rmName: 'H', stage: '30 mins ago', usingSince: 'active', plan: 'planName', team: '3', arn: '1', menu: '' },
-  { adminName: 'Admin Name', email: 'Helium', mobile: 4.0026, rmName: 'He', stage: '30 mins ago', usingSince: 'active', plan: 'planName', team: '3', arn: '1', menu: '' },
-  { adminName: 'Admin Name', email: 'Lithium', mobile: 6.941, rmName: 'Li', stage: '30 mins ago', usingSince: 'active', plan: 'planName', team: '3', arn: '1', menu: '' },
-  { adminName: 'Admin Name', email: 'Beryllium', mobile: 9.0122, rmName: 'Be', stage: '30 mins ago', usingSince: 'active', plan: 'planName', team: '3', arn: '1', menu: '' },
-  { adminName: 'Admin Name', email: 'Boron', mobile: 10.811, rmName: 'B', stage: '30 mins ago', usingSince: 'active', plan: 'planName', team: '3', arn: '1', menu: '' },
-  { adminName: 'Admin Name', email: 'Carbon', mobile: 12.0107, rmName: 'C', stage: '30 mins ago', usingSince: 'active', plan: 'planName', team: '3', arn: '1', menu: '' },
-  { adminName: 'Admin Name', email: 'Nitrogen', mobile: 14.0067, rmName: 'N', stage: '30 mins ago', usingSince: 'active', plan: 'planName', team: '3', arn: '1', menu: '' },
-  { adminName: 'Admin Name', email: 'Oxygen', mobile: 15.9994, rmName: 'O', stage: '30 mins ago', usingSince: 'active', plan: 'planName', team: '3', arn: '1', menu: '' },
-  { adminName: 'Admin Name', email: 'Fluorine', mobile: 18.9984, rmName: 'F', stage: '30 mins ago', usingSince: 'active', plan: 'planName', team: '3', arn: '1', menu: '' },
-  { adminName: 'Admin Name', email: 'Neon', mobile: 20.1797, rmName: 'Ne', stage: '30 mins ago', usingSince: 'active', plan: 'planName', team: '3', arn: '1', menu: '' },
+  { adminName: 'Sonesh Dedhia', email: 'sonesh.dedhia@manek.com', mobile: 9322574914, rmName: 'Nita Shinde', stage: 'Auto forward setup', usingSince: '7 Days', plan: 'Power + WL + OT', team: '3', arn: '1', menu: '' },
+  { adminName: 'Sonesh Dedhia', email: 'sonesh.dedhia@manek.com', mobile: 9322574914, rmName: 'Nita Shinde', stage: 'Auto forward setup', usingSince: '7 Days', plan: 'Power + WL + OT', team: '3', arn: '1', menu: '' },
+  { adminName: 'Sonesh Dedhia', email: 'sonesh.dedhia@manek.com', mobile: 9322574914, rmName: 'Nita Shinde', stage: 'Auto forward setup', usingSince: '7 Days', plan: 'Power + WL + OT', team: '3', arn: '1', menu: '' },
+  { adminName: 'Sonesh Dedhia', email: 'sonesh.dedhia@manek.com', mobile: 9322574914, rmName: 'Nita Shinde', stage: 'Auto forward setup', usingSince: '7 Days', plan: 'Power + WL + OT', team: '3', arn: '1', menu: '' },
+  { adminName: 'Sonesh Dedhia', email: 'sonesh.dedhia@manek.com', mobile: 9322574914, rmName: 'Nita Shinde', stage: 'Auto forward setup', usingSince: '7 Days', plan: 'Power + WL + OT', team: '3', arn: '1', menu: '' },
+  { adminName: 'Sonesh Dedhia', email: 'sonesh.dedhia@manek.com', mobile: 9322574914, rmName: 'Nita Shinde', stage: 'Auto forward setup', usingSince: '7 Days', plan: 'Power + WL + OT', team: '3', arn: '1', menu: '' },
+  { adminName: 'Sonesh Dedhia', email: 'sonesh.dedhia@manek.com', mobile: 9322574914, rmName: 'Nita Shinde', stage: 'Auto forward setup', usingSince: '7 Days', plan: 'Power + WL + OT', team: '3', arn: '1', menu: '' },
+  { adminName: 'Sonesh Dedhia', email: 'sonesh.dedhia@manek.com', mobile: 9322574914, rmName: 'Nita Shinde', stage: 'Auto forward setup', usingSince: '7 Days', plan: 'Power + WL + OT', team: '3', arn: '1', menu: '' },
+
 ];

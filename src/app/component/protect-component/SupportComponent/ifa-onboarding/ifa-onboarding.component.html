@@ -19,7 +19,7 @@
             <!-- admin name Column -->
             <ng-container matColumnDef="adminName">
                 <th mat-header-cell *matHeaderCellDef class="b-a"> Admin Name </th>
-                <td mat-cell *matCellDef="let element" class="b-a">
+                <td mat-cell (click)="openAdminDetails('addifasDetails','open40')" *matCellDef="let element" class="b-a">
                     <div class="bar"> {{element.adminName}} </div>
                 </td>
             </ng-container>
@@ -86,7 +86,8 @@
                 <td mat-cell *matCellDef="let element" class="b-a">
                     <div class="bar">
                         <mat-menu #appMenu="matMenu">
-                            <button mat-menu-item>Order historical Files</button>
+                            <button (click)="openIfaHistory('addifasDetails','open40')" mat-menu-item>Order
+                                historical Files</button>
                             <button mat-menu-item>Deactivate Account</button>
                             <button mat-menu-item>Merge Scheme Code</button>
                         </mat-menu>

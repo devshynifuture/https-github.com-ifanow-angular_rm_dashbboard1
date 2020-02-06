@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SupportService } from './../support.service';
+import { IfasDetailsComponent } from './ifas-details/ifas-details.component';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from '../../AdviserComponent/Subscriptions/subscription-inject.service';
 
 
 @Component({
@@ -11,7 +14,7 @@ import { SupportService } from './../support.service';
 
 export class MyIfasComponent implements OnInit {
   isLoading = false;
-  constructor(private supportService: SupportService) { }
+  constructor(private supportService: SupportService, private subInjectService: SubscriptionInject) { }
 
   dataSource = ELEMENT_DATA;
   displayedColumns = ['adminName', 'email', 'mobile', 'usingSince', 'lastLogin', 'accStatus', 'plan', 'nextBilling', 'team', 'arn', 'logout', 'menu']
@@ -19,6 +22,29 @@ export class MyIfasComponent implements OnInit {
 
   ngOnInit() {
 
+  }
+
+  openDetailsComponent(value, data) {
+    const fragmentData = {
+      flag: value,
+      data,
+      id: 1,
+      state: 'open70',
+      componentName: IfasDetailsComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
+          rightSideDataSub.unsubscribe();
+        }
+
+      }
+    );
   }
 
 
