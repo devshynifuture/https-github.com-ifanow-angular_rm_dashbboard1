@@ -17,17 +17,18 @@
         <div class="row">
             <div class="col-md-8 p-0">
                 <h5 class="m-0 text-black pb-12">Select an investor from the search box below...</h5>
-                <mat-form-field class="w-100">    
-                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'  [data]='ownerData'formControlName="ownerName" class="form-control br-0">
-                    <mat-option value=''>Search family members</mat-option>
-                    <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName" (click)="ownerDetails(f)">
-                        <span>{{f.userName}}</span>
-                    </mat-option>
-                </mat-select>
-                <mat-error class="f-12 pt-4">
-                    This field is required
-                </mat-error>
-            </mat-form-field>
+                <mat-form-field class="w-100">
+                    <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                        [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                        <mat-option value=''>Search family members</mat-option>
+                        <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName" (click)="ownerDetails(f)">
+                            <span>{{f.userName}}</span>
+                        </mat-option>
+                    </mat-select>
+                    <mat-error class="f-12 pt-4">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
             </div>
         </div>
     </div>
@@ -84,7 +85,8 @@
                     <div class="col-md-8 pl-0">
                         <h3 class="m-0" [ngClass]="{ 'text-primary': selectedDiv == 'REDEMPTION' }"> Redeem</h3>
                         <p class="m-0 roboto text-custom pt-4 f-13"
-                            [ngClass]="{ 'text-primary': selectedDiv == 'REDEMPTION' }">Redeem from your existing schemes
+                            [ngClass]="{ 'text-primary': selectedDiv == 'REDEMPTION' }">Redeem from your existing
+                            schemes
                         </p>
                     </div>
                 </div>
@@ -158,12 +160,14 @@
             <div class="col-md-8 pl-0 pr-20" *ngIf="!isSaveAndAddClicked">
                 <h5 class="m-0 pb-10 text-black">Select from the following options</h5>
                 <mat-radio-group aria-label="Select an option" formControlName="schemeSelection">
-                    <mat-radio-button value="1"
-                        [ngClass]="value == 1 ? 'text-primary bu-primary': 'b-a text-primitive'"> Invest in
+                    <mat-radio-button [value]="1"
+                        [ngClass]="transactionAddForm.get('schemeSelection').value == 1 ? 'text-primary bu-primary': 'b-a text-primitive'">
+                        Invest in
                         existing scheme
                     </mat-radio-button>
-                    <mat-radio-button value="2"
-                        [ngClass]="value == 2 ? 'text-primary bu-primary': 'b-a text-primitive'">Select a new
+                    <mat-radio-button [value]="2"
+                        [ngClass]="transactionAddForm.get('schemeSelection').value == 2 ? 'text-primary bu-primary': 'b-a text-primitive'">
+                        Select a new
                         scheme</mat-radio-button>
                 </mat-radio-group>
                 <h5 class="m-0 pt-28 text-black pb-12">Select a scheme to invest in</h5>
@@ -171,7 +175,7 @@
                     <input type="text" aria-label="Number" class="form-group h-0" matInput formControlName="investor"
                         [matAutocomplete]="auto" value="Start typing to see investor names">
                     <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option [value]="option">
+                        <mat-option [value]="option" *ngFor="let options of investorsArray">
                             rahul jain
                         </mat-option>
                     </mat-autocomplete>

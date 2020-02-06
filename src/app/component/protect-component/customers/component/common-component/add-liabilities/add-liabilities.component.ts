@@ -35,7 +35,8 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   loanTypeView: any;
   clientId: any;
   nomineesListFM: any;
-
+  // needs to check with gayatri 
+  maxDate = new Date();
 
   constructor(public utils: UtilService, private subInjectService: SubscriptionInject, private fb: FormBuilder,
     public custumService: CustomerService, public eventService: EventService) {
@@ -176,7 +177,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     if (this.addLiabilityForm.get('ownerName').invalid) {
       this.addLiabilityForm.get('ownerName').markAsTouched();
       return;
-     } else if (this.addLiabilityForm.get('loanType').invalid) {
+    } else if (this.addLiabilityForm.get('loanType').invalid) {
       this.addLiabilityForm.get('loanType').markAsTouched();
       return;
     } else if (this.addLiabilityForm.get('loanAmount').invalid) {
