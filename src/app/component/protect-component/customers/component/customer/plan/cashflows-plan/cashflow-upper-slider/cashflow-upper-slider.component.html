@@ -15,12 +15,13 @@
 </div>
 
 <div *ngIf="cashFlowCategory === 'income'">
-    <app-cashflow-upper-income-expense [data]="data"></app-cashflow-upper-income-expense>
+    <app-cashflow-upper-income [data]="data">
+    </app-cashflow-upper-income>
 </div>
 
 <!-- expenses table -->
 <div *ngIf="cashFlowCategory === 'expenses'">
-    <app-cashflow-upper-income-expense [data]="data"></app-cashflow-upper-income-expense>
+    <app-cashflow-upper-expense [data]="data"></app-cashflow-upper-expense>
 </div>
 
 <!-- assets table -->
@@ -40,5 +41,6 @@
 
 <!-- liabilities table -->
 <div *ngIf="cashFlowCategory === 'liabilities'">
-    <app-cashflow-upper-income-expense [data]="data"></app-cashflow-upper-income-expense>
+    <app-cashflow-upper-liabilities [data]="data">
+    </app-cashflow-upper-liabilities>
 </div>

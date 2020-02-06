@@ -1,1 +1,54 @@
-<p>cashflow-plan-liabilities works!</p>
+<table mat-table [appSkeletonLoading]="isLoading" appSkeletonLoading [dataSource]="dataSource" id="table-low"
+    class="skeletonAnimation">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="year">
+        <th class="br-grey f-400 f-14" mat-header-cell *matHeaderCellDef> Year </th>
+        <td class="br-grey f-14" mat-cell *matCellDef="let element">
+            <div class="bar">
+                {{element.year}}
+            </div>
+        </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="groupHeadAge">
+        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
+            Group head age
+        </th>
+        <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
+            <div class="bar"> {{element.groupHeadAge}} </div>
+        </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="spouseAge">
+        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
+            Spouse age
+        </th>
+        <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
+            <div class="bar">{{element.spouseAge}}</div>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="monthlyIncome">
+        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
+            Total liabilities
+        </th>
+        <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
+            <div class="bar"> {{element.monthlyIncome}}</div>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="view">
+        <th mat-header-cell *matHeaderCellDef> Monthly View </th>
+        <td class="c-p text-primary text-center f-400 f-14" mat-cell *matCellDef="let element"
+            (click)="openUpperSlider(element)">
+            <div class="bar">{{element.view}} </div>
+        </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
