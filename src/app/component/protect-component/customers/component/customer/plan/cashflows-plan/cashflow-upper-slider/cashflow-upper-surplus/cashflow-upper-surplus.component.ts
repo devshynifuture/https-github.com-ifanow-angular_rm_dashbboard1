@@ -1,9 +1,11 @@
+import { AuthService } from './../../../../../../../../../auth-service/authService';
 import { UpperTableBox, Group } from './../../cashflow.interface';
 import { EventService } from './../../../../../../../../../Data-service/event.service';
 import { ValidatorType } from './../../../../../../../../../services/util.service';
 import { CashflowAddComponent } from './../cashflow-add/cashflow-add.component';
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
+import { CashFlowsPlanService } from '../../cashflows-plan.service';
 
 @Component({
   selector: 'app-cashflow-upper-surplus',
@@ -13,7 +15,8 @@ import { MatDialog } from '@angular/material';
 export class CashflowUpperSurplusComponent implements OnInit {
   onlyNumbers: string;
 
-  constructor(public dialog: MatDialog, private eventService: EventService) { }
+  constructor(public dialog: MatDialog, private eventService: EventService,
+    private cashflowService: CashFlowsPlanService) { }
   @Input() data;
   editMode: boolean = false;
 
@@ -22,7 +25,14 @@ export class CashflowUpperSurplusComponent implements OnInit {
   cashFlowCategory: string = '';
   displayedColumns: string[] = ['description', 'month1', 'month2', 'month3', 'month4', 'month5', 'month6', 'month7', 'month8', 'month9', 'month10', 'month11', 'month12', 'total', 'remove'];
   dataSource = ELEMENT_DATA3;
+  advisorId = AuthService.getAdvisorId();
+  clientId = AuthService.getClientId();
 
+  ngOnInit() {
+    this.cashFlowCategory = this.data.tableInUse;
+    this.year = this.data.financialYear;
+    this.getCashflowMonthlySurplusData();
+  }
 
   alterTable(table: (UpperTableBox | Group)[], field: string, value: string, index: number): (UpperTableBox | Group)[] {
     table[index][field] = value;
@@ -38,7 +48,6 @@ export class CashflowUpperSurplusComponent implements OnInit {
     object['total'] = String(sum);
   }
 
-
   changeTableTdValue(value: string, field: string, index: number) {
     if (field === 'description' && this.editMode) {
       this.alterTable(ELEMENT_DATA3, field, value, index);
@@ -51,9 +60,14 @@ export class CashflowUpperSurplusComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-    this.cashFlowCategory = this.data.tableInUse;
-    this.year = this.data.financialYear;
+  getCashflowMonthlySurplusData() {
+    this.cashflowService
+      .getCashflowYearlySurplusValues({ advisorId: this.advisorId, clientId: this.clientId })
+      .subscribe(res => {
+        console.log(res);
+      }, err => {
+        console.error(err);
+      })
   }
 
   isGroup(index, item): boolean {
