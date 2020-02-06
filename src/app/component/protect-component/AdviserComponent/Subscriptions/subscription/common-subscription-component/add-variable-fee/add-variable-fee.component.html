@@ -19,7 +19,7 @@
         <div class="col-md-5 pr-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input type="text" maxlength="{{getFormControl().serviceName.maxLength}}" formControlName="serviceName" class="form-control br-0" matInput>
+                    <input type="text" (changedValue)="getFormControl().serviceName.setValue($event)" [inputValidator]="validatorType.COMPULSORY_ALPHA_NUMERIC" appInputValueValidation maxlength="{{getFormControl().serviceName.maxLength}}" formControlName="serviceName" class="form-control br-0" matInput>
                     <mat-error class="f-12" [ngClass]="{'v-h':!(isServiceValid && getFormControl().serviceName.invalid || (getFormControl().serviceName.touched && getFormControl().serviceName.invalid))}">
                         Service Name is required
                     </mat-error>
@@ -191,6 +191,9 @@
                     <mat-error *ngIf="isSelectOtherAssets" class="f-12">
                        Please select atlest one other asset class fees
                     </mat-error>
+                    <mat-error class="f-12" *ngIf="getFormControl().pricing.touched && getFormControl().pricing.hasError('required')">
+                        Please fill other asset class fees
+                     </mat-error>
                 </div>
             </div>
             <mat-error *ngIf="pricing && getFormControl().pricing.invalid" class="f-12 pr-10">Please fill details
