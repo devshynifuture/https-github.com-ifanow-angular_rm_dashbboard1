@@ -14,7 +14,6 @@ import { AccountEntryModule } from './component/customer/accounts/account.entry.
 import { PlanEntryModule } from './component/customer/plan/plan.entry.module';
 import { DynamicComponentService } from '../../../services/dynamic-component.service';
 import { AdviceEntryModule } from './component/customer/customer-activity/advice-entry.module';
-import { EmailConsentComponent } from './component/customer/customer-activity/advice-activity/email-consent/email-consent.component';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 
 
@@ -24,7 +23,7 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
 
 
 @NgModule({
-  declarations: [CustomerComponent, EmailConsentComponent],
+  declarations: [CustomerComponent],
   imports: [
     // BrowserModule,
     CommonModule,

@@ -44,10 +44,10 @@ export class EmailAdviceComponent implements OnInit {
     this.cusService.generateGroupId(obj).subscribe(
       data => {
         this.groupId = data
+        this.route.navigate(['/cus/email-consent'], { queryParams: { gropID: data } });
         this.close(false)
       }
     )
-    this.route.navigate(['/customer/email-consent'])
   }
   close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
