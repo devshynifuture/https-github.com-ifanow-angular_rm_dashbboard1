@@ -7,7 +7,7 @@ import { ProcessTransactionService } from '../process-transaction.service';
   styleUrls: ['./transaction-summary.component.scss']
 })
 export class TransactionSummaryComponent implements OnInit {
-  selectedPlatform 
+  selectedPlatform
   selectedInvestor: any;
   showInvestor = false;
   investorList: void;
@@ -16,10 +16,10 @@ export class TransactionSummaryComponent implements OnInit {
   selectedFamilyMember: any;
   platformType = 2
   transactionSummary: any;
-  constructor(private processTransaction :ProcessTransactionService) { }
-  showPlatform = false
-  @Input()
-  set data(data) {
+  constructor(private processTransaction: ProcessTransactionService) { }
+  showPlatform = false;
+
+  @Input() set data(data) {
     this.inputData = data;
     console.log('This is Input data of FixedDepositComponent ', data);
     this.transactionSummary = data
@@ -33,16 +33,16 @@ export class TransactionSummaryComponent implements OnInit {
   }
   ngOnInit() {
     this.investorList = this.processTransaction.getIINList()
-    console.log('iinList == ',this.investorList)
+    console.log('iinList == ', this.investorList)
     this.transactionSummary = this.inputData
-    console.log('transactionSummary',this.transactionSummary)
-   
+    console.log('transactionSummary', this.transactionSummary)
+
   }
   setPlatform(value) {
     this.selectedPlatform = value.value
     this.showPlatform = false
   }
-  setInvestor(value){
+  setInvestor(value) {
     this.selectedInvestor = value.value
     this.showInvestor = false
   }

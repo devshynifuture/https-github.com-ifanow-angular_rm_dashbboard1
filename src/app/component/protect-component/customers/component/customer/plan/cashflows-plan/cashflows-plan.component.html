@@ -22,9 +22,7 @@
                             </div>
 
                             <div class="col-md-12 cashflowTable pr-0">
-                                <table mat-table [appSkeletonLoading]="isLoading" appSkeletonLoading
-                                    [dataSource]="dataSourceSurplus" *ngIf="showSurplusTable" id="table-low"
-                                    class="skeletonAnimation ">
+                                <table mat-table [appSkeletonLoading]="isLoading" appSkeletonLoading [dataSource]="dataSourceSurplus" *ngIf="showSurplusTable" id="table-low" class="skeletonAnimation ">
 
                                     <!--- Note that these columns can be defined in any order.
                                                       The actual rendered columns are set as a property on the row definition" -->
@@ -42,8 +40,7 @@
 
                                     <!-- Name Column -->
                                     <ng-container matColumnDef="ageH">
-                                        <th class="br-grey f-400 text-right f-14" mat-header-cell *matHeaderCellDef> Age
-                                            (H)
+                                        <th class="br-grey f-400 text-right f-14" mat-header-cell *matHeaderCellDef> Age (H)
                                         </th>
                                         <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
                                             <div class="bar"> {{element.ageH}} </div>
@@ -52,8 +49,7 @@
 
                                     <!-- Weight Column -->
                                     <ng-container matColumnDef="ageW">
-                                        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef> Age
-                                            (W)
+                                        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef> Age (W)
                                         </th>
                                         <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
                                             <div class="bar"> {{element.ageW}}</div>
@@ -90,8 +86,7 @@
 
                                     <ng-container matColumnDef="view">
                                         <th mat-header-cell *matHeaderCellDef> </th>
-                                        <td class="c-p text-primary text-center f-14" mat-cell *matCellDef="let element"
-                                            (click)="openUpperSlider(element)">
+                                        <td class="c-p text-primary text-center f-14" mat-cell *matCellDef="let element" (click)="openUpperSlider(element)">
                                             <div class="bar">{{element.view}} Allocate</div>
                                         </td>
                                     </ng-container>
@@ -116,11 +111,9 @@
                             <img class="mr-12" src="/assets/images/svg/cash-flow-expenses-icon.svg"> Expenses</button>
                         <button mat-stroked-button class="btn-cash-flow" (click)="filterCashFlowTableUsing('assets')">
                             <img class="mr-12" src="/assets/images/svg/cash-flow-assets-icon.svg"> Assets</button>
-                        <button mat-stroked-button class="btn-cash-flow"
-                            (click)="filterCashFlowTableUsing('insurance')">
+                        <button mat-stroked-button class="btn-cash-flow" (click)="filterCashFlowTableUsing('insurance')">
                             <img class="mr-12" src="/assets/images/svg/cash-flow-insurance-icon.svg">Insurance</button>
-                        <button mat-stroked-button class="btn-cash-flow"
-                            (click)="filterCashFlowTableUsing('liabilities')">
+                        <button mat-stroked-button class="btn-cash-flow" (click)="filterCashFlowTableUsing('liabilities')">
                             <img class="mr-12"
                                 src="/assets/images/svg/cash-flow-liabilites-icon.svg">Liabilities</button>
 
