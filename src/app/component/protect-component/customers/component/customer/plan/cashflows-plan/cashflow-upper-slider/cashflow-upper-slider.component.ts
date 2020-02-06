@@ -1,9 +1,6 @@
 import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { CashflowAddComponent } from './cashflow-add/cashflow-add.component';
-
 
 @Component({
   selector: 'app-cashflow-upper-slider',

@@ -621,4 +621,14 @@ export class CustomerService {
     let httpParams = new HttpParams().set('clientId', data.clientId).set("advisorId", data.advisorId).set("familyMemberId", data.familyMemberId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.ADVICE_GET_DEPLOYMENTS, httpParams)
   }
+  generateGroupId(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.GENERATE_GROUP_ID, data)
+  }
+  getAdviceConsent(data) {
+    let httpParams = new HttpParams().set("adviceGroupId", data);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_CONSENT, httpParams);
+  }
+  updateAssetConsent(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_ASSET_CONSENT, data)
+  }
 }
