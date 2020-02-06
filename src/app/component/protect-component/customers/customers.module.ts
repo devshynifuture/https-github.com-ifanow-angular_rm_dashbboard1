@@ -13,7 +13,9 @@ import { EntryComponentsModule } from '../../../entry.components.module';
 import { AccountEntryModule } from './component/customer/accounts/account.entry.module';
 import { PlanEntryModule } from './component/customer/plan/plan.entry.module';
 import { DynamicComponentService } from '../../../services/dynamic-component.service';
-import { SupportEntryModule } from '../SupportComponent/support.entry.module';
+import { AdviceEntryModule } from './component/customer/customer-activity/advice-entry.module';
+import { EmailConsentComponent } from './component/customer/customer-activity/advice-activity/email-consent/email-consent.component';
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -22,7 +24,7 @@ import { SupportEntryModule } from '../SupportComponent/support.entry.module';
 
 
 @NgModule({
-  declarations: [CustomerComponent],
+  declarations: [CustomerComponent, EmailConsentComponent],
   imports: [
     // BrowserModule,
     CommonModule,
@@ -38,13 +40,15 @@ import { SupportEntryModule } from '../SupportComponent/support.entry.module';
     AccountEntryModule,
     PlanEntryModule,
     CustomersRoutingModule,
+    AdviceEntryModule,
+    CustomDirectiveModule
 
     // PlanModule
   ],
   exports: [],
   providers: [DynamicComponentService],
-  entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(),
-  PlanEntryModule.getComponentList()]
+  entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), AdviceEntryModule.getComponentList()
+    , PlanEntryModule.getComponentList()]
 })
 export class CustomersModule {
 }
