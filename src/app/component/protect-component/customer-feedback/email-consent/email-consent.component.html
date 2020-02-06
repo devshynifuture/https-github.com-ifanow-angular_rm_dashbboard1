@@ -81,12 +81,14 @@
         </ng-container>
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
-            <td mat-cell *matCellDef="let element" class="br text-primary">
+            <td mat-cell *matCellDef="let element;index as i" class="br text-primary">
                 <div>
-                    <button [ngClass]="{'mat-button': acceptedOrDeclined==0,'mat-stroked-button':acceptedOrDeclined==1}"
-                        (click)="acceptConsent(element)">ACCEPTED</button>
-                    <button [ngClass]="{'mat-button': acceptedOrDeclined==0,'mat-stroked-button':acceptedOrDeclined==2}"
-                        (click)="declineConsent(element)">DECLINE</button>
+                    <button
+                        [ngClass]="{'mat-button': element.acceptedOrDeclined==0,'mat-stroked-button':element.acceptedOrDeclined==1}"
+                        (click)="acceptConsent(element,i)">ACCEPTED</button>
+                    <button
+                        [ngClass]="{'mat-button': element.acceptedOrDeclined==0,'mat-stroked-button':element.acceptedOrDeclined==2}"
+                        (click)="declineConsent(element,i)">DECLINE</button>
                 </div>
             </td>
             <td *matFooterCellDef class="br text-right" mat-footer-cell></td>

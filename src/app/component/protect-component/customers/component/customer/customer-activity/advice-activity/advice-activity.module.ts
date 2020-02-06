@@ -25,10 +25,11 @@ import { AllAdviceSmallSavingsSchemeComponent } from './advice-small-saving-sche
 import { AllAdviceCashAndHandComponent } from './advice-cash-and-hand/all-advice-cash-and-hand/all-advice-cash-and-hand.component';
 import { AllAdviceCommoditiesComponent } from './advice-commodities/all-advice-commodities/all-advice-commodities.component';
 import { AllAdviceStocksComponent } from './advice-stocks/all-advice-stocks/all-advice-stocks.component';
+import { AdviceActionComponent } from './advice-action/advice-action.component';
 
 
 @NgModule({
-  declarations: [AdviceActivityComponent, AdviceFixedIncomeComponent, AdviceRealAssetComponent, AdviceAllPortfolioComponent, AdviceRetirementAccountComponent, AdviceSmallSavingSchemeComponent, AdviceCommoditiesComponent, AdviceCashAndHandComponent, AdviceLibilitiesComponent, AdviceLifeInsuranceComponent, AdviceGeneralInsuranceComponent, AdviceMutualFundComponent, AdviceAssetsComponent, AdviceStocksComponent, AllAdviceFixedDepositComponent, AllAdviceRealAssetComponent, AllRetrirementAssetComponent, AllAdviceSmallSavingsSchemeComponent, AllAdviceCashAndHandComponent, AllAdviceCommoditiesComponent, AllAdviceStocksComponent],
+  declarations: [AdviceActivityComponent, AdviceFixedIncomeComponent, AdviceRealAssetComponent, AdviceAllPortfolioComponent, AdviceRetirementAccountComponent, AdviceSmallSavingSchemeComponent, AdviceCommoditiesComponent, AdviceCashAndHandComponent, AdviceLibilitiesComponent, AdviceLifeInsuranceComponent, AdviceGeneralInsuranceComponent, AdviceMutualFundComponent, AdviceAssetsComponent, AdviceStocksComponent, AllAdviceFixedDepositComponent, AllAdviceRealAssetComponent, AllRetrirementAssetComponent, AllAdviceSmallSavingsSchemeComponent, AllAdviceCashAndHandComponent, AllAdviceCommoditiesComponent, AllAdviceStocksComponent, AdviceActionComponent],
   imports: [
     CommonModule,
     AdviceActivityRoutingModule,
