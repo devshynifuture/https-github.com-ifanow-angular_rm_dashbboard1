@@ -54,6 +54,10 @@ export class CashFlowsPlanService {
     getCashflowYearlyInsuranceValues(data) {
         return this.http.get('', data)
     }
+
+    getCashflowMonthlyInsuranceValues(data) {
+        return this.http.get('', data);
+    }
     // cashflow expenses  
     cashflowAddExpenses(data) {
         return this.http.post(apiConfig.MAIN_URL + appConfig.CASHFLOW_ADD_EXPENSES, data);
@@ -76,7 +80,7 @@ export class CashFlowsPlanService {
         return this.http.get(apiConfig.MAIN_URL + appConfig.CASHFLOW_GET_YEARLY_LIABILITIES, data);
     }
 
-    getCashflowMonthlyLiabilities(data) {
+    getCashflowMonthlyLiabilitiesValues(data) {
         return this.http.get(apiConfig.MAIN_URL + appConfig.CASHFLOW_GET_MONTHLY_LIABILITIES, data);
     }
 

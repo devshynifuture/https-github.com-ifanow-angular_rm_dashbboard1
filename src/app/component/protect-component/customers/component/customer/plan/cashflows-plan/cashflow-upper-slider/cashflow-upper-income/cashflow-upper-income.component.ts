@@ -5,7 +5,7 @@ import { UpperTableBox } from '../../cashflow.interface';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CashFlowsPlanService } from '../../cashflows-plan.service';
 import { EventService } from 'src/app/Data-service/event.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-cashflow-upper-income',
@@ -34,6 +34,8 @@ export class CashflowUpperIncomeComponent implements OnInit {
     this.cashflowCategory = this.data.tableInUse;
 
     this.year = this.data.year;
+
+    this.dataSource = new MatTableDataSource(ELEMENT_DATA);
     // api not created
     // this.getCashflowMonthlyIncomeData();
   }
@@ -56,12 +58,7 @@ export class CashflowUpperIncomeComponent implements OnInit {
 
   deleteEntryCashFlow(element: UpperTableBox) {
     let whichTable;
-    (this.cashflowCategory === 'income') ?
-      whichTable = ELEMENT_DATA :
-      (this.cashflowCategory === 'expenses') ?
-        whichTable = ELEMENT_DATA1 :
-        (this.cashflowCategory === 'liabilities') ?
-          whichTable = ELEMENT_DATA2 : whichTable = '';
+    (this.cashflowCategory === 'income') ? whichTable = ELEMENT_DATA : ''
 
     let el;
     (whichTable !== '') ? el = whichTable.splice(whichTable.indexOf(element), 1) : null;

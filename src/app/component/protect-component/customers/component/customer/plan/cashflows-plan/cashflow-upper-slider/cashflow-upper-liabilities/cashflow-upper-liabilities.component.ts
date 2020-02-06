@@ -31,43 +31,29 @@ export class CashflowUpperLiabilitiesComponent implements OnInit {
   onlyNumbers = '';
 
   ngOnInit() {
-    this.refreshTableData();
-  }
-
-  refreshTableData() {
     this.cashflowCategory = this.data.tableInUse;
 
     this.year = this.data.year;
-    if (this.cashflowCategory === 'expenses') {
-      this.dataSource = ELEMENT_DATA1;
-      // call income table api 
-    } else if (this.cashflowCategory === 'income') {
-      this.dataSource = ELEMENT_DATA;
-      // call income table api
-    } else if (this.cashflowCategory === 'liabilities') {
-      this.dataSource = ELEMENT_DATA2;
-    }
+    // this.refreshTableData();
+    // api not created
+    this.getCashflowMonthlyLiabilitiesData()
   }
+
+  getCashflowMonthlyLiabilitiesData() {
+    this.cashflowService
+      .getCashflowMonthlyLiabilitiesValues({ advisorId: this.advisorId, clientId: this.clientId })
+      .subscribe(res => {
+        console.log(res)
+      }, err => {
+        console.error(err);
+      })
+  }
+
 
   alterTable(table: UpperTableBox[], field: string, value: string, index: number): UpperTableBox[] {
     table[index][field] = value;
     this.updateTotal(table[index]);
     return table;
-  }
-
-  getMonthlyExpenseTableData() {
-    const data = {
-      advisorId: AuthService.getUserInfo().advisorId,
-      clientId: AuthService.getClientId(),
-      year: 2020
-    }
-    this.cashflowService.getCashflowMonthlyExpensesValues(data).subscribe(res => {
-      console.log("value of cashflow expense data, ", res);
-      const { familyMemberId } = res;
-
-    }, err => {
-      console.error("error in getting cashflow expense data, ", err)
-    });
   }
 
   deleteEntryCashFlow(element: UpperTableBox) {
@@ -82,7 +68,7 @@ export class CashflowUpperLiabilitiesComponent implements OnInit {
     let el;
     (whichTable !== '') ? el = whichTable.splice(whichTable.indexOf(element), 1) : null;
     console.log("this element deleted:0000 ", el);
-    this.refreshTableData();
+    // refresh Table Data
   }
 
   updateTotal(object: UpperTableBox) {
