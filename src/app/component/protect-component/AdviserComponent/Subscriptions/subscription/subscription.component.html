@@ -1,7 +1,7 @@
 <div id="ui-subscriptions">
   <div class="sub-header-fix">
     <div class="bg-white">
-      <h1 class="cusotm-haeding-main">Subscriptions</h1>
+      <!-- <h1 class="cusotm-haeding-main">Subscriptions</h1> -->
 
       <nav (selectedTabChange)="tabClick($event)" class="text-right" id="ui-customer-secondhead" mat-align-tabs="end"
         mat-tab-nav-bar>
@@ -18,8 +18,8 @@
           routerLinkActive="active">INVOICES</a>
         <a (click)="value=6" [ngClass]="_value == 6 ? 'active': ''" [routerLink]="'./documents'" mat-tab-link
           routerLinkActive="active">DOCUMENTS</a>
-        <a (click)="value=7" [ngClass]="isLinkActive()? 'active': ''" [routerLink]="['./settings',label]" [state]="{ example: 0 }"
-          mat-tab-link >SETTINGS</a>
+        <a (click)="value=7" [ngClass]="isLinkActive()? 'active': ''" [routerLink]="['./settings',label]"
+          [state]="{ example: 0 }" mat-tab-link>SETTINGS</a>
       </nav>
 
       <router-outlet></router-outlet>

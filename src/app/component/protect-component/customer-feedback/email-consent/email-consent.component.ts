@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CustomerService } from '../../../customer.service';
-import { Location } from '@angular/common';
+import { CustomerService } from '../../customers/component/customer/customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-email-consent',
@@ -10,15 +11,21 @@ import { EventService } from 'src/app/Data-service/event.service';
 })
 export class EmailConsentComponent implements OnInit {
 
-  constructor(private cusService: CustomerService, private Location: Location, private eventService: EventService) { }
+  constructor(private cusService: CustomerService, private Location: Location, private eventService: EventService, private activateRoute: ActivatedRoute) { }
   displayedColumns: string[] = ['position', 'investorName', 'schemeDetails', 'currentValue', 'notionalGain', 'advice', 'adviceStatus', 'applicableDate', 'actions'];
   dataSource;
   selectedConsent = [];
   ngOnInit() {
-    this.getConsentDetails();
+    this.activateRoute.queryParams.subscribe(
+      params => {
+        console.log(params)
+        this.getConsentDetails(params.gropID);
+      }
+    )
+
   }
-  getConsentDetails() {
-    this.cusService.getAdviceConsent(1).subscribe(
+  getConsentDetails(data) {
+    this.cusService.getAdviceConsent(data).subscribe(
       data => {
         console.log(data)
         this.dataSource = data
@@ -34,9 +41,12 @@ export class EmailConsentComponent implements OnInit {
       }
     )
   }
-  selectionConsent(data) {
-    (data.acceptedOrDeclined == 1) ? data.acceptedOrDeclined = 2 : data.acceptedOrDeclined = 1
+  acceptConsent(data) {
+    data.acceptedOrDeclined = 1
     console.log(this.dataSource)
+  }
+  declineConsent(data) {
+    data.acceptedOrDeclined = 2
   }
   dialogClose() {
     this.Location.back();

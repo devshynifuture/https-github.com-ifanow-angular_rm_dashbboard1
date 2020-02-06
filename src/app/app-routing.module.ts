@@ -48,7 +48,6 @@ const routes: Routes = [
       // }
     ],
     canActivate: [AuthGuard],
-
   },
   {
     path: 'support',
@@ -67,6 +66,10 @@ const routes: Routes = [
   {
     path: 'backoffice',
     component: BackofficeDashboardComponent
+  },
+  {
+    path: 'cus',
+    loadChildren: () => import('./component/protect-component/customer-feedback/cus-feedback.module').then(m => m.CusFeedbackModule)
   },
   {
     path: '',
@@ -104,8 +107,7 @@ const routes: Routes = [
   {
     path: '**',
     redirectTo: 'not-found'
-  }
-
+  },
 ];
 
 @NgModule({

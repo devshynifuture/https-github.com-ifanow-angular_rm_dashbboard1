@@ -61,21 +61,21 @@
       </div>
       <div class="col-md-12 p-0">
         <p class="m-0 text-custom pt-24 pl-8">Current value</p>
-        <h2 class="m-0 f-300 text-black pt-4 pl-8 pb-24">₹28,37,842</h2>
+        <h2 class="m-0 f-300 text-black pt-4 pl-8 pb-24" appFormatNumber>{{(mfData)?(mfData.total_current_value| currency:'INR'):'0'}}</h2>
       </div>
       <div class="col-md-12 p-0">
         <div class="row bg-light lter pt-20 pb-20 bt-1">
           <div class="col-md-4 pr-0 pl-12">
             <p class="text-custom m-0">Amount invested</p>
-            <h5 class="m-0 text-black">₹19,24,908</h5>
+            <h5 class="m-0 text-black" appFormatNumber>{{(mfData)?(mfData.total_amount_invested | currency:'INR'):'0'}}</h5>
           </div>
           <div class="col-md-4 pr-0 pl-12">
             <p class="text-custom m-0">Unrealized gain/loss</p>
-            <h5 class="m-0 text-success">₹9,13,206</h5>
+            <h5 class="m-0 text-success" appFormatNumber>{{(mfData)?(mfData.total_absolute_return | currency:'INR'):'0'}}</h5>
           </div>
           <div class="col-md-4 pr-0 pl-12">
             <p class="text-custom m-0">Returns</p>
-            <h5 class="m-0 text-success">12.23% <i class="material-icons f-14 f-700">
+            <h5 class="m-0 text-success"><span>{{(mfData)?mfData.total_absolute_return:'0'}}</span>% <i class="material-icons f-14 f-700">
                 arrow_upward
               </i>
             </h5>
