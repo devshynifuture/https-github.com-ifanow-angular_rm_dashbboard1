@@ -39,7 +39,7 @@
         mat-align-tabs="center">
         <mat-tab #tab delay="500" label="OVERVIEW" placement="left" tooltip="tootip on left">
           <ng-template matTabContent>
-            <app-overview [componentFlag]='flag' (changePlanData)="getPlanData($event)"
+            <app-overview [componentFlag]='flag' (changePlanData)="getData($event)"
               [upperData]="fragmentDataSubsUpper.data">
             </app-overview>
           </ng-template>
@@ -63,7 +63,7 @@
       <mat-tab-group (selectedTabChange)="tabClick($event)" [selectedIndex]="selectedServiceTab" animationDuration="0ms"
         class="popup-header-fix-tabs" mat-align-tabs="center">
         <mat-tab label="FEE STRUCTURE">
-          <app-fee-structure (changeServiceData)="getServiceData($event)" [upperData]="fragmentDataSubsUpper.data">
+          <app-fee-structure (changeServiceData)="getData($event)" [upperData]="fragmentDataSubsUpper.data">
           </app-fee-structure>
         </mat-tab>
         <mat-tab #tab [disabled]='fragmentDataSubsUpper.data==""' label="PLANS">
@@ -92,7 +92,7 @@
       <mat-tab-group animationDuration="0ms" class="popup-header-fix-tabs" mat-align-tabs="center">
         <mat-tab label="OVERVIEW">
           <ng-template matTabContent>
-            <app-overview (changePlanData)="getDocumentData($event)" [upperData]="fragmentDataSubsUpper.data">
+            <app-overview (changePlanData)="getData($event)" [upperData]="fragmentDataSubsUpper.data">
             </app-overview>
           </ng-template>
         </mat-tab>

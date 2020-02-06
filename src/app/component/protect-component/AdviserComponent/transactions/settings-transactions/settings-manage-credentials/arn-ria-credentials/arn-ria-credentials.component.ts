@@ -4,6 +4,7 @@ import { SubscriptionInject } from '../../../../Subscriptions/subscription-injec
 import { AddArnRiaCredentialsComponent } from './add-arn-ria-credentials/add-arn-ria-credentials.component';
 import { OnlineTransactionService } from '../../../online-transaction.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-arn-ria-credentials',
@@ -15,7 +16,8 @@ export class ArnRiaCredentialsComponent implements OnInit {
   dataSource : Array<any> = [{}, {}, {}];
   advisorId: any;
   brokerCredentials: any;
-  constructor(private onlineTransact: OnlineTransactionService,private utilService: UtilService, private subInjectService: SubscriptionInject) { }
+  noData: string;
+  constructor(private eventService : EventService,private onlineTransact: OnlineTransactionService,private utilService: UtilService, private subInjectService: SubscriptionInject) { }
   isLoading = false;
   ngOnInit() {
     this.getBSECredentials()
@@ -47,24 +49,33 @@ export class ArnRiaCredentialsComponent implements OnInit {
     }
     console.log('encode',obj)
     this.onlineTransact.getBSESubBrokerCredentials(obj).subscribe(
-      data => this.getBSESubBrokerCredentialsRes(data)
+      data => this.getBSESubBrokerCredentialsRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+        this.dataSource = [];
+        this.isLoading = false;
+      }
     );
   }
   getBSESubBrokerCredentialsRes(data){
     this.isLoading = false;
-    console.log('getBSESubBrokerCredentialsRes',data)
-    this.brokerCredentials.forEach(function(ad){
-      var subBrokerMatch = data.find(function(tm){
-      return ad.id == tm.tpUserCredentialId
-    })
-    if(subBrokerMatch && subBrokerMatch.euin){
-      ad.euin = subBrokerMatch.euin
-      ad.tp_nse_subbroker_mapping_id = subBrokerMatch.tpUserCredentialId
-      ad.subBrokerCode = subBrokerMatch.subBrokerCode
+    if(data == undefined || data.length == 0){
+      this.noData = "No scheme found";
+      this.dataSource = [];
+    }else{
+      console.log('getBSESubBrokerCredentialsRes',data)
+      this.brokerCredentials.forEach(function(ad){
+        var subBrokerMatch = data.find(function(tm){
+        return ad.id == tm.tpUserCredentialId
+      })
+      if(subBrokerMatch && subBrokerMatch.euin){
+        ad.euin = subBrokerMatch.euin
+        ad.tp_nse_subbroker_mapping_id = subBrokerMatch.tpUserCredentialId
+        ad.subBrokerCode = subBrokerMatch.subBrokerCode
+      }
+      })
+      this.dataSource = this.brokerCredentials
+      console.log('subBrokerMatch',this.dataSource)
     }
-    })
-    this.dataSource = this.brokerCredentials
-    console.log('subBrokerMatch',this.dataSource)
   }
   openAddCredential(data, flag) {
     const fragmentData = {

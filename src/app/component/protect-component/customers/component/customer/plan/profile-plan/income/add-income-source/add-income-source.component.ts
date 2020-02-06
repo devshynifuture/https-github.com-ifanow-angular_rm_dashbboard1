@@ -1,6 +1,5 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { element } from 'protractor';
-import { EventService } from 'src/app/Data-service/event.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {EventService} from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-add-income-source',

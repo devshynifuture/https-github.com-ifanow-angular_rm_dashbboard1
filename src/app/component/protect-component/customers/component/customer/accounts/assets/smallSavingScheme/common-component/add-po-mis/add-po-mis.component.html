@@ -56,7 +56,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput type="text" (keypress)="utils.keyPress($event)" autocomplete="off" #amtInvested maxlength="10" class="form-control br-0 rupess" formControlName="amtInvested">
+                    <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" autocomplete="off" #amtInvested maxlength="10" class="form-control br-0 rupess" formControlName="amtInvested">
                     <mat-error *ngIf="pomisForm.get('amtInvested').errors?.required && pomisForm.get('amtInvested').touched" class="f-12">
                         This field is required
                     </mat-error>
@@ -92,7 +92,7 @@
         <div class="col-md-3">
             <mat-form-field>
                 <mat-select class="form-control br-0" formControlName="ownershipType">
-                    <mat-option value=""> Select option </mat-option>
+                    <mat-option value="" disabled> Select option </mat-option>
                     <mat-option value="0"> Joint </mat-option>
                     <mat-option value="1">Single </mat-option>
                 </mat-select>
@@ -133,7 +133,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input type="text" (keypress)="utils.keyPress($event)" matInput #accNumber maxlength="16" class="form-control br-0" formControlName="accNumber">
+                        <input type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" matInput #accNumber maxlength="16" class="form-control br-0" formControlName="accNumber">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{accNumber.value.length}}/16</mat-hint>
                     </mat-form-field>

@@ -78,9 +78,9 @@ export class AddPlanDetailComponent implements OnInit {
 
 
   getSinglePlanData(data) {
-    if (data == '') {
-      return;
-    } else {
+    console.log(data.id, "editPlanData");
+    
+    if (data.id != undefined) {
       this.editApiCall = data;
       this.planDataForm.get('planName').setValue(data.name);
       this.planDataForm.get('code').setValue(data.code);
@@ -95,7 +95,9 @@ export class AddPlanDetailComponent implements OnInit {
     }
     else {
       this.barButtonOptions.active = true;
-      if (!this.editApiCall) {
+      console.log(this.editApiCall, this.editApiCall == undefined,"check editApiCall");
+      
+      if (this.editApiCall == undefined) {
         const obj = {
           name: this.getFormControl().planName.value,
           description: this.getFormControl().description.value,

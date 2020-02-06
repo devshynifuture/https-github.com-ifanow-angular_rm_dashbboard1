@@ -1,10 +1,8 @@
-import { Injectable } from '@angular/core';
-import { DatePipe, DecimalPipe } from '@angular/common';
-import { EventService } from '../Data-service/event.service';
-import { HttpClient } from '@angular/common/http';
-import { element } from 'protractor';
-import { SubscriptionService } from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import { AuthService } from '../auth-service/authService';
+import {Injectable} from '@angular/core';
+import {DatePipe, DecimalPipe} from '@angular/common';
+import {EventService} from '../Data-service/event.service';
+import {HttpClient} from '@angular/common/http';
+import {SubscriptionService} from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
 
 
 @Injectable({
@@ -56,7 +54,7 @@ export class UtilService {
     let tempData;
     tempData = Object.assign([], this.subscriptionStepData)
     tempData = tempData.filter(element => element.stepTypeId == stepNo)
-    if(tempData.length!=0){
+    if (tempData.length != 0) {
       return tempData[0].completed;
     }
   }
@@ -85,7 +83,7 @@ export class UtilService {
 
   }
 
-  static convertDateObjectToDateString(datePipe: DatePipe, date: Date) {
+  static convertDateObjectToDateString(datePipe: DatePipe, date: any) {
     return datePipe.transform(date, 'yyyy-MM-dd');
   }
 
@@ -185,6 +183,7 @@ export class UtilService {
     }
   }
 
+
   htmlToPdf(inputData, pdfName) {
     const obj = {
       htmlInput: inputData,
@@ -209,7 +208,8 @@ export class ValidatorType {
   static PERSON_NAME = new RegExp(/^[a-zA-Z]*[a-zA-Z]+[a-zA-Z ]*$/);
   // static PERSON_NAME = new RegExp(/^[a-zA-Z0-9]*[ a-zA-Z]+[a-zA-Z0-9]*$/);/*With Number*/
   static NUMBER_KEY_ONLY = new RegExp(/[^0-9.]+/g);
-  static TEXT_ONLY = new RegExp(/^[a-zA-Z ]/);
+  // static TEXT_ONLY = new RegExp(/^[a-zA-Z ]/);
+  static TEXT_ONLY = new RegExp(/^[a-zA-Z ]*$/);
   static TEXT_WITH_SPACE = new RegExp(/^[a-zA-Z ]/gi);
 
   static ALPHA_NUMERIC = new RegExp(/^[a-zA-Z0-9/-]*$/);
@@ -218,4 +218,9 @@ export class ValidatorType {
   // static EMAIL = new RegExp(/^[a-z0-9!#$%&'*+\=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/);
   // static EMAIL_ONLY = new RegExp(/\b[\w.!#$%&’*+\/=?^`{|}~-]+@[\w-]+(?:\.[\w-]+)*\b/);
   // static EMAIL_ONLY = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+}
+
+// Escape characters that have a special meaning in Regular Expressions
+export function escapeRegExp(s: string): string {
+  return s.replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1');
 }

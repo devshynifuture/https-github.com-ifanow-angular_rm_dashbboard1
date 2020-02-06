@@ -1,13 +1,13 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 // import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { Router } from '@angular/router';
-import { AuthService } from '../../../../../../../auth-service/authService';
-import { DialogContainerComponent } from 'src/app/common/dialog-container/dialog-container.component';
-import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } from 'src/app/animation/animation';
-import { DynamicComponentService } from 'src/app/services/dynamic-component.service';
-import { Location } from '@angular/common';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {Router} from '@angular/router';
+import {AuthService} from '../../../../../../../auth-service/authService';
+import {DialogContainerComponent} from 'src/app/common/dialog-container/dialog-container.component';
+import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from 'src/app/animation/animation';
+import {DynamicComponentService} from 'src/app/services/dynamic-component.service';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-subscription-upper-slider',
@@ -24,7 +24,6 @@ import { Location } from '@angular/common';
 export class SubscriptionUpperSliderComponent extends DialogContainerComponent implements OnInit {
   fragmentDataSubsUpper;
   selectedServiceTab = 0;
-  upperRightSideInputData;
   sessionData: any;
   upperState: string = "close";
   referenceData: any;
@@ -125,7 +124,7 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
         this.location.replaceState('/admin/subscription/settings/documents');
         break;
       default:
-        // this.router.navigate(['/admin/subscription/clients'])
+        this.router.navigate(['/admin/subscription/clients'])
         this.location.replaceState('/admin/subscription/clients');
         // this.router.navigate(['/admin/subscription/clients'])
         break;
@@ -139,14 +138,7 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
     }
   }
 
-  getPlanData(event){
-    console.log(event, "data overview");
-    if(event != undefined){
-      this.isRefreshData = true;
-    }
-  }
-
-  getServiceData(event){
+  getData(event){
     console.log(event, "data overview");
     if(event != undefined){
       this.isRefreshData = true;

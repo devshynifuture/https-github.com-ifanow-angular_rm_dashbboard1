@@ -41,7 +41,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #currentValue type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0 rupess" formControlName="currentValue">
+                        <input matInput #currentValue type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess" formControlName="currentValue">
                         <mat-error class="f-12" [ngClass]="{'v-h':!(isCurrentValue && getFormControl().currentValue.invalid || getFormControl().currentValue.touched && getFormControl().currentValue.invalid)}">
                             This field is required
                         </mat-error>
@@ -73,7 +73,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #totalContry type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0 rupess" formControlName="totalContry">
+                        <input matInput #totalContry type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess" formControlName="totalContry">
                         <mat-error class="f-12" [ngClass]="{'v-h':!(isTotalContry && getFormControl().totalContry.invalid || getFormControl().totalContry.touched && getFormControl().totalContry.invalid)}">
                             This field is required
                         </mat-error>
@@ -106,7 +106,7 @@
                             <div class="form-group mb-0">
                                 <mat-form-field>
                                     <mat-select formControlName="accountPreferenceId" class="form-control br-0">
-                                        <mat-option value="">Select option</mat-option>
+                                        <mat-option value="" disabled>Select option</mat-option>
                                         <mat-option value="1">Tier I</mat-option>
                                         <mat-option value="2">Tier II</mat-option>
                                         <mat-option value="3">NPS Lite</mat-option>
@@ -122,7 +122,7 @@
                             <div class="form-group mb-0">
                                 <mat-form-field>
                                     <mat-select formControlName="frequencyId" class="form-control br-0">
-                                        <mat-option value="">Select option</mat-option>
+                                        <mat-option value="" disabled>Select option</mat-option>
                                         <mat-option value="1">Monthly</mat-option>
                                         <mat-option value="2">Quarterly</mat-option>
                                         <mat-option value="3">Semi annually</mat-option>
@@ -137,7 +137,7 @@
                         <div class="col-md-3 p-0">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <input matInput #currentValue type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0 rupess" formControlName="approxContribution">
+                                    <input matInput #currentValue type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess" formControlName="approxContribution">
                                     <mat-hint align="end" class="f-12">{{currentValue.value.length}}/10</mat-hint>
                                     <mat-error class="f-12">
                                         This field is required
@@ -179,7 +179,7 @@
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <mat-select formControlName="schemeChoice" class="form-control br-0">
-                                <mat-option value="">Select option</mat-option>
+                                <mat-option value="" disabled>Select option</mat-option>
                                 <mat-option value="1">Active-choice investment</mat-option>
                                 <mat-option value="2">Auto-choice investment</mat-option>
                             </mat-select>
@@ -223,7 +223,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <mat-form-field>
-                                        <input matInput #nomineePercentageShare type="number" (keypress)="utils.keyPress($event)" class="form-control br-0 percentage" formControlName="sharePercentage">
+                                        <input matInput #nomineePercentageShare type="number" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage" formControlName="sharePercentage">
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-5" *ngIf="i==0">

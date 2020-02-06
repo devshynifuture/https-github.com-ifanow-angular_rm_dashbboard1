@@ -1,18 +1,16 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { SubscriptionService } from '../../subscription.service';
-import { SubscriptionInject } from '../../subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTableDataSource, MAT_DATE_FORMATS } from '@angular/material';
-import { AuthService } from '../../../../../../auth-service/authService';
-import { UtilService, ValidatorType } from '../../../../../../services/util.service';
-import { DatePipe } from '@angular/common';
-import { element } from 'protractor';
-import { Router } from '@angular/router';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { ErrPageOpenComponent } from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
-import { SubscriptionDataService } from '../../subscription-data.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {SubscriptionService} from '../../subscription.service';
+import {SubscriptionInject} from '../../subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MAT_DATE_FORMATS, MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {AuthService} from '../../../../../../auth-service/authService';
+import {UtilService, ValidatorType} from '../../../../../../services/util.service';
+import {DatePipe} from '@angular/common';
+import {Router} from '@angular/router';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {ErrPageOpenComponent} from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 
 export interface PeriodicElement {
   date: string;
@@ -161,7 +159,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
             barButtonOption.active = false;
             this.getData = data;
             this.isLoading = false;
-    
+
             if (data != undefined) {
               this.lastDataId = data[data.length - 1].id;
               this.tableData = data;

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {Component, OnInit} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-setup-lumpsum-deployment',
@@ -17,8 +17,9 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
 
   ngOnInit() {
   }
-  close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+
+  close() {
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 }
 export interface PeriodicElement {

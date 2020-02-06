@@ -1,9 +1,9 @@
+import { SubscriptionInject } from './../../AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from './../../../../services/util.service';
 import { Component, OnInit } from '@angular/core';
-import { SupportService } from './../support.service';
+import { IfaDetailsComponent } from './ifa-details/ifa-details.component';
+import { SupportService } from '../support.service';
 import { IfasDetailsComponent } from './ifas-details/ifas-details.component';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from '../../AdviserComponent/Subscriptions/subscription-inject.service';
-
 
 @Component({
   selector: 'app-my-ifas',
@@ -47,9 +47,26 @@ export class MyIfasComponent implements OnInit {
     );
   }
 
+  openIfaRightSilder(data) {
+    const fragmentData = {
+      flag: 'ifaDetails',
+      data,
+      id: 1,
+      state: 'open75',
+      componentName: IfaDetailsComponent,
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
 
-
-
+        }
+      }
+    );
+    event.stopPropagation();
+  }
 }
 const ELEMENT_DATA = [
   { adminName: 'Sonesh Dedhia', email: 'sonesh.dedhia@manek.com', mobile: 9322574914, usingSince: '3Y 7M', lastLogin: '30 mins ago', accStatus: 'active', plan: 'Power + OT + WL', nextBilling: '18/03/2020', team: '3', arn: '1', logout: '', menu: '' },
