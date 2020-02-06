@@ -1,9 +1,10 @@
 <div class="wrapper-20" *ngIf="allAdvice == false">
     <div class="row">
         <div class="col-md-6 p-0">
-            <button mat-stroked-button class="btn-primary mr-12 br-0" >Advice
+            <button mat-stroked-button class="btn-primary mr-12 br-0">Advice
                 given</button>
-            <button mat-stroked-button class="text-primary br-0 b-priamry " (click) = "allAdvice = true">All commodities</button>
+            <button mat-stroked-button class="text-primary br-0 b-priamry " (click)="allAdvice = true">All
+                commodities</button>
         </div>
         <div class="col-md-6 p-0 text-right">
             <button mat-button [matMenuTriggerFor]="menu" class="right b-a br-0 pr-8">Scenario 2<i
@@ -40,13 +41,7 @@
     </div>
     <div class="row pt-44">
         <div class="col-md-12 p-0">
-            <button mat-button class="b-a pr-8 br-0" [matMenuTriggerFor]="menu">Action<i
-                    class="material-icons text-custom pl-8">
-                    arrow_drop_down
-                </i></button>
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item>Request for content</button>
-            </mat-menu>
+            <app-advice-action></app-advice-action>
         </div>
     </div>
     <div class="row pt-32">
@@ -56,8 +51,9 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openCommodities('adviceGOLD','adviceGOLD')"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new gold</button>
+            <button mat-stroked-button class="btn-primary br-0 pl-8 "
+                (click)="openCommodities('adviceGOLD','adviceGOLD')"><img src="/assets/images/svg/plus.svg"
+                    class="pr-8">Suggest new gold</button>
         </div>
     </div>
     <table mat-table [dataSource]="dataSource3" class="mt-8" id="table-low">
@@ -116,8 +112,9 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 "(click)="openOthers('adviceOTHERS','adviceOTHERS')"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new others</button>
+            <button mat-stroked-button class="btn-primary br-0 pl-8 "
+                (click)="openOthers('adviceOTHERS','adviceOTHERS')"><img src="/assets/images/svg/plus.svg"
+                    class="pr-8">Suggest new others</button>
         </div>
     </div>
     <table mat-table [dataSource]="dataSource3" class="mt-8" id="table-low">
@@ -170,6 +167,6 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
     </table>
 </div>
-<div *ngIf="allAdvice == true"> 
+<div *ngIf="allAdvice == true">
     <app-all-advice-commodities></app-all-advice-commodities>
 </div>

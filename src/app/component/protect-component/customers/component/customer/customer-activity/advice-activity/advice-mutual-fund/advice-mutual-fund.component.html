@@ -2,8 +2,8 @@
 <div class="wrapper-20">
     <div class="row">
         <div class="col-md-6 p-0">
-            <button mat-stroked-button class="btn-primary mr-12 br-0"
-                (click)="openselectAdvice(null)">Advice given</button>
+            <button mat-stroked-button class="btn-primary mr-12 br-0" (click)="openselectAdvice(null)">Advice
+                given</button>
             <button mat-stroked-button class="text-primary br-0 b-priamry">All Mutual
                 funds</button>
         </div>
@@ -42,19 +42,13 @@
     </div>
     <div class="row pt-40 pb-16">
         <div class="col-md-6 p-0">
-            <button mat-button [matMenuTriggerFor]="menu" class="b-a br-0 pr-8">Action<i
-                    class="material-icons text-custom text-right pl-8">
-                    arrow_drop_down
-                </i></button>
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item>Request for consent</button>
-            </mat-menu>
+            <app-advice-action></app-advice-action>
         </div>
         <div class="col-md-6 p-0 text-right">
-            <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img
-                    src="/assets/images/svg/addon-three.svg" class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 "><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new MF</button>
+            <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
+                    class="pr-8">Filters</button>
+            <button mat-stroked-button class="btn-primary br-0 pl-8 "><img src="/assets/images/svg/plus.svg"
+                    class="pr-8">Suggest new MF</button>
         </div>
     </div>
     <table mat-table [dataSource]="dataSource2" id="table-low">

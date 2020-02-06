@@ -35,13 +35,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <button mat-button [matMenuTriggerFor]="menu1" class="b-a br-0 pr-8 action">Actions<i
-                class="material-icons pl-8 text-light">
-                keyboard_arrow_down
-            </i></button>
-        <mat-menu #menu1="matMenu" class="pb-0">
-            <button (click)="openConsentDialog()" mat-menu-item>Request for consent</button>
-        </mat-menu>
+        <app-advice-action></app-advice-action>
     </div>
 </div>
 <div class="row pt-12">
