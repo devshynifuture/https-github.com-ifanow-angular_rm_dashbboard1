@@ -161,7 +161,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     else {
       (this.utilservice.checkSubscriptionastepData(3) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}]
     }
-    // this.getClientSubData(this.scrollLoad, this.isFirstCall);
+    this.getClientSubData(this.scrollLoad, this.isFirstCall);
     console.log('upperData', this.upperData);
 
   }

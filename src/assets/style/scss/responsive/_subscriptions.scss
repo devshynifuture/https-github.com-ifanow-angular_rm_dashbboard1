@@ -15,7 +15,17 @@
       margin-right: 8px !important;
     }
   }
+
+  .mat-radio-button {
+    min-width: 150px;
+  }
+
+  .radioBtn .mat-radio-label {
+    min-width: 135px !important;
+  }
 }
+
+@media(max-width:1200px) {}
 
 @media(max-width:1142px) {
   #ui-subscriptions {

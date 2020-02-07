@@ -49,6 +49,7 @@
     "highcharts": "^7.2.1",
     "highcharts-angular": "^2.4.0",
     "html2pdf.js": "^0.9.1",
+    "material-design-icons": "^3.0.1",
     "moment": "^2.24.0",
     "ng-circle-progress": "~1.5.1",
     "ng2-file-upload": "^1.4.0",

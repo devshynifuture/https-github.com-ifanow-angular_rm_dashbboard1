@@ -1,4 +1,5 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~material-design-icons/iconfont/material-icons.css';
 @import '~saturn-datepicker/bundle.css';
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import'./assets/style/scss/variable';
@@ -896,12 +897,6 @@ mat-tab-group[vertical] {
   }
 }
 
-#ui-biller {
-  .form-control {
-    border: 1px solid rgba(25, 25, 25, 0.32) !important;
-  }
-}
-
 #ui-customer {
   border-bottom: 0px !important;
   position: fixed;
@@ -1442,7 +1437,7 @@ textarea {
   height: 400px;
   overflow: auto;
   overflow-x: hidden;
-  margin-top: 8px;
+  // margin-top: 8px;
   // border-top: 1xp solid #ddd;
   // border-left: 1px solid #ddd;
 }
