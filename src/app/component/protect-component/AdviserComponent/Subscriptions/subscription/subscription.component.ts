@@ -85,11 +85,9 @@ export class SubscriptionComponent implements OnInit {
 
 
   isLinkActive(): boolean {
-    let u = this.router.url.split('/')
-    let compareUrl = '/' + u[1] + '/' + u[2] + '/' + u[3]
-    // console.log("/admin/subscription/settings", "url", compareUrl);
-    return "/admin/subscription/settings" === compareUrl;
-  }
+    
+    return "settings" === this.router.url.split('/')[3];
+ }
   // ngDoCheck(){
   //   this.route.paramMap.subscribe(params => {
   //     if(this.label == 'plans'){

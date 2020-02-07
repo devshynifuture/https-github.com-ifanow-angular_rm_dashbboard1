@@ -40,7 +40,10 @@
                                     <mat-form-field>
                                         <input #gstinNum [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation autofocus class="form-control br-0 text-left" formControlName="gstinNum" matInput (changedValue)="getFormControlProfile().gstinNum.setValue($event)" maxLength="{{getFormControlProfile().gstinNum.maxLength}}"
                                             type="text">
-                                        <mat-error class="f-12">GSTIN number is required</mat-error>
+                                        <mat-error *ngIf="profileDetailsForm.get('gstinNum').errors?.required" class="f-12">GSTIN number is required</mat-error>
+                                        <mat-error *ngIf="(profileDetailsForm.get('gstinNum').errors?.pattern)" class="f-12">
+                                            Enter valid GSTIN number
+                                        </mat-error>
                                         <mat-hint align="end" class="f-12">{{gstinNum.value.length}}/15</mat-hint>
                                     </mat-form-field>
                                 </div>
@@ -236,9 +239,10 @@
                         <div class="col-md-7">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <input #ifscCode [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation (changedValue)="getFormControlBank().ifscCode.setValue($event)" class="form-control br-0 text-left" formControlName="ifscCode" matInput maxLength="{{getFormControlBank().ifscCode.maxLength}}"
+                                    <input #ifscCode [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation (changedValue)="getFormControlBank().ifscCode.setValue($event)" class="form-control br-0 text-left" formControlName="ifscCode" matInput maxLength="{{getFormControlBank().ifscCode.maxLength}}" (focusout)="getBankAddress(getFormControlBank().ifscCode.value)"
                                         type="text">
-                                    <mat-error class="f-12">City is required</mat-error>
+                                    <mat-error class="f-12">{{ifsciInvalid?'Invalid IFSC':'IFSC is required'}}
+                                    </mat-error>
                                     <mat-hint align="end" class="f-12">{{ifscCode.value.length}}/11</mat-hint>
                                 </mat-form-field>
                             </div>
@@ -264,8 +268,9 @@
                         </div>
                         <div class="col-md-5">
                             <div class="form-group mb-0">
+                                <!-- (focusout)="getPostalPin($event.target.value,'bankDetailsForm')"  -->
                                 <mat-form-field>
-                                    <input #pincodeB [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" (focusout)="getPostalPin($event.target.value,'bankDetailsForm')" appInputValueValidation class="form-control br-0 text-left" formControlName="pincodeB" matInput minlength="6"
+                                    <input #pincodeB [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" appInputValueValidation class="form-control br-0 text-left" formControlName="pincodeB" matInput minlength="6"
                                         type="text">
                                     <mat-error class="f-12">{{pinInvalid?'Invalid pincode':'Pincode is required'}}</mat-error>
                                     <mat-hint align="end" class="f-12">{{pincodeB.value.length}}/6</mat-hint>

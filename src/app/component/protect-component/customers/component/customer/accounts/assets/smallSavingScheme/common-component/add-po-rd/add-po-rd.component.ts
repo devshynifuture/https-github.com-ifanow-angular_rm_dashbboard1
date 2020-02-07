@@ -85,6 +85,7 @@ export class AddPoRdComponent implements OnInit {
       ownerName: [data.ownerName, [Validators.required]],
       monthlyContribution: [data.monthlyContribution, [Validators.required, Validators.min(10)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
+      tenure: [(data.tenure) ? data.tenure : '3'],
       ownership: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]]
     });
     this.PORDFormoptionalForm = this.fb.group({
