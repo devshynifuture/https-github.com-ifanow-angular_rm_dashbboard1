@@ -15,11 +15,13 @@
 
 <div class="row">
     <div class="col-md-12 overflow-hidden back-office-table">
-        <table mat-table id="table-low" [dataSource]="dataSource" class="skeletonAnimation mb-8" appSkeletonLoading [appSkeletonLoading]="isLoading">
+        <table mat-table id="table-low" [dataSource]="dataSource" class="skeletonAnimation mb-8" appSkeletonLoading
+            [appSkeletonLoading]="isLoading">
             <!-- admin name Column -->
             <ng-container matColumnDef="adminName">
                 <th mat-header-cell *matHeaderCellDef class="b-a"> Admin Name </th>
-                <td mat-cell (click)="openAdminDetails('addifasDetails','open40')" *matCellDef="let element" class="b-a">
+                <td mat-cell (click)="openAdminDetails('addifasDetails','open40')" *matCellDef="let element"
+                    class="b-a">
                     <div class="bar"> {{element.adminName}} </div>
                 </td>
             </ng-container>

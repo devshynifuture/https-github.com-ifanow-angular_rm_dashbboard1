@@ -1,94 +1,86 @@
 h3 {
-    font-family: "Playfair Display", serif;
+  font-family: "Playfair Display", serif;
 }
 
 ::ng-deep .mat-checkbox-checked .mat-checkbox-background,
 .mat-checkbox-indeterminate .mat-checkbox-background {
-    background-color: #008FFF !important;
+  background-color: #008FFF !important;
 }
 
 // overwrite the ripple overlay on hover and click
- ::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
-    background-color: #008FFF !important;
+::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
+  background-color: #008FFF !important;
 }
 
- ::ng-deep .mat-accent .mat-slider-thumb,
+::ng-deep .mat-accent .mat-slider-thumb,
 .mat-accent .mat-slider-thumb-label,
 .mat-accent .mat-slider-track-fill {
-    background-color: #008FFF;
+  background-color: #008FFF;
 }
 
 ::ng-deep .mat-accent .mat-slider-track-fill {
-    background-color: #008FFF;
+  background-color: #008FFF;
 }
 
 ::ng-deep .mat-slider-horizontal {
-    min-width: 70px !important;
+  min-width: 70px !important;
 }
 
 ::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
-    background-color: #008FFF !important;
+  background-color: #008FFF !important;
 }
 
 ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
-    background-color: #008FFF !important;
-    /*inner circle color change*/
+  background-color: #008FFF !important;
+  /*inner circle color change*/
 }
 
 ::ng-deep.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-    border-color: #008FFF !important;
-    /*outer ring color change*/
+  border-color: #008FFF !important;
+  /*outer ring color change*/
 }
 
 ::ng-deep .mat-horizontal-stepper-header {
-    pointer-events: none !important;
+  pointer-events: none !important;
 }
 
 .min-38 {
-    min-height: 38px !important
+  min-height: 38px !important
 }
 
 ::ng-deep .custom-checkbox .mat-checkbox-layout {
-    vertical-align: top !important;
+  vertical-align: top !important;
 }
 
 .md-datepicker-input-container {
-    width: 300px;
+  width: 300px;
 }
 
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
-    padding: 0px;
+  padding: 0px;
 }
 
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
-    width: 1.5em !important;
-}
-
-::ng-deep .mat-datepicker-toggle {
-    position: absolute;
-    right: 8px !important;
-    top: -16px !important;
-    float: none;
-    left: inherit;
+  width: 1.5em !important;
 }
 
 ::ng-deep .mat-form-field {
-    width: 100%;
+  width: 100%;
 }
 
 ::ng-deep .custom-checkbox .mat-checkbox-inner-container {
-    border: transparent !important
+  border: transparent !important
 }
 
 .height120 {
-    height: 120px;
+  height: 120px;
 }
 
 ::ng-deep .radioBtn .mat-radio-label {
-    min-width: 152px;
-    height: 45px;
-    display: flex !important;
-    justify-content: left;
-    align-items: center;
-    padding-left: 10px !important;
+  min-width: 152px;
+  height: 45px;
+  display: flex !important;
+  justify-content: left;
+  align-items: center;
+  padding-left: 10px !important;
 }
