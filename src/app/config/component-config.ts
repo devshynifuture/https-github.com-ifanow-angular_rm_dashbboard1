@@ -159,6 +159,7 @@ export const appConfig = {
   EDIT_STOCK_PORTFOLIO: 'account/asset/stock/portfolio/edit',
   ADD_SCRIP: 'account/asset/stock/scrip-name/add',
   EDIT_SCRIP_HOLDING_TRANSACTION: 'account/asset/stock/holding/transaction/edit',
+  MUTUAL_FUND_GET: 'mutual-fund/mutualfund/list/get',
   ////////////////////////////////plan////////////////////////////
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
   SUBMIT_RISK: 'plan/risk-assessment/add',
@@ -337,10 +338,34 @@ export const appConfig = {
   ADVICE_ADD_OTHERS: 'advice/asset/commodity/suggest-new-other/add',
   GET_ADVICE_BY_CATEGORY: 'advice/assetType/get',
   ADVICE_GET_DEPLOYMENTS: '/activity/deployment/get',
+  GENERATE_GROUP_ID: 'advice/asset/consent/post',
+  GET_ASSET_CONSENT: 'advice/advice/consent/get',
+  UPDATE_ASSET_CONSENT: 'advice/asset/update/consent',
+  SENT_EMAIL_CONSENT: 'advice/asset/update/consent/sent',
   ////////////////////////////////////OnlineTransaction///////////////////////////////////////
   ADD_BSE_CREDENTIALS: 'bse/user/save',
   GET_BSE_CREDENTIALS: 'bse/user/view',
   GET_BSE_SUB_BROKER_CREDENTIALS: 'bse/user/sub-broker/view',
+  GET_NEW_SCHEMES : 'mutual-fund/search',
+  GET_SCHEME_DETAILS:'mutual-fund/product-limit/get',
+
+  // cashflow 
+  CASHFLOW_ADD_INCOME: 'cashflow/income/add',
+  CASHFLOW_GET_INCOME: 'cashflow/get',
+  CASHFLOW_DELETE_INCOME: 'cashflow/income/delete',
+  CASHFLOW_EDIT_INCOME: 'cashflow/income/edit',
+  CASHFLOW_EDIT_MONTHLY_INCOME: 'cashflow/income/monthly/edit',
+  CASHFLOW_GET_YEARLY_EXPENSE: 'cashflow/expense/list/get',
+  CASHFLOW_GET_MONTHLY_EXPENSE: 'cashflow/expense/monthly/list/get',
+  CASHFLOW_ADD_EXPENSES: 'cashflow/expense/add',
+  CASHFLOW_EDIT_EXPENSES: 'cashflow/expense/edit',
+  CASHFLOW_DELETE_EXPENSES: 'cashflow/expense/delete',
+  CASHFLOW_EDIT_MONTHLY_EXPENSE_DISTRIBUTION: 'cashflow/expense/monthly-distribution/edit',
+  CASHFLOW_GET_YEARLY_LIABILITIES: 'cashflow/liability/list/get',
+  CASHFLOW_GET_MONTHLY_LIABILITIES: 'cashflow/liability/monthly/list/get',
+  CASHFLOW_ADD_LIABILITIES: 'cashflow/liability/add',
+  CASHFLOW_EDIT_LIABILITIES: 'cashflow/liability/edit',
+  CASHFLOW_DELETE_LIABILITIES: 'cashflow/liability/delete',
 
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',

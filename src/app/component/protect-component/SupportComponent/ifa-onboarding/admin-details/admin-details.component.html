@@ -1,0 +1,181 @@
+<div class="popup-header-fix-40">
+    <div class="row bb-1">
+        <div class="col-md-8 p-0">
+            <h4 class="mb-0 wrapper-20"> Historical file ordering setup</h4>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12">
+                <i class="material-icons c-p pt-8 v-middle" (click)="Close(false)"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row pt-28">
+    <div class="col-md-12">
+        <mat-tab-group>
+            <mat-tab label="Overview">
+                <div class="row">
+                    <div class="col-md-12">
+
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Onboarding activity"> Content 2 </mat-tab>
+            <mat-tab label="RTA details">
+
+                <div class="row pt-16">
+                    <div class="back-office-table col-md-12 overflow-hidden">
+                        <h3 class="f-16">CAMS</h3>
+                        <table id="table-low" mat-table [dataSource]="dataSource1" class=" ">
+                            <ng-container matColumnDef="arn">
+                                <th class="br" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
+                                <td class="br" mat-cell *matCellDef="let element"> {{element.arn}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="regEmailId">
+                                <th class="br" mat-header-cell *matHeaderCellDef> Registered email ID </th>
+                                <td class="br" mat-cell *matCellDef="let element"> {{element.regEmailId}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="scheduleExp">
+                                <th class="br" mat-header-cell *matHeaderCellDef> Schedule expires on </th>
+                                <td class="br" mat-cell *matCellDef="let element"> {{element.scheduleExp}} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row pt-16">
+                    <div class="back-office-table col-md-12 overflow-hidden">
+                        <h3 class="f-16">Karvy (KFintech)</h3>
+                        <table id="table-low" mat-table [dataSource]="dataSource2" class=" ">
+                            <ng-container matColumnDef="arn">
+                                <th class="br" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
+                                <td class="br" mat-cell *matCellDef="let element"> {{element.arn}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="loginId">
+                                <th class="br" mat-header-cell *matHeaderCellDef> Login ID </th>
+                                <td class="br" mat-cell *matCellDef="let element"> {{element.loginId}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="registeredId">
+                                <th class="br" mat-header-cell *matHeaderCellDef> Registered email ID </th>
+                                <td class="br" mat-cell *matCellDef="let element"> {{element.registeredId}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="userOrdering">
+                                <th class="br" mat-header-cell *matHeaderCellDef> Use for file ordering? </th>
+                                <td class="br" mat-cell *matCellDef="let element"> {{element.userOrdering}} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row pt-16">
+                    <div class="back-office-table col-md-12 overflow-hidden">
+                        <h3 class="f-16"> Franklin Templeton </h3>
+                        <table id="table-low" mat-table [dataSource]="dataSource3" class=" ">
+                            <ng-container matColumnDef="arn">
+                                <th class="br" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
+                                <td class="br" mat-cell *matCellDef="let element"> {{element.arn}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="loginId">
+                                <th class="br" mat-header-cell *matHeaderCellDef> Login ID </th>
+                                <td class="br" mat-cell *matCellDef="let element"> {{element.loginId}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="registeredId">
+                                <th class="br" mat-header-cell *matHeaderCellDef> Registered email ID </th>
+                                <td class="br" mat-cell *matCellDef="let element"> {{element.registeredId}} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+                        </table>
+                    </div>
+                </div>
+
+
+                <div class="row pt-16">
+                    <div class="back-office-table col-md-12 overflow-hidden">
+                        <h3 class="f-16"> CAMS Fundsnet </h3>
+                        <table id="table-low" mat-table [dataSource]="dataSource4" class=" ">
+                            <ng-container matColumnDef="arn">
+                                <th class="br" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
+                                <td class="br" mat-cell *matCellDef="let element"> {{element.arn}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="loginId">
+                                <th class="br" mat-header-cell *matHeaderCellDef> Login ID </th>
+                                <td class="br" mat-cell *matCellDef="let element"> {{element.loginId}} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns4"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns4;"></tr>
+                        </table>
+                    </div>
+                </div>
+
+            </mat-tab>
+            <mat-tab label="Team members">
+                <div class="row pt-16">
+                    <div class="back-office-table col-md-12 overflow-hidden">
+                        <table id="table-low" mat-table [dataSource]="dataSource" class=" ">
+
+                            <ng-container matColumnDef="name">
+                                <th class="br" mat-header-cell *matHeaderCellDef> Name </th>
+                                <td class="br" mat-cell *matCellDef="let element"> {{element.name}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="email">
+                                <th class="br" mat-header-cell *matHeaderCellDef> Email </th>
+                                <td class="br" mat-cell *matCellDef="let element"> {{element.email}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="mobile">
+                                <th class="br" mat-header-cell *matHeaderCellDef> Mobile </th>
+                                <td class="br" mat-cell *matCellDef="let element"> {{element.mobile}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="role">
+                                <th class="br" mat-header-cell *matHeaderCellDef> Role </th>
+                                <td class="br" mat-cell *matCellDef="let element"> {{element.role}} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+
+
+                    </div>
+                </div>
+
+
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>
+
+
+
+
+
+<div class="bottom-fixed wrapper-12 pt-16">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveEPF()">Save</button>
+        </div>
+    </div>
+</div>

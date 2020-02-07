@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { EmailAdviceComponent } from '../email-advice/email-advice.component';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { CustomerService } from '../../../customer.service';
 
 @Component({
   selector: 'app-advice-all-portfolio',
@@ -6,12 +10,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./advice-all-portfolio.component.scss']
 })
 export class AdviceAllPortfolioComponent implements OnInit {
-  displayedColumns: string[] = [ 'position', 'name', 'weight', 'symbol', 'icons'];
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'icons'];
   dataSource = ELEMENT_DATA;
 
   displayedColumns1: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'status', 'date', 'adate', 'icons'];
   dataSource1 = ELEMENT_DATA1;
-  constructor() { }
+  constructor(private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
   ngOnInit() {
   }

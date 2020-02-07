@@ -14,150 +14,36 @@
                     <div class="col-md-9 pl-0 br">
                         <div class="d-flex justify-content-md-between align-items-center">
                             <p class="f-20 pb-20 pt-20 roboto m-0 pl-16"> {{ tableInUse | titlecase }}</p>
-
                         </div>
 
                         <div class="row">
-                            <div class="col-md-12 cashflowTable pr-0">
-                                <table mat-table [appSkeletonLoading]="isLoading" appSkeletonLoading
-                                    [dataSource]="dataSource" id="table-low" class="skeletonAnimation"
-                                    *ngIf="!showSurplusTable">
-
-                                    <!--- Note that these columns can be defined in any order.
-                                                      The actual rendered columns are set as a property on the row definition" -->
-
-                                    <!-- Position Column -->
-                                    <ng-container matColumnDef="year">
-                                        <th class="br-grey f-400 f-14" mat-header-cell *matHeaderCellDef> Year </th>
-                                        <td class="br-grey f-14" mat-cell *matCellDef="let element">
-                                            <div class="bar">
-                                                {{element.year}}
-                                            </div>
-                                        </td>
-                                    </ng-container>
-
-                                    <!-- Name Column -->
-                                    <ng-container matColumnDef="age">
-                                        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
-                                            Group head age
-                                        </th>
-                                        <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
-                                            <div class="bar"> {{element.age}} </div>
-                                        </td>
-                                    </ng-container>
-
-                                    <!-- Weight Column -->
-                                    <ng-container matColumnDef="age2">
-                                        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
-                                            Spouse age
-                                        </th>
-                                        <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
-                                            <div class="bar">{{element.age2}}</div>
-                                        </td>
-                                    </ng-container>
-
-                                    <ng-container matColumnDef="total">
-                                        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
-                                            Total incomes
-                                        </th>
-                                        <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
-                                            <div class="bar"> {{element.total}}</div>
-                                        </td>
-                                    </ng-container>
-
-                                    <ng-container matColumnDef="view">
-                                        <th mat-header-cell *matHeaderCellDef> Monthly View </th>
-                                        <td class="c-p text-primary text-center f-400 f-14" mat-cell
-                                            *matCellDef="let element" (click)="openUpperSlider(element)">
-                                            <div class="bar">{{element.view}} </div>
-                                        </td>
-                                    </ng-container>
-
-
-                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                                </table>
+                            <div class="col-md-12 cashflowTable pr-0" *ngIf="tableInUse == 'income'">
+                                <app-cashflow-plan-income></app-cashflow-plan-income>
                             </div>
 
+                            <div class="col-md-12 cashflowTable pr-0" *ngIf="tableInUse == 'expenses'">
+                                <app-cashflow-plan-expense></app-cashflow-plan-expense>
+                            </div>
+
+                            <div class="col-md-12 cashflowTable pr-0" *ngIf="tableInUse == 'insurance'">
+                                <app-cashflow-plan-insurance></app-cashflow-plan-insurance>
+                            </div>
+
+                            <div class="col-md-12 cashflowTable pr-0" *ngIf="tableInUse == 'liabilities'">
+                                <app-cashflow-plan-liabilities></app-cashflow-plan-liabilities>
+                            </div>
+
+                            <div class="col-md-12 cashflowTable pr-0" *ngIf="tableInUse == 'assets'">
+                                <app-cashflow-plan-assets></app-cashflow-plan-assets>
+                            </div>
+
+                            <div class="col-md-12 cashflowTable pr-0" *ngIf="tableInUse == 'surplus'">
+                                <app-cashflow-plan-surplus></app-cashflow-plan-surplus>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="dataSource == []">
                             <div class="col-md-12 cashflowTable pr-0">
-                                <table mat-table [appSkeletonLoading]="isLoading" appSkeletonLoading
-                                    [dataSource]="dataSourceSurplus" *ngIf="showSurplusTable" id="table-low"
-                                    class="skeletonAnimation ">
-
-                                    <!--- Note that these columns can be defined in any order.
-                                                      The actual rendered columns are set as a property on the row definition" -->
-
-                                    <!-- Position Column -->
-                                    <ng-container matColumnDef="financialYear">
-                                        <th class="br-grey f-400 f-14" mat-header-cell *matHeaderCellDef> Financial year
-                                        </th>
-                                        <td class="br-grey f-14" mat-cell *matCellDef="let element">
-                                            <div class="bar">
-                                                {{element.financialYear}}
-                                            </div>
-                                        </td>
-                                    </ng-container>
-
-                                    <!-- Name Column -->
-                                    <ng-container matColumnDef="ageH">
-                                        <th class="br-grey f-400 text-right f-14" mat-header-cell *matHeaderCellDef> Age
-                                            (H)
-                                        </th>
-                                        <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
-                                            <div class="bar"> {{element.ageH}} </div>
-                                        </td>
-                                    </ng-container>
-
-                                    <!-- Weight Column -->
-                                    <ng-container matColumnDef="ageW">
-                                        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef> Age
-                                            (W)
-                                        </th>
-                                        <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
-                                            <div class="bar"> {{element.ageW}}</div>
-                                        </td>
-                                    </ng-container>
-
-                                    <!-- Symbol Column -->
-                                    <ng-container matColumnDef="originalSurplus">
-                                        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
-                                            Original surplus
-                                        </th>
-                                        <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
-                                            <div class="bar">{{element.originalSurplus}} </div>
-                                        </td>
-                                    </ng-container>
-
-                                    <ng-container matColumnDef="surplusAllocated">
-                                        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
-                                            Surplus allocated
-                                        </th>
-                                        <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
-                                            <div class="bar"> {{element.surplusAllocated}}</div>
-                                        </td>
-                                    </ng-container>
-
-                                    <ng-container matColumnDef="balanceSurplus">
-                                        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
-                                            Balance Surplus
-                                        </th>
-                                        <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
-                                            <div class="bar"> {{element.balanceSurplus}} </div>
-                                        </td>
-                                    </ng-container>
-
-                                    <ng-container matColumnDef="view">
-                                        <th mat-header-cell *matHeaderCellDef> </th>
-                                        <td class="c-p text-primary text-center f-14" mat-cell *matCellDef="let element"
-                                            (click)="openUpperSlider(element)">
-                                            <div class="bar">{{element.view}} Allocate</div>
-                                        </td>
-                                    </ng-container>
-
-
-                                    <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
-                                    <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
-                                </table>
+                                No data found
                             </div>
                         </div>
                     </div>
@@ -169,11 +55,9 @@
                             <img class="mr-12" src="/assets/images/svg/cash-flow-expenses-icon.svg"> Expenses</button>
                         <button mat-stroked-button class="btn-cash-flow" (click)="filterCashFlowTableUsing('assets')">
                             <img class="mr-12" src="/assets/images/svg/cash-flow-assets-icon.svg"> Assets</button>
-                        <button mat-stroked-button class="btn-cash-flow"
-                            (click)="filterCashFlowTableUsing('insurance')">
+                        <button mat-stroked-button class="btn-cash-flow" (click)="filterCashFlowTableUsing('insurance')">
                             <img class="mr-12" src="/assets/images/svg/cash-flow-insurance-icon.svg">Insurance</button>
-                        <button mat-stroked-button class="btn-cash-flow"
-                            (click)="filterCashFlowTableUsing('liabilities')">
+                        <button mat-stroked-button class="btn-cash-flow" (click)="filterCashFlowTableUsing('liabilities')">
                             <img class="mr-12"
                                 src="/assets/images/svg/cash-flow-liabilites-icon.svg">Liabilities</button>
 

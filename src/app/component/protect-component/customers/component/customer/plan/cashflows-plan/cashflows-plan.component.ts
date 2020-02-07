@@ -1,8 +1,13 @@
+import { MatTableDataSource } from '@angular/material';
+import { PlanService } from './../plan.service';
+import { DatePipe } from '@angular/common';
+import { CashFlowsPlanService } from './cashflows-plan.service';
 import { UtilService } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { Component, OnInit } from '@angular/core';
 import { chart } from './highChart';
 import { CashflowUpperSliderComponent } from './cashflow-upper-slider/cashflow-upper-slider.component';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-cashflows-plan',
@@ -11,8 +16,13 @@ import { CashflowUpperSliderComponent } from './cashflow-upper-slider/cashflow-u
 })
 export class CashflowsPlanComponent implements OnInit {
 
-  displayedColumns: string[] = ['year', 'age', 'age2', 'total', 'view'];
-  dataSource = ELEMENT_DATA;
+  displayedColumns: string[] = ['year', 'groupHeadAge', 'spouseAge', 'monthlyIncome', 'view'];
+  dataSource;
+  dataSourceIncome;
+  dataSourceExpense;
+  dataSourceLiabilities;
+  dataSourceInsurance;
+  dataSourceAssets;
 
   displayedColumns1: string[] = ['financialYear', 'ageH', 'ageW', 'originalSurplus', 'surplusAllocated', 'balanceSurplus', 'view'];
 
@@ -21,129 +31,122 @@ export class CashflowsPlanComponent implements OnInit {
   showSurplusTable: boolean = false;
 
   tableInUse: string = 'income';
+  cashflowIncomeValue: any;
+  groupHeadAge: number;
+  listOfIncomeArray: IncometableI[] = [];
+  advisorId = AuthService.getUserInfo().advisorId;
+  clientId = AuthService.getClientId()
 
-  constructor(private eventService: EventService,
+  constructor(
+    private cashflowService: CashFlowsPlanService,
+    private datePipe: DatePipe
   ) { }
-  isLoading = false;
+  isLoading: boolean = false;
   ngOnInit() {
     this.cashFlow('surplus');
     this.filterCashFlowTableUsing('income');
   }
 
+  getCashflowLiabilitiesData() {
+    this.cashflowService.getCashflowYearlyLiabilitiesValues({ advisorId: this.advisorId, clientId: this.clientId }).subscribe(res => {
+      console.log("this is cashflow liabilities value::::::::", res);
+      this.dataSource = new MatTableDataSource(ELEMENT_DATA3);
+
+    }, err => {
+      console.log(err);
+    });
+  }
+
+  getCashflowExpenseData() {
+    this.cashflowService.getCashflowYearlyExpensesValues({ advisorId: this.advisorId, clientId: this.clientId }).subscribe(res => {
+      console.log("value of cashflow expense Value data, ", res);
+    }, err => {
+      console.error("error in getting cashflow expenses data, ", err)
+    });
+  }
+
+  getCashflowIncomeData() {
+    this.cashflowService.getCashflowYearlyIncomeValues({ advisorId: this.advisorId, clientId: this.clientId }).subscribe(res => {
+      console.log("value of cashflow income data, ", res);
+      this.cashflowIncomeValue = res;
+
+      res.forEach(item => {
+        const { familyMemberId, monthlyIncome, incomeEndYear } = item;
+        this.getFamilyMemberDetailsAndCalculateAge(familyMemberId, { monthlyIncome, incomeEndYear });
+
+      });
+      this.isLoading = false;
+    }, err => {
+      console.error("error in getting cashflow income data, ", err)
+    });
+  }
+
+  getFamilyMemberDetailsAndCalculateAge(familyMemberId, data) {
+    // call family member detail api MatTableDataSource<IncomeTableI>;
+
+
+    const requestJSON = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      familyMemberId,
+    }
+    let birthDate = [];
+    this.cashflowService.getFamilyMemberData(requestJSON).subscribe(res => {
+      // console.log(res);
+
+      res.familyMembersList.forEach(item => {
+        const { dateOfBirth } = item;
+        birthDate.push(
+          this.ageCalculation(
+            UtilService.convertDateObjectToDateString(this.datePipe, dateOfBirth).slice(0, 4)
+          )
+        );
+
+        this.groupHeadAge = Math.max(...birthDate);
+        // if (item.relationshipId == 2) {
+        //   this.listOfIncomeArray.push({
+        //     year: data.incomeEndYear,
+        //     groupHeadAge: this.groupHeadAge,
+        //     spouseAge: item.relationshipId == 2 ? this.ageCalculation(
+        //       UtilService.convertDateObjectToDateString(this.datePipe, item.dateOfBirth).slice(0, 4)
+        //     ) : 0,
+        //     monthlyIncome: data.monthlyIncome,
+        //     view: 'view'
+        //   });
+        // }
+      });
+
+      this.dataSource = new MatTableDataSource(this.listOfIncomeArray);
+
+      // console.log(this.listOfIncomeArray);
+    });
+  }
+
+  ageCalculation(birthYear) {
+    const year = new Date().getFullYear();
+    return year - birthYear;
+  }
+
+  // get
+
   filterCashFlowTableUsing(flag: string): void {
     this.tableInUse = flag;
-
-    if (flag !== 'surplus') {
-      this.showSurplusTable = false;
-    }
-
-    switch (flag) {
-      case 'income': this.dataSource = ELEMENT_DATA;
-        break;
-      case 'expenses': this.dataSource = ELEMENT_DATA1;
-        break;
-      case 'insurance': this.dataSource = ELEMENT_DATA2;
-        break;
-      case 'liabilities': this.dataSource = ELEMENT_DATA3;
-        break;
-      case 'assets': this.dataSource = ELEMENT_DATA4;
-        break;
-      case 'commited-outflows': this.dataSource = ELEMENT_DATA5;
-        break;
-      case 'goals': this.dataSource = ELEMENT_DATA6;
-        break;
-      case 'surplus': this.showSurplusTable = true;
-        break;
-      default: this.dataSource = ELEMENT_DATA;
-    }
-
-    // this.dataSource =
-    // call api and consume data
-
-    // update table dataSource
-
   }
 
-  openUpperSlider(element) {
-    console.log(this.tableInUse);
-    console.log(element);
-
-    const fragmentData = {
-      flag: 'openCashFlowUpper',
-      id: 1,
-      data: { ...element, tableInUse: this.tableInUse },
-      direction: 'top',
-      componentName: CashflowUpperSliderComponent,
-      state: 'open'
-    };
-    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-      upperSliderData => {
-        if (UtilService.isDialogClose(upperSliderData)) {
-          // this.getClientSubscriptionList();
-          subscription.unsubscribe();
-        }
-      }
-    );
-  }
 
   cashFlow(id) {
     chart();
   }
-  // cashFlow(id) {
-  //   var chart1 = new Highcharts.Chart('surplus', {
-  //     chart: {
-  //       type: 'bar'
-  //     },
-  //     title: {
-  //       text: 'Bar chart with negative values'
-  //     },
-  //     xAxis: {
-  //       categories: []
-  //     },
-  //     credits: {
-  //       enabled: false
-  //     },
-  //     plotOptions: {
-  //       series: {
-  //         stacking: 'normal',
-  //         pointWidth: 10
-  //       }
-  //     },
-  //     series: [{
-  //       name: 'Income',
-  //       data: [-1, -2, -2, -7, -2, -1, -1, -2, -3, -4, -5, -5, -6, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, 2, 3],
-  //       color: '#5DC644'
-  //     }, {
-  //       name: 'Expenses',
-  //       data: [1, 2, 2, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-  //       color: '#FFC100'
-  //     }, {
-  //       name: 'Liabilities',
-  //       data: [1, 2, 3, 4, 2, -1, -1, -1, -1, -1, -1, -1, -1, 1, 0, 0, 0, 0, 0, 0, 0, 0, -1, -2, -3, -3, -4, -5],
-  //       color: '#FF6823'
-  //     }, {
-  //       name: 'Insurance',
-  //       data: [1, 2, 3, 3, 2, 1, 2, 3, 4, 5, 5, 6, 6, 0, 0, 0, -1, -2, -3, -4, -5, -6, -7],
-  //       color: '#7B50FF'
-  //     }, {
-  //       name: 'Assets',
-  //       data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 3, 0, 7, 2],
-  //       color: '#BCC6CA'
-  //     }, {
-  //       type: 'spline',
-  //       name: 'Surplus',
-  //       marker: {
-  //         enabled: false
-  //       },
-  //       color: '#000000',
-  //       dashStyle: 'shortdot',
-  //       data: [1, 1, 1, 1., 1., 2, 1, 2, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1],
-  //     }]
-  //   });
-  // }
+
 }
 
-
+export interface IncometableI {
+  year: string,
+  groupHeadAge: string,
+  spouseAge: string,
+  monthlyIncome: string,
+  view: string
+}
 
 export interface IncomeTableI {
   year: string;
@@ -205,7 +208,7 @@ const ELEMENT_DATA2: IncomeTableI[] = [
   { year: '2125', age: '30', age2: '26', total: '2,80,000', view: 'view' },
   { year: '2126', age: '31', age2: '27', total: '2,20,000', view: 'view' },
 ];
-const ELEMENT_DATA3: IncomeTableI[] = [
+let ELEMENT_DATA3: IncomeTableI[] = [
   { year: '2020', age: '15', age2: '21', total: '2,10,000', view: 'view' },
   { year: '2021', age: '16', age2: '22', total: '2,10,400', view: 'view' },
   { year: '2022', age: '17', age2: '23', total: '2,30,000', view: 'view' },

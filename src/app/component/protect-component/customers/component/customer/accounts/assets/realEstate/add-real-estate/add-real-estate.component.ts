@@ -12,7 +12,7 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
   styleUrls: ['./add-real-estate.component.scss']
 })
 export class AddRealEstateComponent implements OnInit {
-  validatorType=ValidatorType
+  validatorType = ValidatorType
   addrealEstateForm: any;
   ownerData: any;
   ownerName: any;
@@ -52,6 +52,10 @@ export class AddRealEstateComponent implements OnInit {
     this._data = inputData;
     this.getRealEstate(inputData);
 
+  }
+
+  preventDefault(e) {
+    e.preventDefault();
   }
 
   get data() {

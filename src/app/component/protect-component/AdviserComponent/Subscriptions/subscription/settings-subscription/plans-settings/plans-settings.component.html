@@ -35,11 +35,14 @@
                     </mat-card-header>
                     <mat-card-content class="bg-white mb-0">
                         <div class="row wrapper-20 overflow-hidden">
-                            <div class="col-md-12 height120 p-0 ">
+                            <div class="col-md-12  p-0 " >
                                 <p class="mb-0 text-primitive f-12">DESCRIPTION</p>
-                                <div class="mb-0 pt-8 plan-description relClass">
+                                <div class="mb-0 pt-8 plan-description relClass"  >
                                     <div class="bar" [ngClass]="{'height23': isLoading}">
-                                        {{singlePlan.description}}
+                                        <div class="l-h" [ngClass]="read? '':'height80'" >
+                                            {{singlePlan.description}}
+                                        </div>
+                                        <div (click)="readMore()" class="read-more c-p" *ngIf="singlePlan.description.length > 200">{{read?'read less':'read more'}}</div>
                                     </div>
                                 </div>
                             </div>

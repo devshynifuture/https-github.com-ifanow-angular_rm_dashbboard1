@@ -1,7 +1,7 @@
 import { EventService } from './../../../../../../../Data-service/event.service';
 import { SubscriptionService } from './../../../../Subscriptions/subscription.service';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-email-add-task',
@@ -43,7 +43,7 @@ export class EmailAddTaskComponent implements OnInit {
 
     // this.valueChange.emit(this.emailSend);
   }
-  saveData(data){
+  saveData(data) {
 
   }
 }

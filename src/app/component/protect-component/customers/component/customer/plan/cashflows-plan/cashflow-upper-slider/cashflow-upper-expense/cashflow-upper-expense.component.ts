@@ -1,22 +1,29 @@
-import { EventService } from './../../../../../../../../../Data-service/event.service';
-import { ValidatorType } from './../../../../../../../../../services/util.service';
-import { CashflowAddComponent } from './../cashflow-add/cashflow-add.component';
 import { Component, OnInit, Input } from '@angular/core';
-import { UpperTableBox } from './../../cashflow.interface';
+import { UpperTableBox } from '../../cashflow.interface';
+import { CashflowAddComponent } from '../cashflow-add/cashflow-add.component';
+import { ValidatorType } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CashFlowsPlanService } from '../../cashflows-plan.service';
 import { MatDialog } from '@angular/material';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
-  selector: 'app-cashflow-upper-income-expense',
-  templateUrl: './cashflow-upper-income-expense.component.html',
-  styleUrls: ['./cashflow-upper-income-expense.component.scss']
+  selector: 'app-cashflow-upper-expense',
+  templateUrl: './cashflow-upper-expense.component.html',
+  styleUrls: ['./cashflow-upper-expense.component.scss']
 })
-export class CashflowUpperIncomeExpenseComponent implements OnInit {
+export class CashflowUpperExpenseComponent implements OnInit {
+  incomeData: string;
 
   constructor(public dialog: MatDialog,
-    private eventService: EventService) { }
+    private eventService: EventService,
+    private cashflowService: CashFlowsPlanService) { }
 
   displayedColumns: string[] = ['description', 'month1', 'month2', 'month3', 'month4', 'month5', 'month6', 'month7', 'month8', 'month9', 'month10', 'month11', 'month12', 'total', 'remove'];
   dataSource = null;
+  advisorId = AuthService.getAdvisorId();
+  clientId = AuthService.getClientId();
+
   year: string = '';
   cashflowCategory;
   @Input() data;
@@ -24,28 +31,30 @@ export class CashflowUpperIncomeExpenseComponent implements OnInit {
   onlyNumbers = '';
 
   ngOnInit() {
-    this.refreshTableData();
-  }
-
-  refreshTableData() {
     this.cashflowCategory = this.data.tableInUse;
 
     this.year = this.data.year;
-    if (this.cashflowCategory === 'expenses') {
-      this.dataSource = ELEMENT_DATA1;
-      // call income table api 
-    } else if (this.cashflowCategory === 'income') {
-      this.dataSource = ELEMENT_DATA;
-      // call income table api
-    } else if (this.cashflowCategory === 'liabilities') {
-      this.dataSource = ELEMENT_DATA2;
-    }
+    // this.getCashflowMonthlyExpenseTableData();
+
+    // this.refreshTableData();
   }
 
   alterTable(table: UpperTableBox[], field: string, value: string, index: number): UpperTableBox[] {
     table[index][field] = value;
     this.updateTotal(table[index]);
     return table;
+  }
+
+  getCashflowMonthlyExpenseTableData() {
+    this.cashflowService.getCashflowMonthlyExpensesValues({
+      advisorId: AuthService.getUserInfo().advisorId,
+      clientId: AuthService.getClientId(),
+      year: this.year
+    }).subscribe(res => {
+      console.log("value of cashflow monthly expense data, ", res);
+    }, err => {
+      console.error("error in getting cashflow expense data, ", err)
+    });
   }
 
   deleteEntryCashFlow(element: UpperTableBox) {
@@ -60,7 +69,7 @@ export class CashflowUpperIncomeExpenseComponent implements OnInit {
     let el;
     (whichTable !== '') ? el = whichTable.splice(whichTable.indexOf(element), 1) : null;
     console.log("this element deleted:0000 ", el);
-    this.refreshTableData();
+    // udpate table data
   }
 
   updateTotal(object: UpperTableBox) {

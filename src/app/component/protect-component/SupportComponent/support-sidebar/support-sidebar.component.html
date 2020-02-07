@@ -18,8 +18,7 @@
                     <img src="assets/images/svg/people.svg">
                     <span class="title" mat-line>My IFAs</span>
                 </a>
-                <a class="sidenav-link" routerLink="/support/ifa-onboarding" routerLinkActive="router-link-active"
-                    mat-list-item>
+                <a class="sidenav-link" routerLink="/support/ifa-onboarding" routerLinkActive="router-link-active" mat-list-item>
                     <img src="assets/images/svg/file-lines.svg">
                     <span class="title" mat-line>IFA onboarding</span>
                 </a>
@@ -129,3 +128,13 @@
     </mat-sidenav-content>
 
 </mat-sidenav-container>
+<div *ngIf="isOverlayVisible" [@dialogContainer]="dialogState" class="custom-overlay">
+</div>
+<!-- class="upper_slider" -->
+<div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
+    <ng-template #dynamicUpper></ng-template>
+</div>
+<div [@openClose]="currentState" class="right_sidenav">
+    <ng-template #dynamic></ng-template>
+</div>
+<!--<app-dialog-container [parentComponentName]="'leftSideBar'"></app-dialog-container>-->

@@ -5,7 +5,8 @@
                 <div class="col-md-9">
                     <p class="m-0 roboto text-custom">Transaction platform</p>
                     <div *ngIf="showPlatform == false">
-                        <h5 class="m-0">{{(selectedPlatform =='2')?'BSE':(selectedPlatform =='1')?'NSE':'NSE'}} NMF II</h5>
+                        <h5 class="m-0">{{(selectedPlatform =='2')?'BSE':(selectedPlatform =='1')?'NSE':'NSE'}} NMF II
+                        </h5>
                     </div>
                     <mat-select *ngIf="showPlatform == true" class="form-control"
                         (selectionChange)="setPlatform($event)">
@@ -20,11 +21,18 @@
             <div class="row  pt-16 pb-16">
                 <div class="col-md-9">
                     <p class="m-0 roboto text-custom">Investor details</p>
-                    <h5 class="m-0">Rahul Jain</h5>
-                    <h5 class="m-0"> IIN 5011102595 (Joint)</h5>
+                    <h5 class="m-0">{{(!transactionSummary)? '-': transactionSummary.selectedFamilyMember}}</h5>
+                    <div *ngIf="showInvestor == false">
+                        <h5 class="m-0"> IIN {{selectedInvestor}} (Joint)</h5>
+                    </div>
+                    <mat-select *ngIf="showInvestor == true" class="form-control"
+                        (selectionChange)="setInvestor($event)">
+                        <mat-option *ngFor="let iin of investorList" [value]="iin.iin">{{iin.iin}}</mat-option>
+                    </mat-select>
                 </div>
                 <div class="col-md-2">
-                    <button mat-stroked-button class="primary-sm">Edit</button>
+                    <!-- <button mat-stroked-button class="primary-sm" *ngIf="investorList.length > 1"
+                        (click)="showInvestor = true">Edit</button> -->
                 </div>
             </div>
             <div class="row  pt-16 pb-16">
@@ -41,8 +49,8 @@
             <div class="row  pt-16 pb-16">
                 <div class="col-md-12 p-0">
                     <p class="m-0 roboto text-custom">Scheme, folio and amount</p>
-                    <h5 class="m-0"><span class="f-500">Scheme:</span> Axis Liquid Fund -Regular Plan -
-                        Weekly Dividend Option
+                    <h5 class="m-0"><span class="f-500">Scheme:</span>
+                        {{(transactionSummary==undefined)?'':transactionSummary.schemeName}}
                     </h5>
                     <h5 class="m-0"> <span class="f-500">Folio:</span> 91032325824</h5>
                     <h5 class="m-0"> <span class="f-500">Amount:</span> ₹5,00,000/Lumpsum</h5>
@@ -57,13 +65,13 @@
                     <button mat-stroked-button class="primary-sm">Edit</button>
                 </div>
             </div>
-            <div class="row  pt-16 pb-16">
+            <div class="row  pt-16 pb-16" *ngIf="platformType == 1">
                 <div class="col-md-9">
                     <p class="m-0 roboto text-custom">Mode of payment</p>
                     <h5 class="m-0">Net banking</h5>
                 </div>
             </div>
-            <div class="row  pt-16 pb-16">
+            <div class="row  pt-16 pb-16" *ngIf="platformType == 1">
                 <div class="col-md-9">
                     <p class="m-0 roboto text-custom">Bank A/c details</p>
                     <h5 class="m-0">ICICI Bank</h5>
