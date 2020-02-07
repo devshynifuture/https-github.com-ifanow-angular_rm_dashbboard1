@@ -1,70 +1,35 @@
 <div id="ui-subscriptions">
-  <div class="sub-header-fix">
-    <div class="bg-white">
-      <!-- <h1 class="cusotm-haeding-main">Subscriptions</h1> -->
+  <div class="row">
+    <div class="col-md-2">
+      <h3 class="m-0 pt-16">Subscriptions</h3>
+    </div>
+    <div class="col-md-10 p-0">
+      <div class="subnav-fixed">
+        <nav (selectedTabChange)="tabClick($event)" mat-tab-nav-bar class="subnav-fixed">
+          <a (click)="value=1" [ngClass]="_value == 1 ? 'active': ''" [routerLink]="'./dashboard'" mat-tab-link
+            routerLinkActive="active">DASHBOARD</a>
+          <a (click)="value=2" [ngClass]="_value == 2 ? 'active': ''" [routerLink]="'./clients'" mat-tab-link
+            routerLinkActive="active">CLIENTS</a>
+          <a (click)="value=3" [ngClass]="_value == 3 ? 'active': ''" [routerLink]="'./subscriptions'" mat-tab-link
+            routerLinkActive="active">SUBSCRIPTIONS</a>
+          <a (click)="value=4" [ngClass]="_value == 4 ? 'active': ''" [routerLink]="'./quotations'" mat-tab-link
+            routerLinkActive="active">QUOTATIONS</a>
+          <a (click)="value=5" [ngClass]="_value == 5 ? 'active': ''" [routerLink]="'./invoices'" mat-tab-link
+            routerLinkActive="active">INVOICES</a>
+          <a (click)="value=6" [ngClass]="_value == 6 ? 'active': ''" [routerLink]="'./documents'" mat-tab-link
+            routerLinkActive="active">DOCUMENTS</a>
+          <a (click)="value=7" [ngClass]="_value == 7 ? 'active': ''" [routerLink]="['./settings',label]"
+            [state]="{ example: 0 }" mat-tab-link routerLinkActive="active">SETTINGS</a>
+        </nav>
+      </div>
 
-      <nav (selectedTabChange)="tabClick($event)" class="text-right" id="ui-customer-secondhead" mat-align-tabs="end"
-        mat-tab-nav-bar>
-        <a (click)="value=1" [ngClass]="_value == 1 ? 'active': ''" [routerLink]="'./dashboard'" mat-tab-link
-          routerLinkActive="active">DASHBOARD</a>
-        <a (click)="value=2" [ngClass]="_value == 2 ? 'active': ''" [routerLink]="'./clients'" mat-tab-link
-          routerLinkActive="active">CLIENTS</a>
-        <a (click)="value=3" [ngClass]="_value == 3 ? 'active': ''" [routerLink]="'./subscriptions'" mat-tab-link
-          routerLinkActive="active">SUBSCRIPTIONS</a>
-        <a (click)="value=4" [ngClass]="_value == 4 ? 'active': ''" [routerLink]="'./quotations'" mat-tab-link
-          routerLinkActive="active">QUOTATIONS</a>
-        <!-- <a mat-tab-link [routerLink]="'expenses'">EXPENSES</a> -->
-        <a (click)="value=5" [ngClass]="_value == 5 ? 'active': ''" [routerLink]="'./invoices'" mat-tab-link
-          routerLinkActive="active">INVOICES</a>
-        <a (click)="value=6" [ngClass]="_value == 6 ? 'active': ''" [routerLink]="'./documents'" mat-tab-link
-          routerLinkActive="active">DOCUMENTS</a>
-        <a (click)="value=7" [ngClass]="isLinkActive()? 'active': ''" [routerLink]="['./settings',label]"
-          [state]="{ example: 0 }" mat-tab-link>SETTINGS</a>
-      </nav>
-
-      <router-outlet></router-outlet>
-      <!-- <mat-tab-group mat-align-tabs="end" animationDuration="0ms" [selectedIndex]="selected"
-               (selectedTabChange)="tabClick($event)">
-
-  <mat-tab label="DASHBOARD">
-    <app-dashboard-subscription></app-dashboard-subscription>
-  </mat-tab>
-  <mat-tab label="CLIENTS">
-    <ng-template matTabContent>
-      <app-client-subscription></app-client-subscription>
-    </ng-template>
-  </mat-tab>
-  <mat-tab label="SUBSCRIPTIONS">
-    <ng-template matTabContent>
-      <app-subscriptions-subscription></app-subscriptions-subscription>
-    </ng-template>
-  </mat-tab>
-  <mat-tab label="QUOTATIONS">
-    <ng-template matTabContent>
-      <app-quotations-subscription></app-quotations-subscription>
-    </ng-template>
-  </mat-tab>
-  <mat-tab label="INVOICES">
-    <ng-template matTabContent>
-      <app-invoices-subscription></app-invoices-subscription>
-    </ng-template>
-  </mat-tab>
-  <mat-tab label="DOCUMENTS">
-    <ng-template matTabContent>
-      <app-documents-subscriptions></app-documents-subscriptions>
-    </ng-template>
-  </mat-tab>
-  <mat-tab label="SETTINGS">
-    <ng-template matTabContent>
-      <app-settings-subscription [sIndex]="settingIndex"></app-settings-subscription>
-    </ng-template>
-  </mat-tab>
-</mat-tab-group> -->
-      <!-- </div>
-</div> -->
     </div>
   </div>
 </div>
-<!--<div *ngIf="isOverlayVisible" class="custom-overlay">-->
 
-<!--</div>-->
+
+<div class="row">
+  <div class="col-md-12 p-0">
+    <router-outlet></router-outlet>
+  </div>
+</div>

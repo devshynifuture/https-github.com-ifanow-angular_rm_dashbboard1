@@ -13,7 +13,6 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { CashflowUpperSliderComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-upper-slider.component';
 import { CashflowAddComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-add/cashflow-add.component';
-import { CashflowUpperIncomeExpenseComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-upper-income-expense/cashflow-upper-income-expense.component';
 import { CashflowUpperAssetComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-upper-asset/cashflow-upper-asset.component';
 import { CashflowUpperInsuranceComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-upper-insurance/cashflow-upper-insurance.component';
 import { CashflowUpperSurplusComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-upper-surplus/cashflow-upper-surplus.component';
@@ -32,6 +31,9 @@ import { EditApplicableTaxComponent } from './texes-plan/edit-applicable-tax/edi
 import { AddInsurancePlanningComponent } from './insurance-plan/add-insurance-planning/add-insurance-planning.component';
 import { DeploymentDetailsComponent } from './deployments-plan/deployment-details/deployment-details.component';
 import { SelectAssetClassComponent } from './deployments-plan/select-asset-class/select-asset-class.component';
+import { CashflowUpperIncomeComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-upper-income/cashflow-upper-income.component';
+import { CashflowUpperExpenseComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-upper-expense/cashflow-upper-expense.component';
+import { CashflowUpperLiabilitiesComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-upper-liabilities/cashflow-upper-liabilities.component';
 
 export const componentList = [
   PreferencesComponent,
@@ -39,7 +41,6 @@ export const componentList = [
   AddProfilePlanComponent,
   CashflowUpperSliderComponent,
   CashflowAddComponent,
-  CashflowUpperIncomeExpenseComponent,
   CashflowUpperAssetComponent,
   CashflowUpperInsuranceComponent,
   CashflowUpperSurplusComponent,
@@ -56,7 +57,10 @@ export const componentList = [
   EditApplicableTaxComponent,
   AddInsurancePlanningComponent,
   DeploymentDetailsComponent,
-  SelectAssetClassComponent
+  SelectAssetClassComponent,
+  CashflowUpperIncomeComponent,
+  CashflowUpperExpenseComponent,
+  CashflowUpperLiabilitiesComponent,
 ];
 // import { AddPlaninsuranceComponent } from './insurance-plan/add-planinsurance/add-planinsurance.component';
 

@@ -25,4 +25,10 @@ export class OnlineTransactionService {
   getSchemeDetails(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_SCHEME_DETAILS, data, 1);
   }
+  getFamilyMemberList(data){
+    return this.http.get(apiConfig.TRANSACT + appConfig.GET_FAMILY_MEMBER, data);
+  }
+  getDefaultDetails(data){
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_DEFAULT_DETAILS, data,1);
+  }
 }

@@ -28,6 +28,10 @@ import { CashflowPlanExpenseComponent } from './cashflows-plan/cashflow-plan-exp
 import { CashflowPlanLiabilitiesComponent } from './cashflows-plan/cashflow-plan-liabilities/cashflow-plan-liabilities.component';
 import { CashflowPlanAssetsComponent } from './cashflows-plan/cashflow-plan-assets/cashflow-plan-assets.component';
 import { CashflowPlanInsuranceComponent } from './cashflows-plan/cashflow-plan-insurance/cashflow-plan-insurance.component';
+import { CashflowPlanSurplusComponent } from './cashflows-plan/cashflow-plan-surplus/cashflow-plan-surplus.component';
+import { CashflowUpperIncomeComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-upper-income/cashflow-upper-income.component';
+import { CashflowUpperExpenseComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-upper-expense/cashflow-upper-expense.component';
+import { CashflowUpperLiabilitiesComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-upper-liabilities/cashflow-upper-liabilities.component';
 // import { AddInsurancePlanningComponent } from './insurance-plan/add-insurance-planning/add-insurance-planning.component';
 // import { EditApplicableTaxComponent } from './texes-plan/edit-applicable-tax/edit-applicable-tax.component';
 // import { SetupLumpsumDeploymentComponent } from './investments-plan/add-investment-plan/setup-lumpsum-deployment/setup-lumpsum-deployment.component';
@@ -68,6 +72,8 @@ import { CashflowPlanInsuranceComponent } from './cashflows-plan/cashflow-plan-i
     CashflowPlanLiabilitiesComponent,
     CashflowPlanAssetsComponent,
     CashflowPlanInsuranceComponent,
+    CashflowPlanSurplusComponent,
+
     // DeploymentDetailsComponent,
     // AddInsurancePlanningComponent,
     // EditApplicableTaxComponent,

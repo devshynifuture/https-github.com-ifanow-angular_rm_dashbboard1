@@ -50,7 +50,7 @@ export class AddFixedFeeComponent implements OnInit {
     Duration: [1],
     fees: [, [Validators.required]],
     billingNature: [1],
-    billEvery: [, [Validators.required]],
+    billEvery: ["1", [Validators.required]],
     billingMode: [1]
   });
   @Input() set data(data) {
@@ -72,7 +72,7 @@ export class AddFixedFeeComponent implements OnInit {
       Duration: ['1'],
       fees: [data, [Validators.required]],
       billingNature: ['1'],
-      billEvery: [data, [Validators.required]],
+      billEvery: ['1', [Validators.required]],
       billingMode: ['1']
     });
     this.getFormControl().serviceName.maxLength = 40;
@@ -108,13 +108,13 @@ export class AddFixedFeeComponent implements OnInit {
       this.fixedFeeData.controls.serviceName.setValue(data.serviceName);
       this.fixedFeeData.controls.code.setValue(data.serviceCode);
       this.fixedFeeData.controls.description.setValue(data.description);
-      this.fixedFeeData.controls.Duration.setValue(data.servicePricing.billingCycle);
+      this.fixedFeeData.controls.Duration.setValue(String(data.servicePricing.billingCycle));
       this.fixedFeeData.controls.fees.setValue(data.servicePricing.pricingList[0].pricing);
       this.fixedFeeData.controls.billingNature.setValue(String(data.servicePricing.billingNature));
       // this.fixedFeeData.controls.billingNature.setValue('2');
 
       this.fixedFeeData.controls.billingMode.setValue(String(data.servicePricing.billingMode));
-      this.fixedFeeData.controls.billEvery.setValue(data.servicePricing.billEvery);
+      this.fixedFeeData.controls.billEvery.setValue(String(data.servicePricing.billEvery));
 
       this.getFormControl().serviceName.maxLength = 40;
       this.getFormControl().code.maxLength = 10;

@@ -93,7 +93,7 @@ export class AddPpfComponent implements OnInit {
     this.ppfData = data;
     this.ppfSchemeForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
-      accountBalance: [data.accountBalance, [Validators.required, Validators.min(500)]],
+      accountBalance: [data.accountBalance, [Validators.required, Validators.min(500), Validators.max(150000)]],
       balanceAsOn: [new Date(data.balanceAsOn), [Validators.required]],
       commencementDate: [new Date(data.commencementDate), [Validators.required]],
       futureContribution: [data.futureApproxcontribution, [Validators.required]],

@@ -20,10 +20,14 @@ export class EnumServiceService {
     //   })
     // _.merge(this.globalEnumData, data);
     /*this.globalEnumData =*/
+    console.log(data, "check data variable fee 2");
+
     Object.assign(this.globalEnumData, data);
   }
 
   getOtherAssetData() {
+    console.log(this.globalEnumData.otherAssetTypes, "check data variable fee 1");
+    
     return this.globalEnumData.otherAssetTypes;
   }
 

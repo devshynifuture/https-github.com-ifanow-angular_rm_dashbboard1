@@ -1,4 +1,4 @@
-.fc-green{
+.fc-green {
     color: #02B875 !important
 }
 
@@ -6,6 +6,35 @@
     color: #FF6823 !important;
 }
 
-.fc-yellow{
+.fc-yellow {
     color: #FFC100 !important;
+}
+
+.ui-backoffice {
+    margin-top: 60px;
+    .sub-header-color {
+        box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2), 0px 1px 0px rgba(0, 0, 0, 0.12), 0px 3px 3px rgba(0, 0, 0, 0.14);
+        height: 64px;
+        width: 100%;
+        background: #ffffff;
+        display: flex;
+        align-items: center;
+        padding-left: 15px;
+        position: fixed;
+        top: 64px;
+        z-index: 100;
+        h1 {
+            font-family: "Roboto";
+            font-style: normal;
+            font-weight: normal;
+            font-size: 20px;
+            line-height: 23px;
+            letter-spacing: 0.2px;
+            margin: 0;
+        }
+    }
+}
+
+.marTop-94 {
+    margin-top: 94px !important;
 }

@@ -38,7 +38,6 @@ export class CashflowsPlanComponent implements OnInit {
   clientId = AuthService.getClientId()
 
   constructor(
-    private eventService: EventService,
     private cashflowService: CashFlowsPlanService,
     private datePipe: DatePipe
   ) { }
@@ -67,7 +66,7 @@ export class CashflowsPlanComponent implements OnInit {
   }
 
   getCashflowIncomeData() {
-    this.cashflowService.getCashflowIncomeValues({ advisorId: this.advisorId, clientId: this.clientId }).subscribe(res => {
+    this.cashflowService.getCashflowYearlyIncomeValues({ advisorId: this.advisorId, clientId: this.clientId }).subscribe(res => {
       console.log("value of cashflow income data, ", res);
       this.cashflowIncomeValue = res;
 
@@ -132,64 +131,8 @@ export class CashflowsPlanComponent implements OnInit {
 
   filterCashFlowTableUsing(flag: string): void {
     this.tableInUse = flag;
-
-    if (flag !== 'surplus') {
-      this.showSurplusTable = false;
-    }
-
-    switch (flag) {
-      case 'income':
-        this.listOfIncomeArray = [];
-        this.isLoading = true;
-        this.getCashflowIncomeData();
-        break;
-      case 'expenses':
-        this.listOfIncomeArray = [];
-        this.getCashflowExpenseData();
-        break;
-      case 'insurance': this.dataSource = ELEMENT_DATA2;
-        break;
-      case 'liabilities': this.getCashflowLiabilitiesData();
-        break;
-      case 'assets': this.dataSource = ELEMENT_DATA4;
-        break;
-      case 'commited-outflows': this.dataSource = ELEMENT_DATA5;
-        break;
-      case 'goals': this.dataSource = ELEMENT_DATA6;
-        break;
-      case 'surplus': this.showSurplusTable = true;
-        break;
-      default: this.dataSource = ELEMENT_DATA;
-    }
-
-    // this.dataSource =
-    // call api and consume data
-
-    // update table dataSource
-
   }
 
-  openUpperSlider(element) {
-    console.log(this.tableInUse);
-    console.log(element);
-
-    const fragmentData = {
-      flag: 'openCashFlowUpper',
-      id: 1,
-      data: { ...element, tableInUse: this.tableInUse },
-      direction: 'top',
-      componentName: CashflowUpperSliderComponent,
-      state: 'open'
-    };
-    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-      upperSliderData => {
-        if (UtilService.isDialogClose(upperSliderData)) {
-          // this.getClientSubscriptionList();
-          subscription.unsubscribe();
-        }
-      }
-    );
-  }
 
   cashFlow(id) {
     chart();

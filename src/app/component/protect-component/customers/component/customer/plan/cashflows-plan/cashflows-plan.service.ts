@@ -8,6 +8,7 @@ import { Injectable } from '@angular/core';
 })
 export class CashFlowsPlanService {
     constructor(private http: HttpService) { }
+
     // income api calls 
     cashFlowAddIncome(data) {
         return this.http.post(apiConfig.MAIN_URL + appConfig.CASHFLOW_ADD_INCOME, data);
@@ -25,8 +26,12 @@ export class CashFlowsPlanService {
         return this.http.put(apiConfig.MAIN_URL + appConfig.CASHFLOW_EDIT_MONTHLY_INCOME, data);
     }
 
-    getCashflowIncomeValues(data) {
+    getCashflowYearlyIncomeValues(data) {
         return this.http.get(apiConfig.MAIN_URL + appConfig.CASHFLOW_GET_INCOME, data);
+    }
+
+    getCashflowMonthlyIncomeValues(data) {
+        return this.http.get('', data);
     }
 
     // expenses api calls 
@@ -34,10 +39,26 @@ export class CashFlowsPlanService {
         return this.http.get(apiConfig.MAIN_URL + appConfig.CASHFLOW_GET_YEARLY_EXPENSE, data)
     }
 
-    getMonthlyExpensesValues(data) {
+    getCashflowMonthlyExpensesValues(data) {
         return this.http.get(apiConfig.MAIN_URL + appConfig.CASHFLOW_GET_MONTHLY_EXPENSE, data);
     }
 
+    getCashflowYearlyAssetsValue(data) {
+        return this.http.get('', data);
+    }
+
+    getCashflowMonthlyAssetsValues(data) {
+        return this.http.get('', data);
+    }
+
+    getCashflowYearlyInsuranceValues(data) {
+        return this.http.get('', data)
+    }
+
+    getCashflowMonthlyInsuranceValues(data) {
+        return this.http.get('', data);
+    }
+    // cashflow expenses  
     cashflowAddExpenses(data) {
         return this.http.post(apiConfig.MAIN_URL + appConfig.CASHFLOW_ADD_EXPENSES, data);
     }
@@ -59,7 +80,7 @@ export class CashFlowsPlanService {
         return this.http.get(apiConfig.MAIN_URL + appConfig.CASHFLOW_GET_YEARLY_LIABILITIES, data);
     }
 
-    getCashflowMonthlyLiabilities(data) {
+    getCashflowMonthlyLiabilitiesValues(data) {
         return this.http.get(apiConfig.MAIN_URL + appConfig.CASHFLOW_GET_MONTHLY_LIABILITIES, data);
     }
 
@@ -73,6 +94,11 @@ export class CashFlowsPlanService {
 
     cashflowDeleteLiabilities(data) {
         return this.http.put(apiConfig.MAIN_URL + appConfig.CASHFLOW_DELETE_LIABILITIES, data);
+    }
+
+    // surplus calls
+    getCashflowYearlySurplusValues(data) {
+        return this.http.get('', data);
     }
 
     getFamilyMemberData(data) {

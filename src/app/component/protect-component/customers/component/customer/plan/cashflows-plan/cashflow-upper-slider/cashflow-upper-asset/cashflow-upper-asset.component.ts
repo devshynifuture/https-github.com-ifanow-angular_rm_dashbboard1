@@ -1,5 +1,7 @@
+import { AuthService } from './../../../../../../../../../auth-service/authService';
 import { Component, OnInit, Input } from '@angular/core';
 import { UpperTableBox, Group } from './../../cashflow.interface';
+import { CashFlowsPlanService } from '../../cashflows-plan.service';
 
 @Component({
   selector: 'app-cashflow-upper-asset',
@@ -8,16 +10,14 @@ import { UpperTableBox, Group } from './../../cashflow.interface';
 })
 export class CashflowUpperAssetComponent implements OnInit {
 
-  constructor() { }
+  constructor(private cashflowService: CashFlowsPlanService) { }
   dataSource = ELEMENT_DATA2;
-
   displayedColumns: string[] = ['description', 'month1', 'month2', 'month3', 'month4', 'month5', 'month6', 'month7', 'month8', 'month9', 'month10', 'month11', 'month12'];
-
   @Input() data;
-
   year;
-
   cashflowCategory;
+  advisorId = AuthService.getAdvisorId();
+  clientId = AuthService.getClientId();
 
   isGroup(index, item): boolean {
     return item.groupName;
@@ -31,6 +31,19 @@ export class CashflowUpperAssetComponent implements OnInit {
     this.year = this.data.year;
     this.cashflowCategory = this.data.tableInUse;
     console.log("ASSETS:::::::::", this.data);
+
+    // api not created
+    // this.getCashflowMonthlyAssetsData()
+  }
+
+  getCashflowMonthlyAssetsData() {
+    this.cashflowService
+      .getCashflowMonthlyAssetsValues({ advisorId: this.advisorId, clientId: this.clientId })
+      .subscribe(res => {
+        console.log(res);
+      }, err => {
+        console.error(err);
+      })
   }
 
 }
