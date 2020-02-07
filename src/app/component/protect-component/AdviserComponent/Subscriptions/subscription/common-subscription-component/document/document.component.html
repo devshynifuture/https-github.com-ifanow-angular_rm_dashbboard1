@@ -7,7 +7,7 @@
             <div class="col-md-8 right text-right">
                 <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveMappingDocumentToPlans()">Save
                 </button> -->
-                <app-progress-button (btnClick)="saveMappingDocumentToPlans()" [options]="barButtonOptions" >
+                <app-progress-button (btnClick)="saveMappingDocumentToPlans()" [options]="barButtonOptions">
                 </app-progress-button>
             </div>
         </div>
@@ -111,7 +111,7 @@
             <div class="col-md-6 text-right">
                 <!-- <button type="button" mat-stroked-button class="btn-bottom br-0" (click)="mapDocumentToService()">Save
                 </button> -->
-                <app-progress-button (btnClick)="mapDocumentToService()" [options]="barButtonOptions" >
+                <app-progress-button (btnClick)="mapDocumentToService()" [options]="barButtonOptions">
                 </app-progress-button>
             </div>
         </div>
@@ -163,7 +163,7 @@
                                     </mat-card-header>
                                 </div>
                             </div>
-                            <mat-card-actions class="mb-0 p-0 bg-grey lter">
+                            <mat-card-actions class="mb-0 p-0 bg-grey lter ml-0 mr-0">
                                 <div class="row">
                                     <div class="col-md-10 titleClass relClass">
                                         <div class="bar" [ngClass]="{'height24': isLoading}">
@@ -183,7 +183,7 @@
                     </div>
                 </div>
             </div>
-    </div>
+        </div>
     </div>
 </div>
 <div *ngIf="componentFlag=='clientDocuments'">
@@ -237,7 +237,7 @@
                                     </mat-menu>
                                 </div>
 
-                                <div class="col-md-9 ml-32 p-0" >
+                                <div class="col-md-9 ml-32 p-0">
                                     <p class="m-0 text-black text-left pt-12" *ngIf="dataCount == 1">{{dataCount}}
                                         document selected
                                     </p>
@@ -366,8 +366,7 @@
                                                 (click)="openEsignDocument(element)">Email
                                                 with esign
                                                 request</a>
-                                                <a mat-menu-item 
-                                                (click)="openSendEmail()">Email only</a>
+                                            <a mat-menu-item (click)="openSendEmail()">Email only</a>
                                         </mat-menu>
                                     </div>
                                 </td>

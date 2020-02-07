@@ -1,7 +1,7 @@
 <div id="ui-document-settings">
 
     <div class="bg-white pb-36 ">
-        <div *ngIf="documentSettingData">
+        <div *ngIf="documentSettingData.length > 0">
             <div class="wrapper-20 pt-0 pr-0">
                 <div class="row">
                     <div class="col-md-8 p-0">
@@ -13,11 +13,11 @@
                     </div>
                 </div>
                 <div class="row skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
-                    <div class="col-md-4 pr-20 pb-20 pl-0">
+                    <div class="col-md-4 pr-20 pb-20 pl-0" (click)="openFragment('documents',null)">
                         <mat-card class="example-card height-484 bg-grey lter b-a">
                             <mat-card-content>
                                 <p class="text-center">
-                                    <i class="material-icons icon-center" (click)="openFragment('documents',null)">
+                                    <i class="material-icons icon-center" >
                                         add
                                     </i>
                                 </p>
@@ -67,7 +67,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" *ngIf="documentSettingData==undefined">
+        <div class="row" *ngIf="documentSettingData.length <= 0">
             <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
                 <img class="width200" src="assets/images/svg/add-documents-img.svg">
                 <p class="f-22 f-600 pt-28"> Create Documents </p>

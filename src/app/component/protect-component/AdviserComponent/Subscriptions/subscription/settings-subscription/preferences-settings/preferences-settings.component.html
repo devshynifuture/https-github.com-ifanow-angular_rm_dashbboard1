@@ -1,39 +1,48 @@
 <div id="ui-perferences" class="bg-white">
     <div class="wrapper-20">
 
-        <div class="row pb-20" *ngIf="billerProfileData">
-            <div class="col-md-12 right text-right pr-0">
-                <button *ngIf="viewMode =='tab1'" (click)="Open('Add','addbillerProfile')" mat-stroked-button class="btn-primary addon">ADD
-                    NEW
-                </button>
-            </div>
-        </div>
+
 
         <div class="row">
             <div class="col-md-2 p-0 pt-1 preferencesMenuList">
                 <ul class="vertical-menu">
-                    <li (click)="viewMode ='tab1'" [ngClass]="{'b-outline':viewMode =='tab1','':viewMode =='tab1'}" class="c-p">
+                    <li (click)="viewMode ='tab1'" [ngClass]="{'b-outline':viewMode =='tab1','':viewMode =='tab1'}"
+                        class="c-p">
                         Biller profile
                     </li>
-                    <li (click)="viewMode ='tab2';getPrefixData(1)" [ngClass]="{'b-outline':viewMode =='tab2','':viewMode =='tab2'}" class="c-p">
+                    <li (click)="viewMode ='tab2';getPrefixData(1)"
+                        [ngClass]="{'b-outline':viewMode =='tab2','':viewMode =='tab2'}" class="c-p">
                         Invoice
                     </li>
-                    <li (click)="viewMode ='tab3';getPrefixData(2)" [ngClass]="{'b-outline':viewMode =='tab3','':viewMode =='tab3'}" class="c-p">
+                    <li (click)="viewMode ='tab3';getPrefixData(2)"
+                        [ngClass]="{'b-outline':viewMode =='tab3','':viewMode =='tab3'}" class="c-p">
                         Quotations
                     </li>
-                    <li (click)="viewMode ='tab4';getPrefixData(3)" [ngClass]="{'b-outline':viewMode =='tab4','':viewMode =='tab4'}" class=" c-p">
+                    <li (click)="viewMode ='tab4';getPrefixData(3)"
+                        [ngClass]="{'b-outline':viewMode =='tab4','':viewMode =='tab4'}" class=" c-p">
                         Subscriptions
                     </li>
-                    <li (click)="viewMode ='tab5'" [ngClass]="{'b-outline':viewMode =='tab5','':viewMode =='tab5'}" class=" c-p">
+                    <li (click)="viewMode ='tab5'" [ngClass]="{'b-outline':viewMode =='tab5','':viewMode =='tab5'}"
+                        class=" c-p">
                         Email settings
                     </li>
                 </ul>
 
             </div>
             <div class="col-md-10 b-a p-0 min-height" [ngSwitch]="viewMode">
+                <div class="row pt-20 pr-16" *ngIf="billerProfileData">
+                    <div class="col-md-12 right text-right pr-0">
+                        <button *ngIf="viewMode =='tab1'" (click)="Open('Add','addbillerProfile')" mat-stroked-button
+                            class="btn-primary addon">ADD
+                            NEW
+                        </button>
+                    </div>
+                </div>
                 <div *ngSwitchCase="'tab1'">
                     <div *ngIf="billerProfileData">
-                        <div class="wrapper-16 pt-20 skeletonAnimation" *ngFor="let singleBillerProfile of billerProfileData" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                        <div class="wrapper-16 pt-20 skeletonAnimation"
+                            *ngFor="let singleBillerProfile of billerProfileData" appSkeletonLoading
+                            [appSkeletonLoading]="isLoading">
                             <div class="row b-a bg-grey lter pt-20 pb-16">
                                 <div class="col-md-9 relClass">
                                     <div class="bar">
@@ -42,16 +51,20 @@
                                 </div>
 
                                 <div class="col-md-3 d-flex justify-content-end align-items-center">
-                                    <button mat-stroked-button *ngIf="singleBillerProfile.isPrimary == true" class="text-primary br-0  ml-12"> PRIMARY </button>
-                                    <i class="material-icons text-right right text-custom f-28 c-p" [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
+                                    <button mat-stroked-button *ngIf="singleBillerProfile.isPrimary == true"
+                                        class="text-primary br-0  ml-12"> PRIMARY </button>
+                                    <i class="material-icons text-right right text-custom f-28 c-p"
+                                        [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
                                         more_vert
                                     </i>
                                     <mat-menu #menu="matMenu">
-                                        <a mat-menu-item *ngIf="billerProfileData.length > 1" (click)="getBillerPrimary(singleBillerProfile)">Set as
+                                        <a mat-menu-item *ngIf="billerProfileData.length > 1"
+                                            (click)="getBillerPrimary(singleBillerProfile)">Set as
                                             primary</a>
                                         <a mat-menu-item (click)="Open(singleBillerProfile,'editbillerProfile')">Edit
                                             biller profile</a>
-                                        <a mat-menu-item *ngIf="billerProfileData.length > 1" class="bt-1" (click)="deleteModal(singleBillerProfile)">Delete
+                                        <a mat-menu-item *ngIf="billerProfileData.length > 1" class="bt-1"
+                                            (click)="deleteModal(singleBillerProfile)">Delete
                                             biller
                                             profile</a>
                                     </mat-menu>
@@ -77,13 +90,13 @@
                                         <hr>
                                         <div class="wrapper-16">
                                             <div class="row pb-20">
-                                                <div class="col-md-7 p-0 relClass">
+                                                <div class="col-md-12 p-0 relClass">
                                                     <p class="text-uppercase f-12">Name on bank A/c</p>
                                                     <div class="bar">
                                                         <h5 class="height20">{{singleBillerProfile.nameAsPerBank}}</h5>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-5 p-0 relClass">
+                                                <div class="col-md-12 p-0 relClass">
                                                     <p class="text-uppercase f-12">Account No.</p>
                                                     <div class="bar">
                                                         <h5 class="height20">{{singleBillerProfile.acNumber}}</h5>
@@ -91,7 +104,7 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-6 p-0 relClass">
+                                                <div class="col-md-12 p-0 relClass">
 
                                                     <p class="text-uppercase f-12">Bank name</p>
                                                     <div class="bar">
@@ -150,9 +163,10 @@
                     <!-- <div *ngIf="showLoader">
                         <mat-spinner class="loader" [diameter]="30"></mat-spinner>
                     </div> -->
-                    <div [formGroup]="prefixData" class="wrapper-44 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                    <div [formGroup]="prefixData" class="wrapper-44 skeletonAnimation" appSkeletonLoading
+                        [appSkeletonLoading]="isLoading">
                         <div class="row pl-44">
-                            <div class="col-md-3 pr-0 mr-40">
+                            <div class="col-md-4 pr-0 mr-40">
                                 <h5 class="m-0 mb-5 f-14 text-black">Invoice prefix</h5>
                                 <div class="form-group relClass">
                                     <mat-form-field *ngIf="!isLoading">
@@ -162,7 +176,7 @@
                                     <div class="bar height23" *ngIf="isLoading"> </div>
                                 </div>
                             </div>
-                            <div class="col-md-3 pr-0 ">
+                            <div class="col-md-4 pr-0 ">
                                 <h5 class="m-0 mb-5 f-14 text-black">Invoice next number</h5>
                                 <div class="form-group relClass">
                                     <mat-form-field *ngIf="!isLoading">
@@ -175,9 +189,11 @@
                             <div class="col-md-12 pt-44 ">
                                 <!-- <button mat-stroked-button class="btn-primary br-0 mr-8" (click)="savePrefix(1)">SAVE
                                 </button> -->
-                                <app-progress-button class="btn-primary br-0 mr-8" (btnClick)="savePrefix(1)" [options]="barButtonOptions">
+                                <app-progress-button class="btn-primary br-0 mr-8" (btnClick)="savePrefix(1)"
+                                    [options]="barButtonOptions">
                                 </app-progress-button>
-                                <button mat-stroked-button class="text-primary br-0" (click)="resetPrefix()">CANCEL</button>
+                                <button mat-stroked-button class="text-primary br-0"
+                                    (click)="resetPrefix()">CANCEL</button>
                             </div>
                         </div>
                     </div>
@@ -186,9 +202,10 @@
                     <!-- <div *ngIf="showLoader">
                         <mat-spinner class="loader" [diameter]="30"></mat-spinner>
                     </div> -->
-                    <div [formGroup]="prefixData" class="wrapper-44 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                    <div [formGroup]="prefixData" class="wrapper-44 skeletonAnimation" appSkeletonLoading
+                        [appSkeletonLoading]="isLoading">
                         <div class="row pl-44">
-                            <div class="col-md-3 pr-0 mr-40">
+                            <div class="col-md-4 pr-0 mr-40">
                                 <h5 class="m-0 mb-5 f-14 text-black">Quotation prefix</h5>
                                 <div class="form-group relClass">
                                     <mat-form-field *ngIf="!isLoading">
@@ -198,7 +215,7 @@
                                     <div class="bar height23" *ngIf="isLoading"> </div>
                                 </div>
                             </div>
-                            <div class="col-md-3 pr-0 ">
+                            <div class="col-md-4 pr-0 ">
                                 <h5 class="m-0 mb-5 f-14 text-black">Quotation next number</h5>
                                 <div class="form-group relClass">
                                     <mat-form-field *ngIf="!isLoading">
@@ -211,19 +228,22 @@
                             <div class="col-md-12 pt-44 ">
                                 <!-- <button mat-stroked-button class="btn-primary br-0 mr-8" (click)="savePrefix(1)">SAVE
                                 </button> -->
-                                <app-progress-button class="btn-primary br-0 mr-8" (btnClick)="savePrefix(2)" [options]="barButtonOptions">
+                                <app-progress-button class="btn-primary br-0 mr-8" (btnClick)="savePrefix(2)"
+                                    [options]="barButtonOptions">
                                 </app-progress-button>
-                                <button mat-stroked-button class="text-primary br-0" (click)="resetPrefix()">CANCEL</button>
+                                <button mat-stroked-button class="text-primary br-0"
+                                    (click)="resetPrefix()">CANCEL</button>
                             </div>
                         </div>
 
                     </div>
                 </div>
                 <div *ngSwitchCase="'tab4'">
-                    <div [formGroup]="prefixData" class="wrapper-44 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                    <div [formGroup]="prefixData" class="wrapper-44 skeletonAnimation" appSkeletonLoading
+                        [appSkeletonLoading]="isLoading">
 
                         <div class="row pl-44">
-                            <div class="col-md-3 pr-0 mr-40">
+                            <div class="col-md-4 pr-0 mr-40">
                                 <h5 class="m-0 mb-5 f-14 text-black">Subscription prefix</h5>
                                 <div class="form-group relClass">
                                     <mat-form-field *ngIf="!isLoading">
@@ -233,7 +253,7 @@
                                     <div class="bar height23" *ngIf="isLoading"> </div>
                                 </div>
                             </div>
-                            <div class="col-md-3 pr-0 ">
+                            <div class="col-md-4 pr-0 ">
                                 <h5 class="m-0 mb-5 f-14 text-black">Subscription next number</h5>
                                 <div class="form-group relClass">
                                     <mat-form-field *ngIf="!isLoading">
@@ -246,9 +266,11 @@
                             <div class="col-md-12 pt-44 ">
                                 <!-- <button mat-stroked-button class="btn-primary br-0 mr-8" (click)="savePrefix(1)">SAVE
                                 </button> -->
-                                <app-progress-button class="btn-primary br-0 mr-8" (btnClick)="savePrefix(3)" [options]="barButtonOptions">
+                                <app-progress-button class="btn-primary br-0 mr-8" (btnClick)="savePrefix(3)"
+                                    [options]="barButtonOptions">
                                 </app-progress-button>
-                                <button mat-stroked-button class="text-primary br-0" (click)="resetPrefix()">CANCEL</button>
+                                <button mat-stroked-button class="text-primary br-0"
+                                    (click)="resetPrefix()">CANCEL</button>
                             </div>
                         </div>
 
@@ -258,7 +280,8 @@
                     <div class="wrapper-12 pb-0">
                         <div class="row">
                             <div class="col-md-5">
-                                <h4>Email configuration <span matBadge="4" matBadgeOverlap="false" class="text-danger ba-danger f-10">NOT CONFIGURED</span></h4>
+                                <h4>Email configuration <span matBadge="4" matBadgeOverlap="false"
+                                        class="text-danger ba-danger f-10">NOT CONFIGURED</span></h4>
                                 <div class="form-group">
                                     <input type="text" class="form-control br-0">
                                 </div>
@@ -343,7 +366,8 @@
                                         <div class="wrapper-20 pl-24">
                                             <div class="row">
                                                 <div class="col-md-12 p-0">
-                                                    <p>This template is used while sending documents to your clients with eSign request.</p>
+                                                    <p>This template is used while sending documents to your clients
+                                                        with eSign request.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -368,7 +392,8 @@
                                         <div class="wrapper-20 pl-24">
                                             <div class="row">
                                                 <div class="col-md-12 p-0">
-                                                    <p>This template is used while sending documents to your clients without eSign.
+                                                    <p>This template is used while sending documents to your clients
+                                                        without eSign.
                                                     </p>
                                                 </div>
                                             </div>

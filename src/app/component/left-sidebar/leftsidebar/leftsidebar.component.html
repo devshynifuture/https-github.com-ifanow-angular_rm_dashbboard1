@@ -1,7 +1,7 @@
 <mat-sidenav-container (window:resize)="onResize()" class="sidenav-container">
   <mat-sidenav #sidenav mode="side" opened role="navigation">
     <mat-nav-list class="width-230 pt-0" id="d">
-      <mat-toolbar *ngIf="showTabs && userInfo" class="bg-white p-0 logoWrap">
+      <mat-toolbar *ngIf="showTabs && userInfo" class="bg-white p-0 h-60 logoWrap">
         <img class="logo" src="{{userInfo.profilePic}}">
         <h5>{{logoText | uppercase}}</h5>
       </mat-toolbar>

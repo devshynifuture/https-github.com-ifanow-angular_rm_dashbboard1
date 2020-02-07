@@ -77,7 +77,7 @@ export class AddSsyComponent implements OnInit {
     this.ssySchemeForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
       guardian: [data.guardianName, [Validators.required]],
-      accBalance: [data.accountBalance, [Validators.required]],
+      accBalance: [data.accountBalance, [Validators.required, Validators.min(250), Validators.max(150000)]],
       balanceAsOn: [new Date(data.balanceAsOn), [Validators.required]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
       futureAppx: [data.futureApproxContribution, [Validators.required]],
