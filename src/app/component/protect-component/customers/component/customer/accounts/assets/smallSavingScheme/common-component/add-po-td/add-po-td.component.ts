@@ -74,7 +74,7 @@ export class AddPoTdComponent implements OnInit {
       commDate: [new Date(data.commencementDate), [Validators.required]],
       description: [data.description, [Validators.required]],
 
-      tenure: [data.tenure + "", [Validators.required]],
+      tenure: [(data.tenure) ? data.tenure : '5', [Validators.required]],
       ownershipType: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]]
     })
     this.POTDOptionalForm = this.fb.group({
