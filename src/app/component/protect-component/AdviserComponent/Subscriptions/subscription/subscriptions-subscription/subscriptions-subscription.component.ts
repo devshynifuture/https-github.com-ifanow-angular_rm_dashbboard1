@@ -97,8 +97,8 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   isFilter: boolean = false;
   // DataToSend;
   scrollCallData = true;
-  isLoading = false;
-  isFirstCall=true
+  isLoading = true;
+  isFirstCall = true
   chips = [
     { name: 'LIVE', value: 2 },
     { name: 'FUTURE', value: 3 },
@@ -161,14 +161,14 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     else {
       (this.utilservice.checkSubscriptionastepData(3) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}]
     }
-    this.getClientSubData(this.scrollLoad,this.isFirstCall);
+    this.getClientSubData(this.scrollLoad, this.isFirstCall);
     console.log('upperData', this.upperData);
 
   }
 
-  getClientSubData(boolean,firstLoad) {
+  getClientSubData(boolean, firstLoad) {
     this.dataSource.data = [{}, {}, {}]
-    this.getSummaryDataAdvisor(boolean,firstLoad).subscribe(
+    this.getSummaryDataAdvisor(boolean, firstLoad).subscribe(
       data => {
         this.getData = data;
         if (data != undefined) {
@@ -208,15 +208,15 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     fragmentData.data = {
       positiveMethod: (barButtonOption: MatProgressButtonOptions) => {
         barButtonOption.active = true;
-        this.isFirstCall=false;
-        this.getSummaryDataAdvisor(false,this.isFirstCall).subscribe(
+        this.isFirstCall = false;
+        this.getSummaryDataAdvisor(false, this.isFirstCall).subscribe(
           data => {
             barButtonOption.active = false;
             this.getData = data;
             if (data != undefined) {
-              if(this.isFirstCall==false){
-                this.lastDataId=0;
-              }else{
+              if (this.isFirstCall == false) {
+                this.lastDataId = 0;
+              } else {
                 this.lastDataId = data[data.length - 1].id;
               }
               // obj.offset = this.lastDataId;
@@ -273,7 +273,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
       if (this.statusIdList.length <= 0) {
 
-        this.getClientSubData(scrollLoader,false);
+        this.getClientSubData(scrollLoader, false);
       } else {
         this.callFilter(scrollLoader);
       }
@@ -282,9 +282,9 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   }
 
 
-  getSummaryDataAdvisor(scrollLoader,isFirstCall) {
-    if(isFirstCall!=true){
-      this.lastDataId=0;
+  getSummaryDataAdvisor(scrollLoader, isFirstCall) {
+    if (isFirstCall != true) {
+      this.lastDataId = 0;
     }
     const obj = {
       advisorId: this.advisorId,
@@ -300,7 +300,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       this.isLoading = true;
     }
 
-   return this.subService.getSubSummary(obj);
+    return this.subService.getSubSummary(obj);
   }
 
 
@@ -371,8 +371,8 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       state: 'open',
       componentName: component
     };
-    console.log(fragmentData,  "fragmentData json");
-    
+    console.log(fragmentData, "fragmentData json");
+
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
@@ -442,7 +442,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', UtilService.isRefreshRequired(sideBarData));
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getClientSubData(false,false);
+            this.getClientSubData(false, false);
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -468,7 +468,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getClientSubData(false,false);
+            this.getClientSubData(false, false);
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -678,7 +678,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     };
     console.log('this.callFilter req obj : ', obj, this.statusIdList);
     if (obj.statusIdList.length == 0 && obj.fromDate == null) {
-      this.getClientSubData(false,false);
+      this.getClientSubData(false, false);
     } else {
       this.subService.filterSubscription(obj).subscribe(
         (data) => {

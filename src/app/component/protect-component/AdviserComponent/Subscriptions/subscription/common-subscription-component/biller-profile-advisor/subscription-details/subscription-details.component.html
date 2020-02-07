@@ -3,7 +3,7 @@
         <h4 class="wrapper-20 m-0" *ngIf="!isEdite">Subscription details</h4>
         <h4 class="wrapper-20 m-0" *ngIf="isEdite">Edit Subscription details</h4>
     </div>
-    <div class="col-md-4 text-right" >
+    <div class="col-md-4 text-right">
         <div class="wrapper-12 pb-10">
             <button mat-stroked-button class="br-0 btn-primary mr-20" (click)="enableForm()" *ngIf="!isEdite">
                 EDIT
@@ -13,7 +13,7 @@
     </div>
 </div>
 <ng-template matStepLabel>Subscription details</ng-template>
-            <div [formGroup]="subscriptionDetails" class="wrapper-20 pt-36 mb-44 pb-44" >
+            <div [formGroup]="subscriptionDetails" class="wrapper-20 pt-90 mb-44 pb-44" >
                 <div class="row pt-24">
                     <div class="col-md-5">
                         <h5 class="text-right m-0 pt-8">Subscription #</h5>
@@ -101,6 +101,6 @@
                         <!-- <button *ngIf="isEdite" mat-button class="btn-bottom br-0 text-inherit" [disabled]="subscriptionDetails.invalid"
                             (click)="saveChangePayeeSetting()">Save
                         </button> -->
-                    </div>
-                </div>
-            </div>
+        </div>
+    </div>
+</div>
