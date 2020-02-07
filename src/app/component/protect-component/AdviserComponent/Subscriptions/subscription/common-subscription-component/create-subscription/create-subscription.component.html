@@ -141,7 +141,7 @@
                         <p class="m-0 text-right text-custom roboto">Select a biller profile</p>
                     </div>
                 </div>
-                <div class="row pt-16" *ngIf="billerData && billersData.length !== 0">
+                <div class="row pt-16" *ngIf="billersData && billersData.length !== 0">
                     <div (click)="select('biller',singleBiller)" *ngFor="let singleBiller of billersData"
                         class="col-md-6 mt-20">
                         <mat-card

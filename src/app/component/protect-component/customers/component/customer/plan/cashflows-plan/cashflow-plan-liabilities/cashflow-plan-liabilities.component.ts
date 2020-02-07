@@ -22,6 +22,7 @@ export class CashflowPlanLiabilitiesComponent implements OnInit {
 
   advisorId = AuthService.getAdvisorId();
   clientId = AuthService.getClientId();
+  isLoading: boolean = false;
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);

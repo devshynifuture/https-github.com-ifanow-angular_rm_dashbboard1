@@ -5,9 +5,7 @@ import { IfaBoradingHistoryComponent } from './ifa-onboarding/ifa-borading-histo
 import { AdminDetailsComponent } from './ifa-onboarding/admin-details/admin-details.component';
 
 
-export const componentList = [
-  IfasDetailsComponent, IfaBoradingHistoryComponent, AdminDetailsComponent
-
+export const componentList = [ 
 ];
 
 @NgModule({
