@@ -24,7 +24,7 @@ export class DocumentsSettingsComponent implements OnInit {
   Questions = [{ question: 'Can I create my own template for Quotations?' },
   { question: 'Can I create my own template for Consent T&C?' },
   { question: 'What are the Future subscriptions?' }]
-  documentSettingData = [];
+  documentSettingData = [{},{}];
   isLoading = false;
   //showLoader;
 
@@ -37,7 +37,7 @@ export class DocumentsSettingsComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     // this.openFragment('documents');
-    (SubscriptionDataService.getLoderFlag(5) == false) ? this.documentSettingData = undefined : this.documentSettingData = [{}, {}, {}]
+    // (SubscriptionDataService.getLoderFlag(5) == false) ? this.documentSettingData = undefined : this.documentSettingData = [{}, {}, {}]
     this.getDocumentsSetting();
   }
 
@@ -66,7 +66,7 @@ export class DocumentsSettingsComponent implements OnInit {
   }
   getDocumentsSettingResponse(data) {
     if (data == undefined) {
-      this.documentSettingData = undefined;
+      this.documentSettingData = [];
       this.isLoading = false;
     }
     else {

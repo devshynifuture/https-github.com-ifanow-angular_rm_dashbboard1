@@ -1,14 +1,25 @@
-.content{
-    position: relative;
-    right: 20%;
+.content {
+  position: relative;
+  right: 20%;
 }
-.ba-blue-2{
-   
-    border-radius: 2px;
+
+.ba-blue-2 {
+
+  border-radius: 2px;
 }
-.box-height{
-    min-height: 81px;
-    h3{
-        text-align: center !important;
+
+.box-height {
+  min-height: 81px;
+
+  h3 {
+    text-align: center !important;
+  }
+}
+
+@media(max-width:1224px) {
+  .box-height {
+    h3 {
+      font-size: 18px;
     }
+  }
 }

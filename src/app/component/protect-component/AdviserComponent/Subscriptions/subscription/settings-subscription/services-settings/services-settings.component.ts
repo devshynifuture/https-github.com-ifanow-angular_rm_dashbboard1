@@ -26,15 +26,15 @@ export class ServicesSettingsComponent implements OnInit {
 
   // showLoader;
 
-  serviceSettingData;
+  serviceSettingData:any = [{},{}];
   isLoading = false;
   advisorId;
-
+  read:boolean = false;
   ngOnInit() {
 
     this.advisorId = AuthService.getAdvisorId();
     this.feesDisplay = true;
-    (SubscriptionDataService.getLoderFlag(5) == false) ? this.serviceSettingData = undefined : this.serviceSettingData = [{}, {}, {}]
+    // (SubscriptionDataService.getLoderFlag(5) == false) ? this.serviceSettingData = undefined : this.serviceSettingData = [{}, {}, {}]
     this.getServiceSettingSubData();
   }
 
@@ -108,12 +108,23 @@ export class ServicesSettingsComponent implements OnInit {
 
   getServiceSettingSubResponse(data) {
     console.log('service data', data);
-    this.isLoading = false;
-    this.feesDisplay = false
-    this.serviceSettingData = data;
+    if(data != undefined){
+      this.isLoading = false;
+      this.feesDisplay = false
+      for(let s of data){
+        s['read'] = false;
+      }
+      this.serviceSettingData = data;
+    }
+    else{
+      this.serviceSettingData = [];
+
+    }
 
     // this.showLoader = false;
   }
+
+  
 
   getFileErrorResponse(err) {
     this.dataService.openSnackBar(err, 'Dismiss');

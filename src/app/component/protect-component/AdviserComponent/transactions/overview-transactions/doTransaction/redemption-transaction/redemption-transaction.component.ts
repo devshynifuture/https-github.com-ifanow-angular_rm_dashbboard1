@@ -26,7 +26,7 @@ export class RedemptionTransactionComponent implements OnInit {
       this.inputData = data;
       this.transactionType =  data.transactionType
       this.selectedFamilyMember = data.selectedFamilyMember
-      console.log('This is Input data of FixedDepositComponent ', data);
+      console.log('This is Input data of FixedDepositComponent ', data );
   
       if (this.isViewInitCalled) {
         this.getdataForm('');

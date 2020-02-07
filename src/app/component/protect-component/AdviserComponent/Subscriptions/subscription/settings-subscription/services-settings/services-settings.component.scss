@@ -21,8 +21,25 @@ h3 {
 // p{
 //     margin-bottom: 0;
 // }
+
+.read-more{
+    text-align: right;
+    color: #008FFF;
+    margin-bottom: -47px;
+    font-size: 14px;
+}
+
+.h-a{
+    height: auto !important;
+}
+
 h3 p {
     color: #757575;
+}
+
+.serDic{
+    height: 33px ; margin-top: 5px; overflow: hidden;
+    p{white-space: initial; color: #4c4949; width: 100%;}
 }
 
 .button-fix {

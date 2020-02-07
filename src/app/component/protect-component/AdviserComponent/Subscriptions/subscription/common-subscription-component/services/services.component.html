@@ -8,7 +8,7 @@
 </div>
 
 <div *ngIf="planServiceData.length>0">
-    <div class="bg-white pt-180">
+    <div class="bg-white pt-180 plan-service">
         <div class="wrapper-20 pb-0">
             <div class="row">
                 <div class="col-md-10 p-0 pt-8 text-center">
@@ -32,12 +32,16 @@
         </div>
         <div class="wrapper-40">
             <div class="row text-center padder-80">
-                <div *ngFor="let serviceData of planServiceData; index as i" appSkeletonLoading [appSkeletonLoading]="isLoading" class="col-md-4 c-p pl-10 pr-10 pb-28  ">
+                <div *ngFor="let serviceData of planServiceData; index as i" appSkeletonLoading
+                    [appSkeletonLoading]="isLoading" class="col-md-4 c-p pl-10 pr-10 pb-28  ">
                     <div class="example-card b-a">
-                        <div [ngClass]="{'baBlue':serviceData.selected,'b-ua':serviceData.selected==false }" (click)="selectService(serviceData,i)" class="overflow-hidden">
+                        <div [ngClass]="{'baBlue':serviceData.selected,'b-ua':serviceData.selected==false }"
+                            (click)="selectService(serviceData,i)" class="overflow-hidden">
                             <div class="bg-grey lter text-left">
                                 <div *ngIf="!isLoading">
-                                    <mat-checkbox class="custom-checkbox" [ngStyle]="{'pointer-events':(serviceData.selected)?'none':'all'}" checked="false" [ngClass]="{'v-h':serviceData.selected==false }"></mat-checkbox>
+                                    <mat-checkbox class="custom-checkbox"
+                                        [ngStyle]="{'pointer-events':(serviceData.selected)?'none':'all'}"
+                                        checked="false" [ngClass]="{'v-h':serviceData.selected==false }"></mat-checkbox>
                                 </div>
                                 <div class="pl-20 pr-20 pt-20 height155">
                                     <div class="relClass">
@@ -50,7 +54,9 @@
                                     <div class="relClass">
                                         <div class="bar" [ngClass]="{'height24': isLoading}">
                                             <p matTooltip="Service code">{{serviceData.serviceCode}}</p>
-                                            <p class="mb-0 pb-32 pt-4" matTooltip="Description : {{serviceData.description}}" aria-label="Button that displays a tooltip when focused or hovered over">
+                                            <p class="mb-0 pb-32 pt-4"
+                                                matTooltip="Description : {{serviceData.description}}"
+                                                aria-label="Button that displays a tooltip when focused or hovered over">
                                                 {{serviceData.description}}</p>
                                         </div>
                                     </div>
@@ -70,13 +76,15 @@
                                         </div>
 
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 p-0">
                                         <p class="text-primitive f-12">BILLING NATURE</p>
                                         <div class="relClass">
                                             <div class="bar" [ngClass]="{'height24': isLoading}">
-                                                <h3 class="m-0 proxima" *ngIf="serviceData&&serviceData.billingNature==1">
+                                                <h3 class="m-0 proxima"
+                                                    *ngIf="serviceData&&serviceData.billingNature==1">
                                                     Recurring</h3>
-                                                <h3 class="m-0 proxima" *ngIf="serviceData&&serviceData.billingNature==2">
+                                                <h3 class="m-0 proxima"
+                                                    *ngIf="serviceData&&serviceData.billingNature==2">
                                                     Once</h3>
                                             </div>
                                         </div>
@@ -88,16 +96,18 @@
                                         <p class="text-primitive f-12">BILLING MODE</p>
                                         <div class="relClass">
                                             <div class="bar" [ngClass]="{'height24': isLoading}">
-                                                <h3 class="m-0 proxima f-18" *ngIf="serviceData&&serviceData.billingMode==1">
+                                                <h3 class="m-0 proxima f-18"
+                                                    *ngIf="serviceData&&serviceData.billingMode==1">
                                                     Start Of Period</h3>
-                                                <h3 class="m-0 proxima f-18" *ngIf="serviceData&&serviceData.billingMode==2">
+                                                <h3 class="m-0 proxima f-18"
+                                                    *ngIf="serviceData&&serviceData.billingMode==2">
                                                     End Of Period
                                                 </h3>
                                             </div>
                                         </div>
 
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 p-0">
                                         <p *ngIf="serviceData&&serviceData.feeTypeId==1" class="text-primitive f-12">
                                             FEES</p>
 
@@ -130,7 +140,9 @@
         <img class="width200 mt-80" src="assets/images/svg/add-services-img.svg">
         <p class="f-22 f-600 pt-28">Create Services </p>
         <p class="f-16 text-center mt-20 l-21">
-            Next up, you create Services. More than one Service can be added to a Plan. E.g. <br> Plan could be Financial Planning. It’s Services could be 1) Planning fees 2) <br> Implementation services 3) Retainer services.
+            Next up, you create Services. More than one Service can be added to a Plan. E.g. <br> Plan could be
+            Financial Planning. It’s Services could be 1) Planning fees 2) <br> Implementation services 3) Retainer
+            services.
         </p>
         <!-- <button (click)="openFragment('','services')" class="btn-primary mt-12 d-flex align-items-center">
             ADD SERVICES
@@ -150,7 +162,7 @@
         </div>
         <div class="col-md-8 right text-right">
             <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="savePlanMapToService()">Save</button> -->
-            <app-progress-button (btnClick)="savePlanMapToService()" [options]="barButtonOptions" >
+            <app-progress-button (btnClick)="savePlanMapToService()" [options]="barButtonOptions">
             </app-progress-button>
         </div>
     </div>

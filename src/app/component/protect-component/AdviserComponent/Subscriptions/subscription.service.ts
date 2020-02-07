@@ -219,6 +219,10 @@ export class SubscriptionService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.CHANGE_PAYEE_SETTING, data);
   }
 
+  changeSubsDetails(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.CHANGE_SUBSCRIPTION_DETAILS, data);
+  }
+
   changeBillerSetting(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.CHANGE_BILLER_SETTING, data);
   }
@@ -262,6 +266,11 @@ export class SubscriptionService {
   getBillerProfile(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('subId', data.subId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BILLER_PROFILE, httpParams);
+  }
+
+  getBankAddress(data) {
+    const httpParams = new HttpParams().set('ifsc', data.ifsc);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BANK_ADDRESS, httpParams);
   }
 
   getPayeerProfile(data) {
