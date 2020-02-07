@@ -34,10 +34,14 @@
     }
 
     .mat-tab-link {
-      font-size: 11px !important;
+      font-size: 12px !important;
       height: 54px !important;
       min-width: 90px !important;
 
     }
+  }
+
+  #ui-settings-subs .mat-tab-label {
+    font-size: 11px;
   }
 }
