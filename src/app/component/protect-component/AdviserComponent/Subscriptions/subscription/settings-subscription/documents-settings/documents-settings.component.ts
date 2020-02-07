@@ -66,7 +66,7 @@ export class DocumentsSettingsComponent implements OnInit {
   }
   getDocumentsSettingResponse(data) {
     if (data == undefined) {
-      this.documentSettingData = undefined;
+      this.documentSettingData = [];
       this.isLoading = false;
     }
     else {

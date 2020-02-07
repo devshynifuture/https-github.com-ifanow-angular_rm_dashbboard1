@@ -24,7 +24,6 @@ export class PlansSettingsComponent implements OnInit {
   button: any;
 
   //showLoader;
-  read:boolean = false;
   planSettingData:any = [];
   isLoading = false;
   advisorId;
@@ -56,9 +55,18 @@ export class PlansSettingsComponent implements OnInit {
   }
 
   getSettingsPlanResponse(data) {
+    if(data != undefined){
     this.isLoading = false;
     console.log('get plan', data);
+    for(let p of data){
+      p['read'] = false;
+    }
     this.planSettingData = data;
+    
+    }
+    else{
+      this.planSettingData = [];
+    }
     //this.showLoader = false;
   }
 
@@ -95,14 +103,6 @@ export class PlansSettingsComponent implements OnInit {
   //
   //  });*/
 
-  readMore(){
-    if(this.read){
-      this.read = false;
-    }
-    else{
-      this.read = true;
-    }
-  }
 
   openFragment(singlePlan, data) {
     this.location.replaceState('/subscription-upper');

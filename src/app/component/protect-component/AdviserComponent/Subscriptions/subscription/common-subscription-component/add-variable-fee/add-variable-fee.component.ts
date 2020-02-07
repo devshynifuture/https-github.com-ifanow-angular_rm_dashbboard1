@@ -48,14 +48,17 @@ export class AddVariableFeeComponent implements OnInit {
   otherAssetDataId: any;
   _data: any;
   @Input() set data(data) {
+    let stock = this.enumService.getOtherAssetData().filter((x) => x.subAssetClassName == "Stocks");
+    console.log(stock,this.enumService.getOtherAssetData(),"stock 123");
+    
     if (data == "") {
       // this.otherAssetData=UtilService.
-      this.otherAssetData = Object.assign([], this.enumService.getOtherAssetData());
+      this.otherAssetData = Object.assign([], stock);
       return;
     }
     else {
       this.ischeckVariableData = data
-      this.otherAssetData = Object.assign([], this.enumService.getOtherAssetData());
+      this.otherAssetData = Object.assign([], stock);
       this.getFeeFormUpperData(data)
     }
   }
@@ -120,7 +123,7 @@ export class AddVariableFeeComponent implements OnInit {
     // , Validators.max(99) 
     this.getFormControl().serviceName.maxLength = 40;
     this.getFormControl().code.maxLength = 10;
-    this.getFormControl().description.maxLength = 160;
+    this.getFormControl().description.maxLength = 500;
   }
 
   getFeeFormUpperData(data) {
@@ -150,7 +153,7 @@ export class AddVariableFeeComponent implements OnInit {
         pricing: [data.servicePricing.pricingList[2].pricing, [Validators.required]]
       });
       if (data.servicePricing.pricingList[2].serviceSubAssets != undefined) {
-        this.otherAssetData = data.servicePricing.pricingList[2].serviceSubAssets
+        this.otherAssetData = data.servicePricing.pricingList[2].serviceSubAssets.filter((x)=> x.subAssetClassName == "Stocks")
       }
       // this.otherAssetData = data.servicePricing.pricingList[2].serviceSubAssets
       // this.otherAssetData = data.servicePricing.pricingList[2].serviceSubAssets
@@ -162,7 +165,7 @@ export class AddVariableFeeComponent implements OnInit {
       console.log(this.otherAssetData)
       this.getFormControl().serviceName.maxLength = 40;
       this.getFormControl().code.maxLength = 10;
-      this.getFormControl().description.maxLength = 160;
+      this.getFormControl().description.maxLength = 500;
     }
   }
 
