@@ -274,6 +274,10 @@ export class BillerProfileAdvisorComponent implements OnInit {
         this.bankData(data)  
         // this.PinData(data, 'bankDetailsForm')
 
+      },
+      err=>{
+        console.log(err, "error internet");
+        this.bankData(err) 
       })
     }
   }
@@ -298,50 +302,39 @@ export class BillerProfileAdvisorComponent implements OnInit {
   PinData(data, state) {
     if(data[0].Status == "Error"){
       this.pinInvalid = true;
-      if (state == 'bankDetailsForm'){
-        this.getFormControlBank().pincodeB.setErrors(this.pinInvalid);
-        this.getFormControlBank().cityB.setValue("")
-        this.getFormControlBank().countryB.setValue("")
-        this.getFormControlBank().stateB.setValue("")
-        this.getFormControlBank().address.setValue("")
-      }
-      else{
-        this.getFormControlProfile().pincode.setErrors(this.pinInvalid);
-        this.getFormControlProfile().city.setValue("");
-        this.getFormControlProfile().country.setValue("");
-        this.getFormControlProfile().state.setValue("");
-      }
-    }
-    else if (state == 'bankDetailsForm') {
-      this.getFormControlBank().cityB.setValue(data.district)
-      this.getFormControlBank().countryB.setValue("India")
-      this.getFormControlBank().stateB.setValue(data.state)
-      this.getFormControlBank().address.setValue(data.address)
-      this.pinInvalid = false;
-    } else {
+      this.getFormControlProfile().ifscCode.setErrors(this.pinInvalid);
+      this.getFormControlProfile().city.setValue("");
+      this.getFormControlProfile().country.setValue("");
+      this.getFormControlProfile().state.setValue("");
+    }else{
       this.getFormControlProfile().city.setValue(data[0].PostOffice[0].District);
       this.getFormControlProfile().country.setValue(data[0].PostOffice[0].Country);
       this.getFormControlProfile().state.setValue(data[0].PostOffice[0].Circle);
       this.pinInvalid = false;
-
     }
   }
-
+  ifsciInvalid:boolean;
   bankData(data){
-    if(data.ifsc == undefined){
-      this.pinInvalid = true;
-        this.getFormControlBank().pincodeB.setErrors(this.pinInvalid);
+    if(data.status != undefined){
+      this.ifsciInvalid = true;
+        this.getFormControlBank().ifscCode.setErrors(this.ifsciInvalid);
         this.getFormControlBank().cityB.setValue("")
         this.getFormControlBank().countryB.setValue("")
         this.getFormControlBank().stateB.setValue("")
         this.getFormControlBank().address.setValue("")
+        this.getFormControlBank().pincodeB.setValue("")
       }
     else {
+      console.log(data,"bankPin 123");
+      let bankPin = data.address.split('A');
+      this.getFormControlBank().pincodeB.setValue(bankPin[bankPin.length - 1])
       this.getFormControlBank().cityB.setValue(data.district)
       this.getFormControlBank().countryB.setValue("India")
       this.getFormControlBank().stateB.setValue(data.state)
       this.getFormControlBank().address.setValue(data.address)
-      this.pinInvalid = false;
+      this.getFormControlBank().bankName.setValue(data.bankcode)
+
+      this.ifsciInvalid = false;
     }
   }
 
