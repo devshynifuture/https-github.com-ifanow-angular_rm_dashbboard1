@@ -42,3 +42,7 @@ table {
 .marTop-94 {
     margin-top: 94px !important;
 }
+
+::ng-deep .back-office-table #table-low tbody td {
+    padding: 0px 8px !important;
+}

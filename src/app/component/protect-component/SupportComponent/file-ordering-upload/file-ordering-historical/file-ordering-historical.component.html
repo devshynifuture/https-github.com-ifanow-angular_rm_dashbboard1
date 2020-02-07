@@ -1,1 +1,77 @@
-<p>file-ordering-historical works!</p>
+<div class="row pt-90">
+    <div class="col-md-12 text-right">
+        <button class="btn-primary addon" mat-stroked-button> Order bulk files </button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table mat-table id="table-low" [dataSource]="dataSource" class="">
+            <ng-container matColumnDef="advisorName">
+                <th class="br" mat-header-cell *matHeaderCellDef> Advisor name </th>
+                <td class="br" mat-cell *matCellDef="let element"> {{element.advisorName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="rta">
+                <th class="br" mat-header-cell *matHeaderCellDef> RTA </th>
+                <td class="br" mat-cell *matCellDef="let element"> {{element.rta}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="orderedby">
+                <th class="br" mat-header-cell *matHeaderCellDef> Ordered by </th>
+                <td class="br" mat-cell *matCellDef="let element"> {{element.orderedby}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="startedOn">
+                <th class="br" mat-header-cell *matHeaderCellDef> Started on </th>
+                <td class="br" mat-cell *matCellDef="let element"> {{element.startedOn}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalfiles">
+                <th class="br" mat-header-cell *matHeaderCellDef> Total files </th>
+                <td class="br" mat-cell *matCellDef="let element"> {{element.totalfiles}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="queue">
+                <th class="br" mat-header-cell *matHeaderCellDef> In queue </th>
+                <td class="br" mat-cell *matCellDef="let element"> {{element.queue}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="ordering">
+                <th class="br" mat-header-cell *matHeaderCellDef> Ordering </th>
+                <td class="br" mat-cell *matCellDef="let element"> {{element.ordering}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="ordered">
+                <th class="br" mat-header-cell *matHeaderCellDef> Ordered </th>
+                <td class="br" mat-cell *matCellDef="let element"> {{element.ordered}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="failed">
+                <th class="br" mat-header-cell *matHeaderCellDef> Failed </th>
+                <td class="br" mat-cell *matCellDef="let element"> {{element.failed}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="uploaded">
+                <th class="br" mat-header-cell *matHeaderCellDef> Uploaded </th>
+                <td class="br" mat-cell *matCellDef="let element"> {{element.uploaded}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="refresh">
+                <th class="br" mat-header-cell *matHeaderCellDef> Refresh </th>
+                <td class="br" mat-cell *matCellDef="let element"> {{element.refresh}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="empty">
+                <th class="br" mat-header-cell *matHeaderCellDef> </th>
+                <td class="br" mat-cell *matCellDef="let element"> </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>
