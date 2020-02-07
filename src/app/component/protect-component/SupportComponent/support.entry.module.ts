@@ -17,7 +17,7 @@ const componentList = [
         MaterialModule,
         FormsModule,
         ReactiveFormsModule,
-        CommonComponentModule
+        CommonComponentModule,
     ],
     entryComponents: componentList
 })
