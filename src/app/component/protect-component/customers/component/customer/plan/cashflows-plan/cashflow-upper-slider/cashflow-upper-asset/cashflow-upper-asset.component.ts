@@ -2,6 +2,7 @@ import { AuthService } from './../../../../../../../../../auth-service/authServi
 import { Component, OnInit, Input } from '@angular/core';
 import { UpperTableBox, Group } from './../../cashflow.interface';
 import { CashFlowsPlanService } from '../../cashflows-plan.service';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-cashflow-upper-asset',
@@ -11,8 +12,8 @@ import { CashFlowsPlanService } from '../../cashflows-plan.service';
 export class CashflowUpperAssetComponent implements OnInit {
 
   constructor(private cashflowService: CashFlowsPlanService) { }
-  dataSource = ELEMENT_DATA2;
-  displayedColumns: string[] = ['description', 'month1', 'month2', 'month3', 'month4', 'month5', 'month6', 'month7', 'month8', 'month9', 'month10', 'month11', 'month12'];
+  dataSource = new MatTableDataSource(ELEMENT_DATA2);
+  displayedColumns: string[] = ['description', 'month1', 'month2', 'month3', 'month4', 'month5', 'month6', 'month7', 'month8', 'month9', 'month10', 'month11', 'month12', 'remove'];
   @Input() data;
   year;
   cashflowCategory;

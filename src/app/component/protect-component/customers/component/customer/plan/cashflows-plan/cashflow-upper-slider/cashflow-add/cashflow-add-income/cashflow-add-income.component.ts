@@ -42,9 +42,10 @@ export class CashflowAddIncomeComponent implements OnInit {
   ngOnInit() {
   }
 
-  addCashflowIncome() {
+  // editing multiple values
+  editCashflowMonthlyIncomeTableData(values) {
     this.cashflowService
-      .cashFlowAddIncome({ advisorId: this.advisorId, clientId: this.clientId })
+      .cashflowEditMonthlyIncomeValues({ advisorId: this.advisorId, clientId: this.clientId, values })
       .subscribe(res => {
         console.log(res);
       }, err => {
@@ -52,9 +53,9 @@ export class CashflowAddIncomeComponent implements OnInit {
       });
   }
 
-  deleteCashflowIncome(id) {
+  addCashflowIncome() {
     this.cashflowService
-      .cashFlowDeleteIncome(id)
+      .cashFlowAddIncome({ advisorId: this.advisorId, clientId: this.clientId })
       .subscribe(res => {
         console.log(res);
       }, err => {

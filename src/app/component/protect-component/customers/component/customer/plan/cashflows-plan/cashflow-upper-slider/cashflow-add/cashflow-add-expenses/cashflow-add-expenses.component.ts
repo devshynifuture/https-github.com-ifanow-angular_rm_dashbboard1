@@ -1,7 +1,9 @@
+import { AuthService } from 'src/app/auth-service/authService';
 import { ValidatorType } from './../../../../../../../../../../services/util.service';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormBuilder, Validators } from '@angular/forms';
+import { CashFlowsPlanService } from '../../../cashflows-plan.service';
 
 @Component({
   selector: 'app-cashflow-add-expenses',
@@ -13,10 +15,13 @@ export class CashflowAddExpensesComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<CashflowAddExpensesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cashflowService: CashFlowsPlanService
   ) { }
 
   validatorType = ValidatorType;
+  advisorId = AuthService.getAdvisorId();
+  clientId = AuthService.getClientId();
 
   formExpense = this.fb.group({
     "category": [, Validators.required],
@@ -36,6 +41,26 @@ export class CashflowAddExpensesComponent implements OnInit {
 
   closeDialog() {
     this.dialogRef.close();
+  }
+
+  cashflowAddExpense(data) {
+    this.cashflowService
+      .cashflowAddExpenses({ advisorId: this.advisorId, clientId: this.clientId, data })
+      .subscribe(res => {
+        console.log(res);
+      }, err => {
+        console.error(err);
+      })
+  }
+
+  editCashflowExpenseData(data) {
+    this.cashflowService
+      .cashflowEditExpenses({ advisorId: this.advisorId, clientId: this.clientId })
+      .subscribe(res => {
+        console.log(res);
+      }, err => {
+        console.error(err);
+      });
   }
 
   submitForm() {

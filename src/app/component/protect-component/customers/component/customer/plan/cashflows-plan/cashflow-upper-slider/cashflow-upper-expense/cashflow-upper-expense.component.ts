@@ -4,7 +4,7 @@ import { CashflowAddComponent } from '../cashflow-add/cashflow-add.component';
 import { ValidatorType } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CashFlowsPlanService } from '../../cashflows-plan.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatTableDataSource } from '@angular/material';
 import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
@@ -20,7 +20,7 @@ export class CashflowUpperExpenseComponent implements OnInit {
     private cashflowService: CashFlowsPlanService) { }
 
   displayedColumns: string[] = ['description', 'month1', 'month2', 'month3', 'month4', 'month5', 'month6', 'month7', 'month8', 'month9', 'month10', 'month11', 'month12', 'total', 'remove'];
-  dataSource = null;
+  dataSource: MatTableDataSource<UpperTableBox>;
   advisorId = AuthService.getAdvisorId();
   clientId = AuthService.getClientId();
 
@@ -34,6 +34,7 @@ export class CashflowUpperExpenseComponent implements OnInit {
     this.cashflowCategory = this.data.tableInUse;
 
     this.year = this.data.year;
+    this.dataSource = new MatTableDataSource(ELEMENT_DATA1);
     // this.getCashflowMonthlyExpenseTableData();
 
     // this.refreshTableData();
