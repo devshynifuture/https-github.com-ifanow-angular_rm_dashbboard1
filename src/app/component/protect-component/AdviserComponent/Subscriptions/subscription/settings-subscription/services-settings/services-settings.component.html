@@ -29,12 +29,11 @@
                                 <div class="bar" [ngClass]="{'height23': isLoading}" matTooltip="Service code">
                                     {{singleService.serviceCode}}
                                 </div>
-
-                                <p class="m-0 text-sl" matTooltip="Description : {{singleService.description}}" aria-label="Button that displays a tooltip when focused or hovered over">
-
-                                    {{singleService.description}}
-
-                                </p>
+                                <div class="serDic">
+                                    <p class="m-0 text-sl" matTooltip="Description : {{singleService.description}}" aria-label="Button that displays a tooltip when focused or hovered over">
+                                        {{singleService.description}}
+                                    </p>
+                                </div>
                             </mat-card-subtitle>
                         </div>
                     </mat-card-header>
@@ -134,7 +133,7 @@
         </div>
     </div>
 
-    <div class="row" *ngIf="serviceSettingData == undefined">
+    <div class="row" *ngIf="serviceSettingData.length <=0">
         <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
             <img class="width200" src="assets/images/svg/add-services-img.svg">
             <p class="f-22 f-600 pt-28">Create Services </p>

@@ -25,14 +25,15 @@ export class PlansSettingsComponent implements OnInit {
 
   //showLoader;
   read:boolean = false;
-  planSettingData = [{}, {}];
+  planSettingData:any = [];
   isLoading = false;
   advisorId;
 
   ngOnInit() {
+    this.planSettingData = [{}, {}];
 
     this.advisorId = AuthService.getAdvisorId();
-    (SubscriptionDataService.getLoderFlag(5) == false) ? this.planSettingData = undefined : this.planSettingData = [{}, {}, {}]
+    // (SubscriptionDataService.getLoderFlag(5) == false) ? this.planSettingData = undefined : this.planSettingData = [{}, {}, {}]
     this.getSettingsPlanData();
     // this.openFragment('', 'plan');
   }

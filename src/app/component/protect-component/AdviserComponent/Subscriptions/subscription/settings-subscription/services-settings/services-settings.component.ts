@@ -26,7 +26,7 @@ export class ServicesSettingsComponent implements OnInit {
 
   // showLoader;
 
-  serviceSettingData;
+  serviceSettingData:any = [{},{}];
   isLoading = false;
   advisorId;
 
@@ -34,7 +34,7 @@ export class ServicesSettingsComponent implements OnInit {
 
     this.advisorId = AuthService.getAdvisorId();
     this.feesDisplay = true;
-    (SubscriptionDataService.getLoderFlag(5) == false) ? this.serviceSettingData = undefined : this.serviceSettingData = [{}, {}, {}]
+    // (SubscriptionDataService.getLoderFlag(5) == false) ? this.serviceSettingData = undefined : this.serviceSettingData = [{}, {}, {}]
     this.getServiceSettingSubData();
   }
 
