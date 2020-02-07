@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-mutual-fund-summary',
@@ -14,10 +14,17 @@ export class MutualFundSummaryComponent implements OnInit {
 
   displayedColumns2: string[] = ['schemeName2', 'folioNumber', 'dividendPayoutAmount', 'dividendReInvestmentAmount', 'totalReinvestmentAmount'];
   dataSource2 = ELEMENT_DATA2;
+  mfData: any;
 
   constructor() { }
+    @Input() mutualFund;
 
   ngOnInit() {
+    this.getMutualFund(this.mutualFund)
+  }
+
+  getMutualFund(data){
+    this.mfData=data
   }
 }
 export interface PeriodicElement {
