@@ -31,8 +31,8 @@
                     </mat-select>
                 </div>
                 <div class="col-md-2">
-                    <button mat-stroked-button class="primary-sm" *ngIf="investorList.length > 1"
-                        (click)="showInvestor = true">Edit</button>
+                    <!-- <button mat-stroked-button class="primary-sm" *ngIf="investorList.length > 1"
+                        (click)="showInvestor = true">Edit</button> -->
                 </div>
             </div>
             <div class="row  pt-16 pb-16">
@@ -49,7 +49,8 @@
             <div class="row  pt-16 pb-16">
                 <div class="col-md-12 p-0">
                     <p class="m-0 roboto text-custom">Scheme, folio and amount</p>
-                    <h5 class="m-0"><span class="f-500">Scheme:</span> {{(transactionSummary==undefined)?'':transactionSummary.schemeName}}
+                    <h5 class="m-0"><span class="f-500">Scheme:</span>
+                        {{(transactionSummary==undefined)?'':transactionSummary.schemeName}}
                     </h5>
                     <h5 class="m-0"> <span class="f-500">Folio:</span> 91032325824</h5>
                     <h5 class="m-0"> <span class="f-500">Amount:</span> ₹5,00,000/Lumpsum</h5>

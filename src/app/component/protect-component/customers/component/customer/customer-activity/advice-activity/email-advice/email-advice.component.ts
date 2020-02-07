@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../customer.service';
 import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-email-advice',
@@ -12,8 +13,10 @@ import { Router } from '@angular/router';
 })
 export class EmailAdviceComponent implements OnInit {
   groupId: any;
-
-  constructor(private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService, private route: Router) { }
+  @ViewChild('tempRef', { static: true }) tempRef: ElementRef;
+  @ViewChild('EmailIdTo', { static: true }) EmailIdToRef: ElementRef;
+  @ViewChild('subBody', { static: true }) subBodyRef: ElementRef;
+  constructor(private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService, private route: Router, private datePipe: DatePipe) { }
 
   ngOnInit() {
   }
@@ -43,9 +46,37 @@ export class EmailAdviceComponent implements OnInit {
     let obj = [1];
     this.cusService.generateGroupId(obj).subscribe(
       data => {
-        this.groupId = data
-        this.route.navigate(['/cus/email-consent'], { queryParams: { gropID: data } });
-        this.close(false)
+        this.groupId = data;
+        let dateObj = new Date();
+        // this.elemRef.nativeElement.innerHTML
+        let obj =
+        {
+          "messageBody": "Test",
+          "toEmail": [
+            {
+              "emailAddress": this.EmailIdToRef.nativeElement.innerText
+            }
+          ],
+          "targetObject": {
+            "adviceUuid": this.groupId,
+            "sent": this.datePipe.transform(new Date(), 'yyyy-MM-dd')
+          },
+          "fromEmail": "sarvesh@futurewise.co.in",
+          "emailSubject": this.subBodyRef.nativeElement.innerText,
+          "placeholder": [
+            {
+              "user": "$user"
+            }
+          ]
+        }
+        this.cusService.sentEmailConsent(obj).subscribe(
+          data => {
+            console.log(data)
+            this.route.navigate(['/cus/email-consent'], { queryParams: { gropID: this.groupId } });
+            this.close(false)
+          }
+        )
+
       }
     )
   }

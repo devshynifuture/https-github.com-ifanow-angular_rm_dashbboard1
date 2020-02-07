@@ -1,3 +1,5 @@
+import { AuthService } from './../../../../../../../../auth-service/authService';
+import { CashFlowsPlanService } from './../cashflows-plan.service';
 import { CashflowUpperSliderComponent } from './../cashflow-upper-slider/cashflow-upper-slider.component';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatTableDataSource } from '@angular/material';
@@ -12,14 +14,32 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class CashflowPlanIncomeComponent implements OnInit {
 
-  constructor(private eventService: EventService) { }
+  constructor(private eventService: EventService,
+    private cashflowService: CashFlowsPlanService) { }
   isLoading: boolean = false;
 
   dataSource: MatTableDataSource<IncometableI>;
   displayedColumns: string[] = ['year', 'groupHeadAge', 'spouseAge', 'monthlyIncome', 'view'];
   tableInUse: string = 'income';
+  advisorId = AuthService.getAdvisorId();
+  clientId = AuthService.getClientId();
+
   ngOnInit() {
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+    // if income api is created 
+    // get yearly income 
+    this.getYearlyCashflowIncomeData();
+  }
+
+  getYearlyCashflowIncomeData() {
+    this.cashflowService
+      .getCashflowYearlyIncomeValues({ advisorId: this.advisorId, clientId: this.clientId })
+      .subscribe(res => {
+        console.log(res);
+      },
+        err => {
+          console.error(err);
+        });
   }
 
   openUpperSlider(element) {

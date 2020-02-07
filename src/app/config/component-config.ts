@@ -159,7 +159,7 @@ export const appConfig = {
   EDIT_STOCK_PORTFOLIO: 'account/asset/stock/portfolio/edit',
   ADD_SCRIP: 'account/asset/stock/scrip-name/add',
   EDIT_SCRIP_HOLDING_TRANSACTION: 'account/asset/stock/holding/transaction/edit',
-  MUTUAL_FUND_GET:'mutual-fund/mutualfund/list/get',
+  MUTUAL_FUND_GET: 'mutual-fund/mutualfund/list/get',
   ////////////////////////////////plan////////////////////////////
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
   SUBMIT_RISK: 'plan/risk-assessment/add',
@@ -341,8 +341,9 @@ export const appConfig = {
   GET_ADVICE_BY_CATEGORY: 'advice/assetType/get',
   ADVICE_GET_DEPLOYMENTS: '/activity/deployment/get',
   GENERATE_GROUP_ID: 'advice/asset/consent/post',
-  GET_ASSET_CONSENT: 'advice/asset/consent/get',
+  GET_ASSET_CONSENT: 'advice/advice/consent/get',
   UPDATE_ASSET_CONSENT: 'advice/asset/update/consent',
+  SENT_EMAIL_CONSENT: 'advice/asset/update/consent/sent',
   ////////////////////////////////////OnlineTransaction///////////////////////////////////////
   ADD_BSE_CREDENTIALS: 'bse/user/save',
   GET_BSE_CREDENTIALS: 'bse/user/view',

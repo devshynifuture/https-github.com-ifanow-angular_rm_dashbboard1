@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../../customers/component/customer/customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
-import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { Location, DatePipe } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-email-consent',
@@ -10,8 +11,9 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./email-consent.component.scss']
 })
 export class EmailConsentComponent implements OnInit {
+  consentData = [];
 
-  constructor(private cusService: CustomerService, private Location: Location, private eventService: EventService, private activateRoute: ActivatedRoute) { }
+  constructor(private cusService: CustomerService, private Location: Location, private eventService: EventService, private activateRoute: ActivatedRoute, private route: Router, private datePipe: DatePipe) { }
   displayedColumns: string[] = ['position', 'investorName', 'schemeDetails', 'currentValue', 'notionalGain', 'advice', 'adviceStatus', 'applicableDate', 'actions'];
   dataSource;
   selectedConsent = [];
@@ -29,11 +31,21 @@ export class EmailConsentComponent implements OnInit {
       data => {
         console.log(data)
         this.dataSource = data
+        data.forEach(element => {
+          let obj =
+          {
+            id: element.id,
+            acceptedOrDeclined: element.acceptedOrDeclined,
+            actionPerformed: this.datePipe.transform(new Date(element.actionPerformed), 'yyyy-MM-dd')
+          }
+          this.consentData.push(obj)
+        });
+        console.log(this.consentData)
       }
     )
   }
   save() {
-    this.cusService.updateAssetConsent(this.dataSource).subscribe(
+    this.cusService.updateAssetConsent(this.consentData).subscribe(
       data => {
         console.log(data)
         this.eventService.openSnackBar("Consent updated", "dismiss")
@@ -41,12 +53,14 @@ export class EmailConsentComponent implements OnInit {
       }
     )
   }
-  acceptConsent(data) {
-    data.acceptedOrDeclined = 1
-    console.log(this.dataSource)
+  acceptConsent(data, index) {
+    this.consentData[index].acceptedOrDeclined = 1
+    console.log(this.consentData[index])
   }
-  declineConsent(data) {
-    data.acceptedOrDeclined = 2
+  declineConsent(data, index) {
+    this.consentData[index].acceptedOrDeclined = 2
+    console.log(this.consentData[index])
+
   }
   dialogClose() {
     this.Location.back();

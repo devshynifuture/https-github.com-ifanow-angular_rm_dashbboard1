@@ -33,9 +33,9 @@ export class SubscriptionComponent implements OnInit {
   }
 
   subscriptionTab;
-  setLabel:boolean = false;
+  setLabel: boolean = false;
   selected: any;
-  label:any = 'plans';
+  label: any = 'plans';
   ngOnInit() {
     // this.getActiveParam();
     // this.route.paramMap.subscribe(params => {
@@ -46,7 +46,7 @@ export class SubscriptionComponent implements OnInit {
     //   }
     // })
     console.log("i was called for check", this.label);
-    
+
     // this.currentState = 'close';
     this.enumDataService.getDataForSubscriptionEnumService();
     this.selected = 1;
@@ -83,7 +83,7 @@ export class SubscriptionComponent implements OnInit {
   //   })
   // }
 
-  
+
   isLinkActive(): boolean {
     
     return "settings" === this.router.url.split('/')[3];
