@@ -1,21 +1,27 @@
 <div id="ui-subscriptions">
-    <div class="sub-header-fix">
-        <div class="bg-white">
-            <h1 class="custom-heading-main">AUM reconciliation</h1>
-            <nav class="text-right" id="ui-customer-secondhead" mat-align-tabs="end" mat-tab-nav-bar>
-                <a routerLink="/support/aum-reconciliation/all-rta" mat-tab-link routerLinkActive="active">ALL RTA</a>
-                <a routerLink="/support/aum-reconciliation/cams" mat-tab-link routerLinkActive="active">CAMS</a>
-                <a routerLink="/support/aum-reconciliation/karvy" mat-tab-link routerLinkActive="active">KARVY</a>
-                <a routerLink="/support/aum-reconciliation/franklin" mat-tab-link routerLinkActive="active">FRANKLIN</a>
-            </nav>
-
-            <router-outlet></router-outlet>
+    <div class="bg-white">
+        <div class="row">
+            <div class="col-md-3">
+                <h3 class="m-0 pt-16"> AUM reconciliation </h3>
+            </div>
+            <div class="col-md-9">
+                <div class="subnav-fixed">
+                    <nav class="text-right" mat-align-tabs="end" mat-tab-nav-bar>
+                        <a routerLink="/support/aum-reconciliation/all-rta" mat-tab-link routerLinkActive="active">ALL
+                            RTA</a>
+                        <a routerLink="/support/aum-reconciliation/cams" mat-tab-link routerLinkActive="active">CAMS</a>
+                        <a routerLink="/support/aum-reconciliation/karvy" mat-tab-link routerLinkActive="active">KARVY</a>
+                        <a routerLink="/support/aum-reconciliation/franklin" mat-tab-link routerLinkActive="active">FRANKLIN</a>
+                    </nav>
+                </div>
+            </div>
         </div>
+
     </div>
 </div>
 
 <div class="row">
-    <div class="col-md-12 mt-44 mb-2">
+    <div class="col-md-12 pt-130 mb-2">
         <button mat-stroked-button class="br-0 pl-8 right text-primitive">
             <img src="/assets/images/svg/addon-three.svg" class="pr-12">
             FILTERS
@@ -25,80 +31,104 @@
 
 
 <div class="row">
-    <div class="col-md-12">
-        <table mat-table id="table-low" [dataSource]="dataSource" class="mt-8">
+    <div class="col-md-12 overflow-hidden back-office-table">
+        <table mat-table id="table-low" [dataSource]="dataSource" class="  mt-8" matSort>
             <!-- admin name Column -->
             <ng-container matColumnDef="rt">
-                <th mat-header-cell *matHeaderCellDef class="b-a"> RT </th>
-                <td mat-cell *matCellDef="let element" class="b-a"> {{element.rt}} </td>
+                <th mat-header-cell *matHeaderCellDef class="b-a" mat-sort-header="rt"> RT </th>
+                <td mat-cell *matCellDef="let element" class="b-a">
+                    <div class="bar"> {{element.rt}} </div>
+                </td>
             </ng-container>
 
             <!-- email Column -->
             <ng-container matColumnDef="advisorName">
-                <th mat-header-cell *matHeaderCellDef class="b-a"> Advisor Name </th>
-                <td mat-cell *matCellDef="let element" class="b-a"> {{element.advisorName}} </td>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="advisorName" class="b-a"> Advisor Name </th>
+                <td mat-cell *matCellDef="let element" class="b-a">
+                    <div class="bar">
+                        {{element.advisorName}} </div>
+                </td>
             </ng-container>
 
             <!-- mobile Column -->
             <ng-container matColumnDef="arnria">
-                <th mat-header-cell *matHeaderCellDef class="b-a"> ARN / RIA </th>
-                <td mat-cell *matCellDef="let element" class="b-a"> {{element.arnria}} </td>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="arnria" class="b-a"> ARN / RIA </th>
+                <td mat-cell *matCellDef="let element" class="b-a">
+                    <div class="bar"> {{element.arnria}} </div>
+                </td>
             </ng-container>
 
             <!-- using Since Column -->
             <ng-container matColumnDef="doneOn">
-                <th mat-header-cell *matHeaderCellDef class="b-a"> Done On </th>
-                <td mat-cell *matCellDef="let element" class="b-a fc-green"> {{element.doneOn}} </td>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="doneOn" class="b-a"> Done On </th>
+                <td mat-cell *matCellDef="let element" class="b-a fc-green">
+                    <div class="bar"> {{element.doneOn}} </div>
+                </td>
             </ng-container>
 
             <!-- last Login Column -->
             <ng-container matColumnDef="doneBy">
-                <th mat-header-cell *matHeaderCellDef class="b-a"> Done By </th>
-                <td mat-cell *matCellDef="let element" class="b-a fc-warning"> {{element.doneBy}} </td>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="doneBy" class="b-a"> Done By </th>
+                <td mat-cell *matCellDef="let element" class="b-a fc-warning">
+                    <div class="bar"> {{element.doneBy}} </div>
+                </td>
             </ng-container>
 
             <!-- acc Status column -->
             <ng-container matColumnDef="total">
-                <th mat-header-cell *matHeaderCellDef class="b-a"> Total </th>
-                <td mat-cell *matCellDef="let element" class="b-a fc-yellow"> {{element.total}} </td>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="total" class="b-a"> Total </th>
+                <td mat-cell *matCellDef="let element" class="b-a fc-yellow">
+                    <div class="bar"> {{element.total}} </div>
+                </td>
             </ng-container>
             <ng-container matColumnDef="before">
-                <th mat-header-cell *matHeaderCellDef class="b-a"> Before </th>
-                <td mat-cell *matCellDef="let element" class="b-a"> {{element.before}} </td>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="before" class="b-a"> Before </th>
+                <td mat-cell *matCellDef="let element" class="b-a">
+                    <div class="bar"> {{element.before}} </div>
+                </td>
             </ng-container>
             <ng-container matColumnDef="after">
-                <th mat-header-cell *matHeaderCellDef class="b-a"> After</th>
-                <td mat-cell *matCellDef="let element" class="b-a"> {{element.after}} </td>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="advisorName" class="b-a"> After</th>
+                <td mat-cell *matCellDef="let element" class="b-a">
+                    <div class="bar"> {{element.after}} </div>
+                </td>
             </ng-container>
             <ng-container matColumnDef="aumBalance">
-                <th mat-header-cell *matHeaderCellDef class="b-a"> AUM Balance</th>
-                <td mat-cell *matCellDef="let element" class="b-a"> {{element.aumBalance}} </td>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="aumBalance" class="b-a"> AUM Balance</th>
+                <td mat-cell *matCellDef="let element" class="b-a">
+                    <div class="bar"> {{element.aumBalance}} </div>
+                </td>
             </ng-container>
             <ng-container matColumnDef="transaction">
-                <th mat-header-cell *matHeaderCellDef class="b-a"> Transaction </th>
-                <td mat-cell *matCellDef="let element" class="b-a"> {{element.transaction}} </td>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="transaction" class="b-a"> Transaction </th>
+                <td mat-cell *matCellDef="let element" class="b-a">
+                    <div class="bar"> {{element.transaction}} </div>
+                </td>
             </ng-container>
             <ng-container matColumnDef="report">
                 <th mat-header-cell *matHeaderCellDef class="b-a">Report</th>
                 <td mat-cell *matCellDef="let element" class="b-a">
-                    <button mat-stroked-button class="bg-primary">
-                        Report
-                    </button>
+                    <div class="bar">
+                        <button mat-stroked-button class="bg-primary text-white">
+                            Report
+                        </button> </div>
             </ng-container>
             <ng-container matColumnDef="menu">
-                <th mat-header-cell *matHeaderCellDef class="b-a"> </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="advisorName" class="b-a"> </th>
                 <td mat-cell *matCellDef="let element" class="b-a">
+                    <div class="bar">
+                        <mat-menu #appMenu="matMenu">
+                            <button mat-menu-item>Recalculate Balance Units</button>
+                            <button mat-menu-item>Deactivate Account</button>
+                            <button mat-menu-item>Merge Scheme Code</button>
+                            <button mat-menu-item>Order Historical file</button>
+                        </mat-menu>
 
-                    <mat-menu #appMenu="matMenu">
-                        <button mat-menu-item>Recalculate Balance Units</button>
-                        <button mat-menu-item>Deactivate Account</button>
-                        <button mat-menu-item>Merge Scheme Code</button>
-                        <button mat-menu-item>Order Historical file</button>
-                    </mat-menu>
+                        <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
 
-                    <button mat-icon-button [matMenuTriggerFor]="appMenu">
-                        <mat-icon>more_vert</mat-icon>
-                    </button>
+                    </div>
                 </td>
             </ng-container>
 
