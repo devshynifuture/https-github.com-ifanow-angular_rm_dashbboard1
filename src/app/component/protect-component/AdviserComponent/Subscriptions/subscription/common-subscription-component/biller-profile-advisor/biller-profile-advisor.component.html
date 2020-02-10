@@ -337,7 +337,7 @@
                                 <mat-form-field>
                                     <textarea #footnote class="form-control br-0" formControlName="footnote" matInput maxLength="{{getFrormControlMisc().footnote.maxLength}}" rows="5"></textarea>
                                     <mat-error class="f-12">This field is required</mat-error>
-                                    <mat-hint align="end" class="f-12">{{footnote.value.length}}/160</mat-hint>
+                                    <mat-hint align="end" class="f-12">{{footnote.value.length}}/500</mat-hint>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -352,7 +352,7 @@
                                 <mat-form-field>
                                     <textarea #terms class="form-control br-0" formControlName="terms" matInput maxLength="{{getFrormControlMisc().terms.maxLength}}" rows="4"></textarea>
                                     <mat-error class="f-12">This field is required</mat-error>
-                                    <mat-hint align="end" class="f-12">{{terms.value.length}}/160</mat-hint>
+                                    <mat-hint align="end" class="f-12">{{terms.value.length}}/500</mat-hint>
                                 </mat-form-field>
                             </div>
                         </div>
