@@ -57,7 +57,7 @@ export class AddPoSavingComponent implements OnInit {
   }
   lisNominee(value) {
     console.log(value)
-    this.nomineesListFM = Object.assign([], value.familyMembersList);
+    this.nomineesListFM = Object.assign([], this.utils.calculateAgeFromCurrentDate(value.familyMembersList));
   }
   changeAccountBalance(data) {
     (this.poSavingForm.get('ownershipType').value == 1) ? (this.accBalance = 1500000,
@@ -86,7 +86,7 @@ export class AddPoSavingComponent implements OnInit {
     }
     this.posavingData = data
     this.poSavingForm = this.fb.group({
-      ownerName: [data.ownerName, [Validators.required]],
+      ownerName: [data.ownerName, [Validators.required, UtilService.ageValidators]],
       accBal: [data.accountBalance, [Validators.required, Validators.min(20)]],
       balAsOn: [new Date(data.balanceAsOn), [Validators.required]],
       ownershipType: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]],
