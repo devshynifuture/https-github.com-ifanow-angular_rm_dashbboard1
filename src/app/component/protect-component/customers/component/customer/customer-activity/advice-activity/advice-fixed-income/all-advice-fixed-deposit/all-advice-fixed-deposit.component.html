@@ -1,7 +1,7 @@
 <div class="wrapper-20" *ngIf="allAdvice == true">
     <div class="row">
         <div class="col-md-6 p-0">
-            <button mat-stroked-button class="text-primary mr-12 br-0 b-priamry" (click) = "allAdvice = false">Advice
+            <button mat-stroked-button class="text-primary mr-12 br-0 b-priamry" (click)="allAdvice = false">Advice
                 given</button>
             <button mat-stroked-button class="btn-primary br-0">All Fixed income</button>
         </div>
@@ -38,17 +38,11 @@
             </mat-menu>
         </div>
     </div>
-    <!-- <div class="row pt-44">
+    <div class="row pt-44">
         <div class="col-md-12 p-0">
-            <button mat-button class="b-a pr-8 br-0" [matMenuTriggerFor]="menu">Action<i
-                    class="material-icons text-custom pl-8">
-                    arrow_drop_down
-                </i></button>
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item>Request for content</button>
-            </mat-menu>
+            <app-advice-action></app-advice-action>
         </div>
-    </div> -->
+    </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
             <h5 class="m-0 text-black pt-8">Fixed deposit</h5>
@@ -255,6 +249,6 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
     </table>
 </div>
-<div  *ngIf="allAdvice == false">
+<div *ngIf="allAdvice == false">
     <app-advice-fixed-income></app-advice-fixed-income>
 </div>

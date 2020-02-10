@@ -1,17 +1,21 @@
 ::ng-deep .mat-checkbox-checked .mat-checkbox-background,
 .mat-checkbox-indeterminate .mat-checkbox-background {
-    background-color: #008FFF !important;
+  background-color: #008FFF !important;
 }
 
 // overwrite the ripple overlay on hover and click
- ::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
-    background-color: #008FFF !important;
+::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
+  background-color: #008FFF !important;
 }
 
 ::ng-deep .mat-checkbox-layout {
-    vertical-align: top !important;
+  vertical-align: top !important;
 }
 
 .height160 {
-    height: 160px;
+  height: 160px;
+}
+
+::ng-deep .example-card-315 .mat-card {
+  height: 315px;
 }

@@ -14,6 +14,10 @@ import { AddClientMappingComponent } from './settings-transactions/settings-clie
 import { ConfirmationTransactionComponent } from './overview-transactions/doTransaction/confirmation-transaction/confirmation-transaction.component';
 import { SwitchTransactionComponent } from './overview-transactions/doTransaction/switch-transaction/switch-transaction.component';
 import { RedemptionTransactionComponent } from './overview-transactions/doTransaction/redemption-transaction/redemption-transaction.component';
+import { SwpTransactionComponent } from './overview-transactions/doTransaction/swp-transaction/swp-transaction.component';
+import { StpTransactionComponent } from './overview-transactions/doTransaction/stp-transaction/stp-transaction.component';
+import { SipTransactionComponent } from './overview-transactions/doTransaction/sip-transaction/sip-transaction.component';
+import { TransactionsHistoryComponent } from './transactions-list/transactions-history/transactions-history.component';
 
 export const componentList = [
     TransactionAddComponent,
@@ -26,6 +30,10 @@ export const componentList = [
     ConfirmationTransactionComponent,
     SwitchTransactionComponent,
     RedemptionTransactionComponent,
+    SwpTransactionComponent,
+    StpTransactionComponent,
+    SipTransactionComponent,
+    TransactionsHistoryComponent
 ]
 @NgModule({
     declarations: componentList,

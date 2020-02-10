@@ -3,6 +3,9 @@ import { Validators, FormBuilder } from '@angular/forms';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { ConfirmationTransactionComponent } from '../confirmation-transaction/confirmation-transaction.component';
+import { OnlineTrasactionComponent } from '../online-trasaction/online-trasaction.component';
+import { OnlineTransactionService } from '../../../online-transaction.service';
+import { ProcessTransactionService } from '../process-transaction.service';
 
 @Component({
   selector: 'app-purchase-trasaction',
@@ -18,17 +21,25 @@ export class PurchaseTrasactionComponent implements OnInit {
   selectedFamilyMember: any;
   confirmTrasaction = false
   transactionType: any;
-  folioSelection :[2] 
-
-  constructor(private subInjectService: SubscriptionInject,
+  folioSelection: [2]
+  schemeSelection: [2]
+  selectScheme = 2;
+  schemeList: any;
+  navOfSelectedScheme: any;
+  schemeDetails: any;
+  reInvestmentOpt = [];
+  transactionSummary: {};
+  platformType = 2
+  ExistingOrNew: any;
+  maiSchemeList: any;
+  constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService, private subInjectService: SubscriptionInject,
     private fb: FormBuilder) { }
   @Input()
   set data(data) {
     this.inputData = data;
-    this.transactionType =  data.transactionType
+    this.transactionType = data.transactionType
     this.selectedFamilyMember = data.selectedFamilyMember
-    console.log('This is Input data of FixedDepositComponent ', data);
-
+    console.log('This is Input data', data);
     if (this.isViewInitCalled) {
       this.getdataForm('');
     }
@@ -40,8 +51,78 @@ export class PurchaseTrasactionComponent implements OnInit {
 
   ngOnInit() {
     this.getdataForm(this.inputData);
+    this.transactionSummary = { selectedFamilyMember: this.inputData.selectedFamilyMember }
+    console.log('this.transactionSummary', this.transactionSummary)
   }
-  onAddTransaction(value,data){
+  selectSchemeOption(value) {
+    console.log('value selction scheme', value)
+    this.selectScheme = value
+  }
+
+  getSchemeList(value) {
+
+    if (this.selectScheme == 2 && value.length > 2) {
+      let obj = {
+        searchQuery: value,
+        bseOrderType: 'ORDER',
+        aggregatorType: 2,
+        advisorId: 414,
+        tpUserCredentialId: 212,
+      }
+      this.onlineTransact.getNewSchemes(obj).subscribe(
+        data => this.getNewSchemesRes(data)
+      );
+    } else {
+
+    }
+  }
+  reinvest(scheme) {
+    this.schemeDetails = scheme
+    this.transactionSummary = {
+      schemeName: scheme.schemeName
+    }
+    console.log('schemeDetails == ', this.schemeDetails)
+  }
+  selectExistingOrNew(value) {
+    this.ExistingOrNew = value
+  }
+  selectedScheme(scheme) {
+    this.transactionSummary = { schemeName: scheme.schemeName }
+    this.navOfSelectedScheme = scheme.nav
+    let obj1 = {
+      mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
+      aggregatorType: 2,
+      orderType: 'ORDER',
+      userAccountType: 1,
+    }
+    this.onlineTransact.getSchemeDetails(obj1).subscribe(
+      data => this.getSchemeDetailsRes(data)
+    );
+  }
+  getSchemeDetailsRes(data) {
+    console.log('getSchemeDetailsRes == ', data)
+    this.maiSchemeList = data
+    this.schemeDetails = data[0]
+    this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
+    if (data.length > 1) {
+      this.reInvestmentOpt = data
+      console.log('reinvestment', this.reInvestmentOpt)
+    } if (data.length == 1) {
+      this.reInvestmentOpt = []
+    }
+  }
+  enteredAmount(value){
+    this.transactionSummary = { enteredAmount: value }
+  }
+  getNewSchemesRes(data) {
+    console.log('new schemes', data)
+    this.schemeList = data
+  }
+  getDefaultDetails(data) {
+
+    console.log('get defaul here yupeeee', data)
+  }
+  onAddTransaction(value, data) {
     this.confirmTrasaction = true
     const fragmentData = {
       flag: 'addNsc',
@@ -57,11 +138,10 @@ export class PurchaseTrasactionComponent implements OnInit {
           if (UtilService.isRefreshRequired(sideBarData)) {
             // this.getNscSchemedata();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
           }
           rightSideDataSub.unsubscribe();
         }
-       
+
       }
     );
   }

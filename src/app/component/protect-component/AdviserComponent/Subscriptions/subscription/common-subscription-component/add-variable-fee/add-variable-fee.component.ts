@@ -7,7 +7,6 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from "../../../../../../../auth-service/authService";
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-
 @Component({
   selector: 'app-add-variable-fee',
   templateUrl: './add-variable-fee.component.html',
@@ -49,14 +48,17 @@ export class AddVariableFeeComponent implements OnInit {
   otherAssetDataId: any;
   _data: any;
   @Input() set data(data) {
+    let stock = this.enumService.getOtherAssetData().filter((x) => x.subAssetClassName == "Stocks");
+    console.log(stock,this.enumService.getOtherAssetData(),"stock 123");
+    
     if (data == "") {
       // this.otherAssetData=UtilService.
-      this.otherAssetData = Object.assign([], this.enumService.getOtherAssetData());
+      this.otherAssetData = Object.assign([], stock);
       return;
     }
     else {
       this.ischeckVariableData = data
-      this.otherAssetData = Object.assign([], this.enumService.getOtherAssetData());
+      this.otherAssetData = Object.assign([], stock);
       this.getFeeFormUpperData(data)
     }
   }
@@ -64,10 +66,14 @@ export class AddVariableFeeComponent implements OnInit {
   @Output() outputVariableData = new EventEmitter();
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private fb: FormBuilder,
-    private subService: SubscriptionService, private enumService: EnumServiceService, private eventService: EventService) {
+    private subService: SubscriptionService, private enumService: EnumServiceService,  private eventService: EventService) {
   }
 
   ngOnInit() {
+    // if(this.enumService.getOtherAssetData().length <= 0 ){
+    //   this.otherAssetData = Object.assign([], this.enumService.getOtherAssetData());
+    // }
+    // console.log(this.enumService.getOtherAssetData(), this.enumService.getOtherAssetData().length <= 0 , "check data variable fee");
     this.advisorId = AuthService.getAdvisorId();
     this.setValidation(false);
     (this.ischeckVariableData) ? console.log("fixed fee Data") : this.createVariableFeeForm('');
@@ -117,7 +123,7 @@ export class AddVariableFeeComponent implements OnInit {
     // , Validators.max(99) 
     this.getFormControl().serviceName.maxLength = 40;
     this.getFormControl().code.maxLength = 10;
-    this.getFormControl().description.maxLength = 160;
+    this.getFormControl().description.maxLength = 500;
   }
 
   getFeeFormUpperData(data) {
@@ -147,7 +153,7 @@ export class AddVariableFeeComponent implements OnInit {
         pricing: [data.servicePricing.pricingList[2].pricing, [Validators.required]]
       });
       if (data.servicePricing.pricingList[2].serviceSubAssets != undefined) {
-        this.otherAssetData = data.servicePricing.pricingList[2].serviceSubAssets
+        this.otherAssetData = data.servicePricing.pricingList[2].serviceSubAssets.filter((x)=> x.subAssetClassName == "Stocks")
       }
       // this.otherAssetData = data.servicePricing.pricingList[2].serviceSubAssets
       // this.otherAssetData = data.servicePricing.pricingList[2].serviceSubAssets
@@ -159,16 +165,17 @@ export class AddVariableFeeComponent implements OnInit {
       console.log(this.otherAssetData)
       this.getFormControl().serviceName.maxLength = 40;
       this.getFormControl().code.maxLength = 10;
-      this.getFormControl().description.maxLength = 160;
+      this.getFormControl().description.maxLength = 500;
     }
   }
 
   Close(state) {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
-
-    this.otherAssetData.forEach(element => {
-      element.isActive = 0
-    });
+    if (this.serviceId == undefined) {
+      this.otherAssetData.forEach(element => {
+        element.isActive = 0
+      });
+    }
     this.setValidation(false);
     this.createVariableFeeForm('')
     this.otherAssetData = []
@@ -185,6 +192,13 @@ export class AddVariableFeeComponent implements OnInit {
       this.variableFeeData.get('serviceName').markAsTouched();
       this.variableFeeData.get('code').markAsTouched();
       this.variableFeeData.get('billEvery').markAsTouched();
+      this.variableFeeData.get('pricing').markAsTouched();
+      this.getFormControl().regularFees.controls.equity.markAsTouched();
+      this.getFormControl().regularFees.controls.debt.markAsTouched();
+      this.getFormControl().regularFees.controls.liquid.markAsTouched();
+      this.getFormControl().directFees.controls.equity.markAsTouched();
+      this.getFormControl().directFees.controls.debt.markAsTouched();
+      this.getFormControl().directFees.controls.liquid.markAsTouched();
     } else if (this.variableFeeData.controls.directFees.invalid || this.variableFeeData.controls.regularFees.invalid) {
       this.mutualFundFees = true;
       return;

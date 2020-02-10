@@ -14,6 +14,7 @@ import { MaterialModule } from 'src/app/material/material';
 import { SettingsTransactionsModule } from './settings-transactions/settings-transactions.module';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
+// import { TransactionsHistoryComponent } from './transactions-list/transactions-history/transactions-history.component';
 
 // import { TransactionsComponent } from './t/transactions.component';
 
@@ -27,7 +28,8 @@ import { CustomCommonModule } from 'src/app/common/custom.common.module';
     TransactionsListComponent,
     InvestorsTransactionsComponent,
     MandatesTransactionsComponent,
-    KycTransactionsComponent
+    KycTransactionsComponent,
+
   ],
   imports: [
     CommonModule,

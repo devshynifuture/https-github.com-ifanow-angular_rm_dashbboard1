@@ -75,7 +75,7 @@ export class AddScssComponent implements OnInit {
     this.scssData = data;
     this.scssSchemeForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
-      amtInvested: [data.amountInvested, [Validators.required, Validators.min(1500), Validators.max(1500000)]],
+      amtInvested: [data.amountInvested, [Validators.required, Validators.min(1000), Validators.max(1500000)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
       ownershipType: [data.ownerTypeI ? String(data.ownerTypeId) : '1', [Validators.required]]
     });

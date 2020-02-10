@@ -17,17 +17,18 @@
         <div class="row">
             <div class="col-md-8 p-0">
                 <h5 class="m-0 text-black pb-12">Select an investor from the search box below...</h5>
-                <mat-form-field class="w-100">
-                    <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
-                        [data]='ownerData' formControlName="ownerName" class="form-control br-0">
-                        <mat-option value=''>Search family members</mat-option>
-                        <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName" (click)="ownerDetails(f)">
-                            <span>{{f.userName}}</span>
-                        </mat-option>
-                    </mat-select>
-                    <mat-error class="f-12 pt-4">
-                        This field is required
-                    </mat-error>
+                <mat-form-field>
+                    <input [matAutocomplete]="auto1" aria-label="client" class="form-control br-0 pl-8"
+                        (keyup)="getFamilyList($event.target.value)" formControlName="ownerName" matInput>
+                    <mat-autocomplete #auto1="matAutocomplete">
+                            <mat-option value=''>Search family members</mat-option>
+                            <mat-option *ngFor="let f of nomineesListFM" [value]="f.name" (click)="ownerDetails(f)">
+                                <span>{{f.name}}</span>
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error class="f-12 pt-4">
+                            This field is required
+                        </mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -52,8 +53,8 @@
                     <div class="col-md-8 pl-0">
                         <h3 class="m-0" [ngClass]="{ 'text-primary': selectedDiv == 'PURCHASE' }"> Purchase</h3>
                         <p class="m-0 roboto text-custom pt-4 f-13"
-                            [ngClass]="{ 'text-primary': selectedDiv == 'PURCHASE' }">Invest a
-                            lumpsum amount in a jiffy</p>
+                            [ngClass]="{ 'text-primary': selectedDiv == 'PURCHASE' }">Invest a lumpsum amount in a jiffy
+                        </p>
                     </div>
                 </div>
             </div>
@@ -70,7 +71,8 @@
                         <h3 class="m-0" [ngClass]="{ 'text-primary': selectedDiv == 'SWITCH' }"> Switch</h3>
                         <p class="m-0 roboto text-custom pt-4 f-13"
                             [ngClass]="{ 'text-primary': selectedDiv == 'SWITCH' }">Switch lumpsum from one scheme to
-                            another</p>
+                            another
+                        </p>
                     </div>
                 </div>
             </div>
@@ -121,7 +123,8 @@
                         <h3 class="m-0" [ngClass]="{ 'text-primary': selectedDiv == 'STP' }"> STP</h3>
                         <p class="m-0 roboto text-custom pt-4 f-13"
                             [ngClass]="{ 'text-primary': selectedDiv == 'STP' }">Systematic transfer from one scheme to
-                            another</p>
+                            another
+                        </p>
                     </div>
                 </div>
             </div>
@@ -150,9 +153,8 @@
     <div class="pt-90 pr-20 pl-20 pb-44" *ngIf="formStep== 'step-3'">
         <div class="row">
             <div class="col-md-12 p-0">
-                <h5 class="m-0 text-black"> <img src="/assets/images/svg/back-arrow.svg"
-                        class="v-initial pr-12">Investor
-                    name: Rahul Jain
+                <h5 class="m-0 text-black"> <img (click)="baackToSelectTransaction()"
+                        src="/assets/images/svg/back-arrow.svg" class="v-initial pr-12">Investor name: Rahul Jain
                 </h5>
             </div>
         </div>
@@ -162,13 +164,12 @@
                 <mat-radio-group aria-label="Select an option" formControlName="schemeSelection">
                     <mat-radio-button [value]="1"
                         [ngClass]="transactionAddForm.get('schemeSelection').value == 1 ? 'text-primary bu-primary': 'b-a text-primitive'">
-                        Invest in
-                        existing scheme
+                        Invest in existing scheme
                     </mat-radio-button>
                     <mat-radio-button [value]="2"
                         [ngClass]="transactionAddForm.get('schemeSelection').value == 2 ? 'text-primary bu-primary': 'b-a text-primitive'">
-                        Select a new
-                        scheme</mat-radio-button>
+                        Select a new scheme
+                    </mat-radio-button>
                 </mat-radio-group>
                 <h5 class="m-0 pt-28 text-black pb-12">Select a scheme to invest in</h5>
                 <div class="form-control mb-0 add-transactions">
@@ -221,29 +222,24 @@
                     <div class="col-md-12 p-0 text-center">
                         <img src="/assets/images/svg/last-step.svg" class="pt-28">
                         <h3 class="m-0 text-primary pt-24">So far so good. One last step!</h3>
-                        <h5 class="m-0 pt-12 pb-12 b-h-dashed">Your client needs to <b>authorize</b> the transaction
-                            to <b>complete</b> it.</h5>
+                        <h5 class="m-0 pt-12 pb-12 b-h-dashed">Your client needs to <b>authorize</b> the transaction to
+                            <b>complete</b> it.</h5>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="p-8">
                             <p class="m-0 roboto pt-28"> An email has been sent to <b>registered email id.</b> Your
-                                client
-                                should
-                                review the <b>transaction
+                                client should review the <b>transaction
                                     details</b> and click on the <b>payment link</b> provided there.</p>
 
 
                             <p class="m-0 roboto pt-28"> Next, your client will be redirected to the <b>net banking
-                                    page.</b> The
-                                client needs to login and make
-                                the payment.</p>
+                                    page.</b> The client needs to login and make the payment.</p>
 
 
                             <p class="m-0 roboto pt-28"> Once the payment is done, NSE NMF will send a <b>confirmation
-                                    email</b> to
-                                the registered email id.</p>
+                                    email</b> to the registered email id.</p>
 
 
                             <p class="m-0 roboto pt-28"> Additionally, the Purchase transaction has been added to the
@@ -329,24 +325,14 @@
                     <mat-tab label="Rationale">
                         <div class="p-20 rationaletabs">
                             <p class="m-0 roboto text-custom">The scheme seeks to generate long-term capital
-                                appreciation
-                                from a
-                                diversified portfolio of
-                                predominantly equity and equity related instruments.
+                                appreciation from a diversified portfolio of predominantly equity and equity related
+                                instruments.
                             </p>
                             <p class="m-0 roboto text-custom pt-20"> Lorem ipsum dolor sit amet, consectetur adipiscing
-                                elit,
-                                sed
-                                do
-                                eiusmod tempor incididunt ut labore
-                                et dolore magna aliqua. Sit amet nulla facilisi morbi tempus iaculis. Dui ut ornare
-                                lectus
-                                sit
-                                amet
-                                est placerat in egestas. Sed turpis tincidunt id aliquet risus feugiat in. Magna sit
-                                amet
-                                purus
-                                gravida quis blandit turpis cursus.
+                                elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sit amet nulla
+                                facilisi morbi tempus iaculis. Dui ut ornare lectus sit amet est placerat in egestas.
+                                Sed turpis tincidunt id aliquet risus feugiat in. Magna sit amet purus gravida quis
+                                blandit turpis cursus.
                             </p>
                             <div class="row pt-12">
                                 <div class="col-md-12 p-0">

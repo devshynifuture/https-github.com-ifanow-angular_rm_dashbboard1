@@ -5,6 +5,11 @@ import { PurchaseTrasactionComponent } from '../purchase-trasaction/purchase-tra
 import { UtilService } from 'src/app/services/util.service';
 import { RedemptionTransactionComponent } from '../redemption-transaction/redemption-transaction.component';
 import { SwitchTransactionComponent } from '../switch-transaction/switch-transaction.component';
+import { SipTransactionComponent } from '../sip-transaction/sip-transaction.component';
+import { StpTransactionComponent } from '../stp-transaction/stp-transaction.component';
+import { SwpTransactionComponent } from '../swp-transaction/swp-transaction.component';
+import { OnlineTransactionService } from '../../../online-transaction.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-online-trasaction',
@@ -42,8 +47,10 @@ export class OnlineTrasactionComponent implements OnInit {
   inputData: any;
   isViewInitCalled: any;
   selectedFamilyMember: any;
+  advisorId: any;
+  clientId: any;
 
-  constructor(private subInjectService: SubscriptionInject,
+  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private fb: FormBuilder) {
   }
 
@@ -63,9 +70,24 @@ export class OnlineTrasactionComponent implements OnInit {
 
   ngOnInit() {
     this.getdataForm(this.inputData)
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
   }
-
-
+  getFamilyList(value) {
+    let obj = {
+      advisorId: this.advisorId,
+     name : value
+    }
+    if(value.length > 2){
+      this.onlineTransact.getFamilyMemberList(obj).subscribe(
+        data => this.getFamilyMemberListRes(data)
+      );
+    }
+  }
+  getFamilyMemberListRes(data) {
+    console.log('getFamilyMemberListRes', data)
+    this.nomineesListFM = data.familyMembers
+  }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
@@ -115,7 +137,7 @@ export class OnlineTrasactionComponent implements OnInit {
       data,
       id: 1,
       state: 'open65',
-      componentName: (value == 'PURCHASE') ? PurchaseTrasactionComponent : (value == 'REDEMPTION') ? RedemptionTransactionComponent :(value == 'SIP') ? SwitchTransactionComponent:(value == 'SWP') ? RedemptionTransactionComponent:(value == 'STP') ? PurchaseTrasactionComponent:(value == 'SWITCH') ? SwitchTransactionComponent : ''
+      componentName: (value == 'PURCHASE') ? PurchaseTrasactionComponent : (value == 'REDEMPTION') ? RedemptionTransactionComponent : (value == 'SIP') ? SipTransactionComponent : (value == 'SWP') ? SwpTransactionComponent : (value == 'STP') ? StpTransactionComponent : (value == 'SWITCH') ? SwitchTransactionComponent : ''
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -150,7 +172,9 @@ export class OnlineTrasactionComponent implements OnInit {
   onAddTransaction() {
     console.log(this.transactionAddForm);
   }
-
+  baackToSelectTransaction() {
+    this.formStep = 'step-2';
+  }
   saveAndNext() {
     console.log(this.formStep);
     if (this.transactionAddForm.get('ownerName').valid) {
