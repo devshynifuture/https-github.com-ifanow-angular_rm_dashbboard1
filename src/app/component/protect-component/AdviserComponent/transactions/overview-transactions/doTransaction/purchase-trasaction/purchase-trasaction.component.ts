@@ -186,7 +186,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       folioNo: (this.schemeDetails.folioNo==undefined)?null:this.schemeDetails.folioNo,
       // schemePlan : ,
       tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
-      // tpSubBrokerCredentialId : ,
+      tpSubBrokerCredentialId : this.getDataSummary.defaultCredential.subBrokerCredentialId,
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
       adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
       clientId: this.getDataSummary.defaultClient.clientId,
