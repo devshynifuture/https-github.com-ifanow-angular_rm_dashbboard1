@@ -34,4 +34,7 @@ export class OnlineTransactionService {
   purchase(data){
     return this.http.postEncoded(apiConfig.MAIN_URL + appConfig.PURCHASE, data)
   }
+  getExistingSchemes(data){
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_EXISTING_SCHEMES, data, 1)
+  }
 }

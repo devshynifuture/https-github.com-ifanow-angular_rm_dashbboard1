@@ -62,21 +62,31 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   getSchemeList(value) {
-
+    let obj = {
+      searchQuery: value,
+      bseOrderType: 'ORDER',
+      aggregatorType: 2,
+      advisorId: 414,
+      tpUserCredentialId: 212,
+      familyMemberId:this.getDataSummary.defaultClient.familyMemberId,
+      clientId:this.getDataSummary.defaultClient.clientId,
+    }
     if (this.selectScheme == 2 && value.length > 2) {
-      let obj = {
-        searchQuery: value,
-        bseOrderType: 'ORDER',
-        aggregatorType: 2,
-        advisorId: 414,
-        tpUserCredentialId: 212,
-      }
       this.onlineTransact.getNewSchemes(obj).subscribe(
         data => this.getNewSchemesRes(data)
       );
     } else {
-
+      this.onlineTransact.getExistingSchemes(obj).subscribe(
+        data => this.getExistingSchemesRes(data)
+      );
     }
+  }
+  getNewSchemesRes(data) {
+    console.log('new schemes', data)
+    this.schemeList = data
+  }
+  getExistingSchemesRes(data){
+    this.schemeList = data
   }
   reinvest(scheme) {
     this.schemeDetails = scheme
@@ -87,6 +97,9 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
   selectExistingOrNew(value) {
     this.ExistingOrNew = value
+    // if(this.ExistingOrNew == 1){
+    //   this.getExistingSchemes()
+    // }
   }
   selectedScheme(scheme) {
     this.scheme = scheme
@@ -116,10 +129,6 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
   enteredAmount(value) {
     this.transactionSummary = { enteredAmount: value }
-  }
-  getNewSchemesRes(data) {
-    console.log('new schemes', data)
-    this.schemeList = data
   }
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
@@ -183,10 +192,10 @@ export class PurchaseTrasactionComponent implements OnInit {
       mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
       productCode: this.schemeDetails.schemeCode,
       isin: this.schemeDetails.isin,
-      folioNo: (this.schemeDetails.folioNo==undefined)?null:this.schemeDetails.folioNo,
+      folioNo: (this.schemeDetails.folioNo == undefined) ? null : this.schemeDetails.folioNo,
       // schemePlan : ,
       tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
-      tpSubBrokerCredentialId : this.getDataSummary.defaultCredential.subBrokerCredentialId,
+      tpSubBrokerCredentialId: this.getDataSummary.defaultCredential.subBrokerCredentialId,
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
       adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
       clientId: this.getDataSummary.defaultClient.clientId,
@@ -205,12 +214,12 @@ export class PurchaseTrasactionComponent implements OnInit {
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       // teamMemberSessionId : ,
     }
-    console.log('new purchase obj',obj)
+    console.log('new purchase obj', obj)
     this.onlineTransact.purchase(obj).subscribe(
       data => this.purchaseRes(data)
     );
   }
-  purchaseRes(data){
-    console.log('purchase transaction ==',data)
+  purchaseRes(data) {
+    console.log('purchase transaction ==', data)
   }
 }
