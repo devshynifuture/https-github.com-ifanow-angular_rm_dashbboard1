@@ -95,7 +95,9 @@ export class PayeeSettingsComponent implements OnInit {
   set data(data) {
     this.inputData = data;
     console.log(data, "check ani");
-    
+    if(!this.inputData.flag){
+      delete data.id;
+    }
     // this.clientId = AuthService.getClientId()
     this.getClientPayeeSettings(data);
   }
@@ -326,11 +328,13 @@ export class PayeeSettingsComponent implements OnInit {
     //   this.subInjectService.changeNewRightSliderState({ state: 'close', data });
     //   this.eventService.openSnackBar('Client profile added Successfully', 'OK');
     // } else {
-      console.log('addClientBillerProfileRes', data);
-      this.updatedData = data;
+      if(this.inputData.flag){
+        console.log('addClientBillerProfileRes', data);
+        this.updatedData = data;
+        this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+        this.eventService.openSnackBar('Client profile added Successfully', 'OK');
+      }
       this.Close(data);
-      this.subInjectService.changeNewRightSliderState({ state: 'close', data });
-      this.eventService.openSnackBar('Client profile added Successfully', 'OK');
     // }
   }
 
