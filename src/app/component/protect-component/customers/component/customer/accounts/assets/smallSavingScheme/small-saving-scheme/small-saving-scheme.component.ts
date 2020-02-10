@@ -13,6 +13,6 @@ export class SmallSavingSchemeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selectedTab = 6;
+    this.selectedTab = 1;
   }
 }

@@ -71,7 +71,7 @@ export class AddPoMisComponent implements OnInit {
   }
   lisNominee(value) {
     console.log(value)
-    this.nomineesListFM = Object.assign([], value.familyMembersList);
+    this.nomineesListFM = Object.assign([], this.utils.calculateAgeFromCurrentDate(value.familyMembersList));
   }
   getPomisData(data) {
     this.flag = data;
@@ -82,7 +82,7 @@ export class AddPoMisComponent implements OnInit {
       this.editApi = data;
     }
     this.pomisForm = this.fb.group({
-      ownerName: [data.ownerName, [Validators.required]],
+      ownerName: [data.ownerName, [Validators.required, UtilService.ageValidators(10)]],
       amtInvested: [data.amountInvested, [Validators.required, Validators.min(1500)]],
       commencementdate: [new Date(data.commencementDate), [Validators.required]],
       tenure: [(data.tenure) ? data.tenure : '5', [Validators.required]],

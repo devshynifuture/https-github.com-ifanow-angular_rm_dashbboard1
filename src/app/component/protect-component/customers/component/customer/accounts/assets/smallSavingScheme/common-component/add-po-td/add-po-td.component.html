@@ -21,12 +21,15 @@
                     <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
                         [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                         <mat-option value=''>Search family members</mat-option>
-                        <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
+                        <mat-option *ngFor="let f of nomineesListFM" [value]="f">
                             <span>{{f.userName}}</span>
                         </mat-option>
                     </mat-select>
-                    <mat-error class="f-12">
+                    <mat-error class="f-12" *ngIf="POTDForm.get('ownerName').errors?.required">
                         This field is required
+                    </mat-error>
+                    <mat-error class="f-12" *ngIf="POTDForm.get('ownerName').errors?.isaAgeInvalid">
+                        Age should be greater than 10
                     </mat-error>
                 </mat-form-field>
             </div>

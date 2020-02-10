@@ -27,6 +27,9 @@
                 <mat-error class="f-12">
                     This field is required
                 </mat-error>
+                <mat-error class="f-12" *ngIf="poSavingForm.get('ownerName').errors?.isaAgeInvalid">
+                    Age should be greater than 10
+                </mat-error>
             </mat-form-field>
         </div>
     </div>
