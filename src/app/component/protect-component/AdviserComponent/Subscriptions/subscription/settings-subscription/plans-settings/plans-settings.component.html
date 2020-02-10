@@ -5,7 +5,7 @@
     <div class="wrapper-20 pb-0 pr-0">
         <div class="row">
 
-            <div *ngIf="planSettingData" (click)="openFragment('','plan')" class="col-md-4 pr-20 pb-20 pl-0 c-p">
+            <div *ngIf="planSettingData.length > 0" (click)="openFragment('','plan')" class="col-md-4 pr-20 pb-20 pl-0 c-p">
                 <mat-card class="example-card b-a height-470 bg-grey lter bd-1">
                     <mat-card-content>
                         <p class="text-center">
@@ -17,7 +17,7 @@
 
             <div class="col-md-4  pr-20 pb-20 pl-0 d-flex skeletonAnimation" appSkeletonLoading
                 [appSkeletonLoading]="isLoading" *ngFor="let singlePlan of planSettingData">
-                <mat-card class="example-card b-a  bg-grey lter p-0 flex-fill">
+                <mat-card class="example-card b-a  bg-grey lter p-0 flex-fill" >
                     <mat-card-header class="overflow-hidden">
                         <div class="wrapper-20 pb-10 height120 width100per">
 
@@ -39,10 +39,10 @@
                                 <p class="mb-0 text-primitive f-12">DESCRIPTION</p>
                                 <div class="mb-0 pt-8 plan-description relClass"  >
                                     <div class="bar" [ngClass]="{'height23': isLoading}">
-                                        <div class="l-h" [ngClass]="read? '':'height80'" >
+                                        <div class="l-h" [ngClass]="singlePlan.read? '':'height80'" >
                                             {{singlePlan.description}}
                                         </div>
-                                        <div (click)="readMore()" class="read-more c-p" *ngIf="singlePlan.description.length > 200">{{read?'read less':'read more'}}</div>
+                                        <div (click)="singlePlan.read = singlePlan.read? false : true" class="read-more c-p" *ngIf="singlePlan.description && singlePlan.description.length > 200">{{singlePlan.read?'read less':'read more'}}</div>
                                     </div>
                                 </div>
                             </div>
@@ -75,9 +75,10 @@
                     </mat-card-actions>
 
                 </mat-card>
+
             </div>
 
-            <div *ngIf="planSettingData == undefined"
+            <div *ngIf="planSettingData.length <= 0"
                 class="col-md-12 d-flex align-items-center flex-column justify-content-center">
                 <img class="width200" src="assets/images/svg/new-add-plan.svg">
                 <p class="f-22 f-600 pt-28">Create Plan </p>

@@ -9,6 +9,9 @@ export class SchemeMappingComponent implements OnInit {
 
   constructor() { }
 
+  dataSource = null;
+  displayedColumns: string[] = [];
+
   ngOnInit() {
   }
 

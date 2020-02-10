@@ -17,6 +17,7 @@ import { RedemptionTransactionComponent } from './overview-transactions/doTransa
 import { SwpTransactionComponent } from './overview-transactions/doTransaction/swp-transaction/swp-transaction.component';
 import { StpTransactionComponent } from './overview-transactions/doTransaction/stp-transaction/stp-transaction.component';
 import { SipTransactionComponent } from './overview-transactions/doTransaction/sip-transaction/sip-transaction.component';
+import { TransactionsHistoryComponent } from './transactions-list/transactions-history/transactions-history.component';
 
 export const componentList = [
     TransactionAddComponent,
@@ -31,7 +32,8 @@ export const componentList = [
     RedemptionTransactionComponent,
     SwpTransactionComponent,
     StpTransactionComponent,
-    SipTransactionComponent
+    SipTransactionComponent,
+    TransactionsHistoryComponent
 ]
 @NgModule({
     declarations: componentList,

@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ProcessTransactionService } from '../process-transaction.service';
+import { OnlineTransactionService } from '../../../online-transaction.service';
 
 @Component({
   selector: 'app-transaction-summary',
@@ -16,9 +17,13 @@ export class TransactionSummaryComponent implements OnInit {
   selectedFamilyMember: any;
   platformType = 2
   transactionSummary: any;
-  constructor(private processTransaction: ProcessTransactionService) { }
+  defaultCredential: any;
+  defaultClient: any;
+  allData: any;
+  clientDataList: any;
+  constructor(private onlineTransact: OnlineTransactionService, private processTransaction: ProcessTransactionService) { }
   showPlatform = false;
-
+  @Output() defaultDetails = new EventEmitter();
   @Input() set data(data) {
     this.inputData = data;
     console.log('This is Input data of FixedDepositComponent ', data);
@@ -36,11 +41,32 @@ export class TransactionSummaryComponent implements OnInit {
     console.log('iinList == ', this.investorList)
     this.transactionSummary = this.inputData
     console.log('transactionSummary', this.transactionSummary)
-
+    this.getDefaultDetails(null)
+  }
+  getDefaultDetails(platform) {
+    let obj = {
+      advisorId: 414,
+      familyMemberId: 112166,
+      clientId: 53637,
+      aggregatorType: 2
+    }
+    this.onlineTransact.getDefaultDetails(obj).subscribe(
+      data => this.getDefaultDetailsRes(data)
+    );
+  }
+  getDefaultDetailsRes(data) {
+    console.log('deault', data)
+    this.defaultDetails.emit(data);
+    this.allData = data
+    this.clientDataList = data.clientDataList
+    this.defaultCredential = data.defaultCredential
+    this.defaultClient = data.defaultClient
+    this.selectedPlatform = this.defaultCredential.aggregatorType
   }
   setPlatform(value) {
     this.selectedPlatform = value.value
     this.showPlatform = false
+    this.getDefaultDetails(this.selectedPlatform)
   }
   setInvestor(value) {
     this.selectedInvestor = value.value

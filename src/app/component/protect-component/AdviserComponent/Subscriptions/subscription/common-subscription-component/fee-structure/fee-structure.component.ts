@@ -9,6 +9,8 @@ import { SubscriptionService } from '../../../subscription.service';
 import { AddFixedFeeComponent } from '../add-fixed-fee/add-fixed-fee.component';
 import { AddVariableFeeComponent } from '../add-variable-fee/add-variable-fee.component';
 import { Router } from '@angular/router';
+import { EnumDataService } from 'src/app/services/enum-data.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-fee-structure',
@@ -18,14 +20,19 @@ import { Router } from '@angular/router';
 export class FeeStructureComponent implements OnInit {
   advisorId: any;
 
-  constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject, private eventService: EventService,private router: Router, private subService: SubscriptionService) {
+  constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject, private eventService: EventService,private router: Router, private subService: SubscriptionService, private enumService: EnumServiceService, private enumDataService: EnumDataService) {
   }
 
   _upperData;
   selectedFee;
   singleService;
   ngOnInit() {
-    console.log('FeeStructureComponent init', this.upperData);
+    // console.log('FeeStructureComponent init', this.upperData);
+    if(this.enumService.getOtherAssetData().length <= 0 ){
+      this.enumDataService.getDataForSubscriptionEnumService();
+      // this.otherAssetData = Object.assign([], this.enumService.getOtherAssetData());
+    }
+    console.log(this.enumService.getOtherAssetData(), this.enumService.getOtherAssetData().length <= 0 , "check data variable fee");
   }
   @Output() changeServiceData = new EventEmitter();
   @Input()
@@ -51,11 +58,12 @@ export class FeeStructureComponent implements OnInit {
     (value == 'fixedFee') ? component = AddFixedFeeComponent : component = AddVariableFeeComponent
     const fragmentData = {
       flag: value,
-      data,
+      data:data,
       id: 1,
       state: 'open',
       componentName: component
     };
+    
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);

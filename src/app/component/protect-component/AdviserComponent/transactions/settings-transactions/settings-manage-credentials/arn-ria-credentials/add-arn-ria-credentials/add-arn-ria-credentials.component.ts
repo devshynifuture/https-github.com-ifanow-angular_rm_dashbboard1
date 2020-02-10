@@ -87,7 +87,7 @@ export class AddArnRiaCredentialsComponent implements OnInit {
       appId: [(!data) ? '' : data.userId, [Validators.required]],
       memberId:[(!data) ? '' : data.memberId, [Validators.required]],
       pwd: [(!data) ? '' : data.apiPassword, [Validators.required]],
-      euin: [(!data) ? '' : data.euin, [Validators.required,Validators.max(200),Validators.pattern( /^[0-9]{1,6}$/)]],
+      euin: [(!data) ? '' : data.euin, [Validators.required,Validators.max(7),Validators.pattern("/^E/i[0-9]{1,6}$/")]],
       setDefault: [(!data) ? '' : data.defaultLogin, [Validators.required]],
     });
   }

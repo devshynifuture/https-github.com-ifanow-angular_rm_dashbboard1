@@ -19,7 +19,7 @@
         <div class="col-md-5 pr-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input type="text" maxlength="{{getFormControl().serviceName.maxLength}}" formControlName="serviceName" class="form-control br-0" matInput>
+                    <input type="text" (changedValue)="getFormControl().serviceName.setValue($event)" [inputValidator]="validatorType.COMPULSORY_ALPHA_NUMERIC" appInputValueValidation maxlength="{{getFormControl().serviceName.maxLength}}" formControlName="serviceName" class="form-control br-0" matInput>
                     <mat-error class="f-12" [ngClass]="{'v-h':!(isServiceValid && getFormControl().serviceName.invalid || (getFormControl().serviceName.touched && getFormControl().serviceName.invalid))}">
                         Service Name is required
                     </mat-error>
@@ -131,6 +131,14 @@
                             <input [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)" [maxLength]="4" appInputValueValidation class="form-control br-0 h-39" formControlName="liquid" placeholder="%" type="text">
                         </div>
                     </div>
+                    <mat-error class="f-12" *ngIf="
+                    (getFormControl().directFees.controls.equity.touched && getFormControl().directFees.controls.equity.hasError('required')) ||
+                    (getFormControl().directFees.controls.debt.touched && getFormControl().directFees.controls.debt.hasError('required')) ||
+                    (getFormControl().directFees.controls.liquid.touched && getFormControl().directFees.controls.liquid.hasError('required'))
+                    ">
+                        All direct Fees required
+                    </mat-error>
+
                 </div>
 
                 <div formGroupName="regularFees" class="col-md-6 p-0 bt-grey ">
@@ -158,6 +166,13 @@
                             <input [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)" [maxLength]="4" appInputValueValidation class="form-control br-0 h-39" formControlName="liquid" placeholder="%" type="text">
                         </div>
                     </div>
+                    <mat-error class="f-12" *ngIf="
+                    (getFormControl().regularFees.controls.equity.touched && getFormControl().regularFees.controls.equity.hasError('required')) ||
+                    (getFormControl().regularFees.controls.debt.touched && getFormControl().regularFees.controls.debt.hasError('required')) ||
+                    (getFormControl().regularFees.controls.liquid.touched && getFormControl().regularFees.controls.liquid.hasError('required'))
+                    ">
+                        All regular Fees required
+                    </mat-error>
                 </div>
             </div>
             <mat-error [ngClass]="{'v-h':!mutualFundFees}" class="f-12">Please fill fees details</mat-error>
@@ -191,6 +206,9 @@
                     <mat-error *ngIf="isSelectOtherAssets" class="f-12">
                        Please select atlest one other asset class fees
                     </mat-error>
+                    <mat-error class="f-12" *ngIf="getFormControl().pricing.touched && getFormControl().pricing.hasError('required')">
+                        Please fill other asset class fees
+                     </mat-error>
                 </div>
             </div>
             <mat-error *ngIf="pricing && getFormControl().pricing.invalid" class="f-12 pr-10">Please fill details

@@ -17,12 +17,12 @@
       </div>
     </div>
   </div>
-  <div [ngSwitch]="viewMode">
-    <div *ngSwitchCase="'Overview Report'">
-      <app-mutual-fund-overview></app-mutual-fund-overview>
+  <div [ngSwitch]="viewMode" >
+    <div *ngSwitchCase="'Overview Report'" >
+      <app-mutual-fund-overview ></app-mutual-fund-overview>
     </div>
     <div *ngSwitchCase="'Summary'">
-      <app-mutual-fund-summary></app-mutual-fund-summary>
+      <app-mutual-fund-summary [mutualFund]="mfData"></app-mutual-fund-summary>
     </div>
     <div *ngSwitchCase="'All Transactions'">
       <app-mutual-fund-all-transaction></app-mutual-fund-all-transaction>

@@ -22,6 +22,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   confirmTrasaction = false
   transactionType: any;
   folioSelection: [2]
+  schemeSelection: [2]
   selectScheme = 2;
   schemeList: any;
   navOfSelectedScheme: any;
@@ -51,7 +52,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   ngOnInit() {
     this.getdataForm(this.inputData);
     this.transactionSummary = { selectedFamilyMember: this.inputData.selectedFamilyMember }
-    console.log('this.transactionSummary',this.transactionSummary)
+    console.log('this.transactionSummary', this.transactionSummary)
   }
   selectSchemeOption(value) {
     console.log('value selction scheme', value)
@@ -110,9 +111,16 @@ export class PurchaseTrasactionComponent implements OnInit {
       this.reInvestmentOpt = []
     }
   }
+  enteredAmount(value){
+    this.transactionSummary = { enteredAmount: value }
+  }
   getNewSchemesRes(data) {
     console.log('new schemes', data)
     this.schemeList = data
+  }
+  getDefaultDetails(data) {
+
+    console.log('get defaul here yupeeee', data)
   }
   onAddTransaction(value, data) {
     this.confirmTrasaction = true

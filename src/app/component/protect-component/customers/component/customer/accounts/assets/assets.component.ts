@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService} from 'src/app/services/util.service';
-import {MatDialog} from '@angular/material';
-import {AuthService} from 'src/app/auth-service/authService';
-import {CustomerService} from '../../customer.service';
-import {ActivatedRoute} from '@angular/router';
-import {UpperCustomerComponent} from '../../../common-component/upper-customer/upper-customer.component';
+import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService } from 'src/app/services/util.service';
+import { MatDialog } from '@angular/material';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../customer.service';
+import { ActivatedRoute } from '@angular/router';
+import { UpperCustomerComponent } from '../../../common-component/upper-customer/upper-customer.component';
 
 @Component({
   selector: 'app-assets',
@@ -28,7 +28,7 @@ export class AssetsComponent implements OnInit {
   ];
   tab: any;
   Settab: any;
-  viewMode = 'tab1';
+  viewMode = 'tab6';
 
   constructor(private subInjectService: SubscriptionInject, private eventService: EventService,
     public dialog: MatDialog, private cusService: CustomerService, private route: ActivatedRoute) {

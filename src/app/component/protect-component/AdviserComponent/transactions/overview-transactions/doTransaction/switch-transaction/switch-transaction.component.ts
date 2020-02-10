@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 import { ConfirmationTransactionComponent } from '../confirmation-transaction/confirmation-transaction.component';
 import { UtilService } from 'src/app/services/util.service';
+import { OnlineTransactionService } from '../../../online-transaction.service';
 
 @Component({
   selector: 'app-switch-transaction',
@@ -18,8 +19,16 @@ export class SwitchTransactionComponent implements OnInit {
   inputData: any;
   isViewInitCalled=false;
   transactionType: any;
+  selectScheme=2;
+  navOfSelectedScheme: any;
+  transactionSummary: {};
+  schemeDetails: any;
+  maiSchemeList: any;
+  reInvestmentOpt: any;
+  schemeList: any;
+  showUnits = false;
 
-  constructor(private subInjectService: SubscriptionInject,
+  constructor(private subInjectService: SubscriptionInject,private onlineTransact: OnlineTransactionService,
     private fb: FormBuilder) { }
     @Input()
     set data(data) {
@@ -39,6 +48,54 @@ export class SwitchTransactionComponent implements OnInit {
   
   ngOnInit() {
     this.getdataForm(this.inputData)
+    this.transactionSummary = { selectedFamilyMember: this.inputData.selectedFamilyMember }
+  }
+  getSchemeList(value) {
+
+    if (this.selectScheme == 2 && value.length > 2) {
+      let obj = {
+        searchQuery: value,
+        bseOrderType: 'ORDER',
+        aggregatorType: 2,
+        advisorId: 414,
+        tpUserCredentialId: 212,
+      }
+      this.onlineTransact.getNewSchemes(obj).subscribe(
+        data => this.getNewSchemesRes(data)
+      );
+    } else {
+
+    }
+  }
+  selectedScheme(scheme) {
+    this.showUnits = true
+    this.transactionSummary = { schemeName: scheme.schemeName }
+    this.navOfSelectedScheme = scheme.nav
+    let obj1 = {
+      mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
+      aggregatorType: 2,
+      orderType: 'ORDER',
+      userAccountType: 1,
+    }
+    this.onlineTransact.getSchemeDetails(obj1).subscribe(
+      data => this.getSchemeDetailsRes(data)
+    );
+  }
+  getSchemeDetailsRes(data) {
+    console.log('getSchemeDetailsRes == ', data)
+    this.maiSchemeList = data
+    this.schemeDetails = data[0]
+    this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
+    if (data.length > 1) {
+      this.reInvestmentOpt = data
+      console.log('reinvestment', this.reInvestmentOpt)
+    } if (data.length == 1) {
+      this.reInvestmentOpt = []
+    }
+  }
+  getNewSchemesRes(data) {
+    console.log('new schemes', data)
+    this.schemeList = data
   }
   onAddTransaction(value,data){
     this.confirmTrasaction = true

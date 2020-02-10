@@ -3,6 +3,7 @@ import { Validators, FormBuilder } from '@angular/forms';
 import { ConfirmationTransactionComponent } from '../confirmation-transaction/confirmation-transaction.component';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
+import { OnlineTransactionService } from '../../../online-transaction.service';
 
 @Component({
   selector: 'app-stp-transaction',
@@ -19,8 +20,16 @@ export class StpTransactionComponent implements OnInit {
   selectedFamilyMember: any;
   isViewInitCalled=false;
   transactionType: any;
+  maiSchemeList: any;
+  schemeDetails: any;
+  transactionSummary: { schemeName: any; };
+  showUnits=false;
+  reInvestmentOpt: any;
+  schemeList: any;
+  navOfSelectedScheme: any;
+  selectScheme=2;
 
-  constructor(private subInjectService: SubscriptionInject,
+  constructor(private subInjectService: SubscriptionInject,private onlineTransact: OnlineTransactionService,
     private fb: FormBuilder) { }
     @Input()
     set data(data) {
@@ -40,6 +49,53 @@ export class StpTransactionComponent implements OnInit {
   
   ngOnInit() {
     this.getdataForm(this.inputData)
+  }
+  getSchemeList(value) {
+
+    if (this.selectScheme == 2 && value.length > 2) {
+      let obj = {
+        searchQuery: value,
+        bseOrderType: 'ORDER',
+        aggregatorType: 2,
+        advisorId: 414,
+        tpUserCredentialId: 212,
+      }
+      this.onlineTransact.getNewSchemes(obj).subscribe(
+        data => this.getNewSchemesRes(data)
+      );
+    } else {
+
+    }
+  }
+  getSchemeDetailsRes(data) {
+    console.log('getSchemeDetailsRes == ', data)
+    this.maiSchemeList = data
+    this.schemeDetails = data[0]
+    this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
+    if (data.length > 1) {
+      this.reInvestmentOpt = data
+      console.log('reinvestment', this.reInvestmentOpt)
+    } if (data.length == 1) {
+      this.reInvestmentOpt = []
+    }
+  }
+  getNewSchemesRes(data) {
+    console.log('new schemes', data)
+    this.schemeList = data
+  }
+  selectedScheme(scheme) {
+    this.showUnits = true
+    this.transactionSummary = { schemeName: scheme.schemeName }
+    this.navOfSelectedScheme = scheme.nav
+    let obj1 = {
+      mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
+      aggregatorType: 2,
+      orderType: 'ORDER',
+      userAccountType: 1,
+    }
+    this.onlineTransact.getSchemeDetails(obj1).subscribe(
+      data => this.getSchemeDetailsRes(data)
+    );
   }
   onAddTransaction(value,data){
     this.confirmTrasaction = true
