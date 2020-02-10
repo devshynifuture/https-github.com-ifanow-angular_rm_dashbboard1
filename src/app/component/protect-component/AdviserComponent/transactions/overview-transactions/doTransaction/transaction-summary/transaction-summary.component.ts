@@ -15,7 +15,7 @@ export class TransactionSummaryComponent implements OnInit {
   inputData: any;
   isViewInitCalled: any;
   selectedFamilyMember: any;
-  platformType = 2
+  platformType
   transactionSummary: any;
   defaultCredential: any;
   defaultClient: any;
@@ -48,7 +48,7 @@ export class TransactionSummaryComponent implements OnInit {
       advisorId: 414,
       familyMemberId: 112166,
       clientId: 53637,
-      aggregatorType: 2
+      aggregatorType: platform
     }
     this.onlineTransact.getDefaultDetails(obj).subscribe(
       data => this.getDefaultDetailsRes(data)
@@ -56,7 +56,7 @@ export class TransactionSummaryComponent implements OnInit {
   }
   getDefaultDetailsRes(data) {
     console.log('deault', data)
-    this.defaultDetails.emit(data);
+    this.defaultDetails.emit(data.defaultCredential);
     this.allData = data
     this.clientDataList = data.clientDataList
     this.defaultCredential = data.defaultCredential
@@ -70,6 +70,8 @@ export class TransactionSummaryComponent implements OnInit {
   }
   setInvestor(value) {
     this.selectedInvestor = value.value
+    this.defaultCredential.clientCode = this.selectedInvestor
+    this.defaultDetails.emit(this.defaultCredential);
     this.showInvestor = false
   }
 }
