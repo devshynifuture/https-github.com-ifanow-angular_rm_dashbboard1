@@ -1,25 +1,25 @@
 <div class="row bb-1">
     <div class="col-md-10 p-0">
-        <h4 class="mb-0 l-22 wrapper-20">CLIENT-FAQ</h4>
+        <h4 class="mb-0 wrapper-20">CLIENT-FAQ</h4>
     </div>
-<div class="col-md-2 text-right">
-    <i class="material-icons pt-20 c-p" (click)="Close('close')"> clear</i>
-</div>
+    <div class="col-md-2 text-right">
+        <i class="material-icons pt-20 c-p" (click)="Close('close')"> clear</i>
+    </div>
 </div>
 <div class="wrapper-28" *ngFor="let que of inputData">
-        <h5 class="mb-0  text-black">{{que.question}}</h5>
-        <!-- <h5 class="mb-0 text-black">How to apply subscription to client?</h5>
+    <h5 class="mb-0  text-black">{{que.question}}</h5>
+    <!-- <h5 class="mb-0 text-black">How to apply subscription to client?</h5>
      
         <h5 class="mb-0 pt-24 text-black">Can we have more than one subscription applied to <br/>the client at the same time?</h5>
      
         <h5 class="mb-0 pt-24 text-black">What are the Future subscription?</h5> -->
 </div>
 
-    <div class="bottom-fixed wrapper-20">
-        <div class="row">
-            <div class="col-md-12 pl-0">
+<div class="bottom-fixed wrapper-20">
+    <div class="row">
+        <div class="col-md-12 pl-0">
             <h5 class="mb-0 text-white c-p text-left" (click)="Close('close')">Cancel</h5>
-            </div>
-           
         </div>
+
     </div>
+</div>

@@ -1,7 +1,7 @@
 <div class="popup-header-fix w-65">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-2 wrapper-20">NEW TRANSACTION</h4>
+            <h3 class="mb-0 wrapper-20">NEW TRANSACTION</h3>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -21,14 +21,14 @@
                     <input [matAutocomplete]="auto1" aria-label="client" class="form-control br-0 pl-8"
                         (keyup)="getFamilyList($event.target.value)" formControlName="ownerName" matInput>
                     <mat-autocomplete #auto1="matAutocomplete">
-                            <mat-option value=''>Search family members</mat-option>
-                            <mat-option *ngFor="let f of nomineesListFM" [value]="f.name" (click)="ownerDetails(f)">
-                                <span>{{f.name}}</span>
-                            </mat-option>
-                        </mat-autocomplete>
-                        <mat-error class="f-12 pt-4">
-                            This field is required
-                        </mat-error>
+                        <mat-option value=''>Search family members</mat-option>
+                        <mat-option *ngFor="let f of nomineesListFM" [value]="f.name" (click)="ownerDetails(f)">
+                            <span>{{f.name}}</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-error class="f-12 pt-4">
+                        This field is required
+                    </mat-error>
                 </mat-form-field>
             </div>
         </div>
