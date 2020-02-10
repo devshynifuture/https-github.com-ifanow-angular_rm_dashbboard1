@@ -1,8 +1,9 @@
-import {Injectable} from '@angular/core';
-import {DatePipe, DecimalPipe} from '@angular/common';
-import {EventService} from '../Data-service/event.service';
-import {HttpClient} from '@angular/common/http';
-import {SubscriptionService} from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { Injectable } from '@angular/core';
+import { DatePipe, DecimalPipe } from '@angular/common';
+import { EventService } from '../Data-service/event.service';
+import { HttpClient } from '@angular/common/http';
+import { SubscriptionService } from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
 
 
 @Injectable({
@@ -82,7 +83,18 @@ export class UtilService {
     return date;
 
   }
+  static ageValidators(age: Number) {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (control.value == null) {
+        return;
+      }
+      if (control.value.age < age) {
+        return { isaAgeInvalid: true }
+      }
+      return null;
+    }
 
+  }
   static convertDateObjectToDateString(datePipe: DatePipe, date: any) {
     return datePipe.transform(date, 'yyyy-MM-dd');
   }

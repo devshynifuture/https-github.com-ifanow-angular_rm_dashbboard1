@@ -113,7 +113,7 @@
         </ng-container>
         <tr *matHeaderRowDef="displayedColumns20; sticky: true" mat-header-row></tr>
         <tr *matRowDef="let row; columns: displayedColumns20;" mat-row></tr>
-        <tr *matFooterRowDef="footerRowColumn;sticky: true" [hidden]="datasource.data.length==0" mat-footer-row></tr>
+        <tr *matFooterRowDef="footerRowColumn;sticky: true" [hidden]="isLoading" mat-footer-row></tr>
     </table>
     <div *ngIf="datasource.filteredData.length == 0" class="d-flex flex-column align-items-center">
         <img class="width400" src="assets/images/svg/noDataFound.svg">

@@ -15,6 +15,12 @@ export class TransactionsListComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  Close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+  }
+
+
   openTransactionHistory() {
     const fragmentData = {
       flag: 'addNewTransaction',

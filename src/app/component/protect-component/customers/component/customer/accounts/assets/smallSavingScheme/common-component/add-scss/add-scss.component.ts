@@ -59,7 +59,7 @@ export class AddScssComponent implements OnInit {
   }
   lisNominee(value) {
     console.log(value)
-    this.nomineesListFM = Object.assign([], value.familyMembersList);
+    this.nomineesListFM = Object.assign([], this.utils.calculateAgeFromCurrentDate(value.familyMembersList));
   }
   getFormDataNominee(data) {
     console.log(data)
@@ -74,7 +74,7 @@ export class AddScssComponent implements OnInit {
     }
     this.scssData = data;
     this.scssSchemeForm = this.fb.group({
-      ownerName: [data.ownerName, [Validators.required]],
+      ownerName: [data.ownerName, [Validators.required, UtilService.ageValidators(60)]],
       amtInvested: [data.amountInvested, [Validators.required, Validators.min(1000), Validators.max(1500000)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
       ownershipType: [data.ownerTypeI ? String(data.ownerTypeId) : '1', [Validators.required]]
