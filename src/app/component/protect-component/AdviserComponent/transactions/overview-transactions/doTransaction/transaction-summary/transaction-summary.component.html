@@ -15,7 +15,8 @@
                     </mat-select>
                 </div>
                 <div class="col-md-2" *ngIf="allData">
-                    <button mat-stroked-button *ngIf="allData.showPlatformEdit ==true" class="primary-sm" (click)="showPlatform = true">Edit</button>
+                    <button mat-stroked-button *ngIf="allData.showPlatformEdit ==true" class="primary-sm"
+                        (click)="showPlatform = true">Edit</button>
                 </div>
             </div>
             <div class="row  pt-16 pb-16" *ngIf="defaultClient">
@@ -23,11 +24,13 @@
                     <p class="m-0 roboto text-custom">Investor details</p>
                     <h5 class="m-0">{{(!transactionSummary)? '-': transactionSummary.selectedFamilyMember}}</h5>
                     <div *ngIf="showInvestor == false">
-                        <h5 class="m-0"> IIN {{selectedInvestor || defaultClient.clientCode}} {{(defaultClient.holdingType)}}</h5>
+                        <h5 class="m-0"> IIN {{selectedInvestor || defaultClient.clientCode}}
+                            {{(defaultClient.holdingType)}}</h5>
                     </div>
                     <mat-select *ngIf="showInvestor == true" class="form-control"
                         (selectionChange)="setInvestor($event)">
-                        <mat-option *ngFor="let iin of clientDataList" [value]="iin.clientCode">{{iin.clientCode}}</mat-option>
+                        <mat-option *ngFor="let iin of clientDataList" [value]="iin.clientCode">{{iin.clientCode}}
+                        </mat-option>
                     </mat-select>
                 </div>
                 <div class="col-md-2">
@@ -49,11 +52,14 @@
             <div class="row  pt-16 pb-16">
                 <div class="col-md-12 p-0">
                     <p class="m-0 roboto text-custom">Scheme, folio and amount</p>
-                    <h5 class="m-0"><span class="f-500">Scheme:</span>
-                        {{(transactionSummary==undefined)?'':transactionSummary.schemeName}}
+                    <div class="bar">
+                        <h5 class="m-0"><span class="f-500">Scheme:</span>
+                            {{(transactionSummary==undefined)?'':transactionSummary.schemeName}}
+                        </h5>
+                    </div>
+                    <h5 class="m-0"> <span class="f-500">Folio:</span></h5>
+                    <h5 class="m-0"> <span class="f-500">Amount:</span> ₹{{transactionSummary.enteredAmount}}/Lumpsum
                     </h5>
-                    <h5 class="m-0"> <span class="f-500">Folio:</span> 91032325824</h5>
-                    <h5 class="m-0"> <span class="f-500">Amount:</span> ₹{{transactionSummary.enteredAmount}}/Lumpsum</h5>
                 </div>
             </div>
             <div class="row  pt-16 pb-16">

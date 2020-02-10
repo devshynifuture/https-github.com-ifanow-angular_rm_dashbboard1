@@ -32,6 +32,8 @@ export class PurchaseTrasactionComponent implements OnInit {
   platformType = 2
   ExistingOrNew: any;
   maiSchemeList: any;
+  getDataSummary: any;
+  scheme: any;
   constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService, private subInjectService: SubscriptionInject,
     private fb: FormBuilder) { }
   @Input()
@@ -87,6 +89,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.ExistingOrNew = value
   }
   selectedScheme(scheme) {
+    this.scheme = scheme
     this.transactionSummary = { schemeName: scheme.schemeName }
     this.navOfSelectedScheme = scheme.nav
     let obj1 = {
@@ -111,7 +114,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       this.reInvestmentOpt = []
     }
   }
-  enteredAmount(value){
+  enteredAmount(value) {
     this.transactionSummary = { enteredAmount: value }
   }
   getNewSchemesRes(data) {
@@ -119,8 +122,8 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.schemeList = data
   }
   getDefaultDetails(data) {
-
     console.log('get defaul here yupeeee', data)
+    this.getDataSummary = data
   }
   onAddTransaction(value, data) {
     this.confirmTrasaction = true
@@ -173,5 +176,41 @@ export class PurchaseTrasactionComponent implements OnInit {
 
   getFormControl(): any {
     return this.purchaseTransaction.controls;
+  }
+  purchase() {
+    let obj = {
+      productDbId: this.schemeDetails.id,
+      mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
+      productCode: this.schemeDetails.schemeCode,
+      isin: this.schemeDetails.isin,
+      folioNo: (this.schemeDetails.folioNo==undefined)?null:this.schemeDetails.folioNo,
+      // schemePlan : ,
+      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+      // tpSubBrokerCredentialId : ,
+      familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+      adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
+      clientId: this.getDataSummary.defaultClient.clientId,
+      orderType: 'ORDER',
+      buySell: 'PURCHASE',
+      transCode: 'NEW',
+      buySellType: (this.purchaseTransaction.controls.folioSelection.value == '1') ? "ADDITIONAL" : "FRESH",
+      dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
+      amountType: 'Amount',
+      clientCode: this.getDataSummary.defaultClient.clientCode,
+      orderVal: this.purchaseTransaction.controls.employeeContry.value,
+      // schemeCd:,
+      // userId: ,
+      euin: this.getDataSummary.defaultCredential.euin,
+      bseDPTransType: 'PHYSICAL',
+      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+      // teamMemberSessionId : ,
+    }
+    console.log('new purchase obj',obj)
+    this.onlineTransact.purchase(obj).subscribe(
+      data => this.purchaseRes(data)
+    );
+  }
+  purchaseRes(data){
+    console.log('purchase transaction ==',data)
   }
 }

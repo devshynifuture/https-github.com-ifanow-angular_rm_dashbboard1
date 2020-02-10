@@ -352,6 +352,7 @@ export const appConfig = {
   GET_SCHEME_DETAILS:'mutual-fund/product-limit/get',
   GET_FAMILY_MEMBER:'family/name/get',
   GET_DEFAULT_DETAILS:'bse/user/family-member/transaction-setting/default',
+  PURCHASE:'bse/order/bse/order/create',
 
   // cashflow 
   CASHFLOW_ADD_INCOME: 'cashflow/income/add',
