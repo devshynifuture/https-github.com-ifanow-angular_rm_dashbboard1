@@ -5,6 +5,7 @@ import { EventService } from './../../../../../../../../../../Data-service/event
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { CashflowAddService } from '../cashflow-add.service';
 
 @Component({
   selector: 'app-cashflow-add-income',
@@ -17,11 +18,13 @@ export class CashflowAddIncomeComponent implements OnInit {
     public dialogRef: MatDialogRef<CashflowAddIncomeComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
-    private cashflowService: CashFlowsPlanService
+    private cashflowService: CashFlowsPlanService,
+    private cashflowAddService: CashflowAddService
   ) { }
 
   advisorId = AuthService.getAdvisorId();
   clientId = AuthService.getClientId();
+  familyMemberList: {}[] = [];
 
   validatorType = ValidatorType;
   formIncome = this.fb.group({
@@ -40,6 +43,7 @@ export class CashflowAddIncomeComponent implements OnInit {
   });
 
   ngOnInit() {
+    this.getFamilyMemberData();
   }
 
   // editing multiple values
@@ -67,10 +71,13 @@ export class CashflowAddIncomeComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  submitForm() {
+  addIncome() {
     //   "familyMemberId":5500000,
     // "clientId":2978,
     // "advisorId":2808,
+
+    this.cashflowAddService.formValidations(this.formIncome) ? console.log(this.formIncome) : '';
+    // api call for adding income
     const userInfo = AuthService.getUserInfo();
     const requestJSON = {
       familyMemberId: 5500000,
@@ -87,4 +94,13 @@ export class CashflowAddIncomeComponent implements OnInit {
     // })
   }
 
+  getFamilyMemberData() {
+    this.cashflowService
+      .getFamilyMemberData({ advisorId: this.advisorId, clientId: this.clientId })
+      .subscribe(res => {
+        console.log("family member ::::::::::::", res);
+        this.familyMemberList = res.familyMembersList;
+        console.log(this.familyMemberList);
+      });
+  }
 }

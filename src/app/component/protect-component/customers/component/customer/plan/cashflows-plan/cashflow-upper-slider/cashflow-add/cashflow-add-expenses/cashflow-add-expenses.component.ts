@@ -5,6 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CashFlowsPlanService } from '../../../cashflows-plan.service';
 import { ConstantsService } from 'src/app/constants/constants.service';
+import { CashflowAddService } from './../cashflow-add.service';
 
 @Component({
   selector: 'app-cashflow-add-expenses',
@@ -19,7 +20,8 @@ export class CashflowAddExpensesComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     private cashflowService: CashFlowsPlanService,
-    private constantsService: ConstantsService
+    private constantsService: ConstantsService,
+    private cashflowAddService: CashflowAddService
   ) { }
 
   validatorType = ValidatorType;
@@ -83,21 +85,6 @@ export class CashflowAddExpensesComponent implements OnInit {
   }
 
   submitForm() {
-    if (this.formValidations()) {
-      console.log(this.formExpense);
-      this.closeDialog();
-    }
-    // this.formValidations();
+    this.cashflowAddService.formValidations(this.formExpense) ? console.log(this.formExpense.value) : '';
   }
-
-  formValidations() {
-    for (let key in this.formExpense.controls) {
-      if (this.formExpense.get(key).invalid) {
-        this.formExpense.get(key).markAsTouched();
-        return false;
-      }
-    }
-    return (this.formExpense.valid) ? true : false;
-  }
-
 }

@@ -1,5 +1,5 @@
-<form [formGroup]="formIncome" (ngSubmit)="submitForm()">
-    <div class="scrollHeight">
+<form [formGroup]="formIncome">
+    <div class=" scrollHeight">
 
         <div class="row p-12">
             <div class="col-md-4 pr-0 text-right">
@@ -7,10 +7,14 @@
             </div>
             <div class="col-md-4">
                 <mat-form-field>
-                    <input matInput formControlName="earning-member" type="text" class="form-control br-0  ">
+                    <mat-select formControlName="earning-member" class="form-control br-0  ">
+                        <mat-option *ngFor="let member of familyMemberList" [value]="member.userName">
+                            {{member.userName}}
+                        </mat-option>
+                    </mat-select>
                     <mat-error
                         *ngIf="formIncome.get('earning-member').touched && formIncome.get('earning-member').invalid">
-                        Must be filled
+                        This field is required
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -24,7 +28,7 @@
                 <mat-form-field>
                     <input matInput type="text" formControlName="income-src" class="form-control br-0  ">
                     <mat-error *ngIf="formIncome.get('income-src').touched && formIncome.get('income-src').invalid">
-                        Must be filled
+                        This field is required
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -37,10 +41,15 @@
             </div>
             <div class="col-md-4">
                 <mat-form-field>
-                    <input matInput type="text" formControlName="monthly-amt" class="form-control br-0  ">
+                    <input matInput #monthlyAmtInput type="text" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" formControlName="monthly-amt"
+                        class="form-control br-0">
                     <mat-error *ngIf="formIncome.get('monthly-amt').touched && formIncome.get('monthly-amt').invalid">
-                        Must be filled
+                        This field is required
                     </mat-error>
+                    <mat-hint align="end" class="f-12">
+                        {{ monthlyAmtInput.value.length }}/10
+                    </mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -58,7 +67,7 @@
                                     class="form-control br-0  ">
                                 <mat-error
                                     *ngIf="formIncome.get('continues-till').touched && formIncome.get('continues-till').invalid">
-                                    Must be filled
+                                    This field is required
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -70,7 +79,7 @@
                                     class="form-control br-0  ">
                                 <mat-error
                                     *ngIf="formIncome.get('continues-till-date').touched && formIncome.get('continues-till-date').invalid">
-                                    Must be filled
+                                    This field is required
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -96,13 +105,13 @@
                             </mat-button-toggle-group>
                             <mat-error
                                 *ngIf="formIncome.get('income-growth-rate').touched && formIncome.get('income-growth-rate').invalid">
-                                Must be filled
+                                This field is required
                             </mat-error>
                             <!-- <input matInput type="text" formControlName="income-growth-rate"
                                     class="form-control br-0 height50 ">
                                 <mat-error
                                     *ngIf="formIncome.get('income-growth-rate').touched && formIncome.get('income-growth-rate').invalid">
-                                    Must be filled
+                                    This field is required
                                 </mat-error> -->
                         </div>
                     </div>
@@ -114,7 +123,7 @@
                                     class="form-control br-0 height50 ">
                                 <mat-error
                                     *ngIf="formIncome.get('income-growth-rate-input').touched && formIncome.get('income-growth-rate-input').invalid">
-                                    Must be filled
+                                    This field is required
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -141,7 +150,7 @@
                                 <mat-datepicker #picker2></mat-datepicker>
                                 <mat-error
                                     *ngIf="formIncome.get('income-period-start').touched && formIncome.get('income-period-start').invalid">
-                                    Must be filled
+                                    This field is required
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -155,7 +164,7 @@
                                 <mat-datepicker #picker3></mat-datepicker>
                                 <mat-error
                                     *ngIf="formIncome.get('income-period-end').touched && formIncome.get('income-period-end').invalid">
-                                    Must be filled
+                                    This field is required
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -174,7 +183,7 @@
                     <input matInput type="text" formControlName="next-appraisal-date" class="form-control br-0">
                     <mat-error
                         *ngIf="formIncome.get('next-appraisal-date').touched && formIncome.get('next-appraisal-date').invalid">
-                        Must be filled
+                        This field is required
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -194,7 +203,7 @@
                                 <input matInput type="text" formControlName="bonus-date" class="form-control br-0">
                                 <mat-error
                                     *ngIf="formIncome.get('bonus-date').touched && formIncome.get('bonus-date').invalid">
-                                    Must be filled
+                                    This field is required
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -205,7 +214,7 @@
                                 <input matInput type="text" formControlName="bonus-amt" class="form-control br-0">
                                 <mat-error
                                     *ngIf="formIncome.get('bonus-date').touched && formIncome.get('bonus-amt').invalid">
-                                    Must be filled
+                                    This field is required
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -221,7 +230,7 @@
         <div class="row p-12">
             <div class="col-md-12 text-right">
                 <button mat-button class="text-primitive" type="button" (click)="closeDialog()">CANCEL</button>
-                <button mat-button class="text-primary" type="submit">SAVE</button>
+                <button mat-button class="text-primary" (click)="addIncome()">SAVE</button>
             </div>
         </div>
     </div>

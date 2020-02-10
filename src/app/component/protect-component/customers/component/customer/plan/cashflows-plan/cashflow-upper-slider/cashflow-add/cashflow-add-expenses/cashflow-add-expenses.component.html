@@ -11,8 +11,9 @@
                         <mat-option [value]='category.clientExpenseTypeMasterId'
                             *ngFor="let category of expenseCategory">{{ category.expenseType }}</mat-option>
                     </mat-select>
-                    <mat-error *ngIf="formExpense.get('category').touched && formExpense.get('category').invalid">This
-                        is required
+                    <mat-error *ngIf="formExpense.get('category').touched && formExpense.get('category').invalid"
+                        class="f-12">This
+                        field is required
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -29,8 +30,9 @@
                     <input matInput type="text" #expenseAmtInput appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" formControlName="amount"
                         class="form-control br-0 rupess">
-                    <mat-error *ngIf="formExpense.get('amount').touched && formExpense.get('amount').invalid">
-                        This is required
+                    <mat-error class="f-12"
+                        *ngIf="formExpense.get('amount').touched && formExpense.get('amount').invalid">
+                        This field is required
                     </mat-error>
                     <mat-hint align="end">
                         {{ expenseAmtInput.value.length }}/ 10
@@ -54,8 +56,9 @@
                                     <mat-option value='1'>Repeat weekly</mat-option>
                                 </mat-select>
                                 <mat-error
-                                    *ngIf="formExpense.get('repeat-freq').touched && formExpense.get('repeat-freq').invalid">
-                                    This is required
+                                    *ngIf="formExpense.get('repeat-freq').touched && formExpense.get('repeat-freq').invalid"
+                                    class="f-12">
+                                    This field is required
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -68,8 +71,9 @@
                                     <mat-option value='1'> 1 week</mat-option>
                                 </mat-select>
                                 <mat-error
-                                    *ngIf="formExpense.get('repeat-every').touched && formExpense.get('repeat-every').invalid">
-                                    This is required
+                                    *ngIf="formExpense.get('repeat-every').touched && formExpense.get('repeat-every').invalid"
+                                    class="f-12">
+                                    This field is required
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -92,8 +96,9 @@
                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
                                 <mat-error
-                                    *ngIf="formExpense.get('starts-date').touched && formExpense.get('starts-date').invalid">
-                                    This is required
+                                    *ngIf="formExpense.get('starts-date').touched && formExpense.get('starts-date').invalid"
+                                    class="f-12">
+                                    This field is required
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -111,8 +116,9 @@
                                     <mat-option value='7'> Sunday</mat-option>
                                 </mat-select>
                                 <mat-error
-                                    *ngIf="formExpense.get('starts-day').touched && formExpense.get('starts-day').invalid">
-                                    This is required
+                                    *ngIf="formExpense.get('starts-day').touched && formExpense.get('starts-day').invalid"
+                                    class="f-12">
+                                    This field is required
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -134,8 +140,9 @@
                                     <mat-option value='1'> Until</mat-option>
                                 </mat-select>
                                 <mat-error
-                                    *ngIf="formExpense.get('continues-till').touched && formExpense.get('continues-till').invalid">
-                                    This is required
+                                    *ngIf="formExpense.get('continues-till').touched && formExpense.get('continues-till').invalid"
+                                    class="f-12">
+                                    This field is required
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -150,8 +157,9 @@
                                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                 <mat-datepicker #picker1></mat-datepicker>
                                 <mat-error
-                                    *ngIf="formExpense.get('continues-till-date').touched && formExpense.get('continues-till-date').invalid">
-                                    This is required
+                                    *ngIf="formExpense.get('continues-till-date').touched && formExpense.get('continues-till-date').invalid"
+                                    class="f-12">
+                                    This field is required
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -172,8 +180,9 @@
                         <mat-option value='2'> Debit card </mat-option>
                     </mat-select>
                     <mat-error
-                        *ngIf="formExpense.get('payment-mode').touched && formExpense.get('payment-mode').invalid">
-                        This is required
+                        *ngIf="formExpense.get('payment-mode').touched && formExpense.get('payment-mode').invalid"
+                        class="f-12">
+                        This field is required
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -191,8 +200,9 @@
                             {{ member.userName }}</mat-option>
                     </mat-select>
                     <mat-error
-                        *ngIf="formExpense.get('family-member').touched && formExpense.get('family-member').invalid">
-                        This is required
+                        *ngIf="formExpense.get('family-member').touched && formExpense.get('family-member').invalid"
+                        class="f-12">
+                        This field is required
                     </mat-error>
                 </mat-form-field>
             </div>
