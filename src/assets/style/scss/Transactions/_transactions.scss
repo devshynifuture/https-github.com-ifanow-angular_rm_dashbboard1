@@ -1,80 +1,65 @@
 #ui-transactions {
-  // margin-top: 60px;
-
-  .mat-tab-link.active {
-    background-color: transparent !important;
-    border-bottom: 4px solid #008FFF !important;
-    color: #008FFF !important;
-
-  }
-
-  .mat-tab-link {
-    color: #595252 !important;
-    border-bottom: 4px solid transparent;
-    width: 120px !important;
-    background: transparent !important;
-    font-family: "roboto" !important;
-    letter-spacing: 0.75px !important;
-  }
-
+    // margin-top: 60px;
+    .mat-tab-link.active {
+        background-color: transparent !important;
+        border-bottom: 4px solid #008FFF !important;
+        color: #008FFF !important;
+    }
+    .mat-tab-link {
+        color: #595252 !important;
+        border-bottom: 4px solid transparent;
+        width: 120px !important;
+        background: transparent !important;
+        font-family: "roboto" !important;
+        letter-spacing: 0.75px !important;
+    }
 }
 
-#ui-overview-transactions {
-  padding-top: 72px;
-  background-color: #F5F7F7;
-  height: 100vh;
-}
-
+// #ui-overview-transactions {
+//   padding-top: 72px;
+//   background-color: #F5F7F7;
+//   height: 100vh;
+// }
 #ui-addtransaction-tabs {
-  .mat-tab-label {
-    height: 40px !important;
-    font-weight: 500 !important;
-    opacity: 1 !important;
-    color: #595252 !important;
-  }
-
-  .mat-ink-bar {
-    height: 2px !important;
-  }
-
-  .mat-tab-header {
-    border-bottom: 0px !important;
-  }
-
-  .mat-tab-label-active {
-    color: #008FFF !important;
-    letter-spacing: 0.75px !important;
-  }
-
-  .transaction-summary {
-    .row {
-      border-bottom: 0.5px dashed #83959D;
+    .mat-tab-label {
+        height: 40px !important;
+        font-weight: 500 !important;
+        opacity: 1 !important;
+        color: #595252 !important;
     }
-
-    .col-md-9 {
-      padding: 0px;
+    .mat-ink-bar {
+        height: 2px !important;
     }
-
-    .col-md-3 {
-      padding-right: 0px;
+    .mat-tab-header {
+        border-bottom: 0px !important;
     }
-
-    h5 {
-      color: #3F3F3F;
+    .mat-tab-label-active {
+        color: #008FFF !important;
+        letter-spacing: 0.75px !important;
     }
-
-    p {
-      text-transform: uppercase;
-      padding-bottom: 6px;
+    .transaction-summary {
+        .row {
+            border-bottom: 0.5px dashed #83959D;
+        }
+        .col-md-9 {
+            padding: 0px;
+        }
+        .col-md-3 {
+            padding-right: 0px;
+        }
+        h5 {
+            color: #3F3F3F;
+        }
+        p {
+            text-transform: uppercase;
+            padding-bottom: 6px;
+        }
     }
-  }
-
-  .rationaletabs {
-    p {
-      text-transform: initial;
+    .rationaletabs {
+        p {
+            text-transform: initial;
+        }
     }
-  }
-
 }
 
 .arn-ria,
@@ -84,17 +69,15 @@
 .folio-mapping-popuptable,
 .mandates,
 .all-transactions {
-  tr.mat-header-row {
-    height: 44px !important;
-  }
-
-  #table-low {
-    tbody tr {
-      height: 36px !important;
+    tr.mat-header-row {
+        height: 44px !important;
     }
-
-    tbody td {
-      padding: 4px 6px !important;
+    #table-low {
+        tbody tr {
+            height: 36px !important;
+        }
+        tbody td {
+            padding: 4px 6px !important;
+        }
     }
-  }
 }

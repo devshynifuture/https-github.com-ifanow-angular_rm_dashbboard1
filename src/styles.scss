@@ -208,7 +208,8 @@
     }
 }
 
-#ui-subscriptions {
+#ui-subscriptions,
+#uiTransactions {
     position: fixed;
     margin-top: 4px;
     float: right;
@@ -445,7 +446,12 @@
     display: none;
 }
 
-#ui-subscriptions {
+#uiTransactions .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
+    display: none;
+}
+
+#ui-subscriptions,
+#uiTransactions {
     .mat-tab-link {
         color: #595252 !important;
         border-bottom: 4px solid transparent;
