@@ -586,7 +586,7 @@
             </ng-container>
             <tr *matHeaderRowDef="displayedColumns13; sticky: true" mat-header-row></tr>
             <tr *matRowDef="let row; columns: displayedColumns13;" mat-row></tr>
-            <tr *matFooterRowDef="displayedColumns13;sticky: true" mat-footer-row></tr>
+            <tr *matFooterRowDef="displayedColumns13;sticky: true" [hidden]="isLoading" mat-footer-row></tr>
         </table>
         <div *ngIf="dataGratuityList.filteredData.length == 0" class="d-flex flex-column align-items-center">
             <img class="width400" src="assets/images/svg/noDataFound.svg">
@@ -883,7 +883,7 @@
             </ng-container>
             <tr *matHeaderRowDef="displayedColumns15; sticky: true" mat-header-row></tr>
             <tr *matRowDef="let row; columns: displayedColumns15;" mat-row></tr>
-            <tr *matFooterRowDef="displayedColumns15;sticky: true" mat-footer-row></tr>
+            <tr *matFooterRowDef="displayedColumns15;sticky: true" [hidden]="isLoading" mat-footer-row></tr>
         </table>
         <div *ngIf="EPSList.filteredData.length == 0" class="d-flex flex-column align-items-center">
             <img class="width400" src="assets/images/svg/noDataFound.svg">
