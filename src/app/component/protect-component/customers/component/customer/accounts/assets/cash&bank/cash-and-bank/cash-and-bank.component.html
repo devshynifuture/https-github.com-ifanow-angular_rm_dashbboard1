@@ -147,7 +147,7 @@
                 </ng-container>
                 <tr *matHeaderRowDef="displayedColumns7; sticky: true" mat-header-row></tr>
                 <tr *matRowDef="let row; columns: displayedColumns7;" mat-row></tr>
-                <tr *matFooterRowDef="displayedColumns7;sticky: true" mat-footer-row></tr>
+                <tr *matFooterRowDef="displayedColumns7;sticky: true" [hidden]="isLoading" mat-footer-row></tr>
             </table>
             <div *ngIf="bankAccountList.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <img class="width400" src="assets/images/svg/noDataFound.svg">

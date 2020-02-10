@@ -81,7 +81,52 @@ export class HttpService {
         }
       });
   }
+  postEncoded(url: string, body, options?): Observable<any> {
+    let httpOptions: { headers: HttpHeaders };
 
+    if (options) {
+      httpOptions = options;
+    } else {
+      httpOptions = {
+        headers: new HttpHeaders().set('Content-Type', 'application/json')
+      };
+      if (this._userService.getToken()) {
+        httpOptions.headers = httpOptions.headers.set('authToken', this._userService.getToken());
+      }
+    }
+
+    const inputData = { query: this.changeBase64Data(body) };
+
+    return this._http
+      .post(this.baseUrl + url, inputData, httpOptions).pipe(
+        catchError(err => of([]))
+
+        // catchError(err => {
+        //   console.log('Handling error locally and rethrowing it...', err);
+        //
+        //   // return throwError(err);
+        // })
+      )
+      .map((res: any) => {
+        // console.log('resData: undecoded ', res);
+
+        if (res.status === 200 || res.status === 201) {
+          // console.log('resData: decoded ', res);
+
+          const resData = this.changeBase64ToString(res);
+          // console.log('resData: decoded ', resData);
+          return resData;
+        }
+        else if (res.status === 304 || 204) {
+          return res.status;
+        }
+        else {
+
+          // this._router.navigate(['login']);
+          throw new Error(res.message);
+        }
+      });
+  }
   put(url: string, body, options?): Observable<any> {
     let httpOptions = {
       headers: new HttpHeaders().set('authToken', this._userService.getToken())

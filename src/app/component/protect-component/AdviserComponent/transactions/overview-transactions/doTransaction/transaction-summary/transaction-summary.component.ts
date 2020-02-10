@@ -56,7 +56,7 @@ export class TransactionSummaryComponent implements OnInit {
   }
   getDefaultDetailsRes(data) {
     console.log('deault', data)
-    this.defaultDetails.emit(data.defaultCredential);
+    this.defaultDetails.emit(data);
     this.allData = data
     this.clientDataList = data.clientDataList
     this.defaultCredential = data.defaultCredential
@@ -70,8 +70,8 @@ export class TransactionSummaryComponent implements OnInit {
   }
   setInvestor(value) {
     this.selectedInvestor = value.value
-    this.defaultCredential.clientCode = this.selectedInvestor
-    this.defaultDetails.emit(this.defaultCredential);
+    this.allData.defaultCredential.clientCode = this.selectedInvestor
+    this.defaultDetails.emit(this.allData);
     this.showInvestor = false
   }
 }
