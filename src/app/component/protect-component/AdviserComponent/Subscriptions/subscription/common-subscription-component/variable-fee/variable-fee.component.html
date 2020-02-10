@@ -4,7 +4,8 @@
     </div>
     <div class="col-md-4 text-right" *ngIf="singleSubscriptionData.status == 2 || singleSubscriptionData.status == 3">
         <div class="wrapper-12 pb-10">
-            <button [ngClass]="{'v-h':!isSave}" mat-stroked-button class="br-0 btn-primary mr-20" (click)="enableForm()">
+            <button [ngClass]="{'v-h':!isSave}" mat-stroked-button class="br-0 btn-primary mr-20"
+                (click)="enableForm()">
                 EDIT
             </button>
             <i class="material-icons c-p v-middle" (click)="close(false)"> clear</i>
@@ -23,7 +24,8 @@
                 <div class="row">
                     <div class="col-md-5 p-0">
                         <div class="form-group">
-                            <input type="text" appNumberOnly [maxLength]="2" [disabled]="true" class="form-control br-0 br-none" formControlName="billEvery">
+                            <input type="text" appNumberOnly [maxLength]="2" [disabled]="true"
+                                class="form-control br-0 br-none" formControlName="billEvery">
                         </div>
                     </div>
 
@@ -35,7 +37,9 @@
                             </select>
                         </div>
                     </div>
-                    <mat-error *ngIf="isBillValid && variableFeeStructureForm.get('billEvery') .invalid ||variableFeeStructureForm.get('billEvery') .touched &&variableFeeStructureForm.get('billEvery') .invalid" class="f-12">Field is required
+                    <mat-error
+                        *ngIf="isBillValid && variableFeeStructureForm.get('billEvery') .invalid ||variableFeeStructureForm.get('billEvery') .touched &&variableFeeStructureForm.get('billEvery') .invalid"
+                        class="f-12">Field is required
                     </mat-error>
                 </div>
             </div>
@@ -44,7 +48,8 @@
         <div class="row pt-28">
             <div class="col-md-5">
                 <h5 class="text-right pt-12 mb-0">Mutual fund fees</h5>
-                <p class="mb-0 f-12 text-custom text-right">Enter yearly rates here even if your <br>charging mode is monthly or quarterly.
+                <p class="mb-0 f-12 text-custom text-right">Enter yearly rates here even if your <br>charging mode is
+                    monthly or quarterly.
                     <br> We will calculate accordingly.</p>
             </div>
             <div class="col-md-7">
@@ -64,14 +69,20 @@
                         </div>
                         <div class="row ui-mff">
                             <div class="col-md-4 p-0 bl-0 border-right-1">
-                                <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" [maxValue]="100" appInputValueValidation class="form-control br-0 h-39" formControlName="equity" placeholder="%" type="text">
+                                <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" [maxValue]="100"
+                                    appInputValueValidation class="form-control br-0 h-39" formControlName="equity"
+                                    placeholder="%" type="text">
                                 <!-- <span  style= "position:absolute; top: 10px; right: 3px;">%</span> -->
                             </div>
                             <div class="col-md-4 p-0 border-right-1">
-                                <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" [maxValue]="100" appInputValueValidation class="form-control br-0 h-39" formControlName="debt" placeholder="%" type="text">
+                                <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" [maxValue]="100"
+                                    appInputValueValidation class="form-control br-0 h-39" formControlName="debt"
+                                    placeholder="%" type="text">
                             </div>
                             <div class="col-md-4 p-0">
-                                <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" [maxValue]="100" appInputValueValidation class="form-control br-0 h-39" formControlName="liquid" placeholder="%" type="number">
+                                <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" [maxValue]="100"
+                                    appInputValueValidation class="form-control br-0 h-39" formControlName="liquid"
+                                    placeholder="%" type="number">
                             </div>
                         </div>
                     </div>
@@ -91,13 +102,16 @@
                         </div>
                         <div class="row ui-mff">
                             <div class="col-md-4 p-0 bl-0 border-right-1">
-                                <input type="text" appNumberOnly [maxLength]="4" placeholder="%" class="form-control br-0 h-39" formControlName="equity">
+                                <input type="text" appNumberOnly [maxLength]="4" placeholder="%"
+                                    class="form-control br-0 h-39" formControlName="equity">
                             </div>
                             <div class="col-md-4 p-0 border-right-1 ">
-                                <input type="number" appNumberOnly [maxLength]="4" placeholder="%" class="form-control br-0 h-39" formControlName="debt">
+                                <input type="number" appNumberOnly [maxLength]="4" placeholder="%"
+                                    class="form-control br-0 h-39" formControlName="debt">
                             </div>
                             <div class="col-md-4 p-0">
-                                <input type="number" appNumberOnly [maxLength]="4" placeholder="%" class="form-control br-0 h-39 " formControlName="liquid">
+                                <input type="number" appNumberOnly [maxLength]="4" placeholder="%"
+                                    class="form-control br-0 h-39 " formControlName="liquid">
                             </div>
                         </div>
                     </div>
@@ -108,15 +122,19 @@
         <div class="row pt-44">
             <div class="col-md-5">
                 <h5 class="text-right pt-12 mb-0">Other asset class fees</h5>
-                <p class="mb-0 f-12 text-custom text-right">This includes assets like stocks,<br> insurance, FD, real estate, gold etc. You <br>can add or remove asset classes.</p>
+                <p class="mb-0 f-12 text-custom text-right">This includes assets like stocks,<br> insurance, FD, real
+                    estate, gold etc. You <br>can add or remove asset classes.</p>
             </div>
             <div class="col-md-7">
 
                 <div class="row" [ngStyle]="{'pointer-events':(variableFeeStructureForm.disabled)?'none':'all'}">
                     <div class="col-md-10 p-0">
                         <div class="b-a wrapper-12">
-                            <mat-chip-list *ngIf="otherAssetData" [disabled]="!variableFeeStructureForm.enabled" aria-label="Fish selection">
-                                <mat-chip (click)="select(assets)" *ngFor="let assets of otherAssetData" [ngClass]="{'btn-primary':assets.selected}" class="f-13 f-400 wrapper-16"><i class="material-icons mr-8 text-grey f-16">
+                            <mat-chip-list *ngIf="otherAssetData" [disabled]="!variableFeeStructureForm.enabled"
+                                aria-label="Fish selection">
+                                <mat-chip (click)="select(assets)" *ngFor="let assets of otherAssetData"
+                                    [ngClass]="{'btn-primary':assets.selected}" class="f-13 f-400 wrapper-16"><i
+                                        class="material-icons mr-8 text-grey f-16">
                                         check
                                     </i>
                                     <div *ngIf="assets">{{assets.subAssetClassName}}</div>
@@ -126,7 +144,9 @@
                     </div>
                     <div class="col-md-2  p-0">
                         <!--            [minValue]="0.001" [maxValue]="99"-->
-                        <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" appInputValueValidation class="form-control  b-a br-0 h-39 " formControlName="pricing" matInput maxlength="3" placeholder="%" type="number">
+                        <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" appInputValueValidation
+                            class="form-control  b-a br-0 h-39 bl-0" formControlName="pricing" matInput maxlength="3"
+                            placeholder="%" type="number">
                         <mat-error *ngIf="(variableFeeStructureForm.get('pricing').errors)" class="f-12 ml-8">
                             Should be between than 0.01 to 99
                         </mat-error>
@@ -144,9 +164,11 @@
             <h5 class="mb-0 pt-4 text-white c-p" (click)="close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button *ngIf="singleSubscriptionData.isCreateSub && isSave==false" mat-button [disabled]="isLoading" (click)="saveVariableModifyFees()" class="btn-bottom br-0 text-inherit">Save
+            <button *ngIf="singleSubscriptionData.isCreateSub && isSave==false" mat-button [disabled]="isLoading"
+                (click)="saveVariableModifyFees()" class="btn-bottom br-0 text-inherit">Save
             </button>
-            <button *ngIf="singleSubscriptionData.isCreateSub==false" mat-button (click)="saveVariableModifyFees()" class="btn-bottom br-0 text-inherit">NEXT
+            <button *ngIf="singleSubscriptionData.isCreateSub==false" mat-button (click)="saveVariableModifyFees()"
+                class="btn-bottom br-0 text-inherit">NEXT
             </button>
             <!-- <mat-spinner *ngIf="isLoading"></mat-spinner> -->
         </div>

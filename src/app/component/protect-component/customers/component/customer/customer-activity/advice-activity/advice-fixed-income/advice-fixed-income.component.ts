@@ -20,6 +20,7 @@ export class AdviceFixedIncomeComponent implements OnInit {
   dataSource3 = ELEMENT_DATA3;
   advisorId: any;
   clientId: any;
+  dataSource: any;
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private utilService: UtilService, private activityService: ActiityService) { }
   allAdvice = false;
   ngOnInit() {
@@ -67,6 +68,7 @@ export class AdviceFixedIncomeComponent implements OnInit {
   }
   getAllSchemeResponse(data) {
     console.log('data', data)
+    this.dataSource = data;
     data.BONDS;
     data.FIXED_DEPOSIT;
     data.RECURRING_DEPOSIT;

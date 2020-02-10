@@ -194,7 +194,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.profileDetailsForm = this.fb.group({
       companyDisplayName: [data.companyDisplayName, [Validators.required]],
       // companyName: [data.companyName, [Validators.required]],
-      gstinNum: [(data.gstin), [Validators.required]],
+      gstinNum: [(data.gstin), [Validators.required, Validators.pattern("^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$")]],
       panNum: [(data.pan), [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-z]{1}")]],
       Address: [(data.billerAddress), [Validators.required]],
       state: [(data.state), [Validators.required]],
@@ -230,8 +230,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.getFormControlBank().acNo.maxLength = 16;
     this.getFormControlBank().ifscCode.maxLength = 11;
     this.getFormControlBank().address.maxLength = 150;
-    this.getFrormControlMisc().footnote.maxLength = 160;
-    this.getFrormControlMisc().terms.maxLength = 160;
+    this.getFrormControlMisc().footnote.maxLength = 500;
+    this.getFrormControlMisc().terms.maxLength = 500;
     this.logoImg = data.logoUrl;
   }
 
@@ -262,6 +262,26 @@ export class BillerProfileAdvisorComponent implements OnInit {
     }
   }
 
+  getBankAddress(ifsc){
+    let obj = {
+      ifsc: ifsc
+    }
+    console.log('ifsc 121221', obj)
+
+    if(ifsc != ""){
+      this.subService.getBankAddress(obj).subscribe(data => {
+        console.log('postal 121221', data)
+        this.bankData(data)  
+        // this.PinData(data, 'bankDetailsForm')
+
+      },
+      err=>{
+        console.log(err, "error internet");
+        this.bankData(err) 
+      })
+    }
+  }
+
   pinInvalid:boolean = false;
 
   getPostalPin(value, state) {
@@ -282,30 +302,39 @@ export class BillerProfileAdvisorComponent implements OnInit {
   PinData(data, state) {
     if(data[0].Status == "Error"){
       this.pinInvalid = true;
-      if (state == 'bankDetailsForm'){
-        this.getFormControlBank().pincodeB.setErrors(this.pinInvalid);
-        this.getFormControlBank().cityB.setValue("")
-        this.getFormControlBank().countryB.setValue("")
-        this.getFormControlBank().stateB.setValue("")
-      }
-      else{
-        this.getFormControlProfile().pincode.setErrors(this.pinInvalid);
-        this.getFormControlProfile().city.setValue("");
-        this.getFormControlProfile().country.setValue("");
-        this.getFormControlProfile().state.setValue("");
-      }
-    }
-    else if (state == 'bankDetailsForm') {
-      this.getFormControlBank().cityB.setValue(data[0].PostOffice[0].District)
-      this.getFormControlBank().countryB.setValue(data[0].PostOffice[0].Country)
-      this.getFormControlBank().stateB.setValue(data[0].PostOffice[0].Circle)
-      this.pinInvalid = false;
-    } else {
+      this.getFormControlProfile().ifscCode.setErrors(this.pinInvalid);
+      this.getFormControlProfile().city.setValue("");
+      this.getFormControlProfile().country.setValue("");
+      this.getFormControlProfile().state.setValue("");
+    }else{
       this.getFormControlProfile().city.setValue(data[0].PostOffice[0].District);
       this.getFormControlProfile().country.setValue(data[0].PostOffice[0].Country);
       this.getFormControlProfile().state.setValue(data[0].PostOffice[0].Circle);
       this.pinInvalid = false;
+    }
+  }
+  ifsciInvalid:boolean;
+  bankData(data){
+    if(data.status != undefined){
+      this.ifsciInvalid = true;
+        this.getFormControlBank().ifscCode.setErrors(this.ifsciInvalid);
+        this.getFormControlBank().cityB.setValue("")
+        this.getFormControlBank().countryB.setValue("")
+        this.getFormControlBank().stateB.setValue("")
+        this.getFormControlBank().address.setValue("")
+        this.getFormControlBank().pincodeB.setValue("")
+      }
+    else {
+      console.log(data,"bankPin 123");
+      let bankPin = data.address.split('A');
+      this.getFormControlBank().pincodeB.setValue(bankPin[bankPin.length - 1])
+      this.getFormControlBank().cityB.setValue(data.district)
+      this.getFormControlBank().countryB.setValue("India")
+      this.getFormControlBank().stateB.setValue(data.state)
+      this.getFormControlBank().address.setValue(data.address)
+      this.getFormControlBank().bankName.setValue(data.bankcode)
 
+      this.ifsciInvalid = false;
     }
   }
 

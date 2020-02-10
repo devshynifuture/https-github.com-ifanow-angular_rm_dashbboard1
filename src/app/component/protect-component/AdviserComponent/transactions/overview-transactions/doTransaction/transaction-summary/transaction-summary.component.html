@@ -5,7 +5,7 @@
                 <div class="col-md-9">
                     <p class="m-0 roboto text-custom">Transaction platform</p>
                     <div *ngIf="showPlatform == false">
-                        <h5 class="m-0">{{(selectedPlatform =='2')?'BSE':(selectedPlatform =='1')?'NSE':'NSE'}} NMF II
+                        <h5 class="m-0">{{(selectedPlatform =='2')?'BSE':(selectedPlatform =='1')?'NSE':'-'}} NMF II
                         </h5>
                     </div>
                     <mat-select *ngIf="showPlatform == true" class="form-control"
@@ -14,33 +14,36 @@
                         <mat-option value="2">BSE</mat-option>
                     </mat-select>
                 </div>
-                <div class="col-md-2">
-                    <button mat-stroked-button class="primary-sm" (click)="showPlatform = true">Edit</button>
+                <div class="col-md-2" *ngIf="allData">
+                    <button mat-stroked-button *ngIf="allData.showPlatformEdit ==true" class="primary-sm"
+                        (click)="showPlatform = true">Edit</button>
                 </div>
             </div>
-            <div class="row  pt-16 pb-16">
+            <div class="row  pt-16 pb-16" *ngIf="defaultClient">
                 <div class="col-md-9">
                     <p class="m-0 roboto text-custom">Investor details</p>
                     <h5 class="m-0">{{(!transactionSummary)? '-': transactionSummary.selectedFamilyMember}}</h5>
                     <div *ngIf="showInvestor == false">
-                        <h5 class="m-0"> IIN {{selectedInvestor}} (Joint)</h5>
+                        <h5 class="m-0"> IIN {{selectedInvestor || defaultClient.clientCode}}
+                            {{(defaultClient.holdingType)}}</h5>
                     </div>
                     <mat-select *ngIf="showInvestor == true" class="form-control"
                         (selectionChange)="setInvestor($event)">
-                        <mat-option *ngFor="let iin of investorList" [value]="iin.iin">{{iin.iin}}</mat-option>
+                        <mat-option *ngFor="let iin of clientDataList" [value]="iin.clientCode">{{iin.clientCode}}
+                        </mat-option>
                     </mat-select>
                 </div>
                 <div class="col-md-2">
-                    <!-- <button mat-stroked-button class="primary-sm" *ngIf="investorList.length > 1"
-                        (click)="showInvestor = true">Edit</button> -->
+                    <button mat-stroked-button class="primary-sm" *ngIf="allData.showMappingEdit ==true"
+                        (click)="showInvestor = true">Edit</button>
                 </div>
             </div>
-            <div class="row  pt-16 pb-16">
+            <div class="row  pt-16 pb-16" *ngIf="defaultCredential">
                 <div class="col-md-9">
                     <p class="m-0 roboto text-custom">ARN/RIA and EUIN</p>
-                    <h5 class="m-0">ARN-83866
+                    <h5 class="m-0">{{defaultCredential.brokerCode}}
                     </h5>
-                    <h5 class="m-0"> E023539 - Ankit Mehta</h5>
+                    <h5 class="m-0"> {{defaultCredential.euin}} - Ankit Mehta</h5>
                 </div>
                 <div class="col-md-2">
                     <button mat-stroked-button class="primary-sm">Edit</button>
@@ -49,11 +52,14 @@
             <div class="row  pt-16 pb-16">
                 <div class="col-md-12 p-0">
                     <p class="m-0 roboto text-custom">Scheme, folio and amount</p>
-                    <h5 class="m-0"><span class="f-500">Scheme:</span>
-                        {{(transactionSummary==undefined)?'':transactionSummary.schemeName}}
+                    <div class="bar">
+                        <h5 class="m-0"><span class="f-500">Scheme:</span>
+                            {{(transactionSummary==undefined)?'':transactionSummary.schemeName}}
+                        </h5>
+                    </div>
+                    <h5 class="m-0"> <span class="f-500">Folio:</span></h5>
+                    <h5 class="m-0"> <span class="f-500">Amount:</span> ₹{{transactionSummary.enteredAmount}}/Lumpsum
                     </h5>
-                    <h5 class="m-0"> <span class="f-500">Folio:</span> 91032325824</h5>
-                    <h5 class="m-0"> <span class="f-500">Amount:</span> ₹5,00,000/Lumpsum</h5>
                 </div>
             </div>
             <div class="row  pt-16 pb-16">
@@ -61,9 +67,9 @@
                     <p class="m-0 roboto text-custom">TRANSACTION INITIATION</p>
                     <h5 class="m-0">Immediate</h5>
                 </div>
-                <div class="col-md-2">
+                <!-- <div class="col-md-2">
                     <button mat-stroked-button class="primary-sm">Edit</button>
-                </div>
+                </div> -->
             </div>
             <div class="row  pt-16 pb-16" *ngIf="platformType == 1">
                 <div class="col-md-9">

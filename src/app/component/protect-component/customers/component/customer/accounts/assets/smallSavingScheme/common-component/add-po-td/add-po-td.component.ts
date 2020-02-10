@@ -36,7 +36,7 @@ export class AddPoTdComponent implements OnInit {
   potdData: any;
   flag: any;
 
-  constructor(public utils: UtilService, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
+  constructor(public utils: UtilService, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject, private util: UtilService) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -53,7 +53,7 @@ export class AddPoTdComponent implements OnInit {
   }
   lisNominee(value) {
     console.log(value)
-    this.nomineesListFM = Object.assign([], value.familyMembersList);
+    this.nomineesListFM = Object.assign([], this.util.calculateAgeFromCurrentDate(value.familyMembersList));
   }
   getFormDataNominee(data) {
     console.log(data)
@@ -69,12 +69,12 @@ export class AddPoTdComponent implements OnInit {
     }
     this.potdData = data;
     this.POTDForm = this.fb.group({
-      ownerName: [data.ownerName, [Validators.required]],
+      ownerName: [data.ownerName, [Validators.required, UtilService.ageValidators(10)]],
       amtInvested: [data.amountInvested, [Validators.required, Validators.min(200)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
       description: [data.description, [Validators.required]],
 
-      tenure: [data.tenure + "", [Validators.required]],
+      tenure: [(data.tenure) ? data.tenure : '5', [Validators.required]],
       ownershipType: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]]
     })
     this.POTDOptionalForm = this.fb.group({

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { UpperCustomerComponent } from 'src/app/component/protect-component/customers/component/common-component/upper-customer/upper-customer.component';
 import { AddMutualFundComponent } from '../add-mutual-fund/add-mutual-fund.component';
 import { MFSchemeLevelHoldingsComponent } from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
@@ -8,6 +8,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import * as Highcharts from 'highcharts';
 import { CustomerService } from '../../../../../customer.service';
+import { MatTableDataSource } from '@angular/material';
 // const HighchartsMore = require('highcharts/highcharts-more.src');
 // HighchartsMore(Highcharts);
 
@@ -31,8 +32,10 @@ export class MutualFundOverviewComponent implements OnInit {
   solution_OrientedCurrentValue: any;
   otherCurrentValue: any;
   dataSource4: any;
-
-
+  dataSource3: any;
+  filteredArray: any[];
+  subCategoryArray: any;
+  dataSource2: MatTableDataSource<any>;
   constructor(public subInjectService: SubscriptionInject, public UtilService: UtilService,
     public eventService: EventService, private custumService: CustomerService) {
   }
@@ -42,11 +45,13 @@ export class MutualFundOverviewComponent implements OnInit {
 
   displayedColumns1 = ['data', 'amts'];
   datasource1 = ELEMENT_DATA1;
+  // @Input() mutualFund;
 
   ngOnInit() {
     this.getMutualFundData();
 
   }
+
 
   getMutualFundData() {
     const obj = {
@@ -62,13 +67,13 @@ export class MutualFundOverviewComponent implements OnInit {
   getMutualFundResponse(data) {
     console.log(data)
     this.mfData = data;
-    this.dataSource4=data.mutualFundCategoryMastersList;//category wise allocation
     this.calculatePercentage(data);//for Calculating MF categories percentage
     this.pieChart('piechartMutualFund');//pie chart data after calculating percentage
+    this.dataSource4 = data.mutualFundCategoryMastersList;//category wise allocation
     this.getCashFlowStatus();//Used for cashFlow status
-    // this.getsubCategorywiseAllocation(data);//For subCategoryWiseAllocation
-    // this.getFamilyMemberWiseAllocation(data)//for FamilyMemberWiseAllocation
-    // this.schemeWiseAllocation(data);//for shemeWiseAllocation
+    this.getsubCategorywiseAllocation(data);//For subCategoryWiseAllocation
+    this.getFamilyMemberWiseAllocation(data)//for FamilyMemberWiseAllocation
+    this.schemeWiseAllocation(data);//for shemeWiseAllocation
   }
   //function for calculating percentage
   calculatePercentage(data) {
@@ -97,7 +102,7 @@ export class MutualFundOverviewComponent implements OnInit {
       }
     });
   }
-  getCashFlowStatus(){
+  getCashFlowStatus() {
     //Used for cashFlow status
     this.datasource1.forEach(element => {
       switch (element.data) {
@@ -134,21 +139,46 @@ export class MutualFundOverviewComponent implements OnInit {
 
     });
   }
-  // getsubCategorywiseAllocation(data){
-  //   let subCategoryArray=[];
-  //   data.mutualFundCategoryMastersList.forEach(element => {
-  //     element.mutualFundSubCategoryMaster.forEach(obj => {
-  //       console.log(obj);
-  //       subCategoryArray.push(obj);
-  //     });
-  //   });
-  // }
-  // getFamilyMemberWiseAllocation(data){
+  getsubCategorywiseAllocation(data) {
+    this.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
+    this.dataSource3 = new MatTableDataSource(this.filteredArray);
+    console.log(this.dataSource3);
+  }
+  getFamilyMemberWiseAllocation(data) {
+    let dataToShow = data.family_member_map;
+    let familyMemberAllocation = [];
+    //   Object.keys(dataToShow).map(function(key){
+    //     familyMemberAllocation.push({[key]:dataToShow[key]})
+    //     return familyMemberAllocation;
+    // });
+    // familyMemberAllocation = Object.entries(dataToShow);
 
-  // }
-  // schemeWiseAllocation(data){
+    console.log(familyMemberAllocation);
+    // familyMemberAllocation.push(data.family_member_map);
+    // this.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
 
-  // }
+  }
+  schemeWiseAllocation(data) {
+    this.filter(this.filteredArray, 'mutualFundSchemeMaster');
+    this.dataSource2 = new MatTableDataSource(this.filteredArray);
+  }
+  //Used for filtering the data 
+  filter(data, key) {
+    const filterData = [];
+    const finalDataSource = [];
+    data.filter(function (element) {
+      filterData.push(element[key])
+    })
+    if (filterData.length > 0) {
+      filterData.forEach(element => {
+        element.forEach(data => {
+          finalDataSource.push(data)
+        });
+      });
+    }
+    console.log(finalDataSource)
+    this.filteredArray = finalDataSource;//final dataSource Value
+  }
   onClick(referenceKeyName) {
     alert(referenceKeyName.id);
   }
@@ -291,7 +321,6 @@ export class MutualFundOverviewComponent implements OnInit {
       componentName: UpperCustomerComponent,
       state: 'open'
     };
-
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {

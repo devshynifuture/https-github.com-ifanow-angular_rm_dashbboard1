@@ -100,6 +100,61 @@ export class ArnRiaCredentialsComponent implements OnInit {
       }
     );
   }
+  // deleteModal(value, data) {
+  //   const dialogData = {
+  //     data: value,
+  //     header: 'DELETE',
+  //     body: 'Are you sure you want to delete?',
+  //     body2: 'This cannot be undone',
+  //     btnYes: 'CANCEL',
+  //     btnNo: 'DELETE',
+  //     positiveMethod: () => {
+  //       if (value == 'FIXED DEPOSITE') {
+  //         this.customerService.deleteFixedDeposite(data.id).subscribe(
+  //           data => {
+  //             this.eventService.openSnackBar('Fixed deposite is deleted', 'dismiss');
+  //             dialogRef.close();
+  //             this.getFixedDepositList();
+  //           },
+  //           error => this.eventService.showErrorMessage(error)
+  //         );
+  //       } else if (value == 'RECURRING DEPOSITE') {
+  //         this.customerService.deleteRecurringDeposite(data.id).subscribe(
+  //           data => {
+  //             this.eventService.openSnackBar('Recurring deposite is deleted', 'dismiss');
+  //             dialogRef.close();
+  //             this.getRecurringDepositList();
+  //           },
+  //           error => this.eventService.showErrorMessage(error)
+  //         );
+  //       } else {
+  //         this.customerService.deleteBond(data.id).subscribe(
+  //           data => {
+  //             this.eventService.openSnackBar('Bond is deleted', 'dismiss');
+  //             dialogRef.close();
+  //             this.getBondsList();
+  //           },
+  //           error => this.eventService.showErrorMessage(error)
+  //         );
+  //       }
+  //     },
+  //     negativeMethod: () => {
+  //       console.log('2222222222222222222222222222222222222');
+  //     }
+  //   };
+  //   console.log(dialogData + '11111111111111');
+
+  //   const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+  //     width: '400px',
+  //     data: dialogData,
+  //     autoFocus: false,
+
+  //   });
+
+  //   dialogRef.afterClosed().subscribe(result => {
+
+  //   });
+  // }
 }
 // export interface PeriodicElement {
 //   name: string;

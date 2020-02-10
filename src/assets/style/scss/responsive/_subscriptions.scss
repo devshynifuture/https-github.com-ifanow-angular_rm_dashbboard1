@@ -23,21 +23,55 @@
   .radioBtn .mat-radio-label {
     min-width: 135px !important;
   }
+
+  #ui-subscription-completeness {
+    .mat-card {
+      .col-md-2 {
+        padding-right: 8px;
+        padding-left: 8px;
+      }
+    }
+  }
 }
 
 @media(max-width:1200px) {}
 
 @media(max-width:1142px) {
+  #ui-dashboard {
+    .bg-red {
+      p {
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+    }
+  }
+
   #ui-subscriptions {
     h3 {
       font-size: 16px;
     }
 
     .mat-tab-link {
-      font-size: 11px !important;
+      font-size: 12px !important;
       height: 54px !important;
       min-width: 90px !important;
 
+    }
+  }
+
+  #ui-settings-subs .mat-tab-label {
+    font-size: 11px;
+  }
+
+  #ui-subscription-completeness {
+    .mat-card {
+      h4 {
+        font-size: 16px;
+      }
+
+      p {
+        padding-top: 0px;
+      }
     }
   }
 }

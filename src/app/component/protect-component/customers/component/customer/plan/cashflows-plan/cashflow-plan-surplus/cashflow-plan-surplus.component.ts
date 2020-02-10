@@ -18,6 +18,8 @@ export class CashflowPlanSurplusComponent implements OnInit {
     private cashflowService: CashFlowsPlanService) { }
   tableInUse: string = 'surplus';
 
+  isLoading: boolean = false;
+
   dataSource: MatTableDataSource<SurplusInterface>;
   displayedColumns: string[] = ['financialYear', 'ageH', 'ageW', 'originalSurplus', 'surplusAllocated', 'balanceSurplus', 'view'];
   advisorId = AuthService.getAdvisorId();

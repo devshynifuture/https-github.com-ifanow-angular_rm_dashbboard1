@@ -21,11 +21,9 @@ import { SchemeMappingComponent } from './support-dashboard/scheme-mapping/schem
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { IfasDetailsComponent } from './my-ifas/ifas-details/ifas-details.component';
 import { DynamicComponentService } from 'src/app/services/dynamic-component.service';
-import { SupportEntryModule } from './support-entry.module';
+import { SupportEntryModule } from './support.entry.module';
 import { IfaBoradingHistoryComponent } from './ifa-onboarding/ifa-borading-history/ifa-borading-history.component';
 import { AdminDetailsComponent } from './ifa-onboarding/admin-details/admin-details.component';
-
-
 
 
 @NgModule({

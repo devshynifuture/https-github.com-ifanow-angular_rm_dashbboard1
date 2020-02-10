@@ -1,7 +1,7 @@
 <div class="popup-header-fix w-65">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-2 wrapper-20">{{transactionType}} TRANSACTION</h4>
+            <h3 class="mb-0 wrapper-20">{{transactionType}} TRANSACTION</h3>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -15,7 +15,8 @@
     <div class="pt-90 pr-20 pl-20 pb-44">
         <div class="row">
             <div class="col-md-12 p-0">
-                <h5 class="m-0 text-black"> <img src="/assets/images/svg/back-arrow.svg" class="v-initial pr-12">Investor name: {{selectedFamilyMember}}
+                <h5 class="m-0 text-black"> <img src="/assets/images/svg/back-arrow.svg"
+                        class="v-initial pr-12">Investor name: {{selectedFamilyMember}}
                 </h5>
             </div>
         </div>
@@ -23,16 +24,21 @@
             <div class="col-md-8 pl-0 pr-20">
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pt-28 text-black pb-12">seat scheme to redeem from</h5>
+                        <h5 class="m-0 pt-28 text-black pb-12">Select scheme to switch out of</h5>
                     </div>
                     <div class="col-md-12 p-0">
-                        <mat-form-field>
-                            <mat-select class="form-control br-0">
-                                <mat-option>
-                                    Option
+                        <div class="form-control mb-0 add-transactions">
+                            <input type="text" aria-label="Number" class="form-group h-0" matInput
+                                formControlName="investor" [matAutocomplete]="auto"
+                                (keyup)="getSchemeList($event.target.value)" value="Start typing to see investor names">
+                            <mat-autocomplete #auto="matAutocomplete">
+                                <mat-option (onSelectionChange)="selectedScheme(scheme)"
+                                    *ngFor="let scheme of schemeList" [value]="scheme.schemeName">
+                                    {{scheme.schemeName}}
                                 </mat-option>
-                            </mat-select>
-                        </mat-form-field>
+                            </mat-autocomplete>
+                            <p class="m-0 f-12 text-custom pt-8">Last closing NAV: {{navOfSelectedScheme}}</p>
+                        </div>
                     </div>
                 </div>
 
@@ -50,14 +56,13 @@
                         </mat-form-field>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-md-7 mt-20 pl-0">
+                <div class="row" *ngIf="showUnits == true">
+                    <div class="col-md-12 mt-20 pl-0">
                         <div class="bg-grey lter">
                             <div class="row">
                                 <div class="col-md-6 p-20 text-left">
                                     <p class="f-14 m-0">Current value</p>
-                                    <h3 class="f-18 roboto m-0">₹897</h3>
+                                    <h3 class="f-18 roboto m-0">Rs: 897</h3>
                                 </div>
                                 <div class="col-md-6 p-20 text-left">
                                     <p class="f-14 m-0">Balance unit</p>
@@ -66,7 +71,9 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12 pb-12">
-                                    <p class="f-12 m-0">Note: </p>
+                                    <p class="f-12 m-0">Note: Note: Units data provided here is as per data uploaded in
+                                        the system. This data may not be updated in NSE NMF. As a result, some
+                                        transactions may not go through.</p>
                                 </div>
                             </div>
                         </div>
@@ -95,7 +102,8 @@
                     <div class="col-md-5 p-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input #employeeContry matInput maxlength="10" type="text" class="form-control br-0 rupess" formControlName="employeeContry">
+                                <input #employeeContry matInput maxlength="10" type="text"
+                                    class="form-control br-0 rupess" formControlName="employeeContry">
                             </mat-form-field>
                             <p class="m-0 f-12 text-custom">Min amount: ₹500</p>
                         </div>

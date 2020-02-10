@@ -263,11 +263,13 @@ export const appConfig = {
   MAP_PLAN_TO_SERVICE_SETTING: 'subscription/map/plan/service',
   UPDATE_INVOICE: 'subscription/invoice/edit',
   CHANGE_PAYEE_SETTING: 'subscription/client-biller/setting/subscription/update',
+  CHANGE_SUBSCRIPTION_DETAILS: 'subscription/subscription/edit',
   CHANGE_BILLER_SETTING: 'subscription/change/biller-setting/subscription',
   EDIT_PLAN_SETTING: 'subscription/plan/edit',
   GET_SERVICE_MODULE: 'subscription/service/module/get',
   MAP_MODULE_TO_PLANS: 'subscription/subscription/service/module-list/edit',
   GET_BILLER_PROFILE: 'subscription/biller/profiles/get',
+  GET_BANK_ADDRESS:'misc/ifsc',
   GET_SERVICES_LIST: 'subscription/invoice-service/get',
   ADD_INVOICE: 'subscription/invoice/manual/add',
   GET_PAYEE_PROFILE: 'subscription/client-biller/profiles/get',
@@ -348,6 +350,9 @@ export const appConfig = {
   GET_BSE_SUB_BROKER_CREDENTIALS: 'bse/user/sub-broker/view',
   GET_NEW_SCHEMES : 'mutual-fund/search',
   GET_SCHEME_DETAILS:'mutual-fund/product-limit/get',
+  GET_FAMILY_MEMBER:'family/name/get',
+  GET_DEFAULT_DETAILS:'bse/user/family-member/transaction-setting/default',
+  PURCHASE:'bse/order/bse/order/create',
 
   // cashflow 
   CASHFLOW_ADD_INCOME: 'cashflow/income/add',
