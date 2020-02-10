@@ -1,7 +1,6 @@
 <mat-tab-group animationDuration="0ms" mat-align-tabs="center" id="ui-addtransaction-tabs">
     <mat-tab label="Transaction summary">
-        <div class="p-20 transaction-summary" class="skeletonAnimation" appSkeletonLoading
-            [appSkeletonLoading]="isLoading">
+        <div class="p-20 transaction-summary">
             <div class="row pt-16 pb-16">
                 <div class="col-md-9">
                     <p class="m-0 roboto text-custom">Transaction platform</p>
@@ -55,12 +54,11 @@
                     <p class="m-0 roboto text-custom">Scheme, folio and amount</p>
                     <div class="bar">
                         <h5 class="m-0"><span class="f-500">Scheme:</span>
-                            {{(transactionSummary==undefined)?isLoading:transactionSummary.schemeName}}
+                            {{(transactionSummary==undefined)?'':transactionSummary.schemeName}}
                         </h5>
                     </div>
                     <h5 class="m-0"> <span class="f-500">Folio:</span></h5>
-                    <h5 class="m-0"> <span class="f-500">Amount:</span>
-                        ₹{{(transactionSummary==undefined)?isLoading:transactionSummary.enteredAmount}}/Lumpsum
+                    <h5 class="m-0"> <span class="f-500">Amount:</span> ₹{{(transactionSummary==undefined)?'':transactionSummary.enteredAmount}}/Lumpsum
                     </h5>
                 </div>
             </div>
