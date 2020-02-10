@@ -1,4 +1,4 @@
-<div class="bg-white pl-20 pr-20  pt-130">
+<div class="bg-white pl-20 pr-20  pt-130 pb-44">
 
     <div [ngClass]="dataSource.data.length > 0 || isFilter ? 'block' : 'none'">
         <div class="row pt-20 pb-8">
@@ -50,7 +50,7 @@
         </div>
     </div>
 
-    <div class="example-container" [ngClass]="dataSource.data.length > 0 ? 'block' : 'none'">
+    <div class="" [ngClass]="dataSource.data.length > 0 ? 'block' : 'none'">
         <!-- {{dataCount == dataSource.data.length}} -->
         <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class=" skeletonAnimation"
             id="table-low" mat-table matSort>
