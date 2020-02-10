@@ -39,34 +39,39 @@ export class CreateSubscriptionComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   }
+
+  
   feeModeData: any;
-  isFlagPayee: boolean;
+  isFlagPayee: boolean = false;
   payeeSettingData: any = null;
   advisorName;
   dateToShow: any;
   subDateToShow: any;
   billEveryMsg: any;
 
+  
   constructor(private enumService: EnumServiceService, public subInjectService: SubscriptionInject,
     private eventService: EventService, private fb: FormBuilder,
     private subService: SubscriptionService, public datepipe: DatePipe) {
     // this.eventService.sidebarSubscribeData.subscribe(
     //   data => this.subFeeMode = data
     // );
-    this.subInjectService.event.subscribe(
-      data => {
-        this.isFlagPayee = data.flag;
-        setTimeout(
-          this.payeesData = data.data, 500
-        )
+    // this.subInjectService.event.subscribe(
+    //   data => {
+    //     this.isFlagPayee = data.flag;
+    //     setTimeout(
+    //       this.payeesData = data.data, 500
+    //     )
 
-      }
-    )
+    //   }
+    // )
   }
 
   inputData;
   @Input()
   set data(data) {
+    console.log(data, "data check anni");
+    this.payeeSettingData = data
     this.totalSelectedPayeeShare = 0;
     this.getSubStartDetails(data);
   }
@@ -76,6 +81,7 @@ export class CreateSubscriptionComponent implements OnInit {
   }
 
   @ViewChild('stepper', { static: false }) stepper: MatStepper;
+  stepper2: MatStepper
   feeStructureData;
   clientData;
   feeMode;
@@ -116,16 +122,22 @@ export class CreateSubscriptionComponent implements OnInit {
     console.log(AuthService.getClientData(), "123 AuthService.getUserInfo()");
 
     this.advisorName = AuthService.getUserInfo().fullName;
-    this.isFlagPayee = true;
+    // this.isFlagPayee = true;
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
     console.log(this.feeCollectionMode, "fee mood");
   }
   getPayeeFlagData(data) {
-    this.isFlagPayee = data.flag
-    this.payeeSettingData = data
-    console.log(data, this.payeeSettingData, "abc 77")
+    this.isFlagPayee = data
+    if(!data){
+      setTimeout(() => {   
+        this.stepper.selectedIndex = 3;
+        this.getSubStartDetails(this.payeeSettingData);
+      }, 1);
+    }
+    console.log(data, "abc 77")
   }
 
+  
   preventDefault(e) {
     e.preventDefault();
   }
@@ -187,6 +199,8 @@ export class CreateSubscriptionComponent implements OnInit {
   }
   goBack() {
     this.stepper.previous();
+    console.log(this.stepper.selectedIndex, "check selectedIndex");
+    
   }
 
   nextStep(data) {
@@ -194,9 +208,9 @@ export class CreateSubscriptionComponent implements OnInit {
     this.clientData = data;
     this.goForward();
   }
-  getTotalPayeeData(data) {
-    this.isFlagPayee = data
-  }
+  // getTotalPayeeData(data) {
+  //   this.isFlagPayee = data
+  // }
   getSubStartDetails(data) {
     // this.clientData = data.data;
     this.feeModeData = data;
@@ -235,6 +249,7 @@ export class CreateSubscriptionComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           // this.getProfileBillerData()
+          this.stepper.selectedIndex = 3
           console.log('this is sidebardata in subs subs 2: ');
           rightSideDataSub.unsubscribe();
         }

@@ -37,7 +37,7 @@ export class PayeeSettingsComponent implements OnInit {
   sendData;
   updatedData: any;
   inputData: any;
-
+  @Output() closeAddPayee = new EventEmitter();
   @Output() getEditData = new EventEmitter();
   obj = [
     {
@@ -94,6 +94,8 @@ export class PayeeSettingsComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
+    console.log(data, "check ani");
+    
     // this.clientId = AuthService.getClientId()
     this.getClientPayeeSettings(data);
   }
@@ -104,10 +106,10 @@ export class PayeeSettingsComponent implements OnInit {
   }
   getListFamilyMem() {
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId();
+    // this.clientId = AuthService.getClientId();
     const obj = {
       advisorId: this.advisorId,
-      clientId: this.clientData.id
+      clientId: !this.inputData.flag? this.clientData.clientId : this.clientData.id
     };
     this.subService.getListOfFamilyByClient(obj).subscribe(
       data => this.getListOfFamilyByClientRes(data)
@@ -167,7 +169,7 @@ export class PayeeSettingsComponent implements OnInit {
 
   getClientPayeeSettings(data) {
     (data == 'Add') ? data = {} : data
-    this.clientData = data.clientData;
+    this.clientData = data.clientData ? data.clientData : data;
     console.log('payee data', data);
     this.payeeSettingsForm = this.fb.group({
       customerName: [data.name, [Validators.required]],
@@ -219,7 +221,12 @@ export class PayeeSettingsComponent implements OnInit {
   Close(data) {
     // this.subInjectService.rightSliderData(state)
     // this.subInjectService.rightSideData(state);
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+    if(!this.inputData.flag){
+      this.closeAddPayee.emit(false);
+    }
+    else{
+      this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+    }
   }
 
   savePayeeSettings() {
@@ -260,7 +267,7 @@ export class PayeeSettingsComponent implements OnInit {
           state: this.payeeSettingsForm.controls.state.value,
           zipCode: this.payeeSettingsForm.controls.pincode.value,
           id: this.payeeSettingsForm.controls.id.value,
-          clientId: this.clientData.id
+          clientId:!this.inputData.flag? this.clientData.clientId : this.clientData.id
         };
         this.sendData = obj1;
         this.subService.editPayeeSettings(obj1).subscribe(
@@ -290,8 +297,7 @@ export class PayeeSettingsComponent implements OnInit {
           pan: this.getFormControl().pan.value,
           country: this.getFormControl().country.value,
           zipCode: this.getFormControl().pincode.value,
-          clientId: this.clientData.id,
-
+          clientId: !this.inputData.flag? this.clientData.clientId : this.clientData.id
         };
         this.subService.addClientBillerProfile(obj).subscribe(
           data =>{
@@ -310,22 +316,22 @@ export class PayeeSettingsComponent implements OnInit {
   addClientBillerProfileRes(data) {
     this.barButtonOptions.active = false;
 
-    if (this.inputData.data == "Add") {
-      // this.totalPayeeData.emit(true)obj=
-      let obj = {
-        data: data,
-        flag: true
-      }
-      this.subInjectService.addEvent(obj)
-      this.subInjectService.changeNewRightSliderState({ state: 'close', data });
-      this.eventService.openSnackBar('Client profile added Successfully', 'OK');
-    } else {
+    // if (this.inputData.data == "Add") {
+    //   // this.totalPayeeData.emit(true)obj=
+    //   let obj = {
+    //     data: data,
+    //     flag: true
+    //   }
+    //   this.subInjectService.addEvent(obj)
+    //   this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+    //   this.eventService.openSnackBar('Client profile added Successfully', 'OK');
+    // } else {
       console.log('addClientBillerProfileRes', data);
       this.updatedData = data;
-      this.closeTab(data);
+      this.Close(data);
       this.subInjectService.changeNewRightSliderState({ state: 'close', data });
       this.eventService.openSnackBar('Client profile added Successfully', 'OK');
-    }
+    // }
   }
 
   editSettingResData(data) {
@@ -334,13 +340,13 @@ export class PayeeSettingsComponent implements OnInit {
       this.subInjectService.changeNewRightSliderState({ state: 'close', data });
       this.eventService.openSnackBar('Client profile update Successfully', 'OK');
       this.getEditData.emit(this.sendData);
-      this.closeTab(data);
+      this.Close(data);
     }
   }
 
-  closeTab(data) {
-    // if (data.status == 1) {
-    this.Close(data);
-    // }
-  }
+  // closeTab(data) {
+  //   // if (data.status == 1) {
+  //   this.Close(data);
+  //   // }
+  // }
 }
