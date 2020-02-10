@@ -44,7 +44,7 @@ export class CashflowUpperAssetComponent implements OnInit {
         console.log(res);
       }, err => {
         console.error(err);
-      })
+      });
   }
 
 }

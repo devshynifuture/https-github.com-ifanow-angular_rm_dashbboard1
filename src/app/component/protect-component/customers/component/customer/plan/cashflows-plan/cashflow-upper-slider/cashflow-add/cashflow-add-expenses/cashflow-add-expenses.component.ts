@@ -4,6 +4,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CashFlowsPlanService } from '../../../cashflows-plan.service';
+import { ConstantsService } from 'src/app/constants/constants.service';
 
 @Component({
   selector: 'app-cashflow-add-expenses',
@@ -11,17 +12,20 @@ import { CashFlowsPlanService } from '../../../cashflows-plan.service';
   styleUrls: ['./cashflow-add-expenses.component.scss']
 })
 export class CashflowAddExpensesComponent implements OnInit {
+  familyMemberList: {}[];
 
   constructor(
     public dialogRef: MatDialogRef<CashflowAddExpensesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
-    private cashflowService: CashFlowsPlanService
+    private cashflowService: CashFlowsPlanService,
+    private constantsService: ConstantsService
   ) { }
 
   validatorType = ValidatorType;
   advisorId = AuthService.getAdvisorId();
   clientId = AuthService.getClientId();
+  expenseCategory = {};
 
   formExpense = this.fb.group({
     "category": [, Validators.required],
@@ -37,6 +41,8 @@ export class CashflowAddExpensesComponent implements OnInit {
   });
 
   ngOnInit() {
+    this.expenseCategory = this.constantsService.expenseList;
+    this.getFamilyMemberData();
   }
 
   closeDialog() {
@@ -50,7 +56,20 @@ export class CashflowAddExpensesComponent implements OnInit {
         console.log(res);
       }, err => {
         console.error(err);
-      })
+      });
+  }
+
+  getFamilyMemberData() {
+    this.cashflowService
+      .getFamilyMemberData({ advisorId: this.advisorId, clientId: this.clientId })
+      .subscribe(res => {
+        this.familyMemberList = res.familyMembersList;
+        console.log(this.familyMemberList);
+      });
+  }
+
+  getMonthFromDate(value) {
+    console.log(value);
   }
 
   editCashflowExpenseData(data) {
@@ -64,7 +83,21 @@ export class CashflowAddExpensesComponent implements OnInit {
   }
 
   submitForm() {
-    console.log(this.formExpense);
+    if (this.formValidations()) {
+      console.log(this.formExpense);
+      this.closeDialog();
+    }
+    // this.formValidations();
+  }
+
+  formValidations() {
+    for (let key in this.formExpense.controls) {
+      if (this.formExpense.get(key).invalid) {
+        this.formExpense.get(key).markAsTouched();
+        return false;
+      }
+    }
+    return (this.formExpense.valid) ? true : false;
   }
 
 }

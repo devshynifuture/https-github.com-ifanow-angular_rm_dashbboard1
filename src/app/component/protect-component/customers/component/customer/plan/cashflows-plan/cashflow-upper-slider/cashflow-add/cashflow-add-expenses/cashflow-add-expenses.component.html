@@ -1,4 +1,4 @@
-<form [formGroup]="formExpense" (ngSubmit)="submitForm()">
+<form [formGroup]="formExpense">
     <div class="scrollHeight">
 
         <div class="row p-12">
@@ -8,10 +8,11 @@
             <div class="col-md-6">
                 <mat-form-field>
                     <mat-select class="form-control br-0" formControlName="category">
-                        <mat-option value='1'>Household expenses</mat-option>
+                        <mat-option [value]='category.clientExpenseTypeMasterId'
+                            *ngFor="let category of expenseCategory">{{ category.expenseType }}</mat-option>
                     </mat-select>
-                    <mat-error *ngIf="formExpense.get('category').touched && formExpense.get('category').invalid">Must
-                        be selected
+                    <mat-error *ngIf="formExpense.get('category').touched && formExpense.get('category').invalid">This
+                        is required
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -25,11 +26,15 @@
             </div>
             <div class="col-md-4">
                 <mat-form-field>
-                    <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                        [maxLength]="10" formControlName="amount" class="form-control br-0 rupess">
+                    <input matInput type="text" #expenseAmtInput appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" formControlName="amount"
+                        class="form-control br-0 rupess">
                     <mat-error *ngIf="formExpense.get('amount').touched && formExpense.get('amount').invalid">
-                        Must be inserted
+                        This is required
                     </mat-error>
+                    <mat-hint align="end">
+                        {{ expenseAmtInput.value.length }}/ 10
+                    </mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -50,7 +55,7 @@
                                 </mat-select>
                                 <mat-error
                                     *ngIf="formExpense.get('repeat-freq').touched && formExpense.get('repeat-freq').invalid">
-                                    Must be Selected
+                                    This is required
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -64,7 +69,7 @@
                                 </mat-select>
                                 <mat-error
                                     *ngIf="formExpense.get('repeat-every').touched && formExpense.get('repeat-every').invalid">
-                                    Must be Selected
+                                    This is required
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -88,7 +93,7 @@
                                 <mat-datepicker #picker></mat-datepicker>
                                 <mat-error
                                     *ngIf="formExpense.get('starts-date').touched && formExpense.get('starts-date').invalid">
-                                    Must be Selected
+                                    This is required
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -107,7 +112,7 @@
                                 </mat-select>
                                 <mat-error
                                     *ngIf="formExpense.get('starts-day').touched && formExpense.get('starts-day').invalid">
-                                    Must be Selected
+                                    This is required
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -130,7 +135,7 @@
                                 </mat-select>
                                 <mat-error
                                     *ngIf="formExpense.get('continues-till').touched && formExpense.get('continues-till').invalid">
-                                    Must be Selected
+                                    This is required
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -146,7 +151,7 @@
                                 <mat-datepicker #picker1></mat-datepicker>
                                 <mat-error
                                     *ngIf="formExpense.get('continues-till-date').touched && formExpense.get('continues-till-date').invalid">
-                                    Must be Selected
+                                    This is required
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -163,11 +168,12 @@
             <div class="col-md-6">
                 <mat-form-field>
                     <mat-select formControlName="payment-mode" class="form-control br-0">
-                        <mat-option value='1'> Credit card</mat-option>
+                        <mat-option value='1'> Credit card </mat-option>
+                        <mat-option value='2'> Debit card </mat-option>
                     </mat-select>
                     <mat-error
                         *ngIf="formExpense.get('payment-mode').touched && formExpense.get('payment-mode').invalid">
-                        Must be Selected
+                        This is required
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -181,11 +187,12 @@
             <div class="col-md-6">
                 <mat-form-field>
                     <mat-select formControlName="family-member" class="form-control br-0">
-                        <mat-option value='1'>Rahul Jain</mat-option>
+                        <mat-option *ngFor="let member of familyMemberList" [value]='member.userName'>
+                            {{ member.userName }}</mat-option>
                     </mat-select>
                     <mat-error
                         *ngIf="formExpense.get('family-member').touched && formExpense.get('family-member').invalid">
-                        Must be Selected
+                        This is required
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -194,7 +201,7 @@
         <div class="row p-12">
             <div class="col-md-12 text-right">
                 <button mat-button class="text-primitive" (click)="closeDialog()">CANCEL</button>
-                <button mat-button class="text-primary" type="submit">SAVE</button>
+                <button mat-button class="text-primary" (click)="submitForm()">SAVE</button>
             </div>
         </div>
     </div>

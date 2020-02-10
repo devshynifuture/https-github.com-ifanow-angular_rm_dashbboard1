@@ -59,16 +59,8 @@ export class CashflowUpperExpenseComponent implements OnInit {
   }
 
   deleteEntryCashFlow(element: UpperTableBox) {
-    let whichTable;
-    (this.cashflowCategory === 'income') ?
-      whichTable = ELEMENT_DATA :
-      (this.cashflowCategory === 'expenses') ?
-        whichTable = ELEMENT_DATA1 :
-        (this.cashflowCategory === 'liabilities') ?
-          whichTable = ELEMENT_DATA2 : whichTable = '';
-
     let el;
-    (whichTable !== '') ? el = whichTable.splice(whichTable.indexOf(element), 1) : null;
+    (ELEMENT_DATA1 !== null) ? el = ELEMENT_DATA1.splice(ELEMENT_DATA1.indexOf(element), 1) : null;
     console.log("this element deleted:0000 ", el);
     // udpate table data
   }
@@ -83,17 +75,7 @@ export class CashflowUpperExpenseComponent implements OnInit {
 
   changeTableTdValue(value: string, field: string, index: number) {
     if (ValidatorType.NUMBER_ONLY.test(value)) {
-      switch (this.cashflowCategory) {
-        case 'income':
-          ELEMENT_DATA = this.alterTable(ELEMENT_DATA, field, value, index);
-          break;
-        case 'expenses':
-          ELEMENT_DATA1 = this.alterTable(ELEMENT_DATA1, field, value, index);
-          break;
-        case 'liabilities':
-          ELEMENT_DATA2 = this.alterTable(ELEMENT_DATA2, field, value, index);
-          break;
-      }
+      ELEMENT_DATA1 = this.alterTable(ELEMENT_DATA1, field, value, index);
     } else {
       this.onlyNumbers = '';
       this.eventService.openSnackBar("This Input only takes Numbers", "DISMISS");
@@ -122,24 +104,7 @@ export class CashflowUpperExpenseComponent implements OnInit {
 
 }
 
-// for Income
-let ELEMENT_DATA: UpperTableBox[] = [
-  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
-  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
-  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
-  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
-  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
-  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
-  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
-];
-
 // for expense
 let ELEMENT_DATA1: UpperTableBox[] = [
   { description: 'dkabjvk', month1: '5', month2: '213', month3: '298', month4: '1232', month5: '134', month6: '1265', month7: '15646756', month8: '435', month9: '13563', month10: '44456745', month11: '1434', month12: '14567', total: '12564', remove: '' },
-]
-
-// for liabilities
-let ELEMENT_DATA2: UpperTableBox[] = [
-  { description: 'akldjvasbkd', month1: '534', month2: '3', month3: '28', month4: '12', month5: '4', month6: '8', month7: '1556', month8: '4', month9: '45', month10: '3', month11: '4', month12: '152', total: '123', remove: '' },
-
 ]
