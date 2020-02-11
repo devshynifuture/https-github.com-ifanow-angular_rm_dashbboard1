@@ -77,7 +77,7 @@ export class AddFixedFeeComponent implements OnInit {
     });
     this.getFormControl().serviceName.maxLength = 40;
     this.getFormControl().code.maxLength = 10;
-    this.getFormControl().description.maxLength = 160;
+    this.getFormControl().description.maxLength = 500;
     this.getFormControl().fees.maxLength = 10;
   }
 
@@ -118,7 +118,7 @@ export class AddFixedFeeComponent implements OnInit {
 
       this.getFormControl().serviceName.maxLength = 40;
       this.getFormControl().code.maxLength = 10;
-      this.getFormControl().description.maxLength = 160;
+      this.getFormControl().description.maxLength = 500;
       this.getFormControl().fees.maxLength = 10;
     }
 

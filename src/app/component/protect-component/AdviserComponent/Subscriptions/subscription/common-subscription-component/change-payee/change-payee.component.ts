@@ -36,15 +36,13 @@ export class ChangePayeeComponent implements OnInit {
   payeeDataRes: any;
   noDataMessage: string;
   @Output() subStartNextBtn = new EventEmitter();
-  @Input() set upperData(data) {
-    if (data == undefined) {
-      return;
-    } else {
-      this.getPayeeData(data);
-    }
-    console.log('input payeeData:1');
+  // @Input() set upperData(data) {
+  //   if (data != undefined) {
+  //     this.getPayeeData(data);
+  //   }
+  //   console.log('input payeeData:1', data);
 
-  }
+  // }
 
   @Input()
   set data(payeeData) {
@@ -63,7 +61,7 @@ export class ChangePayeeComponent implements OnInit {
       return;
     } else {
       this._payeeData = payeeData;
-      this.getPayeeData(payeeData)
+      // this.getPayeeData(payeeData)
     }
     console.log('input payeeData:2', payeeData);
   }
@@ -99,33 +97,33 @@ export class ChangePayeeComponent implements OnInit {
   totalValue = 0;
 
   ngOnInit() {
-    console.log('change payee upperData', this.upperData);
+    // console.log('change payee upperData', this.upperData);
   }
 
   Close(flag) {
     this.subInjectService.changeUpperRightSliderState({ state: 'close',refreshRequired:flag });
     this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag });
   }
-  getPayeeData(data) {
-    this.getRowData = data;
-    this.dataObj = {
-      clientId: this.getRowData.clientId,
-      subId: this.getRowData.id
-    };
-    this.subService.getPayeerProfile(this.dataObj).subscribe(
-      responseData => {
-        console.log('getPayeeProfile responseData:', responseData);
-        if (responseData) {
-        } else {
-          this.noDataMessage = 'No payee profile found.';
-        }
-        this.getPayeeProfileRes(responseData);
-      }
-      , error => {
-        console.log('getPayeerProfile error: ', error);
-      });
+  // getPayeeData(data) {
+  //   this.getRowData = data;
+  //   this.dataObj = {
+  //     clientId: this.getRowData.clientId,
+  //     subId: this.getRowData.id
+  //   };
+  //   this.subService.getPayeerProfile(this.dataObj).subscribe(
+  //     responseData => {
+  //       console.log('getPayeeProfile responseData:', responseData);
+  //       if (responseData) {
+  //       } else {
+  //         this.noDataMessage = 'No payee profile found.';
+  //       }
+  //       this.getPayeeProfileRes(responseData);
+  //     }
+  //     , error => {
+  //       console.log('getPayeerProfile error: ', error);
+  //     });
 
-  }
+  // }
 
   getPayeeProfileRes(data) {
     console.log('getPayeeProfileRes data', data);
