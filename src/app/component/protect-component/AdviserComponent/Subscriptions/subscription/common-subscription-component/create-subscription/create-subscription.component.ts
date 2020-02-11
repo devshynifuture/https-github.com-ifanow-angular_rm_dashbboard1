@@ -222,7 +222,7 @@ export class CreateSubscriptionComponent implements OnInit {
         // advisorId: 2808,
         advisorId: this.advisorId,
         clientId: data.clientId,
-        subId: data.id
+        subId: !data.id? data.subscriptionPricing.id : data.id  
       };
       this.subService.getSubscriptionStartData(obj).subscribe(
         subStartData => this.getSubStartDetailsResponse(subStartData, data)
