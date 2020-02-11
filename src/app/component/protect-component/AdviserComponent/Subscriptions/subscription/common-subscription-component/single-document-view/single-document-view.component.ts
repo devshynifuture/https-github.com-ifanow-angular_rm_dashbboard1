@@ -63,7 +63,7 @@ export class SingleDocumentViewComponent implements OnInit {
     this.location.replaceState('/subscription-upper');
     console.log('hello mf button clicked');
     const fragmentData = {
-      flag: 'document',
+      flag: 'documents',
       id: 1,
       data: { documentData: this.singleDocument, flag: 'documents' },
       direction: 'top',
