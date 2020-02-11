@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { EmailAdviceComponent } from '../email-advice/email-advice.component';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { CustomerService } from '../../../customer.service';
+import { MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-advice-all-portfolio',
@@ -11,13 +12,17 @@ import { CustomerService } from '../../../customer.service';
 })
 export class AdviceAllPortfolioComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'icons'];
-  dataSource = ELEMENT_DATA;
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   displayedColumns1: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'status', 'date', 'adate', 'icons'];
-  dataSource1 = ELEMENT_DATA1;
+  dataSource1 = new MatTableDataSource(ELEMENT_DATA1);
   constructor(private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
+  @ViewChild(MatSort, { static: true }) sort1: MatSort;
+  @ViewChild(MatSort, { static: true }) sort2: MatSort;
 
   ngOnInit() {
+    this.dataSource.sort = this.sort1;
+    this.dataSource1.sort = this.sort2;
   }
 
 }
@@ -31,7 +36,7 @@ export interface PeriodicElement {
 
 const ELEMENT_DATA: PeriodicElement[] = [
   { position: 'Rahul Jain', name: 'Surplus from life csh flows (Lumpsum)', weight: '35, 000', symbol: 'Invest towards Shreya’s Higher education and Rahul’s Retirement goal', },
-  { position: 'Rahul Jain', name: 'Surplus from life csh flows (Lumpsum)', weight: '35, 000', symbol: 'Invest towards Shreya’s Higher education and Rahul’s Retirement goal', },
+  { position: 'Rahul Jain1', name: 'Surplus from life csh flows (Lumpsum)1', weight: '35, 000', symbol: 'Invest towards Shreya’s Higher education and Rahul’s Retirement goal1', },
 
 ];
 export interface PeriodicElement1 {
@@ -50,7 +55,7 @@ const ELEMENT_DATA1: PeriodicElement1[] = [
     date: '23/12/2019', adate: '23/12/2019'
   },
   {
-    position: 'Rahul Jain', name: 'Surplus from life csh flows (Lumpsum)',
+    position: 'Rahul Jain2', name: 'Surplus from life csh flows (Lumpsum)1',
     weight: '35, 000', symbol: 'Invest towards Shreya’s Higher education and Rahul’s Retirement goal',
     status: 'Given', date: '23/12/2019', adate: '23/12/2019'
   },

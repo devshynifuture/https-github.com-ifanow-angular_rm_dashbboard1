@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SelectAdviceComponent } from '../select-advice/select-advice.component';
 import { UtilService } from 'src/app/services/util.service';
 import { CustomerService } from '../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatTableDataSource, MatSort } from '@angular/material';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { AddRealEstateComponent } from '../../../accounts/assets/realEstate/add-real-estate/add-real-estate.component';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -21,6 +21,8 @@ export class AdviceRealAssetComponent implements OnInit {
   clientId: any;
   isLoading: any;
   dataSource: any;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
   constructor(private eventService: EventService, public dialog: MatDialog, private subInjectService: SubscriptionInject,
     private cusService: CustomerService, private activityService: ActiityService) { }
 
@@ -47,7 +49,8 @@ export class AdviceRealAssetComponent implements OnInit {
   }
   getAllAssetResponse(data) {
     this.isLoading = false;
-    this.dataSource = data.REAL_ESTATE
+    this.dataSource = new MatTableDataSource(data.REAL_ESTATE)
+    this.dataSource.sort = this.sort
     console.log(data);
   }
   openRealEstate(data, value) {
