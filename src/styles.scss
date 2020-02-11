@@ -910,7 +910,7 @@ mat-tab-group[vertical] {
   width: 100%;
   top: 0;
   background: #fff;
-  z-index: 99;
+  z-index: 10;
 
   .left-icons {
     position: fixed;
@@ -925,6 +925,10 @@ mat-tab-group[vertical] {
     margin: 0;
   }
 
+  .mat-tab-header {
+    border-bottom: 0px !important;
+  }
+
   .mat-tab-links {
     justify-content: center;
   }
@@ -937,9 +941,10 @@ mat-tab-group[vertical] {
     // border-bottom: 1px solid transparent !important;
   }
 
-  // .mat-ink-bar {
-  // height: 6px !important;
-  // }
+  .mat-tab-label {
+    text-transform: uppercase;
+  }
+
 }
 
 #ui-account-second-head {
@@ -972,40 +977,25 @@ mat-tab-group[vertical] {
   }
 }
 
-// .headerClassNav {
-// border-bottom: 0px !important;
-// position: fixed !important;
-// width: 100%;
-// top: 0px;
-// background: #ffffff;
-// z-index: 9;
-// .mat-tab-links {
-// justify-content: center;
-// height: 65px;
-// }
-// }
-#ui-customer-secondhead {
-  border-bottom: 0px !important;
+
+#ui-customer-secondhead,
+#ui-plan-secondhead {
   position: fixed !important;
+  margin-right: 0px !important;
+  right: 0 !important;
+  margin-top: 58px !important;
+  background-color: #000;
   width: 100%;
-  margin-top: 58px;
-  background: #000;
-  z-index: 99;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, .2), 0 1px 0 rgba(0, 0, 0, .12), 0 3px 3px rgba(0, 0, 0, .14);
+  z-index: 11;
 
   .mat-tab-links {
     height: 65px;
-    color: #fff;
-    margin-right: 20px;
+
   }
 
-  .mat-tab-link-container {
-    position: fixed !important;
-    margin-right: 0px !important;
-    right: 0 !important;
-    margin-right: 5px;
-    background-color: #fff;
-    width: 100%;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, .2), 0 1px 0 rgba(0, 0, 0, .12), 0 3px 3px rgba(0, 0, 0, .14);
+  .mat-tab-header {
+    border-bottom: 0px;
   }
 
   .mat-tab-link:focus:not(.mat-tab-disabled) {
@@ -1025,28 +1015,6 @@ mat-tab-group[vertical] {
       color: #008FFF !important;
     }
   }
-}
-
-#plan-home,
-#advisor-home {
-  position: fixed;
-  z-index: 112;
-  margin-top: 72px;
-  border: 1px solid #FFC100;
-  color: #FFC100;
-  margin-left: 20px;
-
-  .btn-yellow {
-    color: #FFC100 !important;
-  }
-}
-
-// #plan-home .mat-stroked-button {
-// padding-left: 5px !important;
-// padding-right: 10px !important;
-// }
-#ui-customer .mat-tab-label {
-  text-transform: uppercase;
 }
 
 .real-estate,
