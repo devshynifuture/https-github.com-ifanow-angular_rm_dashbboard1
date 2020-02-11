@@ -163,7 +163,7 @@ export class SipTransactionComponent implements OnInit {
   getSipFrequencyRes(data){
     console.log('isin ----',data)
     this.sipFrequency = data
-    this.sipFrequency = data.sipFrequency.filter(function(element){
+    this.sipFrequency = data.filter(function(element){
       return element.sipFrequency
     })
   }

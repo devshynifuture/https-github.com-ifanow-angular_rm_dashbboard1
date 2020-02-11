@@ -133,7 +133,7 @@
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select class="form-control" formControlName="investmentAccountSelection">
-                                    <mat-option value="option">Option</mat-option>
+                                    <mat-option value="option" *ngFor="let frequency of sipFrequency">{{frequency}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
