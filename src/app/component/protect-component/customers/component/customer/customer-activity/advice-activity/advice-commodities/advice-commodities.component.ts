@@ -16,6 +16,7 @@ export class AdviceCommoditiesComponent implements OnInit {
   dataSource3 = ELEMENT_DATA1;
   advisorId: any;
   clientId: any;
+  isLoading: boolean;
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
 
   ngOnInit() {
@@ -30,6 +31,7 @@ export class AdviceCommoditiesComponent implements OnInit {
       clientId: this.clientId,
       assetCategory: 12
     }
+    this.isLoading = true
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {
       }
@@ -37,6 +39,7 @@ export class AdviceCommoditiesComponent implements OnInit {
   }
   getAllSchemeResponse(data) {
     console.log(data);
+    this.isLoading = false
   }
   openCommodities(data, value) {
     const fragmentData = {

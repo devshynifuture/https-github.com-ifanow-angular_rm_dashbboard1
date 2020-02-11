@@ -83,7 +83,7 @@ export class AddPoMisComponent implements OnInit {
     }
     this.pomisForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required, UtilService.ageValidators(10)]],
-      amtInvested: [data.amountInvested, [Validators.required, Validators.min(1500)]],
+      amtInvested: [data.amountInvested, [Validators.required, Validators.min(1500), Validators.max(450000)]],
       commencementdate: [new Date(data.commencementDate), [Validators.required]],
       tenure: [(data.tenure) ? data.tenure : '5', [Validators.required]],
       ownershipType: [(data.ownerTypeId) ? data.ownerTypeId : '1', [Validators.required]],
@@ -109,6 +109,10 @@ export class AddPoMisComponent implements OnInit {
   getFormData(data) {
     console.log(data)
     this.nomineesList = data.controls
+  }
+  changeMaxValue(data) {
+    // console.log(data.value)
+    (data.value == 1) ? this.pomisForm.get('amtInvested').setValidators([Validators.max(450000)]) : this.pomisForm.get('amtInvested').setValidators([Validators.max(900000)])
   }
   saveFormData(state) {
     this.nominees = []

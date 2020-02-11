@@ -109,7 +109,8 @@
             </div>
 
             <div class="col-md-4 bg-grey lter p-0">
-                <app-transaction-summary></app-transaction-summary>
+                <app-transaction-summary [data]="transactionSummary" (defaultDetails)='getDefaultDetails($event)'>
+                </app-transaction-summary>
             </div>
         </div>
     </div>

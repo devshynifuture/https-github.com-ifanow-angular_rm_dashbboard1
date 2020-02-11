@@ -275,9 +275,10 @@ img.header-img {
 }
 
 .scorllable {
-  max-height: calc(100vh - 9rem);
+  // max-height: calc(100vh - 9rem);
+  height: 100vh;
   overflow-y: scroll;
-  padding-bottom: 80px;
+  // padding-bottom: 80px;
 }
 
 .scorllable::-webkit-scrollbar {
@@ -286,12 +287,6 @@ img.header-img {
 
 .scorllable::-webkit-scrollbar-track {
   background: #f1f1f1;
-}
-
-.scorllable {
-  max-height: calc(100vh - 9rem);
-  overflow-y: auto;
-  padding-bottom: 80px;
 }
 
 .scorllable::-webkit-scrollbar-thumb:hover {

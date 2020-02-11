@@ -27,6 +27,7 @@ export class SwitchTransactionComponent implements OnInit {
   reInvestmentOpt: any;
   schemeList: any;
   showUnits = false;
+  getDataSummary: any;
 
   constructor(private subInjectService: SubscriptionInject,private onlineTransact: OnlineTransactionService,
     private fb: FormBuilder) { }
@@ -50,6 +51,10 @@ export class SwitchTransactionComponent implements OnInit {
     this.getdataForm(this.inputData)
     this.transactionSummary = { selectedFamilyMember: this.inputData.selectedFamilyMember }
   }
+  getDefaultDetails(data) {
+    console.log('get defaul here yupeeee', data)
+    this.getDataSummary = data
+  }
   getSchemeList(value) {
 
     if (this.selectScheme == 2 && value.length > 2) {
@@ -58,7 +63,8 @@ export class SwitchTransactionComponent implements OnInit {
         bseOrderType: 'ORDER',
         aggregatorType: 2,
         advisorId: 414,
-        tpUserCredentialId: 212,
+        showOnlyNonZero:true,
+        tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
       }
       this.onlineTransact.getNewSchemes(obj).subscribe(
         data => this.getNewSchemesRes(data)
@@ -67,6 +73,7 @@ export class SwitchTransactionComponent implements OnInit {
 
     }
   }
+  
   selectedScheme(scheme) {
     this.showUnits = true
     this.transactionSummary = { schemeName: scheme.schemeName }
