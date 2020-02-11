@@ -22,7 +22,7 @@ export class StpTransactionComponent implements OnInit {
   transactionType: any;
   maiSchemeList: any;
   schemeDetails: any;
-  transactionSummary: { schemeName: any; };
+  transactionSummary: {};
   showUnits=false;
   reInvestmentOpt: any;
   schemeList: any;
@@ -50,6 +50,7 @@ export class StpTransactionComponent implements OnInit {
   
   ngOnInit() {
     this.getdataForm(this.inputData)
+    this.transactionSummary = { selectedFamilyMember: this.inputData.selectedFamilyMember }
   }
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)

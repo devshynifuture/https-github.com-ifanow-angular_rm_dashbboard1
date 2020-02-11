@@ -55,6 +55,7 @@ export class SipTransactionComponent implements OnInit {
 
   ngOnInit() {
     this.getdataForm(this.inputData)
+    this.transactionSummary = { selectedFamilyMember: this.inputData.selectedFamilyMember }
   }
   onAddTransaction(value, data) {
     this.confirmTrasaction = true
