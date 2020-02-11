@@ -22,14 +22,13 @@ export class AdviceStocksComponent implements OnInit {
   clientId: any;
   constructor(private eventService: EventService, public dialog: MatDialog, private subInjectService: SubscriptionInject,
     private cusService: CustomerService, private activityService: ActiityService) { }
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild("tableOne", { static: true }) sort: MatSort;
   ngOnInit() {
     this.dataSource3.sort = this.sort;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getAssetAll();
   }
-
 
   allAdvice = false;
   getAssetAll() {
@@ -104,6 +103,6 @@ export interface PeriodicElement1 {
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
   { name: 'Rahul Jain', desc: '1', mvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-  { name: 'Rahul Jain1', desc: '2', mvalue: '20000', advice: 'do trasact1 ', adate: '2020-02-20', astatus: 'LIVE' },
+  { name: 'Rahul xain1', desc: '2', mvalue: '20000', advice: 'do trasact1 ', adate: '2020-02-20', astatus: 'LIVE' },
 
 ];
