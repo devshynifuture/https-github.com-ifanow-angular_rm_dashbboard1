@@ -21,6 +21,10 @@ export class AdviceFixedIncomeComponent implements OnInit {
   advisorId: any;
   clientId: any;
   dataSource: any;
+  isLoading: any;
+  fixedDataSource: any;
+  recurringDataSource: any;
+  bondDataSource: any;
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private utilService: UtilService, private activityService: ActiityService) { }
   allAdvice = false;
   ngOnInit() {
@@ -34,6 +38,10 @@ export class AdviceFixedIncomeComponent implements OnInit {
       clientId: this.clientId,
       assetCategory: 7
     }
+    this.isLoading = true;
+    this.fixedDataSource = [{}, {}, {}];
+    this.recurringDataSource = [{}, {}, {}];
+    this.bondDataSource = [{}, {}, {}];
     // let obj1 = {
     //   advisorId: this.advisorId,
     //   clientId: this.clientId,
@@ -67,11 +75,14 @@ export class AdviceFixedIncomeComponent implements OnInit {
     // );
   }
   getAllSchemeResponse(data) {
+    this.isLoading = false;
     console.log('data', data)
     this.dataSource = data;
-    data.BONDS;
-    data.FIXED_DEPOSIT;
-    data.RECURRING_DEPOSIT;
+    this.fixedDataSource = data.FIXED_DEPOSIT;
+    this.recurringDataSource = data.RECURRING_DEPOSIT;
+    this.bondDataSource = data.BONDS;
+
+
   }
   openselectAdvice(data) {
     const fragmentData = {
