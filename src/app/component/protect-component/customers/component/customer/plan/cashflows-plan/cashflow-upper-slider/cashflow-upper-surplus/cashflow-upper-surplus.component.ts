@@ -52,7 +52,7 @@ export class CashflowUpperSurplusComponent implements OnInit {
     if (field === 'description' && this.editMode) {
       this.alterTable(ELEMENT_DATA3, field, value, index);
     } else if (ValidatorType.NUMBER_ONLY.test(value) && this.editMode) {
-      console.log("im here:::::::::::::")
+      console.log("im here:::::::::::::");
       this.alterTable(ELEMENT_DATA3, field, value, index);
     } else {
       this.onlyNumbers = '';
@@ -67,7 +67,7 @@ export class CashflowUpperSurplusComponent implements OnInit {
         console.log(res);
       }, err => {
         console.error(err);
-      })
+      });
   }
 
   isGroup(index, item): boolean {

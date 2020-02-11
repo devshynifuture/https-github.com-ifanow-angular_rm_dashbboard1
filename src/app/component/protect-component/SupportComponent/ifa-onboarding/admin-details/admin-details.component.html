@@ -1,7 +1,7 @@
 <div class="popup-header-fix-40">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20"> Historical file ordering setup</h4>
+            <h4 class="mb-0 wrapper-20"> Sonesh Dedhia</h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -13,17 +13,87 @@
 
 <div class="row pt-28">
     <div class="col-md-12">
-        <mat-tab-group>
-            <mat-tab label="Overview">
-                <div class="row">
-                    <div class="col-md-12">
+        <mat-tab-group id="ui-backoffice-tabs">
 
+            <!-- <mat-tab label="Overview">
+                <div class="row">
+                    <div class="col-md-8 miscellaneousBox">
+                        <mat-form-field class="example-full-width">
+                            <textarea matInput class="form-control height160"></textarea>
+                            <button mat-button class=" bg-primary text-white right br-0 text-inherit mt-12">EDIT</button>
+                        </mat-form-field>
                     </div>
                 </div>
-            </mat-tab>
-            <mat-tab label="Onboarding activity"> Content 2 </mat-tab>
-            <mat-tab label="RTA details">
+            </mat-tab> -->
 
+
+            <mat-tab label="Onboarding activity">
+
+                <div class="cardList">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <mat-checkbox> </mat-checkbox>
+                            First call
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="bg-grey lter p-20">
+                    <h4 class="f-14 f-500">Comments</h4>
+                    <div class="row pb-20">
+                        <div class="col-md-1 text-center p-0">
+                            <img src="/assets/images/svg/comment-icon.svg">
+                        </div>
+                        <div class="col-md-9 pl-0">
+                            <h4 class="f-14">Ronak Hindocha <span class="text-primitive">a minute ago </span> </h4>
+                            <p>This is a test comment. All comments related to tasks come here. This is second line of the comment.</p>
+                        </div>
+                        <div class="col-md-2 p-0 text-right">
+                            <p class="f-12 c-p mr-8 d-inline-block"> Edit </p>
+                            <p class="f-12 c-p d-inline-block"> Delete </p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-1 text-center p-0">
+                            <img src="/assets/images/svg/comment-icon.svg">
+                        </div>
+                        <div class="col-md-9 pl-0">
+                            <h4 class="f-14">Nita Shinde <span class="text-primitive">30 minutes ago </span> </h4>
+                            <p>This is a test comment. All comments related to tasks come here. This is second line of the comment.</p>
+                        </div>
+                        <div class="col-md-2 p-0 text-right">
+                            <p class="f-12 text_underLine c-p mr-8 d-inline-block"> Edit </p>
+                            <p class="f-12 text_underLine c-p d-inline-block"> Delete </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-grey shadow lter p-20">
+                    <div class="row">
+                        <div class="col-md-1 text-center p-0">
+                            <img src="/assets/images/svg/comment-icon.svg">
+                        </div>
+                        <div class="col-md-11 p-0">
+                            <mat-form-field>
+                                <input matInput type="text" maxlength="10" class="form-control br-0">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+            </mat-tab>
+
+            <!-- <mat-tab label="RTA details">
                 <div class="row pt-16">
                     <div class="back-office-table col-md-12 overflow-hidden">
                         <h3 class="f-16">CAMS</h3>
@@ -125,7 +195,8 @@
                     </div>
                 </div>
 
-            </mat-tab>
+            </mat-tab> -->
+
             <mat-tab label="Team members">
                 <div class="row pt-16">
                     <div class="back-office-table col-md-12 overflow-hidden">
@@ -161,6 +232,7 @@
 
 
             </mat-tab>
+
         </mat-tab-group>
     </div>
 </div>

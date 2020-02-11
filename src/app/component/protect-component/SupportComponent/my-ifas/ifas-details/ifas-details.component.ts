@@ -38,6 +38,34 @@ export class IfasDetailsComponent implements OnInit {
   }
 
 
+  // openFragment(flag, data) {
+  //   this.location.replaceState('/subscription-upper');
+  //   data.flag = flag
+  //   console.log('hello mf button clicked');
+  //   const fragmentData = {
+  //     flag: 'clietns',
+  //     id: 1,
+  //     data,
+  //     direction: 'top',
+  //     componentName: SubscriptionUpperSliderComponent,
+  //     state: 'open'
+  //   };
+
+  //   AuthService.setSubscriptionUpperSliderData(fragmentData);
+  //   const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+  //     upperSliderData => {
+  //       if (UtilService.isDialogClose(upperSliderData)) {
+
+  //         subscription.unsubscribe();
+  //       }
+  //     }
+  //   );
+  // }
+
+
+
+
+
 }
 export interface PeriodicElement {
   arn: string;
@@ -52,6 +80,7 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
+  { arn: 'RIA-INA000004409', date: '08/01/20 11:28AM', name: 'Ankit Shah', total: '890', befor: '14', after: '8', aumbalance: '07/01/2020', transaction: '02/12/2019', report: '' },
   { arn: 'RIA-INA000004409', date: '08/01/20 11:28AM', name: 'Ankit Shah', total: '890', befor: '14', after: '8', aumbalance: '07/01/2020', transaction: '02/12/2019', report: '' },
 ];
 
@@ -83,11 +112,10 @@ export interface PeriodicElementTwo {
 }
 
 const ELEMENT_DATA_TWO: PeriodicElementTwo[] = [
+  { type: 'Plan', description: 'White labeled mobile app', gstOne: '16,000', gstTwo: '18,880', gstThree: '4,800', gstFour: '5,664' },
+  { type: 'Plan', description: 'White labeled mobile app asdasdsd asdlsahd sadsad', gstOne: '16,000', gstTwo: '18,880', gstThree: '4,800', gstFour: '5,664' },
   { type: 'Plan', description: 'Power Plan', gstOne: '16,000', gstTwo: '18,880', gstThree: '4,800', gstFour: '5,664' },
-  { type: 'Plan', description: 'Power Plan', gstOne: '16,000', gstTwo: '18,880', gstThree: '4,800', gstFour: '5,664' },
-  { type: 'Plan', description: 'Power Plan', gstOne: '16,000', gstTwo: '18,880', gstThree: '4,800', gstFour: '5,664' },
-  { type: 'Plan', description: 'Power Plan', gstOne: '16,000', gstTwo: '18,880', gstThree: '4,800', gstFour: '5,664' },
-  { type: 'Plan', description: 'Power Plan', gstOne: '16,000', gstTwo: '18,880', gstThree: '4,800', gstFour: '5,664' },
+
 ];
 
 

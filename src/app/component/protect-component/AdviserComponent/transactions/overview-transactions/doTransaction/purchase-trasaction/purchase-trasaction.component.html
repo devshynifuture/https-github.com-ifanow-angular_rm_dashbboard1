@@ -25,14 +25,6 @@
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
                         <h5 class="m-0 pb-10 text-black">Select from the following options</h5>
-                        <mat-radio-group aria-label="Select an option" formControlName="schemeSelection">
-                            <!-- <mat-radio-button [value]="option.value" (click)="selectSchemeOption(option)"
-                            [ngClass]="{'b-a-custom': purchaseTransaction.get('schemeSelection').value==1,'text-primary':purchaseTransaction.get('schemeSelection').value==1,'b-a':purchaseTransaction.get('schemeSelection').value==2}"
-                                class="b-a-custom radioBtn text-primary custom-radio"
-                                *ngFor="let option of schemeSelection">
-                                {{option.select}}
-                            </mat-radio-button> -->
-                        </mat-radio-group>
                         <mat-radio-group aria-label="Select an option" formControlName="schemeSelection"
                             (ngModelChange)="selectSchemeOption($event)">
                             <mat-radio-button value="1"
@@ -53,17 +45,23 @@
                         <h5 class="m-0 pt-28 text-black pb-12">Select a scheme to invest in</h5>
                     </div>
                     <div class="col-md-12 p-0">
-                        <div class="form-control mb-0 add-transactions">
-                            <input type="text" aria-label="Number" class="form-group h-0" matInput
-                                formControlName="investor" [matAutocomplete]="auto"
-                                (keyup)="getSchemeList($event.target.value)" value="Start typing to see investor names">
-                            <mat-autocomplete #auto="matAutocomplete">
-                                <mat-option (onSelectionChange)="selectedScheme(scheme)"
-                                    *ngFor="let scheme of schemeList" [value]="scheme.schemeName">
-                                    {{scheme.schemeName}}
-                                </mat-option>
-                            </mat-autocomplete>
-                            <p class="m-0 f-12 text-custom pt-8">Last closing NAV: {{navOfSelectedScheme}}</p>
+                        <div class="form-control ">
+                            <mat-form-field>
+                                <input type="text" aria-label="Number" class="form-group h-0" matInput
+                                    formControlName="investor" [matAutocomplete]="auto"
+                                    (keyup)="getSchemeList($event.target.value)"
+                                    value="Start typing to see investor names">
+                                <mat-autocomplete #auto="matAutocomplete">
+                                    <mat-option (onSelectionChange)="selectedScheme(scheme)"
+                                        *ngFor="let scheme of schemeList" [value]="scheme.schemeName">
+                                        {{scheme.schemeName}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                                <mat-error class="f-12">
+                                    This field is required
+                                </mat-error>
+                                <mat-hint align="start" class="m-0 f-12 text-custom pt-8">Last closing NAV: {{navOfSelectedScheme}}</mat-hint>
+                            </mat-form-field>
                         </div>
                     </div>
                 </div>
@@ -111,7 +109,8 @@
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select class="form-control" formControlName="investmentAccountSelection">
-                                    <mat-option value="option">Option</mat-option>
+                                    <mat-option value="option" (onSelectionChange)="selectedFolio(folio)"
+                                        *ngFor="let folio of folioList">{{folio.folioNumber}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
@@ -128,10 +127,13 @@
                                 <input #employeeContry matInput maxlength="10" type="text"
                                     class="form-control br-0 rupess" formControlName="employeeContry"
                                     (change)="enteredAmount($event.target.value)">
+                                <p class="m-0 f-12 text-custom">Min amount:
+                                    ₹{{(schemeDetails == undefined)?'-':schemeDetails.minimumPurchaseAmount }}
+                                </p>
+                                <mat-error *ngIf="(purchaseTransaction.get('employeeContry').errors?.min)" class="f-12">
+                                    Should be greater than or equal to {{schemeDetails.minimumPurchaseAmount}}
+                                </mat-error>
                             </mat-form-field>
-                            <p class="m-0 f-12 text-custom">Min amount:
-                                ₹{{(schemeDetails == undefined)?'-':schemeDetails.minimumPurchaseAmount }}
-                            </p>
                         </div>
                     </div>
                 </div>

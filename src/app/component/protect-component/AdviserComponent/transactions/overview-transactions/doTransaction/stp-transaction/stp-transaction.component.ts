@@ -22,12 +22,13 @@ export class StpTransactionComponent implements OnInit {
   transactionType: any;
   maiSchemeList: any;
   schemeDetails: any;
-  transactionSummary: { schemeName: any; };
+  transactionSummary: {};
   showUnits=false;
   reInvestmentOpt: any;
   schemeList: any;
   navOfSelectedScheme: any;
   selectScheme=2;
+  getDataSummary: any;
 
   constructor(private subInjectService: SubscriptionInject,private onlineTransact: OnlineTransactionService,
     private fb: FormBuilder) { }
@@ -49,6 +50,11 @@ export class StpTransactionComponent implements OnInit {
   
   ngOnInit() {
     this.getdataForm(this.inputData)
+    this.transactionSummary = { selectedFamilyMember: this.inputData.selectedFamilyMember }
+  }
+  getDefaultDetails(data) {
+    console.log('get defaul here yupeeee', data)
+    this.getDataSummary = data
   }
   getSchemeList(value) {
 
@@ -58,7 +64,7 @@ export class StpTransactionComponent implements OnInit {
         bseOrderType: 'ORDER',
         aggregatorType: 2,
         advisorId: 414,
-        tpUserCredentialId: 212,
+        tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
       }
       this.onlineTransact.getNewSchemes(obj).subscribe(
         data => this.getNewSchemesRes(data)

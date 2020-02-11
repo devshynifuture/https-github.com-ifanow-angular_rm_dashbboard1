@@ -18,8 +18,7 @@
             <div class="col-md-8 p-0">
                 <h5 class="m-0 text-black pb-12">Select an investor from the search box below...</h5>
                 <mat-form-field class="w-100">
-                    <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
-                        [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                    <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                         <mat-option value=''>Search family members</mat-option>
                         <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName" (click)="ownerDetails(f)">
                             <span>{{f.userName}}</span>
@@ -42,50 +41,41 @@
         </div>
         <div class="row pt-12">
             <div class="col-md-4 pl-8 pr-8 c-p" (click)="selectTransactionType('purchase')">
-                <mat-checkbox [ngStyle]="{'pointer-events': (selectedDiv == 'purchase') ? 'all': 'none'}"
-                    [ngClass]="{'v-h': selectedDiv != 'purchase' }" class="checked" checked="false"></mat-checkbox>
+                <mat-checkbox [ngStyle]="{'pointer-events': (selectedDiv == 'purchase') ? 'all': 'none'}" [ngClass]="{'v-h': selectedDiv != 'purchase' }" class="checked" checked="false"></mat-checkbox>
                 <div class="row pt-20 pb-20 bg-grey lter" [ngClass]="{'b-a-custom': selectedDiv == 'purchase'}">
                     <div class="col-md-4 text-right">
-                        <img src="/assets/images/svg/shopping{{ (selectedDiv == 'purchase') ? '-blue': '-icons' }}.svg"
-                            class="pt-4">
+                        <img src="/assets/images/svg/shopping{{ (selectedDiv == 'purchase') ? '-blue': '-icons' }}.svg" class="pt-4">
                     </div>
                     <div class="col-md-8 pl-0">
                         <h3 class="m-0" [ngClass]="{ 'text-primary': selectedDiv == 'purchase' }"> Purchase</h3>
-                        <p class="m-0 roboto text-custom pt-4 f-13"
-                            [ngClass]="{ 'text-primary': selectedDiv == 'purchase' }">Invest a
-                            lumpsum amount in a jiffy</p>
+                        <p class="m-0 roboto text-custom pt-4 f-13" [ngClass]="{ 'text-primary': selectedDiv == 'purchase' }">Invest a lumpsum amount in a jiffy
+                        </p>
                     </div>
                 </div>
             </div>
             <div class="col-md-4 pl-8 pr-8 c-p" (click)="selectTransactionType('switch')">
-                <mat-checkbox [ngStyle]=" {'pointer-events': (selectedDiv == 'switch') ? 'all': 'none'}"
-                    [ngClass]="{'v-h':selectedDiv != 'switch' }" class="checked" checked="false">
+                <mat-checkbox [ngStyle]=" {'pointer-events': (selectedDiv == 'switch') ? 'all': 'none'}" [ngClass]="{'v-h':selectedDiv != 'switch' }" class="checked" checked="false">
                 </mat-checkbox>
                 <div class="row pt-20 pb-20 bg-grey lter" [ngClass]="{'b-a-custom': selectedDiv == 'switch'}">
                     <div class="col-md-4 text-right">
-                        <img src="/assets/images/svg/switch{{ (selectedDiv == 'switch') ? '-blue': '-icons' }}.svg"
-                            class="pt-4">
+                        <img src="/assets/images/svg/switch{{ (selectedDiv == 'switch') ? '-blue': '-icons' }}.svg" class="pt-4">
                     </div>
                     <div class="col-md-8 pl-0">
                         <h3 class="m-0" [ngClass]="{ 'text-primary': selectedDiv == 'switch' }"> Switch</h3>
-                        <p class="m-0 roboto text-custom pt-4 f-13"
-                            [ngClass]="{ 'text-primary': selectedDiv == 'switch' }">Switch lumpsum from one scheme to
-                            another</p>
+                        <p class="m-0 roboto text-custom pt-4 f-13" [ngClass]="{ 'text-primary': selectedDiv == 'switch' }">Switch lumpsum from one scheme to another
+                        </p>
                     </div>
                 </div>
             </div>
             <div class="col-md-4 pl-8 pr-8 c-p" (click)="selectTransactionType('redeem')">
-                <mat-checkbox [ngStyle]="{'pointer-events': (selectedDiv == 'redeem') ? 'all': 'none'}"
-                    [ngClass]="{'v-h':selectedDiv != 'redeem' }" class="checked" checked="false"></mat-checkbox>
+                <mat-checkbox [ngStyle]="{'pointer-events': (selectedDiv == 'redeem') ? 'all': 'none'}" [ngClass]="{'v-h':selectedDiv != 'redeem' }" class="checked" checked="false"></mat-checkbox>
                 <div class="row pt-20 pb-20 bg-grey lter" [ngClass]="{'b-a-custom': selectedDiv == 'redeem'}">
                     <div class="col-md-4 text-right">
-                        <img src="/assets/images/svg/reedem{{ (selectedDiv == 'redeem') ? '-blue': '-icons' }}.svg"
-                            class="pt-4">
+                        <img src="/assets/images/svg/reedem{{ (selectedDiv == 'redeem') ? '-blue': '-icons' }}.svg" class="pt-4">
                     </div>
                     <div class="col-md-8 pl-0">
                         <h3 class="m-0" [ngClass]="{ 'text-primary': selectedDiv == 'redeem' }"> Redeem</h3>
-                        <p class="m-0 roboto text-custom pt-4 f-13"
-                            [ngClass]="{ 'text-primary': selectedDiv == 'redeem' }">Redeem from your existing schemes
+                        <p class="m-0 roboto text-custom pt-4 f-13" [ngClass]="{ 'text-primary': selectedDiv == 'redeem' }">Redeem from your existing schemes
                         </p>
                     </div>
                 </div>
@@ -94,48 +84,39 @@
         </div>
         <div class="row pt-12">
             <div class="col-md-4 pl-8 pr-8 c-p" (click)="selectTransactionType('sip')">
-                <mat-checkbox [ngStyle]="{'pointer-events': (selectedDiv == 'sip') ? 'all': 'none'}"
-                    [ngClass]="{'v-h':selectedDiv != 'sip' }" class="checked" checked="false"></mat-checkbox>
+                <mat-checkbox [ngStyle]="{'pointer-events': (selectedDiv == 'sip') ? 'all': 'none'}" [ngClass]="{'v-h':selectedDiv != 'sip' }" class="checked" checked="false"></mat-checkbox>
                 <div class="row pt-20 pb-20 bg-grey lter" [ngClass]="{'b-a-custom': selectedDiv == 'sip'}">
                     <div class="col-md-4 text-right">
-                        <img src="/assets/images/svg/sip{{ (selectedDiv == 'sip') ? '-blue': '-icons' }}.svg"
-                            class="pt-4">
+                        <img src="/assets/images/svg/sip{{ (selectedDiv == 'sip') ? '-blue': '-icons' }}.svg" class="pt-4">
                     </div>
                     <div class="col-md-8 pl-0">
                         <h3 class="m-0" [ngClass]="{ 'text-primary': selectedDiv == 'sip' }"> SIP</h3>
-                        <p class="m-0 roboto text-custom pt-4 f-13"
-                            [ngClass]="{ 'text-primary': selectedDiv == 'sip' }">Start a systematic investment plan</p>
+                        <p class="m-0 roboto text-custom pt-4 f-13" [ngClass]="{ 'text-primary': selectedDiv == 'sip' }">Start a systematic investment plan</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-4 pl-8 pr-8 c-p" (click)="selectTransactionType('stp')">
-                <mat-checkbox [ngStyle]="{'pointer-events':(selectedDiv == 'stp') ? 'all': 'none'}"
-                    [ngClass]="{'v-h':selectedDiv != 'stp' }" class="checked" checked="false"></mat-checkbox>
+                <mat-checkbox [ngStyle]="{'pointer-events':(selectedDiv == 'stp') ? 'all': 'none'}" [ngClass]="{'v-h':selectedDiv != 'stp' }" class="checked" checked="false"></mat-checkbox>
                 <div class="row pt-20 pb-20 bg-grey lter" [ngClass]="{'b-a-custom': selectedDiv == 'stp'}">
                     <div class="col-md-4 text-right">
-                        <img src="/assets/images/svg/switch{{ (selectedDiv == 'stp') ? '-blue': '-icons' }}.svg"
-                            class="pt-4">
+                        <img src="/assets/images/svg/switch{{ (selectedDiv == 'stp') ? '-blue': '-icons' }}.svg" class="pt-4">
                     </div>
                     <div class="col-md-8 pl-0">
                         <h3 class="m-0" [ngClass]="{ 'text-primary': selectedDiv == 'stp' }"> STP</h3>
-                        <p class="m-0 roboto text-custom pt-4 f-13"
-                            [ngClass]="{ 'text-primary': selectedDiv == 'stp' }">Systematic transfer from one scheme to
-                            another</p>
+                        <p class="m-0 roboto text-custom pt-4 f-13" [ngClass]="{ 'text-primary': selectedDiv == 'stp' }">Systematic transfer from one scheme to another
+                        </p>
                     </div>
                 </div>
             </div>
             <div class="col-md-4 pl-8 pr-8 c-p" (click)="selectTransactionType('swp')">
-                <mat-checkbox [ngStyle]="{'pointer-events':(selectedDiv == 'swp') ? 'all': 'none'}"
-                    [ngClass]="{'v-h':selectedDiv != 'swp' }" class="checked" checked="false"></mat-checkbox>
+                <mat-checkbox [ngStyle]="{'pointer-events':(selectedDiv == 'swp') ? 'all': 'none'}" [ngClass]="{'v-h':selectedDiv != 'swp' }" class="checked" checked="false"></mat-checkbox>
                 <div class="row pt-20 pb-20 bg-grey lter" [ngClass]="{'b-a-custom': selectedDiv == 'swp'}">
                     <div class="col-md-4 text-right">
-                        <img src="/assets/images/svg/reedem{{ (selectedDiv == 'swp') ? '-blue': '-icons' }}.svg"
-                            class="pt-4">
+                        <img src="/assets/images/svg/reedem{{ (selectedDiv == 'swp') ? '-blue': '-icons' }}.svg" class="pt-4">
                     </div>
                     <div class="col-md-8 pl-0">
                         <h3 class="m-0" [ngClass]="{ 'text-primary': selectedDiv == 'swp' }"> SWP</h3>
-                        <p class="m-0 roboto text-custom pt-4 f-13"
-                            [ngClass]="{ 'text-primary': selectedDiv == 'swp' }">Systematic withdrawal from a scheme
+                        <p class="m-0 roboto text-custom pt-4 f-13" [ngClass]="{ 'text-primary': selectedDiv == 'swp' }">Systematic withdrawal from a scheme
                         </p>
                     </div>
                 </div>
@@ -149,9 +130,7 @@
     <div class="pt-90 pr-20 pl-20 pb-44" *ngIf="formStep== 'step-3'">
         <div class="row">
             <div class="col-md-12 p-0">
-                <h5 class="m-0 text-black"> <img src="/assets/images/svg/back-arrow.svg"
-                        class="v-initial pr-12">Investor
-                    name: Rahul Jain
+                <h5 class="m-0 text-black"> <img src="/assets/images/svg/back-arrow.svg" class="v-initial pr-12">Investor name: Rahul Jain
                 </h5>
             </div>
         </div>
@@ -159,20 +138,16 @@
             <div class="col-md-8 pl-0 pr-20" *ngIf="!isSaveAndAddClicked">
                 <h5 class="m-0 pb-10 text-black">Select from the following options</h5>
                 <mat-radio-group aria-label="Select an option" formControlName="schemeType">
-                    <mat-radio-button value="existing"
-                        [ngClass]="transactionAddForm.get('schemeType').value == 'existing' ? 'text-primary b-a-custom': 'b-a text-primitive'">
-                        Invest in
-                        existing scheme
+                    <mat-radio-button value="existing" [ngClass]="transactionAddForm.get('schemeType').value == 'existing' ? 'text-primary b-a-custom': 'b-a text-primitive'">
+                        Invest in existing scheme
                     </mat-radio-button>
-                    <mat-radio-button value="new"
-                        [ngClass]="transactionAddForm.get('schemeType').value == 'new' ? 'text-primary b-a-custom': 'b-a text-primitive'">
-                        Select a new
-                        scheme</mat-radio-button>
+                    <mat-radio-button value="new" [ngClass]="transactionAddForm.get('schemeType').value == 'new' ? 'text-primary b-a-custom': 'b-a text-primitive'">
+                        Select a new scheme
+                    </mat-radio-button>
                 </mat-radio-group>
                 <h5 class="m-0 pt-28 text-black pb-12">Select a scheme to invest in</h5>
                 <div class="form-control mb-0 add-transactions">
-                    <input type="text" aria-label="Number" class="form-group h-0" matInput formControlName="scheme"
-                        [matAutocomplete]="auto1" value="Start typing to see investor names">
+                    <input type="text" aria-label="Number" class="form-group h-0" matInput formControlName="scheme" [matAutocomplete]="auto1" value="Start typing to see investor names">
                     <mat-autocomplete #auto1="matAutocomplete">
                         <mat-option [value]="item" *ngFor="let item of schemes">
                             {{ item }}
@@ -182,26 +157,22 @@
                 </div>
                 <h5 class="m-0 pt-28 text-black pb-12">Select folio</h5>
                 <mat-radio-group aria-label="Select an option" formControlName="folio">
-                    <mat-radio-button value="existing"
-                        [ngClass]="transactionAddForm.get('folio').value == 'existing' ? 'b-a-custom text-primary': 'b-a text-primitive'">
+                    <mat-radio-button value="existing" [ngClass]="transactionAddForm.get('folio').value == 'existing' ? 'b-a-custom text-primary': 'b-a text-primitive'">
                         Existing
                     </mat-radio-button>
-                    <mat-radio-button value="new"
-                        [ngClass]="transactionAddForm.get('folio').value == 'new' ? 'b-a-custom text-primary': 'b-a text-primitive'">
+                    <mat-radio-button value="new" [ngClass]="transactionAddForm.get('folio').value == 'new' ? 'b-a-custom text-primary': 'b-a text-primitive'">
                         New </mat-radio-button>
                 </mat-radio-group>
                 <h5 class="m-0 pt-28 text-black pb-12">Enter amount</h5>
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input #employeeContry matInput maxlength="10" type="text" class="form-control br-0 rupess"
-                            formControlName="employeeContry" appInputValueValidation
-                            [inputValidator]="validatorType.NUMBER_ONLY">
+                        <input #employeeContry matInput maxlength="10" type="text" class="form-control br-0 rupess" formControlName="employeeContry" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY">
                         <mat-error>
                             Must be greater than 500
                         </mat-error>
                     </mat-form-field>
-                    <p class="m-0 f-12 text-custom" *ngIf="transactionAddForm.get('employeeContry').valid">Min amount:
-                        ₹500</p>
+                    <p class="m-0 f-12 text-custom" *ngIf="transactionAddForm.get('employeeContry').valid">Min amount: ₹500
+                    </p>
                 </div>
                 <h5 class="m-0 pt-28 text-black pb-12">Select investment account</h5>
                 <div class="form-group mb-0">
@@ -213,12 +184,10 @@
                 </div>
                 <h5 class="m-0 pt-40 text-black pb-12">Select mode of payment</h5>
                 <mat-radio-group aria-label="Select an option" formControlName="modeOfPayment">
-                    <mat-radio-button value="net-banking"
-                        [ngClass]="transactionAddForm.get('modeOfPayment').value == 'net-banking' ? 'b-a-custom text-primary' : 'b-a text-primitive'">
+                    <mat-radio-button value="net-banking" [ngClass]="transactionAddForm.get('modeOfPayment').value == 'net-banking' ? 'b-a-custom text-primary' : 'b-a text-primitive'">
                         Net banking
                     </mat-radio-button>
-                    <mat-radio-button value="debate-mandate"
-                        [ngClass]="transactionAddForm.get('modeOfPayment').value == 'debate-mandate' ? 'b-a-custom text-primary' : 'b-a text-primitive'">
+                    <mat-radio-button value="debate-mandate" [ngClass]="transactionAddForm.get('modeOfPayment').value == 'debate-mandate' ? 'b-a-custom text-primary' : 'b-a text-primitive'">
                         Debit mandate </mat-radio-button>
                 </mat-radio-group>
                 <h5 class="m-0 pt-40 pb-12 text-black">Select bank account</h5>
@@ -233,29 +202,23 @@
                     <div class="col-md-12 p-0 text-center">
                         <img src="/assets/images/svg/last-step.svg" class="pt-28">
                         <h3 class="m-0 text-primary pt-24">So far so good. One last step!</h3>
-                        <h5 class="m-0 pt-12 pb-12 b-h-dashed">Your client needs to <b>authorize</b> the transaction
-                            to <b>complete</b> it.</h5>
+                        <h5 class="m-0 pt-12 pb-12 b-h-dashed">Your client needs to <b>authorize</b> the transaction to
+                            <b>complete</b> it.</h5>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="p-8">
-                            <p class="m-0 roboto pt-28"> An email has been sent to <b>registered email id.</b> Your
-                                client
-                                should
-                                review the <b>transaction
+                            <p class="m-0 roboto pt-28"> An email has been sent to <b>registered email id.</b> Your client should review the <b>transaction
                                     details</b> and click on the <b>payment link</b> provided there.</p>
 
 
                             <p class="m-0 roboto pt-28"> Next, your client will be redirected to the <b>net banking
-                                    page.</b> The
-                                client needs to login and make
-                                the payment.</p>
+                                    page.</b> The client needs to login and make the payment.</p>
 
 
                             <p class="m-0 roboto pt-28"> Once the payment is done, NSE NMF will send a <b>confirmation
-                                    email</b> to
-                                the registered email id.</p>
+                                    email</b> to the registered email id.</p>
 
 
                             <p class="m-0 roboto pt-28"> Additionally, the Purchase transaction has been added to the
@@ -304,8 +267,7 @@
                             <div class="row  pt-16 pb-16">
                                 <div class="col-md-12 p-0">
                                     <p class="m-0 roboto text-custom">Scheme, folio and amount</p>
-                                    <h5 class="m-0"><span class="f-500">Scheme:</span> Axis Liquid Fund -Regular Plan -
-                                        Weekly Dividend Option
+                                    <h5 class="m-0"><span class="f-500">Scheme:</span> Axis Liquid Fund -Regular Plan - Weekly Dividend Option
                                     </h5>
                                     <h5 class="m-0"> <span class="f-500">Folio:</span> 91032325824</h5>
                                     <h5 class="m-0"> <span class="f-500">Amount:</span> ₹5,00,000/Lumpsum</h5>
@@ -340,25 +302,10 @@
                     </mat-tab>
                     <mat-tab label="Rationale">
                         <div class="p-20 rationaletabs">
-                            <p class="m-0 roboto text-custom">The scheme seeks to generate long-term capital
-                                appreciation
-                                from a
-                                diversified portfolio of
-                                predominantly equity and equity related instruments.
+                            <p class="m-0 roboto text-custom">The scheme seeks to generate long-term capital appreciation from a diversified portfolio of predominantly equity and equity related instruments.
                             </p>
-                            <p class="m-0 roboto text-custom pt-20"> Lorem ipsum dolor sit amet, consectetur adipiscing
-                                elit,
-                                sed
-                                do
-                                eiusmod tempor incididunt ut labore
-                                et dolore magna aliqua. Sit amet nulla facilisi morbi tempus iaculis. Dui ut ornare
-                                lectus
-                                sit
-                                amet
-                                est placerat in egestas. Sed turpis tincidunt id aliquet risus feugiat in. Magna sit
-                                amet
-                                purus
-                                gravida quis blandit turpis cursus.
+                            <p class="m-0 roboto text-custom pt-20"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sit amet nulla facilisi morbi tempus iaculis. Dui ut ornare lectus sit amet est placerat in egestas.
+                                Sed turpis tincidunt id aliquet risus feugiat in. Magna sit amet purus gravida quis blandit turpis cursus.
                             </p>
                             <div class="row pt-12">
                                 <div class="col-md-12 p-0">
@@ -382,11 +329,11 @@
             <div class="col-md-4 pt-8">
                 <h5 class="mb-0  text-white c-p" (click)="close()">Cancel</h5>
             </div>
-            <div class="col-md-8 right pt-8" *ngIf="formStep == 'step-1' || formStep == 'step-2'">
+            <div class="col-md-8 text-right pt-8" *ngIf="formStep == 'step-1' || formStep == 'step-2'">
 
                 <h5 class="mb-0 text-white c-p" (click)="saveAndNext()"> NEXT </h5>
             </div>
-            <div class="col-md-8 right pt-8" *ngIf="formStep == 'step-3'">
+            <div class="col-md-8 right pt-8 text-right" *ngIf="formStep == 'step-3'">
                 <button mat-button class="text-success" (click)="saveAndAddAnother()">
                     SAVE & ADD ANOTHER
                 </button>

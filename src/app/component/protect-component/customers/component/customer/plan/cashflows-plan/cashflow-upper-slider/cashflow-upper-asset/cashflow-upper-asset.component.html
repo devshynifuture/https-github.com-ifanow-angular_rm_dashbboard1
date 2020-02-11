@@ -1,5 +1,5 @@
 <div class="col-md-12 cash-flow-upperTable mt-20">
-    <table mat-table [dataSource]="dataSource" id="table-low" class=" ">
+    <table mat-table [dataSource]="dataSource" id="table-low" [ngClass]="editMode == true ? 'edit-mode-hover': ''">
         <ng-container matColumnDef="description">
             <th class="br-grey f-400 f-14" mat-header-cell *matHeaderCellDef> Description </th>
             <td class="br-grey f-14" mat-cell *matCellDef="let element">
@@ -49,7 +49,8 @@
         </ng-container>
 
         <ng-container matColumnDef="groupHeader">
-            <td class="br-grey text-primary text-center" [attr.colspan]="displayedColumns.length" mat-cell *matCellDef="let group">
+            <td class="br-grey text-primary text-center" [attr.colspan]="displayedColumns.length" mat-cell
+                *matCellDef="let group">
                 {{ group.groupName }} </td>
         </ng-container>
 
@@ -110,9 +111,12 @@
         </ng-container>
 
         <ng-container matColumnDef="remove">
-            <th mat-header-cell *matHeaderCellDef> </th>
+            <th mat-header-cell *matHeaderCellDef>Delete </th>
             <td class="br-grey text-right f-14  " mat-cell *matCellDef="let element">
-                1,20,000 </td>
+                <mat-icon>
+                    delete_outline
+                </mat-icon>
+            </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

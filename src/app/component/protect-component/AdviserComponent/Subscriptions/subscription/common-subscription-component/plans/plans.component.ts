@@ -31,9 +31,8 @@ export class PlansComponent implements OnInit {
   constructor(private subService: SubscriptionService, private eventService: EventService) {
   }
 
-  @Input()
-  set upperData(upperData) {
-    console.log('FeeStructureComponent upperData set : ', this.upperData);
+  @Input() set upperData(upperData) {
+    console.log('FeeStructureComponent upperData set : ', upperData);
     this.flag = upperData.flag
     this._upperData = upperData;
     // setTimeout(() => {
@@ -126,6 +125,9 @@ export class PlansComponent implements OnInit {
 
   getPlansMappedToAdvisorResponse(data) {
     this.isLoading = false;
+    for (let p of data) {
+      p['read'] = false;
+    }
     console.log('service plan data', data);
     if (data && data !== undefined && data !== null) {
       this.servicePlanData = data;
@@ -199,11 +201,11 @@ export class PlansComponent implements OnInit {
       ]
     }
     this.subService.mapDocumentToService(obj).subscribe(
-      data =>{
+      data => {
         this.barButtonOptions.active = false;
         this.mapPlanToServiceRes(data);
       },
-      err =>{
+      err => {
         this.barButtonOptions.active = false;
         console.log(err, "error mapDocumentToService");
       }
@@ -238,11 +240,11 @@ export class PlansComponent implements OnInit {
       ]
     }
     this.subService.mapPlanToServiceSettings(obj).subscribe(
-      data =>{
+      data => {
         this.barButtonOptions.active = false;
         this.saveMappedPlansResponse(data);
       },
-      err =>{
+      err => {
         this.barButtonOptions.active = false;
         console.log(err, "error mapPlanToServiceSettings");
       }
@@ -276,11 +278,11 @@ export class PlansComponent implements OnInit {
     console.log('Mapped Plans', obj);
 
     this.subService.mapPlanToServiceSettings(obj).subscribe(
-      data =>{
+      data => {
         this.barButtonOptions.active = false;
         this.saveMappedPlansResponse(data);
       },
-      err=>{
+      err => {
         this.barButtonOptions.active = false;
         console.log(err, "error mapPlanToServiceSettings");
       }
