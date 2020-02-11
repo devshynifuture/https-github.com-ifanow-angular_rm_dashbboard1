@@ -1,7 +1,7 @@
 import { SubscriptionInject } from './../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from './../../../../services/util.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IfaDetailsComponent } from './ifa-details/ifa-details.component';
+// import { IfaDetailsComponent } from './ifa-details/ifa-details.component';
 import { SupportService } from '../support.service';
 import { IfasDetailsComponent } from './ifas-details/ifas-details.component';
 import { MatSort } from '@angular/material';
@@ -26,36 +26,36 @@ export class MyIfasComponent implements OnInit {
 
   }
 
-  openDetailsComponent(value, data) {
-    const fragmentData = {
-      flag: value,
-      data,
-      id: 1,
-      state: 'open70',
-      componentName: IfasDetailsComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+  // openDetailsComponent(value, data) {
+  //   const fragmentData = {
+  //     flag: value,
+  //     data,
+  //     id: 1,
+  //     state: 'open70',
+  //     componentName: IfasDetailsComponent
+  //   };
+  //   const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+  //     sideBarData => {
+  //       console.log('this is sidebardata in subs subs : ', sideBarData);
+  //       if (UtilService.isDialogClose(sideBarData)) {
+  //         if (UtilService.isRefreshRequired(sideBarData)) {
+  //           console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
-          }
-          rightSideDataSub.unsubscribe();
-        }
+  //         }
+  //         rightSideDataSub.unsubscribe();
+  //       }
 
-      }
-    );
-  }
+  //     }
+  //   );
+  // }
 
   openIfaRightSilder(data) {
     const fragmentData = {
       flag: 'ifaDetails',
       data,
       id: 1,
-      state: 'open75',
-      componentName: IfaDetailsComponent,
+      state: 'open70',
+      componentName: IfasDetailsComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

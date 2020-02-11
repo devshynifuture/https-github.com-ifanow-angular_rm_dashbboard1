@@ -57,16 +57,8 @@ export class CashflowUpperLiabilitiesComponent implements OnInit {
   }
 
   deleteEntryCashFlow(element: UpperTableBox) {
-    let whichTable;
-    (this.cashflowCategory === 'income') ?
-      whichTable = ELEMENT_DATA :
-      (this.cashflowCategory === 'expenses') ?
-        whichTable = ELEMENT_DATA1 :
-        (this.cashflowCategory === 'liabilities') ?
-          whichTable = ELEMENT_DATA2 : whichTable = '';
-
     let el;
-    (whichTable !== '') ? el = whichTable.splice(whichTable.indexOf(element), 1) : null;
+    (ELEMENT_DATA2 !== null) ? el = ELEMENT_DATA2.splice(ELEMENT_DATA2.indexOf(element), 1) : null;
     console.log("this element deleted:0000 ", el);
     // refresh Table Data
   }
@@ -81,17 +73,7 @@ export class CashflowUpperLiabilitiesComponent implements OnInit {
 
   changeTableTdValue(value: string, field: string, index: number) {
     if (ValidatorType.NUMBER_ONLY.test(value)) {
-      switch (this.cashflowCategory) {
-        case 'income':
-          ELEMENT_DATA = this.alterTable(ELEMENT_DATA, field, value, index);
-          break;
-        case 'expenses':
-          ELEMENT_DATA1 = this.alterTable(ELEMENT_DATA1, field, value, index);
-          break;
-        case 'liabilities':
-          ELEMENT_DATA2 = this.alterTable(ELEMENT_DATA2, field, value, index);
-          break;
-      }
+      ELEMENT_DATA2 = this.alterTable(ELEMENT_DATA2, field, value, index);
     } else {
       this.onlyNumbers = '';
       this.eventService.openSnackBar("This Input only takes Numbers", "DISMISS");

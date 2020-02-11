@@ -22,7 +22,7 @@ export class CashFlowsPlanService {
         return this.http.put(apiConfig.MAIN_URL + appConfig.CASHFLOW_EDIT_INCOME, data);
     }
 
-    cashflowEditMonthlyIncome(data) {
+    cashflowEditMonthlyIncomeValues(data) {
         return this.http.put(apiConfig.MAIN_URL + appConfig.CASHFLOW_EDIT_MONTHLY_INCOME, data);
     }
 
@@ -99,6 +99,18 @@ export class CashFlowsPlanService {
     // surplus calls
     getCashflowYearlySurplusValues(data) {
         return this.http.get('', data);
+    }
+
+    getCashflowMonthlySurplusValues(data) {
+        return this.http.get('', data);
+    }
+
+    cashflowAddSurplusData(data) {
+        return this.http.post('', data);
+    }
+
+    cashflowEditSurplusData(data) {
+        return this.http.post('', data);
     }
 
     getFamilyMemberData(data) {

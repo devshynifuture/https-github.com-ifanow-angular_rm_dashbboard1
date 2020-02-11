@@ -2,12 +2,13 @@ import { MaterialModule } from './../../../material/material';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IfaDetailsComponent } from './my-ifas/ifa-details/ifa-details.component';
 import { CommonComponentModule } from '../common-component/common-component.module';
+import { IfasDetailsComponent } from './my-ifas/ifas-details/ifas-details.component';
+import { AdminDetailsComponent } from './ifa-onboarding/admin-details/admin-details.component';
 
 
 const componentList = [
-    IfaDetailsComponent
+    IfasDetailsComponent, AdminDetailsComponent
 ]
 
 @NgModule({

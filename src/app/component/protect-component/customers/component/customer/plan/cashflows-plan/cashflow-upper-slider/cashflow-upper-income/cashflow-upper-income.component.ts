@@ -57,13 +57,12 @@ export class CashflowUpperIncomeComponent implements OnInit {
   }
 
   deleteEntryCashFlow(element: UpperTableBox) {
-    let whichTable;
-    (this.cashflowCategory === 'income') ? whichTable = ELEMENT_DATA : ''
-
     let el;
-    (whichTable !== '') ? el = whichTable.splice(whichTable.indexOf(element), 1) : null;
+    el = ELEMENT_DATA.splice(ELEMENT_DATA.indexOf(element), 1);
+
     console.log("this element deleted:0000 ", el);
     // refreshTableData 
+    this.dataSource = new MatTableDataSource(ELEMENT_DATA);
   }
 
   updateTotal(object: UpperTableBox) {
@@ -76,26 +75,25 @@ export class CashflowUpperIncomeComponent implements OnInit {
 
   changeTableTdValue(value: string, field: string, index: number) {
     if (ValidatorType.NUMBER_ONLY.test(value)) {
-      switch (this.cashflowCategory) {
-        case 'income':
-          ELEMENT_DATA = this.alterTable(ELEMENT_DATA, field, value, index);
-          break;
-        case 'expenses':
-          ELEMENT_DATA1 = this.alterTable(ELEMENT_DATA1, field, value, index);
-          break;
-        case 'liabilities':
-          ELEMENT_DATA2 = this.alterTable(ELEMENT_DATA2, field, value, index);
-          break;
-      }
+      this.alterTable(ELEMENT_DATA, field, value, index);
     } else {
       this.onlyNumbers = '';
       this.eventService.openSnackBar("This Input only takes Numbers", "DISMISS");
     }
-
   }
 
   toggleEditMode() {
     this.editMode = !this.editMode;
+  }
+
+  cashflowAddIncome() {
+    this.cashflowService
+      .cashFlowAddIncome({ advisorId: this.advisorId, clientId: this.clientId })
+      .subscribe(res => {
+        console.log(res);
+      }, err => {
+        console.error(err);
+      })
   }
 
   addCashFlow(data) {
