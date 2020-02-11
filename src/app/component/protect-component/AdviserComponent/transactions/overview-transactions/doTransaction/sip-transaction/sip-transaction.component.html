@@ -95,7 +95,20 @@
                     <div class="col-md-12 p-0 text-left">
                         <h5 class="m-0 pt-28 text-black pb-12">Enter amount</h5>
                     </div>
-
+                    <div class="row">
+                        <div class="col-md-12 p-0 text-left">
+                            <h5 class="m-0 pt-28 text-black pb-12">Select SIP Frequency</h5>
+                        </div>
+                        <div class="col-md-5 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <mat-select class="form-control" formControlName="investmentAccountSelection">
+                                        <mat-option value="option">Option</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-5 p-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
@@ -104,20 +117,6 @@
                                     (change)="enteredAmount($event.target.value)">
                             </mat-form-field>
                             <p class="m-0 f-12 text-custom">Min amount: ₹500</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pt-28 text-black pb-12">Select SIP Frequency</h5>
-                    </div>
-                    <div class="col-md-5 p-0">
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <mat-select class="form-control" formControlName="investmentAccountSelection">
-                                    <mat-option value="option">Option</mat-option>
-                                </mat-select>
-                            </mat-form-field>
                         </div>
                     </div>
                 </div>
@@ -154,7 +153,8 @@
             </div>
 
             <div class="col-md-4 bg-grey lter p-0">
-                <app-transaction-summary></app-transaction-summary>
+                <app-transaction-summary [data]="transactionSummary" (defaultDetails)='getDefaultDetails($event)'>
+                </app-transaction-summary>
             </div>
         </div>
     </div>

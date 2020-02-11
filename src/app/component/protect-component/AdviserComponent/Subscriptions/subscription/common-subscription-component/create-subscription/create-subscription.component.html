@@ -1,4 +1,4 @@
-<div *ngIf="isFlagPayee">
+<div *ngIf="!isFlagPayee">
     <div class="row bb-1 popup-header-fix-60">
         <div class="col-md-10 p-0">
             <h4 class="mb-0 wrapper-20 pr-0">CREATE SUBSCRIPTION FOR {{feeModeData.clientName | uppercase }}</h4>
@@ -210,7 +210,7 @@
         <mat-step [stepControl]="payeeSetting" state="done">
             <ng-template matStepLabel>Payee Settings</ng-template>
             <app-change-payee (outputData)="selectPayee($event)" (payeeFlag)="getPayeeFlagData($event)"
-                (subStartNextBtn)="getSharesInfo($event)" *ngIf="isFlagPayee" [data]="payeesData"></app-change-payee>
+                (subStartNextBtn)="getSharesInfo($event)"  [data]="payeesData"></app-change-payee>
             <div class="bottom-fixed wrapper-12">
                 <div class="row">
                     <div class="col-md-4">
@@ -299,6 +299,7 @@
 
     </mat-horizontal-stepper>
 </div>
-<div *ngIf="isFlagPayee==false">
-    <!-- <app-payee-settings [data]="payeeSettingData" (totalPayeeData)="getTotalPayeeData($event)"></app-payee-settings> -->
+<div *ngIf="isFlagPayee">
+    <app-payee-settings [data]="payeeSettingData"  (closeAddPayee)="getPayeeFlagData($event)"></app-payee-settings>
+    <!-- (totalPayeeData)="getTotalPayeeData($event)" -->
 </div>

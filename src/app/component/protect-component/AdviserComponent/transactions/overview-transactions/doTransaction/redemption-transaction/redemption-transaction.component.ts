@@ -3,6 +3,7 @@ import { SubscriptionInject } from '../../../../Subscriptions/subscription-injec
 import { FormBuilder, Validators } from '@angular/forms';
 import { ConfirmationTransactionComponent } from '../confirmation-transaction/confirmation-transaction.component';
 import { UtilService } from 'src/app/services/util.service';
+import { OnlineTransactionService } from '../../../online-transaction.service';
 
 @Component({
   selector: 'app-redemption-transaction',
@@ -18,8 +19,16 @@ export class RedemptionTransactionComponent implements OnInit {
   selectedFamilyMember: any;
   isViewInitCalled=false;
   transactionType: any;
+  getDataSummary: any;
+  schemeList: any;
+  scheme: any;
+  maiSchemeList: any;
+  reInvestmentOpt: [];
+  schemeDetails: any;
+  navOfSelectedScheme: any;
+  transactionSummary: {};
 
-  constructor(private subInjectService: SubscriptionInject,
+  constructor(private subInjectService: SubscriptionInject,private onlineTransact: OnlineTransactionService,
     private fb: FormBuilder) { }
     @Input()
     set data(data) {
@@ -92,5 +101,48 @@ export class RedemptionTransactionComponent implements OnInit {
 
   getFormControl(): any {
     return this.redemptionTransaction.controls;
+  }
+  getSchemeList(value) {
+    let obj = {
+      searchQuery: value,
+      bseOrderType: 'ORDER',
+      aggregatorType: 2,
+      advisorId: 414,
+      tpUserCredentialId: 212,
+      familyMemberId:this.getDataSummary.defaultClient.familyMemberId,
+      clientId:this.getDataSummary.defaultClient.clientId,
+    }
+      this.onlineTransact.getExistingSchemes(obj).subscribe(
+        data => this.getExistingSchemesRes(data)
+      );
+  }
+  getExistingSchemesRes(data){
+    this.schemeList = data
+  }
+  selectedScheme(scheme) {
+    this.scheme = scheme
+    this.transactionSummary = { schemeName: scheme.schemeName }
+    this.navOfSelectedScheme = scheme.nav
+    let obj1 = {
+      mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
+      aggregatorType: 2,
+      orderType: 'ORDER',
+      userAccountType: 1,
+    }
+    this.onlineTransact.getSchemeDetails(obj1).subscribe(
+      data => this.getSchemeDetailsRes(data)
+    );
+  }
+  getSchemeDetailsRes(data) {
+    console.log('getSchemeDetailsRes == ', data)
+    this.maiSchemeList = data
+    this.schemeDetails = data[0]
+    this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
+    if (data.length > 1) {
+      this.reInvestmentOpt = data
+      console.log('reinvestment', this.reInvestmentOpt)
+    } if (data.length == 1) {
+      this.reInvestmentOpt = []
+    }
   }
 }

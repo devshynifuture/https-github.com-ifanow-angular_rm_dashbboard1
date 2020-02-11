@@ -221,5 +221,6 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
   purchaseRes(data) {
     console.log('purchase transaction ==', data)
+    
   }
 }

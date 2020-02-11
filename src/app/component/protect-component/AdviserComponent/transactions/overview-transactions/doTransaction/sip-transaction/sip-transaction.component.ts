@@ -28,6 +28,7 @@ export class SipTransactionComponent implements OnInit {
   navOfSelectedScheme: any;
   maiSchemeList: any;
   reInvestmentOpt = [];
+  getDataSummary: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService, 
     private fb: FormBuilder) { }
@@ -78,25 +79,35 @@ export class SipTransactionComponent implements OnInit {
     this.transactionSummary = { enteredAmount: value }
   }
   getSchemeList(value) {
-
+    let obj = {
+      searchQuery: value,
+      bseOrderType: 'ORDER',
+      aggregatorType: 2,
+      advisorId: 414,
+      tpUserCredentialId: 212,
+      familyMemberId:this.getDataSummary.defaultClient.familyMemberId,
+      clientId:this.getDataSummary.defaultClient.clientId,
+    }
     if (this.selectScheme == 2 && value.length > 2) {
-      let obj = {
-        searchQuery: value,
-        bseOrderType: 'ORDER',
-        aggregatorType: 2,
-        advisorId: 414,
-        tpUserCredentialId: 212,
-      }
       this.onlineTransact.getNewSchemes(obj).subscribe(
         data => this.getNewSchemesRes(data)
       );
     } else {
-
+      this.onlineTransact.getExistingSchemes(obj).subscribe(
+        data => this.getExistingSchemesRes(data)
+      );
     }
   }
   getNewSchemesRes(data) {
     console.log('new schemes', data)
     this.schemeList = data
+  }
+  getExistingSchemesRes(data){
+    this.schemeList = data
+  }
+  getDefaultDetails(data) {
+    console.log('get defaul here yupeeee', data)
+    this.getDataSummary = data
   }
   selectedScheme(scheme) {
     this.scheme = scheme
@@ -105,7 +116,7 @@ export class SipTransactionComponent implements OnInit {
     let obj1 = {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
       aggregatorType: 2,
-      orderType: 'ORDER',
+      orderType: 'SIP',
       userAccountType: 1,
     }
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
