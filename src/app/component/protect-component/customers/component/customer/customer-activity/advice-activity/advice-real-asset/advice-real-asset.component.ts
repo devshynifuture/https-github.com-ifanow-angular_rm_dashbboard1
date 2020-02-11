@@ -19,6 +19,8 @@ export class AdviceRealAssetComponent implements OnInit {
   dataSource3 = ELEMENT_DATA1;
   advisorId: any;
   clientId: any;
+  isLoading: any;
+  dataSource: any;
   constructor(private eventService: EventService, public dialog: MatDialog, private subInjectService: SubscriptionInject,
     private cusService: CustomerService, private activityService: ActiityService) { }
 
@@ -36,12 +38,16 @@ export class AdviceRealAssetComponent implements OnInit {
       clientId: this.clientId,
       assetCategory: 8
     }
+    this.dataSource = [{}, {}, {}];
+    this.isLoading = true;
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllAssetResponse(data), (error) => {
       }
     );
   }
-  getAllAssetResponse(data){
+  getAllAssetResponse(data) {
+    this.isLoading = false;
+    this.dataSource = data.REAL_ESTATE
     console.log(data);
   }
   openRealEstate(data, value) {

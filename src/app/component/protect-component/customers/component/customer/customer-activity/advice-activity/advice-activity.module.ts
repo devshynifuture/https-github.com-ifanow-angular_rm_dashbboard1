@@ -26,6 +26,7 @@ import { AllAdviceCashAndHandComponent } from './advice-cash-and-hand/all-advice
 import { AllAdviceCommoditiesComponent } from './advice-commodities/all-advice-commodities/all-advice-commodities.component';
 import { AllAdviceStocksComponent } from './advice-stocks/all-advice-stocks/all-advice-stocks.component';
 import { AdviceActionComponent } from './advice-action/advice-action.component';
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 
 
 @NgModule({
@@ -35,6 +36,8 @@ import { AdviceActionComponent } from './advice-action/advice-action.component';
     AdviceActivityRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
-    FormsModule]
+    FormsModule,
+    CustomDirectiveModule
+  ]
 })
 export class AdviceActivityModule { }

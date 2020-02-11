@@ -14,11 +14,12 @@ import { ActiityService } from '../../actiity.service';
   styleUrls: ['./advice-cash-and-hand.component.scss']
 })
 export class AdviceCashAndHandComponent implements OnInit {
-  displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'balance','advice', 'astatus', 'adate', 'icon'];
+  displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'balance', 'advice', 'astatus', 'adate', 'icon'];
   dataSource3 = ELEMENT_DATA1;
   advisorId: any;
   clientId: any;
-  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject,private activityService:ActiityService) { }
+  isLoading: any;
+  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -31,16 +32,19 @@ export class AdviceCashAndHandComponent implements OnInit {
       clientId: this.clientId,
       assetCategory: 11
     }
+    this.isLoading = true;
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {
       }
     );
   }
-  getAllSchemeResponse(data){
+  getAllSchemeResponse(data) {
     console.log(data);
+    this.isLoading = false;
+    // this.cashinHandData=data.CASH IN HAND;
   }
-  allAdvice =  false
-  openCashAndBank(data,value) {
+  allAdvice = false
+  openCashAndBank(data, value) {
     const fragmentData = {
       flag: value,
       data,
@@ -64,7 +68,7 @@ export class AdviceCashAndHandComponent implements OnInit {
     );
   }
 
-  openCashInHand(data,value) {
+  openCashInHand(data, value) {
     const fragmentData = {
       flag: value,
       data,
@@ -99,7 +103,7 @@ export interface PeriodicElement1 {
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
-  { name: 'Rahul Jain', desc: '1',balance:'20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-  { name: 'Rahul Jain', desc: '2',balance:'20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
+  { name: 'Rahul Jain', desc: '1', balance: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
+  { name: 'Rahul Jain', desc: '2', balance: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
 
 ];
