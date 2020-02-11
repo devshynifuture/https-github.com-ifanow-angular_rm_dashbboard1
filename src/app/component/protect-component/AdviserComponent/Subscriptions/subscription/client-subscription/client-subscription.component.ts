@@ -159,26 +159,28 @@ export class ClientSubscriptionComponent implements OnInit {
 
 
   openFragment(flag, data) {
-    this.location.replaceState('/subscription-upper');
-    data.flag = flag
-    console.log('hello mf button clicked');
-    const fragmentData = {
-      flag: 'clietns',
-      id: 1,
-      data,
-      direction: 'top',
-      componentName: SubscriptionUpperSliderComponent,
-      state: 'open'
-    };
-    // this.router.navigate(['/subscription-upper'])
-    AuthService.setSubscriptionUpperSliderData(fragmentData);
-    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-      upperSliderData => {
-        if (UtilService.isDialogClose(upperSliderData)) {
-          // this.getClientSubscriptionList();
-          subscription.unsubscribe();
+    if(!this.isLoading){
+      this.location.replaceState('/subscription-upper');
+      data.flag = flag
+      console.log('hello mf button clicked');
+      const fragmentData = {
+        flag: 'clietns',
+        id: 1,
+        data,
+        direction: 'top',
+        componentName: SubscriptionUpperSliderComponent,
+        state: 'open'
+      };
+      // this.router.navigate(['/subscription-upper'])
+      AuthService.setSubscriptionUpperSliderData(fragmentData);
+      const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+        upperSliderData => {
+          if (UtilService.isDialogClose(upperSliderData)) {
+            // this.getClientSubscriptionList();
+            subscription.unsubscribe();
+          }
         }
-      }
-    );
+      );
+    }
   }
 }

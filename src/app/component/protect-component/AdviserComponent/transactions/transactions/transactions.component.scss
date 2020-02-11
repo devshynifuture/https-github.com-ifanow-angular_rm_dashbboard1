@@ -1,19 +1,18 @@
 .example-card {
-  height: 457px;
+    height: 457px;
 }
 
-#ui-subscriptions .mat-tab-link.active {
-  background-color: transparent !important;
-  border-bottom: 4px solid #008FFF !important;
-  color: #008FFF !important;
-
+#uiTransactions .mat-tab-link.active {
+    background-color: transparent !important;
+    border-bottom: 4px solid #008FFF !important;
+    color: #008FFF !important;
 }
 
-#ui-subscriptions .mat-tab-link {
-  color: #595252 !important;
-  border-bottom: 4px solid transparent;
-  width: 120px !important;
-  background: transparent !important;
-  font-family: "roboto" !important;
-  letter-spacing: 0.75px !important;
+#uiTransactions .mat-tab-link {
+    color: #595252 !important;
+    border-bottom: 4px solid transparent;
+    width: 120px !important;
+    background: transparent !important;
+    font-family: "roboto" !important;
+    letter-spacing: 0.75px !important;
 }
