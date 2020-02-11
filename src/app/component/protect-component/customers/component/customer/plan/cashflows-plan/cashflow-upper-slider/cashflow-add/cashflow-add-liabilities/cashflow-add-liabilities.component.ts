@@ -1,7 +1,9 @@
+import { AuthService } from 'src/app/auth-service/authService';
 import { CashflowAddComponent } from './../cashflow-add.component';
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { CashFlowsPlanService } from '../../../cashflows-plan.service';
 
 @Component({
   selector: 'app-cashflow-add-liabilities',
@@ -10,10 +12,13 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 })
 export class CashflowAddLiabilitiesComponent implements OnInit {
   maxDate = new Date();
+  advisorId = AuthService.getAdvisorId();
+  clientId = AuthService.getClientId();
   constructor(
     public dialogRef: MatDialogRef<CashflowAddLiabilitiesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cashflowService: CashFlowsPlanService
   ) { }
 
   ngOnInit() {
@@ -37,6 +42,26 @@ export class CashflowAddLiabilitiesComponent implements OnInit {
 
   toggleLiabilitiesExpansion() {
     this.shouldExpandLiabilities = !this.shouldExpandLiabilities;
+  }
+
+  cashflowAddLiabilitiesData(data) {
+    this.cashflowService
+      .cashflowAddLiabilities({ advisorId: this.advisorId, clientId: this.clientId })
+      .subscribe(res => {
+        console.log(res);
+      }, err => {
+        console.error(err);
+      })
+  }
+
+  cashflowEditLiabilitiesData(data) {
+    this.cashflowService
+      .cashflowEditLiabilities({ advisorId: this.advisorId, clientId: this.clientId })
+      .subscribe(res => {
+        console.log(res);
+      }, err => {
+        console.error(err);
+      });
   }
 
   submitForm() {
