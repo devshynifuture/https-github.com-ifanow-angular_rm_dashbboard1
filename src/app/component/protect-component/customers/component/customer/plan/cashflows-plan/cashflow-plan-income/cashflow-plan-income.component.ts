@@ -13,13 +13,14 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./cashflow-plan-income.component.scss']
 })
 export class CashflowPlanIncomeComponent implements OnInit {
+  lastItem: any;
 
   constructor(private eventService: EventService,
     private cashflowService: CashFlowsPlanService) { }
   isLoading: boolean = false;
 
   dataSource: MatTableDataSource<IncometableI>;
-  displayedColumns: string[] = ['year', 'groupHeadAge', 'spouseAge', 'monthlyIncome', 'view'];
+  displayedColumns: string[] = ['year', 'groupHeadAge', 'spouseAge', 'totalIncome', 'view'];
   tableInUse: string = 'income';
   advisorId = AuthService.getAdvisorId();
   clientId = AuthService.getClientId();
@@ -28,14 +29,33 @@ export class CashflowPlanIncomeComponent implements OnInit {
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
     // if income api is created 
     // get yearly income 
+
     this.getYearlyCashflowIncomeData();
   }
 
   getYearlyCashflowIncomeData() {
+    this.isLoading = true;
     this.cashflowService
       .getCashflowYearlyIncomeValues({ advisorId: this.advisorId, clientId: this.clientId })
       .subscribe(res => {
+
+        res = res.filter((item, i) => {
+          if (i == res.length - 1) {
+            this.lastItem = item;
+            return;
+          }
+          return item;
+        });
+
         console.log(res);
+        res.map(item => {
+          item.groupHeadAge = this.lastItem.groupHeadAge;
+          item.spouseAge = this.lastItem.spouseAge;
+          item.view = 'view';
+        });
+
+        this.dataSource = new MatTableDataSource(res);
+        this.isLoading = false;
       },
         err => {
           console.error(err);
@@ -45,6 +65,8 @@ export class CashflowPlanIncomeComponent implements OnInit {
   openUpperSlider(element) {
     console.log(this.tableInUse);
     console.log(element);
+
+    element.year = String(element.year);
 
     const fragmentData = {
       flag: 'openCashFlowUpper',
@@ -67,11 +89,7 @@ export class CashflowPlanIncomeComponent implements OnInit {
 
 
 const ELEMENT_DATA: IncometableI[] = [
-  { year: '2020', groupHeadAge: '25', spouseAge: '21', monthlyIncome: '210000', view: 'view' },
-  { year: '2021', groupHeadAge: '26', spouseAge: '22', monthlyIncome: '210400', view: 'view' },
-  { year: '2022', groupHeadAge: '27', spouseAge: '23', monthlyIncome: '230000', view: 'view' },
-  { year: '2023', groupHeadAge: '28', spouseAge: '24', monthlyIncome: '210000', view: 'view' },
-  { year: '2024', groupHeadAge: '29', spouseAge: '25', monthlyIncome: '240000', view: 'view' },
-  { year: '2025', groupHeadAge: '30', spouseAge: '26', monthlyIncome: '280000', view: 'view' },
-  { year: '2026', groupHeadAge: '31', spouseAge: '27', monthlyIncome: '220000', view: 'view' },
+  { year: null, groupHeadAge: null, spouseAge: null, monthlyIncome: null, view: null },
+  { year: null, groupHeadAge: null, spouseAge: null, monthlyIncome: null, view: null },
+  { year: null, groupHeadAge: null, spouseAge: null, monthlyIncome: null, view: null },
 ];
