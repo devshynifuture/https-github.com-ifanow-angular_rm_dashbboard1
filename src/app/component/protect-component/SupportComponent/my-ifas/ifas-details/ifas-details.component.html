@@ -12,70 +12,61 @@
 </div>
 
 
-<div class="pt-60">
-    <mat-tab-group>
+<div class="pt-60 pb-28 pl-20">
+    <mat-tab-group id="ui-backoffice-tabs">
+
         <mat-tab label="Recon summary">
+
             <div class="row">
-                <div class="col-md-6">
-                    <h2 class="f-16 m-0">
-                        Suggestions
+                <div class="col-md-6 pl-0">
+                    <h2 class="f-16 m-0 d-flex align-items-center">
+                        CAMS
+                        <i class="material-icons ml-4">
+                            add_circle_outline
+                        </i>
                     </h2>
                 </div>
-                <div class="col-md-2 text-center">
-                    <h2 class="f-14 m-0">Yearly fees</h2>
-                </div>
-                <div class="col-md-3">
-                    <h2 class="f-14 m-0">Quarterly fees</h2>
+                <div class="col-md-5 ">
+                    <h2 class="f-14 f-600 d-inline-block widthYear text-center border_h2 m-0">Unmatched folios</h2>
+                    <h2 class="f-14 text-center d-inline-block widthQuarterly f-600 border_h2 m-0 borderleft_none">
+                        Quarterly fees</h2>
                 </div>
             </div>
-
             <div class="row">
-                <div class="back-office-table col-md-12 overflow-hidden">
+                <div class="back-office-table col-md-12 pl-0 overflow-hidden ">
                     <table mat-table [dataSource]="dataSource" id="table-low" class="">
-
                         <ng-container matColumnDef="arn">
                             <th class="br" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
                             <td class="br" mat-cell *matCellDef="let element"> {{element.arn}} </td>
                         </ng-container>
-
-
                         <ng-container matColumnDef="date">
                             <th class="br" mat-header-cell *matHeaderCellDef> Last done on </th>
                             <td class="br" mat-cell *matCellDef="let element"> {{element.date}} </td>
                         </ng-container>
-
-
                         <ng-container matColumnDef="name">
                             <th class="br" mat-header-cell *matHeaderCellDef> Done by </th>
                             <td class="br" mat-cell *matCellDef="let element"> {{element.name}} </td>
                         </ng-container>
-
-
                         <ng-container matColumnDef="total">
                             <th class="br" mat-header-cell *matHeaderCellDef> Total folios </th>
                             <td class="br" mat-cell *matCellDef="let element"> {{element.total}} </td>
                         </ng-container>
-
                         <ng-container matColumnDef="befor">
                             <th mat-header-cell *matHeaderCellDef> Before </th>
                             <td mat-cell *matCellDef="let element"> {{element.befor}} </td>
                         </ng-container>
-
                         <ng-container matColumnDef="after">
                             <th class="br" mat-header-cell *matHeaderCellDef> After </th>
                             <td class="br" mat-cell *matCellDef="let element"> {{element.after}} </td>
                         </ng-container>
-
                         <ng-container matColumnDef="aumbalance">
                             <th mat-header-cell *matHeaderCellDef> AUM balance </th>
                             <td mat-cell *matCellDef="let element"> {{element.aumbalance}} </td>
                         </ng-container>
-
                         <ng-container matColumnDef="transaction">
                             <th class="br" mat-header-cell *matHeaderCellDef> Transaction </th>
                             <td class="br" mat-cell *matCellDef="let element"> {{element.transaction}} </td>
                         </ng-container>
-
                         <ng-container matColumnDef="report">
                             <th class="br" mat-header-cell *matHeaderCellDef> Report </th>
                             <td class="br" mat-cell *matCellDef="let element">
@@ -90,13 +81,148 @@
                     </table>
                 </div>
             </div>
+
+
+            <div class="row pt-28">
+                <div class="col-md-6 pl-0">
+                    <h2 class="f-16 m-0 d-flex align-items-center">
+                        Karvy <i class="material-icons ml-4">
+                            add_circle_outline
+                        </i>
+                    </h2>
+                </div>
+                <div class="col-md-5 ">
+                    <h2 class="f-14 f-600 d-inline-block widthYear text-center border_h2 m-0">Unmatched folios</h2>
+                    <h2 class="f-14 text-center d-inline-block widthQuarterly f-600 border_h2 m-0 borderleft_none">
+                        Latest data as on</h2>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="back-office-table col-md-12 pl-0 overflow-hidden ">
+                    <table mat-table [dataSource]="dataSource" id="table-low" class="">
+                        <ng-container matColumnDef="arn">
+                            <th class="br" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
+                            <td class="br" mat-cell *matCellDef="let element"> {{element.arn}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="date">
+                            <th class="br" mat-header-cell *matHeaderCellDef> Last done on </th>
+                            <td class="br" mat-cell *matCellDef="let element"> {{element.date}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="name">
+                            <th class="br" mat-header-cell *matHeaderCellDef> Done by </th>
+                            <td class="br" mat-cell *matCellDef="let element"> {{element.name}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="total">
+                            <th class="br" mat-header-cell *matHeaderCellDef> Total folios </th>
+                            <td class="br" mat-cell *matCellDef="let element"> {{element.total}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="befor">
+                            <th mat-header-cell *matHeaderCellDef> Before </th>
+                            <td mat-cell *matCellDef="let element"> {{element.befor}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="after">
+                            <th class="br" mat-header-cell *matHeaderCellDef> After </th>
+                            <td class="br" mat-cell *matCellDef="let element"> {{element.after}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="aumbalance">
+                            <th mat-header-cell *matHeaderCellDef> AUM balance </th>
+                            <td mat-cell *matCellDef="let element"> {{element.aumbalance}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="transaction">
+                            <th class="br" mat-header-cell *matHeaderCellDef> Transaction </th>
+                            <td class="br" mat-cell *matCellDef="let element"> {{element.transaction}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="report">
+                            <th class="br" mat-header-cell *matHeaderCellDef> Report </th>
+                            <td class="br" mat-cell *matCellDef="let element">
+                                <button mat-stroked-button class="bg-primary text-white">
+                                    Report
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="row pt-28">
+                <div class="col-md-6 pl-0">
+                    <h2 class="f-16 m-0 d-flex align-items-center">
+                        Franklin Templeton <i class="material-icons ml-4">
+                            add_circle_outline
+                        </i>
+                    </h2>
+                </div>
+                <div class="col-md-5 ">
+                    <h2 class="f-14 f-600 d-inline-block widthYear text-center border_h2 m-0">Unmatched folios</h2>
+                    <h2 class="f-14 text-center d-inline-block widthQuarterly f-600 border_h2 m-0 borderleft_none">
+                        Latest data as on</h2>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="back-office-table col-md-12 pl-0 overflow-hidden ">
+                    <table mat-table [dataSource]="dataSource" id="table-low" class="">
+                        <ng-container matColumnDef="arn">
+                            <th class="br" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
+                            <td class="br" mat-cell *matCellDef="let element"> {{element.arn}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="date">
+                            <th class="br" mat-header-cell *matHeaderCellDef> Last done on </th>
+                            <td class="br" mat-cell *matCellDef="let element"> {{element.date}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="name">
+                            <th class="br" mat-header-cell *matHeaderCellDef> Done by </th>
+                            <td class="br" mat-cell *matCellDef="let element"> {{element.name}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="total">
+                            <th class="br" mat-header-cell *matHeaderCellDef> Total folios </th>
+                            <td class="br" mat-cell *matCellDef="let element"> {{element.total}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="befor">
+                            <th mat-header-cell *matHeaderCellDef> Before </th>
+                            <td mat-cell *matCellDef="let element"> {{element.befor}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="after">
+                            <th class="br" mat-header-cell *matHeaderCellDef> After </th>
+                            <td class="br" mat-cell *matCellDef="let element"> {{element.after}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="aumbalance">
+                            <th mat-header-cell *matHeaderCellDef> AUM balance </th>
+                            <td mat-cell *matCellDef="let element"> {{element.aumbalance}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="transaction">
+                            <th class="br" mat-header-cell *matHeaderCellDef> Transaction </th>
+                            <td class="br" mat-cell *matCellDef="let element"> {{element.transaction}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="report">
+                            <th class="br" mat-header-cell *matHeaderCellDef> Report </th>
+                            <td class="br" mat-cell *matCellDef="let element">
+                                <button mat-stroked-button class="bg-primary text-white">
+                                    Report
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </div>
+            </div>
+
+
         </mat-tab>
+
         <mat-tab label="Suggestions">
 
             <div class="row">
                 <div class="col-md-12">
                     <h2 class="f-16 m-0">
-                        CAMS
+                        Current subscriptions
                     </h2>
                 </div>
                 <div class="back-office-table col-md-10 overflow-hidden">
@@ -136,17 +262,14 @@
             </div>
 
             <div class="row pt-24">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <h2 class="f-16 m-0">
                         Suggestions
-
                     </h2>
                 </div>
-                <div class="col-md-2 text-center">
-                    <h2 class="f-14 m-0">Yearly fees</h2>
-                </div>
-                <div class="col-md-3">
-                    <h2 class="f-14 m-0">Quarterly fees</h2>
+                <div class="col-md-6">
+                    <h2 class="f-14 f-600 d-inline-block widthSuggesstion text-center border_h2 m-0">Yearly fees</h2>
+                    <h2 class="f-14 f-600 d-inline-block widthSuggesstion text-center border_h2 m-0">Quarterly fees</h2>
                 </div>
             </div>
 
@@ -154,14 +277,14 @@
                 <div class="back-office-table col-md-10 overflow-hidden">
                     <table mat-table [dataSource]="dataSourceTwo" id="table-low" class="">
                         <ng-container matColumnDef="type">
-                            <th class="br" mat-header-cell *matHeaderCellDef> Type </th>
-                            <td class="br" mat-cell *matCellDef="let element"> {{element.type}} </td>
+                            <th class="br w-12" mat-header-cell *matHeaderCellDef> Type </th>
+                            <td class="br w-12" mat-cell *matCellDef="let element"> {{element.type}} </td>
                         </ng-container>
 
 
                         <ng-container matColumnDef="description">
-                            <th class="br" mat-header-cell *matHeaderCellDef> Description </th>
-                            <td class="br" mat-cell *matCellDef="let element"> {{element.description}} </td>
+                            <th class="br w-30" mat-header-cell *matHeaderCellDef> Description </th>
+                            <td class="br w-30" mat-cell *matCellDef="let element"> {{element.description}} </td>
                         </ng-container>
 
 
@@ -195,6 +318,7 @@
 
 
         </mat-tab>
+
         <mat-tab label="Tickets">
             <div class="row pt-28">
                 <div class="col-md-12">
@@ -222,7 +346,7 @@
                 </div>
             </div>
 
-            <div class="row pt-28">
+            <div class="row">
                 <div class="col-md-12 back-office-table  overflow-hidden">
                     <h3 class="f-16 mb-4">Ticket list</h3>
 
@@ -276,7 +400,7 @@
         </mat-tab>
         <mat-tab label="Team members">
 
-            <div class="row pt-28">
+            <div class="row">
                 <div class="col-md-12 back-office-table  overflow-hidden">
                     <h3 class="f-16 mb-4">Ticket list</h3>
 
@@ -324,7 +448,7 @@
         </mat-tab>
         <mat-tab label="Billing details">
 
-            <div class="row pt-28">
+            <div class="row">
                 <div class="col-md-10 back-office-table  overflow-hidden">
                     <h3 class="f-16 mb-4">Ticket list</h3>
 
@@ -386,7 +510,7 @@
 </div>
 
 
-<div class="bottom-fixed-70 wrapper-12 pt-16">
+<div class="bottom-fixed-70 wrapper-12 pt-16 zIndex">
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
