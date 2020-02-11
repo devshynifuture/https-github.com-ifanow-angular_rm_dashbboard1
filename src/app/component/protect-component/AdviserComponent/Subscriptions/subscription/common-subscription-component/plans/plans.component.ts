@@ -126,6 +126,9 @@ export class PlansComponent implements OnInit {
 
   getPlansMappedToAdvisorResponse(data) {
     this.isLoading = false;
+    for(let p of data){
+      p['read'] = false;
+    }
     console.log('service plan data', data);
     if (data && data !== undefined && data !== null) {
       this.servicePlanData = data;

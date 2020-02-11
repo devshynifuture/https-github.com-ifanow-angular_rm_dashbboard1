@@ -15,7 +15,8 @@
                 </mat-card-content>
             </mat-card>
         </div>
-        <div  *ngFor="let singleService of serviceSettingData" [appSkeletonLoading]="isLoading" appSkeletonLoading class="col-md-4 pr-20 pb-20 pl-0 skeletonAnimation">
+        <div *ngFor="let singleService of serviceSettingData" [appSkeletonLoading]="isLoading" appSkeletonLoading
+            class="col-md-4 pr-20 pb-20 pl-0 skeletonAnimation">
             <mat-card class="example-card bg-grey lter p-0 b-a ">
                 <div class="bar">
                     <mat-card-header class="overflow-hidden">
@@ -30,11 +31,15 @@
                                     {{singleService.serviceCode}}
                                 </div>
                                 <div class="serDic" [ngClass]="singleService.read? 'h-a':''">
-                                    <p class="m-0 text-sl" matTooltip="Description : {{singleService.description}}" aria-label="Button that displays a tooltip when focused or hovered over">
+                                    <p class="m-0 text-sl" matTooltip="Description : {{singleService.description}}"
+                                        aria-label="Button that displays a tooltip when focused or hovered over">
                                         {{singleService.description}}
                                     </p>
                                 </div>
-                                <div (click)="singleService.read = singleService.read? false : true" class="read-more c-p" *ngIf="singleService.description && singleService.description.length > 100">{{singleService.read?'read less':'read more'}}</div>
+                                <div (click)="singleService.read = singleService.read? false : true"
+                                    class="read-more c-p"
+                                    *ngIf="singleService.description && singleService.description.length > 100">
+                                    {{singleService.read?'read less':'read more'}}</div>
                             </mat-card-subtitle>
                         </div>
                     </mat-card-header>
@@ -157,7 +162,8 @@
                 services.
             </p>
 
-            <button (click)="openFragment('','services')" class="btn-primary d-flex align-items-center">
+            <button mat-stroked-button (click)="openFragment('','services')"
+                class="btn-primary d-flex align-items-center">
                 ADD SERVICES
             </button>
         </div>
