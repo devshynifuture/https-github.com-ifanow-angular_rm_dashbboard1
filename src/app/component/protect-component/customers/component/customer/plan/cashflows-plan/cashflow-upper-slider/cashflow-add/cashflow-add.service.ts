@@ -8,7 +8,7 @@ export class CashflowAddService {
   constructor() { }
 
   formValidations(whichTable) {
-    console.log("this is formGroup::::::::::", whichTable)
+    // console.log("this is formGroup::::::::::", whichTable);
     for (let key in whichTable.controls) {
       if (whichTable.get(key).invalid) {
         whichTable.get(key).markAsTouched();

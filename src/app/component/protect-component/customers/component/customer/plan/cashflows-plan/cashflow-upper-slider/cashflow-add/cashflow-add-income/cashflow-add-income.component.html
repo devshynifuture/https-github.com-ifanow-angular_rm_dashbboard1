@@ -8,8 +8,11 @@
             <div class="col-md-4">
                 <mat-form-field>
                     <mat-select formControlName="earning-member" class="form-control br-0  ">
-                        <mat-option *ngFor="let member of familyMemberList" [value]="member.userName">
-                            {{member.userName}}
+                        <mat-option value="1">
+                            Rahul Jain
+                        </mat-option>
+                        <mat-option value="2">
+                            Sarvesh
                         </mat-option>
                     </mat-select>
                     <mat-error
@@ -26,8 +29,25 @@
             </div>
             <div class="col-md-4">
                 <mat-form-field>
-                    <input matInput type="text" formControlName="income-src" class="form-control br-0  ">
-                    <mat-error *ngIf="formIncome.get('income-src').touched && formIncome.get('income-src').invalid">
+                    <!-- <input matInput type="text" formControlName="income-type" class="form-control br-0"> -->
+                    <mat-select formControlName="income-type" class="form-control br-0">
+                        <mat-option value="1">
+                            Salaried
+                        </mat-option>
+                        <mat-option value="2">
+                            Business
+                        </mat-option>
+                        <mat-option value="3">
+                            Profession
+                        </mat-option>
+                        <mat-option value="4">
+                            Rental
+                        </mat-option>
+                        <mat-option value="5">
+                            Others
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="formIncome.get('income-type').touched && formIncome.get('income-type').invalid">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -63,8 +83,18 @@
                     <div class="col-md-6 pr-8  pl-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput formControlName="continues-till" type="text"
-                                    class="form-control br-0  ">
+                                <mat-select formControlName="continues-till" #continuesTillSelectValue
+                                    class="form-control br-0">
+                                    <mat-option value="1">
+                                        Retirement
+                                    </mat-option>
+                                    <mat-option value="2">
+                                        Life Time
+                                    </mat-option>
+                                    <mat-option value="3">
+                                        Number of Years
+                                    </mat-option>
+                                </mat-select>
                                 <mat-error
                                     *ngIf="formIncome.get('continues-till').touched && formIncome.get('continues-till').invalid">
                                     This field is required
@@ -72,11 +102,11 @@
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="col-md-6 pl-8  pr-0">
+                    <div class="col-md-6 pl-8  pr-0" *ngIf="continuesTillSelectValue.value === '3'">
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <input matInput type="text" formControlName="continues-till-date"
-                                    class="form-control br-0  ">
+                                    class="form-control br-0">
                                 <mat-error
                                     *ngIf="formIncome.get('continues-till-date').touched && formIncome.get('continues-till-date').invalid">
                                     This field is required
@@ -180,7 +210,10 @@
             </div>
             <div class="col-md-6">
                 <mat-form-field>
-                    <input matInput type="text" formControlName="next-appraisal-date" class="form-control br-0">
+                    <input matInput (focus)="picker.open()" formControlName="next-appraisal-date"
+                        class="form-control br-0" [matDatepicker]="picker" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
                     <mat-error
                         *ngIf="formIncome.get('next-appraisal-date').touched && formIncome.get('next-appraisal-date').invalid">
                         This field is required
@@ -196,13 +229,18 @@
 
             </div>
             <div class="col-md-6">
-                <div class="row">
+                <div class="row" [formGroup]="formItem"
+                    *ngFor="let formItem of formBonusListArrayControls.controls; index as i">
                     <div class="col-md-6 pr-8 pl-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput type="text" formControlName="bonus-date" class="form-control br-0">
+                                <input matInput appInputValueValidation (focus)="picker1.open()"
+                                    formControlName="bonus-date" class="form-control br-0" [matDatepicker]="picker1"
+                                    readonly>
+                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-datepicker #picker1></mat-datepicker>
                                 <mat-error
-                                    *ngIf="formIncome.get('bonus-date').touched && formIncome.get('bonus-date').invalid">
+                                    *ngIf="formItem.get('bonus-date').touched && formItem.get('bonus-date').invalid">
                                     This field is required
                                 </mat-error>
                             </mat-form-field>
@@ -213,14 +251,21 @@
                             <mat-form-field>
                                 <input matInput type="text" formControlName="bonus-amt" class="form-control br-0">
                                 <mat-error
-                                    *ngIf="formIncome.get('bonus-date').touched && formIncome.get('bonus-amt').invalid">
+                                    *ngIf="formItem.get('bonus-amt').touched && formItem.get('bonus-amt').invalid">
                                     This field is required
                                 </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
                     <div class="col-md-1 p-0 d-flex align-items-center justify-content-center">
-                        <i class="material-icons text-primitive c-p">add</i>
+                        <span *ngIf="i === formBonusListArrayControls.controls.length - 1"
+                            (click)="addNewBonusDataInFormArray()">
+                            <i class="material-icons text-primitive c-p">add</i>
+                        </span>
+                        <span *ngIf="i < formBonusListArrayControls.controls.length - 1"
+                            (click)="removeBonusDataFromFormArray(i)">
+                            <i class="material-icons text-primitive c-p">remove</i>
+                        </span>
                     </div>
 
                 </div>
