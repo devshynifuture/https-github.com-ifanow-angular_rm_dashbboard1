@@ -31,7 +31,7 @@ export class CashFlowsPlanService {
     }
 
     getCashflowMonthlyIncomeValues(data) {
-        return this.http.get('', data);
+        return this.http.get(apiConfig.MAIN_URL + appConfig.CASHFLOW_GET_MONTHLY_DISTRIBUTION_INCOME, data);
     }
 
     // expenses api calls 

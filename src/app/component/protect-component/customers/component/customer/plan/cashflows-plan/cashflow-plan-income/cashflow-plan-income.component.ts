@@ -14,6 +14,7 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class CashflowPlanIncomeComponent implements OnInit {
   lastItem: any;
+  detailsForMonthlyDistributionGetList: any;
 
   constructor(private eventService: EventService,
     private cashflowService: CashFlowsPlanService) { }
@@ -38,23 +39,18 @@ export class CashflowPlanIncomeComponent implements OnInit {
     this.cashflowService
       .getCashflowYearlyIncomeValues({ advisorId: this.advisorId, clientId: this.clientId })
       .subscribe(res => {
-
-        res = res.filter((item, i) => {
-          if (i == res.length - 1) {
-            this.lastItem = item;
-            return;
-          }
-          return item;
-        });
-
-        console.log(res);
-        res.map(item => {
-          item.groupHeadAge = this.lastItem.groupHeadAge;
-          item.spouseAge = this.lastItem.spouseAge;
+        const { cashFlowIncomeOutputList, detailsForMonthlyDistributionGetList, groupHeadAge, spouseAge } = res;
+        cashFlowIncomeOutputList.map(item => {
+          item.groupHeadAge = groupHeadAge;
+          item.spouseAge = spouseAge;
           item.view = 'view';
         });
 
-        this.dataSource = new MatTableDataSource(res);
+        this.detailsForMonthlyDistributionGetList = detailsForMonthlyDistributionGetList;
+
+
+        console.log(res);
+        this.dataSource = new MatTableDataSource(cashFlowIncomeOutputList);
         this.isLoading = false;
       },
         err => {
@@ -67,6 +63,7 @@ export class CashflowPlanIncomeComponent implements OnInit {
     console.log(element);
 
     element.year = String(element.year);
+    element.detailsForMonthlyDistributionGetList = this.detailsForMonthlyDistributionGetList;
 
     const fragmentData = {
       flag: 'openCashFlowUpper',

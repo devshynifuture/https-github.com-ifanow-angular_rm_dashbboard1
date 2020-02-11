@@ -363,6 +363,7 @@ export const appConfig = {
   CASHFLOW_GET_INCOME: 'cashflow/income/get',
   CASHFLOW_DELETE_INCOME: 'cashflow/income/delete',
   CASHFLOW_EDIT_INCOME: 'cashflow/income/edit',
+  CASHFLOW_GET_MONTHLY_DISTRIBUTION_INCOME: 'cashflow/income/monthly-distribution/get',
   CASHFLOW_EDIT_MONTHLY_INCOME: 'cashflow/income/monthly/edit',
   CASHFLOW_GET_YEARLY_EXPENSE: 'cashflow/expense/list/get',
   CASHFLOW_GET_MONTHLY_EXPENSE: 'cashflow/expense/monthly/list/get',

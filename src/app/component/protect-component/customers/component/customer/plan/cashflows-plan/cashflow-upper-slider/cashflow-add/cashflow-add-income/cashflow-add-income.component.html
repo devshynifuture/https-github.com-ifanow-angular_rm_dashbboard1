@@ -7,16 +7,15 @@
             </div>
             <div class="col-md-4">
                 <mat-form-field>
-                    <mat-select formControlName="earning-member" class="form-control br-0  ">
-                        <mat-option value="1">
+                    <mat-select formControlName="ownerName" class="form-control br-0  ">
+                        <mat-option value="Rahul Jain">
                             Rahul Jain
                         </mat-option>
-                        <mat-option value="2">
+                        <mat-option value="Sarvesh">
                             Sarvesh
                         </mat-option>
                     </mat-select>
-                    <mat-error
-                        *ngIf="formIncome.get('earning-member').touched && formIncome.get('earning-member').invalid">
+                    <mat-error *ngIf="formIncome.get('ownerName').touched && formIncome.get('ownerName').invalid">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -29,8 +28,8 @@
             </div>
             <div class="col-md-4">
                 <mat-form-field>
-                    <!-- <input matInput type="text" formControlName="income-type" class="form-control br-0"> -->
-                    <mat-select formControlName="income-type" class="form-control br-0">
+                    <!-- <input matInput type="text" formControlName="incomeTypeId" class="form-control br-0"> -->
+                    <mat-select formControlName="incomeTypeId" class="form-control br-0">
                         <mat-option value="1">
                             Salaried
                         </mat-option>
@@ -47,7 +46,7 @@
                             Others
                         </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="formIncome.get('income-type').touched && formIncome.get('income-type').invalid">
+                    <mat-error *ngIf="formIncome.get('incomeTypeId').touched && formIncome.get('incomeTypeId').invalid">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -62,9 +61,10 @@
             <div class="col-md-4">
                 <mat-form-field>
                     <input matInput #monthlyAmtInput type="text" appInputValueValidation
-                        [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" formControlName="monthly-amt"
+                        [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" formControlName="monthlyIncome"
                         class="form-control br-0">
-                    <mat-error *ngIf="formIncome.get('monthly-amt').touched && formIncome.get('monthly-amt').invalid">
+                    <mat-error
+                        *ngIf="formIncome.get('monthlyIncome').touched && formIncome.get('monthlyIncome').invalid">
                         This field is required
                     </mat-error>
                     <mat-hint align="end" class="f-12">
@@ -83,7 +83,7 @@
                     <div class="col-md-6 pr-8  pl-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <mat-select formControlName="continues-till" #continuesTillSelectValue
+                                <mat-select formControlName="continueTill" #continuesTillSelectValue
                                     class="form-control br-0">
                                     <mat-option value="1">
                                         Retirement
@@ -96,7 +96,7 @@
                                     </mat-option>
                                 </mat-select>
                                 <mat-error
-                                    *ngIf="formIncome.get('continues-till').touched && formIncome.get('continues-till').invalid">
+                                    *ngIf="formIncome.get('continueTill').touched && formIncome.get('continueTill').invalid">
                                     This field is required
                                 </mat-error>
                             </mat-form-field>
@@ -105,10 +105,10 @@
                     <div class="col-md-6 pl-8  pr-0" *ngIf="continuesTillSelectValue.value === '3'">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput type="text" formControlName="continues-till-date"
+                                <input matInput type="text" formControlName="continueTillDate"
                                     class="form-control br-0">
                                 <mat-error
-                                    *ngIf="formIncome.get('continues-till-date').touched && formIncome.get('continues-till-date').invalid">
+                                    *ngIf="formIncome.get('continueTillDate').touched && formIncome.get('continueTillDate').invalid">
                                     This field is required
                                 </mat-error>
                             </mat-form-field>
@@ -128,13 +128,13 @@
                     <div class="col-md-9 p-0">
                         <div class="form-group mb-0">
                             <mat-button-toggle-group name="income-growth-rate" aria-label="Income Growth Rate"
-                                formControlName="income-growth-rate">
+                                formControlName="growthRate">
                                 <mat-button-toggle type="radio" value="4-6">4-6 %</mat-button-toggle>
                                 <mat-button-toggle type="radio" value="6-8">6-8%</mat-button-toggle>
                                 <mat-button-toggle type="radio" value="8-10">8-10%</mat-button-toggle>
                             </mat-button-toggle-group>
                             <mat-error
-                                *ngIf="formIncome.get('income-growth-rate').touched && formIncome.get('income-growth-rate').invalid">
+                                *ngIf="formIncome.get('growthRate').touched && formIncome.get('growthRate').invalid">
                                 This field is required
                             </mat-error>
                             <!-- <input matInput type="text" formControlName="income-growth-rate"
@@ -210,12 +210,12 @@
             </div>
             <div class="col-md-6">
                 <mat-form-field>
-                    <input matInput (focus)="picker.open()" formControlName="next-appraisal-date"
+                    <input matInput (focus)="picker.open()" formControlName="nextAppraisalOrNextRenewal"
                         class="form-control br-0" [matDatepicker]="picker" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-error
-                        *ngIf="formIncome.get('next-appraisal-date').touched && formIncome.get('next-appraisal-date').invalid">
+                        *ngIf="formIncome.get('nextAppraisalOrNextRenewal').touched && formIncome.get('nextAppraisalOrNextRenewal').invalid">
                         This field is required
                     </mat-error>
                 </mat-form-field>

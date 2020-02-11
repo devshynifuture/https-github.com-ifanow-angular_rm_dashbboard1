@@ -29,6 +29,8 @@ export class CashflowUpperIncomeComponent implements OnInit {
   @Input() data;
   editMode: boolean = false;
   onlyNumbers = '';
+  incomeIdArray = [];
+  familyMemberId;
 
   ngOnInit() {
     this.cashflowCategory = this.data.tableInUse;
@@ -37,17 +39,33 @@ export class CashflowUpperIncomeComponent implements OnInit {
 
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
     // api not created
-    // this.getCashflowMonthlyIncomeData();
+    this.getCashflowMonthlyIncomeData();
   }
 
   getCashflowMonthlyIncomeData() {
+    const { detailsForMonthlyDistributionGetList } = this.data;
+
+    detailsForMonthlyDistributionGetList.forEach(item => {
+      const { incomeId, familyMemberId } = item;
+      this.incomeIdArray.push(incomeId);
+      this.familyMemberId = familyMemberId;
+    });
+
+    console.log(" income id array", this.incomeIdArray);
+
+    const requestJSON = {
+      incomeId: this.incomeIdArray,
+      year: parseInt(this.data.year)
+    };
     this.cashflowService
-      .getCashflowMonthlyIncomeValues({ advisorId: this.advisorId, clientId: this.clientId })
+      .getCashflowMonthlyIncomeValues(requestJSON)
       .subscribe(res => {
         console.log(res);
       }, err => {
         console.error(err);
-      })
+      });
+
+    // console.log(this.data.detailsForMonthlyDistributionGetList);
   }
 
   alterTable(table: UpperTableBox[], field: string, value: string, index: number): UpperTableBox[] {

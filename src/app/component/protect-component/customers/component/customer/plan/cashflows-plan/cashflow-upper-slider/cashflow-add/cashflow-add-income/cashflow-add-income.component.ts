@@ -29,16 +29,16 @@ export class CashflowAddIncomeComponent implements OnInit {
 
   validatorType = ValidatorType;
   formIncome = this.fb.group({
-    "earning-member": [, Validators.required],
-    "income-type": [, [Validators.pattern(/\d+/), Validators.required]],
-    "monthly-amt": [, Validators.required],
-    "continues-till": [, Validators.required],
-    "continues-till-date": [,],
-    "income-growth-rate": [, Validators.required],
+    "ownerName": [, Validators.required],
+    "incomeTypeId": [, [Validators.pattern(/\d+/), Validators.required]],
+    "monthlyIncome": [, Validators.required],
+    "continueTill": [, Validators.required],
+    "continueTillDate": [,],
+    "growthRate": [, Validators.required],
     "income-growth-rate-input": [, Validators.required],
     "income-period-start": [, Validators.required],
     "income-period-end": [, Validators.required],
-    "next-appraisal-date": [,],
+    "nextAppraisalOrNextRenewal": [,],
     "bonusList": new FormArray([
       this.fb.group({
         "bonus-date": [, Validators.required],
@@ -107,13 +107,49 @@ export class CashflowAddIncomeComponent implements OnInit {
     }
     // api call for adding income
 
-    const userInfo = AuthService.getUserInfo();
     const requestJSON = {
-      familyMemberId: 5500000,
-      clientId: userInfo.clientId,
-      advisorId: userInfo.advisorId,
-      ...this.formIncome
+      "familyMemberId": 5500000,
+      "clientId": this.clientId,
+      "advisorId": this.advisorId,
+      "ownerName": this.formIncome.get('ownerName').value,
+      "monthlyIncome": this.formIncome.get('monthlyIncome').value,
+      "incomeStartMonth": 1,
+      "incomeStartYear": 2019,
+      "incomeEndMonth": 4,
+      "incomeEndYear": 2020,
+      "incomeGrowthRateId": 50,
+      "growthRate": 20,
+      "incomeStyleId": 20,
+      "continueTill": parseInt(this.formIncome.get('continueTill').value),
+      "nextAppraisalOrNextRenewal": parseInt(this.formIncome.get('nextAppraisalOrNextRenewal').value),
+      "incomeTypeId": parseInt(this.formIncome.get('incomeTypeId').value),
+      "realEstateId": 20,
+      "basicIncome": 200,
+      "standardDeduction": 200,
+      "deamessAlowance": 200,
+      "hraRecieved": 200,
+      "totalRentPaid": 200,
+      "addedFromCashFlow": 1,
+      "description": "description",
+      "monthlyContributions": [
+        {
+          "amount": 200,
+          "receivingMonth": 1,
+          "receivingYear": "2019"
+        },
+        {
+          "amount": 200,
+          "receivingMonth": 2,
+          "receivingYear": "2019"
+        }
+      ]
     }
+
+    this.cashflowService.cashFlowAddIncome(requestJSON).subscribe(res => {
+
+      // gives incomeId of newly created income inside cashflow
+      console.log("this is some response frmo add income apio", res);
+    })
 
     // console.log('this is income form ', this.formIncome);
     // this.cashflowService.cashFlowAddIncome(requestJSON).subscribe(res => {
