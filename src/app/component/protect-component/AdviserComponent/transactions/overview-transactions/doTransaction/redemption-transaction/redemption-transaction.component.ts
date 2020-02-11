@@ -17,7 +17,7 @@ export class RedemptionTransactionComponent implements OnInit {
   redemptionTransaction: any;
   inputData: any;
   selectedFamilyMember: any;
-  isViewInitCalled=false;
+  isViewInitCalled = false;
   transactionType: any;
   getDataSummary: any;
   schemeList: any;
@@ -27,33 +27,39 @@ export class RedemptionTransactionComponent implements OnInit {
   schemeDetails: any;
   navOfSelectedScheme: any;
   transactionSummary: {};
+  folioList: any;
+  folioDetails: any;
 
-  constructor(private subInjectService: SubscriptionInject,private onlineTransact: OnlineTransactionService,
+  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private fb: FormBuilder) { }
-    @Input()
-    set data(data) {
-      this.inputData = data;
-      this.transactionType =  data.transactionType
-      this.selectedFamilyMember = data.selectedFamilyMember
-      console.log('This is Input data of FixedDepositComponent ', data );
-  
-      if (this.isViewInitCalled) {
-        this.getdataForm('');
-      }
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    this.transactionType = data.transactionType
+    this.selectedFamilyMember = data.selectedFamilyMember
+    console.log('This is Input data of FixedDepositComponent ', data);
+
+    if (this.isViewInitCalled) {
+      this.getdataForm('');
     }
-  
-    get data() {
-      return this.inputData;
-    }
-  
+  }
+
+  get data() {
+    return this.inputData;
+  }
+
   ngOnInit() {
     this.getdataForm(this.inputData)
+    this.transactionSummary = { selectedFamilyMember: this.inputData.selectedFamilyMember }
   }
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
   }
-  onAddTransaction(value,data){
+  redemptionType(value){
+
+  }
+  onAddTransaction(value, data) {
     this.confirmTrasaction = true
     const fragmentData = {
       flag: 'addNsc',
@@ -73,7 +79,7 @@ export class RedemptionTransactionComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-       
+
       }
     );
   }
@@ -102,7 +108,9 @@ export class RedemptionTransactionComponent implements OnInit {
 
     this.ownerData = this.redemptionTransaction.controls;
   }
-
+  enteredAmount(value) {
+    this.transactionSummary = { enteredAmount: value }
+  }
   getFormControl(): any {
     return this.redemptionTransaction.controls;
   }
@@ -112,16 +120,16 @@ export class RedemptionTransactionComponent implements OnInit {
       bseOrderType: 'ORDER',
       aggregatorType: 2,
       advisorId: 414,
-      showOnlyNonZero:true,
+      showOnlyNonZero: true,
       tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
-      familyMemberId:this.getDataSummary.defaultClient.familyMemberId,
-      clientId:this.getDataSummary.defaultClient.clientId,
+      familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+      clientId: this.getDataSummary.defaultClient.clientId,
     }
-      this.onlineTransact.getExistingSchemes(obj).subscribe(
-        data => this.getExistingSchemesRes(data)
-      );
+    this.onlineTransact.getExistingSchemes(obj).subscribe(
+      data => this.getExistingSchemesRes(data)
+    );
   }
-  getExistingSchemesRes(data){
+  getExistingSchemesRes(data) {
     this.schemeList = data
   }
   selectedScheme(scheme) {
@@ -149,5 +157,25 @@ export class RedemptionTransactionComponent implements OnInit {
     } if (data.length == 1) {
       this.reInvestmentOpt = []
     }
+    this.getSchemeWiseFolios()
+  }
+  getSchemeWiseFolios() {
+    let obj1 = {
+      mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
+      advisorId:  this.getDataSummary.defaultClient.advisorId,
+      familyMemberId:  this.getDataSummary.defaultClient.familyMemberId,
+      clientId:  this.getDataSummary.defaultClient.clientId
+    }
+    this.onlineTransact.getSchemeWiseFolios(obj1).subscribe(
+      data => this.getSchemeWiseFoliosRes(data)
+    );
+  }
+  getSchemeWiseFoliosRes(data) {
+    console.log('res scheme folio',data)
+    this.folioList = data
+  }
+  selectedFolio(folio) {
+    this.folioDetails = folio
+    this.transactionSummary = { folioNumber: folio.folioNumber }
   }
 }
