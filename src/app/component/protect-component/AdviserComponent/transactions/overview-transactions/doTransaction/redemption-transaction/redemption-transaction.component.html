@@ -30,13 +30,18 @@
                         <h5 class="m-0 pt-28 text-black pb-12">seat scheme to redeem from</h5>
                     </div>
                     <div class="col-md-12 p-0">
-                        <mat-form-field>
-                            <mat-select class="form-control br-0">
-                                <mat-option>
-                                    Option
+                        <div class="form-control mb-0 add-transactions">
+                            <input type="text" aria-label="Number" class="form-group h-0" matInput
+                                formControlName="investor" [matAutocomplete]="auto"
+                                (keyup)="getSchemeList($event.target.value)" value="Start typing to see investor names">
+                            <mat-autocomplete #auto="matAutocomplete">
+                                <mat-option (onSelectionChange)="selectedScheme(scheme)"
+                                    *ngFor="let scheme of schemeList" [value]="scheme.schemeName">
+                                    {{scheme.schemeName}}
                                 </mat-option>
-                            </mat-select>
-                        </mat-form-field>
+                            </mat-autocomplete>
+                            <p class="m-0 f-12 text-custom pt-8">Last closing NAV: {{navOfSelectedScheme}}</p>
+                        </div>
                     </div>
                 </div>
 
@@ -113,7 +118,8 @@
             </div>
 
             <div class="col-md-4 bg-grey lter p-0">
-                <app-transaction-summary></app-transaction-summary>
+                <app-transaction-summary [data]="transactionSummary" (defaultDetails)='getDefaultDetails($event)'>
+                </app-transaction-summary>
             </div>
         </div>
     </div>
