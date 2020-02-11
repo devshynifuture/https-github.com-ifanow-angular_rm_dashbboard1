@@ -154,7 +154,8 @@
                                 <br> for your client's financial freedom. We do the background work for you - create
                                 <br> invoices, bill clients, execute agreements and so on.
                             </p>
-                            <button (click)="Open('Add','billerProfile')" class="btn-primary d-flex align-items-center">
+                            <button mat-stroked-button (click)="Open('Add','billerProfile')"
+                                class="btn-primary d-flex align-items-center">
                                 ADD NEW</button>
                         </div>
                     </div>
@@ -229,7 +230,7 @@
                                 <!-- <button mat-stroked-button class="btn-primary br-0 mr-8" (click)="savePrefix(1)">SAVE
                                 </button> -->
                                 <app-progress-button class="btn-primary br-0 mr-8" (btnClick)="savePrefix(2)"
-                                    [options]="barButtonOptions">
+                                    [options]="barButtonOptions" style="box-shadow: none;">
                                 </app-progress-button>
                                 <button mat-stroked-button class="text-primary br-0"
                                     (click)="resetPrefix()">CANCEL</button>
