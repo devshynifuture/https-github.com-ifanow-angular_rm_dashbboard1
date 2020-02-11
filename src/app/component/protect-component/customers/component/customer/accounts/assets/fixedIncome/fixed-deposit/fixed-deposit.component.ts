@@ -138,13 +138,13 @@ export class FixedDepositComponent implements OnInit {
     }
   }
 
-  intrestPayout(value) {
-    if (value == 2) {
-      this.showFreqPayOpt = true;
-    } else {
-      this.showFreqPayOpt = false;
-    }
-  }
+  // intrestPayout(value) {
+  //   if (value == 2) {
+  //     this.showFreqPayOpt = true;
+  //   } else {
+  //     this.showFreqPayOpt = false;
+  //   }
+  // }
   keyPress(event: any) {
     var k = event.keyCode;
     return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 45 || k == 47 || k == 8 || (k >= 48 && k <= 57));

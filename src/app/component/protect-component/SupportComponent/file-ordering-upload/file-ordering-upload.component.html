@@ -1,12 +1,18 @@
 <div id="ui-subscriptions">
-    <div class="sub-header-fix">
-        <div class="bg-white">
-            <h1 class="custom-heading-main">File ordering & uploads</h1>
-            <nav class="text-right" id="ui-customer-secondhead" mat-align-tabs="end" mat-tab-nav-bar>
-                <a routerLink="/support/file-ordering/historical" mat-tab-link routerLinkActive="active">HISTORICAL</a>
-                <a routerLink="/support/file-ordering/bulk" mat-tab-link routerLinkActive="active">BULK</a>
-            </nav>
-            <router-outlet></router-outlet>
+    <div class="row">
+        <div class="col-md-5">
+            <h3 class="m-0 pt-16"> File ordering & uploads </h3>
+        </div>
+
+        <div class="col-md-6">
+            <div class="subnav-fixed">
+                <nav class="text-right" mat-align-tabs="end" mat-tab-nav-bar>
+                    <a routerLink="/support/file-ordering/historical" mat-tab-link routerLinkActive="active">HISTORICAL</a>
+                    <a routerLink="/support/file-ordering/bulk" mat-tab-link routerLinkActive="active">BULK</a>
+                </nav>
+            </div>
         </div>
     </div>
 </div>
+
+<router-outlet></router-outlet>

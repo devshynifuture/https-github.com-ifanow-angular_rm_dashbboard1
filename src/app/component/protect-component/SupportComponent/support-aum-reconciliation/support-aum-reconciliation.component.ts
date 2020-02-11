@@ -1,6 +1,7 @@
 import { ELEMENT_DATA1 } from './../../customers/component/customer/plan/cashflows-plan/cashflow-upper-slider/cashflow-add/cashflow-add-surplus/cashflow-add-surplus.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-support-aum-reconciliation',
@@ -8,8 +9,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./support-aum-reconciliation.component.scss']
 })
 export class SupportAumReconciliationComponent implements OnInit {
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  isLoading = false;
+  constructor(private router: Router) {
 
-  constructor(private router: Router) { }
+  }
 
   displayedColumns = ['rt', 'advisorName', 'arnria', 'doneOn', 'doneBy', 'total', 'before', 'after', 'aumBalance', 'transaction', 'report']
   dataSource = ELEMENT_DATA;

@@ -349,6 +349,7 @@ export const appConfig = {
   GET_BSE_CREDENTIALS: 'bse/user/view',
   GET_BSE_SUB_BROKER_CREDENTIALS: 'bse/user/sub-broker/view',
   GET_NEW_SCHEMES : 'mutual-fund/search',
+  GET_EXISTING_SCHEMES:'mutual-fund/existing/search',
   GET_SCHEME_DETAILS:'mutual-fund/product-limit/get',
   GET_FAMILY_MEMBER:'family/name/get',
   GET_DEFAULT_DETAILS:'bse/user/family-member/transaction-setting/default',

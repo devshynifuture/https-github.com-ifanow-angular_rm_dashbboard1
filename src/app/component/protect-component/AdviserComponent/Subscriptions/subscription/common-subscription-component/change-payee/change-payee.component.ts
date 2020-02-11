@@ -7,6 +7,7 @@ import { HAMMER_GESTURE_CONFIG } from "@angular/platform-browser";
 import { GestureConfig } from "@angular/material/core";
 import { UtilService } from 'src/app/services/util.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { PayeeSettingsComponent } from '../payee-settings/payee-settings.component';
 
 @Component({
   selector: 'app-change-payee',
@@ -41,6 +42,8 @@ export class ChangePayeeComponent implements OnInit {
     } else {
       this.getPayeeData(data);
     }
+    console.log('input payeeData:1');
+
   }
 
   @Input()
@@ -60,9 +63,9 @@ export class ChangePayeeComponent implements OnInit {
       return;
     } else {
       this._payeeData = payeeData;
-      console.log('input payeeData : ', payeeData);
       this.getPayeeData(payeeData)
     }
+    console.log('input payeeData:2', payeeData);
   }
   restrictAfter100(event) {
     if (parseInt(event.target.value) > 100) {
@@ -111,7 +114,7 @@ export class ChangePayeeComponent implements OnInit {
     };
     this.subService.getPayeerProfile(this.dataObj).subscribe(
       responseData => {
-        console.log('getPayeeProfile responseData: ', responseData);
+        console.log('getPayeeProfile responseData:', responseData);
         if (responseData) {
         } else {
           this.noDataMessage = 'No payee profile found.';
@@ -130,13 +133,13 @@ export class ChangePayeeComponent implements OnInit {
 
   }
 
-  openAddPayee() {
-    const obj = {
-      data: 'Add',
-      flag: false
-    };
-    this.payeeFlag.emit(obj);
-  }
+  // openAddPayee() {
+  //   const obj = {
+  //     data: 'Add',
+  //     flag: false
+  //   };
+  //   this.payeeFlag.emit(obj);
+  // }
 
   onInputChange(event: MatSliderChange, singlePlan) {
     console.log('This is emitted as the thumb slides');
@@ -197,6 +200,30 @@ export class ChangePayeeComponent implements OnInit {
       singlePlan.selected = 1;
     }
     this.calculateMaxValue(this.payeeDataRes);
+  }
+
+  openPayeeSettings(profileData, value, state) {
+    // (profileData == "Add") ? profileData = { flag: profileData } : ''
+    // profileData['clientData'] = this.upperData
+    // const fragmentData = {
+    //   flag: value,
+    //   data: profileData,
+    //   id: 1,
+    //   state: 'open',
+    //   componentName: PayeeSettingsComponent
+    // };
+    // const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+    //   sideBarData => {
+    //     console.log('this is sidebardata in subs subs : ', sideBarData);
+    //     // this.getSettingProfileData();
+    //     if (UtilService.isDialogClose(sideBarData)) {
+    //       console.log('this is sidebardata in subs subs 2: ');
+    //       rightSideDataSub.unsubscribe();
+    //     }
+    //   }
+    // );
+
+    this.payeeFlag.emit(true);
   }
 
   calculateMaxValue(data) {
