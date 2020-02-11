@@ -57,7 +57,7 @@
                             {{(transactionSummary==undefined)?'':transactionSummary.schemeName}}
                         </h5>
                     </div>
-                    <h5 class="m-0"> <span class="f-500">Folio:</span></h5>
+                    <h5 class="m-0"> <span class="f-500">Folio:</span>{{(transactionSummary==undefined)?'':transactionSummary.folioNumber}}</h5>
                     <h5 class="m-0"> <span class="f-500">Amount:</span> ₹{{(transactionSummary==undefined)?'':transactionSummary.enteredAmount}}/Lumpsum
                     </h5>
                 </div>

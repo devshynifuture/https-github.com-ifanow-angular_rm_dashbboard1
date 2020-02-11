@@ -32,9 +32,18 @@ export class OnlineTransactionService {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_DEFAULT_DETAILS, data,1);
   }
   purchase(data){
-    return this.http.postEncoded(apiConfig.MAIN_URL + appConfig.PURCHASE, data)
+    return this.http.postEncoded(apiConfig.TRANSACT + appConfig.PURCHASE, data)
   }
   getExistingSchemes(data){
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_EXISTING_SCHEMES, data, 1)
+  }
+  getFoliosAmcWise(data){
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_AMCWISE_FOLIO, data, 1)
+  }
+  getSchemeWiseFolios(data){
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_SCHEMEWISE_FOLIO, data, 1)
+  }
+  getMandateDetails(data){
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_MANDATE_DETAILS, data, 1)
   }
 }

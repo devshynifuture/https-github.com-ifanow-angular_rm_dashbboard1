@@ -49,6 +49,10 @@ export class RedemptionTransactionComponent implements OnInit {
   ngOnInit() {
     this.getdataForm(this.inputData)
   }
+  getDefaultDetails(data) {
+    console.log('get defaul here yupeeee', data)
+    this.getDataSummary = data
+  }
   onAddTransaction(value,data){
     this.confirmTrasaction = true
     const fragmentData = {
@@ -108,7 +112,8 @@ export class RedemptionTransactionComponent implements OnInit {
       bseOrderType: 'ORDER',
       aggregatorType: 2,
       advisorId: 414,
-      tpUserCredentialId: 212,
+      showOnlyNonZero:true,
+      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
       familyMemberId:this.getDataSummary.defaultClient.familyMemberId,
       clientId:this.getDataSummary.defaultClient.clientId,
     }
