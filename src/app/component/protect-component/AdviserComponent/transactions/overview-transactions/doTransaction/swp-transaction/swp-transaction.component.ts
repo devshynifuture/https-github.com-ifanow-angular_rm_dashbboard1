@@ -27,7 +27,7 @@ export class SwpTransactionComponent implements OnInit {
   schemeList: any;
   showUnits = false;
   navOfSelectedScheme: any;
-  transactionSummary: { schemeName: any; };
+  transactionSummary: {};
   getDataSummary: any;
 
   constructor(private subInjectService: SubscriptionInject,private onlineTransact: OnlineTransactionService,
@@ -50,6 +50,7 @@ export class SwpTransactionComponent implements OnInit {
   
   ngOnInit() {
     this.getdataForm(this.inputData)
+    this.transactionSummary = { selectedFamilyMember: this.inputData.selectedFamilyMember }
   }
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)

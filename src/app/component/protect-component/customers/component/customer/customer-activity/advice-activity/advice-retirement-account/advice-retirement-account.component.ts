@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NpsSummaryPortfolioComponent } from '../../../accounts/assets/retirementAccounts/add-nps/nps-summary-portfolio/nps-summary-portfolio.component';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -9,6 +9,7 @@ import { AddSuperannuationComponent } from '../../../accounts/assets/retirementA
 import { AddEPSComponent } from '../../../accounts/assets/retirementAccounts/add-eps/add-eps.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ActiityService } from '../../actiity.service';
+import { MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-advice-retirement-account',
@@ -29,6 +30,8 @@ export class AdviceRetirementAccountComponent implements OnInit {
   superannuationDataSource: any;
   epsDataSource: any;
   console: any;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
 
   ngOnInit() {
@@ -101,11 +104,16 @@ export class AdviceRetirementAccountComponent implements OnInit {
   }
   getAllSchemeResponse(data) {
     this.isLoading = false;
-    this.epfDataSource = data.EPF;
-    this.epsDataSource = data.EPS;
-    this.superannuationDataSource = data.SUPERANNUATION;
-    this.gratuityDataSource = data.GRATUITY;
-    this.npsDataSource = data.NPS
+    this.epfDataSource = new MatTableDataSource(data.EPF);
+    this.epfDataSource.sort = this.sort;
+    this.epsDataSource = new MatTableDataSource(data.EPS);
+    this.epsDataSource.sort = this.sort;
+    this.superannuationDataSource = new MatTableDataSource(data.SUPERANNUATION);
+    this.superannuationDataSource.sort = this.sort;
+    this.gratuityDataSource = new MatTableDataSource(data.GRATUITY);
+    this.gratuityDataSource.sort = this.sort;
+    this.npsDataSource = new MatTableDataSource(data.NPS);
+    this.npsDataSource.sort = this.sort;
     console.log(data);
   }
   openAddEPF(data, value) {

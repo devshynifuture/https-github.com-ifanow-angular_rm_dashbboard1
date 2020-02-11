@@ -15,6 +15,8 @@ export class SipTransactionComponent implements OnInit {
   confirmTrasaction: boolean;
   dataSource: any;
   ownerData: any;
+  folioSelection: [2]
+  schemeSelection: [2]
   sipTransaction: any;
   inputData: any;
   selectedFamilyMember: any;
@@ -53,6 +55,7 @@ export class SipTransactionComponent implements OnInit {
 
   ngOnInit() {
     this.getdataForm(this.inputData)
+    this.transactionSummary = { selectedFamilyMember: this.inputData.selectedFamilyMember }
   }
   onAddTransaction(value, data) {
     this.confirmTrasaction = true
@@ -199,12 +202,12 @@ export class SipTransactionComponent implements OnInit {
       ownerName: [(!data) ? '' : data.ownerName, [Validators.required]],
       transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
-      schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
+      schemeSelection: ['2'],
       investor: [(!data) ? '' : data.investor, [Validators.required]],
+      folioSelection: ['2'],
       employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required]],
       investmentAccountSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
-      modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
-      folioSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      modeOfPaymentSelection: ['1'],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
     });
 

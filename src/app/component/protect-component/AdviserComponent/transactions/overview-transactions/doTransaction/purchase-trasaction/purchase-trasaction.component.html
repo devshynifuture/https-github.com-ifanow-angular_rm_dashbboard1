@@ -25,14 +25,6 @@
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
                         <h5 class="m-0 pb-10 text-black">Select from the following options</h5>
-                        <mat-radio-group aria-label="Select an option" formControlName="schemeSelection">
-                            <!-- <mat-radio-button [value]="option.value" (click)="selectSchemeOption(option)"
-                            [ngClass]="{'b-a-custom': purchaseTransaction.get('schemeSelection').value==1,'text-primary':purchaseTransaction.get('schemeSelection').value==1,'b-a':purchaseTransaction.get('schemeSelection').value==2}"
-                                class="b-a-custom radioBtn text-primary custom-radio"
-                                *ngFor="let option of schemeSelection">
-                                {{option.select}}
-                            </mat-radio-button> -->
-                        </mat-radio-group>
                         <mat-radio-group aria-label="Select an option" formControlName="schemeSelection"
                             (ngModelChange)="selectSchemeOption($event)">
                             <mat-radio-button value="1"

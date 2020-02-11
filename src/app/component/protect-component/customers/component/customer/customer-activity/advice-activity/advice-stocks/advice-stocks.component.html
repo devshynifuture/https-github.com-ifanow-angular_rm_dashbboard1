@@ -51,7 +51,7 @@
                     class="pr-8">Suggest new Stock</button>
         </div>
     </div>
-    <table mat-table [dataSource]="dataSource3" class="mt-8" id="table-low">
+    <table matSort mat-table [dataSource]="dataSource3" class="mt-8" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox></mat-checkbox>
@@ -61,28 +61,28 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Investor name </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
         </ng-container>
         <ng-container matColumnDef="desc">
-            <th mat-header-cell *matHeaderCellDef> Description </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
             <td mat-cell *matCellDef="let element"> {{element.desc}} </td>
         </ng-container>
 
         <ng-container matColumnDef="mvalue">
-            <th mat-header-cell *matHeaderCellDef> Market value </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Market value </th>
             <td mat-cell *matCellDef="let element"> {{element.mvalue}} </td>
         </ng-container>
         <ng-container matColumnDef="advice">
-            <th mat-header-cell *matHeaderCellDef> Advice </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
             <td mat-cell *matCellDef="let element"> {{element.advice}} </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
-            <th mat-header-cell *matHeaderCellDef> Advice status </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status </th>
             <td mat-cell *matCellDef="let element"> {{element.astatus}} </td>
         </ng-container>
         <ng-container matColumnDef="adate">
-            <th mat-header-cell *matHeaderCellDef> Applicable date </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Applicable date </th>
             <td mat-cell *matCellDef="let element"> {{element.adate}} </td>
         </ng-container>
         <ng-container matColumnDef="icon">

@@ -44,7 +44,7 @@
                         <mat-error *ngIf="PORDForm.get('monthlyContribution').errors?.required" class="f-12">
                             This field is required
                         </mat-error>
-                        <mat-error *ngIf="(PORDForm.get('monthlyContribution').errors?.min)" class="f-12">
+                        <mat-error *ngIf="PORDForm.get('monthlyContribution').errors?.min" class="f-12">
                             Should be greater than or equal 10
                         </mat-error>
                         <mat-hint align="end" class="f-12">{{amountInvest.value.length}}/10</mat-hint>

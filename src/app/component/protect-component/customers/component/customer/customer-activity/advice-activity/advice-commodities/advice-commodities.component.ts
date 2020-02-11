@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { GoldComponent } from '../../../accounts/assets/commodities/gold/gold.component';
 import { OthersComponent } from '../../../accounts/assets/commodities/others/others.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ActiityService } from '../../actiity.service';
+import { MatTableDataSource, MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-advice-commodities',
@@ -13,13 +14,16 @@ import { ActiityService } from '../../actiity.service';
 })
 export class AdviceCommoditiesComponent implements OnInit {
   displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'mvalue', 'advice', 'astatus', 'adate', 'icon'];
-  dataSource3 = ELEMENT_DATA1;
+  dataSource3 = new MatTableDataSource(ELEMENT_DATA1);
   advisorId: any;
   clientId: any;
   isLoading: boolean;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
 
   ngOnInit() {
+    this.dataSource3.sort = this.sort;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getAdviceByAsset();

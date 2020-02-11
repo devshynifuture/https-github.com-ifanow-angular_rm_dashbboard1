@@ -1,0 +1,34 @@
+::ng-deep {
+    .add-transactions {
+        input.mat-input-element {
+            padding: 11px 0px !important;
+        }
+    }
+}
+
+ ::ng-deep .checked {
+    position: absolute;
+    right: 8px;
+    top: -5px;
+}
+
+ ::ng-deep .mat-tab-label {
+    padding: 0 10px !important;
+}
+
+ ::ng-deep .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
+    display: none !important;
+}
+
+ ::ng-deep .radioBtn .mat-radio-label {
+    min-width: 152px;
+    height: 45px;
+    display: flex !important;
+    justify-content: left;
+    align-items: center;
+    padding-left: 10px !important;
+}
+
+::ng-deep .bigRadio .mat-radio-button {
+    min-width: 240px;
+}

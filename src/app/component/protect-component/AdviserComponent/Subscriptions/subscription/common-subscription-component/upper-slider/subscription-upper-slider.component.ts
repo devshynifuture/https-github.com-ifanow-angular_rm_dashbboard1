@@ -1,13 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 // import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {Router} from '@angular/router';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {DialogContainerComponent} from 'src/app/common/dialog-container/dialog-container.component';
-import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from 'src/app/animation/animation';
-import {DynamicComponentService} from 'src/app/services/dynamic-component.service';
-import {Location} from '@angular/common';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { DialogContainerComponent } from 'src/app/common/dialog-container/dialog-container.component';
+import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } from 'src/app/animation/animation';
+import { DynamicComponentService } from 'src/app/services/dynamic-component.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-subscription-upper-slider',
@@ -27,7 +27,7 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
   sessionData: any;
   upperState: string = "close";
   referenceData: any;
-  isRefreshData:boolean = false;
+  isRefreshData: boolean = false;
   constructor(private router: Router, private authService: AuthService,
     protected eventService: EventService, protected subinject: SubscriptionInject, protected dynamicComponentService: DynamicComponentService, private location: Location
     // public dialogRef: MatDialogRef<UpperSliderComponent>,
@@ -97,9 +97,11 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
   ngOnInit() {
     console.log(history.state, "hi i was called again");
     // if (this.referenceData == undefined) {
-      this.referenceData = AuthService.getSubscriptionUpperSliderData();
-      this.fragmentDataSubsUpper = this.referenceData
-      this.upperDataSubsUpper = this.referenceData.data;
+    this.referenceData = AuthService.getSubscriptionUpperSliderData();
+    this.fragmentDataSubsUpper = this.referenceData
+    this.upperDataSubsUpper = this.referenceData.data;
+
+    console.log("upper data", this.referenceData);
     // }
     // this.upperState = "open";
   }
@@ -108,8 +110,8 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
   }
   dialogClose() {
     // this.dialogRef.close();
-    console.log(this.fragmentDataSubsUpper, this.referenceData,"13 this.fragmentDataSubsUpper");
-    
+    console.log(this.fragmentDataSubsUpper, this.referenceData, "13 this.fragmentDataSubsUpper");
+
     switch (true) {
       case (this.referenceData.flag == "plan"):
         this.router.navigate(['/admin/subscription/settings/plans'])
@@ -130,17 +132,17 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
         break;
     }
     sessionStorage.removeItem('subUpperData')
-    if(this.isRefreshData){
-      this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true});
+    if (this.isRefreshData) {
+      this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
     }
-    else{
-      this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: false});
+    else {
+      this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: false });
     }
   }
 
-  getData(event){
+  getData(event) {
     console.log(event, "data overview");
-    if(event != undefined){
+    if (event != undefined) {
       this.isRefreshData = true;
     }
   }

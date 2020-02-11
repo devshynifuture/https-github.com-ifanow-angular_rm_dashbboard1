@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { AddEPSComponent } from '../../../accounts/assets/retirementAccounts/add-eps/add-eps.component';
@@ -7,6 +7,7 @@ import { CashInHandComponent } from '../../../accounts/assets/cash&bank/cash-in-
 import { BankAccountsComponent } from '../../../accounts/assets/cash&bank/bank-accounts/bank-accounts.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ActiityService } from '../../actiity.service';
+import { MatTableDataSource, MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-advice-cash-and-hand',
@@ -15,13 +16,16 @@ import { ActiityService } from '../../actiity.service';
 })
 export class AdviceCashAndHandComponent implements OnInit {
   displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'balance', 'advice', 'astatus', 'adate', 'icon'];
-  dataSource3 = ELEMENT_DATA1;
+  dataSource3 = new MatTableDataSource(ELEMENT_DATA1);
   advisorId: any;
   clientId: any;
   isLoading: any;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
 
   ngOnInit() {
+    this.dataSource3.sort = this.sort;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getAdviceByAsset();

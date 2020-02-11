@@ -17,3 +17,32 @@
 ::ng-deep .miscellaneousBox .mat-form-field {
     height: auto !important;
 }
+
+::ng-deep .mat-tab-group.mat-primary .mat-ink-bar {
+    background-color: transparent !important;
+}
+
+.border_h2 {
+    border: 1px solid #e0e0e0;
+    border-bottom: transparent;
+}
+
+.borderleft_none {
+    border-left: transparent !important;
+}
+
+.widthYear {
+    width: 41%;
+}
+
+.widthQuarterly {
+    width: 40%;
+}
+
+.widthSuggesstion {
+    width: 50%;
+}
+
+.zIndex {
+    z-index: 2;
+}

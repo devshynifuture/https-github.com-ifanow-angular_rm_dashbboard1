@@ -1443,3 +1443,53 @@ textarea {
   position: fixed;
   margin-right: 10px;
 }
+
+#ui-backoffice-tabs {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  .mat-tab-body-content {
+      overflow: hidden !important;
+      margin-top: 25px;
+  }
+  .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
+      display: none !important;
+  }
+  .mat-tab-header {
+      border-bottom: 0px !important;
+  }
+  .hide-now {
+      .mat-tab-label-content {
+          visibility: hidden !important;
+          cursor: default !important;
+      }
+  }
+  .mat-ink-bar {
+      display: none !important;
+  }
+  .mat-tab-label {
+      // border-right:1px solid #ddd;
+      // border-bottom-color: transparent !important;
+      height: 40px !important;
+      min-width: 75px;
+      border-bottom: 1px solid #DADCE0;
+  }
+  // .mat-tab-label-container{
+  // border-color: #DADCE0 #DADCE0 #fff;
+  // }
+  .mat-tab-body-wrapper {
+      // border: 1px solid #e9eaec;
+      border-top: 0px !important;
+  }
+  .mat-tab-label-active {
+      border: 1px solid #dadce0;
+      border-bottom: 0px !important;
+  }
+}
+
+.back-office-table {
+  #table-low {
+      tr.mat-header-row {
+          height: 40px !important;
+      }
+  }
+}
