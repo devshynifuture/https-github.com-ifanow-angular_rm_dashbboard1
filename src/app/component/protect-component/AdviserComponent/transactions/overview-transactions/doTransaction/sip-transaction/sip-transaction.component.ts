@@ -18,7 +18,7 @@ export class SipTransactionComponent implements OnInit {
   sipTransaction: any;
   inputData: any;
   selectedFamilyMember: any;
-  isViewInitCalled=false;
+  isViewInitCalled = false;
   transactionType: any;
   schemeDetails: any;
   transactionSummary: {};
@@ -29,29 +29,32 @@ export class SipTransactionComponent implements OnInit {
   maiSchemeList: any;
   reInvestmentOpt = [];
   getDataSummary: any;
+  folioList: any;
+  folioDetails: any;
+  ExistingOrNew: any;
 
-  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService, 
+  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private fb: FormBuilder) { }
-    @Input()
-    set data(data) {
-      this.inputData = data;
-      this.transactionType =  data.transactionType
-      this.selectedFamilyMember = data.selectedFamilyMember
-      console.log('This is Input data of FixedDepositComponent ', data);
-  
-      if (this.isViewInitCalled) {
-        this.getdataForm('');
-      }
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    this.transactionType = data.transactionType
+    this.selectedFamilyMember = data.selectedFamilyMember
+    console.log('This is Input data of FixedDepositComponent ', data);
+
+    if (this.isViewInitCalled) {
+      this.getdataForm('');
     }
-  
-    get data() {
-      return this.inputData;
-    }
-  
+  }
+
+  get data() {
+    return this.inputData;
+  }
+
   ngOnInit() {
     this.getdataForm(this.inputData)
   }
-  onAddTransaction(value,data){
+  onAddTransaction(value, data) {
     this.confirmTrasaction = true
     const fragmentData = {
       flag: 'addNsc',
@@ -71,22 +74,29 @@ export class SipTransactionComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-       
+
       }
     );
   }
   enteredAmount(value) {
     this.transactionSummary = { enteredAmount: value }
   }
+  selectExistingOrNew(value) {
+    this.ExistingOrNew = value
+  }
+  selectSchemeOption(value) {
+    console.log('value selction scheme', value)
+    this.selectScheme = value
+  }
   getSchemeList(value) {
     let obj = {
       searchQuery: value,
-      bseOrderType: 'ORDER',
-      aggregatorType: 2,
+      bseOrderType: 'SIP',
+      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       advisorId: 414,
-      tpUserCredentialId: 212,
-      familyMemberId:this.getDataSummary.defaultClient.familyMemberId,
-      clientId:this.getDataSummary.defaultClient.clientId,
+      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+      familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+      clientId: this.getDataSummary.defaultClient.clientId,
     }
     if (this.selectScheme == 2 && value.length > 2) {
       this.onlineTransact.getNewSchemes(obj).subscribe(
@@ -102,7 +112,7 @@ export class SipTransactionComponent implements OnInit {
     console.log('new schemes', data)
     this.schemeList = data
   }
-  getExistingSchemesRes(data){
+  getExistingSchemesRes(data) {
     this.schemeList = data
   }
   getDefaultDetails(data) {
@@ -134,6 +144,39 @@ export class SipTransactionComponent implements OnInit {
     } if (data.length == 1) {
       this.reInvestmentOpt = []
     }
+    this.getAmcWiseFolio()
+    this.getMandateDetails()
+  }
+  getMandateDetails() {
+    let obj1 = {
+      advisorId: this.getDataSummary.defaultClient.advisorId,
+      clientCode:this.getDataSummary.defaultClient.clientCode,
+      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+    }
+    this.onlineTransact.getMandateDetails(obj1).subscribe(
+      data => this.getMandateDetailsRes(data)
+    );
+  }
+  getMandateDetailsRes(data) {
+    console.log('mandate details :',data)
+  }
+  getAmcWiseFolio() {
+    let obj1 = {
+      amcId: this.scheme.amcId,
+      advisorId: this.getDataSummary.defaultClient.advisorId,
+      familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+      clientId: this.getDataSummary.defaultClient.clientId,
+    }
+    this.onlineTransact.getFoliosAmcWise(obj1).subscribe(
+      data => this.getFoliosAmcWiseRes(data)
+    );
+  }
+  getFoliosAmcWiseRes(data) {
+    console.log('getFoliosAmcWiseRes', data)
+    this.folioList = data
+  }
+  selectedFolio(folio) {
+    this.folioDetails = folio
   }
   reinvest(scheme) {
     this.schemeDetails = scheme

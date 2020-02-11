@@ -29,11 +29,12 @@ export class PurchaseTrasactionComponent implements OnInit {
   schemeDetails: any;
   reInvestmentOpt = [];
   transactionSummary: {};
-  platformType = 2
   ExistingOrNew: any;
   maiSchemeList: any;
   getDataSummary: any;
   scheme: any;
+  folioList: any;
+  folioDetails: any;
   constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService, private subInjectService: SubscriptionInject,
     private fb: FormBuilder) { }
   @Input()
@@ -65,11 +66,11 @@ export class PurchaseTrasactionComponent implements OnInit {
     let obj = {
       searchQuery: value,
       bseOrderType: 'ORDER',
-      aggregatorType: 2,
+      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       advisorId: 414,
-      tpUserCredentialId: 212,
-      familyMemberId:this.getDataSummary.defaultClient.familyMemberId,
-      clientId:this.getDataSummary.defaultClient.clientId,
+      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+      familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+      clientId: this.getDataSummary.defaultClient.clientId,
     }
     if (this.selectScheme == 2 && value.length > 2) {
       this.onlineTransact.getNewSchemes(obj).subscribe(
@@ -85,7 +86,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     console.log('new schemes', data)
     this.schemeList = data
   }
-  getExistingSchemesRes(data){
+  getExistingSchemesRes(data) {
     this.schemeList = data
   }
   reinvest(scheme) {
@@ -97,9 +98,6 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
   selectExistingOrNew(value) {
     this.ExistingOrNew = value
-    // if(this.ExistingOrNew == 1){
-    //   this.getExistingSchemes()
-    // }
   }
   selectedScheme(scheme) {
     this.scheme = scheme
@@ -119,6 +117,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     console.log('getSchemeDetailsRes == ', data)
     this.maiSchemeList = data
     this.schemeDetails = data[0]
+    this.purchaseTransaction.controls["employeeContry"].setValidators([Validators.min(this.schemeDetails.minimumPurchaseAmount)])
     this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
     if (data.length > 1) {
       this.reInvestmentOpt = data
@@ -126,6 +125,26 @@ export class PurchaseTrasactionComponent implements OnInit {
     } if (data.length == 1) {
       this.reInvestmentOpt = []
     }
+    this.getAmcWiseFolio()
+  }
+  getAmcWiseFolio() {
+    let obj1 = {
+      amcId: this.scheme.amcId,
+      advisorId: this.getDataSummary.defaultClient.advisorId,
+      familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+      clientId: this.getDataSummary.defaultClient.clientId,
+    }
+    this.onlineTransact.getFoliosAmcWise(obj1).subscribe(
+      data => this.getFoliosAmcWiseRes(data)
+    );
+  }
+  getFoliosAmcWiseRes(data) {
+    console.log('getFoliosAmcWiseRes', data)
+    this.folioList = data
+  }
+  selectedFolio(folio) {
+    this.folioDetails = folio
+    this.transactionSummary = { folioNumber: folio.folioNumber }
   }
   enteredAmount(value) {
     this.transactionSummary = { enteredAmount: value }
@@ -148,7 +167,6 @@ export class PurchaseTrasactionComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getNscSchemedata();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
           }
           rightSideDataSub.unsubscribe();
@@ -173,7 +191,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: ['2'],
       investor: [(!data) ? '' : data.investor, [Validators.required]],
-      employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required]],
+      employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required,]],
       investmentAccountSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       modeOfPaymentSelection: ['1'],
       folioSelection: ['2'],
@@ -187,40 +205,46 @@ export class PurchaseTrasactionComponent implements OnInit {
     return this.purchaseTransaction.controls;
   }
   purchase() {
-    let obj = {
-      productDbId: this.schemeDetails.id,
-      mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
-      productCode: this.schemeDetails.schemeCode,
-      isin: this.schemeDetails.isin,
-      folioNo: (this.schemeDetails.folioNo == undefined) ? null : this.schemeDetails.folioNo,
-      // schemePlan : ,
-      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
-      tpSubBrokerCredentialId: this.getDataSummary.defaultCredential.subBrokerCredentialId,
-      familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
-      adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
-      clientId: this.getDataSummary.defaultClient.clientId,
-      orderType: 'ORDER',
-      buySell: 'PURCHASE',
-      transCode: 'NEW',
-      buySellType: (this.purchaseTransaction.controls.folioSelection.value == '1') ? "ADDITIONAL" : "FRESH",
-      dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
-      amountType: 'Amount',
-      clientCode: this.getDataSummary.defaultClient.clientCode,
-      orderVal: this.purchaseTransaction.controls.employeeContry.value,
-      // schemeCd:,
-      // userId: ,
-      euin: this.getDataSummary.defaultCredential.euin,
-      bseDPTransType: 'PHYSICAL',
-      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-      // teamMemberSessionId : ,
+    if (this.purchaseTransaction.get('investor').invalid) {
+      this.purchaseTransaction.get('investor').markAsTouched();
+      return;
+    } else if (this.purchaseTransaction.get('folioSelection').invalid) {
+      this.purchaseTransaction.get('folioSelection').markAsTouched();
+      return;
+    } else {
+      let obj = {
+        productDbId: this.schemeDetails.id,
+        mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
+        productCode: this.schemeDetails.schemeCode,
+        isin: this.schemeDetails.isin,
+        folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+        tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+        tpSubBrokerCredentialId: this.getDataSummary.defaultCredential.tpSubBrokerCredentialId,
+        familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+        adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
+        clientId: this.getDataSummary.defaultClient.clientId,
+        orderType: 'ORDER',
+        buySell: 'PURCHASE',
+        transCode: 'NEW',
+        buySellType: (this.purchaseTransaction.controls.folioSelection.value == '1') ? "ADDITIONAL" : "FRESH",
+        dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
+        amountType: 'Amount',
+        clientCode: this.getDataSummary.defaultClient.clientCode,
+        orderVal: this.purchaseTransaction.controls.employeeContry.value,
+        euin: this.getDataSummary.defaultCredential.euin,
+        bseDPTransType: 'PHYSICAL',
+        aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+      }
+      console.log('new purchase obj', obj)
+      this.onlineTransact.purchase(obj).subscribe(
+        data => this.purchaseRes(data)
+      );
     }
-    console.log('new purchase obj', obj)
-    this.onlineTransact.purchase(obj).subscribe(
-      data => this.purchaseRes(data)
-    );
   }
   purchaseRes(data) {
     console.log('purchase transaction ==', data)
-    
+    if(data){
+      this.onAddTransaction('confirm',null)
+    }
   }
 }

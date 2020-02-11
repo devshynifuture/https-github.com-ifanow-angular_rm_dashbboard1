@@ -5,8 +5,9 @@
     <div class="wrapper-20 pb-0 pr-0">
         <div class="row">
 
-            <div *ngIf="planSettingData.length > 0" (click)="openFragment('','plan')" class="col-md-4 pr-20 pb-20 pl-0 c-p">
-                <mat-card class="example-card b-a height-470 bg-grey lter bd-1">
+            <div *ngIf="planSettingData.length > 0" (click)="openFragment('','plan')"
+                class="col-md-4 pr-20 pb-20 pl-0 c-p">
+                <mat-card class="example-card b-a height-460 bg-grey lter bd-1">
                     <mat-card-content>
                         <p class="text-center">
                             <i class="material-icons icon-center">add </i>
@@ -15,9 +16,9 @@
                 </mat-card>
             </div>
 
-            <div class="col-md-4  pr-20 pb-20 pl-0 d-flex skeletonAnimation" appSkeletonLoading
+            <div class="col-md-4  pr-20 pb-20 pl-0 skeletonAnimation" appSkeletonLoading
                 [appSkeletonLoading]="isLoading" *ngFor="let singlePlan of planSettingData">
-                <mat-card class="example-card b-a  bg-grey lter p-0 flex-fill" >
+                <mat-card class="example-card b-a  bg-grey lter p-0">
                     <mat-card-header class="overflow-hidden">
                         <div class="wrapper-20 pb-10 height120 width100per">
 
@@ -35,14 +36,17 @@
                     </mat-card-header>
                     <mat-card-content class="bg-white mb-0">
                         <div class="row wrapper-20 overflow-hidden">
-                            <div class="col-md-12  p-0 " >
+                            <div class="col-md-12  p-0 ">
                                 <p class="mb-0 text-primitive f-12">DESCRIPTION</p>
-                                <div class="mb-0 pt-8 plan-description relClass"  >
+                                <div class="mb-0 pt-8 plan-description relClass">
                                     <div class="bar" [ngClass]="{'height23': isLoading}">
-                                        <div class="l-h" [ngClass]="singlePlan.read? '':'height80'" >
+                                        <div class="l-h" [ngClass]="singlePlan.read? '':'height80'">
                                             {{singlePlan.description}}
                                         </div>
-                                        <div (click)="singlePlan.read = singlePlan.read? false : true" class="read-more c-p" *ngIf="singlePlan.description && singlePlan.description.length > 200">{{singlePlan.read?'read less':'read more'}}</div>
+                                        <div (click)="singlePlan.read = singlePlan.read? false : true"
+                                            class="read-more c-p"
+                                            *ngIf="singlePlan.description && singlePlan.description.length > 200">
+                                            {{singlePlan.read?'read less':'read more'}}</div>
                                     </div>
                                 </div>
                             </div>
@@ -86,7 +90,8 @@
                     can have <br> multiple plans for different types of clients. Each plan will have sub offerings, also
                     <br> known as Services (explained in next slide). </p>
 
-                <button (click)="openFragment('','plan')" class="btn-primary d-flex align-items-center">
+                <button mat-stroked-button (click)="openFragment('','plan')"
+                    class="btn-primary d-flex align-items-center">
                     ADD PLAN </button>
 
             </div>
