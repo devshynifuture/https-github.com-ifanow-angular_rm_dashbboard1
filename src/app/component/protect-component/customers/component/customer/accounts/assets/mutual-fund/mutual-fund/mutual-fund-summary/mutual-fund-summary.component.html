@@ -144,7 +144,8 @@
                         </th>
                         <td class="br text-right" mat-cell *matCellDef="let element"> {{element.sipAmount}} </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-                                {{f354252}}</td>
+                                <!-- {{f354252}} commented for prod-->
+                            </td>
                     </ng-container>
                     <ng-container matColumnDef="groupHeader">
                         <td *matCellDef="let group" [attr.colspan]="displayedColumns.length" class="text-center">
@@ -155,7 +156,7 @@
                     <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
                     <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
                     <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
-                    <tr *matFooterRowDef="footerColumns;sticky: true" mat-footer-row></tr>
+                    <!-- <tr *matFooterRowDef="footerColumns;sticky: true" mat-footer-row></tr> commented for prod -->
                 </table>
             </div>
         </div>

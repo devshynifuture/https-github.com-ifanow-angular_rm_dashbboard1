@@ -28,7 +28,7 @@ export class MutualFundSummaryComponent implements OnInit {
     this.getSchemeWise();
     this.mfSchemes();
   }
-  subCatArray(data) {
+  subCatArray() {
     let catObj = {};
     const categoryArray = [];
     this.mutualFundList.forEach(ele => {
