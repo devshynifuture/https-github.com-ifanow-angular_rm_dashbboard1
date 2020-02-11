@@ -22,7 +22,14 @@ export class AdviceRetirementAccountComponent implements OnInit {
   dataSource3 = ELEMENT_DATA1;
   advisorId: any;
   clientId: any;
-  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject,private activityService:ActiityService) { }
+  isLoading: any;
+  epfDataSource: any;
+  npsDataSource: any;
+  gratuityDataSource: any;
+  superannuationDataSource: any;
+  epsDataSource: any;
+  console: any;
+  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -36,6 +43,12 @@ export class AdviceRetirementAccountComponent implements OnInit {
       clientId: this.clientId,
       assetCategory: 9
     }
+    this.isLoading = true;
+    this.epfDataSource = [{}, {}, {}];
+    this.npsDataSource = [{}, {}, {}];
+    this.gratuityDataSource = [{}, {}, {}];
+    this.superannuationDataSource = [{}, {}, {}];
+    this.epsDataSource = [{}, {}, {}];
     // let obj1 = {
     //   advisorId: this.advisorId,
     //   clientId: this.clientId,
@@ -86,7 +99,13 @@ export class AdviceRetirementAccountComponent implements OnInit {
     //   }
     // );
   }
-  getAllSchemeResponse(data){
+  getAllSchemeResponse(data) {
+    this.isLoading = false;
+    this.epfDataSource = data.EPF;
+    this.epsDataSource = data.EPS;
+    this.superannuationDataSource = data.SUPERANNUATION;
+    this.gratuityDataSource = data.GRATUITY;
+    this.npsDataSource = data.NPS
     console.log(data);
   }
   openAddEPF(data, value) {
@@ -102,7 +121,7 @@ export class AdviceRetirementAccountComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-             this.getAdviceByAsset();
+            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -124,7 +143,7 @@ export class AdviceRetirementAccountComponent implements OnInit {
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-             this.getAdviceByAsset();
+            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -147,7 +166,7 @@ export class AdviceRetirementAccountComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-             this.getAdviceByAsset();
+            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -170,7 +189,7 @@ export class AdviceRetirementAccountComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-             this.getAdviceByAsset();
+            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -214,7 +233,7 @@ export class AdviceRetirementAccountComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-             this.getAdviceByAsset();
+            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }

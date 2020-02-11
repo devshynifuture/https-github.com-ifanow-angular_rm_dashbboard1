@@ -25,16 +25,17 @@
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
                         <h5 class="m-0 pb-10 text-black">Select from the following options</h5>
-                        <mat-radio-group aria-label="Select an option" formControlName="schemeSelection">
+                        <mat-radio-group aria-label="Select an option" formControlName="schemeSelection"
+                            (ngModelChange)="selectSchemeOption($event)">
                             <mat-radio-button value="1"
-                                [ngClass]=" sipTransaction.get('schemeSelection').value == 1 ? 'text-primary bu-primary': 'b-a text-primitive'">
+                                [ngClass]="{'b-a-custom': sipTransaction.get('schemeSelection').value==1,'text-primary':sipTransaction.get('schemeSelection').value==1,'b-a':sipTransaction.get('schemeSelection').value==2}"
+                                class="b-a-custom radioBtn text-primary custom-radio">
                                 Invest in existing scheme
                             </mat-radio-button>
-                            <!-- value == 2 -->
-                            <mat-radio-button value="2" checked="true"
-                                [ngClass]="sipTransaction.get('schemeSelection').value == 2 ? 'text-primary bu-primary': sipTransaction.get('schemeSelection').value == 1 ?'b-a text-primitive':'text-primary bu-primary'">
-                                Select a new scheme
-                            </mat-radio-button>
+                            <mat-radio-button value="2"
+                                [ngClass]="{'b-a-custom': sipTransaction.get('schemeSelection').value==2,'text-primary':sipTransaction.get('schemeSelection').value==2,'b-a':sipTransaction.get('schemeSelection').value==1}"
+                                class="b-a radioBtn ">
+                                Select a new scheme</mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
@@ -80,7 +81,8 @@
                         <h5 class="m-0 pt-28 text-black pb-12">Select folio</h5>
                     </div>
                     <div class="col-md-12 p-0">
-                        <mat-radio-group aria-label="Select an option" formControlName="folioSelection">
+                        <mat-radio-group aria-label="Select an option" formControlName="folioSelection"
+                        (ngModelChange)="selectExistingOrNew($event)">
                             <mat-radio-button value="1"
                                 [ngClass]=" sipTransaction.get('folioSelection').value == 1 ? 'text-primary bu-primary': 'b-a text-primitive'">
                                 Existing
@@ -91,23 +93,24 @@
                         </mat-radio-group>
                     </div>
                 </div>
+                <div class="row" *ngIf="ExistingOrNew == 1">
+                    <div class="col-md-6 p-0 text-left">
+                        <h5 class="m-0 pt-28 text-black pb-12">Select scheme folio</h5>
+                    </div>
+                    <div class="col-md-7 p-0">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <mat-select class="form-control" formControlName="investmentAccountSelection">
+                                    <mat-option value="option" (onSelectionChange)="selectedFolio(folio)"
+                                        *ngFor="let folio of folioList">{{folio.folioNumber}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
                         <h5 class="m-0 pt-28 text-black pb-12">Enter amount</h5>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 p-0 text-left">
-                            <h5 class="m-0 pt-28 text-black pb-12">Select SIP Frequency</h5>
-                        </div>
-                        <div class="col-md-5 p-0">
-                            <div class="form-group mb-0">
-                                <mat-form-field>
-                                    <mat-select class="form-control" formControlName="investmentAccountSelection">
-                                        <mat-option value="option">Option</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                        </div>
                     </div>
                     <div class="col-md-5 p-0">
                         <div class="form-group mb-0">
@@ -117,6 +120,20 @@
                                     (change)="enteredAmount($event.target.value)">
                             </mat-form-field>
                             <p class="m-0 f-12 text-custom">Min amount: ₹500</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 p-0 text-left">
+                        <h5 class="m-0 pt-28 text-black pb-12">Select SIP Frequency</h5>
+                    </div>
+                    <div class="col-md-5 p-0">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <mat-select class="form-control" formControlName="investmentAccountSelection">
+                                    <mat-option value="option">Option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
                         </div>
                     </div>
                 </div>
@@ -146,10 +163,6 @@
                         </mat-form-field>
                     </div>
                 </div>
-
-
-
-
             </div>
 
             <div class="col-md-4 bg-grey lter p-0">

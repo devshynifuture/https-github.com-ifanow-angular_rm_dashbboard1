@@ -61,7 +61,7 @@
     <!-- id="pdfDoc"  removed from above div-->
 
     <div class="wrapper-20 pt-8 bg-white" id="wrapper" *ngIf="dataSource.data.length > 0">
-        <div class="example-container">
+        <div class="">
             <table class="mt-8" [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
                 class=" skeletonAnimation" id="table-low" mat-table matSort>
                 <ng-container matColumnDef="checkbox">
