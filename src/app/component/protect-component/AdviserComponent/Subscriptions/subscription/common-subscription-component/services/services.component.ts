@@ -89,6 +89,9 @@ export class ServicesComponent implements OnInit {
   getPlanServiceDataResponse(data) {
     console.log('plan service', data);
     this.isLoading = false;
+    for(let S of data){
+      S['read'] = false;
+    }
     this.planServiceData = data;
     if (data) {
 
