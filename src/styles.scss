@@ -1337,8 +1337,8 @@ textarea {
 }
 
 #ui-backoffice-tabs {
-    margin-top: 40px;
-    margin-bottom: 40px;
+    // margin-top: 40px;
+    // margin-bottom: 40px;
     .mat-tab-body-content {
         overflow: hidden !important;
         margin-top: 25px;
@@ -1382,6 +1382,12 @@ textarea {
     #table-low {
         tr.mat-header-row {
             height: 40px !important;
+        }
+        tr.mat-row {
+            height: 40px !important;
+        }
+        tbody td {
+            padding: 6px 8px !important;
         }
     }
 }

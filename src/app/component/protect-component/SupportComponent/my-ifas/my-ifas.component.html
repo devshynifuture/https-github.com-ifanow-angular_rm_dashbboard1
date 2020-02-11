@@ -20,8 +20,8 @@
         <table mat-table id="table-low" [dataSource]="dataSource" class="skeletonAnimation mt-8" appSkeletonLoading [appSkeletonLoading]="isLoading" matSort>
             <!-- admin name Column -->
             <ng-container matColumnDef="adminName">
-                <th mat-header-cell *matHeaderCellDef class="b-a w-13" mat-sort-header="adminName"> Admin Name </th>
-                <td mat-cell *matCellDef="let element" class="b-a w-13 c-p" (click)="openIfaRightSilder(element)">
+                <th mat-header-cell *matHeaderCellDef class="b-a w-12" mat-sort-header="adminName"> Admin Name </th>
+                <td mat-cell *matCellDef="let element" class="b-a w-12 c-p" (click)="openIfaRightSilder(element)">
                     <div class="bar"> {{element.adminName}} </div>
                 </td>
             </ng-container>

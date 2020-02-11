@@ -6,7 +6,7 @@ import { AdminDetailsComponent } from './ifa-onboarding/admin-details/admin-deta
 
 
 export const componentList = [
-  IfasDetailsComponent, IfaBoradingHistoryComponent, AdminDetailsComponent,
+  IfasDetailsComponent, AdminDetailsComponent, IfaBoradingHistoryComponent
 
 ];
 
