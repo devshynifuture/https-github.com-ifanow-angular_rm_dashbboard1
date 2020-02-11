@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { SelectAdviceComponent } from '../select-advice/select-advice.component';
 import { UtilService } from 'src/app/services/util.service';
+import { constructor } from 'moment';
 
 @Component({
   selector: 'app-advice-mutual-fund',
@@ -11,10 +12,12 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class AdviceMutualFundComponent implements OnInit {
   displayedColumns2: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'status', 'date', 'adate', 'icons'];
-  dataSource2 = ELEMENT_DATA2
-  constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject,private utilService :UtilService) { }
+  dataSource2 = new MatTableDataSource(ELEMENT_DATA2);
+  constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private utilService: UtilService) { }
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   ngOnInit() {
+    this.dataSource2.sort = this.sort;
   }
   openselectAdvice(data) {
     const fragmentData = {
@@ -52,9 +55,9 @@ const ELEMENT_DATA2: PeriodicElement2[] = [
     date: '23/12/2019', adate: '23/12/2019'
   },
   {
-    position: 'Rahul Jain', name: 'Surplus from life csh flows (Lumpsum)',
+    position: 'Rahul Jain1', name: 'Surplus from life csh flows (Lumpsum)1',
     weight: '35, 000', symbol: 'Invest towards Shreya’s Higher education and Rahul’s Retirement goal',
-    status: 'Given', date: '23/12/2019', adate: '23/12/2019'
+    status: 'Given1', date: '23/12/2019', adate: '23/12/2019'
   },
 
 ]

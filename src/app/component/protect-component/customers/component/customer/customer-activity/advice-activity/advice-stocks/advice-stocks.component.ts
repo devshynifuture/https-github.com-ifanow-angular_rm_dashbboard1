@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActiityService } from '../../actiity.service';
 import { SelectAdviceComponent } from '../select-advice/select-advice.component';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -7,7 +7,7 @@ import { AddAssetStocksComponent } from '../../../accounts/assets/asset-stocks/a
 import { AssetStocksComponent } from '../../../accounts/assets/asset-stocks/asset-stocks.component';
 import { EventService } from 'src/app/Data-service/event.service';
 import { CustomerService } from '../../../customer.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
@@ -17,13 +17,14 @@ import { AuthService } from 'src/app/auth-service/authService';
 })
 export class AdviceStocksComponent implements OnInit {
   displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'mvalue', 'advice', 'astatus', 'adate', 'icon'];
-  dataSource3 = ELEMENT_DATA1;
+  dataSource3 = new MatTableDataSource(ELEMENT_DATA1);
   advisorId: any;
   clientId: any;
   constructor(private eventService: EventService, public dialog: MatDialog, private subInjectService: SubscriptionInject,
     private cusService: CustomerService, private activityService: ActiityService) { }
-
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   ngOnInit() {
+    this.dataSource3.sort = this.sort;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getAssetAll();
@@ -44,7 +45,7 @@ export class AdviceStocksComponent implements OnInit {
       }
     );
   }
-  getAllAssetResponse(data){
+  getAllAssetResponse(data) {
     console.log(data);
   }
   openRealEstate(data, value) {
@@ -103,6 +104,6 @@ export interface PeriodicElement1 {
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
   { name: 'Rahul Jain', desc: '1', mvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-  { name: 'Rahul Jain', desc: '2', mvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
+  { name: 'Rahul Jain1', desc: '2', mvalue: '20000', advice: 'do trasact1 ', adate: '2020-02-20', astatus: 'LIVE' },
 
 ];

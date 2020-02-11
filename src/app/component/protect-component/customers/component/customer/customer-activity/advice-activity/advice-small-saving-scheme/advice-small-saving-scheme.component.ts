@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AddPpfComponent } from '../../../accounts/assets/smallSavingScheme/common-component/add-ppf/add-ppf.component';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -12,6 +12,7 @@ import { AddPoSavingComponent } from '../../../accounts/assets/smallSavingScheme
 import { AddSsyComponent } from '../../../accounts/assets/smallSavingScheme/common-component/add-ssy/add-ssy.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ActiityService } from '../../actiity.service';
+import { MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-advice-small-saving-scheme',
@@ -20,16 +21,18 @@ import { ActiityService } from '../../actiity.service';
 })
 export class AdviceSmallSavingSchemeComponent implements OnInit {
   displayedColumns: string[] = ['checkbox', 'name', 'desc', 'cvalue', 'empcon', 'emprcon', 'advice', 'astatus', 'adate', 'icon'];
-  dataSource = ELEMENT_DATA;
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
   displayedColumns2: string[] = ['checkbox', 'name', 'desc', 'cvalue', 'emprcon', 'advice', 'astatus', 'adate', 'icon'];
-  dataSource2 = ELEMENT_DATA2;
+  dataSource2 = new MatTableDataSource(ELEMENT_DATA2);
   displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'advice', 'astatus', 'adate', 'icon'];
-  dataSource3 = ELEMENT_DATA1;
+  dataSource3 = new MatTableDataSource(ELEMENT_DATA1);
   displayedColumns4: string[] = ['checkbox', 'name', 'desc', 'cvalue', 'advice', 'astatus', 'adate', 'icon'];
-  dataSource4 = ELEMENT_DATA4;
+  dataSource4 = new MatTableDataSource(ELEMENT_DATA4);
   advisorId: any;
   clientId: any;
   isLoading: boolean;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
   allAdvice = false
   ngOnInit() {

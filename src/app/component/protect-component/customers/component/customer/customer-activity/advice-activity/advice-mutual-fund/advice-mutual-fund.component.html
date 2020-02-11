@@ -51,7 +51,7 @@
                     class="pr-8">Suggest new MF</button>
         </div>
     </div>
-    <table mat-table [dataSource]="dataSource2" id="table-low">
+    <table matSort mat-table [dataSource]="dataSource2" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef class="br">
                 <mat-checkbox></mat-checkbox>
@@ -61,38 +61,38 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="position">
-            <th mat-header-cell *matHeaderCellDef class="br"> Investor name </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Investor name </th>
             <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
         </ng-container>
 
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef class="br"> Scheme details</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Scheme details</th>
             <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
         </ng-container>
 
         <ng-container matColumnDef="weight">
-            <th mat-header-cell *matHeaderCellDef class="br"> Current
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Current
                 value </th>
             <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
         </ng-container>
 
         <ng-container matColumnDef="symbol">
-            <th mat-header-cell *matHeaderCellDef class="br"> Balance units
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Balance units
                 Load free units </th>
             <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
         </ng-container>
         <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef class="br"> Notional
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Notional
                 gain (loss) </th>
             <td mat-cell *matCellDef="let element" class="br"> {{element.status}} </td>
         </ng-container>
 
         <ng-container matColumnDef="date">
-            <th mat-header-cell *matHeaderCellDef class="br"> Advice </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice </th>
             <td mat-cell *matCellDef="let element" class="br"> {{element.date}} </td>
         </ng-container>
         <ng-container matColumnDef="adate">
-            <th mat-header-cell *matHeaderCellDef class="br"> Applicable Status </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Applicable Status </th>
             <td mat-cell *matCellDef="let element" class="br"> {{element.adate}} </td>
         </ng-container>
         <ng-container matColumnDef="icons">
