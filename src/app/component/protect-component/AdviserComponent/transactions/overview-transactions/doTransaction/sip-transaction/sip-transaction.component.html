@@ -28,12 +28,12 @@
                         <mat-radio-group aria-label="Select an option" formControlName="schemeSelection"
                             (ngModelChange)="selectSchemeOption($event)">
                             <mat-radio-button value="1"
-                                [ngClass]="{'b-a-custom': sipTransactionget('schemeSelection').value==1,'text-primary':sipTransactionget('schemeSelection').value==1,'b-a':sipTransactionget('schemeSelection').value==2}"
+                                [ngClass]="{'b-a-custom': sipTransaction.get('schemeSelection').value==1,'text-primary':sipTransaction.get('schemeSelection').value==1,'b-a':sipTransaction.get('schemeSelection').value==2}"
                                 class="b-a-custom radioBtn text-primary custom-radio">
                                 Invest in existing scheme
                             </mat-radio-button>
                             <mat-radio-button value="2"
-                                [ngClass]="{'b-a-custom': sipTransactionget('schemeSelection').value==2,'text-primary':sipTransactionget('schemeSelection').value==2,'b-a':sipTransactionget('schemeSelection').value==1}"
+                                [ngClass]="{'b-a-custom': sipTransaction.get('schemeSelection').value==2,'text-primary':sipTransaction.get('schemeSelection').value==2,'b-a':sipTransaction.get('schemeSelection').value==1}"
                                 class="b-a radioBtn ">
                                 Select a new scheme</mat-radio-button>
                         </mat-radio-group>
