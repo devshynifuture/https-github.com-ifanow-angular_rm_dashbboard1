@@ -70,7 +70,7 @@ export class TransactionSummaryComponent implements OnInit {
   }
   setInvestor(value) {
     this.selectedInvestor = value.value
-    this.allData.defaultCredential.clientCode = this.selectedInvestor
+    this.allData.defaultClient.clientCode = this.selectedInvestor
     this.defaultDetails.emit(this.allData);
     this.showInvestor = false
   }

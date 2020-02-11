@@ -28,6 +28,7 @@ export class SwpTransactionComponent implements OnInit {
   showUnits = false;
   navOfSelectedScheme: any;
   transactionSummary: { schemeName: any; };
+  getDataSummary: any;
 
   constructor(private subInjectService: SubscriptionInject,private onlineTransact: OnlineTransactionService,
     private fb: FormBuilder) { }
@@ -50,6 +51,10 @@ export class SwpTransactionComponent implements OnInit {
   ngOnInit() {
     this.getdataForm(this.inputData)
   }
+  getDefaultDetails(data) {
+    console.log('get defaul here yupeeee', data)
+    this.getDataSummary = data
+  }
   getSchemeList(value) {
 
     if (this.selectScheme == 2 && value.length > 2) {
@@ -58,7 +63,8 @@ export class SwpTransactionComponent implements OnInit {
         bseOrderType: 'ORDER',
         aggregatorType: 2,
         advisorId: 414,
-        tpUserCredentialId: 212,
+        tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+        showOnlyNonZero:true,
       }
       this.onlineTransact.getNewSchemes(obj).subscribe(
         data => this.getNewSchemesRes(data)

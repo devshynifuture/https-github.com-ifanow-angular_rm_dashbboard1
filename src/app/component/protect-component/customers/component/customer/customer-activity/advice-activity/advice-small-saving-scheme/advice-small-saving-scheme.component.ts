@@ -29,7 +29,8 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
   dataSource4 = ELEMENT_DATA4;
   advisorId: any;
   clientId: any;
-  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject ,private activityService:ActiityService) { }
+  isLoading: boolean;
+  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
   allAdvice = false
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -42,12 +43,14 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
       clientId: this.clientId,
       assetCategory: 10
     }
+    this.isLoading = true;
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {
       }
     );
   }
-  getAllSchemeResponse(data){
+  getAllSchemeResponse(data) {
+    this.isLoading = false;
     console.log(data)
   }
   openAddPPF(data, value) {
@@ -140,7 +143,7 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
       }
     );
   }
-  openAddPOMIS(data,value) {
+  openAddPOMIS(data, value) {
     const fragmentData = {
       flag: value,
       data,
