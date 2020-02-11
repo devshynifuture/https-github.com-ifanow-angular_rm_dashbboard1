@@ -1,31 +1,28 @@
-<div id="plan-home">
-    <button (click)="goToAdvisorHome()" class="btn-yellow" mat-stroked-button><i class="material-icons mr-12">
-            keyboard_backspace
-        </i>ADVISOR HOME</button>
-</div>
-<nav mat-tab-nav-bar id="ui-secondnav">
-    <!-- <a (click)="value=1" mat-tab-link [ngClass]="_value == 1 ? 'active': ''" [routerLink]="'summary'">SUMMARY</a>
-    <a (click)="value=2" mat-tab-link [ngClass]="_value == 2 ? 'active': ''" [routerLink]="'profile'">PROFILE</a>
-    <a (click)="value=3" mat-tab-link [ngClass]="_value == 3 ? 'active': ''" [routerLink]="'insurance'">INSURANCE</a>
-    <a (click)="value=4" mat-tab-link [ngClass]="_value == 4 ? 'active': ''" [routerLink]="'goals'">GOALS</a>
-    <a (click)="value=5" mat-tab-link [ngClass]="_value == 5 ? 'active': ''" [routerLink]="'taxes'">TAXES</a>
-    <a (click)="value=6" mat-tab-link [ngClass]="_value == 6 ? 'active': ''" [routerLink]="'cash-flow'">CASH FLOWS</a>
-    <a (click)="value=7" mat-tab-link [ngClass]="_value == 7 ? 'active': ''"
-        [routerLink]="'investments'">INVESTMENTS</a>
-    <a (click)="value=8" mat-tab-link [ngClass]="_value == 8 ? 'active': ''" [routerLink]="'scenarios'">SCENARIOS</a>
- -->
-    <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/summary']">SUMMARY</a>
-    <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/advice']">ADVICE</a>
-    <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/deployments']">DEPLOYMENTS</a>
-    <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/action-plan']">ACTION PLANS</a>
-    <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/task']">TASKS</a>
-    <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/notes']">NOTES</a>
+<div class="row" id="ui-activity-secondhead">
+    <div class="col-md-2 pt-16">
+        <button (click)="goToAdvisorHome()" class="btn-warning-outline br-2" mat-stroked-button><i
+                class="material-icons mr-12">
+                keyboard_backspace
+            </i>ADVISOR HOME</button>
+    </div>
+    <div class="col-md-8">
+        <nav mat-tab-nav-bar mat-align-tabs="center">
 
-</nav>
-<router-outlet></router-outlet>
-<div class="col-md-4">
-    <!-- left side nav bar -->
+            <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/summary']">SUMMARY</a>
+            <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/advice']">ADVICE</a>
+            <a mat-tab-link routerLinkActive="active"
+                [routerLink]="['/customer/detail/activity/deployments']">DEPLOYMENTS</a>
+            <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/action-plan']">ACTION
+                PLANS</a>
+            <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/task']">TASKS</a>
+            <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/notes']">NOTES</a>
+
+        </nav>
+    </div>
 </div>
-<div class="col-md-8">
-    <!-- main side nav bar -->
+
+<div class="row">
+    <div class="col-md-12 p-0">
+        <router-outlet></router-outlet>
+    </div>
 </div>

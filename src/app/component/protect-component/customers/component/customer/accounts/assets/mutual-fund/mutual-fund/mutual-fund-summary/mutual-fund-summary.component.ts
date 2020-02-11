@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { RightFilterComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-mutual-fund-summary',
@@ -20,7 +23,7 @@ export class MutualFundSummaryComponent implements OnInit {
   schemeWise: any[];
   mutualFundList: any[];
 
-  constructor() { }
+  constructor(private subInjectService:SubscriptionInject,private UtilService:UtilService) { }
   @Input() mutualFund;
 
   ngOnInit() {
@@ -47,9 +50,26 @@ export class MutualFundSummaryComponent implements OnInit {
         customDataSource.data.push(singleData);
       });
     });
-    console.log(customDataSource)
     return customDataSource;
 
+  }
+  openFilter() {
+    const fragmentData = {
+      flag: 'openFilter',
+      id: 1,
+      state: 'open35',
+      componentName: RightFilterComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
   }
   isGroup(index, item): boolean {
     // console.log('index : ', index);

@@ -17,8 +17,8 @@ export class AdviceAllPortfolioComponent implements OnInit {
   displayedColumns1: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'status', 'date', 'adate', 'icons'];
   dataSource1 = new MatTableDataSource(ELEMENT_DATA1);
   constructor(private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
-  @ViewChild(MatSort, { static: true }) sort1: MatSort;
-  @ViewChild(MatSort, { static: true }) sort2: MatSort;
+  @ViewChild("tableOne", { static: true }) sort1: MatSort;
+  @ViewChild("tableTwo", { static: true }) sort2: MatSort;
 
   ngOnInit() {
     this.dataSource.sort = this.sort1;

@@ -56,8 +56,8 @@
                     class="pr-8">Suggest new gold</button>
         </div>
     </div>
-    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="dataSource3"
-        class="mt-8 skeletonAnimation" id="table-low">
+    <table #tableOne="matSort" matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table
+        [dataSource]="dataSource1" class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
                 <mat-checkbox></mat-checkbox>
@@ -130,8 +130,8 @@
                     class="pr-8">Suggest new others</button>
         </div>
     </div>
-    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="dataSource3"
-        class="mt-8 skeletonAnimation" id="table-low">
+    <table #tableTwo="matSort" matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table
+        [dataSource]="dataSource1" class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
                 <mat-checkbox></mat-checkbox>

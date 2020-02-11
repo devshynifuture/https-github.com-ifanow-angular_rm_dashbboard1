@@ -407,6 +407,12 @@ button:active {
   background-color: $warning !important;
 }
 
+.btn-warning-outline {
+  color: $warning !important;
+  border-color: $warning !important;
+  // background-color: $warning !important;
+}
+
 .btn-primitive {
   color: $white !important;
   border-color: $primitive !important;
