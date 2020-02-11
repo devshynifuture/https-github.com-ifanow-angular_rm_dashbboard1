@@ -357,6 +357,7 @@ export const appConfig = {
   GET_AMCWISE_FOLIO:'mutual-fund/folios/amc-wise/get',
   GET_SCHEMEWISE_FOLIO:'mutual-fund/folios/scheme-wise/get',
   GET_MANDATE_DETAILS:'bse/mandate/view',
+  GET_FREQUENCY:'bse/scheme/sip/view',
 
   // cashflow 
   CASHFLOW_ADD_INCOME: 'cashflow/income/add',

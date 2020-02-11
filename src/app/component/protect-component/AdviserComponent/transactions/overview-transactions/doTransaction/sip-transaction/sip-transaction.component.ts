@@ -34,6 +34,7 @@ export class SipTransactionComponent implements OnInit {
   folioList: any;
   folioDetails: any;
   ExistingOrNew: any;
+  sipFrequency: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private fb: FormBuilder) { }
@@ -149,7 +150,26 @@ export class SipTransactionComponent implements OnInit {
     }
     this.getAmcWiseFolio()
     this.getMandateDetails()
+    this.getFrequency()
   }
+  getFrequency(){
+    let obj = {
+      isin : this.schemeDetails.isin,
+    }
+    this.onlineTransact.getSipFrequency(obj).subscribe(
+      data => this.getSipFrequencyRes(data)
+    );
+  }
+  getSipFrequencyRes(data){
+    console.log('isin ----',data)
+    this.sipFrequency = data
+    this.sipFrequency = data.sipFrequency.filter(function(element){
+      return element.sipFrequency
+    })
+  }
+  // dateArray(){
+  //   this.dateArray= .split(",")
+  // }
   getMandateDetails() {
     let obj1 = {
       advisorId: this.getDataSummary.defaultClient.advisorId,
