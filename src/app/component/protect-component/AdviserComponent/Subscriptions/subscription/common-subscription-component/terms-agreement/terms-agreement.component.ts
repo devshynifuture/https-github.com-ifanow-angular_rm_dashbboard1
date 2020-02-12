@@ -42,6 +42,7 @@ export class TermsAgreementComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   }
+   isRefresh:boolean = true;
   model: any;
   dataSub: any;
   storeData: any;
@@ -72,6 +73,7 @@ export class TermsAgreementComponent implements OnInit {
   set upperData(upperData) {
     this._upperData = upperData;
     console.log('Terms and agreemennt upperData: ', upperData);
+    this.isRefresh = false
     this.getDataTerms(upperData);
     if (upperData && upperData.documentData) {
       // this.changeDisplay();
@@ -241,6 +243,7 @@ export class TermsAgreementComponent implements OnInit {
     };
     this.subService.updateDocumentData(obj).subscribe(
       responseData =>{
+        this.isRefresh = true
         this.getResponseData(responseData)
       },
       err =>{
@@ -249,14 +252,13 @@ export class TermsAgreementComponent implements OnInit {
       }
     );
   }
-
   getResponseData(data) {
     console.log(data);
     this.barButtonOptions.active = false;
     if (data == 1) {
       this.eventService.openSnackBar('Document added successfully', 'OK');
     }
-    this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
+    this.eventService.changeUpperSliderState({state: 'close', refreshRequired: this.isRefresh});
   }
 
   // Begin ControlValueAccesor methods.
