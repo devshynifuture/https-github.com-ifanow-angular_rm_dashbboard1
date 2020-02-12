@@ -887,7 +887,8 @@ mat-tab-group[vertical] {
     // border-bottom-color: transparent !important;
     height: 50px !important;
     min-width: 75px;
-    border-bottom: 1px solid #DADCE0;
+    font-weight: 400;
+    // border-bottom: 1px solid #DADCE0;
   }
 
   // .mat-tab-label-container{
@@ -895,12 +896,17 @@ mat-tab-group[vertical] {
   // }
   .mat-tab-body-wrapper {
     border: 1px solid #e9eaec;
-    border-top: 0px !important;
+    margin-top: -1px;
+
   }
 
   .mat-tab-label-active {
-    border: 1px solid #dadce0;
+    border: 1px solid #e9eaec;
     border-bottom: 0px !important;
+    opacity: initial;
+    background: #fff;
+    color: #212121;
+
   }
 }
 
