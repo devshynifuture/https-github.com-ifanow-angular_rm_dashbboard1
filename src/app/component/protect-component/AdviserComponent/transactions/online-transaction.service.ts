@@ -52,4 +52,10 @@ export class OnlineTransactionService {
   mapUnmappedFolios(data) {
     return this.http.post(apiConfig.TRANSACT + appConfig.MAP_UNMAP_FOLIOS, data);
   }
+  getSipFrequency(data) {
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_FREQUENCY, data, 1)
+  }
+  sipBSE(data) {
+    return this.http.postEncoded(apiConfig.TRANSACT + appConfig.SIP_BSE, data)
+  }
 }

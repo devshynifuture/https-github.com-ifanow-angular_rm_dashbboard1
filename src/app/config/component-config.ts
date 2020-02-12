@@ -359,6 +359,8 @@ export const appConfig = {
   GET_MANDATE_DETAILS: 'bse/mandate/view',
   GET_UNMAPPED_FOLIO: '/bse/user/mapped-unmapped-clients/view',
   MAP_UNMAP_FOLIOS: '/map-iin',
+  GET_FREQUENCY: 'bse/scheme/sip/view',
+  SIP_BSE: 'bse/order/create',
   // cashflow 
   CASHFLOW_ADD_INCOME: 'cashflow/income/add',
   CASHFLOW_GET_INCOME: 'cashflow/income/get',

@@ -29,6 +29,7 @@ export class RedemptionTransactionComponent implements OnInit {
   transactionSummary: {};
   folioList: any;
   folioDetails: any;
+  showUnits = false
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private fb: FormBuilder) { }
@@ -150,6 +151,7 @@ export class RedemptionTransactionComponent implements OnInit {
     console.log('getSchemeDetailsRes == ', data)
     this.maiSchemeList = data
     this.schemeDetails = data[0]
+    this.redemptionTransaction.controls["employeeContry"].setValidators([Validators.min(this.schemeDetails.redemptionAmountMinimum)])
     this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
     if (data.length > 1) {
       this.reInvestmentOpt = data
@@ -176,6 +178,7 @@ export class RedemptionTransactionComponent implements OnInit {
   }
   selectedFolio(folio) {
     this.folioDetails = folio
+    this.showUnits = true
     this.transactionSummary = { folioNumber: folio.folioNumber }
   }
 }
