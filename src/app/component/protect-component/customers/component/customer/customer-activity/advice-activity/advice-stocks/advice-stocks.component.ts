@@ -20,6 +20,8 @@ export class AdviceStocksComponent implements OnInit {
   dataSource3 = new MatTableDataSource(ELEMENT_DATA1);
   advisorId: any;
   clientId: any;
+  stockDatasource: any;
+  isLoading: boolean;
   constructor(private eventService: EventService, public dialog: MatDialog, private subInjectService: SubscriptionInject,
     private cusService: CustomerService, private activityService: ActiityService) { }
   @ViewChild("tableOne", { static: true }) sort: MatSort;
@@ -37,6 +39,8 @@ export class AdviceStocksComponent implements OnInit {
       clientId: this.clientId,
       assetCategory: 1
     }
+    this.stockDatasource = [{}, {}, {}]
+    this.isLoading = true;
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllAssetResponse(data), (error) => {
         // this.datasource.data = [];
@@ -45,6 +49,8 @@ export class AdviceStocksComponent implements OnInit {
     );
   }
   getAllAssetResponse(data) {
+    this.isLoading = false;
+    this.stockDatasource = data.STOCKS
     console.log(data);
   }
   openRealEstate(data, value) {

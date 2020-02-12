@@ -15,35 +15,72 @@
     <div class="col-md-12">
         <mat-tab-group id="ui-backoffice-tabs">
 
-            <!-- <mat-tab label="Overview">
+            <mat-tab label="Overview">
                 <div class="row">
-                    <div class="col-md-8 miscellaneousBox">
+                    <div class="col-md-9 pl-0 miscellaneousBox">
                         <mat-form-field class="example-full-width">
                             <textarea matInput class="form-control height160"></textarea>
                             <button mat-button class=" bg-primary text-white right br-0 text-inherit mt-12">EDIT</button>
                         </mat-form-field>
                     </div>
                 </div>
-            </mat-tab> -->
+            </mat-tab>
 
 
             <mat-tab label="Onboarding activity">
-
                 <div class="cardList">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <mat-checkbox> </mat-checkbox>
+                    <div class="row pt-10 pb-10 bb">
+                        <div class="col-md-8 f-14">
+                            <mat-checkbox class="mr-8"> </mat-checkbox>
                             First call
                         </div>
                         <div class="col-md-4"></div>
                     </div>
+
+                    <div class="row pt-10 pb-10 bb">
+                        <div class="col-md-8 f-14">
+                            <mat-checkbox class="mr-8"> </mat-checkbox>
+                            Auto forward setup
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+
+                    <div class="row pt-10 pb-10 bb">
+                        <div class="col-md-8 f-14">
+                            <mat-checkbox class="mr-8"> </mat-checkbox>
+                            Data upload and AUM reconciliation
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+
+                    <div class="row pt-10 pb-10 bb">
+                        <div class="col-md-8 f-14">
+                            <mat-checkbox class="mr-8"> </mat-checkbox>
+                            Daily schedule & CAMS expiry date addition
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+
+                    <div class="row pt-10 pb-10 bb">
+                        <div class="col-md-8 f-14">
+                            <mat-checkbox class="mr-8"> </mat-checkbox>
+                            Demo and handover
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+
+                    <div class="row pt-10 pb-10 bb">
+                        <div class="col-md-8 f-14">
+                            <mat-checkbox class="mr-8"> </mat-checkbox>
+                            Done
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+
+
                 </div>
 
-
-
-
-
-                <div class="bg-grey lter p-20">
+                <div class="bg-grey lter mt-44 p-20">
                     <h4 class="f-14 f-500">Comments</h4>
                     <div class="row pb-20">
                         <div class="col-md-1 text-center p-0">
@@ -89,12 +126,10 @@
 
 
 
-
-
             </mat-tab>
 
-            <!-- <mat-tab label="RTA details">
-                <div class="row pt-16">
+            <mat-tab label="RTA details">
+                <div class="row">
                     <div class="back-office-table col-md-12 overflow-hidden">
                         <h3 class="f-16">CAMS</h3>
                         <table id="table-low" mat-table [dataSource]="dataSource1" class=" ">
@@ -195,7 +230,7 @@
                     </div>
                 </div>
 
-            </mat-tab> -->
+            </mat-tab>
 
             <mat-tab label="Team members">
                 <div class="row pt-16">

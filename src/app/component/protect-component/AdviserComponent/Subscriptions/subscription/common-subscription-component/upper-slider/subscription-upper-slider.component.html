@@ -1,185 +1,163 @@
 <div>
-  <div class="dialogclose">
-    <div class="row popup-header-fix-100">
-      <div class="col-md-2 border-right-1 p-0">
-        <img class="pt-4" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
-      </div>
-      <div class="col-md-8 p-0">
-        <p class="f-16 mb-0 pt-24 text-center"
-          *ngIf="fragmentDataSubsUpper.data.flag=='plan' || fragmentDataSubsUpper.data==='plan'">Add
-          plan details, map
-          services/documents
-          to the
-          selected plan</p>
-        <p class="f-16 mb-0 pt-24 text-center"
-          *ngIf="fragmentDataSubsUpper.data.flag=='services' || fragmentDataSubsUpper.data===''">Add
-          fee structure, map
-          plans/documents/modules to the selected service</p>
-        <p class="f-16 mb-0 pt-24 text-center"
-          *ngIf="fragmentDataSubsUpper.data.flag=='documents' || fragmentDataSubsUpper.data==='documents'">Add
-          documents,
-          map them to
-          services/plans</p>
-        <p class="f-16 mb-0 pt-24 text-center"
-          *ngIf="fragmentDataSubsUpper.data.flag=='clients' || fragmentDataSubsUpper.data==='clients'">
-          Add fee structure, send
-          quotations/invoices, execute documents for the selected client</p>
-      </div>
-      <div class="col-md-2 text-right">
-        <i (click)="dialogClose()" class="material-icons pt-16 c-p pr-16">
+    <div class="dialogclose">
+        <div class="row popup-header-fix-100">
+            <div class="col-md-2 border-right-1 p-0">
+                <img class="pt-4" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+            </div>
+            <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
+                <p class="f-16 mb-0" *ngIf="fragmentDataSubsUpper.data.flag=='plan' || fragmentDataSubsUpper.data==='plan'">Add plan details, map services/documents to the selected plan</p>
+                <p class="f-16 mb-0" *ngIf="fragmentDataSubsUpper.data.flag=='services' || fragmentDataSubsUpper.data===''">Add fee structure, map plans/documents/modules to the selected service</p>
+                <p class="f-16 mb-0" *ngIf="fragmentDataSubsUpper.data.flag=='documents' || fragmentDataSubsUpper.data==='documents'">Add documents, map them to services/plans
+                </p>
+                <p class="f-16 mb-0" *ngIf="fragmentDataSubsUpper.data.flag=='clients' || fragmentDataSubsUpper.data==='clients'">
+                    Add fee structure, send quotations/invoices, execute documents for the selected client</p>
+            </div>
+            <div class="col-md-2 text-right">
+                <i (click)="dialogClose()" class="material-icons pt-16 c-p pr-16">
           clear
         </i>
-      </div>
+            </div>
+        </div>
     </div>
-  </div>
-  <div *ngIf="fragmentDataSubsUpper&&fragmentDataSubsUpper.data.flag==='plan' || fragmentDataSubsUpper.data==='plan'"
-    class="row">
-    <div class="col-md-12 p-0">
-      <mat-tab-group (selectedTabChange)="tabClick($event)" animationDuration="0ms" class="popup-header-fix-tabs"
-        mat-align-tabs="center">
-        <mat-tab #tab delay="500" label="OVERVIEW" placement="left" tooltip="tootip on left">
-          <ng-template matTabContent>
-            <app-overview [componentFlag]='flag' (changePlanData)="getData($event)"
-              [upperData]="fragmentDataSubsUpper.data">
-            </app-overview>
-          </ng-template>
-        </mat-tab>
-        <mat-tab #tab [disabled]='fragmentDataSubsUpper.data=="plan"' label="SERVICES">
-          <ng-template matTabContent>
-            <app-services [componentFlag]='flag' [planData]="fragmentDataSubsUpper.data"></app-services>
-          </ng-template>
-        </mat-tab>
-        <mat-tab #tab [disabled]='fragmentDataSubsUpper.data=="plan"' label="DOCUMENTS">
-          <ng-template matTabContent>
-            <app-document [componentFlag1]='documents' [upperData]="fragmentDataSubsUpper.data"></app-document>
-          </ng-template>
-        </mat-tab>
+    <div *ngIf="fragmentDataSubsUpper&&fragmentDataSubsUpper.data.flag==='plan' || fragmentDataSubsUpper.data==='plan'" class="row">
+        <div class="col-md-12 p-0">
+            <mat-tab-group (selectedTabChange)="tabClick($event)" animationDuration="0ms" class="popup-header-fix-tabs" mat-align-tabs="center">
+                <mat-tab #tab delay="500" label="OVERVIEW" placement="left" tooltip="tootip on left">
+                    <ng-template matTabContent>
+                        <app-overview [componentFlag]='flag' (changePlanData)="getData($event)" [upperData]="fragmentDataSubsUpper.data">
+                        </app-overview>
+                    </ng-template>
+                </mat-tab>
+                <mat-tab #tab [disabled]='fragmentDataSubsUpper.data=="plan"' label="SERVICES">
+                    <ng-template matTabContent>
+                        <app-services [componentFlag]='flag' [planData]="fragmentDataSubsUpper.data"></app-services>
+                    </ng-template>
+                </mat-tab>
+                <mat-tab #tab [disabled]='fragmentDataSubsUpper.data=="plan"' label="DOCUMENTS">
+                    <ng-template matTabContent>
+                        <app-document [componentFlag1]='documents' [upperData]="fragmentDataSubsUpper.data"></app-document>
+                    </ng-template>
+                </mat-tab>
 
-      </mat-tab-group>
+            </mat-tab-group>
+        </div>
     </div>
-  </div>
-  <div *ngIf="fragmentDataSubsUpper.data.flag=='services' || fragmentDataSubsUpper.data===''" class="row z-value-100">
-    <div class="col-md-12 p-0">
-      <mat-tab-group (selectedTabChange)="tabClick($event)" [selectedIndex]="selectedServiceTab" animationDuration="0ms"
-        class="popup-header-fix-tabs" mat-align-tabs="center">
-        <mat-tab label="FEE STRUCTURE">
-          <app-fee-structure (changeServiceData)="getData($event)" [upperData]="fragmentDataSubsUpper.data">
-          </app-fee-structure>
-        </mat-tab>
-        <mat-tab #tab [disabled]='fragmentDataSubsUpper.data==""' label="PLANS">
-          <ng-template matTabContent>
-            <!--*ngIf="subscriptionTab=='PLANS'"-->
-            <app-plans *ngIf="fragmentDataSubsUpper" [componentFlag]='plans' [upperData]="fragmentDataSubsUpper.data">
-            </app-plans>
-          </ng-template>
-        </mat-tab>
-        <mat-tab #tab [disabled]='fragmentDataSubsUpper.data==""' label="DOCUMENTS">
-          <ng-template matTabContent>
-            <app-document *ngIf="fragmentDataSubsUpper" [componentFlag1]='servicesDocuments'
-              [upperData]="fragmentDataSubsUpper.data"></app-document>
-          </ng-template>
-        </mat-tab>
-        <mat-tab #tab [disabled]='fragmentDataSubsUpper.data==""' label="MODULES">
-          <ng-template matTabContent>
-            <app-modules *ngIf="subscriptionTab=='MODULES'" [upperData]="fragmentDataSubsUpper.data"></app-modules>
-          </ng-template>
-        </mat-tab>
-      </mat-tab-group>
+    <div *ngIf="fragmentDataSubsUpper.data.flag=='services' || fragmentDataSubsUpper.data===''" class="row z-value-100">
+        <div class="col-md-12 p-0">
+            <mat-tab-group (selectedTabChange)="tabClick($event)" [selectedIndex]="selectedServiceTab" animationDuration="0ms" class="popup-header-fix-tabs" mat-align-tabs="center">
+                <mat-tab label="FEE STRUCTURE">
+                    <app-fee-structure (changeServiceData)="getData($event)" [upperData]="fragmentDataSubsUpper.data">
+                    </app-fee-structure>
+                </mat-tab>
+                <mat-tab #tab [disabled]='fragmentDataSubsUpper.data==""' label="PLANS">
+                    <ng-template matTabContent>
+                        <!--*ngIf="subscriptionTab=='PLANS'"-->
+                        <app-plans *ngIf="fragmentDataSubsUpper" [componentFlag]='plans' [upperData]="fragmentDataSubsUpper.data">
+                        </app-plans>
+                    </ng-template>
+                </mat-tab>
+                <mat-tab #tab [disabled]='fragmentDataSubsUpper.data==""' label="DOCUMENTS">
+                    <ng-template matTabContent>
+                        <app-document *ngIf="fragmentDataSubsUpper" [componentFlag1]='servicesDocuments' [upperData]="fragmentDataSubsUpper.data"></app-document>
+                    </ng-template>
+                </mat-tab>
+                <mat-tab #tab [disabled]='fragmentDataSubsUpper.data==""' label="MODULES">
+                    <ng-template matTabContent>
+                        <app-modules *ngIf="subscriptionTab=='MODULES'" [upperData]="fragmentDataSubsUpper.data"></app-modules>
+                    </ng-template>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
     </div>
-  </div>
-  <div *ngIf="fragmentDataSubsUpper.data.flag=='documents' || fragmentDataSubsUpper.data==='documents'" class="row">
-    <div class="col-md-12 p-0">
-      <mat-tab-group animationDuration="0ms" class="popup-header-fix-tabs" mat-align-tabs="center">
-        <mat-tab label="OVERVIEW">
-          <ng-template matTabContent>
-            <app-overview (changePlanData)="getData($event)" [upperData]="fragmentDataSubsUpper.data">
-            </app-overview>
-          </ng-template>
-        </mat-tab>
-        <mat-tab label="PLANS"
-          *ngIf="upperDataSubsUpper && upperDataSubsUpper.documentData && upperDataSubsUpper.documentData.availableAt == 1 && upperDataSubsUpper.documentData.planId==0">
-          <ng-template matTabContent>
-            <app-plans [componentFlag]='"plans"' [upperData]="fragmentDataSubsUpper.data"></app-plans>
-          </ng-template>
-        </mat-tab>
-        <mat-tab label="SERVICES"
-          *ngIf="upperDataSubsUpper && upperDataSubsUpper.documentData && upperDataSubsUpper.documentData.availableAt == 2">
-          <ng-template matTabContent>
-            <app-services [componentFlag]='"services"' [upperData]="fragmentDataSubsUpper.data"></app-services>
-          </ng-template>
-        </mat-tab>
+    <div *ngIf="fragmentDataSubsUpper.data.flag=='documents' || fragmentDataSubsUpper.data==='documents'" class="row">
+        <div class="col-md-12 p-0">
+            <mat-tab-group animationDuration="0ms" class="popup-header-fix-tabs" mat-align-tabs="center">
+                <mat-tab label="OVERVIEW">
+                    <ng-template matTabContent>
+                        <app-overview (changePlanData)="getData($event)" [upperData]="fragmentDataSubsUpper.data">
+                        </app-overview>
+                    </ng-template>
+                </mat-tab>
+                <mat-tab label="PLANS" *ngIf="upperDataSubsUpper && upperDataSubsUpper.documentData && upperDataSubsUpper.documentData.availableAt == 1 && upperDataSubsUpper.documentData.planId==0">
+                    <ng-template matTabContent>
+                        <app-plans [componentFlag]='"plans"' [upperData]="fragmentDataSubsUpper.data"></app-plans>
+                    </ng-template>
+                </mat-tab>
+                <mat-tab label="SERVICES" *ngIf="upperDataSubsUpper && upperDataSubsUpper.documentData && upperDataSubsUpper.documentData.availableAt == 2">
+                    <ng-template matTabContent>
+                        <app-services [componentFlag]='"services"' [upperData]="fragmentDataSubsUpper.data"></app-services>
+                    </ng-template>
+                </mat-tab>
 
-      </mat-tab-group>
+            </mat-tab-group>
+        </div>
     </div>
-  </div>
-  <div *ngIf="fragmentDataSubsUpper.data.flag=='clients' || fragmentDataSubsUpper.data==='clients'" class="row">
-    <div class="col-md-12 p-0 popup-header-fix-tabs">
+    <div *ngIf="fragmentDataSubsUpper.data.flag=='clients' || fragmentDataSubsUpper.data==='clients'" class="row">
+        <div class="col-md-12 p-0 popup-header-fix-tabs">
 
-      <mat-tab-group (selectedTabChange)="tabClick($event)" [selectedIndex]="selectedServiceTab" animationDuration="0ms"
-        mat-align-tabs="center">
+            <mat-tab-group (selectedTabChange)="tabClick($event)" [selectedIndex]="selectedServiceTab" animationDuration="0ms" mat-align-tabs="center">
 
-        <mat-tab label="SUBSCRIPTIONS">
-          <ng-template matTabContent>
-            <div class="wrapper-20 bg-grey lter heading-fix b-a">
-              <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.data.name}}</h3>
-            </div>
-            <app-client-upper-subscription [upperData]="fragmentDataSubsUpper.data">
-            </app-client-upper-subscription>
-          </ng-template>
-        </mat-tab>
-        <mat-tab label="QUOTATIONS">
-          <!--                  <div class="wrapper-20 bg-grey lter heading-fix">-->
-          <!--                    <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.clientData.name}}</h3>-->
-          <!--                  </div>-->
-          <!--                  <app-quotations-subscription [upperData]="fragmentDataSubsUpper.clientData" [screenType]="1"-->
-          <!--                                               *ngIf="subscriptionTab=='QUOTATIONS'"></app-quotations-subscription>-->
-          <ng-template matTabContent>
-            <div class="wrapper-20 bg-grey lter heading-fix b-a">
-              <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.data.name}}</h3>
-            </div>
-            <app-quotations [clientData]="fragmentDataSubsUpper.data">
-            </app-quotations>
-          </ng-template>
-        </mat-tab>
-        <mat-tab label="INVOICES">
-          <ng-template matTabContent>
-            <div class="wrapper-20 bg-grey lter heading-fix b-a">
-              <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.data.name}}</h3>
-            </div>
-            <app-invoices [upperData]="fragmentDataSubsUpper.data">
-            </app-invoices>
-          </ng-template>
-        </mat-tab>
-        <mat-tab label="DOCUMENTS">
-          <ng-template matTabContent>
-            <div class="wrapper-20 bg-grey lter heading-fix b-a">
-              <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.data.name}}</h3>
-            </div>
-            <app-document [clientData]="fragmentDataSubsUpper.data" [componentFlag1]='clientDocuments'
-              [upperData]="fragmentDataSubsUpper.data">
-            </app-document>
-          </ng-template>
-        </mat-tab>
-        <mat-tab label="SETTINGS">
-          <ng-template matTabContent>
-            <div class="wrapper-20 bg-grey lter heading-fix b-a">
-              <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.data.name}}</h3>
-            </div>
-            <app-settings [upperData]="fragmentDataSubsUpper.data">
-            </app-settings>
-          </ng-template>
-        </mat-tab>
-      </mat-tab-group>
+                <mat-tab label="SUBSCRIPTIONS">
+                    <ng-template matTabContent>
+                        <div class="wrapper-20 bg-grey lter heading-fix b-a">
+                            <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.data.name}}</h3>
+                        </div>
+                        <app-client-upper-subscription [upperData]="fragmentDataSubsUpper.data">
+                        </app-client-upper-subscription>
+                    </ng-template>
+                </mat-tab>
+                <mat-tab label="QUOTATIONS">
+                    <!--                  <div class="wrapper-20 bg-grey lter heading-fix">-->
+                    <!--                    <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.clientData.name}}</h3>-->
+                    <!--                  </div>-->
+                    <!--                  <app-quotations-subscription [upperData]="fragmentDataSubsUpper.clientData" [screenType]="1"-->
+                    <!--                                               *ngIf="subscriptionTab=='QUOTATIONS'"></app-quotations-subscription>-->
+                    <ng-template matTabContent>
+                        <div class="wrapper-20 bg-grey lter heading-fix b-a">
+                            <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.data.name}}</h3>
+                        </div>
+                        <app-quotations [clientData]="fragmentDataSubsUpper.data">
+                        </app-quotations>
+                    </ng-template>
+                </mat-tab>
+                <mat-tab label="INVOICES">
+                    <ng-template matTabContent>
+                        <div class="wrapper-20 bg-grey lter heading-fix b-a">
+                            <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.data.name}}</h3>
+                        </div>
+                        <app-invoices [upperData]="fragmentDataSubsUpper.data">
+                        </app-invoices>
+                    </ng-template>
+                </mat-tab>
+                <mat-tab label="DOCUMENTS">
+                    <ng-template matTabContent>
+                        <div class="wrapper-20 bg-grey lter heading-fix b-a">
+                            <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.data.name}}</h3>
+                        </div>
+                        <app-document [clientData]="fragmentDataSubsUpper.data" [componentFlag1]='clientDocuments' [upperData]="fragmentDataSubsUpper.data">
+                        </app-document>
+                    </ng-template>
+                </mat-tab>
+                <mat-tab label="SETTINGS">
+                    <ng-template matTabContent>
+                        <div class="wrapper-20 bg-grey lter heading-fix b-a">
+                            <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.data.name}}</h3>
+                        </div>
+                        <app-settings [upperData]="fragmentDataSubsUpper.data">
+                        </app-settings>
+                    </ng-template>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
     </div>
-  </div>
 </div>
 
 
 <div *ngIf="isOverlayVisible" [@dialogContainer]="upperState" class="custom-overlay">
 </div>
 <div [@upperSliderOpenClose]="upperState" class="upper_slider">
-  <ng-template #dynamicUpper></ng-template>
+    <ng-template #dynamicUpper></ng-template>
 </div>
 <div [@openClose]="currentState" class="right_sidenav">
-  <ng-template #dynamic></ng-template>
+    <ng-template #dynamic></ng-template>
 </div>
