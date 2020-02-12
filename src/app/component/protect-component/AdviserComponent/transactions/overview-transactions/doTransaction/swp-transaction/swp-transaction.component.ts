@@ -4,6 +4,7 @@ import { ConfirmationTransactionComponent } from '../confirmation-transaction/co
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 import { OnlineTransactionService } from '../../../online-transaction.service';
+import { ProcessTransactionService } from '../process-transaction.service';
 
 @Component({
   selector: 'app-swp-transaction',
@@ -29,9 +30,17 @@ export class SwpTransactionComponent implements OnInit {
   navOfSelectedScheme: any;
   transactionSummary: {};
   getDataSummary: any;
+  swpFrequency: any;
+  fre: any;
+  frequency: any;
+  dates: any;
+  dateDisplay: any;
+  folioDetails: any;
+  scheme: any;
+  folioList: any;
 
   constructor(private subInjectService: SubscriptionInject,private onlineTransact: OnlineTransactionService,
-    private fb: FormBuilder) { }
+    private processTransaction :ProcessTransactionService,private fb: FormBuilder) { }
     @Input()
     set data(data) {
       this.inputData = data;
@@ -67,8 +76,8 @@ export class SwpTransactionComponent implements OnInit {
         tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
         showOnlyNonZero:true,
       }
-      this.onlineTransact.getNewSchemes(obj).subscribe(
-        data => this.getNewSchemesRes(data)
+      this.onlineTransact.getExistingSchemes(obj).subscribe(
+        data => this.getExistingSchemesRes(data)
       );
     } else {
 
@@ -85,12 +94,15 @@ export class SwpTransactionComponent implements OnInit {
     } if (data.length == 1) {
       this.reInvestmentOpt = []
     }
+    this.getFrequency()
+    this.getSchemeWiseFolios()
   }
-  getNewSchemesRes(data) {
-    console.log('new schemes', data)
+  getExistingSchemesRes(data) {
+    console.log('getExistingSchemesRes =', data)
     this.schemeList = data
   }
   selectedScheme(scheme) {
+    this.scheme =scheme
     this.showUnits = true
     this.transactionSummary = { schemeName: scheme.schemeName }
     this.navOfSelectedScheme = scheme.nav
@@ -103,6 +115,53 @@ export class SwpTransactionComponent implements OnInit {
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
       data => this.getSchemeDetailsRes(data)
     );
+  }
+  getSchemeWiseFolios() {
+    let obj1 = {
+      mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
+      advisorId:  this.getDataSummary.defaultClient.advisorId,
+      familyMemberId:  this.getDataSummary.defaultClient.familyMemberId,
+      clientId:  this.getDataSummary.defaultClient.clientId
+    }
+    this.onlineTransact.getSchemeWiseFolios(obj1).subscribe(
+      data => this.getSchemeWiseFoliosRes(data)
+    );
+  }
+  getSchemeWiseFoliosRes(data) {
+    console.log('res scheme folio',data)
+    this.folioList = data
+  }
+ 
+  selectedFolio(folio) {
+    this.folioDetails = folio
+    this.showUnits = true
+    this.transactionSummary = { folioNumber: folio.folioNumber }
+  }
+  getFrequency() {
+    let obj = {
+      isin: this.schemeDetails.isin,
+    }
+    this.onlineTransact.getSipFrequency(obj).subscribe(
+      data => this.getSipFrequencyRes(data)
+    );
+  }
+  getSipFrequencyRes(data) {
+    console.log('isin ----', data)
+    this.swpFrequency = data
+    this.swpFrequency = data.filter(function (element) {
+      return element.sipFrequency
+    })
+  }
+  selectedFrequency(getFrerq) {
+    this.fre = getFrerq
+    this.frequency = getFrerq.sipFrequency
+    this.swpTransaction.controls["employeeContry"].setValidators([Validators.min(getFrerq.sipMinimumInstallmentAmount)])
+    this.dateArray(getFrerq.sipDates)
+  }
+  dateArray(sipDates) {
+    this.dates = sipDates.split(",")
+    this.dateDisplay = this.processTransaction.getDateByArray(this.dates, true)
+    console.log('dateDisplay = ', this.dateDisplay)
   }
   onAddTransaction(value,data){
     this.confirmTrasaction = true
@@ -149,6 +208,8 @@ export class SwpTransactionComponent implements OnInit {
       modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
       folioSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      date:[(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      frequency:[(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
     });
 
     this.ownerData = this.swpTransaction.controls;

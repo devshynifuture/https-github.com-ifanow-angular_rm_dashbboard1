@@ -38,9 +38,7 @@
                     <div class="col-md-12 p-0 text-left">
                         <h5 class="m-0 pt-28 text-black pb-12">Select a scheme to invest in</h5>
                     </div>
-
                 </div>
-
                 <div class="row">
                     <div class="col-md-11 p-0">
                         <div class="form-group m-0">
@@ -59,7 +57,7 @@
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="col-md-1 ">
+                    <div class="col-md-1" *ngIf="showSpinner == true">
                         <mat-spinner class="mt-8"></mat-spinner>
                     </div>
 

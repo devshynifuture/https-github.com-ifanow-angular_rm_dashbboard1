@@ -43,30 +43,31 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pt-28 text-black pb-12">select scheme folio</h5>
+                    <div class="col-md-6 p-0 text-left">
+                        <h5 class="m-0 pt-28 text-black pb-12">Select scheme folio</h5>
                     </div>
-                    <div class="col-md-5 p-0">
-                        <mat-form-field>
-                            <mat-select class="form-control br-0">
-                                <mat-option>
-                                    Option
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
+                    <div class="col-md-7 p-0">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <mat-select class="form-control" formControlName="investmentAccountSelection">
+                                    <mat-option value="option" (onSelectionChange)="selectedFolio(folio)"
+                                        *ngFor="let folio of folioList">{{folio.folioNumber}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
                     </div>
                 </div>
-                <div class="row" *ngIf="showUnits == true">
+                <div class="row" *ngIf="showUnits ==true">
                     <div class="col-md-12 mt-20 pl-0">
-                        <div class="bg-grey lter">
+                        <div class="bg-grey lter" *ngIf="folioDetails">
                             <div class="row">
                                 <div class="col-md-6 p-20 text-left">
                                     <p class="f-14 m-0">Current value</p>
-                                    <h3 class="f-18 roboto m-0">Rs: 897</h3>
+                                    <h3 class="f-18 roboto m-0">Rs: {{folioDetails.currentValue}}</h3>
                                 </div>
                                 <div class="col-md-6 p-20 text-left">
                                     <p class="f-14 m-0">Balance unit</p>
-                                    <h3 class="f-18 roboto m-0">987</h3>
+                                    <h3 class="f-18 roboto m-0">{{folioDetails.balanceUnit}}</h3>
                                 </div>
                             </div>
                             <div class="row">
@@ -81,19 +82,19 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pt-28 text-black pb-12">STP Frequency</h5>
+                        <h5 class="m-0 pt-28 text-black pb-12">Select SIP Frequency</h5>
                     </div>
                     <div class="col-md-5 p-0">
-                        <mat-form-field>
-                            <mat-select class="form-control br-0">
-                                <mat-option>
-                                    Option
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <mat-select class="form-control" formControlName="frequency">
+                                    <mat-option value="option" (click)="selectedFrequency(frequency)"
+                                        *ngFor="let frequency of switchFrequency">{{frequency.switchFrequency}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
                         <h5 class="m-0 pt-28 text-black pb-12"> Amount/Units</h5>
@@ -109,7 +110,20 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12 p-0 text-left">
+                        <h5 class="m-0 pt-40 text-black pb-12">Select 1st Date SIP</h5>
+                    </div>
 
+                    <div class="col-md-5 p-0">
+                        <mat-form-field>
+                            <mat-select class="form-control" formControlName="date">
+                                <mat-option value="{{date.dateToDisplay}}" *ngFor="let date of dateDisplay">
+                                    {{date.dateToDisplay}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">

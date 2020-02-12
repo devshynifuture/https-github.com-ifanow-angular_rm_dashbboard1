@@ -36,6 +36,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   scheme: any;
   folioList: any;
   folioDetails: any;
+  showSpinner = false;
   constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService, 
     private subInjectService: SubscriptionInject,private fb: FormBuilder) { }
   @Input()
@@ -101,6 +102,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.ExistingOrNew = value
   }
   selectedScheme(scheme) {
+    this.showSpinner = true
     this.scheme = scheme
     this.transactionSummary = { schemeName: scheme.schemeName }
     this.navOfSelectedScheme = scheme.nav
@@ -115,6 +117,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     );
   }
   getSchemeDetailsRes(data) {
+    this.showSpinner = false
     console.log('getSchemeDetailsRes == ', data)
     this.maiSchemeList = data
     this.schemeDetails = data[0]

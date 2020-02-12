@@ -4,6 +4,7 @@ import { ConfirmationTransactionComponent } from '../confirmation-transaction/co
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 import { OnlineTransactionService } from '../../../online-transaction.service';
+import { ProcessTransactionService } from '../process-transaction.service';
 
 @Component({
   selector: 'app-stp-transaction',
@@ -29,8 +30,17 @@ export class StpTransactionComponent implements OnInit {
   navOfSelectedScheme: any;
   selectScheme=2;
   getDataSummary: any;
+  scheme: any;
+  folioDetails: any;
+  folioList: any;
+  switchFrequency: any;
+  fre: any;
+  frequency: any;
+  dates: any;
+  dateDisplay: any;
 
   constructor(private subInjectService: SubscriptionInject,private onlineTransact: OnlineTransactionService,
+    private processTransaction: ProcessTransactionService,
     private fb: FormBuilder) { }
     @Input()
     set data(data) {
@@ -66,30 +76,35 @@ export class StpTransactionComponent implements OnInit {
         advisorId: 414,
         tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
       }
-      this.onlineTransact.getNewSchemes(obj).subscribe(
-        data => this.getNewSchemesRes(data)
+      this.onlineTransact.getExistingSchemes(obj).subscribe(
+        data => this.getExistingSchemesRes(data)
       );
     } else {
 
     }
   }
-  getSchemeDetailsRes(data) {
-    console.log('getSchemeDetailsRes == ', data)
-    this.maiSchemeList = data
-    this.schemeDetails = data[0]
-    this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
-    if (data.length > 1) {
-      this.reInvestmentOpt = data
-      console.log('reinvestment', this.reInvestmentOpt)
-    } if (data.length == 1) {
-      this.reInvestmentOpt = []
+  getSchemeWiseFolios() {
+    let obj1 = {
+      mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
+      advisorId:  this.getDataSummary.defaultClient.advisorId,
+      familyMemberId:  this.getDataSummary.defaultClient.familyMemberId,
+      clientId:  this.getDataSummary.defaultClient.clientId
     }
+    this.onlineTransact.getSchemeWiseFolios(obj1).subscribe(
+      data => this.getSchemeWiseFoliosRes(data)
+    );
   }
-  getNewSchemesRes(data) {
-    console.log('new schemes', data)
-    this.schemeList = data
+  getSchemeWiseFoliosRes(data) {
+    console.log('res scheme folio',data)
+    this.folioList = data
+  }
+  selectedFolio(folio) {
+    this.folioDetails = folio
+    this.showUnits = true
+    this.transactionSummary = { folioNumber: folio.folioNumber }
   }
   selectedScheme(scheme) {
+    this.scheme = scheme
     this.showUnits = true
     this.transactionSummary = { schemeName: scheme.schemeName }
     this.navOfSelectedScheme = scheme.nav
@@ -102,6 +117,50 @@ export class StpTransactionComponent implements OnInit {
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
       data => this.getSchemeDetailsRes(data)
     );
+  }
+  getSchemeDetailsRes(data) {
+    console.log('getSchemeDetailsRes == ', data)
+    this.maiSchemeList = data
+    this.schemeDetails = data[0]
+    this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
+    if (data.length > 1) {
+      this.reInvestmentOpt = data
+      console.log('reinvestment', this.reInvestmentOpt)
+    } if (data.length == 1) {
+      this.reInvestmentOpt = []
+    }
+    this.getSchemeWiseFolios()
+    // this.getMandateDetails()
+    this.getFrequency()
+  }
+  getExistingSchemesRes(data) {
+    this.schemeList = data
+  }
+  getFrequency() {
+    let obj = {
+      isin: this.schemeDetails.isin,
+    }
+    this.onlineTransact.getSipFrequency(obj).subscribe(
+      data => this.getSipFrequencyRes(data)
+    );
+  }
+  getSipFrequencyRes(data) {
+    console.log('isin ----', data)
+    this.switchFrequency = data
+    this.switchFrequency = data.filter(function (element) {
+      return element.sipFrequency
+    })
+  }
+  selectedFrequency(getFrerq) {
+    this.fre = getFrerq
+    this.frequency = getFrerq.sipFrequency
+    this.stpTransaction.controls["employeeContry"].setValidators([Validators.min(getFrerq.sipMinimumInstallmentAmount)])
+    this.dateArray(getFrerq.sipDates)
+  }
+  dateArray(sipDates) {
+    this.dates = sipDates.split(",")
+    this.dateDisplay = this.processTransaction.getDateByArray(this.dates, true)
+    console.log('dateDisplay = ', this.dateDisplay)
   }
   onAddTransaction(value,data){
     this.confirmTrasaction = true
@@ -144,10 +203,12 @@ export class StpTransactionComponent implements OnInit {
       schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
       investor: [(!data) ? '' : data.investor, [Validators.required]],
       employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required]],
+      frequency:[(!data) ? '' : data.employeeContry, [Validators.required]],
       investmentAccountSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
       folioSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      date:[(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
     });
 
     this.ownerData = this.stpTransaction.controls;
