@@ -15,6 +15,7 @@ import { UtilService } from 'src/app/services/util.service';
 export class CashflowPlanIncomeComponent implements OnInit {
   lastItem: any;
   detailsForMonthlyDistributionGetList: any;
+  familyMemberList: any;
 
   constructor(private eventService: EventService,
     private cashflowService: CashFlowsPlanService) { }
@@ -58,7 +59,16 @@ export class CashflowPlanIncomeComponent implements OnInit {
         });
   }
 
+  getFamilyMemberListData() {
+    this.cashflowService
+      .getFamilyMemberData({ advisorId: this.advisorId, clientId: this.clientId })
+      .subscribe(res => {
+        this.familyMemberList = res.familyMembersList;
+      })
+  }
+
   openUpperSlider(element) {
+    this.getFamilyMemberListData();
     console.log(this.tableInUse);
     console.log(element);
 
@@ -68,7 +78,7 @@ export class CashflowPlanIncomeComponent implements OnInit {
     const fragmentData = {
       flag: 'openCashFlowUpper',
       id: 1,
-      data: { ...element, tableInUse: this.tableInUse },
+      data: { ...element, familyMemberList: this.familyMemberList, tableInUse: this.tableInUse },
       direction: 'top',
       componentName: CashflowUpperSliderComponent,
       state: 'open'

@@ -13,6 +13,8 @@ import { CashflowAddService } from '../cashflow-add.service';
   styleUrls: ['./cashflow-add-income.component.scss']
 })
 export class CashflowAddIncomeComponent implements OnInit {
+  ownerName: any;
+  familyMemberId: any;
 
   constructor(
     public dialogRef: MatDialogRef<CashflowAddIncomeComponent>,
@@ -21,11 +23,14 @@ export class CashflowAddIncomeComponent implements OnInit {
     private cashflowService: CashFlowsPlanService,
     private cashflowAddService: CashflowAddService,
     private eventService: EventService
-  ) { }
+  ) {
+  }
 
   advisorId = AuthService.getAdvisorId();
   clientId = AuthService.getClientId();
-  familyMemberList: {}[] = [];
+  familyMemberList: {}[];
+
+  ownerData;
 
   validatorType = ValidatorType;
   formIncome = this.fb.group({
@@ -48,7 +53,7 @@ export class CashflowAddIncomeComponent implements OnInit {
   });
 
   get formBonusListArrayControls() {
-    return this.formIncome.controls['bonusList'] as FormArray;
+    return this.formIncome.get('bonusList') as FormArray;
   }
 
   addNewBonusDataInFormArray() {
@@ -65,8 +70,8 @@ export class CashflowAddIncomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getFamilyMemberData();
-    console.log(this.formBonusListArrayControls.controls);
+    console.log(this.data);
+    this.ownerData = this.formIncome.controls;
   }
 
   // editing multiple values
@@ -157,15 +162,5 @@ export class CashflowAddIncomeComponent implements OnInit {
     // }, err => {
     //   console.error('this is some error in cashflow add::', err)
     // })
-  }
-
-  getFamilyMemberData() {
-    this.cashflowService
-      .getFamilyMemberData({ advisorId: this.advisorId, clientId: this.clientId })
-      .subscribe(res => {
-        console.log("family member ::::::::::::", res);
-        this.familyMemberList = res.familyMembersList;
-        console.log(this.familyMemberList);
-      });
   }
 }

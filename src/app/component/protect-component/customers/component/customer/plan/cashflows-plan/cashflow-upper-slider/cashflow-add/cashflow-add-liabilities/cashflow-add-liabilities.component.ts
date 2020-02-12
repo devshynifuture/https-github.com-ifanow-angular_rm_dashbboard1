@@ -1,9 +1,11 @@
+import { ValidatorType } from './../../../../../../../../../../services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CashflowAddComponent } from './../cashflow-add.component';
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { CashFlowsPlanService } from '../../../cashflows-plan.service';
+import { CashflowAddService } from '../cashflow-add.service';
 
 @Component({
   selector: 'app-cashflow-add-liabilities',
@@ -14,18 +16,25 @@ export class CashflowAddLiabilitiesComponent implements OnInit {
   maxDate = new Date();
   advisorId = AuthService.getAdvisorId();
   clientId = AuthService.getClientId();
+  showTransact: boolean = false;
+
   constructor(
     public dialogRef: MatDialogRef<CashflowAddLiabilitiesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
-    private cashflowService: CashFlowsPlanService
+    private cashflowService: CashFlowsPlanService,
+    private cashflowAddService: CashflowAddService
   ) { }
 
+  ownerData;
+  validatorType = ValidatorType;
+
   ngOnInit() {
+    this.ownerData = this.formLiabilities.controls;
   }
 
   formLiabilities = this.fb.group({
-    "owner": [, Validators.required],
+    "ownerName": [, Validators.required],
     "loan-type": [, Validators.required],
     "original-amt-loan": [, Validators.required],
     "loan-tenure": [, Validators.required],
@@ -34,9 +43,41 @@ export class CashflowAddLiabilitiesComponent implements OnInit {
     "annual-interest-rate": [, Validators.required],
     "emi": [,],
     "financial-institution": [,],
-    "collateral": [,]
-  })
+    "collateral": [,],
+    "transact": this.fb.array([
+      this.fb.group({
+        "partPaymentDate": [, Validators.required],
+        "partPaymentAmount": [, Validators.required],
+        "partPaymentOptions": [, Validators.required]
+      })
+    ])
+  });
 
+
+  onChange(event) {
+    if (parseInt(event.target.value) > 100) {
+      event.target.value = '100';
+      this.formLiabilities.get('annual-interest-rate').setValue(event.target.value);
+    }
+  }
+
+  addTransaction() {
+    (this.formLiabilities.get('transact') as FormArray).push(
+      this.fb.group({
+        "partPaymentDate": [,],
+        "partPaymentAmount": [,],
+        "partPaymentOptions": [,]
+      })
+    );
+  }
+
+  toggleTransact() {
+    this.showTransact = !this.showTransact;
+  }
+
+  removeTransaction(index) {
+    (this.formLiabilities.get('transact') as FormArray).controls.splice(index, 1);
+  }
 
   shouldExpandLiabilities: boolean = false;
 
@@ -54,6 +95,10 @@ export class CashflowAddLiabilitiesComponent implements OnInit {
       })
   }
 
+  getFormArrayControlsOfTransact() {
+    return (this.formLiabilities.get('transact') as FormArray).controls;
+  }
+
   cashflowEditLiabilitiesData(data) {
     this.cashflowService
       .cashflowEditLiabilities({ advisorId: this.advisorId, clientId: this.clientId })
@@ -65,7 +110,7 @@ export class CashflowAddLiabilitiesComponent implements OnInit {
   }
 
   submitForm() {
-    console.log(this.formLiabilities);
+    console.log(this.formLiabilities.value);
   }
 
   closeDialog() {

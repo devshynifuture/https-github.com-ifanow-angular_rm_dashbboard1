@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UpperTableBox } from '../../cashflow.interface';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatTableDataSource } from '@angular/material';
 import { EventService } from 'src/app/Data-service/event.service';
 import { CashFlowsPlanService } from '../../cashflows-plan.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -20,7 +20,7 @@ export class CashflowUpperLiabilitiesComponent implements OnInit {
     private cashflowService: CashFlowsPlanService) { }
 
   displayedColumns: string[] = ['description', 'month1', 'month2', 'month3', 'month4', 'month5', 'month6', 'month7', 'month8', 'month9', 'month10', 'month11', 'month12', 'total', 'remove'];
-  dataSource = null;
+  dataSource: MatTableDataSource<UpperTableBox>;
   advisorId = AuthService.getAdvisorId();
   clientId = AuthService.getClientId();
 
@@ -32,6 +32,7 @@ export class CashflowUpperLiabilitiesComponent implements OnInit {
 
   ngOnInit() {
     this.cashflowCategory = this.data.tableInUse;
+    this.dataSource = new MatTableDataSource(ELEMENT_DATA2);
 
     this.year = this.data.year;
     // this.refreshTableData();
@@ -101,22 +102,6 @@ export class CashflowUpperLiabilitiesComponent implements OnInit {
   }
 
 }
-
-// for Income
-let ELEMENT_DATA: UpperTableBox[] = [
-  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
-  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
-  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
-  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
-  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
-  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
-  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
-];
-
-// for expense
-let ELEMENT_DATA1: UpperTableBox[] = [
-  { description: 'dkabjvk', month1: '5', month2: '213', month3: '298', month4: '1232', month5: '134', month6: '1265', month7: '15646756', month8: '435', month9: '13563', month10: '44456745', month11: '1434', month12: '14567', total: '12564', remove: '' },
-]
 
 // for liabilities
 let ELEMENT_DATA2: UpperTableBox[] = [

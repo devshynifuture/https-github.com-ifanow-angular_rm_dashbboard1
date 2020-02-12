@@ -7,12 +7,11 @@
             </div>
             <div class="col-md-4">
                 <mat-form-field>
-                    <mat-select formControlName="ownerName" class="form-control br-0  ">
-                        <mat-option value="Rahul Jain">
-                            Rahul Jain
-                        </mat-option>
-                        <mat-option value="Sarvesh">
-                            Sarvesh
+                    <mat-select appOwner (valueChange)='cashflowAddService.display($event)'
+                        (valueChange1)='cashflowAddService.familyMemberListAssign($event)' [data]='ownerData'
+                        formControlName="ownerName" class="form-control br-0">
+                        <mat-option [value]="member" *ngFor="let member of cashflowAddService.familyMemberList">
+                            {{ member.userName }}
                         </mat-option>
                     </mat-select>
                     <mat-error *ngIf="formIncome.get('ownerName').touched && formIncome.get('ownerName').invalid">

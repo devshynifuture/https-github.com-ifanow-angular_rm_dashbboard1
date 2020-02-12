@@ -39,7 +39,7 @@ export class AddVariableFeeComponent implements OnInit {
   otherAssetData;
   selectedOtherAssets = [];
   pricing = false;
-  isSelectOtherAssets:boolean=false;
+  isSelectOtherAssets: boolean = false;
   ischeckVariableData
   serviceId: any;
   dataToSend: any;
@@ -49,8 +49,8 @@ export class AddVariableFeeComponent implements OnInit {
   _data: any;
   @Input() set data(data) {
     let stock = this.enumService.getOtherAssetData().filter((x) => x.subAssetClassName == "Stocks");
-    console.log(stock,this.enumService.getOtherAssetData(),"stock 123");
-    
+    console.log(stock, this.enumService.getOtherAssetData(), "stock 123");
+
     if (data == "") {
       // this.otherAssetData=UtilService.
       this.otherAssetData = Object.assign([], stock);
@@ -66,7 +66,7 @@ export class AddVariableFeeComponent implements OnInit {
   @Output() outputVariableData = new EventEmitter();
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private fb: FormBuilder,
-    private subService: SubscriptionService, private enumService: EnumServiceService,  private eventService: EventService) {
+    private subService: SubscriptionService, private enumService: EnumServiceService, private eventService: EventService) {
   }
 
   ngOnInit() {
@@ -153,7 +153,7 @@ export class AddVariableFeeComponent implements OnInit {
         pricing: [data.servicePricing.pricingList[2].pricing, [Validators.required]]
       });
       if (data.servicePricing.pricingList[2].serviceSubAssets != undefined) {
-        this.otherAssetData = data.servicePricing.pricingList[2].serviceSubAssets.filter((x)=> x.subAssetClassName == "Stocks")
+        this.otherAssetData = data.servicePricing.pricingList[2].serviceSubAssets.filter((x) => x.subAssetClassName == "Stocks")
       }
       // this.otherAssetData = data.servicePricing.pricingList[2].serviceSubAssets
       // this.otherAssetData = data.servicePricing.pricingList[2].serviceSubAssets
@@ -227,16 +227,16 @@ export class AddVariableFeeComponent implements OnInit {
               id: (this._data != undefined) ? this._data.servicePricing.id : '',
               directRegular: 1,
               assetClassId: 1,
-              debtAllocation: this.variableFeeData.controls.directFees.controls.debt.value > 100? 100 : this.variableFeeData.controls.directFees.controls.debt.value,
-              equityAllocation: this.variableFeeData.controls.directFees.controls.equity.value > 100? 100 : this.variableFeeData.controls.directFees.controls.equity.value,
-              liquidAllocation: this.variableFeeData.controls.directFees.controls.liquid.value > 100? 100 : this.variableFeeData.controls.directFees.controls.liquid.value,
+              debtAllocation: this.variableFeeData.controls.directFees.controls.debt.value > 100 ? 100 : this.variableFeeData.controls.directFees.controls.debt.value,
+              equityAllocation: this.variableFeeData.controls.directFees.controls.equity.value > 100 ? 100 : this.variableFeeData.controls.directFees.controls.equity.value,
+              liquidAllocation: this.variableFeeData.controls.directFees.controls.liquid.value > 100 ? 100 : this.variableFeeData.controls.directFees.controls.liquid.value,
             }, {
               id: (this._data != undefined) ? this._data.servicePricing.pricingList[1].id : '',
               directRegular: 2,
               assetClassId: 1,
-              debtAllocation: this.variableFeeData.controls.regularFees.controls.debt.value > 100? 100 : this.variableFeeData.controls.regularFees.controls.debt.value,
-              equityAllocation: this.variableFeeData.controls.regularFees.controls.equity.value > 100? 100 : this.variableFeeData.controls.regularFees.controls.equity.value,
-              liquidAllocation: this.variableFeeData.controls.regularFees.controls.liquid.value > 100? 100 : this.variableFeeData.controls.regularFees.controls.liquid.value,
+              debtAllocation: this.variableFeeData.controls.regularFees.controls.debt.value > 100 ? 100 : this.variableFeeData.controls.regularFees.controls.debt.value,
+              equityAllocation: this.variableFeeData.controls.regularFees.controls.equity.value > 100 ? 100 : this.variableFeeData.controls.regularFees.controls.equity.value,
+              liquidAllocation: this.variableFeeData.controls.regularFees.controls.liquid.value > 100 ? 100 : this.variableFeeData.controls.regularFees.controls.liquid.value,
             },
             {
               id: (this._data != undefined) ? this._data.servicePricing.pricingList[2].id : '',
@@ -252,23 +252,23 @@ export class AddVariableFeeComponent implements OnInit {
       console.log('jifsdfoisd', obj);
       if (this.serviceId == undefined) {
         this.subService.createSettingService(obj).subscribe(
-          data =>{
+          data => {
             this.saveVariableFeeDataResponse(data, obj);
             this.barButtonOptions.active = false;
           },
-          err =>{
+          err => {
             console.log("error createSettingService", err);
             this.barButtonOptions.active = false;
           }
         );
       } else {
         this.subService.editSettingService(obj).subscribe(
-          data =>{
+          data => {
             this.saveFeeTypeDataEditResponse(data);
             this.barButtonOptions.active = false;
 
           },
-          err =>{
+          err => {
             this.barButtonOptions.active = false;
             console.log("error editSettingService", err);
           }
