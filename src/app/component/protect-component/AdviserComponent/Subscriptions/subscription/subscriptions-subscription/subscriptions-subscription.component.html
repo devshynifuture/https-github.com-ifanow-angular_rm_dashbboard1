@@ -85,7 +85,7 @@
                     </td>
                 </ng-container>
                 <!-- Weight Column -->
-                <ng-container matColumnDef="activation">
+                <ng-container matColumnDef="activation" >
                     <th *matHeaderCellDef class="f-18 t-6" mat-header-cell mat-sort-header="startsOn">
                         Activation date
                     </th>
@@ -104,7 +104,7 @@
                 </ng-container>
 
                 <!-- Symbol Column -->
-                <ng-container matColumnDef="lastbilling">
+                <ng-container matColumnDef="lastbilling" >
                     <th *matHeaderCellDef class="f-18 t-10" mat-header-cell mat-sort-header="prevBillingDate">
                         Last billing date
                     </th>
@@ -112,21 +112,21 @@
                         <div class="bar"> {{element.prevBillingDate | date:'dd/MM/yyyy'}} </div>
                     </td>
                 </ng-container>
-                <ng-container matColumnDef="nextbilling">
-                    <th *matHeaderCellDef class="f-18 text-right pr-24 t-15" mat-header-cell
+                <ng-container matColumnDef="nextbilling" >
+                    <th *matHeaderCellDef class="f-18 text-right pr-24 t-15"  mat-header-cell [ngStyle]="{'display':isLoading?'none':''}"
                         mat-sort-header="nextBillingDate">
                         Next billing date
                     </th>
-                    <td *matCellDef="let element" class="text-left pr-8 t-15" mat-cell>
+                    <td *matCellDef="let element" class="text-left pr-8 t-15" [ngStyle]="{'display':isLoading?'none':''}"  mat-cell>
                         <div class="bar text-left"> {{element.nextBillingDate | date:'dd/MM/yyyy'}} </div>
                     </td>
                 </ng-container>
-                <ng-container matColumnDef="feemode">
+                <ng-container matColumnDef="feemode" >
                     <th *matHeaderCellDef class="f-18 text-left pr-24 t-12" mat-header-cell
-                        mat-sort-header="subscriptionPricing.feeTypeId" matTooltip="Fee collection mode"
+                        mat-sort-header="subscriptionPricing.feeTypeId" matTooltip="Fee collection mode" [ngStyle]="{'display':isLoading?'none':''}"
                         aria-label="Button that displays a tooltip when focused or hovered over"> Fee coll...
                     </th>
-                    <td *matCellDef="let element" class="text-left pr-8 t-12" mat-cell>
+                    <td *matCellDef="let element" class="text-left pr-8 t-12" [ngStyle]="{'display':isLoading?'none':''}" mat-cell>
                         <div class="bar">
                             <span class="t-10" *ngIf="element.subscriptionPricing">
 
@@ -137,7 +137,7 @@
                         </div>
                     </td>
                 </ng-container>
-                <ng-container matColumnDef="icons" stickyEnd>
+                <ng-container matColumnDef="icons" stickyEnd >
                     <th *matHeaderCellDef class="f-18 t-2" mat-header-cell></th>
                     <td *matCellDef="let element" class="t-2" mat-cell>
                         <div *ngIf="!isLoading">
