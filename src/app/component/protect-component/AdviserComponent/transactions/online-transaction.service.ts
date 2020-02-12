@@ -31,8 +31,8 @@ export class OnlineTransactionService {
   getDefaultDetails(data){
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_DEFAULT_DETAILS, data,1);
   }
-  purchase(data){
-    return this.http.postEncoded(apiConfig.TRANSACT + appConfig.PURCHASE, data)
+  transactionBSE(data){
+    return this.http.postEncoded(apiConfig.TRANSACT + appConfig.BSE_TRANSACTION, data)
   }
   getExistingSchemes(data){
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_EXISTING_SCHEMES, data, 1)
@@ -46,4 +46,10 @@ export class OnlineTransactionService {
   getMandateDetails(data){
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_MANDATE_DETAILS, data, 1)
   }
+  getSipFrequency(data){
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_FREQUENCY, data, 1)
+  }
+  // sipBSE(data){
+  //   return this.http.postEncoded(apiConfig.TRANSACT + appConfig.SIP_BSE, data)
+  // }
 }

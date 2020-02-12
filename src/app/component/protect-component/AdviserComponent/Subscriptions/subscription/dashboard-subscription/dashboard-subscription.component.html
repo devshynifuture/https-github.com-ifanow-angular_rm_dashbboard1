@@ -5,9 +5,9 @@
 
         <div *ngIf="showLetsBegin==false" class="row bg-red mt-20 mb-36">
             <div class="col-md-5">
-                <img class="dashboard-img" src="assets/images/svg/Dashboard.svg">
+                <img class="dashboard-img" src="/assets/images/svg/Dashboard.svg">
             </div>
-            <div class="col-md-7">
+            <div class=" col-md-7">
                 <h1>Hi {{advisorName}}, {{greeting}}</h1>
                 <p class="mb-0 pt-12">We’re excited to see you here! The dashboard currently looks barren. </p>
                 <p> Fret not. We’ll help you in this journey. We’re in this together. </p>
@@ -73,7 +73,7 @@
                                             <p class="f-15 mb-28">{{invoice.clientName}}</p>
                                             <p class="f-13 mb-12">{{invoice.invoiceNumber}}</p>
                                         </div>
-                                        <div class="col-md-4 pr-0">
+                                        <div class="col-md-4 p-0">
                                             <p class="f-15 mb-28">₹{{invoice.finalAmount}}</p>
                                             <p class="f-13 mb-12">{{invoice.invoiceDate | date:'dd/MM/yyyy'}}</p>
                                         </div>

@@ -34,7 +34,14 @@
   }
 }
 
-@media(max-width:1200px) {}
+@media(max-width:1200px) {
+  .variblefee {
+    h5 {
+      font-size: 14px;
+    }
+  }
+
+}
 
 @media(max-width:1142px) {
   #ui-dashboard {
@@ -42,6 +49,26 @@
       p {
         font-size: 14px;
         margin-bottom: 10px;
+      }
+    }
+  }
+
+  .radioBtn .mat-radio-label {
+    font-size: 14px;
+  }
+
+  .settings {
+
+
+    .wrapper-100 {
+      padding: 60px;
+    }
+  }
+
+  #ui-dashboard {
+    .subscription-summary {
+      p {
+        font-size: 14px !important;
       }
     }
   }
@@ -79,5 +106,15 @@
     h4 {
       font-size: 16px;
     }
+  }
+
+  #ui-stepper {
+    .mat-radio-button {
+      min-width: 135px;
+    }
+  }
+
+  .mat-radio-button {
+    min-width: 140px;
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-confirmation-transaction',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConfirmationTransactionComponent implements OnInit {
 
-  constructor() { }
+  constructor(private subInjectService: SubscriptionInject) { }
 
   ngOnInit() {
   }
-
+  close() {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  }
 }
