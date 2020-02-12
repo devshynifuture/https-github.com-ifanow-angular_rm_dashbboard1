@@ -361,6 +361,9 @@ export const appConfig = {
   MAP_UNMAP_FOLIOS: '/map-iin',
   GET_FREQUENCY: 'bse/scheme/sip/view',
   SIP_BSE: 'bse/order/create',
+  BSE_TRANSACTION: 'bse/order/create',
+  // SIP_BSE:'bse/order/create',
+
   // cashflow 
   CASHFLOW_ADD_INCOME: 'cashflow/income/add',
   CASHFLOW_GET_INCOME: 'cashflow/income/get',

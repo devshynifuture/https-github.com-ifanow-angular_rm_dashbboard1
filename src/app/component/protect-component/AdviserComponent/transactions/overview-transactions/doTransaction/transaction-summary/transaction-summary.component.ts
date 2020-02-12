@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ProcessTransactionService } from '../process-transaction.service';
 import { OnlineTransactionService } from '../../../online-transaction.service';
+import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-transaction-summary',
@@ -21,7 +22,8 @@ export class TransactionSummaryComponent implements OnInit {
   defaultClient: any;
   allData: any;
   clientDataList: any;
-  constructor(private onlineTransact: OnlineTransactionService, private processTransaction: ProcessTransactionService) { }
+  constructor(private onlineTransact: OnlineTransactionService, private processTransaction: ProcessTransactionService,
+    private subInjectService: SubscriptionInject,) { }
   showPlatform = false;
   @Output() defaultDetails = new EventEmitter();
   @Input() set data(data) {

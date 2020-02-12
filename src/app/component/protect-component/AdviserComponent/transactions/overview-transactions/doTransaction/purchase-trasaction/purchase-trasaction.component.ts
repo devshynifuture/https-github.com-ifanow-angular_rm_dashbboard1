@@ -36,8 +36,8 @@ export class PurchaseTrasactionComponent implements OnInit {
   scheme: any;
   folioList: any;
   folioDetails: any;
-  constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService, private subInjectService: SubscriptionInject,
-    private fb: FormBuilder) { }
+  constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService, 
+    private subInjectService: SubscriptionInject,private fb: FormBuilder) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -237,15 +237,17 @@ export class PurchaseTrasactionComponent implements OnInit {
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       }
       console.log('new purchase obj', obj)
-      this.onlineTransact.purchase(obj).subscribe(
+      this.onlineTransact.transactionBSE(obj).subscribe(
         data => this.purchaseRes(data)
       );
     }
   }
   purchaseRes(data) {
     console.log('purchase transaction ==', data)
-    if(data){
-      this.onAddTransaction('confirm',null)
+    if(data == undefined){
+
+    }else{
+    this.onAddTransaction('confirm',null)
     }
   }
 }
