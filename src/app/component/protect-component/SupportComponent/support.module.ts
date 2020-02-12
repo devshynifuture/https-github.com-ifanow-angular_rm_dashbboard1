@@ -24,10 +24,12 @@ import { DynamicComponentService } from 'src/app/services/dynamic-component.serv
 import { SupportEntryModule } from './support.entry.module';
 import { IfaBoradingHistoryComponent } from './ifa-onboarding/ifa-borading-history/ifa-borading-history.component';
 import { AdminDetailsComponent } from './ifa-onboarding/admin-details/admin-details.component';
+import { UpperSliderBackofficeComponent } from './common-component/upper-slider-backoffice/upper-slider-backoffice.component';
+import { ReconciliationDetailsViewComponent } from './common-component/reconciliation-details-view/reconciliation-details-view.component';
 
 
 @NgModule({
-  declarations: [SupportSidebarComponent, SupportDashboardComponent, MyIfasComponent, IfaOnboardingComponent, SupportMiscellaneousComponent, AddStockMasterComponent, AddLifeInsuranceMasterComponent, SchemeMappingComponent, IfasDetailsComponent, IfaBoradingHistoryComponent, AdminDetailsComponent],
+  declarations: [SupportSidebarComponent, SupportDashboardComponent, MyIfasComponent, IfaOnboardingComponent, SupportMiscellaneousComponent, AddStockMasterComponent, AddLifeInsuranceMasterComponent, SchemeMappingComponent, IfasDetailsComponent, IfaBoradingHistoryComponent, AdminDetailsComponent, UpperSliderBackofficeComponent, ReconciliationDetailsViewComponent],
   imports: [
     CommonModule,
     SupportRoutingModule,

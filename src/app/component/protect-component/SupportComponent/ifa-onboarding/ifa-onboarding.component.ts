@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { IfaBoradingHistoryComponent } from './ifa-borading-history/ifa-borading-history.component';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { AdminDetailsComponent } from './admin-details/admin-details.component';
+import { MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-ifa-onboarding',
@@ -10,6 +11,7 @@ import { AdminDetailsComponent } from './admin-details/admin-details.component';
   styleUrls: ['./ifa-onboarding.component.scss']
 })
 export class IfaOnboardingComponent implements OnInit {
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   isLoading = false;
 
 
@@ -31,7 +33,7 @@ export class IfaOnboardingComponent implements OnInit {
       flag: value,
       data,
       id: 1,
-      state: 'open',
+      state: 'open50',
       componentName: IfaBoradingHistoryComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
