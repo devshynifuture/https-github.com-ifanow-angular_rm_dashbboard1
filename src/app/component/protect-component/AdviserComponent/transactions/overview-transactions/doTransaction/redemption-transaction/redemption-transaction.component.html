@@ -89,7 +89,7 @@
                     </div>
                     <div class="col-md-5 p-0">
                         <mat-form-field>
-                            <mat-select class="form-control br-0" (selectionChange)="redemptionType($event)">
+                            <mat-select class="form-control br-0" formControlName="redeemType"(selectionChange)="redemptionType($event)">
                                 <mat-option value="1">Amount Rs.
                                 </mat-option>
                                 <mat-option value="2">No. of units
@@ -145,7 +145,7 @@
             <button mat-button class="text-success">
                 SAVE & ADD ANOTHER
             </button>
-            <button mat-button class="text-success" (click)="onAddTransaction('confirm',null)">
+            <button mat-button class="text-success" (click)="redeem()">
                 SAVE & PROCEED
             </button>
         </div>

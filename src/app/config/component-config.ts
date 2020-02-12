@@ -353,12 +353,12 @@ export const appConfig = {
   GET_SCHEME_DETAILS: 'mutual-fund/product-limit/get',
   GET_FAMILY_MEMBER: 'family/name/get',
   GET_DEFAULT_DETAILS: 'bse/user/family-member/transaction-setting/default',
-  PURCHASE: 'bse/order/create',
+  BSE_TRANSACTION: 'bse/order/create',
   GET_AMCWISE_FOLIO:'mutual-fund/folios/amc-wise/get',
   GET_SCHEMEWISE_FOLIO:'mutual-fund/folios/scheme-wise/get',
   GET_MANDATE_DETAILS:'bse/mandate/view',
   GET_FREQUENCY:'bse/scheme/sip/view',
-  SIP_BSE:'bse/order/create',
+  // SIP_BSE:'bse/order/create',
 
   // cashflow 
   CASHFLOW_ADD_INCOME: 'cashflow/income/add',

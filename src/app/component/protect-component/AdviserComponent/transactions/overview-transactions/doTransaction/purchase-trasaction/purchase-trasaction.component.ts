@@ -237,7 +237,7 @@ export class PurchaseTrasactionComponent implements OnInit {
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       }
       console.log('new purchase obj', obj)
-      this.onlineTransact.purchase(obj).subscribe(
+      this.onlineTransact.transactionBSE(obj).subscribe(
         data => this.purchaseRes(data)
       );
     }

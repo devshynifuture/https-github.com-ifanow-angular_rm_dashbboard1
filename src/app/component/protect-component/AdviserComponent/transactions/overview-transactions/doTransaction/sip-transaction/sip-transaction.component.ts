@@ -147,6 +147,7 @@ export class SipTransactionComponent implements OnInit {
     console.log('getSchemeDetailsRes == ', data)
     this.maiSchemeList = data
     this.schemeDetails = data[0]
+    this.sipTransaction.controls["employeeContry"].setValidators([Validators.min(this.schemeDetails.minimumPurchaseAmount)])
     this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
     if (data.length > 1) {
       this.reInvestmentOpt = data
@@ -266,7 +267,7 @@ export class SipTransactionComponent implements OnInit {
       adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
       clientId: this.getDataSummary.defaultClient.clientId,
       startDate: Number(new Date(this.sipTransaction.controls.date.value.replace(/"/g, ""))),
-      frequencyType: this.sipTransaction.controls.frequency.value.toUpperCase(),
+      frequencyType:this.frequency,
       //endDate :sipTransaction.sip.scheme.,
       noOfInstallments: this.sipTransaction.controls.installment.value,
       orderType: this.mandateDetails[0].mandateType,
@@ -294,12 +295,13 @@ export class SipTransactionComponent implements OnInit {
      }else{
        obj.noOfInstallments =  this.sipTransaction.controls.installment.value
      }
-     this.onlineTransact.sipBSE(obj).subscribe(
+     this.onlineTransact.transactionBSE(obj).subscribe(
       data => this.sipBSERes(data)
     );
   }
   sipBSERes(data){
     console.log('sip',data)
+    this.onAddTransaction('confirm',null)
   }
 
 }
