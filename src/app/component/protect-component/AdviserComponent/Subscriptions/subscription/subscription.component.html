@@ -5,7 +5,7 @@
     </div>
     <div class="col-md-10 p-0">
       <div class="subnav-fixed">
-        <nav (selectedTabChange)="tabClick($event)" mat-tab-nav-bar class="subnav-fixed">
+        <nav (selectedTabChange)="tabClick($event)" mat-tab-nav-bar>
           <a (click)="value=1" [ngClass]="_value == 1 ? 'active': ''" [routerLink]="'./dashboard'" mat-tab-link
             routerLinkActive="active">DASHBOARD</a>
           <a (click)="value=2" [ngClass]="_value == 2 ? 'active': ''" [routerLink]="'./clients'" mat-tab-link
@@ -18,8 +18,8 @@
             routerLinkActive="active">INVOICES</a>
           <a (click)="value=6" [ngClass]="_value == 6 ? 'active': ''" [routerLink]="'./documents'" mat-tab-link
             routerLinkActive="active">DOCUMENTS</a>
-          <a  [ngClass]="isLinkActive() ? 'active': ''" [routerLink]="  ['./settings',label]"
-            [state]="{ example: 0 }" mat-tab-link >SETTINGS</a>
+          <a [ngClass]="isLinkActive() ? 'active': ''" [routerLink]="  ['./settings',label]" [state]="{ example: 0 }"
+            mat-tab-link>SETTINGS</a>
         </nav>
       </div>
 

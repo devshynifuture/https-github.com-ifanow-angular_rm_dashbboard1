@@ -137,7 +137,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" *ngIf="platformType == 1">
+                <!-- *ngIf="platformType == 1" commented for prod build-->
+                <div class="row" >
                     <div class="col-md-5 p-0 text-left">
                         <h5 class="m-0 pt-40 text-black pb-12">Select mode of payment</h5>
                     </div>
@@ -155,7 +156,8 @@
                         </mat-radio-group>
                     </div>
                 </div>
-                <div class="row" *ngIf="platformType == 1">
+                <!-- *ngIf="platformType == 1" COMMENTED for prod build -->
+                <div class="row" >
                     <div class="col-md-12 p-0 text-left">
                         <h5 class="m-0 pt-40 pb-12 text-black">Select bank account</h5>
                     </div>

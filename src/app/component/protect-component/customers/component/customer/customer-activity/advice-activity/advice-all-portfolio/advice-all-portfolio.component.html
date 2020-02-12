@@ -48,7 +48,7 @@
     </div>
 </div>
 <div class="wrapper-16">
-    <table matSort mat-table [dataSource]="dataSource" id="table-low">
+    <table #tableOne="matSort" matSort mat-table [dataSource]="dataSource" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox></mat-checkbox>
@@ -110,7 +110,7 @@
                     class="pr-8">Filters</button>
         </div>
     </div>
-    <table matSort mat-table [dataSource]="dataSource1" id="table-low">
+    <table #tableTwo="matSort" matSort mat-table [dataSource]="dataSource1" id="table-low">
 
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef>

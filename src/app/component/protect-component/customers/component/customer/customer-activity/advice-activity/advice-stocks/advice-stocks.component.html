@@ -51,7 +51,7 @@
                     class="pr-8">Suggest new Stock</button>
         </div>
     </div>
-    <table matSort mat-table [dataSource]="dataSource3" class="mt-8" id="table-low">
+    <table #tableOne="matSort" matSort mat-table [dataSource]="dataSource3" class="mt-8" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox></mat-checkbox>
