@@ -62,7 +62,7 @@
                             Amount invested</th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber> {{element.amountInvested}} </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-                            {{mutualFund.total_amount_invested}}</td>
+                            {{(mutualFund)?mutualFund.total_amount_invested:'0'}}</td>
 
                     </ng-container>
 
@@ -72,7 +72,7 @@
                             Current value</th>
                         <td class="br text-left" mat-cell *matCellDef="let element" appFormatNumber> {{element.currentValue}} </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-                            {{mutualFund.total_current_value}}</td>
+                            {{(mutualFund)?mutualFund.total_current_value:'0'}}</td>
 
                     </ng-container>
 
@@ -82,7 +82,7 @@
                             Unrealized profit (loss) </th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber> {{element.unrealizedGain}} </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-                            {{mutualFund.total_unrealized_gain}}</td>
+                            {{(mutualFund)?mutualFund.total_absolute_return:'0'}}</td>
 
                     </ng-container>
 
@@ -91,7 +91,7 @@
                             Ret %</th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber> {{element.absoluteReturn}} </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-                            {{mutualFund.total_absolute_return}}</td>
+                            {{(mutualFund)?mutualFund.total_absolute_return:'0'}}</td>
 
                     </ng-container>
 
@@ -99,7 +99,7 @@
                         <th class="br text-right" mat-sort-header="xirr" mat-header-cell *matHeaderCellDef>XIRR % </th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber> {{element.xirr}} </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-                            {{mutualFund.total_xirr}}</td>
+                            {{(mutualFund)?mutualFund.total_xirr:'0'}}</td>
 
                     </ng-container>
 
@@ -108,7 +108,7 @@
                             Dividend payout</th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber> {{element.dividendPayout}} </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-                            {{mutualFund.total_dividend_payout}}</td>
+                            {{(mutualFund)?mutualFund.total_dividend_payout:'0'}}</td>
 
                     </ng-container>
 
@@ -117,7 +117,7 @@
                             Withdrawals Switch outs </th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber> {{element.switchOut}} </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-                            {{mutualFund.total_switch_out}}</td>
+                            {{(mutualFund)?mutualFund.total_switch_out:'0'}}</td>
 
                     </ng-container>
 
@@ -126,7 +126,7 @@
                             Balance Unit </th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber> {{element.balanceUnit}} </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-                            {{mutualFund.balanceUnit}}</td>
+                            {{(mutualFund)?mutualFund.balanceUnit:'0'}}</td>
 
                     </ng-container>
 
@@ -134,7 +134,7 @@
                         <th class="br text-right" mat-sort-header="navDate" mat-header-cell *matHeaderCellDef>NAV Date
                         </th>
                         <td class="br text-right" mat-cell *matCellDef="let element"> {{element.navDate}} </td>
-                        <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
+                        <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>{{(mutualFund)?mutualFund.navDate:'0'}}
                         </td>
 
                     </ng-container>
@@ -142,8 +142,7 @@
                         <th class="br text-right" mat-sort-header="sipAmount" mat-header-cell *matHeaderCellDef> SIP
                         </th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber> {{element.sipAmount}} </td>
-                        <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-                                <!-- {{f354252}} commented for prod-->
+                        <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>{{(mutualFund)?mutualFund.totalSipAmount:'0'}}
                             </td>
                     </ng-container>
                     <ng-container matColumnDef="groupHeader">
@@ -156,7 +155,7 @@
                     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
-                    <!-- <tr *matFooterRowDef="footerColumns;sticky: true" mat-footer-row></tr> commented for prod -->
+                    <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true"></tr>
                 </table>
             </div>
         </div>
