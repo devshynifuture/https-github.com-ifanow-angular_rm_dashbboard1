@@ -42,6 +42,7 @@ export class SipTransactionComponent implements OnInit {
   showUnits = false;
   mandateDetails: any;
   frequency: any;
+  fre: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private processTransaction: ProcessTransactionService, private fb: FormBuilder) { }
@@ -175,7 +176,9 @@ export class SipTransactionComponent implements OnInit {
     })
   }
   selectedFrequency(getFrerq) {
+    this.fre = getFrerq
     this.frequency = getFrerq.sipFrequency
+    this.sipTransaction.controls["employeeContry"].setValidators([Validators.min(getFrerq.sipMinimumInstallmentAmount)])
     this.dateArray(getFrerq.sipDates)
   }
   dateArray(sipDates) {
@@ -241,6 +244,7 @@ export class SipTransactionComponent implements OnInit {
       folioSelection: ['2'],
       employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required]],
       frequency: [(!data) ? '' : data.frequency, [Validators.required]],
+      investmentAccountSelection:[(!data) ? '' : data.frequency, [Validators.required]],
       modeOfPaymentSelection: ['1'],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       date: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
@@ -301,7 +305,11 @@ export class SipTransactionComponent implements OnInit {
   }
   sipBSERes(data){
     console.log('sip',data)
+    if(data == undefined){
+
+    }else{
     this.onAddTransaction('confirm',null)
+    }
   }
 
 }

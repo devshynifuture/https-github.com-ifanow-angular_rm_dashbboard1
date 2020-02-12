@@ -216,5 +216,10 @@ export class RedemptionTransactionComponent implements OnInit {
   }
   redeemBSERes(data){
     console.log('redeem res',data)
+    if(data == undefined){
+
+    }else{
+    this.onAddTransaction('confirm',null)
+    }
   }
 }

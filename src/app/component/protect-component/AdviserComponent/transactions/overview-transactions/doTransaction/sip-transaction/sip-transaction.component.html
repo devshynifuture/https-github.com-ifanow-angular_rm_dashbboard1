@@ -131,7 +131,18 @@
                     </div>
                     <div class="col-md-5 p-0">
                         <div class="form-group mb-0">
-                            <mat-form-field>
+                            <mat-form-field *ngIf="selectScheme == 1">
+                                <input #employeeContry matInput maxlength="10" type="text"
+                                    class="form-control br-0 rupess" formControlName="employeeContry"
+                                    (change)="enteredAmount($event.target.value)">
+                                <p class="m-0 f-12 text-custom">Min amount:
+                                    ₹{{(fre == undefined)?'-':fre.sipMinimumInstallmentAmount }}
+                                </p>
+                                <mat-error *ngIf="(sipTransaction.get('employeeContry').errors?.min)" class="f-12">
+                                    Should be greater than or equal to {{fre.sipMinimumInstallmentAmount}}
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field *ngIf="selectScheme == 2">
                                 <input #employeeContry matInput maxlength="10" type="text"
                                     class="form-control br-0 rupess" formControlName="employeeContry"
                                     (change)="enteredAmount($event.target.value)">

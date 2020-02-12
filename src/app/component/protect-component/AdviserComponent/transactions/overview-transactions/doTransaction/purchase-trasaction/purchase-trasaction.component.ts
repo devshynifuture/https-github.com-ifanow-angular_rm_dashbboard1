@@ -36,8 +36,8 @@ export class PurchaseTrasactionComponent implements OnInit {
   scheme: any;
   folioList: any;
   folioDetails: any;
-  constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService, private subInjectService: SubscriptionInject,
-    private fb: FormBuilder) { }
+  constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService, 
+    private subInjectService: SubscriptionInject,private fb: FormBuilder) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -244,8 +244,10 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
   purchaseRes(data) {
     console.log('purchase transaction ==', data)
-    if(data){
-      this.onAddTransaction('confirm',null)
+    if(data == undefined){
+
+    }else{
+    this.onAddTransaction('confirm',null)
     }
   }
 }
