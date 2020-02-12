@@ -29,7 +29,7 @@ export class RedemptionTransactionComponent implements OnInit {
   transactionSummary: {};
   folioList: any;
   folioDetails: any;
-  showUnits=false;
+  showUnits = false
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private fb: FormBuilder) { }

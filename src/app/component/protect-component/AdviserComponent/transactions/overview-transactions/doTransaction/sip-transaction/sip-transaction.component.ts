@@ -39,6 +39,7 @@ export class SipTransactionComponent implements OnInit {
   dateDisplay: any;
   sipDate: any;
   dates: any;
+  showUnits = false;
   mandateDetails: any;
   frequency: any;
 
@@ -80,7 +81,6 @@ export class SipTransactionComponent implements OnInit {
           if (UtilService.isRefreshRequired(sideBarData)) {
             // this.getNscSchemedata();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
           }
           rightSideDataSub.unsubscribe();
         }
