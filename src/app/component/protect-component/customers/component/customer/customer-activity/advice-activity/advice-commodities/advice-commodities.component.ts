@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { GoldComponent } from '../../../accounts/assets/commodities/gold/gold.component';
 import { OthersComponent } from '../../../accounts/assets/commodities/others/others.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ActiityService } from '../../actiity.service';
+import { MatTableDataSource, MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-advice-commodities',
@@ -13,13 +14,18 @@ import { ActiityService } from '../../actiity.service';
 })
 export class AdviceCommoditiesComponent implements OnInit {
   displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'mvalue', 'advice', 'astatus', 'adate', 'icon'];
-  dataSource3 = ELEMENT_DATA1;
+  dataSource1 = new MatTableDataSource(ELEMENT_DATA1);
+  dataSource2 = new MatTableDataSource(ELEMENT_DATA2);
   advisorId: any;
   clientId: any;
   isLoading: boolean;
+  @ViewChild("tableOne", { static: true }) sort1: MatSort;
+  @ViewChild("tableTwo", { static: true }) sort2: MatSort;
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
 
   ngOnInit() {
+    this.dataSource1.sort = this.sort1;
+    this.dataSource2.sort = this.sort2;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getAdviceByAsset();
@@ -103,6 +109,12 @@ export interface PeriodicElement1 {
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
   { name: 'Rahul Jain', desc: '1', mvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-  { name: 'Rahul Jain', desc: '2', mvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
+  { name: 'Rahul sain1', desc: '2', mvalue: '20000', advice: 'do trasact1', adate: '2020-02-20', astatus: 'LIVE' },
+
+];
+
+const ELEMENT_DATA2: PeriodicElement1[] = [
+  { name: 'Rahul Jain', desc: '1', mvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
+  { name: 'Rahul sain1', desc: '2', mvalue: '20000', advice: 'do trasact1', adate: '2020-02-20', astatus: 'LIVE' },
 
 ];

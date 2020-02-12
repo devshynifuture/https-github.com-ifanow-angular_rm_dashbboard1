@@ -1,62 +1,32 @@
-<div id="ui-account-container">
-  <div id="advisor-home">
-    <button (click)="goToAdvisorHome()" class="btn-yellow" mat-stroked-button><i class="material-icons mr-12">
+<div class="row" id="ui-customer-secondhead">
+  <div class="col-md-2 pt-16">
+    <button (click)="goToAdvisorHome()" class="btn-warning-outline br-2" mat-stroked-button><i
+        class="material-icons mr-12">
         keyboard_backspace
       </i>ADVISOR HOME
     </button>
   </div>
-  <nav id="ui-customer-secondhead" mat-align-tabs="center" mat-tab-nav-bar>
-    <a [routerLink]="['/customer/detail/account/summary']" mat-tab-link routerLinkActive="active">SUMMARY</a>
-    <a [routerLink]="['/customer/detail/account/assets']" mat-tab-link routerLinkActive="active">ASSETS</a>
-    <a [routerLink]="['/customer/detail/account/liabilities']" mat-tab-link routerLinkActive="active">LIABILITIES</a>
-    <a [routerLink]="['/customer/detail/account/insurance']" mat-tab-link routerLinkActive="active">INSURANCE</a>
-    <a [routerLink]="['/customer/detail/account/documents']" mat-tab-link routerLinkActive="active">DOCUMENTS</a>
-  </nav>
-  <div [@routeAnimations]="routingStateService.prepareRoute(outlet)">
-
-    <router-outlet #outlet="outlet">
-
-    </router-outlet>
-    <ng-template>
-      <router-outlet></router-outlet>
-    </ng-template>
+  <div class="col-md-8 p-0">
+    <nav mat-align-tabs="center" mat-tab-nav-bar>
+      <a [routerLink]="['/customer/detail/account/summary']" mat-tab-link routerLinkActive="active">SUMMARY</a>
+      <a [routerLink]="['/customer/detail/account/assets']" mat-tab-link routerLinkActive="active">ASSETS</a>
+      <a [routerLink]="['/customer/detail/account/liabilities']" mat-tab-link routerLinkActive="active">LIABILITIES</a>
+      <a [routerLink]="['/customer/detail/account/insurance']" mat-tab-link routerLinkActive="active">INSURANCE</a>
+      <a [routerLink]="['/customer/detail/account/documents']" mat-tab-link routerLinkActive="active">DOCUMENTS</a>
+    </nav>
   </div>
-  <!-- <ng-template>
-     <router-outlet></router-outlet>
-   </ng-template>-->
-  <!--  </div>-->
-  <!-- <mat-tab-group [selectedIndex]="selected" mat-align-tabs="center" id="ui-account-second-head" animationDuration="0ms">
-    <mat-tab label="SUMMARY ssfsf">
-      <ng-template matTabContent>
-        <app-summary></app-summary>
-      </ng-template> -->
-  <!-- <app-assets></app-assets> -->
-  <!-- </mat-tab>
-    <mat-tab label="ASSETS">
-      <ng-template matTabContent>
-        <app-assets></app-assets> -->
-  <!-- <app-mutual-funds-capital></app-mutual-funds-capital> -->
-  <!-- </ng-template>
-    </mat-tab>
-    <mat-tab label="LIABILITIES">
-      <ng-template matTabContent>
-        <app-liabilities></app-liabilities>
+
+</div>
+<div class="row">
+  <div class="col-md-12 p-0">
+    <div [@routeAnimations]="routingStateService.prepareRoute(outlet)">
+
+      <router-outlet #outlet="outlet">
+
+      </router-outlet>
+      <ng-template>
+        <router-outlet></router-outlet>
       </ng-template>
-    </mat-tab>
-    <mat-tab label="INSURANCE">
-      <ng-template matTabContent>
-        <app-insurance></app-insurance>
-      </ng-template>
-    </mat-tab>
-   <mat-tab label="EXPENSES">
-      <ng-template matTabContent>
-        <app-expenses></app-expenses>
-      </ng-template>
-    </mat-tab> -->
-  <!-- <mat-tab label="DOCUMENTS">
-      <ng-template matTabContent>
-        <app-documents></app-documents>
-      </ng-template>
-    </mat-tab>
-  </mat-tab-group> -->
+    </div>
+  </div>
 </div>

@@ -43,47 +43,47 @@
                             EQUITY
                         </h5>
                     </div> -->
-                    <table matSort mat-table [dataSource]="subCatArray(mf)" id="table-low"
-                        class="mutualfunds-capital-equity">
+                    <!-- table commrnted for prod build <table matSort mat-table [dataSource]="subCatArray(mf)" id="table-low"
+                        class="mutualfunds-capital-equity"> -->
     
                         <!--- Note that these columns can be defined in any order.
                                           The actual rendered columns are set as a property on the row definition" -->
     
                         <!-- Position Column -->
-                        <ng-container matColumnDef="schemeName">
+                        <!-- <ng-container matColumnDef="schemeName">
                             <th class="br" mat-sort-header="schemeName" mat-header-cell *matHeaderCellDef> Scheme name </th>
                             <td class="br" mat-cell *matCellDef="let element"> {{element.schemeName}} </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left"> Total</td>
-                        </ng-container>
+                        </ng-container> -->
     
                         <!-- Name Column -->
-                        <ng-container matColumnDef="amountInvested">
+                        <!-- <ng-container matColumnDef="amountInvested">
                             <th class="br text-right" mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef>
                                 Amount invested</th>
                             <td class="br text-right" mat-cell *matCellDef="let element"> {{element.amountInvested}} </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right"
                                 appFormatNumber>{{mfData.total_amount_invested}}</td>
-                        </ng-container>
+                        </ng-container> -->
     
                         <!-- Weight Column -->
-                        <ng-container matColumnDef="currentValue">
+                        <!-- <ng-container matColumnDef="currentValue">
                             <th class="br text-left" mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef>
                                 Current value</th>
                             <td class="br text-left" mat-cell *matCellDef="let element"> {{element.currentValue}} </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right"
                                 appFormatNumber>{{mfData.total_amount_invested}}</td>
-                        </ng-container>
+                        </ng-container> -->
     
                         <!-- Symbol Column -->
-                        <ng-container matColumnDef="unrealizedProfit">
+                        <!-- <ng-container matColumnDef="unrealizedProfit">
                             <th class="br text-right" mat-sort-header="unrealizedProfit" mat-header-cell *matHeaderCellDef>
                                 Unrealized profit (loss) </th>
                             <td class="br text-right" mat-cell *matCellDef="let element"> {{element.unrealizedProfit}} </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right"
                                 appFormatNumber>{{mfData.total_amount_invested}}</td>
-                        </ng-container>
+                        </ng-container> -->
     
-                        <ng-container matColumnDef="absoluteReturn">
+                        <!-- <ng-container matColumnDef="absoluteReturn">
                             <th class="br text-right" mat-sort-header="absoluteReturn" mat-header-cell *matHeaderCellDef>Abs
                                 Ret %</th>
                             <td class="br text-right" mat-cell *matCellDef="let element"> {{element.absoluteReturn}} </td>
@@ -144,7 +144,7 @@
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                         <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
                         <tr *matFooterRowDef="footerColumns;sticky: true" mat-footer-row></tr>
-                    </table>
+                    </table>  table commrnted for prod build-->
                 </div>
             </div>
     

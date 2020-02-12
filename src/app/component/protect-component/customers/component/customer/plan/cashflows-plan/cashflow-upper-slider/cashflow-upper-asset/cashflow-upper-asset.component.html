@@ -1,5 +1,6 @@
 <div class="col-md-12 cash-flow-upperTable mt-20">
-    <table mat-table [dataSource]="dataSource" id="table-low" [ngClass]="editMode == true ? 'edit-mode-hover': ''">
+    <!-- [ngClass]="editMode == true ? 'edit-mode-hover': ''" commented for prod -->
+    <table mat-table [dataSource]="dataSource" id="table-low" >
         <ng-container matColumnDef="description">
             <th class="br-grey f-400 f-14" mat-header-cell *matHeaderCellDef> Description </th>
             <td class="br-grey f-14" mat-cell *matCellDef="let element">

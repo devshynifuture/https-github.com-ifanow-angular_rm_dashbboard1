@@ -26,7 +26,7 @@
                 <img class="c-p" src="assets/images/svg/three-dot-bordered.svg">
                 <img class="c-p mr-12" src="assets/images/svg/up-down.svg">
                 <button class="btn-default addon mr-12 v-middle mat-stroked-button mat-button-base"
-                    mat-stroked-button="">
+                    mat-stroked-button="" (click)="openFilter()">
                     <span class="mat-button-wrapper"><i class="material-icons">filter_list</i>FILTERS</span>
                     <div class="mat-button-ripple mat-ripple" matripple="" ng-reflect-centered="false"
                         ng-reflect-disabled="false" ng-reflect-trigger="[object HTMLButtonElement]">
@@ -37,14 +37,13 @@
         </div>
 
         <div class="row">
-            <div  class="col-md-12 pl-0 mb-8">
+            <div class="col-md-12 pl-0 mb-8">
                 <!-- <div class="b-a">
                     <h5 class="wrapper-8 f-500 f-14 mb-0 text-primary text-center">
                         EQUITY
                     </h5>
                 </div> -->
-                <table matSort mat-table [dataSource]="subCatArray()" id="table-low"
-                    class="mutualfunds-capital-equity">
+                <table matSort mat-table [dataSource]="subCatArray()" id="table-low" class="mutualfunds-capital-equity">
 
                     <!--- Note that these columns can be defined in any order.
                                       The actual rendered columns are set as a property on the row definition" -->
@@ -53,9 +52,9 @@
                     <ng-container matColumnDef="schemeName">
                         <th class="br" mat-sort-header="schemeName" mat-header-cell *matHeaderCellDef> Scheme name </th>
                         <td class="br" mat-cell *matCellDef="let element"> {{element.schemeName}} </td>
-                        <th *matFooterCellDef [attr.colspan]="5" class="br text-right" mat-header-cell
-                        style="background-color: #fff !important;"> Total
-                      </th>                    </ng-container>
+                        <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left">Grand Total</td>
+
+                    </ng-container>
 
                     <!-- Name Column -->
                     <ng-container matColumnDef="amountInvested">
@@ -63,7 +62,7 @@
                             Amount invested</th>
                         <td class="br text-right" mat-cell *matCellDef="let element"> {{element.amountInvested}} </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-                                {{345325}}</td>
+                            {{mutualFund.total_amount_invested}}</td>
 
                     </ng-container>
 
@@ -73,7 +72,7 @@
                             Current value</th>
                         <td class="br text-left" mat-cell *matCellDef="let element"> {{element.currentValue}} </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-                                {{3235}}</td>
+                            {{mutualFund.total_current_value}}</td>
 
                     </ng-container>
 
@@ -81,9 +80,9 @@
                     <ng-container matColumnDef="unrealizedProfit">
                         <th class="br text-right" mat-sort-header="unrealizedProfit" mat-header-cell *matHeaderCellDef>
                             Unrealized profit (loss) </th>
-                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.unrealizedProfit}} </td>
+                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.unrealizedGain}} </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-                                {{35235235}}</td>
+                            {{mutualFund.total_unrealized_gain}}</td>
 
                     </ng-container>
 
@@ -92,7 +91,7 @@
                             Ret %</th>
                         <td class="br text-right" mat-cell *matCellDef="let element"> {{element.absoluteReturn}} </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-                                {{352352}}</td>
+                            {{mutualFund.total_absolute_return}}</td>
 
                     </ng-container>
 
@@ -100,7 +99,7 @@
                         <th class="br text-right" mat-sort-header="xirr" mat-header-cell *matHeaderCellDef>XIRR % </th>
                         <td class="br text-right" mat-cell *matCellDef="let element"> {{element.xirr}} </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-                                {{35235235}}</td>
+                            {{mutualFund.total_xirr}}</td>
 
                     </ng-container>
 
@@ -109,7 +108,7 @@
                             Dividend payout</th>
                         <td class="br text-right" mat-cell *matCellDef="let element"> {{element.dividendPayout}} </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-                                {{3523523}}</td>
+                            {{mutualFund.total_dividend_payout}}</td>
 
                     </ng-container>
 
@@ -118,7 +117,7 @@
                             Withdrawals Switch outs </th>
                         <td class="br text-right" mat-cell *matCellDef="let element"> {{element.switchOut}} </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-                                {{3523523}}</td>
+                            {{mutualFund.total_switch_out}}</td>
 
                     </ng-container>
 
@@ -127,7 +126,7 @@
                             Balance Unit </th>
                         <td class="br text-right" mat-cell *matCellDef="let element"> {{element.balanceUnit}} </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-                                {{35235235}}</td>
+                            {{mutualFund.balanceUnit}}</td>
 
                     </ng-container>
 
@@ -136,7 +135,7 @@
                         </th>
                         <td class="br text-right" mat-cell *matCellDef="let element"> {{element.navDate}} </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-                                {{325235235}}</td>
+                        </td>
 
                     </ng-container>
                     <ng-container matColumnDef="sipAmount">
@@ -144,18 +143,20 @@
                         </th>
                         <td class="br text-right" mat-cell *matCellDef="let element"> {{element.sipAmount}} </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-                                {{f354252}}</td>
+                                <!-- {{f354252}} commented for prod-->
+                            </td>
                     </ng-container>
                     <ng-container matColumnDef="groupHeader">
                         <td *matCellDef="let group" [attr.colspan]="displayedColumns.length" class="text-center">
                             {{group.groupName}}</td>
                     </ng-container>
-                 
-                   
-                    <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
-                    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+
+
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
-                    <tr *matFooterRowDef="footerColumns;sticky: true" mat-footer-row></tr>
+                    <!-- <tr *matFooterRowDef="footerColumns;sticky: true" mat-footer-row></tr> commented for prod -->
                 </table>
             </div>
         </div>

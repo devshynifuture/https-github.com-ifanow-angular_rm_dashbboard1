@@ -1,52 +1,37 @@
 <div id="ui-customer-container">
 
-  <!-- <div *ngIf="clientId && upperSliderData.state == 'close'"> -->
-  <div class="show">
-    <img class="img-top" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+  <div class="col-md-12">
+    <h1 *ngIf="!clientId">Please select client</h1>
+    <div *ngIf="isOverlayVisible" [@dialogContainer]="dialogState" class="custom-overlay">
+    </div>
+    <div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
+      <ng-template #dynamicUpper></ng-template>
+    </div>
+    <div [@openClose]="currentState" class="right_sidenav">
+      <ng-template #dynamic></ng-template>
+    </div>
   </div>
-  <!--<mat-tab-group [selectedIndex]="selected" animationDuration="0ms" mat-align-tabs="center" id="ui-customer">
-
-      <mat-tab label="OVERVIEW">
-        &lt;!&ndash;      <app-plan></app-plan>&ndash;&gt;
-      </mat-tab>
-      <mat-tab label="ACCOUNTS">
-        <app-accounts></app-accounts>
-      </mat-tab>
-      <mat-tab label="PLAN">
-        <app-plan></app-plan>
-      </mat-tab>
-      <mat-tab label="ACTIVITY">Content 2</mat-tab>
-      <mat-tab label="TRANSACT">Content 3</mat-tab>
-
-    </mat-tab-group>-->
-  <h1 *ngIf="!clientId">Please select client</h1>
-  <div *ngIf="isOverlayVisible" [@dialogContainer]="dialogState" class="custom-overlay">
+  <div class="row" id="ui-customer">
+    <div class="col-md-2 p-0">
+      <img class="w-100" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+    </div>
+    <div class="col-md-8 p-0">
+      <nav mat-tab-nav-bar>
+        <a [routerLink]="['/customer/detail/overview']" routerLinkActive="successBorder" mat-tab-link>OVERVIEW</a>
+        <a [routerLink]="['/customer/detail/account']" routerLinkActive="successBorder" mat-tab-link>ACCOUNTS</a>
+        <a [routerLink]="['/customer/detail/plan']" routerLinkActive="successBorder" mat-tab-link>PLAN</a>
+        <a [routerLink]="['/customer/detail/activity']" routerLinkActive="successBorder" mat-tab-link>ACTIVITY</a>
+        <a [routerLink]="['/customer/detail/transact']" routerLinkActive="successBorder" mat-tab-link>TRANSACT</a>
+      </nav>
+    </div>
   </div>
-  <div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
-    <ng-template #dynamicUpper></ng-template>
+  <div class="row">
+    <div class="col-md-12 p-0">
+      <router-outlet></router-outlet>
+      <ng-template>
+        <router-outlet></router-outlet>
+      </ng-template>
+    </div>
   </div>
-  <div [@openClose]="currentState" class="right_sidenav">
-    <ng-template #dynamic></ng-template>
-  </div>
-  <nav id="ui-customer" mat-tab-nav-bar>
-    <a [routerLink]="['/customer/detail/overview']" routerLinkActive="successBorder" mat-tab-link>OVERVIEW</a>
-    <a [routerLink]="['/customer/detail/account']" routerLinkActive="successBorder" mat-tab-link>ACCOUNTS</a>
-    <a [routerLink]="['/customer/detail/plan']" routerLinkActive="successBorder" mat-tab-link>PLAN</a>
-    <a [routerLink]="['/customer/detail/activity']" routerLinkActive="successBorder" mat-tab-link>ACTIVITY</a>
-    <a [routerLink]="['/customer/detail/transact']" routerLinkActive="successBorder" mat-tab-link>TRANSACT</a>
-  </nav>
 
 </div>
-<router-outlet></router-outlet>
-<ng-template>
-  <router-outlet></router-outlet>
-</ng-template>
-<!--</div>-->
-
-<!--<app-dialog-container [parentComponentName]="'customer'"></app-dialog-container>-->
-
-<!-- <div class="right-side">
-  <img src="/src/assets/images/svg/bell.svg">
-  <img src="/src/assets/images/svg/bell.svg">
-  <img src="/src/assets/images/svg/bell.svg">
-</div> -->

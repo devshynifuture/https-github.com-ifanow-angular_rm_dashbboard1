@@ -1,65 +1,27 @@
-<div id="advisor-home">
-    <button (click)="goToAdvisorHome()" class="btn-yellow" mat-stroked-button><i class="material-icons mr-12">
-            keyboard_backspace
-        </i>ADVISOR HOME
-    </button>
+<div class="row" id="ui-plan-secondhead">
+    <div class="col-md-2 pt-16">
+        <button (click)="goToAdvisorHome()" class="btn-warning-outline br-2" mat-stroked-button><i
+                class="material-icons mr-12">
+                keyboard_backspace
+            </i>ADVISOR HOME
+        </button>
+    </div>
+    <div class="col-md-8">
+        <nav mat-align-tabs="center" mat-tab-nav-bar>
+            <a (click)="value=1" routerLinkActive="active" [routerLink]="'summary'" mat-tab-link>SUMMARY</a>
+            <a (click)="value=2" routerLinkActive="active" [routerLink]="'profile'" mat-tab-link>PROFILE</a>
+            <a (click)="value=3" routerLinkActive="active" [routerLink]="'insurance'" mat-tab-link>INSURANCE</a>
+            <a (click)="value=4" routerLinkActive="active" [routerLink]="'goals'" mat-tab-link>GOALS</a>
+            <a (click)="value=5" routerLinkActive="active" [routerLink]="'taxes'" mat-tab-link>TAXES</a>
+            <a (click)="value=6" routerLinkActive="active" [routerLink]="'cash-flow'" mat-tab-link>CASH FLOWS</a>
+            <a (click)="value=7" routerLinkActive="active" [routerLink]="'investments'" mat-tab-link>DEPLOYMENTS</a>
+            <a (click)="value=8" routerLinkActive="active" [routerLink]="'scenarios'" mat-tab-link>SCENARIOS</a>
+        </nav>
+    </div>
 </div>
-<div id="ui-plan">
-    <nav mat-align-tabs="center" mat-tab-nav-bar id="ui-customer-secondhead">
-        <a (click)="value=1" routerLinkActive="active" [routerLink]="'summary'" mat-tab-link>SUMMARY</a>
-        <a (click)="value=2" routerLinkActive="active" [routerLink]="'profile'" mat-tab-link>PROFILE</a>
-        <a (click)="value=3" routerLinkActive="active" [routerLink]="'insurance'" mat-tab-link>INSURANCE</a>
-        <a (click)="value=4" routerLinkActive="active" [routerLink]="'goals'" mat-tab-link>GOALS</a>
-        <a (click)="value=5" routerLinkActive="active" [routerLink]="'taxes'" mat-tab-link>TAXES</a>
-        <a (click)="value=6" routerLinkActive="active" [routerLink]="'cash-flow'" mat-tab-link>CASH FLOWS</a>
-        <a (click)="value=7" routerLinkActive="active" [routerLink]="'investments'" mat-tab-link>DEPLOYMENTS</a>
-        <a (click)="value=8" routerLinkActive="active" [routerLink]="'scenarios'" mat-tab-link>SCENARIOS</a>
-    </nav>
+
+<div class="row">
+    <div class="col-md-12 p-0">
+        <router-outlet></router-outlet>
+    </div>
 </div>
-<!-- <mat-tab-group [selectedIndex]="selected" mat-align-tabs="center" id="ui-account-second-head" animationDuration="0ms">
-    <mat-tab label="SUMMARY">
-        <ng-template matTabContent> -->
-<!-- <app-summary-plan></app-summary-plan> -->
-<!-- <app-goals-plan></app-goals-plan>
-        </ng-template>
-    </mat-tab>
-    <mat-tab label="profile">
-        <ng-template matTabContent>
-            <app-profile-plan></app-profile-plan>
-        </ng-template>
-    </mat-tab>
-    <mat-tab label="INSURANCE">
-        <ng-template matTabContent>
-            <app-insurance-plan></app-insurance-plan>
-        </ng-template>
-    </mat-tab>
-    <mat-tab label="GOALS">
-        <ng-template matTabContent>
-
-        </ng-template>
-    </mat-tab>
-    <mat-tab label="taxES">
-        <ng-template matTabContent>
-
-        </ng-template>
-    </mat-tab>
-    <mat-tab label="CASH FLOWS">
-        <app-cashflows-plan></app-cashflows-plan> -->
-<!-- <ng-template matTabContent>
-
-        </ng-template> -->
-<!-- </mat-tab>
-    <mat-tab label="investmentS">
-        <app-investments-plan></app-investments-plan> -->
-<!-- <ng-template matTabContent>
-        </ng-template> -->
-<!-- </mat-tab>
-    <mat-tab label="scenarios"> -->
-<!-- <ng-template matTabContent> -->
-<!-- <app-scenarios-plan></app-scenarios-plan> -->
-<!-- </ng-template> -->
-<!-- </mat-tab>
-</mat-tab-group>
- -->
-
-<router-outlet></router-outlet>
