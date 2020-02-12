@@ -60,7 +60,7 @@
                     <ng-container matColumnDef="amountInvested">
                         <th class="br text-right" mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef>
                             Amount invested</th>
-                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.amountInvested}} </td>
+                        <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber> {{element.amountInvested}} </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
                             {{mutualFund.total_amount_invested}}</td>
 
@@ -70,7 +70,7 @@
                     <ng-container matColumnDef="currentValue">
                         <th class="br text-left" mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef>
                             Current value</th>
-                        <td class="br text-left" mat-cell *matCellDef="let element"> {{element.currentValue}} </td>
+                        <td class="br text-left" mat-cell *matCellDef="let element" appFormatNumber> {{element.currentValue}} </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
                             {{mutualFund.total_current_value}}</td>
 
@@ -80,7 +80,7 @@
                     <ng-container matColumnDef="unrealizedProfit">
                         <th class="br text-right" mat-sort-header="unrealizedProfit" mat-header-cell *matHeaderCellDef>
                             Unrealized profit (loss) </th>
-                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.unrealizedGain}} </td>
+                        <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber> {{element.unrealizedGain}} </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
                             {{mutualFund.total_unrealized_gain}}</td>
 
@@ -89,7 +89,7 @@
                     <ng-container matColumnDef="absoluteReturn">
                         <th class="br text-right" mat-sort-header="absoluteReturn" mat-header-cell *matHeaderCellDef>Abs
                             Ret %</th>
-                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.absoluteReturn}} </td>
+                        <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber> {{element.absoluteReturn}} </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
                             {{mutualFund.total_absolute_return}}</td>
 
@@ -97,7 +97,7 @@
 
                     <ng-container matColumnDef="xirr">
                         <th class="br text-right" mat-sort-header="xirr" mat-header-cell *matHeaderCellDef>XIRR % </th>
-                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.xirr}} </td>
+                        <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber> {{element.xirr}} </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
                             {{mutualFund.total_xirr}}</td>
 
@@ -106,7 +106,7 @@
                     <ng-container matColumnDef="dividendPayout">
                         <th class="br text-right" mat-sort-header="dividendPayout" mat-header-cell *matHeaderCellDef>
                             Dividend payout</th>
-                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.dividendPayout}} </td>
+                        <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber> {{element.dividendPayout}} </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
                             {{mutualFund.total_dividend_payout}}</td>
 
@@ -115,7 +115,7 @@
                     <ng-container matColumnDef="switchOut">
                         <th class="br text-right" mat-sort-header="switchOut" mat-header-cell *matHeaderCellDef>
                             Withdrawals Switch outs </th>
-                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.switchOut}} </td>
+                        <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber> {{element.switchOut}} </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
                             {{mutualFund.total_switch_out}}</td>
 
@@ -124,7 +124,7 @@
                     <ng-container matColumnDef="balanceUnit">
                         <th class="br text-right" mat-sort-header="balanceUnit" mat-header-cell *matHeaderCellDef>
                             Balance Unit </th>
-                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.balanceUnit}} </td>
+                        <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber> {{element.balanceUnit}} </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
                             {{mutualFund.balanceUnit}}</td>
 
@@ -141,7 +141,7 @@
                     <ng-container matColumnDef="sipAmount">
                         <th class="br text-right" mat-sort-header="sipAmount" mat-header-cell *matHeaderCellDef> SIP
                         </th>
-                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.sipAmount}} </td>
+                        <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber> {{element.sipAmount}} </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
                         </td>
                     </ng-container>
