@@ -4,6 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ConfirmationTransactionComponent } from '../confirmation-transaction/confirmation-transaction.component';
 import { UtilService } from 'src/app/services/util.service';
 import { OnlineTransactionService } from '../../../online-transaction.service';
+import { ProcessTransactionService } from '../process-transaction.service';
 
 @Component({
   selector: 'app-sip-transaction',
@@ -35,9 +36,14 @@ export class SipTransactionComponent implements OnInit {
   folioDetails: any;
   ExistingOrNew: any;
   sipFrequency: any;
+  dateDisplay: any;
+  sipDate: any;
+  dates: any;
+  mandateDetails: any;
+  frequency: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-    private fb: FormBuilder) { }
+    private processTransaction: ProcessTransactionService, private fb: FormBuilder) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -152,28 +158,34 @@ export class SipTransactionComponent implements OnInit {
     this.getMandateDetails()
     this.getFrequency()
   }
-  getFrequency(){
+  getFrequency() {
     let obj = {
-      isin : this.schemeDetails.isin,
+      isin: this.schemeDetails.isin,
     }
     this.onlineTransact.getSipFrequency(obj).subscribe(
       data => this.getSipFrequencyRes(data)
     );
   }
-  getSipFrequencyRes(data){
-    console.log('isin ----',data)
+  getSipFrequencyRes(data) {
+    console.log('isin ----', data)
     this.sipFrequency = data
-    this.sipFrequency = data.filter(function(element){
+    this.sipFrequency = data.filter(function (element) {
       return element.sipFrequency
     })
   }
-  // dateArray(){
-  //   this.dateArray= .split(",")
-  // }
+  selectedFrequency(getFrerq) {
+    this.frequency = getFrerq.sipFrequency
+    this.dateArray(getFrerq.sipDates)
+  }
+  dateArray(sipDates) {
+    this.dates = sipDates.split(",")
+    this.dateDisplay = this.processTransaction.getDateByArray(this.dates, true)
+    console.log('dateDisplay = ', this.dateDisplay)
+  }
   getMandateDetails() {
     let obj1 = {
       advisorId: this.getDataSummary.defaultClient.advisorId,
-      clientCode:this.getDataSummary.defaultClient.clientCode,
+      clientCode: this.getDataSummary.defaultClient.clientCode,
       tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
     }
     this.onlineTransact.getMandateDetails(obj1).subscribe(
@@ -181,7 +193,8 @@ export class SipTransactionComponent implements OnInit {
     );
   }
   getMandateDetailsRes(data) {
-    console.log('mandate details :',data)
+    console.log('mandate details :', data)
+    this.mandateDetails = data
   }
   getAmcWiseFolio() {
     let obj1 = {
@@ -226,9 +239,12 @@ export class SipTransactionComponent implements OnInit {
       investor: [(!data) ? '' : data.investor, [Validators.required]],
       folioSelection: ['2'],
       employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required]],
-      investmentAccountSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      frequency: [(!data) ? '' : data.frequency, [Validators.required]],
       modeOfPaymentSelection: ['1'],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      date: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      tenure: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      installment: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
     });
 
     this.ownerData = this.sipTransaction.controls;
@@ -237,4 +253,53 @@ export class SipTransactionComponent implements OnInit {
   getFormControl(): any {
     return this.sipTransaction.controls;
   }
+  sip() {
+    let obj = {
+      productDbId: this.schemeDetails.id,
+      mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
+      productCode: this.schemeDetails.schemeCode,
+      isin: this.schemeDetails.isin,
+      folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+      tpSubBrokerCredentialId: this.getDataSummary.defaultCredential.tpSubBrokerCredentialId,
+      familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+      adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
+      clientId: this.getDataSummary.defaultClient.clientId,
+      startDate: Number(new Date(this.sipTransaction.controls.date.value.replace(/"/g, ""))),
+      frequencyType: this.sipTransaction.controls.frequency.value.toUpperCase(),
+      //endDate :sipTransaction.sip.scheme.,
+      noOfInstallments: this.sipTransaction.controls.installment.value,
+      orderType: this.mandateDetails[0].mandateType,
+      buySell: 'PURCHASE',
+      transCode: 'NEW',
+      buySellType: "FRESH",
+      dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
+      amountType: 'Amount',
+      clientCode: this.getDataSummary.defaultClient.clientCode,
+      orderVal: this.sipTransaction.controls.employeeContry.value,
+      euin: this.getDataSummary.defaultCredential.euin,
+      xSipMandateId: this.mandateDetails[0].mandateId,
+      schemeCd: this.schemeDetails.schemeCode,
+      transMode: 'PHYSICAL',
+      bseDPTransType: 'PHYSICAL',
+      // teamMemberSessionId: sipTransaction.localStorage.mm.mainDetail.userDetails.teamMemberSessionId,
+    }
+    console.log('sip json',obj)
+    if( this.frequency == 'MONTHLY' && this.sipTransaction.controls.tenure.value == 2){
+      obj.noOfInstallments = obj.noOfInstallments*12
+     }else if(this.frequency == 'QUATERLY' && this.sipTransaction.controls.tenure.value == 2){
+       obj.noOfInstallments =  obj.noOfInstallments*4
+     }else if(this.frequency == 'WEEKLY' && this.sipTransaction.controls.tenure.value == 2){
+       obj.noOfInstallments =  obj.noOfInstallments*52
+     }else{
+       obj.noOfInstallments =  this.sipTransaction.controls.installment.value
+     }
+     this.onlineTransact.sipBSE(obj).subscribe(
+      data => this.sipBSERes(data)
+    );
+  }
+  sipBSERes(data){
+    console.log('sip',data)
+  }
+
 }

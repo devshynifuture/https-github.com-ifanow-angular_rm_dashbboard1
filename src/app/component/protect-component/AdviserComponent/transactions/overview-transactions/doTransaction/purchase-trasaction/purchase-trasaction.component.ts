@@ -23,6 +23,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   transactionType: any;
   folioSelection: [2]
   schemeSelection: [2]
+  platformType
   selectScheme = 2;
   schemeList: any;
   navOfSelectedScheme: any;

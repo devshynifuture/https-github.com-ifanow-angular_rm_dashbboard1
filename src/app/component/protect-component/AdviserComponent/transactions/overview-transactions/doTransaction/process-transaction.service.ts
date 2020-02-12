@@ -42,7 +42,7 @@ export class ProcessTransactionService {
       datesArr.push(moment(t).set('date',arr[i]))
     }
     console.log("step date array",datesArr)
-    datesArr=datesArr.reduce(function(dt){
+    datesArr=datesArr.filter(function(dt){
       return (moment(dt).isSameOrBefore(t))
     })
     console.log("step date array filtered isSameOrBefore of step date",datesArr)

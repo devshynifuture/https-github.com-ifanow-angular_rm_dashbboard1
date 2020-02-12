@@ -49,4 +49,7 @@ export class OnlineTransactionService {
   getSipFrequency(data){
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_FREQUENCY, data, 1)
   }
+  sipBSE(data){
+    return this.http.postEncoded(apiConfig.TRANSACT + appConfig.SIP_BSE, data)
+  }
 }
