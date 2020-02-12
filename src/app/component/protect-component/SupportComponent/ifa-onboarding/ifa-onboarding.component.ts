@@ -33,7 +33,7 @@ export class IfaOnboardingComponent implements OnInit {
       flag: value,
       data,
       id: 1,
-      state: 'open',
+      state: 'open50',
       componentName: IfaBoradingHistoryComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
