@@ -42,6 +42,7 @@ export class SipTransactionComponent implements OnInit {
   showUnits = false;
   mandateDetails: any;
   frequency: any;
+  fre: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private processTransaction: ProcessTransactionService, private fb: FormBuilder) { }
@@ -147,6 +148,7 @@ export class SipTransactionComponent implements OnInit {
     console.log('getSchemeDetailsRes == ', data)
     this.maiSchemeList = data
     this.schemeDetails = data[0]
+    this.sipTransaction.controls["employeeContry"].setValidators([Validators.min(this.schemeDetails.minimumPurchaseAmount)])
     this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
     if (data.length > 1) {
       this.reInvestmentOpt = data
@@ -174,7 +176,9 @@ export class SipTransactionComponent implements OnInit {
     })
   }
   selectedFrequency(getFrerq) {
+    this.fre = getFrerq
     this.frequency = getFrerq.sipFrequency
+    this.sipTransaction.controls["employeeContry"].setValidators([Validators.min(getFrerq.sipMinimumInstallmentAmount)])
     this.dateArray(getFrerq.sipDates)
   }
   dateArray(sipDates) {
@@ -240,6 +244,7 @@ export class SipTransactionComponent implements OnInit {
       folioSelection: ['2'],
       employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required]],
       frequency: [(!data) ? '' : data.frequency, [Validators.required]],
+      investmentAccountSelection:[(!data) ? '' : data.frequency, [Validators.required]],
       modeOfPaymentSelection: ['1'],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       date: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
@@ -266,7 +271,7 @@ export class SipTransactionComponent implements OnInit {
       adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
       clientId: this.getDataSummary.defaultClient.clientId,
       startDate: Number(new Date(this.sipTransaction.controls.date.value.replace(/"/g, ""))),
-      frequencyType: this.sipTransaction.controls.frequency.value.toUpperCase(),
+      frequencyType:this.frequency,
       //endDate :sipTransaction.sip.scheme.,
       noOfInstallments: this.sipTransaction.controls.installment.value,
       orderType: this.mandateDetails[0].mandateType,
@@ -294,12 +299,17 @@ export class SipTransactionComponent implements OnInit {
      }else{
        obj.noOfInstallments =  this.sipTransaction.controls.installment.value
      }
-     this.onlineTransact.sipBSE(obj).subscribe(
+     this.onlineTransact.transactionBSE(obj).subscribe(
       data => this.sipBSERes(data)
     );
   }
   sipBSERes(data){
     console.log('sip',data)
+    if(data == undefined){
+
+    }else{
+    this.onAddTransaction('confirm',null)
+    }
   }
 
 }

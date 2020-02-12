@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AddClientMappingComponent } from './add-client-mapping/add-client-mapping.component';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
+import { OnlineTransactionService } from '../../online-transaction.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-settings-client-mapping',
@@ -10,17 +12,58 @@ import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.s
 })
 export class SettingsClientMappingComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'pan', 'hold', 'tstatus', 'status', 'map'];
-  dataSource = ELEMENT_DATA;
-  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject) { }
+  dataSource;
+  defaultDetails: any;
+  allData: any;
+  clientDataList: any;
+  defaultCredential: any;
+  defaultClient: any;
+  selectedPlatform: any;
+  brokerCodeList: any;
+  constructor(private eventService: EventService, private utilService: UtilService, private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) { }
 
   ngOnInit() {
+    this.getUnmappedFolios()
+  }
+  getUnmappedFolios() {
+    const obj =
+    {
+      advisorId: 3021
+    }
+    this.tranService.getUnmappedFolios(obj).subscribe(
+      data => {
+        this.dataSource = data;
+        console.log(data)
+      },
+      err => this.eventService.openSnackBar(err, "dismiss")
+    )
+  }
+  getDefaultDetails(platform) {
+    let obj = {
+      advisorId: 414,
+      familyMemberId: 112166,
+      clientId: 53637,
+      aggregatorType: platform
+    }
+    this.tranService.getDefaultDetails(obj).subscribe(
+      data => this.getDefaultDetailsRes(data)
+    );
+  }
+  getDefaultDetailsRes(data) {
+    console.log('deault', data)
+    this.allData = data
+    this.brokerCodeList = data.credentialList
+    // this.clientDataList = data.clientDataList
+    // this.defaultCredential = data.defaultCredential
+    // this.defaultClient = data.defaultClient
+    // this.selectedPlatform = this.defaultCredential.aggregatorType
   }
   openAddMappiing(data, flag) {
     const fragmentData = {
       flag: 'addNsc',
       data,
       id: 1,
-      state: (flag == 'detailedNsc') ? 'open50' : 'open50',
+      state: 'open50',
       componentName: AddClientMappingComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -39,22 +82,3 @@ export class SettingsClientMappingComponent implements OnInit {
     );
   }
 }
-export interface PeriodicElement {
-  name: string;
-  position: string;
-  weight: string;
-  symbol: string;
-  pan: string;
-  hold: string;
-  tstatus: string;
-  status: string;
-
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    position: "NSE", name: 'ARN-83865', weight: "5011012025", symbol: 'Sneha Vishal Shah	', pan: 'AAFHF8989J',
-    hold: 'Anyone or survivor', tstatus: 'NRI - Repatriable (NRE)', status: 'Active'
-  },
-
-];
