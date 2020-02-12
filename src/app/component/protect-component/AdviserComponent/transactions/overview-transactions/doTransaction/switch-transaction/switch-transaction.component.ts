@@ -28,6 +28,9 @@ export class SwitchTransactionComponent implements OnInit {
   schemeList: any;
   showUnits = false;
   getDataSummary: any;
+  scheme: any;
+  folioList: any;
+  folioDetails: any;
 
   constructor(private subInjectService: SubscriptionInject,private onlineTransact: OnlineTransactionService,
     private fb: FormBuilder) { }
@@ -66,15 +69,23 @@ export class SwitchTransactionComponent implements OnInit {
         showOnlyNonZero:true,
         tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
       }
-      this.onlineTransact.getNewSchemes(obj).subscribe(
-        data => this.getNewSchemesRes(data)
+      this.onlineTransact.getExistingSchemes(obj).subscribe(
+        data => this.getExistingSchemesRes(data)
       );
     } else {
 
     }
   }
-  
+  getExistingSchemesRes(data) {
+    this.schemeList = data
+  }
+  selectedFolio(folio) {
+    this.folioDetails = folio
+    this.showUnits = true
+    this.transactionSummary = { folioNumber: folio.folioNumber }
+  }
   selectedScheme(scheme) {
+    this.scheme = scheme
     this.showUnits = true
     this.transactionSummary = { schemeName: scheme.schemeName }
     this.navOfSelectedScheme = scheme.nav
@@ -88,6 +99,21 @@ export class SwitchTransactionComponent implements OnInit {
       data => this.getSchemeDetailsRes(data)
     );
   }
+  getSchemeWiseFolios() {
+    let obj1 = {
+      mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
+      advisorId:  this.getDataSummary.defaultClient.advisorId,
+      familyMemberId:  this.getDataSummary.defaultClient.familyMemberId,
+      clientId:  this.getDataSummary.defaultClient.clientId
+    }
+    this.onlineTransact.getSchemeWiseFolios(obj1).subscribe(
+      data => this.getSchemeWiseFoliosRes(data)
+    );
+  }
+  getSchemeWiseFoliosRes(data) {
+    console.log('res scheme folio',data)
+    this.folioList = data
+  }
   getSchemeDetailsRes(data) {
     console.log('getSchemeDetailsRes == ', data)
     this.maiSchemeList = data
@@ -99,10 +125,7 @@ export class SwitchTransactionComponent implements OnInit {
     } if (data.length == 1) {
       this.reInvestmentOpt = []
     }
-  }
-  getNewSchemesRes(data) {
-    console.log('new schemes', data)
-    this.schemeList = data
+    this.getSchemeWiseFolios()
   }
   onAddTransaction(value,data){
     this.confirmTrasaction = true
@@ -120,7 +143,6 @@ export class SwitchTransactionComponent implements OnInit {
           if (UtilService.isRefreshRequired(sideBarData)) {
             // this.getNscSchemedata();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
           }
           rightSideDataSub.unsubscribe();
         }
@@ -149,6 +171,8 @@ export class SwitchTransactionComponent implements OnInit {
       modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
       folioSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      installment:[(!data) ? '' : data.employeeContry, [Validators.required]],
+      tenure:[(!data) ? '' : data.employeeContry, [Validators.required]],
     });
 
     this.ownerData = this.switchTransaction.controls;

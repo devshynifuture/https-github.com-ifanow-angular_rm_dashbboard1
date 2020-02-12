@@ -60,9 +60,9 @@
                     </div>
                 </div>
                 <!-- *ngIf="showUnits == true" commented for prod -->
-                <div class="row" >
+                <div class="row" *ngIf="showUnits ==true">
                     <div class="col-md-12 mt-20 pl-0">
-                        <div class="bg-grey lter">
+                        <div class="bg-grey lter" *ngIf="folioDetails">
                             <div class="row">
                                 <div class="col-md-6 p-20 text-left">
                                     <p class="f-14 m-0">Current value</p>
