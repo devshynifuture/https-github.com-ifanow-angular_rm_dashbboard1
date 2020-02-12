@@ -82,13 +82,15 @@
                     </div>
                     <div class="col-md-12 p-0">
                         <mat-radio-group aria-label="Select an option" formControlName="folioSelection"
-                        (ngModelChange)="selectExistingOrNew($event)">
+                            (ngModelChange)="selectExistingOrNew($event)">
                             <mat-radio-button value="1"
-                                [ngClass]=" sipTransaction.get('folioSelection').value == 1 ? 'text-primary bu-primary': 'b-a text-primitive'">
+                                [ngClass]="{'b-a-custom': sipTransaction.get('folioSelection').value==1,'text-primary':sipTransaction.get('folioSelection').value==1,'b-a':sipTransaction.get('folioSelection').value==2}"
+                                class="b-a-custom radioBtn text-primary custom-radio">
                                 Existing
                             </mat-radio-button>
-                            <mat-radio-button value="2" checked="true"
-                                [ngClass]="sipTransaction.get('folioSelection').value == 2 ? 'text-primary bu-primary': sipTransaction.get('folioSelection').value == 1 ?'b-a text-primitive':'text-primary bu-primary'">
+                            <mat-radio-button value="2"
+                                [ngClass]="{'b-a-custom': sipTransaction.get('folioSelection').value==2,'text-primary':sipTransaction.get('folioSelection').value==2,'b-a':sipTransaction.get('folioSelection').value==1}"
+                                class="b-a radioBtn ">
                                 New </mat-radio-button>
                         </mat-radio-group>
                     </div>

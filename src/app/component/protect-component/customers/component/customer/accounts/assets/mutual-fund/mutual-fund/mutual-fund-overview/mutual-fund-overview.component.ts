@@ -36,12 +36,12 @@ export class MutualFundOverviewComponent implements OnInit {
   filteredArray: any[];
   subCategoryArray: any;
   dataSource2: MatTableDataSource<any>;
+  dataSource: MatTableDataSource<unknown>;
   constructor(public subInjectService: SubscriptionInject, public UtilService: UtilService,
     public eventService: EventService, private custumService: CustomerService) {
   }
 
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
-  dataSource = ELEMENT_DATA;
 
   displayedColumns1 = ['data', 'amts'];
   datasource1 = ELEMENT_DATA1;
@@ -128,7 +128,7 @@ export class MutualFundOverviewComponent implements OnInit {
           element.amts = this.mfData.total_market_value
           break;
         case ('h. Net Gain (g-f)'):
-          element.amts = this.mfData.total_market_value
+          element.amts = this.mfData.total_unrealized_gain
           break;
         case ('i. Realized XIRR (All Transactions)'):
           element.amts = this.mfData.total_xirr
@@ -145,15 +145,15 @@ export class MutualFundOverviewComponent implements OnInit {
     console.log(this.dataSource3);
   }
   getFamilyMemberWiseAllocation(data) {
-    let dataToShow = data.family_member_map;
-    let familyMemberAllocation = [];
+    this.dataSource=new MatTableDataSource(data.family_member_list);
+    console.log(this.dataSource)
+
     //   Object.keys(dataToShow).map(function(key){
     //     familyMemberAllocation.push({[key]:dataToShow[key]})
     //     return familyMemberAllocation;
     // });
     // familyMemberAllocation = Object.entries(dataToShow);
 
-    console.log(familyMemberAllocation);
     // familyMemberAllocation.push(data.family_member_map);
     // this.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
 

@@ -37,13 +37,13 @@
                     <div class="example-card b-a">
                         <div [ngClass]="{'baBlue':serviceData.selected,'b-ua':serviceData.selected==false }"
                             (click)="selectService(serviceData,i)" class="overflow-hidden">
-                            <div class="bg-grey lter text-left">
+                            <div class="bg-grey lter text-left" >
                                 <div *ngIf="!isLoading">
                                     <mat-checkbox class="custom-checkbox"
                                         [ngStyle]="{'pointer-events':(serviceData.selected)?'none':'all'}"
                                         checked="false" [ngClass]="{'v-h':serviceData.selected==false }"></mat-checkbox>
                                 </div>
-                                <div class="pl-20 pr-20 pt-20 height155">
+                                <div class="pl-20 pr-20 pt-20 overflow-hidden" [ngClass]="serviceData.read? '':'height130'">
                                     <div class="relClass">
                                         <div class="bar f-24 p-0 l-26 mb-10" [ngClass]="{'height24': isLoading}">
                                             <h3 class="f-24" matTooltip="Service name">
@@ -54,10 +54,12 @@
                                     <div class="relClass">
                                         <div class="bar" [ngClass]="{'height24': isLoading}">
                                             <p matTooltip="Service code">{{serviceData.serviceCode}}</p>
-                                            <p class="mb-0 pb-32 pt-4"
-                                                matTooltip="Description : {{serviceData.description}}"
-                                                aria-label="Button that displays a tooltip when focused or hovered over">
-                                                {{serviceData.description}}</p>
+                                            <div class="serDic" [ngClass]="serviceData.read? 'h-a':''">
+                                                <p class="m-0 text-sl" matTooltip="Description : {{serviceData.description}}" aria-label="Button that displays a tooltip when focused or hovered over">
+                                                    {{serviceData.description}}
+                                                </p>
+                                            </div>
+                                            <div (click)="serviceData.read = serviceData.read? false : true" class="read-more c-p" *ngIf="serviceData.description && serviceData.description.length > 100">{{serviceData.read?'read less':'read more'}}</div>
                                         </div>
                                     </div>
 

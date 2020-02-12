@@ -32,7 +32,7 @@
                 <div (click)="passInvoice(strData,i,$event)" *ngFor="let strData of dataInvoices let i=index"
                     [ngClass]="(strData.id==storeData.id)?'bg-grey lter':'b-b'" class="invoiceSpacing b-b c-p">
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-8 pl-0">
                             <p class="m-0 f-15">{{strData.clientName}}</p>
                         </div>
                         <div class="col-md-4 text-right pr-8">
@@ -40,7 +40,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-md-5 pl-0">
                             <p class="m-0 f-13 pt-12">{{strData.invoiceNumber}}</p>
                         </div>
                         <div class="col-md-2 p-0">
@@ -557,7 +557,7 @@
     </div>
 </div>
 <!--Add and edit invoice section-->
-<div *ngIf="showEdit">
+<div *ngIf="showEdit" class="pt-60">
     <app-add-edit-subscription-invoice (cancelAddInvoice)="getAddCancelFlag($event)"
         (cancelEditInvoice)="getCancelFlag($event)" (valueChange)='display($event)' [data]="storeData"
         [invoiceInSub]="invoiceInSub" [invoiceValue]="invoiceValue">

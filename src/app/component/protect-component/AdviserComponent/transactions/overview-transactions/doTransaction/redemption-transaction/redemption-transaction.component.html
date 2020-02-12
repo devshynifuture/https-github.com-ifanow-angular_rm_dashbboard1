@@ -26,7 +26,7 @@
 
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pt-28 text-black pb-12">seat scheme to redeem from</h5>
+                        <h5 class="m-0 pt-28 text-black pb-12">select scheme to redeem from</h5>
                     </div>
                     <div class="col-md-12 p-0">
                         <div class="form-group  ">
@@ -55,10 +55,9 @@
                         </mat-form-field>
                     </div>
                 </div>
-
-
+                <!-- *ngIf="showUnits == true" commented for prod -->
                 <div class="row">
-                    <div class="col-md-7 mt-20 pl-0">
+                    <div class="col-md-12 mt-20 pl-0">
                         <div class="bg-grey lter">
                             <div class="row">
                                 <div class="col-md-6 p-20 text-left">
@@ -72,23 +71,24 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12 pb-12">
-                                    <p class="f-12 m-0">Note: </p>
+                                    <p class="f-12 m-0">Note: Note: Units data provided here is as per data uploaded in the system. This data may not be updated in NSE NMF. As a result, some transactions may not go through.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
                         <h5 class="m-0 pt-28 text-black pb-12">Redemption type</h5>
                     </div>
                     <div class="col-md-5 p-0">
                         <mat-form-field>
-                            <mat-select class="form-control br-0">
-                                <mat-option>
-                                    Option
+                            <mat-select class="form-control br-0" (selectionChange)="redemptionType($event)">
+                                <mat-option value="1">Amount Rs.
+                                </mat-option>
+                                <mat-option value="2">No. of units
+                                </mat-option>
+                                <mat-option value="3">All avialable units
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -100,13 +100,15 @@
                         <h5 class="m-0 pt-28 text-black pb-12"> Amount/Units</h5>
                     </div>
 
-                    <div class="col-md-5 p-0">
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <input #employeeContry matInput maxlength="10" type="text" class="form-control br-0 rupess" formControlName="employeeContry">
-                            </mat-form-field>
-                            <p class="m-0 f-12 text-custom">Min amount: ₹500</p>
-                        </div>
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input #employeeContry matInput maxlength="10" type="text" class="form-control br-0 rupess" formControlName="employeeContry" (change)="enteredAmount($event.target.value)">
+                            <p class="m-0 f-12 text-custom">Min amount: ₹{{(schemeDetails == undefined)?'-':schemeDetails.minimumRedemptionAmount }}
+                            </p>
+                            <mat-error *ngIf="(redemptionTransaction.get('employeeContry').errors?.min)" class="f-12">
+                                Should be greater than or equal to {{schemeDetails.minimumRedemptionAmount}}
+                            </mat-error>
+                        </mat-form-field>
                     </div>
                 </div>
 

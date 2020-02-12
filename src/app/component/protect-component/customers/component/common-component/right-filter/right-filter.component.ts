@@ -9,6 +9,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
   styleUrls: ['./right-filter.component.scss']
 })
 export class RightFilterComponent implements OnInit {
+  show=false;
   ngOnInit(): void {
     throw new Error("Method not implemented.");
   }
@@ -35,6 +36,9 @@ export class RightFilterComponent implements OnInit {
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
   Close(data) {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  }
+  statusChange(){
+    this.show=true;
   }
 
 }

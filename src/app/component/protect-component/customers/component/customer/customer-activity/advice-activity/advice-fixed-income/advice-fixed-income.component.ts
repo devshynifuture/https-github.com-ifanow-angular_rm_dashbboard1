@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatTableDataSource, MatSort } from '@angular/material';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { SelectAdviceComponent } from '../select-advice/select-advice.component';
@@ -27,6 +27,7 @@ export class AdviceFixedIncomeComponent implements OnInit {
   bondDataSource: any;
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private utilService: UtilService, private activityService: ActiityService) { }
   allAdvice = false;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -78,11 +79,12 @@ export class AdviceFixedIncomeComponent implements OnInit {
     this.isLoading = false;
     console.log('data', data)
     this.dataSource = data;
-    this.fixedDataSource = data.FIXED_DEPOSIT;
-    this.recurringDataSource = data.RECURRING_DEPOSIT;
-    this.bondDataSource = data.BONDS;
-
-
+    this.fixedDataSource = new MatTableDataSource(data.FIXED_DEPOSIT);
+    this.fixedDataSource.sort = this.sort
+    this.recurringDataSource = new MatTableDataSource(data.RECURRING_DEPOSIT);
+    this.recurringDataSource.sort = this.sort
+    this.bondDataSource = new MatTableDataSource(data.BONDS);
+    this.bondDataSource.sort = this.sort
   }
   openselectAdvice(data) {
     const fragmentData = {
