@@ -1,10 +1,10 @@
 <div class="row bb-1 popup-header-fix-60">
     <div class="col-md-8 p-0">
-        <h4 class="wrapper-20 m-0" *ngIf="!isEdite">Subscription details</h4>
+        <h4 class="pl-20 pt-20 m-0" *ngIf="!isEdite">Subscription details</h4>
         <h4 class="wrapper-20 m-0" *ngIf="isEdite">Edit Subscription details</h4>
     </div>
     <div class="col-md-4 text-right">
-        <div class="wrapper-12 pb-10">
+        <div class="wrapper-12">
             <button mat-stroked-button class="br-0 btn-primary mr-20" (click)="enableForm()" *ngIf="!isEdite">
                 EDIT
             </button>
