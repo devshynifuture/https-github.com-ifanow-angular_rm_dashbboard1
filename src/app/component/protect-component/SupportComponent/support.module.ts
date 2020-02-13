@@ -19,24 +19,21 @@ import { AddStockMasterComponent } from './support-dashboard/add-stock-master/ad
 import { AddLifeInsuranceMasterComponent } from './support-dashboard/add-life-insurance-master/add-life-insurance-master.component';
 import { SchemeMappingComponent } from './support-dashboard/scheme-mapping/scheme-mapping.component';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
-import { IfasDetailsComponent } from './my-ifas/ifas-details/ifas-details.component';
 import { DynamicComponentService } from 'src/app/services/dynamic-component.service';
 import { SupportEntryModule } from './support.entry.module';
-import { IfaBoradingHistoryComponent } from './ifa-onboarding/ifa-borading-history/ifa-borading-history.component';
-import { AdminDetailsComponent } from './ifa-onboarding/admin-details/admin-details.component';
-import { UpperSliderBackofficeComponent } from './common-component/upper-slider-backoffice/upper-slider-backoffice.component';
-import { ReconciliationDetailsViewComponent } from './common-component/reconciliation-details-view/reconciliation-details-view.component';
+
 
 
 @NgModule({
-  declarations: [SupportSidebarComponent, SupportDashboardComponent, MyIfasComponent, IfaOnboardingComponent, SupportMiscellaneousComponent, AddStockMasterComponent, AddLifeInsuranceMasterComponent, SchemeMappingComponent, IfasDetailsComponent, IfaBoradingHistoryComponent, AdminDetailsComponent, UpperSliderBackofficeComponent, ReconciliationDetailsViewComponent],
+  declarations: [SupportSidebarComponent, SupportDashboardComponent, MyIfasComponent, IfaOnboardingComponent, SupportMiscellaneousComponent, AddStockMasterComponent, AddLifeInsuranceMasterComponent, SchemeMappingComponent],
   imports: [
     CommonModule,
     SupportRoutingModule,
     MaterialModule,
-    CustomDirectiveModule
+    CustomDirectiveModule,
+    SupportEntryModule
   ],
-  entryComponents: [SupportEntryModule.getComponentList()],
+  entryComponents: [],
   providers: [DynamicComponentService]
 })
 export class SupportModule { }
