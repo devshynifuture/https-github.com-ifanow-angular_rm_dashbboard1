@@ -4,6 +4,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { UtilService } from 'src/app/services/util.service';
 import { CustomerService } from '../../../customer.service';
 import { MatSort, MatTableDataSource } from '@angular/material';
+import { AdviceUtilsService } from '../advice-utils.service';
 
 @Component({
   selector: 'app-advice-all-portfolio',
@@ -11,20 +12,29 @@ import { MatSort, MatTableDataSource } from '@angular/material';
   styleUrls: ['./advice-all-portfolio.component.scss']
 })
 export class AdviceAllPortfolioComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'icons'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
-
+  displayedColumns: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'icons'];
+  dataSource: any = new MatTableDataSource(ELEMENT_DATA);
+  selectedAssetId = [];
   displayedColumns1: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'status', 'date', 'adate', 'icons'];
-  dataSource1 = new MatTableDataSource(ELEMENT_DATA1);
+  dataSource1: any = new MatTableDataSource(ELEMENT_DATA1);
   constructor(private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
-  @ViewChild(MatSort, { static: true }) sort1: MatSort;
-  @ViewChild(MatSort, { static: true }) sort2: MatSort;
+  @ViewChild("tableOne", { static: true }) sort1: MatSort;
+  @ViewChild("tableTwo", { static: true }) sort2: MatSort;
 
   ngOnInit() {
     this.dataSource.sort = this.sort1;
     this.dataSource1.sort = this.sort2;
   }
+  checkAll(flag, value) {
+    console.log(flag)
+    if (value == 'cashflow') {
+      this.dataSource = new MatTableDataSource(AdviceUtilsService.selectAll(flag, this.dataSource._data._value, this.selectedAssetId))
+    }
+    else {
+      this.dataSource1 = new MatTableDataSource(AdviceUtilsService.selectAll(flag, this.dataSource1._data._value, this.selectedAssetId))
 
+    }
+  }
 }
 export interface PeriodicElement {
   name: string;
@@ -34,30 +44,21 @@ export interface PeriodicElement {
 
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 'Rahul Jain', name: 'Surplus from life csh flows (Lumpsum)', weight: '35, 000', symbol: 'Invest towards Shreya’s Higher education and Rahul’s Retirement goal', },
-  { position: 'Rahul Jain1', name: 'Surplus from life csh flows (Lumpsum)1', weight: '35, 000', symbol: 'Invest towards Shreya’s Higher education and Rahul’s Retirement goal1', },
+const ELEMENT_DATA = [
+  { position: 'Rahul Jain', name: 'Surplus from life csh flows (Lumpsum)', weight: '35, 000', symbol: 'Invest towards Shreya’s Higher education and Rahul’s Retirement goal', selected: false },
+  { position: 'Rahul Jain1', name: 'Surplus from life csh flows (Lumpsum)1', weight: '35, 000', symbol: 'Invest towards Shreya’s Higher education and Rahul’s Retirement goal1', selected: false },
 
 ];
-export interface PeriodicElement1 {
-  name: string;
-  position: string;
-  weight: string;
-  symbol: string;
-  status: string;
-  date: string;
-  adate: string;
-}
 
-const ELEMENT_DATA1: PeriodicElement1[] = [
+const ELEMENT_DATA1 = [
   {
     position: 'Rahul Jain', name: 'Surplus from life csh flows (Lumpsum)', weight: '35, 000', symbol: 'Invest towards Shreya’s Higher education and Rahul’s Retirement goal', status: 'Given',
-    date: '23/12/2019', adate: '23/12/2019'
+    date: '23/12/2019', adate: '23/12/2019', selected: false
   },
   {
     position: 'Rahul Jain2', name: 'Surplus from life csh flows (Lumpsum)1',
     weight: '35, 000', symbol: 'Invest towards Shreya’s Higher education and Rahul’s Retirement goal',
-    status: 'Given', date: '23/12/2019', adate: '23/12/2019'
+    status: 'Given', date: '23/12/2019', adate: '23/12/2019', selected: false
   },
 
 ]

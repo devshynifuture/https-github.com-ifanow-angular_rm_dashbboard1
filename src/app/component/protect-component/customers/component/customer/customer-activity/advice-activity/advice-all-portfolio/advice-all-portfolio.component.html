@@ -48,42 +48,55 @@
     </div>
 </div>
 <div class="wrapper-16">
-    <table matSort mat-table [dataSource]="dataSource" id="table-low">
+    <table #tableOne="matSort" appSkeletonLoading [appSkeletonLoading]="isLoading" matSort mat-table
+        [dataSource]="dataSource" class="skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef>
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox (change)="checkAll($event,'cashflow')"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="position">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
-            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar"> {{element.position}}</div>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
-            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar"> {{element.name}}</div>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="weight">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Value </th>
-            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar"> {{element.weight}}</div>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="symbol">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
-            <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar"> {{element.symbol}}</div>
+            </td>
         </ng-container>
         <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status </th>
-            <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar"> {{element.status}}</div>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="date">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Applicable date </th>
-            <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar"> {{element.date}}</div>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="icons">
@@ -110,51 +123,66 @@
                     class="pr-8">Filters</button>
         </div>
     </div>
-    <table matSort mat-table [dataSource]="dataSource1" id="table-low">
+    <table #tableTwo="matSort" appSkeletonLoading [appSkeletonLoading]="isLoading" matSort mat-table
+        [dataSource]="dataSource1" class="skeletonAnimation" id="table-low">
 
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef>
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox (change)="checkAll($event,'mutualFunds')"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="position">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
-            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar"> {{element.position}}</div>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Scheme details </th>
-            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar"> {{element.name}}</div>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="weight">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Current
                 value </th>
-            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar"> {{element.weight}}</div>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="symbol">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Notional
                 gain (loss) </th>
-            <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar"> {{element.symbol}}</div>
+            </td>
         </ng-container>
         <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice
             </th>
-            <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar"> {{element.status}}</div>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="date">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status </th>
-            <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar"> {{element.date}}</div>
+            </td>
         </ng-container>
         <ng-container matColumnDef="adate">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Applicable date </th>
-            <td mat-cell *matCellDef="let element"> {{element.adate}} </td>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar"> {{element.adate}}</div>
+            </td>
         </ng-container>
         <ng-container matColumnDef="icons">
             <th mat-header-cell *matHeaderCellDef>

@@ -39,6 +39,7 @@ export class DocumentsSettingsComponent implements OnInit {
     // this.openFragment('documents');
     // (SubscriptionDataService.getLoderFlag(5) == false) ? this.documentSettingData = undefined : this.documentSettingData = [{}, {}, {}]
     this.getDocumentsSetting();
+    
   }
 
   getDocumentsSetting() {
@@ -63,6 +64,8 @@ export class DocumentsSettingsComponent implements OnInit {
   /**this function is used for calling get api in documentSetting component */
   display(data) {
     this.getDocumentsSetting();
+    console.log("hi i was call 12-02");
+
   }
   getDocumentsSettingResponse(data) {
     if (data == undefined) {
@@ -117,6 +120,7 @@ export class DocumentsSettingsComponent implements OnInit {
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
+          console.log(upperSliderData,"upperSliderData 123")
           if (UtilService.isRefreshRequired(upperSliderData)) {
             this.getDocumentsSetting();
           }

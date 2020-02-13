@@ -23,6 +23,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   transactionType: any;
   folioSelection: [2]
   schemeSelection: [2]
+  platformType
   selectScheme = 2;
   schemeList: any;
   navOfSelectedScheme: any;
@@ -35,8 +36,9 @@ export class PurchaseTrasactionComponent implements OnInit {
   scheme: any;
   folioList: any;
   folioDetails: any;
-  constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService, private subInjectService: SubscriptionInject,
-    private fb: FormBuilder) { }
+  showSpinner = false;
+  constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService, 
+    private subInjectService: SubscriptionInject,private fb: FormBuilder) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -100,6 +102,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.ExistingOrNew = value
   }
   selectedScheme(scheme) {
+    this.showSpinner = true
     this.scheme = scheme
     this.transactionSummary = { schemeName: scheme.schemeName }
     this.navOfSelectedScheme = scheme.nav
@@ -114,6 +117,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     );
   }
   getSchemeDetailsRes(data) {
+    this.showSpinner = false
     console.log('getSchemeDetailsRes == ', data)
     this.maiSchemeList = data
     this.schemeDetails = data[0]
@@ -236,15 +240,17 @@ export class PurchaseTrasactionComponent implements OnInit {
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       }
       console.log('new purchase obj', obj)
-      this.onlineTransact.purchase(obj).subscribe(
+      this.onlineTransact.transactionBSE(obj).subscribe(
         data => this.purchaseRes(data)
       );
     }
   }
   purchaseRes(data) {
     console.log('purchase transaction ==', data)
-    if(data){
-      this.onAddTransaction('confirm',null)
+    if(data == undefined){
+
+    }else{
+    this.onAddTransaction('confirm',null)
     }
   }
 }

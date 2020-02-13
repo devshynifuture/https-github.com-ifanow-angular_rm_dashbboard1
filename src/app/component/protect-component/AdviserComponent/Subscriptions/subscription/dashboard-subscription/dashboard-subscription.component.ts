@@ -15,6 +15,7 @@ import { FixedFeeComponent } from '../common-subscription-component/fixed-fee/fi
 import { BillerSettingsComponent } from '../common-subscription-component/biller-settings/biller-settings.component';
 import { ChangePayeeComponent } from '../common-subscription-component/change-payee/change-payee.component';
 import { InvoiceHistoryComponent } from '../common-subscription-component/invoice-history/invoice-history.component';
+import { SubscriptionPopupComponent } from '../common-subscription-component/subscription-popup/subscription-popup.component';
 
 export interface PeriodicElement {
   name: string;
@@ -220,6 +221,8 @@ export class DashboardSubscriptionComponent implements OnInit {
   showSubscriptionSteps() {
     this.showSubStep = true;
   }
+
+  
 
   changeParentsTab(selectedTab) {
     console.log("this is selected Tab:::::::::::::", selectedTab);

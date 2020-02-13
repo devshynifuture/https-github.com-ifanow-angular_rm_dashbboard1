@@ -20,16 +20,17 @@ export class AdviceStocksComponent implements OnInit {
   dataSource3 = new MatTableDataSource(ELEMENT_DATA1);
   advisorId: any;
   clientId: any;
+  stockDatasource: any;
+  isLoading: boolean;
   constructor(private eventService: EventService, public dialog: MatDialog, private subInjectService: SubscriptionInject,
     private cusService: CustomerService, private activityService: ActiityService) { }
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild("tableOne", { static: true }) sort: MatSort;
   ngOnInit() {
     this.dataSource3.sort = this.sort;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getAssetAll();
   }
-
 
   allAdvice = false;
   getAssetAll() {
@@ -38,6 +39,8 @@ export class AdviceStocksComponent implements OnInit {
       clientId: this.clientId,
       assetCategory: 1
     }
+    this.stockDatasource = [{}, {}, {}]
+    this.isLoading = true;
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllAssetResponse(data), (error) => {
         // this.datasource.data = [];
@@ -46,6 +49,8 @@ export class AdviceStocksComponent implements OnInit {
     );
   }
   getAllAssetResponse(data) {
+    this.isLoading = false;
+    this.stockDatasource = data.STOCKS
     console.log(data);
   }
   openRealEstate(data, value) {
@@ -104,6 +109,6 @@ export interface PeriodicElement1 {
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
   { name: 'Rahul Jain', desc: '1', mvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-  { name: 'Rahul Jain1', desc: '2', mvalue: '20000', advice: 'do trasact1 ', adate: '2020-02-20', astatus: 'LIVE' },
+  { name: 'Rahul xain1', desc: '2', mvalue: '20000', advice: 'do trasact1 ', adate: '2020-02-20', astatus: 'LIVE' },
 
 ];

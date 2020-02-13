@@ -1,0 +1,147 @@
+<div class="popup-header-fix-40">
+    <div class="row bb-1">
+        <div class="col-md-8 p-0">
+            <h4 class="mb-0 wrapper-20"> ARN-83865 CAMS </h4>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12">
+                <i class="material-icons c-p pt-8 v-middle" (click)="Close(false)"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row pt-32">
+    <div class="col-md-6">
+        <p class="m-0 f-12 text-primitive roboto">SCHEME NAME</p>
+        <h4 class="f-14 mb-24">IIFL Dividend Opportunities Index Fund - Growth</h4>
+
+        <p class="m-0 f-12 text-primitive roboto">FOLIO NUMBER</p>
+        <h4 class="f-14 mb-24">7716853/43 </h4>
+
+        <p class="m-0 f-12 text-primitive roboto">INVESTOR</p>
+        <h4 class="f-14 mb-24">Rahul Jain</h4>
+
+    </div>
+
+    <div class="col-md-6">
+        <p class="mb-4 f-12 text-primitive roboto">STATUS</p>
+
+        <div class=" overflow-hidden back-office-table">
+            <table mat-table [dataSource]="dataSource" id="table-low" class=" ">
+
+                <ng-container matColumnDef="unitOne">
+                    <th class="b-a" mat-header-cell *matHeaderCellDef> Units (IFANOW) </th>
+                    <td class="b-a" mat-cell *matCellDef="let element">
+                        <div class="bar"> {{element.unitOne}} </div>
+                    </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="unitsRta">
+                    <th class="b-a" mat-header-cell *matHeaderCellDef> units (RTA) </th>
+                    <td class="b-a" mat-cell *matCellDef="let element">
+                        <div class="bar"> {{element.unitsRta}} </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="difference">
+                    <th class="b-a" mat-header-cell *matHeaderCellDef> Difference </th>
+                    <td class="b-a" mat-cell *matCellDef="let element">
+                        <div class="bar"> {{element.difference}} </div>
+                    </td>
+                </ng-container>
+
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 overflow-hidden back-office-table">
+
+        <table mat-table [dataSource]="dataSource1" id="table-low" class=" ">
+
+            <ng-container matColumnDef="checkbox">
+                <th class="b-a" mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox> </mat-checkbox>
+                </th>
+                <td class="b-a" mat-cell *matCellDef="let element">
+                    <div class="bar">
+                        <mat-checkbox> </mat-checkbox>
+                    </div>
+                </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="transactionType">
+                <th class="b-a" mat-header-cell *matHeaderCellDef> Transaction type </th>
+                <td class="b-a" mat-cell *matCellDef="let element">
+                    <div class="bar"> {{element.transactionType}} </div>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="date">
+                <th class="b-a" mat-header-cell *matHeaderCellDef> Date </th>
+                <td class="b-a" mat-cell *matCellDef="let element">
+                    <div class="bar"> {{element.date}} </div>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="amount">
+                <th class="b-a" mat-header-cell *matHeaderCellDef> Amount </th>
+                <td class="b-a" mat-cell *matCellDef="let element">
+                    <div class="bar"> {{element.amount}} </div>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="units">
+                <th class="b-a" mat-header-cell *matHeaderCellDef> Units </th>
+                <td class="b-a" mat-cell *matCellDef="let element">
+                    <div class="bar"> {{element.units}} </div>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="balanceUnits">
+                <th class="b-a" mat-header-cell *matHeaderCellDef> Balance units </th>
+                <td class="b-a" mat-cell *matCellDef="let element">
+                    <div class="bar"> {{element.balanceUnits}} </div>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+                <th class="b-a" mat-header-cell *matHeaderCellDef> Action </th>
+                <td class="b-a" mat-cell *matCellDef="let element">
+                    <div class="bar">
+
+                        <button mat-stroked-button class="bg-primary text-white">
+                            Delete
+                        </button>
+                    </div>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+        </table>
+
+    </div>
+</div>
+
+
+
+
+<div class="bottom-fixed wrapper-12 pt-16">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+            <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
+        </div>
+    </div>
+</div>

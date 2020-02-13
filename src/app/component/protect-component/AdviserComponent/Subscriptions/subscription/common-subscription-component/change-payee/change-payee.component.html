@@ -11,13 +11,14 @@
 <ng-template matStepLabel *ngIf="getRowData">Payee Settings</ng-template> -->
 
 <div class="wrapper-16 pb-44 mb-44">
-    <div class="row" *ngIf="payeeDataRes">
+    <div class="row" *ngIf="payeeDataRes.length > 0">
         <div class="col-md-12">
             <p class="m-0 text-right text-custom roboto">You can map more than one payee</p>
         </div>
     </div>
-    <div  class="row">
-        <div [hidden]="!payeeDataRes" class="col-md-6 mt-20 hover c-p" *ngFor="let singlePlan of payeeDataRes;  let i = index">
+    <div class="row">
+        <div [hidden]="!payeeDataRes" class="col-md-6 mt-20 hover c-p"
+            *ngFor="let singlePlan of payeeDataRes;  let i = index">
             <mat-card class="p-0 b-ua" [ngClass]="{'ba-blue': singlePlan.selected == 1,'b-ua':singlePlan.selected == 0}"
                 (click)="selectedPayee(singlePlan.selected,singlePlan)">
                 <div class="row bg-grey lter">
@@ -47,8 +48,9 @@
                                         (change)="matSliderOnChange(0,singlePlan,$event.value)"></mat-slider>
                                 </div>
                                 <div class="col-md-4 pr-0 pt-8">
-                                    <input [(ngModel)]="singlePlan.share"type="number" (input)="restrictAfter100($event)"
-                                        (change)="matSliderOnChange(0,singlePlan,0)" min="0" max="100"
+                                    <input [(ngModel)]="singlePlan.share" type="number"
+                                        (input)="restrictAfter100($event)" (change)="matSliderOnChange(0,singlePlan,0)"
+                                        min="0" max="100"
                                         class="m-0 f-13 form-control text-black b-a p-4 text-center" />
                                 </div>
                             </div>
@@ -57,14 +59,16 @@
                 </div>
             </mat-card>
         </div>
-        <div [hidden]="payeeDataRes">
-            <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
-                <img class="width200" src="assets/images/svg/no-data-found.svg">
-                <p class="f-22 f-600 pt-28"> No Data Found </p>
-                <button (click)="openPayeeSettings('Add','payeeSettings','open')"
-                    class="btn-primary mt-20 br-0 right text-right addon" mat-stroked-button>
-                    ADD MORE
-                </button>
+        <div [hidden]="payeeDataRes.length > 0" class="w-100">
+            <div class="row align-items-center justify-content-center h-100vh">
+                <div class="col-md-12 text-center">
+                    <img class="width200" src="assets/images/svg/no-data-found.svg">
+                    <p class="f-22 f-600 pt-28"> No Data Found </p>
+                    <button (click)="openPayeeSettings('Add','payeeSettings','open')"
+                        class="btn-primary mt-20 br-0 addon" mat-stroked-button>
+                        ADD MORE
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -75,7 +79,8 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <app-progress-button  (btnClick)="saveChangePayeeSetting()" [options]="barButtonOptions" [disabled]="totalValue!=100">
+            <app-progress-button (btnClick)="saveChangePayeeSetting()" [options]="barButtonOptions"
+                [disabled]="totalValue!=100">
             </app-progress-button>
             <!-- <button mat-button class="btn-bottom br-0 text-inherit" [disabled]="totalValue!=100"
                 (click)="saveChangePayeeSetting()">Save

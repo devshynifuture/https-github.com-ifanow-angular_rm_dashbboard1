@@ -51,7 +51,8 @@
                     class="pr-8">Suggest new Stock</button>
         </div>
     </div>
-    <table matSort mat-table [dataSource]="dataSource3" class="mt-8" id="table-low">
+    <table #tableOne="matSort" appSkeletonLoading [appSkeletonLoading]="isLoading" matSort mat-table
+        [dataSource]="dataSource3" class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox></mat-checkbox>
@@ -62,28 +63,40 @@
         </ng-container>
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
-            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar">{{element.name}} </div>
+            </td>
         </ng-container>
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
-            <td mat-cell *matCellDef="let element"> {{element.desc}} </td>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar">{{element.desc}} </div>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="mvalue">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Market value </th>
-            <td mat-cell *matCellDef="let element"> {{element.mvalue}} </td>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar">{{element.mvalue}} </div>
+            </td>
         </ng-container>
         <ng-container matColumnDef="advice">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
-            <td mat-cell *matCellDef="let element"> {{element.advice}} </td>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar">{{element.advice}} </div>
+            </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status </th>
-            <td mat-cell *matCellDef="let element"> {{element.astatus}} </td>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar">{{element.astatus}} </div>
+            </td>
         </ng-container>
         <ng-container matColumnDef="adate">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Applicable date </th>
-            <td mat-cell *matCellDef="let element"> {{element.adate}} </td>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar">{{element.adate}} </div>
+            </td>
         </ng-container>
         <ng-container matColumnDef="icon">
             <th mat-header-cell *matHeaderCellDef> </th>

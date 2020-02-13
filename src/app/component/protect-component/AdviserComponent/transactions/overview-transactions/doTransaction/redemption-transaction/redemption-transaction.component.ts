@@ -29,6 +29,7 @@ export class RedemptionTransactionComponent implements OnInit {
   transactionSummary: {};
   folioList: any;
   folioDetails: any;
+  showUnits = false
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private fb: FormBuilder) { }
@@ -56,7 +57,7 @@ export class RedemptionTransactionComponent implements OnInit {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
   }
-  redemptionType(value){
+  redemptionType(value) {
 
   }
   onAddTransaction(value, data) {
@@ -100,6 +101,7 @@ export class RedemptionTransactionComponent implements OnInit {
       schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
       investor: [(!data) ? '' : data.investor, [Validators.required]],
       employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required]],
+      redeemType:[(!data) ? '' : data.redeemType ,[Validators.required]],
       investmentAccountSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
       folioSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
@@ -150,6 +152,7 @@ export class RedemptionTransactionComponent implements OnInit {
     console.log('getSchemeDetailsRes == ', data)
     this.maiSchemeList = data
     this.schemeDetails = data[0]
+    this.redemptionTransaction.controls["employeeContry"].setValidators([Validators.min(this.schemeDetails.redemptionAmountMinimum)])
     this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
     if (data.length > 1) {
       this.reInvestmentOpt = data
@@ -162,20 +165,61 @@ export class RedemptionTransactionComponent implements OnInit {
   getSchemeWiseFolios() {
     let obj1 = {
       mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
-      advisorId:  this.getDataSummary.defaultClient.advisorId,
-      familyMemberId:  this.getDataSummary.defaultClient.familyMemberId,
-      clientId:  this.getDataSummary.defaultClient.clientId
+      advisorId: this.getDataSummary.defaultClient.advisorId,
+      familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+      clientId: this.getDataSummary.defaultClient.clientId
     }
     this.onlineTransact.getSchemeWiseFolios(obj1).subscribe(
       data => this.getSchemeWiseFoliosRes(data)
     );
   }
   getSchemeWiseFoliosRes(data) {
-    console.log('res scheme folio',data)
+    console.log('res scheme folio', data)
     this.folioList = data
   }
   selectedFolio(folio) {
     this.folioDetails = folio
+    this.showUnits = true
     this.transactionSummary = { folioNumber: folio.folioNumber }
+  }
+  redeem() {
+    let obj = {
+      productDbId: this.schemeDetails.id,
+      mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
+      productCode: this.schemeDetails.schemeCode,
+      isin: this.schemeDetails.isin,
+      folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+      tpSubBrokerCredentialId: this.getDataSummary.defaultCredential.tpSubBrokerCredentialId,
+      familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+      adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
+      clientId: this.getDataSummary.defaultClient.clientId,
+      orderType: 'REDEMPTION',
+      buySell: 'REDEMPTION',
+      transCode: 'NEW',
+      buySellType: 'FRESH',
+      dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
+      clientCode: this.getDataSummary.defaultClient.clientCode,
+      orderVal: this.redemptionTransaction.controls.employeeContry.value,
+      amountType: (this.redemptionTransaction.controls.redeemType.value == 1) ? 'Amount' : 'Unit',
+      qty: (this.redemptionTransaction.controls.redeemType.value == 1) ? 0 : (this.redemptionTransaction.controls.redeemType.value == 3) ? this.schemeDetails.balance_units : this.redemptionTransaction.controls.employeeContry.value,
+      schemeCd: this.schemeDetails.schemeCode,
+      euin: this.getDataSummary.defaultCredential.euin,
+      bseDPTransType: 'PHYSICAL',
+      allRedeem: (this.redemptionTransaction.controls.redeemType.value == 3) ? true : false,
+      // teamMemberSessionId: redemptionTransaction.localStorage.mm.mainDetail.userDetails.teamMemberSessionId,
+    }
+    console.log('redeem obj json',obj)
+    this.onlineTransact.transactionBSE(obj).subscribe(
+      data => this.redeemBSERes(data)
+    );
+  }
+  redeemBSERes(data){
+    console.log('redeem res',data)
+    if(data == undefined){
+
+    }else{
+    this.onAddTransaction('confirm',null)
+    }
   }
 }
