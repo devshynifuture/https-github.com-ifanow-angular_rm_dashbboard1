@@ -315,3 +315,11 @@ img.header-img {
   left: 8px;
   top: 10px;
 }
+
+.cdk-overlay-container {
+  .cdk-overlay-0 {
+    .mat-menu-panel {
+      min-width: 400px !important;
+    }
+  }
+}
