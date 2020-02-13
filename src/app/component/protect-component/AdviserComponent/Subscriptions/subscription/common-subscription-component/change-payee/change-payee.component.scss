@@ -21,3 +21,13 @@
 .fontPlayfair {
     font-family: "Playfair Display";
 }
+
+.skeletonAnimation .relClass {
+    .bar{
+        height: 170px; width: 100%;
+        &:after {
+            height: 170px;
+            background-size: 100px 100%;
+        }
+    }
+}

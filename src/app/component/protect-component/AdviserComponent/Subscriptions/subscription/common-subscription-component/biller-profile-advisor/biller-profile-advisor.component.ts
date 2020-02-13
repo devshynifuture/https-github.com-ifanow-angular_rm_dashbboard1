@@ -130,9 +130,9 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
 
   uploadImage() {
-    this.barButtonOptions.active = true;
-
+    
     if (this.imageData.type == 'image/png' || this.imageData.type == 'image/jpeg') {
+      this.barButtonOptions.active = true;
       const files = [this.imageData];
       const tags = this.advisorId + ',biller_profile_logo,';
       PhotoCloudinaryUploadService.uploadFileToCloudinary(files, 'biller_profile_logo', tags,
@@ -236,7 +236,9 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
 
   Close(data) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: data });
+    console.log("state close1", data);
+    
   }
 
   nextStep(value, eventName) {
