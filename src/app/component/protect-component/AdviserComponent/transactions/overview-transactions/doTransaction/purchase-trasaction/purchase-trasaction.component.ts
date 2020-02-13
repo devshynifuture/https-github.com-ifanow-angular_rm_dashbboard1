@@ -37,6 +37,8 @@ export class PurchaseTrasactionComponent implements OnInit {
   folioList: any;
   folioDetails: any;
   showSpinner = false;
+  bankDetails: any;
+  achMandateNSE: any;
   constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService, 
     private subInjectService: SubscriptionInject,private fb: FormBuilder) { }
   @Input()
@@ -65,6 +67,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   getSchemeList(value) {
+    this.platformType = this.getDataSummary.defaultClient.aggregatorType
     let obj = {
       searchQuery: value,
       bseOrderType: 'ORDER',
@@ -118,6 +121,36 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
       data => this.getSchemeDetailsRes(data)
     );
+    if(this.getDataSummary.defaultClient.aggregatorType == 1){
+      this.getNSEAchmandate()
+      this.getBankDetails()
+    }
+  }
+  getBankDetails(){
+    let obj1 = {
+      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+      clientCode: this.getDataSummary.defaultClient.clientCode,
+    }
+    this.onlineTransact.getBankDetailsNSE(obj1).subscribe(
+      data => this.getBankDetailsNSERes(data)
+    );
+  }
+  getBankDetailsNSERes(data){
+    console.log('bank details === ',data)
+    this.bankDetails = data
+  }
+  getNSEAchmandate(){
+    let obj1 = {
+      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+      clientCode: this.getDataSummary.defaultClient.clientCode,
+    }
+    this.onlineTransact.getNSEAchmandate(obj1).subscribe(
+      data => this.getNSEAchmandateRes(data)
+    );
+  }
+  getNSEAchmandateRes(data){
+    console.log('getNSEAchmandateRes',data)
+    this.achMandateNSE = data[0]
   }
   getSchemeDetailsRes(data) {
     this.showSpinner = false
@@ -244,6 +277,40 @@ export class PurchaseTrasactionComponent implements OnInit {
         euin: this.getDataSummary.defaultCredential.euin,
         bseDPTransType: 'PHYSICAL',
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+        bankCode:null,
+        subBrokerArnCode:null,
+        bankBranch:null,
+        accountNo:null,
+        accountType:null,
+        ifscCode:null,
+        umrn:null,
+        achAmount:null,
+        achFromDate:null,
+        achEndDate:null,
+        bankHolderName:null,
+        fromDate:null,
+        toDate:null,
+        periodDay:null,
+        isPoa:null,
+        amount:null,
+        isDematUser:null,
+        nsePaymentMode:null,
+      }
+      if(this.getDataSummary.defaultClient.aggregatorType == 1){
+        obj.bankCode= this.achMandateNSE.BANK_CODE
+        obj.subBrokerArnCode= this.getDataSummary.defaultCredential.brokerCode
+        obj.bankBranch= this.achMandateNSE.BRANCH
+        obj.accountNo= this.achMandateNSE.ACCOUNT_NO
+        obj.accountType= this.achMandateNSE.AC_TYPE
+        obj.ifscCode= this.achMandateNSE.IFSC_CODE
+        obj.umrn= this.achMandateNSE.UMRN_NO
+        obj.bankHolderName= this.achMandateNSE.INVESTOR_NAME
+        obj.fromDate= Number(new Date(this.achMandateNSE.FROM_DATE.replace(/"/g,""))) 
+        obj.toDate= Number(new Date(this.achMandateNSE.TO_DATE.replace(/"/g,""))) 
+        obj.isPoa= false
+        obj.amount=this.achMandateNSE.AMOUNT
+        obj.isDematUser= false
+        obj.nsePaymentMode= (this.purchaseTransaction.controls.modeOfPaymentSelection.value == 1)?'ONLINE':'DEBIT_MANDATEM'
       }
       console.log('new purchase obj', obj)
       this.onlineTransact.transactionBSE(obj).subscribe(

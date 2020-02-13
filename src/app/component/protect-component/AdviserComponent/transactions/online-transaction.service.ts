@@ -55,6 +55,12 @@ export class OnlineTransactionService {
   getSipFrequency(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_FREQUENCY, data, 1)
   }
+  getNSEAchmandate(data){
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.NSE_ACHMANDATE, data, 1)
+  }
+  getBankDetailsNSE(data){
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.BANK_DETAILS_NSE, data, 1)
+  }
   // sipBSE(data){
   //   return this.http.postEncoded(apiConfig.TRANSACT + appConfig.SIP_BSE, data)
   // }
