@@ -209,6 +209,9 @@ export class SipTransactionComponent implements OnInit {
       advisorId: this.getDataSummary.defaultClient.advisorId,
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
       clientId: this.getDataSummary.defaultClient.clientId,
+      userAccountType: this.getDataSummary.defaultCredential.accountType,
+      holdingType:this.getDataSummary.defaultClient.holdingType,
+      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
     }
     this.onlineTransact.getFoliosAmcWise(obj1).subscribe(
       data => this.getFoliosAmcWiseRes(data)

@@ -31,6 +31,9 @@ export class SwitchTransactionComponent implements OnInit {
   scheme: any;
   folioList: any;
   folioDetails: any;
+  schemeTransfer: any;
+  schemeDetailsTransfer: any;
+  schemeListTransfer: any;
 
   constructor(private subInjectService: SubscriptionInject,private onlineTransact: OnlineTransactionService,
     private fb: FormBuilder) { }
@@ -64,10 +67,14 @@ export class SwitchTransactionComponent implements OnInit {
       let obj = {
         searchQuery: value,
         bseOrderType: 'ORDER',
-        aggregatorType: 2,
+        aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
         advisorId: 414,
-        showOnlyNonZero:true,
         tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+        familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+        clientId: this.getDataSummary.defaultClient.clientId,
+        userAccountType: this.getDataSummary.defaultCredential.accountType,
+        holdingType:this.getDataSummary.defaultClient.holdingType,
+        tpUserCredFamilyMappingId:this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
       }
       this.onlineTransact.getExistingSchemes(obj).subscribe(
         data => this.getExistingSchemesRes(data)
@@ -91,9 +98,9 @@ export class SwitchTransactionComponent implements OnInit {
     this.navOfSelectedScheme = scheme.nav
     let obj1 = {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
-      aggregatorType: 2,
+      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       orderType: 'ORDER',
-      userAccountType: 1,
+      userAccountType: this.getDataSummary.defaultCredential.accountType,
     }
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
       data => this.getSchemeDetailsRes(data)
@@ -117,7 +124,10 @@ export class SwitchTransactionComponent implements OnInit {
       mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
       advisorId:  this.getDataSummary.defaultClient.advisorId,
       familyMemberId:  this.getDataSummary.defaultClient.familyMemberId,
-      clientId:  this.getDataSummary.defaultClient.clientId
+      clientId:  this.getDataSummary.defaultClient.clientId,
+      userAccountType: this.getDataSummary.defaultCredential.accountType,
+      holdingType:this.getDataSummary.defaultClient.holdingType,
+      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
     }
     this.onlineTransact.getSchemeWiseFolios(obj1).subscribe(
       data => this.getSchemeWiseFoliosRes(data)
@@ -154,6 +164,47 @@ export class SwitchTransactionComponent implements OnInit {
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
+  selectedSchemeTransfer(schemeTransfer){
+    this.schemeTransfer = schemeTransfer
+    this.transactionSummary = { schemeNameTranfer: schemeTransfer.schemeName }
+    this.navOfSelectedScheme = schemeTransfer.nav
+    let obj1 = {
+      mutualFundSchemeMasterId: schemeTransfer.mutualFundSchemeMasterId,
+      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+      orderType: 'ORDER',
+      userAccountType: this.getDataSummary.defaultCredential.accountType,
+    }
+    this.onlineTransact.getSchemeDetails(obj1).subscribe(
+      data => this.getSchemeDetailsTranferRes(data)
+    );
+  }
+  getSchemeDetailsTranferRes(data){
+    // this.maiSchemeList = data
+    this.schemeDetailsTransfer = data[0]
+  }
+  getSchemeListTranfer(value){
+    if (this.selectScheme == 2 && value.length > 2) {
+      let obj = {
+        searchQuery: value,
+        bseOrderType: 'ORDER',
+        aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+        advisorId: 414,
+        tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+        familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+        clientId: this.getDataSummary.defaultClient.clientId,
+        userAccountType: this.getDataSummary.defaultCredential.accountType,
+        holdingType:this.getDataSummary.defaultClient.holdingType,
+        tpUserCredFamilyMappingId:this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
+      }
+      this.onlineTransact.getNewSchemes(obj).subscribe(
+        data => this.getNewSchemesRes(data)
+      );
+    } 
+  }
+  getNewSchemesRes(data){
+    console.log('new schemes', data)
+    this.schemeListTransfer = data
+  }
   getdataForm(data) {
     if (!data) {
       data = {};
@@ -174,6 +225,7 @@ export class SwitchTransactionComponent implements OnInit {
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       installment:[(!data) ? '' : data.employeeContry, [Validators.required]],
       tenure:[(!data) ? '' : data.employeeContry, [Validators.required]],
+      transferIn:[(!data) ? '' : data.employeeContry, [Validators.required]],
     });
 
     this.ownerData = this.switchTransaction.controls;
@@ -181,5 +233,46 @@ export class SwitchTransactionComponent implements OnInit {
 
   getFormControl(): any {
     return this.switchTransaction.controls;
+  }
+  switch(){
+    let obj = {
+
+      productDbId: this.schemeDetails.id,
+      toProductDbId:this.schemeDetailsTransfer.id,
+      mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
+      toMutualFundSchemeMasterId:this.schemeTransfer.mutualFundSchemeMasterId,
+      productCode: this.schemeDetails.schemeCode,
+      isin: this.schemeDetails.isin,
+      folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+      tpSubBrokerCredentialId: this.getDataSummary.defaultCredential.tpSubBrokerCredentialId,
+      familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+      adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
+      clientId: this.getDataSummary.defaultClient.clientId,
+      toIsin: this.schemeDetailsTransfer.isin,
+      schemeCd: this.schemeDetails.schemeCode,
+      euin: this.getDataSummary.defaultCredential.euin,
+      orderType: "SWITCH",
+      buySell: "PURCHASE",
+      transCode: "NEW",
+      buySellType: "FRESH",
+      dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
+      clientCode: this.getDataSummary.defaultClient.clientCode,
+      orderVal: this.switchTransaction.controls.employeeContry.value,
+      bseDPTransType: "PHYSICAL",
+      aggregatorType: this.getDataSummary.defaultClient.aggregatorType
+    }
+    console.log('switch', obj)
+    this.onlineTransact.transactionBSE(obj).subscribe(
+      data => this.switchBSERes(data)
+    );
+  }
+  switchBSERes(data){
+    console.log('switch res == ',data)
+    if(data == undefined){
+
+    }else{
+    this.onAddTransaction('confirm',null)
+    }
   }
 }
