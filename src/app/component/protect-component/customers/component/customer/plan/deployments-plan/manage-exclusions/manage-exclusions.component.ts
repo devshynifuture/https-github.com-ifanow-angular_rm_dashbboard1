@@ -51,11 +51,18 @@ export class ManageExclusionsComponent implements OnInit {
     }
     else {
       let obj = {
-        deploymentId: this.data.id,
-        exclusionReason: this.manageExclusionsForm.get('exclusionReason').value,
-        exclusionAmount: this.manageExclusionsForm.get('exclusionAmount').value
+        "id": this.data.id,
+        "derivedAmount": this.manageExclusionsForm.get('availableAmount').value,
+        "exclusionToAssetBreakUp":
+        {
+          "id": this.data.exclusionToAssetBreakUp.id,
+          "deploymentId": this.data.exclusionToAssetBreakUp.deploymentId,
+          "exclusionReason": this.manageExclusionsForm.get('exclusionReason').value,
+          "exclusionAmount": this.manageExclusionsForm.get('exclusionAmount').value
+        },
+        "deploymentBreakUpId": this.data.deploymentAssetBreakUp.id
       }
-      this.planService.addManageExclusive(obj).subscribe(
+      this.planService.editManageExclusive(obj).subscribe(
         data => {
           console.log(data);
           this.close();

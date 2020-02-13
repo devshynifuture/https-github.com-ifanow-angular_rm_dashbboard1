@@ -125,7 +125,10 @@ export class PlanService {
   deleteRecuringBudget(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_RECURING_BUDGET, data)
   }
-  addManageExclusive(data) {
+  editManageExclusive(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_MANAGE_EXCLUSIVE, data)
+  }
+  deleteDeployment(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_DEPLOYMENT, data);
   }
 }
