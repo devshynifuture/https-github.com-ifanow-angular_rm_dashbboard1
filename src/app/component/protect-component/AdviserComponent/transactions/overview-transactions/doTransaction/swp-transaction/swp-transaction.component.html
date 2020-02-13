@@ -43,7 +43,7 @@
                 </div>
 
 
-                <div class="row" *ngIf="ExistingOrNew == 1">
+                <div class="row">
                     <div class="col-md-6 p-0 text-left">
                         <h5 class="m-0 pt-28 text-black pb-12">Select scheme folio</h5>
                     </div>
@@ -81,7 +81,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pt-28 text-black pb-12">Select SIP Frequency</h5>
+                        <h5 class="m-0 pt-28 text-black pb-12">Select SWP Frequency</h5>
                     </div>
                     <div class="col-md-5 p-0">
                         <div class="form-group mb-0">
@@ -96,7 +96,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pt-28 text-black pb-12"> Amount/Units</h5>
+                        <h5 class="m-0 pt-28 text-black pb-12">Enter amount</h5>
                     </div>
 
                     <div class="col-md-5 p-0">
@@ -137,6 +137,18 @@
                         </mat-form-field>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12 p-0 text-left">
+                        <h5 class="m-0 pt-40 pb-12 text-black">Enter installment</h5>
+                    </div>
+    
+                    <div class="col-md-5 p-0">
+                        <mat-form-field>
+                            <input #employeeContry matInput maxlength="10" type="text" class="form-control br-0 rupess"
+                                formControlName="installment">
+                        </mat-form-field>
+                    </div>
+                </div>
             </div>
             <div class="col-md-4 bg-grey lter p-0">
                 <app-transaction-summary [data]="transactionSummary" (defaultDetails)='getDefaultDetails($event)'>
@@ -160,7 +172,7 @@
             <button mat-button class="text-success">
                 SAVE & ADD ANOTHER
             </button>
-            <button mat-button class="text-success" (click)="onAddTransaction('confirm',null)">
+            <button mat-button class="text-success" (click)="swp()">
                 SAVE & PROCEED
             </button>
         </div>

@@ -15,6 +15,7 @@ export class AdviceMutualFundComponent implements OnInit {
   dataSource2 = new MatTableDataSource(ELEMENT_DATA2);
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private utilService: UtilService) { }
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  isLoading:boolean =false;
 
   ngOnInit() {
     this.dataSource2.sort = this.sort;

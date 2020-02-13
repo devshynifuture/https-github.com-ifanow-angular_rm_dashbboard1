@@ -41,3 +41,7 @@
 .b-a-success {
     border: 1px solid #00B294;
 }
+
+::ng-deep .mat-tab-group.mat-primary .mat-ink-ba {
+    background-color: transparent !important;
+}
