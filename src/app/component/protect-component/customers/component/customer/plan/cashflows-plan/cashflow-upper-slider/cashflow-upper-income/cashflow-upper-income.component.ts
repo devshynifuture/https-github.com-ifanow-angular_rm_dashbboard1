@@ -15,12 +15,14 @@ import { MatDialog, MatTableDataSource } from '@angular/material';
 export class CashflowUpperIncomeComponent implements OnInit {
   incomeData: string;
   familyMemberList: any;
+  dataToMap: any = [];
+  isLoading: boolean = false;
 
   constructor(public dialog: MatDialog,
     private eventService: EventService,
     private cashflowService: CashFlowsPlanService) { }
 
-  displayedColumns: string[] = ['description', 'month1', 'month2', 'month3', 'month4', 'month5', 'month6', 'month7', 'month8', 'month9', 'month10', 'month11', 'month12', 'total', 'remove'];
+  displayedColumns: string[] = ['description', 'month4', 'month5', 'month6', 'month7', 'month8', 'month9', 'month10', 'month11', 'month12', 'month1', 'month2', 'month3', 'total', 'remove'];
   dataSource = null;
   advisorId = AuthService.getAdvisorId();
   clientId = AuthService.getClientId();
@@ -37,9 +39,7 @@ export class CashflowUpperIncomeComponent implements OnInit {
 
     console.log(this.data);
     this.cashflowCategory = this.data.tableInUse;
-
     this.year = this.data.year;
-
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
     // api not created
     this.getCashflowMonthlyIncomeData();
@@ -57,24 +57,61 @@ export class CashflowUpperIncomeComponent implements OnInit {
     console.log(" income id array", this.incomeIdArray);
 
     const requestJSON = {
-      incomeId: this.incomeIdArray,
+      incomeIdList: this.incomeIdArray,
       year: parseInt(this.data.year)
     };
+    this.isLoading = true;
     this.cashflowService
       .getCashflowMonthlyIncomeValues(requestJSON)
       .subscribe(res => {
         console.log(res);
+        const obj = {};
+        this.incomeIdArray.forEach(id => {
+          res.forEach(item => {
+            if (item.incomeId === id) {
+              if (item.bonusOrInflow !== 0) {
+                obj[`month${item.receivingMonth}`] = { value: String(item.bonusOrInflow + item.amount), isAdHocChangesDone: (item.editedFromCashflow == 1 ? true : false) };
+              } else {
+                obj[`month${item.receivingMonth}`] = { value: String(item.bonusOrInflow + item.amount), isAdHocChangesDone: (item.editedFromCashflow == 1 ? true : false) };
+              }
+            }
+          });
+
+          let total = 0;
+          for (const key in obj) {
+            if (obj.hasOwnProperty(key)) {
+              const element = parseInt(obj[key].value);
+              total = total + element;
+            }
+          }
+
+          // add in dataMap
+          this.dataToMap.push({
+            ...obj,
+            description: 'hello',
+            remove: '',
+            total: String(total)
+          });
+        });
+
+        // complete list 
+        for (let i = 1; i <= 12; i++) {
+          this.dataToMap.map(item => {
+            for (const key in item) {
+              if (!item.hasOwnProperty(`month${i}`)) {
+                item[`month${i}`] = { value: '', isAdHocChangesDone: false };
+              }
+            }
+          });
+        }
+
+        console.log("expected outcome::::::::", this.dataToMap);
+        this.isLoading = false;
+        this.dataSource = new MatTableDataSource(this.dataToMap);
       }, err => {
         console.error(err);
       });
 
-    // console.log(this.data.detailsForMonthlyDistributionGetList);
-  }
-
-  alterTable(table: UpperTableBox[], field: string, value: string, index: number): UpperTableBox[] {
-    table[index][field] = value;
-    this.updateTotal(table[index]);
-    return table;
   }
 
   deleteEntryCashFlow(element: UpperTableBox) {
@@ -86,17 +123,14 @@ export class CashflowUpperIncomeComponent implements OnInit {
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
   }
 
-  updateTotal(object: UpperTableBox) {
-    let sum = 0;
-    for (let i = 1; i <= 12; i++) {
-      sum = sum + parseInt(object[`month${i}`]);
-    }
-    object['total'] = String(sum);
-  }
-
   changeTableTdValue(value: string, field: string, index: number) {
+    console.log(value, field, index);
     if (ValidatorType.NUMBER_ONLY.test(value)) {
-      this.alterTable(ELEMENT_DATA, field, value, index);
+      const updatedTable = this.cashflowService.alterTable(this.dataToMap, field, value, index);
+      console.log("this is updated Table", updatedTable);
+      this.dataSource = null;
+      this.dataSource = new MatTableDataSource(updatedTable);
+
     } else {
       this.onlyNumbers = '';
       this.eventService.openSnackBar("This Input only takes Numbers", "DISMISS");
@@ -136,11 +170,9 @@ export class CashflowUpperIncomeComponent implements OnInit {
 
 // for Income
 let ELEMENT_DATA: UpperTableBox[] = [
-  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
-  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
-  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
-  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
-  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
-  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
-  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
+  {
+    description: null, month1: { value: null, isAdHocChangesDone: false }, month2: { value: null, isAdHocChangesDone: false }, month3: { value: null, isAdHocChangesDone: false }, month4: { value: null, isAdHocChangesDone: false }, month5: { value: null, isAdHocChangesDone: false }, month6: { value: null, isAdHocChangesDone: false }, month7: { value: null, isAdHocChangesDone: false }, month8: { value: null, isAdHocChangesDone: false }, month9: { value: null, isAdHocChangesDone: false }, month10: { value: null, isAdHocChangesDone: false }, month11: { value: null, isAdHocChangesDone: false }, month12: { value: null, isAdHocChangesDone: false }, total: null, remove: ''
+  },
+  { description: null, month1: { value: null, isAdHocChangesDone: false }, month2: { value: null, isAdHocChangesDone: false }, month3: { value: null, isAdHocChangesDone: false }, month4: { value: null, isAdHocChangesDone: false }, month5: { value: null, isAdHocChangesDone: false }, month6: { value: null, isAdHocChangesDone: false }, month7: { value: null, isAdHocChangesDone: false }, month8: { value: null, isAdHocChangesDone: false }, month9: { value: null, isAdHocChangesDone: false }, month10: { value: null, isAdHocChangesDone: false }, month11: { value: null, isAdHocChangesDone: false }, month12: { value: null, isAdHocChangesDone: false }, total: null, remove: '' },
+  { description: null, month1: { value: null, isAdHocChangesDone: false }, month2: { value: null, isAdHocChangesDone: false }, month3: { value: null, isAdHocChangesDone: false }, month4: { value: null, isAdHocChangesDone: false }, month5: { value: null, isAdHocChangesDone: false }, month6: { value: null, isAdHocChangesDone: false }, month7: { value: null, isAdHocChangesDone: false }, month8: { value: null, isAdHocChangesDone: false }, month9: { value: null, isAdHocChangesDone: false }, month10: { value: null, isAdHocChangesDone: false }, month11: { value: null, isAdHocChangesDone: false }, month12: { value: null, isAdHocChangesDone: false }, total: null, remove: '' },
 ];

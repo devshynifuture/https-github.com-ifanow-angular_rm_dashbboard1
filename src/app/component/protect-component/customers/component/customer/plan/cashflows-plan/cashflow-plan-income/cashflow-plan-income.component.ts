@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
 import { IncomeTableI, IncometableI } from '../cashflows-plan.component';
 import { UtilService } from 'src/app/services/util.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-cashflow-plan-income',
@@ -18,7 +19,8 @@ export class CashflowPlanIncomeComponent implements OnInit {
   familyMemberList: any;
 
   constructor(private eventService: EventService,
-    private cashflowService: CashFlowsPlanService) { }
+    private cashflowService: CashFlowsPlanService,
+    private datePipe: DatePipe) { }
   isLoading: boolean = false;
 
   dataSource: MatTableDataSource<IncometableI>;
@@ -35,6 +37,12 @@ export class CashflowPlanIncomeComponent implements OnInit {
     this.getYearlyCashflowIncomeData();
   }
 
+  ageCalculation(timeStamp) {
+    const dob = UtilService.convertDateObjectToDateString(this.datePipe, timeStamp).slice(0, 4);
+    const year = new Date().getFullYear();
+    return year - parseInt(dob);
+  }
+
   getYearlyCashflowIncomeData() {
     this.isLoading = true;
     this.cashflowService
@@ -42,13 +50,12 @@ export class CashflowPlanIncomeComponent implements OnInit {
       .subscribe(res => {
         const { cashFlowIncomeOutputList, detailsForMonthlyDistributionGetList, groupHeadAge, spouseAge } = res;
         cashFlowIncomeOutputList.map(item => {
-          item.groupHeadAge = groupHeadAge;
-          item.spouseAge = spouseAge;
+          item.groupHeadAge = this.ageCalculation(groupHeadAge);
+          item.spouseAge = this.ageCalculation(spouseAge);
           item.view = 'view';
         });
 
         this.detailsForMonthlyDistributionGetList = detailsForMonthlyDistributionGetList;
-
 
         console.log(res);
         this.dataSource = new MatTableDataSource(cashFlowIncomeOutputList);

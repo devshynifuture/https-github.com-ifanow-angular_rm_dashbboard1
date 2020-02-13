@@ -5,12 +5,10 @@ import { Directive, HostListener, ElementRef, Renderer2, Input, EventEmitter, Ou
 })
 export class CashflowTableEditDirective {
   @Input() editModeTable;
-  @Output() disableClickOnOtherTd = new EventEmitter();
   editMode: boolean = false;
   constructor(private el: ElementRef, private renderer: Renderer2) { }
 
   @HostListener('click') editTableTdValue() {
-    this.disableClickOnOtherTd.emit(true);
     this.editTableData();
   }
 
