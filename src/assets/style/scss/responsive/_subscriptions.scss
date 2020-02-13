@@ -53,6 +53,46 @@
     }
   }
 
+  .plans {
+    .wrapper-100 {
+      padding: 60px !important;
+    }
+  }
+
+  .service-setting {
+    p.f-12 {
+      font-size: 10px !important;
+    }
+
+    p.f-14 {
+      font-size: 13px !important;
+    }
+
+    div.f-24 {
+      font-size: 20px !important;
+    }
+
+    p.f-16,
+    h4.f-16,
+    label.f-16 {
+      font-size: 13px !important;
+    }
+  }
+
+  .padder-80 {
+    padding-right: 40px !important;
+    padding-left: 40px !important;
+  }
+
+  .plan-service {
+
+    .col-md-6 {
+      h3 {
+        font-size: 15px !important;
+      }
+    }
+  }
+
   .radioBtn .mat-radio-label {
     font-size: 14px;
   }
@@ -88,6 +128,7 @@
 
   #ui-settings-subs .mat-tab-label {
     font-size: 11px;
+    height: 35px !important;
   }
 
   #ui-subscription-completeness {
@@ -108,13 +149,13 @@
     }
   }
 
-  #ui-stepper {
-    .mat-radio-button {
-      min-width: 135px;
-    }
-  }
+  // #ui-stepper {
+  //   .mat-radio-button {
+  //     min-width: 135px;
+  //   }
+  // }
 
   .mat-radio-button {
-    min-width: 140px;
+    min-width: 135px;
   }
 }
