@@ -16,3 +16,12 @@
     font-family: "roboto" !important;
     letter-spacing: 0.75px !important;
 }
+
+#uiTransactions .mat-tab-link.kycWidth {
+    min-width: 50px !important;
+    width: 50px !important;
+}
+
+#uiTransactions .mat-tab-link.transactionsWidth {
+    width: 150px !important;
+}

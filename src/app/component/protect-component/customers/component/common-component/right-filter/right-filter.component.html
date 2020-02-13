@@ -31,8 +31,7 @@
       </mat-expansion-panel-header>
       <div>
         <mat-list-item role="listitem" *ngFor="let item of familyMember">
-          <!-- $event removed for prod build -->
-          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect()">{{item.name}}</mat-checkbox>
+          <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterFamily($event)">{{item.name}}</mat-checkbox>
         </mat-list-item>
       </div>
     </mat-expansion-panel>
@@ -59,8 +58,7 @@
       </mat-expansion-panel-header>
       <div>
         <mat-list-item role="listitem" *ngFor="let item of scheme">
-          <!-- $event removed for prod build -->
-          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect()" class="wb">{{item.schemeName}}
+          <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterScheme($event)" class="wb">{{item.schemeName}}
           </mat-checkbox>
         </mat-list-item>
       </div>
@@ -75,8 +73,7 @@
       </mat-expansion-panel-header>
       <div>
         <mat-list-item role="listitem" *ngFor="let item of folio">
-          <!-- $event removed for prod build -->
-          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect()">{{item.folioNumber}}</mat-checkbox>
+          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelectFolio($event)">{{item.folioNumber}}</mat-checkbox>
         </mat-list-item>
       </div>
     </mat-expansion-panel>
@@ -120,8 +117,7 @@
       </mat-expansion-panel-header>
       <div>
         <mat-list-item role="listitem" *ngFor="let item of category">
-          <!-- $event removed for prod build -->
-          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect()">{{item.category}}</mat-checkbox>
+          <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterCategory($event)">{{item.category}}</mat-checkbox>
         </mat-list-item>
       </div>
     </mat-expansion-panel>
@@ -142,7 +138,7 @@
     </div>
     </div>
     <div class="col-md-6 p-0">
-      <h5 class="m-0 pb-8">Report as on</h5>
+      <h5 class="m-0 pb-8">Show zero folios?</h5>
       <mat-radio-group aria-label="Select an option" id="custom-radio">
         <mat-radio-button value="1" class="text-custom b-ua">Yes</mat-radio-button>
         <mat-radio-button value="2" class="text-primary bu-primary">No</mat-radio-button>
@@ -223,7 +219,7 @@
       <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('Close')">Cancel</h5>
     </div>
     <div class="col-md-8 right text-right">
-      <button mat-button class="btn-bottom br-0 text-inherit">GENERATE REPORT</button>
+      <button mat-button class="btn-bottom br-0 text-inherit" (click)="generateReport()">GENERATE REPORT</button>
     </div>
   </div>
 </div>

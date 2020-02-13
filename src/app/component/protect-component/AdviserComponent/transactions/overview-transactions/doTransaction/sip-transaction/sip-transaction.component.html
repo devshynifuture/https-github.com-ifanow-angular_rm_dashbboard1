@@ -23,7 +23,7 @@
             <div class="col-md-8 pl-0 pr-20">
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pb-10 text-black">Select from the following options</h5>
+                        <h5 class="m-0 pb-8 text-black">Select from the following options</h5>
                         <mat-radio-group class="bigRadio" aria-label="Select an option" formControlName="schemeSelection" (ngModelChange)="selectSchemeOption($event)">
                             <mat-radio-button value="1" [ngClass]="{'b-a-custom': sipTransaction.get('schemeSelection').value==1,'text-primary':sipTransaction.get('schemeSelection').value==1,'radio-border':sipTransaction.get('schemeSelection').value==2}" class="b-a-custom radioBtn text-primary custom-radio bor_top_tb_left">
                                 Invest in existing scheme
@@ -36,7 +36,7 @@
                 <!-- value == 1 -->
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pt-28 text-black pb-12">Select a scheme to invest in</h5>
+                        <h5 class="m-0 pt-28 text-black pb-8">Select a scheme to invest in</h5>
                     </div>
                 </div>
                 <div class="row">
@@ -63,7 +63,7 @@
 
                 <div class="row pt-28 " *ngIf="reInvestmentOpt.length > 1">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 text-black pb-12">Select re-investment</h5>
+                        <h5 class="m-0 text-black pb-8">Select re-investment</h5>
                     </div>
                     <div class="col-md-5 p-0">
                         <div class="form-group mb-0">
@@ -80,7 +80,7 @@
 
                 <div class="row pt-28 ">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 text-black pb-12">Select folio</h5>
+                        <h5 class="m-0 text-black pb-8">Select folio</h5>
                     </div>
                     <div class="col-md-12 p-0">
                         <mat-radio-group aria-label="Select an option" formControlName="folioSelection" (ngModelChange)="selectExistingOrNew($event)">
@@ -93,9 +93,9 @@
                     </div>
                 </div>
 
-                <div class="row pt-28" *ngIf="ExistingOrNew == 1">
+                <div class="row pt-40" *ngIf="ExistingOrNew == 1">
                     <div class="col-md-6 p-0 text-left">
-                        <h5 class="m-0  text-black pb-12">Select scheme folio</h5>
+                        <h5 class="m-0  text-black pb-8">Select scheme folio</h5>
                     </div>
                     <div class="col-md-7 p-0">
                         <div class="form-group mb-0">
@@ -108,9 +108,9 @@
                     </div>
                 </div>
 
-                <div class="row pt-28 ">
+                <div class="row pt-40 ">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 text-black pb-12">Select SIP Frequency</h5>
+                        <h5 class="m-0 text-black pb-8">Select SIP Frequency</h5>
                     </div>
                     <div class="col-md-5 p-0">
                         <div class="form-group mb-0">
@@ -126,10 +126,10 @@
 
                 <div class="row pt-28">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0  text-black pb-12">Enter amount</h5>
+                        <h5 class="m-0  text-black pb-8">Enter amount</h5>
                     </div>
                     <div class="col-md-5 p-0">
-                        <div class="form-group mb-0">
+                        <div class="form-group iconRupess mb-0">
                             <mat-form-field *ngIf="selectScheme == 1">
                                 <input #employeeContry matInput maxlength="10" type="text" class="form-control br-0 rupess" formControlName="employeeContry" (change)="enteredAmount($event.target.value)">
                                 <mat-hint align="start" class="f-12 text-custom">
@@ -153,7 +153,7 @@
                 </div>
                 <div class="row pt-40">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0  text-black pb-12">Select 1st Date SIP</h5>
+                        <h5 class="m-0  text-black pb-8">Select 1st Date SIP</h5>
                     </div>
 
                     <div class="col-md-5 p-0">
@@ -167,7 +167,7 @@
                 </div>
                 <div class="row pt-28">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0  pb-12 text-black">Select tenure</h5>
+                        <h5 class="m-0  pb-8 text-black">Select tenure</h5>
                     </div>
 
                     <div class="col-md-5 p-0">
@@ -181,7 +181,7 @@
                 </div>
                 <div class="row pt-28">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0  pb-12 text-black">Enter installment</h5>
+                        <h5 class="m-0  pb-8 text-black">Enter installment</h5>
                     </div>
 
                     <div class="col-md-5 p-0">
