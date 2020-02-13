@@ -41,6 +41,7 @@ export class SwpTransactionComponent implements OnInit {
   schemeListTransfer: any;
   schemeTransfer: any;
   schemeDetailsTransfer: any;
+  ExistingOrNew: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private processTransaction: ProcessTransactionService, private fb: FormBuilder) { }
@@ -171,48 +172,10 @@ export class SwpTransactionComponent implements OnInit {
   dateArray(sipDates) {
     this.dates = sipDates.split(",")
     this.dateDisplay = this.processTransaction.getDateByArray(this.dates, true)
+    this.dateDisplay = this.dateDisplay.filter(element => {
+      return element.date > new Date()
+    });
     console.log('dateDisplay = ', this.dateDisplay)
-  }
-  getSchemeListTranfer(value){
-    if (this.selectScheme == 2 && value.length > 2) {
-      let obj = {
-        searchQuery: value,
-        bseOrderType: 'ORDER',
-        aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-        advisorId: 414,
-        tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
-        familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
-        clientId: this.getDataSummary.defaultClient.clientId,
-        userAccountType: this.getDataSummary.defaultCredential.accountType,
-        holdingType:this.getDataSummary.defaultClient.holdingType,
-        tpUserCredFamilyMappingId:this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
-      }
-      this.onlineTransact.getNewSchemes(obj).subscribe(
-        data => this.getNewSchemesRes(data)
-      );
-    } 
-  }
-  getNewSchemesRes(data){
-    console.log('new schemes', data)
-    this.schemeListTransfer = data
-  }
-  selectedSchemeTransfer(schemeTransfer){
-    this.schemeTransfer = schemeTransfer
-    this.transactionSummary = { schemeNameTranfer: schemeTransfer.schemeName }
-    this.navOfSelectedScheme = schemeTransfer.nav
-    let obj1 = {
-      mutualFundSchemeMasterId: schemeTransfer.mutualFundSchemeMasterId,
-      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-      orderType: 'ORDER',
-      userAccountType: this.getDataSummary.defaultCredential.accountType,
-    }
-    this.onlineTransact.getSchemeDetails(obj1).subscribe(
-      data => this.getSchemeDetailsTranferRes(data)
-    );
-  }
-  getSchemeDetailsTranferRes(data){
-    // this.maiSchemeList = data
-    this.schemeDetailsTransfer = data[0]
   }
   onAddTransaction(value, data) {
     this.confirmTrasaction = true
@@ -273,9 +236,7 @@ export class SwpTransactionComponent implements OnInit {
   swp() {
     let obj = {
       productDbId: this.schemeDetails.id,
-      toProductDbId:this.schemeDetailsTransfer.id,
       mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
-      toMutualFundSchemeMasterId:this.schemeTransfer.mutualFundSchemeMasterId,
       productCode: this.schemeDetails.schemeCode,
       isin: this.schemeDetails.isin,
       folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
@@ -285,7 +246,6 @@ export class SwpTransactionComponent implements OnInit {
       adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
       clientId: this.getDataSummary.defaultClient.clientId,
       startDate: Number(new Date(this.swpTransaction.controls.date.value.replace(/"/g, ""))),
-      toIsin: this.schemeDetailsTransfer.isin,
       noOfInstallments: this.swpTransaction.controls.installment.value,
       frequencyType:this.frequency,
       schemeCd: this.schemeDetails.schemeCode,

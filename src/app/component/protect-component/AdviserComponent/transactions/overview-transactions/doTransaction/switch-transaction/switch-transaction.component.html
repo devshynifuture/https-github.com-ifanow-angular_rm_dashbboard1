@@ -103,7 +103,24 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pt-28 text-black pb-12"> Enter amount</h5>
+                        <h5 class="m-0 pt-28 text-black pb-12">Switch type</h5>
+                    </div>
+                    <div class="col-md-5 p-0">
+                        <mat-form-field>
+                            <mat-select class="form-control br-0" formControlName="switchType" (selectionChange)="switchType($event)">
+                                <mat-option value="1">Amount Rs.
+                                </mat-option>
+                                <mat-option value="2">No. of units
+                                </mat-option>
+                                <mat-option value="3">All avialable units
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 p-0 text-left">
+                        <h5 class="m-0 pt-28 text-black pb-12"> Amounts/Units</h5>
                     </div>
 
                     <div class="col-md-5 p-0">
