@@ -58,21 +58,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pt-28 text-black pb-12">Select SIP Frequency</h5>
-                    </div>
-                    <div class="col-md-5 p-0">
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <mat-select class="form-control" formControlName="frequency">
-                                    <mat-option value="option" (click)="selectedFrequency(frequency)"
-                                        *ngFor="let frequency of swpFrequency">{{frequency.swpFrequency}}</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                </div>
                 <div class="row" *ngIf="showUnits ==true">
                     <div class="col-md-12 mt-20 pl-0">
                         <div class="bg-grey lter" *ngIf="folioDetails">
@@ -92,20 +77,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pt-28 text-black pb-12">SWP type</h5>
-                    </div>
-                    <div class="col-md-5 p-0">
-                        <mat-form-field>
-                            <mat-select class="form-control br-0">
-                                <mat-option>
-                                    Option
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
                     </div>
                 </div>
                 <div class="row">
