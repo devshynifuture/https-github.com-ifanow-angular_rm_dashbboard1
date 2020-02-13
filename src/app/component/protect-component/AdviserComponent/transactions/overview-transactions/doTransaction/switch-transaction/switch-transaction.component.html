@@ -15,7 +15,8 @@
     <div class="pt-90 pr-20 pl-20 pb-44">
         <div class="row">
             <div class="col-md-12 p-0">
-                <h5 class="m-0 text-black"> <img src="/assets/images/svg/back-arrow.svg" class="v-initial pr-12">Investor name: {{selectedFamilyMember}}
+                <h5 class="m-0 text-black"> <img src="/assets/images/svg/back-arrow.svg"
+                        class="v-initial pr-12">Investor name: {{selectedFamilyMember}}
                 </h5>
             </div>
         </div>
@@ -27,13 +28,16 @@
                     </div>
                     <div class="col-md-12 p-0">
                         <div class=" form-group mb-0 add-transactions">
-                            <input type="text" aria-label="Number" class=" form-control " matInput formControlName="investor" [matAutocomplete]="auto" (keyup)="getSchemeList($event.target.value)" value="Start typing to see investor names">
-                            <mat-autocomplete #auto="matAutocomplete">
-                                <mat-option (onSelectionChange)="selectedScheme(scheme)" *ngFor="let scheme of schemeList" [value]="scheme.schemeName">
+                            <input type="text" aria-label="Number" class=" form-control " matInput
+                                formControlName="investor" [matAutocomplete]="auto1"
+                                (keyup)="getSchemeList($event.target.value)" value="Start typing to see investor names">
+                            <mat-autocomplete #auto1="matAutocomplete">
+                                <mat-option (onSelectionChange)="selectedScheme(scheme)"
+                                    *ngFor="let scheme of schemeList" [value]="scheme.schemeName">
                                     {{scheme.schemeName}}
                                 </mat-option>
                             </mat-autocomplete>
-                            <mat-hint align="start" class="m-0 f-12 text-custom  ">
+                            <mat-hint align="start" class="f-12 text-custom  ">
                                 Last closing NAV: {{navOfSelectedScheme}}
                             </mat-hint>
                         </div>
@@ -47,7 +51,8 @@
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select class="form-control" formControlName="investmentAccountSelection">
-                                    <mat-option value="option" (onSelectionChange)="selectedFolio(folio)" *ngFor="let folio of folioList">{{folio.folioNumber}}</mat-option>
+                                    <mat-option value="option" (onSelectionChange)="selectedFolio(folio)"
+                                        *ngFor="let folio of folioList">{{folio.folioNumber}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
@@ -68,7 +73,9 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12 pb-12">
-                                    <p class="f-12 m-0">Note: Note: Units data provided here is as per data uploaded in the system. This data may not be updated in NSE NMF. As a result, some transactions may not go through.</p>
+                                    <p class="f-12 m-0">Note: Note: Units data provided here is as per data uploaded in
+                                        the system. This data may not be updated in NSE NMF. As a result, some
+                                        transactions may not go through.</p>
                                 </div>
                             </div>
                         </div>
@@ -76,33 +83,40 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pt-26 text-black pb-12">Select Scheme to Switch into </h5>
+                        <h5 class="m-0 pt-28 text-black pb-12">Select a scheme to switch in</h5>
                     </div>
                     <div class="col-md-12 p-0">
-                        <mat-form-field>
-                            <mat-select class="form-control br-0">
-                                <mat-option>
-                                    Option
+                        <div class="form-control mb-0 add-transactions">
+                            <input type="text" aria-label="Number" class="form-group h-0" matInput
+                                formControlName="transferIn" [matAutocomplete]="auto"
+                                (keyup)="getSchemeListTranfer($event.target.value)"
+                                value="Start typing to see investor names">
+                            <mat-autocomplete #auto="matAutocomplete">
+                                <mat-option (onSelectionChange)="selectedSchemeTransfer(scheme)"
+                                    *ngFor="let scheme of schemeListTransfer" [value]="scheme.schemeName">
+                                    {{scheme.schemeName}}
                                 </mat-option>
-                            </mat-select>
-                        </mat-form-field>
+                            </mat-autocomplete>
+                            <p class="m-0 f-12 text-custom pt-8">Last closing NAV: {{navOfSelectedScheme}}</p>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pt-28 text-black pb-12"> Amount/Units</h5>
+                        <h5 class="m-0 pt-28 text-black pb-12"> Enter amount</h5>
                     </div>
 
                     <div class="col-md-5 p-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input #employeeContry matInput maxlength="10" type="text" class="form-control br-0 rupess" formControlName="employeeContry">
+                                <input #employeeContry matInput maxlength="10" type="text"
+                                    class="form-control br-0 rupess" formControlName="employeeContry">
                             </mat-form-field>
                             <p class="m-0 f-12 text-custom">Min amount: ₹500</p>
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-12 p-0 text-left">
                         <h5 class="m-0 pt-40 pb-12 text-black">Select Tenure</h5>
                     </div>
@@ -126,7 +140,7 @@
                             <input #employeeContry matInput maxlength="10" type="text" class="form-control br-0 rupess" formControlName="installment">
                         </mat-form-field>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="col-md-4 bg-grey lter p-0">
                 <app-transaction-summary [data]="transactionSummary" (defaultDetails)='getDefaultDetails($event)'>
@@ -149,7 +163,7 @@
             <button mat-button class="text-white">
                 SAVE & ADD ANOTHER
             </button>
-            <button mat-button class="text-white" (click)="onAddTransaction('confirm',null)">
+            <button mat-button class="text-white" (click)="switch()">
                 SAVE & PROCEED
             </button>
         </div>

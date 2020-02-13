@@ -71,8 +71,8 @@ export class TransactionSummaryComponent implements OnInit {
     this.getDefaultDetails(this.selectedPlatform)
   }
   setInvestor(value) {
-    this.selectedInvestor = value.value
-    this.allData.defaultClient.clientCode = this.selectedInvestor
+    this.selectedInvestor = value
+    this.allData.defaultClient = this.selectedInvestor
     this.defaultDetails.emit(this.allData);
     this.showInvestor = false
   }
