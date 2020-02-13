@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -16,8 +16,12 @@ export class EmailAdviceComponent implements OnInit {
   @ViewChild('tempRef', { static: true }) tempRef: ElementRef;
   @ViewChild('EmailIdTo', { static: true }) EmailIdToRef: ElementRef;
   @ViewChild('subBody', { static: true }) subBodyRef: ElementRef;
+  selectedAssetId: any;
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService, private route: Router, private datePipe: DatePipe) { }
-
+  @Input() set data(data) {
+    this.selectedAssetId = data;
+    console.log(this.selectedAssetId, "selected id")
+  }
   ngOnInit() {
   }
   OpenProceedConsent() {
@@ -43,7 +47,7 @@ export class EmailAdviceComponent implements OnInit {
     );
   }
   sendEmail() {
-    let obj = [1];
+    let obj = this.selectedAssetId;
     this.cusService.generateGroupId(obj).subscribe(
       data => {
         this.groupId = data;

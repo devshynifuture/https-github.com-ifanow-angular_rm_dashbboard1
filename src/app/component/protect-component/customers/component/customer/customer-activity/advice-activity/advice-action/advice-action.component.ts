@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { EmailAdviceComponent } from '../email-advice/email-advice.component';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -10,15 +10,20 @@ import { CustomerService } from '../../../customer.service';
   styleUrls: ['./advice-action.component.scss']
 })
 export class AdviceActionComponent implements OnInit {
+  selectedAssetData: any;
 
   constructor(private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
-
+  @Input() set data(data) {
+    console.log(data)
+    this.selectedAssetData = data;
+  }
   ngOnInit() {
   }
   openConsentDialog(data) {
+    console.log(this.selectedAssetData)
     const fragmentData = {
       flag: 'detailPoTd',
-      data,
+      data: this.selectedAssetData,
       id: 1,
       state: 'open',
       componentName: EmailAdviceComponent
