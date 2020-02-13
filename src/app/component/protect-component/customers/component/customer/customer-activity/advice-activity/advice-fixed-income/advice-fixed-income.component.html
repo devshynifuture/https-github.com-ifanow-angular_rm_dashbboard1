@@ -142,7 +142,7 @@
     <table matSort mat-table *ngIf="recurringDataSource" appSkeletonLoading [appSkeletonLoading]="isLoading"
         [dataSource]=" recurringDataSource" class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox (change)="checkAll($event,recurringDataSource)"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">

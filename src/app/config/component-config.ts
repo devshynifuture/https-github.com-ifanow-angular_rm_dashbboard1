@@ -192,6 +192,7 @@ export const appConfig = {
   DELETE_RECURRING_EXPENSE: 'account/expense/recurring/expense/delete',
   DELETE_BUDGET: 'account/expense/budget/delete',
   DELETE_RECURING_BUDGET: 'account/expense/othercommitments/delete',
+  ADD_MANAGE_EXCLUSIVE: '/activity/deployment/exclusion/add',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   GET_EPF: 'account/asset/retirement/epf/list/get',

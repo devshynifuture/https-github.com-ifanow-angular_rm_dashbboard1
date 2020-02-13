@@ -71,58 +71,61 @@ export class PlanService {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_LIST_FAMILY_MEMBER, httpParams)
   }
-  addExpense(data){
+  addExpense(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_EXPENSE, data)
   }
-  editExpense(data){
+  editExpense(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_EXPENSE, data)
   }
-  getRiskHistory(data){
+  getRiskHistory(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.RISK_HISTORY, data)
   }
-  getResultRisk(data){
+  getResultRisk(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.RESULT_VIEW, data)
   }
   getTransactionExpense(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TRANSACTION_EXPENSE, data);
   }
-  getRecuringExpense(data){
+  getRecuringExpense(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.RECURING_EXPENSE_GET, data);
   }
-  addRecuringExpense(data){
+  addRecuringExpense(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.RECURING_EXPENSE_ADD, data);
   }
-  editRecuringExpense(data){
+  editRecuringExpense(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.RECURING_EXPENSE_EDIT, data);
   }
-  getBudget(data){
+  getBudget(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BUDGETS, data);
   }
-  addBudget(data){
+  addBudget(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_BUDGET, data);
   }
-  editBudget(data){
+  editBudget(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_BUDGET, data);
   }
-  otherCommitmentsGet(data){
+  otherCommitmentsGet(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.OTHERCOMMITMENTS_GET, data);
   }
-  otherCommitmentsAdd(data){
-     return this.http.post(apiConfig.MAIN_URL + appConfig.OTHERCOMMITMENTS_ADD, data);
+  otherCommitmentsAdd(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.OTHERCOMMITMENTS_ADD, data);
   }
-  otherCommitmentsEdit(data){
-     return this.http.put(apiConfig.MAIN_URL + appConfig.OTHERCOMMITMENTS_EDIT, data);
+  otherCommitmentsEdit(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.OTHERCOMMITMENTS_EDIT, data);
   }
-  deleteExpenseTransaction(data){
+  deleteExpenseTransaction(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_TRANSACTION_EXPENSE, data)
   }
-  deleteExpenseRecurring(data){
+  deleteExpenseRecurring(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_RECURRING_EXPENSE, data)
   }
-  deletBudget(data){
-  return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_BUDGET, data)
+  deletBudget(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_BUDGET, data)
   }
-  deleteRecuringBudget(data){
-  return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_RECURING_BUDGET, data)
+  deleteRecuringBudget(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_RECURING_BUDGET, data)
+  }
+  addManageExclusive(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_MANAGE_EXCLUSIVE, data)
   }
 }
