@@ -131,4 +131,8 @@ export class PlanService {
   deleteDeployment(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_DEPLOYMENT, data);
   }
+  getFilterGoalScheme(data) {
+    let httpParams = new HttpParams().set('advisorId', data.advisorId).set("clientId", data.clientId)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.ADD_FILTER_SCHEME_LIST, httpParams);
+  }
 }
