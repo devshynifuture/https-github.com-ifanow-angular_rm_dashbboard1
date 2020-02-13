@@ -31,7 +31,7 @@ import { SupportEntryModule } from '../../protect-component/SupportComponent/sup
     TransactionEntryModule,
     SupportEntryModule
   ],
-  entryComponents: [SubscriptionEntry.getComponentList()],
+  entryComponents: [SubscriptionEntry.getComponentList(), SupportEntryModule.getComponentList()],
   providers: [DynamicComponentService]
   // providers: [DynamicComponentService]
 })
