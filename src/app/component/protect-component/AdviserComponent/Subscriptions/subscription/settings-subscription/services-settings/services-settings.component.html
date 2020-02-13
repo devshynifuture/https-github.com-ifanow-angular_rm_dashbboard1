@@ -2,8 +2,6 @@
     <mat-spinner class="loader" [diameter]="30"></mat-spinner>
 </div> -->
 <div class="wrapper-20  pr-0">
-
-
     <div class="row" *ngIf="serviceSettingData.length > 0">
         <div (click)="openFragment('','services')" class="col-md-4 pr-20 pb-20 pl-0 c-p">
             <mat-card class="example-card h-475 bg-grey lter">
@@ -16,7 +14,7 @@
             </mat-card>
         </div>
         <div *ngFor="let singleService of serviceSettingData" [appSkeletonLoading]="isLoading" appSkeletonLoading
-            class="col-md-4 pr-20 pb-20 pl-0 skeletonAnimation">
+            class="col-md-4 pr-20 pb-20 pl-0 skeletonAnimation service-setting">
             <mat-card class="example-card bg-grey lter p-0 b-a ">
                 <div class="bar">
                     <mat-card-header class="overflow-hidden">

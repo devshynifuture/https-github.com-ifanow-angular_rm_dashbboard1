@@ -1,9 +1,9 @@
 <div class="row">
-    <div class="col-md-4 p-0">
+    <div class="col-md-6 p-0">
         <h4 class="m-0 text-black roboto pt-8">Senior citizen savings scheme (SCSS)</h4>
     </div>
     <!-- *ngIf="datasource.filteredData > 0" -->
-    <div class="col-md-8 p-0 right text-right" *ngIf="datasource.filteredData.length > 0">
+    <div class="col-md-6 p-0 right text-right" *ngIf="datasource.filteredData.length > 0">
         <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
         <mat-menu #menu5="matMenu">
             <button mat-menu-item>PDF</button>
@@ -23,8 +23,7 @@
     </div>
 </div>
 <div class=" col-md-12 overflow-hidden p-0 mt-8 real-estate">
-    <table *ngIf="datasource.filteredData.length > 0" matSort mat-table [dataSource]="datasource" id="table-low"
-        class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+    <table *ngIf="datasource.filteredData.length > 0" matSort mat-table [dataSource]="datasource" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
         <ng-container matColumnDef="no">
             <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
@@ -48,8 +47,7 @@
             <td mat-cell *matCellDef="let element" class="br t-14 text-right">
                 <div class="bar" appFormatNumber> {{element.quarterlyPayout}} </div>
             </td>
-            <td mat-footer-cell class="br text-right p-8 f-500 t-7" *matFooterCellDef appFormatNumber
-                [value]="sumOfQuarterlyPayout">{{sumOfQuarterlyPayout}}</td>
+            <td mat-footer-cell class="br text-right p-8 f-500 t-7" *matFooterCellDef appFormatNumber [value]="sumOfQuarterlyPayout">{{sumOfQuarterlyPayout}}</td>
         </ng-container>
         <ng-container matColumnDef="pdate">
             <th mat-sort-header="pdate" mat-header-cell *matHeaderCellDef class="br t-10 text-right"> Payout date </th>
@@ -66,13 +64,11 @@
             <td mat-footer-cell class="br text-left t-7" *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="tamt">
-            <th mat-sort-header="totalAmountReceived" mat-header-cell *matHeaderCellDef class="br text-right"> Amount
-                recieved </th>
+            <th mat-sort-header="totalAmountReceived" mat-header-cell *matHeaderCellDef class="br text-right"> Amount recieved </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar" appFormatNumber> {{element.totalAmountReceived}} </div>
             </td>
-            <td mat-footer-cell class="br text-right p-8 f-500 t-7" *matFooterCellDef appFormatNumber
-                [value]="sumOfTotalAmountReceived">{{sumOfTotalAmountReceived}}</td>
+            <td mat-footer-cell class="br text-right p-8 f-500 t-7" *matFooterCellDef appFormatNumber [value]="sumOfTotalAmountReceived">{{sumOfTotalAmountReceived}}</td>
         </ng-container>
         <ng-container matColumnDef="amt">
             <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef class="br text-right">Amount invested
@@ -80,14 +76,12 @@
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar" appFormatNumber> {{element.amountInvested}} </div>
             </td>
-            <td mat-footer-cell class="br text-right p-8 f-500 t-7" *matFooterCellDef appFormatNumber
-                [value]="sumOfAmountInvested">
+            <td mat-footer-cell class="br text-right p-8 f-500 t-7" *matFooterCellDef appFormatNumber [value]="sumOfAmountInvested">
                 <div class="bar"> {{sumOfAmountInvested}} </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="mdate">
-            <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef class="br t-12 text-left"> Maturity
-                date </th>
+            <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef class="br t-12 text-left"> Maturity date </th>
             <td mat-cell *matCellDef="let element" class="br t-12 text-left">
                 <div class="bar"> {{element.maturityDate | date: 'dd/MM/yyyy'}} </div>
             </td>

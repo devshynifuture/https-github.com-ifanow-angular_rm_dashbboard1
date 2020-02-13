@@ -16,6 +16,11 @@ export class UpperSliderBackofficeComponent implements OnInit {
   displayedColumns1: string[] = ['name', 'folioNumber', 'unitsIfnow', 'unitsRta', 'difference', 'transactions'];
   dataSource1 = ELEMENT_DATA1;
 
+  displayedColumns3: string[] = ['foliosOrdered', 'file_order', 'file_status', 'id', 'trx_file', 'trx_added', 'file_name', 'download'];
+  dataSource3 = ELEMENT_DATA3;
+
+
+
   constructor(private subInjectService: SubscriptionInject) { }
 
   ngOnInit() {
@@ -74,4 +79,21 @@ export interface PeriodicElement1 {
 }
 const ELEMENT_DATA1: PeriodicElement1[] = [
   { name: 'IIFL Dividend Opportunities Index Fund - Growth', folioNumber: '7716853/43	', unitsIfnow: '0', unitsRta: '463.820', difference: '463.82', transactions: ' ' },
+];
+
+
+
+export interface PeriodicElement3 {
+  foliosOrdered: string;
+  file_order: string;
+  file_status: string;
+  id: string;
+  trx_file: string;
+  trx_added: string;
+  file_name: string;
+  download: string;
+
+}
+const ELEMENT_DATA3: PeriodicElement3[] = [
+  { foliosOrdered: 'IIFL Dividend Opportunities Index Fund - Growth', file_order: '7716853/43	', file_status: '0', id: '463.820', trx_file: '463.82', trx_added: ' ', file_name: '', download: '' },
 ];

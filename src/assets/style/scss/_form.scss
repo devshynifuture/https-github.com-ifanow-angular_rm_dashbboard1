@@ -267,8 +267,9 @@ textarea.mat-input-element {
   margin: 0 !important;
 }
 
-.form-control {
-  border-radius: 0px !important;
+.form-control,
+.form-control.br-0 {
+  border-radius: 2px !important;
 }
 
 .mat-accent .mat-slider-thumb,
