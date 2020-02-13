@@ -45,7 +45,7 @@
       <div>
         <mat-list-item role="listitem" *ngFor="let item of amc">
           <!-- $event removed for prod build -->
-          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect($)">{{item.amc_name}}</mat-checkbox>
+          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect()">{{item.amc_name}}</mat-checkbox>
         </mat-list-item>
       </div>
     </mat-expansion-panel>

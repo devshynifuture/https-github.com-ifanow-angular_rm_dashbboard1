@@ -108,11 +108,15 @@
 
                                                     <p class="text-uppercase f-12">Bank name</p>
                                                     <div class="bar">
-                                                        <h5 class="height20">{{singleBillerProfile.bankName}}</h5>
+                                                        <div>
+                                                            <h5>{{singleBillerProfile.bankName}}</h5>
+                                                        </div>
                                                     </div>
                                                     <p class="f-12 text-uppercase pt-24">IFSC code</p>
                                                     <div class="bar">
-                                                        <h5 class="height20">{{singleBillerProfile.ifscCode}}</h5>
+                                                        <div>
+                                                            <h5>{{singleBillerProfile.ifscCode}}</h5>
+                                                        </div>
                                                     </div>
                                                     <p class="f-12 text-uppercase pt-24">ADDRESS</p>
                                                     <div class="bar">
@@ -130,13 +134,21 @@
                                         <hr>
                                         <div class="wrapper-16 relClass">
                                             <p class="f-12 text-uppercase">Footnote</p>
-                                            <div class="bar">
-                                                <h5 class="height20">{{singleBillerProfile.footnote}}</h5>
+                                            <div [ngClass]="singleBillerProfile.read? '': 'bar'" style="overflow: hidden;" [ngStyle]="{'height':singleBillerProfile.read?'':'55px'}">
+                                                <h5  >{{singleBillerProfile.footnote}}</h5>
                                             </div>
+                                            <div (click)="singleBillerProfile.read = singleBillerProfile.read? false : true"
+                                        class="read-more c-p"
+                                        *ngIf="singleBillerProfile.footnote && singleBillerProfile.footnote.length > 200">
+                                        {{singleBillerProfile.read?'read less':'read more'}}</div>
                                             <p class="pt-32 text-uppercase f-12">Terms & Conditions</p>
-                                            <div class="bar">
+                                            <div [ngClass]="singleBillerProfile.read? '': 'bar'" style="overflow: hidden;" [ngStyle]="{'height':singleBillerProfile.read?'':'55px'}">
                                                 <h5>{{singleBillerProfile.terms}} </h5>
                                             </div>
+                                            <div (click)="singleBillerProfile.read = singleBillerProfile.read? false : true"
+                                        class="read-more c-p"
+                                        *ngIf="singleBillerProfile.terms && singleBillerProfile.terms.length > 200">
+                                        {{singleBillerProfile.read?'read less':'read more'}}</div>
                                         </div>
                                     </div>
                                 </div>
