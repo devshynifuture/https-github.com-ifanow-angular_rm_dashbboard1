@@ -151,7 +151,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   ngOnInit() {
     // this.data = [{}, {}, {}];
-
+    
     this.advisorId = AuthService.getAdvisorId();
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
     // console.log("feeeee...",this.feeCollectionMode);

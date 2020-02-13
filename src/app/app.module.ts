@@ -21,7 +21,7 @@ import { BaseComponent } from './component/protect-component/AdviserComponent/Su
 import { MomentDateModule } from '@angular/material-moment-adapter';
 import { CustomCommonModule } from './common/custom.common.module';
 import { DatePipe } from '@angular/common';
-import { MatSortModule, MatTableModule } from '@angular/material';
+import { MatSortModule, MatTableModule, MatExpansionModule } from '@angular/material';
 // import { SubscriptionModule } from './component/protect-component/AdviserComponent/Subscriptions/subscription.module';
 import { EmailEntryModule } from './component/protect-component/AdviserComponent/Email/email.entry.module';
 import 'zone.js/dist/zone';
@@ -59,6 +59,7 @@ import { BackofficeDashboardComponent } from './component/protect-component/Advi
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,
+    MatExpansionModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,

@@ -149,8 +149,11 @@
                 <input #gstIn class="form-control br-0" appInputValueValidation
                     [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="gstIn" matInput maxlength="16"
                     type="text">
-                <mat-error class="f-12">
+                <mat-error class="f-12" *ngIf="payeeSettingsForm.get('gstIn').errors?.required">
                     This field is required
+                </mat-error>
+                <mat-error *ngIf="payeeSettingsForm.get('gstIn').errors?.pattern"class="f-12">
+                Enter valid GSTIN number
                 </mat-error>
                 <mat-hint align="end" class="f-12">{{(gstIn.value.length)}}/{{getFormControl().gstIn.maxLength}}
                 </mat-hint>

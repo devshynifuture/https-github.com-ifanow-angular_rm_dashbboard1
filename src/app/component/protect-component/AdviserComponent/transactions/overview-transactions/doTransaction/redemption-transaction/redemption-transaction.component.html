@@ -15,8 +15,7 @@
     <div class="pt-90 pr-20 pl-20 pb-44">
         <div class="row">
             <div class="col-md-12 p-0">
-                <h5 class="m-0 text-black"> <img src="/assets/images/svg/back-arrow.svg"
-                        class="v-initial pr-12">Investor name: {{selectedFamilyMember}}
+                <h5 class="m-0 text-black"> <img src="/assets/images/svg/back-arrow.svg" class="v-initial pr-12">Investor name: {{selectedFamilyMember}}
                 </h5>
             </div>
         </div>
@@ -30,13 +29,10 @@
                         <h5 class="m-0 pt-28 text-black pb-12">select scheme to redeem from</h5>
                     </div>
                     <div class="col-md-12 p-0">
-                        <div class="form-control mb-0 add-transactions">
-                            <input type="text" aria-label="Number" class="form-group h-0" matInput
-                                formControlName="investor" [matAutocomplete]="auto"
-                                (keyup)="getSchemeList($event.target.value)" value="Start typing to see investor names">
+                        <div class="form-group  ">
+                            <input type="text" aria-label="Number" class="form-control " matInput formControlName="investor" [matAutocomplete]="auto" (keyup)="getSchemeList($event.target.value)" value="Start typing to see investor names">
                             <mat-autocomplete #auto="matAutocomplete">
-                                <mat-option (onSelectionChange)="selectedScheme(scheme)"
-                                    *ngFor="let scheme of schemeList" [value]="scheme.schemeName">
+                                <mat-option (onSelectionChange)="selectedScheme(scheme)" *ngFor="let scheme of schemeList" [value]="scheme.schemeName">
                                     {{scheme.schemeName}}
                                 </mat-option>
                             </mat-autocomplete>
@@ -52,8 +48,7 @@
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select class="form-control" formControlName="investmentAccountSelection">
-                                    <mat-option value="option" (onSelectionChange)="selectedFolio(folio)"
-                                        *ngFor="let folio of folioList">{{folio.folioNumber}}</mat-option>
+                                    <mat-option value="option" (onSelectionChange)="selectedFolio(folio)" *ngFor="let folio of folioList">{{folio.folioNumber}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
@@ -75,9 +70,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12 pb-12">
-                                    <p class="f-12 m-0">Note: Note: Units data provided here is as per data uploaded in
-                                        the system. This data may not be updated in NSE NMF. As a result, some
-                                        transactions may not go through.</p>
+                                    <p class="f-12 m-0">Note: Note: Units data provided here is as per data uploaded in the system. This data may not be updated in NSE NMF. As a result, some transactions may not go through.</p>
                                 </div>
                             </div>
                         </div>
@@ -89,7 +82,7 @@
                     </div>
                     <div class="col-md-5 p-0">
                         <mat-form-field>
-                            <mat-select class="form-control br-0" (selectionChange)="redemptionType($event)">
+                            <mat-select class="form-control br-0" formControlName="redeemType" (selectionChange)="redemptionType($event)">
                                 <mat-option value="1">Amount Rs.
                                 </mat-option>
                                 <mat-option value="2">No. of units
@@ -108,11 +101,8 @@
 
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input #employeeContry matInput maxlength="10" type="text"
-                                class="form-control br-0 rupess" formControlName="employeeContry"
-                                (change)="enteredAmount($event.target.value)">
-                            <p class="m-0 f-12 text-custom">Min amount:
-                                ₹{{(schemeDetails == undefined)?'-':schemeDetails.redemptionAmountMinimum }}
+                            <input #employeeContry matInput maxlength="10" type="text" class="form-control br-0 rupess" formControlName="employeeContry" (change)="enteredAmount($event.target.value)">
+                            <p class="m-0 f-12 text-custom">Min amount: ₹{{(schemeDetails == undefined)?'-':schemeDetails.redemptionAmountMinimum }}
                             </p>
                             <mat-error *ngIf="(redemptionTransaction.get('employeeContry').errors?.min)" class="f-12">
                                 Should be greater than or equal to {{schemeDetails.redemptionAmountMinimum}}
@@ -140,12 +130,12 @@
 
             <h5 class="mb-0 text-white c-p" (click)="saveAndNext()"> NEXT </h5>
         </div> -->
-        <div class="col-md-8 right pt-8">
+        <div class="col-md-8 text-right">
             <!-- commented for prod build -->
-            <button mat-button class="text-success">
+            <button mat-button class="text-white">
                 SAVE & ADD ANOTHER
             </button>
-            <button mat-button class="text-success" (click)="onAddTransaction('confirm',null)">
+            <button mat-button class="text-success" (click)="redeem()">
                 SAVE & PROCEED
             </button>
         </div>

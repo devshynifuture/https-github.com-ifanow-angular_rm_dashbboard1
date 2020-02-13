@@ -5,66 +5,71 @@
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle"> clear</i>
+                <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
             </div>
         </div>
     </div>
 </div>
 
 <div class="pt-90 pr-20 pl-20">
-    <h5 class="m-0">Mapping of Client code <b>5011012025</b> belonging to <b>Sneha Vishal Shah</b></h5>
+    <h5 class="m-0">Mapping of Client code <b>{{singleFolioData.clientCode}}</b> belonging to
+        <b>{{singleFolioData.firstApplicantName}}</b></h5>
     <h5 class="m-0 pt-40">Select an investor from the search box below...</h5>
     <div class="row pt-12">
         <div class="col-md-10 p-0">
             <div class="form-group">
-                <form>
+                <form [formGroup]="folioForm">
                     <mat-form-field>
-                        <!-- [formControl]="myControl" removed for prod build -->
-                        <input type="text" aria-label="Number" matInput [matAutocomplete]="auto" class="form-control"
-                            value="Start typing to see investor name">
-                        <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option value="Sneha Vishal Shah">Sneha Vishal Shah</mat-option>
+                        <input [matAutocomplete]="auto1" aria-label="client" class="form-control br-0 pl-8"
+                            (keyup)="getFamilyList($event.target.value)" formControlName="ownerName" matInput>
+                        <mat-autocomplete #auto1="matAutocomplete">
+                            <mat-option *ngFor="let f of nomineesListFM" [value]="f.name" (click)="ownerDetails(f)">
+                                <span>{{f.name}}</span>
+                            </mat-option>
                         </mat-autocomplete>
+                        <mat-error class="f-12 pt-4">
+                            This field is required
+                        </mat-error>
                     </mat-form-field>
                 </form>
             </div>
         </div>
 
-        <!-- <div class="col-md-12 pt-60 p-0">
+        <div *ngIf="familyMemberData" class="col-md-12 pt-60 p-0">
             <h5 class="m-0 f-500 pb-12">Following are the details of Sneha Vishal Shah</h5>
             <div class="row b-a">
                 <div class="col-md-6 p-0 b-b">
                     <p class="m-0 p-8">Full name</p>
                 </div>
                 <div class="col-md-6 p-0 b-b text-right">
-                    <p class="m-0 p-8">Sneha Vishal Shah</p>
+                    <p class="m-0 p-8">{{familyMemberData.name}}</p>
                 </div>
                 <div class="col-md-6 p-0 b-b">
                     <p class="m-0 p-8">Date of birth</p>
                 </div>
                 <div class="col-md-6 p-0 b-b text-right">
-                    <p class="m-0 p-8">23/09/2010</p>
+                    <p class="m-0 p-8">{{familyMemberData.birthDate}}</p>
                 </div>
                 <div class="col-md-6 p-0 b-b">
                     <p class="m-0 p-8">PAN</p>
                 </div>
                 <div class="col-md-6 p-0 b-b text-right">
-                    <p class="m-0 p-8">-</p>
+                    <p class="m-0 p-8">{{familyMemberData.pan}}</p>
                 </div>
                 <div class="col-md-6 p-0 b-b">
                     <p class="m-0 p-8">Mobile number</p>
                 </div>
                 <div class="col-md-6 p-0 b-b text-right">
-                    <p class="m-0 p-8">-</p>
+                    <p class="m-0 p-8">{{familyMemberData.mobileNumber}}</p>
                 </div>
                 <div class="col-md-6 p-0">
                     <p class="m-0 p-8">Email</p>
                 </div>
                 <div class="col-md-6 p-0 text-right">
-                    <p class="m-0 p-8">-</p>
+                    <p class="m-0 p-8">{{familyMemberData.emailId}}</p>
                 </div>
             </div>
-        </div> -->
+        </div>
 
         <!-- <div class="col-md-12 pt-60 p-0 folio-mapping-popuptable">
             <h5 class="m-0 f-500">Select an investment account you would like to map this folio to (multi select
@@ -111,10 +116,10 @@
 <div class="bottom-fixed wrapper-12 w-50">
     <div class="row">
         <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit">MAP
+            <button (click)="mapUnmapFolios()" mat-button class="btn-bottom br-0 text-inherit">MAP
             </button>
         </div>
     </div>

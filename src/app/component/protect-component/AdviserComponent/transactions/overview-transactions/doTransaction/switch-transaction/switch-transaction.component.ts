@@ -99,6 +99,19 @@ export class SwitchTransactionComponent implements OnInit {
       data => this.getSchemeDetailsRes(data)
     );
   }
+  getSchemeDetailsRes(data) {
+    console.log('getSchemeDetailsRes == ', data)
+    this.maiSchemeList = data
+    this.schemeDetails = data[0]
+    this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
+    if (data.length > 1) {
+      this.reInvestmentOpt = data
+      console.log('reinvestment', this.reInvestmentOpt)
+    } if (data.length == 1) {
+      this.reInvestmentOpt = []
+    }
+    this.getSchemeWiseFolios()
+  }
   getSchemeWiseFolios() {
     let obj1 = {
       mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
@@ -114,19 +127,7 @@ export class SwitchTransactionComponent implements OnInit {
     console.log('res scheme folio',data)
     this.folioList = data
   }
-  getSchemeDetailsRes(data) {
-    console.log('getSchemeDetailsRes == ', data)
-    this.maiSchemeList = data
-    this.schemeDetails = data[0]
-    this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
-    if (data.length > 1) {
-      this.reInvestmentOpt = data
-      console.log('reinvestment', this.reInvestmentOpt)
-    } if (data.length == 1) {
-      this.reInvestmentOpt = []
-    }
-    this.getSchemeWiseFolios()
-  }
+ 
   onAddTransaction(value,data){
     this.confirmTrasaction = true
     const fragmentData = {

@@ -545,7 +545,7 @@
   }
 
   .mat-tab-label {
-    height: 40px !important;
+    height: 40px;
     margin-top: 15px;
     margin-bottom: 10px;
     line-height: 2;
@@ -950,7 +950,6 @@ mat-tab-group[vertical] {
   .mat-tab-label {
     text-transform: uppercase;
   }
-
 }
 
 #ui-account-second-head {
@@ -983,7 +982,6 @@ mat-tab-group[vertical] {
   }
 }
 
-
 #ui-customer-secondhead,
 #ui-plan-secondhead,
 #ui-activity-secondhead {
@@ -998,7 +996,6 @@ mat-tab-group[vertical] {
 
   .mat-tab-links {
     height: 65px;
-
   }
 
   .mat-tab-header {
@@ -1452,9 +1449,6 @@ textarea {
 }
 
 #ui-backoffice-tabs {
-  margin-top: 40px;
-  margin-bottom: 40px;
-
   .mat-tab-body-content {
     overflow: hidden !important;
     margin-top: 25px;
@@ -1505,6 +1499,14 @@ textarea {
   #table-low {
     tr.mat-header-row {
       height: 40px !important;
+    }
+
+    tr.mat-row {
+      height: 40px !important;
+    }
+
+    tbody td {
+      padding: 6px 8px !important;
     }
   }
 }
