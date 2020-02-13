@@ -20,7 +20,7 @@
     display: none !important;
 }
 
- ::ng-deep .radioBtn .mat-radio-label {
+::ng-deep .radioBtn .mat-radio-label {
     min-width: 152px;
     height: 45px;
     display: flex !important;
@@ -31,4 +31,48 @@
 
 ::ng-deep .bigRadio .mat-radio-button {
     min-width: 240px;
+}
+
+::ng-deep .bigRadio .radioBtn .mat-radio-label {
+    min-width: 240px;
+    height: 45px;
+    display: flex !important;
+    justify-content: left;
+    align-items: center;
+    padding-left: 10px !important;
+}
+
+::ng-deep .mat-progress-spinner {
+    width: 24px !important;
+    height: 24px !important;
+}
+
+::ng-deep .mat-progress-spinner svg {
+    width: 24px !important;
+    height: 24px !important;
+}
+
+::ng-deep .mat-form-field-subscript-wrapper {
+    margin-top: 5px !important;
+    margin-left: 10px !important;
+    padding-left: 0px !important;
+}
+
+.radio-border {
+    border: 1px solid rgba(25, 25, 25, 0.32) !important;
+}
+
+.bor_top_tb_left {
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+
+.bor_top_tb_right {
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+::ng-deep .mat-progress-spinner circle,
+.mat-spinner circle {
+    stroke: #008FFF;
 }

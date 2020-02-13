@@ -3,3 +3,18 @@
     margin-left: 10px !important;
     padding-left: 0px !important;
 }
+
+::ng-deep .mat-progress-spinner {
+    width: 24px !important;
+    height: 24px !important;
+}
+
+::ng-deep .mat-progress-spinner svg {
+    width: 24px !important;
+    height: 24px !important;
+}
+
+::ng-deep .mat-progress-spinner circle,
+.mat-spinner circle {
+    stroke: #008FFF;
+}

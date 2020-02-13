@@ -120,12 +120,15 @@ export class RedemptionTransactionComponent implements OnInit {
     let obj = {
       searchQuery: value,
       bseOrderType: 'ORDER',
-      aggregatorType: 2,
+      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       advisorId: 414,
       showOnlyNonZero: true,
       tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
       clientId: this.getDataSummary.defaultClient.clientId,
+      userAccountType: this.getDataSummary.defaultCredential.accountType,
+      holdingType:this.getDataSummary.defaultClient.holdingType,
+      tpUserCredFamilyMappingId:this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
     }
     this.onlineTransact.getExistingSchemes(obj).subscribe(
       data => this.getExistingSchemesRes(data)
@@ -140,9 +143,9 @@ export class RedemptionTransactionComponent implements OnInit {
     this.navOfSelectedScheme = scheme.nav
     let obj1 = {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
-      aggregatorType: 2,
+      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       orderType: 'ORDER',
-      userAccountType: 1,
+      userAccountType: this.getDataSummary.defaultCredential.accountType,
     }
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
       data => this.getSchemeDetailsRes(data)
@@ -167,7 +170,10 @@ export class RedemptionTransactionComponent implements OnInit {
       mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
       advisorId: this.getDataSummary.defaultClient.advisorId,
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
-      clientId: this.getDataSummary.defaultClient.clientId
+      clientId: this.getDataSummary.defaultClient.clientId,
+      userAccountType: this.getDataSummary.defaultCredential.accountType,
+      holdingType:this.getDataSummary.defaultClient.holdingType,
+      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
     }
     this.onlineTransact.getSchemeWiseFolios(obj1).subscribe(
       data => this.getSchemeWiseFoliosRes(data)

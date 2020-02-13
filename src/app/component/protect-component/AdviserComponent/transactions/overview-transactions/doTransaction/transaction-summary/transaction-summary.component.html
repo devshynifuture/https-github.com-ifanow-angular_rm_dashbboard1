@@ -27,9 +27,8 @@
                         <h5 class="m-0"> IIN {{selectedInvestor || defaultClient.clientCode}}
                             {{(defaultClient.holdingType)}}</h5>
                     </div>
-                    <mat-select *ngIf="showInvestor == true" class="form-control"
-                        (selectionChange)="setInvestor($event)">
-                        <mat-option *ngFor="let iin of clientDataList" [value]="iin.clientCode">{{iin.clientCode}}
+                    <mat-select *ngIf="showInvestor == true" class="form-control">
+                        <mat-option *ngFor="let iin of clientDataList" (click)="setInvestor(iin)" [value]="iin.clientCode">{{iin.clientCode}}
                         </mat-option>
                     </mat-select>
                 </div>
