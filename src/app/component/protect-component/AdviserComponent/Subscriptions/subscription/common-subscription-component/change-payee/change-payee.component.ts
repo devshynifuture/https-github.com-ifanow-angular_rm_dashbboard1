@@ -33,7 +33,7 @@ export class ChangePayeeComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   }
-  payeeDataRes: any;
+  payeeDataRes: any=[];
   noDataMessage: string;
   @Output() subStartNextBtn = new EventEmitter();
   // @Input() set upperData(data) {
@@ -61,7 +61,7 @@ export class ChangePayeeComponent implements OnInit {
       return;
     } else {
       this._payeeData = payeeData;
-      // this.getPayeeData(payeeData)
+      this.getPayeeData(payeeData)
     }
     console.log('input payeeData:2', payeeData);
   }
@@ -104,26 +104,26 @@ export class ChangePayeeComponent implements OnInit {
     this.subInjectService.changeUpperRightSliderState({ state: 'close',refreshRequired:flag });
     this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag });
   }
-  // getPayeeData(data) {
-  //   this.getRowData = data;
-  //   this.dataObj = {
-  //     clientId: this.getRowData.clientId,
-  //     subId: this.getRowData.id
-  //   };
-  //   this.subService.getPayeerProfile(this.dataObj).subscribe(
-  //     responseData => {
-  //       console.log('getPayeeProfile responseData:', responseData);
-  //       if (responseData) {
-  //       } else {
-  //         this.noDataMessage = 'No payee profile found.';
-  //       }
-  //       this.getPayeeProfileRes(responseData);
-  //     }
-  //     , error => {
-  //       console.log('getPayeerProfile error: ', error);
-  //     });
+  getPayeeData(data) {
+    this.getRowData = data;
+    this.dataObj = {
+      clientId: this.getRowData.clientId,
+      subId: this.getRowData.id
+    };
+    this.subService.getPayeerProfile(this.dataObj).subscribe(
+      responseData => {
+        console.log('getPayeeProfile responseData:', responseData);
+        if (responseData) {
+        } else {
+          this.noDataMessage = 'No payee profile found.';
+        }
+        this.getPayeeProfileRes(responseData);
+      }
+      , error => {
+        console.log('getPayeerProfile error: ', error);
+      });
 
-  // }
+  }
 
   getPayeeProfileRes(data) {
     console.log('getPayeeProfileRes data', data);

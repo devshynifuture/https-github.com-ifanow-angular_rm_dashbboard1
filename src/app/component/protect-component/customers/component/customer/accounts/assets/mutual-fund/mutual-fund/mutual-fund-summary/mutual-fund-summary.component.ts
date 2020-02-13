@@ -23,43 +23,54 @@ export class MutualFundSummaryComponent implements OnInit {
   schemeWise: any[];
   mutualFundList: any[];
 
-  constructor(private subInjectService:SubscriptionInject,private UtilService:UtilService) { }
+  constructor(private subInjectService: SubscriptionInject, private UtilService: UtilService) { }
   @Input() mutualFund;
 
   ngOnInit() {
-    this.getSubCategoryWise(this.mutualFund)
-    this.getSchemeWise();
-    this.mfSchemes();
+    if (this.mutualFund != undefined) {
+      this.getSubCategoryWise(this.mutualFund)
+      this.getSchemeWise();
+      this.mfSchemes();
+    }
   }
   subCatArray() {
     let catObj = {};
     const categoryArray = [];
-    this.mutualFundList.forEach(ele => {
-      if (ele.subCategoryName) {
-        const categoryArray = catObj[ele.subCategoryName] ? catObj[ele.subCategoryName] : [];
-        categoryArray.push(ele);
-        catObj[ele.subCategoryName] = categoryArray;
-      } else {
-        categoryArray.push(ele);
-      }
-    });
-    const customDataSource = new MatTableDataSource(categoryArray);
-    Object.keys(catObj).map(key => {
-      customDataSource.data.push({ groupName: key });
-      catObj[key].forEach((singleData) => {
-        customDataSource.data.push(singleData);
+    if (this.mutualFundList != undefined) {
+      this.mutualFundList.forEach(ele => {
+        if (ele.subCategoryName) {
+          const categoryArray = catObj[ele.subCategoryName] ? catObj[ele.subCategoryName] : [];
+          categoryArray.push(ele);
+          catObj[ele.subCategoryName] = categoryArray;
+        } else {
+          categoryArray.push(ele);
+        }
       });
-    });
-    return customDataSource;
-
+      const customDataSource = new MatTableDataSource(categoryArray);
+      Object.keys(catObj).map(key => {
+        customDataSource.data.push({ groupName: key });
+        catObj[key].forEach((singleData) => {
+          customDataSource.data.push(singleData);
+        });
+      });
+      return customDataSource;
+    }
   }
   openFilter() {
     const fragmentData = {
       flag: 'openFilter',
+      data:{},
       id: 1,
       state: 'open35',
       componentName: RightFilterComponent
     };
+    fragmentData.data={
+      folioWise:this.mutualFundList,
+      schemeWise:this.schemeWise,
+      familyMember:this.mutualFund.family_member_list,
+      category:this.mutualFund.mutualFundCategoryMastersList,
+      transactionView:this.displayedColumns
+    }
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);

@@ -98,13 +98,13 @@ export class SubscriptionCompletenessComponent implements OnInit {
     var showSubStep = false
     this.dashboard.emit(showSubStep);
   }
+  
   openPopup(data) {
     const Fragmentdata = {
       flag: data,
     };
     const dialogRef = this.dialog.open(SubscriptionPopupComponent, {
       width: '70%',
-      height: '100%',
       data: Fragmentdata,
       autoFocus: false,
 
@@ -113,6 +113,8 @@ export class SubscriptionCompletenessComponent implements OnInit {
 
     });
   }
+
+  
 
 
 }
