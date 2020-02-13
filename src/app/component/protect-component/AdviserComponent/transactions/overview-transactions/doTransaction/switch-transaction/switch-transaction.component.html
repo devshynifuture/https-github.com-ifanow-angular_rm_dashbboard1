@@ -26,14 +26,14 @@
                         <h5 class="m-0 pt-28 text-black pb-12">Select scheme to switch out of</h5>
                     </div>
                     <div class="col-md-12 p-0">
-                        <div class=" form-group mb-0 add-transactions">
-                            <input type="text" aria-label="Number" class=" form-control " matInput formControlName="investor" [matAutocomplete]="auto" (keyup)="getSchemeList($event.target.value)" value="Start typing to see investor names">
+                        <div class="form-group">
+                            <input type="text" aria-label="Number" class="form-control" matInput formControlName="investor" [matAutocomplete]="auto" (keyup)="getSchemeList($event.target.value)" value="Start typing to see investor names">
                             <mat-autocomplete #auto="matAutocomplete">
                                 <mat-option (onSelectionChange)="selectedScheme(scheme)" *ngFor="let scheme of schemeList" [value]="scheme.schemeName">
                                     {{scheme.schemeName}}
                                 </mat-option>
                             </mat-autocomplete>
-                            <mat-hint align="start" class="m-0 f-12 text-custom  ">
+                            <mat-hint align="start" class="f-12 text-custom  ">
                                 Last closing NAV: {{navOfSelectedScheme}}
                             </mat-hint>
                         </div>
