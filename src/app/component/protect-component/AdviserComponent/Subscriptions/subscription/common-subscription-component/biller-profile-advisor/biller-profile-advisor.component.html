@@ -4,12 +4,12 @@
         <h4 *ngIf="display!='Add'" class="mb-0 l-22 wrapper-20">EDIT BILLER PROFILE</h4>
     </div>
     <div class="col-md-2 text-right">
-        <i (click)="Close('close')" class="material-icons pt-16 c-p pr-16">
+        <i (click)="Close(false)" class="material-icons pt-16 c-p pr-16">
             clear
         </i>
     </div>
 </div>
-<hr class="right-line">
+
 <div class="wrapper-40 pt-72" id="ui-biller">
     <mat-tab-group [selectedIndex]="selected" animationDuration="0ms" class="event-none" id="ui-biller-tabs">
         <mat-tab class="active " label="Profile">
@@ -18,7 +18,7 @@
                     <div class="col-md-12">
                         <div class="row pt-20">
                             <div class="col-md-5 pr-0">
-                                <h5 class="text-right m-0 pt-16">Company display name</h5>
+                                <h5 class="text-right m-0 pt-12">Company display name</h5>
                             </div>
                             <div class="col-md-7">
                                 <div class="form-group mb-0">
@@ -186,7 +186,7 @@
                             <div class="col-md-5">
                                 <h5 class="text-right m-0 pt-8">Your logo</h5>
                             </div>
-                            <div class="col-md-7">
+                            <div class="col-md-7 pr-0">
                                 <!-- <app-photo-upload></app-photo-upload>-->
                                 <img *ngIf="logoImg" class="t-70 b-a" src="{{logoImg}}">
                                 <div (click)="file.click()" *ngIf="logoImg==undefined" class="imgBox">
@@ -218,9 +218,9 @@
             </div>
         </mat-tab>
         <mat-tab label="Bank details">
-            <div [formGroup]="bankDetailsForm" class="row pt-40 pb-32">
+            <div [formGroup]="bankDetailsForm" class="row pt-48 pb-32">
                 <div class="col-md-12">
-                    <div class="row pt-44">
+                    <div class="row">
                         <div class="col-md-5">
                             <h5 class="text-right m-0 pt-8">Name on bank A/C</h5>
                         </div>
@@ -296,7 +296,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row pt-44">
+                    <div class="row pt-44 pb-24">
                         <div class="col-md-5">
                             <h5 class="text-right m-0 pt-8">Bank address</h5>
                         </div>
@@ -403,7 +403,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row pt-44">
+                    <div class="row pt-100 pb-28">
                         <div class="col-md-5">
                             <h5 class="text-right m-0 pt-8">Terms & Conditions</h5>
                             <span class="text-right">This will appear in invoices</span>

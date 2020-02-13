@@ -24,14 +24,14 @@
             <div class="col-md-8 pl-0 pr-20">
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pt-28 text-black pb-12">Select scheme to switch out of</h5>
+                        <h5 class="m-0 pt-28 text-black pb-12">Select scheme to transfer out of</h5>
                     </div>
                     <div class="col-md-12 p-0">
                         <div class="form-control mb-0 add-transactions">
                             <input type="text" aria-label="Number" class="form-group h-0" matInput
-                                formControlName="investor" [matAutocomplete]="auto"
+                                formControlName="investor" [matAutocomplete]="auto1"
                                 (keyup)="getSchemeList($event.target.value)" value="Start typing to see investor names">
-                            <mat-autocomplete #auto="matAutocomplete">
+                            <mat-autocomplete #auto1="matAutocomplete">
                                 <mat-option (onSelectionChange)="selectedScheme(scheme)"
                                     *ngFor="let scheme of schemeList" [value]="scheme.schemeName">
                                     {{scheme.schemeName}}
@@ -41,7 +41,23 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="row" *ngIf="reInvestmentOpt.length > 1">
+                    <div class="col-md-12 p-0 text-left">
+                        <h5 class="m-0 pt-28 text-black pb-12">Select re-investment</h5>
+                    </div>
+                    <div class="col-md-5 p-0">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <mat-select class="form-control" formControlName="investmentAccountSelection">
+                                    <mat-option value="option" *ngFor="let flag of reInvestmentOpt"
+                                        (click)="reinvest(flag)">
+                                        {{(flag.dividendReinvestmentFlag == 0)?'Dividend payout':'Dividend reinvestment'}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-6 p-0 text-left">
                         <h5 class="m-0 pt-28 text-black pb-12">Select scheme folio</h5>
@@ -82,14 +98,34 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pt-28 text-black pb-12">Select SIP Frequency</h5>
+                        <h5 class="m-0 pt-28 text-black pb-12">Select a scheme to transfer in</h5>
+                    </div>
+                    <div class="col-md-12 p-0">
+                        <div class="form-control mb-0 add-transactions">
+                            <input type="text" aria-label="Number" class="form-group h-0" matInput
+                                formControlName="transferIn" [matAutocomplete]="auto"
+                                (keyup)="getSchemeListTranfer($event.target.value)" value="Start typing to see investor names">
+                            <mat-autocomplete #auto="matAutocomplete">
+                                <mat-option (onSelectionChange)="selectedSchemeTransfer(scheme)"
+                                    *ngFor="let scheme of schemeListTransfer" [value]="scheme.schemeName">
+                                    {{scheme.schemeName}}
+                                </mat-option>
+                            </mat-autocomplete>
+                            <p class="m-0 f-12 text-custom pt-8">Last closing NAV: {{navOfSelectedScheme}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 p-0 text-left">
+                        <h5 class="m-0 pt-28 text-black pb-12">Select STP frequency</h5>
                     </div>
                     <div class="col-md-5 p-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select class="form-control" formControlName="frequency">
                                     <mat-option value="option" (click)="selectedFrequency(frequency)"
-                                        *ngFor="let frequency of switchFrequency">{{frequency.switchFrequency}}</mat-option>
+                                        *ngFor="let frequency of switchFrequency">{{frequency.sipFrequency}}
+                                    </mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
@@ -97,7 +133,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pt-28 text-black pb-12"> Amount/Units</h5>
+                        <h5 class="m-0 pt-28 text-black pb-12">Enter amount</h5>
                     </div>
 
                     <div class="col-md-5 p-0">
@@ -124,46 +160,51 @@
                         </mat-form-field>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pt-28 text-black pb-12">STP Tenure</h5>
+                        <h5 class="m-0 pt-40 pb-12 text-black">Select Tenure</h5>
                     </div>
+
                     <div class="col-md-5 p-0">
                         <mat-form-field>
-                            <mat-select class="form-control br-0">
-                                <mat-option>
-                                    Option
-                                </mat-option>
+                            <mat-select class="form-control" formControlName="tenure">
+                                <mat-option value="1">No. of installment</mat-option>
+                                <mat-option value="2">No. year</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12 p-0 text-left">
+                        <h5 class="m-0 pt-40 pb-12 text-black">Enter installment</h5>
+                    </div>
+    
+                    <div class="col-md-5 p-0">
+                        <mat-form-field>
+                            <input #employeeContry matInput maxlength="10" type="text" class="form-control br-0 rupess"
+                                formControlName="installment">
+                        </mat-form-field>
+                    </div>
+                </div>
             </div>
-
             <div class="col-md-4 bg-grey lter p-0">
                 <app-transaction-summary [data]="transactionSummary" (defaultDetails)='getDefaultDetails($event)'>
                 </app-transaction-summary>
             </div>
         </div>
     </div>
-
 </div>
 <div class="bottom-fixed wrapper-12 pt-16 w-65">
     <div class="row">
         <div class="col-md-4 pt-8">
             <h5 class="mb-0  text-white c-p" (click)="close()">Cancel</h5>
         </div>
-        <!-- <div class="col-md-8 right pt-8" *ngIf="formStep == 'step-1' || formStep == 'step-2'">
-
-            <h5 class="mb-0 text-white c-p" (click)="saveAndNext()"> NEXT </h5>
-        </div> -->
         <div class="col-md-8 right pt-8">
             <!-- commented for prod build -->
             <button mat-button class="text-success">
                 SAVE & ADD ANOTHER
             </button>
-            <button mat-button class="text-success" (click)="onAddTransaction('confirm',null)">
+            <button mat-button class="text-success" (click)="stp()">
                 SAVE & PROCEED
             </button>
         </div>

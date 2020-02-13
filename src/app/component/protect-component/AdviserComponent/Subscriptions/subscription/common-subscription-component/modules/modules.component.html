@@ -1,7 +1,7 @@
 <div class="bg-grey lter wrapper-20 heading-fix">
     <h3 class="text-center m-0 head-common">{{_upperData.serviceName}}</h3>
 </div>
-<div class="bg-white pt-72">
+<div class="bg-white pt-72 pb-44">
     <div class="wrapper-20 pt-125 pb-44">
         <div class="row">
             <div class="col-md-10 p-0 pt-8 text-center">
@@ -22,7 +22,8 @@
             <div class="col-md-10">
                 <h5 class="pt-28 pb-16 pl-16 m-0">Financial planning</h5>
                 <div class="row">
-                    <div (click)="selectModule(singleFinanceModule)" *ngFor="let singleFinanceModule of ModuleData" class="col-md-3 c-p" >
+                    <div (click)="selectModule(singleFinanceModule)" *ngFor="let singleFinanceModule of ModuleData"
+                        class="col-md-3 c-p">
                         <div *ngIf="singleFinanceModule.moduleName=='Financial Planning'">
                             <mat-checkbox *ngIf="singleFinanceModule.selected" class="custom-checkbox" checked="false">
                             </mat-checkbox>
@@ -73,7 +74,7 @@
                 <div class="row">
                     <div (click)="selectModule(singleMultiModule)" *ngFor="let singleMultiModule of ModuleData"
                         class="col-md-3 c-p" [hidden]="singleMultiModule.moduleName!='Multi Asset View'">
-                        <div >
+                        <div>
                             <mat-checkbox *ngIf="singleMultiModule.selected" class="custom-checkbox" checked="false">
                             </mat-checkbox>
                             <div class="b-a wrapper-16 box-height" [ngClass]="{'ba-blue':singleMultiModule.selected}">

@@ -5,7 +5,8 @@
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle" (click)="Close(false)"> clear</i>
+                <!-- (click)="Close(false)" removed for prod build -->
+                <i class="material-icons c-p pt-8 v-middle" > clear</i>
             </div>
         </div>
     </div>
@@ -52,8 +53,6 @@
                     </td>
                 </ng-container>
 
-
-
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
@@ -61,11 +60,21 @@
     </div>
 </div>
 
+
+<div class="row">
+    <div class="col-md-6">
+        <button class="ba-black" mat-stroked-button>Delete selected</button>
+        <span class="text-primitive ml-12 f-14"> Selected units: 463.82 </span>
+    </div>
+    <div class="col-md-6 text-right">
+        <button class="bg-grey lt " mat-stroked-button>Freeze folio</button>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-md-12 overflow-hidden back-office-table">
 
-        <table mat-table [dataSource]="dataSource1" id="table-low" class=" ">
-
+        <table mat-table [dataSource]="dataSource1" id="table-low" class=" mt-8">
             <ng-container matColumnDef="checkbox">
                 <th class="b-a" mat-header-cell *matHeaderCellDef>
                     <mat-checkbox> </mat-checkbox>
@@ -138,7 +147,8 @@
 <div class="bottom-fixed wrapper-12 pt-16">
     <div class="row">
         <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
+            <!-- (click)="Close(false)" removed for prod build -->
+            <h5 class="mb-0 pt-8 text-white c-p" >Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
             <button mat-button class="btn-bottom br-0 text-inherit">Save</button>

@@ -88,12 +88,8 @@ export class PlansComponent implements OnInit {
   }
   getPlansMapped() {
     this.isLoading = true;
-    const obj = {
-      // advisorid: 12345,
-      advisorId: this.advisorId,
-      docRepoId: this.upperData ? this.upperData.documentData.documentRepositoryId : null
-    };
-    this.subService.plansMapped(obj).subscribe(
+
+    this.subService.plansMapped(this.advisorId, this.upperData ? this.upperData.documentData.documentRepositoryId : null).subscribe(
       data => this.getPlansMappedResponse(data)
     );
   }

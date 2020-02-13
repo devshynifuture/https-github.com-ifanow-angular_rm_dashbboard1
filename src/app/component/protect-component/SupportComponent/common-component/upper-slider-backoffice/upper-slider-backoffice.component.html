@@ -7,7 +7,8 @@
             <p class="f-16 m-0">ARN-83865 CAMS</p>
         </div>
         <div class="col-md-2 text-right">
-            <i (click)="dialogClose()" class="material-icons pt-16 c-p pr-16">
+            <!-- (click)="dialogClose() removed for prod build" -->
+            <i  class="material-icons pt-16 c-p pr-16">
                 clear
             </i>
         </div>
@@ -175,7 +176,108 @@
 
             </mat-tab>
 
-            <mat-tab label="Third"> Content 3 </mat-tab>
+            <mat-tab label="Deletion & reordering">
+                <p class=" f-14">
+                    The following option was selected while doing the reconciliation
+                </p>
+
+                <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group">
+
+                    <mat-radio-button class="example-radio-button d-block mb-5 f-14">
+                        Delete unmatched folios
+                    </mat-radio-button>
+
+                    <mat-radio-button class="example-radio-button mb-5 d-block f-14">
+                        Delete and reorder unmatched folios <span class="f-12 bu-primary text-primary"> CHOSEN OPTION
+                        </span>
+                    </mat-radio-button>
+                </mat-radio-group>
+
+                <div class="row pt-28">
+                    <div class="col-md-6 d-flex align-items-center">
+                        <p class="f-14 m-0">File ordering status</p>
+                    </div>
+
+                    <div class="col-md-6 text-right">
+                        <button class="bg-grey lt mr-8" mat-button>
+                            <img src="/assets/images/svg/retry.svg">
+                            Retry skipped files</button>
+                        <button class="bg-grey lt" mat-button>
+                            <img src="/assets/images/svg/refresh.svg"> Refresh</button>
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12 overflow-hidden back-office-table">
+                        <table mat-table [dataSource]="dataSource3" id="table-low" class=" mt-8">
+
+
+                            <!-- Symbol Column -->
+                            <ng-container matColumnDef="foliosOrdered">
+                                <th class="b-a" mat-header-cell *matHeaderCellDef> Folios ordered </th>
+                                <td class="b-a" mat-cell *matCellDef="let element">
+                                    <div class="bar"> {{element.foliosOrdered}} </div>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="file_order">
+                                <th class="b-a" mat-header-cell *matHeaderCellDef> File order time (most recent) </th>
+                                <td class="b-a" mat-cell *matCellDef="let element">
+                                    <div class="bar"> {{element.file_order}} </div>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="file_status">
+                                <th class="b-a" mat-header-cell *matHeaderCellDef> File status </th>
+                                <td class="b-a" mat-cell *matCellDef="let element">
+                                    <div class="bar"> {{element.file_status}} </div>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="id">
+                                <th class="b-a" mat-header-cell *matHeaderCellDef> Reference ID </th>
+                                <td class="b-a" mat-cell *matCellDef="let element">
+                                    <div class="bar"> {{element.id}} </div>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="trx_file">
+                                <th class="b-a" mat-header-cell *matHeaderCellDef> Trx in file </th>
+                                <td class="b-a" mat-cell *matCellDef="let element">
+                                    <div class="bar"> {{element.trx_file}} </div>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="trx_added">
+                                <th class="b-a" mat-header-cell *matHeaderCellDef> Trx added </th>
+                                <td class="b-a" mat-cell *matCellDef="let element">
+                                    <div class="bar"> {{element.trx_added}} </div>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="file_name">
+                                <th class="b-a" mat-header-cell *matHeaderCellDef> File name </th>
+                                <td class="b-a" mat-cell *matCellDef="let element">
+                                    <div class="bar"> {{element.file_name}} </div>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="download">
+                                <th class="b-a" mat-header-cell *matHeaderCellDef> Download file </th>
+                                <td class="b-a" mat-cell *matCellDef="let element">
+                                    <div class="bar"> {{element.download}} </div>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+                        </table>
+                    </div>
+                </div>
+
+            </mat-tab>
         </mat-tab-group>
     </div>
 </div>

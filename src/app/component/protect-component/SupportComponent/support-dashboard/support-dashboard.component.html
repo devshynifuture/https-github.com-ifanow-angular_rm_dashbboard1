@@ -78,7 +78,12 @@
                         <h4 class="f-20 m-0 roboto">RM Dashboard</h4>
                     </div>
                     <div class="col-md-4">
-                        <button>Add to Stock master</button>
+                        <button mat-button [matMenuTriggerFor]="menu">Quick actions</button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item>Add to stock master</button>
+                            <button mat-menu-item>Add to LI master</button>
+                            <button mat-menu-item>Update NJ/Prudent Switch trx</button>
+                        </mat-menu>
                     </div>
                 </div>
 

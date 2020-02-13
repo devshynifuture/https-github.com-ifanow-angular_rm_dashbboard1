@@ -19,9 +19,9 @@ export class SwpTransactionComponent implements OnInit {
   swpTransaction: any;
   inputData: any;
   selectedFamilyMember: any;
-  isViewInitCalled=false;
+  isViewInitCalled = false;
   transactionType: any;
-  selectScheme= 2;
+  selectScheme = 2;
   maiSchemeList: any;
   schemeDetails: any;
   reInvestmentOpt: any;
@@ -38,25 +38,29 @@ export class SwpTransactionComponent implements OnInit {
   folioDetails: any;
   scheme: any;
   folioList: any;
+  schemeListTransfer: any;
+  schemeTransfer: any;
+  schemeDetailsTransfer: any;
+  ExistingOrNew: any;
 
-  constructor(private subInjectService: SubscriptionInject,private onlineTransact: OnlineTransactionService,
-    private processTransaction :ProcessTransactionService,private fb: FormBuilder) { }
-    @Input()
-    set data(data) {
-      this.inputData = data;
-      this.transactionType =  data.transactionType
-      this.selectedFamilyMember = data.selectedFamilyMember
-      console.log('This is Input data of FixedDepositComponent ', data);
-  
-      if (this.isViewInitCalled) {
-        this.getdataForm('');
-      }
+  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
+    private processTransaction: ProcessTransactionService, private fb: FormBuilder) { }
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    this.transactionType = data.transactionType
+    this.selectedFamilyMember = data.selectedFamilyMember
+    console.log('This is Input data of FixedDepositComponent ', data);
+
+    if (this.isViewInitCalled) {
+      this.getdataForm('');
     }
-  
-    get data() {
-      return this.inputData;
-    }
-  
+  }
+
+  get data() {
+    return this.inputData;
+  }
+
   ngOnInit() {
     this.getdataForm(this.inputData)
     this.transactionSummary = { selectedFamilyMember: this.inputData.selectedFamilyMember }
@@ -71,10 +75,14 @@ export class SwpTransactionComponent implements OnInit {
       let obj = {
         searchQuery: value,
         bseOrderType: 'ORDER',
-        aggregatorType: 2,
+        aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
         advisorId: 414,
         tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
-        showOnlyNonZero:true,
+        familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+        clientId: this.getDataSummary.defaultClient.clientId,
+        userAccountType: this.getDataSummary.defaultCredential.accountType,
+        holdingType: this.getDataSummary.defaultClient.holdingType,
+        tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
       }
       this.onlineTransact.getExistingSchemes(obj).subscribe(
         data => this.getExistingSchemesRes(data)
@@ -102,15 +110,15 @@ export class SwpTransactionComponent implements OnInit {
     this.schemeList = data
   }
   selectedScheme(scheme) {
-    this.scheme =scheme
+    this.scheme = scheme
     this.showUnits = true
     this.transactionSummary = { schemeName: scheme.schemeName }
     this.navOfSelectedScheme = scheme.nav
     let obj1 = {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
-      aggregatorType: 2,
+      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       orderType: 'ORDER',
-      userAccountType: 1,
+      userAccountType: this.getDataSummary.defaultCredential.accountType,
     }
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
       data => this.getSchemeDetailsRes(data)
@@ -119,19 +127,22 @@ export class SwpTransactionComponent implements OnInit {
   getSchemeWiseFolios() {
     let obj1 = {
       mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
-      advisorId:  this.getDataSummary.defaultClient.advisorId,
-      familyMemberId:  this.getDataSummary.defaultClient.familyMemberId,
-      clientId:  this.getDataSummary.defaultClient.clientId
+      advisorId: this.getDataSummary.defaultClient.advisorId,
+      familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+      clientId: this.getDataSummary.defaultClient.clientId,
+      userAccountType: this.getDataSummary.defaultCredential.accountType,
+      holdingType: this.getDataSummary.defaultClient.holdingType,
+      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
     }
     this.onlineTransact.getSchemeWiseFolios(obj1).subscribe(
       data => this.getSchemeWiseFoliosRes(data)
     );
   }
   getSchemeWiseFoliosRes(data) {
-    console.log('res scheme folio',data)
+    console.log('res scheme folio', data)
     this.folioList = data
   }
- 
+
   selectedFolio(folio) {
     this.folioDetails = folio
     this.showUnits = true
@@ -161,9 +172,12 @@ export class SwpTransactionComponent implements OnInit {
   dateArray(sipDates) {
     this.dates = sipDates.split(",")
     this.dateDisplay = this.processTransaction.getDateByArray(this.dates, true)
+    this.dateDisplay = this.dateDisplay.filter(element => {
+      return element.date > new Date()
+    });
     console.log('dateDisplay = ', this.dateDisplay)
   }
-  onAddTransaction(value,data){
+  onAddTransaction(value, data) {
     this.confirmTrasaction = true
     const fragmentData = {
       flag: 'addNsc',
@@ -183,7 +197,7 @@ export class SwpTransactionComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-       
+
       }
     );
   }
@@ -208,8 +222,9 @@ export class SwpTransactionComponent implements OnInit {
       modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
       folioSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
-      date:[(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
-      frequency:[(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      date: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      frequency: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      installment: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
     });
 
     this.ownerData = this.swpTransaction.controls;
@@ -217,5 +232,42 @@ export class SwpTransactionComponent implements OnInit {
 
   getFormControl(): any {
     return this.swpTransaction.controls;
+  }
+  swp() {
+    let obj = {
+      productDbId: this.schemeDetails.id,
+      mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
+      productCode: this.schemeDetails.schemeCode,
+      isin: this.schemeDetails.isin,
+      folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+      tpSubBrokerCredentialId: this.getDataSummary.defaultCredential.tpSubBrokerCredentialId,
+      familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+      adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
+      clientId: this.getDataSummary.defaultClient.clientId,
+      startDate: Number(new Date(this.swpTransaction.controls.date.value.replace(/"/g, ""))),
+      noOfInstallments: this.swpTransaction.controls.installment.value,
+      frequencyType:this.frequency,
+      schemeCd: this.schemeDetails.schemeCode,
+      euin: this.getDataSummary.defaultCredential.euin,
+      clientCode: this.getDataSummary.defaultClient.clientCode,
+      orderVal: this.swpTransaction.controls.employeeContry.value,
+      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+      orderType: "SWP",
+      amountType: "Amount",
+      bseDPTransType: "PHYSICAL",
+    }
+    this.onlineTransact.transactionBSE(obj).subscribe(
+      data => this.swpBSERes(data)
+    );
+    console.log('swp json obj',obj)
+  }
+  swpBSERes(data){
+    console.log('swp res == ',data)
+    if(data == undefined){
+
+    }else{
+    this.onAddTransaction('confirm',null)
+    }
   }
 }
