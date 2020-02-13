@@ -31,7 +31,8 @@
       </mat-expansion-panel-header>
       <div>
         <mat-list-item role="listitem" *ngFor="let item of familyMember">
-          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect($event)">{{item.name}}</mat-checkbox>
+          <!-- $event removed for prod build -->
+          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect()">{{item.name}}</mat-checkbox>
         </mat-list-item>
       </div>
     </mat-expansion-panel>
@@ -43,7 +44,8 @@
       </mat-expansion-panel-header>
       <div>
         <mat-list-item role="listitem" *ngFor="let item of amc">
-          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect($event)">{{item.amc_name}}</mat-checkbox>
+          <!-- $event removed for prod build -->
+          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect($)">{{item.amc_name}}</mat-checkbox>
         </mat-list-item>
       </div>
     </mat-expansion-panel>
@@ -57,7 +59,8 @@
       </mat-expansion-panel-header>
       <div>
         <mat-list-item role="listitem" *ngFor="let item of scheme">
-          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect($event)" class="wb">{{item.schemeName}}
+          <!-- $event removed for prod build -->
+          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect()" class="wb">{{item.schemeName}}
           </mat-checkbox>
         </mat-list-item>
       </div>
@@ -72,7 +75,8 @@
       </mat-expansion-panel-header>
       <div>
         <mat-list-item role="listitem" *ngFor="let item of folio">
-          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect($event)">{{item.folioNumber}}</mat-checkbox>
+          <!-- $event removed for prod build -->
+          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect()">{{item.folioNumber}}</mat-checkbox>
         </mat-list-item>
       </div>
     </mat-expansion-panel>
@@ -86,7 +90,8 @@
       </mat-expansion-panel-header>
       <div>
         <mat-list-item role="listitem" *ngFor="let item of transactionView">
-          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect($event)">{{item.displayName}}</mat-checkbox>
+          <!-- $event removed for prod build -->
+          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect()">{{item.displayName}}</mat-checkbox>
         </mat-list-item>
       </div>
     </mat-expansion-panel>
@@ -100,7 +105,8 @@
       </mat-expansion-panel-header>
       <div>
         <mat-list-item role="listitem" *ngFor="let item of reportType">
-          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect($event)">{{item.name}}</mat-checkbox>
+          <!-- $event removed for prod build -->
+          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect()">{{item.name}}</mat-checkbox>
         </mat-list-item>
       </div>
     </mat-expansion-panel>
@@ -114,7 +120,8 @@
       </mat-expansion-panel-header>
       <div>
         <mat-list-item role="listitem" *ngFor="let item of category">
-          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect($event)">{{item.category}}</mat-checkbox>
+          <!-- $event removed for prod build -->
+          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect()">{{item.category}}</mat-checkbox>
         </mat-list-item>
       </div>
     </mat-expansion-panel>

@@ -43,28 +43,27 @@ export class ChangePayeeComponent implements OnInit {
   //   console.log('input payeeData:1', data);
 
   // }
-
+  clientData:any;
   @Input()
   set data(payeeData) {
-    if (payeeData == undefined) {
-      return;
-    } else if (payeeData.length > 0) {
-      if (payeeData.length == 1) {
-        payeeData[0].share = 100
-        payeeData[0].selected = 1
-        this.payeeDataRes = payeeData;
-        this.subStartNextBtn.emit(payeeData[0])
-      }
-      else {
+    if(payeeData != undefined){
+      if(payeeData.id == undefined){
+        if (payeeData.length == 1) {
+          payeeData[0].share = 100
+          payeeData[0].selected = 1
+          this.subStartNextBtn.emit(payeeData[0])
+        }
         this.payeeDataRes = payeeData;
       }
-      return;
-    } else {
-      this._payeeData = payeeData;
-      this.getPayeeData(payeeData)
+      else{
+        this.isLoading = true;
+        this.payeeDataRes = [{},{}];
+        this.clientData = payeeData;
+      }
     }
     console.log('input payeeData:2', payeeData);
   }
+
   restrictAfter100(event) {
     if (parseInt(event.target.value) > 100) {
       event.target.value = "100";
@@ -93,10 +92,15 @@ export class ChangePayeeComponent implements OnInit {
   arraTosend: any;
   dataMatSlider: any;
   clickedOnMatSlider = false;
-
+  isLoading:boolean =false;
   totalValue = 0;
 
   ngOnInit() {
+    if(this.clientData != undefined){
+     this.getPayeeData(this.clientData);
+     console.log("hi clientData");
+     
+    }
     // console.log('change payee upperData', this.upperData);
   }
 
@@ -127,8 +131,8 @@ export class ChangePayeeComponent implements OnInit {
 
   getPayeeProfileRes(data) {
     console.log('getPayeeProfileRes data', data);
+    this.isLoading = false;
     this.payeeDataRes = data;
-
   }
 
   // openAddPayee() {

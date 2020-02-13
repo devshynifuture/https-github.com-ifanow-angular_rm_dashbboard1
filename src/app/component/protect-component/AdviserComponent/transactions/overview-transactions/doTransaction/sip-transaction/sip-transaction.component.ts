@@ -187,6 +187,9 @@ export class SipTransactionComponent implements OnInit {
   dateArray(sipDates) {
     this.dates = sipDates.split(",")
     this.dateDisplay = this.processTransaction.getDateByArray(this.dates, true)
+    this.dateDisplay = this.dateDisplay.filter(element => {
+      return element.date > new Date()
+    });
     console.log('dateDisplay = ', this.dateDisplay)
   }
   getMandateDetails() {

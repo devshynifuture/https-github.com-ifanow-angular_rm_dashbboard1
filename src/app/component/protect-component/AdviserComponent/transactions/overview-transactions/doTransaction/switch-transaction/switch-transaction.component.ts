@@ -201,6 +201,9 @@ export class SwitchTransactionComponent implements OnInit {
       );
     } 
   }
+  switchType(value){
+
+  }
   getNewSchemesRes(data){
     console.log('new schemes', data)
     this.schemeListTransfer = data
@@ -226,6 +229,7 @@ export class SwitchTransactionComponent implements OnInit {
       installment:[(!data) ? '' : data.employeeContry, [Validators.required]],
       tenure:[(!data) ? '' : data.employeeContry, [Validators.required]],
       transferIn:[(!data) ? '' : data.employeeContry, [Validators.required]],
+      switchType:[(!data) ? '' : data.employeeContry, [Validators.required]],
     });
 
     this.ownerData = this.switchTransaction.controls;
@@ -235,6 +239,7 @@ export class SwitchTransactionComponent implements OnInit {
     return this.switchTransaction.controls;
   }
   switch(){
+
     let obj = {
 
       productDbId: this.schemeDetails.id,
@@ -252,8 +257,10 @@ export class SwitchTransactionComponent implements OnInit {
       toIsin: this.schemeDetailsTransfer.isin,
       schemeCd: this.schemeDetails.schemeCode,
       euin: this.getDataSummary.defaultCredential.euin,
+      qty: (this.switchTransaction.controls.switchType.value == 1) ? 0 : (this.switchTransaction.controls.switchType.value == 3) ? this.schemeDetails.balance_units : this.switchTransaction.controls.employeeContry.value,
+      allRedeem: (this.switchTransaction.controls.switchType.value == 3) ? true : false,
       orderType: "SWITCH",
-      buySell: "PURCHASE",
+      buySell: "SWITCH_OUT",
       transCode: "NEW",
       buySellType: "FRESH",
       dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,

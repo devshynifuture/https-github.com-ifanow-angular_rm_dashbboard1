@@ -202,8 +202,10 @@ export class PreferencesSettingsComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          this.getProfileBillerData()
-          console.log('this is sidebardata in subs subs 2: ');
+          if(UtilService.isRefreshRequired(sideBarData)){
+            this.getProfileBillerData()
+            console.log('this is sidebardata in subs subs 2: ');
+          }
           rightSideDataSub.unsubscribe();
         }
       }
