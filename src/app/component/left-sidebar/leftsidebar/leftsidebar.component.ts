@@ -80,6 +80,20 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     }
   }
 
+  getActiveLink(){
+    let link = this.router.url.split('/')[2];
+    console.log("link check", link);
+    
+    switch(link)
+    {
+      case 'subscription': return link;
+
+      case 'emails': return link;
+
+      case 'transactions': return link;
+    }
+  }
+
   selectClient(singleClientData) {
     console.log(singleClientData);
     this.ngZone.run(() => {
