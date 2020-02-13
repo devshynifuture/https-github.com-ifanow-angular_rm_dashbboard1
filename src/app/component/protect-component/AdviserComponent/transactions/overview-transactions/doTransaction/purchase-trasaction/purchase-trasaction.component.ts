@@ -73,6 +73,9 @@ export class PurchaseTrasactionComponent implements OnInit {
       tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
       clientId: this.getDataSummary.defaultClient.clientId,
+      userAccountType: this.getDataSummary.defaultCredential.accountType,
+      holdingType:this.getDataSummary.defaultClient.holdingType,
+      tpUserCredFamilyMappingId:this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
     }
     if (this.selectScheme == 2 && value.length > 2) {
       this.onlineTransact.getNewSchemes(obj).subscribe(
@@ -108,9 +111,9 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.navOfSelectedScheme = scheme.nav
     let obj1 = {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
-      aggregatorType: 2,
+      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       orderType: 'ORDER',
-      userAccountType: 1,
+      userAccountType: this.getDataSummary.defaultCredential.accountType,
     }
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
       data => this.getSchemeDetailsRes(data)
