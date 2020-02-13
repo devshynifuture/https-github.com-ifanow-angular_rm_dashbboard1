@@ -512,15 +512,14 @@
   .mat-tab-link {
     color: #595252 !important;
     border-bottom: 4px solid transparent;
-    padding: 0 0px !important;
     min-width: 110px;
     background: transparent !important;
     font-family: "roboto" !important;
     letter-spacing: 0.75px !important;
     opacity: 1 !important;
     height: 60px !important;
-    padding-right: 15px;
-    padding-left: 15px;
+    padding-right: 10px;
+    padding-left: 10px;
   }
 
   .mat-tab-link.active {
@@ -572,6 +571,7 @@
 #ui-settings-subs {
   .mat-tab-label {
     padding: 0 16px !important;
+    height: 40px !important;
   }
 }
 
@@ -1508,5 +1508,12 @@ textarea {
     tbody td {
       padding: 6px 8px !important;
     }
+  }
+}
+
+@media (max-width: 1142px) {
+  #ui-settings-subs .mat-tab-label {
+    height: 30px !important;
+    font-size: 11px;
   }
 }
