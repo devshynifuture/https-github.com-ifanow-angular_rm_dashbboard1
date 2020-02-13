@@ -88,7 +88,7 @@
                             <mat-form-field>
                                 <mat-select class="form-control" formControlName="frequency">
                                     <mat-option value="option" (click)="selectedFrequency(frequency)"
-                                        *ngFor="let frequency of swpFrequency">{{frequency.swpFrequency}}</mat-option>
+                                        *ngFor="let frequency of swpFrequency">{{frequency.sipFrequency}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
@@ -123,24 +123,21 @@
                         </mat-form-field>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pt-28 text-black pb-12">Select SWP Tenure</h5>
+                        <h5 class="m-0 pt-40 pb-12 text-black">Select Tenure</h5>
                     </div>
+
                     <div class="col-md-5 p-0">
                         <mat-form-field>
-                            <mat-select class="form-control br-0">
-                                <mat-option>
-                                    Option
-                                </mat-option>
+                            <mat-select class="form-control" formControlName="tenure">
+                                <mat-option value="1">No. of installment</mat-option>
+                                <mat-option value="2">No. year</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
                 </div>
-
             </div>
-
             <div class="col-md-4 bg-grey lter p-0">
                 <app-transaction-summary [data]="transactionSummary" (defaultDetails)='getDefaultDetails($event)'>
                 </app-transaction-summary>
