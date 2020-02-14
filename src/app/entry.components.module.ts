@@ -83,6 +83,8 @@ import { CustomDirectiveModule } from './common/directives/common-directive.modu
 import { AddNomineeComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/add-nominee/add-nominee.component';
 import { AddBudgetComponent } from './component/protect-component/customers/component/common-component/add-budget/add-budget/add-budget.component';
 import { RightFilterComponent } from './component/protect-component/customers/component/common-component/right-filter/right-filter.component';
+import { FolioMasterDetailsComponent } from './component/protect-component/customers/component/common-component/folio-master-details/folio-master-details.component';
+import { SipDetailsComponent } from './component/protect-component/customers/component/common-component/sip-details/sip-details.component';
 //import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
 
@@ -207,8 +209,9 @@ export const componentList = [
   SelectAdviceComponent,
   AddNomineeComponent,
   AddBudgetComponent,
-  RightFilterComponent
-
+  RightFilterComponent,
+  FolioMasterDetailsComponent,
+  SipDetailsComponent
   // ComposeEmailComponent
 ];
 

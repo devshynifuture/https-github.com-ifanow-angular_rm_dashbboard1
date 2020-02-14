@@ -20,20 +20,21 @@ export class AdviceAllPortfolioComponent implements OnInit {
   constructor(private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   @ViewChild("tableOne", { static: true }) sort1: MatSort;
   @ViewChild("tableTwo", { static: true }) sort2: MatSort;
-
+  isLoading:boolean =false;
   ngOnInit() {
     this.dataSource.sort = this.sort1;
     this.dataSource1.sort = this.sort2;
   }
-  checkAll(flag, value) {
-    console.log(flag)
-    if (value == 'cashflow') {
-      this.dataSource = new MatTableDataSource(AdviceUtilsService.selectAll(flag, this.dataSource._data._value, this.selectedAssetId))
-    }
-    else {
-      this.dataSource1 = new MatTableDataSource(AdviceUtilsService.selectAll(flag, this.dataSource1._data._value, this.selectedAssetId))
-
-    }
+  checkAll(flag, tableDataList) {
+    console.log(flag, tableDataList)
+    const { dataList, selectedIdList } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
+    this.dataSource = new MatTableDataSource(dataList);
+    this.selectedAssetId = selectedIdList;
+    console.log(this.selectedAssetId);
+  }
+  checkSingle(flag, selectedData) {
+    (flag.checked) ? this.selectedAssetId.push(selectedData.id) : this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
+    console.log(this.selectedAssetId)
   }
 }
 export interface PeriodicElement {

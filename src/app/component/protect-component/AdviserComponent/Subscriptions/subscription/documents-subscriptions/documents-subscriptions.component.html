@@ -13,18 +13,18 @@
                                 arrow_drop_down
                             </i></button>
                         <mat-menu #menu="matMenu">
-                            <button *ngIf="dataCount == 0" mat-menu-item>Select documents to see more
+                            <a *ngIf="dataCount == 0" mat-menu-item>Select documents to see more
                                 actions
-                            </button>
+                            </a>
 
-                            <button (click)="deleteModal(null)" *ngIf="dataCount != 0 && dataCount > 1"
+                            <a (click)="deleteModal(null)" *ngIf="dataCount != 0 && dataCount > 1"
                                 mat-menu-item>Delete
-                                Documents
-                            </button>
-                            <button (click)="deleteModal(null)" *ngIf="dataCount != 0 && dataCount <= 1"
+                                documents
+                            </a>
+                            <a (click)="deleteModal(null)" *ngIf="dataCount != 0 && dataCount <= 1"
                                 mat-menu-item>Delete
-                                Document
-                            </button>
+                                document
+                            </a>
                         </mat-menu>
                     </div>
                     <div class="col-md-8 p-0" *ngIf="dataSource.data.length > 0 && dataCount > 0">
@@ -142,7 +142,7 @@
                             more_vert
                         </i>
                         <mat-menu #menu="matMenu">
-                            <a (click)="openViewDocument('viewDoc',element)" mat-menu-item>View & Edit
+                            <a (click)="openViewDocument('viewDoc',element)" mat-menu-item>Edit
                                 document</a>
                             <a (click)="downloadEsign(element)" *ngIf="element.signed" class="bt-1"
                                 mat-menu-item>Download eSigned

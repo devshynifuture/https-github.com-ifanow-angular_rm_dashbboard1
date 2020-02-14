@@ -13,7 +13,6 @@ import { TransactionsModule } from '../../protect-component/AdviserComponent/tra
 import { TransactionEntryModule } from '../../protect-component/AdviserComponent/transactions/transaction.entry.module';
 import { SupportEntryModule } from '../../protect-component/SupportComponent/support.entry.module';
 
-
 @NgModule({
   declarations: [
     LeftsidebarComponent
@@ -29,9 +28,9 @@ import { SupportEntryModule } from '../../protect-component/SupportComponent/sup
     CalendarModule,
     TransactionsModule,
     TransactionEntryModule,
-    SupportEntryModule
+    SupportEntryModule,
   ],
-  entryComponents: [SubscriptionEntry.getComponentList()],
+  entryComponents: [SubscriptionEntry.getComponentList(), SupportEntryModule.getComponentList()],
   providers: [DynamicComponentService]
   // providers: [DynamicComponentService]
 })

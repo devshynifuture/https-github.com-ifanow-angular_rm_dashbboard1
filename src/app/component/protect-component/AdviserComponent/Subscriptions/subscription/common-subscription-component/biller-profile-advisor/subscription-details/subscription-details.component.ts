@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input,EventEmitter} from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { MatSliderChange } from '@angular/material';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../../../subscription-inject.service';
@@ -33,12 +33,12 @@ export class SubscriptionDetailsComponent implements OnInit {
   payeeDataRes: any;
   noDataMessage: string;
   @Output() subStartNextBtn = new EventEmitter();
-  
+
 
   @Input()
   set data(payeeData) {
-      this._payeeData = payeeData;
-      console.log('input payeeData : ', this._payeeData);
+    this._payeeData = payeeData;
+    console.log('input payeeData : ', this._payeeData);
   }
   restrictAfter100(event) {
     if (parseInt(event.target.value) > 100) {
@@ -46,9 +46,9 @@ export class SubscriptionDetailsComponent implements OnInit {
     }
   }
 
-  
 
-  constructor(public utils: UtilService, private enumService: EnumServiceService,public subInjectService: SubscriptionInject, public subService: SubscriptionService, public eventService: EventService, private fb: FormBuilder) {
+
+  constructor(public utils: UtilService, private enumService: EnumServiceService, public subInjectService: SubscriptionInject, public subService: SubscriptionService, public eventService: EventService, private fb: FormBuilder) {
 
   }
 
@@ -67,12 +67,12 @@ export class SubscriptionDetailsComponent implements OnInit {
   clickedOnMatSlider = false;
   subscriptionDetails: FormGroup;
   totalValue = 0;
-  feeMode:any;
-  isEdite:boolean = false;
+  feeMode: any;
+  isEdite: boolean = false;
   ngOnInit() {
     // console.log('change payee upperData', this.upperData);
     this.subscriptionDetails = this.fb.group({
-      id:[this._payeeData.id],
+      id: [this._payeeData.id],
       subscriptionNumber: [this._payeeData.subscriptionNumber, [Validators.required]],
       startsOn: [new Date(this._payeeData.startsOn), [Validators.required]],
       invoiceSending: [1, [Validators.required]],
@@ -84,25 +84,25 @@ export class SubscriptionDetailsComponent implements OnInit {
 
   }
 
-  enableForm(){
+  enableForm() {
     this.isEdite = true;
   }
 
   Close(flag) {
-    this.subInjectService.changeUpperRightSliderState({ state: 'close',refreshRequired:flag });
-    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag });
+    this.subInjectService.changeUpperRightSliderState({ state: 'close', refreshRequired: flag });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
-  
+
 
   saveChangeSubsDetails() {
-    if(this.subscriptionDetails.invalid){
+    if (this.subscriptionDetails.invalid) {
       this.subscriptionDetails.get('subscriptionNumber').markAsTouched();
       this.subscriptionDetails.get('startsOn').markAsTouched();
       this.subscriptionDetails.get('feeMode').markAsTouched();
       this.subscriptionDetails.get('invoiceSending').markAsTouched();
       this.subscriptionDetails.get('dueDateFrequency').markAsTouched();
     }
-    else{
+    else {
       this.barButtonOptions.active = true;
       console.log('obj ====', this.subscriptionDetails.value);
       this.subService.changeSubsDetails(this.subscriptionDetails.value).subscribe(
@@ -110,9 +110,9 @@ export class SubscriptionDetailsComponent implements OnInit {
           this.barButtonOptions.active = false;
           this.changeSubsDetails(data)
         },
-        err =>{
+        err => {
           this.barButtonOptions.active = false;
-          console.log(err,"error changePayeeSetting");
+          console.log(err, "error changePayeeSetting");
         }
       );
     }
@@ -120,10 +120,10 @@ export class SubscriptionDetailsComponent implements OnInit {
 
   changeSubsDetails(data) {
     console.log('changeSubsDetails', data);
-    
-      this.eventService.openSnackBar('Details updated successfully', 'OK');
-      this.Close(true);
-    
+
+    this.eventService.openSnackBar('Details updated successfully', 'OK');
+    this.Close(true);
+
   }
 
 }

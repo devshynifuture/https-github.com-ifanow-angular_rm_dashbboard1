@@ -120,10 +120,16 @@ img.header-img {
 
 ::ng-deep .mat-menu-content:not(:empty) {
   padding-bottom: 0px !important;
+  padding-top: 0px !important;
+
+}
+
+::ng-deep .mat-menu-panel {
+  min-width: 400px !important;
 }
 
 .mat-menu-item {
-  height: 65px !important;
+  height: 80px !important;
 }
 
 .small-primary {
@@ -314,4 +320,16 @@ img.header-img {
   position: absolute;
   left: 8px;
   top: 10px;
+}
+
+.cdk-overlay-container {
+  .cdk-overlay-0 {
+    .mat-menu-panel {
+      min-width: 400px !important;
+    }
+
+    .cdk-overlay-connected-position-bounding-box {
+      right: 0 !important;
+    }
+  }
 }

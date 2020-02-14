@@ -97,8 +97,8 @@ export class PreferencesSettingsComponent implements OnInit {
       data => this.setBillerPrimaryRes(data)
     );
   }
-  setBillerPrimaryRes(data) {
 
+  setBillerPrimaryRes(data) {
     console.log(data)
     this.billerProfileData.forEach(element => {
       if (element.id == data) {
@@ -176,6 +176,9 @@ export class PreferencesSettingsComponent implements OnInit {
   getProfileBillerDataResponse(data) {
     this.isLoading = false;
     console.log('getProfileBillerDataResponse', data);
+    for(let p of data){
+      p['read'] = false;
+    }
     this.billerProfileData = data;
   }
 
@@ -202,8 +205,10 @@ export class PreferencesSettingsComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          this.getProfileBillerData()
-          console.log('this is sidebardata in subs subs 2: ');
+          if(UtilService.isRefreshRequired(sideBarData)){
+            this.getProfileBillerData()
+            console.log('this is sidebardata in subs subs 2: ');
+          }
           rightSideDataSub.unsubscribe();
         }
       }

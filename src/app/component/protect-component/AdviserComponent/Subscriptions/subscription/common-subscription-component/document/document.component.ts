@@ -702,25 +702,39 @@ export class DocumentComponent implements OnInit {
     }
   }
 
-  deleteModal(value) {
+  deleteModal(data) {
+    console.log(data, 'data document');
+
+    let list = [];
+    if (data == null) {
+      this.dataSource.filteredData.forEach(singleElement => {
+        if (singleElement.selected) {
+          list.push(singleElement.id);
+        }
+      });
+    } else {
+      list = [data.id];
+    }
     const dialogData = {
-      data: value,
+      data: 'DOCUMENT',
       header: 'DELETE',
-      body: 'Are you sure you want to delete the document?',
+      body: list.length == 1 ? 'Are you sure you want to delete the document?' : 'Are you sure you want to delete these documents?',
       body2: 'This cannot be undone',
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        const deleteFromTrashSubscription = this.subService.deleteSettingsDocument(null)
-          .subscribe(response => {
-            console.log(response);
-            deleteFromTrashSubscription.unsubscribe();
-            this.ngOnInit();
-          }, error => console.error(error));
-
+        this.subService.deleteClientDocumentsMultiple(list).subscribe(
+          data => {
+            this.eventService.openSnackBar('document is deleted', 'dismiss');
+            // this.valueChange.emit('close');
+            dialogRef.close(list);
+            // this.getRealEstate();
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
       },
       negativeMethod: () => {
-        console.log('aborted');
+        console.log('2222222222222222222222222222222222222');
       }
     };
 
@@ -732,7 +746,22 @@ export class DocumentComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-
+      if (result.length > 0) {
+        const tempList = [];
+        this.dataSource.data.forEach(singleElement => {
+          if ( result.length > 1) {
+            if(!singleElement.selected){
+              tempList.push(singleElement);
+            }
+          } else{ 
+            if (result[0] != singleElement.id){
+              tempList.push(singleElement);
+            } 
+          }
+        });
+        this.dataSource.data = tempList;
+      }
+      console.log(result, this.dataSource.data, 'delete result');
     });
 
   }

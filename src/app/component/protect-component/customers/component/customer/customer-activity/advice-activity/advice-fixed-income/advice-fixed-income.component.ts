@@ -8,6 +8,7 @@ import { RecuringDepositComponent } from '../../../accounts/assets/fixedIncome/r
 import { BondsComponent } from '../../../accounts/assets/fixedIncome/bonds/bonds.component';
 import { ActiityService } from '../../actiity.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { AdviceUtilsService } from '../advice-utils.service';
 
 @Component({
   selector: 'app-advice-fixed-income',
@@ -25,6 +26,7 @@ export class AdviceFixedIncomeComponent implements OnInit {
   fixedDataSource: any;
   recurringDataSource: any;
   bondDataSource: any;
+  selectedAssetId: any = [];
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private utilService: UtilService, private activityService: ActiityService) { }
   allAdvice = false;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -85,6 +87,17 @@ export class AdviceFixedIncomeComponent implements OnInit {
     this.recurringDataSource.sort = this.sort
     this.bondDataSource = new MatTableDataSource(data.BONDS);
     this.bondDataSource.sort = this.sort
+  }
+  checkAll(flag, tableDataList) {
+    console.log(flag, tableDataList)
+    const { dataList, selectedIdList } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
+    this.dataSource = new MatTableDataSource(dataList);
+    this.selectedAssetId = selectedIdList;
+    console.log(this.selectedAssetId);
+  }
+  checkSingle(flag, selectedData) {
+    (flag.checked) ? this.selectedAssetId.push(selectedData.id) : this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
+    console.log(this.selectedAssetId)
   }
   openselectAdvice(data) {
     const fragmentData = {
