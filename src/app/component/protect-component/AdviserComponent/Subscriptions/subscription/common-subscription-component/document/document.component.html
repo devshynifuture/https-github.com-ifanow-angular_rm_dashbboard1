@@ -357,7 +357,7 @@
                     document</a> -->
                                             <a mat-menu-item (click)="open('viewDocuments',element)">View & modify
                                                 document</a>
-                                            <a mat-menu-item class="bt-1" (click)="deleteModal('DOCUMENT')">Delete
+                                            <a mat-menu-item class="bt-1" (click)="deleteModal('DOCUMENT',element)">Delete
                                                 document</a>
                                             <a mat-menu-item *ngIf="element.signed" class="bt-1"
                                                 (click)="downloadEsign(element)">Download esigned

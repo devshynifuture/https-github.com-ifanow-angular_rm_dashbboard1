@@ -702,7 +702,7 @@ export class DocumentComponent implements OnInit {
     }
   }
 
-  deleteModal(value) {
+  deleteModal(value, data) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -711,14 +711,18 @@ export class DocumentComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        const deleteFromTrashSubscription = this.subService.deleteSettingsDocument(null)
+        this.subService.deleteSettingsDocument(data.documentRepositoryId)
           .subscribe(response => {
             console.log(response);
-            deleteFromTrashSubscription.unsubscribe();
-            this.ngOnInit();
-          }, error => console.error(error));
+            this.eventService.openSnackBar('document is deleted', 'dismiss');
+            dialogRef.close(data);
+            // this.ngOnInit();
+          }, error =>{
+            this.eventService.openSnackBar('Something went wrong', 'dismiss');
+            console.error(error);
+          } 
 
-      },
+          )},
       negativeMethod: () => {
         console.log('aborted');
       }
@@ -732,7 +736,17 @@ export class DocumentComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-
+      if (result != undefined) {
+        console.log(result, this.dataSource.data, 'delete result');
+        const tempList = [];
+        this.dataSource.data.forEach(singleElement => {
+          if (singleElement.id != result.id) {
+            tempList.push(singleElement);
+          }
+        });
+        this.dataSource.data = tempList;
+      }
+    
     });
 
   }
