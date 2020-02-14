@@ -23,8 +23,7 @@ export class CashflowAddIncomeComponent implements OnInit {
     private cashflowService: CashFlowsPlanService,
     private cashflowAddService: CashflowAddService,
     private eventService: EventService
-  ) {
-  }
+  ) { }
 
   advisorId = AuthService.getAdvisorId();
   clientId = AuthService.getClientId();
@@ -70,7 +69,7 @@ export class CashflowAddIncomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.data);
+    console.log("this is some data from uppper slider::", this.data);
     this.ownerData = this.formIncome.controls;
   }
 
