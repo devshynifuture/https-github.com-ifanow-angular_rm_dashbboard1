@@ -62,6 +62,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
     Object.assign(this.transactionSummary, { paymentMode: 1 });
     Object.assign(this.transactionSummary, { allEdit: true });
+    Object.assign(this.transactionSummary, { transactType: 'PURCHASE' });
     console.log('this.transactionSummary', this.transactionSummary)
   }
   selectSchemeOption(value) {
@@ -109,9 +110,11 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.ExistingOrNew = value
   }
   getbankDetails(bank) {
+    this.bankDetails = bank
     console.log('bank details', bank)
   }
   getAchmandateDetails(ach) {
+    this.achMandateNSE  = ach
     console.log('ach details', ach)
   }
   selectedScheme(scheme) {
@@ -177,6 +180,9 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
   selectPaymentMode(value) {
     Object.assign(this.transactionSummary, { paymentMode: value });
+    if(value == 2){
+      Object.assign(this.transactionSummary, { getAch: true });
+    }
   }
   onAddTransaction(value, data) {
     Object.assign(this.transactionSummary, {allEdit: false});
@@ -260,39 +266,13 @@ export class PurchaseTrasactionComponent implements OnInit {
         euin: this.getDataSummary.defaultCredential.euin,
         bseDPTransType: 'PHYSICAL',
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-        bankCode: null,
-        subBrokerArnCode: null,
-        bankBranch: null,
-        accountNo: null,
-        accountType: null,
-        ifscCode: null,
-        umrn: null,
-        achAmount: null,
-        achFromDate: null,
-        achEndDate: null,
-        bankHolderName: null,
-        fromDate: null,
-        toDate: null,
-        periodDay: null,
-        isPoa: null,
-        amount: null,
-        isDematUser: null,
+        mandateId : null,
         nsePaymentMode: null,
+        bankDetailId:null,
       }
       if (this.getDataSummary.defaultClient.aggregatorType == 1) {
-        obj.bankCode = this.achMandateNSE.bankCode
-        obj.subBrokerArnCode = this.getDataSummary.defaultCredential.brokerCode
-        obj.bankBranch = this.achMandateNSE.bankBranch
-        obj.accountNo = this.achMandateNSE.accountNo
-        obj.accountType = this.achMandateNSE.accountType
-        obj.ifscCode = this.achMandateNSE.ifscCode
-        obj.umrn = this.achMandateNSE.umrnNo
-        obj.bankHolderName = this.achMandateNSE.investorName
-        obj.fromDate = Number(new Date(this.achMandateNSE.fromDate.replace(/"/g, "")))
-        obj.toDate = Number(new Date(this.achMandateNSE.toDate.replace(/"/g, "")))
-        obj.isPoa = false
-        obj.amount = this.achMandateNSE.amount
-        obj.isDematUser = false
+        obj.mandateId = this.achMandateNSE.mandateId
+        obj.bankDetailId = this.bankDetails.bankDetailId
         obj.nsePaymentMode = (this.purchaseTransaction.controls.modeOfPaymentSelection.value == 1) ? 'ONLINE' : 'DEBIT_MANDATEM'
       }
       console.log('new purchase obj', obj)

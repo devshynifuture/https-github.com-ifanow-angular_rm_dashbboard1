@@ -150,6 +150,25 @@
                         </div>
                     </div>
                 </div>
+                <div class="row" *ngIf="platformType == 1">
+                    <div class="col-md-5 p-0 text-left">
+                        <h5 class="m-0 pt-40 text-black pb-12">Select mode of payment</h5>
+                    </div>
+                    <div class="col-md-12 p-0">
+                        <mat-radio-group aria-label="Select an option" formControlName="modeOfPaymentSelection"
+                            (ngModelChange)="selectPaymentMode($event)">
+                            <mat-radio-button value="1" checked="true"
+                                [ngClass]="{'b-a-custom': sipTransaction.get('modeOfPaymentSelection').value==1,'text-primary':sipTransaction.get('modeOfPaymentSelection').value==1,'b-a':sipTransaction.get('modeOfPaymentSelection').value==2}"
+                                class="b-a-custom radioBtn text-primary custom-radio bor_top_tb_left">
+                                Net banking
+                            </mat-radio-button>
+                            <mat-radio-button value="2"
+                                [ngClass]="{'b-a-custom': sipTransaction.get('modeOfPaymentSelection').value==2,'text-primary':sipTransaction.get('modeOfPaymentSelection').value==2,'b-a':sipTransaction.get('modeOfPaymentSelection').value==1}"
+                                class="b-a radioBtn bor_top_tb_right">
+                                Debit mandate </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
                 <div class="row pt-40">
                     <div class="col-md-12 p-0 text-left">
                         <h5 class="m-0  text-black pb-12">Select 1st Date SIP</h5>

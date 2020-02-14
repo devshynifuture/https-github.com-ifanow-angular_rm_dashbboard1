@@ -76,7 +76,7 @@
                     <button mat-stroked-button class="primary-sm">Edit</button>
                 </div> -->
             </div>
-            <div class="row  pt-16 pb-16">
+            <div class="row  pt-16 pb-16" *ngIf="selectedPlatform== 1">
                 <div class="col-md-9">
                     <p class="m-0 roboto text-custom">Mode of payment</p>
                     <h5 class="m-0">
@@ -103,7 +103,7 @@
                         {{(achMandateNSE==undefined)?'':achMandateNSE.accountNo}}</h5>
                 </div>
                 <div class="col-md-2"
-                    *ngIf=" transactionSummary && showBankEdit == true && transactionSummary.allEdit == true">
+                    *ngIf=" transactionSummary && showBankEdit == true && transactionSummary.allEdit == true && (transactionSummary.transactType != 'STP'|| transactionSummary.transactType != 'SWITCH')">
                     <button mat-stroked-button class="primary-sm" (click)="showbank = true">Edit</button>
                 </div>
             </div>
@@ -120,7 +120,7 @@
                         </mat-option>
                     </mat-select>
                 </div>
-                <div class="col-md-2" *ngIf=" transactionSummary && transactionSummary.allEdit == true">
+                <div class="col-md-2" *ngIf=" transactionSummary && transactionSummary.allEdit == true  && (transactionSummary.transactType == 'PURCHASE'|| transactionSummary.transactType == 'SIP')">
                     <button mat-stroked-button class="primary-sm" (click)="showUmrn = true">Edit</button>
                 </div>
             </div>

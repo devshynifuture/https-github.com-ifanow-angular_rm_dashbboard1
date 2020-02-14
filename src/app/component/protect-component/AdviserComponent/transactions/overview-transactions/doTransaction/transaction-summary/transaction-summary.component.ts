@@ -36,6 +36,9 @@ export class TransactionSummaryComponent implements OnInit {
     this.inputData = data;
     console.log('This is Input data of FixedDepositComponent ', data);
     this.transactionSummary = data
+    if(data.getAch == true){
+      this.getNSEAchmandate()
+    }
     if (this.isViewInitCalled) {
       // this.getdataForm('');
     }
@@ -61,17 +64,12 @@ export class TransactionSummaryComponent implements OnInit {
   }
   getBankDetailsNSERes(data) {
     console.log('bank res',data)
+    // let obj = [{bankName : 'axis'},{bankName : 'hdfc'},{bankName : 'sbi'}]
     this.bankDetails = data
     if(this.bankDetails.length > 1){
       this.showBankEdit = true
     }
-    this.bankDetailsSend.emit(this.bankDetails);
-  }
-  selectBank(bank){
-    
-  }
-  selectUmrn(umrn){
-    
+   
   }
   getNSEAchmandate(){
     let obj1 = {
@@ -83,9 +81,15 @@ export class TransactionSummaryComponent implements OnInit {
   }
   getNSEAchmandateRes(data){
     console.log('getNSEAchmandateRes',data)
-    this.achMandateNSE = data
-    this.achmandateDetails.emit(this.achMandateNSE);
+    this.achMandateNSE = data[0]
   }
+  selectBank(bank){
+    this.bankDetailsSend.emit(bank);
+  }
+  selectUmrn(umrn){
+    this.achmandateDetails.emit(umrn);
+  }
+
   getDefaultDetails(platform) {
     let obj = {
       advisorId: 414,
@@ -107,7 +111,6 @@ export class TransactionSummaryComponent implements OnInit {
     this.selectedPlatform = this.defaultCredential.aggregatorType
     if (this.selectedPlatform == 1) {
       this.getBankDetails()
-      this.getNSEAchmandate()
       this.getIINDetails()
     }
   }

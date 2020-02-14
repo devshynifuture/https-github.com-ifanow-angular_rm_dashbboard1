@@ -43,6 +43,8 @@ export class SipTransactionComponent implements OnInit {
   mandateDetails: any;
   frequency: any;
   fre: any;
+  achMandateNSE: any;
+  platformType: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private processTransaction: ProcessTransactionService, private fb: FormBuilder) { }
@@ -135,6 +137,13 @@ export class SipTransactionComponent implements OnInit {
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
+    this.platformType = this.getDataSummary.defaultClient.aggregatorType
+  }
+  selectPaymentMode(value) {
+    Object.assign(this.transactionSummary, { paymentMode: value });
+    if(value == 2){
+      Object.assign(this.transactionSummary, { getAch: true });
+    }
   }
   selectedScheme(scheme) {
     this.scheme = scheme

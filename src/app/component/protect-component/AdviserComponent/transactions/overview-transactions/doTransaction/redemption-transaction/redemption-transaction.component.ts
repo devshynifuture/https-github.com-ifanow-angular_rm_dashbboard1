@@ -54,6 +54,7 @@ export class RedemptionTransactionComponent implements OnInit {
     this.transactionSummary = {}
     Object.assign(this.transactionSummary, { allEdit: true });
     Object.assign(this.transactionSummary, {selectedFamilyMember: this.inputData.selectedFamilyMember  });
+    Object.assign(this.transactionSummary, { transactType: 'REDEEM' });
   }
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
