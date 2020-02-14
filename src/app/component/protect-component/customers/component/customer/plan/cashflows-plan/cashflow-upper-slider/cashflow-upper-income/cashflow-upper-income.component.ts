@@ -1,9 +1,9 @@
+import { CashFlowsPlanService } from './../../cashflows-plan.service';
 import { ValidatorType } from './../../../../../../../../../services/util.service';
 import { CashflowAddComponent } from './../cashflow-add/cashflow-add.component';
 import { Component, OnInit, Input } from '@angular/core';
 import { UpperTableBox } from '../../cashflow.interface';
 import { AuthService } from 'src/app/auth-service/authService';
-import { CashFlowsPlanService } from '../../cashflows-plan.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatDialog, MatTableDataSource } from '@angular/material';
 
@@ -14,12 +14,16 @@ import { MatDialog, MatTableDataSource } from '@angular/material';
 })
 export class CashflowUpperIncomeComponent implements OnInit {
   incomeData: string;
+  familyMemberList: any;
+  dataToMap: any = [];
+  isLoading: boolean = false;
+  dataToMapCopy: any;
 
   constructor(public dialog: MatDialog,
     private eventService: EventService,
     private cashflowService: CashFlowsPlanService) { }
 
-  displayedColumns: string[] = ['description', 'month1', 'month2', 'month3', 'month4', 'month5', 'month6', 'month7', 'month8', 'month9', 'month10', 'month11', 'month12', 'total', 'remove'];
+  displayedColumns: string[] = ['description', 'month4', 'month5', 'month6', 'month7', 'month8', 'month9', 'month10', 'month11', 'month12', 'month1', 'month2', 'month3', 'total', 'remove'];
   dataSource = null;
   advisorId = AuthService.getAdvisorId();
   clientId = AuthService.getClientId();
@@ -29,31 +33,87 @@ export class CashflowUpperIncomeComponent implements OnInit {
   @Input() data;
   editMode: boolean = false;
   onlyNumbers = '';
+  incomeIdArray = [];
+  familyMemberId;
 
   ngOnInit() {
+
+    console.log(this.data);
     this.cashflowCategory = this.data.tableInUse;
-
     this.year = this.data.year;
-
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
     // api not created
-    // this.getCashflowMonthlyIncomeData();
+    this.getCashflowMonthlyIncomeData();
   }
 
   getCashflowMonthlyIncomeData() {
+    const { detailsForMonthlyDistributionGetList } = this.data;
+
+    detailsForMonthlyDistributionGetList.forEach(item => {
+      const { incomeId, familyMemberId } = item;
+      this.incomeIdArray.push(incomeId);
+      this.familyMemberId = familyMemberId;
+    });
+
+    console.log(" income id array", this.incomeIdArray);
+
+    const requestJSON = {
+      incomeIdList: this.incomeIdArray,
+      year: parseInt(this.data.year)
+    };
+    this.isLoading = true;
     this.cashflowService
-      .getCashflowMonthlyIncomeValues({ advisorId: this.advisorId, clientId: this.clientId })
+      .getCashflowMonthlyIncomeValues(requestJSON)
       .subscribe(res => {
         console.log(res);
+        const obj = {};
+        this.incomeIdArray.forEach(id => {
+          res.forEach(item => {
+            if (item.incomeId === id) {
+              if (item.editedFromCashflow === 0) {
+                obj[`month${item.receivingMonth}`] = { value: String(item.bonusOrInflow + item.amount), isAdHocChangesDone: false };
+              } else if (item.editedFromCashflow === 1) {
+                obj[`month${item.receivingMonth}`] = { value: String(item.cashflowAmount), isAdHocChangesDone: true };
+              }
+            }
+          });
+
+          let total = 0;
+          for (const key in obj) {
+            if (obj.hasOwnProperty(key)) {
+              const element = parseInt(obj[key].value);
+              total = total + element;
+            }
+          }
+
+          // add in dataMap
+          this.dataToMap.push({
+            ...obj,
+            description: 'hello',
+            remove: '',
+            total: String(total)
+          });
+        });
+
+        // complete list 
+        for (let i = 1; i <= 12; i++) {
+          this.dataToMap.map(item => {
+            for (const key in item) {
+              if (!item.hasOwnProperty(`month${i}`)) {
+                item[`month${i}`] = { value: '', isAdHocChangesDone: false };
+              }
+            }
+          });
+        }
+
+        console.log("expected outcome::::::::", this.dataToMap);
+        this.isLoading = false;
+        this.dataToMapCopy = this.dataToMap;
+        this.dataSource = new MatTableDataSource(this.dataToMap);
       }, err => {
         console.error(err);
-      })
-  }
+      });
 
-  alterTable(table: UpperTableBox[], field: string, value: string, index: number): UpperTableBox[] {
-    table[index][field] = value;
-    this.updateTotal(table[index]);
-    return table;
   }
 
   deleteEntryCashFlow(element: UpperTableBox) {
@@ -65,21 +125,24 @@ export class CashflowUpperIncomeComponent implements OnInit {
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
   }
 
-  updateTotal(object: UpperTableBox) {
-    let sum = 0;
-    for (let i = 1; i <= 12; i++) {
-      sum = sum + parseInt(object[`month${i}`]);
-    }
-    object['total'] = String(sum);
-  }
-
   changeTableTdValue(value: string, field: string, index: number) {
+    console.log(value, field, index);
     if (ValidatorType.NUMBER_ONLY.test(value)) {
-      this.alterTable(ELEMENT_DATA, field, value, index);
+      const updatedTable = this.cashflowService.alterTable(this.dataToMap, field, value, index);
+      console.log("this is updated Table", updatedTable);
+      this.dataSource.data = updatedTable;
     } else {
       this.onlyNumbers = '';
       this.eventService.openSnackBar("This Input only takes Numbers", "DISMISS");
     }
+  }
+
+  resetAdhocChanges(index, month) {
+    this.dataToMap[index][month].isAdHocChangesDone = !this.dataToMap[index][month].isAdHocChangesDone;
+    this.dataToMap[index][month].value = this.dataToMapCopy[index][month].value;
+    this.dataSource.data = this.dataToMap;
+    console.log("this is new table", this.dataToMap);
+    console.log("this is old table", this.dataToMapCopy);
   }
 
   toggleEditMode() {
@@ -99,7 +162,7 @@ export class CashflowUpperIncomeComponent implements OnInit {
   addCashFlow(data) {
     const dialogRef = this.dialog.open(CashflowAddComponent, {
       width: '750px',
-      data: { ...data, tableData: this.data }
+      data: { ...data, familyMemberList: this.familyMemberList, tableData: this.data }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -115,22 +178,9 @@ export class CashflowUpperIncomeComponent implements OnInit {
 
 // for Income
 let ELEMENT_DATA: UpperTableBox[] = [
-  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
-  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
-  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
-  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
-  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
-  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
-  { description: '2020', month1: '25', month2: '21', month3: '210000', month4: '121', month5: '121', month6: '121', month7: '12', month8: '12', month9: '12', month10: '445', month11: '12', month12: '12', total: '121', remove: '' },
+  {
+    description: null, month1: { value: null, isAdHocChangesDone: false }, month2: { value: null, isAdHocChangesDone: false }, month3: { value: null, isAdHocChangesDone: false }, month4: { value: null, isAdHocChangesDone: false }, month5: { value: null, isAdHocChangesDone: false }, month6: { value: null, isAdHocChangesDone: false }, month7: { value: null, isAdHocChangesDone: false }, month8: { value: null, isAdHocChangesDone: false }, month9: { value: null, isAdHocChangesDone: false }, month10: { value: null, isAdHocChangesDone: false }, month11: { value: null, isAdHocChangesDone: false }, month12: { value: null, isAdHocChangesDone: false }, total: null, remove: ''
+  },
+  { description: null, month1: { value: null, isAdHocChangesDone: false }, month2: { value: null, isAdHocChangesDone: false }, month3: { value: null, isAdHocChangesDone: false }, month4: { value: null, isAdHocChangesDone: false }, month5: { value: null, isAdHocChangesDone: false }, month6: { value: null, isAdHocChangesDone: false }, month7: { value: null, isAdHocChangesDone: false }, month8: { value: null, isAdHocChangesDone: false }, month9: { value: null, isAdHocChangesDone: false }, month10: { value: null, isAdHocChangesDone: false }, month11: { value: null, isAdHocChangesDone: false }, month12: { value: null, isAdHocChangesDone: false }, total: null, remove: '' },
+  { description: null, month1: { value: null, isAdHocChangesDone: false }, month2: { value: null, isAdHocChangesDone: false }, month3: { value: null, isAdHocChangesDone: false }, month4: { value: null, isAdHocChangesDone: false }, month5: { value: null, isAdHocChangesDone: false }, month6: { value: null, isAdHocChangesDone: false }, month7: { value: null, isAdHocChangesDone: false }, month8: { value: null, isAdHocChangesDone: false }, month9: { value: null, isAdHocChangesDone: false }, month10: { value: null, isAdHocChangesDone: false }, month11: { value: null, isAdHocChangesDone: false }, month12: { value: null, isAdHocChangesDone: false }, total: null, remove: '' },
 ];
-
-// for expense
-let ELEMENT_DATA1: UpperTableBox[] = [
-  { description: 'dkabjvk', month1: '5', month2: '213', month3: '298', month4: '1232', month5: '134', month6: '1265', month7: '15646756', month8: '435', month9: '13563', month10: '44456745', month11: '1434', month12: '14567', total: '12564', remove: '' },
-]
-
-// for liabilities
-let ELEMENT_DATA2: UpperTableBox[] = [
-  { description: 'akldjvasbkd', month1: '534', month2: '3', month3: '28', month4: '12', month5: '4', month6: '8', month7: '1556', month8: '4', month9: '45', month10: '3', month11: '4', month12: '152', total: '123', remove: '' },
-
-]

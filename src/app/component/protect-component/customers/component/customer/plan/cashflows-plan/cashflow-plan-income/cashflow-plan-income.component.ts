@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
 import { IncomeTableI, IncometableI } from '../cashflows-plan.component';
 import { UtilService } from 'src/app/services/util.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-cashflow-plan-income',
@@ -14,9 +15,12 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class CashflowPlanIncomeComponent implements OnInit {
   lastItem: any;
+  detailsForMonthlyDistributionGetList: any;
+  familyMemberList: any;
 
   constructor(private eventService: EventService,
-    private cashflowService: CashFlowsPlanService) { }
+    private cashflowService: CashFlowsPlanService,
+    private datePipe: DatePipe) { }
   isLoading: boolean = false;
 
   dataSource: MatTableDataSource<IncometableI>;
@@ -33,28 +37,28 @@ export class CashflowPlanIncomeComponent implements OnInit {
     this.getYearlyCashflowIncomeData();
   }
 
+  ageCalculation(timeStamp) {
+    const dob = UtilService.convertDateObjectToDateString(this.datePipe, timeStamp).slice(0, 4);
+    const year = new Date().getFullYear();
+    return year - parseInt(dob);
+  }
+
   getYearlyCashflowIncomeData() {
     this.isLoading = true;
     this.cashflowService
       .getCashflowYearlyIncomeValues({ advisorId: this.advisorId, clientId: this.clientId })
       .subscribe(res => {
-
-        res = res.filter((item, i) => {
-          if (i == res.length - 1) {
-            this.lastItem = item;
-            return;
-          }
-          return item;
-        });
-
-        console.log(res);
-        res.map(item => {
-          item.groupHeadAge = this.lastItem.groupHeadAge;
-          item.spouseAge = this.lastItem.spouseAge;
+        const { cashFlowIncomeOutputList, detailsForMonthlyDistributionGetList, groupHeadAge, spouseAge } = res;
+        cashFlowIncomeOutputList.map(item => {
+          item.groupHeadAge = this.ageCalculation(groupHeadAge);
+          item.spouseAge = this.ageCalculation(spouseAge);
           item.view = 'view';
         });
 
-        this.dataSource = new MatTableDataSource(res);
+        this.detailsForMonthlyDistributionGetList = detailsForMonthlyDistributionGetList;
+
+        console.log(res);
+        this.dataSource = new MatTableDataSource(cashFlowIncomeOutputList);
         this.isLoading = false;
       },
         err => {
@@ -62,16 +66,26 @@ export class CashflowPlanIncomeComponent implements OnInit {
         });
   }
 
+  getFamilyMemberListData() {
+    this.cashflowService
+      .getFamilyMemberData({ advisorId: this.advisorId, clientId: this.clientId })
+      .subscribe(res => {
+        this.familyMemberList = res.familyMembersList;
+      })
+  }
+
   openUpperSlider(element) {
+    this.getFamilyMemberListData();
     console.log(this.tableInUse);
     console.log(element);
 
     element.year = String(element.year);
+    element.detailsForMonthlyDistributionGetList = this.detailsForMonthlyDistributionGetList;
 
     const fragmentData = {
       flag: 'openCashFlowUpper',
       id: 1,
-      data: { ...element, tableInUse: this.tableInUse },
+      data: { ...element, familyMemberList: this.familyMemberList, tableInUse: this.tableInUse },
       direction: 'top',
       componentName: CashflowUpperSliderComponent,
       state: 'open'
