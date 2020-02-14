@@ -1,7 +1,8 @@
 <div *ngIf="singleSubscriptionData.isCreateSub" class="row bb-1 popup-header-fix-60">
     <div class="col-md-8 p-0">
-        <h4 class="wrapper-20 m-0">FIXED FEE STRUCTURE</h4>
+        <h4 class="wrapper-20 m-0">{{!isSave?'EDIT':''}} FIXED FEE STRUCTURE</h4>
     </div>
+    
     <div class="col-md-4 text-right" *ngIf="subData.status == 2 || subData.status == 3">
         <div class="wrapper-12 pb-10">
             <button [ngClass]="{'v-h':!isSave}" mat-stroked-button class="br-0 btn-primary mr-20" (click)="enableForm()">

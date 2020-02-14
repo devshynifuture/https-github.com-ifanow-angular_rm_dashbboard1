@@ -651,6 +651,14 @@ button.primary-sm {
   white-space: nowrap !important;
 }
 
+.ws-normal {
+  white-space: normal !important;
+}
+
 .mat-card:not([class*=mat-elevation-z]) {
   box-shadow: none !important;
+}
+
+.event-none {
+  pointer-events: none !important;
 }
