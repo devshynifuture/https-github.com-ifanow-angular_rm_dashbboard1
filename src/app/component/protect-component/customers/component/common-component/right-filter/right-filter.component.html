@@ -44,7 +44,7 @@
       <div>
         <mat-list-item role="listitem" *ngFor="let item of amc">
           <!-- $event removed for prod build -->
-          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect()">{{item.amc_name}}</mat-checkbox>
+          <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterAmc()">{{item.amc_name}}</mat-checkbox>
         </mat-list-item>
       </div>
     </mat-expansion-panel>
@@ -73,7 +73,7 @@
       </mat-expansion-panel-header>
       <div>
         <mat-list-item role="listitem" *ngFor="let item of folio">
-          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelectFolio($event)">{{item.folioNumber}}</mat-checkbox>
+          <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterFolio($event)">{{item.folioNumber}}</mat-checkbox>
         </mat-list-item>
       </div>
     </mat-expansion-panel>
@@ -124,25 +124,28 @@
   </mat-accordion>
 
 
-  <div class="row pt-12">
+  <div class="row pt-12" [formGroup]="summaryFilerForm">
     <div class="col-md-6 p-0">
       <h5 class="m-0 pb-8">Report as on</h5>
       <div class="col-md-8 pl-0">
         <mat-form-field>
-            <input class="form-control br-0" matInput [matDatepicker]="picker"  readonly>
+            <input class="form-control br-0" matInput [matDatepicker]="picker" formControlName="reportAsOn"  readonly>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
-            
+            <mat-error class="f-12">
+              This field is required
+          </mat-error>
         </mat-form-field>
 
     </div>
     </div>
     <div class="col-md-6 p-0">
       <h5 class="m-0 pb-8">Show zero folios?</h5>
-      <mat-radio-group aria-label="Select an option" id="custom-radio">
+      <mat-radio-group aria-label="Select an option" id="custom-radio" formControlName="showFolios">
         <mat-radio-button value="1" class="text-custom b-ua">Yes</mat-radio-button>
         <mat-radio-button value="2" class="text-primary bu-primary">No</mat-radio-button>
       </mat-radio-group>
+     
     </div>
   </div>
   <!-- Transaction view -->

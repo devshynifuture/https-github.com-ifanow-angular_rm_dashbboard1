@@ -17,16 +17,16 @@
                                     arrow_drop_down
                                 </i></button>
                             <mat-menu #menu="matMenu">
-                                <button mat-menu-item *ngIf="dataCount == 0">Select invoice to see more actions</button>
+                                <a mat-menu-item *ngIf="dataCount == 0">Select invoice to see more actions</a>
                                 <!-- <button mat-menu-item (click)="openInvoicesESign('eSignInvoices','open')" *ngIf="dataCount == 1">Email with eSign request</button> -->
-                                <button mat-menu-item class="b-t" (click)="openSendEmail()" *ngIf="dataCount == 1">Email
-                                    only</button>
-                                <button (click)="deleteModal('INVOICES')" *ngIf="dataCount != 0 && dataCount > 1" mat-menu-item>Delete
-                                    Invoices
-                                </button>
-                                <button (click)="deleteModal('INVOICE')" *ngIf="dataCount != 0 && dataCount <= 1" mat-menu-item>Delete
-                                    Invoice
-                                </button>
+                                <a mat-menu-item class="b-t" (click)="openSendEmail()" *ngIf="dataCount == 1">Email
+                                    only</a>
+                                <a (click)="deleteModal('INVOICES')" *ngIf="dataCount != 0 && dataCount > 1" mat-menu-item>Delete
+                                    invoices
+                                </a>
+                                <a (click)="deleteModal('INVOICE')" *ngIf="dataCount != 0 && dataCount <= 1" mat-menu-item>Delete
+                                    invoice
+                                </a>
                             </mat-menu>
                         </div>
                         <div class="col-md-5 ml-32 p-0" *ngIf="dataCount > 0">

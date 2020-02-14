@@ -34,19 +34,23 @@
             keyboard_arrow_right
           </mat-icon>
         </a>
-        <a class="sidenav-link" [ngClass]="getActiveLink() == 'emails'? 'bg-grey lter': ''" mat-list-item routerLink="./emails/inbox/google-connect">
+        <a class="sidenav-link" [ngClass]="getActiveLink() == 'emails'? 'bg-grey lter': ''" mat-list-item
+          routerLink="./emails/inbox/google-connect">
           <img src="assets/images/svg/mail.svg">
           <span *ngIf="showTabs" class="title" mat-line>Email</span>
         </a>
-        <a class="sidenav-link" [ngClass]="getActiveLink() == 'transactions'? 'bg-grey lter': ''" mat-list-item routerLink="./transactions/overview">
+        <a class="sidenav-link" [ngClass]="getActiveLink() == 'transactions'? 'bg-grey lter': ''" mat-list-item
+          routerLink="./transactions/overview">
           <img src="assets/images/svg/cart.svg">
           <span *ngIf="showTabs" class="title" mat-line>Transactions</span>
         </a>
-        <a class="sidenav-link" [ngClass]="getActiveLink() == 'subscription'? 'bg-grey lter': ''" mat-list-item routerLink="./subscription/dashboard">
+        <a class="sidenav-link" [ngClass]="getActiveLink() == 'subscription'? 'bg-grey lter': ''" mat-list-item
+          routerLink="./subscription/dashboard">
           <img src="assets/images/svg/ruppes.svg">
           <span *ngIf="showTabs" class="title" mat-line>Subscription</span>
         </a>
-        <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/customer/detail/account/assets">
+        <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
+          routerLink="/customer/detail/account/assets">
           <img src="assets/images/svg/ruppes.svg">
           <span *ngIf="showTabs" class="title" mat-line>Clients</span>
         </a>
@@ -127,7 +131,7 @@
       </mat-form-field>
       <div class="hide-on-800 d-flex align-items-center justify-content-center right-fixed tablate-none">
         <a class="sidenav-link" mat-list-item>
-          <img class="t-15" src="assets/images/svg/bell.svg">
+          <img class="t-12" src="assets/images/svg/bell.svg">
         </a>
         <a class="sidenav-link" mat-list-item>
           <img src="assets/images/svg/earphone.svg">
@@ -135,12 +139,104 @@
 
 
         <a class="sidenav-link pr-28" mat-list-item>
-          <img class="c-p header-img" [matMenuTriggerFor]="appMenu" src="assets/images/img1.jpg">
+          <img class="c-p header-img" [matMenuTriggerFor]="appMenu" src="/assets/images/svg/setting.svg">
 
           <mat-menu #appMenu="matMenu">
+            <button mat-menu-item class="bb-1 event-none">
+              <div class="row">
+                <div class="col-md-10 p-0">
+                  <h3 class="m-0 pt-12">Settings</h3>
+                </div>
+                <div class="col-md-2 pl-0 text-right">
+                  <img src="/assets/images/svg/close.svg" class="c-p w-40">
+                </div>
+              </div>
+            </button>
+            <button mat-menu-item class="mt-28">
+              <div class="row">
+                <div class="col-md-2">
+                  <img src="/assets/images/svg/settings-circle.svg" class="v-super">
+                </div>
+                <div class="col-md-10 pl-0">
+                  <p class="m-0 roboto">Organisation profile</p>
+                  <p class="text-regular pt-4 ws-normal">Add key details about your organisation that reflects
+                    across the
+                    system</p>
+                </div>
+              </div>
+            </button>
+            <button mat-menu-item>
+              <div class="row">
+                <div class="col-md-2">
+                  <img src="/assets/images/svg/settings-circle.svg" class="v-super">
+                </div>
+                <div class="col-md-10 pl-0">
+                  <p class="m-0 roboto">CRM</p>
+                  <p class="text-regular pt-4 ws-normal">Manage settings related to leads, tasks, email, calendars,
+                    notifications, reminders etc.</p>
+                </div>
+              </div>
+            </button>
+            <button mat-menu-item>
+              <div class="row">
+                <div class="col-md-2">
+                  <img src="/assets/images/svg/settings-circle.svg" class="v-super">
+                </div>
+                <div class="col-md-10 pl-0">
+                  <p class="m-0 roboto">Plan</p>
+                  <p class="text-regular pt-4 ws-normal">Manage settings related to key financial planning assumptions,
+                    asset allocation etc.</p>
+                </div>
+              </div>
+            </button>
+            <button mat-menu-item>
+              <div class="row">
+                <div class="col-md-2">
+                  <img src="/assets/images/svg/settings-circle.svg" class="v-super">
+                </div>
+                <div class="col-md-10 pl-0">
+                  <p class="m-0 roboto">Users & roles</p>
+                  <p class="text-regular pt-4 ws-normal">Manage adding and updating of your team, sub brokers. Define
+                    roles and assign it to your team and sub brokers.</p>
+                </div>
+              </div>
+            </button>
+            <button mat-menu-item>
+              <div class="row">
+                <div class="col-md-2">
+                  <img src="/assets/images/svg/settings-circle.svg" class="v-super">
+                </div>
+                <div class="col-md-10 pl-0">
+                  <p class="m-0 roboto">Back office</p>
+                  <p class="text-regular pt-4 ws-normal">Add your ARN/RIA details, Manage RTA credentials, SOA settings
+                    etc.</p>
+                </div>
+              </div>
+            </button>
+            <button mat-menu-item class="mb-28">
+              <div class="row">
+                <div class="col-md-2">
+                  <img src="/assets/images/svg/settings-circle.svg" class="v-super">
+                </div>
+                <div class="col-md-10 pl-0">
+                  <p class="m-0 roboto">Backup</p>
+                  <p class="text-regular pt-4 ws-normal">Securely backup your data in excel.</p>
+                </div>
+              </div>
+            </button>
 
-            <button (click)="logout()" mat-menu-item>Logout</button>
+
+            <div class="bottom-fixed wrapper-12 w-29">
+              <div class="row">
+                <div class="col-md-4">
+                  <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
+                </div>
+              </div>
+            </div>
           </mat-menu>
+        </a>
+        <a class="sidenav-link" mat-list-item>
+          <img src="assets/images/img1.jpg" class="c-p header-img" (click)="logout()">
         </a>
       </div>
       <i (click)="openSettings()" class="material-icons tabs-right desktop-none">
