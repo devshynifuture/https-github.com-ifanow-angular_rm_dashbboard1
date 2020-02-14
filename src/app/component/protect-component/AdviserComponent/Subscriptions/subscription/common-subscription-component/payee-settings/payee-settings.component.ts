@@ -80,7 +80,7 @@ export class PayeeSettingsComponent implements OnInit {
   advisorId: any;
   family: any;
   familyMemberId: any;
-  showGstin: any;
+  showGstin: boolean= false;
   clientData: any;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private eventService: EventService,
@@ -156,8 +156,17 @@ export class PayeeSettingsComponent implements OnInit {
 
  
   gstTreatmentRemove(value) {
-    this.showGstin = value
+    console.log('gstTreatmentRemove 123', value)
+    if(value == 4){
+      this.getFormControl().gstIn.setValidators([Validators.required, Validators.pattern("^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$")]);
+      this.showGstin = true;
+    }
+    else{
+      this.getFormControl().gstIn.setValidators(null);
+      this.showGstin = false;
+    }
   }
+  
   getListOfFamilyByClientRes(data) {
     console.log('family Memebers', data)
     this.family = data.familyMembersList
@@ -182,7 +191,7 @@ export class PayeeSettingsComponent implements OnInit {
       primaryContact: [data.primaryContact, [Validators.required]],
       pan: [data.pan, [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-z]{1}")]],
       gstTreatment: [(data.gstTreatmentId == 1) ? 'Registered Business - Regular' : (data.gstTreatmentId == 2) ? 'Registered Business - Composition' : 'Unregistered Business'],
-      gstIn: [data.gstin, [Validators.required, Validators.pattern("^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$")]],
+      gstIn: [data.gstin],
       billingAddress: [data.billerAddress, [Validators.required]],
       city: [data.city],
       state: [data.state],
@@ -331,7 +340,7 @@ export class PayeeSettingsComponent implements OnInit {
       if(this.inputData.flag){
         console.log('addClientBillerProfileRes', data);
         this.updatedData = data;
-        this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+        this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
         this.eventService.openSnackBar('Client profile added Successfully', 'OK');
       }
       this.Close(data);
@@ -341,7 +350,7 @@ export class PayeeSettingsComponent implements OnInit {
   editSettingResData(data) {
     this.barButtonOptions.active = false;
     if (data.status == 1) {
-      this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
       this.eventService.openSnackBar('Client profile update Successfully', 'OK');
       this.getEditData.emit(this.sendData);
       this.Close(data);

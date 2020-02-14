@@ -12,14 +12,14 @@
                                 </i>
                             </button>
                             <mat-menu #menu="matMenu">
-                                <button *ngIf="dataCount == 0" mat-menu-item>Select quotation to see more
-                                    actions</button>
-                                <button *ngIf="dataCount != 0" (click)="openSendEmail('')" mat-menu-item>Email
+                                <a *ngIf="dataCount == 0" mat-menu-item>Select quotation to see more
+                                    actions</a>
+                                <a *ngIf="dataCount != 0" (click)="openSendEmail('')" mat-menu-item>Email
                                     only
-                                </button>
-                                <button (click)="deleteModal(null)" *ngIf="dataCount != 0" class="b-t" mat-menu-item>Delete
-                                    Quotations
-                                </button>
+                                </a>
+                                <a (click)="deleteModal(null)" *ngIf="dataCount != 0" class="b-t" mat-menu-item>Delete
+                                    quotations
+                                </a>
                             </mat-menu>
                         </div>
                         <div class="col-md-9 p-0 ml-32" >
