@@ -185,7 +185,7 @@ export class PayeeSettingsComponent implements OnInit {
     this.payeeSettingsForm = this.fb.group({
       customerName: [data.name, [Validators.required]],
       displayName: [data.companyDisplayName, [Validators.required]],
-      customerType: [(data.customerTypeId == 1) ? 'Business' : 'Individual'],
+      customerType: [data.customerTypeId ],
       companyName: [data.companyName, [Validators.required]],
       emailId: [data.email, [Validators.required]],
       primaryContact: [data.primaryContact, [Validators.required]],

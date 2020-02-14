@@ -6,7 +6,7 @@
 
         <div class="row pt-180" *ngIf="SettingProfileData.length > 0">
             <div class="col-md-12 mt-36">
-                <button (click)="openPayeeSettings('Add','payeeSettings','open')"
+                <button (click)="openPayeeSettings({},'Add')"
                     class="btn-primary br-0 right text-right addon" mat-stroked-button>
                     ADD MORE
                 </button>
@@ -33,7 +33,7 @@
                                 </i>
                                 <mat-menu #menu="matMenu">
                                     <a (click)="setPrimaryField(profileData)" mat-menu-item>Set as primary</a>
-                                    <a (click)="openPayeeSettings(profileData,'payeeSettings','open')"
+                                    <a (click)="openPayeeSettings(profileData,'Edit')"
                                         mat-menu-item>Edit
                                         client profile</a>
                                     <a (click)="deleteModal('PROFILE',profileData)" class="bt-1" mat-menu-item>Delete

@@ -85,8 +85,8 @@ export class SettingsComponent implements OnInit {
   }
 
   openPayeeSettings(profileData, value, state) {
-    (profileData == "Add") ? profileData = { flag: profileData } : ''
-    profileData['clientData'] = this.upperData
+    profileData['clientData'] = this.upperData;
+    profileData['flag'] = value;
     const fragmentData = {
       flag: value,
       data: profileData,
@@ -97,12 +97,14 @@ export class SettingsComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isRefreshRequired(sideBarData)) {
-          this.SettingProfileData = [{}];
-          this.getSettingProfileData();
-          console.log('this is sidebardata in subs subs 2: ');
-        }
-        rightSideDataSub.unsubscribe();
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.SettingProfileData = [{}];
+            this.getSettingProfileData();
+            console.log('this is sidebardata in subs subs 2: ');
+          }
+          rightSideDataSub.unsubscribe();
+      }
       }
     );
   }
@@ -122,10 +124,11 @@ export class SettingsComponent implements OnInit {
       positiveMethod: () => {
 
         this.subService.deleteClientProfileSubscriptionSetting(data.id).subscribe(
-          data => {
-            this.deletedData(data);
-            this.getSettingProfileData();
-            dialogRef.close();
+          resData => {
+            this.eventService.openSnackBar('Deleted successfully!', 'dismiss');
+            // this.SettingProfileData = [{}];
+            // this.getSettingProfileData();
+            dialogRef.close(data.id);
           }
         )
       },
@@ -142,16 +145,21 @@ export class SettingsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-
+      console.log(result,this.SettingProfileData, "delete result");
+      
+      if(result != undefined){
+        const tempList = this.SettingProfileData.filter(p => p.id != result.id);
+        this.SettingProfileData = tempList;
+      }
     });
 
   }
 
-  deletedData(data) {
-    if (data == true) {
-      this.eventService.openSnackBar('Deleted successfully!', 'dismiss');
-    }
-  }
+  // deletedData(data) {
+  //   if (data == true) {
+      
+  //   }
+  // }
 
   dataTosendSetting(value) {
     console.log('data setting send by Output', value);
