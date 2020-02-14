@@ -14,8 +14,8 @@ import { SipDetailsComponent } from 'src/app/component/protect-component/custome
 export class MutualFundSummaryComponent implements OnInit {
 
 
-  displayedColumns: string[] = ['schemeName', 'amountInvested', 'currentValue', 'unrealizedProfit', 'absoluteReturn', 'xirr', 'dividendPayout', 'switchOut','icons'];
-  // displayedColumns: string[] = ['schemeName', 'amountInvested', 'currentValue', 'unrealizedProfit', 'absoluteReturn', 'xirr', 'dividendPayout', 'switchOut', 'balanceUnit', 'navDate', 'sipAmount','icons'];
+  // displayedColumns: string[] = ['schemeName', 'amountInvested', 'currentValue', 'unrealizedProfit', 'absoluteReturn', 'xirr', 'dividendPayout', 'switchOut','icons'];
+  displayedColumns: string[] = ['schemeName', 'amountInvested', 'currentValue', 'unrealizedProfit', 'absoluteReturn', 'xirr', 'dividendPayout', 'switchOut', 'balanceUnit', 'navDate', 'sipAmount', 'icons'];
 
 
 
@@ -96,17 +96,17 @@ export class MutualFundSummaryComponent implements OnInit {
   openFilter() {
     const fragmentData = {
       flag: 'openFilter',
-      data:{},
+      data: {},
       id: 1,
       state: 'open35',
       componentName: RightFilterComponent
     };
-    fragmentData.data={
-      folioWise:this.mutualFundList,
-      schemeWise:this.schemeWise,
-      familyMember:this.mutualFund.family_member_list,
-      category:this.mutualFund.mutualFundCategoryMastersList,
-      transactionView:this.displayedColumns
+    fragmentData.data = {
+      folioWise: this.mutualFundList,
+      schemeWise: this.schemeWise,
+      familyMember: this.mutualFund.family_member_list,
+      category: this.mutualFund.mutualFundCategoryMastersList,
+      transactionView: this.displayedColumns
     }
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -118,12 +118,12 @@ export class MutualFundSummaryComponent implements OnInit {
       }
     );
   }
-  openFolioMaster(){
+  openFolioMaster() {
     const fragmentData = {
       flag: 'openfolioMaster',
-      data:{},
+      data: {},
       id: 1,
-      state: 'open35',
+      state: 'open45',
       componentName: FolioMasterDetailsComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -136,12 +136,12 @@ export class MutualFundSummaryComponent implements OnInit {
       }
     );
   }
-  openSipDetails(){
+  openSipDetails() {
     const fragmentData = {
       flag: 'openSipDetails',
-      data:{},
+      data: {},
       id: 1,
-      state: 'open35',
+      state: 'open45',
       componentName: SipDetailsComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -154,5 +154,5 @@ export class MutualFundSummaryComponent implements OnInit {
       }
     );
   }
- 
+
 }
