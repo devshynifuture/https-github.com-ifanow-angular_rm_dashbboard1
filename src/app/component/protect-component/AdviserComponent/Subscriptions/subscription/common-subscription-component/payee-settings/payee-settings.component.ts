@@ -257,7 +257,7 @@ export class PayeeSettingsComponent implements OnInit {
       this.payeeSettingsForm.get('state').markAsTouched();
     } else {
       this.barButtonOptions.active = true;
-      if (this.payeeSettingsForm.controls.id.value != undefined) {
+      if (this.payeeSettingsForm.controls.id.value != undefined) { 
         const obj1 = {
           customerName: this.payeeSettingsForm.controls.customerName.value,
           city: this.payeeSettingsForm.controls.city.value,
