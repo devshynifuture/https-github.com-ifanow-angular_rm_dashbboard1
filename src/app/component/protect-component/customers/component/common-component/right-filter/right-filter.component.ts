@@ -3,6 +3,9 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { element } from 'protractor';
+import { FormBuilder, Validators } from '@angular/forms';
+import { CustomerService } from '../../customer/customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-right-filter',
@@ -26,7 +29,8 @@ export class RightFilterComponent implements OnInit {
   countReport: any;
   countTranView: any;
   countCategory: any;
-  dataToSend:any;
+  dataToSend: any;
+  summaryFilerForm: any;
   @Input()
   set data(inputData) {
     this._data = inputData;
@@ -43,6 +47,7 @@ export class RightFilterComponent implements OnInit {
     this.getTransactionView(this._data.transactionView);
     this.getReportType();
     this.setDefaultFilters();
+    this.showSummaryFilterForm('');
   }
   private _transformer = (node: FoodNode, level: number) => {
     return {
@@ -50,6 +55,17 @@ export class RightFilterComponent implements OnInit {
       name: node.name,
       level: level,
     };
+  }
+
+
+  getFormControl(): any {
+    return this.summaryFilerForm.controls;
+  }
+  showSummaryFilterForm(data) {
+    this.summaryFilerForm = this.fb.group({
+      reportAsOn: [(data.reportAsOn == undefined) ? null : new Date(data.reportAsOn), [Validators.required]],
+      showFolios: [(data.showFolio), [Validators.required]],
+    });
   }
   getSchemeWise(data) {
     let filterData = [];
@@ -152,7 +168,7 @@ export class RightFilterComponent implements OnInit {
       }
     })
     this.scheme = [...new Map(filterData1.map(item => [item['schemeCode'], item])).values()];
-    this.amc=this.scheme;
+    this.amc = this.scheme;
     this.folio = filterData2;
     this.category = [...new Map(filterData3.map(item => [item['categoryId'], item])).values()];
     this.changeSelect();
@@ -282,13 +298,13 @@ export class RightFilterComponent implements OnInit {
       }
     })
     this.scheme = [...new Map(filterData1.map(item => [item['schemeCode'], item])).values()];
-    this.amc=this.scheme;
+    this.amc = this.scheme;
     this.folio = filterData2;
     this.familyMember = [...new Map(filterData3.map(item => [item['familyMemberId'], item])).values()];
     this.changeSelect();
 
   }
-  changeSelectFolio() {
+  changeFilterFolio() {
     let filterData = [];
     let filterData2 = this._data.schemeWise;
     let filterData1 = [];
@@ -324,7 +340,7 @@ export class RightFilterComponent implements OnInit {
       }
     })
     this.scheme = [...new Map(filterData.map(item => [item['schemeCode'], item])).values()];
-    this.amc=this.scheme;
+    this.amc = this.scheme;
     this.familyMember = [...new Map(filterData1.map(item => [item['familyMemberId'], item])).values()];
     this.category = [...new Map(filterData3.map(item => [item['categoryId'], item])).values()];
     console.log(this.amc)
@@ -426,17 +442,33 @@ export class RightFilterComponent implements OnInit {
     //     (c < arr.length) ? (c + " of " + arr.length + " selected") : "All Selected"
     // return selection
   }
-  generateReport(){
-    this.dataToSend={
-      'familyMember':this.familyMember.filter(ele => ele.selected==true),
-      'amc':this.amc.filter(ele => ele.selected==true),
-      'scheme':this.scheme.filter(ele => ele.selected==true),
-      'folio':this.folio.filter(ele => ele.selected==true),
-      'transactionView':this.transactionView.filter(ele => ele.selected==true),
-      'reportType':this.reportType.filter(ele => ele.selected==true),
-      'category':this.category.filter(ele => ele.selected==true)
+  generateReport() {
+    if (this.summaryFilerForm.get('reportAsOn').invalid) {
+      this.summaryFilerForm.get('reportAsOn').markAsTouched();
+      return
     }
-    console.log('dataToSend---------->',this.dataToSend);
+    this.dataToSend = {
+      'advisorId': 3967,
+      'clientId': 2982,
+      'familyMember': this.familyMember.filter(ele => ele.selected == true),
+      'amc': this.amc.filter(ele => ele.selected == true),
+      'scheme': this.scheme.filter(ele => ele.selected == true),
+      'folio': this.folio.filter(ele => ele.selected == true),
+      'transactionView': this.transactionView.filter(ele => ele.selected == true),
+      'reportType': this.reportType.filter(ele => ele.selected == true),
+      'category': this.category.filter(ele => ele.selected == true),
+      'reportAsOn': (this.summaryFilerForm.controls.reportAsOn.value) ? this.summaryFilerForm.controls.reportAsOn.value.toISOString().slice(0, 10) : null,
+      'showFolio': parseInt(this.summaryFilerForm.controls.showFolios.value),
+    }
+    console.log('dataToSend---------->', this.dataToSend);
+    this.custumService.getMutualFund(this.dataToSend).subscribe(
+      data => this.getMutualFundResponse(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+    );
+  }
+  getMutualFundResponse(data){
+    console.log(data)
   }
   treeControl = new FlatTreeControl<ExampleFlatNode>(
     node => node.level, node => node.expandable);
@@ -446,7 +478,7 @@ export class RightFilterComponent implements OnInit {
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-  constructor(private subInjectService: SubscriptionInject) {
+  constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder ,private custumService:CustomerService ,private eventService:EventService) {
     this.dataSource.data = TREE_DATA;
   }
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
