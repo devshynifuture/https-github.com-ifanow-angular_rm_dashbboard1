@@ -17,6 +17,7 @@ export class CashflowUpperIncomeComponent implements OnInit {
   familyMemberList: any;
   dataToMap: any = [];
   isLoading: boolean = false;
+  dataToMapCopy: any;
 
   constructor(public dialog: MatDialog,
     private eventService: EventService,
@@ -69,10 +70,10 @@ export class CashflowUpperIncomeComponent implements OnInit {
         this.incomeIdArray.forEach(id => {
           res.forEach(item => {
             if (item.incomeId === id) {
-              if (item.bonusOrInflow !== 0) {
-                obj[`month${item.receivingMonth}`] = { value: String(item.bonusOrInflow + item.amount), isAdHocChangesDone: (item.editedFromCashflow == 1 ? true : false) };
-              } else {
-                obj[`month${item.receivingMonth}`] = { value: String(item.bonusOrInflow + item.amount), isAdHocChangesDone: (item.editedFromCashflow == 1 ? true : false) };
+              if (item.editedFromCashflow === 0) {
+                obj[`month${item.receivingMonth}`] = { value: String(item.bonusOrInflow + item.amount), isAdHocChangesDone: false };
+              } else if (item.editedFromCashflow === 1) {
+                obj[`month${item.receivingMonth}`] = { value: String(item.cashflowAmount), isAdHocChangesDone: true };
               }
             }
           });
@@ -107,6 +108,7 @@ export class CashflowUpperIncomeComponent implements OnInit {
 
         console.log("expected outcome::::::::", this.dataToMap);
         this.isLoading = false;
+        this.dataToMapCopy = this.dataToMap;
         this.dataSource = new MatTableDataSource(this.dataToMap);
       }, err => {
         console.error(err);
@@ -128,13 +130,19 @@ export class CashflowUpperIncomeComponent implements OnInit {
     if (ValidatorType.NUMBER_ONLY.test(value)) {
       const updatedTable = this.cashflowService.alterTable(this.dataToMap, field, value, index);
       console.log("this is updated Table", updatedTable);
-      this.dataSource = null;
-      this.dataSource = new MatTableDataSource(updatedTable);
-
+      this.dataSource.data = updatedTable;
     } else {
       this.onlyNumbers = '';
       this.eventService.openSnackBar("This Input only takes Numbers", "DISMISS");
     }
+  }
+
+  resetAdhocChanges(index, month) {
+    this.dataToMap[index][month].isAdHocChangesDone = !this.dataToMap[index][month].isAdHocChangesDone;
+    this.dataToMap[index][month].value = this.dataToMapCopy[index][month].value;
+    this.dataSource.data = this.dataToMap;
+    console.log("this is new table", this.dataToMap);
+    console.log("this is old table", this.dataToMapCopy);
   }
 
   toggleEditMode() {
