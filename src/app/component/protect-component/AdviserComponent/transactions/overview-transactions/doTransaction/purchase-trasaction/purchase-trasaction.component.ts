@@ -37,8 +37,10 @@ export class PurchaseTrasactionComponent implements OnInit {
   folioList: any;
   folioDetails: any;
   showSpinner = false;
-  constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService, 
-    private subInjectService: SubscriptionInject,private fb: FormBuilder) { }
+  bankDetails: any;
+  achMandateNSE: any;
+  constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
+    private subInjectService: SubscriptionInject, private fb: FormBuilder) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -55,8 +57,12 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.transactionSummary= {}
     this.getdataForm(this.inputData);
-    this.transactionSummary = { selectedFamilyMember: this.inputData.selectedFamilyMember }
+    Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
+    Object.assign(this.transactionSummary, { paymentMode: 1 });
+    Object.assign(this.transactionSummary, { allEdit: true });
+    Object.assign(this.transactionSummary, { transactType: 'PURCHASE' });
     console.log('this.transactionSummary', this.transactionSummary)
   }
   selectSchemeOption(value) {
@@ -65,6 +71,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   getSchemeList(value) {
+    this.platformType = this.getDataSummary.defaultClient.aggregatorType
     let obj = {
       searchQuery: value,
       bseOrderType: 'ORDER',
@@ -74,8 +81,8 @@ export class PurchaseTrasactionComponent implements OnInit {
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
       clientId: this.getDataSummary.defaultClient.clientId,
       userAccountType: this.getDataSummary.defaultCredential.accountType,
-      holdingType:this.getDataSummary.defaultClient.holdingType,
-      tpUserCredFamilyMappingId:this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
+      holdingType: this.getDataSummary.defaultClient.holdingType,
+      tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
     }
     if (this.selectScheme == 2 && value.length > 2) {
       this.onlineTransact.getNewSchemes(obj).subscribe(
@@ -96,18 +103,23 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
   reinvest(scheme) {
     this.schemeDetails = scheme
-    this.transactionSummary = {
-      schemeName: scheme.schemeName
-    }
+    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     console.log('schemeDetails == ', this.schemeDetails)
   }
   selectExistingOrNew(value) {
     this.ExistingOrNew = value
   }
+  getbankDetails(bank) {
+    this.bankDetails = bank
+    console.log('bank details', bank)
+  }
+  getAchmandateDetails(ach) {
+    this.achMandateNSE  = ach
+    console.log('ach details', ach)
+  }
   selectedScheme(scheme) {
     this.showSpinner = true
     this.scheme = scheme
-    this.transactionSummary = { schemeName: scheme.schemeName }
     this.navOfSelectedScheme = scheme.nav
     let obj1 = {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
@@ -118,7 +130,9 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
       data => this.getSchemeDetailsRes(data)
     );
+    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
   }
+
   getSchemeDetailsRes(data) {
     this.showSpinner = false
     console.log('getSchemeDetailsRes == ', data)
@@ -141,7 +155,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
       clientId: this.getDataSummary.defaultClient.clientId,
       userAccountType: this.getDataSummary.defaultCredential.accountType,
-      holdingType:this.getDataSummary.defaultClient.holdingType,
+      holdingType: this.getDataSummary.defaultClient.holdingType,
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
     }
     this.onlineTransact.getFoliosAmcWise(obj1).subscribe(
@@ -154,7 +168,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
   selectedFolio(folio) {
     this.folioDetails = folio
-    this.transactionSummary = { folioNumber: folio.folioNumber }
+    Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
   }
   enteredAmount(value) {
     this.transactionSummary = { enteredAmount: value }
@@ -162,8 +176,16 @@ export class PurchaseTrasactionComponent implements OnInit {
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
+    this.platformType = this.getDataSummary.defaultClient.aggregatorType
+  }
+  selectPaymentMode(value) {
+    Object.assign(this.transactionSummary, { paymentMode: value });
+    if(value == 2){
+      Object.assign(this.transactionSummary, { getAch: true });
+    }
   }
   onAddTransaction(value, data) {
+    Object.assign(this.transactionSummary, {allEdit: false});
     this.confirmTrasaction = true
     const fragmentData = {
       flag: 'addNsc',
@@ -244,6 +266,14 @@ export class PurchaseTrasactionComponent implements OnInit {
         euin: this.getDataSummary.defaultCredential.euin,
         bseDPTransType: 'PHYSICAL',
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+        mandateId : null,
+        nsePaymentMode: null,
+        bankDetailId:null,
+      }
+      if (this.getDataSummary.defaultClient.aggregatorType == 1) {
+        obj.mandateId = this.achMandateNSE.mandateId
+        obj.bankDetailId = this.bankDetails.bankDetailId
+        obj.nsePaymentMode = (this.purchaseTransaction.controls.modeOfPaymentSelection.value == 1) ? 'ONLINE' : 'DEBIT_MANDATEM'
       }
       console.log('new purchase obj', obj)
       this.onlineTransact.transactionBSE(obj).subscribe(
@@ -253,10 +283,10 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
   purchaseRes(data) {
     console.log('purchase transaction ==', data)
-    if(data == undefined){
+    if (data == undefined) {
 
-    }else{
-    this.onAddTransaction('confirm',null)
+    } else {
+      this.onAddTransaction('confirm', null)
     }
   }
 }
