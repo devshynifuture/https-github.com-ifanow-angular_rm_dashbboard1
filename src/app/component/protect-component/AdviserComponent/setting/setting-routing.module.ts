@@ -24,7 +24,7 @@ const routes: Routes = [
       },
       {
         path: 'plan',
-        component: SettingPlanComponent
+        loadChildren: () => import('src/app/component/protect-component/AdviserComponent/setting/setting-plan/setting-plan/setting-plan.module').then(m => m.SettingPlanModule)
       },
       {
         path: 'users&roles',
@@ -36,7 +36,7 @@ const routes: Routes = [
       },
       {
         path: 'backup',
-        component: SettingBackupComponent
+        loadChildren: () => import('src/app/component/protect-component/AdviserComponent/setting/setting-backup/setting-backup/setting-backup.module').then(m => m.SettingBackupModule)
       },
       {
         path: '',
