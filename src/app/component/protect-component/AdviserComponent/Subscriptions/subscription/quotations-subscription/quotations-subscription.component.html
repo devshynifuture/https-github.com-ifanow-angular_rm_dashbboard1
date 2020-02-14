@@ -14,12 +14,12 @@
                                     arrow_drop_down
                                 </i></button>
                             <mat-menu #menu="matMenu">
-                                <button *ngIf="dataCount == 0" mat-menu-item>Select quotation to see more
+                                <a *ngIf="dataCount == 0" mat-menu-item>Select quotation to see more
                                     actions
-                                </button>
-                                <button (click)="deleteModal(null)" *ngIf="dataCount != 0" mat-menu-item>Delete
+                                </a>
+                                <a (click)="deleteModal(null)" *ngIf="dataCount != 0" mat-menu-item>Delete
                                     quotation
-                                </button>
+                                </a>
                             </mat-menu>
                         </div>
                         <div class="col-md-8" *ngIf="dataSource.data.length > 0 && dataCount > 0">
@@ -135,7 +135,7 @@
                                 more_vert
                             </i>
                             <mat-menu #menu="matMenu">
-                                <a (click)="Open('emailQuotation',element)" mat-menu-item>View & Edit Quotation</a>
+                                <a (click)="Open('emailQuotation',element)" mat-menu-item>Edit Quotation</a>
                                 <a (click)="deleteModal(element)" mat-menu-item>Delete quotation</a>
                             </mat-menu>
                         </div>
