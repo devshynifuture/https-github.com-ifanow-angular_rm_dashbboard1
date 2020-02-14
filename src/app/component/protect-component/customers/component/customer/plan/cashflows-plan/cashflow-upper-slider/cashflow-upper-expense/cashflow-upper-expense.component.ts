@@ -1,3 +1,4 @@
+import { Group } from './../../cashflow.interface';
 import { Component, OnInit, Input } from '@angular/core';
 import { UpperTableBox } from '../../cashflow.interface';
 import { CashflowAddComponent } from '../cashflow-add/cashflow-add.component';
@@ -19,8 +20,8 @@ export class CashflowUpperExpenseComponent implements OnInit {
     private eventService: EventService,
     private cashflowService: CashFlowsPlanService) { }
 
-  displayedColumns: string[] = ['description', 'month1', 'month2', 'month3', 'month4', 'month5', 'month6', 'month7', 'month8', 'month9', 'month10', 'month11', 'month12', 'total', 'remove'];
-  dataSource: MatTableDataSource<UpperTableBox>;
+  displayedColumns: string[] = ['description', 'month4', 'month5', 'month6', 'month7', 'month8', 'month9', 'month10', 'month11', 'month12', 'month1', 'month2', 'month3', 'total', 'remove'];
+  dataSource: MatTableDataSource<UpperTableBox | Group>;
   advisorId = AuthService.getAdvisorId();
   clientId = AuthService.getClientId();
 
@@ -40,11 +41,11 @@ export class CashflowUpperExpenseComponent implements OnInit {
     // this.refreshTableData();
   }
 
-  alterTable(table: UpperTableBox[], field: string, value: string, index: number): UpperTableBox[] {
-    table[index][field] = value;
-    this.updateTotal(table[index]);
-    return table;
-  }
+  // alterTable(table: UpperTableBox[], field: string, value: string, index: number): UpperTableBox[] {
+  //   table[index][field] = value;
+  //   this.updateTotal(table[index]);
+  //   return table;
+  // }
 
   getCashflowMonthlyExpenseTableData() {
     this.cashflowService.getCashflowMonthlyExpensesValues({
@@ -65,17 +66,17 @@ export class CashflowUpperExpenseComponent implements OnInit {
     // udpate table data
   }
 
-  updateTotal(object: UpperTableBox) {
-    let sum = 0;
-    for (let i = 1; i <= 12; i++) {
-      sum = sum + parseInt(object[`month${i}`]);
-    }
-    object['total'] = String(sum);
-  }
+  // updateTotal(object: UpperTableBox) {
+  //   let sum = 0;
+  //   for (let i = 1; i <= 12; i++) {
+  //     sum = sum + parseInt(object[`month${i}`]);
+  //   }
+  //   object['total'] = String(sum);
+  // }
 
   changeTableTdValue(value: string, field: string, index: number) {
     if (ValidatorType.NUMBER_ONLY.test(value)) {
-      ELEMENT_DATA1 = this.alterTable(ELEMENT_DATA1, field, value, index);
+      ELEMENT_DATA1 = this.cashflowService.alterTable(ELEMENT_DATA1, field, value, index);
     } else {
       this.onlyNumbers = '';
       this.eventService.openSnackBar("This Input only takes Numbers", "DISMISS");
@@ -105,6 +106,8 @@ export class CashflowUpperExpenseComponent implements OnInit {
 }
 
 // for expense
-let ELEMENT_DATA1: UpperTableBox[] = [
-  { description: 'dkabjvk', month1: '5', month2: '213', month3: '298', month4: '1232', month5: '134', month6: '1265', month7: '15646756', month8: '435', month9: '13563', month10: '44456745', month11: '1434', month12: '14567', total: '12564', remove: '' },
+let ELEMENT_DATA1: (UpperTableBox | Group)[] = [
+  {
+    description: '2020', month1: { value: '234', isAdHocChangesDone: false }, month2: { value: '99', isAdHocChangesDone: false }, month3: { value: '2334', isAdHocChangesDone: false }, month4: { value: '45', isAdHocChangesDone: false }, month5: { value: '43', isAdHocChangesDone: false }, month6: { value: '634', isAdHocChangesDone: false }, month7: { value: '22324', isAdHocChangesDone: false }, month8: { value: '254354', isAdHocChangesDone: false }, month9: { value: '26467', isAdHocChangesDone: false }, month10: { value: '2879696', isAdHocChangesDone: false }, month11: { value: '23745', isAdHocChangesDone: false }, month12: { value: '24574654', isAdHocChangesDone: false }, total: '44534534', remove: ''
+  }
 ]

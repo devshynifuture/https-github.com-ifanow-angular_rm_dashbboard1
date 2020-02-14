@@ -1,3 +1,4 @@
+import { EventService } from './../../../../../../../../../../Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ValidatorType } from './../../../../../../../../../../services/util.service';
 import { Component, OnInit, Inject } from '@angular/core';
@@ -21,7 +22,8 @@ export class CashflowAddExpensesComponent implements OnInit {
     private fb: FormBuilder,
     private cashflowService: CashFlowsPlanService,
     private constantsService: ConstantsService,
-    private cashflowAddService: CashflowAddService
+    private cashflowAddService: CashflowAddService,
+    private eventService: EventService
   ) { }
 
   validatorType = ValidatorType;
@@ -85,6 +87,11 @@ export class CashflowAddExpensesComponent implements OnInit {
   }
 
   submitForm() {
-    this.cashflowAddService.formValidations(this.formExpense) ? console.log(this.formExpense.value) : '';
+    if (this.cashflowAddService.formValidations(this.formExpense)) {
+      console.log(this.formExpense.value);
+      this.closeDialog();
+    } else {
+      this.eventService.openSnackBar('Must fill required fields', "DISMISS")
+    }
   }
 }

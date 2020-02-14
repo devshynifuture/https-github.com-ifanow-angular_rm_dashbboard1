@@ -291,7 +291,7 @@
       <div class="col-md-4 pr-0">
         <h5 class="m-0 pb-8">Option </h5>
       </div>
-      <div *ngIf="this.showTransact==true" formArrayName="transact">
+      <div formArrayName="transact">
         <div class="row" *ngFor="let obj of transactEntries.controls; let pointIndex=index"
           [formGroupName]="pointIndex">
           <div class="col-md-4">
