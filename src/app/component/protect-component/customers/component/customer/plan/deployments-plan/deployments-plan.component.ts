@@ -9,6 +9,7 @@ import { ManageDeploymentComponent } from './manage-deployment/manage-deployment
 import { ManageExclusionsComponent } from './manage-exclusions/manage-exclusions.component';
 import { EventService } from 'src/app/Data-service/event.service';
 import { DeploymentDetailsComponent } from './deployment-details/deployment-details.component';
+import { PlanService } from '../plan.service';
 
 @Component({
   selector: 'app-investments-plan',
@@ -20,7 +21,7 @@ export class DeploymentsPlanComponent implements OnInit {
   dataSource;
   clientId: any;
   advisorId: any;
-  constructor(private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService, public dialog: MatDialog) { }
+  constructor(private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService, public dialog: MatDialog, private planService: PlanService) { }
   isLoading = false;
   ngOnInit() {
     this.clientId = AuthService.getClientId();
@@ -70,7 +71,12 @@ export class DeploymentsPlanComponent implements OnInit {
     });
 
   }
-
+  deleteDeployment(deleteData) {
+    this.planService.deleteDeployment(deleteData.id).subscribe(
+      data => console.log(data),
+      err => this.eventService.openSnackBar(err, 'dismiss')
+    )
+  }
   openDep(flagValue) {
     let component;
     component = (flagValue == 'open') ? component = DeploymentDetailsComponent : component = SetupLumpsumDeploymentComponent;

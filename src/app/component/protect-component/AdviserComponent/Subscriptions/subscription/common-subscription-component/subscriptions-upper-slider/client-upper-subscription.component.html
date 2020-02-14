@@ -150,15 +150,15 @@
                                 <a (click)="Open('open',element)" *ngIf="element.status!=4 && element.status !=1"
                                     mat-menu-item>
                                     View fee structure</a>
+                                <a (click)="openPlanSlider('subscriptionDetails','open',element)"
+                                    *ngIf="element.status!=4 && element.status !=1" mat-menu-item>View
+                                    subscription details</a>
                                 <a class="bt-1" (click)="openPlanSlider('billerSettings','open',element)"
                                     *ngIf="element.status!=4 && element.status !=1" mat-menu-item>Change
-                                    Biller</a>
+                                    biller</a>
                                 <a (click)="openPlanSlider('changePayee','open',element)"
                                     *ngIf="element.status!=4 && element.status !=1" mat-menu-item>Change
-                                    Payee</a>
-                                <a (click)="openPlanSlider('subscriptionDetails','open',element)"
-                                    *ngIf="element.status!=4 && element.status !=1" mat-menu-item>Change
-                                    subscription details</a>
+                                    payee</a>
 
                                 <div [ngClass]="element.status !=1? 'bt-1':''">
 

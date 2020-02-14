@@ -2,6 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { element } from 'protractor';
+import { FormBuilder, Validators } from '@angular/forms';
+import { CustomerService } from '../../customer/customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-right-filter',
@@ -25,6 +29,8 @@ export class RightFilterComponent implements OnInit {
   countReport: any;
   countTranView: any;
   countCategory: any;
+  dataToSend: any;
+  summaryFilerForm: any;
   @Input()
   set data(inputData) {
     this._data = inputData;
@@ -33,23 +39,15 @@ export class RightFilterComponent implements OnInit {
     return this._data;
   }
   ngOnInit(): void {
-    this.familyMember = this._data.familyMember
     this.amc = this._data.schemeWise;
     this.folio = this._data.folioWise;
     this.category = this._data.category;
     this.getSchemeWise(this.amc);
+    this.getFamilyMember(this._data.folioWise)
     this.getTransactionView(this._data.transactionView);
     this.getReportType();
     this.setDefaultFilters();
-  }
-  _filtersMeta: {
-    familyMembers: "All Selected",
-    amc: "All Selected",
-    schemes: "All Selected",
-    folios: "All Selected",
-    transactionsView: "All Selected",
-    category: "All Selected",
-    transactionsViewCount: 11,
+    this.showSummaryFilterForm('');
   }
   private _transformer = (node: FoodNode, level: number) => {
     return {
@@ -58,16 +56,41 @@ export class RightFilterComponent implements OnInit {
       level: level,
     };
   }
+
+
+  getFormControl(): any {
+    return this.summaryFilerForm.controls;
+  }
+  showSummaryFilterForm(data) {
+    this.summaryFilerForm = this.fb.group({
+      reportAsOn: [(data.reportAsOn == undefined) ? null : new Date(data.reportAsOn), [Validators.required]],
+      showFolios: [(data.showFolio), [Validators.required]],
+    });
+  }
   getSchemeWise(data) {
     let filterData = [];
     data.filter(function (element) {
       const obj = {
         "schemeCode": element.schemeCode,
         "schemeName": element.schemeName,
+        "amc_name": element.amc_name,
+        "mutualFund": element.mutualFund
       }
       filterData.push(obj);
     })
     this.scheme = filterData;
+  }
+  getFamilyMember(data) {
+    let filterData = [];
+    data.forEach(element => {
+      const obj = {
+        "name": element.ownerName,
+        "familyMemberId": element.familyMemberId,
+        "selected": true
+      }
+      filterData.push(obj);
+    });
+    this.familyMember = [...new Map(filterData.map(item => [item['familyMemberId'], item])).values()];;
   }
   getTransactionView(data) {
     let filterData = [];
@@ -108,40 +131,223 @@ export class RightFilterComponent implements OnInit {
     this.countCategory = this.category.length;
 
   }
-
-  changeSelect = function () {
+  changeFilterFamily() {
+    let filterData = this._data.schemeWise;
+    let filterData1 = [];
     let filterData2 = [];
-    let filterData3=[];
+    let filterData3 = [];
+    let filterData4 = [];
+    this.familyMember.filter(function (element) {
+      if (element.selected == true) {
+        filterData.filter(function (amc) {
+          amc.mutualFund.forEach(function (mf) {
+            if (mf.familyMemberId == element.familyMemberId) {
+              const obj = {
+                "amc_name": amc.amc_name,
+                "schemeName": amc.schemeName,
+                "schemeCode": amc.schemeCode,
+                "mutualFund": amc.mutualFund,
+                "selected": true
+              }
+              const obj2 = {
+                "folioNumber": mf.folioNumber,
+                "selected": true
+              }
+              const obj3 = {
+                "category": mf.categoryName,
+                "categoryId": mf.categoryId,
+                "selected": true
+              }
+
+              filterData1.push(obj);
+              filterData2.push(obj2);
+              filterData3.push(obj3);
+            }
+          })
+        })
+      }
+    })
+    this.scheme = [...new Map(filterData1.map(item => [item['schemeCode'], item])).values()];
+    this.amc = this.scheme;
+    this.folio = filterData2;
+    this.category = [...new Map(filterData3.map(item => [item['categoryId'], item])).values()];
+    this.changeSelect();
+  }
+  changeFilterAmc() {
+    let filterData2 = [];
+    let filterData3 = [];
+    let filterData4 = []
     let filterData = [];
     this.amc.filter(function (element) {
       if (element.selected == true) {
-          element.mutualFund.forEach(ele => {
-            const obj = {
-              "folioNumber": ele.folioNumber,
-              "selected":true
-            }
-            const obj2={
-              "name": ele.ownerName,
-              "familyMemberId":ele.familyMemberId,
-              "selected":true
-            }
-            filterData.push(obj);
-            filterData3.push(obj2);
-
-          });
+        element.mutualFund.forEach(ele => {
           const obj = {
-            "schemeName": element.schemeName,
-            "selected":true
+            "folioNumber": ele.folioNumber,
+            "selected": true
           }
-          filterData2.push(obj);
+          const obj2 = {
+            "name": ele.ownerName,
+            "familyMemberId": ele.familyMemberId,
+            "selected": true
+          }
+          const obj3 = {
+            "category": ele.categoryName,
+            "categoryId": ele.categoryId,
+            "selected": true
+          }
+          filterData.push(obj);
+          filterData3.push(obj2);
+          filterData4.push(obj3)
+        });
+        const obj = {
+          "schemeName": element.schemeName,
+          "amc_name": element.amc_name,
+          "mutualFund": element.mutualFund,
+          "selected": true
+        }
+        filterData2.push(obj);
       }
     })
     this.scheme = filterData2;
-    this.folio=filterData;
-    var jobsUnique = filterData3.filter(function(item, index){
-      return filterData3.indexOf(item) >= index;
-    });
-    this.familyMember=jobsUnique;
+    this.folio = filterData;
+    this.familyMember = [...new Map(filterData3.map(item => [item['familyMemberId'], item])).values()];
+    this.category = [...new Map(filterData4.map(item => [item['categoryId'], item])).values()];
+    this.changeSelect();
+  }
+  changeFilterScheme() {
+    let filterData = [];
+    let filterData2 = [];
+    let filterData3 = [];
+    let filterData4 = [];
+    this.scheme.filter(function (element) {
+      if (element.selected == true) {
+        const obj = {
+          "amc_name": element.amc_name,
+          "schemeName": element.schemeName,
+          "mutualFund": element.mutualFund,
+          "selected": true
+        }
+        filterData.push(obj);
+
+        element.mutualFund.forEach(ele => {
+          const obj = {
+            "folioNumber": ele.folioNumber,
+            "selected": true
+          }
+          const obj2 = {
+            "name": ele.ownerName,
+            "familyMemberId": ele.familyMemberId,
+            "selected": true
+          }
+          const obj3 = {
+            "category": ele.categoryName,
+            "categoryId": ele.categoryId,
+            "selected": true
+          }
+          filterData2.push(obj);
+          filterData3.push(obj2);
+          filterData4.push(obj3)
+        });
+      }
+    })
+    this.amc = filterData;
+    this.folio = filterData2;
+    this.familyMember = [...new Map(filterData3.map(item => [item['familyMemberId'], item])).values()];
+    this.category = [...new Map(filterData4.map(item => [item['categoryId'], item])).values()];
+    this.changeSelect();
+  }
+  changeFilterCategory() {
+    let filterData1 = [];
+    let filterData2 = [];
+    let filterData3 = [];
+    let filterData4 = []
+    let filterData = this._data.schemeWise;
+    this.category.filter(function (element) {
+      if (element.selected == true) {
+        filterData.filter(function (amc) {
+          amc.mutualFund.forEach(function (mf) {
+            if (mf.categoryId == element.id) {
+              const obj = {
+                "amc_name": amc.amc_name,
+                "schemeName": amc.schemeName,
+                "schemeCode": amc.schemeCode,
+                "mutualFund": amc.mutualFund,
+                "selected": true
+              }
+              const obj2 = {
+                "folioNumber": mf.folioNumber,
+                "selected": true
+              }
+              const obj3 = {
+                "name": mf.ownerName,
+                "familyMemberId": mf.familyMemberId,
+                "selected": true
+              }
+              // const obj3 = {
+              //   "category": mf.categoryName,
+              //   "categoryId": mf.categoryId,
+              //   "selected": true
+              // }
+
+              filterData1.push(obj);
+              filterData2.push(obj2);
+              filterData3.push(obj3);
+            }
+          })
+        })
+      }
+    })
+    this.scheme = [...new Map(filterData1.map(item => [item['schemeCode'], item])).values()];
+    this.amc = this.scheme;
+    this.folio = filterData2;
+    this.familyMember = [...new Map(filterData3.map(item => [item['familyMemberId'], item])).values()];
+    this.changeSelect();
+
+  }
+  changeFilterFolio() {
+    let filterData = [];
+    let filterData2 = this._data.schemeWise;
+    let filterData1 = [];
+    let filterData3 = [];
+    this.folio.filter(function (element) {
+      if (element.selected == true) {
+        filterData2.forEach(amc => {
+          amc.mutualFund.forEach(mf => {
+            if (element.folioNumber == mf.folioNumber) {
+              const obj = {
+                "amc_name": amc.amc_name,
+                "schemeName": amc.schemeName,
+                "schemeCode": amc.schemeCode,
+                "mutualFund": amc.mutualFund,
+                "selected": true
+              }
+              const obj1 = {
+                "name": mf.ownerName,
+                "familyMemberId": mf.familyMemberId,
+                "selected": true
+              }
+              const obj2 = {
+                "category": mf.categoryName,
+                "categoryId": mf.categoryId,
+                "selected": true
+              }
+              filterData.push(obj);
+              filterData1.push(obj1);
+              filterData3.push(obj2);
+            }
+          })
+        });
+      }
+    })
+    this.scheme = [...new Map(filterData.map(item => [item['schemeCode'], item])).values()];
+    this.amc = this.scheme;
+    this.familyMember = [...new Map(filterData1.map(item => [item['familyMemberId'], item])).values()];
+    this.category = [...new Map(filterData3.map(item => [item['categoryId'], item])).values()];
+    console.log(this.amc)
+    this.changeSelect();
+  }
+  changeSelect = function () {
+
     // this.folio.filter(function(element){
     //   if (element.selected == true) {
     //     const obj = {
@@ -236,7 +442,34 @@ export class RightFilterComponent implements OnInit {
     //     (c < arr.length) ? (c + " of " + arr.length + " selected") : "All Selected"
     // return selection
   }
-
+  generateReport() {
+    if (this.summaryFilerForm.get('reportAsOn').invalid) {
+      this.summaryFilerForm.get('reportAsOn').markAsTouched();
+      return
+    }
+    this.dataToSend = {
+      'advisorId': 3967,
+      'clientId': 2982,
+      'familyMember': this.familyMember.filter(ele => ele.selected == true),
+      'amc': this.amc.filter(ele => ele.selected == true),
+      'scheme': this.scheme.filter(ele => ele.selected == true),
+      'folio': this.folio.filter(ele => ele.selected == true),
+      'transactionView': this.transactionView.filter(ele => ele.selected == true),
+      'reportType': this.reportType.filter(ele => ele.selected == true),
+      'category': this.category.filter(ele => ele.selected == true),
+      'reportAsOn': (this.summaryFilerForm.controls.reportAsOn.value) ? this.summaryFilerForm.controls.reportAsOn.value.toISOString().slice(0, 10) : null,
+      'showFolio': parseInt(this.summaryFilerForm.controls.showFolios.value),
+    }
+    console.log('dataToSend---------->', this.dataToSend);
+    this.custumService.getMutualFund(this.dataToSend).subscribe(
+      data => this.getMutualFundResponse(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+    );
+  }
+  getMutualFundResponse(data){
+    console.log(data)
+  }
   treeControl = new FlatTreeControl<ExampleFlatNode>(
     node => node.level, node => node.expandable);
 
@@ -245,10 +478,9 @@ export class RightFilterComponent implements OnInit {
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-  constructor(private subInjectService: SubscriptionInject) {
+  constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder ,private custumService:CustomerService ,private eventService:EventService) {
     this.dataSource.data = TREE_DATA;
   }
-
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
   Close(data) {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
