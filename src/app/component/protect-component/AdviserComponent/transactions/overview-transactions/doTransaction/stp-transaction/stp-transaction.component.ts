@@ -63,7 +63,9 @@ export class StpTransactionComponent implements OnInit {
 
   ngOnInit() {
     this.getdataForm(this.inputData)
-    this.transactionSummary = { selectedFamilyMember: this.inputData.selectedFamilyMember }
+    this.transactionSummary ={}
+    Object.assign(this.transactionSummary, { allEdit: true });
+    Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember});
   }
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
@@ -122,11 +124,11 @@ export class StpTransactionComponent implements OnInit {
   selectedFolio(folio) {
     this.folioDetails = folio
     this.showUnits = true
-    this.transactionSummary = { folioNumber: folio.folioNumber }
+    Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
   }
   selectedSchemeTransfer(schemeTransfer){
     this.schemeTransfer = schemeTransfer
-    this.transactionSummary = { schemeNameTranfer: schemeTransfer.schemeName }
+    Object.assign(this.transactionSummary, { schemeTransfer: schemeTransfer.schemeName });
     this.navOfSelectedScheme = schemeTransfer.nav
     let obj1 = {
       mutualFundSchemeMasterId: schemeTransfer.mutualFundSchemeMasterId,
@@ -145,7 +147,7 @@ export class StpTransactionComponent implements OnInit {
   selectedScheme(scheme) {
     this.scheme = scheme
     this.showUnits = true
-    this.transactionSummary = { schemeName: scheme.schemeName }
+    Object.assign(this.transactionSummary, { schemeTransfer: scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav
     let obj1 = {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
@@ -226,6 +228,7 @@ export class StpTransactionComponent implements OnInit {
     console.log('dateDisplay = ', this.dateDisplay)
   }
   onAddTransaction(value, data) {
+    Object.assign(this.transactionSummary, {allEdit: false});
     this.confirmTrasaction = true
     const fragmentData = {
       flag: 'addNsc',

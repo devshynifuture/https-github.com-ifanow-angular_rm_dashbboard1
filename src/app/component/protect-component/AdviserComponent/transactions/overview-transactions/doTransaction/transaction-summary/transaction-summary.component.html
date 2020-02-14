@@ -15,8 +15,9 @@
                     </mat-select>
                 </div>
                 <div class="col-md-2" *ngIf="allData">
-                    <button mat-stroked-button *ngIf="allData.showPlatformEdit ==true" class="primary-sm"
-                        (click)="showPlatform = true">Edit</button>
+                    <button mat-stroked-button
+                        *ngIf="transactionSummary && allData.showPlatformEdit ==true && transactionSummary.allEdit == true"
+                        class="primary-sm" (click)="showPlatform = true">Edit</button>
                 </div>
             </div>
             <div class="row  pt-16 pb-16" *ngIf="defaultClient">
@@ -28,12 +29,14 @@
                             {{(defaultClient.holdingType)}}</h5>
                     </div>
                     <mat-select *ngIf="showInvestor == true" class="form-control">
-                        <mat-option *ngFor="let iin of clientDataList" (click)="setInvestor(iin)" [value]="iin.clientCode">{{iin.clientCode}}
+                        <mat-option *ngFor="let iin of clientDataList" (click)="setInvestor(iin)"
+                            [value]="iin.clientCode">{{iin.clientCode}}
                         </mat-option>
                     </mat-select>
                 </div>
                 <div class="col-md-2">
-                    <button mat-stroked-button class="primary-sm" *ngIf="allData.showMappingEdit ==true"
+                    <button mat-stroked-button class="primary-sm"
+                        *ngIf="transactionSummary && allData.showMappingEdit ==true && transactionSummary.allEdit == true"
                         (click)="showInvestor = true">Edit</button>
                 </div>
             </div>
@@ -44,7 +47,7 @@
                     </h5>
                     <h5 class="m-0"> {{defaultCredential.euin}} - Ankit Mehta</h5>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2" *ngIf="transactionSummary && transactionSummary.allEdit == true">
                     <button mat-stroked-button class="primary-sm">Edit</button>
                 </div>
             </div>
@@ -56,8 +59,11 @@
                             {{(transactionSummary==undefined)?'':transactionSummary.schemeName}}
                         </h5>
                     </div>
-                    <h5 class="m-0"> <span class="f-500">Folio:</span>{{(transactionSummary==undefined)?'':transactionSummary.folioNumber}}</h5>
-                    <h5 class="m-0"> <span class="f-500">Amount:</span> ₹{{(transactionSummary==undefined)?'':transactionSummary.enteredAmount}}/Lumpsum
+                    <h5 class="m-0"> <span
+                            class="f-500">Folio:</span>{{(transactionSummary==undefined)?'':transactionSummary.folioNumber}}
+                    </h5>
+                    <h5 class="m-0"> <span class="f-500">Amount:</span>
+                        ₹{{(transactionSummary==undefined)?'':transactionSummary.enteredAmount}}/Lumpsum
                     </h5>
                 </div>
             </div>
@@ -70,20 +76,52 @@
                     <button mat-stroked-button class="primary-sm">Edit</button>
                 </div> -->
             </div>
-            <div class="row  pt-16 pb-16" *ngIf="platformType == 1">
+            <div class="row  pt-16 pb-16">
                 <div class="col-md-9">
                     <p class="m-0 roboto text-custom">Mode of payment</p>
-                    <h5 class="m-0">Net banking</h5>
+                    <h5 class="m-0">
+                        {{(transactionSummary==undefined)?'':(transactionSummary.paymentMode==2)?'Debit mandate':'Net banking'}}
+                    </h5>
                 </div>
             </div>
-            <div class="row  pt-16 pb-16" *ngIf="platformType == 1">
+            <div class="row  pt-16 pb-16" *ngIf="selectedPlatform== 1">
                 <div class="col-md-9">
                     <p class="m-0 roboto text-custom">Bank A/c details</p>
-                    <h5 class="m-0">ICICI Bank</h5>
-                    <h5 class="m-0"> Saving A/c 1032*****710</h5>
+                    <h5 class="m-0">
+                        <span class="f-500">Bank Name:</span>
+                        {{(bankDetails==undefined)?'':bankDetails.bankName}}</h5>
+                    <mat-select *ngIf="showbank == true" class="form-control">
+                        <mat-option *ngFor="let bank of bankDetails" (click)="selectBank(bank)" [value]="bank.bankName">
+                            {{bank.bankName}}
+                        </mat-option>
+                    </mat-select>
+                    <h5 class="m-0">
+                        <span class="f-500">Ac Type:</span>
+                        {{(achMandateNSE==undefined)?'':achMandateNSE.accountType}}</h5>
+                    <h5 class="m-0">
+                        <span class="f-500">Ac no.:</span>
+                        {{(achMandateNSE==undefined)?'':achMandateNSE.accountNo}}</h5>
                 </div>
-                <div class="col-md-2">
-                    <button mat-stroked-button class="primary-sm">Edit</button>
+                <div class="col-md-2"
+                    *ngIf=" transactionSummary && showBankEdit == true && transactionSummary.allEdit == true">
+                    <button mat-stroked-button class="primary-sm" (click)="showbank = true">Edit</button>
+                </div>
+            </div>
+            <div class="row  pt-16 pb-16" *ngIf="selectedPlatform== 1">
+                <div class="col-md-9">
+                    <p class="m-0 roboto text-custom">UMRN details</p>
+                    <h5 class="m-0">
+                        <span class="f-500">UMRN no.:</span>
+                        {{(transactionSummary==undefined)?'':(transactionSummary.paymentMode==2)?'Debit mandate':'Net banking'}}
+                    </h5>
+                    <mat-select *ngIf="showUmrn== true" class="form-control">
+                        <mat-option *ngFor="let umrn of achMandateNSE" (click)="selectUmrn(umrn)" [value]="umrn.umrnNo">
+                            {{umrn.umrnNo}}
+                        </mat-option>
+                    </mat-select>
+                </div>
+                <div class="col-md-2" *ngIf=" transactionSummary && transactionSummary.allEdit == true">
+                    <button mat-stroked-button class="primary-sm" (click)="showUmrn = true">Edit</button>
                 </div>
             </div>
         </div>

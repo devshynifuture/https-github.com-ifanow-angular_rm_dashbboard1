@@ -12,6 +12,7 @@ export class TransactionSummaryComponent implements OnInit {
   selectedPlatform
   selectedInvestor: any;
   showInvestor = false;
+  showbank= false
   investorList: void;
   inputData: any;
   isViewInitCalled: any;
@@ -22,10 +23,15 @@ export class TransactionSummaryComponent implements OnInit {
   defaultClient: any;
   allData: any;
   clientDataList: any;
+  bankDetails: any;
+  achMandateNSE: any;
+  showBankEdit=false;
   constructor(private onlineTransact: OnlineTransactionService, private processTransaction: ProcessTransactionService,
-    private subInjectService: SubscriptionInject,) { }
+    private subInjectService: SubscriptionInject, ) { }
   showPlatform = false;
   @Output() defaultDetails = new EventEmitter();
+  @Output() bankDetailsSend = new EventEmitter();
+  @Output() achmandateDetails = new EventEmitter();
   @Input() set data(data) {
     this.inputData = data;
     console.log('This is Input data of FixedDepositComponent ', data);
@@ -44,6 +50,41 @@ export class TransactionSummaryComponent implements OnInit {
     this.transactionSummary = this.inputData
     console.log('transactionSummary', this.transactionSummary)
     this.getDefaultDetails(null)
+  }
+  getBankDetails() {
+    let obj = {
+      tpUserCredFamilyMappingId:this.defaultClient.tpUserCredFamilyMappingId
+    }
+    this.onlineTransact.getBankDetailsNSE(obj).subscribe(
+      data => this.getBankDetailsNSERes(data)
+    );
+  }
+  getBankDetailsNSERes(data) {
+    console.log('bank res',data)
+    this.bankDetails = data
+    if(this.bankDetails.length > 1){
+      this.showBankEdit = true
+    }
+    this.bankDetailsSend.emit(this.bankDetails);
+  }
+  selectBank(bank){
+    
+  }
+  selectUmrn(umrn){
+    
+  }
+  getNSEAchmandate(){
+    let obj1 = {
+      tpUserCredFamilyMappingId:this.defaultClient.tpUserCredFamilyMappingId
+    }
+    this.onlineTransact.getNSEAchmandate(obj1).subscribe(
+      data => this.getNSEAchmandateRes(data)
+    );
+  }
+  getNSEAchmandateRes(data){
+    console.log('getNSEAchmandateRes',data)
+    this.achMandateNSE = data
+    this.achmandateDetails.emit(this.achMandateNSE);
   }
   getDefaultDetails(platform) {
     let obj = {
@@ -64,6 +105,22 @@ export class TransactionSummaryComponent implements OnInit {
     this.defaultCredential = data.defaultCredential
     this.defaultClient = data.defaultClient
     this.selectedPlatform = this.defaultCredential.aggregatorType
+    if (this.selectedPlatform == 1) {
+      this.getBankDetails()
+      this.getNSEAchmandate()
+      this.getIINDetails()
+    }
+  }
+  getIINDetails(){
+    let obj1 = {
+      tpUserCredFamilyMappingId:this.defaultClient.tpUserCredFamilyMappingId
+    }
+    this.onlineTransact.getIINDetails(obj1).subscribe(
+      data => this.getIINDetailsRes(data)
+    );
+  }
+  getIINDetailsRes(data){
+    console.log('IIN Details',data)
   }
   setPlatform(value) {
     this.selectedPlatform = value.value

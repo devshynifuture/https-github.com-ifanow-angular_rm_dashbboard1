@@ -51,7 +51,9 @@ export class RedemptionTransactionComponent implements OnInit {
 
   ngOnInit() {
     this.getdataForm(this.inputData)
-    this.transactionSummary = { selectedFamilyMember: this.inputData.selectedFamilyMember }
+    this.transactionSummary = {}
+    Object.assign(this.transactionSummary, { allEdit: true });
+    Object.assign(this.transactionSummary, {selectedFamilyMember: this.inputData.selectedFamilyMember  });
   }
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
@@ -111,7 +113,7 @@ export class RedemptionTransactionComponent implements OnInit {
     this.ownerData = this.redemptionTransaction.controls;
   }
   enteredAmount(value) {
-    this.transactionSummary = { enteredAmount: value }
+    Object.assign(this.transactionSummary, { enteredAmount: value });
   }
   getFormControl(): any {
     return this.redemptionTransaction.controls;
@@ -139,7 +141,7 @@ export class RedemptionTransactionComponent implements OnInit {
   }
   selectedScheme(scheme) {
     this.scheme = scheme
-    this.transactionSummary = { schemeName: scheme.schemeName }
+    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav
     let obj1 = {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
@@ -186,7 +188,7 @@ export class RedemptionTransactionComponent implements OnInit {
   selectedFolio(folio) {
     this.folioDetails = folio
     this.showUnits = true
-    this.transactionSummary = { folioNumber: folio.folioNumber }
+    Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
   }
   redeem() {
     let obj = {

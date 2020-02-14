@@ -39,8 +39,8 @@ export class PurchaseTrasactionComponent implements OnInit {
   showSpinner = false;
   bankDetails: any;
   achMandateNSE: any;
-  constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService, 
-    private subInjectService: SubscriptionInject,private fb: FormBuilder) { }
+  constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
+    private subInjectService: SubscriptionInject, private fb: FormBuilder) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -57,8 +57,11 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.transactionSummary= {}
     this.getdataForm(this.inputData);
-    this.transactionSummary = { selectedFamilyMember: this.inputData.selectedFamilyMember }
+    Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
+    Object.assign(this.transactionSummary, { paymentMode: 1 });
+    Object.assign(this.transactionSummary, { allEdit: true });
     console.log('this.transactionSummary', this.transactionSummary)
   }
   selectSchemeOption(value) {
@@ -77,8 +80,8 @@ export class PurchaseTrasactionComponent implements OnInit {
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
       clientId: this.getDataSummary.defaultClient.clientId,
       userAccountType: this.getDataSummary.defaultCredential.accountType,
-      holdingType:this.getDataSummary.defaultClient.holdingType,
-      tpUserCredFamilyMappingId:this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
+      holdingType: this.getDataSummary.defaultClient.holdingType,
+      tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
     }
     if (this.selectScheme == 2 && value.length > 2) {
       this.onlineTransact.getNewSchemes(obj).subscribe(
@@ -99,18 +102,21 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
   reinvest(scheme) {
     this.schemeDetails = scheme
-    this.transactionSummary = {
-      schemeName: scheme.schemeName
-    }
+    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     console.log('schemeDetails == ', this.schemeDetails)
   }
   selectExistingOrNew(value) {
     this.ExistingOrNew = value
   }
+  getbankDetails(bank) {
+    console.log('bank details', bank)
+  }
+  getAchmandateDetails(ach) {
+    console.log('ach details', ach)
+  }
   selectedScheme(scheme) {
     this.showSpinner = true
     this.scheme = scheme
-    this.transactionSummary = { schemeName: scheme.schemeName }
     this.navOfSelectedScheme = scheme.nav
     let obj1 = {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
@@ -121,37 +127,9 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
       data => this.getSchemeDetailsRes(data)
     );
-    if(this.getDataSummary.defaultClient.aggregatorType == 1){
-      this.getNSEAchmandate()
-      this.getBankDetails()
-    }
+    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
   }
-  getBankDetails(){
-    let obj1 = {
-      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
-      clientCode: this.getDataSummary.defaultClient.clientCode,
-    }
-    this.onlineTransact.getBankDetailsNSE(obj1).subscribe(
-      data => this.getBankDetailsNSERes(data)
-    );
-  }
-  getBankDetailsNSERes(data){
-    console.log('bank details === ',data)
-    this.bankDetails = data
-  }
-  getNSEAchmandate(){
-    let obj1 = {
-      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
-      clientCode: this.getDataSummary.defaultClient.clientCode,
-    }
-    this.onlineTransact.getNSEAchmandate(obj1).subscribe(
-      data => this.getNSEAchmandateRes(data)
-    );
-  }
-  getNSEAchmandateRes(data){
-    console.log('getNSEAchmandateRes',data)
-    this.achMandateNSE = data[0]
-  }
+
   getSchemeDetailsRes(data) {
     this.showSpinner = false
     console.log('getSchemeDetailsRes == ', data)
@@ -174,7 +152,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
       clientId: this.getDataSummary.defaultClient.clientId,
       userAccountType: this.getDataSummary.defaultCredential.accountType,
-      holdingType:this.getDataSummary.defaultClient.holdingType,
+      holdingType: this.getDataSummary.defaultClient.holdingType,
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
     }
     this.onlineTransact.getFoliosAmcWise(obj1).subscribe(
@@ -187,7 +165,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
   selectedFolio(folio) {
     this.folioDetails = folio
-    this.transactionSummary = { folioNumber: folio.folioNumber }
+    Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
   }
   enteredAmount(value) {
     this.transactionSummary = { enteredAmount: value }
@@ -195,8 +173,13 @@ export class PurchaseTrasactionComponent implements OnInit {
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
+    this.platformType = this.getDataSummary.defaultClient.aggregatorType
+  }
+  selectPaymentMode(value) {
+    Object.assign(this.transactionSummary, { paymentMode: value });
   }
   onAddTransaction(value, data) {
+    Object.assign(this.transactionSummary, {allEdit: false});
     this.confirmTrasaction = true
     const fragmentData = {
       flag: 'addNsc',
@@ -277,40 +260,40 @@ export class PurchaseTrasactionComponent implements OnInit {
         euin: this.getDataSummary.defaultCredential.euin,
         bseDPTransType: 'PHYSICAL',
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-        bankCode:null,
-        subBrokerArnCode:null,
-        bankBranch:null,
-        accountNo:null,
-        accountType:null,
-        ifscCode:null,
-        umrn:null,
-        achAmount:null,
-        achFromDate:null,
-        achEndDate:null,
-        bankHolderName:null,
-        fromDate:null,
-        toDate:null,
-        periodDay:null,
-        isPoa:null,
-        amount:null,
-        isDematUser:null,
-        nsePaymentMode:null,
+        bankCode: null,
+        subBrokerArnCode: null,
+        bankBranch: null,
+        accountNo: null,
+        accountType: null,
+        ifscCode: null,
+        umrn: null,
+        achAmount: null,
+        achFromDate: null,
+        achEndDate: null,
+        bankHolderName: null,
+        fromDate: null,
+        toDate: null,
+        periodDay: null,
+        isPoa: null,
+        amount: null,
+        isDematUser: null,
+        nsePaymentMode: null,
       }
-      if(this.getDataSummary.defaultClient.aggregatorType == 1){
-        obj.bankCode= this.achMandateNSE.BANK_CODE
-        obj.subBrokerArnCode= this.getDataSummary.defaultCredential.brokerCode
-        obj.bankBranch= this.achMandateNSE.BRANCH
-        obj.accountNo= this.achMandateNSE.ACCOUNT_NO
-        obj.accountType= this.achMandateNSE.AC_TYPE
-        obj.ifscCode= this.achMandateNSE.IFSC_CODE
-        obj.umrn= this.achMandateNSE.UMRN_NO
-        obj.bankHolderName= this.achMandateNSE.INVESTOR_NAME
-        obj.fromDate= Number(new Date(this.achMandateNSE.FROM_DATE.replace(/"/g,""))) 
-        obj.toDate= Number(new Date(this.achMandateNSE.TO_DATE.replace(/"/g,""))) 
-        obj.isPoa= false
-        obj.amount=this.achMandateNSE.AMOUNT
-        obj.isDematUser= false
-        obj.nsePaymentMode= (this.purchaseTransaction.controls.modeOfPaymentSelection.value == 1)?'ONLINE':'DEBIT_MANDATEM'
+      if (this.getDataSummary.defaultClient.aggregatorType == 1) {
+        obj.bankCode = this.achMandateNSE.bankCode
+        obj.subBrokerArnCode = this.getDataSummary.defaultCredential.brokerCode
+        obj.bankBranch = this.achMandateNSE.bankBranch
+        obj.accountNo = this.achMandateNSE.accountNo
+        obj.accountType = this.achMandateNSE.accountType
+        obj.ifscCode = this.achMandateNSE.ifscCode
+        obj.umrn = this.achMandateNSE.umrnNo
+        obj.bankHolderName = this.achMandateNSE.investorName
+        obj.fromDate = Number(new Date(this.achMandateNSE.fromDate.replace(/"/g, "")))
+        obj.toDate = Number(new Date(this.achMandateNSE.toDate.replace(/"/g, "")))
+        obj.isPoa = false
+        obj.amount = this.achMandateNSE.amount
+        obj.isDematUser = false
+        obj.nsePaymentMode = (this.purchaseTransaction.controls.modeOfPaymentSelection.value == 1) ? 'ONLINE' : 'DEBIT_MANDATEM'
       }
       console.log('new purchase obj', obj)
       this.onlineTransact.transactionBSE(obj).subscribe(
@@ -320,10 +303,10 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
   purchaseRes(data) {
     console.log('purchase transaction ==', data)
-    if(data == undefined){
+    if (data == undefined) {
 
-    }else{
-    this.onAddTransaction('confirm',null)
+    } else {
+      this.onAddTransaction('confirm', null)
     }
   }
 }

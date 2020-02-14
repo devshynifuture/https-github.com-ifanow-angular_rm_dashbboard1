@@ -61,6 +61,9 @@ export class OnlineTransactionService {
   getBankDetailsNSE(data){
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.BANK_DETAILS_NSE, data, 1)
   }
+  getIINDetails(data){
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GETIIN_DETAILS, data, 1)
+  }
   // sipBSE(data){
   //   return this.http.postEncoded(apiConfig.TRANSACT + appConfig.SIP_BSE, data)
   // }

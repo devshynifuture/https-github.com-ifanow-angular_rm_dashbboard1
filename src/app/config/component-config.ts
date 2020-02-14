@@ -362,8 +362,9 @@ export const appConfig = {
   GET_FREQUENCY: 'bse/scheme/sip/view',
   SIP_BSE: 'bse/order/create',
   BSE_TRANSACTION: 'bse/order/create',
-  NSE_ACHMANDATE:'nse/achmandate/report/get',
-  BANK_DETAILS_NSE:'nse/iin/bank/detail/get',
+  NSE_ACHMANDATE:'nse/ach-mandate/report/get',
+  BANK_DETAILS_NSE:'nse/iin/bank-detail/get',
+  GETIIN_DETAILS:'nse/iin/detail/get',
   // SIP_BSE:'bse/order/create',
 
   // cashflow 
