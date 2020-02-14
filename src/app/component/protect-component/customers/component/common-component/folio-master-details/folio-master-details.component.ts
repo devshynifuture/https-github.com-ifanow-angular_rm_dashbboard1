@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-folio-master-details',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FolioMasterDetailsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private subInjectService:SubscriptionInject) { }
 
   ngOnInit() {
+  }
+  close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
 }

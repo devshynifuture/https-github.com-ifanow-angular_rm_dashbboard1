@@ -123,7 +123,7 @@ export class MutualFundSummaryComponent implements OnInit {
       flag: 'openfolioMaster',
       data:{},
       id: 1,
-      state: 'open',
+      state: 'open35',
       componentName: FolioMasterDetailsComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -141,7 +141,7 @@ export class MutualFundSummaryComponent implements OnInit {
       flag: 'openSipDetails',
       data:{},
       id: 1,
-      state: 'open',
+      state: 'open35',
       componentName: SipDetailsComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -154,4 +154,5 @@ export class MutualFundSummaryComponent implements OnInit {
       }
     );
   }
+ 
 }
