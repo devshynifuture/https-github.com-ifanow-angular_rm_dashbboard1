@@ -14,6 +14,11 @@ import { MaterialModule } from 'src/app/material/material';
 import { SettingsTransactionsModule } from './settings-transactions/settings-transactions.module';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
+//import { NomineeDetailsComponent } from './overview-transactions/know-your-customer/nominee-details/nominee-details.component';
+//import { PermanentAddressComponent } from './overview-transactions/know-your-customer/permanent-address/permanent-address.component';
+//import { BackDetailsComponent } from './overview-transactions/know-your-customer/back-details/back-details.component';
+//import { PersonalDetailsComponent } from './overview-transactions/know-your-customer/personal-details/personal-details.component';
+//import { KnowYourCustomerComponent } from './overview-transactions/know-your-customer/know-your-customer.component';
 // import { TransactionsHistoryComponent } from './transactions-list/transactions-history/transactions-history.component';
 
 // import { TransactionsComponent } from './t/transactions.component';
@@ -29,6 +34,10 @@ import { CustomCommonModule } from 'src/app/common/custom.common.module';
     InvestorsTransactionsComponent,
     MandatesTransactionsComponent,
     KycTransactionsComponent,
+
+
+
+
 
   ],
   imports: [

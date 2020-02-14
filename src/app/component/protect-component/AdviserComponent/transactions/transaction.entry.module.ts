@@ -18,6 +18,11 @@ import { SwpTransactionComponent } from './overview-transactions/doTransaction/s
 import { StpTransactionComponent } from './overview-transactions/doTransaction/stp-transaction/stp-transaction.component';
 import { SipTransactionComponent } from './overview-transactions/doTransaction/sip-transaction/sip-transaction.component';
 import { TransactionsHistoryComponent } from './transactions-list/transactions-history/transactions-history.component';
+import { KnowYourCustomerComponent } from './overview-transactions/know-your-customer/know-your-customer.component';
+import { PersonalDetailsComponent } from './overview-transactions/know-your-customer/personal-details/personal-details.component';
+import { BackDetailsComponent } from './overview-transactions/know-your-customer/back-details/back-details.component';
+import { PermanentAddressComponent } from './overview-transactions/know-your-customer/permanent-address/permanent-address.component';
+import { NomineeDetailsComponent } from './overview-transactions/know-your-customer/nominee-details/nominee-details.component';
 
 export const componentList = [
     TransactionAddComponent,
@@ -33,7 +38,15 @@ export const componentList = [
     SwpTransactionComponent,
     StpTransactionComponent,
     SipTransactionComponent,
-    TransactionsHistoryComponent
+    TransactionsHistoryComponent,
+    KnowYourCustomerComponent,
+    PersonalDetailsComponent,
+    PermanentAddressComponent,
+    BackDetailsComponent,
+    NomineeDetailsComponent
+
+
+
 ]
 @NgModule({
     declarations: componentList,
