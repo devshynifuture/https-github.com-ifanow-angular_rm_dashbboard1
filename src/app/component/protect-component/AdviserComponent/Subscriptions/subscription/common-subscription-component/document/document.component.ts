@@ -702,29 +702,39 @@ export class DocumentComponent implements OnInit {
     }
   }
 
-  deleteModal(value, data) {
+  deleteModal(data) {
+    console.log(data, 'data document');
+
+    let list = [];
+    if (data == null) {
+      this.dataSource.filteredData.forEach(singleElement => {
+        if (singleElement.selected) {
+          list.push(singleElement.id);
+        }
+      });
+    } else {
+      list = [data.id];
+    }
     const dialogData = {
-      data: value,
+      data: 'DOCUMENT',
       header: 'DELETE',
-      body: 'Are you sure you want to delete the document?',
+      body: list.length == 1 ? 'Are you sure you want to delete the document?' : 'Are you sure you want to delete these documents?',
       body2: 'This cannot be undone',
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.subService.deleteSettingsDocument(data.documentRepositoryId)
-          .subscribe(response => {
-            console.log(response);
+        this.subService.deleteClientDocumentsMultiple(list).subscribe(
+          data => {
             this.eventService.openSnackBar('document is deleted', 'dismiss');
-            dialogRef.close(data);
-            // this.ngOnInit();
-          }, error =>{
-            this.eventService.openSnackBar('Something went wrong', 'dismiss');
-            console.error(error);
-          } 
-
-          )},
+            // this.valueChange.emit('close');
+            dialogRef.close(list);
+            // this.getRealEstate();
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
+      },
       negativeMethod: () => {
-        console.log('aborted');
+        console.log('2222222222222222222222222222222222222');
       }
     };
 
@@ -736,17 +746,22 @@ export class DocumentComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result != undefined) {
-        console.log(result, this.dataSource.data, 'delete result');
+      if (result.length > 0) {
         const tempList = [];
         this.dataSource.data.forEach(singleElement => {
-          if (singleElement.id != result.id) {
-            tempList.push(singleElement);
+          if ( result.length > 1) {
+            if(!singleElement.selected){
+              tempList.push(singleElement);
+            }
+          } else{ 
+            if (result[0] != singleElement.id){
+              tempList.push(singleElement);
+            } 
           }
         });
         this.dataSource.data = tempList;
       }
-    
+      console.log(result, this.dataSource.data, 'delete result');
     });
 
   }
