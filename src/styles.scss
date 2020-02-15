@@ -1140,6 +1140,13 @@ mat-tab-group[vertical] {
   font-weight: bold !important;
 }
 
+.mutualfunds-capital-equity {
+  .mat-sort-header-button {
+    white-space: inherit;
+  }
+
+}
+
 .btn-dark-black {
   border: 1px solid $black !important;
   color: $black !important;
@@ -1515,5 +1522,33 @@ textarea {
   #ui-settings-subs .mat-tab-label {
     height: 30px !important;
     font-size: 11px;
+  }
+}
+
+#ui-foliomaster {
+  .mat-tab-label {
+    min-width: 115px !important;
+    padding: 0px 8px !important;
+    height: 40px !important;
+    font-weight: 400 !important;
+  }
+
+  .mat-tab-label-active {
+    border: 1px solid #e9eaec;
+    border-bottom: 0px;
+  }
+
+  .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination,
+  .mat-ink-bar {
+    display: none;
+  }
+
+  .mat-tab-body-wrapper {
+    // border: 1px solid #e9eaec;
+    margin-top: -1px;
+  }
+
+  .mat-tab-header {
+    border-bottom: 0px;
   }
 }
