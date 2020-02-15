@@ -63,6 +63,7 @@ export class RedemptionTransactionComponent implements OnInit {
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
+    this.redemptionTransaction.controls.investor.reset();
   }
   redemptionType(value) {
 
@@ -212,11 +213,11 @@ export class RedemptionTransactionComponent implements OnInit {
   }
   redeem() {
     let obj = {
-      productDbId: this.schemeDetails.id,
+      productDbId: 67,//this.schemeDetails.id,
       mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
-      productCode: this.schemeDetails.schemeCode,
-      isin: this.schemeDetails.isin,
-      folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+      productCode:"DBGPGGR", //this.schemeDetails.schemeCode,
+      isin:"INF846K01917", //this.schemeDetails.isin,
+      folioNo: '91031058953',//(this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
       tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
       tpSubBrokerCredentialId: this.getDataSummary.defaultCredential.tpSubBrokerCredentialId,
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,

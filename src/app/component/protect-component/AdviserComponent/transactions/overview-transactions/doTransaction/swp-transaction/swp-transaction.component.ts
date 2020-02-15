@@ -43,6 +43,7 @@ export class SwpTransactionComponent implements OnInit {
   schemeTransfer: any;
   schemeDetailsTransfer: any;
   ExistingOrNew: any;
+  mandateDetails: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private processTransaction: ProcessTransactionService, private fb: FormBuilder) { }
@@ -72,6 +73,7 @@ export class SwpTransactionComponent implements OnInit {
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
+    this.swpTransaction.controls.investor.reset();
   }
   getSchemeList(value) {
     this.showSpinner = true
@@ -107,6 +109,9 @@ export class SwpTransactionComponent implements OnInit {
       this.reInvestmentOpt = []
     }
     this.getFrequency()
+    if(this.getDataSummary.defaultClient.aggregatorType == 2){
+      this.getMandateDetails()
+      }
     this.getSchemeWiseFolios()
   }
   reinvest(scheme) {
@@ -190,6 +195,20 @@ export class SwpTransactionComponent implements OnInit {
     });
     console.log('dateDisplay = ', this.dateDisplay)
   }
+  getMandateDetails() {
+    let obj1 = {
+      advisorId: this.getDataSummary.defaultClient.advisorId,
+      clientCode: this.getDataSummary.defaultClient.clientCode,
+      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+    }
+    this.onlineTransact.getMandateDetails(obj1).subscribe(
+      data => this.getMandateDetailsRes(data)
+    );
+  }
+  getMandateDetailsRes(data) {
+    console.log('mandate details :', data)
+    this.mandateDetails = data
+  }
   onAddTransaction(value, data) {
     Object.assign(this.transactionSummary, {allEdit: false});
     this.confirmTrasaction = true
@@ -270,6 +289,14 @@ export class SwpTransactionComponent implements OnInit {
       orderType: "SWP",
       amountType: "Amount",
       bseDPTransType: "PHYSICAL",
+      mandateId:null,
+      bankDetailId:null,
+      nsePaymentMode:null,
+    }
+    if (this.getDataSummary.defaultClient.aggregatorType == 1) {
+      obj.mandateId = (this.achMandateNSE == undefined)?null:this.achMandateNSE.id
+      obj.bankDetailId = this.bankDetails.id
+      obj.nsePaymentMode = (this.stpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE'
     }
     this.onlineTransact.transactionBSE(obj).subscribe(
       data => this.swpBSERes(data)

@@ -102,10 +102,10 @@
                     </mat-select>
                     <h5 class="m-0">
                         <span class="f-500">Ac Type:</span>
-                        {{(achMandateNSE==undefined)?'':achMandateNSE.accountType}}</h5>
+                        {{(bankDetails==undefined)?'':bankDetails.accountType}}</h5>
                     <h5 class="m-0">
                         <span class="f-500">Ac no.:</span>
-                        {{(achMandateNSE==undefined)?'':achMandateNSE.accountNo}}</h5>
+                        {{(bankDetails==undefined)?'':bankDetails.accountNo}}</h5>
                 </div>
                 <div class="col-md-2"
                     *ngIf=" transactionSummary && showBankEdit == true && transactionSummary.allEdit == true && (transactionSummary.transactType != 'STP'|| transactionSummary.transactType != 'SWITCH')">

@@ -42,6 +42,9 @@ export class StpTransactionComponent implements OnInit {
   schemeListTransfer: any;
   schemeDetailsTransfer: any;
   schemeTransfer: any;
+  achMandateNSE: any;
+  mandateDetails: any;
+  bankDetails: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private processTransaction: ProcessTransactionService,
@@ -72,6 +75,22 @@ export class StpTransactionComponent implements OnInit {
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
+    this.stpTransaction.controls.investor.reset();
+    this.stpTransaction.controls.transferIn.reset();
+  }
+  getMandateDetails() {
+    let obj1 = {
+      advisorId: this.getDataSummary.defaultClient.advisorId,
+      clientCode: this.getDataSummary.defaultClient.clientCode,
+      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+    }
+    this.onlineTransact.getMandateDetails(obj1).subscribe(
+      data => this.getMandateDetailsRes(data)
+    );
+  }
+  getMandateDetailsRes(data) {
+    console.log('mandate details :', data)
+    this.mandateDetails = data
   }
   getSchemeListTranfer(value) {
     this.showSpinner = true
@@ -176,6 +195,9 @@ export class StpTransactionComponent implements OnInit {
       this.reInvestmentOpt = []
     }
     this.getSchemeWiseFolios()
+    if(this.getDataSummary.defaultClient.aggregatorType == 2){
+      this.getMandateDetails()
+      }
     this.getFrequency()
   }
   reinvest(scheme) {
@@ -262,6 +284,10 @@ export class StpTransactionComponent implements OnInit {
   enteredAmount(value) {
     Object.assign(this.transactionSummary, { enteredAmount: value });
   }
+  getbankDetails(value){
+    this.bankDetails = value
+    console.log('bank details',value)
+  }
   getdataForm(data) {
     if (!data) {
       data = {};
@@ -324,7 +350,15 @@ export class StpTransactionComponent implements OnInit {
       clientCode: this.getDataSummary.defaultClient.clientCode,
       orderVal: this.stpTransaction.controls.employeeContry.value,
       bseDPTransType: "PHYSICAL",
-      aggregatorType: this.getDataSummary.defaultClient.aggregatorType
+      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+      mandateId:null,
+      bankDetailId:null,
+      nsePaymentMode:null,
+    }
+    if (this.getDataSummary.defaultClient.aggregatorType == 1) {
+      obj.mandateId = (this.achMandateNSE == undefined)?null:this.achMandateNSE.id
+      obj.bankDetailId = this.bankDetails.id
+      obj.nsePaymentMode = (this.stpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE'
     }
     console.log('json stp', obj)
     this.onlineTransact.transactionBSE(obj).subscribe(

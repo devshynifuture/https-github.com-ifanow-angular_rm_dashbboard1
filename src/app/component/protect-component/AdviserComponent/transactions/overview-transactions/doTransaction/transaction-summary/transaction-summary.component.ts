@@ -36,9 +36,6 @@ export class TransactionSummaryComponent implements OnInit {
     this.inputData = data;
     console.log('This is Input data of FixedDepositComponent ', data);
     this.transactionSummary = data
-    if(data.getAch == true){
-      this.getNSEAchmandate()
-    }
     if (this.isViewInitCalled) {
       // this.getdataForm('');
     }
@@ -82,6 +79,7 @@ export class TransactionSummaryComponent implements OnInit {
   getNSEAchmandateRes(data){
     console.log('getNSEAchmandateRes',data)
     this.achMandateNSE = data[0]
+    this.achmandateDetails.emit(this.bankDetails);
   }
   selectBank(bank){
     this.bankDetailsSend.emit(bank);

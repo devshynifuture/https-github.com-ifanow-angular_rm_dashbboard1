@@ -202,12 +202,26 @@ export class PurchaseTrasactionComponent implements OnInit {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
     this.platformType = this.getDataSummary.defaultClient.aggregatorType
+    this.purchaseTransaction.controls.investor.reset();
   }
   selectPaymentMode(value) {
     Object.assign(this.transactionSummary, { paymentMode: value });
     if(value == 2){
       Object.assign(this.transactionSummary, { getAch: true });
+      this.getNSEAchmandate()
     }
+  }
+  getNSEAchmandate(){
+    let obj1 = {
+      tpUserCredFamilyMappingId:this.getDataSummary.defaultClient.tpUserCredFamilyMappingId
+    }
+    this.onlineTransact.getNSEAchmandate(obj1).subscribe(
+      data => this.getNSEAchmandateRes(data)
+    );
+  }
+  getNSEAchmandateRes(data){
+    console.log('getNSEAchmandateRes',data)
+    this.achMandateNSE = data[0]
   }
   onAddTransaction(value, data) {
     Object.assign(this.transactionSummary, {allEdit: false});
@@ -296,7 +310,7 @@ export class PurchaseTrasactionComponent implements OnInit {
         bankDetailId:null,
       }
       if (this.getDataSummary.defaultClient.aggregatorType == 1) {
-        obj.mandateId = (this.achMandateNSE == undefined)?null:this.achMandateNSE.mandateId
+        obj.mandateId = (this.achMandateNSE == undefined)?null:this.achMandateNSE.id
         obj.bankDetailId = this.bankDetails.id
         obj.nsePaymentMode = (this.purchaseTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE'
       }

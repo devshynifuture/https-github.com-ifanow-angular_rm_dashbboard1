@@ -46,6 +46,7 @@ export class SipTransactionComponent implements OnInit {
   fre: any;
   achMandateNSE: any;
   platformType: any;
+  bankDetails: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private processTransaction: ProcessTransactionService, private fb: FormBuilder) { }
@@ -141,12 +142,14 @@ export class SipTransactionComponent implements OnInit {
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
+    this.sipTransaction.controls.investor.reset();
     this.platformType = this.getDataSummary.defaultClient.aggregatorType
   }
   selectPaymentMode(value) {
     Object.assign(this.transactionSummary, { paymentMode: value });
     if(value == 2){
       Object.assign(this.transactionSummary, { getAch: true });
+      this.getNSEAchmandate()
     }
   }
   selectedScheme(scheme) {
@@ -176,8 +179,22 @@ export class SipTransactionComponent implements OnInit {
       this.reInvestmentOpt = []
     }
     this.getAmcWiseFolio()
+    if(this.getDataSummary.defaultClient.aggregatorType == 2){
     this.getMandateDetails()
+    }
     this.getFrequency()
+  }
+  getNSEAchmandate(){
+    let obj1 = {
+      tpUserCredFamilyMappingId:this.getDataSummary.defaultClient.tpUserCredFamilyMappingId
+    }
+    this.onlineTransact.getNSEAchmandate(obj1).subscribe(
+      data => this.getNSEAchmandateRes(data)
+    );
+  }
+  getNSEAchmandateRes(data){
+    console.log('getNSEAchmandateRes',data)
+    this.achMandateNSE = data[0]
   }
   getFrequency() {
     let obj = {
@@ -209,6 +226,7 @@ export class SipTransactionComponent implements OnInit {
     console.log('dateDisplay = ', this.dateDisplay)
   }
   getbankDetails(value){
+    this.bankDetails = value
     console.log('bank details',value)
   }
   getAchmandateDetails(value){
@@ -320,7 +338,15 @@ export class SipTransactionComponent implements OnInit {
       schemeCd: this.schemeDetails.schemeCode,
       transMode: 'PHYSICAL',
       bseDPTransType: 'PHYSICAL',
+      mandateId:null,
+      bankDetailId:null,
+      nsePaymentMode:null,
       // teamMemberSessionId: sipTransaction.localStorage.mm.mainDetail.userDetails.teamMemberSessionId,
+    }
+    if (this.getDataSummary.defaultClient.aggregatorType == 1) {
+      obj.mandateId = (this.achMandateNSE == undefined)?null:this.achMandateNSE.id
+      obj.bankDetailId = this.bankDetails.id
+      obj.nsePaymentMode = (this.sipTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE'
     }
     console.log('sip json',obj)
     if( this.frequency == 'MONTHLY' && this.sipTransaction.controls.tenure.value == 2){

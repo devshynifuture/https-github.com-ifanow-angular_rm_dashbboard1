@@ -64,6 +64,8 @@ export class SwitchTransactionComponent implements OnInit {
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
+    this.switchTransaction.controls.investor.reset();
+    this.switchTransaction.controls.transferIn.reset();
   }
   getSchemeList(value) {
     this.showSpinner = true
@@ -258,20 +260,20 @@ export class SwitchTransactionComponent implements OnInit {
 
     let obj = {
 
-      productDbId: this.schemeDetails.id,
-      toProductDbId:this.schemeDetailsTransfer.id,
+      productDbId:67,//this.schemeDetails.id,
+      toProductDbId:104,//this.schemeDetailsTransfer.id,
       mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
       toMutualFundSchemeMasterId:this.schemeTransfer.mutualFundSchemeMasterId,
-      productCode: this.schemeDetails.schemeCode,
-      isin: this.schemeDetails.isin,
-      folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+      productCode:"DBGPGGR", //this.schemeDetails.schemeCode,
+      isin: "INF846K01917",//this.schemeDetails.isin,
+      folioNo: "91031058953",//(this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
       tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
       tpSubBrokerCredentialId: this.getDataSummary.defaultCredential.tpSubBrokerCredentialId,
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
       adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
       clientId: this.getDataSummary.defaultClient.clientId,
-      toIsin: this.schemeDetailsTransfer.isin,
-      schemeCd: this.schemeDetails.schemeCode,
+      toIsin:"INF846K01412", //this.schemeDetailsTransfer.isin,
+      schemeCd: "DBGPGGR",//this.schemeDetails.schemeCode,
       euin: this.getDataSummary.defaultCredential.euin,
       qty: (this.switchTransaction.controls.switchType.value == 1) ? 0 : (this.switchTransaction.controls.switchType.value == 3) ? this.schemeDetails.balance_units : this.switchTransaction.controls.employeeContry.value,
       allRedeem: (this.switchTransaction.controls.switchType.value == 3) ? true : false,
@@ -279,13 +281,14 @@ export class SwitchTransactionComponent implements OnInit {
       buySell: "SWITCH_OUT",
       transCode: "NEW",
       buySellType: "FRESH",
-      amountType: (this.switchTransaction.controls.redeemType.value == 1) ? 'Amount' : 'Unit',
-      dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
+      amountType: (this.switchTransaction.controls.switchType.value == 1) ? 'Amount' : 'Unit',
+      dividendReinvestmentFlag:-1, //this.schemeDetails.dividendReinvestmentFlag,
       clientCode: this.getDataSummary.defaultClient.clientCode,
       orderVal: this.switchTransaction.controls.employeeContry.value,
       bseDPTransType: "PHYSICAL",
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType
     }
+
     console.log('switch', obj)
     this.onlineTransact.transactionBSE(obj).subscribe(
       data => this.switchBSERes(data)
