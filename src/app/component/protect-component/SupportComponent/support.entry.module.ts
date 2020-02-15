@@ -8,10 +8,11 @@ import { IfasDetailsComponent } from './my-ifas/ifas-details/ifas-details.compon
 import { IfaBoradingHistoryComponent } from './ifa-onboarding/ifa-borading-history/ifa-borading-history.component';
 import { UpperSliderBackofficeComponent } from './common-component/upper-slider-backoffice/upper-slider-backoffice.component';
 import { ReconciliationDetailsViewComponent } from './common-component/reconciliation-details-view/reconciliation-details-view.component';
+import { SupportUpperSliderComponent } from './support-dashboard/support-upper-slider/support-upper-slider.component';
 
 
 const componentList = [
-    AdminDetailsComponent, IfasDetailsComponent, IfaBoradingHistoryComponent, UpperSliderBackofficeComponent, ReconciliationDetailsViewComponent
+    AdminDetailsComponent, IfasDetailsComponent, IfaBoradingHistoryComponent, UpperSliderBackofficeComponent, ReconciliationDetailsViewComponent, SupportUpperSliderComponent
 ]
 
 @NgModule({
