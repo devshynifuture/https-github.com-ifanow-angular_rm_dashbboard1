@@ -69,7 +69,7 @@ export class CashflowAddIncomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("this is some data from uppper slider::", this.data);
+    console.log("this is some data from uppper slider:: ", this.data);
     this.ownerData = this.formIncome.controls;
   }
 
@@ -110,6 +110,10 @@ export class CashflowAddIncomeComponent implements OnInit {
       this.eventService.openSnackBar('Must fill required fields', "DISMISS");
     }
     // api call for adding income
+
+    let incomeStartDate = this.formIncome.get('income-period-start').value;
+
+    console.log("start date::::::", incomeStartDate);
 
     const requestJSON = {
       "familyMemberId": 5500000,
@@ -153,7 +157,7 @@ export class CashflowAddIncomeComponent implements OnInit {
 
       // gives incomeId of newly created income inside cashflow
       console.log("this is some response frmo add income apio", res);
-    })
+    });
 
     // console.log('this is income form ', this.formIncome);
     // this.cashflowService.cashFlowAddIncome(requestJSON).subscribe(res => {

@@ -2,7 +2,14 @@
     <div class="col-md-12 text-right mb-10 mt-20">
         <button mat-raised-button class="btn-primary addon f-14 mr-16" (click)="addCashFlow('')">ADD
             {{ cashflowCategory | uppercase }}</button>
-        <button mat-raised-button class="greryColorBg" (click)="toggleEditMode()">EDIT MODE</button>
+        <button mat-raised-button class="greryColorBg" (click)="toggleEditMode()">
+            <span class="tableValue" *ngIf="!editMode">
+                EDIT MODE
+            </span>
+            <span class="inputValue" *ngIf="editMode">
+                SAVE
+            </span>
+        </button>
     </div>
 </div>
 <div class="col-md-12 cash-flow-upperTable">
@@ -87,7 +94,8 @@
         </ng-container>
 
         <ng-container matColumnDef="month5">
-            <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> May-{{ year.slice(-2) }}
+            <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef>
+                May-{{ year.slice(-2) }}
             </th>
             <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element; let i = index"
                 appCashflowTableEdit [editModeTable]="editMode">
