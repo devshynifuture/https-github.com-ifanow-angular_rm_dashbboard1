@@ -131,9 +131,10 @@
             <mat-form-field class="w-100">
                 <mat-select formControlName="customerType" (ngModelChange)="gstTreatmentRemove($event)"
                     class="form-control br-0" id="sel1">
-                    <mat-option [value]=1>Registered Business - Regular</mat-option>
-                    <mat-option [value]=2>Registered Business - Composition</mat-option>
-                    <mat-option [value]=3>Unregistered Business</mat-option>
+                    <mat-option [value]=1>Consumer</mat-option>
+                    <mat-option [value]=2>Not registered business</mat-option>
+                    <mat-option [value]=3>Overseas</mat-option>
+                    <mat-option [value]=4>Registered Business</mat-option>
                 </mat-select>
                 <mat-error class="f-12">
                     This field is required
@@ -141,7 +142,7 @@
             </mat-form-field>
         </div>
     </div>
-    <div class="row" *ngIf="showGstin != 3">
+    <div class="row" *ngIf="showGstin">
         <div class="col-md-6 pr-0">
             <h5 class="m-0">GSTIN</h5>
         </div>

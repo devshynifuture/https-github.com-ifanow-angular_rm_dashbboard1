@@ -1,12 +1,9 @@
 import { MatTableDataSource } from '@angular/material';
-import { PlanService } from './../plan.service';
 import { DatePipe } from '@angular/common';
 import { CashFlowsPlanService } from './cashflows-plan.service';
 import { UtilService } from 'src/app/services/util.service';
-import { EventService } from 'src/app/Data-service/event.service';
 import { Component, OnInit } from '@angular/core';
 import { chart } from './highChart';
-import { CashflowUpperSliderComponent } from './cashflow-upper-slider/cashflow-upper-slider.component';
 import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({

@@ -1,6 +1,6 @@
 <div class="col-md-12 cash-flow-upperTable mt-20">
     <!-- [ngClass]="editMode == true ? 'edit-mode-hover': ''" commented for prod -->
-    <table mat-table [dataSource]="dataSource" id="table-low" >
+    <table mat-table [dataSource]="dataSource" id="table-low">
         <ng-container matColumnDef="description">
             <th class="br-grey f-400 f-14" mat-header-cell *matHeaderCellDef> Description </th>
             <td class="br-grey f-14" mat-cell *matCellDef="let element">
@@ -15,7 +15,7 @@
             </th>
 
             <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
-                {{ element.month1 }}</td>
+                {{ element.month1.value }}</td>
         </ng-container>
 
         <!-- Weight Column -->
@@ -24,7 +24,7 @@
                 May-{{ year.slice(-2) }}
             </th>
             <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
-                {{ element.month2 }} </td>
+                {{ element.month2.value }} </td>
         </ng-container>
 
         <ng-container matColumnDef="month3">
@@ -32,21 +32,21 @@
                 Jun-{{ year.slice(-2) }}
             </th>
             <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
-                {{ element.month3 }} </td>
+                {{ element.month3.value }} </td>
         </ng-container>
 
         <ng-container matColumnDef="month4">
             <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Jul-{{ year.slice(-2) }}
             </th>
             <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
-                {{ element.month4 }} </td>
+                {{ element.month4.value }} </td>
         </ng-container>
 
         <ng-container matColumnDef="month5">
             <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Aug-{{ year.slice(-2) }}
             </th>
             <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
-                {{ element.month5 }} </td>
+                {{ element.month5.value }} </td>
         </ng-container>
 
         <ng-container matColumnDef="groupHeader">
@@ -59,49 +59,49 @@
             <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Sep-{{ year.slice(-2) }}
             </th>
             <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
-                {{ element.month6 }} </td>
+                {{ element.month6.value }} </td>
         </ng-container>
 
         <ng-container matColumnDef="month7">
             <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Oct-{{ year.slice(-2) }}
             </th>
             <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
-                {{ element.month7 }} </td>
+                {{ element.month7.value }} </td>
         </ng-container>
 
         <ng-container matColumnDef="month8">
             <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Nov-{{ year.slice(-2) }}
             </th>
             <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
-                {{ element.month8 }} </td>
+                {{ element.month8.value }} </td>
         </ng-container>
 
         <ng-container matColumnDef="month9">
             <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Dec-{{ year.slice(-2) }}
             </th>
             <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
-                {{ element.month9 }}</td>
+                {{ element.month9.value }}</td>
         </ng-container>
 
         <ng-container matColumnDef="month10">
             <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Jan-{{ year.slice(-2) }}
             </th>
             <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
-                {{ element.month10 }} </td>
+                {{ element.month10.value }} </td>
         </ng-container>
 
         <ng-container matColumnDef="month11">
             <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Feb-{{ year.slice(-2) }}
             </th>
             <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
-                {{element.month11}} </td>
+                {{element.month11.value}} </td>
         </ng-container>
 
         <ng-container matColumnDef="month12">
             <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> Mar-{{ year.slice(-2) }}
             </th>
             <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
-                {{ element.month12 }}</td>
+                {{ element.month12.value }}</td>
         </ng-container>
 
         <ng-container matColumnDef="total">

@@ -18,7 +18,7 @@ export class CashflowPlanInsuranceComponent implements OnInit {
     private cashflowService: CashFlowsPlanService) { }
   dataSource: MatTableDataSource<IncometableI>;
   displayedColumns: string[] = ['year', 'groupHeadAge', 'spouseAge', 'monthlyIncome', 'view'];
-  tableInUse: string = 'income';
+  tableInUse: string = 'insurance';
   isLoading: boolean = false;
 
   ngOnInit() {
