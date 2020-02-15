@@ -187,7 +187,7 @@ export class PayeeSettingsComponent implements OnInit {
       displayName: [data.companyDisplayName, [Validators.required]],
       customerType: [data.customerTypeId ],
       companyName: [data.companyName, [Validators.required]],
-      emailId: [data.email, [Validators.required]],
+      emailId: [data.email, [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
       primaryContact: [data.primaryContact, [Validators.required]],
       pan: [data.pan, [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-z]{1}")]],
       gstTreatment: [(data.gstTreatmentId == 1) ? 'Registered Business - Regular' : (data.gstTreatmentId == 2) ? 'Registered Business - Composition' : 'Unregistered Business'],
