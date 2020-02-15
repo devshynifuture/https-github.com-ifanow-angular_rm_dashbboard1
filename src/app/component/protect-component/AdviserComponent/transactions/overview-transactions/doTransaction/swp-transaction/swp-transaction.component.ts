@@ -293,11 +293,11 @@ export class SwpTransactionComponent implements OnInit {
       bankDetailId:null,
       nsePaymentMode:null,
     }
-    if (this.getDataSummary.defaultClient.aggregatorType == 1) {
-      obj.mandateId = (this.achMandateNSE == undefined)?null:this.achMandateNSE.id
-      obj.bankDetailId = this.bankDetails.id
-      obj.nsePaymentMode = (this.stpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE'
-    }
+    // if (this.getDataSummary.defaultClient.aggregatorType == 1) {
+    //   obj.mandateId = (this.achMandateNSE == undefined)?null:this.achMandateNSE.id
+    //   obj.bankDetailId = this.bankDetails.id
+    //   obj.nsePaymentMode = (this.stpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE'
+    // }
     this.onlineTransact.transactionBSE(obj).subscribe(
       data => this.swpBSERes(data)
     );
