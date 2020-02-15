@@ -263,7 +263,7 @@ export class PayeeSettingsComponent implements OnInit {
           city: this.payeeSettingsForm.controls.city.value,
           clientBillerId: 1,
           companyDisplayName: this.payeeSettingsForm.controls.displayName.value,
-          familyMemberId: this.familyMemberId,
+          familyMemberId: !this.inputData.flag? this.clientData.clientId : this.clientData.id,
           companyName: this.payeeSettingsForm.controls.companyName.value,
           country: this.payeeSettingsForm.controls.country.value,
           currency: 'string',
@@ -276,6 +276,7 @@ export class PayeeSettingsComponent implements OnInit {
           billerAddress: this.payeeSettingsForm.controls.billingAddress.value,
           primaryContact: this.payeeSettingsForm.controls.primaryContact.value,
           state: this.payeeSettingsForm.controls.state.value,
+          pan: this.payeeSettingsForm.controls.pan.value,
           zipCode: this.payeeSettingsForm.controls.pincode.value,
           id: this.payeeSettingsForm.controls.id.value,
           clientId:!this.inputData.flag? this.clientData.clientId : this.clientData.id

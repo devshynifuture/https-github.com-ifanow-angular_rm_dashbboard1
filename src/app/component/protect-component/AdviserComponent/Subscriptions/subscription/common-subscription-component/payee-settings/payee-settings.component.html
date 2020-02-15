@@ -185,7 +185,7 @@
         <div class="col-md-6">
             <mat-form-field>
                 <input #pincode [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6"
-                    (change)="getPostalPin($event.target.value)" appInputValueValidation
+                    (focusout)="getPostalPin($event.target.value)" appInputValueValidation
                     class="form-control br-0 text-left" formControlName="pincode" matInput minlength="6" type="text">
                 <mat-error class="f-12">{{pinInvalid?'Invalid pincode':'Pincode is required'}}</mat-error>
                 <mat-hint align="end" class="f-12">{{pincode.value.length}}/6</mat-hint>
