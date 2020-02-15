@@ -29,7 +29,7 @@ export class FixedFeeComponent implements OnInit {
   fixedFeeStructureForm = this.fb.group({
     fees: ['', [Validators.required]],
     billingNature: ['1'],
-    billEvery: [, [Validators.required]],
+    billEvery: ['', [Validators.required]],
     Duration: [1],
     billingMode: ['1']
   });
@@ -54,7 +54,7 @@ export class FixedFeeComponent implements OnInit {
       this.getFixedFee().fees.setValue(fixedData.subscriptionPricing.pricing);
       this.getFixedFee().billingNature.setValue(String(fixedData.subscriptionPricing.billingNature));
       this.getFixedFee().billEvery.setValue(fixedData.subscriptionPricing.billEvery);
-      this.getFixedFee().Duration.setValue((fixedData.subscriptionPricing.billingCycle) ? fixedData.subscriptionPricing.billingCycle : '1');
+      this.getFixedFee().Duration.setValue('1');
       this.getFixedFee().billingMode.setValue(String(fixedData.subscriptionPricing.billingMode));
       (this.singleSubscriptionData.isCreateSub == false) ? this.fixedFeeStructureForm.enable() : this.fixedFeeStructureForm.disable();
 

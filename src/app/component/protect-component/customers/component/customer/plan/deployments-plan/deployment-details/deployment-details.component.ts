@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { MatDialog } from '@angular/material';
 import { SelectAssetClassComponent } from '../select-asset-class/select-asset-class.component';
+import { PlanService } from '../../plan.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-deployment-details',
@@ -9,8 +11,9 @@ import { SelectAssetClassComponent } from '../select-asset-class/select-asset-cl
   styleUrls: ['./deployment-details.component.scss']
 })
 export class DeploymentDetailsComponent implements OnInit {
+  deploymentData: any;
 
-  constructor(private subInjectService: SubscriptionInject, public dialog: MatDialog) { }
+  constructor(private eventService: EventService, private subInjectService: SubscriptionInject, public dialog: MatDialog, private planService: PlanService) { }
   displayedColumns: string[] = ['position', 'name', 'weight', 'icons'];
   dataSource = ELEMENT_DATA;
   displayedColumns1: string[] = ['position', 'name', 'weight', 'icons'];
@@ -18,6 +21,23 @@ export class DeploymentDetailsComponent implements OnInit {
   displayedColumns2: string[] = ['name', 'weight', 'height', 'test', 'icons'];
   dataSource2 = ELEMENT_DATA2;
   ngOnInit() {
+  }
+  set data(data) {
+    this.getDeploymentData(data)
+  }
+  getDeploymentData(data) {
+    let obj =
+    {
+      deploymentId: data.id
+    }
+    this.planService.getDeploymentDetailsdata(obj).subscribe(
+      data => {
+        console.log(data);
+        this.deploymentData = data;
+      },
+      err => this.eventService.openSnackBar(err, 'dismiss')
+    )
+
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
