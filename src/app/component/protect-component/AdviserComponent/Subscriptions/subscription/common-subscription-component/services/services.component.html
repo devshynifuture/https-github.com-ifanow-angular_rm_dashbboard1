@@ -35,6 +35,7 @@
                 <div *ngFor="let serviceData of planServiceData; index as i" appSkeletonLoading
                     [appSkeletonLoading]="isLoading" class="col-md-4 c-p pl-10 pr-10 pb-28  ">
                     <div class="example-card b-a">
+                        <div (click)="serviceData.read = serviceData.read? false : true" class="read-more c-p" *ngIf="serviceData.description && serviceData.description.length > 100">{{serviceData.read?'read less':'read more'}}</div>
                         <div [ngClass]="{'baBlue':serviceData.selected,'b-ua':serviceData.selected==false }"
                             (click)="selectService(serviceData,i)" class="overflow-hidden">
                             <div class="bg-grey lter text-left" >
@@ -59,7 +60,7 @@
                                                     {{serviceData.description}}
                                                 </p>
                                             </div>
-                                            <div (click)="serviceData.read = serviceData.read? false : true" class="read-more c-p" *ngIf="serviceData.description && serviceData.description.length > 100">{{serviceData.read?'read less':'read more'}}</div>
+                                            
                                         </div>
                                     </div>
 
