@@ -43,6 +43,8 @@ export class SipTransactionComponent implements OnInit {
   mandateDetails: any;
   frequency: any;
   fre: any;
+  achMandateNSE: any;
+  platformType: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private processTransaction: ProcessTransactionService, private fb: FormBuilder) { }
@@ -64,9 +66,12 @@ export class SipTransactionComponent implements OnInit {
 
   ngOnInit() {
     this.getdataForm(this.inputData)
-    this.transactionSummary = { selectedFamilyMember: this.inputData.selectedFamilyMember }
+    this.transactionSummary={}
+    Object.assign(this.transactionSummary, { allEdit: true });
+    Object.assign(this.transactionSummary, {selectedFamilyMember: this.inputData.selectedFamilyMember});
   }
   onAddTransaction(value, data) {
+    Object.assign(this.transactionSummary, {allEdit: false});
     this.confirmTrasaction = true
     const fragmentData = {
       flag: 'addNsc',
@@ -132,10 +137,17 @@ export class SipTransactionComponent implements OnInit {
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
+    this.platformType = this.getDataSummary.defaultClient.aggregatorType
+  }
+  selectPaymentMode(value) {
+    Object.assign(this.transactionSummary, { paymentMode: value });
+    if(value == 2){
+      Object.assign(this.transactionSummary, { getAch: true });
+    }
   }
   selectedScheme(scheme) {
     this.scheme = scheme
-    this.transactionSummary = { schemeName: scheme.schemeName }
+    Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
     this.navOfSelectedScheme = scheme.nav
     let obj1 = {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
@@ -192,6 +204,12 @@ export class SipTransactionComponent implements OnInit {
     });
     console.log('dateDisplay = ', this.dateDisplay)
   }
+  getbankDetails(value){
+    console.log('bank details',value)
+  }
+  getAchmandateDetails(value){
+    console.log('achMandate details',value)
+  }
   getMandateDetails() {
     let obj1 = {
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -226,6 +244,7 @@ export class SipTransactionComponent implements OnInit {
   }
   selectedFolio(folio) {
     this.folioDetails = folio
+    Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
   }
   reinvest(scheme) {
     this.schemeDetails = scheme

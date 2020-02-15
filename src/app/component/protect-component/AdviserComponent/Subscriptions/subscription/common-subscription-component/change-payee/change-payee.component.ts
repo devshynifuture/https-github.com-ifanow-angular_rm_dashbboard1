@@ -150,29 +150,34 @@ export class ChangePayeeComponent implements OnInit {
   }
 
   saveChangePayeeSetting() {
-    this.barButtonOptions.active = true;
-    const obj = [];
-    this.payeeDataRes.forEach(element => {
-      if (element.selected == 1 || element.selected == true) {
-        const obj1 = {
-          id: element.id,
-          subscriptionId: this.getRowData.id,
-          share: element.share
-        };
-        obj.push(obj1);
-      }
-    });
-    console.log('obj ====', obj);
-    this.subService.changePayeeSetting(obj).subscribe(
-      data =>{
-        this.barButtonOptions.active = false;
-        this.changePayeeSettingRes(data);
-      },
-      err =>{
-        this.barButtonOptions.active = false;
-        console.log(err, "error changePayeeSettingRes");
-      }
-    );
+    if(this.totalValue!=100){
+      this.eventService.openSnackBar('Total spliting ratio of selected payee should be equal to 100%', 'dismiss')
+    }
+    else{
+      this.barButtonOptions.active = true;
+      const obj = [];
+      this.payeeDataRes.forEach(element => {
+        if (element.selected == 1 || element.selected == true) {
+          const obj1 = {
+            id: element.id,
+            subscriptionId: this.getRowData.id,
+            share: element.share
+          };
+          obj.push(obj1);
+        }
+      });
+      console.log('obj ====', obj);
+      this.subService.changePayeeSetting(obj).subscribe(
+        data =>{
+          this.barButtonOptions.active = false;
+          this.changePayeeSettingRes(data);
+        },
+        err =>{
+          this.barButtonOptions.active = false;
+          console.log(err, "error changePayeeSettingRes");
+        }
+      );
+    }
   }
 
   changePayeeSettingRes(data) {

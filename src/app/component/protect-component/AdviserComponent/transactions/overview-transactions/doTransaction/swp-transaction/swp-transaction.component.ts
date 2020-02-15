@@ -62,8 +62,11 @@ export class SwpTransactionComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.transactionSummary ={}
     this.getdataForm(this.inputData)
-    this.transactionSummary = { selectedFamilyMember: this.inputData.selectedFamilyMember }
+    Object.assign(this.transactionSummary, { transactType: 'SWP' });
+    Object.assign(this.transactionSummary, { allEdit: true });
+    Object.assign(this.transactionSummary, {selectedFamilyMember: this.inputData.selectedFamilyMember});
   }
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
@@ -112,6 +115,7 @@ export class SwpTransactionComponent implements OnInit {
   selectedScheme(scheme) {
     this.scheme = scheme
     this.showUnits = true
+    Object.assign(this.transactionSummary, {schemeName:  scheme.schemeName});
     this.transactionSummary = { schemeName: scheme.schemeName }
     this.navOfSelectedScheme = scheme.nav
     let obj1 = {
@@ -146,7 +150,7 @@ export class SwpTransactionComponent implements OnInit {
   selectedFolio(folio) {
     this.folioDetails = folio
     this.showUnits = true
-    this.transactionSummary = { folioNumber: folio.folioNumber }
+    Object.assign(this.transactionSummary, {folioNumber:  folio.folioNumber});
   }
   getFrequency() {
     let obj = {
@@ -178,6 +182,7 @@ export class SwpTransactionComponent implements OnInit {
     console.log('dateDisplay = ', this.dateDisplay)
   }
   onAddTransaction(value, data) {
+    Object.assign(this.transactionSummary, {allEdit: false});
     this.confirmTrasaction = true
     const fragmentData = {
       flag: 'addNsc',
