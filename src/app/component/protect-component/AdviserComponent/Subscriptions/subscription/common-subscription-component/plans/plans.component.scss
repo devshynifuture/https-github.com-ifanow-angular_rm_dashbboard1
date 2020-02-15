@@ -9,6 +9,7 @@
     padding: 0;
 }
 
+
 .positionAbsulate {
     position: absolute;
     top: 0px;
@@ -25,7 +26,16 @@
     color: #008FFF;
     margin-bottom: -18px;
     font-size: 14px;
+    position: absolute;
+    bottom:19px;
+    right:10px;
+    z-index: 1;
 }
+
+.example-card{
+    position: relative;
+}
+
 .height80{height: 80px;  overflow: hidden;  }
 .l-h{
     line-height: 20px;
