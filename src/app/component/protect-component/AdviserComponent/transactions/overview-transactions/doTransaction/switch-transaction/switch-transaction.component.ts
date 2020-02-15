@@ -24,7 +24,7 @@ export class SwitchTransactionComponent implements OnInit {
   transactionSummary: {};
   schemeDetails: any;
   maiSchemeList: any;
-  reInvestmentOpt: any;
+  reInvestmentOpt=[];
   schemeList: any;
   showUnits = false;
   getDataSummary: any;
@@ -66,7 +66,7 @@ export class SwitchTransactionComponent implements OnInit {
     this.getDataSummary = data
   }
   getSchemeList(value) {
-
+    this.showSpinner = true
     if (this.selectScheme == 2 && value.length > 2) {
       let obj = {
         searchQuery: value,
@@ -88,6 +88,7 @@ export class SwitchTransactionComponent implements OnInit {
     }
   }
   getExistingSchemesRes(data) {
+    this.showSpinner = false
     this.schemeList = data
   }
   selectedFolio(folio) {
@@ -122,6 +123,11 @@ export class SwitchTransactionComponent implements OnInit {
       this.reInvestmentOpt = []
     }
     this.getSchemeWiseFolios()
+  }
+  reinvest(scheme) {
+    this.schemeDetails = scheme
+    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
+    console.log('schemeDetails == ', this.schemeDetails)
   }
   getSchemeWiseFolios() {
     let obj1 = {
@@ -188,6 +194,7 @@ export class SwitchTransactionComponent implements OnInit {
     this.schemeDetailsTransfer = data[0]
   }
   getSchemeListTranfer(value){
+    this.showSpinner = true
     if (this.selectScheme == 2 && value.length > 2) {
       let obj = {
         searchQuery: value,
@@ -213,6 +220,7 @@ export class SwitchTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { enteredAmount: value });
   }
   getNewSchemesRes(data){
+    this.showSpinner = false
     console.log('new schemes', data)
     this.schemeListTransfer = data
   }
@@ -271,6 +279,7 @@ export class SwitchTransactionComponent implements OnInit {
       buySell: "SWITCH_OUT",
       transCode: "NEW",
       buySellType: "FRESH",
+      amountType: (this.switchTransaction.controls.redeemType.value == 1) ? 'Amount' : 'Unit',
       dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
       clientCode: this.getDataSummary.defaultClient.clientCode,
       orderVal: this.switchTransaction.controls.employeeContry.value,

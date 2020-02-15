@@ -64,8 +64,8 @@ export class TransactionSummaryComponent implements OnInit {
   }
   getBankDetailsNSERes(data) {
     console.log('bank res',data)
-    // let obj = [{bankName : 'axis'},{bankName : 'hdfc'},{bankName : 'sbi'}]
-    this.bankDetails = data
+    this.bankDetails = data[0]
+    this.bankDetailsSend.emit(this.bankDetails);
     if(this.bankDetails.length > 1){
       this.showBankEdit = true
     }

@@ -24,7 +24,7 @@
             <div class="col-md-8 pl-0 pr-20">
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pt-28 text-black pb-12">Select scheme to transfer out of</h5>
+                        <h5 class="m-0 pt-28 text-black pb-12">Select scheme to switch out of</h5>
                     </div>
                 </div>
                 <div class="row">
@@ -54,7 +54,22 @@
                         <mat-spinner class="mt-8"></mat-spinner>
                     </div>
                 </div>
-
+                <div class="row pt-28 " *ngIf="reInvestmentOpt.length > 1">
+                    <div class="col-md-12 p-0 text-left">
+                        <h5 class="m-0 text-black pb-8">Select re-investment</h5>
+                    </div>
+                    <div class="col-md-5 p-0">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <mat-select class="form-control" formControlName="investmentAccountSelection">
+                                    <mat-option value="option" *ngFor="let flag of reInvestmentOpt" (click)="reinvest(flag)">
+                                        {{(flag.dividendReinvestmentFlag == 0)?'Dividend payout':'Dividend reinvestment'}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-6 p-0 text-left">
                         <h5 class="m-0 pt-28 text-black pb-8">Select scheme folio</h5>
@@ -108,7 +123,7 @@
                                     (keyup)="getSchemeListTranfer($event.target.value)"
                                     value="Start typing to see transferIn names">
                                 <mat-autocomplete #auto1="matAutocomplete">
-                                    <mat-option (onSelectionChange)="selectedScheme(scheme)"
+                                    <mat-option (onSelectionChange)="selectedSchemeTransfer(scheme)"
                                         *ngFor="let scheme of schemeListTransfer" [value]="scheme.schemeName">
                                         {{scheme.schemeName}}
                                     </mat-option>
@@ -167,31 +182,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="row">
-                    <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pb-8 text-black">Select Tenure</h5>
-                    </div>
-
-                    <div class="col-md-5 p-0">
-                        <mat-form-field>
-                            <mat-select class="form-control" formControlName="tenure">
-                                <mat-option value="1">No. of installment</mat-option>
-                                <mat-option value="2">No. year</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row pt-28">
-                    <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pb-8 text-black">Enter installment</h5>
-                    </div>
-
-                    <div class="col-md-5 p-0">
-                        <mat-form-field>
-                            <input #employeeContry matInput maxlength="10" type="text" class="form-control br-0 rupess" formControlName="installment">
-                        </mat-form-field>
-                    </div>
-                </div> -->
             </div>
             <div class="col-md-4 bg-grey lter p-0">
                 <app-transaction-summary [data]="transactionSummary" (defaultDetails)='getDefaultDetails($event)'>

@@ -106,6 +106,7 @@ export class SipTransactionComponent implements OnInit {
     this.selectScheme = value
   }
   getSchemeList(value) {
+    this.showSpinner = true
     let obj = {
       searchQuery: value,
       bseOrderType: 'ORDER',
@@ -129,10 +130,12 @@ export class SipTransactionComponent implements OnInit {
     }
   }
   getNewSchemesRes(data) {
+    this.showSpinner = false
     console.log('new schemes', data)
     this.schemeList = data
   }
   getExistingSchemesRes(data) {
+    this.showSpinner = false
     this.schemeList = data
   }
   getDefaultDetails(data) {
@@ -243,6 +246,7 @@ export class SipTransactionComponent implements OnInit {
     console.log('getFoliosAmcWiseRes', data)
     this.folioList = data
   }
+  
   selectedFolio(folio) {
     this.folioDetails = folio
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });

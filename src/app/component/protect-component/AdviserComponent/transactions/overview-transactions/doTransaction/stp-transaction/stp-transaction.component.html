@@ -123,7 +123,7 @@
                                     (keyup)="getSchemeListTranfer($event.target.value)"
                                     value="Start typing to see transferIn names">
                                 <mat-autocomplete #auto1="matAutocomplete">
-                                    <mat-option (onSelectionChange)="selectedScheme(scheme)"
+                                    <mat-option (onSelectionChange)="selectedSchemeTransfer(scheme)"
                                         *ngFor="let scheme of schemeListTransfer" [value]="scheme.schemeName">
                                         {{scheme.schemeName}}
                                     </mat-option>
@@ -141,22 +141,6 @@
                         <mat-spinner class="mt-8"></mat-spinner>
                     </div>
                 </div>
-                <!-- <div class="col-md-12 p-0">
-                        <div class="form-control mb-0 add-transactions">
-                            <input type="text" aria-label="Number" class="form-group h-0" matInput
-                                formControlName="transferIn" [matAutocomplete]="auto"
-                                (keyup)="getSchemeListTranfer($event.target.value)"
-                                value="Start typing to see investor names">
-                            <mat-autocomplete #auto="matAutocomplete">
-                                <mat-option (onSelectionChange)="selectedSchemeTransfer(scheme)"
-                                    *ngFor="let scheme of schemeListTransfer" [value]="scheme.schemeName">
-                                    {{scheme.schemeName}}
-                                </mat-option>
-                            </mat-autocomplete>
-                            <p class="m-0 f-12 text-custom pt-8">Last closing NAV: {{navOfSelectedScheme}}</p>
-                        </div>
-                    </div> -->
-
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
                         <h5 class="m-0 pt-28 text-black pb-12">Select STP frequency</h5>

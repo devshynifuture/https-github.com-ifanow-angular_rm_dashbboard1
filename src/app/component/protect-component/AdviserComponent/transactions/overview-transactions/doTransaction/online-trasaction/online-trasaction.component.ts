@@ -10,6 +10,7 @@ import { StpTransactionComponent } from '../stp-transaction/stp-transaction.comp
 import { SwpTransactionComponent } from '../swp-transaction/swp-transaction.component';
 import { OnlineTransactionService } from '../../../online-transaction.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-online-trasaction',
@@ -49,9 +50,10 @@ export class OnlineTrasactionComponent implements OnInit {
   selectedFamilyMember: any;
   advisorId: any;
   clientId: any;
+  checkFamilyMem: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-    private fb: FormBuilder) {
+    private eventService : EventService,private fb: FormBuilder) {
   }
 
   @Input()
@@ -76,16 +78,21 @@ export class OnlineTrasactionComponent implements OnInit {
   getFamilyList(value) {
     let obj = {
       advisorId: this.advisorId,
-     name : value
+      name: value
     }
-    if(value.length > 2){
+    if (value.length > 2) {
       this.onlineTransact.getFamilyMemberList(obj).subscribe(
         data => this.getFamilyMemberListRes(data)
       );
     }
   }
   getFamilyMemberListRes(data) {
-    console.log('getFamilyMemberListRes', data)
+    if(data == undefined){
+      return
+    }
+    console.log('getFamilyMemberListRes', data) , (error) => {
+      this.eventService.showErrorMessage(error);
+    }
     this.nomineesListFM = data.familyMembers
   }
   close() {
@@ -105,6 +112,7 @@ export class OnlineTrasactionComponent implements OnInit {
   }
 
   getdataForm(data) {
+    // this.formStep = data
     if (!data) {
       data = {};
     }
@@ -173,8 +181,11 @@ export class OnlineTrasactionComponent implements OnInit {
   }
   saveAndNext() {
     console.log(this.formStep);
-    if (this.transactionAddForm.get('ownerName').valid) {
-      if (this.formStep == 'step-1') {
+    if (this.nomineesListFM && this.transactionAddForm.get('ownerName').valid) {
+      this.nomineesListFM.forEach(element => {
+        this.checkFamilyMem = element.name.includes(this.transactionAddForm.controls.ownerName.value)
+      });
+      if (this.formStep == 'step-1' == this.checkFamilyMem == true) {
         this.formStep = 'step-2';
       } else if (this.transactionAddForm.get('transactionType').valid && this.formStep == 'step-2') {
         let data = {

@@ -54,8 +54,22 @@
                         <mat-spinner class="mt-8"></mat-spinner>
                     </div>
                 </div>
-
-
+                <div class="row pt-28 " *ngIf="reInvestmentOpt.length > 1">
+                    <div class="col-md-12 p-0 text-left">
+                        <h5 class="m-0 text-black pb-8">Select re-investment</h5>
+                    </div>
+                    <div class="col-md-5 p-0">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <mat-select class="form-control" formControlName="investmentAccountSelection">
+                                    <mat-option value="option" *ngFor="let flag of reInvestmentOpt" (click)="reinvest(flag)">
+                                        {{(flag.dividendReinvestmentFlag == 0)?'Dividend payout':'Dividend reinvestment'}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-6 p-0 text-left">
                         <h5 class="m-0 pt-28 text-black pb-12">Select scheme folio</h5>

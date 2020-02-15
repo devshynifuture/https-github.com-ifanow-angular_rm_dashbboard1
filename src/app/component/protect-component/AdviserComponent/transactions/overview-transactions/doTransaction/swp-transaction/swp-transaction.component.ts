@@ -24,7 +24,7 @@ export class SwpTransactionComponent implements OnInit {
   selectScheme = 2;
   maiSchemeList: any;
   schemeDetails: any;
-  reInvestmentOpt: any;
+  reInvestmentOpt=[];
   schemeList: any;
   showUnits = false;
   showSpinner = false;
@@ -74,7 +74,7 @@ export class SwpTransactionComponent implements OnInit {
     this.getDataSummary = data
   }
   getSchemeList(value) {
-
+    this.showSpinner = true
     if (this.selectScheme == 2 && value.length > 2) {
       let obj = {
         searchQuery: value,
@@ -109,7 +109,13 @@ export class SwpTransactionComponent implements OnInit {
     this.getFrequency()
     this.getSchemeWiseFolios()
   }
+  reinvest(scheme) {
+    this.schemeDetails = scheme
+    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
+    console.log('schemeDetails == ', this.schemeDetails)
+  }
   getExistingSchemesRes(data) {
+    this.showSpinner = false
     console.log('getExistingSchemesRes =', data)
     this.schemeList = data
   }
