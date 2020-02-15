@@ -29,6 +29,8 @@ export class DeploymentsPlanComponent implements OnInit {
     this.getDeploymentData();
   }
   getDeploymentData() {
+    this.isLoading = true;
+    this.dataSource = [{}, {}, {}];
     const obj =
     {
       clientId: this.clientId,
@@ -37,8 +39,9 @@ export class DeploymentsPlanComponent implements OnInit {
     }
     this.cusService.getAdviceDeploymentsData(obj).subscribe(
       data => {
-        console.log(data)
-        this.dataSource = data[0]
+        console.log(data);
+        this.isLoading = false;
+        this.dataSource = data[0];
       },
       err => this.eventService.openSnackBar("something went wrong", "dismiss")
     )

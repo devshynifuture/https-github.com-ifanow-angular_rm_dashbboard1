@@ -25,7 +25,7 @@
       <app-mutual-fund-summary [mutualFund]="mfData"></app-mutual-fund-summary>
     </div>
     <div *ngSwitchCase="'All Transactions'">
-      <app-mutual-fund-all-transaction></app-mutual-fund-all-transaction>
+      <app-mutual-fund-all-transaction [mutualFund]="mfData"></app-mutual-fund-all-transaction>
     </div>
     <div *ngSwitchCase="'Unrealized Transactions'">
       <app-mutual-fund-unrealized-tran></app-mutual-fund-unrealized-tran>

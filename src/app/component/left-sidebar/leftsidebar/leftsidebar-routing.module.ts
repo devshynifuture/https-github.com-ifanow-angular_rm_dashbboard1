@@ -50,6 +50,10 @@ const routes: Routes = [
       {
         path: 'backoffice-aum-reconciliation',
         loadChildren: () => import('src/app/component/protect-component/AdviserComponent/backOffice/backoffice-aum-reconciliation/backoffice-aum-reconciliation.module').then(m => m.BackofficeAumReconciliationModule)
+      },
+      {
+        path: 'setting',
+        loadChildren: () => import('src/app/component/protect-component/AdviserComponent/setting/setting.module').then(m => m.SettingModule)
       }
     ]
   }
