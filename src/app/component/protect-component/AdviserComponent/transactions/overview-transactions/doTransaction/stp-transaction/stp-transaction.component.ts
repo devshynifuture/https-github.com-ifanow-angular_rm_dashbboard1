@@ -33,6 +33,7 @@ export class StpTransactionComponent implements OnInit {
   scheme: any;
   folioDetails: any;
   folioList: any;
+  showSpinner = false;
   switchFrequency: any;
   fre: any;
   frequency: any;
@@ -257,6 +258,9 @@ export class StpTransactionComponent implements OnInit {
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
+  enteredAmount(value) {
+    Object.assign(this.transactionSummary, { enteredAmount: value });
+  }
   getdataForm(data) {
     if (!data) {
       data = {};
@@ -331,7 +335,7 @@ export class StpTransactionComponent implements OnInit {
     if(data == undefined){
 
     }else{
-    this.onAddTransaction('confirm',null)
+    this.onAddTransaction('confirm',this.transactionSummary)
     }
   }
 }

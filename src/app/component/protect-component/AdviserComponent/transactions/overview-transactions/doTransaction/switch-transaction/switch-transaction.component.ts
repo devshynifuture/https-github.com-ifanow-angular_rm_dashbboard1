@@ -28,6 +28,7 @@ export class SwitchTransactionComponent implements OnInit {
   schemeList: any;
   showUnits = false;
   getDataSummary: any;
+  showSpinner = false;
   scheme: any;
   folioList: any;
   folioDetails: any;
@@ -170,7 +171,7 @@ export class SwitchTransactionComponent implements OnInit {
   }
   selectedSchemeTransfer(schemeTransfer){
     this.schemeTransfer = schemeTransfer
-    this.transactionSummary = { schemeNameTranfer: schemeTransfer.schemeName }
+    Object.assign(this.transactionSummary, {schemeNameTranfer: schemeTransfer.schemeName});
     this.navOfSelectedScheme = schemeTransfer.nav
     let obj1 = {
       mutualFundSchemeMasterId: schemeTransfer.mutualFundSchemeMasterId,
@@ -207,6 +208,9 @@ export class SwitchTransactionComponent implements OnInit {
   }
   switchType(value){
 
+  }
+  enteredAmount(value) {
+    Object.assign(this.transactionSummary, { enteredAmount: value });
   }
   getNewSchemesRes(data){
     console.log('new schemes', data)
@@ -283,7 +287,7 @@ export class SwitchTransactionComponent implements OnInit {
     if(data == undefined){
 
     }else{
-    this.onAddTransaction('confirm',null)
+    this.onAddTransaction('confirm',this.transactionSummary)
     }
   }
 }

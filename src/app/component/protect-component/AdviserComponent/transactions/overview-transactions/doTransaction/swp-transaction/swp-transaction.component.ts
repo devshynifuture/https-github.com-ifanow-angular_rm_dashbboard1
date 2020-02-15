@@ -27,6 +27,7 @@ export class SwpTransactionComponent implements OnInit {
   reInvestmentOpt: any;
   schemeList: any;
   showUnits = false;
+  showSpinner = false;
   navOfSelectedScheme: any;
   transactionSummary: {};
   getDataSummary: any;
@@ -146,7 +147,9 @@ export class SwpTransactionComponent implements OnInit {
     console.log('res scheme folio', data)
     this.folioList = data
   }
-
+  enteredAmount(value) {
+    Object.assign(this.transactionSummary, { enteredAmount: value });
+  }
   selectedFolio(folio) {
     this.folioDetails = folio
     this.showUnits = true
@@ -272,7 +275,7 @@ export class SwpTransactionComponent implements OnInit {
     if(data == undefined){
 
     }else{
-    this.onAddTransaction('confirm',null)
+    this.onAddTransaction('confirm',this.transactionSummary)
     }
   }
 }

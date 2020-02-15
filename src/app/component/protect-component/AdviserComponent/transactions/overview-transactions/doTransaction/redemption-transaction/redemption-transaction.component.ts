@@ -18,6 +18,7 @@ export class RedemptionTransactionComponent implements OnInit {
   inputData: any;
   selectedFamilyMember: any;
   isViewInitCalled = false;
+  showSpinner = false;
   transactionType: any;
   getDataSummary: any;
   schemeList: any;
@@ -228,7 +229,7 @@ export class RedemptionTransactionComponent implements OnInit {
     if(data == undefined){
 
     }else{
-    this.onAddTransaction('confirm',null)
+    this.onAddTransaction('confirm',this.transactionSummary)
     }
   }
 }

@@ -120,6 +120,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   selectedScheme(scheme) {
     this.showSpinner = true
     this.scheme = scheme
+    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav
     let obj1 = {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
@@ -130,7 +131,6 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
       data => this.getSchemeDetailsRes(data)
     );
-    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
   }
 
   getSchemeDetailsRes(data) {
@@ -171,7 +171,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
   }
   enteredAmount(value) {
-    this.transactionSummary = { enteredAmount: value }
+    Object.assign(this.transactionSummary, { enteredAmount: value });
   }
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
@@ -286,7 +286,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     if (data == undefined) {
 
     } else {
-      this.onAddTransaction('confirm', null)
+      this.onAddTransaction('confirm', this.transactionSummary)
     }
   }
 }

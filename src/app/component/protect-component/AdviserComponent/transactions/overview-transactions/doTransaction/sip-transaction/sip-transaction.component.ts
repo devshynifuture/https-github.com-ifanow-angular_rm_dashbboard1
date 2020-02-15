@@ -39,6 +39,7 @@ export class SipTransactionComponent implements OnInit {
   dateDisplay: any;
   sipDate: any;
   dates: any;
+  showSpinner = false;
   showUnits = false;
   mandateDetails: any;
   frequency: any;
@@ -95,7 +96,7 @@ export class SipTransactionComponent implements OnInit {
     );
   }
   enteredAmount(value) {
-    this.transactionSummary = { enteredAmount: value }
+    Object.assign(this.transactionSummary, { enteredAmount: value });
   }
   selectExistingOrNew(value) {
     this.ExistingOrNew = value
@@ -336,7 +337,7 @@ export class SipTransactionComponent implements OnInit {
     if(data == undefined){
 
     }else{
-    this.onAddTransaction('confirm',null)
+    this.onAddTransaction('confirm',this.transactionSummary)
     }
   }
 

@@ -146,7 +146,6 @@ export class OnlineTrasactionComponent implements OnInit {
           if (UtilService.isRefreshRequired(sideBarData)) {
             // this.getNscSchemedata();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
           }
           rightSideDataSub.unsubscribe();
         }
@@ -155,9 +154,6 @@ export class OnlineTrasactionComponent implements OnInit {
     );
   }
   selectTransactionType(value: string) {
-    // let obj = {
-    //   'transactionType': value
-    // }
     this.selectedDiv = value;
     this.transactionAddForm.controls.transactionType.setValue(value);
 
