@@ -35,6 +35,7 @@ p {
 
 .h-a{
     height: auto !important;
+    padding-bottom: 23px;
 }
 
 h3 p {
@@ -45,6 +46,13 @@ h3 p {
     text-align: right;
     color: #008FFF;
     font-size: 14px;
+    position: absolute;
+    bottom:178px;
+    right:10px;
+}
+
+.example-card{
+    position: relative;
 }
 
 // .button-fix{
@@ -113,6 +121,8 @@ label {
 .baBlue {
     outline: 3px solid #008FFF;
 }
+
+
 
 ::ng-deep .example-card:hover {
     box-shadow: none;

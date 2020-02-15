@@ -82,7 +82,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
 
   getActiveLink(){
     let link = this.router.url.split('/')[2];
-    console.log("link check", link);
+    // console.log("link check", link);
     
     switch(link)
     {
