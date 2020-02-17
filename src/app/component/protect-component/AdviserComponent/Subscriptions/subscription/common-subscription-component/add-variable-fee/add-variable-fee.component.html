@@ -92,19 +92,33 @@
                 <mat-form-field>
                     <div class="row">
                         <div class="col-md-5 p-0">
-                            <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="2" appInputValueValidation
+                            <!-- <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="2" appInputValueValidation
                                 matInput (changedValue)="getFormControl().billEvery.setValue($event)"
-                                class="form-control br0 height38 br-none" formControlName="billEvery" type="text">
+                                class="form-control br0 height38 br-none" formControlName="billEvery" type="text"> -->
+                            <mat-select class="form-control br-0" formControlName="billEvery">
+                                <mat-option [value]="1">Monthly</mat-option>
+                                <!-- <mat-option value="2">2</mat-option> -->
+                                <mat-option [value]="3">Quarterly</mat-option>
+                                <!-- <mat-option value="4">4</mat-option>
+                                <mat-option value="5">5</mat-option> -->
+                                <mat-option [value]="6">Half-yearly</mat-option>
+                                <!-- <mat-option value="7">7</mat-option>
+                                <mat-option value="8">8</mat-option>
+                                <mat-option value="9">9</mat-option>
+                                <mat-option value="10">10</mat-option>
+                                <mat-option value="11">11</mat-option> -->
+                                <mat-option [value]="12">Yearly</mat-option>
+                            </mat-select>
                         </div>
                         <div class="col-md-4 p-0">
-                            <mat-select class="form-control br0" formControlName="Duration" id="sel1">
+                            <!-- <mat-select class="form-control br0" formControlName="Duration" id="sel1">
                                 <mat-option value="1">Months</mat-option>
                                 <mat-option value="2">Years</mat-option>
-                            </mat-select>
+                            </mat-select> -->
                         </div>
                     </div>
                     <mat-error class="f-12"
-                        [ngClass]="{'v-h':!(isBillValid && getFormControl().billEvery.invalid || getFormControl().billEvery.touched && getFormControl().billEvery.invalid)}">
+                        *ngIf="getFormControl().billEvery.touched && getFormControl().billEvery.required">
                         Billevery is required
                     </mat-error>
                 </mat-form-field>
