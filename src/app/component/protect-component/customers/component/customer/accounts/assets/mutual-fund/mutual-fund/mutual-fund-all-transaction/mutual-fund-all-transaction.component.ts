@@ -9,9 +9,9 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./mutual-fund-all-transaction.component.scss']
 })
 export class MutualFundAllTransactionComponent implements OnInit {
- 
 
-  displayedColumns: string[] = ['no','transactionType', 'transactionDate', 'transactionAmount', 'transactionNav', 'units', 'balanceUnits', 'days','icons'];
+
+  displayedColumns: string[] = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav', 'units', 'balanceUnits', 'days', 'icons'];
   // displayedColumns: string[] = ['schemeName', 'amountInvested', 'currentValue', 'unrealizedProfit', 'absoluteReturn', 'xirr', 'dividendPayout', 'switchOut', 'balanceUnit', 'navDate', 'sipAmount','icons'];
 
 
@@ -22,8 +22,13 @@ export class MutualFundAllTransactionComponent implements OnInit {
   subCategoryData: any[];
   schemeWise: any[];
   mutualFundList: any[];
+  totalTransactionAmt: number;
+  totalUnit: number;
+  totalBalanceUnit: number;
+  totalNav: number;
+  totalObj: { 'total': string; 'totalTransactionAmt': number; 'totalUnit': number; 'totalNav': number; 'totalBalanceUnit': number; };
 
-  constructor(private subInjectService: SubscriptionInject, private UtilService:UtilService) { }
+  constructor(private subInjectService: SubscriptionInject, private UtilService: UtilService) { }
   @Input() mutualFund;
 
   ngOnInit() {
@@ -31,6 +36,7 @@ export class MutualFundAllTransactionComponent implements OnInit {
       this.getSubCategoryWise(this.mutualFund)
       this.getSchemeWise();
       this.mfSchemes();
+      this.getTotalValue();
     }
   }
   subCatArray() {
@@ -50,20 +56,22 @@ export class MutualFundAllTransactionComponent implements OnInit {
       Object.keys(catObj).map(key => {
         customDataSource.data.push({ groupName: key });
         catObj[key].forEach((singleData) => {
-         const obj={
-          'schemeName':singleData.schemeName,
-          'nav':singleData.nav
+          const obj = {
+            'schemeName': singleData.schemeName,
+            'nav': singleData.nav
           }
           customDataSource.data.push(obj);
-          const obj2={
-            'name':singleData.ownerName,
-            'pan':singleData.pan,
-            'folio':singleData.folioNumber
+          const obj2 = {
+            'name': singleData.ownerName,
+            'pan': singleData.pan,
+            'folio': singleData.folioNumber
           }
           customDataSource.data.push(obj2);
           singleData.mutualFundTransactions.forEach((ele) => {
-          customDataSource.data.push(ele);
+            customDataSource.data.push(ele);
           })
+          this.getEachTotalValue(singleData);
+          customDataSource.data.push(this.totalObj);
         });
       });
       return customDataSource;
@@ -87,6 +95,16 @@ export class MutualFundAllTransactionComponent implements OnInit {
     return item.pan;
     return item.folio;
   }
+  isGroup4(index, item): boolean {
+    // console.log('index : ', index);
+    // console.log('item : ', item);
+    return item.total;
+    return item.totalTransactionAmt;
+    return item.totalUnit;
+    return item.totalNav;
+    return item.totalBalanceUnit;
+
+  }
   getSubCategoryWise(data) {
     this.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
     this.subCategoryData = this.filteredArray
@@ -98,6 +116,40 @@ export class MutualFundAllTransactionComponent implements OnInit {
   mfSchemes() {
     this.filter(this.schemeWise, 'mutualFund');
     this.mutualFundList = this.filteredArray;
+  }
+  getTotalValue() {
+    this.totalTransactionAmt = 0;
+    this.totalUnit = 0;
+    this.totalNav = 0;
+    this.totalBalanceUnit = 0;
+    this.mutualFundList.forEach(element => {
+      element.mutualFundTransactions.forEach(ele => {
+        this.totalTransactionAmt += ele.amount;
+        this.totalUnit += ele.unit;
+        this.totalNav += ele.transactionNav;
+        this.totalBalanceUnit += ele.balanceUnits;
+      });
+    })
+  }
+  getEachTotalValue(data) {
+    this.totalTransactionAmt = 0;
+    this.totalUnit = 0;
+    this.totalNav = 0;
+    this.totalBalanceUnit = 0;
+    data.mutualFundTransactions.forEach(ele => {
+      this.totalTransactionAmt += ele.amount;
+      this.totalUnit += ele.unit;
+      this.totalNav += ele.transactionNav;
+      this.totalBalanceUnit += ele.balanceUnits;
+    });
+    const obj = {
+      'total': 'Total',
+      'totalTransactionAmt': this.totalTransactionAmt,
+      'totalUnit': this.totalUnit,
+      'totalNav': this.totalNav,
+      'totalBalanceUnit': this.totalBalanceUnit,
+    }
+    this.totalObj = obj
   }
   //Used for filtering the data 
   filter(data, key) {
