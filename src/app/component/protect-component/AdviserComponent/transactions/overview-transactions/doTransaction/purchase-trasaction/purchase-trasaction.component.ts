@@ -68,31 +68,31 @@ export class PurchaseTrasactionComponent implements OnInit {
     console.log('value selction scheme', value)
     this.selectScheme = value
   }
-  backToTransact(value,data){
-    data = {
-      formStep : 'step-2'
-    }
-    this.confirmTrasaction = true
-    const fragmentData = {
-      flag: 'addNsc',
-      data:data,
-      id: 1,
-      state: 'open65',
-      componentName: OnlineTrasactionComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-          }
-          rightSideDataSub.unsubscribe();
-        }
+  // backToTransact(value,data){
+  //   data = {
+  //     formStep : 'step-2'
+  //   }
+  //   this.confirmTrasaction = true
+  //   const fragmentData = {
+  //     flag: 'addNsc',
+  //     data:data,
+  //     id: 1,
+  //     state: 'open65',
+  //     componentName: OnlineTrasactionComponent
+  //   };
+  //   const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+  //     sideBarData => {
+  //       console.log('this is sidebardata in subs subs : ', sideBarData);
+  //       if (UtilService.isDialogClose(sideBarData)) {
+  //         if (UtilService.isRefreshRequired(sideBarData)) {
+  //           console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+  //         }
+  //         rightSideDataSub.unsubscribe();
+  //       }
 
-      }
-    );
-  }
+  //     }
+  //   );
+  // }
   getSchemeList(value) {
     this.showSpinner = true
     this.platformType = this.getDataSummary.defaultClient.aggregatorType

@@ -47,13 +47,18 @@ export class ChangePayeeComponent implements OnInit {
   @Input()
   set data(payeeData) {
     if(payeeData != undefined){
+      this.isLoading = true;
+        this.payeeDataRes = [{},{}];
       if(payeeData.id == undefined){
         if (payeeData.length == 1) {
           payeeData[0].share = 100
           payeeData[0].selected = 1
           this.subStartNextBtn.emit(payeeData[0])
+          
         }
         this.payeeDataRes = payeeData;
+        this.isLoading = false;
+
       }
       else{
         this.isLoading = true;

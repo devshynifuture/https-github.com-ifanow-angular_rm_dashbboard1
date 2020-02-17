@@ -1,1 +1,26 @@
-<p>setting-user-roles works!</p>
+<div class="bg-white" id="ui-settingsHeaders">
+    <div class="bg-white">
+        <div class="row">
+            <div class="col-md-12 ">
+                <mat-tab-group class="bg-white pt-60" mat-align-tabs="end" animationDuration="0ms"
+                    id="ui-settings-user-role">
+                    <mat-tab label="Users">
+                        <ng-template matTabContent>
+                            <app-users></app-users>
+                        </ng-template>
+                    </mat-tab>
+                    <mat-tab label="Roles">
+                        <ng-template matTabContent>
+                            <app-roles></app-roles>
+                        </ng-template>
+                    </mat-tab>
+                    <mat-tab label="Hierarchy">
+                        <ng-template matTabContent>
+                            <app-hierachy></app-hierachy>
+                        </ng-template>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>
