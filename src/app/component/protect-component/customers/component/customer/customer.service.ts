@@ -554,6 +554,9 @@ export class CustomerService {
   getMutualFund(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_GET, data);
   }
+  getMfFolioMaster(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.FOLIO_MASTER_DETAILS, data);
+  }
   searchFile(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.SEARCH_FILE, data);
   }
