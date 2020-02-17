@@ -8,13 +8,10 @@ import { MatTableDataSource } from '@angular/material';
   styleUrls: ['./support-upper-slider.component.scss']
 })
 export class SupportUpperSliderComponent implements OnInit {
-  constructor(
-    private subInjectService: SubscriptionInject
-  ) { }
+  constructor(private subInjectService: SubscriptionInject) { }
 
-  displayedColumns: string[] = ['position', 'weight', 'name', 'symbol'];
-
-  dataSource = new MatTableDataSource<elementI>(ELEMENT_DATA);
+  displayedColumns: string[] = ['name', 'nav', 'schemeName', 'schemeCode', 'amficode', 'navTwo', 'navDate', 'njCount', 'map'];
+  dataSource = ELEMENT_DATA;
 
   ngOnInit() {
   }
@@ -27,14 +24,20 @@ export class SupportUpperSliderComponent implements OnInit {
 }
 
 export interface elementI {
-  position: string,
-  name: string,
-  weight: string,
-  symbol: string
+
+  name: string;
+  nav: string;
+  schemeName: string;
+  schemeCode: string;
+  amficode: string;
+  navTwo: string;
+  navDate: string;
+  njCount: string;
+  map: string;
 }
 
 const ELEMENT_DATA = [
-  { position: '1', name: 'hello', weight: '23', symbol: 'ajkd' },
-  { position: '2', name: 'hello 3', weight: '223', symbol: 'ajkd' },
-  { position: '3', name: 'hello 2', weight: '24', symbol: 'ajkd' },
+  { name: 'Aditya Birla Sun Life FTP Series - KH - Regular Div', nav: '1898.988', schemeName: ' ', amficode: ' ', navTwo: ' ', navDate: ' ', njCount: ' ', map: ' ' },
+
+
 ]
