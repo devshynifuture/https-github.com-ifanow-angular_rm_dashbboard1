@@ -135,4 +135,8 @@ export class PlanService {
     let httpParams = new HttpParams().set('advisorId', data.advisorId).set("clientId", data.clientId)
     return this.http.get(apiConfig.MAIN_URL + appConfig.ADD_FILTER_SCHEME_LIST, httpParams);
   }
+  getDeploymentDetailsdata(data) {
+    let httpParams = new HttpParams().set('deploymentId', data.deploymentId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DEPLOYMENT_DETAILS, httpParams)
+  }
 }

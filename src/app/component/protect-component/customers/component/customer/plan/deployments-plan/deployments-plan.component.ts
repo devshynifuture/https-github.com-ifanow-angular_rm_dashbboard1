@@ -10,6 +10,7 @@ import { ManageExclusionsComponent } from './manage-exclusions/manage-exclusions
 import { EventService } from 'src/app/Data-service/event.service';
 import { DeploymentDetailsComponent } from './deployment-details/deployment-details.component';
 import { PlanService } from '../plan.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-investments-plan',
@@ -75,17 +76,46 @@ export class DeploymentsPlanComponent implements OnInit {
 
   }
   deleteDeployment(deleteData) {
-    this.planService.deleteDeployment(deleteData.id).subscribe(
-      data => console.log(data),
-      err => this.eventService.openSnackBar(err, 'dismiss')
-    )
+    const dialogData = {
+      data: deleteData,
+      header: 'DELETE DEPLOYMENT',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        this.cusService.deletePPF(deleteData.id).subscribe(
+          data => {
+            this.eventService.openSnackBar("Deployment is deleted", "dismiss")
+            dialogRef.close();
+          },
+          error => this.eventService.showErrorMessage(error)
+        )
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
-  openDep(flagValue) {
+
+  openDep(flagValue, data) {
     let component;
     component = (flagValue == 'open') ? component = DeploymentDetailsComponent : component = SetupLumpsumDeploymentComponent;
     const fragmentData = {
-      flag: flagValue,
       id: 1,
+      data,
       state: flagValue,
       componentName: component
     };

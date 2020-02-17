@@ -36,9 +36,6 @@ export class TransactionSummaryComponent implements OnInit {
     this.inputData = data;
     console.log('This is Input data of FixedDepositComponent ', data);
     this.transactionSummary = data
-    if(data.getAch == true){
-      this.getNSEAchmandate()
-    }
     if (this.isViewInitCalled) {
       // this.getdataForm('');
     }
@@ -64,8 +61,8 @@ export class TransactionSummaryComponent implements OnInit {
   }
   getBankDetailsNSERes(data) {
     console.log('bank res',data)
-    // let obj = [{bankName : 'axis'},{bankName : 'hdfc'},{bankName : 'sbi'}]
-    this.bankDetails = data
+    this.bankDetails = data[0]
+    this.bankDetailsSend.emit(this.bankDetails);
     if(this.bankDetails.length > 1){
       this.showBankEdit = true
     }
@@ -82,6 +79,7 @@ export class TransactionSummaryComponent implements OnInit {
   getNSEAchmandateRes(data){
     console.log('getNSEAchmandateRes',data)
     this.achMandateNSE = data[0]
+    this.achmandateDetails.emit(this.bankDetails);
   }
   selectBank(bank){
     this.bankDetailsSend.emit(bank);
@@ -111,19 +109,7 @@ export class TransactionSummaryComponent implements OnInit {
     this.selectedPlatform = this.defaultCredential.aggregatorType
     if (this.selectedPlatform == 1) {
       this.getBankDetails()
-      this.getIINDetails()
     }
-  }
-  getIINDetails(){
-    let obj1 = {
-      tpUserCredFamilyMappingId:this.defaultClient.tpUserCredFamilyMappingId
-    }
-    this.onlineTransact.getIINDetails(obj1).subscribe(
-      data => this.getIINDetailsRes(data)
-    );
-  }
-  getIINDetailsRes(data){
-    console.log('IIN Details',data)
   }
   setPlatform(value) {
     this.selectedPlatform = value.value

@@ -1,6 +1,5 @@
 import { ValidatorType } from './../../../../../../../../../../services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
-import { CashflowAddComponent } from './../cashflow-add.component';
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
@@ -22,9 +21,7 @@ export class CashflowAddLiabilitiesComponent implements OnInit {
     public dialogRef: MatDialogRef<CashflowAddLiabilitiesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
-    private cashflowService: CashFlowsPlanService,
-    private cashflowAddService: CashflowAddService
-  ) { }
+    private cashflowService: CashFlowsPlanService) { }
 
   ownerData;
   validatorType = ValidatorType;

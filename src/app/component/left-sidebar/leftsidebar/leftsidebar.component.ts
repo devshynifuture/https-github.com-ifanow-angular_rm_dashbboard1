@@ -80,17 +80,16 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     }
   }
 
-  getActiveLink(){
+  getActiveLink(value) {
     let link = this.router.url.split('/')[2];
-    console.log("link check", link);
-    
-    switch(link)
-    {
-      case 'subscription': return link;
+    // console.log("link check", link);
 
-      case 'emails': return link;
+    switch (link) {
+      case 'subscription': return link === value ? true : false;
 
-      case 'transactions': return link;
+      case 'emails': return link === value ? true : false;
+
+      case 'transactions': return link === value ? true : false;
     }
   }
 

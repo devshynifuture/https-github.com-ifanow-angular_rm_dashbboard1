@@ -39,12 +39,14 @@ export class SipTransactionComponent implements OnInit {
   dateDisplay: any;
   sipDate: any;
   dates: any;
+  showSpinner = false;
   showUnits = false;
   mandateDetails: any;
   frequency: any;
   fre: any;
   achMandateNSE: any;
   platformType: any;
+  bankDetails: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private processTransaction: ProcessTransactionService, private fb: FormBuilder) { }
@@ -95,7 +97,7 @@ export class SipTransactionComponent implements OnInit {
     );
   }
   enteredAmount(value) {
-    this.transactionSummary = { enteredAmount: value }
+    Object.assign(this.transactionSummary, { enteredAmount: value });
   }
   selectExistingOrNew(value) {
     this.ExistingOrNew = value
@@ -105,6 +107,7 @@ export class SipTransactionComponent implements OnInit {
     this.selectScheme = value
   }
   getSchemeList(value) {
+    this.showSpinner = true
     let obj = {
       searchQuery: value,
       bseOrderType: 'ORDER',
@@ -128,21 +131,25 @@ export class SipTransactionComponent implements OnInit {
     }
   }
   getNewSchemesRes(data) {
+    this.showSpinner = false
     console.log('new schemes', data)
     this.schemeList = data
   }
   getExistingSchemesRes(data) {
+    this.showSpinner = false
     this.schemeList = data
   }
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
+    this.sipTransaction.controls.investor.reset();
     this.platformType = this.getDataSummary.defaultClient.aggregatorType
   }
   selectPaymentMode(value) {
     Object.assign(this.transactionSummary, { paymentMode: value });
     if(value == 2){
       Object.assign(this.transactionSummary, { getAch: true });
+      this.getNSEAchmandate()
     }
   }
   selectedScheme(scheme) {
@@ -172,8 +179,22 @@ export class SipTransactionComponent implements OnInit {
       this.reInvestmentOpt = []
     }
     this.getAmcWiseFolio()
+    if(this.getDataSummary.defaultClient.aggregatorType == 2){
     this.getMandateDetails()
+    }
     this.getFrequency()
+  }
+  getNSEAchmandate(){
+    let obj1 = {
+      tpUserCredFamilyMappingId:this.getDataSummary.defaultClient.tpUserCredFamilyMappingId
+    }
+    this.onlineTransact.getNSEAchmandate(obj1).subscribe(
+      data => this.getNSEAchmandateRes(data)
+    );
+  }
+  getNSEAchmandateRes(data){
+    console.log('getNSEAchmandateRes',data)
+    this.achMandateNSE = data[0]
   }
   getFrequency() {
     let obj = {
@@ -205,6 +226,7 @@ export class SipTransactionComponent implements OnInit {
     console.log('dateDisplay = ', this.dateDisplay)
   }
   getbankDetails(value){
+    this.bankDetails = value
     console.log('bank details',value)
   }
   getAchmandateDetails(value){
@@ -242,6 +264,7 @@ export class SipTransactionComponent implements OnInit {
     console.log('getFoliosAmcWiseRes', data)
     this.folioList = data
   }
+  
   selectedFolio(folio) {
     this.folioDetails = folio
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
@@ -302,7 +325,7 @@ export class SipTransactionComponent implements OnInit {
       frequencyType:this.frequency,
       //endDate :sipTransaction.sip.scheme.,
       noOfInstallments: this.sipTransaction.controls.installment.value,
-      orderType: this.mandateDetails[0].mandateType,
+      orderType: (this.mandateDetails==undefined)?null:this.mandateDetails[0].mandateType,
       buySell: 'PURCHASE',
       transCode: 'NEW',
       buySellType: "FRESH",
@@ -311,11 +334,19 @@ export class SipTransactionComponent implements OnInit {
       clientCode: this.getDataSummary.defaultClient.clientCode,
       orderVal: this.sipTransaction.controls.employeeContry.value,
       euin: this.getDataSummary.defaultCredential.euin,
-      xSipMandateId: this.mandateDetails[0].mandateId,
+      xSipMandateId:(this.mandateDetails==undefined)?null:this.mandateDetails[0].mandateId,
       schemeCd: this.schemeDetails.schemeCode,
       transMode: 'PHYSICAL',
       bseDPTransType: 'PHYSICAL',
+      mandateId:null,
+      bankDetailId:null,
+      nsePaymentMode:null,
       // teamMemberSessionId: sipTransaction.localStorage.mm.mainDetail.userDetails.teamMemberSessionId,
+    }
+    if (this.getDataSummary.defaultClient.aggregatorType == 1) {
+      obj.mandateId = (this.achMandateNSE == undefined)?null:this.achMandateNSE.id
+      obj.bankDetailId = this.bankDetails.id
+      obj.nsePaymentMode = (this.sipTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE'
     }
     console.log('sip json',obj)
     if( this.frequency == 'MONTHLY' && this.sipTransaction.controls.tenure.value == 2){
@@ -336,7 +367,7 @@ export class SipTransactionComponent implements OnInit {
     if(data == undefined){
 
     }else{
-    this.onAddTransaction('confirm',null)
+    this.onAddTransaction('confirm',this.transactionSummary)
     }
   }
 

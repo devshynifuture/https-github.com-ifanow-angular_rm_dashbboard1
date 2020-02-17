@@ -51,21 +51,29 @@
             <div class="col-md-7">
                 <div class="row">
                     <div class="col-md-5 p-0">
-                        <div class="form-group mb-0">
+                        <!-- <div class="form-group mb-0">
                             <input type="text" appNumberOnly [maxLength]="2" formControlName="billEvery" class="form-control br-0 br-none">
                         </div>
                         <mat-error class="f-12" [ngClass]="{'v-h':!(isBillValid && getFixedFee().billEvery.invalid || getFixedFee().billEvery.touched && getFixedFee().billEvery.invalid)}">
                             Code is Required
-                        </mat-error>
-
+                        </mat-error> -->
+                        <div class="form-group">
+                            <select formControlName='billEvery' class="form-control br-0" f id="sel1">
+                                <option value="" >Select option</option>
+                                <option value=1>Annually</option>
+                                <option value=2>Semi annually</option>
+                                <option value=4>Quaterly</option>
+                                <option value=12>Monthly</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="col-md-5 p-0">
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <select formControlName='Duration' class="form-control br-0" f id="sel1">
                                 <option value="1">Months</option>
                                 <option value="2">Yearly</option>
                             </select>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

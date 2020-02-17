@@ -21,6 +21,10 @@
             <div class="col-md-4 pb-40 c-p skeletonAnimation" *ngFor="let singleServicePlan of servicePlanData"
                 appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <div class="example-card">
+                    <div (click)="singleServicePlan.read = singleServicePlan.read? false : true"
+                                            class="read-more c-p"
+                                            *ngIf="singleServicePlan.description && singleServicePlan.description.length > 200">
+                                            {{singleServicePlan.read?'read less':'read more'}}</div>
                     <mat-card class="p-0 b-ua" (click)="selectServicePlan(singleServicePlan)"
                         [ngClass]="{'p-0': singleServicePlan.selected==false,'b-ua':singleServicePlan.selected==false,'ba-blue':singleServicePlan.selected==true}">
                         <div class="overflow-hidden">
@@ -52,10 +56,7 @@
                                         <div class="l-h" [ngClass]="singleServicePlan.read? '':'height80'">
                                             {{singleServicePlan.description}}
                                         </div>
-                                        <div (click)="singleServicePlan.read = singleServicePlan.read? false : true"
-                                            class="read-more c-p"
-                                            *ngIf="singleServicePlan.description && singleServicePlan.description.length > 200">
-                                            {{singleServicePlan.read?'read less':'read more'}}</div>
+                                        
                                         <!-- <p class="f-12 mb-0">DESCRIPTION</p>
                                         <div class="relClass">
                                             <div class="bar" [ngClass]="{'height24': isLoading}">

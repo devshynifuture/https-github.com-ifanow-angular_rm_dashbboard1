@@ -76,7 +76,7 @@ export class SingleDocumentViewComponent implements OnInit {
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           if (UtilService.isRefreshRequired(upperSliderData)) {
-          this.valueChange.emit('close');
+            this.valueChange.emit('close');
           }
           subscription.unsubscribe();
         }
