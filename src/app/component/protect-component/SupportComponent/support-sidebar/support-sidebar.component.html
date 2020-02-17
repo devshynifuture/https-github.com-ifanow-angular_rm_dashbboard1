@@ -1,52 +1,71 @@
-<mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #sidenav mode="side" opened role="navigation">
+<div *ngIf="isOverlayVisible" [@dialogContainer]="dialogState" class="custom-overlay">
+</div>
+<!-- class="upper_slider" -->
+<div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
+    <ng-template #dynamicUpper></ng-template>
+</div>
+<div [@openClose]="currentState" class="right_sidenav">
+    <ng-template #dynamic></ng-template>
+</div>
+<mat-sidenav-container class="sidenav-container" [hasBackdrop]="false">
+    <mat-sidenav #sidenav mode="over" class="mt-150" closed role="navigation">
         <mat-nav-list class="width-230 pt-0" id="d">
-            <mat-toolbar class="bg-white p-0 logoWrap">
-                <img class="logo" src={{userInfo.profilePic}}>
-                <h5>{{logoText | uppercase}}</h5>
-            </mat-toolbar>
-            <div class="main-details min-height">
-                <p class="f-16 f-600 mb-0">Satish patel</p>
-            </div>
+
             <div class="pt-12 scorllable ">
-                <!-- dashboard not created so removing routerLink -->
-                <a class="sidenav-link" routerLink="/support/dashboard" mat-list-item>
-                    <img src="assets/images/svg/time-meter.svg">
-                    <span class="title" mat-line>Dashboard</span>
-                </a>
-                <a class="sidenav-link" routerLink="/support/my-ifas" mat-list-item>
-                    <img src="assets/images/svg/people.svg">
-                    <span class="title" mat-line>My IFAs</span>
-                </a>
-                <a class="sidenav-link" routerLink="/support/ifa-onboarding" routerLinkActive="router-link-active" mat-list-item>
-                    <img src="assets/images/svg/file-lines.svg">
-                    <span class="title" mat-line>IFA onboarding</span>
-                </a>
-                <a class="sidenav-link" routerLink="/support/aum-reconciliation" mat-list-item>
-                    <img src="assets/images/svg/mail.svg">
-                    <span class="title" mat-line>AUM Reconciliation</span>
-                </a>
-                <a class="sidenav-link" routerLink="/support/file-ordering" mat-list-item>
-                    <img src="assets/images/svg/cart.svg">
-                    <span class="title" mat-line>File ordering & uploads</span>
-                </a>
-                <a class="sidenav-link" routerLink="/support/reports" mat-list-item>
-                    <img src="assets/images/svg/ruppes.svg">
-                    <span class="title" mat-line>Reports</span>
-                </a>
-                <a class="sidenav-link" routerLink="/support/miscellaneous" mat-list-item>
-                    <img src="assets/images/svg/ruppes.svg">
-                    <span class="title" mat-line>Miscellaneous</span>
-                </a>
+                <div class="right c-p" (click)="sidenav.toggle()">
+                    <mat-icon>
+                        close
+                    </mat-icon>
+                </div>
+                <div class="mt-50">
+
+                    <!-- dashboard not created so removing routerLink -->
+                    <a class="sidenav-link" routerLink="/support/dashboard" mat-list-item>
+                        <img src="assets/images/svg/time-meter.svg">
+                        <span class="title" mat-line>Dashboard</span>
+                    </a>
+                    <a class="sidenav-link" routerLink="/support/my-ifas" mat-list-item>
+                        <img src="assets/images/svg/people.svg">
+                        <span class="title" mat-line>My IFAs</span>
+                    </a>
+                    <a class="sidenav-link" routerLink="/support/ifa-onboarding" routerLinkActive="router-link-active"
+                        mat-list-item>
+                        <img src="assets/images/svg/file-lines.svg">
+                        <span class="title" mat-line>IFA onboarding</span>
+                    </a>
+                    <a class="sidenav-link" routerLink="/support/aum-reconciliation" mat-list-item>
+                        <img src="assets/images/svg/mail.svg">
+                        <span class="title" mat-line>AUM Reconciliation</span>
+                    </a>
+                    <a class="sidenav-link" routerLink="/support/file-ordering" mat-list-item>
+                        <img src="assets/images/svg/cart.svg">
+                        <span class="title" mat-line>File ordering & uploads</span>
+                    </a>
+                    <a class="sidenav-link" routerLink="/support/reports" mat-list-item>
+                        <img src="assets/images/svg/ruppes.svg">
+                        <span class="title" mat-line>Reports</span>
+                    </a>
+                    <a class="sidenav-link" routerLink="/support/miscellaneous" mat-list-item>
+                        <img src="assets/images/svg/ruppes.svg">
+                        <span class="title" mat-line>Miscellaneous</span>
+                    </a>
+
+                </div>
             </div>
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content id="left">
-        <mat-toolbar class="bg-white bl-1" class="fix-top pl-0">
-            <!-- <mat-form-field class="width40 serachbox">
+        <div class="leftside-overlay-toggle-button" (click)="sidenav.toggle()">
+            <mat-icon>
+                dehaze
+            </mat-icon>
+        </div>
+        <mat-toolbar class="bg-white p-0 logoWrap">
+
+
+            <mat-form-field class="width40 serachbox">
                 <div class="form-group searchBoxHeader">
-                    <input #inputSearch [matAutocomplete]="auto" class="form-control pl-40"
-                        matInput type="text">
+                    <input #inputSearch [matAutocomplete]="auto" class="form-control pl-40" matInput type="text">
                     <i class="material-icons searchIcon"> search </i>
                     <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete">
                         <mat-option (click)="selectClient(singleClient)"
@@ -79,7 +98,7 @@
                         </mat-option>
                     </mat-autocomplete>
                 </div>
-            </mat-form-field> -->
+            </mat-form-field>
             <div class="hide-on-800 d-flex align-items-center justify-content-center right-fixed tablate-none">
                 <a class="sidenav-link" mat-list-item>
                     <img class="t-15" src="assets/images/svg/bell.svg">
@@ -100,6 +119,7 @@
                 more_vert
             </i>
         </mat-toolbar>
+
         <div class="desktop-none tabs-mt-70" id="showSettings">
             <div class="bg-success">
                 <div class="search-container tabs-block">
@@ -128,13 +148,5 @@
     </mat-sidenav-content>
 
 </mat-sidenav-container>
-<div *ngIf="isOverlayVisible" [@dialogContainer]="dialogState" class="custom-overlay">
-</div>
-<!-- class="upper_slider" -->
-<div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
-    <ng-template #dynamicUpper></ng-template>
-</div>
-<div [@openClose]="currentState" class="right_sidenav">
-    <ng-template #dynamic></ng-template>
-</div>
+
 <!--<app-dialog-container [parentComponentName]="'leftSideBar'"></app-dialog-container>-->

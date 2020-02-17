@@ -1,1 +1,48 @@
-<p>hierachy works!</p>
+<div class="row">
+    <div class="col-md-6 p-0">
+        <h4 class="m-0 text-black">Hierarchy</h4>
+    </div>
+</div>
+<table mat-table [dataSource]="dataSource" class="mt-8 hierachy" id="table-low">
+
+    <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef class="br"> Full name </th>
+        <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
+        <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="weight">
+        <th mat-header-cell *matHeaderCellDef class="br"> Mobile </th>
+        <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="symbol">
+        <th mat-header-cell *matHeaderCellDef class="br"> Email </th>
+        <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
+    </ng-container>
+    <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef class="br"> Role </th>
+        <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
+    </ng-container>
+    <ng-container matColumnDef="report">
+        <th mat-header-cell *matHeaderCellDef class="br"> Reporting to </th>
+        <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
+    </ng-container>
+    <ng-container matColumnDef="icons">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let element">
+            <i class="material-icons">
+                more_vert
+            </i>
+        </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

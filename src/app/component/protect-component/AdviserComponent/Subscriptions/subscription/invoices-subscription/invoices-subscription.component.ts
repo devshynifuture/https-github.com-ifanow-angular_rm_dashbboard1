@@ -354,12 +354,11 @@ export class InvoicesSubscriptionComponent implements OnInit {
       this.dataCount = 0;
     }
     this.invoiceSubscription = 'false';
-
+    this.subInjectService.addSingleProfile("");
     // this.ngOnInit();
   }
   getCancelInvoiceSubscription(data) {
     this.invoiceSubscription = 'false';
-
     if (data) {
       this.dataSource.data = [{}, {}, {}]
       this.tableData = [];

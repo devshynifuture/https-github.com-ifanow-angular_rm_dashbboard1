@@ -21,6 +21,7 @@
 @import'./assets/style/scss/Crm/_crm';
 @import'./assets/style/scss/Advice/_advice';
 @import'./assets/style/scss/Transactions/transactions';
+@import'./assets/style/scss/setting/setting';
 // responsive style
 @import'./assets/style/scss/responsive/subscriptions';
 
@@ -383,7 +384,8 @@
 #ui-subscriptions,
 #ui-plans,
 #ui-transactions,
-#ui-settingsHeaders {
+#ui-settingsHeaders,
+#ui-settingsplan {
   @extend .mt-60;
 
   .example-card .mat-card-header-text {
@@ -535,6 +537,9 @@
 }
 
 #ui-settings-subs,
+#ui-settings-plan,
+#ui-settings-backoffice,
+#ui-settings-user-role,
 #ui-mutualsecond-header {
   box-shadow: 0 !important;
 
@@ -558,6 +563,8 @@
     color: #595252;
     opacity: 1 !important;
     font-weight: 500;
+    padding: 0 16px !important;
+    height: 40px !important;
   }
 
   .mat-tab-label.mat-tab-label-active {
@@ -565,13 +572,6 @@
     width: auto;
     background: transparent;
     color: #008FFF;
-  }
-}
-
-#ui-settings-subs {
-  .mat-tab-label {
-    padding: 0 16px !important;
-    height: 40px !important;
   }
 }
 
