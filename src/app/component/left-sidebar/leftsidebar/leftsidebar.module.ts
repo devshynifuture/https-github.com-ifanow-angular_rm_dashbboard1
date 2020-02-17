@@ -12,6 +12,7 @@ import { DynamicComponentService } from "../../../services/dynamic-component.ser
 import { TransactionsModule } from '../../protect-component/AdviserComponent/transactions/transactions.module';
 import { TransactionEntryModule } from '../../protect-component/AdviserComponent/transactions/transaction.entry.module';
 import { SupportEntryModule } from '../../protect-component/SupportComponent/support.entry.module';
+import { SettingEntryModule } from '../../protect-component/AdviserComponent/setting/setting-entry/setting-entry.module';
 
 @NgModule({
   declarations: [
@@ -29,8 +30,9 @@ import { SupportEntryModule } from '../../protect-component/SupportComponent/sup
     TransactionsModule,
     TransactionEntryModule,
     SupportEntryModule,
+    SettingEntryModule
   ],
-  entryComponents: [SubscriptionEntry.getComponentList(), SupportEntryModule.getComponentList()],
+  entryComponents: [SubscriptionEntry.getComponentList(), SupportEntryModule.getComponentList(), SettingEntryModule.getComponentList()],
   providers: [DynamicComponentService]
   // providers: [DynamicComponentService]
 })

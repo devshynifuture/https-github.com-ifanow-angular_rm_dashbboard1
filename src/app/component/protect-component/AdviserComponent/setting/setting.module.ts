@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { SettingRoutingModule } from './setting-routing.module';
 import { MaterialModule } from 'src/app/material/material';
 import { LeftsidebarSettingComponent } from './leftsidebar-setting/leftsidebar-setting.component';
@@ -11,6 +10,7 @@ import { SettingBackofficeComponent } from './setting-backoffice/setting-backoff
 import { UsersComponent } from './setting-user-roles/setting-users-roles/users/users.component';
 import { RolesComponent } from './setting-user-roles/setting-users-roles/roles/roles.component';
 import { HierachyComponent } from './setting-user-roles/setting-users-roles/hierachy/hierachy.component';
+import { SettingEntryModule } from './setting-entry/setting-entry.module';
 
 
 @NgModule({
@@ -20,7 +20,8 @@ import { HierachyComponent } from './setting-user-roles/setting-users-roles/hier
   imports: [
     CommonModule,
     SettingRoutingModule,
-    MaterialModule
+    MaterialModule,
+    SettingEntryModule
   ]
 })
 export class SettingModule { }
