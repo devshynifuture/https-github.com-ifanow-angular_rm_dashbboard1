@@ -5,6 +5,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 import { OnlineTransactionService } from '../../../online-transaction.service';
 import { ProcessTransactionService } from '../process-transaction.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-stp-transaction',
@@ -47,7 +48,7 @@ export class StpTransactionComponent implements OnInit {
   bankDetails: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-    private processTransaction: ProcessTransactionService,
+    private processTransaction: ProcessTransactionService, private eventService : EventService,
     private fb: FormBuilder) { }
   @Input()
   set data(data) {
@@ -85,8 +86,10 @@ export class StpTransactionComponent implements OnInit {
       tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
     }
     this.onlineTransact.getMandateDetails(obj1).subscribe(
-      data => this.getMandateDetailsRes(data)
-    );
+      data => this.getMandateDetailsRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   getMandateDetailsRes(data) {
     console.log('mandate details :', data)
@@ -108,8 +111,10 @@ export class StpTransactionComponent implements OnInit {
         tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
       }
       this.onlineTransact.getNewSchemes(obj).subscribe(
-        data => this.getNewSchemesRes(data)
-      );
+        data => this.getNewSchemesRes(data), (error) => {
+          this.eventService.showErrorMessage(error);
+        }
+        );
     }
   }
   getNewSchemesRes(data) {
@@ -133,8 +138,10 @@ export class StpTransactionComponent implements OnInit {
         tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
       }
       this.onlineTransact.getExistingSchemes(obj).subscribe(
-        data => this.getExistingSchemesRes(data)
-      );
+        data => this.getExistingSchemesRes(data), (error) => {
+          this.eventService.showErrorMessage(error);
+        }
+        );
     } else {
 
     }
@@ -161,8 +168,10 @@ export class StpTransactionComponent implements OnInit {
       userAccountType: this.getDataSummary.defaultCredential.accountType,
     }
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
-      data => this.getSchemeDetailsTranferRes(data)
-    );
+      data => this.getSchemeDetailsTranferRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   getSchemeDetailsTranferRes(data) {
     // this.maiSchemeList = data
@@ -180,8 +189,10 @@ export class StpTransactionComponent implements OnInit {
       userAccountType: this.getDataSummary.defaultCredential.accountType,
     }
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
-      data => this.getSchemeDetailsRes(data)
-    );
+      data => this.getSchemeDetailsRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   getSchemeDetailsRes(data) {
     console.log('getSchemeDetailsRes == ', data)
@@ -226,13 +237,17 @@ export class StpTransactionComponent implements OnInit {
   getFrequency() {
     let obj = {
       isin: this.schemeDetails.isin,
+      aggregatorType:this.getDataSummary.defaultClient.aggregatorType,
+      orderType:'STP'
     }
     this.onlineTransact.getSipFrequency(obj).subscribe(
-      data => this.getSipFrequencyRes(data)
-    );
+      data => this.getSipFrequencyRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   getSipFrequencyRes(data) {
-    console.log('isin ----', data)
+    console.log('isin Frequency ----', data)
     this.switchFrequency = data
     this.switchFrequency = data.filter(function (element) {
       return element.sipFrequency
@@ -362,8 +377,10 @@ export class StpTransactionComponent implements OnInit {
     }
     console.log('json stp', obj)
     this.onlineTransact.transactionBSE(obj).subscribe(
-      data => this.stpBSERes(data)
-    );
+      data => this.stpBSERes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   stpBSERes(data) {
     console.log('stp res == ', data)

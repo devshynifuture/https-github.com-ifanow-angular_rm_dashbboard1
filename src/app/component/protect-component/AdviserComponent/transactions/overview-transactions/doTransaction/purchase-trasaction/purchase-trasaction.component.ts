@@ -6,6 +6,7 @@ import { ConfirmationTransactionComponent } from '../confirmation-transaction/co
 import { OnlineTrasactionComponent } from '../online-trasaction/online-trasaction.component';
 import { OnlineTransactionService } from '../../../online-transaction.service';
 import { ProcessTransactionService } from '../process-transaction.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-purchase-trasaction',
@@ -40,7 +41,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   bankDetails: any;
   achMandateNSE: any;
   constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
-    private subInjectService: SubscriptionInject, private fb: FormBuilder) { }
+    private subInjectService: SubscriptionInject, private fb: FormBuilder,private eventService : EventService) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -110,11 +111,15 @@ export class PurchaseTrasactionComponent implements OnInit {
     }
     if (this.selectScheme == 2 && value.length > 2) {
       this.onlineTransact.getNewSchemes(obj).subscribe(
-        data => this.getNewSchemesRes(data)
+        data => this.getNewSchemesRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
       );
     } else {
       this.onlineTransact.getExistingSchemes(obj).subscribe(
-        data => this.getExistingSchemesRes(data)
+        data => this.getExistingSchemesRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
       );
     }
   }
@@ -154,7 +159,9 @@ export class PurchaseTrasactionComponent implements OnInit {
       userAccountType: this.getDataSummary.defaultCredential.accountType,
     }
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
-      data => this.getSchemeDetailsRes(data)
+      data => this.getSchemeDetailsRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
     );
   }
 
@@ -184,7 +191,9 @@ export class PurchaseTrasactionComponent implements OnInit {
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
     }
     this.onlineTransact.getFoliosAmcWise(obj1).subscribe(
-      data => this.getFoliosAmcWiseRes(data)
+      data => this.getFoliosAmcWiseRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
     );
   }
   getFoliosAmcWiseRes(data) {
@@ -216,7 +225,9 @@ export class PurchaseTrasactionComponent implements OnInit {
       tpUserCredFamilyMappingId:this.getDataSummary.defaultClient.tpUserCredFamilyMappingId
     }
     this.onlineTransact.getNSEAchmandate(obj1).subscribe(
-      data => this.getNSEAchmandateRes(data)
+      data => this.getNSEAchmandateRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
     );
   }
   getNSEAchmandateRes(data){
@@ -316,7 +327,9 @@ export class PurchaseTrasactionComponent implements OnInit {
       }
       console.log('new purchase obj', obj)
       this.onlineTransact.transactionBSE(obj).subscribe(
-        data => this.purchaseRes(data)
+        data => this.purchaseRes(data), (error) => {
+          this.eventService.showErrorMessage(error);
+        }
       );
     }
   }
