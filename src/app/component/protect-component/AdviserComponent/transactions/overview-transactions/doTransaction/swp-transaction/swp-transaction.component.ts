@@ -228,11 +228,9 @@ export class SwpTransactionComponent implements OnInit {
           if (UtilService.isRefreshRequired(sideBarData)) {
             // this.getNscSchemedata();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
           }
           rightSideDataSub.unsubscribe();
         }
-
       }
     );
   }
@@ -264,7 +262,6 @@ export class SwpTransactionComponent implements OnInit {
 
     this.ownerData = this.swpTransaction.controls;
   }
-
   getFormControl(): any {
     return this.swpTransaction.controls;
   }
