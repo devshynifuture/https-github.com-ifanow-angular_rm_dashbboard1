@@ -50,6 +50,9 @@ export class SettingsSubscriptionComponent implements OnInit {
       case 'documents':
       this.selected = 2;
       break;
+
+      default:
+      this.selected = 3;
     }
     // this.tabGroup.selectedIndex = 0;
     console.log(this.label, this.selected,"this.label 123");
