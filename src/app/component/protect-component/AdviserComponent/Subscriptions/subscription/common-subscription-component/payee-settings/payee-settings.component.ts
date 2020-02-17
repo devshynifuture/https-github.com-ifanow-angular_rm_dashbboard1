@@ -169,7 +169,9 @@ export class PayeeSettingsComponent implements OnInit {
 
   getListOfFamilyByClientRes(data) {
     console.log('family Memebers', data)
-    this.family = data.familyMembersList
+    if(data != undefined){
+      this.family = data.familyMembersList
+    }
   }
   getOwnerName(data) {
     this.familyMemberId = data.id
