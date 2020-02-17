@@ -1,1 +1,47 @@
-<p>roles works!</p>
+<div class="row">
+    <div class="col-md-6 p-0">
+        <h4 class="m-0 text-black">Roles</h4>
+    </div>
+    <div class="col-md-6 text-right p-0">
+        <button mat-stroked-button class="btn-primary pl-8"><i class="material-icons pr-8 text-white">
+                add
+            </i>ADD NEW</button>
+    </div>
+</div>
+<table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
+
+    <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef class="br"> Role </th>
+        <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef class="br"> Description </th>
+        <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="weight">
+        <th mat-header-cell *matHeaderCellDef class="br"> Edit </th>
+        <td mat-cell *matCellDef="let element" class="br">
+            <button mat-stroked-button class="btn-primary-outline btn-sm">EDIT</button>
+        </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="symbol">
+        <th mat-header-cell *matHeaderCellDef class="br"> Clone </th>
+        <td mat-cell *matCellDef="let element" class="br">
+            <button mat-stroked-button class="btn-success-outline btn-sm">CLONE</button>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="del">
+        <th mat-header-cell *matHeaderCellDef> Delete </th>
+        <td mat-cell *matCellDef="let element">
+            <button mat-stroked-button class="btn-danger-outline btn-sm">DELETE</button>
+        </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

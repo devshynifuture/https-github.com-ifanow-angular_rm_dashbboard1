@@ -141,8 +141,7 @@
                 <div class="col-md-4 p-0">
                     <div class="bg-white bPrimitive p-9">
                         <div class="row pb-12">
-                            <div class="col-md-12">
-
+                            <div class="col-md-12 p-0">
                                 <mat-tab-group class="overviewTab" animationDuration="0ms">
                                     <mat-tab label="Recent">
                                         <div class="detailsRecent">
@@ -380,7 +379,7 @@
                     <img class="width20 mr-4" src="assets/images/svg/shopping-blue.svg"> TRANSACTION
                 </button>
 
-                <button mat-stroked-button class="btn-transaction text-primary  roboto">
+                <button mat-stroked-button class="btn-transaction text-primary  roboto" (click)="openNewCustomer()">
                     <img class="width20 mr-4" src="assets/images/svg/customer-trans.svg"> KNOW YOUR CUSTOMER
                 </button>
 

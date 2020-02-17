@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IfaBoradingHistoryComponent } from './ifa-borading-history.component';
+import { PersonalDetailsComponent } from './personal-details.component';
 
-describe('IfaBoradingHistoryComponent', () => {
-  let component: IfaBoradingHistoryComponent;
-  let fixture: ComponentFixture<IfaBoradingHistoryComponent>;
+describe('PersonalDetailsComponent', () => {
+  let component: PersonalDetailsComponent;
+  let fixture: ComponentFixture<PersonalDetailsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ IfaBoradingHistoryComponent ]
+      declarations: [ PersonalDetailsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IfaBoradingHistoryComponent);
+    fixture = TestBed.createComponent(PersonalDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

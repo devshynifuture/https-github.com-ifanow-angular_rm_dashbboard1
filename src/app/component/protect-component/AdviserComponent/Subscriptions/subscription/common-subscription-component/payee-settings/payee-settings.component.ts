@@ -14,7 +14,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
   styleUrls: ['./payee-settings.component.scss']
 })
 export class PayeeSettingsComponent implements OnInit {
-  validatorType=ValidatorType
+  validatorType = ValidatorType
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'Save',
@@ -80,7 +80,7 @@ export class PayeeSettingsComponent implements OnInit {
   advisorId: any;
   family: any;
   familyMemberId: any;
-  showGstin: boolean= false;
+  showGstin: boolean = false;
   clientData: any;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private eventService: EventService,
@@ -95,7 +95,7 @@ export class PayeeSettingsComponent implements OnInit {
   set data(data) {
     this.inputData = data;
     console.log(data, "check ani");
-    if(!this.inputData.flag){
+    if (!this.inputData.flag) {
       delete data.id;
     }
     // this.clientId = AuthService.getClientId()
@@ -111,42 +111,42 @@ export class PayeeSettingsComponent implements OnInit {
     // this.clientId = AuthService.getClientId();
     const obj = {
       advisorId: this.advisorId,
-      clientId: !this.inputData.flag? this.clientData.clientId : this.clientData.id
+      clientId: !this.inputData.flag ? this.clientData.clientId : this.clientData.id
     };
     this.subService.getListOfFamilyByClient(obj).subscribe(
       data => this.getListOfFamilyByClientRes(data)
     );
   }
 
-  pinInvalid:boolean = false;
+  pinInvalid: boolean = false;
 
   getPostalPin(value) {
     let obj = {
       zipCode: value
     }
-    console.log(value,"check value");
-    if(value != ""){
+    console.log(value, "check value");
+    if (value != "") {
       this.postalService.getPostalPin(value).subscribe(data => {
         console.log('postal 121221', data)
         this.PinData(data)
       })
     }
-    else{
+    else {
       this.pinInvalid = false;
     }
   }
 
   PinData(data) {
-    if(data[0].Status == "Error"){
+    if (data[0].Status == "Error") {
       this.pinInvalid = true;
-      
-        this.getFormControl().pincode.setErrors(this.pinInvalid);
-        this.getFormControl().city.setValue("");
-        this.getFormControl().country.setValue("");
-        this.getFormControl().state.setValue("");
-      
+
+      this.getFormControl().pincode.setErrors(this.pinInvalid);
+      this.getFormControl().city.setValue("");
+      this.getFormControl().country.setValue("");
+      this.getFormControl().state.setValue("");
+
     }
-    else{
+    else {
       this.getFormControl().city.setValue(data[0].PostOffice[0].District);
       this.getFormControl().country.setValue(data[0].PostOffice[0].Country);
       this.getFormControl().state.setValue(data[0].PostOffice[0].Circle);
@@ -154,19 +154,19 @@ export class PayeeSettingsComponent implements OnInit {
     }
   }
 
- 
+
   gstTreatmentRemove(value) {
     console.log('gstTreatmentRemove 123', value)
-    if(value == 4){
+    if (value == 4) {
       this.getFormControl().gstIn.setValidators([Validators.required, Validators.pattern("^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$")]);
       this.showGstin = true;
     }
-    else{
+    else {
       this.getFormControl().gstIn.setValidators(null);
       this.showGstin = false;
     }
   }
-  
+
   getListOfFamilyByClientRes(data) {
     console.log('family Memebers', data)
     if(data != undefined){
@@ -187,7 +187,7 @@ export class PayeeSettingsComponent implements OnInit {
     this.payeeSettingsForm = this.fb.group({
       customerName: [data.name, [Validators.required]],
       displayName: [data.companyDisplayName, [Validators.required]],
-      customerType: [data.customerTypeId ],
+      customerType: [data.customerTypeId],
       companyName: [data.companyName, [Validators.required]],
       emailId: [data.email, [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
       primaryContact: [data.primaryContact, [Validators.required]],
@@ -234,16 +234,16 @@ export class PayeeSettingsComponent implements OnInit {
   Close(data) {
     // this.subInjectService.rightSliderData(state)
     // this.subInjectService.rightSideData(state);
-    if(!this.inputData.flag){
+    if (!this.inputData.flag) {
       this.closeAddPayee.emit(false);
     }
-    else{
+    else {
       this.subInjectService.changeNewRightSliderState({ state: 'close', data });
     }
   }
 
   savePayeeSettings() {
-    this.inputData
+    // this.inputData
     if (this.payeeSettingsForm.invalid) {
       this.payeeSettingsForm.get('customerName').markAsTouched();
       this.payeeSettingsForm.get('displayName').markAsTouched();
@@ -259,13 +259,13 @@ export class PayeeSettingsComponent implements OnInit {
       this.payeeSettingsForm.get('state').markAsTouched();
     } else {
       this.barButtonOptions.active = true;
-      if (this.payeeSettingsForm.controls.id.value != undefined) { 
+      if (this.payeeSettingsForm.controls.id.value != undefined) {
         const obj1 = {
           customerName: this.payeeSettingsForm.controls.customerName.value,
           city: this.payeeSettingsForm.controls.city.value,
           clientBillerId: 1,
           companyDisplayName: this.payeeSettingsForm.controls.displayName.value,
-          familyMemberId: !this.inputData.flag? this.clientData.clientId : this.clientData.id,
+          familyMemberId: !this.inputData.flag ? this.clientData.clientId : this.clientData.id,
           companyName: this.payeeSettingsForm.controls.companyName.value,
           country: this.payeeSettingsForm.controls.country.value,
           currency: 'string',
@@ -281,14 +281,14 @@ export class PayeeSettingsComponent implements OnInit {
           pan: this.payeeSettingsForm.controls.pan.value,
           zipCode: this.payeeSettingsForm.controls.pincode.value,
           id: this.payeeSettingsForm.controls.id.value,
-          clientId:!this.inputData.flag? this.clientData.clientId : this.clientData.id
+          clientId: !this.inputData.flag ? this.clientData.clientId : this.clientData.id
         };
         this.sendData = obj1;
         this.subService.editPayeeSettings(obj1).subscribe(
-          data =>{
+          data => {
             this.editSettingResData(data)
           },
-          err=>{
+          err => {
             console.log(err, "editPayeeSettings error");
           }
         );
@@ -311,15 +311,15 @@ export class PayeeSettingsComponent implements OnInit {
           pan: this.getFormControl().pan.value,
           country: this.getFormControl().country.value,
           zipCode: this.getFormControl().pincode.value,
-          clientId: !this.inputData.flag? this.clientData.clientId : this.clientData.id
+          clientId: !this.inputData.flag ? this.clientData.clientId : this.clientData.id
         };
         this.subService.addClientBillerProfile(obj).subscribe(
-          data =>{
+          data => {
             this.addClientBillerProfileRes(data);
           },
-        err=>{
-          console.log(err, "addClientBillerProfileRes error");
-        }
+          err => {
+            console.log(err, "addClientBillerProfileRes error");
+          }
         );
 
       }
@@ -340,13 +340,13 @@ export class PayeeSettingsComponent implements OnInit {
     //   this.subInjectService.changeNewRightSliderState({ state: 'close', data });
     //   this.eventService.openSnackBar('Client profile added Successfully', 'OK');
     // } else {
-      if(this.inputData.flag){
-        console.log('addClientBillerProfileRes', data);
-        this.updatedData = data;
-        this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
-        this.eventService.openSnackBar('Client profile added Successfully', 'OK');
-      }
-      this.Close(data);
+    if (this.inputData.flag) {
+      console.log('addClientBillerProfileRes', data);
+      this.updatedData = data;
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
+      this.eventService.openSnackBar('Client profile added Successfully', 'OK');
+    }
+    this.Close(data);
     // }
   }
 

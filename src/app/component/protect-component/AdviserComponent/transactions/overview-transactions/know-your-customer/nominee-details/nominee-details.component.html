@@ -1,0 +1,159 @@
+<div class="pt-60 mb-100">
+    <div class="row">
+        <div class="col-md-2 col-2 fixed-top">
+            <div class="details_ui">
+                <ul>
+                    <li class="text-success">
+                        <span class="bg-success "> <i class="material-icons text-white">
+                                done
+                            </i> </span> Personal details
+                    </li>
+
+                    <li class="text-success">
+                        <span class="bg-success "> <i class="material-icons text-white">
+                                done
+                            </i> </span> Address details
+                    </li>
+
+                    <li class="text-primary">
+                        <span class="bg-primary text-white"> 3 </span> Bank details
+                    </li>
+
+                    <li>
+                        <span class="bg-grey lt"> 4 </span> Nominee details
+                    </li>
+
+                    <li>
+                        <span class="bg-grey lt"> 5 </span> FATCA details
+                    </li>
+
+                    <li>
+                        <span class="bg-grey lt"> 6 </span> Photo & Signature
+                    </li>
+
+                    <li>
+                        <span class="bg-grey lt"> 7 </span> Video KYC
+                    </li>
+
+                    <li>
+                        <span class="bg-grey lt"> 8 </span> Review & submit
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="col-md-7 offset-2 p-0 bl-1 ">
+            <div class="p-20">
+                <h3 class="f-18 mb-28 f-600">Nominee details #1</h3>
+
+                <div class="row">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Nominee name </h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <input matInput maxlength="10" type="text" class="form-control">
+
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Nominee relation </h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <mat-select class="form-control">
+                                <mat-option value="Resident individual"> Resident individual </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-10 m-0">Nominee type</h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-radio-group aria-label="Select an option">
+                            <mat-radio-button value="1" class="b-a-custom bor_top_tb_left radioBtnSmall  text-primary custom-radio">
+                                Major
+                            </mat-radio-button>
+                            <mat-radio-button value="2" class="radioBtnSmall radio-border custom-radio">
+                                Minor </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                </div>
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Nominee date of birth </h3>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput class="form-control" [matDatepicker]="picker">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Nominee percentage </h3>
+                    </div>
+                    <div class="col-md-3 iconPetage">
+                        <input matInput maxlength="10" type="text" class="form-control percentage">
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-3 bl-1 mt-28 fixed-top-right ">
+            <div class="row ">
+                <div class="col-md-12">
+                    <h3 class="f-16 mt-4 mb-10">Upload PAN</h3>
+                    <div class="dragDropCLass">
+                        Drag & drop file here <br> or <br> Browse
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+<div class="bottom-fixed wrapper-12 w-100">
+    <div class="row d-flex align-items-center">
+        <div class="col-md-3 ">
+            <button mat-button class="f-16 text-transform-inherit text-white m-0"> Skip this step </button>
+        </div>
+
+        <div class="col-md-5 text-center">
+            <div class="holderLink">
+                <a class="activeLink p-4 f-18 text-white" href=""> Nominee 1 </a>
+                <a class="f-18 text-white p-4" href=""> Nominee 2 </a>
+                <a class="f-18 text-white p-4" href=""> Nominee 3 </a>
+            </div>
+        </div>
+
+        <div class="col-md-4 text-right">
+            <button mat-raised-button class="f-16 btn-default mr-12 br-0 text-inherit"> PREVIOUS </button>
+            <button mat-button class="f-16 text-white m-0"> NEXT STEP </button>
+        </div>
+    </div>
+</div>

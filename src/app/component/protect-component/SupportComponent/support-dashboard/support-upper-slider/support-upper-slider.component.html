@@ -1,0 +1,79 @@
+<div class="dialogclose">
+    <div class="row popup-header-fix-100">
+        <div class="col-md-2 border-right-1 p-0">
+            <img class="imgAdLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+        </div>
+        <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
+
+            <p class="f-16 mb-0">
+                NJ - RTA Scheme Mapping
+            </p>
+        </div>
+        <div class="col-md-2 text-right">
+            <i (click)="dialogClose()" class="material-icons pt-16 c-p pr-16">
+                clear
+            </i>
+        </div>
+    </div>
+</div>
+
+
+<div class="row pt-72">
+    <div class="col-md-12">
+        <table id="table-low" mat-table [dataSource]="dataSource">
+            <!-- Position Column -->
+            <ng-container matColumnDef="name">
+                <th class="b-a" mat-header-cell *matHeaderCellDef> NJ name </th>
+                <td mat-cell class="b-a" *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="nav">
+                <th class="b-a" mat-header-cell *matHeaderCellDef> NJ NAV </th>
+                <td class="b-a" mat-cell *matCellDef="let element"> {{element.nav}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="schemeName">
+                <th class="b-a" mat-header-cell *matHeaderCellDef> Search corresponding scheme name </th>
+                <td class="b-a" mat-cell *matCellDef="let element"> <input class="form-control" matInput value="Sushi">
+                </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="schemeCode">
+                <th class="b-a" mat-header-cell *matHeaderCellDef> Scheme code </th>
+                <td class="b-a" mat-cell *matCellDef="let element"> {{element.schemeCode}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="amficode">
+                <th class="b-a" mat-header-cell *matHeaderCellDef> AMFI code </th>
+                <td class="b-a" mat-cell *matCellDef="let element"> {{element.amficode}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="navTwo">
+                <th class="b-a" mat-header-cell *matHeaderCellDef> NAV </th>
+                <td class="b-a" mat-cell *matCellDef="let element"> {{element.navTwo}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="navDate">
+                <th class="b-a" mat-header-cell *matHeaderCellDef> NAV date </th>
+                <td class="b-a" mat-cell *matCellDef="let element"> {{element.navDate}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="njCount">
+                <th class="b-a" mat-header-cell *matHeaderCellDef> NJ count </th>
+                <td class="b-a" mat-cell *matCellDef="let element"> {{element.njCount}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="map">
+                <th class="b-a" mat-header-cell *matHeaderCellDef> Map </th>
+                <td class="b-a" mat-cell *matCellDef="let element"> {{element.map}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>

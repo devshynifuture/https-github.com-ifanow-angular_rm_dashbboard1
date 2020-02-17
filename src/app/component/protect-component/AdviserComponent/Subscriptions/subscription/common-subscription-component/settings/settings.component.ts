@@ -104,7 +104,7 @@ export class SettingsComponent implements OnInit {
             console.log('this is sidebardata in subs subs 2: ');
           }
           rightSideDataSub.unsubscribe();
-      }
+        }
       }
     );
   }
@@ -145,9 +145,9 @@ export class SettingsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result,this.SettingProfileData, "delete result");
-      
-      if(result != undefined){
+      console.log(result, this.SettingProfileData, "delete result");
+
+      if (result != undefined) {
         const tempList = this.SettingProfileData.filter(p => p.id != result.id);
         this.SettingProfileData = tempList;
       }
@@ -157,7 +157,7 @@ export class SettingsComponent implements OnInit {
 
   // deletedData(data) {
   //   if (data == true) {
-      
+
   //   }
   // }
 

@@ -1,0 +1,34 @@
+.plan-assetallocation {
+  th:nth-child(1) {
+    width: 16.68% !important;
+  }
+}
+
+.plan-returnsinflation {
+  table {
+    tr.mat-header-row {
+      height: 52px !important;
+    }
+  }
+}
+
+#ui-settings-plan,
+#ui-settings-user-role {
+  .mat-tab-label {
+    font-weight: 400 !important;
+  }
+}
+
+.hierachy {
+  tr.mat-header-row {
+    height: 44px;
+  }
+
+  tbody td {
+    padding: 6px 8px !important;
+  }
+
+  tr.mat-row {
+    height: 36px;
+  }
+}
