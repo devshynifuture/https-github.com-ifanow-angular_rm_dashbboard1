@@ -45,12 +45,27 @@
                             </mat-form-field>
                         </div>
                     </div>
-                    <!-- *ngIf="showSpinner == true removed for prod build" -->
-                    <div class="col-md-1" >
+                    <div class="col-md-1"  *ngIf="showSpinner == true">
                         <mat-spinner class="mt-8"></mat-spinner>
                     </div>
                 </div>
-
+                <div class="row" *ngIf="reInvestmentOpt.length > 1">
+                    <div class="col-md-12 p-0 text-left">
+                        <h5 class="m-0 pt-28 text-black pb-12">Select re-investment</h5>
+                    </div>
+                    <div class="col-md-5 p-0">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <mat-select class="form-control" formControlName="investmentAccountSelection">
+                                    <mat-option value="option" *ngFor="let flag of reInvestmentOpt"
+                                        (click)="reinvest(flag)">
+                                        {{(flag.dividendReinvestmentFlag == 0)?'Dividend payout':'Dividend reinvestment'}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-6 p-0 text-left">
                         <h5 class="m-0 pt-28 text-black pb-12">Select scheme folio</h5>
@@ -127,8 +142,9 @@
             </div>
 
             <div class="col-md-4 bg-grey lter p-0">
-                <app-transaction-summary [data]="transactionSummary" (defaultDetails)='getDefaultDetails($event)'>
-                </app-transaction-summary>
+                <app-transaction-summary [data]="transactionSummary" (defaultDetails)='getDefaultDetails($event)'
+                (bankDetailsSend)='getbankDetails($event)' (achmandateDetails)='getAchmandateDetails($event)'>
+            </app-transaction-summary>
             </div>
         </div>
     </div>

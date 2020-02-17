@@ -25,7 +25,7 @@ export class StpTransactionComponent implements OnInit {
   schemeDetails: any;
   transactionSummary: {};
   showUnits = false;
-  reInvestmentOpt =[];
+  reInvestmentOpt = [];
   schemeList: any;
   navOfSelectedScheme: any;
   selectScheme = 2;
@@ -33,6 +33,7 @@ export class StpTransactionComponent implements OnInit {
   scheme: any;
   folioDetails: any;
   folioList: any;
+  showSpinner = false;
   switchFrequency: any;
   fre: any;
   frequency: any;
@@ -41,6 +42,9 @@ export class StpTransactionComponent implements OnInit {
   schemeListTransfer: any;
   schemeDetailsTransfer: any;
   schemeTransfer: any;
+  achMandateNSE: any;
+  mandateDetails: any;
+  bankDetails: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private processTransaction: ProcessTransactionService,
@@ -63,16 +67,33 @@ export class StpTransactionComponent implements OnInit {
 
   ngOnInit() {
     this.getdataForm(this.inputData)
-    this.transactionSummary ={}
+    this.transactionSummary = {}
     Object.assign(this.transactionSummary, { allEdit: true });
     Object.assign(this.transactionSummary, { transactType: 'STP' });
-    Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember});
+    Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
   }
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
+    this.stpTransaction.controls.investor.reset();
+    this.stpTransaction.controls.transferIn.reset();
   }
-  getSchemeListTranfer(value){
+  getMandateDetails() {
+    let obj1 = {
+      advisorId: this.getDataSummary.defaultClient.advisorId,
+      clientCode: this.getDataSummary.defaultClient.clientCode,
+      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+    }
+    this.onlineTransact.getMandateDetails(obj1).subscribe(
+      data => this.getMandateDetailsRes(data)
+    );
+  }
+  getMandateDetailsRes(data) {
+    console.log('mandate details :', data)
+    this.mandateDetails = data
+  }
+  getSchemeListTranfer(value) {
+    this.showSpinner = true
     if (this.selectScheme == 2 && value.length > 2) {
       let obj = {
         searchQuery: value,
@@ -83,20 +104,21 @@ export class StpTransactionComponent implements OnInit {
         familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
         clientId: this.getDataSummary.defaultClient.clientId,
         userAccountType: this.getDataSummary.defaultCredential.accountType,
-        holdingType:this.getDataSummary.defaultClient.holdingType,
-        tpUserCredFamilyMappingId:this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
+        holdingType: this.getDataSummary.defaultClient.holdingType,
+        tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
       }
       this.onlineTransact.getNewSchemes(obj).subscribe(
         data => this.getNewSchemesRes(data)
       );
-    } 
+    }
   }
-  getNewSchemesRes(data){
+  getNewSchemesRes(data) {
+    this.showSpinner = false
     console.log('new schemes', data)
     this.schemeListTransfer = data
   }
   getSchemeList(value) {
-
+    this.showSpinner = true
     if (this.selectScheme == 2 && value.length > 2) {
       let obj = {
         searchQuery: value,
@@ -107,8 +129,8 @@ export class StpTransactionComponent implements OnInit {
         familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
         clientId: this.getDataSummary.defaultClient.clientId,
         userAccountType: this.getDataSummary.defaultCredential.accountType,
-        holdingType:this.getDataSummary.defaultClient.holdingType,
-        tpUserCredFamilyMappingId:this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
+        holdingType: this.getDataSummary.defaultClient.holdingType,
+        tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
       }
       this.onlineTransact.getExistingSchemes(obj).subscribe(
         data => this.getExistingSchemesRes(data)
@@ -118,18 +140,19 @@ export class StpTransactionComponent implements OnInit {
     }
   }
   getExistingSchemesRes(data) {
+    this.showSpinner = false
     this.schemeList = data
-    console.log('data schemelist res',data)
+    console.log('data schemelist res', data)
   }
- 
+
   selectedFolio(folio) {
     this.folioDetails = folio
     this.showUnits = true
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
   }
-  selectedSchemeTransfer(schemeTransfer){
+  selectedSchemeTransfer(schemeTransfer) {
     this.schemeTransfer = schemeTransfer
-    Object.assign(this.transactionSummary, { schemeTransfer: schemeTransfer.schemeName });
+    Object.assign(this.transactionSummary, { schemeNameTranfer: schemeTransfer.schemeName });
     this.navOfSelectedScheme = schemeTransfer.nav
     let obj1 = {
       mutualFundSchemeMasterId: schemeTransfer.mutualFundSchemeMasterId,
@@ -141,14 +164,14 @@ export class StpTransactionComponent implements OnInit {
       data => this.getSchemeDetailsTranferRes(data)
     );
   }
-  getSchemeDetailsTranferRes(data){
+  getSchemeDetailsTranferRes(data) {
     // this.maiSchemeList = data
     this.schemeDetailsTransfer = data[0]
   }
   selectedScheme(scheme) {
     this.scheme = scheme
     this.showUnits = true
-    Object.assign(this.transactionSummary, { schemeTransfer: scheme.schemeName });
+    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav
     let obj1 = {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
@@ -172,13 +195,14 @@ export class StpTransactionComponent implements OnInit {
       this.reInvestmentOpt = []
     }
     this.getSchemeWiseFolios()
+    if(this.getDataSummary.defaultClient.aggregatorType == 2){
+      this.getMandateDetails()
+      }
     this.getFrequency()
   }
   reinvest(scheme) {
     this.schemeDetails = scheme
-    this.transactionSummary = {
-      schemeName: scheme.schemeName
-    }
+    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     console.log('schemeDetails == ', this.schemeDetails)
   }
   getSchemeWiseFolios() {
@@ -188,7 +212,7 @@ export class StpTransactionComponent implements OnInit {
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
       clientId: this.getDataSummary.defaultClient.clientId,
       userAccountType: this.getDataSummary.defaultCredential.accountType,
-      holdingType:this.getDataSummary.defaultClient.holdingType,
+      holdingType: this.getDataSummary.defaultClient.holdingType,
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
     }
     this.onlineTransact.getSchemeWiseFolios(obj1).subscribe(
@@ -229,7 +253,7 @@ export class StpTransactionComponent implements OnInit {
     console.log('dateDisplay = ', this.dateDisplay)
   }
   onAddTransaction(value, data) {
-    Object.assign(this.transactionSummary, {allEdit: false});
+    Object.assign(this.transactionSummary, { allEdit: false });
     this.confirmTrasaction = true
     const fragmentData = {
       flag: 'addNsc',
@@ -256,6 +280,13 @@ export class StpTransactionComponent implements OnInit {
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  }
+  enteredAmount(value) {
+    Object.assign(this.transactionSummary, { enteredAmount: value });
+  }
+  getbankDetails(value){
+    this.bankDetails = value
+    console.log('bank details',value)
   }
   getdataForm(data) {
     if (!data) {
@@ -293,9 +324,9 @@ export class StpTransactionComponent implements OnInit {
     let obj = {
 
       productDbId: this.schemeDetails.id,
-      toProductDbId:this.schemeDetailsTransfer.id,
+      toProductDbId: this.schemeDetailsTransfer.id,
       mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
-      toMutualFundSchemeMasterId:this.schemeTransfer.mutualFundSchemeMasterId,
+      toMutualFundSchemeMasterId: this.schemeTransfer.mutualFundSchemeMasterId,
       productCode: this.schemeDetails.schemeCode,
       isin: this.schemeDetails.isin,
       folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
@@ -319,19 +350,27 @@ export class StpTransactionComponent implements OnInit {
       clientCode: this.getDataSummary.defaultClient.clientCode,
       orderVal: this.stpTransaction.controls.employeeContry.value,
       bseDPTransType: "PHYSICAL",
-      aggregatorType: this.getDataSummary.defaultClient.aggregatorType
+      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+      mandateId:null,
+      bankDetailId:null,
+      nsePaymentMode:null,
     }
-    console.log('json stp',obj)
+    if (this.getDataSummary.defaultClient.aggregatorType == 1) {
+      obj.mandateId = (this.achMandateNSE == undefined)?null:this.achMandateNSE.id
+      obj.bankDetailId = this.bankDetails.id
+      obj.nsePaymentMode = (this.stpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE'
+    }
+    console.log('json stp', obj)
     this.onlineTransact.transactionBSE(obj).subscribe(
       data => this.stpBSERes(data)
     );
   }
-  stpBSERes(data){
-    console.log('stp res == ',data)
-    if(data == undefined){
+  stpBSERes(data) {
+    console.log('stp res == ', data)
+    if (data == undefined) {
 
-    }else{
-    this.onAddTransaction('confirm',null)
+    } else {
+      this.onAddTransaction('confirm', this.transactionSummary)
     }
   }
 }
