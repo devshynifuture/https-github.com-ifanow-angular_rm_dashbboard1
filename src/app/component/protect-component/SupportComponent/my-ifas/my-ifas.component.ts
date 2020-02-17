@@ -4,7 +4,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 // import { IfaDetailsComponent } from './ifa-details/ifa-details.component';
 import { SupportService } from '../support.service';
 import { IfasDetailsComponent } from './ifas-details/ifas-details.component';
-import { MatSort } from '@angular/material';
+import { MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-my-ifas',
@@ -18,12 +18,13 @@ export class MyIfasComponent implements OnInit {
   isLoading = false;
   constructor(private supportService: SupportService, private subInjectService: SubscriptionInject) { }
 
-  dataSource = ELEMENT_DATA;
+  dataSource;
   displayedColumns = ['adminName', 'email', 'mobile', 'usingSince', 'lastLogin', 'accStatus', 'plan', 'nextBilling', 'team', 'arn', 'logout', 'menu']
 
 
   ngOnInit() {
-
+    this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+    this.dataSource.sort = this.sort;
   }
 
   // openDetailsComponent(value, data) {
@@ -67,7 +68,7 @@ export class MyIfasComponent implements OnInit {
         }
       }
     );
-    event.stopPropagation();
+    // event.stopPropagation();
   }
 }
 const ELEMENT_DATA = [
