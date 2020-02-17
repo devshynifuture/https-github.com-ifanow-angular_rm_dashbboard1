@@ -309,3 +309,41 @@ img.header-img {
     left: 8px;
     top: 10px;
 }
+
+.leftside-overlay-toggle-button{
+    position: absolute;
+    background: #fff;
+    cursor: pointer;
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+    box-shadow: 2px 2px 3px #ccc;
+    top: 100px;
+    z-index: 1;
+    display: flex;
+    padding: 0.5rem 0.3rem 0.5rem 0rem;
+}
+
+.leftside-overlay-toggle-button1{
+    position: absolute;
+    background: #fff;
+    cursor: pointer;
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+    box-shadow: 2px 2px 3px #ccc;
+    top: 100px;
+    left: 200px;
+    z-index: 1;
+    display: flex;
+    padding: 0.5rem 0.3rem 0.5rem 0rem;
+}
+
+mat-drawer-content {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.mt-50{
+    margin-top: 50px !important;
+}
