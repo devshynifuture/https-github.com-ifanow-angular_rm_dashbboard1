@@ -12,7 +12,12 @@ import { SupportUpperSliderComponent } from './support-dashboard/support-upper-s
 
 
 const componentList = [
-    AdminDetailsComponent, IfasDetailsComponent, IfaBoardingHistoryComponent, UpperSliderBackofficeComponent, ReconciliationDetailsViewComponent, SupportUpperSliderComponent
+    AdminDetailsComponent,
+    IfasDetailsComponent,
+    IfaBoardingHistoryComponent,
+    UpperSliderBackofficeComponent,
+    ReconciliationDetailsViewComponent,
+    SupportUpperSliderComponent
 ]
 
 @NgModule({
