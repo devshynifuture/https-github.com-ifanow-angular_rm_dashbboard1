@@ -84,27 +84,36 @@
     </div>
     <h5 class="m-0 f-500 text-black pt-44">Added items</h5>
     <p class="roboto m-0 f-500 text-black pt-20">EQUITY</p>
-    <table *ngIf="deploymentData" mat-table [dataSource]="deploymentData.equity_investment" class="mt-8" id="table-low">
+    <table *ngIf="deploymentData" mat-table appSkeletonLoading [appSkeletonLoading]="isLoading"
+        [dataSource]="deploymentData.equity_investment" class="mt-8" id="table-low">
         <!-- Name Column -->
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Scheme name </th>
-            <td mat-cell *matCellDef="let element"> {{element.scheme_name}} </td>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar">{{element.scheme_name}}</div>
+            </td>
         </ng-container>
 
         <!-- Weight Column -->
         <ng-container matColumnDef="weight">
             <th mat-header-cell *matHeaderCellDef> Amount </th>
-            <td mat-cell *matCellDef="let element"> {{element.advice_allotment}} </td>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar">{{element.advice_allotment}}</div>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="height">
             <th mat-header-cell *matHeaderCellDef> Advice status </th>
-            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar">{{element.weight}}</div>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="test">
             <th mat-header-cell *matHeaderCellDef> Action plan status </th>
-            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar">{{element.weight}}</div>
+            </td>
         </ng-container>
         <!-- Symbol Column -->
         <ng-container matColumnDef="icons">
@@ -118,27 +127,36 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
     </table>
     <p class="roboto m-0 f-500 text-black pt-20">DEBT</p>
-    <table *ngIf="deploymentData" mat-table [dataSource]="deploymentData.debt_investment" class="mt-8" id="table-low">
+    <table *ngIf="deploymentData" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation"
+        mat-table [dataSource]="deploymentData.debt_investment" class="mt-8" id="table-low">
         <!-- Name Column -->
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Scheme name </th>
-            <td mat-cell *matCellDef="let element"> {{element.scheme_name}} </td>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar"> {{element.scheme_name}}</div>
+            </td>
         </ng-container>
 
         <!-- Weight Column -->
         <ng-container matColumnDef="weight">
             <th mat-header-cell *matHeaderCellDef> Amount </th>
-            <td mat-cell *matCellDef="let element"> {{element.advice_allotment}} </td>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar"> {{element.advice_allotment}}</div>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="height">
             <th mat-header-cell *matHeaderCellDef> Advice status </th>
-            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar"> {{element.weight}}</div>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="test">
             <th mat-header-cell *matHeaderCellDef> Action plan status </th>
-            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar"> {{element.weight}}</div>
+            </td>
         </ng-container>
         <!-- Symbol Column -->
         <ng-container matColumnDef="icons">

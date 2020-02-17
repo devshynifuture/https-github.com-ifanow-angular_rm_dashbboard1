@@ -37,8 +37,8 @@
             <div class="row">
 
                 <div class="col-md-10 deployment">
-                    <table [appSkeletonLoading]="isLoading" appSkeletonLoading mat-table [dataSource]="dataSource"
-                        class="skeletonAnimation" id="table-low">
+                    <table *ngIf="dataSource" [appSkeletonLoading]="isLoading" appSkeletonLoading mat-table
+                        [dataSource]="dataSource" class="skeletonAnimation" id="table-low">
 
                         <ng-container matColumnDef="checkbox">
                             <th mat-header-cell *matHeaderCellDef> </th>
@@ -116,7 +116,7 @@
                                         <button mat-menu-item (click)="openDep('open')">View record details</button>
                                         <button mat-menu-item (click)="openDep('open',element)">Deployment
                                             details</button>
-                                        <button mat-menu-item (click)="deleteDeployment('open')">Delete
+                                        <button mat-menu-item (click)="deleteDeployment(element)">Delete
                                             deployment</button>
                                     </mat-menu>
                                 </div>
