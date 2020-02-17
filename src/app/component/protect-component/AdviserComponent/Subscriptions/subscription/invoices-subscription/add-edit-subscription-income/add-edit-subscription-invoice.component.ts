@@ -76,20 +76,21 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   }
 
   @Input() set data(data) {
-    console.log('@@@@@@@@ yo1', data, this.copyStoreData);
-   this.copyStoreData = data;
-   this.storeData = data;
+    this.copyStoreData = data;
+    this.storeData = data;
+    console.log('@@@@@@@@ yo1', data.id, data.id == undefined);
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-
+    if(data.id == undefined){
+      this.getClients();
+    }
     this.initFormsAndVariable(data);
-
   }
 
   ngOnInit() {
     console.log(this.upperData)
+   
     this.advisorId = AuthService.getAdvisorId();
-    this.getClients();
     this.showErr = false;
     this.getServicesList();
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
@@ -131,7 +132,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       dueDate: [new Date(data.dueDate), [Validators.required]],
       footnote: [data.footnote, [Validators.required]],
       terms: [data.terms, [Validators.required]],
-      taxStatus: [(!data.igstTaxAmount) ? 'SGST(9%)|CGST(9%)' : 'IGST(18%)'],
+      taxStatus: [data=='' || !data.cgst ? 'IGST(18%)' : 'SGST(9%)|CGST(9%)' ],
       serviceName: [(!data.services) ? '0' : (data.services.length == 0) ? '0' : data.services[0].serviceName,
       [Validators.required]],
       subTotal: [(!data.subTotal) ? '' : data.subTotal],
@@ -360,7 +361,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     console.log('updateInvoiceInfoRes', data);
     if (data == 1) {
       this.barButtonOptions.active = false;
-      this.cancelAddInvoice.emit(false);
+      this.cancelAddInvoice.emit(true);
       this.Close('close', true);
     }
   }
@@ -390,6 +391,9 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     this.editPayment.controls.footnote.setValue(data.biller.footnote);
     this.editPayment.controls.terms.setValue(data.biller.terms);
     this.editPayment.controls.invoiceNumber.setValue(data.invoiceNumber);
+    this.editPayment.controls.invoiceDate.setValue(new Date());
+    this.editPayment.controls.dueDate.setValue(new Date());
+    this.editPayment.controls.taxStatus.setValue("IGST(18%)");
   }
 
   getServicesList() {
