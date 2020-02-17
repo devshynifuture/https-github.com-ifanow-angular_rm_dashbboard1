@@ -11,12 +11,13 @@ import { UsersComponent } from './setting-user-roles/setting-users-roles/users/u
 import { RolesComponent } from './setting-user-roles/setting-users-roles/roles/roles.component';
 import { HierachyComponent } from './setting-user-roles/setting-users-roles/hierachy/hierachy.component';
 import { SettingEntryModule } from './setting-entry/setting-entry.module';
+import { ArnRiaDetailsComponent } from './setting-backup/setting-backup/arn-ria-details/arn-ria-details.component';
 
 
 @NgModule({
   declarations: [LeftsidebarSettingComponent, SettingOrgProfileComponent, SettingCrmComponent,
     SettingUserRolesComponent, SettingBackofficeComponent, UsersComponent, RolesComponent,
-    HierachyComponent],
+    HierachyComponent, ArnRiaDetailsComponent],
   imports: [
     CommonModule,
     SettingRoutingModule,

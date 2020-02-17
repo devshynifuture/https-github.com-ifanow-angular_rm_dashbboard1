@@ -73,9 +73,9 @@ export class SubscriptionCompletenessComponent implements OnInit {
   currentTabs(value, ind) {
     this.eventService.tabData(value.selectedTab)
     if (value.selectedTab == 7 && ind == 0) {
-      this.router.navigate(['admin', 'subscription', 'settings'], { state: { example: 0 } });
+      this.router.navigate(['/admin/subscription/settings', 'plans']);
     } else {
-      this.router.navigate(['admin', 'subscription', 'settings'], { state: { example: 3 } });
+      this.router.navigate(['/admin/subscription/settings','preferences']);
     }
     switch (value.selectedTab) {
       case (2):

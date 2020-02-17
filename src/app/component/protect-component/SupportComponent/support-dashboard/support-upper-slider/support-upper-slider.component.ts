@@ -18,6 +18,7 @@ export class SupportUpperSliderComponent implements OnInit {
 
   close() {
     this.subInjectService.changeUpperRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
     console.log('close');
   }
 
