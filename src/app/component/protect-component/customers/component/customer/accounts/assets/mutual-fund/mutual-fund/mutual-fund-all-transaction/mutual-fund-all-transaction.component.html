@@ -1,6 +1,6 @@
 <div>
-        <div class="wrapper-8">
-            <!-- <div class="row">
+    <div class="wrapper-8">
+        <!-- <div class="row">
                     <div class="col-md-12 right text-right pt-28 pb-28 pr-0">
                         <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-0">
                             Overview Report
@@ -16,155 +16,168 @@
                         </mat-menu>
                     </div>
                 </div> -->
-    
-            <div class="row pb-12">
-                <div class="col-md-4 pl-0">
-                    <h4 class="m-0 text-black roboto pt-8">Mutual fund transactions</h4>
-                </div>
-                <div class="col-md-8 p-0 d-flex justify-content-end">
-                    <img class="c-p" src="assets/images/svg/download-bordered.svg">
-                    <img class="c-p" src="assets/images/svg/three-dot-bordered.svg">
-                    <img class="c-p mr-12" src="assets/images/svg/up-down.svg">
-                    <button class="btn-default addon mr-12 v-middle mat-stroked-button mat-button-base"
-                        mat-stroked-button="">
-                        <span class="mat-button-wrapper"><i class="material-icons">filter_list</i>FILTERS</span>
-                        <div class="mat-button-ripple mat-ripple" matripple="" ng-reflect-centered="false"
-                            ng-reflect-disabled="false" ng-reflect-trigger="[object HTMLButtonElement]">
-                        </div>
-                        <div class="mat-button-focus-overlay"></div>
-                    </button>
-                </div>
+
+        <div class="row pb-12">
+            <div class="col-md-4 pl-0">
+                <h4 class="m-0 text-black roboto pt-8">Mutual fund transactions</h4>
             </div>
-    
-            <div class="row">
-                <div class="col-md-12 pl-0 mb-8">
-                    <table matSort mat-table [dataSource]="subCatArray()" id="table-low" class="mutualfunds-capital-equity">
-                        <ng-container matColumnDef="no">
-                            <th mat-header-cell *matHeaderCellDef class="br">Sr no. </th>
-                            <td mat-cell *matCellDef="let element;index as i" class="br">
-                                <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
-                            </td>
-                            <td *matFooterCellDef class="br  text-right" mat-footer-cell></td>
-                        </ng-container>
+            <div class="col-md-8 p-0 d-flex justify-content-end">
+                <img class="c-p" src="assets/images/svg/download-bordered.svg">
+                <img class="c-p" src="assets/images/svg/three-dot-bordered.svg">
+                <img class="c-p mr-12" src="assets/images/svg/up-down.svg">
+                <button class="btn-default addon mr-12 v-middle mat-stroked-button mat-button-base"
+                    mat-stroked-button="">
+                    <span class="mat-button-wrapper"><i class="material-icons">filter_list</i>FILTERS</span>
+                    <div class="mat-button-ripple mat-ripple" matripple="" ng-reflect-centered="false"
+                        ng-reflect-disabled="false" ng-reflect-trigger="[object HTMLButtonElement]">
+                    </div>
+                    <div class="mat-button-focus-overlay"></div>
+                </button>
+            </div>
+        </div>
 
-                        <ng-container matColumnDef="transactionType">
-                            <th class="br" mat-sort-header="transactionType" mat-header-cell *matHeaderCellDef> Transaction Type </th>
-                            <td class="br" mat-cell *matCellDef="let element"> {{element.fwTransactionType}} </td>
-                            <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left">Grand Total
-                            </td>
-    
-                        </ng-container>
-    
-                        <ng-container matColumnDef="transactionDate">
-                            <th class="br text-right" mat-sort-header="transactionDate" mat-header-cell *matHeaderCellDef>
-                               Transaction date</th>
-                            <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
-                                {{element.transactionDate}} </td>
-                            <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-                                {{(mutualFund)?mutualFund.total_amount_invested:'0'}}</td>
-    
-                        </ng-container>
-    
-                        <ng-container    matColumnDef="transactionAmount">
-                            <th class="br text-left" mat-sort-header="transactionAmount" mat-header-cell *matHeaderCellDef>
-                               Transaction amount</th>
-                            <td class="br text-left" mat-cell *matCellDef="let element" appFormatNumber>
-                                {{element.amount}} </td>
-                            <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-                                {{(mutualFund)?mutualFund.total_current_value:'0'}}</td>
-    
-                        </ng-container>
-    
-                        <!-- Symbol Column -->
-                        <ng-container matColumnDef="transactionNav">
-                            <th class="br text-right" mat-sort-header="transactionNav" mat-header-cell *matHeaderCellDef>
-                               Transaction NAV</th>
-                            <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
-                                {{element.transactionNav}} </td>
-                            <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-                                {{(mutualFund)?mutualFund.total_unrealized_gain:'0'}}</td>
-    
-                        </ng-container>
-    
-                        <ng-container matColumnDef="units">
-                            <th class="br text-right" mat-sort-header="units" mat-header-cell *matHeaderCellDef>Units</th>
-                            <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
-                                {{element.unit}} </td>
-                            <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-                                {{(mutualFund)?mutualFund.total_absolute_return:'0'}}</td>
-    
-                        </ng-container>
-    
-                        <ng-container matColumnDef="balanceUnits">
-                            <th class="br text-right" mat-sort-header="balanceUnits" mat-header-cell *matHeaderCellDef>Balance units </th>
-                            <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber> {{element.balanceUnits}}
-                            </td>
-                            <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-                                {{(mutualFund)?mutualFund.total_xirr:'0'}}</td>
-    
-                        </ng-container>
-    
-                        <ng-container matColumnDef="days">
-                            <th class="br text-right" mat-sort-header="days" mat-header-cell *matHeaderCellDef>
-                                Days</th>
-                            <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
-                                {{element.days}} </td>
-                            <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-                                {{(mutualFund)?mutualFund.total_dividend_payout:'0'}}</td>
-    
-                        </ng-container>
-    
-                        <ng-container matColumnDef="groupHeader">
-                            <td *matCellDef="let group" [attr.colspan]="displayedColumns.length" class="text-center text-primary">
-                                {{group.groupName}}</td>
-                        </ng-container>
-    
-                        <ng-container matColumnDef="groupHeader2">
-                            <td *matCellDef="let group" [attr.colspan]="displayedColumns.length">
-                                {{group.schemeName}}  <p class="text-right">Current NAV:{{group.nav}}</p> </td>
-                        </ng-container>
+        <div class="row">
+            <div class="col-md-12 pl-0 mb-8">
+                <table matSort mat-table [dataSource]="subCatArray()" id="table-low" class="mutualfunds-capital-equity">
+                    <ng-container matColumnDef="no">
+                        <th mat-header-cell *matHeaderCellDef class="br">Sr no. </th>
+                        <td mat-cell *matCellDef="let element;index as i" class="br">
+                            <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
+                        </td>
+                        <td *matFooterCellDef class="br  text-right" mat-footer-cell></td>
+                    </ng-container>
 
-                        <ng-container matColumnDef="groupHeader3"  >
-                                <td *matCellDef="let group" [attr.colspan]="displayedColumns.length" class="text-center text-primary">
-                                    {{group.name}}(PAN:{{group.pan}})|{{group.folio}}</td>
-                            </ng-container>
+                    <ng-container matColumnDef="transactionType">
+                        <th class="br" mat-sort-header="transactionType" mat-header-cell *matHeaderCellDef> Transaction
+                            Type </th>
+                        <td class="br" mat-cell *matCellDef="let element"> {{element.fwTransactionType}} </td>
+                        <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left">Grand Total
+                        </td>
 
-                        <ng-container matColumnDef="icons">
-                            <th *matHeaderCellDef class="" mat-header-cell></th>
-                            <td *matCellDef="let element" class="" mat-cell><i [matMenuTriggerFor]="menu25"
+                    </ng-container>
+
+                    <ng-container matColumnDef="transactionDate">
+                        <th class="br text-right" mat-sort-header="transactionDate" mat-header-cell *matHeaderCellDef>
+                            Transaction date</th>
+                        <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
+                            {{element.transactionDate}} </td>
+                        <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
+                        </td>
+
+                    </ng-container>
+
+                    <ng-container matColumnDef="transactionAmount">
+                        <th class="br text-left" mat-sort-header="transactionAmount" mat-header-cell *matHeaderCellDef>
+                            Transaction amount</th>
+                        <td class="br text-left" mat-cell *matCellDef="let element" appFormatNumber>
+                            {{element.amount}} </td>
+                        <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
+                            {{(mutualFund)?this.totalTransactionAmt:'0'}}</td>
+
+                    </ng-container>
+
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="transactionNav">
+                        <th class="br text-right" mat-sort-header="transactionNav" mat-header-cell *matHeaderCellDef>
+                            Transaction NAV</th>
+                        <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
+                            {{element.transactionNav}} </td>
+                        <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
+                            {{(mutualFund)?this.totalNav:'0'}}</td>
+
+                    </ng-container>
+
+                    <ng-container matColumnDef="units">
+                        <th class="br text-right" mat-sort-header="units" mat-header-cell *matHeaderCellDef>Units</th>
+                        <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
+                            {{element.unit}} </td>
+                        <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
+                            {{(mutualFund)?this.totalUnit:'0'}}</td>
+
+                    </ng-container>
+
+                    <ng-container matColumnDef="balanceUnits">
+                        <th class="br text-right" mat-sort-header="balanceUnits" mat-header-cell *matHeaderCellDef>
+                            Balance units </th>
+                        <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
+                            {{element.balanceUnits}}
+                        </td>
+                        <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
+                            {{(mutualFund)?this.totalBalanceUnit:'0'}}</td>
+
+                    </ng-container>
+
+                    <ng-container matColumnDef="days">
+                        <th class="br text-right" mat-sort-header="days" mat-header-cell *matHeaderCellDef>
+                            Days</th>
+                        <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
+                            {{element.days}} </td>
+                        <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
+                        </td>
+
+                    </ng-container>
+
+                    <ng-container matColumnDef="groupHeader">
+                        <td *matCellDef="let group" [attr.colspan]="displayedColumns.length"
+                            class="text-center text-primary">
+                            {{group.groupName}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="groupHeader2">
+                        <td *matCellDef="let group" [attr.colspan]="displayedColumns.length">
+                            {{group.schemeName}} <p class="text-right">Current NAV:{{group.nav}}</p>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="groupHeader3">
+                        <td *matCellDef="let group" [attr.colspan]="displayedColumns.length"
+                            class="text-center text-primary">
+                            {{group.name}}(PAN:{{group.pan}})|{{group.folio}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="groupHeader4">
+                        <td *matCellDef="let group" [attr.colspan]="displayedColumns.length"
+                            class="text-center f-600">
+                            {{group.total}}{{group.totalTransactionAmt}}{{group.totalUnit}}{{group.totalNav}}{{group.totalBalanceUnit}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="icons">
+                        <th *matHeaderCellDef class="" mat-header-cell></th>
+                        <td *matCellDef="let element" class="" mat-cell><i [matMenuTriggerFor]="menu25"
                                 class="material-icons c-p text-black">
                                 more_vert
-                              </i>
-                              <mat-menu #menu25="matMenu">
-                                <button mat-menu-item >View factsheet</button>
+                            </i>
+                            <mat-menu #menu25="matMenu">
+                                <button mat-menu-item>View factsheet</button>
                                 <button mat-menu-item>Download SOA</button>
                                 <button mat-menu-item (click)="openFolioMaster()">Folio master details</button>
                                 <button mat-menu-item (click)="openSipDetails()">SIP details</button>
                                 <button mat-menu-item class="bt-1">Transact online</button>
-                                <button mat-menu-item >Transaction slip</button>
+                                <button mat-menu-item>Transaction slip</button>
                                 <button mat-menu-item class="bt-1">View transactions</button>
-                                <button mat-menu-item >Add records</button>
-                                <button mat-menu-item >Delete scheme</button>
-    
-                              </mat-menu>
-                            </td>
-                  
-                            <td *matFooterCellDef class="br t-8 text-right" mat-footer-cell></td>
-                          </ng-container>
-    
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                        <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
-                        <tr *matRowDef="let row; columns: ['groupHeader2']; when: isGroup2" mat-row></tr>
-                        <tr *matRowDef="let row; columns: ['groupHeader3']; when: isGroup3" mat-row></tr>
-                        <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true"></tr>
-    
-                        
-                    </table>
-                </div>
+                                <button mat-menu-item>Add records</button>
+                                <button mat-menu-item>Delete scheme</button>
+
+                            </mat-menu>
+                        </td>
+
+                        <td *matFooterCellDef class="br t-8 text-right" mat-footer-cell></td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
+                    <tr *matRowDef="let row; columns: ['groupHeader2']; when: isGroup2" mat-row></tr>
+                    <tr *matRowDef="let row; columns: ['groupHeader3']; when: isGroup3" mat-row></tr>
+                    <tr *matRowDef="let row; columns: ['groupHeader4']; when: isGroup4" mat-row></tr>
+                    <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true"></tr>
+
+
+                </table>
             </div>
-    
-    
-            
         </div>
+
+
+
     </div>
+</div>

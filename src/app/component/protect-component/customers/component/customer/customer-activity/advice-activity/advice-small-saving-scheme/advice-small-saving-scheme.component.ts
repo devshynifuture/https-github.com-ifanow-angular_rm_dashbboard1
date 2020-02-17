@@ -32,6 +32,7 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
   clientId: any;
   isLoading: boolean;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  ppfDataSource: any;
 
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
   allAdvice = false
@@ -46,6 +47,7 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
       clientId: this.clientId,
       assetCategory: 10
     }
+    this.ppfDataSource = [{}, {}, {}]
     this.isLoading = true;
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {
@@ -54,6 +56,7 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
   }
   getAllSchemeResponse(data) {
     this.isLoading = false;
+    this.ppfDataSource = new MatTableDataSource(data.PPF);
     console.log(data)
   }
   openAddPPF(data, value) {

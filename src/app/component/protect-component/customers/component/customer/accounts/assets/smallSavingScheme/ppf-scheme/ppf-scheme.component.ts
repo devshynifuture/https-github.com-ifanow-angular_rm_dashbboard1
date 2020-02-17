@@ -29,7 +29,6 @@ export class PPFSchemeComponent implements OnInit {
   displayedColumns = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
 
   ngOnInit() {
-
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getPpfSchemeData();
@@ -55,7 +54,7 @@ export class PPFSchemeComponent implements OnInit {
       this.noData = 'No scheme found';
       this.dataSource.data = [];
     } else if (data && data.PPFList && data.PPFList.length > 0) {
-      console.log('getPpfSchemeDataResponse',data);
+      console.log('getPpfSchemeDataResponse', data);
       this.dataSource.data = data.PPFList;
       this.dataSource.sort = this.sort;
       UtilService.checkStatusId(this.dataSource.filteredData);
@@ -121,7 +120,7 @@ export class PPFSchemeComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-        
+
       }
     );
   }
