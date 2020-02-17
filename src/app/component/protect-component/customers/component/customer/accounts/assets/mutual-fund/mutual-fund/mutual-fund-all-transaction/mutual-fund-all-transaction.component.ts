@@ -1,4 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-mutual-fund-all-transaction',
@@ -6,42 +9,83 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./mutual-fund-all-transaction.component.scss']
 })
 export class MutualFundAllTransactionComponent implements OnInit {
- // displayedColumns: string[] = ['schemeName', 'amtInvested', 'currentValue', 'unrealizedProfit', 'absReturn', 'xirr', 'dividendPayout', 'withdrawalsSwitchOut', 'balanceUnit', 'navDate', 'sip'];
-  // dataSource = ELEMENT_DATA;
+ 
 
-  displayedColumns1: string[] = ['schemeName1', 'folioNumber', 'investorName', 'stGain', 'stLoss', 'ltGain', 'indexedGain', 'liloss', 'indexedLoss'];
-  dataSource1 = ELEMENT_DATA1;
+  displayedColumns: string[] = ['no','transactionType', 'transactionDate', 'transactionAmount', 'transactionNav', 'units', 'balanceUnits', 'days','icons'];
+  // displayedColumns: string[] = ['schemeName', 'amountInvested', 'currentValue', 'unrealizedProfit', 'absoluteReturn', 'xirr', 'dividendPayout', 'switchOut', 'balanceUnit', 'navDate', 'sipAmount','icons'];
 
-  displayedColumns2: string[] = ['schemeName2', 'folioNumber', 'dividendPayoutAmount', 'dividendReInvestmentAmount', 'totalReinvestmentAmount'];
-  dataSource2 = ELEMENT_DATA2;
+
+
+
   mfData: any;
   filteredArray: any[];
   subCategoryData: any[];
   schemeWise: any[];
   mutualFundList: any[];
-  dataSource: any;
 
-  constructor() { }
+  constructor(private subInjectService: SubscriptionInject, private UtilService:UtilService) { }
   @Input() mutualFund;
 
   ngOnInit() {
-    this.getSubCategoryWise(this.mutualFund)
-    this.getSchemeWise();
-    this.mfSchemes();
-    this.subCatArray();
+    if (this.mutualFund != undefined) {
+      this.getSubCategoryWise(this.mutualFund)
+      this.getSchemeWise();
+      this.mfSchemes();
+    }
   }
   subCatArray() {
     let catObj = {};
-    this.mutualFundList.forEach(ele => {
-      if (ele.subCategory) {
-        const categoryArray = catObj[ele.subCategory] ? catObj[ele.subCategory] : [];
-        categoryArray.push(ele);
-        catObj[ele.subCategory] = categoryArray;
-      }
-      // this.dataSource=categoryArray;
-    });
-
-
+    const categoryArray = [];
+    if (this.mutualFundList != undefined) {
+      this.mutualFundList.forEach(ele => {
+        if (ele.subCategoryName) {
+          const categoryArray = catObj[ele.subCategoryName] ? catObj[ele.subCategoryName] : [];
+          categoryArray.push(ele);
+          catObj[ele.subCategoryName] = categoryArray;
+        } else {
+          categoryArray.push(ele);
+        }
+      });
+      const customDataSource = new MatTableDataSource(categoryArray);
+      Object.keys(catObj).map(key => {
+        customDataSource.data.push({ groupName: key });
+        catObj[key].forEach((singleData) => {
+         const obj={
+          'schemeName':singleData.schemeName,
+          'nav':singleData.nav
+          }
+          customDataSource.data.push(obj);
+          const obj2={
+            'name':singleData.ownerName,
+            'pan':singleData.pan,
+            'folio':singleData.folioNumber
+          }
+          customDataSource.data.push(obj2);
+          singleData.mutualFundTransactions.forEach((ele) => {
+          customDataSource.data.push(ele);
+          })
+        });
+      });
+      return customDataSource;
+    }
+  }
+  isGroup(index, item): boolean {
+    // console.log('index : ', index);
+    // console.log('item : ', item);
+    return item.groupName;
+  }
+  isGroup2(index, item): boolean {
+    // console.log('index : ', index);
+    // console.log('item : ', item);
+    return item.schemeName;
+    return item.nav
+  }
+  isGroup3(index, item): boolean {
+    // console.log('index : ', index);
+    // console.log('item : ', item);
+    return item.name;
+    return item.pan;
+    return item.folio;
   }
   getSubCategoryWise(data) {
     this.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
@@ -69,7 +113,6 @@ export class MutualFundAllTransactionComponent implements OnInit {
         });
       });
     }
-    console.log(finalDataSource)
     this.filteredArray = finalDataSource;//final dataSource Value
     return;
   }

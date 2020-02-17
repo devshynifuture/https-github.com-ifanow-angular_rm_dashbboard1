@@ -10,8 +10,16 @@ export class AdviceUtilsService {
   static selectAll(flag, dataList, selectedIdList) {
     console.log(dataList)
     dataList.forEach(element => {
-      element.selected = flag.checked
+      element.selected = flag.checked;
+      if (flag.checked) {
+        selectedIdList.push(element.id);
+      }
+      else {
+        selectedIdList.forEach(singleId => {
+          (singleId == element.id) ? selectedIdList.splice(selectedIdList.indexOf(singleId), 1) : ''
+        });
+      }
     });
-    return dataList;
+    return { dataList, selectedIdList };
   }
 }

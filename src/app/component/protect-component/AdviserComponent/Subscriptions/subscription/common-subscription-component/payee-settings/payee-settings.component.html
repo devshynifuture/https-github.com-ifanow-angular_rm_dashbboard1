@@ -79,8 +79,11 @@
         <div class="col-md-6">
             <mat-form-field class="w-100">
                 <input #emailId class="form-control br-0" formControlName="emailId" matInput maxlength="40" type="text">
-                <mat-error class="f-12">
+                <mat-error class="f-12" *ngIf="payeeSettingsForm.get('emailId').errors?.required">
                     This field is required
+                </mat-error>
+                <mat-error class="f-12" *ngIf="payeeSettingsForm.get('emailId').errors?.pattern">
+                    Enter valid email id
                 </mat-error>
                 <mat-hint align="end" class="f-12">{{emailId.value.length}}/40</mat-hint>
             </mat-form-field>
@@ -104,9 +107,10 @@
     </div>
     <div class="row">
         <div class="col-md-6 pr-0">
-            <h5 class="m-0">PAN</h5>
-            <p class="text-custom m-0 pl-40 f-12">If the Customer Type is Business then Company PAN should be mentioned.
-            </p>
+            <h5 class="m-0">PAN<img src="/assets/images/svg/toggle.svg" class="c-p"
+                    matTooltip="If the Customer Type is Business then Company PAN should be mentioned."></h5>
+            <!-- <p class="text-custom m-0 pl-40 f-12">If the Customer Type is Business then Company PAN should be mentioned.
+            </p> -->
         </div>
         <div class="col-md-6">
             <mat-form-field class="w-100">
@@ -130,9 +134,10 @@
             <mat-form-field class="w-100">
                 <mat-select formControlName="customerType" (ngModelChange)="gstTreatmentRemove($event)"
                     class="form-control br-0" id="sel1">
-                    <mat-option [value]=1>Registered Business - Regular</mat-option>
-                    <mat-option [value]=2>Registered Business - Composition</mat-option>
-                    <mat-option [value]=3>Unregistered Business</mat-option>
+                    <mat-option [value]=1>Consumer</mat-option>
+                    <mat-option [value]=2>Not registered business</mat-option>
+                    <mat-option [value]=3>Overseas</mat-option>
+                    <mat-option [value]=4>Registered Business</mat-option>
                 </mat-select>
                 <mat-error class="f-12">
                     This field is required
@@ -140,7 +145,7 @@
             </mat-form-field>
         </div>
     </div>
-    <div class="row" *ngIf="showGstin != 3">
+    <div class="row" *ngIf="showGstin">
         <div class="col-md-6 pr-0">
             <h5 class="m-0">GSTIN</h5>
         </div>
@@ -152,8 +157,8 @@
                 <mat-error class="f-12" *ngIf="payeeSettingsForm.get('gstIn').errors?.required">
                     This field is required
                 </mat-error>
-                <mat-error *ngIf="payeeSettingsForm.get('gstIn').errors?.pattern"class="f-12">
-                Enter valid GSTIN number
+                <mat-error *ngIf="payeeSettingsForm.get('gstIn').errors?.pattern" class="f-12">
+                    Enter valid GSTIN number
                 </mat-error>
                 <mat-hint align="end" class="f-12">{{(gstIn.value.length)}}/{{getFormControl().gstIn.maxLength}}
                 </mat-hint>
@@ -183,7 +188,7 @@
         <div class="col-md-6">
             <mat-form-field>
                 <input #pincode [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6"
-                    (change)="getPostalPin($event.target.value)" appInputValueValidation
+                    (focusout)="getPostalPin($event.target.value)" appInputValueValidation
                     class="form-control br-0 text-left" formControlName="pincode" matInput minlength="6" type="text">
                 <mat-error class="f-12">{{pinInvalid?'Invalid pincode':'Pincode is required'}}</mat-error>
                 <mat-hint align="end" class="f-12">{{pincode.value.length}}/6</mat-hint>

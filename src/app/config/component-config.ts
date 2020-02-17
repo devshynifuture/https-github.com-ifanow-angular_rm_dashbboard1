@@ -192,6 +192,10 @@ export const appConfig = {
   DELETE_RECURRING_EXPENSE: 'account/expense/recurring/expense/delete',
   DELETE_BUDGET: 'account/expense/budget/delete',
   DELETE_RECURING_BUDGET: 'account/expense/othercommitments/delete',
+  ADD_MANAGE_EXCLUSIVE: '/activity/deployment/exclusion/edit',
+  DELETE_DEPLOYMENT: '/activity/deployment/archive-record/put',
+  ADD_FILTER_SCHEME_LIST: '/activity/deployment/add/filter/goal/scheme',
+  GET_DEPLOYMENT_DETAILS: '/activity/deployment/deployment/detail/get',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   GET_EPF: 'account/asset/retirement/epf/list/get',
@@ -362,6 +366,9 @@ export const appConfig = {
   GET_FREQUENCY: 'bse/scheme/sip/view',
   SIP_BSE: 'bse/order/create',
   BSE_TRANSACTION: 'bse/order/create',
+  NSE_ACHMANDATE: 'nse/ach-mandate/report/get',
+  BANK_DETAILS_NSE: 'nse/iin/bank-detail/get',
+  GETIIN_DETAILS: 'nse/iin/detail/get',
   // SIP_BSE:'bse/order/create',
 
   // cashflow 
@@ -369,6 +376,7 @@ export const appConfig = {
   CASHFLOW_GET_INCOME: 'cashflow/income/get',
   CASHFLOW_DELETE_INCOME: 'cashflow/income/delete',
   CASHFLOW_EDIT_INCOME: 'cashflow/income/edit',
+  CASHFLOW_GET_MONTHLY_DISTRIBUTION_INCOME: 'cashflow/income/monthly-distribution/get',
   CASHFLOW_EDIT_MONTHLY_INCOME: 'cashflow/income/monthly/edit',
   CASHFLOW_GET_YEARLY_EXPENSE: 'cashflow/expense/list/get',
   CASHFLOW_GET_MONTHLY_EXPENSE: 'cashflow/expense/monthly/list/get',

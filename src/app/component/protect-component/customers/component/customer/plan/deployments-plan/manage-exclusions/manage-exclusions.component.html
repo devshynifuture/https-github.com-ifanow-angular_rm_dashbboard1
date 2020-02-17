@@ -4,21 +4,31 @@
         <div class="col-md-4 form-group">
             <mat-form-field>
                 <p>Dervied amount</p>
-                <input matInput formControlName="derivedAmount" class="form-control" autocomplete="off">
+                <input matInput appInputValueValidation maxlength="10" [inputValidator]="validatorType.NUMBER_ONLY"
+                    #derivedAmt (input)="checkAvailableAmount()" formControlName="derivedAmount" class="form-control"
+                    autocomplete="off">
                 <mat-error>This field is required</mat-error>
             </mat-form-field>
         </div>
         <div class="col-md-4 form-group">
             <mat-form-field>
                 <p>Available amount</p>
-                <input matInput formControlName="availableAmount" class="form-control" autocomplete="off">
-                <mat-error>This field is required</mat-error>
+                <input matInput #availableAmt appInputValueValidation maxlength="10"
+                    [inputValidator]="validatorType.NUMBER_ONLY" formControlName="availableAmount" class="form-control"
+                    autocomplete="off">
+                <mat-error *ngIf="manageExclusionsForm.get('availableAmount').errors?.required">This field is required
+                </mat-error>
+                <mat-error *ngIf="manageExclusionsForm.get('availableAmount').errors?.numError">
+                    Invalid amount
+                </mat-error>
             </mat-form-field>
         </div>
         <div class="col-md-4 form-group">
             <mat-form-field>
                 <p>Exclusion amount</p>
-                <input matInput formControlName="exclusionAmount" class="form-control" autocomplete="off">
+                <input matInput #exclusionAmt appInputValueValidation maxlength="10"
+                    [inputValidator]="validatorType.NUMBER_ONLY" (input)="checkAvailableAmount()"
+                    formControlName="exclusionAmount" class="form-control" autocomplete="off">
                 <mat-error>This field is required</mat-error>
             </mat-form-field>
         </div>
@@ -26,13 +36,15 @@
             <div class="col-md-12 form-group">
                 <mat-form-field>
                     <p>Exclusion reason</p>
-                    <input matInput formControlName="exclusionReason" class="form-control" autocomplete="off">
+                    <input matInput formControlName="exclusionReason" maxlength="10" class="form-control"
+                        autocomplete="off">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
         </div>
     </div>
-
-    <button mat-raised-button (click)="close()">CANCEL</button>
-    <button mat-raised-button class="text-primary">ADD</button>
+    <div class="f-right mt-44">
+        <button mat-raised-button (click)="close()">CANCEL</button>
+        <button mat-raised-button (click)="addExclusions()" class="text-primary">ADD</button>
+    </div>
 </div>

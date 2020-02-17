@@ -1,5 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { PlanService } from '../../../plan.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-setup-lumpsum-deployment',
@@ -13,13 +15,46 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
   dataSource1 = ELEMENT_DATA1;
   displayedColumns2: string[] = ['name', 'weight', 'height', 'test', 'icons'];
   dataSource2 = ELEMENT_DATA2;
-  constructor(private subInjectService: SubscriptionInject) { }
+  advisorId: any;
+  clientId: any;
+  filterSchemeData: any;
+  constructor(private subInjectService: SubscriptionInject, private planService: PlanService) { }
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    this.filterScheme();
   }
-
+  filterScheme() {
+    let obj =
+    {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    }
+    this.planService.getFilterGoalScheme(obj).subscribe(
+      data => {
+        console.log(data);
+        data.forEach(element => {
+          element['name'] = ''
+          element.forEach(singleData => {
+            switch (true) {
+              case (singleData.categoryId == 1):
+                element.name = "DEBT";
+                break;
+              case (singleData.categoryId == 2):
+                element.name = "EQUITY";
+                break;
+              default:
+                console.log("Test")
+            }
+          });
+        });
+        this.filterSchemeData = data;
+      }
+    )
+  }
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 }
 export interface PeriodicElement {

@@ -215,25 +215,25 @@
                                             arrow_drop_down
                                         </i></button>
                                     <mat-menu #menu="matMenu">
-                                        <button mat-menu-item *ngIf="dataCount == 0">Select invoice to see more
+                                        <a mat-menu-item *ngIf="dataCount == 0">Select document to see more
                                             actions
-                                        </button>
-                                        <button mat-menu-item *ngIf="dataCount == 1 && sendESign"
+                                        </a>
+                                        <a mat-menu-item *ngIf="dataCount == 1 && sendESign"
                                             (click)="openEsignDocument(null)">Email
                                             with esign
                                             request
-                                        </button>
-                                        <button (click)="openSendEmail()" *ngIf="dataCount == 1" mat-menu-item>Email
+                                        </a>
+                                        <a (click)="openSendEmail()" *ngIf="dataCount == 1" mat-menu-item>Email
                                             only
-                                        </button>
-                                        <button (click)="deleteModal('DOCUMENT')" *ngIf="dataCount==1" class="b-t"
+                                        </a>
+                                        <a (click)="deleteModal(null)" *ngIf="dataCount==1" class="b-t"
                                             mat-menu-item>Delete
                                             document
-                                        </button>
-                                        <button (click)="deleteModal('DOCUMENTS')" *ngIf="dataCount >1" class="b-t"
+                                        </a>
+                                        <a (click)="deleteModal(null)" *ngIf="dataCount >1" class="b-t"
                                             mat-menu-item>Delete
                                             documents
-                                        </button>
+                                        </a>
                                     </mat-menu>
                                 </div>
 
@@ -357,7 +357,7 @@
                     document</a> -->
                                             <a mat-menu-item (click)="open('viewDocuments',element)">View & modify
                                                 document</a>
-                                            <a mat-menu-item class="bt-1" (click)="deleteModal('DOCUMENT')">Delete
+                                            <a mat-menu-item class="bt-1" (click)="deleteModal(element)">Delete
                                                 document</a>
                                             <a mat-menu-item *ngIf="element.signed" class="bt-1"
                                                 (click)="downloadEsign(element)">Download esigned

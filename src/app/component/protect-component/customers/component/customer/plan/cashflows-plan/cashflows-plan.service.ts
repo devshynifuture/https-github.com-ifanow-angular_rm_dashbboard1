@@ -2,6 +2,7 @@ import { HttpService } from './../../../../../../../http-service/http-service';
 import { appConfig } from 'src/app/config/component-config';
 import { apiConfig } from './../../../../../../../config/main-config';
 import { Injectable } from '@angular/core';
+import { UpperTableBox, Group } from './cashflow.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -31,7 +32,7 @@ export class CashFlowsPlanService {
     }
 
     getCashflowMonthlyIncomeValues(data) {
-        return this.http.get('', data);
+        return this.http.get(apiConfig.MAIN_URL + appConfig.CASHFLOW_GET_MONTHLY_DISTRIBUTION_INCOME, data);
     }
 
     // expenses api calls 
@@ -115,5 +116,27 @@ export class CashFlowsPlanService {
 
     getFamilyMemberData(data) {
         return this.http.get(apiConfig.MAIN_URL + appConfig.GET_LIST_FAMILY_MEMBER, data);
+    }
+
+
+    // =============== common functions ==================
+    // ===================================================
+
+    alterTable(table: (UpperTableBox | Group)[], field: string, value: string, index: number): (UpperTableBox | Group)[] {
+        table[index][field]['value'] = value;
+        table[index][field]['isAdHocChangesDone'] = true;
+        console.log("this is table field value ", table[index][field]['value']);
+        this.updateTotal(table[index]);
+        return table;
+    }
+
+    updateTotal(object: UpperTableBox | Group) {
+        let sum = 0;
+        for (let i = 1; i <= 12; i++) {
+            if (object[`month${i}`].value !== '') {
+                sum = sum + parseInt(object[`month${i}`].value);
+            }
+        }
+        object['total'] = String(sum);
     }
 }

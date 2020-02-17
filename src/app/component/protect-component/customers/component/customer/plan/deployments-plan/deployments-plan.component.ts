@@ -9,6 +9,8 @@ import { ManageDeploymentComponent } from './manage-deployment/manage-deployment
 import { ManageExclusionsComponent } from './manage-exclusions/manage-exclusions.component';
 import { EventService } from 'src/app/Data-service/event.service';
 import { DeploymentDetailsComponent } from './deployment-details/deployment-details.component';
+import { PlanService } from '../plan.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-investments-plan',
@@ -20,7 +22,7 @@ export class DeploymentsPlanComponent implements OnInit {
   dataSource;
   clientId: any;
   advisorId: any;
-  constructor(private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService, public dialog: MatDialog) { }
+  constructor(private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService, public dialog: MatDialog, private planService: PlanService) { }
   isLoading = false;
   ngOnInit() {
     this.clientId = AuthService.getClientId();
@@ -28,6 +30,8 @@ export class DeploymentsPlanComponent implements OnInit {
     this.getDeploymentData();
   }
   getDeploymentData() {
+    this.isLoading = true;
+    this.dataSource = [{}, {}, {}];
     const obj =
     {
       clientId: this.clientId,
@@ -36,8 +40,9 @@ export class DeploymentsPlanComponent implements OnInit {
     }
     this.cusService.getAdviceDeploymentsData(obj).subscribe(
       data => {
-        console.log(data)
-        this.dataSource = data[0]
+        console.log(data);
+        this.isLoading = false;
+        this.dataSource = data[0];
       },
       err => this.eventService.openSnackBar("something went wrong", "dismiss")
     )
@@ -70,13 +75,47 @@ export class DeploymentsPlanComponent implements OnInit {
     });
 
   }
+  deleteDeployment(deleteData) {
+    const dialogData = {
+      data: deleteData,
+      header: 'DELETE DEPLOYMENT',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        this.cusService.deletePPF(deleteData.id).subscribe(
+          data => {
+            this.eventService.openSnackBar("Deployment is deleted", "dismiss")
+            dialogRef.close();
+          },
+          error => this.eventService.showErrorMessage(error)
+        )
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
 
-  openDep(flagValue) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+
+  openDep(flagValue, data) {
     let component;
     component = (flagValue == 'open') ? component = DeploymentDetailsComponent : component = SetupLumpsumDeploymentComponent;
     const fragmentData = {
-      flag: flagValue,
       id: 1,
+      data,
       state: flagValue,
       componentName: component
     };

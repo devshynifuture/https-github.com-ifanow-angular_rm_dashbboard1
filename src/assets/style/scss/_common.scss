@@ -554,10 +554,12 @@ ul {
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 1);
-  opacity: 0;
+  opacity: 0.25 !important;
   overflow-x: hidden;
   transition: 0.5s;
 }
+
+// .custom-overlay:hover + .upper_slider{overflow: hidden !important;}
 
 .z-value-100 {
   z-index: 100;
@@ -651,6 +653,14 @@ button.primary-sm {
   white-space: nowrap !important;
 }
 
+.ws-normal {
+  white-space: normal !important;
+}
+
 .mat-card:not([class*=mat-elevation-z]) {
   box-shadow: none !important;
+}
+
+.event-none {
+  pointer-events: none !important;
 }

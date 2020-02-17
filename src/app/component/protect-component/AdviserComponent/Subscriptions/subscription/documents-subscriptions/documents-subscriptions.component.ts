@@ -555,10 +555,14 @@ export class DocumentsSubscriptionsComponent implements OnInit {
       if (result.length > 0) {
         const tempList = [];
         this.dataSource.data.forEach(singleElement => {
-          if (!singleElement.selected && result.length > 1) {
-            tempList.push(singleElement);
-          } else if (result[0] != singleElement.documentRepositoryId) {
-            tempList.push(singleElement);
+          if ( result.length > 1) {
+            if(!singleElement.selected){
+              tempList.push(singleElement);
+            }
+          } else{ 
+            if (result[0] != singleElement.id){
+              tempList.push(singleElement);
+            } 
           }
         });
         this.dataSource.data = tempList;

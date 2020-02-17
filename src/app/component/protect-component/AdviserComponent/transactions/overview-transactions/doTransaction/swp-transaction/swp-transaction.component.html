@@ -24,25 +24,52 @@
             <div class="col-md-8 pl-0 pr-20">
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pt-28 text-black pb-12">Select scheme to switch out of</h5>
+                        <h5 class="m-0 pt-28 text-black pb-12">Select a scheme to withdraw</h5>
                     </div>
-                    <div class="col-md-12 p-0">
-                        <div class="form-control mb-0 add-transactions">
-                            <input type="text" aria-label="Number" class="form-group h-0" matInput
-                                formControlName="investor" [matAutocomplete]="auto"
-                                (keyup)="getSchemeList($event.target.value)" value="Start typing to see investor names">
-                            <mat-autocomplete #auto="matAutocomplete">
-                                <mat-option (onSelectionChange)="selectedScheme(scheme)"
-                                    *ngFor="let scheme of schemeList" [value]="scheme.schemeName">
-                                    {{scheme.schemeName}}
-                                </mat-option>
-                            </mat-autocomplete>
-                            <p class="m-0 f-12 text-custom pt-8">Last closing NAV: {{navOfSelectedScheme}}</p>
+                </div>
+                <div class="row">
+                    <div class="col-md-11 p-0">
+                        <div class="form-group">
+                            <mat-form-field>
+                                <input type="text" aria-label="Number" class="form-control" matInput
+                                    formControlName="investor" [matAutocomplete]="auto"
+                                    (keyup)="getSchemeList($event.target.value)"
+                                    value="Start typing to see investor names">
+                                <mat-autocomplete #auto="matAutocomplete">
+                                    <mat-option (onSelectionChange)="selectedScheme(scheme)"
+                                        *ngFor="let scheme of schemeList" [value]="scheme.schemeName">
+                                        {{scheme.schemeName}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                                <mat-error class="f-12">
+                                    This field is required
+                                </mat-error>
+                                <mat-hint align="start" class="f-12 text-custom">Last closing NAV:
+                                    {{navOfSelectedScheme}}
+                                </mat-hint>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-1" *ngIf="showSpinner == true">
+                        <mat-spinner class="mt-8"></mat-spinner>
+                    </div>
+                </div>
+                <div class="row pt-28 " *ngIf="reInvestmentOpt.length > 1">
+                    <div class="col-md-12 p-0 text-left">
+                        <h5 class="m-0 text-black pb-8">Select re-investment</h5>
+                    </div>
+                    <div class="col-md-5 p-0">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <mat-select class="form-control" formControlName="investmentAccountSelection">
+                                    <mat-option value="option" *ngFor="let flag of reInvestmentOpt" (click)="reinvest(flag)">
+                                        {{(flag.dividendReinvestmentFlag == 0)?'Dividend payout':'Dividend reinvestment'}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
                         </div>
                     </div>
                 </div>
-
-
                 <div class="row">
                     <div class="col-md-6 p-0 text-left">
                         <h5 class="m-0 pt-28 text-black pb-12">Select scheme folio</h5>
@@ -73,7 +100,9 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12 pb-12">
-                                    <p class="f-12 m-0">Note: Note: Units data provided here is as per data uploaded in the system. This data may not be updated in NSE NMF. As a result, some transactions may not go through.</p>
+                                    <p class="f-12 m-0">Note: Note: Units data provided here is as per data uploaded in
+                                        the system. This data may not be updated in NSE NMF. As a result, some
+                                        transactions may not go through.</p>
                                 </div>
                             </div>
                         </div>
@@ -81,7 +110,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pt-28 text-black pb-12">Select SWP Frequency</h5>
+                        <h5 class="m-0 pt-28 text-black pb-12">Select SWP frequency</h5>
                     </div>
                     <div class="col-md-5 p-0">
                         <div class="form-group mb-0">
@@ -101,17 +130,24 @@
 
                     <div class="col-md-5 p-0">
                         <div class="form-group mb-0">
-                            <mat-form-field>
+                            <mat-form-field *ngIf="selectScheme == 2">
                                 <input #employeeContry matInput maxlength="10" type="text"
-                                    class="form-control br-0 rupess" formControlName="employeeContry">
+                                    class="form-control br-0 rupess" formControlName="employeeContry"
+                                    (change)="enteredAmount($event.target.value)">
+                                <mat-hint align="start" class="f-12 text-custom">
+                                    Min amount:
+                                    ₹{{(schemeDetails == undefined)?'-':schemeDetails.minimumPurchaseAmount }}
+                                </mat-hint>
+                                <mat-error *ngIf="(swpTransaction.get('employeeContry').errors?.min)" class="f-12">
+                                    Should be greater than or equal to {{schemeDetails.minimumPurchaseAmount}}
+                                </mat-error>
                             </mat-form-field>
-                            <p class="m-0 f-12 text-custom">Min amount: ₹500</p>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pt-40 text-black pb-12">Select 1st Date SIP</h5>
+                        <h5 class="m-0 pt-40 text-black pb-12">Select 1st date SIP</h5>
                     </div>
 
                     <div class="col-md-5 p-0">
@@ -125,7 +161,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pt-40 pb-12 text-black">Select Tenure</h5>
+                        <h5 class="m-0 pt-40 pb-12 text-black">Select tenure</h5>
                     </div>
 
                     <div class="col-md-5 p-0">
@@ -141,7 +177,7 @@
                     <div class="col-md-12 p-0 text-left">
                         <h5 class="m-0 pt-40 pb-12 text-black">Enter installment</h5>
                     </div>
-    
+
                     <div class="col-md-5 p-0">
                         <mat-form-field>
                             <input #employeeContry matInput maxlength="10" type="text" class="form-control br-0 rupess"

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 
 @Component({
@@ -7,10 +7,25 @@ import { SubscriptionInject } from '../../../../Subscriptions/subscription-injec
   styleUrls: ['./confirmation-transaction.component.scss']
 })
 export class ConfirmationTransactionComponent implements OnInit {
+  transactionSummary: any;
+  inputData: any;
+  isViewInitCalled: any;
 
   constructor(private subInjectService: SubscriptionInject) { }
+  @Input() set data(data) {
+    this.inputData = data;
+    console.log('This is Input data of FixedDepositComponent ', data);
+    this.transactionSummary = data
+    if (this.isViewInitCalled) {
+      // this.getdataForm('');
+    }
+  }
 
+  get data() {
+    return this.inputData;
+  }
   ngOnInit() {
+    this.transactionSummary = this.inputData
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });

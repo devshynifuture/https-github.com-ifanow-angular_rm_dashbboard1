@@ -80,7 +80,7 @@ export class PayeeSettingsComponent implements OnInit {
   advisorId: any;
   family: any;
   familyMemberId: any;
-  showGstin: any;
+  showGstin: boolean= false;
   clientData: any;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private eventService: EventService,
@@ -156,8 +156,17 @@ export class PayeeSettingsComponent implements OnInit {
 
  
   gstTreatmentRemove(value) {
-    this.showGstin = value
+    console.log('gstTreatmentRemove 123', value)
+    if(value == 4){
+      this.getFormControl().gstIn.setValidators([Validators.required, Validators.pattern("^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$")]);
+      this.showGstin = true;
+    }
+    else{
+      this.getFormControl().gstIn.setValidators(null);
+      this.showGstin = false;
+    }
   }
+  
   getListOfFamilyByClientRes(data) {
     console.log('family Memebers', data)
     this.family = data.familyMembersList
@@ -176,13 +185,13 @@ export class PayeeSettingsComponent implements OnInit {
     this.payeeSettingsForm = this.fb.group({
       customerName: [data.name, [Validators.required]],
       displayName: [data.companyDisplayName, [Validators.required]],
-      customerType: [(data.customerTypeId == 1) ? 'Business' : 'Individual'],
+      customerType: [data.customerTypeId ],
       companyName: [data.companyName, [Validators.required]],
-      emailId: [data.email, [Validators.required]],
+      emailId: [data.email, [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
       primaryContact: [data.primaryContact, [Validators.required]],
       pan: [data.pan, [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-z]{1}")]],
       gstTreatment: [(data.gstTreatmentId == 1) ? 'Registered Business - Regular' : (data.gstTreatmentId == 2) ? 'Registered Business - Composition' : 'Unregistered Business'],
-      gstIn: [data.gstin, [Validators.required, Validators.pattern("^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$")]],
+      gstIn: [data.gstin],
       billingAddress: [data.billerAddress, [Validators.required]],
       city: [data.city],
       state: [data.state],
@@ -248,13 +257,13 @@ export class PayeeSettingsComponent implements OnInit {
       this.payeeSettingsForm.get('state').markAsTouched();
     } else {
       this.barButtonOptions.active = true;
-      if (this.payeeSettingsForm.controls.id.value != undefined) {
+      if (this.payeeSettingsForm.controls.id.value != undefined) { 
         const obj1 = {
           customerName: this.payeeSettingsForm.controls.customerName.value,
           city: this.payeeSettingsForm.controls.city.value,
           clientBillerId: 1,
           companyDisplayName: this.payeeSettingsForm.controls.displayName.value,
-          familyMemberId: this.familyMemberId,
+          familyMemberId: !this.inputData.flag? this.clientData.clientId : this.clientData.id,
           companyName: this.payeeSettingsForm.controls.companyName.value,
           country: this.payeeSettingsForm.controls.country.value,
           currency: 'string',
@@ -267,6 +276,7 @@ export class PayeeSettingsComponent implements OnInit {
           billerAddress: this.payeeSettingsForm.controls.billingAddress.value,
           primaryContact: this.payeeSettingsForm.controls.primaryContact.value,
           state: this.payeeSettingsForm.controls.state.value,
+          pan: this.payeeSettingsForm.controls.pan.value,
           zipCode: this.payeeSettingsForm.controls.pincode.value,
           id: this.payeeSettingsForm.controls.id.value,
           clientId:!this.inputData.flag? this.clientData.clientId : this.clientData.id
@@ -331,7 +341,7 @@ export class PayeeSettingsComponent implements OnInit {
       if(this.inputData.flag){
         console.log('addClientBillerProfileRes', data);
         this.updatedData = data;
-        this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+        this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
         this.eventService.openSnackBar('Client profile added Successfully', 'OK');
       }
       this.Close(data);
@@ -341,7 +351,7 @@ export class PayeeSettingsComponent implements OnInit {
   editSettingResData(data) {
     this.barButtonOptions.active = false;
     if (data.status == 1) {
-      this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
       this.eventService.openSnackBar('Client profile update Successfully', 'OK');
       this.getEditData.emit(this.sendData);
       this.Close(data);

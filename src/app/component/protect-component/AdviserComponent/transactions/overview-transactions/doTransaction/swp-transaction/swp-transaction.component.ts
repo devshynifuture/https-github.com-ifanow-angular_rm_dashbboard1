@@ -24,9 +24,10 @@ export class SwpTransactionComponent implements OnInit {
   selectScheme = 2;
   maiSchemeList: any;
   schemeDetails: any;
-  reInvestmentOpt: any;
+  reInvestmentOpt=[];
   schemeList: any;
   showUnits = false;
+  showSpinner = false;
   navOfSelectedScheme: any;
   transactionSummary: {};
   getDataSummary: any;
@@ -42,6 +43,9 @@ export class SwpTransactionComponent implements OnInit {
   schemeTransfer: any;
   schemeDetailsTransfer: any;
   ExistingOrNew: any;
+  mandateDetails: any;
+  bankDetails: any;
+  achMandateNSE: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private processTransaction: ProcessTransactionService, private fb: FormBuilder) { }
@@ -62,15 +66,19 @@ export class SwpTransactionComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.transactionSummary ={}
     this.getdataForm(this.inputData)
-    this.transactionSummary = { selectedFamilyMember: this.inputData.selectedFamilyMember }
+    Object.assign(this.transactionSummary, { transactType: 'SWP' });
+    Object.assign(this.transactionSummary, { allEdit: true });
+    Object.assign(this.transactionSummary, {selectedFamilyMember: this.inputData.selectedFamilyMember});
   }
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
+    this.swpTransaction.controls.investor.reset();
   }
   getSchemeList(value) {
-
+    this.showSpinner = true
     if (this.selectScheme == 2 && value.length > 2) {
       let obj = {
         searchQuery: value,
@@ -103,15 +111,25 @@ export class SwpTransactionComponent implements OnInit {
       this.reInvestmentOpt = []
     }
     this.getFrequency()
+    if(this.getDataSummary.defaultClient.aggregatorType == 2){
+      this.getMandateDetails()
+      }
     this.getSchemeWiseFolios()
   }
+  reinvest(scheme) {
+    this.schemeDetails = scheme
+    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
+    console.log('schemeDetails == ', this.schemeDetails)
+  }
   getExistingSchemesRes(data) {
+    this.showSpinner = false
     console.log('getExistingSchemesRes =', data)
     this.schemeList = data
   }
   selectedScheme(scheme) {
     this.scheme = scheme
     this.showUnits = true
+    Object.assign(this.transactionSummary, {schemeName:  scheme.schemeName});
     this.transactionSummary = { schemeName: scheme.schemeName }
     this.navOfSelectedScheme = scheme.nav
     let obj1 = {
@@ -142,11 +160,13 @@ export class SwpTransactionComponent implements OnInit {
     console.log('res scheme folio', data)
     this.folioList = data
   }
-
+  enteredAmount(value) {
+    Object.assign(this.transactionSummary, { enteredAmount: value });
+  }
   selectedFolio(folio) {
     this.folioDetails = folio
     this.showUnits = true
-    this.transactionSummary = { folioNumber: folio.folioNumber }
+    Object.assign(this.transactionSummary, {folioNumber:  folio.folioNumber});
   }
   getFrequency() {
     let obj = {
@@ -177,7 +197,22 @@ export class SwpTransactionComponent implements OnInit {
     });
     console.log('dateDisplay = ', this.dateDisplay)
   }
+  getMandateDetails() {
+    let obj1 = {
+      advisorId: this.getDataSummary.defaultClient.advisorId,
+      clientCode: this.getDataSummary.defaultClient.clientCode,
+      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+    }
+    this.onlineTransact.getMandateDetails(obj1).subscribe(
+      data => this.getMandateDetailsRes(data)
+    );
+  }
+  getMandateDetailsRes(data) {
+    console.log('mandate details :', data)
+    this.mandateDetails = data
+  }
   onAddTransaction(value, data) {
+    Object.assign(this.transactionSummary, {allEdit: false});
     this.confirmTrasaction = true
     const fragmentData = {
       flag: 'addNsc',
@@ -256,6 +291,14 @@ export class SwpTransactionComponent implements OnInit {
       orderType: "SWP",
       amountType: "Amount",
       bseDPTransType: "PHYSICAL",
+      mandateId:null,
+      bankDetailId:null,
+      nsePaymentMode:null,
+    }
+    if (this.getDataSummary.defaultClient.aggregatorType == 1) {
+      obj.mandateId = (this.achMandateNSE == undefined)?null:this.achMandateNSE.id
+      obj.bankDetailId = this.bankDetails.id
+      obj.nsePaymentMode = (this.swpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE'
     }
     this.onlineTransact.transactionBSE(obj).subscribe(
       data => this.swpBSERes(data)
@@ -267,7 +310,7 @@ export class SwpTransactionComponent implements OnInit {
     if(data == undefined){
 
     }else{
-    this.onAddTransaction('confirm',null)
+    this.onAddTransaction('confirm',this.transactionSummary)
     }
   }
 }

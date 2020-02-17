@@ -37,8 +37,10 @@ export class PurchaseTrasactionComponent implements OnInit {
   folioList: any;
   folioDetails: any;
   showSpinner = false;
-  constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService, 
-    private subInjectService: SubscriptionInject,private fb: FormBuilder) { }
+  bankDetails: any;
+  achMandateNSE: any;
+  constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
+    private subInjectService: SubscriptionInject, private fb: FormBuilder) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -49,22 +51,51 @@ export class PurchaseTrasactionComponent implements OnInit {
       this.getdataForm('');
     }
   }
-
   get data() {
     return this.inputData;
   }
 
   ngOnInit() {
+    this.transactionSummary= {}
     this.getdataForm(this.inputData);
-    this.transactionSummary = { selectedFamilyMember: this.inputData.selectedFamilyMember }
+    Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
+    Object.assign(this.transactionSummary, { paymentMode: 1 });
+    Object.assign(this.transactionSummary, { allEdit: true });
+    Object.assign(this.transactionSummary, { transactType: 'PURCHASE' });
     console.log('this.transactionSummary', this.transactionSummary)
   }
   selectSchemeOption(value) {
     console.log('value selction scheme', value)
     this.selectScheme = value
   }
+  // backToTransact(value,data){
+  //   data = {
+  //     formStep : 'step-2'
+  //   }
+  //   this.confirmTrasaction = true
+  //   const fragmentData = {
+  //     flag: 'addNsc',
+  //     data:data,
+  //     id: 1,
+  //     state: 'open65',
+  //     componentName: OnlineTrasactionComponent
+  //   };
+  //   const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+  //     sideBarData => {
+  //       console.log('this is sidebardata in subs subs : ', sideBarData);
+  //       if (UtilService.isDialogClose(sideBarData)) {
+  //         if (UtilService.isRefreshRequired(sideBarData)) {
+  //           console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+  //         }
+  //         rightSideDataSub.unsubscribe();
+  //       }
 
+  //     }
+  //   );
+  // }
   getSchemeList(value) {
+    this.showSpinner = true
+    this.platformType = this.getDataSummary.defaultClient.aggregatorType
     let obj = {
       searchQuery: value,
       bseOrderType: 'ORDER',
@@ -74,8 +105,8 @@ export class PurchaseTrasactionComponent implements OnInit {
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
       clientId: this.getDataSummary.defaultClient.clientId,
       userAccountType: this.getDataSummary.defaultCredential.accountType,
-      holdingType:this.getDataSummary.defaultClient.holdingType,
-      tpUserCredFamilyMappingId:this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
+      holdingType: this.getDataSummary.defaultClient.holdingType,
+      tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
     }
     if (this.selectScheme == 2 && value.length > 2) {
       this.onlineTransact.getNewSchemes(obj).subscribe(
@@ -88,26 +119,33 @@ export class PurchaseTrasactionComponent implements OnInit {
     }
   }
   getNewSchemesRes(data) {
+        this.showSpinner = false
     console.log('new schemes', data)
     this.schemeList = data
   }
   getExistingSchemesRes(data) {
+        this.showSpinner = false
     this.schemeList = data
   }
   reinvest(scheme) {
     this.schemeDetails = scheme
-    this.transactionSummary = {
-      schemeName: scheme.schemeName
-    }
+    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     console.log('schemeDetails == ', this.schemeDetails)
   }
   selectExistingOrNew(value) {
     this.ExistingOrNew = value
   }
+  getbankDetails(bank) {
+    this.bankDetails = bank
+    console.log('bank details', bank)
+  }
+  getAchmandateDetails(ach) {
+    this.achMandateNSE  = ach
+    console.log('ach details', ach)
+  }
   selectedScheme(scheme) {
-    this.showSpinner = true
     this.scheme = scheme
-    this.transactionSummary = { schemeName: scheme.schemeName }
+    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav
     let obj1 = {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
@@ -119,6 +157,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       data => this.getSchemeDetailsRes(data)
     );
   }
+
   getSchemeDetailsRes(data) {
     this.showSpinner = false
     console.log('getSchemeDetailsRes == ', data)
@@ -141,7 +180,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
       clientId: this.getDataSummary.defaultClient.clientId,
       userAccountType: this.getDataSummary.defaultCredential.accountType,
-      holdingType:this.getDataSummary.defaultClient.holdingType,
+      holdingType: this.getDataSummary.defaultClient.holdingType,
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
     }
     this.onlineTransact.getFoliosAmcWise(obj1).subscribe(
@@ -154,16 +193,38 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
   selectedFolio(folio) {
     this.folioDetails = folio
-    this.transactionSummary = { folioNumber: folio.folioNumber }
+    Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
   }
   enteredAmount(value) {
-    this.transactionSummary = { enteredAmount: value }
+    Object.assign(this.transactionSummary, { enteredAmount: value });
   }
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
+    this.platformType = this.getDataSummary.defaultClient.aggregatorType
+    this.purchaseTransaction.controls.investor.reset();
+  }
+  selectPaymentMode(value) {
+    Object.assign(this.transactionSummary, { paymentMode: value });
+    if(value == 2){
+      Object.assign(this.transactionSummary, { getAch: true });
+      this.getNSEAchmandate()
+    }
+  }
+  getNSEAchmandate(){
+    let obj1 = {
+      tpUserCredFamilyMappingId:this.getDataSummary.defaultClient.tpUserCredFamilyMappingId
+    }
+    this.onlineTransact.getNSEAchmandate(obj1).subscribe(
+      data => this.getNSEAchmandateRes(data)
+    );
+  }
+  getNSEAchmandateRes(data){
+    console.log('getNSEAchmandateRes',data)
+    this.achMandateNSE = data[0]
   }
   onAddTransaction(value, data) {
+    Object.assign(this.transactionSummary, {allEdit: false});
     this.confirmTrasaction = true
     const fragmentData = {
       flag: 'addNsc',
@@ -244,6 +305,14 @@ export class PurchaseTrasactionComponent implements OnInit {
         euin: this.getDataSummary.defaultCredential.euin,
         bseDPTransType: 'PHYSICAL',
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+        mandateId : null,
+        nsePaymentMode: null,
+        bankDetailId:null,
+      }
+      if (this.getDataSummary.defaultClient.aggregatorType == 1) {
+        obj.mandateId = (this.achMandateNSE == undefined)?null:this.achMandateNSE.id
+        obj.bankDetailId = this.bankDetails.id
+        obj.nsePaymentMode = (this.purchaseTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE'
       }
       console.log('new purchase obj', obj)
       this.onlineTransact.transactionBSE(obj).subscribe(
@@ -253,10 +322,10 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
   purchaseRes(data) {
     console.log('purchase transaction ==', data)
-    if(data == undefined){
+    if (data == undefined) {
 
-    }else{
-    this.onAddTransaction('confirm',null)
+    } else {
+      this.onAddTransaction('confirm', this.transactionSummary)
     }
   }
 }

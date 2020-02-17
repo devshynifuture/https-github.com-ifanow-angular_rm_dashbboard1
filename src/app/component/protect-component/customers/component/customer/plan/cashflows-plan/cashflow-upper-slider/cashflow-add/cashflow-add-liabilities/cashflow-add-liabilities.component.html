@@ -7,14 +7,16 @@
             </div>
             <div class="col-md-6">
                 <mat-form-field>
-                    <!-- <input matInput type="text" formControlName="owner" class="form-control br-0"> -->
-                    <mat-select formControlName="owner" class="form-control br-0">
-                        <mat-option value="1">
-                            Rahul Jain
+                    <mat-select appOwner (valueChange)='cashflowAddService.display($event)'
+                        (valueChange1)='cashflowAddService.familyMemberListAssign($event)' [data]='ownerData'
+                        formControlName="ownerName" class="form-control br-0">
+                        <mat-option [value]="member" *ngFor="let member of cashflowAddService.familyMemberList">
+                            {{ member.userName }}
                         </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="formLiabilities.get('owner').touched && formLiabilities.get('owner').invalid">
-                        Must be selected
+                    <mat-error
+                        *ngIf="formLiabilities.get('ownerName').touched && formLiabilities.get('ownerName').invalid">
+                        This field is required
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -27,11 +29,17 @@
             <div class="col-md-4">
                 <mat-form-field>
                     <mat-select formControlName="loan-type" class="form-control br-0">
-                        <mat-option value='1'>Rahul Jain</mat-option>
+                        <mat-option value="" disabled>Select option</mat-option>
+                        <mat-option value="1">Home Loan</mat-option>
+                        <mat-option value="2">Vehicle</mat-option>
+                        <mat-option value="3">Education</mat-option>
+                        <mat-option value="4">Credit Card</mat-option>
+                        <mat-option value="5">Personal</mat-option>
+                        <mat-option value="6">Mortgage</mat-option>
                     </mat-select>
                     <mat-error
                         *ngIf="formLiabilities.get('loan-type').touched && formLiabilities.get('loan-type').invalid">
-                        Must be selected
+                        This field is required
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -43,11 +51,16 @@
             </div>
             <div class="col-md-4">
                 <mat-form-field>
-                    <input matInput type="text" class="form-control br-0 rupess" formControlName="original-amt-loan">
+                    <input matInput #originalLoanAmtRef type="text" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" type="text"
+                        class="form-control br-0 rupess" formControlName="original-amt-loan">
                     <mat-error
                         *ngIf="formLiabilities.get('original-amt-loan').touched && formLiabilities.get('original-amt-loan').invalid">
-                        Must be filled
+                        This field is required
                     </mat-error>
+                    <mat-hint align="end" class="f-12">
+                        {{ originalLoanAmtRef.value.length }}/10
+                    </mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -59,11 +72,16 @@
 
             <div class="col-md-4">
                 <mat-form-field>
-                    <input matInput type="text" class="form-control br-0" formControlName="loan-tenure">
+                    <input matInput #loanTenureRef type="text" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" type="text"
+                        class="form-control br-0" formControlName="loan-tenure">
                     <mat-error
                         *ngIf="formLiabilities.get('loan-tenure').touched && formLiabilities.get('loan-tenure').invalid">
-                        Must be filled
+                        This field is required
                     </mat-error>
+                    <mat-hint align="end" class="f-12">
+                        {{ loanTenureRef.value.length }}/10
+                    </mat-hint>
                 </mat-form-field>
             </div>
 
@@ -76,13 +94,13 @@
             </div>
             <div class="col-md-4">
                 <mat-form-field>
-                    <input matInput (focus)="picker.open()"[max]="maxDate" formControlName="commencement-date"
+                    <input matInput (focus)="picker.open()" [max]="maxDate" formControlName="commencement-date"
                         class="form-control br-0" [matDatepicker]="picker" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-error
                         *ngIf="formLiabilities.get('commencement-date').touched && formLiabilities.get('commencement-date').invalid">
-                        Must be filled
+                        This field is required
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -96,11 +114,15 @@
             <div class="col-md-4">
                 <mat-form-field>
                     <mat-select formControlName="emi-freq" class="form-control br-0">
-                        <mat-option value='1'>1 week</mat-option>
+                        <mat-option value="" disabled>Select option</mat-option>
+                        <mat-option value="1">Annually</mat-option>
+                        <mat-option value="2">Semi annually</mat-option>
+                        <mat-option value="4">Quaterly</mat-option>
+                        <mat-option value="12">Monthly</mat-option>
                     </mat-select>
                     <mat-error
                         *ngIf="formLiabilities.get('emi-freq').touched && formLiabilities.get('emi-freq').invalid">
-                        Must be selected
+                        This field is required
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -112,10 +134,13 @@
             </div>
             <div class="col-md-4">
                 <mat-form-field>
-                    <input matInput type="text" formControlName="annual-interest-rate" class="form-control br-0">
+                    <input matInput (keyup)="onChange($event)" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY"
+                        maxlength="{{ formLiabilities.get('annual-interest-rate').maxLength}}" type="text"
+                        formControlName="annual-interest-rate" class="form-control br-0">
                     <mat-error
                         *ngIf="formLiabilities.get('annual-interest-rate').touched && formLiabilities.get('annual-interest-rate').invalid">
-                        Must be filled
+                        This field is required
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -133,11 +158,14 @@
             <div class="row p-12">
                 <div class="col-md-4 pr-0 text-right">
                     <h5 class="m-0 pt-8"> EMI </h5>
-
                 </div>
                 <div class="col-md-4">
                     <mat-form-field>
-                        <input matInput type="text" formControlName="emi" class="form-control br-0 rupess">
+                        <input matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                            [maxLength]="10" #emiOptionalRef type="text" formControlName="emi"
+                            class="form-control br-0 rupess">
+                        <mat-hint align="start">Optional</mat-hint>
+                        <mat-hint align="end">{{ emiOptionalRef.value.length }}/10</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -149,7 +177,15 @@
                 </div>
                 <div class="col-md-6">
                     <mat-form-field>
-                        <input matInput type="text" class="form-control br-0" formControlName="financial-institution">
+                        <input matInput appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC"
+                            [maxLength]="40" #financialInstitutionRef type="text" class="form-control br-0"
+                            formControlName="financial-institution">
+                        <mat-hint align="start">
+                            Optional
+                        </mat-hint>
+                        <mat-hint align="end">
+                            {{ financialInstitutionRef.value.length }}/40
+                        </mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -160,14 +196,22 @@
                 </div>
                 <div class="col-md-6">
                     <mat-form-field>
-                        <input matInput type="text" class="form-control br-0" fornControlName="collateral">
+                        <input matInput appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC"
+                            [maxLength]="20" #collateralRef type="text" class="form-control br-0"
+                            fornControlName="collateral">
+                        <mat-hint align="start">
+                            Optional
+                        </mat-hint>
+                        <mat-hint align="end">
+                            {{ collateralRef.value.length }}/20
+                        </mat-hint>
                     </mat-form-field>
                 </div>
             </div>
 
             <div class="row pt-24 justify-content-md-center ">
                 <div class="col-md-9 pt-20 bt-grey text-center">
-                    <button class="btn-dark-black" mat-stroked-button="">
+                    <button class="btn-dark-black" mat-stroked-button="" (click)="toggleTransact()">
                         <i class="material-icons">add</i>ADD TRANSACTIONS
                     </button>
 
@@ -176,6 +220,62 @@
                     </p>
                 </div>
             </div>
+
+            <div class="row" formArrayName="transact" *ngIf="showTransact">
+                <div class="col-md-3 text-center p-0">
+                    <h5 class="m-0 pb-8 pl-28">Part Payment date </h5>
+                </div>
+                <div class="col-md-3 pr-0">
+                    <h5 class="m-0 pb-8">Part Payment Amount</h5>
+                </div>
+                <div class="col-md-5 pr-0">
+                    <h5 class="m-0 pb-8">Options </h5>
+                </div>
+                <div class="col-md-1 pr-0">
+                </div>
+                <div class="row pt-4" [formGroup]="formItem"
+                    *ngFor="let formItem of getFormArrayControlsOfTransact(); index as i">
+                    <div class="col-md-3">
+                        <div class="form-group mb-0">
+                            <input matInput (focus)="picker1.open()" [max]="maxDate" formControlName="partPaymentDate"
+                                class="form-control br-0" [matDatepicker]="picker1" readonly>
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group mb-0">
+                            <mat-form-field class="b-a">
+                                <input type="text" #partPaymentAmtRef appInputValueValidation
+                                    [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="20" matInput
+                                    formControlName="partPaymentAmount" class="form-control br-0">
+                                <mat-hint align="end">
+                                    {{ partPaymentAmtRef.value.length }}/20
+                                </mat-hint>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <mat-select formControlName="partPaymentOptions" class="form-control br-0">
+                                <mat-option value="1" matTooltip="Keep the EMI as it is and reduce the term">Keep the
+                                    EMI as it is and
+                                    reduce the term</mat-option>
+                                <mat-option value="2" matTooltip="Keep the term as it is and reduce the EMI">Keep the
+                                    term as it is
+                                    and reduce the EMI</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-1 p-0 pt-4 d-flex">
+                        <i class="material-icons text-primitive pr-16 c-p float-left" (click)="addTransaction()">add</i>
+                        <i class="material-icons text-primitive c-p float-right"
+                            (click)="removeTransaction(i)">remove</i>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <div class="row p-12">
             <div class="col-md-12 text-right">

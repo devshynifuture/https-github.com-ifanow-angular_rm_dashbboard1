@@ -14,17 +14,17 @@
                                 arrow_drop_down
                             </i></button>
                         <mat-menu #menu="matMenu">
-                            <button *ngIf="dataCount == 0" mat-menu-item>Select invoice to see more
+                            <a *ngIf="dataCount == 0" mat-menu-item>Select invoice to see more
                                 actions
-                            </button>
-                            <button (click)="deleteModal('INVOICE')" *ngIf="dataCount != 0 && dataCount > 1"
+                            </a>
+                            <a (click)="deleteModal('INVOICE')" *ngIf="dataCount != 0 && dataCount > 1"
                                 mat-menu-item>Delete
-                                Invoices
-                            </button>
-                            <button (click)="deleteModal('INVOICE')" *ngIf="dataCount != 0 && dataCount <= 1"
+                                invoices
+                            </a>
+                            <a (click)="deleteModal('INVOICE')" *ngIf="dataCount != 0 && dataCount <= 1"
                                 mat-menu-item>Delete
-                                Invoice
-                            </button>
+                                invoice
+                            </a>
                         </mat-menu>
                     </div>
                     <div class="col-md-8 p-0" *ngIf="dataSource.data.length > 0 && dataCount > 0">
