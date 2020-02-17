@@ -23,6 +23,8 @@ import { PersonalDetailsComponent } from './overview-transactions/know-your-cust
 import { BackDetailsComponent } from './overview-transactions/know-your-customer/back-details/back-details.component';
 import { PermanentAddressComponent } from './overview-transactions/know-your-customer/permanent-address/permanent-address.component';
 import { NomineeDetailsComponent } from './overview-transactions/know-your-customer/nominee-details/nominee-details.component';
+import { FatcaDetailsComponent } from './overview-transactions/know-your-customer/fatca-details/fatca-details.component';
+import { VideoKycComponent } from './overview-transactions/know-your-customer/video-kyc/video-kyc.component';
 
 export const componentList = [
     TransactionAddComponent,
@@ -43,7 +45,10 @@ export const componentList = [
     PersonalDetailsComponent,
     PermanentAddressComponent,
     BackDetailsComponent,
-    NomineeDetailsComponent
+    NomineeDetailsComponent,
+    FatcaDetailsComponent,
+    VideoKycComponent
+
 
 
 
