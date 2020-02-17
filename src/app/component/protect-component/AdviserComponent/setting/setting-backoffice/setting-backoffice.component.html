@@ -1,1 +1,31 @@
-<p>setting-backoffice works!</p>
+<div class="bg-white" id="ui-settingsHeaders">
+    <div class="bg-white">
+        <div class="row">
+            <div class="col-md-12 ">
+                <mat-tab-group class="bg-white pt-60" mat-align-tabs="end" animationDuration="0ms"
+                    id="ui-settings-backoffice">
+                    <mat-tab label="ARN/RIA details">
+                        <ng-template matTabContent>
+                            <app-setting-org-profile></app-setting-org-profile>
+                        </ng-template>
+                    </mat-tab>
+                    <mat-tab label="MF RTA details ">
+                        <ng-template matTabContent>
+
+                        </ng-template>
+                    </mat-tab>
+                    <mat-tab label="Scheme basket">
+                        <ng-template matTabContent>
+
+                        </ng-template>
+                    </mat-tab>
+                    <mat-tab label="Model portfolios">
+                        <ng-template matTabContent>
+
+                        </ng-template>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>
