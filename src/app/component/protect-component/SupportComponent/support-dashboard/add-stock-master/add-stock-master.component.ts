@@ -1,3 +1,5 @@
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddStockMasterComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private subInjectService: SubscriptionInject,
+    private fb: FormBuilder
+  ) { }
+
+
+  addStockMasterForm = this.fb.group({
+    "scriptName": [, Validators.required],
+    "bseSymbol": [, Validators.required],
+    "nseSymbol": [, Validators.required],
+    "prevDayClosingPrice": [, Validators.required],
+    "subCategory": [, Validators.required]
+  })
 
   ngOnInit() {
+  }
+
+  dialogClose() {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
 }

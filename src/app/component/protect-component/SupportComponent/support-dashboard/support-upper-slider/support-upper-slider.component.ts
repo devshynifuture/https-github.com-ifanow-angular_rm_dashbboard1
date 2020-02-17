@@ -1,6 +1,7 @@
 import { SubscriptionInject } from './../../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
+import { SupportUpperSliderService } from './support-upper-slider.service';
 
 @Component({
   selector: 'app-support-upper-slider',
@@ -8,17 +9,21 @@ import { MatTableDataSource } from '@angular/material';
   styleUrls: ['./support-upper-slider.component.scss']
 })
 export class SupportUpperSliderComponent implements OnInit {
-  constructor(private subInjectService: SubscriptionInject) { }
+  constructor(
+    private subInjectService: SubscriptionInject,
+    private supportUpperSliderService: SupportUpperSliderService
+  ) { }
 
   displayedColumns: string[] = ['name', 'nav', 'schemeName', 'schemeCode', 'amficode', 'navTwo', 'navDate', 'njCount', 'map'];
-  dataSource = ELEMENT_DATA;
+  dataSource;
 
   ngOnInit() {
+
+    this.dataSource = new MatTableDataSource(ELEMENT_DATA);
   }
 
-  close() {
+  dialogClose() {
     this.subInjectService.changeUpperRightSliderState({ state: 'close' });
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
     console.log('close');
   }
 

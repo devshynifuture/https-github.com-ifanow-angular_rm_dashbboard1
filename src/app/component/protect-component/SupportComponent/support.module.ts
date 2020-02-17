@@ -17,7 +17,7 @@ import { SupportEntryModule } from './support.entry.module';
 
 
 @NgModule({
-  declarations: [SupportSidebarComponent, SupportDashboardComponent, MyIfasComponent, IfaOnboardingComponent, SupportMiscellaneousComponent, AddStockMasterComponent, AddLifeInsuranceMasterComponent, SchemeMappingComponent],
+  declarations: [SupportSidebarComponent, SupportDashboardComponent, MyIfasComponent, IfaOnboardingComponent, SupportMiscellaneousComponent, AddLifeInsuranceMasterComponent, SchemeMappingComponent],
   imports: [
     CommonModule,
     SupportRoutingModule,

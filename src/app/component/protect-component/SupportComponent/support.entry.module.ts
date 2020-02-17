@@ -1,3 +1,4 @@
+import { AddStockMasterComponent } from './support-dashboard/add-stock-master/add-stock-master.component';
 import { MaterialModule } from './../../../material/material';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -17,7 +18,8 @@ const componentList = [
     IfaBoardingHistoryComponent,
     UpperSliderBackofficeComponent,
     ReconciliationDetailsViewComponent,
-    SupportUpperSliderComponent
+    SupportUpperSliderComponent,
+    AddStockMasterComponent,
 ]
 
 @NgModule({

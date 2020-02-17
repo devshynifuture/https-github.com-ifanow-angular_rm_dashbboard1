@@ -390,6 +390,14 @@ export const appConfig = {
   CASHFLOW_EDIT_LIABILITIES: 'cashflow/liability/edit',
   CASHFLOW_DELETE_LIABILITIES: 'cashflow/liability/delete',
 
+  // backoffice
+
+  BACKOFFICE_GET_ALL_SCHEMES_NJ: 'backoffice/get/allshemes/nj/get',
+  BACKOFFICE_GET_ALL_SCHEMES_PRUDENT: 'backoffice/get/allshemes/prudent/get',
+  BACKOFFICE_GET_UNMAPPED_SCHEMES_NJ: 'backoffice/get/unmapped/njschemes/get',
+  BACKOFFICE_GET_UNMAPPED_SCHEMES_PRUDENT: 'backoffice/get/unmapped/prudentschemes/get',
+  BACKOFFICE_GET_FILTERED_SCHEMES: 'backoffice/get/filtered/shemes',
+
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',

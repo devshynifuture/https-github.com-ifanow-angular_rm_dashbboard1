@@ -80,8 +80,8 @@
                     <div class="col-md-4">
                         <button mat-button [matMenuTriggerFor]="menu">Quick actions</button>
                         <mat-menu #menu="matMenu">
-                            <button mat-menu-item>Add to stock master</button>
-                            <button mat-menu-item>Add to LI master</button>
+                            <button mat-menu-item (click)="openAddStockMaster('')">Add to stock master</button>
+                            <button mat-menu-item (click)="openAddLifeInsuranceMaster('')">Add to LI master</button>
                             <button mat-menu-item>Update NJ/Prudent Switch trx</button>
                         </mat-menu>
                     </div>

@@ -5,21 +5,28 @@
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle"> clear</i>
+                <i class="material-icons c-p pt-8 v-middle" (click)="dialogClose()"> clear</i>
             </div>
         </div>
     </div>
 </div>
 
 
-<div class="pb-44 mb-48 pt-100">
+<div class="pb-44 mb-48 pt-100" [formGroup]="addStockMasterForm">
     <div class="row">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Scrip name</h5>
         </div>
         <div class="col-md-5">
             <mat-form-field>
-                <input matInput type="text" class="form-control br-0">
+                <input matInput #scriptNameRef type="text" class="form-control br-0" formControlName="scriptName">
+                <mat-error
+                    *ngIf="addStockMasterForm.get('scriptName').invalid && addStockMasterForm.get('scriptName').touched">
+                    This field is required
+                </mat-error>
+                <mat-hint align="end">
+                    {{ scriptNameRef.value.length }}/10
+                </mat-hint>
             </mat-form-field>
         </div>
     </div>
@@ -31,7 +38,14 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput type="text" class="form-control br-0">
+                    <input matInput #bseSymbolRef type="text" class="form-control br-0" formControlName="bseSymbol">
+                    <mat-error
+                        *ngIf="addStockMasterForm.get('bseSymbol').invalid && addStockMasterForm.get('bseSymbol').touched">
+                        This field is required
+                    </mat-error>
+                    <mat-hint align="end">
+                        {{ bseSymbolRef.value.length }}/10
+                    </mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -44,7 +58,14 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput type="text" class="form-control br-0">
+                    <input matInput #nseSymbolRef type="text" class="form-control br-0" formControlName="nseSymbol">
+                    <mat-error
+                        *ngIf="addStockMasterForm.get('nseSymbol').invalid && addStockMasterForm.get('nseSymbol').touched">
+                        This field is required
+                    </mat-error>
+                    <mat-hint align="end">
+                        {{ nseSymbolRef.value.length }}/10
+                    </mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -57,9 +78,13 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <mat-select formControlName="pensionPayFreq" class="form-control br-0">
-                        <mat-option value="">Select option</mat-option>
+                    <mat-select formControlName="subCategory" class="form-control br-0">
+                        <mat-option value="1">Select option</mat-option>
                     </mat-select>
+                    <mat-error
+                        *ngIf="addStockMasterForm.get('subCategory').invalid && addStockMasterForm.get('subCategory').touched">
+                        This field is required
+                    </mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -73,7 +98,15 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput type="text" class="form-control br-0">
+                    <input matInput #prevDayClosingPriceRef type="text" class="form-control br-0"
+                        formControlName="prevDayClosingPrice">
+                    <mat-error
+                        *ngIf="addStockMasterForm.get('prevDayClosingPrice').invalid && addStockMasterForm.get('prevDayClosingPrice').touched">
+                        This field is required
+                    </mat-error>
+                    <mat-hint align="end">
+                        {{ prevDayClosingPriceRef.value.length }}/10
+                    </mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -83,10 +116,10 @@
 <div class="bottom-fixed wrapper-12 pt-16">
     <div class="row">
         <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="dialogClose()">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
+            <button mat-stroked-button class="btn-bottom br-0 text-inherit">Save</button>
         </div>
     </div>
 </div>
