@@ -109,19 +109,7 @@ export class TransactionSummaryComponent implements OnInit {
     this.selectedPlatform = this.defaultCredential.aggregatorType
     if (this.selectedPlatform == 1) {
       this.getBankDetails()
-      this.getIINDetails()
     }
-  }
-  getIINDetails(){
-    let obj1 = {
-      tpUserCredFamilyMappingId:this.defaultClient.tpUserCredFamilyMappingId
-    }
-    this.onlineTransact.getIINDetails(obj1).subscribe(
-      data => this.getIINDetailsRes(data)
-    );
-  }
-  getIINDetailsRes(data){
-    console.log('IIN Details',data)
   }
   setPlatform(value) {
     this.selectedPlatform = value.value
