@@ -100,7 +100,7 @@
                             </div>
                             <div class="col-md-12 pl-0">
                                 <mat-error
-                                    *ngIf="getFormControlEdit().invoiceNumber.invalid || (getFormControlEdit().invoiceNumber.touched && getFormControlEdit().invoiceNumber.invalid)"
+                                    *ngIf="getFormControlEdit().invoiceNumber.touched && getFormControlEdit().invoiceNumber.required"
                                     class="f-12">
                                     Invoice no. is required
                                 </mat-error>
