@@ -12,6 +12,7 @@ import { element } from 'protractor';
 })
 export class EmailConsentComponent implements OnInit {
   consentData = [];
+  isLoading: boolean;
 
   constructor(private cusService: CustomerService, private Location: Location, private eventService: EventService, private activateRoute: ActivatedRoute, private route: Router, private datePipe: DatePipe) { }
   displayedColumns: string[] = ['position', 'investorName', 'schemeDetails', 'currentValue', 'notionalGain', 'advice', 'adviceStatus', 'applicableDate', 'actions'];
@@ -21,15 +22,18 @@ export class EmailConsentComponent implements OnInit {
     this.activateRoute.queryParams.subscribe(
       params => {
         console.log(params)
+        this.isLoading = true;
         this.getConsentDetails(params.gropID);
       }
     )
 
   }
   getConsentDetails(data) {
+    this.isLoading = true;
     this.cusService.getAdviceConsent(data).subscribe(
       data => {
         console.log(data)
+        this.isLoading = false;
         this.dataSource = data
         data.forEach(element => {
           let obj =

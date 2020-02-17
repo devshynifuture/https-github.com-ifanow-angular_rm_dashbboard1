@@ -6,6 +6,8 @@ import { OthersComponent } from '../../../accounts/assets/commodities/others/oth
 import { AuthService } from 'src/app/auth-service/authService';
 import { ActiityService } from '../../actiity.service';
 import { MatTableDataSource, MatSort } from '@angular/material';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { AdviceUtilsService } from '../advice-utils.service';
 
 @Component({
   selector: 'app-advice-commodities',
@@ -14,17 +16,18 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 })
 export class AdviceCommoditiesComponent implements OnInit {
   displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'mvalue', 'advice', 'astatus', 'adate', 'icon'];
-  dataSource1 = new MatTableDataSource(ELEMENT_DATA1);
+  // dataSource1 = new MatTableDataSource(ELEMENT_DATA1);
   dataSource2 = new MatTableDataSource(ELEMENT_DATA2);
   advisorId: any;
   clientId: any;
   isLoading: boolean;
   @ViewChild("tableOne", { static: true }) sort1: MatSort;
   @ViewChild("tableTwo", { static: true }) sort2: MatSort;
+  goldDataSource: any;
+  selectedAssetId: any = [];
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
 
   ngOnInit() {
-    this.dataSource1.sort = this.sort1;
     this.dataSource2.sort = this.sort2;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -32,6 +35,7 @@ export class AdviceCommoditiesComponent implements OnInit {
   }
   allAdvice = false
   getAdviceByAsset() {
+    this.goldDataSource = [{}, {}, {}];
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -43,7 +47,16 @@ export class AdviceCommoditiesComponent implements OnInit {
       }
     );
   }
+  checkAll(flag, tableDataList) {
+    console.log(flag, tableDataList)
+    const { dataList, selectedIdList } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
+    this.goldDataSource = new MatTableDataSource(dataList);
+    this.selectedAssetId = selectedIdList;
+    // console.log(this.selectedAssetId);
+  }
   getAllSchemeResponse(data) {
+    this.goldDataSource = new MatTableDataSource(data.GOLD);
+    this.goldDataSource.sort = this.sort1;
     console.log(data);
     this.isLoading = false
   }
