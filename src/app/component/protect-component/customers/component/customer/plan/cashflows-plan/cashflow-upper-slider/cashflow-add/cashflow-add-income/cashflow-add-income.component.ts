@@ -21,7 +21,7 @@ export class CashflowAddIncomeComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     private cashflowService: CashFlowsPlanService,
-    private cashflowAddService: CashflowAddService,
+    public cashflowAddService: CashflowAddService,
     private eventService: EventService
   ) { }
 
