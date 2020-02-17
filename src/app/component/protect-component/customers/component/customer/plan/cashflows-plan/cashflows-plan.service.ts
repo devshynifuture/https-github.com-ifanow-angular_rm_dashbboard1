@@ -124,8 +124,14 @@ export class CashFlowsPlanService {
 
     alterTable(table: (UpperTableBox | Group)[], field: string, value: string, index: number): (UpperTableBox | Group)[] {
         table[index][field]['value'] = value;
+
+        console.log('value field index', value, field, index);
+        console.log('table :', table);
+        console.log('table index: ', table[index]);
+        console.log('table index field', table[index][field])
+        console.log('table index field value', table[index][field]['value']);
+
         table[index][field]['isAdHocChangesDone'] = true;
-        console.log("this is table field value ", table[index][field]['value']);
         this.updateTotal(table[index]);
         return table;
     }

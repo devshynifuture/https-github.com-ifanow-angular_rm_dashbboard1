@@ -34,17 +34,17 @@
             keyboard_arrow_right
           </mat-icon>
         </a>
-        <a class="sidenav-link" [ngClass]="getActiveLink() == 'emails'? 'bg-grey lter': ''" mat-list-item
+        <a class="sidenav-link" [ngClass]="getActiveLink('emails') ? 'bg-grey lter': ''" mat-list-item
           routerLink="./emails/inbox/google-connect">
           <img src="assets/images/svg/mail.svg">
           <span *ngIf="showTabs" class="title" mat-line>Email</span>
         </a>
-        <a class="sidenav-link" [ngClass]="getActiveLink() == 'transactions'? 'bg-grey lter': ''" mat-list-item
+        <a class="sidenav-link" [ngClass]="getActiveLink('transactions') ? 'bg-grey lter': ''" mat-list-item
           routerLink="./transactions/overview">
           <img src="assets/images/svg/cart.svg">
           <span *ngIf="showTabs" class="title" mat-line>Transactions</span>
         </a>
-        <a class="sidenav-link" [ngClass]="getActiveLink() == 'subscription'? 'bg-grey lter': ''" mat-list-item
+        <a class="sidenav-link" [ngClass]="getActiveLink('subscription') ? 'bg-grey lter': ''" mat-list-item
           routerLink="./subscription/dashboard">
           <img src="assets/images/svg/ruppes.svg">
           <span *ngIf="showTabs" class="title" mat-line>Subscription</span>
