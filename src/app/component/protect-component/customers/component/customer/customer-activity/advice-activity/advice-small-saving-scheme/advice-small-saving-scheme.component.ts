@@ -36,6 +36,13 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
   ppfDataSource: any;
   potdDataSource: any;
   selectedAssetId: any = [];
+  nscDataSpurce: any;
+  ssyDataSpurce: any;
+  kvpDataSpurce: any;
+  scssDataSpurce: any;
+  posavingDataSpurce: any;
+  pordDataSpurce: any;
+  pomisDataSpurce: any;
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
   allAdvice = false
   ngOnInit() {
@@ -50,6 +57,12 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
       assetCategory: 10
     }
     this.ppfDataSource = [{}, {}, {}];
+    this.nscDataSpurce = [{}, {}, {}];
+    this.ssyDataSpurce = [{}, {}, {}];
+    this.kvpDataSpurce = [{}, {}, {}];
+    this.scssDataSpurce = [{}, {}, {}];
+    this.pordDataSpurce = [{}, {}, {}];
+    this.pomisDataSpurce = [{}, {}, {}];
     this.potdDataSource = [{}, {}, {}];
     this.isLoading = true;
     this.activityService.getAllAsset(obj).subscribe(
@@ -60,7 +73,23 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
   getAllSchemeResponse(data) {
     this.isLoading = false;
     this.ppfDataSource = new MatTableDataSource(data.PPF);
+    this.nscDataSpurce = data.NSC;
+    this.ssyDataSpurce = data.SSY;
+    this.kvpDataSpurce = data.KVP;
+    this.scssDataSpurce = data.SCSS;
+    this.posavingDataSpurce = data;
+    this.pordDataSpurce = data.PO_RD;
+    this.pomisDataSpurce = data.PO_MIS;
     this.potdDataSource = data.PO_TD;
+    this.ppfDataSource['tableFlag'] = (data.PPF.length == 0) ? false : true;
+    this.nscDataSpurce['tableFlag'] = (data.NSC.length == 0) ? false : true;
+    this.ssyDataSpurce['tableFlag'] = (data.SSY.length == 0) ? false : true;
+    this.kvpDataSpurce['tableFlag'] = (data.KVP.length == 0) ? false : true;
+    this.scssDataSpurce['tableFlag'] = (data.SCSS.length == 0) ? false : true;
+    this.posavingDataSpurce['tableFlag'] = (data.PPF.length == 0) ? false : true;
+    this.pordDataSpurce['tableFlag'] = (data.PO_RD.length == 0) ? false : true;
+    this.pomisDataSpurce['tableFlag'] = (data.PO_MIS.length == 0) ? false : true;
+    this.potdDataSource['tableFlag'] = (data.PO_TD.length == 0) ? false : true;
     console.log(data)
   }
   checkAll(flag, tableDataList) {
