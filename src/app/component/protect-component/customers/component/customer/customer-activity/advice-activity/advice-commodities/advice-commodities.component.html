@@ -159,7 +159,7 @@
     <table #tableTwo="matSort" matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table
         [dataSource]="otherDataSource" class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox *ngIf="isLoading==false && otherDataSource.tableFlag"
                     (change)="checkAll($event,otherDataSource)"></mat-checkbox>
             </th>
