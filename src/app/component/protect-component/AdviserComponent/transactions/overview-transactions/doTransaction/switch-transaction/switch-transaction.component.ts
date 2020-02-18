@@ -4,6 +4,7 @@ import { SubscriptionInject } from '../../../../Subscriptions/subscription-injec
 import { ConfirmationTransactionComponent } from '../confirmation-transaction/confirmation-transaction.component';
 import { UtilService } from 'src/app/services/util.service';
 import { OnlineTransactionService } from '../../../online-transaction.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-switch-transaction',
@@ -37,7 +38,7 @@ export class SwitchTransactionComponent implements OnInit {
   schemeListTransfer: any;
 
   constructor(private subInjectService: SubscriptionInject,private onlineTransact: OnlineTransactionService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,private eventService : EventService) { }
     @Input()
     set data(data) {
       this.inputData = data;
@@ -83,8 +84,10 @@ export class SwitchTransactionComponent implements OnInit {
         tpUserCredFamilyMappingId:this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
       }
       this.onlineTransact.getExistingSchemes(obj).subscribe(
-        data => this.getExistingSchemesRes(data)
-      );
+        data => this.getExistingSchemesRes(data), (error) => {
+          this.eventService.showErrorMessage(error);
+        }
+        );
     } else {
 
     }
@@ -110,8 +113,10 @@ export class SwitchTransactionComponent implements OnInit {
       userAccountType: this.getDataSummary.defaultCredential.accountType,
     }
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
-      data => this.getSchemeDetailsRes(data)
-    );
+      data => this.getSchemeDetailsRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   getSchemeDetailsRes(data) {
     console.log('getSchemeDetailsRes == ', data)
@@ -142,8 +147,10 @@ export class SwitchTransactionComponent implements OnInit {
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
     }
     this.onlineTransact.getSchemeWiseFolios(obj1).subscribe(
-      data => this.getSchemeWiseFoliosRes(data)
-    );
+      data => this.getSchemeWiseFoliosRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   getSchemeWiseFoliosRes(data) {
     console.log('res scheme folio',data)
@@ -188,8 +195,10 @@ export class SwitchTransactionComponent implements OnInit {
       userAccountType: this.getDataSummary.defaultCredential.accountType,
     }
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
-      data => this.getSchemeDetailsTranferRes(data)
-    );
+      data => this.getSchemeDetailsTranferRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   getSchemeDetailsTranferRes(data){
     // this.maiSchemeList = data
@@ -211,8 +220,10 @@ export class SwitchTransactionComponent implements OnInit {
         tpUserCredFamilyMappingId:this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
       }
       this.onlineTransact.getNewSchemes(obj).subscribe(
-        data => this.getNewSchemesRes(data)
-      );
+        data => this.getNewSchemesRes(data), (error) => {
+          this.eventService.showErrorMessage(error);
+        }
+        );
     } 
   }
   switchType(value){
@@ -291,8 +302,10 @@ export class SwitchTransactionComponent implements OnInit {
 
     console.log('switch', obj)
     this.onlineTransact.transactionBSE(obj).subscribe(
-      data => this.switchBSERes(data)
-    );
+      data => this.switchBSERes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   switchBSERes(data){
     console.log('switch res == ',data)

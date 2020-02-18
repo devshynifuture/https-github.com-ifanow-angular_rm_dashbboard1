@@ -56,14 +56,14 @@
                     src="/assets/images/svg/plus.svg" class="pr-8">Suggest new bank account</button>
         </div>
     </div>
-    <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="dataSource3"
+    <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="bankAccDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false && bankAccDataSource.tableFlag"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -118,6 +118,9 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
     </table>
+    <div *ngIf="bankAccDataSource.tableFlag==false">
+        <h4 class="text-center pt-72">No Data Found</h4>
+    </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
             <h5 class="m-0 text-black pt-8">Cash in hand</h5>
@@ -130,14 +133,14 @@
                     class="pr-8">Suggest new cash in hand</button>
         </div>
     </div>
-    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="dataSource3"
+    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="cashInHandDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false && cashInHandDataSource.tableFlag"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -190,6 +193,9 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
     </table>
+    <div *ngIf="cashInHandDataSource.tableFlag==false">
+        <h4 class="text-center pt-72">No Data Found</h4>
+    </div>
 </div>
 <div *ngIf="allAdvice == true">
     <app-all-advice-cash-and-hand></app-all-advice-cash-and-hand>

@@ -16,16 +16,17 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 })
 export class AdviceCashAndHandComponent implements OnInit {
   displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'balance', 'advice', 'astatus', 'adate', 'icon'];
-  dataSource3 = new MatTableDataSource(ELEMENT_DATA1);
   advisorId: any;
   clientId: any;
   isLoading: any;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  bankAccDataSource: any;
+  cashInHandDataSource: any;
 
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
 
   ngOnInit() {
-    this.dataSource3.sort = this.sort;
+    // this.dataSource3.sort = this.sort;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getAdviceByAsset();
@@ -36,6 +37,8 @@ export class AdviceCashAndHandComponent implements OnInit {
       clientId: this.clientId,
       assetCategory: 11
     }
+    this.cashInHandDataSource = [{}, {}, {}];
+    this.bankAccDataSource = [{}, {}, {}]
     this.isLoading = true;
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {
@@ -44,6 +47,10 @@ export class AdviceCashAndHandComponent implements OnInit {
   }
   getAllSchemeResponse(data) {
     console.log(data);
+    this.bankAccDataSource = data.BANK_ACCOUNTS;
+    this.cashInHandDataSource = data.CASH_IN_HAND;
+    this.bankAccDataSource['tableFlag'] = (data.BANK_ACCOUNTS.length == 0) ? false : true;
+    this.cashInHandDataSource['tableFlag'] = (data.CASH_IN_HAND.length == 0) ? false : true;
     this.isLoading = false;
     // this.cashinHandData=data.CASH IN HAND;
   }
@@ -96,18 +103,3 @@ export class AdviceCashAndHandComponent implements OnInit {
     );
   }
 }
-export interface PeriodicElement1 {
-  name: string;
-  desc: string;
-  balance: string;
-  advice: string;
-  adate: string;
-  astatus: string;
-
-}
-
-const ELEMENT_DATA1: PeriodicElement1[] = [
-  { name: 'Rahul Jain', desc: '1', balance: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-  { name: 'Rahul Jain', desc: '2', balance: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-
-];
