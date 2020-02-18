@@ -12,6 +12,7 @@ import { RolesComponent } from './setting-user-roles/setting-users-roles/roles/r
 import { HierachyComponent } from './setting-user-roles/setting-users-roles/hierachy/hierachy.component';
 import { SettingEntryModule } from './setting-entry/setting-entry.module';
 import { ArnRiaDetailsComponent } from './setting-backup/setting-backup/arn-ria-details/arn-ria-details.component';
+import { SettingBackupModule } from './setting-backup/setting-backup/setting-backup.module';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { ArnRiaDetailsComponent } from './setting-backup/setting-backup/arn-ria-
     CommonModule,
     SettingRoutingModule,
     MaterialModule,
-    SettingEntryModule
+    SettingEntryModule,
+    SettingBackupModule
   ]
 })
 export class SettingModule { }

@@ -62,6 +62,13 @@ export class AdviceStocksComponent implements OnInit {
     this.stockDatasource['tableFlag'] = (data.STOCKS.length == 0) ? false : true;
     console.log(data);
   }
+  checkAll(flag, tableDataList) {
+    console.log(flag, tableDataList)
+    const { dataList, selectedIdList } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
+    this.stockDatasource = new MatTableDataSource(dataList);
+    this.selectedAssetId = selectedIdList;
+    console.log(this.selectedAssetId);
+  }
   openRealEstate(data, value) {
     const fragmentData = {
       flag: value,
