@@ -25,7 +25,7 @@
                     <p class="m-0 roboto text-custom">Investor details</p>
                     <h5 class="m-0">{{(!transactionSummary)? '-': transactionSummary.selectedFamilyMember}}</h5>
                     <div *ngIf="showInvestor == false">
-                        <h5 class="m-0"> IIN {{selectedInvestor || defaultClient.clientCode}}
+                        <h5 class="m-0">{{selectedInvestor || defaultClient.clientCode}}
                             {{(defaultClient.holdingType)}}</h5>
                     </div>
                     <mat-select *ngIf="showInvestor == true" class="form-control">

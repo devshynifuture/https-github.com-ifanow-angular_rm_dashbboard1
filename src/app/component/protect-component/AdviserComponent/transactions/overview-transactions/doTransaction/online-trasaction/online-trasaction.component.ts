@@ -11,6 +11,7 @@ import { SwpTransactionComponent } from '../swp-transaction/swp-transaction.comp
 import { OnlineTransactionService } from '../../../online-transaction.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
+import { ProcessTransactionService } from '../process-transaction.service';
 
 @Component({
   selector: 'app-online-trasaction',
@@ -51,9 +52,15 @@ export class OnlineTrasactionComponent implements OnInit {
   advisorId: any;
   clientId: any;
   checkFamilyMem: any;
+  selectedPlatform: any;
+  defaultClient: any;
+  defaultCredential: any;
+  allData: any;
+  credentialList: any;
+  getPlatformCount: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-    private eventService : EventService,private fb: FormBuilder) {
+    private eventService : EventService,private fb: FormBuilder,private processTransaction : ProcessTransactionService) {
   }
 
   @Input()
@@ -74,6 +81,33 @@ export class OnlineTrasactionComponent implements OnInit {
     this.getdataForm(this.inputData)
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.getDefaultDetails(null)
+  }
+  getDefaultDetails(platform) {
+    let obj = {
+      advisorId: 414,
+      familyMemberId: 112166,
+      clientId: 53637,
+      aggregatorType: platform
+    }
+    this.onlineTransact.getDefaultDetails(obj).subscribe(
+      data => this.getDefaultDetailsRes(data)
+    );
+  }
+  getDefaultDetailsRes(data) {
+    console.log('deault', data)
+    if(data == undefined) {
+      return
+    }
+    this.allData = data
+    this.credentialList = data.credentialList
+    this.getPlatformCount = data.credentialList.filter(function(ele){
+      return ele.id
+    })
+    console.log('platform count',this.getPlatformCount)
+    this.defaultCredential = data.defaultCredential
+    this.defaultClient = data.defaultClient
+    this.selectedPlatform = this.defaultCredential.aggregatorType
   }
   getFamilyList(value) {
     let obj = {
@@ -88,12 +122,11 @@ export class OnlineTrasactionComponent implements OnInit {
   }
   getFamilyMemberListRes(data) {
     if(data == undefined){
-      return
+    
+    }else{
+      this.nomineesListFM = data.familyMembers
     }
-    console.log('getFamilyMemberListRes', data) , (error) => {
-      this.eventService.showErrorMessage(error);
-    }
-    this.nomineesListFM = data.familyMembers
+    console.log('getFamilyMemberListRes', data) 
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
@@ -186,6 +219,9 @@ export class OnlineTrasactionComponent implements OnInit {
         this.checkFamilyMem = element.name.includes(this.transactionAddForm.controls.ownerName.value)
       });
       if (this.formStep == 'step-1' == this.checkFamilyMem == true) {
+        if(this.allData && this.allData.length > 0){
+          this.formStep = 'step-2';
+        }
         this.formStep = 'step-2';
       } else if (this.transactionAddForm.get('transactionType').valid && this.formStep == 'step-2') {
         let data = {

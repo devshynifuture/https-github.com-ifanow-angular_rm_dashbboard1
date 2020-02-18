@@ -209,23 +209,38 @@
     </div>
 </div>
 
-<div class="bottom-fixed wrapper-12 w-100">
-    <div class="row d-flex align-items-center">
-        <div class="col-md-3 ">
-            <button mat-button class="f-16 text-transform-inherit text-white m-0"> Skip this step </button>
-        </div>
 
-        <div class="col-md-5 text-center">
-            <div class="holderLink">
-                <a class="activeLink p-4 f-18 text-white" href=""> First holder </a>
-                <a class="f-18 text-white p-4" href=""> Second holder </a>
-                <a class="f-18 text-white p-4" href=""> Third holder </a>
-            </div>
-        </div>
 
-        <div class="col-md-4 text-right">
-            <button mat-raised-button class="f-16 btn-default mr-12 br-0 text-inherit"> PREVIOUS </button>
-            <button mat-button class="f-16 text-white m-0"> NEXT STEP </button>
-        </div>
+
+<div class="bottom-fixed  pl-20 pr-20 d-flex  w-100 row">
+
+    <div class="col-md-3 p-0 d-flex align-items-center ">
+        <a href="#" class="text-white f-300"> Skip this step </a>
     </div>
+
+    <div class="col-md-5 center_menu">
+        <a class="activeLink" href=""> First holder </a>
+        <a class="activeLink" href=""> Second holder </a>
+        <a class="activeLink" href=""> Third holder </a>
+    </div>
+
+    <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">
+
+        <button class="br-0 perviousBtn text-inherit f-14" mat-button mat-raised-button>
+            PREVIOUS
+        </button>
+
+        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4">SAVE</button>
+        <button mat-button class="greenBtn  p-0 mw-40 br-left-white " [matMenuTriggerFor]="menu">
+            <i class="material-icons">
+                keyboard_arrow_up
+            </i></button>
+        <mat-menu #menu="matMenu">
+            <button class="btn-bottom br-0 text-inherit" mat-menu-item>
+                Item 1 </button>
+        </mat-menu>
+
+
+    </div>
+
 </div>

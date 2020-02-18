@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, Output ,EventEmitter} from '@angular/core';
 import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
@@ -68,6 +68,7 @@ export class DocumentComponent implements OnInit {
   // @Input() upperData;
 
   advisorId;
+  @Output() changeServiceData = new EventEmitter();
 
   /*@Input()*/
   documentDesign;
@@ -810,7 +811,8 @@ export class DocumentComponent implements OnInit {
 
   saveMappingDocumentToPlansResponse(data) {
     console.log("response status:::::::::::::::", data);
-    this.eventService.changeUpperSliderState({ state: 'close' });
+    this.changeServiceData.emit(true);
+    // this.eventService.changeUpperSliderState({ state: 'close' });
     if (this.mappedData.length == 0) {
       this.eventService.openSnackBar('No Document mapped', 'Dismiss');
     } else {
@@ -892,7 +894,7 @@ export class DocumentComponent implements OnInit {
     } else {
       this.eventService.openSnackBar('Documents mapped', 'OK');
     }
-
+    this.changeServiceData.emit(true);
   }
 
   selectAll(event) {

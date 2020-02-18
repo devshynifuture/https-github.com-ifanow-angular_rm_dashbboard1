@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {SubscriptionService} from '../../../subscription.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
@@ -9,6 +9,8 @@ import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-
   styleUrls: ['./modules.component.scss']
 })
 export class ModulesComponent implements OnInit {
+  @Output() changeServiceData = new EventEmitter();
+
   _upperData: any;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
@@ -126,12 +128,13 @@ export class ModulesComponent implements OnInit {
   }
 
   mapModuleToPlanResponse(data) {
-    this.dialogClose();
+    // this.dialogClose();
     console.log('Module Map data', data);
     if (this.mappedData.length != 0) {
       this.eventService.openSnackBar('Module is mapped', 'OK');
     } else {
       this.eventService.openSnackBar('No module is mapped', 'OK');
     }
+    this.changeServiceData.emit(true);
   }
 }

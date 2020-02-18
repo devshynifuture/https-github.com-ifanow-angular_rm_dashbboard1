@@ -132,6 +132,9 @@
                                 <mat-hint align="start" class="f-12 text-custom">
                                     Min amount: ₹{{(schemeDetails == undefined)?'-':schemeDetails.redemptionAmountMinimum }}
                                 </mat-hint>
+                                <mat-hint align="start" class="f-12 text-custom" *ngIf="(redemptionTransaction.get('redeemType').value == 2)">
+                                    Min unit: ₹{{(schemeDetails == undefined)?'-':schemeDetails.redemptionQtyMultiplier }}
+                                </mat-hint>
                                 <mat-error *ngIf="(redemptionTransaction.get('employeeContry').errors?.min)" class="f-12">
                                     Should be greater than or equal to {{schemeDetails.redemptionAmountMinimum}}
                                 </mat-error>

@@ -65,8 +65,8 @@
                             </mat-form-field>
                         </div>
                     </div>
-                    <!-- *ngIf="showSpinner == true removed for prod build" -->
-                    <div class="col-md-1">
+                    <!-- removed for prod build" -->
+                    <div class="col-md-1" *ngIf="showSpinner == true">
                         <mat-spinner class="mt-8"></mat-spinner>
                     </div>
                 </div>
@@ -134,7 +134,7 @@
                             <mat-form-field>
                                 <mat-select class="form-control" formControlName="frequency">
                                     <mat-option value="option" (click)="selectedFrequency(frequency)"
-                                        *ngFor="let frequency of sipFrequency">{{frequency.sipFrequency}}</mat-option>
+                                        *ngFor="let frequency of sipFrequency">{{frequency.frequency}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
@@ -217,7 +217,8 @@
                             <mat-select class="form-control" formControlName="tenure">
                                 <mat-option value="1">No. of installment</mat-option>
                                 <mat-option value="2">No. year</mat-option>
-                                <mat-option *ngIf="getDataSummary && getDataSummary.defaultClient.aggregatorType == 1" value="2">Continue
+                                <mat-option *ngIf="getDataSummary && getDataSummary.defaultClient.aggregatorType == 1"
+                                    value="2">Continue
                                     until cancelled</mat-option>
                             </mat-select>
                         </mat-form-field>
