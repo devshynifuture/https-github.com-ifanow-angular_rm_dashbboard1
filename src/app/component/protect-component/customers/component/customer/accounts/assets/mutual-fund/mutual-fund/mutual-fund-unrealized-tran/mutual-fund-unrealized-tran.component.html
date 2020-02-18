@@ -45,7 +45,7 @@
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left">Grand Total
                         </td>
 
-                    </ng-container> 
+                    </ng-container>
 
                     <ng-container matColumnDef="amtInvested">
                         <th class="br text-left" mat-sort-header="amtInvested" mat-header-cell *matHeaderCellDef>
@@ -91,7 +91,7 @@
 
                     <ng-container matColumnDef="gain">
                         <th class="br text-right" mat-sort-header="gain" mat-header-cell *matHeaderCellDef>
-                           Gain</th>
+                            Gain</th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
                             {{element.gain}}
                         </td>
@@ -102,18 +102,18 @@
 
                     <ng-container matColumnDef="absReturn">
                         <th class="br text-right" mat-sort-header="absReturn" mat-header-cell *matHeaderCellDef>
-                           Absolute Return%</th>
+                            Absolute Return%</th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
                             {{element.absReturn}}
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                             {{(mutualFund)?this.finalAbsReturn:'0'}}</td>
 
-                    </ng-container> 
+                    </ng-container>
 
                     <ng-container matColumnDef="xirr">
                         <th class="br text-right" mat-sort-header="xirr" mat-header-cell *matHeaderCellDef>
-                           Xirr%</th>
+                            Xirr%</th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
                             {{element.xirr}}
                         </td>
@@ -121,20 +121,20 @@
                             {{(mutualFund)?this.finalXirr:'0'}}</td>
 
                     </ng-container>
-                    
+
                     <ng-container matColumnDef="allocation">
                         <th class="br text-right" mat-sort-header="allocation" mat-header-cell *matHeaderCellDef>
-                           Allocation%</th>
+                            Allocation%</th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
                             {{element.allocation}}
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                             {{(mutualFund)?this.finalAllocationPer:'0'}}</td>
 
-                    </ng-container> 
+                    </ng-container>
 
 
-                
+
 
                     <tr mat-header-row *matHeaderRowDef="displayedColumns2; sticky: true"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
@@ -150,7 +150,7 @@
                     <ng-container matColumnDef="no">
                         <th mat-header-cell *matHeaderCellDef class="br">Sr no. </th>
                         <td mat-cell *matCellDef="let element;index as i" class="br">
-                            <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
+                            <div class="bar"> {{ i + 1 }} </div>
                         </td>
                         <td *matFooterCellDef class="br  text-right" mat-footer-cell></td>
                     </ng-container>
@@ -236,7 +236,7 @@
                     </ng-container>
                     <ng-container matColumnDef="totalAmount">
                         <th class="br text-right" mat-sort-header="totalAmount" mat-header-cell *matHeaderCellDef>
-                           Total amount</th>
+                            Total amount</th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
                             {{element.totalAmount}}
                         </td>
@@ -247,7 +247,7 @@
 
                     <ng-container matColumnDef="gain">
                         <th class="br text-right" mat-sort-header="gain" mat-header-cell *matHeaderCellDef>
-                           Gain</th>
+                            Gain</th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
                             {{element.gain}}
                         </td>
@@ -258,25 +258,25 @@
 
                     <ng-container matColumnDef="absReturn">
                         <th class="br text-right" mat-sort-header="absReturn" mat-header-cell *matHeaderCellDef>
-                           Absolute Return%</th>
+                            Absolute Return%</th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
                             {{element.absReturn}}
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                             {{(mutualFund)?this.finalAbsReturn:'0'}}</td>
 
-                    </ng-container> 
+                    </ng-container>
 
                     <ng-container matColumnDef="xirr">
                         <th class="br text-right" mat-sort-header="xirr" mat-header-cell *matHeaderCellDef>
-                           Xirr%</th>
+                            Xirr%</th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
                             {{element.xirr}}
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                             {{(mutualFund)?this.finalXirr:'0'}}</td>
 
-                    </ng-container> 
+                    </ng-container>
 
                     <ng-container matColumnDef="groupHeader">
                         <td *matCellDef="let group" [attr.colspan]="displayedColumns.length"
@@ -297,9 +297,9 @@
                     </ng-container>
 
                     <ng-container matColumnDef="groupHeader4">
-                        <td *matCellDef="let group" [attr.colspan]="displayedColumns.length"
-                            class="text-center f-600">
-                            {{group.total}}{{group.totalTransactionAmt}}{{group.totalNav}}{{group.totalUnit}}{{group.totalNav}}{{group.totalCurrentValue}}{{group.dividendPayout}}{{group.divReinvestment}}{{group.totalAmount}}{{group.gain}}{{group.absReturn}}{{group.xirr}}</td>
+                        <td *matCellDef="let group" [attr.colspan]="displayedColumns.length" class="text-center f-600">
+                            {{group.total}}{{group.totalTransactionAmt}}{{group.totalNav}}{{group.totalUnit}}{{group.totalNav}}{{group.totalCurrentValue}}{{group.dividendPayout}}{{group.divReinvestment}}{{group.totalAmount}}{{group.gain}}{{group.absReturn}}{{group.xirr}}
+                        </td>
                     </ng-container>
 
                     <ng-container matColumnDef="icons">
@@ -311,8 +311,8 @@
                             <mat-menu #menu25="matMenu">
                                 <button mat-menu-item>View factsheet</button>
                                 <button mat-menu-item>Download SOA</button>
-                                <button mat-menu-item (click)="openFolioMaster()">Folio master details</button>
-                                <button mat-menu-item (click)="openSipDetails()">SIP details</button>
+                                <button mat-menu-item>Folio master details</button>
+                                <button mat-menu-item>SIP details</button>
                                 <button mat-menu-item class="bt-1">Transact online</button>
                                 <button mat-menu-item>Transaction slip</button>
                                 <button mat-menu-item class="bt-1">View transactions</button>
