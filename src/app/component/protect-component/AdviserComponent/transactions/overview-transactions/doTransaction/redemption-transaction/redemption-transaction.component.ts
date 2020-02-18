@@ -4,6 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ConfirmationTransactionComponent } from '../confirmation-transaction/confirmation-transaction.component';
 import { UtilService } from 'src/app/services/util.service';
 import { OnlineTransactionService } from '../../../online-transaction.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-redemption-transaction',
@@ -35,7 +36,7 @@ export class RedemptionTransactionComponent implements OnInit {
   achMandateNSE: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,private eventService : EventService) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -84,7 +85,6 @@ export class RedemptionTransactionComponent implements OnInit {
           if (UtilService.isRefreshRequired(sideBarData)) {
             // this.getNscSchemedata();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
           }
           rightSideDataSub.unsubscribe();
         }
@@ -140,8 +140,10 @@ export class RedemptionTransactionComponent implements OnInit {
       tpUserCredFamilyMappingId:this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
     }
     this.onlineTransact.getExistingSchemes(obj).subscribe(
-      data => this.getExistingSchemesRes(data)
-    );
+      data => this.getExistingSchemesRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   getExistingSchemesRes(data) {
     this.showSpinner = false
@@ -166,8 +168,10 @@ export class RedemptionTransactionComponent implements OnInit {
       userAccountType: this.getDataSummary.defaultCredential.accountType,
     }
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
-      data => this.getSchemeDetailsRes(data)
-    );
+      data => this.getSchemeDetailsRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   getSchemeDetailsRes(data) {
     console.log('getSchemeDetailsRes == ', data)
@@ -199,8 +203,10 @@ export class RedemptionTransactionComponent implements OnInit {
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
     }
     this.onlineTransact.getSchemeWiseFolios(obj1).subscribe(
-      data => this.getSchemeWiseFoliosRes(data)
-    );
+      data => this.getSchemeWiseFoliosRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   getSchemeWiseFoliosRes(data) {
     console.log('res scheme folio', data)
@@ -250,8 +256,10 @@ export class RedemptionTransactionComponent implements OnInit {
     }
     console.log('redeem obj json',obj)
     this.onlineTransact.transactionBSE(obj).subscribe(
-      data => this.redeemBSERes(data)
-    );
+      data => this.redeemBSERes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   redeemBSERes(data){
     console.log('redeem res',data)

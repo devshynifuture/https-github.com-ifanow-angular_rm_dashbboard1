@@ -5,6 +5,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 import { OnlineTransactionService } from '../../../online-transaction.service';
 import { ProcessTransactionService } from '../process-transaction.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-swp-transaction',
@@ -48,7 +49,7 @@ export class SwpTransactionComponent implements OnInit {
   achMandateNSE: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-    private processTransaction: ProcessTransactionService, private fb: FormBuilder) { }
+    private processTransaction: ProcessTransactionService, private fb: FormBuilder, private eventService : EventService) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -93,7 +94,9 @@ export class SwpTransactionComponent implements OnInit {
         tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
       }
       this.onlineTransact.getExistingSchemes(obj).subscribe(
-        data => this.getExistingSchemesRes(data)
+        data => this.getExistingSchemesRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
       );
     } else {
 
@@ -139,8 +142,10 @@ export class SwpTransactionComponent implements OnInit {
       userAccountType: this.getDataSummary.defaultCredential.accountType,
     }
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
-      data => this.getSchemeDetailsRes(data)
-    );
+      data => this.getSchemeDetailsRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   getSchemeWiseFolios() {
     let obj1 = {
@@ -153,8 +158,10 @@ export class SwpTransactionComponent implements OnInit {
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
     }
     this.onlineTransact.getSchemeWiseFolios(obj1).subscribe(
-      data => this.getSchemeWiseFoliosRes(data)
-    );
+      data => this.getSchemeWiseFoliosRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   getSchemeWiseFoliosRes(data) {
     console.log('res scheme folio', data)
@@ -171,16 +178,20 @@ export class SwpTransactionComponent implements OnInit {
   getFrequency() {
     let obj = {
       isin: this.schemeDetails.isin,
+      aggregatorType:this.getDataSummary.defaultClient.aggregatorType,
+      orderType:'SWP'
     }
     this.onlineTransact.getSipFrequency(obj).subscribe(
-      data => this.getSipFrequencyRes(data)
-    );
+      data => this.getSipFrequencyRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   getSipFrequencyRes(data) {
-    console.log('isin ----', data)
+    console.log('isin Frequency ----', data)
     this.swpFrequency = data
     this.swpFrequency = data.filter(function (element) {
-      return element.sipFrequency
+      return element.frequency
     })
   }
   selectedFrequency(getFrerq) {
@@ -204,8 +215,10 @@ export class SwpTransactionComponent implements OnInit {
       tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
     }
     this.onlineTransact.getMandateDetails(obj1).subscribe(
-      data => this.getMandateDetailsRes(data)
-    );
+      data => this.getMandateDetailsRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   getMandateDetailsRes(data) {
     console.log('mandate details :', data)
@@ -228,11 +241,9 @@ export class SwpTransactionComponent implements OnInit {
           if (UtilService.isRefreshRequired(sideBarData)) {
             // this.getNscSchemedata();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
           }
           rightSideDataSub.unsubscribe();
         }
-
       }
     );
   }
@@ -264,7 +275,6 @@ export class SwpTransactionComponent implements OnInit {
 
     this.ownerData = this.swpTransaction.controls;
   }
-
   getFormControl(): any {
     return this.swpTransaction.controls;
   }
@@ -301,8 +311,10 @@ export class SwpTransactionComponent implements OnInit {
       obj.nsePaymentMode = (this.swpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE'
     }
     this.onlineTransact.transactionBSE(obj).subscribe(
-      data => this.swpBSERes(data)
-    );
+      data => this.swpBSERes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
     console.log('swp json obj',obj)
   }
   swpBSERes(data){
