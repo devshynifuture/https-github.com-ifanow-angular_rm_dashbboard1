@@ -9,6 +9,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { CustomerService } from '../../../customer.service';
 import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
+import { AdviceUtilsService } from '../advice-utils.service';
 
 @Component({
   selector: 'app-advice-stocks',
@@ -22,6 +23,7 @@ export class AdviceStocksComponent implements OnInit {
   clientId: any;
   stockDatasource: any;
   isLoading: boolean;
+  selectedAssetId: any = [];
   constructor(private eventService: EventService, public dialog: MatDialog, private subInjectService: SubscriptionInject,
     private cusService: CustomerService, private activityService: ActiityService) { }
   @ViewChild("tableOne", { static: true }) sort: MatSort;
@@ -47,6 +49,12 @@ export class AdviceStocksComponent implements OnInit {
         // this.isLoading = false;
       }
     );
+  }
+  checkAll(flag, tableDataList) {
+    console.log(flag, tableDataList)
+    const { dataList, selectedIdList } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
+    this.selectedAssetId = selectedIdList;
+    console.log(this.selectedAssetId);
   }
   getAllAssetResponse(data) {
     this.isLoading = false;
