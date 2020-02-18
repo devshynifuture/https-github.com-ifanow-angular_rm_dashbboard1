@@ -20,13 +20,16 @@
                 <mat-form-field>
                     <input [matAutocomplete]="auto1" aria-label="client" class="form-control pl-8" (keyup)="getFamilyList($event.target.value)" formControlName="ownerName" matInput>
                     <mat-autocomplete #auto1="matAutocomplete">
-                        <mat-option value=''>Search family members</mat-option>
+                        <!-- <mat-option value=''>Search family members</mat-option> -->
                         <mat-option *ngFor="let f of nomineesListFM" [value]="f.name" (click)="ownerDetails(f)">
                             <span>{{f.name}}</span>
                         </mat-option>
                     </mat-autocomplete>
-                    <mat-error class="f-12 pt-4">
+                    <mat-error class="f-12 pt-4" *ngIf="transactionAddForm.get('ownerName').errors?.required">
                         This field is required
+                    </mat-error>
+                    <mat-error class="f-12" *ngIf="transactionAddForm.get('ownerName').errors?.isFamilyListInvalid">
+                        This family member dose not exist
                     </mat-error>
                 </mat-form-field>
             </div>
