@@ -40,9 +40,12 @@
         </div>
     </div>
     <div class="row pt-44">
+        <app-advice-action [data]="selectedAssetId" [ngClass]="{'v-h': selectedAssetId.length==0}">
+        </app-advice-action>
+    </div>
+    <div class="row pt-32">
         <div class="col-md-6 p-0">
-            <app-advice-action [data]="selectedAssetId" [ngClass]="{'v-h': selectedAssetId.length==0}">
-            </app-advice-action>
+            <h5 class="m-0 text-black pt-8">Stock</h5>
         </div>
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
