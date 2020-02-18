@@ -8,22 +8,29 @@ import { SupportDashboardComponent } from './support-dashboard/support-dashboard
 import { MyIfasComponent } from './my-ifas/my-ifas.component';
 import { IfaOnboardingComponent } from './ifa-onboarding/ifa-onboarding.component';
 import { SupportMiscellaneousComponent } from './support-miscellaneous/support-miscellaneous.component';
-import { AddStockMasterComponent } from './support-dashboard/add-stock-master/add-stock-master.component';
-import { AddLifeInsuranceMasterComponent } from './support-dashboard/add-life-insurance-master/add-life-insurance-master.component';
 import { SchemeMappingComponent } from './support-dashboard/scheme-mapping/scheme-mapping.component';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { DynamicComponentService } from 'src/app/services/dynamic-component.service';
 import { SupportEntryModule } from './support.entry.module';
-
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [SupportSidebarComponent, SupportDashboardComponent, MyIfasComponent, IfaOnboardingComponent, SupportMiscellaneousComponent, AddLifeInsuranceMasterComponent, SchemeMappingComponent],
+  declarations: [
+    SupportSidebarComponent,
+    SupportDashboardComponent,
+    MyIfasComponent,
+    IfaOnboardingComponent,
+    SupportMiscellaneousComponent,
+    SchemeMappingComponent
+  ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
     SupportRoutingModule,
     MaterialModule,
     CustomDirectiveModule,
-    SupportEntryModule
+    SupportEntryModule,
   ],
   entryComponents: [],
   providers: [DynamicComponentService]

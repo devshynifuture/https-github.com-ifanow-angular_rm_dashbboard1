@@ -1,7 +1,7 @@
 <div class="popup-header-fix-30">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20">Add to stock master</h4>
+            <h4 class="mb-0 wrapper-20">Add to Life Insurance Master</h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -19,7 +19,8 @@
         </div>
         <div class="col-md-5">
             <mat-form-field>
-                <input matInput #policyNameRef type="text" class="form-control br-0" formControlName="policyName">
+                <input matInput appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="10"
+                    #policyNameRef type="text" class="form-control br-0" formControlName="policyName">
                 <mat-error
                     *ngIf="addLifeInsuranceMasterForm.get('policyName').invalid && addLifeInsuranceMasterForm.get('policyName').touched">
                     This field is required
@@ -38,7 +39,8 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #companyNameRef type="text" class="form-control br-0" formControlName="companyName">
+                    <input matInput appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="10"
+                        #companyNameRef type="text" class="form-control br-0" formControlName="companyName">
                     <mat-error
                         *ngIf="addLifeInsuranceMasterForm.get('companyName').invalid && addLifeInsuranceMasterForm.get('companyName').touched">
                         This field is required
@@ -51,8 +53,6 @@
         </div>
     </div>
 
-
-
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">category</h5>
@@ -61,7 +61,7 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <mat-select formControlName="category" class="form-control br-0">
-                        <mat-option value="">Select option</mat-option>
+                        <mat-option value="0">Select option</mat-option>
                     </mat-select>
                     <mat-error
                         *ngIf="addLifeInsuranceMasterForm.get('category').invalid && addLifeInsuranceMasterForm.get('category').touched">
@@ -74,13 +74,13 @@
 
 </div>
 
-<div class="bottom-fixed wrapper-12 pt-16">
+<div class="bottom-fixed wrapper-12 pt-16 w-35">
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="dialogClose()">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="addLifeInsuranceMaster()">Save</button>
         </div>
     </div>
 </div>

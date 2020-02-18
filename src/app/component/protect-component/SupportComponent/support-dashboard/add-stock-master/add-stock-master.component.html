@@ -19,14 +19,13 @@
         </div>
         <div class="col-md-5">
             <mat-form-field>
-                <input matInput #scriptNameRef type="text" class="form-control br-0" formControlName="scriptName">
+                <input matInput appInputValueValidation
+                    [inputValidator]="validatorType.ALPHA_NUMERIC_PARANTHESIS_DOT_SPACE" #scriptNameRef type="text"
+                    class="form-control br-0" formControlName="scriptName">
                 <mat-error
                     *ngIf="addStockMasterForm.get('scriptName').invalid && addStockMasterForm.get('scriptName').touched">
                     This field is required
                 </mat-error>
-                <mat-hint align="end">
-                    {{ scriptNameRef.value.length }}/10
-                </mat-hint>
             </mat-form-field>
         </div>
     </div>
@@ -38,13 +37,14 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #bseSymbolRef type="text" class="form-control br-0" formControlName="bseSymbol">
+                    <input matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6"
+                        #bseSymbolRef type="text" class="form-control br-0" formControlName="bseSymbol">
                     <mat-error
                         *ngIf="addStockMasterForm.get('bseSymbol').invalid && addStockMasterForm.get('bseSymbol').touched">
                         This field is required
                     </mat-error>
                     <mat-hint align="end">
-                        {{ bseSymbolRef.value.length }}/10
+                        {{ bseSymbolRef.value.length }}/6
                     </mat-hint>
                 </mat-form-field>
             </div>
@@ -58,7 +58,9 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #nseSymbolRef type="text" class="form-control br-0" formControlName="nseSymbol">
+                    <input matInput appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC"
+                        [maxLength]="10" #nseSymbolRef type="text" class="form-control br-0"
+                        formControlName="nseSymbol">
                     <mat-error
                         *ngIf="addStockMasterForm.get('nseSymbol').invalid && addStockMasterForm.get('nseSymbol').touched">
                         This field is required
@@ -79,7 +81,10 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <mat-select formControlName="subCategory" class="form-control br-0">
-                        <mat-option value="1">Select option</mat-option>
+                        <mat-option value="0">Select option</mat-option>
+                        <mat-option [value]="i" *ngFor="let category of subCategories; index as i">
+                            {{ category }}
+                        </mat-option>
                     </mat-select>
                     <mat-error
                         *ngIf="addStockMasterForm.get('subCategory').invalid && addStockMasterForm.get('subCategory').touched">
@@ -98,7 +103,8 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #prevDayClosingPriceRef type="text" class="form-control br-0"
+                    <input matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                        [maxLength]="10" #prevDayClosingPriceRef type="text" class="form-control br-0"
                         formControlName="prevDayClosingPrice">
                     <mat-error
                         *ngIf="addStockMasterForm.get('prevDayClosingPrice').invalid && addStockMasterForm.get('prevDayClosingPrice').touched">
@@ -113,13 +119,13 @@
     </div>
 </div>
 
-<div class="bottom-fixed wrapper-12 pt-16">
+<div class="bottom-fixed wrapper-12 pt-16 w-35">
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="dialogClose()">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-stroked-button class="btn-bottom br-0 text-inherit">Save</button>
+            <button mat-stroked-button class="btn-bottom br-0 text-inherit" (click)="addStockMaster()">Save</button>
         </div>
     </div>
 </div>

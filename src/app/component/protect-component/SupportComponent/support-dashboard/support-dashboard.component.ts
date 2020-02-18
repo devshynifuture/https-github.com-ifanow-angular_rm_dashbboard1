@@ -3,7 +3,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { AddStockMasterComponent } from './add-stock-master/add-stock-master.component';
 import { EventService } from './../../../../Data-service/event.service';
 import { Component, OnInit } from '@angular/core';
-import { SupportUpperSliderComponent } from './support-upper-slider/support-upper-slider.component';
+import { SupportUpperComponent } from './support-upper/support-upper.component';
 import { UtilService } from 'src/app/services/util.service';
 
 @Component({
@@ -67,7 +67,7 @@ export class SupportDashboardComponent implements OnInit {
       id: 1,
       data,
       direction: 'top',
-      componentName: SupportUpperSliderComponent,
+      componentName: SupportUpperComponent,
       state: 'open'
     };
 

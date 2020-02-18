@@ -160,7 +160,7 @@ export const appConfig = {
   ADD_SCRIP: 'account/asset/stock/scrip-name/add',
   EDIT_SCRIP_HOLDING_TRANSACTION: 'account/asset/stock/holding/transaction/edit',
   MUTUAL_FUND_GET: 'mutual-fund/mutualfund/list/get',
-  FOLIO_MASTER_DETAILS:'mutual-fund/folioMasterDetails/list/get',
+  FOLIO_MASTER_DETAILS: 'mutual-fund/folioMasterDetails/list/get',
   ////////////////////////////////plan////////////////////////////
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
   SUBMIT_RISK: 'plan/risk-assessment/add',
@@ -393,10 +393,10 @@ export const appConfig = {
 
   // backoffice
 
-  BACKOFFICE_GET_ALL_SCHEMES_NJ: 'backoffice/get/allshemes/nj/get',
-  BACKOFFICE_GET_ALL_SCHEMES_PRUDENT: 'backoffice/get/allshemes/prudent/get',
-  BACKOFFICE_GET_UNMAPPED_SCHEMES_NJ: 'backoffice/get/unmapped/njschemes/get',
-  BACKOFFICE_GET_UNMAPPED_SCHEMES_PRUDENT: 'backoffice/get/unmapped/prudentschemes/get',
+  BACKOFFICE_GET_ALL_SCHEMES_NJ: 'backoffice/get/allshemes/nj',
+  BACKOFFICE_GET_ALL_SCHEMES_PRUDENT: 'backoffice/get/allshemes/prudent',
+  BACKOFFICE_GET_UNMAPPED_SCHEMES_NJ: 'backoffice/get/unmapped/njschemes',
+  BACKOFFICE_GET_UNMAPPED_SCHEMES_PRUDENT: 'backoffice/get/unmapped/prudentschemes',
   BACKOFFICE_GET_FILTERED_SCHEMES: 'backoffice/get/filtered/shemes',
 
   // gmail

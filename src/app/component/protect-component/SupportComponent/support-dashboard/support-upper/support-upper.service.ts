@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class SupportUpperSliderService {
+export class SupportUpperService {
 
   constructor(private http: HttpService) { }
 

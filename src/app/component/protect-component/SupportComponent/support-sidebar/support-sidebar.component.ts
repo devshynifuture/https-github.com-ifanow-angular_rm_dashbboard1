@@ -22,6 +22,7 @@ import { DynamicComponentService } from 'src/app/services/dynamic-component.serv
 export class SupportSidebarComponent extends DialogContainerComponent implements OnInit {
   userInfo: any;
   changeName: any;
+  shouldShowMainNav = true;
 
   constructor(private authService: AuthService, private _eref: ElementRef,
     protected eventService: EventService, protected subinject: SubscriptionInject,
@@ -32,7 +33,10 @@ export class SupportSidebarComponent extends DialogContainerComponent implements
   logoText = 'Your Logo here';
   ngOnInit() {
     this.userInfo = AuthService.getUserInfo();
-    this.changeName = "Dashboard"
+    this.changeName = "Dashboard";
+    if (this.router.url === '/support/dashboard') {
+      this.shouldShowMainNav = false;
+    }
   }
   changeNavigation(name) {
     this.changeName = name;

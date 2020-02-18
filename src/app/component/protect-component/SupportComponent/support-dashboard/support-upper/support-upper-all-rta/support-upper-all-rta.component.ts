@@ -1,24 +1,23 @@
-import { SubscriptionInject } from './../../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { MatTableDataSource } from '@angular/material';
-import { SupportUpperSliderService } from './support-upper-slider.service';
 
 @Component({
-  selector: 'app-support-upper-slider',
-  templateUrl: './support-upper-slider.component.html',
-  styleUrls: ['./support-upper-slider.component.scss']
+  selector: 'app-support-upper-all-rta',
+  templateUrl: './support-upper-all-rta.component.html',
+  styleUrls: ['./support-upper-all-rta.component.scss']
 })
-export class SupportUpperSliderComponent implements OnInit {
-  constructor(
-    private subInjectService: SubscriptionInject,
-    private supportUpperSliderService: SupportUpperSliderService
-  ) { }
-
+export class SupportUpperAllRtaComponent implements OnInit {
   displayedColumns: string[] = ['name', 'nav', 'schemeName', 'schemeCode', 'amficode', 'navTwo', 'navDate', 'njCount', 'map'];
   dataSource;
 
-  ngOnInit() {
+  constructor(
+    private subInjectService: SubscriptionInject
+  ) { }
 
+
+
+  ngOnInit() {
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
   }
 
