@@ -24,7 +24,8 @@
                             arrow_drop_down
                         </i></button>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="openDep('open70')">Add deployments</button>
+                        <!-- add null for prod build -->
+                        <button mat-menu-item (click)="openDep(null,'open70')">Add deployments</button>
                     </mat-menu>
                 </div>
                 <div class="col-md-2 bt-grey b-l b-t br">

@@ -11,7 +11,7 @@
     </div>
 </div>
 
-<div [formGroup]="transactionAddForm" (ngSubmit)="onAddTransaction()">
+<div [formGroup]="transactionAddForm" >
     <!-- first page -->
     <div class="pt-90 pr-40 pl-40 pb-40" *ngIf="formStep == 'step-1' || formStep == 'step-2'">
         <div class="row">

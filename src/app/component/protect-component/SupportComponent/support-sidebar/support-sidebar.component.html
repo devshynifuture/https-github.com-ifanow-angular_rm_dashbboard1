@@ -67,23 +67,27 @@
                 <div class="form-group searchBoxHeader">
                     <input #inputSearch [matAutocomplete]="auto" class="form-control pl-40" matInput type="text">
                     <i class="material-icons searchIcon"> search </i>
-                    <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete">
-                        <mat-option (click)="selectClient(singleClient)"
-                            *ngFor="let singleClient of filteredOptions | async" [value]="singleClient">
+                    <!-- [displayWith]="displayFn" for prod -->
+                    <mat-autocomplete  #auto="matAutocomplete">
+                        <!-- *ngFor="let singleClient of filteredOptions | async" for prod  (click)="selectClient(singleClient)"-->
+                        <mat-option 
+                            >
+                            <!-- [value]="singleClient" prod -->
                             <div class="row">
                                 <div class="col-md-1 d-flex align-items-center">
                                     <i class="material-icons"> person </i>
                                 </div>
+                                <!-- {{singleClient.name}} prod -->
                                 <div class="col-md-7 d-flex align-items-center">
-                                    <p class="t-left m-0">{{singleClient.name}}</p>
+                                    <p class="t-left m-0"></p>
                                 </div>
                                 <div class="col-md-4 text-right">
                                     <button class="small-primitive" mat-stroked-button>FAMILY MEMBER</button>
                                 </div>
                             </div>
                         </mat-option>
-
-                        <mat-option disabled *ngIf="showDefaultDropDownOnSearch">
+                        <!-- for prod *ngIf="showDefaultDropDownOnSearch" -->
+                        <mat-option disabled >
                             <div class="row">
                                 <div class="col-md-1 d-flex align-items-center">
                                     <i class="material-icons"> person </i>

@@ -105,7 +105,7 @@ export class AddVariableFeeComponent implements OnInit {
       serviceName: [, [Validators.required]],
       code: [, [Validators.required]],
       description: [""],
-      billEvery: [, [Validators.required]],
+      billEvery: [1, [Validators.required]],
       Duration: ["1"],
       directFees: this.fb.group({
         equity: [, [Validators.required]],

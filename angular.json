@@ -130,5 +130,8 @@
       }
     }
   },
-  "defaultProject": "myplanner"
+  "defaultProject": "myplanner",
+  "cli": {
+    "analytics": false
+  }
 }
