@@ -19,76 +19,6 @@
 </div>
 
 
-<!-- 
-    <div class="pt-125 mb-100 ">
-        <div class="row ">
-            <div class="col-md-12 text-center">
-                <h4 class="f-18 f-600">Good afternoon!</h4>
-                <p class="f-16 mt-20 l-21">Over the next few steps we will help you become investment ready.
-                    <br> This smooth and easy process needs you to have the following things handy...</p>
-            </div>
-        </div>
-    
-        <div class="row">
-            <div class="col-md-12">
-                <div class="detailsBox">
-                    <div class="detailsProof">
-                        <img src="assets/images/svg/id-proof.svg">
-                        <h4 class="f-16 mt-16 f-600 roboto">IDENTITY PROOF</h4>
-                        <p class="f-14">PAN, aadhaar card, driving license, passport are accepted documents</p>
-                    </div>
-    
-                    <div class="detailsProof">
-                        <img src="assets/images/svg/address-proof.svg">
-                        <h4 class="f-16 mt-16 f-600 roboto"> ADDRESS PROOF</h4>
-                        <p class="f-14"> Aadhaar card, driving license, passport are accepted documents </p>
-                    </div>
-    
-                    <div class="detailsProof">
-                        <img src="assets/images/svg/bank-proof.svg">
-                        <h4 class="f-16 mt-16 f-600 roboto"> BANK A/C VERIFICATION </h4>
-                        <p class="f-14">A cancelled cheque is the accepted document for bank a/c verification</p>
-                    </div>
-                </div>
-    
-                <div class="detailsBoxTwo">
-                    <div class="detailsProof">
-                        <img src="assets/images/svg/signature-proof.svg">
-                        <h4 class="f-16 mt-16 f-600 roboto">SIGNATURE PROOF</h4>
-                        <p class="f-14"> Upload a scanned copy or use Aadhaar based eSign option </p>
-                    </div>
-    
-                    <div class="detailsProof">
-                        <img src="assets/images/svg/web-cam.svg">
-                        <h4 class="f-16 mt-16 f-600 roboto"> WEBCAM & MIC </h4>
-                        <p class="f-14"> Please ensure that your current device has webcam & microphone </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-        <div class="row">
-            <div class="col-md-12 text-center mt-32">
-                <mat-select class="form-control familyboxWidth">
-                    <mat-option value="Select family member">Select family member </mat-option>
-                </mat-select>
-    
-                <button mat-button class="f-16 m-0 btn-primary "> LET’S BEGIN <i class="material-icons ml-16">
-                        arrow_forward
-                    </i> </button>
-            </div>
-        </div>
-    </div>
-     
-    <div class="bottom-fixed wrapper-12 w-100">
-        <div class="row">
-    
-            <div class="col-md-12 ">
-                <button mat-button class="f-16 text-white m-0"> Cancel </button>
-            </div>
-        </div>
-    </div> -->
-
 
 
 <div class="pt-60 mb-100">
@@ -407,23 +337,35 @@
     </div>
 </div>
 
-<div class="bottom-fixed wrapper-12 w-100">
-    <div class="row d-flex align-items-center">
-        <div class="col-md-3 ">
-            <button mat-button class="f-16 text-transform-inherit text-white m-0"> Skip this step </button>
-        </div>
+<div class="bottom-fixed  pl-20 pr-20 d-flex  w-100 row">
 
-        <div class="col-md-5 text-center">
-            <div class="holderLink">
-                <a class="activeLink p-4 f-18 text-white" href=""> First holder </a>
-                <a class="f-18 text-white p-4" href=""> Second holder </a>
-                <a class="f-18 text-white p-4" href=""> Third holder </a>
-            </div>
-        </div>
-
-        <div class="col-md-4 text-right">
-            <button mat-raised-button class="f-16 btn-default mr-12 br-0 text-inherit"> PREVIOUS </button>
-            <button mat-button class="f-16 text-white m-0"> NEXT STEP </button>
-        </div>
+    <div class="col-md-3 p-0 d-flex align-items-center ">
+        <a href="#" class="text-white f-300"> Skip this step </a>
     </div>
+
+    <div class="col-md-5 center_menu">
+        <a class="activeLink" href=""> First holder </a>
+        <a class="activeLink" href=""> Second holder </a>
+        <a class="activeLink" href=""> Third holder </a>
+    </div>
+
+    <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">
+
+        <button class="br-0 perviousBtn text-inherit f-14" mat-button mat-raised-button>
+            PREVIOUS
+        </button>
+
+        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4">SAVE</button>
+        <button mat-button class="greenBtn  p-0 mw-40 br-left-white " [matMenuTriggerFor]="menu">
+            <i class="material-icons">
+                keyboard_arrow_up
+            </i></button>
+        <mat-menu #menu="matMenu">
+            <button class="btn-bottom br-0 text-inherit" mat-menu-item>
+                Item 1 </button>
+        </mat-menu>
+
+
+    </div>
+
 </div>

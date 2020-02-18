@@ -4,22 +4,19 @@
             <img class="imgAdLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
         </div>
         <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
-
             <p class="f-16 mb-0">
                 Investment onboarding - KYC
             </p>
         </div>
-        <!-- (click)="dialogClose()" for prod build -->
+
         <div class="col-md-2 text-right">
-            <i  class="material-icons pt-16 c-p pr-16">
+            <i (click)="Close(null)" class="material-icons pt-16 c-p pr-16">
                 clear
             </i>
         </div>
     </div>
 </div>
 
-
-<!-- 
 <div class="pt-125 mb-100 ">
     <div class="row ">
         <div class="col-md-12 text-center">
@@ -79,18 +76,33 @@
         </div>
     </div>
 </div>
- 
-<div class="bottom-fixed wrapper-12 w-100">
-    <div class="row">
 
-        <div class="col-md-12 ">
-            <button mat-button class="f-16 text-white m-0"> Cancel </button>
-        </div>
+<div class="bottom-fixed  pl-20 pr-20 d-flex  w-100 row">
+
+    <div class="col-md-3 p-0 d-flex align-items-center ">
+        <a href="#" class="text-white f-300"> Cancel </a>
     </div>
+
 </div> -->
 
 
-
+<div class="dialogclose">
+    <div class="row popup-header-fix-100">
+        <div class="col-md-2 border-right-1 p-0">
+            <img class="imgAdLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+        </div>
+        <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
+            <p class="f-16 mb-0">
+                Investment onboarding - KYC
+            </p>
+        </div>
+        <div class="col-md-2 text-right">
+            <i (click)="Close(null)" class="material-icons pt-16 c-p pr-16">
+                clear
+            </i>
+        </div>
+    </div>
+</div>
 <div class="pt-60 mb-100">
     <div class="row">
         <div class="col-md-2 col-2 fixed-top">
@@ -209,80 +221,173 @@
                 </div>
 
 
+                <!-- --------------- -->
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Nominee percentage </h3>
+                    </div>
+                    <div class="col-md-3 iconPetage">
+                        <input matInput maxlength="10" type="text" class="form-control percentage">
+                    </div>
+                </div>
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Nominee percentage </h3>
+                    </div>
+                    <div class="col-md-3 iconPetage">
+                        <input matInput maxlength="10" type="text" class="form-control percentage">
+                    </div>
+                </div>
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Nominee percentage </h3>
+                    </div>
+                    <div class="col-md-3 iconPetage">
+                        <input matInput maxlength="10" type="text" class="form-control percentage">
+                    </div>
+                </div>
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Nominee percentage </h3>
+                    </div>
+                    <div class="col-md-3 iconPetage">
+                        <input matInput maxlength="10" type="text" class="form-control percentage">
+                    </div>
+                </div>
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Nominee percentage </h3>
+                    </div>
+                    <div class="col-md-3 iconPetage">
+                        <input matInput maxlength="10" type="text" class="form-control percentage">
+                    </div>
+                </div>
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Nominee percentage </h3>
+                    </div>
+                    <div class="col-md-3 iconPetage">
+                        <input matInput maxlength="10" type="text" class="form-control percentage">
+                    </div>
+                </div>
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Nominee percentage </h3>
+                    </div>
+                    <div class="col-md-3 iconPetage">
+                        <input matInput maxlength="10" type="text" class="form-control percentage">
+                    </div>
+                </div>
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Nominee percentage </h3>
+                    </div>
+                    <div class="col-md-3 iconPetage">
+                        <input matInput maxlength="10" type="text" class="form-control percentage">
+                    </div>
+                </div>
+
+
+
             </div>
 
         </div>
 
 
-        <div class="col-md-3 bl-1 mt-28 fixed-top-right ">
-            <div class="row ">
-                <div class="col-md-12">
-                    <h3 class="f-16 f-600 mt-4 mb-10">NOMINATION FAQ</h3>
-                    <p class="f-16 m-0 f-600">What is nomination?</p>
-                    <p class="text-primitive mb-12">Nomination is an instruction that you give to the investment provider (mutual fund, in this case) to record the name of the person or persons entitled to receive the investment or its value when you die.</p>
-                </div>
-            </div>
+        <div class="col-md-3 fixed-top-right bl-1 mt-28">
+            <div class="heightScroll">
 
-            <div class="row ">
-                <div class="col-md-12">
-                    <p class="f-16 m-0 f-600">Why is nomination important?</p>
-                    <p class="text-primitive mb-12">
-                        When you nominate, you make it easy for your dependants to have access to the investments done by you. They just have to establish your death by providing a death certificate and provide proof of their identity and address as the nominee and the mutual
-                        fund AMC will transmit the investment to the nominee.
-                    </p>
+                <div class="row ">
+                    <div class="col-md-12">
+                        <h3 class="f-16 f-600 mt-4 mb-10">NOMINATION FAQ</h3>
+                        <p class="f-16 m-0 f-600">What is nomination?</p>
+                        <p class="text-primitive mb-12">Nomination is an instruction that you give to the investment provider (mutual fund, in this case) to record the name of the person or persons entitled to receive the investment or its value when you die.</p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="row ">
-                <div class="col-md-12">
-                    <p class="f-16 m-0 f-600">Who can I appoint as a nominee?</p>
-                    <p class="text-primitive mb-12">
-                        You are free to nominate whoever you want. More common examples of nominees are your immediate family members like spouse, children, parents etc.
-                    </p>
+                <div class="row ">
+                    <div class="col-md-12">
+                        <p class="f-16 m-0 f-600">Why is nomination important?</p>
+                        <p class="text-primitive mb-12">
+                            When you nominate, you make it easy for your dependants to have access to the investments done by you. They just have to establish your death by providing a death certificate and provide proof of their identity and address as the nominee and the mutual
+                            fund AMC will transmit the investment to the nominee.
+                        </p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="row ">
-                <div class="col-md-12">
-                    <p class="f-16 m-0 f-600">Things to note</p>
-                    <p class="text-primitive mb-12">
-                        While a nomination is an uncomplicated way for your dependants to receive the proceeds of your investment, don’t confuse it with estate planning. If you have also left a Will, then it supersedes any nomination.
-                    </p>
+                <div class="row ">
+                    <div class="col-md-12">
+                        <p class="f-16 m-0 f-600">Who can I appoint as a nominee?</p>
+                        <p class="text-primitive mb-12">
+                            You are free to nominate whoever you want. More common examples of nominees are your immediate family members like spouse, children, parents etc.
+                        </p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="row ">
-                <div class="col-md-12">
-                    <p class="f-16 m-0 f-600">Disclaimer</p>
-                    <p class="text-primitive mb-12">
-                        The advice given here is provided for informational purposes only, and should not be construed as legal advice. You should not act or refrain from acting on the basis of any content included here without seeking legal or other professional advice.
-                    </p>
+                <div class="row ">
+                    <div class="col-md-12">
+                        <p class="f-16 m-0 f-600">Things to note</p>
+                        <p class="text-primitive mb-12">
+                            While a nomination is an uncomplicated way for your dependants to receive the proceeds of your investment, don’t confuse it with estate planning. If you have also left a Will, then it supersedes any nomination.
+                        </p>
+                    </div>
                 </div>
-            </div>
 
+                <div class="row ">
+                    <div class="col-md-12">
+                        <p class="f-16 m-0 f-600">Disclaimer</p>
+                        <p class="text-primitive mb-12">
+                            The advice given here is provided for informational purposes only, and should not be construed as legal advice. You should not act or refrain from acting on the basis of any content included here without seeking legal or other professional advice.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
 
         </div>
 
     </div>
 </div>
 
-<div class="bottom-fixed wrapper-12 w-100">
-    <div class="row d-flex align-items-center">
-        <div class="col-md-3 ">
-            <button mat-button class="f-16 text-transform-inherit text-white m-0"> Skip this step </button>
-        </div>
 
-        <div class="col-md-5 text-center">
-            <div class="holderLink">
-                <a class="activeLink p-4 f-18 text-white" href=""> Nominee 1 </a>
-                <a class="f-18 text-white p-4" href=""> Nominee 2 </a>
-                <a class="f-18 text-white p-4" href=""> Nominee 3 </a>
-            </div>
-        </div>
+<div class="bottom-fixed  pl-20 pr-20 d-flex  w-100 row">
 
-        <div class="col-md-4 text-right">
-            <button mat-raised-button class="f-16 btn-default mr-12 br-0 text-inherit"> PREVIOUS </button>
-            <button mat-button class="f-16 text-white m-0"> NEXT STEP </button>
-        </div>
+    <div class="col-md-3 p-0 d-flex align-items-center ">
+        <a href="#" class="text-white f-300"> Skip this step </a>
     </div>
+
+    <div class="col-md-5 center_menu">
+        <a class="activeLink" href=""> Nominee 1 </a>
+        <a class=" " href=""> Nominee 2 </a>
+        <a class=" " href=""> Nominee 3 </a>
+    </div>
+
+    <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">
+
+        <button class="br-0 perviousBtn text-inherit f-14" mat-button mat-raised-button>
+            PREVIOUS
+        </button>
+
+        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4">NEXT STEP</button>
+        <button mat-button class="greenBtn  p-0 mw-40 br-left-white " [matMenuTriggerFor]="menu">
+            <i class="material-icons">
+                keyboard_arrow_up
+            </i></button>
+        <mat-menu #menu="matMenu">
+            <button class="btn-bottom br-0 text-inherit" mat-menu-item>
+                Item 1 </button>
+        </mat-menu>
+
+
+    </div>
+
 </div>
