@@ -250,7 +250,7 @@ export class StpTransactionComponent implements OnInit {
     console.log('isin Frequency ----', data)
     this.switchFrequency = data
     this.switchFrequency = data.filter(function (element) {
-      return element.sipFrequency
+      return element.frequency
     })
   }
   selectedFrequency(getFrerq) {

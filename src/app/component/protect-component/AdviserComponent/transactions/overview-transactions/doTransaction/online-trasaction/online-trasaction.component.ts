@@ -56,6 +56,8 @@ export class OnlineTrasactionComponent implements OnInit {
   defaultClient: any;
   defaultCredential: any;
   allData: any;
+  credentialList: any;
+  getPlatformCount: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private eventService : EventService,private fb: FormBuilder,private processTransaction : ProcessTransactionService) {
@@ -98,6 +100,11 @@ export class OnlineTrasactionComponent implements OnInit {
       return
     }
     this.allData = data
+    this.credentialList = data.credentialList
+    this.getPlatformCount = data.credentialList.filter(function(ele){
+      return ele.id
+    })
+    console.log('platform count',this.getPlatformCount)
     this.defaultCredential = data.defaultCredential
     this.defaultClient = data.defaultClient
     this.selectedPlatform = this.defaultCredential.aggregatorType

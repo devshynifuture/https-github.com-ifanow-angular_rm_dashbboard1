@@ -191,7 +191,7 @@ export class SwpTransactionComponent implements OnInit {
     console.log('isin Frequency ----', data)
     this.swpFrequency = data
     this.swpFrequency = data.filter(function (element) {
-      return element.sipFrequency
+      return element.frequency
     })
   }
   selectedFrequency(getFrerq) {

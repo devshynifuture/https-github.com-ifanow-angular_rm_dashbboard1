@@ -90,9 +90,9 @@ export class TransactionSummaryComponent implements OnInit {
 
   getDefaultDetails(platform) {
     let obj = {
-      advisorId: 4214,//414,
-      familyMemberId: 158925,//112166,
-      clientId: 79342, //53637,
+      advisorId: 414,
+      familyMemberId: 112166,
+      clientId: 53637,
       aggregatorType: platform
     }
     this.onlineTransact.getDefaultDetails(obj).subscribe(
