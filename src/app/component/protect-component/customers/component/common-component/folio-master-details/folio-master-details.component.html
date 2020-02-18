@@ -73,7 +73,7 @@
                                 <p class="m-0 roboto">First joint holder</p>
                             </div>
                             <div class="col-md-8 p-0 text-right">
-                                <p class="m-0 roboto">N.A.</p>
+                                <p class="m-0 roboto">{{(item.jointHolderName)?item.jointHolderName:'N.A.'}}</p>
                             </div>
                         </div>
                         <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -81,7 +81,7 @@
                                 <p class="m-0 roboto">First joint holder PAN</p>
                             </div>
                             <div class="col-md-8 p-0 text-right">
-                                <p class="m-0 roboto">N.A.</p>
+                                <p class="m-0 roboto">{{(item.jointHolderPAN)?item.jointHolderPAN:'N.A.'}}</p>
                             </div>
                         </div>
                         <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -117,7 +117,7 @@
                                 <p class="m-0 roboto">Guardian</p>
                             </div>
                             <div class="col-md-8 p-0 text-right">
-                                <p class="m-0 roboto">N.A.</p>
+                                <p class="m-0 roboto">{{(item.guardianName)?item.guardianName:'N.A.'}}</p>
                             </div>
                         </div>
                         <div class="row pt-8 pb-8 pl-4 pr-4">
@@ -125,7 +125,7 @@
                                 <p class="m-0 roboto">Guardian PAN</p>
                             </div>
                             <div class="col-md-8 p-0 text-right">
-                                <p class="m-0 roboto">N.A.</p>
+                                <p class="m-0 roboto">{{(item.guardianPan)?item.guardianPan:'N.A.'}}</p>
                             </div>
                         </div>
                     </div>
@@ -191,7 +191,7 @@
                             <p class="m-0 roboto">Bank PIN code</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">{{(item.pinCode)?item.pinCode:'N.A.'}}</p>
+                            <p class="m-0 roboto">{{(item.bankPin)?item.bankPin:'N.A.'}}</p>
                         </div>
                     </div>
                 </div>
@@ -209,7 +209,7 @@
                                 <p class="m-0 roboto">First nominee name</p>
                             </div>
                             <div class="col-md-8 p-0 text-right">
-                                <p class="m-0 roboto">{{(item.invName)?item.invName:'N.A.'}}</p>
+                                <p class="m-0 roboto">{{(item.nomineeName)?item.nomineeName:'N.A.'}}</p>
                             </div>
                         </div>
                         <div class="row pt-8 pb-8 pl-4 pr-4">
@@ -217,7 +217,7 @@
                                 <p class="m-0 roboto">First nominee %</p>
                             </div>
                             <div class="col-md-8 p-0 text-right">
-                                <p class="m-0 roboto">{{(item.nomineePer)?item.nomineePer:'N.A.'}}</p>
+                                <p class="m-0 roboto">{{(item.percentageAllocated)?item.percentageAllocated:'N.A.'}}</p>
                             </div>
                         </div>
                     </div>
@@ -345,7 +345,7 @@
                             <p class="m-0 roboto">Mobile number</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">{{(item.mobNo)?item.mobNo:'N.A.'}}</p>
+                            <p class="m-0 roboto">{{(item.mobileNumber)?item.mobileNumber:'N.A.'}}</p>
                         </div>
                     </div>
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -353,7 +353,7 @@
                             <p class="m-0 roboto">Aadhar number</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">{{(item.adharNo)?item.adharNo:'N.A.'}}</p>
+                            <p class="m-0 roboto">{{(item.aadharCard)?item.aadharCard:'N.A.'}}</p>
                         </div>
                     </div>
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -369,7 +369,7 @@
                             <p class="m-0 roboto">Office phone</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">{{(item.officePhone)?item.officePhone:'N.A.'}}</p>
+                            <p class="m-0 roboto">{{(item.phoneOffice)?item.phoneOffice:'N.A.'}}</p>
                         </div>
                     </div>
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -377,7 +377,7 @@
                             <p class="m-0 roboto">Residence phone</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">{{(item.residencePhone)?item.residencePhone:'N.A.'}}</p>
+                            <p class="m-0 roboto">{{(item.phoneResidential)?item.phoneResidential:'N.A.'}}</p>
                         </div>
                     </div>
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">

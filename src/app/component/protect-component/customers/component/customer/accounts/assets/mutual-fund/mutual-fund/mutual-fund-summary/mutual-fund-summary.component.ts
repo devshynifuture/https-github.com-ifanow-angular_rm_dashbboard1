@@ -100,12 +100,10 @@ export class MutualFundSummaryComponent implements OnInit {
     this.totalObj=obj
   }
   isGroup(index, item): boolean {
-    // console.log('index : ', index);
-    // console.log('item : ', item);
     return item.groupName;
   }
   isGroup2(index, item) {
-    return item.total;
+       return item.total;
         return item.amountInvested;
         return item.currentValue;
         return item.unrealizedGain;
