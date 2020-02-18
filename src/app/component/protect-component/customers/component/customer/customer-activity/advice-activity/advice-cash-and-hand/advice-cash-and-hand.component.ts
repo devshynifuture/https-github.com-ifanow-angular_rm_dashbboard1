@@ -8,6 +8,7 @@ import { BankAccountsComponent } from '../../../accounts/assets/cash&bank/bank-a
 import { AuthService } from 'src/app/auth-service/authService';
 import { ActiityService } from '../../actiity.service';
 import { MatTableDataSource, MatSort } from '@angular/material';
+import { AdviceUtilsService } from '../advice-utils.service';
 
 @Component({
   selector: 'app-advice-cash-and-hand',
@@ -20,8 +21,9 @@ export class AdviceCashAndHandComponent implements OnInit {
   clientId: any;
   isLoading: any;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  bankAccDataSource: any;
-  cashInHandDataSource: any;
+  bankAccDataSource: any = new MatTableDataSource();
+  cashInHandDataSource: any = new MatTableDataSource();
+  selectedAssetId: any = [];
 
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
 
@@ -31,14 +33,21 @@ export class AdviceCashAndHandComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getAdviceByAsset();
   }
+  checkAll(flag, tableDataList) {
+    console.log(flag, tableDataList)
+    const { dataList, selectedIdList } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
+    // this.dataSource = new MatTableDataSource(dataList);
+    this.selectedAssetId = selectedIdList;
+    console.log(this.selectedAssetId);
+  }
   getAdviceByAsset() {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
       assetCategory: 11
     }
-    this.cashInHandDataSource = [{}, {}, {}];
-    this.bankAccDataSource = [{}, {}, {}]
+    this.cashInHandDataSource.data = [{}, {}, {}];
+    this.bankAccDataSource.data = [{}, {}, {}]
     this.isLoading = true;
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {
@@ -47,8 +56,8 @@ export class AdviceCashAndHandComponent implements OnInit {
   }
   getAllSchemeResponse(data) {
     console.log(data);
-    this.bankAccDataSource = data.BANK_ACCOUNTS;
-    this.cashInHandDataSource = data.CASH_IN_HAND;
+    this.bankAccDataSource.data = data.BANK_ACCOUNTS;
+    this.cashInHandDataSource.data = data.CASH_IN_HAND;
     this.bankAccDataSource['tableFlag'] = (data.BANK_ACCOUNTS.length == 0) ? false : true;
     this.cashInHandDataSource['tableFlag'] = (data.CASH_IN_HAND.length == 0) ? false : true;
     this.isLoading = false;

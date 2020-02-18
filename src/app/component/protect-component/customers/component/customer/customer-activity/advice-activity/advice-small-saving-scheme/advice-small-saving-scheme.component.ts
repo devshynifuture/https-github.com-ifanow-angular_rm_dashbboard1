@@ -22,13 +22,10 @@ import { AdviceUtilsService } from '../advice-utils.service';
 })
 export class AdviceSmallSavingSchemeComponent implements OnInit {
   displayedColumns: string[] = ['checkbox', 'name', 'desc', 'cvalue', 'empcon', 'emprcon', 'advice', 'astatus', 'adate', 'icon'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
   displayedColumns2: string[] = ['checkbox', 'name', 'desc', 'cvalue', 'emprcon', 'advice', 'astatus', 'adate', 'icon'];
-  dataSource2 = new MatTableDataSource(ELEMENT_DATA2);
   displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'advice', 'astatus', 'adate', 'icon'];
-  dataSource3 = new MatTableDataSource(ELEMENT_DATA1);
   displayedColumns4: string[] = ['checkbox', 'name', 'desc', 'cvalue', 'advice', 'astatus', 'adate', 'icon'];
-  dataSource4 = new MatTableDataSource(ELEMENT_DATA4);
+
   advisorId: any;
   clientId: any;
   isLoading: boolean;
@@ -80,7 +77,7 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
     this.posavingDataSpurce = data;
     this.pordDataSpurce = data.PO_RD;
     this.pomisDataSpurce = data.PO_MIS;
-    this.potdDataSource = data.PO_TD;
+    this.potdDataSource = new MatTableDataSource(data.PO_TD);
     this.ppfDataSource['tableFlag'] = (data.PPF.length == 0) ? false : true;
     this.nscDataSpurce['tableFlag'] = (data.NSC.length == 0) ? false : true;
     this.ssyDataSpurce['tableFlag'] = (data.SSY.length == 0) ? false : true;
@@ -95,7 +92,6 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
   checkAll(flag, tableDataList) {
     console.log(flag, tableDataList)
     const { dataList, selectedIdList } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
-    this.ppfDataSource = new MatTableDataSource(dataList);
     this.selectedAssetId = selectedIdList;
     // console.log(this.selectedAssetId);
   }
