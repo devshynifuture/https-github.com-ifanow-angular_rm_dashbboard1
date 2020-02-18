@@ -12,6 +12,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 })
 export class DeploymentDetailsComponent implements OnInit {
   deploymentData: any;
+  isLoading: boolean;
 
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject, public dialog: MatDialog, private planService: PlanService) { }
   displayedColumns: string[] = ['position', 'name', 'weight', 'icons'];
@@ -26,6 +27,8 @@ export class DeploymentDetailsComponent implements OnInit {
     this.getDeploymentData(data)
   }
   getDeploymentData(data) {
+    this.deploymentData = [{}, {}, {}]
+    this.isLoading = true;
     let obj =
     {
       deploymentId: data.id
@@ -33,6 +36,7 @@ export class DeploymentDetailsComponent implements OnInit {
     this.planService.getDeploymentDetailsdata(obj).subscribe(
       data => {
         console.log(data);
+        this.isLoading = false;
         this.deploymentData = data;
       },
       err => this.eventService.openSnackBar(err, 'dismiss')

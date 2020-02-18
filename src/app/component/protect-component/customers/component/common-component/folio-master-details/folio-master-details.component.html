@@ -14,134 +14,136 @@
     <div class="col-md-12">
         <mat-tab-group animationDuration="0ms" id="ui-foliomaster">
             <mat-tab label="Scheme details">
-                <div class="ba-light mt-20">
-                    <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">Investor name</p>
+                <div *ngFor="let item of folioDetails">
+                    <div class="ba-light mt-20">
+                        <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">Investor name</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">{{(item.invName)?item.invName:'N.A.'}}</p>
+                            </div>
                         </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">Aakanksha Tanwar</p>
+                        <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">Investor PAN</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">{{(item.panNumber)?item.panNumber:'N.A.'}}</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">Investor PAN</p>
+                        <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">Mode of holding</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">{{(item.modeOfHold)?item.modeOfHold:'N.A.'}}</p>
+                            </div>
                         </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">AIZPT6722D</p>
+                        <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">Scheme name</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">{{(item.schemeName)?item.schemeName:'N.A.'}}</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">Mode of holding</p>
-                        </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">Single</p>
-                        </div>
-                    </div>
-                    <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">Scheme name</p>
-                        </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">DSP Tax Saver Fund - Regular plan - Growth</p>
-                        </div>
-                    </div>
-                    <div class="row pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">Folio number</p>
-                        </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">4327911/08</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row pt-4">
-                    <div class="col-md-12 p-0 text-right">
-                        <p class="m-0 f-12 text-primitive roboto">Updated: 04/09/2019</p>
-                    </div>
-                </div>
-                <div class="row pt-28">
-                    <div class="col-md-12 p-0">
-                        <h5 class="m-0 text-black f-500">Joint holder details</h5>
-                    </div>
-                </div>
-                <div class="ba-light mt-20">
-                    <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">First joint holder</p>
-                        </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">N.A.</p>
+                        <div class="row pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">Folio number</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">{{(item.folioNumber)?item.folioNumber:'N.A.'}}</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">First joint holder PAN</p>
-                        </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">N.A.</p>
+                    <div class="row pt-4">
+                        <div class="col-md-12 p-0 text-right">
+                            <p class="m-0 f-12 text-primitive roboto">Updated: 04/09/2019</p>
                         </div>
                     </div>
-                    <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">Second joint holder</p>
-                        </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">N.A.</p>
+                    <div class="row pt-28">
+                        <div class="col-md-12 p-0">
+                            <h5 class="m-0 text-black f-500">Joint holder details</h5>
                         </div>
                     </div>
-                    <div class="row pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">Second joint holder PAN</p>
+                    <div class="ba-light mt-20">
+                        <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">First joint holder</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">N.A.</p>
+                            </div>
                         </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">N.A.</p>
+                        <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">First joint holder PAN</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">N.A.</p>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row pt-4">
-                    <div class="col-md-12 p-0 text-right">
-                        <p class="m-0 f-12 text-primitive roboto">Updated: 04/09/2019</p>
-                    </div>
-                </div>
-                <div class="row pt-28">
-                    <div class="col-md-12 p-0">
-                        <h5 class="m-0 text-black f-500">Guardian details</h5>
-                    </div>
-                </div>
-                <div class="ba-light mt-20">
-                    <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">Guardian</p>
+                        <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">Second joint holder</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">N.A.</p>
+                            </div>
                         </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">N.A.</p>
-                        </div>
-                    </div>
-                    <div class="row pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">Guardian PAN</p>
-                        </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">N.A.</p>
+                        <div class="row pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">Second joint holder PAN</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">N.A.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row pt-4">
-                    <div class="col-md-12 p-0 text-right">
-                        <p class="m-0 f-12 text-primitive roboto">Updated: 04/09/2019</p>
+                    <div class="row pt-4">
+                        <div class="col-md-12 p-0 text-right">
+                            <p class="m-0 f-12 text-primitive roboto">Updated: 04/09/2019</p>
+                        </div>
+                    </div>
+                    <div class="row pt-28">
+                        <div class="col-md-12 p-0">
+                            <h5 class="m-0 text-black f-500">Guardian details</h5>
+                        </div>
+                    </div>
+                    <div class="ba-light mt-20">
+                        <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">Guardian</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">N.A.</p>
+                            </div>
+                        </div>
+                        <div class="row pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">Guardian PAN</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">N.A.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-4">
+                        <div class="col-md-12 p-0 text-right">
+                            <p class="m-0 f-12 text-primitive roboto">Updated: 04/09/2019</p>
+                        </div>
                     </div>
                 </div>
             </mat-tab>
             <mat-tab label="Bank details">
-                <div class="ba-light mt-20">
+                <div class="ba-light mt-20" *ngFor="let item of folioDetails">
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
                         <div class="col-md-4 p-0">
                             <p class="m-0 roboto">Bank name</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">HDFC</p>
+                            <p class="m-0 roboto">{{(item.bankName)?item.bankName:'N.A.'}}</p>
                         </div>
                     </div>
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -149,7 +151,7 @@
                             <p class="m-0 roboto">Branch</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">Belapur road</p>
+                            <p class="m-0 roboto">{{(item.branchName)?item.branchName:'N.A.'}}</p>
                         </div>
                     </div>
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -157,7 +159,7 @@
                             <p class="m-0 roboto">Account type</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">Savings</p>
+                            <p class="m-0 roboto">{{(item.accountType)?item.accountType:'N.A.'}}</p>
                         </div>
                     </div>
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -165,7 +167,7 @@
                             <p class="m-0 roboto">Account number</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">7678776576576</p>
+                            <p class="m-0 roboto">{{(item.accountNumber)?item.accountNumber:'N.A.'}}</p>
                         </div>
                     </div>
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -173,7 +175,7 @@
                             <p class="m-0 roboto">IFSC code</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">HDFC0000666</p>
+                            <p class="m-0 roboto">{{(item.ifscCode)?item.ifscCode:'N.A.'}}</p>
                         </div>
                     </div>
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -181,7 +183,7 @@
                             <p class="m-0 roboto">Bank city</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">Thane</p>
+                            <p class="m-0 roboto">{{(item.bankCity)?item.bankCity:'N.A.'}}</p>
                         </div>
                     </div>
                     <div class="row pt-8 pb-8 pl-4 pr-4">
@@ -189,7 +191,7 @@
                             <p class="m-0 roboto">Bank PIN code</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">N.A.</p>
+                            <p class="m-0 roboto">{{(item.pinCode)?item.pinCode:'N.A.'}}</p>
                         </div>
                     </div>
                 </div>
@@ -199,76 +201,77 @@
                     </div>
                 </div>
             </mat-tab>
-            <mat-tab label="Nominee details">
-                <div class="ba-light mt-20">
-                    <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">First nominee name</p>
+            <mat-tab label="Nominee details" >
+                <div *ngFor="let item of folioDetails">
+                    <div class="ba-light mt-20">
+                        <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">First nominee name</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">{{(item.invName)?item.invName:'N.A.'}}</p>
+                            </div>
                         </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">Usha Tanwar</p>
+                        <div class="row pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">First nominee %</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">{{(item.nomineePer)?item.nomineePer:'N.A.'}}</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="row pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">First nominee %</p>
+                    <div class="ba-light mt-20">
+                        <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">Second nominee name</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">N.A.</p>
+                            </div>
                         </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">50%</p>
+                        <div class="row pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">Second nominee %</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">N.A.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ba-light mt-20">
+                        <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">Third nominee name</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">N.A.</p>
+                            </div>
+                        </div>
+                        <div class="row  pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">Third nominee %</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">N.A.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-4">
+                        <div class="col-md-12 p-0 text-right">
+                            <p class="m-0 f-12 text-primitive roboto">Updated: 04/09/2019</p>
                         </div>
                     </div>
                 </div>
-                <div class="ba-light mt-20">
-                    <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">Second nominee name</p>
-                        </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">Ankur Tanwar</p>
-                        </div>
-                    </div>
-                    <div class="row pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">Second nominee %</p>
-                        </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">50%</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="ba-light mt-20">
-                    <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">Third nominee name</p>
-                        </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">N.A.</p>
-                        </div>
-                    </div>
-                    <div class="row  pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">Third nominee %</p>
-                        </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">N.A.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row pt-4">
-                    <div class="col-md-12 p-0 text-right">
-                        <p class="m-0 f-12 text-primitive roboto">Updated: 04/09/2019</p>
-                    </div>
-                </div>
-
             </mat-tab>
             <mat-tab label="Broker details">
-                <div class="ba-light mt-20">
+                <div class="ba-light mt-20" *ngFor="let item of folioDetails">
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
                         <div class="col-md-4 p-0">
                             <p class="m-0 roboto">Broker code</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">ARN - 47977</p>
+                            <p class="m-0 roboto">{{(item.brokerCode)?item.brokerCode:'N.A.'}}</p>
                         </div>
                     </div>
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -276,7 +279,7 @@
                             <p class="m-0 roboto">Sub broker code</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">N.A.</p>
+                            <p class="m-0 roboto">{{(item.subBrokerCode)?item.subBrokerCode:'N.A.'}}</p>
                         </div>
                     </div>
                     <div class="row pt-8 pb-8 pl-4 pr-4">
@@ -284,7 +287,7 @@
                             <p class="m-0 roboto">EUIN</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">N.A.</p>
+                            <p class="m-0 roboto">{{(item.euin)?item.euin:'N.A.'}}</p>
                         </div>
                     </div>
                 </div>
@@ -295,13 +298,14 @@
                 </div>
             </mat-tab>
             <mat-tab label="Investor details">
-                <div class="ba-light mt-20">
+                <div class="ba-light mt-20" *ngFor="let item of folioDetails">
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
                         <div class="col-md-4 p-0">
                             <p class="m-0 roboto">Address</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">508, Darapur</p>
+                            <p class="m-0 roboto">{{(item.address1)?item.address1:'N.A.'}} ,
+                                {{(item.address2)?item.address2:'N.A.'}}</p>
                         </div>
                     </div>
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -309,7 +313,7 @@
                             <p class="m-0 roboto">City</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">New Delhi</p>
+                            <p class="m-0 roboto">{{(item.city)?item.city:'N.A.'}}</p>
                         </div>
                     </div>
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -317,7 +321,7 @@
                             <p class="m-0 roboto">PIN</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">11001</p>
+                            <p class="m-0 roboto">{{(item.pincode)?item.pincode:'N.A.'}}</p>
                         </div>
                     </div>
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -325,7 +329,7 @@
                             <p class="m-0 roboto">Email</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">komal@futurewise.co.in</p>
+                            <p class="m-0 roboto">{{(item.email)?item.email:'N.A.'}}</p>
                         </div>
                     </div>
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -333,7 +337,7 @@
                             <p class="m-0 roboto">Date of birth</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">11/08/1991</p>
+                            <p class="m-0 roboto">{{(item.invDob)?(item.invDob | date:'dd/MM/yyyy'):'N.A.'}}</p>
                         </div>
                     </div>
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -341,7 +345,7 @@
                             <p class="m-0 roboto">Mobile number</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">9453237643</p>
+                            <p class="m-0 roboto">{{(item.mobNo)?item.mobNo:'N.A.'}}</p>
                         </div>
                     </div>
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -349,7 +353,7 @@
                             <p class="m-0 roboto">Aadhar number</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">N.A.</p>
+                            <p class="m-0 roboto">{{(item.adharNo)?item.adharNo:'N.A.'}}</p>
                         </div>
                     </div>
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -357,7 +361,7 @@
                             <p class="m-0 roboto">Occupation</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">Private sector service</p>
+                            <p class="m-0 roboto">{{(item.occupation)?item.occupation:'N.A.'}}</p>
                         </div>
                     </div>
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -365,7 +369,7 @@
                             <p class="m-0 roboto">Office phone</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">N.A.</p>
+                            <p class="m-0 roboto">{{(item.officePhone)?item.officePhone:'N.A.'}}</p>
                         </div>
                     </div>
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -373,7 +377,7 @@
                             <p class="m-0 roboto">Residence phone</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">N.A.</p>
+                            <p class="m-0 roboto">{{(item.residencePhone)?item.residencePhone:'N.A.'}}</p>
                         </div>
                     </div>
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -381,7 +385,7 @@
                             <p class="m-0 roboto">Tax status</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">Individual</p>
+                            <p class="m-0 roboto">{{(item.taxStatus)?item.taxStatus:'N.A.'}}</p>
                         </div>
                     </div>
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -389,7 +393,7 @@
                             <p class="m-0 roboto">DP ID</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">N.A.</p>
+                            <p class="m-0 roboto">{{(item.dpId)?item.dpId:'N.A.'}}</p>
                         </div>
                     </div>
                     <div class="row pt-8 pb-8 pl-4 pr-4">
@@ -397,7 +401,7 @@
                             <p class="m-0 roboto">Demat</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">N.A.</p>
+                            <p class="m-0 roboto">{{(item.demat)?item.demat:'N.A.'}}</p>
                         </div>
                     </div>
                 </div>
