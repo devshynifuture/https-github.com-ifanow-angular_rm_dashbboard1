@@ -12,34 +12,34 @@ const routes: Routes = [{
     {
       path: 'summary',
       loadChildren: () => import('./summary/summary.module').then(m => m.SummaryModule),
-      data: { animation: 'Tab1', preload: true }
+      // data: { animation: 'Tab1', preload: true }
 
       // outlet: 'accountRouterOutlet'
     },
     {
       path: 'assets',
       loadChildren: () => import('./assets/assets.module').then(m => m.AssetsModule),
-      data: { animation: 'Tab2' }
+      // data: { animation: 'Tab2' }
 
       // outlet: 'accountRouterOutlet'
     },
     {
       path: 'liabilities',
       loadChildren: () => import('./liabilities/liabilities.module').then(m => m.LiabilitiesModule),
-      data: { animation: 'Tab1', preload: true }
+      // data: { animation: 'Tab1', preload: true }
 
     },
     {
       path: 'insurance',
       loadChildren: () => import('./insurance/insurance.module').then(m => m.InsuranceModule),
-      data: { animation: 'Tab1', preload: true }
+      // data: { animation: 'Tab1', preload: true }
 
       // outlet: 'accountRouterOutlet'
     },
     {
       path: 'documents',
       loadChildren: () => import('./documents/documents.module').then(m => m.DocumentsModule),
-      data: { animation: 'Tab1', preload: true }
+      // data: { animation: 'Tab1', preload: true }
 
       // outlet: 'accountRouterOutlet'
     },
