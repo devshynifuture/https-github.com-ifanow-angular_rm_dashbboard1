@@ -41,7 +41,8 @@
     </div>
     <div class="row pt-44">
         <div class="col-md-12 p-0">
-            <app-advice-action></app-advice-action>
+            <app-advice-action [data]="selectedAssetId" [ngClass]="{'v-h': selectedAssetId.length==0}">
+            </app-advice-action>
         </div>
     </div>
     <div class="row pt-32">
@@ -59,10 +60,10 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkAll($event,ppfDataSource)"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false" [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -98,13 +99,36 @@
         <ng-container matColumnDef="advice">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar">{{element.advice}}</div>
+                <div class="bar">
+                    <span>
+                        <span *ngIf="element.adviceToAsset.adviceId==1">Continue till maturity</span>
+                        <span *ngIf="element.adviceToAsset.adviceId==2">Withdraw as on same date as per rules</span>
+                        <span *ngIf="element.adviceToAsset.adviceId==3">Premature close</span>
+                        <span *ngIf="element.adviceToAsset.adviceId==4">Open new account</span>
+                        <span *ngIf="element.adviceToAsset.adviceId==5">Take loan against PPF</span>
+                        <span *ngIf="element.adviceToAsset.adviceId==6">Extend for period</span>
+                        <span *ngIf="element.adviceToAsset.adviceId==7">Increase the period</span>
+                        <span *ngIf="element.adviceToAsset.adviceId==8">Decrease the period</span>
+                    </span>
+                </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status</th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar">{{element.astatus}}</div>
+                <div class="bar">
+                    <span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==1">GIVEN</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==2">AWAITING CONSENT</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==3">ACCEPTED</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==4">IN PROGRESS</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==5">IMPLEMENTED</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==6">DECLINED</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==7">PENDING</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==8">SYSTEM GENERATED</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==9">REVISED</span>
+                    </span>
+                </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
@@ -128,6 +152,9 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+    <div *ngIf="ppfDataSource.tableFlag==false">
+        <h4 class="text-center pt-72">No Data Found</h4>
+    </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
             <h5 class="m-0 text-black pt-8">NSC</h5>
@@ -139,14 +166,14 @@
                     src="/assets/images/svg/plus.svg" class="pr-8">Suggest new NSC</button>
         </div>
     </div>
-    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="dataSource2"
+    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="nscDataSpurce"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -206,6 +233,9 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
     </table>
+    <div *ngIf="nscDataSpurce.tableFlag==false">
+        <h4 class="text-center pt-72">No Data Found</h4>
+    </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
             <h5 class="m-0 text-black pt-8">SSY</h5>
@@ -217,14 +247,14 @@
                     src="/assets/images/svg/plus.svg" class="pr-8">Suggest new SSY</button>
         </div>
     </div>
-    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="dataSource"
+    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="ssyDataSpurce"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -290,6 +320,9 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+    <div *ngIf="ssyDataSpurce.tableFlag==false">
+        <h4 class="text-center pt-72">No Data Found</h4>
+    </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
             <h5 class="m-0 text-black pt-8">KVP</h5>
@@ -301,14 +334,14 @@
                     src="/assets/images/svg/plus.svg" class="pr-8">Suggest new KVP</button>
         </div>
     </div>
-    <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="dataSource"
+    <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="kvpDataSpurce"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -374,6 +407,9 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+    <div *ngIf="kvpDataSpurce.tableFlag==false">
+        <h4 class="text-center pt-72">No Data Found</h4>
+    </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
             <h5 class="m-0 text-black pt-8">SCSS</h5>
@@ -386,14 +422,14 @@
                     class="pr-8">Suggest new SCSS</button>
         </div>
     </div>
-    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="dataSource3"
+    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="scssDataSpurce"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -442,6 +478,9 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
     </table>
+    <div *ngIf="scssDataSpurce.tableFlag==false">
+        <h4 class="text-center pt-72">No Data Found</h4>
+    </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
             <h5 class="m-0 text-black pt-8">PO SAVINGS</h5>
@@ -458,10 +497,10 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -516,6 +555,9 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
     </table>
+    <!-- <div *ngIf="goldDataSource.tableFlag==false">
+        <h4 class="text-center pt-72">No Data Found</h4>
+    </div> -->
     <div class="row pt-32">
         <div class="col-md-6 p-0">
             <h5 class="m-0 text-black pt-8">PO RD</h5>
@@ -528,14 +570,14 @@
                     class="pr-8">Suggest new PO RD</button>
         </div>
     </div>
-    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="dataSource"
+    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="pordDataSpurce"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -601,6 +643,9 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+    <div *ngIf="pordDataSpurce.tableFlag==false">
+        <h4 class="text-center pt-72">No Data Found</h4>
+    </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
             <h5 class="m-0 text-black pt-8">PO TD</h5>
@@ -613,14 +658,14 @@
                     class="pr-8">Suggest new PO TD</button>
         </div>
     </div>
-    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="dataSource2"
+    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="potdDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkAll($event,ppfDataSource)"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false" [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -632,7 +677,7 @@
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.desc}} </div>
+                <div class="bar"> {{element.adviceToAsset.adviceDescription}} </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
@@ -650,19 +695,37 @@
         <ng-container matColumnDef="advice">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.advice}}</div>
+                <div class="bar">
+                    <span>
+                        <span *ngIf="element.adviceToAsset.adviceId==1">Open new account</span>
+                        <span *ngIf="element.adviceToAsset.adviceId==2">Withdraw</span>
+                        <span *ngIf="element.adviceToAsset.adviceId==3">Premature close</span>
+                        <span *ngIf="element.adviceToAsset.adviceId==4">Extend</span>
+                        <span *ngIf="element.adviceToAsset.adviceId==5">Take loan against po</span>
+                    </span>
+                </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>allAdvice Advice status</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Advice status</th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.astatus}}</div>
+                <div class="bar"> <span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==1">GIVEN</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==2">AWAITING CONSENT</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==3">ACCEPTED</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==4">IN PROGRESS</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==5">IMPLEMENTED</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==6">DECLINED</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==7">PENDING</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==8">SYSTEM GENERATED</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==9">REVISED</span>
+                    </span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Applicable date </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.adate}}</div>
+                <div class="bar"> {{element.applicableDate | date:'dd/MM/yyyy'}}</div>
             </td>
         </ng-container>
         <ng-container matColumnDef="icon">
@@ -680,6 +743,9 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
     </table>
+    <div *ngIf="potdDataSource.tableFlag==false">
+        <h4 class="text-center pt-72">No Data Found</h4>
+    </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
             <h5 class="m-0 text-black pt-8">PO MIS</h5>
@@ -692,14 +758,14 @@
                     class="pr-8">Suggest new PO MIS</button>
         </div>
     </div>
-    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="dataSource3"
+    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="pomisDataSpurce"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -748,6 +814,9 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
     </table>
+    <div *ngIf="pomisDataSpurce.tableFlag==false">
+        <h4 class="text-center pt-72">No Data Found</h4>
+    </div>
 </div>
 <div *ngIf="allAdvice == true">
     <app-all-advice-small-savings-scheme></app-all-advice-small-savings-scheme>

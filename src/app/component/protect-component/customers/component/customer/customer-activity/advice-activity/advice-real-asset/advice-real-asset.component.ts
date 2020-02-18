@@ -49,7 +49,8 @@ export class AdviceRealAssetComponent implements OnInit {
   }
   getAllAssetResponse(data) {
     this.isLoading = false;
-    this.dataSource = new MatTableDataSource(data.REAL_ESTATE)
+    this.dataSource = new MatTableDataSource(data.REAL_ESTATE);
+    this.dataSource['tableFlag'] = (data.REAL_ESTATE.length == 0) ? false : true;
     this.dataSource.sort = this.sort
     console.log(data);
   }

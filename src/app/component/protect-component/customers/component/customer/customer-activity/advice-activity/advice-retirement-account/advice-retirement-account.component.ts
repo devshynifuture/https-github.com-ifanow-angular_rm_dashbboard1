@@ -114,6 +114,11 @@ export class AdviceRetirementAccountComponent implements OnInit {
     this.gratuityDataSource.sort = this.sort;
     this.npsDataSource = new MatTableDataSource(data.NPS);
     this.npsDataSource.sort = this.sort;
+    this.epfDataSource['tableFlag'] = (data.EPF.length == 0) ? false : true;
+    this.epsDataSource['tableFlag'] = (data.EPS.length == 0) ? false : true;
+    this.superannuationDataSource['tableFlag'] = (data.SUPERANNUATION.length == 0) ? false : true;
+    this.gratuityDataSource['tableFlag'] = (data.GRATUITY.length == 0) ? false : true;
+    this.npsDataSource['tableFlag'] = (data.NPS.length == 0) ? false : true;
     console.log(data);
   }
   openAddEPF(data, value) {
