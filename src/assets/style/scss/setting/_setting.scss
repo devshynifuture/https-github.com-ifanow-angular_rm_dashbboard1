@@ -33,3 +33,18 @@
     height: 36px;
   }
 }
+
+.arn-ria-deatils {
+  h2 {
+    font-size: 24px;
+    font-family: "Playfair Display";
+  }
+
+  .mat-card-header-text {
+    display: none;
+  }
+
+  .mat-card-header {
+    padding: 15px 20px 25px;
+  }
+}

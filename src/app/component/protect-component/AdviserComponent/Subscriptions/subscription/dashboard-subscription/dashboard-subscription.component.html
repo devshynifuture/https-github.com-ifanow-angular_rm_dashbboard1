@@ -58,6 +58,13 @@
 
                     <div class="col-md-12 p-0 mt-28">
                         <div class="row bg-white  ">
+                            <div class="dash-info-header">
+                                <div class="dash-info-menu-ho" >
+                                    <i class="material-icons text-right right text-custom f-28 c-p" [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
+                                        more_vert
+                                    </i>
+                                </div>
+                            </div>
                             <div class="col-md-12 p-0 b-b">
                                 <h4 class="f-300 roboto pl-16 pt-16 mb-16">Invoices to be reviewed</h4>
                             </div>
@@ -95,7 +102,16 @@
                     <div class="row">
                         <div class="col-md-6 pl-0">
                             <div class="row bg-white">
-
+                                <div class="dash-info-header">
+                                    <div class="dash-info-p">
+                                        <p>Last 30 days </p>
+                                    </div>
+                                    <div class="dash-info-menu" >
+                                        <i class="material-icons text-right right text-custom f-18 c-p" [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
+                                            more_vert
+                                        </i>
+                                    </div>
+                                </div>
                                 <div [appSkeletonLoading]="isLoading" appSkeletonLoading
                                     class="col-md-6 skeletonAnimation">
 
@@ -127,7 +143,13 @@
                         </div>
                         <div class="col-md-6 pr-0">
                             <div class="row bg-white">
-
+                                <div class="dash-info-header">
+                                    <div class="dash-info-menu-ho" >
+                                        <i class="material-icons text-right right text-custom f-28 c-p" [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
+                                            more_vert
+                                        </i>
+                                    </div>
+                                </div>
                                 <div [appSkeletonLoading]="isLoadingDocsSent" appSkeletonLoading
                                     class="col-md-6 skeletonAnimation">
                                     <div class="c-p">
@@ -162,8 +184,15 @@
                         </div>
                     </div>
 
-                    <div class="col-md-12 p-0">
-                        <div class="wrapper-16 pt-24 bg-white mt-28 pb-20">
+                    <div class="col-md-12 p-0 bg-white mt-28">
+                        <div class="dash-info-header">
+                            <div class="dash-info-menu-ho" >
+                                <i class="material-icons text-right right text-custom f-28 c-p" [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
+                                    more_vert
+                                </i>
+                            </div>
+                        </div>
+                        <div class="wrapper-16 pt-24 bg-white mt-12 pb-20">
                             <div class="pl-20 pr-2">
                                 <div class="row">
                                     <div class="col-md-6 pl-0">

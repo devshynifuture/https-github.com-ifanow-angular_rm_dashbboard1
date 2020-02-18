@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
 @Injectable({
   providedIn: 'root'
 })
@@ -32,6 +33,16 @@ export class ProcessTransactionService {
 
   }
   getEuinList() {
+
+  }
+  static errorValidator(familyList) {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if(familyList==undefined)
+      {
+        return { isFamilyListInvalid: true }
+      }
+      return null;
+    }
 
   }
   getDateByArray = function(arr,flag){

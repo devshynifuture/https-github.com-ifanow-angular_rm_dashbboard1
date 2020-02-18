@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { SubscriptionService } from '../../../subscription.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from '../../../../../../../auth-service/authService';
@@ -30,6 +30,9 @@ export class PlansComponent implements OnInit {
 
   constructor(private subService: SubscriptionService, private eventService: EventService) {
   }
+
+  @Output() changePlanData = new EventEmitter();
+
 
   @Input() set upperData(upperData) {
     console.log('FeeStructureComponent upperData set : ', upperData);
@@ -209,9 +212,10 @@ export class PlansComponent implements OnInit {
   }
 
   mapPlanToServiceRes(data) {
-    this.dialogClose()
+    // this.dialogClose()
+    this.changePlanData.emit(true);
     console.log(data)
-    this.eventService.openSnackBar('Service is mapped', 'OK');
+    this.eventService.openSnackBar('Plans is mapped', 'OK');
   }
 
   saveDocumentPlanMapping() {
@@ -291,5 +295,6 @@ export class PlansComponent implements OnInit {
     } else {
       this.eventService.openSnackBar('Plan is mapped', 'OK');
     }
+    this.changePlanData.emit(true);
   }
 }

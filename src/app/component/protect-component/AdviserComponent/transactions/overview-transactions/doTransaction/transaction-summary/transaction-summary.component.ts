@@ -101,6 +101,9 @@ export class TransactionSummaryComponent implements OnInit {
   }
   getDefaultDetailsRes(data) {
     console.log('deault', data)
+    if(data == undefined) {
+      return
+    }
     this.defaultDetails.emit(data);
     this.allData = data
     this.clientDataList = data.clientDataList
