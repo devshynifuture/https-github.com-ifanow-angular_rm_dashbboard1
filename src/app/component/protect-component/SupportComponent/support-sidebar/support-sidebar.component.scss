@@ -317,7 +317,7 @@ img.header-img {
     border-top-right-radius: 50%;
     border-bottom-right-radius: 50%;
     box-shadow: 2px 1px 0px #ccc;
-    top: 130px;
+    top: 75px;
     z-index: 1;
     /* padding: 5px; */
     display: flex;
@@ -334,7 +334,7 @@ img.header-img {
     border-top-right-radius: 50%;
     border-bottom-right-radius: 50%;
     box-shadow: 2px 1px 0px #ccc;
-    top: 25px;
+    top: 15px;
     z-index: 1;
     /* padding: 5px; */
     display: flex;
@@ -357,7 +357,7 @@ mat-drawer-content {
 }
 
 .sideNavClass {
-    top: 105px;
+    top: 60px;
     overflow: initial;
 }
 
@@ -371,4 +371,11 @@ mat-drawer-content {
 .imgWidth {
     width: 62px !important;
     height: auto;
+}
+
+.logoh5 {
+    font-size: 12px;
+    margin-top: 12px;
+    color: #207638;
+    font-weight: 600;
 }

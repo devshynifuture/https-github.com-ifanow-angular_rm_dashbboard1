@@ -12,7 +12,7 @@
     border-bottom-right-radius: 2px;
 }
 
-::ng-deep .radioBtnSmall .mat-radio-label {
+ ::ng-deep .radioBtnSmall .mat-radio-label {
     min-width: 105px;
     height: 45px;
     display: flex !important;
@@ -21,7 +21,7 @@
     padding-left: 10px !important;
 }
 
-::ng-deep .radioBtnBig .mat-radio-label {
+ ::ng-deep .radioBtnBig .mat-radio-label {
     min-width: 105px;
     height: 45px;
     display: flex !important;
@@ -31,14 +31,25 @@
     padding-right: 10px !important;
 }
 
-::ng-deep .mat-radio-button {
+ ::ng-deep .mat-radio-button {
     min-width: auto !important;
 }
 
-.holderLink {
-    margin-top: 8px;
-    .activeLink {
-        border: 1px solid #FFFFFF;
+.activeLink {
+    border: 2px solid #FFFFFF;
+    border-radius: 2px;
+}
+
+.center_menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    a {
+        color: #FFFFFF;
+        padding-left: 4px;
+        padding-right: 4px;
+        margin-right: 8px;
+        font-size: 18px;
     }
 }
 
@@ -67,11 +78,11 @@
     }
 }
 
-::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
+ ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
     width: 1.5em !important;
 }
 
-::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+ ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
     padding: 0px;
 }
 
@@ -93,12 +104,6 @@
 
 .text-transform-inherit {
     text-transform: inherit;
-}
-
-.fixed-top-right {
-    // position: fixed;
-    // top: 60px;
-    // right: 0;
 }
 
 .uploadPhotoBox {
@@ -125,4 +130,39 @@
     height: 120px;
     border: 1px solid #83959D;
     border-radius: 2px;
+}
+
+.width400 {
+    width: 450px;
+    margin: 0px auto;
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+    .boxOne {
+        width: 45%;
+    }
+}
+
+.imgSize {
+    width: 90px;
+    height: 96px;
+}
+
+.greenBtn {
+    background: #02B875;
+    color: #ffffff;
+}
+
+.perviousBtn {
+    width: 113px;
+    height: 36px;
+    margin-right: 18px;
+}
+
+.br-left-white {
+    border-left: 1px solid #FFFFFF;
+}
+
+.btnwidth {
+    width: 100px;
 }
