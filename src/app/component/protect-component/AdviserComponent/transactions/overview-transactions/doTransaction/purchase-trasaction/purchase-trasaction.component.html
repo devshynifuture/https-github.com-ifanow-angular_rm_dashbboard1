@@ -118,7 +118,7 @@
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select class="form-control" formControlName="investmentAccountSelection">
-                                    <mat-option value="option" (onSelectionChange)="selectedFolio(folio)"
+                                    <mat-option value="option" (click)="selectedFolio(folio)"
                                         *ngFor="let folio of folioList">{{folio.folioNumber}}</mat-option>
                                 </mat-select>
                             </mat-form-field>

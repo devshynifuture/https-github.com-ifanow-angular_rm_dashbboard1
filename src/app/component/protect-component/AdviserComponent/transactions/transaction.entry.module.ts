@@ -23,6 +23,7 @@ import { PersonalDetailsComponent } from './overview-transactions/know-your-cust
 import { BackDetailsComponent } from './overview-transactions/know-your-customer/back-details/back-details.component';
 import { PermanentAddressComponent } from './overview-transactions/know-your-customer/permanent-address/permanent-address.component';
 import { NomineeDetailsComponent } from './overview-transactions/know-your-customer/nominee-details/nominee-details.component';
+import { PopUpComponent } from './overview-transactions/doTransaction/pop-up/pop-up.component';
 
 export const componentList = [
     TransactionAddComponent,
@@ -43,7 +44,8 @@ export const componentList = [
     PersonalDetailsComponent,
     PermanentAddressComponent,
     BackDetailsComponent,
-    NomineeDetailsComponent
+    NomineeDetailsComponent,
+    PopUpComponent
 
 
 

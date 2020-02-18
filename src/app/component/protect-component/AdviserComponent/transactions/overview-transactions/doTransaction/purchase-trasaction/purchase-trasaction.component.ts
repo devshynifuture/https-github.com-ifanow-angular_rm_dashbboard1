@@ -40,6 +40,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   showSpinner = false;
   bankDetails: any;
   achMandateNSE: any;
+  callOnFolioSelection: boolean;
   constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
     private subInjectService: SubscriptionInject, private fb: FormBuilder,private eventService : EventService) { }
   @Input()
@@ -203,6 +204,10 @@ export class PurchaseTrasactionComponent implements OnInit {
   selectedFolio(folio) {
     this.folioDetails = folio
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
+    Object.assign(this.transactionSummary, { mutualFundId: folio.id });
+    // var transactionSummaryDummy = this.transactionSummary
+    this.transactionSummary = {...this.transactionSummary};
+    this.callOnFolioSelection = folio.id
   }
   enteredAmount(value) {
     Object.assign(this.transactionSummary, { enteredAmount: value });

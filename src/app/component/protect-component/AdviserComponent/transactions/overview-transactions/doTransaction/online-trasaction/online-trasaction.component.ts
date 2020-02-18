@@ -138,6 +138,23 @@ export class OnlineTrasactionComponent implements OnInit {
   }
   ownerDetails(value) {
     this.familyMemberId = value.id;
+    if (this.nomineesListFM && this.transactionAddForm.get('ownerName').valid) {
+      this.nomineesListFM.forEach(element => {
+        this.checkFamilyMem = element.name.includes(this.transactionAddForm.controls.ownerName.value)
+      });
+      if (this.formStep == 'step-1' == this.checkFamilyMem == true) {
+        if(this.allData && this.allData.length > 0){
+          this.formStep = 'step-2';
+        }
+        this.formStep = 'step-2';
+      } else if (this.transactionAddForm.get('transactionType').valid && this.formStep == 'step-2') {
+        let data = {
+          selectedFamilyMember: this.ownerData.ownerName.value,
+          transactionType: this.transactionAddForm.controls.transactionType.value
+        }
+        this.openPurchaseTransaction(data.transactionType, data)
+      }
+    }
   }
   lisNominee(value) {
     console.log(value)

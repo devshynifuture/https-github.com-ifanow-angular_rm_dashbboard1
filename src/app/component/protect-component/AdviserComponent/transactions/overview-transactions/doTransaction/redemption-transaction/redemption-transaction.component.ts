@@ -219,11 +219,11 @@ export class RedemptionTransactionComponent implements OnInit {
   }
   redeem() {
     let obj = {
-      productDbId: 67,//this.schemeDetails.id,
+      productDbId: this.schemeDetails.id,
       mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
-      productCode:"DBGPGGR", //this.schemeDetails.schemeCode,
-      isin:"INF846K01917", //this.schemeDetails.isin,
-      folioNo: '91031058953',//(this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+      productCode:this.schemeDetails.schemeCode,
+      isin:this.schemeDetails.isin,
+      folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
       tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
       tpSubBrokerCredentialId: this.getDataSummary.defaultCredential.tpSubBrokerCredentialId,
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
