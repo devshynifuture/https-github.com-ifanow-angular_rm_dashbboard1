@@ -50,7 +50,8 @@ export class AdviceStocksComponent implements OnInit {
   }
   getAllAssetResponse(data) {
     this.isLoading = false;
-    this.stockDatasource = data.STOCKS
+    this.stockDatasource = data.STOCKS;
+    this.stockDatasource['tableFlag'] = (data.STOCKS.length == 0) ? false : true;
     console.log(data);
   }
   openRealEstate(data, value) {

@@ -129,6 +129,10 @@ img.header-img {
   height: 80px !important;
 }
 
+::ng-deep .minwidth-400 {
+  min-width: 400px !important;
+}
+
 .small-primary {
   color: #008FFF;
   font-size: 12px;

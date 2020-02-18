@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-add-arn-ria-details',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddArnRiaDetailsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private subInjectService: SubscriptionInject, ) { }
 
   ngOnInit() {
   }
+  Close(data) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: data });
+    console.log("state close1", data);
 
+  }
 }

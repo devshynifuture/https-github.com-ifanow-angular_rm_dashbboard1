@@ -13,6 +13,7 @@ import { AddSsyComponent } from '../../../accounts/assets/smallSavingScheme/comm
 import { AuthService } from 'src/app/auth-service/authService';
 import { ActiityService } from '../../actiity.service';
 import { MatSort, MatTableDataSource } from '@angular/material';
+import { AdviceUtilsService } from '../advice-utils.service';
 
 @Component({
   selector: 'app-advice-small-saving-scheme',
@@ -33,7 +34,15 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
   isLoading: boolean;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   ppfDataSource: any;
-
+  potdDataSource: any;
+  selectedAssetId: any = [];
+  nscDataSpurce: any;
+  ssyDataSpurce: any;
+  kvpDataSpurce: any;
+  scssDataSpurce: any;
+  posavingDataSpurce: any;
+  pordDataSpurce: any;
+  pomisDataSpurce: any;
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
   allAdvice = false
   ngOnInit() {
@@ -47,7 +56,14 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
       clientId: this.clientId,
       assetCategory: 10
     }
-    this.ppfDataSource = [{}, {}, {}]
+    this.ppfDataSource = [{}, {}, {}];
+    this.nscDataSpurce = [{}, {}, {}];
+    this.ssyDataSpurce = [{}, {}, {}];
+    this.kvpDataSpurce = [{}, {}, {}];
+    this.scssDataSpurce = [{}, {}, {}];
+    this.pordDataSpurce = [{}, {}, {}];
+    this.pomisDataSpurce = [{}, {}, {}];
+    this.potdDataSource = [{}, {}, {}];
     this.isLoading = true;
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {
@@ -57,7 +73,31 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
   getAllSchemeResponse(data) {
     this.isLoading = false;
     this.ppfDataSource = new MatTableDataSource(data.PPF);
+    this.nscDataSpurce = data.NSC;
+    this.ssyDataSpurce = data.SSY;
+    this.kvpDataSpurce = data.KVP;
+    this.scssDataSpurce = data.SCSS;
+    this.posavingDataSpurce = data;
+    this.pordDataSpurce = data.PO_RD;
+    this.pomisDataSpurce = data.PO_MIS;
+    this.potdDataSource = data.PO_TD;
+    this.ppfDataSource['tableFlag'] = (data.PPF.length == 0) ? false : true;
+    this.nscDataSpurce['tableFlag'] = (data.NSC.length == 0) ? false : true;
+    this.ssyDataSpurce['tableFlag'] = (data.SSY.length == 0) ? false : true;
+    this.kvpDataSpurce['tableFlag'] = (data.KVP.length == 0) ? false : true;
+    this.scssDataSpurce['tableFlag'] = (data.SCSS.length == 0) ? false : true;
+    this.posavingDataSpurce['tableFlag'] = (data.PPF.length == 0) ? false : true;
+    this.pordDataSpurce['tableFlag'] = (data.PO_RD.length == 0) ? false : true;
+    this.pomisDataSpurce['tableFlag'] = (data.PO_MIS.length == 0) ? false : true;
+    this.potdDataSource['tableFlag'] = (data.PO_TD.length == 0) ? false : true;
     console.log(data)
+  }
+  checkAll(flag, tableDataList) {
+    console.log(flag, tableDataList)
+    const { dataList, selectedIdList } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
+    this.ppfDataSource = new MatTableDataSource(dataList);
+    this.selectedAssetId = selectedIdList;
+    // console.log(this.selectedAssetId);
   }
   openAddPPF(data, value) {
     const fragmentData = {
