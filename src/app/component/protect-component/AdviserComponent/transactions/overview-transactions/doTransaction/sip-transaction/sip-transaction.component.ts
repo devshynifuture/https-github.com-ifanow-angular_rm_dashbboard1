@@ -256,10 +256,11 @@ export class SipTransactionComponent implements OnInit {
       );
   }
   getMandateDetailsRes(data) {
-    console.log('mandate details :', data)
+    console.log('mandate details :', data[0])
     this.mandateDetails = data
   }
   getAmcWiseFolio() {
+    this.showSpinner = true
     let obj1 = {
       amcId: this.scheme.amcId,
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -274,6 +275,7 @@ export class SipTransactionComponent implements OnInit {
     );
   }
   getFoliosAmcWiseRes(data) {
+    this.showSpinner = false
     console.log('getFoliosAmcWiseRes', data)
     this.folioList = data
   }
@@ -281,6 +283,8 @@ export class SipTransactionComponent implements OnInit {
   selectedFolio(folio) {
     this.folioDetails = folio
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
+    Object.assign(this.transactionSummary, { mutualFundId: folio.id });
+    this.transactionSummary = {...this.transactionSummary};
   }
   reinvest(scheme) {
     this.schemeDetails = scheme

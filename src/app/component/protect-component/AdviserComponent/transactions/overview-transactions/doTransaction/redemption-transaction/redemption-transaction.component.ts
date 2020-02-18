@@ -151,7 +151,7 @@ export class RedemptionTransactionComponent implements OnInit {
   }
   getbankDetails(bank) {
     this.bankDetails = bank
-    console.log('bank details', bank)
+    console.log('bank details', bank[0])
   }
   getAchmandateDetails(ach) {
     this.achMandateNSE  = ach
@@ -193,6 +193,7 @@ export class RedemptionTransactionComponent implements OnInit {
     console.log('schemeDetails == ', this.schemeDetails)
   }
   getSchemeWiseFolios() {
+    this.showSpinner = true
     let obj1 = {
       mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -209,6 +210,7 @@ export class RedemptionTransactionComponent implements OnInit {
       );
   }
   getSchemeWiseFoliosRes(data) {
+    this.showSpinner = false
     console.log('res scheme folio', data)
     this.folioList = data
   }
@@ -216,6 +218,10 @@ export class RedemptionTransactionComponent implements OnInit {
     this.folioDetails = folio
     this.showUnits = true
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
+    Object.assign(this.transactionSummary, { mutualFundId: folio.id });
+    this.transactionSummary = {...this.transactionSummary};
+   this.transactionSummary["xyz"] = folio.folioNumber
+   console.log(this.transactionSummary, this.schemeList, "132")
   }
   redeem() {
     let obj = {

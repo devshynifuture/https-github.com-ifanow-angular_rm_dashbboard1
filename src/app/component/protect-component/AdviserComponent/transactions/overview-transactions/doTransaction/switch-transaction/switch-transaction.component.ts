@@ -100,6 +100,8 @@ export class SwitchTransactionComponent implements OnInit {
     this.folioDetails = folio
     this.showUnits = true
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
+    Object.assign(this.transactionSummary, { mutualFundId: folio.id });
+    this.transactionSummary = {...this.transactionSummary};
   }
   selectedScheme(scheme) {
     this.scheme = scheme
@@ -137,6 +139,7 @@ export class SwitchTransactionComponent implements OnInit {
     console.log('schemeDetails == ', this.schemeDetails)
   }
   getSchemeWiseFolios() {
+    this.showSpinner = true
     let obj1 = {
       mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -153,6 +156,7 @@ export class SwitchTransactionComponent implements OnInit {
     );
   }
   getSchemeWiseFoliosRes(data) {
+    this.showSpinner = false
     console.log('res scheme folio', data)
     this.folioList = data
   }
