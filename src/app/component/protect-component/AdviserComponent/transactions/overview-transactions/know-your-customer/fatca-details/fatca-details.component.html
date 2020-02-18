@@ -46,16 +46,38 @@
 
         <div class="col-md-7 offset-2 p-0 bl-1 ">
             <div class="p-20">
-                <h3 class="f-18 mb-28 f-600">Nominee details #1</h3>
+                <h3 class="f-18 mb-28 f-600"> FATCA details </h3>
+
 
                 <div class="row">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Nominee name </h3>
+                        <h3 class="f-16 pt-10 m-0"> Nationality </h3>
+                    </div>
+                    <div class="col-md-8">
+                        <mat-radio-group aria-label="Select an option">
+                            <mat-radio-button value="1" class="b-a-custom bor_top_tb_left radioBtnSmall  text-primary custom-radio">
+                                India
+                            </mat-radio-button>
+                            <mat-radio-button value="2" class="radioBtnSmall radio-border custom-radio pr-12">
+                                USA/Canada </mat-radio-button>
+
+                            <mat-radio-button value="2" class="radioBtnSmall radio-border custom-radio">
+                                Others </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                </div>
+
+
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> City of birth </h3>
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
                             <input matInput maxlength="10" type="text" class="form-control">
-
                         </mat-form-field>
                     </div>
                 </div>
@@ -63,12 +85,43 @@
 
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Nominee relation </h3>
+                        <h3 class="f-16 pt-8 m-0"> Country of birth </h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <input matInput maxlength="10" type="text" class="form-control">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Gross annual income </h3>
+                        <p class="text-custom f-12 m-0">in Indian Rupees</p>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <mat-select class="form-control">
+                                <mat-option>
+                                    select
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Source of wealth </h3>
+
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
                             <mat-select class="form-control">
-                                <mat-option value="Resident individual"> Resident individual </mat-option>
+                                <mat-option>
+                                    select
+                                </mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
@@ -77,15 +130,34 @@
 
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-10 m-0">Nominee type</h3>
+                        <h3 class="f-16 pt-8 m-0">Occupation </h3>
                     </div>
                     <div class="col-md-5">
+                        <mat-form-field>
+                            <mat-select class="form-control">
+                                <mat-option>
+                                    select
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-10 m-0"> Are you politically exposed person </h3>
+                    </div>
+                    <div class="col-md-8">
                         <mat-radio-group aria-label="Select an option">
                             <mat-radio-button value="1" class="b-a-custom bor_top_tb_left radioBtnSmall  text-primary custom-radio">
-                                Major
+                                Yes
                             </mat-radio-button>
                             <mat-radio-button value="2" class="radioBtnSmall radio-border custom-radio">
-                                Minor </mat-radio-button>
+                                No </mat-radio-button>
+
+                            <mat-radio-button value="2" class="radioBtnSmall radio-border pr-12 custom-radio">
+                                Related to PEP </mat-radio-button>
                         </mat-radio-group>
                     </div>
 
@@ -94,26 +166,23 @@
 
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Nominee date of birth </h3>
+                        <h3 class="f-16 pt-10 m-0"> Tax residency other than india? </h3>
                     </div>
-                    <div class="col-md-3">
-                        <mat-form-field>
-                            <input matInput class="form-control" [matDatepicker]="picker">
-                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
-                        </mat-form-field>
+
+                    <div class="col-md-5">
+                        <mat-radio-group aria-label="Select an option">
+                            <mat-radio-button value="1" class="b-a-custom bor_top_tb_left radioBtnSmall  text-primary custom-radio">
+                                Yes
+                            </mat-radio-button>
+                            <mat-radio-button value="2" class="radioBtnSmall radio-border custom-radio">
+                                No </mat-radio-button>
+
+                        </mat-radio-group>
                     </div>
+
                 </div>
 
 
-                <div class="row pt-32">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Nominee percentage </h3>
-                    </div>
-                    <div class="col-md-3 iconPetage">
-                        <input matInput maxlength="10" type="text" class="form-control percentage">
-                    </div>
-                </div>
 
 
             </div>
@@ -124,18 +193,26 @@
         <div class="col-md-3 bl-1 mt-28 fixed-top-right ">
             <div class="row ">
                 <div class="col-md-12">
-                    <h3 class="f-16 f-600 mt-4 mb-10">NOMINATION FAQ</h3>
-                    <p class="f-16 m-0 f-600">What is nomination?</p>
-                    <p class="text-primitive mb-12">Nomination is an instruction that you give to the investment provider (mutual fund, in this case) to record the name of the person or persons entitled to receive the investment or its value when you die.</p>
+                    <h3 class="f-16 f-600 mt-4 mb-10">FATCA FAQ</h3>
+                    <p class="f-16 m-0 f-600">What is FATCA?</p>
+                    <p class="text-primitive mb-12">
+                        FATCA is a United States (US) law aimed at prevention of tax evasion by US citizens and residents through use of offshore accounts. FATCA obligates foreign financial institutions, including Indian financial institutions to provide the US Internal Revenue
+                        Service (IRS) to report these offshore accounts held by specified US Persons. </p>
+
+                    <p> Since domestic laws of sovereign countries, including India, may not permit sharing of confidential client information by such institutions directly with US IRS, the US has entered into Inter-Governmental Agreement (IGA) with various
+                        countries. </p>
+
+                    <p> The IGA between India and USA was signed on 9th July, 2015, which provides that the Indian FIs will provide the necessary information to Indian tax authorities.
+                    </p>
                 </div>
             </div>
 
             <div class="row ">
                 <div class="col-md-12">
-                    <p class="f-16 m-0 f-600">Why is nomination important?</p>
+                    <p class="f-16 m-0 f-600"> I am an Indian resident and have nothing to do with US. Why am I being asked to comply? </p>
                     <p class="text-primitive mb-12">
-                        When you nominate, you make it easy for your dependants to have access to the investments done by you. They just have to establish your death by providing a death certificate and provide proof of their identity and address as the nominee and the mutual
-                        fund AMC will transmit the investment to the nominee.
+                        FATCA obligates every Indian financial institutions / mutual fund to provide required tax related information to Indian Tax authorities of accounts held by specified US Persons. This rule has been laid as per the SEBI circular CIR/MIRSD/2/2015 dated 26th
+                        August 2015. Therefore, when you open a new account with mutual fund you need to provide information regarding your tax status.
                     </p>
                 </div>
             </div>
@@ -181,9 +258,9 @@
     </div>
 
     <div class="col-md-5 center_menu">
-        <a class="activeLink" href=""> Nominee 1 </a>
-        <a class="activeLink" href=""> Nominee 2 </a>
-        <a class="activeLink" href=""> Nominee 3 </a>
+        <a class="activeLink" href=""> First holder </a>
+        <a class="activeLink" href=""> Second holder </a>
+        <a class="activeLink" href=""> Third holder </a>
     </div>
 
     <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">

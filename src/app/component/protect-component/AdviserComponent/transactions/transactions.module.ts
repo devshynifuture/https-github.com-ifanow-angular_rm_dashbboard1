@@ -14,6 +14,9 @@ import { MaterialModule } from 'src/app/material/material';
 import { SettingsTransactionsModule } from './settings-transactions/settings-transactions.module';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
+import { PhotoSigntureComponent } from './overview-transactions/know-your-customer/photo-signture/photo-signture.component';
+//import { VideoKycComponent } from './overview-transactions/know-your-customer/video-kyc/video-kyc.component';
+//import { FatcaDetailsComponent } from './overview-transactions/know-your-customer/fatca-details/fatca-details.component';
 //import { NomineeDetailsComponent } from './overview-transactions/know-your-customer/nominee-details/nominee-details.component';
 //import { PermanentAddressComponent } from './overview-transactions/know-your-customer/permanent-address/permanent-address.component';
 //import { BackDetailsComponent } from './overview-transactions/know-your-customer/back-details/back-details.component';
@@ -34,6 +37,9 @@ import { CustomCommonModule } from 'src/app/common/custom.common.module';
     InvestorsTransactionsComponent,
     MandatesTransactionsComponent,
     KycTransactionsComponent,
+    PhotoSigntureComponent,
+
+
 
 
 

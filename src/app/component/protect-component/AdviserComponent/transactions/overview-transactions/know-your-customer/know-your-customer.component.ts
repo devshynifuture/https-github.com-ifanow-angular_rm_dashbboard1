@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-know-your-customer',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class KnowYourCustomerComponent implements OnInit {
 
-  constructor() { }
+  constructor(public subInjectService: SubscriptionInject) { }
 
   ngOnInit() {
   }
+
+  Close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag })
+  }
+
 
 }
