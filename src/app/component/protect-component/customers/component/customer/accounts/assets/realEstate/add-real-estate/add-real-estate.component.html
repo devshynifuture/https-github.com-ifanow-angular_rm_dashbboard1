@@ -18,11 +18,10 @@
         </div>
 
         <div class="col-md-3 pr-0">
-
             <mat-form-field class="w-100">
                 <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Search family members</mat-option>
-                    <mat-option *ngFor="let f of nomineesListFM" (click)="ownerList(f)" [value]="f.userName">
+                    <mat-option *ngFor="let f of nomineesListFM" (click)="ownerList(f)" [value]="f.userName" (click)="ownerDetails(f)">
                         <span>{{f.userName}}</span>
                     </mat-option>
                 </mat-select>
