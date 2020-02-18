@@ -120,30 +120,30 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   }
 
   showMainNavWrapper() {
-    document.getElementById('d').classList.add('width-230')
-    document.getElementById('left').classList.remove('width-60')
-    document.getElementById('left').style.marginLeft = "230px"
-    // $('#d').addClass('width-230');
-    // $('#d').removeClass('width-60');
-    // $('#left').css('margin-left', '230px');
+    // document.getElementById('d').classList.add('width-230');
+    // document.getElementById('left').classList.remove('width-60');
+    // document.getElementById('left').style.marginLeft = "230px";
+   
+    document.getElementById('left').style.transition = "0.2s";
     this.showTabs = true;
     this.arrow = false;
+    console.log("i was call left bar 3");
+
   }
 
   showsmallNavWrapper() {
-    document.getElementById('d').classList.remove('width-230')
-    document.getElementById('left').style.marginLeft = "60px"
-    document.getElementById('left').style.transition = "0.3s"
-    document.getElementById('left').style.transition = "0.2s"
-    // $('#d').removeClass('width-230');
-    // $('#left').css('margin-left', '60px');
-    // $('#left').css('transition', 'margin-left 0.3s');
-    // $('#d').css('transition', 'width 0.2s');
+    // document.getElementById('d').classList.remove('width-230');
+    
+    document.getElementById('left').style.transition = "0.2s";
+    console.log("i was call left bar");
+    
     this.showTabs = false;
-    this.arrow = false;
+    // this.arrow = false;
   }
 
   onResize() {
+    console.log("i was call left bar 2");
+
     if (window.innerHeight >= 670 || window.innerHeight == 670) {
       this.showSettings = false;
     }
