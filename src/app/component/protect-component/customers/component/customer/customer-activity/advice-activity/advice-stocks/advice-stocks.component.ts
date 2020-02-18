@@ -50,12 +50,7 @@ export class AdviceStocksComponent implements OnInit {
       }
     );
   }
-  checkAll(flag, tableDataList) {
-    console.log(flag, tableDataList)
-    const { dataList, selectedIdList } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
-    this.selectedAssetId = selectedIdList;
-    console.log(this.selectedAssetId);
-  }
+
   getAllAssetResponse(data) {
     this.isLoading = false;
     this.stockDatasource = data.STOCKS;
