@@ -1,1 +1,78 @@
-<p>plan-assetallocation works!</p>
+<div class="row">
+    <div class="col-md-12 p-0">
+        <h4 class="m-0 text-black">Static asset allocation</h4>
+    </div>
+</div>
+<div class="row pt-20">
+    <div class="col-md-2"></div>
+    <div class="col-md-2 p-0 text-center bg-grey lter bt-1 br1 bl1">
+        <p class="m-0 f-500 roboto pt-16 pb-16">Aggressive</p>
+    </div>
+    <div class="col-md-2 p-0 text-center bg-grey lter bt-1 br1">
+        <p class="m-0 f-500 roboto  pt-16 pb-16">Moderately aggressive</p>
+    </div>
+    <div class="col-md-2 p-0 text-center bg-grey lter bt-1 br1">
+        <p class="m-0 f-500 roboto  pt-16 pb-16">Moderate</p>
+    </div>
+    <div class="col-md-2 p-0 text-center bg-grey lter bt-1 br1">
+        <p class="m-0 f-500 roboto  pt-16 pb-16">Moderately conservative</p>
+    </div>
+    <div class="col-md-2 p-0 text-center bg-grey lter bt-1 br1">
+        <p class="m-0 f-500 roboto  pt-16 pb-16">Conservative</p>
+    </div>
+</div>
+<table mat-table [dataSource]="dataSource" class="plan-assetallocation" id="table-low">
+
+    <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef class="br">Goal time frame </th>
+        <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="debt1">
+        <th mat-header-cell *matHeaderCellDef> Debt </th>
+        <td mat-cell *matCellDef="let element"> {{element.debt1}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="equity1">
+        <th mat-header-cell *matHeaderCellDef class="br"> Equity </th>
+        <td mat-cell *matCellDef="let element" class="br"> {{element.equity1}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="debt2">
+        <th mat-header-cell *matHeaderCellDef> Debt </th>
+        <td mat-cell *matCellDef="let element"> {{element.debt2}} </td>
+    </ng-container>
+    <ng-container matColumnDef="equity2">
+        <th mat-header-cell *matHeaderCellDef class="br"> Equity </th>
+        <td mat-cell *matCellDef="let element" class="br"> {{element.equity2}} </td>
+    </ng-container>
+    <ng-container matColumnDef="debt3">
+        <th mat-header-cell *matHeaderCellDef> Debt </th>
+        <td mat-cell *matCellDef="let element"> {{element.debt3}} </td>
+    </ng-container>
+    <ng-container matColumnDef="equity3">
+        <th mat-header-cell *matHeaderCellDef class="br"> Equity </th>
+        <td mat-cell *matCellDef="let element" class="br"> {{element.equity3}} </td>
+    </ng-container>
+    <ng-container matColumnDef="debt4">
+        <th mat-header-cell *matHeaderCellDef> Debt </th>
+        <td mat-cell *matCellDef="let element"> {{element.debt4}} </td>
+    </ng-container>
+    <ng-container matColumnDef="equity4">
+        <th mat-header-cell *matHeaderCellDef class="br"> Equity </th>
+        <td mat-cell *matCellDef="let element" class="br"> {{element.equity4}} </td>
+    </ng-container>
+    <ng-container matColumnDef="debt5">
+        <th mat-header-cell *matHeaderCellDef> Debt </th>
+        <td mat-cell *matCellDef="let element"> {{element.debt5}} </td>
+    </ng-container>
+    <ng-container matColumnDef="equity5">
+        <th mat-header-cell *matHeaderCellDef> Equity </th>
+        <td mat-cell *matCellDef="let element"> {{element.equity5}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

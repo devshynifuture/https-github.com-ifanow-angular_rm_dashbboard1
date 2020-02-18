@@ -2,7 +2,14 @@
     <div class="col-md-12 text-right mb-10 mt-20">
         <button mat-raised-button class="btn-primary addon f-14 mr-16" (click)="addCashFlow('')">ADD
             {{ cashflowCategory | uppercase }}</button>
-        <button mat-raised-button class="greryColorBg" (click)="toggleEditMode()">EDIT MODE</button>
+        <button mat-raised-button class="greryColorBg" (click)="toggleEditMode()">
+            <span class="tableValue" *ngIf="!editMode">
+                EDIT MODE
+            </span>
+            <span class="inputValue" *ngIf="editMode">
+                SAVE
+            </span>
+        </button>
     </div>
 </div>
 <div class="col-md-12 cash-flow-upperTable">
@@ -87,7 +94,8 @@
         </ng-container>
 
         <ng-container matColumnDef="month5">
-            <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef> May-{{ year.slice(-2) }}
+            <th mat-header-cell class="br-grey text-right f-400 f-14" *matHeaderCellDef>
+                May-{{ year.slice(-2) }}
             </th>
             <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element; let i = index"
                 appCashflowTableEdit [editModeTable]="editMode">
@@ -197,7 +205,7 @@
             <td class="br-grey text-right f-14 f-400" mat-cell
                 [ngClass]="element.month12.isAdHocChangesDone ? 'adhocChangesBg': ''"
                 *matCellDef="let element; let i = index" appCashflowTableEdit [editModeTable]="editMode">
-
+                <!-- 
                 <span class="tableValue bar">
                     {{ element.month12.value ? element.month12.value : '-' }}
                 </span>
@@ -205,7 +213,25 @@
                 <span class="inputValue d-none bar">
                     <input type="text" #month12Ref (input)="changeTableTdValue(month12Ref.value, 'month12', i)"
                         [value]="element.month12.value">
-                </span>
+                </span> -->
+
+                <div class="bar row m-0 p-0 align-items-center">
+                    <div class="col-md-3 m-0 p-0 c-p" *ngIf="element.month12.isAdHocChangesDone"
+                        (click)="resetAdhocChanges(i, 'month12')">
+                        <img src="/assets/images/svg/refresh-white.svg" alt="refresh icon" />
+                    </div>
+
+                    <div class="m-0 p-0"
+                        [ngClass]="element.month12.isAdHocChangesDone ? 'col-md-9 adhocChangesBg' : 'col-md-12'">
+                        <span class="tableValue">
+                            {{ element.month12.value ? element.month12.value: '-' }}
+                        </span>
+                        <span class="inputValue d-none">
+                            <input type="text" #month12Ref [value]="element.month12.value"
+                                (input)="changeTableTdValue(month12Ref.value, 'month12', i)" />
+                        </span>
+                    </div>
+                </div>
             </td>
         </ng-container>
 

@@ -109,7 +109,7 @@ export class CashflowUpperIncomeComponent implements OnInit {
         console.log("expected outcome::::::::", this.dataToMap);
         this.isLoading = false;
         this.dataToMapCopy = this.dataToMap;
-        this.dataSource = new MatTableDataSource(this.dataToMap);
+        this.dataSource.data = this.dataToMap;
       }, err => {
         console.error(err);
       });
@@ -156,7 +156,7 @@ export class CashflowUpperIncomeComponent implements OnInit {
         console.log(res);
       }, err => {
         console.error(err);
-      })
+      });
   }
 
   addCashFlow(data) {

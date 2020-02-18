@@ -1,0 +1,287 @@
+<div class="dialogclose">
+    <div class="row popup-header-fix-100">
+        <div class="col-md-2 border-right-1 p-0">
+            <img class="imgAdLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+        </div>
+        <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
+
+            <p class="f-16 mb-0">
+                Investment onboarding - KYC
+            </p>
+        </div>
+        <div class="col-md-2 text-right">
+            <i (click)="dialogClose()" class="material-icons pt-16 c-p pr-16">
+                clear
+            </i>
+        </div>
+    </div>
+</div>
+
+
+<!-- 
+<div class="pt-125 mb-100 ">
+    <div class="row ">
+        <div class="col-md-12 text-center">
+            <h4 class="f-18 f-600">Good afternoon!</h4>
+            <p class="f-16 mt-20 l-21">Over the next few steps we will help you become investment ready.
+                <br> This smooth and easy process needs you to have the following things handy...</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="detailsBox">
+                <div class="detailsProof">
+                    <img src="assets/images/svg/id-proof.svg">
+                    <h4 class="f-16 mt-16 f-600 roboto">IDENTITY PROOF</h4>
+                    <p class="f-14">PAN, aadhaar card, driving license, passport are accepted documents</p>
+                </div>
+
+                <div class="detailsProof">
+                    <img src="assets/images/svg/address-proof.svg">
+                    <h4 class="f-16 mt-16 f-600 roboto"> ADDRESS PROOF</h4>
+                    <p class="f-14"> Aadhaar card, driving license, passport are accepted documents </p>
+                </div>
+
+                <div class="detailsProof">
+                    <img src="assets/images/svg/bank-proof.svg">
+                    <h4 class="f-16 mt-16 f-600 roboto"> BANK A/C VERIFICATION </h4>
+                    <p class="f-14">A cancelled cheque is the accepted document for bank a/c verification</p>
+                </div>
+            </div>
+
+            <div class="detailsBoxTwo">
+                <div class="detailsProof">
+                    <img src="assets/images/svg/signature-proof.svg">
+                    <h4 class="f-16 mt-16 f-600 roboto">SIGNATURE PROOF</h4>
+                    <p class="f-14"> Upload a scanned copy or use Aadhaar based eSign option </p>
+                </div>
+
+                <div class="detailsProof">
+                    <img src="assets/images/svg/web-cam.svg">
+                    <h4 class="f-16 mt-16 f-600 roboto"> WEBCAM & MIC </h4>
+                    <p class="f-14"> Please ensure that your current device has webcam & microphone </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 text-center mt-32">
+            <mat-select class="form-control familyboxWidth">
+                <mat-option value="Select family member">Select family member </mat-option>
+            </mat-select>
+
+            <button mat-button class="f-16 m-0 btn-primary "> LET’S BEGIN <i class="material-icons ml-16">
+                    arrow_forward
+                </i> </button>
+        </div>
+    </div>
+</div>
+ 
+<div class="bottom-fixed wrapper-12 w-100">
+    <div class="row">
+
+        <div class="col-md-12 ">
+            <button mat-button class="f-16 text-white m-0"> Cancel </button>
+        </div>
+    </div>
+</div> -->
+
+
+
+<div class="pt-60 mb-100">
+    <div class="row">
+        <div class="col-md-2 col-2 fixed-top">
+            <div class="details_ui">
+                <ul>
+                    <li class="text-success">
+                        <span class="bg-success "> <i class="material-icons text-white">
+                                done
+                            </i> </span> Personal details
+                    </li>
+
+                    <li class="text-success">
+                        <span class="bg-success "> <i class="material-icons text-white">
+                                done
+                            </i> </span> Address details
+                    </li>
+
+                    <li class="text-primary">
+                        <span class="bg-primary text-white"> 3 </span> Bank details
+                    </li>
+
+                    <li>
+                        <span class="bg-grey lt"> 4 </span> Nominee details
+                    </li>
+
+                    <li>
+                        <span class="bg-grey lt"> 5 </span> FATCA details
+                    </li>
+
+                    <li>
+                        <span class="bg-grey lt"> 6 </span> Photo & Signature
+                    </li>
+
+                    <li>
+                        <span class="bg-grey lt"> 7 </span> Video KYC
+                    </li>
+
+                    <li>
+                        <span class="bg-grey lt"> 8 </span> Review & submit
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="col-md-7 offset-2 p-0 bl-1 ">
+            <div class="p-20">
+                <h3 class="f-18 mb-28 f-600">Nominee details #1</h3>
+
+                <div class="row">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Nominee name </h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <input matInput maxlength="10" type="text" class="form-control">
+
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Nominee relation </h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <mat-select class="form-control">
+                                <mat-option value="Resident individual"> Resident individual </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-10 m-0">Nominee type</h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-radio-group aria-label="Select an option">
+                            <mat-radio-button value="1" class="b-a-custom bor_top_tb_left radioBtnSmall  text-primary custom-radio">
+                                Major
+                            </mat-radio-button>
+                            <mat-radio-button value="2" class="radioBtnSmall radio-border custom-radio">
+                                Minor </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                </div>
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Nominee date of birth </h3>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput class="form-control" [matDatepicker]="picker">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Nominee percentage </h3>
+                    </div>
+                    <div class="col-md-3 iconPetage">
+                        <input matInput maxlength="10" type="text" class="form-control percentage">
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-3 bl-1 mt-28 fixed-top-right ">
+            <div class="row ">
+                <div class="col-md-12">
+                    <h3 class="f-16 f-600 mt-4 mb-10">NOMINATION FAQ</h3>
+                    <p class="f-16 m-0 f-600">What is nomination?</p>
+                    <p class="text-primitive mb-12">Nomination is an instruction that you give to the investment provider (mutual fund, in this case) to record the name of the person or persons entitled to receive the investment or its value when you die.</p>
+                </div>
+            </div>
+
+            <div class="row ">
+                <div class="col-md-12">
+                    <p class="f-16 m-0 f-600">Why is nomination important?</p>
+                    <p class="text-primitive mb-12">
+                        When you nominate, you make it easy for your dependants to have access to the investments done by you. They just have to establish your death by providing a death certificate and provide proof of their identity and address as the nominee and the mutual
+                        fund AMC will transmit the investment to the nominee.
+                    </p>
+                </div>
+            </div>
+
+            <div class="row ">
+                <div class="col-md-12">
+                    <p class="f-16 m-0 f-600">Who can I appoint as a nominee?</p>
+                    <p class="text-primitive mb-12">
+                        You are free to nominate whoever you want. More common examples of nominees are your immediate family members like spouse, children, parents etc.
+                    </p>
+                </div>
+            </div>
+
+            <div class="row ">
+                <div class="col-md-12">
+                    <p class="f-16 m-0 f-600">Things to note</p>
+                    <p class="text-primitive mb-12">
+                        While a nomination is an uncomplicated way for your dependants to receive the proceeds of your investment, don’t confuse it with estate planning. If you have also left a Will, then it supersedes any nomination.
+                    </p>
+                </div>
+            </div>
+
+            <div class="row ">
+                <div class="col-md-12">
+                    <p class="f-16 m-0 f-600">Disclaimer</p>
+                    <p class="text-primitive mb-12">
+                        The advice given here is provided for informational purposes only, and should not be construed as legal advice. You should not act or refrain from acting on the basis of any content included here without seeking legal or other professional advice.
+                    </p>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+<div class="bottom-fixed wrapper-12 w-100">
+    <div class="row d-flex align-items-center">
+        <div class="col-md-3 ">
+            <button mat-button class="f-16 text-transform-inherit text-white m-0"> Skip this step </button>
+        </div>
+
+        <div class="col-md-5 text-center">
+            <div class="holderLink">
+                <a class="activeLink p-4 f-18 text-white" href=""> Nominee 1 </a>
+                <a class="f-18 text-white p-4" href=""> Nominee 2 </a>
+                <a class="f-18 text-white p-4" href=""> Nominee 3 </a>
+            </div>
+        </div>
+
+        <div class="col-md-4 text-right">
+            <button mat-raised-button class="f-16 btn-default mr-12 br-0 text-inherit"> PREVIOUS </button>
+            <button mat-button class="f-16 text-white m-0"> NEXT STEP </button>
+        </div>
+    </div>
+</div>
