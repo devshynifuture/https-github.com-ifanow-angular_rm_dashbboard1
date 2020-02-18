@@ -23,9 +23,9 @@ export class AdviceCommoditiesComponent implements OnInit, AfterViewInit {
   isLoading: boolean;
   @ViewChild("tableOne", { static: false }) sort1: MatSort;
   @ViewChild("tableTwo", { static: false }) sort2: MatSort;
-  goldDataSource = new MatTableDataSource();
+  goldDataSource: any = new MatTableDataSource();
   selectedAssetId: any = [];
-  otherDataSource = new MatTableDataSource();
+  otherDataSource: any = new MatTableDataSource();
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
   ngAfterViewInit() {
     this.goldDataSource.sort = this.sort1;

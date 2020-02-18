@@ -60,7 +60,7 @@
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox *ngIf="isLoading==false && stockDatasource.tableFlag==true"
-                    (change)="checkAll($event,fixedDataSource)"></mat-checkbox>
+                    (change)="checkAll($event,stockDatasource)"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
                 <mat-checkbox *ngIf="isLoading==false" [checked]="element.selected"></mat-checkbox>

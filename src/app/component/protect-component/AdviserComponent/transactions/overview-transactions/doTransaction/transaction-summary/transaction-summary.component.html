@@ -59,7 +59,8 @@
                             {{(transactionSummary==undefined)?'':transactionSummary.schemeName}}
                         </h5>
                     </div>
-                    <div class="bar" *ngIf="(transactionSummary.transactType == 'STP'|| transactionSummary.transactType == 'SWITCH')">
+                    <div class="bar"
+                        *ngIf="(transactionSummary.transactType == 'STP'|| transactionSummary.transactType == 'SWITCH')">
                         <h5 class="m-0"><span class="f-500">Scheme switch in:</span>
                             {{(transactionSummary==undefined)?'':transactionSummary.schemeNameTranfer}}
                         </h5>
@@ -119,14 +120,15 @@
                         <span class="f-500">UMRN no.:</span>
                         {{(transactionSummary==undefined)?'':(transactionSummary.paymentMode==2)?'Debit mandate':'Net banking'}}
                     </h5>
-                    <mat-select *ngIf="showUmrn== true" class="form-control">
+                    <mat-select class="form-control">
                         <mat-option *ngFor="let umrn of achMandateNSE" (click)="selectUmrn(umrn)" [value]="umrn.umrnNo">
                             {{umrn.umrnNo}}
                         </mat-option>
                     </mat-select>
                 </div>
-                <div class="col-md-2" *ngIf=" transactionSummary && transactionSummary.allEdit == true  && (transactionSummary.transactType == 'PURCHASE'|| transactionSummary.transactType == 'SIP')">
-                    <button mat-stroked-button class="primary-sm" (click)="showUmrn = true">Edit</button>
+                <div class="col-md-2"
+                    *ngIf=" transactionSummary && transactionSummary.allEdit == true  && (transactionSummary.transactType == 'PURCHASE'|| transactionSummary.transactType == 'SIP')">
+                    <button mat-stroked-button class="primary-sm">Edit</button>
                 </div>
             </div>
         </div>
