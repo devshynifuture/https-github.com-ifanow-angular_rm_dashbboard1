@@ -22,7 +22,7 @@
 
         <div class="row">
             <div class="col-md-12 pl-0 mb-8">
-                <table matSort mat-table [dataSource]="subCatArray()" id="table-low" class="mutualfunds-capital-equity">
+                <table matSort mat-table [dataSource]="customDataSource" id="table-low" class="mutualfunds-capital-equity">
 
                     <ng-container matColumnDef="schemeName">
                         <th class="br" mat-sort-header="schemeName" mat-header-cell *matHeaderCellDef> Scheme name </th>
@@ -148,7 +148,7 @@
                             <button mat-menu-item >View factsheet</button>
                             <button mat-menu-item>Download SOA</button>
                             <button mat-menu-item (click)="openFolioMaster(element)">Folio master details</button>
-                            <button mat-menu-item (click)="openSipDetails()">SIP details</button>
+                            <button mat-menu-item (click)="openSipDetails(element)">SIP details</button>
                             <button mat-menu-item class="bt-1">Transact online</button>
                             <button mat-menu-item >Transaction slip</button>
                             <button mat-menu-item class="bt-1">View transactions</button>
