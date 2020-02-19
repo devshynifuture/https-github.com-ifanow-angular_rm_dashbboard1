@@ -74,15 +74,6 @@
                     </h5>
                 </div>
             </div>
-            <div class="row  pt-16 pb-16">
-                <div class="col-md-9">
-                    <p class="m-0 roboto text-custom">TRANSACTION INITIATION</p>
-                    <h5 class="m-0">Immediate</h5>
-                </div>
-                <!-- <div class="col-md-2">
-                    <button mat-stroked-button class="primary-sm">Edit</button>
-                </div> -->
-            </div>
             <div class="row  pt-16 pb-16" *ngIf="selectedPlatform== 1">
                 <div class="col-md-9">
                     <p class="m-0 roboto text-custom">Mode of payment</p>
@@ -128,6 +119,15 @@
                     *ngIf=" transactionSummary && transactionSummary.allEdit == true  && (transactionSummary.transactType == 'PURCHASE'|| transactionSummary.transactType == 'SIP')">
                     <button mat-stroked-button class="primary-sm">Edit</button>
                 </div>
+            </div>
+            <div class="row  pt-16 pb-16">
+                <div class="col-md-9">
+                    <p class="m-0 roboto text-custom">TRANSACTION INITIATION</p>
+                    <h5 class="m-0">Immediate</h5>
+                </div>
+                <!-- <div class="col-md-2">
+                    <button mat-stroked-button class="primary-sm">Edit</button>
+                </div> -->
             </div>
         </div>
     </mat-tab>

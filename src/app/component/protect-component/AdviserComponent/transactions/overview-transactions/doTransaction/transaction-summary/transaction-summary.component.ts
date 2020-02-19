@@ -8,6 +8,9 @@ import { of } from 'rxjs';
 import { PlatformPopUpComponent } from '../platform-pop-up/platform-pop-up.component';
 import { EuinSelectPopUpComponent } from '../euin-select-pop-up/euin-select-pop-up.component';
 import { BankSelectPopUpComponent } from '../bank-select-pop-up/bank-select-pop-up.component';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-transaction-summary',
@@ -43,20 +46,23 @@ export class TransactionSummaryComponent implements OnInit {
     value: 2,
     platform: 'BSE'
   }]
+  checkAlert: any;
   constructor(private onlineTransact: OnlineTransactionService, private processTransaction: ProcessTransactionService,
-    private subInjectService: SubscriptionInject, public dialog: MatDialog) { }
+    private subInjectService: SubscriptionInject, public dialog: MatDialog,private customerService: CustomerService, private eventService: EventService,) { }
   showPlatform = false;
   @Output() defaultDetails = new EventEmitter();
   @Output() bankDetailsSend = new EventEmitter();
   @Output() achmandateDetails = new EventEmitter();
   @Input() set folioChange(data) {
     console.log('This is Input data of foolio ### ', data);
-    this.getDefaultDetails(this.transactionSummary.aggregatorType);
   }
   @Input() set data(data) {
     this.inputData = data;
-    console.log('This is Input data of FixedDepositComponent ', data);
     this.transactionSummary = data
+    console.log('This is Input data of FixedDepositComponent ', data);
+    this.getDefaultDetails(this.transactionSummary.aggregatorType);
+    this.checkAlert = this.transactionSummary.tpUserCredentialId
+   
   }
 
   get data() {
@@ -177,6 +183,9 @@ export class TransactionSummaryComponent implements OnInit {
     if (data == undefined) {
       return
     }
+    if(this.checkAlert && this.checkAlert != data.defaultClient.tpUserCredentialId){
+      this.alertModal(data,null)
+    }
     data.euin = data.subBrokerCredList[0];
     this.defaultDetails.emit(data);
     this.allData = data
@@ -189,20 +198,39 @@ export class TransactionSummaryComponent implements OnInit {
       this.getBankDetails()
     }
   }
-  setPlatform(value) {
-    this.selectedPlatform = value.value
-    this.showPlatform = false
-    this.getDefaultDetails(this.selectedPlatform)
-  }
-  setInvestor(value) {
-    this.selectedInvestor = value
-    this.allData.defaultClient = this.selectedInvestor
-    this.defaultDetails.emit(this.allData);
-    this.showInvestor = false
-  }
-  setEuin(euin) {
-    this.allData.euin = euin
-    this.defaultDetails.emit(this.allData);
-    console.log('selected EUIN', euin)
+  alertModal(value, data) {
+    const dialogData = {
+      data: value,
+      header: 'ALERT',
+      body: 'Holding nature of selected FOLIO matches different client code',
+      body2: 'Are you sure you want to proceed',
+      btnYes: 'NO',
+      btnNo: 'OK,POCEED',
+      positiveMethod: () => {        
+          this.customerService.deleteFixedDeposite(data.id).subscribe(
+            data => {
+              this.eventService.openSnackBar('Sucessfully changed', 'dismiss');
+              dialogRef.close();
+              
+            },
+            error => this.eventService.showErrorMessage(error)
+          );
+      },
+      negativeMethod: () => {
+        console.log('');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
 }

@@ -48,7 +48,10 @@ export class SwpTransactionComponent implements OnInit {
   bankDetails: any;
   achMandateNSE: any;
   showSpinnerFolio = false;
-
+  currentValue: number;
+  multiTransact=false;
+  childTransactions=[];
+  displayedColumns: string[] = ['no','folio', 'ownerName','amount'];
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private processTransaction: ProcessTransactionService, private fb: FormBuilder, private eventService: EventService) { }
   @Input()
@@ -69,6 +72,7 @@ export class SwpTransactionComponent implements OnInit {
 
   ngOnInit() {
     this.transactionSummary = {}
+    this.childTransactions = []
     this.getdataForm(this.inputData)
     Object.assign(this.transactionSummary, { transactType: 'SWP' });
     Object.assign(this.transactionSummary, { allEdit: true });
@@ -161,6 +165,7 @@ export class SwpTransactionComponent implements OnInit {
       userAccountType: this.getDataSummary.defaultCredential.accountType,
       holdingType: this.getDataSummary.defaultClient.holdingType,
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+      showOnlyNonZero: true,
     }
     this.onlineTransact.getSchemeWiseFolios(obj1).subscribe(
       data => this.getSchemeWiseFoliosRes(data), (error) => {
@@ -178,8 +183,11 @@ export class SwpTransactionComponent implements OnInit {
   }
   selectedFolio(folio) {
     this.folioDetails = folio
+    this.currentValue =this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme,folio.balanceUnit)
     this.showUnits = true
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
+    Object.assign(this.transactionSummary, { mutualFundId: folio.id });
+    this.transactionSummary = { ...this.transactionSummary };
   }
   getFrequency() {
     let obj = {
@@ -282,6 +290,7 @@ export class SwpTransactionComponent implements OnInit {
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       date: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       frequency: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      tenure: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       installment: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
     });
 
@@ -291,24 +300,16 @@ export class SwpTransactionComponent implements OnInit {
     return this.swpTransaction.controls;
   }
   swp() {
-    
+
     if (this.swpTransaction.get('date').invalid) {
       this.swpTransaction.get('date').markAsTouched();
       return;
     } else if (this.swpTransaction.get('frequency').invalid) {
       this.swpTransaction.get('frequency').markAsTouched();
       return;
-    } else if (this.swpTransaction.get('modeOfPaymentSelection').invalid) {
-      this.swpTransaction.get('modeOfPaymentSelection').markAsTouched();
-      return;
     } else if (this.swpTransaction.get('employeeContry').invalid) {
       this.swpTransaction.get('employeeContry').markAsTouched();
       return;
-    } else if (this.swpTransaction.get('tenure').value !=3) {
-      if(this.swpTransaction.get('tenure').invalid){
-        this.swpTransaction.get('tenure').markAsTouched();
-      return;
-      }
     } else if (this.swpTransaction.get('installment').invalid) {
       this.swpTransaction.get('installment').markAsTouched();
       return;
@@ -358,5 +359,28 @@ export class SwpTransactionComponent implements OnInit {
     } else {
       this.onAddTransaction('confirm', this.transactionSummary)
     }
+  }
+  AddMultiTransaction() {
+    this.multiTransact = true
+    let obj = {
+      amc: this.scheme.amcId,
+      folioNo:(this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+      productCode:this.schemeDetails.schemeCode,
+      dividendReinvestmentFlag:this.schemeDetails.dividendReinvestmentFlag,
+      orderVal:this.swpTransaction.controls.employeeContry.value,
+      productDbId:this.schemeDetails.id,
+      frequencyType: this.frequency,
+      startDate: Number(new Date(this.swpTransaction.controls.date.value.replace(/"/g, ""))),
+      schemeName:this.scheme.schemeName,
+    }
+    this.childTransactions.push(obj)
+    console.log(this.childTransactions)
+    this.schemeList = [];
+    this.swpTransaction.controls.date.reset()
+    this.swpTransaction.controls.employeeContry.reset()
+    this.swpTransaction.controls.tenure.reset()
+    this.swpTransaction.controls.frequency.reset()
+
+    this.swpTransaction.controls.investmentAccountSelection.reset()
   }
 }

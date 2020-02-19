@@ -7,6 +7,7 @@ import { OnlineTrasactionComponent } from '../online-trasaction/online-trasactio
 import { OnlineTransactionService } from '../../../online-transaction.service';
 import { ProcessTransactionService } from '../process-transaction.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 
 @Component({
   selector: 'app-purchase-trasaction',
@@ -41,10 +42,15 @@ export class PurchaseTrasactionComponent implements OnInit {
   bankDetails: any;
   achMandateNSE: any;
   callOnFolioSelection: boolean;
-  showSpinnerMandate= false;
-  showSpinnerFolio=false;
+  showSpinnerMandate = false;
+  showSpinnerFolio = false;
+  childTransactions: any[];
+  multiTransact = false;
   constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
-    private subInjectService: SubscriptionInject, private fb: FormBuilder,private eventService : EventService) { }
+    private subInjectService: SubscriptionInject, private fb: FormBuilder, private eventService: EventService,
+    private customerService: CustomerService,) { }
+    displayedColumns: string[] = ['no','folio', 'ownerName','amount'];
+    dataSource1 = ELEMENT_DATA;
   @Input()
   set data(data) {
     this.inputData = data;
@@ -60,7 +66,8 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.transactionSummary= {}
+    this.transactionSummary = {}
+    this.childTransactions = []
     this.getdataForm(this.inputData);
     Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
     Object.assign(this.transactionSummary, { paymentMode: 1 });
@@ -115,24 +122,24 @@ export class PurchaseTrasactionComponent implements OnInit {
     if (this.selectScheme == 2 && value.length > 2) {
       this.onlineTransact.getNewSchemes(obj).subscribe(
         data => this.getNewSchemesRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
-      }
+          this.eventService.showErrorMessage(error);
+        }
       );
     } else {
       this.onlineTransact.getExistingSchemes(obj).subscribe(
         data => this.getExistingSchemesRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
-      }
+          this.eventService.showErrorMessage(error);
+        }
       );
     }
   }
   getNewSchemesRes(data) {
-        this.showSpinner = false
+    this.showSpinner = false
     console.log('new schemes', data)
     this.schemeList = data
   }
   getExistingSchemesRes(data) {
-        this.showSpinner = false
+    this.showSpinner = false
     this.schemeList = data
   }
   reinvest(scheme) {
@@ -148,7 +155,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     console.log('bank details', bank)
   }
   getAchmandateDetails(ach) {
-    this.achMandateNSE  = ach
+    this.achMandateNSE = ach
     console.log('ach details', ach)
   }
   selectedScheme(scheme) {
@@ -209,8 +216,8 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.folioDetails = folio
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
     Object.assign(this.transactionSummary, { mutualFundId: folio.id });
-    this.transactionSummary = {...this.transactionSummary};
-    this.callOnFolioSelection = folio.id
+    Object.assign(this.transactionSummary, { tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId});
+    this.transactionSummary = { ...this.transactionSummary };
   }
   enteredAmount(value) {
     Object.assign(this.transactionSummary, { enteredAmount: value });
@@ -218,20 +225,21 @@ export class PurchaseTrasactionComponent implements OnInit {
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
+    Object.assign(this.transactionSummary, { aggregatorType: this.getDataSummary.defaultClient.aggregatorType });
     this.platformType = this.getDataSummary.defaultClient.aggregatorType
-  //  this.purchaseTransaction.controls.investor.reset();
+    //  this.purchaseTransaction.controls.investor.reset();
   }
   selectPaymentMode(value) {
     Object.assign(this.transactionSummary, { paymentMode: value });
-    if(value == 2){
+    if (value == 2) {
       Object.assign(this.transactionSummary, { getAch: true });
       this.getNSEAchmandate()
     }
   }
-  getNSEAchmandate(){
+  getNSEAchmandate() {
     this.showSpinnerMandate = true
     let obj1 = {
-      tpUserCredFamilyMappingId:this.getDataSummary.defaultClient.tpUserCredFamilyMappingId
+      tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId
     }
     this.onlineTransact.getNSEAchmandate(obj1).subscribe(
       data => this.getNSEAchmandateRes(data), (error) => {
@@ -239,17 +247,17 @@ export class PurchaseTrasactionComponent implements OnInit {
       }
     );
   }
-  getNSEAchmandateRes(data){
+  getNSEAchmandateRes(data) {
     this.showSpinnerMandate = false
-    console.log('getNSEAchmandateRes',data)
+    console.log('getNSEAchmandateRes', data)
     this.achMandateNSE = data[0]
   }
   onAddTransaction(value, data) {
-    Object.assign(this.transactionSummary, {allEdit: false});
+    Object.assign(this.transactionSummary, { allEdit: false });
     this.confirmTrasaction = true
     const fragmentData = {
       flag: 'addNsc',
-      data:data,
+      data: data,
       id: 1,
       state: 'open65',
       componentName: ConfirmationTransactionComponent
@@ -281,12 +289,13 @@ export class PurchaseTrasactionComponent implements OnInit {
       transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: ['2'],
-    //  investor: [(!data) ? '' : data.investor, [Validators.required]],
+      //  investor: [(!data) ? '' : data.investor, [Validators.required]],
       employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required,]],
       investmentAccountSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       modeOfPaymentSelection: ['1'],
       folioSelection: ['2'],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      reinvest:[(!data) ? '' : data.reinvest, [Validators.required]],
     });
 
     this.ownerData = this.purchaseTransaction.controls;
@@ -322,21 +331,26 @@ export class PurchaseTrasactionComponent implements OnInit {
         euin: this.getDataSummary.euin.euin,
         bseDPTransType: 'PHYSICAL',
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-        mandateId : null,
+        mandateId: null,
         nsePaymentMode: null,
-        bankDetailId:null,
+        bankDetailId: null,
+        childTransactions:[]
       }
       if (this.getDataSummary.defaultClient.aggregatorType == 1) {
-        obj.mandateId = (this.achMandateNSE == undefined)?null:this.achMandateNSE.id
+        obj.mandateId = (this.achMandateNSE == undefined) ? null : this.achMandateNSE.id
         obj.bankDetailId = this.bankDetails.id
         obj.nsePaymentMode = (this.purchaseTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE'
       }
-      console.log('new purchase obj', obj)
-      this.onlineTransact.transactionBSE(obj).subscribe(
-        data => this.purchaseRes(data), (error) => {
-          this.eventService.showErrorMessage(error);
-        }
-      );
+      if(this.multiTransact == true){
+        console.log('new purchase obj', this.childTransactions)
+         obj.childTransactions = this.childTransactions
+      }
+        console.log('new purchase obj', obj)
+        this.onlineTransact.transactionBSE(obj).subscribe(
+          data => this.purchaseRes(data), (error) => {
+            this.eventService.showErrorMessage(error);
+          }
+        );
     }
   }
   purchaseRes(data) {
@@ -347,4 +361,40 @@ export class PurchaseTrasactionComponent implements OnInit {
       this.onAddTransaction('confirm', this.transactionSummary)
     }
   }
+  AddMultiTransaction() {
+    this.multiTransact = true
+    let obj = {
+      amc: this.scheme.amcId,
+      folioNo:(this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+      productCode:this.schemeDetails.schemeCode,
+      dividendReinvestmentFlag:this.schemeDetails.dividendReinvestmentFlag,
+      orderVal:this.purchaseTransaction.controls.employeeContry.value,
+      bankDetailId:this.bankDetails.id,
+      schemeName:this.scheme.schemeName,
+      productDbId:this.schemeDetails.id,
+    }
+    this.childTransactions.push(obj)
+    console.log(this.childTransactions)
+    this.schemeList = [];
+    this.purchaseTransaction.controls.reinvest.reset()
+    this.purchaseTransaction.controls.employeeContry.reset()
+    this.purchaseTransaction.controls.investmentAccountSelection.reset()
+  }
 }
+export interface PeriodicElement {
+  no: any;
+  ownerName: string;
+  folio:string
+  amount : any
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  {
+    no: 1,folio :'758734587', ownerName: 'hdfc',amount:52435
+
+  },
+  {
+    no: 2, folio :'758734587',ownerName: 'axis',amount:5256
+
+  },
+];

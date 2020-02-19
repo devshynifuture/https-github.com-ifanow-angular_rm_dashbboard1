@@ -47,7 +47,11 @@ export class StpTransactionComponent implements OnInit {
   mandateDetails: any;
   bankDetails: any;
   showSpinnerFolio = false;
-
+  showSpinnerTrans =false;
+  currentValue: number;
+  multiTransact=false;
+  childTransactions=[];
+  displayedColumns: string[] = ['no','folio', 'ownerName','amount'];
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private processTransaction: ProcessTransactionService, private eventService: EventService,
     private fb: FormBuilder) { }
@@ -69,6 +73,7 @@ export class StpTransactionComponent implements OnInit {
 
   ngOnInit() {
     this.getdataForm(this.inputData)
+    this.childTransactions = []
     this.transactionSummary = {}
     Object.assign(this.transactionSummary, { allEdit: true });
     Object.assign(this.transactionSummary, { transactType: 'STP' });
@@ -77,8 +82,10 @@ export class StpTransactionComponent implements OnInit {
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
-    this.stpTransaction.controls.investor.reset();
-    this.stpTransaction.controls.transferIn.reset();
+    Object.assign(this.transactionSummary, { aggregatorType: this.getDataSummary.defaultClient.aggregatorType });
+    // this.stpTransaction.controls.investor.reset();
+    
+     this.stpTransaction.controls.transferIn.reset();
   }
   getMandateDetails() {
     let obj1 = {
@@ -97,7 +104,7 @@ export class StpTransactionComponent implements OnInit {
     this.mandateDetails = data
   }
   getSchemeListTranfer(value) {
-    this.showSpinner = true
+    this.showSpinnerTrans = true
     if (this.selectScheme == 2 && value.length > 2) {
       let obj = {
         searchQuery: value,
@@ -120,7 +127,7 @@ export class StpTransactionComponent implements OnInit {
     }
   }
   getNewSchemesRes(data) {
-    this.showSpinner = false
+    this.showSpinnerTrans = false
     console.log('new schemes', data)
     this.schemeListTransfer = data
   }
@@ -157,12 +164,14 @@ export class StpTransactionComponent implements OnInit {
 
   selectedFolio(folio) {
     this.folioDetails = folio
+    this.currentValue =this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme,folio.balanceUnit)
     this.showUnits = true
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
     Object.assign(this.transactionSummary, { mutualFundId: folio.id });
     this.transactionSummary = { ...this.transactionSummary };
   }
   selectedSchemeTransfer(schemeTransfer) {
+    this.showSpinnerTrans = true
     this.schemeTransfer = schemeTransfer
     Object.assign(this.transactionSummary, { schemeNameTranfer: schemeTransfer.schemeName });
     this.navOfSelectedScheme = schemeTransfer.nav
@@ -180,6 +189,7 @@ export class StpTransactionComponent implements OnInit {
   }
   getSchemeDetailsTranferRes(data) {
     // this.maiSchemeList = data
+    this.showSpinnerTrans = false
     this.schemeDetailsTransfer = data[0]
     if (data.length > 1) {
       this.reInvestmentOpt = data
@@ -233,6 +243,7 @@ export class StpTransactionComponent implements OnInit {
       userAccountType: this.getDataSummary.defaultCredential.accountType,
       holdingType: this.getDataSummary.defaultClient.holdingType,
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+      showOnlyNonZero: true,
     }
     this.onlineTransact.getSchemeWiseFolios(obj1).subscribe(
       data => this.getSchemeWiseFoliosRes(data)
@@ -332,7 +343,7 @@ export class StpTransactionComponent implements OnInit {
       transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
-      investor: [(!data) ? '' : data.investor, [Validators.required]],
+      //investor: [(!data) ? '' : data.investor, [Validators.required]],
       employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required]],
       frequency: [(!data) ? '' : data.employeeContry, [Validators.required]],
       investmentAccountSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
@@ -394,7 +405,7 @@ export class StpTransactionComponent implements OnInit {
         dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
         amountType: "Amount",
         noOfInstallments: this.stpTransaction.controls.installment.value,
-        frequencyType: "MONTHLY",
+        frequencyType: this.frequency,
         clientCode: this.getDataSummary.defaultClient.clientCode,
         orderVal: this.stpTransaction.controls.employeeContry.value,
         bseDPTransType: "PHYSICAL",
@@ -423,5 +434,31 @@ export class StpTransactionComponent implements OnInit {
     } else {
       this.onAddTransaction('confirm', this.transactionSummary)
     }
+  }
+  AddMultiTransaction() {
+    this.multiTransact = true
+
+    let obj = {
+      amc: this.scheme.amcId,
+      folioNo:(this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+      productCode:this.schemeDetails.schemeCode,
+      dividendReinvestmentFlag:this.schemeDetails.dividendReinvestmentFlag,
+      orderVal:this.stpTransaction.controls.employeeContry.value,
+      bankDetailId:this.bankDetails.id,
+      toIsin:this.schemeDetailsTransfer.isin,
+      schemeName:this.scheme.schemeName,
+      mandateId:this.achMandateNSE.id,
+      productDbId:this.schemeDetails.id,
+      frequencyType: this.frequency,
+      startDate: Number(new Date(this.stpTransaction.controls.date.value.replace(/"/g, ""))),
+    }
+    this.childTransactions.push(obj)
+    console.log(this.childTransactions)
+    this.schemeList = [];
+    this.stpTransaction.controls.frequency.reset()
+    this.stpTransaction.controls.date.reset()
+    this.stpTransaction.controls.installment.reset()
+    this.stpTransaction.controls.employeeContry.reset()
+    this.stpTransaction.controls.investmentAccountSelection.reset()
   }
 }

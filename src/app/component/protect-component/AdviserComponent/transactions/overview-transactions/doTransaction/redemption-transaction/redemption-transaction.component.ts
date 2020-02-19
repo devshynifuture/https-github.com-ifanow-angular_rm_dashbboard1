@@ -5,6 +5,7 @@ import { ConfirmationTransactionComponent } from '../confirmation-transaction/co
 import { UtilService } from 'src/app/services/util.service';
 import { OnlineTransactionService } from '../../../online-transaction.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { ProcessTransactionService } from '../process-transaction.service';
 
 @Component({
   selector: 'app-redemption-transaction',
@@ -35,9 +36,12 @@ export class RedemptionTransactionComponent implements OnInit {
   bankDetails: any;
   showSpinnerFolio = false;
   achMandateNSE: any;
-
+  currentValue: number;
+  multiTransact = false;
+  childTransactions = [];
+  displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount'];
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-    private fb: FormBuilder, private eventService: EventService) { }
+    private fb: FormBuilder, private eventService: EventService, private processTransaction: ProcessTransactionService) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -57,6 +61,7 @@ export class RedemptionTransactionComponent implements OnInit {
   ngOnInit() {
     this.getdataForm(this.inputData)
     this.transactionSummary = {}
+    this.childTransactions = []
     this.reInvestmentOpt = [];
     Object.assign(this.transactionSummary, { allEdit: true });
     Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
@@ -65,6 +70,7 @@ export class RedemptionTransactionComponent implements OnInit {
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
+    Object.assign(this.transactionSummary, { aggregatorType: this.getDataSummary.defaultClient.aggregatorType });
     this.redemptionTransaction.controls.investor.reset();
   }
   redemptionType(value) {
@@ -202,6 +208,7 @@ export class RedemptionTransactionComponent implements OnInit {
       clientId: this.getDataSummary.defaultClient.clientId,
       userAccountType: this.getDataSummary.defaultCredential.accountType,
       holdingType: this.getDataSummary.defaultClient.holdingType,
+      showOnlyNonZero: true,
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
     }
     this.onlineTransact.getSchemeWiseFolios(obj1).subscribe(
@@ -217,6 +224,7 @@ export class RedemptionTransactionComponent implements OnInit {
   }
   selectedFolio(folio) {
     this.showUnits = true
+    this.currentValue = this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit)
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
     Object.assign(this.transactionSummary, { mutualFundId: folio.id });
     this.transactionSummary = { ...this.transactionSummary };
@@ -224,15 +232,10 @@ export class RedemptionTransactionComponent implements OnInit {
   }
   redeem() {
 
-    if (this.redemptionTransaction.get('investmentAccountSelection').invalid) {
-      this.redemptionTransaction.get('investmentAccountSelection').markAsTouched();
-      return;
-    } else if (this.redemptionTransaction.get('redeemType').invalid) {
+    if (this.redemptionTransaction.get('redeemType').invalid) {
       this.redemptionTransaction.get('redeemType').markAsTouched();
       return;
-    } else if (this.redemptionTransaction.get('employeeContry').invalid) {
-      this.redemptionTransaction.get('employeeContry').markAsTouched();
-      return;
+
     } else {
       let obj = {
         productDbId: this.schemeDetails.id,
@@ -261,7 +264,7 @@ export class RedemptionTransactionComponent implements OnInit {
         allRedeem: (this.redemptionTransaction.controls.redeemType.value == 3) ? true : false,
         bankDetailId: null,
         nsePaymentMode: null,
-  
+
         // teamMemberSessionId: redemptionTransaction.localStorage.mm.mainDetail.userDetails.teamMemberSessionId,
       }
       if (this.getDataSummary.defaultClient.aggregatorType == 1) {
@@ -283,5 +286,25 @@ export class RedemptionTransactionComponent implements OnInit {
     } else {
       this.onAddTransaction('confirm', this.transactionSummary)
     }
+  }
+  AddMultiTransaction() {
+    this.multiTransact = true
+    let obj = {
+      amc: this.scheme.amcId,
+      folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+      productCode: this.schemeDetails.schemeCode,
+      dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
+      orderVal: this.redemptionTransaction.controls.employeeContry.value,
+      allRedeem: (this.redemptionTransaction.controls.redeemType.value == 3) ? true : false,
+      amountType: (this.redemptionTransaction.controls.redeemType.value == 1) ? 'Amount' : 'Unit',
+      qty: (this.redemptionTransaction.controls.redeemType.value == 1) ? 0 : (this.redemptionTransaction.controls.redeemType.value == 3) ? this.schemeDetails.balance_units : this.redemptionTransaction.controls.employeeContry.value,
+      bankDetailId: this.bankDetails.id,
+      schemeName: this.scheme.schemeName,
+    }
+    this.childTransactions.push(obj)
+    console.log(this.childTransactions)
+    this.schemeList = [];
+    this.redemptionTransaction.controls.employeeContry.reset()
+    this.redemptionTransaction.controls.investmentAccountSelection.reset()
   }
 }

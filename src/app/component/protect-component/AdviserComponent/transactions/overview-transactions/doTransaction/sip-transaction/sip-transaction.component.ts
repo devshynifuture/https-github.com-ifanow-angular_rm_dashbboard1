@@ -50,7 +50,9 @@ export class SipTransactionComponent implements OnInit {
   bankDetails: any;
   showSpinnerFolio = false;
   showSpinnerMandate = false;
-
+  multiTransact = false;
+  childTransactions=[];
+  displayedColumns: string[] = ['no','folio', 'ownerName','amount'];
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private processTransaction: ProcessTransactionService, private fb: FormBuilder, private eventService: EventService) { }
   @Input()
@@ -71,6 +73,7 @@ export class SipTransactionComponent implements OnInit {
 
   ngOnInit() {
     this.getdataForm(this.inputData)
+    this.childTransactions = []
     this.transactionSummary = {}
     Object.assign(this.transactionSummary, { transactType: 'SIP' });
     Object.assign(this.transactionSummary, { paymentMode: 1 });
@@ -154,7 +157,8 @@ export class SipTransactionComponent implements OnInit {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
     this.sipTransaction.controls.investor.reset();
-    this.platformType = this.getDataSummary.defaultClient.aggregatorType
+    this.platformType= this.getDataSummary.defaultClient.aggregatorType
+    Object.assign(this.transactionSummary, { aggregatorType: this.platformType});
   }
   selectPaymentMode(value) {
     Object.assign(this.transactionSummary, { paymentMode: value });
@@ -233,7 +237,7 @@ export class SipTransactionComponent implements OnInit {
   selectedFrequency(getFrerq) {
     this.fre = getFrerq
     this.frequency = getFrerq.frequency
-    this.sipTransaction.controls["employeeContry"].setValidators([Validators.min(getFrerq.sipMinimumInstallmentAmount)])
+    this.sipTransaction.controls["employeeContry"].setValidators([Validators.min(getFrerq.minimumPurchaseAmount)])
     this.dateArray(getFrerq.sipDates)
   }
   dateArray(sipDates) {
@@ -319,7 +323,7 @@ export class SipTransactionComponent implements OnInit {
       transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: ['2'],
-      investor: [(!data) ? '' : data.investor, [Validators.required]],
+     // investor: [(!data) ? '' : data.investor, [Validators.required]],
       folioSelection: ['2'],
       employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required]],
       frequency: [(!data) ? '' : data.frequency, [Validators.required]],
@@ -338,10 +342,8 @@ export class SipTransactionComponent implements OnInit {
     return this.sipTransaction.controls;
   }
   sip() {
-    if (this.sipTransaction.get('investor').invalid) {
-      this.sipTransaction.get('investor').markAsTouched();
-      return;
-    } else if (this.sipTransaction.get('employeeContry').invalid) {
+   
+     if (this.sipTransaction.get('employeeContry').invalid) {
       this.sipTransaction.get('employeeContry').markAsTouched();
       return;
     } else if (this.sipTransaction.get('date').invalid) {
@@ -394,6 +396,7 @@ export class SipTransactionComponent implements OnInit {
         mandateId: null,
         bankDetailId: null,
         nsePaymentMode: null,
+        childTransactions : []
         // teamMemberSessionId: sipTransaction.localStorage.mm.mainDetail.userDetails.teamMemberSessionId,
       }
       if (this.getDataSummary.defaultClient.aggregatorType == 1) {
@@ -411,14 +414,15 @@ export class SipTransactionComponent implements OnInit {
       } else {
         obj.noOfInstallments = this.sipTransaction.controls.installment.value
       }
-
-      this.onlineTransact.transactionBSE(obj).subscribe(
-        data => this.sipBSERes(data), (error) => {
-          this.eventService.showErrorMessage(error);
-        }
-      );
+      if(this.multiTransact == true){
+       obj.childTransactions = this.childTransactions
+      }
+        this.onlineTransact.transactionBSE(obj).subscribe(
+          data => this.sipBSERes(data), (error) => {
+            this.eventService.showErrorMessage(error);
+          }
+        );
     }
-
   }
   sipBSERes(data) {
     console.log('sip', data)
@@ -428,5 +432,29 @@ export class SipTransactionComponent implements OnInit {
       this.onAddTransaction('confirm', this.transactionSummary)
     }
   }
-
+  AddMultiTransaction() {
+    this.multiTransact = true
+    let obj = {
+      amc: this.scheme.amcId,
+      folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+      productCode: this.schemeDetails.schemeCode,
+      dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
+      orderVal: this.sipTransaction.controls.employeeContry.value,
+      bankDetailId: this.bankDetails.id,
+      schemeName: this.scheme.schemeName,
+      mandateId:this.achMandateNSE.id,
+      productDbId:this.schemeDetails.id,
+      frequencyType: this.frequency,
+      startDate: Number(new Date(this.sipTransaction.controls.date.value.replace(/"/g, ""))),
+    }
+    this.childTransactions.push(obj)
+    console.log(this.childTransactions)
+    this.schemeList = [];
+    this.sipTransaction.controls.date.reset()
+    this.sipTransaction.controls.tenure.reset()
+    this.sipTransaction.controls.installment.reset()
+    this.sipTransaction.controls.frequency.reset()
+    this.sipTransaction.controls.employeeContry.reset()
+    this.sipTransaction.controls.investmentAccountSelection.reset()
+  }
 }
