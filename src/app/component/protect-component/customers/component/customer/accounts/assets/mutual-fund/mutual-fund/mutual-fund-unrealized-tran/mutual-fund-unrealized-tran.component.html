@@ -302,29 +302,6 @@
                         </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="icons">
-                        <th *matHeaderCellDef class="" mat-header-cell></th>
-                        <td *matCellDef="let element" class="" mat-cell><i [matMenuTriggerFor]="menu25"
-                                class="material-icons c-p text-black">
-                                more_vert
-                            </i>
-                            <mat-menu #menu25="matMenu">
-                                <button mat-menu-item>View factsheet</button>
-                                <button mat-menu-item>Download SOA</button>
-                                <button mat-menu-item>Folio master details</button>
-                                <button mat-menu-item>SIP details</button>
-                                <button mat-menu-item class="bt-1">Transact online</button>
-                                <button mat-menu-item>Transaction slip</button>
-                                <button mat-menu-item class="bt-1">View transactions</button>
-                                <button mat-menu-item>Add records</button>
-                                <button mat-menu-item>Delete scheme</button>
-
-                            </mat-menu>
-                        </td>
-
-                        <td *matFooterCellDef class="br t-8 text-right" mat-footer-cell></td>
-                    </ng-container>
-
                     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>

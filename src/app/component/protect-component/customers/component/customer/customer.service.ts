@@ -557,6 +557,9 @@ export class CustomerService {
   getMfFolioMaster(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.FOLIO_MASTER_DETAILS, data);
   }
+  getMfSipDetails(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.SIP_DETAILS, data);
+  }
   searchFile(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.SEARCH_FILE, data);
   }
