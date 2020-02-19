@@ -59,6 +59,10 @@ export class AdviceCommoditiesComponent implements OnInit, AfterViewInit {
     this.selectedAssetId = selectedIdList;
     // console.log(this.selectedAssetId);
   }
+  checkSingle(flag, selectedData) {
+    (flag.checked) ? this.selectedAssetId.push(selectedData.id) : this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
+    console.log(this.selectedAssetId)
+  }
   getAllSchemeResponse(data) {
     this.goldDataSource.data = data.GOLD;
     this.goldDataSource.sort = this.sort1;

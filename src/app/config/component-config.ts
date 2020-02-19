@@ -160,7 +160,8 @@ export const appConfig = {
   ADD_SCRIP: 'account/asset/stock/scrip-name/add',
   EDIT_SCRIP_HOLDING_TRANSACTION: 'account/asset/stock/holding/transaction/edit',
   MUTUAL_FUND_GET: 'mutual-fund/mutualfund/list/get',
-  FOLIO_MASTER_DETAILS: 'mutual-fund/folioMasterDetails/list/get',
+  FOLIO_MASTER_DETAILS:'mutual-fund/folioMasterDetails/list/get',
+  SIP_DETAILS:'mutual-fund/sipDetails/list/get',
   ////////////////////////////////plan////////////////////////////
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
   SUBMIT_RISK: 'plan/risk-assessment/add',
