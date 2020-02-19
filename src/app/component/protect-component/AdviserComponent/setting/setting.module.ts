@@ -16,6 +16,7 @@ import { MfRtaDetailsComponent } from './setting-backup/setting-backup/mf-rta-de
 import { SettingEntryModule } from './setting-entry/setting-entry.module';
 import { SchemeBasketComponent } from './setting-backup/setting-backup/scheme-basket/scheme-basket.component';
 import { ModelPortfolioComponent } from './setting-backup/setting-backup/model-portfolio/model-portfolio.component';
+import { SettingBackupModule } from './setting-backup/setting-backup/setting-backup.module';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { ModelPortfolioComponent } from './setting-backup/setting-backup/model-p
     CommonModule,
     SettingRoutingModule,
     MaterialModule,
-    SettingEntryModule
+    SettingEntryModule,
+    SettingBackupModule
   ]
 })
 export class SettingModule { }

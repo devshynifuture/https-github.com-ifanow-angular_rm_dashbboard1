@@ -86,14 +86,13 @@
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <input matInput formControlName="balanceAsOn" class="form-control br-0" [matDatepicker]="picker" readonly>
+                <input matInput formControlName="balanceAsOn" [max]="maxDate" class="form-control br-0" [matDatepicker]="picker" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error class="f-12" [ngClass]="{'v-h':!(isBalanceAsOn && getFormControl().balanceAsOn.invalid || getFormControl().balanceAsOn.touched && getFormControl().balanceAsOn.invalid)}">
                     This field is required
                 </mat-error>
             </mat-form-field>
-
         </div>
     </div>
     <div class="row pt-40">

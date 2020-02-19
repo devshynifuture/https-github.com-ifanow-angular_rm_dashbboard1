@@ -201,13 +201,24 @@ export class DashboardSubscriptionComponent implements OnInit {
 
   getTotalRecivedByDash() {
     this.isLoading = true;
+    const beginDate = new Date();
+    beginDate.setMonth(beginDate.getMonth() - 1);
+    const endDate = new Date();
     const obj = {
       advisorId: this.advisorId,
-      period: 0
+      fromDate: this.formatDate(beginDate),
+      toDate:this.formatDate(endDate)
     };
     this.subService.getTotalRecived(obj).subscribe(
       data => this.getTotalRecivedRes(data)
     );
+  }
+
+  formatDate(date) {
+   let y = new Date(date).getFullYear();
+   let m = new Date(date).getMonth()+1;
+   let d = new Date(date).getDate();
+   return y+'-'+m+'-'+d;
   }
 
   getTotalRecivedRes(data) {
@@ -275,7 +286,7 @@ export class DashboardSubscriptionComponent implements OnInit {
 
     const obj = {
       advisorId: this.advisorId,
-      limit: 3,
+      limit: 9,
       offset: 0,
       dateType: 0,
       statusIdList: [this.subscriptionSummaryStatusFilter],

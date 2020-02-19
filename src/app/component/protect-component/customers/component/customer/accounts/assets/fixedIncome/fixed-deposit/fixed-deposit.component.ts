@@ -240,9 +240,6 @@ export class FixedDepositComponent implements OnInit {
     else if (this.fixedDeposit.get('compound').invalid) {
       this.fixedDeposit.get('compound').markAsTouched();
       return
-    } else if (this.fixedDeposit.get('compound').invalid) {
-      this.fixedDeposit.get('compound').markAsTouched();
-      return
     }
     else if (this.showFreqPayOpt == true && this.fixedDeposit.get('frequencyOfPayoutPerYear').invalid) {
       this.fixedDeposit.get('frequencyOfPayoutPerYear').markAsTouched();

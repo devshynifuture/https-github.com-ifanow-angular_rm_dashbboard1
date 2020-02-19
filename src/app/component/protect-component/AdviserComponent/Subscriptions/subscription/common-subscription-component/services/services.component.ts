@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { SubscriptionService } from '../../../subscription.service';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { EventService } from '../../../../../../../Data-service/event.service';
@@ -12,6 +12,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 })
 
 export class ServicesComponent implements OnInit {
+  @Output() changeServiceData = new EventEmitter();
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'Save',
@@ -214,9 +215,10 @@ export class ServicesComponent implements OnInit {
   }
   mapPlanToServiceRes(data) {
     console.log(data)
+    this.changeServiceData.emit(true);
     this.eventService.openSnackBar('Service is mapped', 'OK');
     this.barButtonOptions.active = false;
-    this.dialogClose()
+    // this.dialogClose()
   }
   savePlanMapToServiceResponse(data) {
     console.log("map plan to service Data", data)
@@ -227,6 +229,7 @@ export class ServicesComponent implements OnInit {
       this.eventService.openSnackBar('Service is mapped', 'OK');
 
     }
+    this.changeServiceData.emit(true);
     this.barButtonOptions.active = false;
   }
   saveServicePlanMapping() {

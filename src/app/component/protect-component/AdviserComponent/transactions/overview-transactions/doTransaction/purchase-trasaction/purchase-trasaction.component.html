@@ -15,7 +15,8 @@
     <div class="pt-90 pr-20 pl-20 pb-44">
         <div class="row">
             <div class="col-md-12 p-0">
-                <h5 class="m-0 text-black"> <img (click)="backToTransact('back',null)"src="/assets/images/svg/back-arrow.svg"
+                <!-- for prod build (click)="backToTransact('back',null)"src="/assets/images/svg/back-arrow.svg" -->
+                <h5 class="m-0 text-black"> <img 
                         class="v-initial pr-12">Investor name: {{selectedFamilyMember}}
                 </h5>
             </div>
@@ -118,14 +119,14 @@
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select class="form-control" formControlName="investmentAccountSelection">
-                                    <mat-option value="option" (onSelectionChange)="selectedFolio(folio)"
+                                    <mat-option value="option" (click)="selectedFolio(folio)"
                                         *ngFor="let folio of folioList">{{folio.folioNumber}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
                     </div>
 
-                    <div class="col-md-1 ">
+                    <div class="col-md-1 " *ngIf="showSpinner == true">
                         <mat-spinner class="mt-8"></mat-spinner>
                     </div>
                 </div>

@@ -8,145 +8,136 @@
     <ng-template #dynamic></ng-template>
 </div>
 <mat-sidenav-container class="sidenav-container" [hasBackdrop]="false">
-    <mat-sidenav #sidenav mode="over" class="mt-150" closed role="navigation">
-        <mat-nav-list class="width-230 pt-0" id="d">
 
-            <div class="pt-12 scorllable ">
-                <div class="right c-p" (click)="sidenav.toggle()">
-                    <mat-icon>
-                        close
-                    </mat-icon>
-                </div>
-                <div class="mt-50">
 
-                    <!-- dashboard not created so removing routerLink -->
-                    <a class="sidenav-link" routerLink="/support/dashboard" mat-list-item>
-                        <img src="assets/images/svg/time-meter.svg">
-                        <span class="title" mat-line>Dashboard</span>
-                    </a>
-                    <a class="sidenav-link" routerLink="/support/my-ifas" mat-list-item>
-                        <img src="assets/images/svg/people.svg">
-                        <span class="title" mat-line>My IFAs</span>
-                    </a>
-                    <a class="sidenav-link" routerLink="/support/ifa-onboarding" routerLinkActive="router-link-active"
-                        mat-list-item>
-                        <img src="assets/images/svg/file-lines.svg">
-                        <span class="title" mat-line>IFA onboarding</span>
-                    </a>
-                    <a class="sidenav-link" routerLink="/support/aum-reconciliation" mat-list-item>
-                        <img src="assets/images/svg/mail.svg">
-                        <span class="title" mat-line>AUM Reconciliation</span>
-                    </a>
-                    <a class="sidenav-link" routerLink="/support/file-ordering" mat-list-item>
-                        <img src="assets/images/svg/cart.svg">
-                        <span class="title" mat-line>File ordering & uploads</span>
-                    </a>
-                    <a class="sidenav-link" routerLink="/support/reports" mat-list-item>
-                        <img src="assets/images/svg/ruppes.svg">
-                        <span class="title" mat-line>Reports</span>
-                    </a>
-                    <a class="sidenav-link" routerLink="/support/miscellaneous" mat-list-item>
-                        <img src="assets/images/svg/ruppes.svg">
-                        <span class="title" mat-line>Miscellaneous</span>
-                    </a>
-
-                </div>
-            </div>
-        </mat-nav-list>
-    </mat-sidenav>
     <mat-sidenav-content id="left">
         <div class="leftside-overlay-toggle-button" (click)="sidenav.toggle()">
-            <mat-icon>
-                dehaze
-            </mat-icon>
+            <i class="material-icons f-30 text-custom">
+                keyboard_arrow_right
+            </i>
         </div>
-        <mat-toolbar class="bg-white p-0 logoWrap">
 
+        <div class="row">
+            <div class="col-md-2 bb d-flex align-items-center">
+                <img class="imgWidth"
+                    src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
+                <h5 class="logoh5">YOUR LOGO HERE</h5>
+            </div>
+            <div class="col-md-7 d-flex align-items-center bg-grey lt">
+                <!-- <mat-form-field class="serachbox">
+                    <div class="form-group searchBoxHeader">
+                        <input #inputSearch [matAutocomplete]="auto" class="form-control pl-40" matInput type="text">
+                        <i class="material-icons searchIcon"> search </i>
+                        <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete">
+                            <mat-option (click)="selectClient(singleClient)"
+                                *ngFor="let singleClient of filteredOptions | async" [value]="singleClient">
+                                <div class="row">
+                                    <div class="col-md-1 d-flex align-items-center">
+                                        <i class="material-icons"> person </i>
+                                    </div>
+                                    <div class="col-md-7 d-flex align-items-center">
+                                        <p class="t-left m-0">{{singleClient.name}}</p>
+                                    </div>
+                                    <div class="col-md-4 text-right">
+                                        <button class="small-primitive" mat-stroked-button>FAMILY MEMBER</button>
+                                    </div>
+                                </div>
+                            </mat-option>
 
-            <mat-form-field class="width40 serachbox">
-                <div class="form-group searchBoxHeader">
-                    <input #inputSearch [matAutocomplete]="auto" class="form-control pl-40" matInput type="text">
-                    <i class="material-icons searchIcon"> search </i>
-                    <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete">
-                        <mat-option (click)="selectClient(singleClient)"
-                            *ngFor="let singleClient of filteredOptions | async" [value]="singleClient">
-                            <div class="row">
-                                <div class="col-md-1 d-flex align-items-center">
-                                    <i class="material-icons"> person </i>
+                            <mat-option disabled>
+                                <div class="row">
+                                    <div class="col-md-1 d-flex align-items-center">
+                                        <i class="material-icons"> person </i>
+                                    </div>
+                                    <div class="col-md-7 d-flex align-items-center">
+                                        <p class="t-left m-0"> No Client Found</p>
+                                    </div>
+                                    <div class="col-md-4 text-right">
+                                        <button class="small-primitive" mat-stroked-button disabled>FAMILY
+                                            MEMBER</button>
+                                    </div>
                                 </div>
-                                <div class="col-md-7 d-flex align-items-center">
-                                    <p class="t-left m-0">{{singleClient.name}}</p>
-                                </div>
-                                <div class="col-md-4 text-right">
-                                    <button class="small-primitive" mat-stroked-button>FAMILY MEMBER</button>
-                                </div>
-                            </div>
-                        </mat-option>
+                            </mat-option>
+                        </mat-autocomplete>
+                    </div>
+                </mat-form-field> -->
+            </div>
 
-                        <mat-option disabled *ngIf="showDefaultDropDownOnSearch">
-                            <div class="row">
-                                <div class="col-md-1 d-flex align-items-center">
-                                    <i class="material-icons"> person </i>
-                                </div>
-                                <div class="col-md-7 d-flex align-items-center">
-                                    <p class="t-left m-0"> No Client Found</p>
-                                </div>
-                                <div class="col-md-4 text-right">
-                                    <button class="small-primitive" mat-stroked-button disabled>FAMILY MEMBER</button>
-                                </div>
-                            </div>
-                        </mat-option>
-                    </mat-autocomplete>
-                </div>
-            </mat-form-field>
-            <div class="hide-on-800 d-flex align-items-center justify-content-center right-fixed tablate-none">
-                <a class="sidenav-link" mat-list-item>
-                    <img class="t-15" src="assets/images/svg/bell.svg">
+            <div class="col-md-3 bg-grey lt justify-content-end d-flex align-items-center support_menu_social">
+                <a class="" mat-list-item>
+                    <img src="assets/images/svg/bell.svg">
                 </a>
-                <a class="sidenav-link" mat-list-item>
+                <a class="" mat-list-item>
                     <img src="assets/images/svg/earphone.svg">
                 </a>
-                <a class="sidenav-link pr-28" mat-list-item>
-                    <img class="c-p header-img" [matMenuTriggerFor]="appMenu" src="assets/images/img1.jpg">
-
-                    <mat-menu #appMenu="matMenu">
-
-                        <button mat-menu-item>Logout</button>
-                    </mat-menu>
+                <a class="" mat-list-item>
+                    <img src="assets/images/svg/setting.svg">
                 </a>
-            </div>
-            <i class="material-icons tabs-right desktop-none">
-                more_vert
-            </i>
-        </mat-toolbar>
 
-        <div class="desktop-none tabs-mt-70" id="showSettings">
-            <div class="bg-success">
-                <div class="search-container tabs-block">
-                    <i class="material-icons icon">
-                        search
-                    </i>
-                    <input class="search-field" name="email" placeholder="SEARCH" type="text">
-                </div>
-                <div class="pl-48 flex tabs-right">
-                    <a class="sidenav-link" mat-list-item>
-                        <mat-icon mat-list-icon>notifications_none</mat-icon>
-                    </a>
-                    <a class="sidenav-link" mat-list-item>
-                        <mat-icon mat-list-icon>headset_mic</mat-icon>
-                    </a>
-                    <a class="sidenav-link" mat-list-item>
-                        <mat-icon mat-list-icon>settings</mat-icon>
-                    </a>
-                </div>
             </div>
         </div>
+
+
+
+
         <div>
             <router-outlet>
             </router-outlet>
         </div>
     </mat-sidenav-content>
 
-</mat-sidenav-container>
 
-<!--<app-dialog-container [parentComponentName]="'leftSideBar'"></app-dialog-container>-->
+    <mat-sidenav #sidenav mode="over" class="sideNavClass" closed role="navigation">
+        <mat-nav-list class="width-230 pt-0" id="d">
+
+            <!-- <div class="right c-p" (click)="sidenav.toggle()">
+                <mat-icon>
+                    close
+                </mat-icon>
+            </div> -->
+
+            <div class="mt-50">
+
+                <!-- dashboard not created so removing routerLink -->
+                <a class="sidenav-link" routerLink="/support/dashboard" mat-list-item>
+                    <img src="assets/images/svg/time-meter.svg">
+                    <span class="title" mat-line>Dashboard</span>
+                </a>
+                <a class="sidenav-link" routerLink="/support/my-ifas" mat-list-item>
+                    <img src="assets/images/svg/people.svg">
+                    <span class="title" mat-line>My IFAs</span>
+                </a>
+                <a class="sidenav-link" routerLink="/support/ifa-onboarding" routerLinkActive="router-link-active"
+                    mat-list-item>
+                    <img src="assets/images/svg/file-lines.svg">
+                    <span class="title" mat-line>IFA onboarding</span>
+                </a>
+                <a class="sidenav-link" routerLink="/support/aum-reconciliation" mat-list-item>
+                    <img src="assets/images/svg/mail.svg">
+                    <span class="title" mat-line>AUM Reconciliation</span>
+                </a>
+                <a class="sidenav-link" routerLink="/support/file-ordering" mat-list-item>
+                    <img src="assets/images/svg/cart.svg">
+                    <span class="title" mat-line>File ordering & uploads</span>
+                </a>
+                <a class="sidenav-link" routerLink="/support/reports" mat-list-item>
+                    <img src="assets/images/svg/ruppes.svg">
+                    <span class="title" mat-line>Reports</span>
+                </a>
+                <a class="sidenav-link" routerLink="/support/miscellaneous" mat-list-item>
+                    <img src="assets/images/svg/ruppes.svg">
+                    <span class="title" mat-line>Miscellaneous</span>
+                </a>
+            </div>
+        </mat-nav-list>
+
+        <div class="leftside-overlay-toggle-button-close" (click)="sidenav.toggle()">
+            <i class="material-icons f-30 text-custom">
+                keyboard_arrow_left
+            </i>
+        </div>
+    </mat-sidenav>
+</mat-sidenav-container>
+<!--<app-dialog-container
+                [parentComponentName]="'leftSideBar'">
+                </app-dialog-container>-->

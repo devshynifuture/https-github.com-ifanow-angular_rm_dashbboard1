@@ -1,0 +1,171 @@
+<div class="pt-60 mb-100">
+    <div class="row">
+        <div class="col-md-2 col-2 fixed-top">
+            <div class="details_ui">
+                <ul>
+                    <li class="text-success">
+                        <span class="bg-success "> <i class="material-icons text-white">
+                                done
+                            </i> </span> Personal details
+                    </li>
+
+                    <li class="text-success">
+                        <span class="bg-success "> <i class="material-icons text-white">
+                                done
+                            </i> </span> Address details
+                    </li>
+
+                    <li class="text-primary">
+                        <span class="bg-primary text-white"> 3 </span> Bank details
+                    </li>
+
+                    <li>
+                        <span class="bg-grey lt"> 4 </span> Nominee details
+                    </li>
+
+                    <li>
+                        <span class="bg-grey lt"> 5 </span> FATCA details
+                    </li>
+
+                    <li>
+                        <span class="bg-grey lt"> 6 </span> Photo & Signature
+                    </li>
+
+                    <li>
+                        <span class="bg-grey lt"> 7 </span> Video KYC
+                    </li>
+
+                    <li>
+                        <span class="bg-grey lt"> 8 </span> Review & submit
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="col-md-10 offset-2 p-0 bl-1 ">
+            <div class="p-20">
+
+                <div class="row">
+                    <div class="col-md-6 p-0">
+                        <h3 class="f-18 mb-28 f-600"> Photo </h3>
+                        <h3 class="f-16 mb-10 f-500"> Upload photo </h3>
+                        <div class="uploadPhotoBox">
+                            Drag & drop file here
+                            <br> or
+                            <br> Browse
+                            <br> or
+                            <br> Capture via webcam
+                        </div>
+
+                        <h3 class="f-16 mt-40">Photo preview</h3>
+                        <div class="perviewPhotoBox">
+
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="col-md-6 pl-28 bl-1 ">
+                        <div class="row">
+                            <div class="col-md-8 p-0">
+                                <h3 class="f-18 mb-28 f-600"> Signature </h3>
+                            </div>
+
+                            <div class="col-md-4 p-0">
+                                <mat-form-field>
+                                    <mat-select class="form-control">
+                                        <mat-option>
+                                            Bank 1
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+
+                        <h3 class="f-16 mb-10 f-500"> Upload signature </h3>
+                        <div class="row">
+                            <div class="col-md-9 p-0">
+                                <div class="uploadPhotoBox">
+                                    Drag & drop file here
+                                    <br> or
+                                    <br> Browse
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 d-flex flex-column justify-content-end p-0 iconPetage">
+                                <p class="mb-4 f-16">Adjust contrast</p>
+                                <mat-form-field>
+                                    <input matInput maxlength="10" type="text" class="form-control percentage">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+
+
+
+                        <h3 class="f-16 mt-40">Signature preview</h3>
+                        <div class="perviewSignatureBox">
+
+                        </div>
+
+                        <h3 class="f-16 mt-28"> Tip</h3>
+                        <p class="f-14 text-custom m-0">Sign on a blank white paper with a black/blue pen & capture a photo to upload. Please ensure that the image is not blurred. Use the contrast option next to the uploaded image to adjust the quality.</p>
+
+
+                    </div>
+
+
+
+                </div>
+
+
+
+
+
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+</div>
+
+
+<div class="bottom-fixed  pl-20 pr-20 d-flex  w-100 row">
+
+    <div class="col-md-3 p-0 d-flex align-items-center ">
+        <a href="#" class="text-white f-300"> Skip this step </a>
+    </div>
+
+    <div class="col-md-5 center_menu">
+        <a class="activeLink" href=""> First holder </a>
+        <a class="activeLink" href=""> Second holder </a>
+        <a class="activeLink" href=""> Third holder </a>
+    </div>
+
+    <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">
+
+        <button class="br-0 perviousBtn text-inherit f-14" mat-button mat-raised-button>
+            PREVIOUS
+        </button>
+
+        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4">SAVE</button>
+        <button mat-button class="greenBtn  p-0 mw-40 br-left-white " [matMenuTriggerFor]="menu">
+            <i class="material-icons">
+                keyboard_arrow_up
+            </i></button>
+        <mat-menu #menu="matMenu">
+            <button class="btn-bottom br-0 text-inherit" mat-menu-item>
+                Item 1 </button>
+        </mat-menu>
+
+
+    </div>
+
+</div>

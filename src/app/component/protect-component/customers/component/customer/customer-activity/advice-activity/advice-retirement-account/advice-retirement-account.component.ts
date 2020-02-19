@@ -10,6 +10,7 @@ import { AddEPSComponent } from '../../../accounts/assets/retirementAccounts/add
 import { AuthService } from 'src/app/auth-service/authService';
 import { ActiityService } from '../../actiity.service';
 import { MatSort, MatTableDataSource } from '@angular/material';
+import { AdviceUtilsService } from '../advice-utils.service';
 
 @Component({
   selector: 'app-advice-retirement-account',
@@ -31,6 +32,7 @@ export class AdviceRetirementAccountComponent implements OnInit {
   epsDataSource: any;
   console: any;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  selectedAssetId: any = [];
 
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
 
@@ -114,6 +116,11 @@ export class AdviceRetirementAccountComponent implements OnInit {
     this.gratuityDataSource.sort = this.sort;
     this.npsDataSource = new MatTableDataSource(data.NPS);
     this.npsDataSource.sort = this.sort;
+    this.epfDataSource['tableFlag'] = (data.EPF.length == 0) ? false : true;
+    this.epsDataSource['tableFlag'] = (data.EPS.length == 0) ? false : true;
+    this.superannuationDataSource['tableFlag'] = (data.SUPERANNUATION.length == 0) ? false : true;
+    this.gratuityDataSource['tableFlag'] = (data.GRATUITY.length == 0) ? false : true;
+    this.npsDataSource['tableFlag'] = (data.NPS.length == 0) ? false : true;
     console.log(data);
   }
   openAddEPF(data, value) {
@@ -138,6 +145,13 @@ export class AdviceRetirementAccountComponent implements OnInit {
 
       }
     );
+  }
+  checkAll(flag, tableDataList) {
+    console.log(flag, tableDataList)
+    const { dataList, selectedIdList } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
+    // this.dataSource = new MatTableDataSource(dataList);
+    this.selectedAssetId = selectedIdList;
+    console.log(this.selectedAssetId);
   }
   openAddSchemeHolding(data) {
     const fragmentData = {
