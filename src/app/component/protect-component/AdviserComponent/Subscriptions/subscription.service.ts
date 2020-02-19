@@ -424,7 +424,7 @@ export class SubscriptionService {
   }
 
   getTotalRecived(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('period', data.period);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('fromDate', data.fromDate).set('toDate', data.toDate);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TOTAL_SALE_RECIVED, httpParams);
   }
 

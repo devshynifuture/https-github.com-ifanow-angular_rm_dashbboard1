@@ -1,40 +1,14 @@
-<div class="row bgColor">
-    <div class="col-md-3">
-        YOUR LOGO HERE
-    </div>
-    <div class="col-md-9 ">
-        <div class="row">
-            <div class="col-md-8 ">
-                <input matInput class="form-control">
-            </div>
-            <div class="col-md-4 p-0">
-                <div class="hide-on-800 d-flex  justify-content-center tablate-none">
-                    <a class="sidenav-link" mat-list-item>
-                        <img src="assets/images/svg/bell.svg">
-                    </a>
-                    <a class="sidenav-link" mat-list-item>
-                        <img src="assets/images/svg/earphone.svg">
-                    </a>
-                    <a class="sidenav-link" mat-list-item>
-                        <img src="assets/images/svg/setting.svg">
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="row">
     <div class="col-md-2 pr-4 pl-0">
         <div class="b-b pb-16">
             <div class="row">
-                <div class="col-md-6 pl-10">
+                <div class="col-md-6 pl-32">
                     <p class="f-12 roboto mb-10 mt-20">MY IFAs</p>
-                    <h5 class="f-34 m-0">128</h5>
+                    <h5 class="f-32 m-0">128</h5>
                 </div>
                 <div class="col-md-6">
                     <p class="f-12 roboto mb-10 mt-20">ACTIVE</p>
-                    <h5 class="f-34 m-0">91%</h5>
+                    <h5 class="f-32 m-0 text-success">91%</h5>
                 </div>
             </div>
 
@@ -47,22 +21,28 @@
             <div class="row">
                 <div class="col-md-4 pl-10">
                     <p class="f-12 roboto mb-10">TODAY</p>
-                    <h5 class="f-34 m-0">2</h5>
+                    <h5 class="f-20 m-0">2</h5>
                 </div>
                 <div class="col-md-4 pl-0">
                     <p class="f-12 roboto mb-10">YESTERDAY</p>
-                    <h5 class="f-34 m-0">1</h5>
+                    <h5 class="f-20 m-0">1</h5>
                 </div>
                 <div class="col-md-4 pl-10 pr-0 ">
                     <p class="f-12 roboto mb-10">THIS MTH</p>
-                    <h5 class="f-34 m-0">27</h5>
+                    <h5 class="f-20 d-flex align-items-center m-0">27
+                        <span class="f-12 d-flex text-success">
+                            <i class="material-icons f-12">
+                                arrow_upward
+                            </i> 53%
+                        </span>
+                    </h5>
                 </div>
             </div>
         </div>
 
         <div class="b-b pb-16">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 pl-10">
                     <h4 class="roboto mb-2 mt-20 f-16">Subscription summary</h4>
                     <p class="customColor f-12">LAST 30 DAYS</p>
                 </div>
@@ -73,21 +53,23 @@
     <div class="col-md-10 pl-0 b-l ">
         <div class="row">
             <div class="col-md-9 p-0 br">
-                <div class="row b-b p-20">
-                    <div class="col-md-8 p-0">
-                        <h4 class="f-20 m-0 roboto">RM Dashboard</h4>
+                <div class="row b-b p-12">
+                    <div class="col-md-9 pl-10 d-flex align-items-center">
+                        <h4 class="f-20 m-0 f-600 roboto">RM Dashboard</h4>
                     </div>
-                    <div class="col-md-4">
-                        <button mat-button [matMenuTriggerFor]="menu">Quick actions</button>
-                        <mat-menu #menu="matMenu">
-                            <button mat-menu-item>Add to stock master</button>
-                            <button mat-menu-item>Add to LI master</button>
-                            <button mat-menu-item>Update NJ/Prudent Switch trx</button>
-                        </mat-menu>
+                    <div class="col-md-3 text-right">
+                        <mat-form-field>
+                            <mat-select class="form-control ba-light">
+                                <mat-option> Quick actions </mat-option>
+                                <mat-option> Add to stock master </mat-option>
+                                <mat-option> Add to LI master </mat-option>
+                                <mat-option> Update NJ/Prudent Switch trx </mat-option>
+                            </mat-select>
+                        </mat-form-field>
                     </div>
                 </div>
 
-                <div class="bg-grey  p-12">
+                <div class="bg-grey lter p-12">
                     <div class="row">
                         <div class="col-md-4 p-9">
                             <div class="bg-white">
@@ -595,27 +577,54 @@
                     </div>
                 </div>
 
-                <h4 class="f-16 mt-32">Scheme mapping</h4>
+                <h4 class="f-16 f-600 mt-32">Scheme mapping</h4>
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="b-primitive">
-                            <p>ALL RTA</p>
-                            <h3>7</h3>
+                    <div class="col-md-12 p-0 d-flex justify-content-between ">
+
+                        <div class="b-primitive mapping_box">
+                            <p class="f-12 mb-4 text-custom">ALL RTA</p>
+                            <h3 class="f-20">7</h3>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="b-primitive" (click)="openUpperSlider('')">
-                            <p>NJ</p>
-                            <h3>2</h3>
+
+                        <div class="b-primitive mapping_box" (click)="openUpperSlider('')">
+                            <p class="f-12 mb-4 text-custom">NJ</p>
+                            <h3 class="f-20">2</h3>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="b-primitive">
-                            <p>PRUDENT</p>
-                            <h3>0</h3>
+
+                        <div class="b-primitive mapping_box">
+                            <p class="f-12 mb-4 text-custom">PRUDENT</p>
+                            <h3 class="f-20">0</h3>
                         </div>
+
                     </div>
                 </div>
+
+
+                <h4 class="f-16 f-600 mt-32">Tickets</h4>
+                <div class="row">
+                    <div class="col-md-12 p-0 d-flex justify-content-between ">
+
+                        <div class="b-primitive mapping_box">
+                            <p class="f-12 mb-4 text-custom">ALL</p>
+                            <h3 class="f-20">19</h3>
+                        </div>
+
+                        <div class="b-primitive mapping_box">
+                            <p class="f-12 mb-4 text-custom">OPEN</p>
+                            <h3 class="f-20">16</h3>
+                        </div>
+
+                        <div class="b-primitive mapping_box">
+                            <p class="f-12 mb-4 text-custom">ON HOLD</p>
+                            <h3 class="f-20">3</h3>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                
+
             </div>
         </div>
     </div>

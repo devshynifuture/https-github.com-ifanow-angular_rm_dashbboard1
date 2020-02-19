@@ -23,9 +23,9 @@ export class AdviceCommoditiesComponent implements OnInit, AfterViewInit {
   isLoading: boolean;
   @ViewChild("tableOne", { static: false }) sort1: MatSort;
   @ViewChild("tableTwo", { static: false }) sort2: MatSort;
-  goldDataSource = new MatTableDataSource([]);
+  goldDataSource: any = new MatTableDataSource();
   selectedAssetId: any = [];
-  otherDataSource: any;
+  otherDataSource: any = new MatTableDataSource();
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
   ngAfterViewInit() {
     this.goldDataSource.sort = this.sort1;
@@ -56,13 +56,13 @@ export class AdviceCommoditiesComponent implements OnInit, AfterViewInit {
   checkAll(flag, tableDataList) {
     console.log(flag, tableDataList)
     const { dataList, selectedIdList } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
-    this.goldDataSource.data = dataList;
     this.selectedAssetId = selectedIdList;
     // console.log(this.selectedAssetId);
   }
   getAllSchemeResponse(data) {
     this.goldDataSource.data = data.GOLD;
-    this.otherDataSource = data.OTHERS;
+    this.goldDataSource.sort = this.sort1;
+    this.otherDataSource.data = data.OTHERS;
     this.goldDataSource['tableFlag'] = (data.GOLD.length == 0) ? false : true;
     this.otherDataSource['tableFlag'] = (data.OTHERS.length == 0) ? false : true;
     console.log(data);

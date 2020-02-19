@@ -1,9 +1,9 @@
 <div class="pt-150  mandates">
     <div class="row">
-        <div class="col-md-8 p-0 d-flex align-items-center">
+        <div class="col-md-8 d-flex align-items-center">
             <h3 class="m-0">Mandates</h3>
         </div>
-        <div class="col-md-4 p-0 text-right">
+        <div class="col-md-4 text-right">
             <img src="/assets/images/svg/download-black.svg" class="b-a p-5">
             <img src="/assets/images/svg/reload.svg" class="b-a p-8">
             <button mat-stroked-button class="btn-default addon ml-12 mr-12 v-middle"><i
@@ -13,58 +13,64 @@
         </div>
     </div>
 
-    <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
-        <ng-container matColumnDef="position">
-            <th mat-header-cell *matHeaderCellDef class="br"> Platform </th>
-            <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
-        </ng-container>
+    <div class="row">
+        <div class="col-md-12">
+            <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Platform </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                </ng-container>
 
 
-        <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
-            <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
-        </ng-container>
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+                </ng-container>
 
 
-        <ng-container matColumnDef="weight">
-            <th mat-header-cell *matHeaderCellDef class="br"> Investor name </th>
-            <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
-        </ng-container>
+                <ng-container matColumnDef="weight">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Investor name </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+                </ng-container>
 
-        <ng-container matColumnDef="symbol">
-            <th mat-header-cell *matHeaderCellDef class="br"> Account number </th>
-            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
-        </ng-container>
-        <ng-container matColumnDef="bank">
-            <th mat-header-cell *matHeaderCellDef class="br"> Bank </th>
-            <td mat-cell *matCellDef="let element" class="br"> {{element.bank}} </td>
-        </ng-container>
-        <ng-container matColumnDef="bankac">
-            <th mat-header-cell *matHeaderCellDef class="br"> Bank A/c </th>
-            <td mat-cell *matCellDef="let element" class="br"> {{element.bankac}} </td>
-        </ng-container>
-        <ng-container matColumnDef="amt">
-            <th mat-header-cell *matHeaderCellDef class="br"> Amount </th>
-            <td mat-cell *matCellDef="let element" class="br"> {{element.amt}} </td>
-        </ng-container>
-        <ng-container matColumnDef="type">
-            <th mat-header-cell *matHeaderCellDef class="br"> Type </th>
-            <td mat-cell *matCellDef="let element" class="br"> {{element.type}} </td>
-        </ng-container>
-        <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
-            <td mat-cell *matCellDef="let element" class="br"> {{element.status}} </td>
-        </ng-container>
-        <ng-container matColumnDef="icons">
-            <th mat-header-cell *matHeaderCellDef> </th>
-            <td mat-cell *matCellDef="let element">
-                <i class="material-icons c-p">
-                    more_vert
-                </i>
-            </td>
-        </ng-container>
+                <ng-container matColumnDef="symbol">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Account number </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
+                </ng-container>
+                <ng-container matColumnDef="bank">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Bank </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.bank}} </td>
+                </ng-container>
+                <ng-container matColumnDef="bankac">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Bank A/c </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.bankac}} </td>
+                </ng-container>
+                <ng-container matColumnDef="amt">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Amount </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.amt}} </td>
+                </ng-container>
+                <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Type </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.type}} </td>
+                </ng-container>
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.status}} </td>
+                </ng-container>
+                <ng-container matColumnDef="icons">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let element">
+                        <i class="material-icons c-p">
+                            more_vert
+                        </i>
+                    </td>
+                </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </div>
+
+
 </div>

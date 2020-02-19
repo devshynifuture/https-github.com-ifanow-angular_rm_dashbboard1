@@ -45,7 +45,10 @@ export const componentList = [
     PermanentAddressComponent,
     BackDetailsComponent,
     NomineeDetailsComponent,
-    PopUpComponent
+    PopUpComponent,
+
+    // FatcaDetailsComponent,
+    // VideoKycComponent
 
 
 

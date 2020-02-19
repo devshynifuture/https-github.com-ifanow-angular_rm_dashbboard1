@@ -18,8 +18,7 @@
                     <mat-option *ngFor="let f of family" [value]="f.userName" (click)="getOwnerName(f)">
                         <span>{{f.userName}}</span>
                     </mat-option>
-                    <mat-option [value]="!clientData.name?clientData.clientName:clientData.name">
-                        {{!clientData.name?clientData.clientName:clientData.name}}</mat-option>
+                    <!-- <mat-option [value]="!clientData.name?clientData.clientName:clientData.name" >{{!clientData.name?clientData.clientName:clientData.name}}</mat-option> -->
                 </mat-select>
                 <mat-error class="f-12">
                     This field is required

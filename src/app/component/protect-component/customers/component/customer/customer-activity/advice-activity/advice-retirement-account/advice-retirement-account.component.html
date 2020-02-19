@@ -41,7 +41,8 @@
     </div>
     <div class="row pt-44">
         <div class="col-md-12 p-0">
-            <app-advice-action></app-advice-action>
+            <app-advice-action [data]="selectedAssetId" [ngClass]="{'v-h': selectedAssetId.length==0}">
+            </app-advice-action>
         </div>
     </div>
     <div class="row pt-32">
@@ -129,7 +130,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
     <div *ngIf="epfDataSource.tableFlag==false">
-        <h4 class="text-center pt-72">No Data Found</h4>
+        <h4 class="text-center pt-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
@@ -229,7 +230,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
     </table>
     <div *ngIf="npsDataSource.tableFlag==false">
-        <h4 class="text-center pt-72">No Data Found</h4>
+        <h4 class="text-center pt-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
@@ -299,7 +300,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
     </table>
     <div *ngIf="gratuityDataSource.tableFlag==false">
-        <h4 class="text-center pt-72">No Data Found</h4>
+        <h4 class="text-center pt-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
@@ -387,7 +388,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
     <div *ngIf="superannuationDataSource.tableFlag==false">
-        <h4 class="text-center pt-72">No Data Found</h4>
+        <h4 class="text-center pt-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
@@ -457,7 +458,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
     </table>
     <div *ngIf="epsDataSource.tableFlag==false">
-        <h4 class="text-center pt-72">No Data Found</h4>
+        <h4 class="text-center pt-44">No Data Found</h4>
     </div>
 </div>
 <div *ngIf="allAdvice == true">

@@ -8,6 +8,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { AddRealEstateComponent } from '../../../accounts/assets/realEstate/add-real-estate/add-real-estate.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ActiityService } from '../../actiity.service';
+import { AdviceUtilsService } from '../advice-utils.service';
 
 @Component({
   selector: 'app-advice-real-asset',
@@ -22,6 +23,7 @@ export class AdviceRealAssetComponent implements OnInit {
   isLoading: any;
   dataSource: any;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  selectedAssetId: any = [];
 
   constructor(private eventService: EventService, public dialog: MatDialog, private subInjectService: SubscriptionInject,
     private cusService: CustomerService, private activityService: ActiityService) { }
@@ -53,6 +55,13 @@ export class AdviceRealAssetComponent implements OnInit {
     this.dataSource['tableFlag'] = (data.REAL_ESTATE.length == 0) ? false : true;
     this.dataSource.sort = this.sort
     console.log(data);
+  }
+  checkAll(flag, tableDataList) {
+    console.log(flag, tableDataList)
+    const { dataList, selectedIdList } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
+    this.dataSource = new MatTableDataSource(dataList);
+    this.selectedAssetId = selectedIdList;
+    console.log(this.selectedAssetId);
   }
   openRealEstate(data, value) {
     const fragmentData = {

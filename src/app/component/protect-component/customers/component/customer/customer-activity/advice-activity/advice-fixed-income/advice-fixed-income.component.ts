@@ -94,7 +94,7 @@ export class AdviceFixedIncomeComponent implements OnInit {
   checkAll(flag, tableDataList) {
     console.log(flag, tableDataList)
     const { dataList, selectedIdList } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
-    this.dataSource = new MatTableDataSource(dataList);
+    // this.dataSource = new MatTableDataSource(dataList);
     this.selectedAssetId = selectedIdList;
     console.log(this.selectedAssetId);
   }
