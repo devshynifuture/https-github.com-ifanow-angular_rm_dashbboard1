@@ -282,6 +282,10 @@ export class SubscriptionService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.MAP_DOCUMENTS_TO_SERVICE, data);
   }
 
+  mapServiceToDocument(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.MAP_SERVICE_TO_DOCUMENT, data);
+  }
+
   getDataForCreateService(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DATA_FOR_CREATE_SERVICE, data);
   }

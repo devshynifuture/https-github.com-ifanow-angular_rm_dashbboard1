@@ -3,6 +3,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
 import { CustomerService } from '../../../../customer.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-mutual-fund',
@@ -12,11 +13,15 @@ import { CustomerService } from '../../../../customer.service';
 export class MutualFundComponent implements OnInit {
   viewMode: string;
   mfData: any;
+  advisorId: any;
+  clientId: any;
 
   constructor(public subInjectService:SubscriptionInject,public UtilService:UtilService,public eventService:EventService,private custumService:CustomerService) { }
   
   ngOnInit() {
     this.viewMode = 'Overview Report';
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
     this.getMutualFund();
   }
   getMutualFund(){

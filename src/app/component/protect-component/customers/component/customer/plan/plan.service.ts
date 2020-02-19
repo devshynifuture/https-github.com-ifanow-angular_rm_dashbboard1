@@ -139,4 +139,11 @@ export class PlanService {
     let httpParams = new HttpParams().set('deploymentId', data.deploymentId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DEPLOYMENT_DETAILS, httpParams)
   }
+  getMututalFundSchemeData() {
+    let httpParams = new HttpParams();
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MUTUAL_FUND_SCHEME, httpParams)
+  }
+  addPurchaseScheme(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_PURCHASE_SCHEME, data)
+  }
 }

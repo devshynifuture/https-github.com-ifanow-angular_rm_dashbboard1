@@ -123,6 +123,10 @@ export class AdviceRetirementAccountComponent implements OnInit {
     this.npsDataSource['tableFlag'] = (data.NPS.length == 0) ? false : true;
     console.log(data);
   }
+  checkSingle(flag, selectedData) {
+    (flag.checked) ? this.selectedAssetId.push(selectedData.id) : this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
+    console.log(this.selectedAssetId)
+  }
   openAddEPF(data, value) {
     const fragmentData = {
       flag: value,
