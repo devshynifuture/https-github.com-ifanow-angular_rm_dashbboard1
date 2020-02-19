@@ -10,6 +10,8 @@ export class MandatesTransactionsComponent implements OnInit {
   dataSource = ELEMENT_DATA;
   constructor() { }
 
+  isLoading = false;
+
   ngOnInit() {
   }
 

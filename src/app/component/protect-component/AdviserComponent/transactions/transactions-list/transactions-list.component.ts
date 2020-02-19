@@ -13,6 +13,8 @@ export class TransactionsListComponent implements OnInit {
   dataSource = ELEMENT_DATA;
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject) { }
 
+  isLoading = false;
+
   ngOnInit() {
   }
 
