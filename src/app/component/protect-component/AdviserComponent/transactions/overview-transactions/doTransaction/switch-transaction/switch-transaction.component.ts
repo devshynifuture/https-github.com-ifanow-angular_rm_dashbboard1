@@ -121,6 +121,10 @@ export class SwitchTransactionComponent implements OnInit {
       }
     );
   }
+  getbankDetails(event) {
+    console.log(event);
+  }
+
   getSchemeDetailsRes(data) {
     console.log('getSchemeDetailsRes == ', data)
     this.maiSchemeList = data
