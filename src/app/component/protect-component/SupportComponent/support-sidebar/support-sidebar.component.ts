@@ -24,6 +24,7 @@ export class SupportSidebarComponent extends DialogContainerComponent implements
   userInfo: any;
   changeName: any;
   shouldShowMainNav = false;
+  sidenavState: boolean = false;
   @ViewChild('sidenav', { static: true }) stateOfPanel: MatSidenav;
 
   constructor(private authService: AuthService, private _eref: ElementRef,
@@ -38,6 +39,7 @@ export class SupportSidebarComponent extends DialogContainerComponent implements
     this.changeName = "Dashboard";
     if (this.router.url === '/support/dashboard') {
       this.shouldShowMainNav = false;
+      this.sidenavState = false;
       console.log('at dashboard: shouldShowMainNav::', this.shouldShowMainNav)
 
       this.stateOfPanel.mode = 'over';
@@ -45,6 +47,7 @@ export class SupportSidebarComponent extends DialogContainerComponent implements
 
     } else {
       this.shouldShowMainNav = true;
+      this.sidenavState = true;
       this.stateOfPanel.mode = 'side';
       console.log('at other: shouldShowMainNav::', this.shouldShowMainNav)
       this.stateOfPanel.open();
@@ -54,11 +57,13 @@ export class SupportSidebarComponent extends DialogContainerComponent implements
   checkUrl(value) {
     if (value === 'dashboard') {
       this.shouldShowMainNav = false;
+      this.sidenavState = false;
       this.stateOfPanel.mode = 'over';
       console.log('at dashboard: shouldShowMainNav::', this.shouldShowMainNav)
       this.stateOfPanel.close();
     } else {
       this.shouldShowMainNav = true;
+      this.sidenavState = true;
       this.stateOfPanel.mode = 'side';
       console.log('at other: shouldShowMainNav::', this.shouldShowMainNav)
       this.stateOfPanel.open();
