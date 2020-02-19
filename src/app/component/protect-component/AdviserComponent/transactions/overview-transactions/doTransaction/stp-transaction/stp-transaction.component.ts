@@ -46,7 +46,7 @@ export class StpTransactionComponent implements OnInit {
   achMandateNSE: any;
   mandateDetails: any;
   bankDetails: any;
-  showSpinnerFolio= false;
+  showSpinnerFolio = false;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private processTransaction: ProcessTransactionService, private eventService: EventService,
@@ -266,12 +266,12 @@ export class StpTransactionComponent implements OnInit {
     this.fre = getFrerq
     this.frequency = getFrerq.frequency
     this.stpTransaction.controls["employeeContry"].setValidators([Validators.min(getFrerq.sipMinimumInstallmentAmount)])
-    if(this.getDataSummary.defaultClient.aggregatorType == 1){
+    if (this.getDataSummary.defaultClient.aggregatorType == 1) {
       this.dateArray(getFrerq.stpDates)
-    }else{
+    } else {
       this.dateArray(getFrerq.sipDates)
     }
-   
+
   }
   dateArray(sipDates) {
     var currentDate = new Date();
@@ -353,51 +353,68 @@ export class StpTransactionComponent implements OnInit {
     return this.stpTransaction.controls;
   }
   stp() {
-    let obj = {
+    if (this.stpTransaction.get('employeeContry').invalid) {
+      this.stpTransaction.get('employeeContry').markAsTouched();
+      return;
+    } else if (this.stpTransaction.get('frequency').invalid) {
+      this.stpTransaction.get('frequency').markAsTouched();
+      return;
+    } else if (this.stpTransaction.get('date').invalid) {
+      this.stpTransaction.get('date').markAsTouched();
+      return;
+    } else if (this.stpTransaction.get('installment').invalid) {
+      this.stpTransaction.get('installment').markAsTouched();
+      return;
+    } else if (this.stpTransaction.get('tenure').invalid) {
+      this.stpTransaction.get('tenure').markAsTouched();
+      return;
+    } else {
+      let obj = {
 
-      productDbId: this.schemeDetails.id,
-      toProductDbId: this.schemeDetailsTransfer.id,
-      mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
-      toMutualFundSchemeMasterId: this.schemeTransfer.mutualFundSchemeMasterId,
-      productCode: this.schemeDetails.schemeCode,
-      isin: this.schemeDetails.isin,
-      folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
-      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
-      tpSubBrokerCredentialId: this.getDataSummary.euin.id,
-      familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
-      adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
-      clientId: this.getDataSummary.defaultClient.clientId,
-      startDate: Number(new Date(this.stpTransaction.controls.date.value.replace(/"/g, ""))),
-      toIsin: this.schemeDetailsTransfer.isin,
-      schemeCd: this.schemeDetails.schemeCode,
-      euin: this.getDataSummary.euin.euin,
-      orderType: "STP",
-      buySell: "PURCHASE",
-      transCode: "NEW",
-      buySellType: "FRESH",
-      dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
-      amountType: "Amount",
-      noOfInstallments: this.stpTransaction.controls.installment.value,
-      frequencyType: "MONTHLY",
-      clientCode: this.getDataSummary.defaultClient.clientCode,
-      orderVal: this.stpTransaction.controls.employeeContry.value,
-      bseDPTransType: "PHYSICAL",
-      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-      mandateId: null,
-      bankDetailId: null,
-      nsePaymentMode: null,
-    }
-    if (this.getDataSummary.defaultClient.aggregatorType == 1) {
-      obj.mandateId = (this.achMandateNSE == undefined) ? null : this.achMandateNSE.id
-      obj.bankDetailId = this.bankDetails.id
-      obj.nsePaymentMode = (this.stpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE'
-    }
-    console.log('json stp', obj)
-    this.onlineTransact.transactionBSE(obj).subscribe(
-      data => this.stpBSERes(data), (error) => {
-        this.eventService.showErrorMessage(error);
+        productDbId: this.schemeDetails.id,
+        toProductDbId: this.schemeDetailsTransfer.id,
+        mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
+        toMutualFundSchemeMasterId: this.schemeTransfer.mutualFundSchemeMasterId,
+        productCode: this.schemeDetails.schemeCode,
+        isin: this.schemeDetails.isin,
+        folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+        tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+        tpSubBrokerCredentialId: this.getDataSummary.euin.id,
+        familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+        adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
+        clientId: this.getDataSummary.defaultClient.clientId,
+        startDate: Number(new Date(this.stpTransaction.controls.date.value.replace(/"/g, ""))),
+        toIsin: this.schemeDetailsTransfer.isin,
+        schemeCd: this.schemeDetails.schemeCode,
+        euin: this.getDataSummary.euin.euin,
+        orderType: "STP",
+        buySell: "PURCHASE",
+        transCode: "NEW",
+        buySellType: "FRESH",
+        dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
+        amountType: "Amount",
+        noOfInstallments: this.stpTransaction.controls.installment.value,
+        frequencyType: "MONTHLY",
+        clientCode: this.getDataSummary.defaultClient.clientCode,
+        orderVal: this.stpTransaction.controls.employeeContry.value,
+        bseDPTransType: "PHYSICAL",
+        aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+        mandateId: null,
+        bankDetailId: null,
+        nsePaymentMode: null,
       }
-    );
+      if (this.getDataSummary.defaultClient.aggregatorType == 1) {
+        obj.mandateId = (this.achMandateNSE == undefined) ? null : this.achMandateNSE.id
+        obj.bankDetailId = this.bankDetails.id
+        obj.nsePaymentMode = (this.stpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE'
+      }
+      console.log('json stp', obj)
+      this.onlineTransact.transactionBSE(obj).subscribe(
+        data => this.stpBSERes(data), (error) => {
+          this.eventService.showErrorMessage(error);
+        }
+      );
+    }
   }
   stpBSERes(data) {
     console.log('stp res == ', data)

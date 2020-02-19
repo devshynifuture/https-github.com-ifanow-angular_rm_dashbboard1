@@ -249,7 +249,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.confirmTrasaction = true
     const fragmentData = {
       flag: 'addNsc',
-      data,
+      data:data,
       id: 1,
       state: 'open65',
       componentName: ConfirmationTransactionComponent

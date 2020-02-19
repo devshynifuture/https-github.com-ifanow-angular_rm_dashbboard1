@@ -46,6 +46,9 @@
                                 <mat-hint align="start" class="f-12 text-custom  ">
                                     Last closing NAV: {{navOfSelectedScheme}}
                                 </mat-hint>
+                                <mat-error class="f-12 pt-4">
+                                    This field is required
+                                </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -66,6 +69,9 @@
                                         {{(flag.dividendReinvestmentFlag == 0)?'Dividend payout':'Dividend reinvestment'}}
                                     </mat-option>
                                 </mat-select>
+                                <mat-error class="f-12 pt-4">
+                                    This field is required
+                                </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -81,6 +87,9 @@
                                     <mat-option value="option" (click)="selectedFolio(folio)"
                                         *ngFor="let folio of folioList">{{folio.folioNumber}}</mat-option>
                                 </mat-select>
+                                <mat-error class="f-12 pt-4">
+                                    This field is required
+                                </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -126,6 +135,9 @@
                                 <mat-option value="3">All avialable units
                                 </mat-option>
                             </mat-select>
+                            <mat-error class="f-12 pt-4">
+                                This field is required
+                            </mat-error>
                         </mat-form-field>
                     </div>
                 </div>

@@ -47,6 +47,9 @@
                                 <mat-hint align="start" class="f-12 text-custom">Last closing NAV:
                                     {{navOfSelectedScheme}}
                                 </mat-hint>
+                                <mat-error class="f-12 pt-4">
+                                    This field is required
+                                </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -81,6 +84,9 @@
                                     <mat-option value="option" (click)="selectedFolio(folio)"
                                         *ngFor="let folio of folioList">{{folio.folioNumber}}</mat-option>
                                 </mat-select>
+                                <mat-error class="f-12 pt-4">
+                                    This field is required
+                                </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -122,6 +128,9 @@
                                     <mat-option value="option" (click)="selectedFrequency(frequency)"
                                         *ngFor="let frequency of swpFrequency">{{frequency.frequency}}</mat-option>
                                 </mat-select>
+                                <mat-error class="f-12 pt-4">
+                                    This field is required
+                                </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -150,7 +159,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pt-40 text-black pb-12">Select 1st date SIP</h5>
+                        <h5 class="m-0 pt-40 text-black pb-12">Select 1st date SWP</h5>
                     </div>
 
                     <div class="col-md-5 p-0">
@@ -159,6 +168,9 @@
                                 <mat-option value="{{date.dateToDisplay}}" *ngFor="let date of dateDisplay">
                                     {{date.dateToDisplay}}</mat-option>
                             </mat-select>
+                            <mat-error class="f-12 pt-4">
+                                This field is required
+                            </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -176,6 +188,9 @@
                                 value="3">Continue
                                 until cancelled</mat-option>
                             </mat-select>
+                            <mat-error class="f-12 pt-4">
+                                This field is required
+                            </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -188,6 +203,9 @@
                         <mat-form-field>
                             <input #employeeContry matInput maxlength="10" type="text" class="form-control br-0 rupess"
                                 formControlName="installment">
+                                <mat-error class="f-12 pt-4">
+                                    This field is required
+                                </mat-error>
                         </mat-form-field>
                     </div>
                 </div>

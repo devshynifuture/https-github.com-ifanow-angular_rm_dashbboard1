@@ -20,7 +20,8 @@
                     to <b>complete</b> it.</h5>
             </div>
         </div>
-        <div class="row">
+        <div class="row"
+            *ngIf="(confirmData.transactType == 'PURCHASE' && confirmData.paymentMode == 1) || (confirmData.transactType == 'SIP' && confirmData.paymentMode == 1)">
             <div class="col-md-12">
                 <div class="p-8">
                     <p class="m-0 roboto pt-28"> An email has been sent to <b>registered email id.</b> Your
@@ -42,7 +43,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12"
+                *ngIf="(confirmData.transactType == 'PURCHASE' && confirmData.paymentMode == 2 ) || (confirmData.transactType == 'REDEEM') || (confirmData.transactType == 'SIP' && confirmData.paymentMode == 2) || (confirmData.transactType == 'SWP') || (confirmData.transactType == 'STP')">
                 <div class="p-8">
                     <p class="m-0 roboto pt-28"> client to send an OTP to complete this
                         transaction

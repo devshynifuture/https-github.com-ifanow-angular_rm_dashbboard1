@@ -36,7 +36,7 @@ export class SwitchTransactionComponent implements OnInit {
   schemeTransfer: any;
   schemeDetailsTransfer: any;
   schemeListTransfer: any;
-  showSpinnerFolio= false
+  showSpinnerFolio = false
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private fb: FormBuilder, private eventService: EventService) { }
@@ -102,7 +102,7 @@ export class SwitchTransactionComponent implements OnInit {
     this.showUnits = true
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
     Object.assign(this.transactionSummary, { mutualFundId: folio.id });
-    this.transactionSummary = {...this.transactionSummary};
+    this.transactionSummary = { ...this.transactionSummary };
   }
   selectedScheme(scheme) {
     this.scheme = scheme
@@ -274,6 +274,14 @@ export class SwitchTransactionComponent implements OnInit {
   }
   switch() {
 
+   if (this.switchTransaction.get('employeeContry').invalid) {
+      this.switchTransaction.get('employeeContry').markAsTouched();
+      return;
+    } else if (this.switchTransaction.get('switchType').invalid) {
+      this.switchTransaction.get('switchType').markAsTouched();
+      return;
+    } else {
+
     let obj = {
 
       productDbId: this.schemeDetails.id,
@@ -306,11 +314,12 @@ export class SwitchTransactionComponent implements OnInit {
     }
 
     console.log('switch', obj)
-    this.onlineTransact.transactionBSE(obj).subscribe(
-      data => this.switchBSERes(data), (error) => {
-        this.eventService.showErrorMessage(error);
-      }
-    );
+      this.onlineTransact.transactionBSE(obj).subscribe(
+        data => this.switchBSERes(data), (error) => {
+          this.eventService.showErrorMessage(error);
+        }
+      );
+    }
   }
   switchBSERes(data) {
     console.log('switch res == ', data)
