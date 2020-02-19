@@ -21,6 +21,7 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
 })
 export class AddSuperannuationComponent implements OnInit {
   validatorType = ValidatorType
+  maxDate = new Date();
   showHide = false;
   inputData: any;
   ownerName: any;
