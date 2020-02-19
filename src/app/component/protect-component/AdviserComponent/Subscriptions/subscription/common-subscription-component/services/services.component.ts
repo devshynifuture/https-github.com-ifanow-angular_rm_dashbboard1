@@ -175,7 +175,7 @@ export class ServicesComponent implements OnInit {
     //   return delData.id == data.id;
     // });
     this.mappedData = this.mappedData.filter(delData => delData.id != data.id)
-    console.log(data);
+    console.log(this.mappedData,data, "unmappedData");
     // console.log(this.mappedData.length);
   }
 
