@@ -85,7 +85,9 @@
 
 .main-details {
   border-bottom: 1px solid #ddd !important;
-  padding: 15px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 }
 
 .main-details .mat-form-field-infix {
