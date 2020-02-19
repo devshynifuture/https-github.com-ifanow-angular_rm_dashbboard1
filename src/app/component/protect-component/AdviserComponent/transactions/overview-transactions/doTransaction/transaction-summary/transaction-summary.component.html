@@ -17,7 +17,7 @@
                 <div class="col-md-2" *ngIf="allData">
                     <button mat-stroked-button
                         *ngIf="transactionSummary && allData.showPlatformEdit ==true && transactionSummary.allEdit == true"
-                        class="primary-sm" (click)="showPlatform = true;">Edit</button>
+                        class="primary-sm" (click)="showPlatform = true;openDialog()">Edit</button>
                 </div>
             </div>
             <div class="row  pt-16 pb-16" *ngIf="defaultClient">
