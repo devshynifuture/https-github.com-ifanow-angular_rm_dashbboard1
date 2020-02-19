@@ -151,7 +151,7 @@ export class RedemptionTransactionComponent implements OnInit {
     this.schemeList = data
   }
   getbankDetails(bank) {
-    this.bankDetails = bank
+    this.bankDetails = bank[0]
     console.log('bank details', bank[0])
   }
   getAchmandateDetails(ach) {
@@ -248,14 +248,12 @@ export class RedemptionTransactionComponent implements OnInit {
       bseDPTransType: 'PHYSICAL',
       aggregatorType:this.getDataSummary.defaultClient.aggregatorType,
       allRedeem: (this.redemptionTransaction.controls.redeemType.value == 3) ? true : false,
-      mandateId:null,
       bankDetailId:null,
       nsePaymentMode:null,
 
       // teamMemberSessionId: redemptionTransaction.localStorage.mm.mainDetail.userDetails.teamMemberSessionId,
     }
     if (this.getDataSummary.defaultClient.aggregatorType == 1) {
-      obj.mandateId = (this.achMandateNSE == undefined)?null:this.achMandateNSE.mandateId
       obj.bankDetailId = this.bankDetails.id
       obj.nsePaymentMode = 'ONLINE'
     }

@@ -5,6 +5,9 @@ import { SubscriptionInject } from '../../../../Subscriptions/subscription-injec
 import { PopUpComponent } from '../pop-up/pop-up.component';
 import { MatDialog } from '@angular/material';
 import { of } from 'rxjs';
+import { PlatformPopUpComponent } from '../platform-pop-up/platform-pop-up.component';
+import { EuinSelectPopUpComponent } from '../euin-select-pop-up/euin-select-pop-up.component';
+import { BankSelectPopUpComponent } from '../bank-select-pop-up/bank-select-pop-up.component';
 
 @Component({
   selector: 'app-transaction-summary',
@@ -33,6 +36,13 @@ export class TransactionSummaryComponent implements OnInit {
   value: any;
   element: any;
   subBrokerCredList: any;
+  platForm = [{
+    value: 1,
+    platform: 'NSE'
+  }, {
+    value: 2,
+    platform: 'BSE'
+  }]
   constructor(private onlineTransact: OnlineTransactionService, private processTransaction: ProcessTransactionService,
     private subInjectService: SubscriptionInject, public dialog: MatDialog) { }
   showPlatform = false;
@@ -62,12 +72,55 @@ export class TransactionSummaryComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(PopUpComponent, {
       width: '470px',
-      data: { name: this.value, animal: this.element }
+      data: { investor: this.clientDataList, animal: this.element }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       this.element = result;
+      this.selectedInvestor = result
+      this.defaultClient = result
+      this.allData.defaultClient = this.selectedInvestor
+      this.defaultDetails.emit(this.allData);
+    });
+  }
+  openEuin(): void {
+    const dialogRef = this.dialog.open(EuinSelectPopUpComponent, {
+      width: '470px',
+      data: { subBroker: this.subBrokerCredList, animal: this.element }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.element = result;
+      this.allData.euin = result
+      this.defaultDetails.emit(this.allData);
+    });
+  }
+  openPlatform(): void {
+    const dialogRef = this.dialog.open(PlatformPopUpComponent, {
+      width: '470px',
+      data: { platform: this.platForm, animal: this.element }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.element = result;
+      this.selectedPlatform = result.value
+      this.showPlatform = false
+      this.getDefaultDetails(this.selectedPlatform)
+    });
+  }
+  openBank(): void {
+    const dialogRef = this.dialog.open(BankSelectPopUpComponent, {
+      width: '470px',
+      data: { bank: this.bankDetails, animal: this.element }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.element = result;
+      this.bankDetailsSend.emit(result);
     });
   }
   getBankDetails() {
@@ -147,7 +200,7 @@ export class TransactionSummaryComponent implements OnInit {
     this.defaultDetails.emit(this.allData);
     this.showInvestor = false
   }
-  setEuin(euin){
+  setEuin(euin) {
     this.allData.euin = euin
     this.defaultDetails.emit(this.allData);
     console.log('selected EUIN', euin)

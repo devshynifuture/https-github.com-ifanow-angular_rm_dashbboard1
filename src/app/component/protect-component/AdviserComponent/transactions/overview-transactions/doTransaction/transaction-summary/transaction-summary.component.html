@@ -8,30 +8,31 @@
                         <h5 class="m-0">{{(selectedPlatform =='2')?'BSE':(selectedPlatform =='1')?'NSE':'-'}} NMF II
                         </h5>
                     </div>
-                    <mat-select *ngIf="showPlatform == true" class="form-control" (selectionChange)="setPlatform($event)">
+                    <!-- <mat-select *ngIf="showPlatform == true" class="form-control"
+                        (selectionChange)="setPlatform($event)">
                         <mat-option value="1">NSE</mat-option>
                         <mat-option value="2">BSE</mat-option>
-                    </mat-select>
+                    </mat-select> -->
                 </div>
                 <div class="col-md-2" *ngIf="allData">
-                    <button mat-stroked-button *ngIf="transactionSummary && allData.showPlatformEdit ==true && transactionSummary.allEdit == true" class="primary-sm" (click)="showPlatform = true;openDialog()">Edit</button>
+                    <button mat-stroked-button
+                        *ngIf="transactionSummary && allData.showPlatformEdit ==true && transactionSummary.allEdit == true"
+                        class="primary-sm" (click)="showPlatform = true;openPlatform()">Edit</button>
                 </div>
             </div>
             <div class="row  pt-16 pb-16" *ngIf="defaultClient">
                 <div class="col-md-9">
                     <p class="m-0 roboto text-custom">Investor details</p>
                     <h5 class="m-0">{{(!transactionSummary)? '-': transactionSummary.selectedFamilyMember}}</h5>
-                    <div *ngIf="showInvestor == false">
-                        <h5 class="m-0">{{selectedInvestor || defaultClient.clientCode}} {{(defaultClient.holdingType)}}
+                    <div *ngIf="showInvestor == false && defaultClient">
+                        <h5 class="m-0">{{defaultClient.clientCode}} {{(defaultClient.holdingType)}}
                         </h5>
                     </div>
-                    <mat-select *ngIf="showInvestor == true" class="form-control">
-                        <mat-option *ngFor="let iin of clientDataList" (click)="setInvestor(iin)" [value]="iin.clientCode">{{iin.clientCode}}
-                        </mat-option>
-                    </mat-select>
                 </div>
                 <div class="col-md-2">
-                    <button mat-stroked-button class="primary-sm" *ngIf="transactionSummary && allData.showMappingEdit ==true && transactionSummary.allEdit == true" (click)="showInvestor = true">Edit</button>
+                    <button mat-stroked-button class="primary-sm"
+                        *ngIf="transactionSummary && allData.showMappingEdit ==true && transactionSummary.allEdit == true"
+                        (click)="openDialog()">Edit</button>
                 </div>
             </div>
             <div class="row  pt-16 pb-16" *ngIf="defaultCredential">
@@ -39,31 +40,37 @@
                     <p class="m-0 roboto text-custom">ARN/RIA and EUIN</p>
                     <h5 class="m-0">{{defaultCredential.brokerCode}}
                     </h5>
-                    <h5 class="m-0"> {{subBrokerCredList[0].euin}} - Ankit Mehta</h5>
+                    <h5 class="m-0"> {{allData.euin.euin}} - Ankit Mehta</h5>
                 </div>
-                <mat-select *ngIf="showEuin == true" class="form-control">
-                    <mat-option *ngFor="let euin of subBrokerCredList" (click)="setEuin(euin)"
-                        [value]="euin.euin">{{euin.euin}}
+                <!-- <mat-select *ngIf="showEuin == true" class="form-control">
+                    <mat-option *ngFor="let euin of subBrokerCredList" (click)="setEuin(euin)" [value]="euin.euin">
+                        {{euin.euin}}
                     </mat-option>
-                </mat-select>
-                <div class="col-md-2" *ngIf="transactionSummary && transactionSummary.allEdit == true && subBrokerCredList.length >1">
-                    <button mat-stroked-button class="primary-sm" (click)="showEuin = true">Edit</button>
+                </mat-select> -->
+                <div class="col-md-2"
+                    *ngIf="transactionSummary && transactionSummary.allEdit == true && subBrokerCredList.length >1">
+                    <button mat-stroked-button class="primary-sm" (click)="showEuin = true;openEuin()">Edit</button>
                 </div>
             </div>
             <div class="row  pt-16 pb-16">
                 <div class="col-md-12 p-0">
                     <p class="m-0 roboto text-custom">Scheme, folio and amount</p>
                     <div class="bar">
-                        <h5 class="m-0"><span class="f-500">Scheme:</span> {{(transactionSummary==undefined)?'':transactionSummary.schemeName}}
+                        <h5 class="m-0"><span class="f-500">Scheme:</span>
+                            {{(transactionSummary==undefined)?'':transactionSummary.schemeName}}
                         </h5>
                     </div>
-                    <div class="bar" *ngIf="(transactionSummary.transactType == 'STP'|| transactionSummary.transactType == 'SWITCH')">
-                        <h5 class="m-0"><span class="f-500">Scheme switch in:</span> {{(transactionSummary==undefined)?'':transactionSummary.schemeNameTranfer}}
+                    <div class="bar"
+                        *ngIf="(transactionSummary.transactType == 'STP'|| transactionSummary.transactType == 'SWITCH')">
+                        <h5 class="m-0"><span class="f-500">Scheme switch in:</span>
+                            {{(transactionSummary==undefined)?'':transactionSummary.schemeNameTranfer}}
                         </h5>
                     </div>
-                    <h5 class="m-0"> <span class="f-500">Folio:</span>{{(transactionSummary==undefined)?'':transactionSummary.folioNumber}}
+                    <h5 class="m-0"> <span
+                            class="f-500">Folio:</span>{{(transactionSummary==undefined)?'':transactionSummary.folioNumber}}
                     </h5>
-                    <h5 class="m-0"> <span class="f-500">Amount:</span> ₹{{(transactionSummary==undefined)?'':transactionSummary.enteredAmount}}/Lumpsum
+                    <h5 class="m-0"> <span class="f-500">Amount:</span>
+                        ₹{{(transactionSummary==undefined)?'':transactionSummary.enteredAmount}}/Lumpsum
                     </h5>
                 </div>
             </div>
@@ -99,15 +106,17 @@
                         <span class="f-500">Ac no.:</span>
                         {{(defaultClient==undefined)?'':defaultClient.accountNo}}</h5>
                 </div>
-                <div class="col-md-2" *ngIf=" transactionSummary && showBankEdit == true && transactionSummary.allEdit == true && (transactionSummary.transactType != 'STP'|| transactionSummary.transactType != 'SWITCH')">
-                    <button mat-stroked-button class="primary-sm" (click)="showbank = true">Edit</button>
+                <div class="col-md-2"
+                    *ngIf=" transactionSummary && showBankEdit == true && transactionSummary.allEdit == true && (transactionSummary.transactType != 'STP'|| transactionSummary.transactType != 'SWITCH')">
+                    <button mat-stroked-button class="primary-sm" (click)="showbank = true;openBank()">Edit</button>
                 </div>
             </div>
             <div class="row  pt-16 pb-16" *ngIf="selectedPlatform== 1 && transactionSummary.paymentMode ==2">
                 <div class="col-md-9">
                     <p class="m-0 roboto text-custom">UMRN details</p>
                     <h5 class="m-0">
-                        <span class="f-500">UMRN no.:</span> {{(transactionSummary==undefined)?'':(transactionSummary.paymentMode==2)?'Debit mandate':'Net banking'}}
+                        <span class="f-500">UMRN no.:</span>
+                        {{(transactionSummary==undefined)?'':(transactionSummary.paymentMode==2)?'Debit mandate':'Net banking'}}
                     </h5>
                     <!-- <mat-select class="form-control">
                         <mat-option *ngFor="let umrn of achMandateNSE" (click)="selectUmrn(umrn)" [value]="umrn.umrnNo">
@@ -115,7 +124,8 @@
                         </mat-option>
                     </mat-select> -->
                 </div>
-                <div class="col-md-2" *ngIf=" transactionSummary && transactionSummary.allEdit == true  && (transactionSummary.transactType == 'PURCHASE'|| transactionSummary.transactType == 'SIP')">
+                <div class="col-md-2"
+                    *ngIf=" transactionSummary && transactionSummary.allEdit == true  && (transactionSummary.transactType == 'PURCHASE'|| transactionSummary.transactType == 'SIP')">
                     <button mat-stroked-button class="primary-sm">Edit</button>
                 </div>
             </div>
@@ -123,9 +133,12 @@
     </mat-tab>
     <mat-tab label="Rationale">
         <div class="p-20 rationaletabs">
-            <p class="m-0 roboto text-custom">The scheme seeks to generate long-term capital appreciation from a diversified portfolio of predominantly equity and equity related instruments.
+            <p class="m-0 roboto text-custom">The scheme seeks to generate long-term capital appreciation from a
+                diversified portfolio of predominantly equity and equity related instruments.
             </p>
-            <p class="m-0 roboto text-custom pt-20"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sit amet nulla facilisi morbi tempus iaculis. Dui ut ornare lectus sit amet est placerat in egestas. Sed turpis tincidunt
+            <p class="m-0 roboto text-custom pt-20"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Sit amet nulla facilisi morbi tempus
+                iaculis. Dui ut ornare lectus sit amet est placerat in egestas. Sed turpis tincidunt
                 id aliquet risus feugiat in. Magna sit amet purus gravida quis blandit turpis cursus.
             </p>
             <div class="row pt-12">

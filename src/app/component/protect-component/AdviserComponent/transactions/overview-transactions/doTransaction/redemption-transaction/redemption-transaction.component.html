@@ -135,7 +135,7 @@
                         <h5 class="m-0 pt-28 text-black pb-12"> Amount/Units</h5>
                     </div>
 
-                    <div class="col-md-5 p-0">
+                    <div class="col-md-5 p-0" *ngIf="(redemptionTransaction.get('redeemType').value) != 3">
                         <div class="form-group mb-0 iconRupess">
                             <mat-form-field>
                                 <input #employeeContry matInput maxlength="10" type="text" class="form-control  rupess"

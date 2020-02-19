@@ -219,7 +219,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
     this.platformType = this.getDataSummary.defaultClient.aggregatorType
-    this.purchaseTransaction.controls.investor.reset();
+  //  this.purchaseTransaction.controls.investor.reset();
   }
   selectPaymentMode(value) {
     Object.assign(this.transactionSummary, { paymentMode: value });

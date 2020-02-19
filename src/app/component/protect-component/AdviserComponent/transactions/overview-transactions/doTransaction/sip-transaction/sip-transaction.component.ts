@@ -138,11 +138,13 @@ export class SipTransactionComponent implements OnInit {
     }
   }
   getNewSchemesRes(data) {
+    this.getNSEAchmandate()
     this.showSpinner = false
     console.log('new schemes', data)
     this.schemeList = data
   }
   getExistingSchemesRes(data) {
+    this.getNSEAchmandate()
     this.showSpinner = false
     this.schemeList = data
   }
