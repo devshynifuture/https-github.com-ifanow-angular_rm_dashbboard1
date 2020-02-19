@@ -101,7 +101,7 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
     this.fragmentDataSubsUpper = this.referenceData
     this.upperDataSubsUpper = this.referenceData.data;
 
-    console.log("upper data", this.referenceData);
+    console.log("upper data fragmentDataSubsUpper", this.fragmentDataSubsUpper);
     // }
     // this.upperState = "open";
   }
@@ -139,9 +139,10 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
       this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: false });
     }
   }
-
+  addedData:any;
   getData(event) {
     console.log(event, "data overview");
+    this.addedData = event
     if (event != undefined) {
       this.isRefreshData = true;
     }
