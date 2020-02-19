@@ -59,7 +59,7 @@
                         Coupon payout
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(bonds.couponPayoutFrequencyId=='1')?'Zero coupon':(bonds.couponPayoutFrequencyId=='2')?'Monthly':(bonds.couponPayoutFrequencyId=='3')?'Quarterly':(bonds.couponPayoutFrequencyId=='4')?'Semi annually':(bonds.couponPayoutFrequencyId=='5')?'Annually':'-'}}
+                        {{(bonds.couponPayoutFrequencyId=='1')?'Zero coupon':(bonds.couponPayoutFrequencyId=='2')?'Monthly':(bonds.couponPayoutFrequencyId=='3')?'Quarterly':(bonds.couponPayoutFrequencyId=='4')?'Half yearly':(bonds.couponPayoutFrequencyId=='5')?'Yearly':'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -92,7 +92,7 @@
                         Compounding
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(bonds.compounding=='1')?'Daily':(bonds.compounding=='2')?'Monthly':(bonds.compounding=='3')?'Quarterly':(bonds.compounding=='4')?'Semi annually':(bonds.compounding=='5')?'Annually':'-'}}
+                        {{(bonds.compounding=='1')?'Daily':(bonds.compounding=='2')?'Monthly':(bonds.compounding=='3')?'Quarterly':(bonds.compounding=='4')?'Half yearly':(bonds.compounding=='5')?'Yearly':'-'}}
                     </div>
                 </div>
 
