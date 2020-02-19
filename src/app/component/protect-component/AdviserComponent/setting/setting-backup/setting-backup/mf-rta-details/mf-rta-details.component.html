@@ -1,1 +1,187 @@
-<p>mf-rta-details works!</p>
+<div class="row">
+    <div class="col-md-8 p-0">
+        <h4 class="m-0 text-black">MF RTA details </h4>
+    </div>
+    <div class="col-md-4 p-0 text-right">
+        <button class="btn-primary pl-8" mat-stroked-button [matMenuTriggerFor]="menu">
+            <i class="material-icons text-white pr-8">
+                add
+            </i> ADD NEW
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item>CAMS</button>
+            <button mat-menu-item>Karvy(KFintech)</button>
+            <button mat-menu-item>Franklin Templeton</button>
+            <button mat-menu-item>CAMS Fundsent</button>
+        </mat-menu>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-7 p-0">
+        <h5 class="m-0 pt-24">CAMS</h5>
+        <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
+
+            <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef class="br"> Registered email ID </th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="weight">
+                <th mat-header-cell *matHeaderCellDef class="br"> Mailback password </th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="symbol">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let element">
+                    <i class="material-icons">
+                        more_vert
+                    </i>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+    <div class="col-md-12 p-0">
+        <h5 class="m-0 pt-24">Karvy (KFintech)</h5>
+        <table mat-table [dataSource]="dataSource1" class="mt-8" id="table-low">
+
+            <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef class="br"> Login ID </th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="weight">
+                <th mat-header-cell *matHeaderCellDef class="br"> Login password </th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef class="br"> Registered email ID </th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.email}} </td>
+            </ng-container>
+            <ng-container matColumnDef="mail">
+                <th mat-header-cell *matHeaderCellDef class="br"> Mailback password</th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.mail}} </td>
+            </ng-container>
+            <ng-container matColumnDef="use">
+                <th mat-header-cell *matHeaderCellDef class="br"> Use for file ordering? </th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.use}} </td>
+            </ng-container>
+            <ng-container matColumnDef="icons">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let element">
+                    <i class="material-icons">
+                        more_vert
+                    </i>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+        </table>
+    </div>
+    <div class="col-md-10 p-0">
+        <h5 class="m-0 pt-24">Franklin Templeton</h5>
+        <table mat-table [dataSource]="dataSource2" class="mt-8" id="table-low">
+
+            <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef class="br"> Login ID </th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="weight">
+                <th mat-header-cell *matHeaderCellDef class="br"> Login password </th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef class="br"> Registered email ID </th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.email}} </td>
+            </ng-container>
+            <ng-container matColumnDef="mail">
+                <th mat-header-cell *matHeaderCellDef class="br"> Mailback password</th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.mail}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="icons">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let element">
+                    <i class="material-icons">
+                        more_vert
+                    </i>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+        </table>
+    </div>
+    <div class="col-md-11 p-0 pb-44">
+        <h5 class="m-0 pt-24">Franklin Templeton</h5>
+        <table mat-table [dataSource]="dataSource2" class="mt-8" id="table-low">
+
+            <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef class="br"> Login ID </th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="weight">
+                <th mat-header-cell *matHeaderCellDef class="br"> Login password </th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef class="br"> Registered email ID </th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.email}} </td>
+            </ng-container>
+            <ng-container matColumnDef="mail">
+                <th mat-header-cell *matHeaderCellDef class="br"> Mailback password</th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.mail}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="icons">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let element">
+                    <i class="material-icons">
+                        more_vert
+                    </i>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+        </table>
+    </div>
+</div>

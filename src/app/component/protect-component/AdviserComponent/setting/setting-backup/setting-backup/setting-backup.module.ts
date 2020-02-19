@@ -9,7 +9,7 @@ import { SettingBackupComponent } from '../setting-backup.component';
 
 
 @NgModule({
-  declarations: [SettingBackupComponent,  MfRtaDetailsComponent, SchemeBasketComponent, ModelPortfolioComponent],
+  declarations: [SettingBackupComponent],
   imports: [
     CommonModule,
     SettingBackupRoutingModule

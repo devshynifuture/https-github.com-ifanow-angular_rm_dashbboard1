@@ -45,7 +45,7 @@ export class RedemptionTransactionComponent implements OnInit {
     console.log('This is Input data of FixedDepositComponent ', data);
 
     if (this.isViewInitCalled) {
-      this.getdataForm('');
+      // this.getdataForm('');
     }
   }
 
@@ -107,7 +107,7 @@ export class RedemptionTransactionComponent implements OnInit {
       transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
-      investor: [(!data) ? '' : this.scheme, [Validators.required]],
+      //investor: [(!data) ? '' : this.scheme, [Validators.required]],
       employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required]],
       redeemType:[(!data) ? '' : data.redeemType ,[Validators.required]],
       investmentAccountSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
@@ -215,11 +215,11 @@ export class RedemptionTransactionComponent implements OnInit {
     this.folioList = data
   }
   selectedFolio(folio) {
-    this.folioDetails = folio
     this.showUnits = true
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
     Object.assign(this.transactionSummary, { mutualFundId: folio.id });
-    this.transactionSummary = {...this.transactionSummary};
+    // this.transactionSummary = {...this.transactionSummary};
+    this.folioDetails = folio
   }
   redeem() {
     let obj = {

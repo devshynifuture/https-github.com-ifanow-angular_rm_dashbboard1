@@ -124,20 +124,24 @@ export class ServicesComponent implements OnInit {
     );
   }
   servicesMappedRes(data) {
-    console.log(data);
     this.isLoading = false;
     if (data) {
+      console.log(data, "servicePricing");
       this.planServiceData = data;
       const modifiedArray = []
       this.planServiceData.forEach(element => {
-        const newElement = {
-          ...element,
-          ...element.servicePricing
-        };
-        if (element.selected == true) {
-          this.mappedData.push(element);
-        }
-        modifiedArray.push(newElement);
+        // const newElement = {
+        //   ...element,
+        //   ...element.servicePricing
+        // };
+        // const newElement = {
+        
+          if (element.selected == true) {
+            this.mappedData.push(element);
+          }
+          element.servicePricing['pricingList'] = element.servicePricing;
+        // };
+        modifiedArray.push(element);
       });
 
       this.planServiceData = modifiedArray;

@@ -37,11 +37,14 @@ export class TransactionSummaryComponent implements OnInit {
   @Output() defaultDetails = new EventEmitter();
   @Output() bankDetailsSend = new EventEmitter();
   @Output() achmandateDetails = new EventEmitter();
+  @Input() set folioChange(data) {
+    console.log('This is Input data of foolio ### ', data);
+    this.getDefaultDetails(this.transactionSummary.aggregatorType);
+  }
   @Input() set data(data) {
     this.inputData = data;
     console.log('This is Input data of FixedDepositComponent ', data);
     this.transactionSummary = data
-    this.getDefaultDetails(this.transactionSummary.aggregatorType);
   }
 
   get data() {

@@ -10,15 +10,20 @@ import { SettingBackofficeComponent } from './setting-backoffice/setting-backoff
 import { UsersComponent } from './setting-user-roles/setting-users-roles/users/users.component';
 import { RolesComponent } from './setting-user-roles/setting-users-roles/roles/roles.component';
 import { HierachyComponent } from './setting-user-roles/setting-users-roles/hierachy/hierachy.component';
-import { SettingEntryModule } from './setting-entry/setting-entry.module';
+
 import { ArnRiaDetailsComponent } from './setting-backup/setting-backup/arn-ria-details/arn-ria-details.component';
+import { MfRtaDetailsComponent } from './setting-backup/setting-backup/mf-rta-details/mf-rta-details.component';
+import { SettingEntryModule } from './setting-entry/setting-entry.module';
+import { SchemeBasketComponent } from './setting-backup/setting-backup/scheme-basket/scheme-basket.component';
+import { ModelPortfolioComponent } from './setting-backup/setting-backup/model-portfolio/model-portfolio.component';
 import { SettingBackupModule } from './setting-backup/setting-backup/setting-backup.module';
 
 
 @NgModule({
   declarations: [LeftsidebarSettingComponent, SettingOrgProfileComponent, SettingCrmComponent,
     SettingUserRolesComponent, SettingBackofficeComponent, UsersComponent, RolesComponent,
-    HierachyComponent, ArnRiaDetailsComponent],
+    HierachyComponent, ArnRiaDetailsComponent, MfRtaDetailsComponent, SchemeBasketComponent,
+    ModelPortfolioComponent],
   imports: [
     CommonModule,
     SettingRoutingModule,
