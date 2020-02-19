@@ -276,7 +276,7 @@
             <div class="col-md-4 bg-grey lter p-0">
                 <!-- (achmandateDetails)='getAchmandateDetails($event)' for prod build -->
                 <app-transaction-summary [data]="transactionSummary" (defaultDetails)='getDefaultDetails($event)'
-                (bankDetailsSend)='getbankDetails($event)' >
+                (bankDetailsSend)='getbankDetails($event)'(folioChange)='onFolioChange($event)' >
             </app-transaction-summary>
             </div>
         </div>

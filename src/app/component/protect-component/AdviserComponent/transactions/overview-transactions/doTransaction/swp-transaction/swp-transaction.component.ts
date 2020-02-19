@@ -181,6 +181,9 @@ export class SwpTransactionComponent implements OnInit {
   enteredAmount(value) {
     Object.assign(this.transactionSummary, { enteredAmount: value });
   }
+  onFolioChange(folio) {
+    this.swpTransaction.controls.folioSelection.reset()
+   }
   selectedFolio(folio) {
     this.folioDetails = folio
     this.currentValue =this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme,folio.balanceUnit)

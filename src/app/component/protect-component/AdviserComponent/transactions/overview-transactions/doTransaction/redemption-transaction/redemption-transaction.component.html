@@ -205,7 +205,7 @@
 
             <div class="col-md-4 bg-grey lter p-0">
                 <app-transaction-summary [data]="transactionSummary" (defaultDetails)='getDefaultDetails($event)'
-                    (bankDetailsSend)='getbankDetails($event)' (achmandateDetails)='getAchmandateDetails($event)'
+                    (bankDetailsSend)='getbankDetails($event)' (folioChange)='onFolioChange($event)'
                     [folioChange]="folioDetails">
                 </app-transaction-summary>
             </div>

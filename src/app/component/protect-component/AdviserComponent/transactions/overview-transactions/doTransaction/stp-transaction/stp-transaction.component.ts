@@ -88,6 +88,9 @@ export class StpTransactionComponent implements OnInit {
     
      this.stpTransaction.controls.transferIn.reset();
   }
+  onFolioChange(folio) {
+    this.stpTransaction.controls.folioSelection.reset()
+   }
   getMandateDetails() {
     let obj1 = {
       advisorId: this.getDataSummary.defaultClient.advisorId,

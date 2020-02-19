@@ -255,9 +255,9 @@ export class SipTransactionComponent implements OnInit {
     this.bankDetails = value[0]
     console.log('bank details', value)
   }
-  getAchmandateDetails(value) {
-    console.log('achMandate details', value)
-  }
+  onFolioChange(folio) {
+    this.sipTransaction.controls.folioSelection.reset()
+   }
   getMandateDetails() {
     let obj1 = {
       advisorId: this.getDataSummary.defaultClient.advisorId,

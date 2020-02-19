@@ -160,10 +160,9 @@ export class RedemptionTransactionComponent implements OnInit {
     this.bankDetails = bank[0]
     console.log('bank details', bank[0])
   }
-  getAchmandateDetails(ach) {
-    this.achMandateNSE = ach
-    console.log('ach details', ach)
-  }
+  onFolioChange(folio) {
+    this.redemptionTransaction.controls.folioSelection.reset()
+   }
   selectedScheme(scheme) {
     this.scheme = scheme
     Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });

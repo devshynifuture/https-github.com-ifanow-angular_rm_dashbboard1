@@ -53,7 +53,7 @@ export class TransactionSummaryComponent implements OnInit {
   showPlatform = false;
   @Output() defaultDetails = new EventEmitter();
   @Output() bankDetailsSend = new EventEmitter();
-  @Output() achmandateDetails = new EventEmitter();
+  @Output() folioEmpty = new EventEmitter();
   @Input() set folioChange(data) {
     console.log('This is Input data of foolio ### ', data);
   }
@@ -148,24 +148,8 @@ export class TransactionSummaryComponent implements OnInit {
     }
 
   }
-  getNSEAchmandate() {
-    let obj1 = {
-      tpUserCredFamilyMappingId: this.defaultClient.tpUserCredFamilyMappingId
-    }
-    this.onlineTransact.getNSEAchmandate(obj1).subscribe(
-      data => this.getNSEAchmandateRes(data)
-    );
-  }
-  getNSEAchmandateRes(data) {
-    console.log('getNSEAchmandateRes', data)
-    this.achMandateNSE = data[0]
-    this.achmandateDetails.emit(this.bankDetails);
-  }
   selectBank(bank) {
     this.bankDetailsSend.emit(bank);
-  }
-  selectUmrn(umrn) {
-    this.achmandateDetails.emit(umrn);
   }
 
   getDefaultDetails(platform) {
@@ -218,6 +202,7 @@ export class TransactionSummaryComponent implements OnInit {
       },
       negativeMethod: () => {
         console.log('');
+        this.folioChange.emit(this.bankDetails);
       }
     };
     console.log(dialogData + '11111111111111');

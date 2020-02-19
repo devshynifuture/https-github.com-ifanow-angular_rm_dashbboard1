@@ -104,6 +104,9 @@ export class SwitchTransactionComponent implements OnInit {
     this.showSpinner = false
     this.schemeList = data
   }
+  onFolioChange(folio) {
+    this.switchTransaction.controls.folioSelection.reset()
+   }
   selectedFolio(folio) {
     this.folioDetails = folio
     this.currentValue =this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme,folio.balanceUnit)
