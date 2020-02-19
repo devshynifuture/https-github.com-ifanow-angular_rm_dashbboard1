@@ -34,7 +34,7 @@ export class MyIfasComponent implements OnInit {
       flag: 'ifaDetails',
       data,
       id: 1,
-      state: 'open30',
+      state: 'open50',
       componentName: OrderHistoricalFileComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
