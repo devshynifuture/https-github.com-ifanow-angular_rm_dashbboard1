@@ -11,7 +11,7 @@
     </div>
 </div>
 
-<div [formGroup]="orderHistoryFileForm">
+<div class="pb-100" [formGroup]="orderHistoryFileForm">
     <div class="row pt-28">
         <div class="col-md-5 pr-0">
             <h5 class="text-right pt-12 mb-0">Select RTA</h5>
@@ -67,6 +67,10 @@
                                 [matDatepicker]="picker1">
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                             <mat-datepicker #picker1></mat-datepicker>
+                            <mat-error
+                                *ngIf="orderHistoryFileForm.get('fromDate').touched && orderHistoryFileForm.get('fromDate').invalid">
+                                This field is required
+                            </mat-error>
                         </mat-form-field>
                     </div>
 
@@ -77,6 +81,10 @@
                                 [matDatepicker]="picker">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
+                            <mat-error
+                                *ngIf="orderHistoryFileForm.get('toDate').touched && orderHistoryFileForm.get('toDate').invalid">
+                                This field is required
+                            </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -92,10 +100,17 @@
         <div class="col-md-3">
             <mat-form-field>
                 <mat-select class="form-control" formControlName="orderingFreq">
+                    <mat-option value="" selected>
+                        select option
+                    </mat-option>
                     <mat-option value="1">
                         Ordering frequency
                     </mat-option>
                 </mat-select>
+                <mat-error
+                    *ngIf="orderHistoryFileForm.get('orderingFreq').touched && orderHistoryFileForm.get('orderingFreq').invalid">
+                    This field is required
+                </mat-error>
             </mat-form-field>
         </div>
     </div>

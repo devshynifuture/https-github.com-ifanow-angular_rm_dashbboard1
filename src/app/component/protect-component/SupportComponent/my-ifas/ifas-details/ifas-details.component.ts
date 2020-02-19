@@ -45,7 +45,7 @@ export class IfasDetailsComponent implements OnInit {
       flag: data,
     };
     const dialogRef = this.dialog.open(MyIfaSelectArnRiaComponent, {
-      width: '70%',
+      width: '30%',
       data: Fragmentdata,
       autoFocus: false,
     });

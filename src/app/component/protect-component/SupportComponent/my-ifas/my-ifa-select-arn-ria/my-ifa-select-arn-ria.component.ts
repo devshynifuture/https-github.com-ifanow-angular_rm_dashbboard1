@@ -16,6 +16,10 @@ export class MyIfaSelectArnRiaComponent implements OnInit {
   ngOnInit() {
   }
 
+  start() {
+    console.log('started');
+  }
+
   dialogClose() {
     this.dialogRef.close();
   }
