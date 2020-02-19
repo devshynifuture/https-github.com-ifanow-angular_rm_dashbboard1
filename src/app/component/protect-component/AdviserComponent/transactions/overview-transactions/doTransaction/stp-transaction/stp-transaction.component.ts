@@ -47,11 +47,11 @@ export class StpTransactionComponent implements OnInit {
   mandateDetails: any;
   bankDetails: any;
   showSpinnerFolio = false;
-  showSpinnerTrans =false;
+  showSpinnerTrans = false;
   currentValue: number;
-  multiTransact=false;
-  childTransactions=[];
-  displayedColumns: string[] = ['no','folio', 'ownerName','amount'];
+  multiTransact = false;
+  childTransactions = [];
+  displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount'];
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private processTransaction: ProcessTransactionService, private eventService: EventService,
     private fb: FormBuilder) { }
@@ -78,19 +78,19 @@ export class StpTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { allEdit: true });
     Object.assign(this.transactionSummary, { transactType: 'STP' });
     Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
-    Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId});
+    Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId });
   }
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
     Object.assign(this.transactionSummary, { aggregatorType: this.getDataSummary.defaultClient.aggregatorType });
     // this.stpTransaction.controls.investor.reset();
-    
-     this.stpTransaction.controls.transferIn.reset();
+
+    this.stpTransaction.controls.transferIn.reset();
   }
   onFolioChange(folio) {
     this.stpTransaction.controls.folioSelection.reset()
-   }
+  }
   getMandateDetails() {
     let obj1 = {
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -168,7 +168,7 @@ export class StpTransactionComponent implements OnInit {
 
   selectedFolio(folio) {
     this.folioDetails = folio
-    this.currentValue =this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme,folio.balanceUnit)
+    this.currentValue = this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit)
     this.showUnits = true
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
     Object.assign(this.transactionSummary, { mutualFundId: folio.id });
@@ -417,13 +417,19 @@ export class StpTransactionComponent implements OnInit {
         mandateId: null,
         bankDetailId: null,
         nsePaymentMode: null,
+        childTransactions: []
       }
       if (this.getDataSummary.defaultClient.aggregatorType == 1) {
         obj.mandateId = (this.achMandateNSE == undefined) ? null : this.achMandateNSE.id
         obj.bankDetailId = this.bankDetails.id
         obj.nsePaymentMode = (this.stpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE'
       }
+      obj = this.processTransaction.checkInstallments(obj)
       console.log('json stp', obj)
+      if (this.multiTransact == true) {
+        console.log('new purchase obj', this.childTransactions)
+        obj.childTransactions = this.childTransactions
+      }
       this.onlineTransact.transactionBSE(obj).subscribe(
         data => this.stpBSERes(data), (error) => {
           this.eventService.showErrorMessage(error);
@@ -444,18 +450,19 @@ export class StpTransactionComponent implements OnInit {
 
     let obj = {
       amc: this.scheme.amcId,
-      folioNo:(this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
-      productCode:this.schemeDetails.schemeCode,
-      dividendReinvestmentFlag:this.schemeDetails.dividendReinvestmentFlag,
-      orderVal:this.stpTransaction.controls.employeeContry.value,
-      bankDetailId:this.bankDetails.id,
-      toIsin:this.schemeDetailsTransfer.isin,
-      schemeName:this.scheme.schemeName,
-      mandateId:this.achMandateNSE.id,
-      productDbId:this.schemeDetails.id,
+      folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+      productCode: this.schemeDetails.schemeCode,
+      dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
+      orderVal: this.stpTransaction.controls.employeeContry.value,
+      bankDetailId: this.bankDetails.id,
+      toIsin: this.schemeDetailsTransfer.isin,
+      schemeName: this.scheme.schemeName,
+      mandateId: this.achMandateNSE.id,
+      productDbId: this.schemeDetails.id,
       frequencyType: this.frequency,
       startDate: Number(new Date(this.stpTransaction.controls.date.value.replace(/"/g, ""))),
     }
+    obj = this.processTransaction.checkInstallments(obj)
     this.childTransactions.push(obj)
     console.log(this.childTransactions)
     this.schemeList = [];

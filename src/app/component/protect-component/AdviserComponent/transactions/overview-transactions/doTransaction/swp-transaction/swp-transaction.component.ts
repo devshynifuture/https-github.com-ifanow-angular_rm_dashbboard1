@@ -342,10 +342,16 @@ export class SwpTransactionComponent implements OnInit {
         bseDPTransType: "PHYSICAL",
         bankDetailId: null,
         nsePaymentMode: null,
+        childTransactions:null,
       }
       if (this.getDataSummary.defaultClient.aggregatorType == 1) {
         obj.bankDetailId = this.bankDetails.id
         obj.nsePaymentMode = (this.swpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE'
+      }
+      obj = this.processTransaction.checkInstallments(obj)
+      if(this.multiTransact == true){
+        console.log('new purchase obj', this.childTransactions)
+         obj.childTransactions = this.childTransactions
       }
       console.log('swp json obj', obj)
       this.onlineTransact.transactionBSE(obj).subscribe(
@@ -377,6 +383,7 @@ export class SwpTransactionComponent implements OnInit {
       startDate: Number(new Date(this.swpTransaction.controls.date.value.replace(/"/g, ""))),
       schemeName:this.scheme.schemeName,
     }
+    obj = this.processTransaction.checkInstallments(obj)
     this.childTransactions.push(obj)
     console.log(this.childTransactions)
     this.schemeList = [];

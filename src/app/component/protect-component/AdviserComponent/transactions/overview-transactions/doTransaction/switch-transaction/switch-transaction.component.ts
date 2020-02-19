@@ -40,11 +40,11 @@ export class SwitchTransactionComponent implements OnInit {
   showSpinnerFolio = false
   showSpinnerTran = false;
   currentValue: number;
-  multiTransact=false;
-  childTransactions=[];
-  displayedColumns: string[] = ['no','folio', 'ownerName','amount'];
+  multiTransact = false;
+  childTransactions = [];
+  displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount'];
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-    private fb: FormBuilder, private eventService: EventService, private processTransaction : ProcessTransactionService) { }
+    private fb: FormBuilder, private eventService: EventService, private processTransaction: ProcessTransactionService) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -73,7 +73,7 @@ export class SwitchTransactionComponent implements OnInit {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
     Object.assign(this.transactionSummary, { aggregatorType: this.getDataSummary.defaultClient.aggregatorType });
-   // this.switchTransaction.controls.investor.reset();
+    // this.switchTransaction.controls.investor.reset();
     this.switchTransaction.controls.transferIn.reset();
   }
   getSchemeList(value) {
@@ -106,14 +106,14 @@ export class SwitchTransactionComponent implements OnInit {
   }
   onFolioChange(folio) {
     this.switchTransaction.controls.folioSelection.reset()
-   }
+  }
   selectedFolio(folio) {
     this.folioDetails = folio
-    this.currentValue =this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme,folio.balanceUnit)
+    this.currentValue = this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit)
     this.showUnits = true
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
     Object.assign(this.transactionSummary, { mutualFundId: folio.id });
-    Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId});
+    Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId });
     this.transactionSummary = { ...this.transactionSummary };
   }
   selectedScheme(scheme) {
@@ -275,7 +275,7 @@ export class SwitchTransactionComponent implements OnInit {
       transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
-     // investor: [(!data) ? '' : data.investor, [Validators.required]],
+      // investor: [(!data) ? '' : data.investor, [Validators.required]],
       employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required]],
       investmentAccountSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
@@ -295,7 +295,7 @@ export class SwitchTransactionComponent implements OnInit {
   }
   switch() {
 
-   if (this.switchTransaction.get('employeeContry').invalid) {
+    if (this.switchTransaction.get('employeeContry').invalid) {
       this.switchTransaction.get('employeeContry').markAsTouched();
       return;
     } else if (this.switchTransaction.get('switchType').invalid) {
@@ -303,38 +303,44 @@ export class SwitchTransactionComponent implements OnInit {
       return;
     } else {
 
-    let obj = {
+      let obj = {
 
-      productDbId: this.schemeDetails.id,
-      toProductDbId: this.schemeDetailsTransfer.id,
-      mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
-      toMutualFundSchemeMasterId: this.schemeTransfer.mutualFundSchemeMasterId,
-      productCode: this.schemeDetails.schemeCode,
-      isin: this.schemeDetails.isin,
-      folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
-      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
-      tpSubBrokerCredentialId: this.getDataSummary.euin.id,
-      familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
-      adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
-      clientId: this.getDataSummary.defaultClient.clientId,
-      toIsin: this.schemeDetailsTransfer.isin,
-      schemeCd: this.schemeDetails.schemeCode,
-      euin: this.getDataSummary.euin.euin,
-      qty: (this.switchTransaction.controls.switchType.value == 1) ? 0 : (this.switchTransaction.controls.switchType.value == 3) ? this.schemeDetails.balance_units : this.switchTransaction.controls.employeeContry.value,
-      allRedeem: (this.switchTransaction.controls.switchType.value == 3) ? true : false,
-      orderType: "SWITCH",
-      buySell: "SWITCH_OUT",
-      transCode: "NEW",
-      buySellType: "FRESH",
-      amountType: (this.switchTransaction.controls.switchType.value == 1) ? 'Amount' : 'Unit',
-      dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
-      clientCode: this.getDataSummary.defaultClient.clientCode,
-      orderVal: this.switchTransaction.controls.employeeContry.value,
-      bseDPTransType: "PHYSICAL",
-      aggregatorType: this.getDataSummary.defaultClient.aggregatorType
-    }
+        productDbId: this.schemeDetails.id,
+        toProductDbId: this.schemeDetailsTransfer.id,
+        mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
+        toMutualFundSchemeMasterId: this.schemeTransfer.mutualFundSchemeMasterId,
+        productCode: this.schemeDetails.schemeCode,
+        isin: this.schemeDetails.isin,
+        folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+        tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+        tpSubBrokerCredentialId: this.getDataSummary.euin.id,
+        familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+        adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
+        clientId: this.getDataSummary.defaultClient.clientId,
+        toIsin: this.schemeDetailsTransfer.isin,
+        schemeCd: this.schemeDetails.schemeCode,
+        euin: this.getDataSummary.euin.euin,
+        qty: (this.switchTransaction.controls.switchType.value == 1) ? 0 : (this.switchTransaction.controls.switchType.value == 3) ? this.schemeDetails.balance_units : this.switchTransaction.controls.employeeContry.value,
+        allRedeem: (this.switchTransaction.controls.switchType.value == 3) ? true : false,
+        orderType: "SWITCH",
+        buySell: "SWITCH_OUT",
+        transCode: "NEW",
+        buySellType: "FRESH",
+        amountType: (this.switchTransaction.controls.switchType.value == 1) ? 'Amount' : 'Unit',
+        dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
+        clientCode: this.getDataSummary.defaultClient.clientCode,
+        orderVal: this.switchTransaction.controls.employeeContry.value,
+        bseDPTransType: "PHYSICAL",
+        aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+        childTransactions: []
 
-    console.log('switch', obj)
+      }
+
+      console.log('switch', obj)
+      if (this.multiTransact == true) {
+        console.log('new purchase obj', this.childTransactions)
+        obj.childTransactions = this.childTransactions
+      }
       this.onlineTransact.transactionBSE(obj).subscribe(
         data => this.switchBSERes(data), (error) => {
           this.eventService.showErrorMessage(error);
@@ -358,12 +364,12 @@ export class SwitchTransactionComponent implements OnInit {
       toProductDbId: this.schemeDetailsTransfer.id,
       toIsin: this.schemeDetailsTransfer.isin,
       isin: this.schemeDetails.isin,
-      folioNo:(this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
-      productCode:this.schemeDetails.schemeCode,
-      dividendReinvestmentFlag:this.schemeDetails.dividendReinvestmentFlag,
-      orderVal:this.switchTransaction.controls.employeeContry.value,
+      folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+      productCode: this.schemeDetails.schemeCode,
+      dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
+      orderVal: this.switchTransaction.controls.employeeContry.value,
 
-      schemeName:this.scheme.schemeName,
+      schemeName: this.scheme.schemeName,
     }
     this.childTransactions.push(obj)
     console.log(this.childTransactions)

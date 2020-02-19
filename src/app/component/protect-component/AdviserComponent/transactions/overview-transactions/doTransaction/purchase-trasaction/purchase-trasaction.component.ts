@@ -154,9 +154,8 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.bankDetails = bank[0]
     console.log('bank details', bank)
   }
-  getAchmandateDetails(ach) {
-    this.achMandateNSE = ach
-    console.log('ach details', ach)
+  onFolioChange(folio) {
+   this.purchaseTransaction.controls.folioSelection.reset()
   }
   selectedScheme(scheme) {
     this.scheme = scheme

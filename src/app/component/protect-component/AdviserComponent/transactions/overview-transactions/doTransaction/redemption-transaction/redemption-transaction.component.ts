@@ -264,6 +264,7 @@ export class RedemptionTransactionComponent implements OnInit {
         allRedeem: (this.redemptionTransaction.controls.redeemType.value == 3) ? true : false,
         bankDetailId: null,
         nsePaymentMode: null,
+        childTransactions : [],
 
         // teamMemberSessionId: redemptionTransaction.localStorage.mm.mainDetail.userDetails.teamMemberSessionId,
       }
@@ -272,6 +273,10 @@ export class RedemptionTransactionComponent implements OnInit {
         obj.nsePaymentMode = 'ONLINE'
       }
       console.log('redeem obj json', obj)
+      if(this.multiTransact == true){
+        console.log('new purchase obj', this.childTransactions)
+         obj.childTransactions = this.childTransactions
+      }
       this.onlineTransact.transactionBSE(obj).subscribe(
         data => this.redeemBSERes(data), (error) => {
           this.eventService.showErrorMessage(error);
@@ -291,6 +296,7 @@ export class RedemptionTransactionComponent implements OnInit {
     this.multiTransact = true
     let obj = {
       amc: this.scheme.amcId,
+      productDbId: this.schemeDetails.id,
       folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
       productCode: this.schemeDetails.schemeCode,
       dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,

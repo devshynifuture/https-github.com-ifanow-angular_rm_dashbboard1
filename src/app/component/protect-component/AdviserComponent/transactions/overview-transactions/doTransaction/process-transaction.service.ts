@@ -35,6 +35,18 @@ export class ProcessTransactionService {
   getEuinList() {
 
   }
+  checkInstallments(obj){
+    if (this.frequency == 'MONTHLY' && this.sipTransaction.controls.tenure.value == 2) {
+      obj.noOfInstallments = obj.noOfInstallments * 12
+    } else if (this.frequency == 'QUATERLY' && this.sipTransaction.controls.tenure.value == 2) {
+      obj.noOfInstallments = obj.noOfInstallments * 4
+    } else if (this.frequency == 'WEEKLY' && this.sipTransaction.controls.tenure.value == 2) {
+      obj.noOfInstallments = obj.noOfInstallments * 52
+    } else {
+      obj.noOfInstallments = this.sipTransaction.controls.installment.value
+    }
+    return obj
+  }
   calculateCurrentValue(nav, unit) {
     var currentValue = nav * unit
     return currentValue

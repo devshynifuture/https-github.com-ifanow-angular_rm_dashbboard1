@@ -48,9 +48,11 @@ export class TransactionSummaryComponent implements OnInit {
   }]
   checkAlert: any;
   changeDetails: any;
+
   constructor(private onlineTransact: OnlineTransactionService, private processTransaction: ProcessTransactionService,
     private subInjectService: SubscriptionInject, public dialog: MatDialog, private customerService: CustomerService, private eventService: EventService, ) { }
   showPlatform = false;
+
   @Output() defaultDetails = new EventEmitter();
   @Output() bankDetailsSend = new EventEmitter();
   @Output() folioEmpty = new EventEmitter();
@@ -63,7 +65,6 @@ export class TransactionSummaryComponent implements OnInit {
     console.log('This is Input data of FixedDepositComponent ', data);
     this.getDefaultDetails(this.transactionSummary.aggregatorType);
     this.checkAlert = this.transactionSummary.tpUserCredFamilyMappingId
-
   }
 
   get data() {
@@ -73,7 +74,6 @@ export class TransactionSummaryComponent implements OnInit {
     this.investorList = this.processTransaction.getIINList()
     console.log('iinList == ', this.investorList)
     this.transactionSummary = this.inputData
-    this.changeDetails.noAlert = false
     console.log('transactionSummary', this.transactionSummary)
     this.getDefaultDetails(null);
   }

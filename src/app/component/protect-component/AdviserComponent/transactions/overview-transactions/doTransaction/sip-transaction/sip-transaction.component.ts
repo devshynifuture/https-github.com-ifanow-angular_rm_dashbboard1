@@ -398,18 +398,11 @@ export class SipTransactionComponent implements OnInit {
         obj.nsePaymentMode = (this.sipTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE'
       }
       console.log('sip json', obj)
-      if (this.frequency == 'MONTHLY' && this.sipTransaction.controls.tenure.value == 2) {
-        obj.noOfInstallments = obj.noOfInstallments * 12
-      } else if (this.frequency == 'QUATERLY' && this.sipTransaction.controls.tenure.value == 2) {
-        obj.noOfInstallments = obj.noOfInstallments * 4
-      } else if (this.frequency == 'WEEKLY' && this.sipTransaction.controls.tenure.value == 2) {
-        obj.noOfInstallments = obj.noOfInstallments * 52
-      } else {
-        obj.noOfInstallments = this.sipTransaction.controls.installment.value
-      }
+      obj = this.processTransaction.checkInstallments(obj)
       if (this.multiTransact == true) {
         obj.childTransactions = this.childTransactions
       }
+      
       this.onlineTransact.transactionBSE(obj).subscribe(
         data => this.sipBSERes(data), (error) => {
           this.eventService.showErrorMessage(error);
@@ -436,10 +429,12 @@ export class SipTransactionComponent implements OnInit {
       bankDetailId: this.bankDetails.id,
       schemeName: this.scheme.schemeName,
       mandateId: this.achMandateNSE.id,
+      noOfInstallments: this.sipTransaction.controls.installment.value,
       productDbId: this.schemeDetails.id,
       frequencyType: this.frequency,
       startDate: Number(new Date(this.sipTransaction.controls.date.value.replace(/"/g, ""))),
     }
+    obj = this.processTransaction.checkInstallments(obj)
     this.childTransactions.push(obj)
     console.log(this.childTransactions)
     this.schemeList = [];
