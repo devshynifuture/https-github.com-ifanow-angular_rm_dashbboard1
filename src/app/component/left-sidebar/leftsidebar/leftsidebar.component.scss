@@ -24,8 +24,7 @@
 
 .logoWrap {
   .logo {
-    width: 62px !important;
-    height: auto;
+    width: auto; height: 100%; margin: 0px auto;
   }
 
   h5 {
@@ -85,7 +84,9 @@
 
 .main-details {
   border-bottom: 1px solid #ddd !important;
-  padding: 15px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 }
 
 .main-details .mat-form-field-infix {

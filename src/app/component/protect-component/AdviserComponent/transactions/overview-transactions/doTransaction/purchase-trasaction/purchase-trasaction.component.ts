@@ -41,6 +41,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   bankDetails: any;
   achMandateNSE: any;
   callOnFolioSelection: boolean;
+  showSpinnerFolio=false;
   constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
     private subInjectService: SubscriptionInject, private fb: FormBuilder,private eventService : EventService) { }
   @Input()
@@ -182,7 +183,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.getAmcWiseFolio()
   }
   getAmcWiseFolio() {
-    this.showSpinner = true
+    this.showSpinnerFolio = true
     let obj1 = {
       amcId: this.scheme.amcId,
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -199,7 +200,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     );
   }
   getFoliosAmcWiseRes(data) {
-    this.showSpinner = false
+    this.showSpinnerFolio = false
     console.log('getFoliosAmcWiseRes', data)
     this.folioList = data
   }
@@ -277,7 +278,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: ['2'],
-      investor: [(!data) ? '' : data.investor, [Validators.required]],
+    //  investor: [(!data) ? '' : data.investor, [Validators.required]],
       employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required,]],
       investmentAccountSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       modeOfPaymentSelection: ['1'],
@@ -292,10 +293,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     return this.purchaseTransaction.controls;
   }
   purchase() {
-    if (this.purchaseTransaction.get('investor').invalid) {
-      this.purchaseTransaction.get('investor').markAsTouched();
-      return;
-    } else if (this.purchaseTransaction.get('folioSelection').invalid) {
+    if (this.purchaseTransaction.get('folioSelection').invalid) {
       this.purchaseTransaction.get('folioSelection').markAsTouched();
       return;
     } else {
