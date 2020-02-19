@@ -193,7 +193,7 @@ export class PlansComponent implements OnInit {
       obj = [
         {
           advisorId: this.advisorId,
-          documentRepositoryId: 0,
+          documentRepositoryId: this.upperData.documentData.documentRepositoryId,
           mappedType: this.upperData ? this.upperData.documentData.mappedType : null,
           mappingId: null
         }

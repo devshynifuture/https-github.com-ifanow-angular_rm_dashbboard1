@@ -11,7 +11,7 @@
     </div>
 </div>
 
-<div [formGroup]="transactionAddForm" >
+<div [formGroup]="transactionAddForm">
     <!-- first page -->
     <div class="pt-90 pr-40 pl-40 pb-40" *ngIf="formStep == 'step-1' || formStep == 'step-2'">
         <div class="row">
@@ -323,25 +323,26 @@
             </div>
         </div>
     </div>
-    <div class="bottom-fixed wrapper-12 pt-16 w-65">
-        <div class="row">
-            <div class="col-md-4 pt-8">
-                <h5 class="mb-0  text-white c-p" (click)="close()">Cancel</h5>
-            </div>
-            <div class="col-md-8 text-right pt-8" *ngIf="formStep == 'step-1' || formStep == 'step-2'">
+    <div class="bottom-fixed row pl-20 pr-20 w-65 d-flex align-items-center">
 
-                <h5 class="mb-0 text-white c-p" (click)="saveAndNext()"> NEXT </h5>
-
-
-            </div>
-            <div class="col-md-8 text-right" *ngIf="formStep == 'step-3'">
-                <button mat-button class="text-success" (click)="saveAndAddAnother()">
-                    SAVE & ADD ANOTHER
-                </button>
-                <button mat-button class="text-success" (click)="onAddTransaction()">
-                    SAVE & PROCEED
-                </button>
-            </div>
+        <div class="col-md-4 p-0 d-flex align-item-center justifly-content-start">
+            <h5 class="mb-0  text-white c-p" (click)="close()">Cancel</h5>
         </div>
+
+        <div class="col-md-8 p-0 d-flex align-item-center justify-content-end" *ngIf="formStep == 'step-1' || formStep == 'step-2'">
+            <button mat-button class="btn-green text-white" (click)="saveAndNext()">NEXT</button>
+        </div>
+
+        <div class="col-md-8 p-0 d-flex align-item-center justifly-content-end" *ngIf="formStep == 'step-3'">
+
+            <button class="br-0 text-success f-14" (click)="saveAndAddAnother()" mat-button mat-raised-button>
+                SAVE & ADD ANOTHER
+            </button>
+
+            <button mat-button class="btn-green text-white" (click)="onAddTransaction()">
+                SAVE & PROCEED
+            </button>
+        </div>
+
     </div>
 </div>

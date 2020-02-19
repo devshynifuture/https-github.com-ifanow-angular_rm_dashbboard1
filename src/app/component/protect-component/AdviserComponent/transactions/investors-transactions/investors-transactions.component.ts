@@ -10,6 +10,8 @@ export class InvestorsTransactionsComponent implements OnInit {
   dataSource = ELEMENT_DATA;
   constructor() { }
 
+  isLoading = false;
+
   ngOnInit() {
   }
 

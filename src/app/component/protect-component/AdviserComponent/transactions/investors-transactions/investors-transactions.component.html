@@ -1,9 +1,9 @@
 <div class="pt-150  mandates">
     <div class="row">
-        <div class="col-md-8  d-flex align-items-center">
+        <div class="col-md-6  d-flex align-items-center">
             <h3 class="m-0 pt-6">Mandates</h3>
         </div>
-        <div class="col-md-4  text-right">
+        <div class="col-md-6  text-right">
             <img src="/assets/images/svg/download-black.svg" class="b-a p-5 c-p">
             <img src="/assets/images/svg/reload.svg" class="b-a p-8 c-p">
             <button mat-stroked-button class="btn-default addon ml-12 mr-12 v-middle"><i
@@ -15,42 +15,60 @@
 
     <div class="row">
         <div class="col-md-12 ">
-            <table mat-table [dataSource]="dataSource" class="mt-8 tableHover" id="table-low">
+            <table mat-table [dataSource]="dataSource" [appSkeletonLoading]="isLoading" appSkeletonLoading class="skeletonAnimation" class="mt-8" id="table-low">
                 <ng-container matColumnDef="position">
                     <th mat-header-cell *matHeaderCellDef class="br"> Platform </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar"> {{element.position}} </div>
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar"> {{element.name}} </div>
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="weight">
                     <th mat-header-cell *matHeaderCellDef class="br"> Investor name </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar"> {{element.weight}} </div>
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="symbol">
                     <th mat-header-cell *matHeaderCellDef class="br"> PAN </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar"> {{element.symbol}} </div>
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="bank">
                     <th mat-header-cell *matHeaderCellDef class="br"> Tax status </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.bank}} </td>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar"> {{element.bank}} </div>
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="bankac">
                     <th mat-header-cell *matHeaderCellDef class="br"> Holding nature </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.bankac}} </td>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar"> {{element.bankac}} </div>
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="amt">
                     <th mat-header-cell *matHeaderCellDef class="br"> Account number </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.amt}} </td>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar"> {{element.amt}} </div>
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="type">
                     <th mat-header-cell *matHeaderCellDef class="br"> Mandate amount </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.type}} </td>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar"> {{element.type}} </div>
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="status">
                     <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.status}} </td>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar"> {{element.status}} </div>
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="icons">
                     <th mat-header-cell *matHeaderCellDef> </th>

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IfaBoardingHistoryComponent } from './ifa-boarding-history/ifa-boarding-history.component';
+import { OrderHistoricalFileComponent } from './../order-historical-file/order-historical-file.component';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { AdminDetailsComponent } from './admin-details/admin-details.component';
@@ -34,7 +34,7 @@ export class IfaOnboardingComponent implements OnInit {
       data,
       id: 1,
       state: 'open50',
-      componentName: IfaBoardingHistoryComponent
+      componentName: OrderHistoricalFileComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
