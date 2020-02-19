@@ -49,6 +49,7 @@ export class SipTransactionComponent implements OnInit {
   platformType: any;
   bankDetails: any;
   showSpinnerFolio=false;
+  showSpinnerMandate= false;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private processTransaction: ProcessTransactionService, private fb: FormBuilder,private eventService : EventService) { }
@@ -193,6 +194,7 @@ export class SipTransactionComponent implements OnInit {
     this.getFrequency()
   }
   getNSEAchmandate(){
+    this.showSpinnerMandate = true
     let obj1 = {
       tpUserCredFamilyMappingId:this.getDataSummary.defaultClient.tpUserCredFamilyMappingId
     }
@@ -203,6 +205,7 @@ export class SipTransactionComponent implements OnInit {
       );
   }
   getNSEAchmandateRes(data){
+    this.showSpinnerMandate = false
     console.log('getNSEAchmandateRes',data)
     this.achMandateNSE = data[0]
   }
@@ -225,7 +228,7 @@ export class SipTransactionComponent implements OnInit {
   }
   selectedFrequency(getFrerq) {
     this.fre = getFrerq
-    this.frequency = getFrerq.sipFrequency
+    this.frequency = getFrerq.frequency
     this.sipTransaction.controls["employeeContry"].setValidators([Validators.min(getFrerq.sipMinimumInstallmentAmount)])
     this.dateArray(getFrerq.sipDates)
   }
@@ -338,7 +341,7 @@ export class SipTransactionComponent implements OnInit {
       isin: this.schemeDetails.isin,
       folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
       tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
-      tpSubBrokerCredentialId: this.getDataSummary.defaultCredential.tpSubBrokerCredentialId,
+      tpSubBrokerCredentialId: this.getDataSummary.euin.id,
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
       adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
       clientId: this.getDataSummary.defaultClient.clientId,
@@ -354,7 +357,7 @@ export class SipTransactionComponent implements OnInit {
       amountType: 'Amount',
       clientCode: this.getDataSummary.defaultClient.clientCode,
       orderVal: this.sipTransaction.controls.employeeContry.value,
-      euin: this.getDataSummary.defaultCredential.euin,
+      euin: this.getDataSummary.euin.euin,
       xSipMandateId:(this.mandateDetails==undefined)?null:this.mandateDetails[0].mandateId,
       aggregatorType:this.getDataSummary.defaultClient.aggregatorType,
       schemeCd: this.schemeDetails.schemeCode,

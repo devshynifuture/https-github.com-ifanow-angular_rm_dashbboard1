@@ -41,6 +41,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   bankDetails: any;
   achMandateNSE: any;
   callOnFolioSelection: boolean;
+  showSpinnerMandate= false;
   showSpinnerFolio=false;
   constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
     private subInjectService: SubscriptionInject, private fb: FormBuilder,private eventService : EventService) { }
@@ -228,6 +229,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     }
   }
   getNSEAchmandate(){
+    this.showSpinnerMandate = true
     let obj1 = {
       tpUserCredFamilyMappingId:this.getDataSummary.defaultClient.tpUserCredFamilyMappingId
     }
@@ -238,6 +240,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     );
   }
   getNSEAchmandateRes(data){
+    this.showSpinnerMandate = false
     console.log('getNSEAchmandateRes',data)
     this.achMandateNSE = data[0]
   }
@@ -304,7 +307,7 @@ export class PurchaseTrasactionComponent implements OnInit {
         isin: this.schemeDetails.isin,
         folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
         tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
-        tpSubBrokerCredentialId: this.getDataSummary.defaultCredential.tpSubBrokerCredentialId,
+        tpSubBrokerCredentialId: this.getDataSummary.euin.id,
         familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
         adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
         clientId: this.getDataSummary.defaultClient.clientId,
@@ -316,7 +319,7 @@ export class PurchaseTrasactionComponent implements OnInit {
         amountType: 'Amount',
         clientCode: this.getDataSummary.defaultClient.clientCode,
         orderVal: this.purchaseTransaction.controls.employeeContry.value,
-        euin: this.getDataSummary.defaultCredential.euin,
+        euin: this.getDataSummary.euin.euin,
         bseDPTransType: 'PHYSICAL',
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
         mandateId : null,

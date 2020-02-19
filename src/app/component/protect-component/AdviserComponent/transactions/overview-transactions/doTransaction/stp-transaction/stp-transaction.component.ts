@@ -264,7 +264,7 @@ export class StpTransactionComponent implements OnInit {
   }
   selectedFrequency(getFrerq) {
     this.fre = getFrerq
-    this.frequency = getFrerq.sipFrequency
+    this.frequency = getFrerq.frequency
     this.stpTransaction.controls["employeeContry"].setValidators([Validators.min(getFrerq.sipMinimumInstallmentAmount)])
     this.dateArray(getFrerq.sipDates)
   }
@@ -365,7 +365,7 @@ export class StpTransactionComponent implements OnInit {
       startDate: Number(new Date(this.stpTransaction.controls.date.value.replace(/"/g, ""))),
       toIsin: this.schemeDetailsTransfer.isin,
       schemeCd: this.schemeDetails.schemeCode,
-      euin: this.getDataSummary.defaultCredential.euin,
+      euin: this.getDataSummary.euin.euin,
       orderType: "STP",
       buySell: "PURCHASE",
       transCode: "NEW",

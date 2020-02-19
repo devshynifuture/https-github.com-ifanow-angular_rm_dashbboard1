@@ -29,8 +29,10 @@ export class TransactionSummaryComponent implements OnInit {
   bankDetails: any;
   achMandateNSE: any;
   showBankEdit = false;
+  showEuin = false
   value: any;
   element: any;
+  subBrokerCredList: any;
   constructor(private onlineTransact: OnlineTransactionService, private processTransaction: ProcessTransactionService,
     private subInjectService: SubscriptionInject, public dialog: MatDialog) { }
   showPlatform = false;
@@ -122,11 +124,13 @@ export class TransactionSummaryComponent implements OnInit {
     if (data == undefined) {
       return
     }
+    data.euin = data.subBrokerCredList[0];
     this.defaultDetails.emit(data);
     this.allData = data
     this.clientDataList = data.clientDataList
     this.defaultCredential = data.defaultCredential
     this.defaultClient = data.defaultClient
+    this.subBrokerCredList = data.subBrokerCredList
     this.selectedPlatform = this.defaultCredential.aggregatorType
     if (this.selectedPlatform == 1) {
       this.getBankDetails()
@@ -142,5 +146,10 @@ export class TransactionSummaryComponent implements OnInit {
     this.allData.defaultClient = this.selectedInvestor
     this.defaultDetails.emit(this.allData);
     this.showInvestor = false
+  }
+  setEuin(euin){
+    this.allData.euin = euin
+    this.defaultDetails.emit(this.allData);
+    console.log('selected EUIN', euin)
   }
 }

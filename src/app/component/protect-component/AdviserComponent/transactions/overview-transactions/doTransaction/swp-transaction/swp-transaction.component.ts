@@ -202,7 +202,7 @@ export class SwpTransactionComponent implements OnInit {
   }
   selectedFrequency(getFrerq) {
     this.fre = getFrerq
-    this.frequency = getFrerq.sipFrequency
+    this.frequency = getFrerq.frequency
     this.swpTransaction.controls["employeeContry"].setValidators([Validators.min(getFrerq.sipMinimumInstallmentAmount)])
     this.dateArray(getFrerq.sipDates)
   }
@@ -294,7 +294,7 @@ export class SwpTransactionComponent implements OnInit {
       isin: this.schemeDetails.isin,
       folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
       tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
-      tpSubBrokerCredentialId: this.getDataSummary.defaultCredential.tpSubBrokerCredentialId,
+      tpSubBrokerCredentialId: this.getDataSummary.euin.id,
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
       adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
       clientId: this.getDataSummary.defaultClient.clientId,
@@ -302,7 +302,7 @@ export class SwpTransactionComponent implements OnInit {
       noOfInstallments: this.swpTransaction.controls.installment.value,
       frequencyType:this.frequency,
       schemeCd: this.schemeDetails.schemeCode,
-      euin: this.getDataSummary.defaultCredential.euin,
+      euin: this.getDataSummary.euin.euin,
       clientCode: this.getDataSummary.defaultClient.clientCode,
       orderVal: this.swpTransaction.controls.employeeContry.value,
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,

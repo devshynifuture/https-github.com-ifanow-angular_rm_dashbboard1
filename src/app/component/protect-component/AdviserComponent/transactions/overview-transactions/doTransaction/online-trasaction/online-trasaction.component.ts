@@ -58,7 +58,7 @@ export class OnlineTrasactionComponent implements OnInit {
   allData: any;
   credentialList: any;
   getPlatformCount: any;
-
+  showSpinnerOwner = false
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private eventService : EventService,private fb: FormBuilder,private processTransaction : ProcessTransactionService) {
   }
@@ -110,6 +110,7 @@ export class OnlineTrasactionComponent implements OnInit {
     this.selectedPlatform = this.defaultCredential.aggregatorType
   }
   getFamilyList(value) {
+    this.showSpinnerOwner = true
     let obj = {
       advisorId: this.advisorId,
       name: value
@@ -121,6 +122,7 @@ export class OnlineTrasactionComponent implements OnInit {
     }
   }
   getFamilyMemberListRes(data) {
+    this.showSpinnerOwner = false
     if(data == undefined){
     
     }else{
