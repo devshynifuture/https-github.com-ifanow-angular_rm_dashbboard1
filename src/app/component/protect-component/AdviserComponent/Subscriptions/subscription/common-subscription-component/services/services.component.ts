@@ -182,16 +182,29 @@ export class ServicesComponent implements OnInit {
 
   mapDocumentToPlan() {
     const obj = [];
-    this.mappedData.forEach(planData => {
-      const data = {
+    let data = {}
+    if(this.mappedData.length > 0){
+      this.mappedData.forEach(planData => {
+        data = {
+          // advisorId: 12345,
+          advisorId: this.advisorId,
+          documentRepositoryId: this.upperData.documentData.documentRepositoryId,
+          mappedType: this.upperData.documentData.mappedType,
+          mappingId: planData.id
+        };
+        obj.push(data);
+      });
+    }
+    else{
+      data = {
         // advisorId: 12345,
         advisorId: this.advisorId,
         documentRepositoryId: this.upperData.documentData.documentRepositoryId,
         mappedType: this.upperData.documentData.mappedType,
-        mappingId: planData.id
+        mappingId: 0
       };
       obj.push(data);
-    });
+    }
     this.subService.mapDocumentToService(obj).subscribe(
       data =>{
         this.mapPlanToServiceRes(data)
@@ -202,6 +215,7 @@ export class ServicesComponent implements OnInit {
       }
     );
   }
+
   mapPlanToServiceRes(data) {
     console.log(data)
     this.changeServiceData.emit(true);
