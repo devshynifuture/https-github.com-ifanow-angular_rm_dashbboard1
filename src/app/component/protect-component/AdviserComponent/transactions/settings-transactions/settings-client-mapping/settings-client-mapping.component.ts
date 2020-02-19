@@ -63,7 +63,8 @@ export class SettingsClientMappingComponent implements OnInit {
       data => {
         console.log(data);
         this.dataSource = data;
-      }
+      },
+      err => this.eventService.openSnackBar(err, 'dismiss')
     )
   }
   getUnmappedData() {
@@ -77,7 +78,8 @@ export class SettingsClientMappingComponent implements OnInit {
       data => {
         console.log(data);
         this.dataSource = data;
-      }
+      },
+      err => this.eventService.openSnackBar(err, 'dismiss')
     )
   }
   getDefaultDetails(platform) {
