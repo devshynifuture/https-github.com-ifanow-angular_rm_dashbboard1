@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { PlanService } from '../../../plan.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-setup-lumpsum-deployment',
@@ -18,12 +19,20 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
   advisorId: any;
   clientId: any;
   filterSchemeData: any;
-  constructor(private subInjectService: SubscriptionInject, private planService: PlanService) { }
+  constructor(private subInjectService: SubscriptionInject, private planService: PlanService, private eventService: EventService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.filterScheme();
+    this.getMutualFundSchemeData();
+    // this.filterScheme();
+  }
+  getMutualFundSchemeData() {
+    this.planService.getMututalFundSchemeData().subscribe(
+      data => {
+        console.log(data)
+      }
+    )
   }
   filterScheme() {
     let obj =
@@ -51,6 +60,26 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
         });
         this.filterSchemeData = data;
       }
+    )
+  }
+  addPurchaseScheme() {
+    let obj = {
+      "deploymentList": [
+        { "id": 1 },
+        { "id": 2 },
+        { "id": 3 }
+      ],
+      "categoryId": 1,
+      "purchaseAmount": 1,
+      "schemeCode": "127FMGP",
+      "clientId": this.clientId,
+      "advisorId": this.advisorId
+    }
+    this.planService.addPurchaseScheme(obj).subscribe(
+      data => {
+        console.log(data)
+      },
+      err => this.eventService.openSnackBar(err, "dismiss")
     )
   }
   close() {

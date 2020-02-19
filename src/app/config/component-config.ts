@@ -197,6 +197,8 @@ export const appConfig = {
   DELETE_DEPLOYMENT: '/activity/deployment/archive-record/put',
   ADD_FILTER_SCHEME_LIST: '/activity/deployment/add/filter/goal/scheme',
   GET_DEPLOYMENT_DETAILS: '/activity/deployment/deployment/detail/get',
+  ADD_PURCHASE_SCHEME: '/activity/deployment/purchase/scheme/post',
+  GET_MUTUAL_FUND_SCHEME: '/activity/deployment/scheme/get',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   GET_EPF: 'account/asset/retirement/epf/list/get',
