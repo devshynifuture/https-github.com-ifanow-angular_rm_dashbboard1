@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { MFSchemeLevelHoldingsComponent } from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
 
 @Component({
   selector: 'app-mutual-fund-all-transaction',
@@ -153,5 +154,23 @@ export class MutualFundAllTransactionComponent implements OnInit {
     }
     this.filteredArray = finalDataSource;//final dataSource Value
     return;
+  }
+  editTransaction(portfolioData,data) {
+    const fragmentData = {
+      flag: portfolioData,
+      data:data,
+      id: 1,
+      state: 'open',
+      componentName: MFSchemeLevelHoldingsComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
   }
 }

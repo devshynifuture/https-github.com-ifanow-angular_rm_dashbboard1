@@ -5,6 +5,9 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { UtilService } from 'src/app/services/util.service';
 import { FolioMasterDetailsComponent } from 'src/app/component/protect-component/customers/component/common-component/folio-master-details/folio-master-details.component';
 import { SipDetailsComponent } from 'src/app/component/protect-component/customers/component/common-component/sip-details/sip-details.component';
+import { AddMutualFundComponent } from '../add-mutual-fund/add-mutual-fund.component';
+import { MFSchemeLevelHoldingsComponent } from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
+import { MFSchemeLevelTransactionsComponent } from '../mfscheme-level-transactions/mfscheme-level-transactions.component';
 
 @Component({
   selector: 'app-mutual-fund-summary',
@@ -200,6 +203,36 @@ export class MutualFundSummaryComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
+  openMutualFund(flag, data) {
+    let component;
+    switch (true) {
+      case (flag == "addPortfolio"):
+        component = AddMutualFundComponent;
+        break;
+      case (flag == "holding"):
+        component = MFSchemeLevelHoldingsComponent;
+        break;
+      default:
+        component = MFSchemeLevelTransactionsComponent
+    }
+    const fragmentData = {
+      flag: 'editMF',
+      data,
+      id: 1,
+      state: 'open',
+      componentName: component
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
         }
       }
     );
