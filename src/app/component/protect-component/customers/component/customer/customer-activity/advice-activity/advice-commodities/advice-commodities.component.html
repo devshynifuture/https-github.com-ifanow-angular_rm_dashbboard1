@@ -68,7 +68,8 @@
             </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <mat-checkbox *ngIf="isLoading==false" [checked]="element.selected"></mat-checkbox>
+                    <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element)"
+                        [checked]="element.selected"></mat-checkbox>
                 </div>
             </td>
         </ng-container>
@@ -164,7 +165,8 @@
                     (change)="checkAll($event,otherDataSource)"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false" [checked]="element.selected"></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element)"
+                    [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">

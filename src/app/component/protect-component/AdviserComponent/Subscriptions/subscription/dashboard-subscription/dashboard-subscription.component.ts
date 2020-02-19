@@ -207,7 +207,7 @@ export class DashboardSubscriptionComponent implements OnInit {
     const obj = {
       advisorId: this.advisorId,
       fromDate: this.formatDate(beginDate),
-      toDate:this.formatDate(endDate)
+      toDate: this.formatDate(endDate)
     };
     this.subService.getTotalRecived(obj).subscribe(
       data => this.getTotalRecivedRes(data)
@@ -215,10 +215,7 @@ export class DashboardSubscriptionComponent implements OnInit {
   }
 
   formatDate(date) {
-   let y = new Date(date).getFullYear();
-   let m = new Date(date).getMonth()+1;
-   let d = new Date(date).getDate();
-   return y+'-'+m+'-'+d;
+    return new Date(date).getFullYear() + '-' + new Date(date).getMonth() + 1 + '-' + new Date(date).getDate();
   }
 
   getTotalRecivedRes(data) {
@@ -233,7 +230,7 @@ export class DashboardSubscriptionComponent implements OnInit {
     this.showSubStep = true;
   }
 
-  
+
 
   changeParentsTab(selectedTab) {
     console.log("this is selected Tab:::::::::::::", selectedTab);
