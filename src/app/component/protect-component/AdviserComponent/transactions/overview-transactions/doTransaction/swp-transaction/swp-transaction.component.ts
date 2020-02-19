@@ -81,7 +81,6 @@ export class SwpTransactionComponent implements OnInit {
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
-    this.swpTransaction.controls.investor.reset();
   }
   getSchemeList(value) {
     this.showSpinner = true

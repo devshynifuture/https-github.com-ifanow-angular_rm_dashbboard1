@@ -156,7 +156,7 @@ export class SipTransactionComponent implements OnInit {
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
-    this.sipTransaction.controls.investor.reset();
+   // this.sipTransaction.controls.investor.reset();
     this.platformType = this.getDataSummary.defaultClient.aggregatorType
     Object.assign(this.transactionSummary, { aggregatorType: this.platformType });
   }

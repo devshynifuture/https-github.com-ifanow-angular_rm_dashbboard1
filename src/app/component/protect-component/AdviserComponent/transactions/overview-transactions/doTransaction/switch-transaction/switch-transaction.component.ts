@@ -73,7 +73,6 @@ export class SwitchTransactionComponent implements OnInit {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
     Object.assign(this.transactionSummary, { aggregatorType: this.getDataSummary.defaultClient.aggregatorType });
-    // this.switchTransaction.controls.investor.reset();
     this.switchTransaction.controls.transferIn.reset();
   }
   getSchemeList(value) {
@@ -361,7 +360,10 @@ export class SwitchTransactionComponent implements OnInit {
     let obj = {
       amc: this.scheme.amcId,
       productDbId: this.schemeDetails.id,
+      amountType: (this.switchTransaction.controls.switchType.value == 1) ? 'Amount' : 'Unit',
       toProductDbId: this.schemeDetailsTransfer.id,
+      qty: (this.switchTransaction.controls.switchType.value == 1) ? 0 : (this.switchTransaction.controls.switchType.value == 3) ? this.schemeDetails.balance_units : this.switchTransaction.controls.employeeContry.value,
+      allRedeem: (this.switchTransaction.controls.switchType.value == 3) ? true : false,
       toIsin: this.schemeDetailsTransfer.isin,
       isin: this.schemeDetails.isin,
       folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
