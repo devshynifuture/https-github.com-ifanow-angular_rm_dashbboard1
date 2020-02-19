@@ -70,13 +70,13 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
   getAllSchemeResponse(data) {
     this.isLoading = false;
     this.ppfDataSource = new MatTableDataSource(data.PPF);
-    this.nscDataSpurce = data.NSC;
-    this.ssyDataSpurce = data.SSY;
-    this.kvpDataSpurce = data.KVP;
-    this.scssDataSpurce = data.SCSS;
-    this.posavingDataSpurce = data;
-    this.pordDataSpurce = data.PO_RD;
-    this.pomisDataSpurce = data.PO_MIS;
+    this.nscDataSpurce = new MatTableDataSource(data.NSC);
+    this.ssyDataSpurce = new MatTableDataSource(data.SSY);
+    this.kvpDataSpurce = new MatTableDataSource(data.KVP);
+    this.scssDataSpurce = new MatTableDataSource(data.SCSS);
+    this.posavingDataSpurce = new MatTableDataSource(data);
+    this.pordDataSpurce = new MatTableDataSource(data.PO_RD);
+    this.pomisDataSpurce = new MatTableDataSource(data.PO_MIS);
     this.potdDataSource = new MatTableDataSource(data.PO_TD);
     this.ppfDataSource['tableFlag'] = (data.PPF.length == 0) ? false : true;
     this.nscDataSpurce['tableFlag'] = (data.NSC.length == 0) ? false : true;
