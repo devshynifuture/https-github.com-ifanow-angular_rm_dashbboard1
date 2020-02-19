@@ -47,8 +47,9 @@ export class TransactionSummaryComponent implements OnInit {
     platform: 'BSE'
   }]
   checkAlert: any;
+  changeDetails: any;
   constructor(private onlineTransact: OnlineTransactionService, private processTransaction: ProcessTransactionService,
-    private subInjectService: SubscriptionInject, public dialog: MatDialog,private customerService: CustomerService, private eventService: EventService,) { }
+    private subInjectService: SubscriptionInject, public dialog: MatDialog, private customerService: CustomerService, private eventService: EventService, ) { }
   showPlatform = false;
   @Output() defaultDetails = new EventEmitter();
   @Output() bankDetailsSend = new EventEmitter();
@@ -61,8 +62,8 @@ export class TransactionSummaryComponent implements OnInit {
     this.transactionSummary = data
     console.log('This is Input data of FixedDepositComponent ', data);
     this.getDefaultDetails(this.transactionSummary.aggregatorType);
-    this.checkAlert = this.transactionSummary.tpUserCredentialId
-   
+    this.checkAlert = this.transactionSummary.tpUserCredFamilyMappingId
+
   }
 
   get data() {
@@ -72,6 +73,7 @@ export class TransactionSummaryComponent implements OnInit {
     this.investorList = this.processTransaction.getIINList()
     console.log('iinList == ', this.investorList)
     this.transactionSummary = this.inputData
+    this.changeDetails.noAlert = false
     console.log('transactionSummary', this.transactionSummary)
     this.getDefaultDetails(null);
   }
@@ -183,8 +185,10 @@ export class TransactionSummaryComponent implements OnInit {
     if (data == undefined) {
       return
     }
-    if(this.checkAlert && this.checkAlert != data.defaultClient.tpUserCredentialId){
-      this.alertModal(data,null)
+    this.changeDetails = data
+    if (this.changeDetails.noAlert == undefined && this.checkAlert && this.checkAlert != data.defaultClient.tpUserCredFamilyMappingId) {
+      this.alertModal(data, null)
+      return
     }
     data.euin = data.subBrokerCredList[0];
     this.defaultDetails.emit(data);
@@ -206,15 +210,11 @@ export class TransactionSummaryComponent implements OnInit {
       body2: 'Are you sure you want to proceed',
       btnYes: 'NO',
       btnNo: 'OK,POCEED',
-      positiveMethod: () => {        
-          this.customerService.deleteFixedDeposite(data.id).subscribe(
-            data => {
-              this.eventService.openSnackBar('Sucessfully changed', 'dismiss');
-              dialogRef.close();
-              
-            },
-            error => this.eventService.showErrorMessage(error)
-          );
+      positiveMethod: () => {
+        this.eventService.openSnackBar('Sucessfully changed', 'dismiss');
+        this.changeDetails.noAlert = true
+        this.getDefaultDetailsRes(this.changeDetails)
+        dialogRef.close();
       },
       negativeMethod: () => {
         console.log('');

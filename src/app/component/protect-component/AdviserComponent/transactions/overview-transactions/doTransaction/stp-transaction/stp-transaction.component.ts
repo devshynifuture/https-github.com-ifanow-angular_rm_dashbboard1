@@ -78,6 +78,7 @@ export class StpTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { allEdit: true });
     Object.assign(this.transactionSummary, { transactType: 'STP' });
     Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
+    Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId});
   }
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
