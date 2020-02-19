@@ -385,6 +385,31 @@ export class SipTransactionComponent implements OnInit {
      }else{
        obj.noOfInstallments =  this.sipTransaction.controls.installment.value
      }
+
+     if (this.sipTransaction.get('folioSelection').invalid) {
+      this.sipTransaction.get('folioSelection').markAsTouched();
+      return;
+     }else if(this.sipTransaction.get('date').invalid){
+      this.sipTransaction.get('date').markAsTouched();
+      return;
+     }else if(this.sipTransaction.get('frequency').invalid){
+      this.sipTransaction.get('frequency').markAsTouched();
+      return;
+     }else if(this.sipTransaction.get('modeOfPaymentSelection').invalid){
+      this.sipTransaction.get('modeOfPaymentSelection').markAsTouched();
+      return;
+     }else if(this.sipTransaction.get('employeeContry').invalid){
+      this.sipTransaction.get('employeeContry').markAsTouched();
+      return;
+     }else if(this.sipTransaction.get('tenure').invalid){
+      this.sipTransaction.get('tenure').markAsTouched();
+      return;
+     }else if(this.sipTransaction.get('installment').invalid){
+      this.sipTransaction.get('installment').markAsTouched();
+      return;
+     }else{
+
+     }
      this.onlineTransact.transactionBSE(obj).subscribe(
       data => this.sipBSERes(data), (error) => {
         this.eventService.showErrorMessage(error);

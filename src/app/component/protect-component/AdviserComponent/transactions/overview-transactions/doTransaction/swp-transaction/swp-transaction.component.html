@@ -34,7 +34,7 @@
                                 <input type="text" aria-label="Number" class="form-control" matInput
                                     formControlName="investor" [matAutocomplete]="auto"
                                     (keyup)="getSchemeList($event.target.value)"
-                                    value="Start typing to see investor names">
+                                    placeholder="Start typing to see investor names">
                                 <mat-autocomplete #auto="matAutocomplete">
                                     <mat-option (onSelectionChange)="selectedScheme(scheme)"
                                         *ngFor="let scheme of schemeList" [value]="scheme.schemeName">
@@ -54,7 +54,7 @@
                         <mat-spinner class="mt-8"></mat-spinner>
                     </div>
                 </div>
-                <div class="row pt-28 " *ngIf="reInvestmentOpt.length > 1">
+                <!-- <div class="row pt-28 " *ngIf="reInvestmentOpt.length > 1">
                     <div class="col-md-12 p-0 text-left">
                         <h5 class="m-0 text-black pb-8">Select re-investment</h5>
                     </div>
@@ -69,7 +69,7 @@
                             </mat-form-field>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="row">
                     <div class="col-md-6 p-0 text-left">
                         <h5 class="m-0 pt-28 text-black pb-12">Select scheme folio</h5>
@@ -179,7 +179,7 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="row"  *ngIf="(swpTransaction.get('tenure').value) != 3">
+                <div class="row">
                     <div class="col-md-12 p-0 text-left">
                         <h5 class="m-0 pt-40 pb-12 text-black">Enter installment</h5>
                     </div>

@@ -266,7 +266,12 @@ export class StpTransactionComponent implements OnInit {
     this.fre = getFrerq
     this.frequency = getFrerq.frequency
     this.stpTransaction.controls["employeeContry"].setValidators([Validators.min(getFrerq.sipMinimumInstallmentAmount)])
-    this.dateArray(getFrerq.sipDates)
+    if(this.getDataSummary.defaultClient.aggregatorType == 1){
+      this.dateArray(getFrerq.stpDates)
+    }else{
+      this.dateArray(getFrerq.sipDates)
+    }
+   
   }
   dateArray(sipDates) {
     var currentDate = new Date();
@@ -358,7 +363,7 @@ export class StpTransactionComponent implements OnInit {
       isin: this.schemeDetails.isin,
       folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
       tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
-      tpSubBrokerCredentialId: this.getDataSummary.defaultCredential.tpSubBrokerCredentialId,
+      tpSubBrokerCredentialId: this.getDataSummary.euin.id,
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
       adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
       clientId: this.getDataSummary.defaultClient.clientId,

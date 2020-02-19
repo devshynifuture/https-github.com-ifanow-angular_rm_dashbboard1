@@ -36,7 +36,7 @@
                             <mat-form-field>
                                 <input type="text" aria-label="Number" class="form-control " matInput
                                     [matAutocomplete]="auto" (keyup)="getSchemeList($event.target.value)"
-                                    value="Start typing to see investor names">
+                                    placeholder="Start typing to see investor names">
                                 <mat-autocomplete #auto="matAutocomplete">
                                     <mat-option (click)="selectedScheme(scheme)" *ngFor="let scheme of schemeList"
                                         [value]="scheme.schemeName">

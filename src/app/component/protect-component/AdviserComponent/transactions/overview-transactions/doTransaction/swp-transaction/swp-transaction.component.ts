@@ -204,7 +204,11 @@ export class SwpTransactionComponent implements OnInit {
     this.fre = getFrerq
     this.frequency = getFrerq.frequency
     this.swpTransaction.controls["employeeContry"].setValidators([Validators.min(getFrerq.sipMinimumInstallmentAmount)])
-    this.dateArray(getFrerq.sipDates)
+    if(this.getDataSummary.defaultClient.aggregatorType == 1){
+      this.dateArray(getFrerq.swpDates)
+    }else{
+      this.dateArray(getFrerq.sipDates)
+    }
   }
   dateArray(sipDates) {
     var currentDate = new Date();

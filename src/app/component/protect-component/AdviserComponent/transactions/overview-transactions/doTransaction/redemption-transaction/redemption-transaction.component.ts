@@ -219,7 +219,7 @@ export class RedemptionTransactionComponent implements OnInit {
     this.showUnits = true
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
     Object.assign(this.transactionSummary, { mutualFundId: folio.id });
-    // this.transactionSummary = {...this.transactionSummary};
+    this.transactionSummary = {...this.transactionSummary};
     this.folioDetails = folio
   }
   redeem() {
