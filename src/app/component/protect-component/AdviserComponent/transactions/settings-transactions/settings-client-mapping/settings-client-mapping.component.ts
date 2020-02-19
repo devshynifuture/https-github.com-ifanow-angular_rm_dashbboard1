@@ -11,7 +11,7 @@ import { EventService } from 'src/app/Data-service/event.service';
   styleUrls: ['./settings-client-mapping.component.scss']
 })
 export class SettingsClientMappingComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'pan', 'hold', 'tstatus', 'status', 'map'];
+  displayedColumns: string[] = ['weight', 'symbol', 'pan', 'hold', 'tstatus', 'status', 'map'];
   dataSource;
   defaultDetails: any;
   allData: any;
@@ -20,10 +20,23 @@ export class SettingsClientMappingComponent implements OnInit {
   defaultClient: any;
   selectedPlatform: any;
   brokerCodeList: any;
-  constructor(private eventService: EventService, private utilService: UtilService, private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) { }
+  constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService, private utilService: UtilService, private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) { }
 
   ngOnInit() {
+    this.getFilterOptionData();
     this.getUnmappedFolios()
+  }
+  getFilterOptionData() {
+    let obj = {
+      advisorId: 414,
+      onlyBrokerCred: true
+    }
+    console.log('encode', obj)
+    this.onlineTransact.getBSECredentials(obj).subscribe(
+      data => {
+        console.log(data)
+      }
+    );
   }
   getUnmappedFolios() {
     const obj =
