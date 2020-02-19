@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SupportUpperSliderComponent } from './support-upper-slider.component';
+import { MyIfaSelectArnRiaComponent } from './my-ifa-select-arn-ria.component';
 
-describe('SupportUpperSliderComponent', () => {
-  let component: SupportUpperSliderComponent;
-  let fixture: ComponentFixture<SupportUpperSliderComponent>;
+describe('MyIfaSelectArnRiaComponent', () => {
+  let component: MyIfaSelectArnRiaComponent;
+  let fixture: ComponentFixture<MyIfaSelectArnRiaComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SupportUpperSliderComponent ]
+      declarations: [ MyIfaSelectArnRiaComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SupportUpperSliderComponent);
+    fixture = TestBed.createComponent(MyIfaSelectArnRiaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

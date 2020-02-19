@@ -124,20 +124,17 @@ export class ServicesComponent implements OnInit {
     );
   }
   servicesMappedRes(data) {
-    console.log(data);
     this.isLoading = false;
     if (data) {
+      console.log(data, "servicePricing");
       this.planServiceData = data;
       const modifiedArray = []
       this.planServiceData.forEach(element => {
-        const newElement = {
-          ...element,
-          ...element.servicePricing
-        };
         if (element.selected == true) {
           this.mappedData.push(element);
         }
-        modifiedArray.push(newElement);
+        element.servicePricing['pricingList'] = element.servicePricing;
+        modifiedArray.push(element);
       });
 
       this.planServiceData = modifiedArray;
@@ -166,17 +163,9 @@ export class ServicesComponent implements OnInit {
   }
 
   unmapPlanToService(data) {
-    // data.selected = false;
-    // _.reject(this.mappedData, delData => {
-    //   return delData.id == data.id;
-    // });
     data.selected = false;
-    // _.remove(this.mappedData, function (delData) {
-    //   return delData.id == data.id;
-    // });
     this.mappedData = this.mappedData.filter(delData => delData.id != data.id)
-    console.log(data);
-    // console.log(this.mappedData.length);
+    console.log(this.mappedData,data, "unmappedData");
   }
 
   

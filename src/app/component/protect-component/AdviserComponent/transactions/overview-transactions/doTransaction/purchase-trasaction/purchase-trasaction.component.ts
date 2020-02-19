@@ -40,6 +40,8 @@ export class PurchaseTrasactionComponent implements OnInit {
   showSpinner = false;
   bankDetails: any;
   achMandateNSE: any;
+  callOnFolioSelection: boolean;
+  showSpinnerFolio=false;
   constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
     private subInjectService: SubscriptionInject, private fb: FormBuilder,private eventService : EventService) { }
   @Input()
@@ -141,7 +143,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.ExistingOrNew = value
   }
   getbankDetails(bank) {
-    this.bankDetails = bank
+    this.bankDetails = bank[0]
     console.log('bank details', bank)
   }
   getAchmandateDetails(ach) {
@@ -181,6 +183,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.getAmcWiseFolio()
   }
   getAmcWiseFolio() {
+    this.showSpinnerFolio = true
     let obj1 = {
       amcId: this.scheme.amcId,
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -197,12 +200,16 @@ export class PurchaseTrasactionComponent implements OnInit {
     );
   }
   getFoliosAmcWiseRes(data) {
+    this.showSpinnerFolio = false
     console.log('getFoliosAmcWiseRes', data)
     this.folioList = data
   }
   selectedFolio(folio) {
     this.folioDetails = folio
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
+    Object.assign(this.transactionSummary, { mutualFundId: folio.id });
+    this.transactionSummary = {...this.transactionSummary};
+    this.callOnFolioSelection = folio.id
   }
   enteredAmount(value) {
     Object.assign(this.transactionSummary, { enteredAmount: value });
@@ -253,7 +260,6 @@ export class PurchaseTrasactionComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-
       }
     );
   }
@@ -272,7 +278,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: ['2'],
-      investor: [(!data) ? '' : data.investor, [Validators.required]],
+    //  investor: [(!data) ? '' : data.investor, [Validators.required]],
       employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required,]],
       investmentAccountSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       modeOfPaymentSelection: ['1'],
@@ -287,10 +293,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     return this.purchaseTransaction.controls;
   }
   purchase() {
-    if (this.purchaseTransaction.get('investor').invalid) {
-      this.purchaseTransaction.get('investor').markAsTouched();
-      return;
-    } else if (this.purchaseTransaction.get('folioSelection').invalid) {
+    if (this.purchaseTransaction.get('folioSelection').invalid) {
       this.purchaseTransaction.get('folioSelection').markAsTouched();
       return;
     } else {

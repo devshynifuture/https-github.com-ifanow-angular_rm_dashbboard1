@@ -51,7 +51,7 @@
                         <div class="form-group">
                             <mat-form-field>
                                 <input type="text" aria-label="Number" class="form-control" matInput
-                                    formControlName="investor" [matAutocomplete]="auto"
+                                  [matAutocomplete]="auto"
                                     (keyup)="getSchemeList($event.target.value)"
                                     value="Start typing to see investor names">
                                 <mat-autocomplete #auto="matAutocomplete">
@@ -119,14 +119,14 @@
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select class="form-control" formControlName="investmentAccountSelection">
-                                    <mat-option value="option" (onSelectionChange)="selectedFolio(folio)"
+                                    <mat-option value="option" (click)="selectedFolio(folio)"
                                         *ngFor="let folio of folioList">{{folio.folioNumber}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
                     </div>
 
-                    <div class="col-md-1 ">
+                    <div class="col-md-1 " *ngIf="showSpinnerFolio == true">
                         <mat-spinner class="mt-8"></mat-spinner>
                     </div>
                 </div>

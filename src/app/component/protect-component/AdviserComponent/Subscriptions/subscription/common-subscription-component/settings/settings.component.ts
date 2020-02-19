@@ -148,7 +148,7 @@ export class SettingsComponent implements OnInit {
       console.log(result, this.SettingProfileData, "delete result");
 
       if (result != undefined) {
-        const tempList = this.SettingProfileData.filter(p => p.id != result.id);
+        const tempList = this.SettingProfileData.filter(p => p.id != result);
         this.SettingProfileData = tempList;
       }
     });

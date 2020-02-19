@@ -48,6 +48,7 @@ export class SipTransactionComponent implements OnInit {
   achMandateNSE: any;
   platformType: any;
   bankDetails: any;
+  showSpinnerFolio=false;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private processTransaction: ProcessTransactionService, private fb: FormBuilder,private eventService : EventService) { }
@@ -229,15 +230,18 @@ export class SipTransactionComponent implements OnInit {
     this.dateArray(getFrerq.sipDates)
   }
   dateArray(sipDates) {
+    var currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() + 7);
+
     this.dates = sipDates.split(",")
     this.dateDisplay = this.processTransaction.getDateByArray(this.dates, true)
     this.dateDisplay = this.dateDisplay.filter(element => {
-      return element.date > new Date()
+      return element.date > currentDate
     });
     console.log('dateDisplay = ', this.dateDisplay)
   }
   getbankDetails(value){
-    this.bankDetails = value
+    this.bankDetails = value[0]
     console.log('bank details',value)
   }
   getAchmandateDetails(value){
@@ -256,10 +260,11 @@ export class SipTransactionComponent implements OnInit {
       );
   }
   getMandateDetailsRes(data) {
-    console.log('mandate details :', data)
+    console.log('mandate details :', data[0])
     this.mandateDetails = data
   }
   getAmcWiseFolio() {
+    this.showSpinnerFolio = true
     let obj1 = {
       amcId: this.scheme.amcId,
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -274,6 +279,7 @@ export class SipTransactionComponent implements OnInit {
     );
   }
   getFoliosAmcWiseRes(data) {
+    this.showSpinnerFolio = false
     console.log('getFoliosAmcWiseRes', data)
     this.folioList = data
   }
@@ -281,6 +287,8 @@ export class SipTransactionComponent implements OnInit {
   selectedFolio(folio) {
     this.folioDetails = folio
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
+    Object.assign(this.transactionSummary, { mutualFundId: folio.id });
+    this.transactionSummary = {...this.transactionSummary};
   }
   reinvest(scheme) {
     this.schemeDetails = scheme
@@ -336,9 +344,9 @@ export class SipTransactionComponent implements OnInit {
       clientId: this.getDataSummary.defaultClient.clientId,
       startDate: Number(new Date(this.sipTransaction.controls.date.value.replace(/"/g, ""))),
       frequencyType:this.frequency,
-      //endDate :sipTransaction.sip.scheme.,
       noOfInstallments: this.sipTransaction.controls.installment.value,
-      orderType: (this.mandateDetails==undefined)?null:this.mandateDetails[0].mandateType,
+      orderType:'SIP', //(this.mandateDetails==undefined)?null:this.mandateDetails[0].mandateType,
+      mandateType:(this.mandateDetails==undefined)?null:this.mandateDetails[0].mandateType,
       buySell: 'PURCHASE',
       transCode: 'NEW',
       buySellType: "FRESH",
@@ -348,6 +356,7 @@ export class SipTransactionComponent implements OnInit {
       orderVal: this.sipTransaction.controls.employeeContry.value,
       euin: this.getDataSummary.defaultCredential.euin,
       xSipMandateId:(this.mandateDetails==undefined)?null:this.mandateDetails[0].mandateId,
+      aggregatorType:this.getDataSummary.defaultClient.aggregatorType,
       schemeCd: this.schemeDetails.schemeCode,
       transMode: 'PHYSICAL',
       bseDPTransType: 'PHYSICAL',
