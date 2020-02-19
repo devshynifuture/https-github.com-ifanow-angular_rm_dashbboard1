@@ -11,6 +11,7 @@ import { SettingsEmpanelledAmcComponent } from './settings-empanelled-amc/settin
 import { ArnRiaCredentialsComponent } from './settings-manage-credentials/arn-ria-credentials/arn-ria-credentials.component';
 import { SubBrokerTeamMemberComponent } from './settings-manage-credentials/sub-broker-team-member/sub-broker-team-member.component';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+import { CommonModule } from '@angular/common';
 
 
 
@@ -24,11 +25,9 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
         SettingsEmpanelledAmcComponent,
         ArnRiaCredentialsComponent,
         SubBrokerTeamMemberComponent,
-
-
-
     ],
     imports: [
+        CommonModule,
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,

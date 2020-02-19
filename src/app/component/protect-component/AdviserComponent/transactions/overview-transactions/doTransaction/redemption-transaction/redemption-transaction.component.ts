@@ -33,6 +33,7 @@ export class RedemptionTransactionComponent implements OnInit {
   folioDetails: any;
   showUnits = false
   bankDetails: any;
+  showSpinnerFolio = false;
   achMandateNSE: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
@@ -193,7 +194,7 @@ export class RedemptionTransactionComponent implements OnInit {
     console.log('schemeDetails == ', this.schemeDetails)
   }
   getSchemeWiseFolios() {
-    this.showSpinner = true
+    this.showSpinnerFolio = true
     let obj1 = {
       mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -210,7 +211,7 @@ export class RedemptionTransactionComponent implements OnInit {
       );
   }
   getSchemeWiseFoliosRes(data) {
-    this.showSpinner = false
+    this.showSpinnerFolio = false
     console.log('res scheme folio', data)
     this.folioList = data
   }
