@@ -4,6 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ConfirmationTransactionComponent } from '../confirmation-transaction/confirmation-transaction.component';
 import { UtilService } from 'src/app/services/util.service';
 import { OnlineTransactionService } from '../../../online-transaction.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-redemption-transaction',
@@ -35,7 +36,7 @@ export class RedemptionTransactionComponent implements OnInit {
   achMandateNSE: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,private eventService : EventService) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -84,7 +85,6 @@ export class RedemptionTransactionComponent implements OnInit {
           if (UtilService.isRefreshRequired(sideBarData)) {
             // this.getNscSchemedata();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
           }
           rightSideDataSub.unsubscribe();
         }
@@ -107,7 +107,7 @@ export class RedemptionTransactionComponent implements OnInit {
       transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
-      investor: [(!data) ? '' : data.investor, [Validators.required]],
+      investor: [(!data) ? '' : this.scheme, [Validators.required]],
       employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required]],
       redeemType:[(!data) ? '' : data.redeemType ,[Validators.required]],
       investmentAccountSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
@@ -140,8 +140,10 @@ export class RedemptionTransactionComponent implements OnInit {
       tpUserCredFamilyMappingId:this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
     }
     this.onlineTransact.getExistingSchemes(obj).subscribe(
-      data => this.getExistingSchemesRes(data)
-    );
+      data => this.getExistingSchemesRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   getExistingSchemesRes(data) {
     this.showSpinner = false
@@ -149,7 +151,7 @@ export class RedemptionTransactionComponent implements OnInit {
   }
   getbankDetails(bank) {
     this.bankDetails = bank
-    console.log('bank details', bank)
+    console.log('bank details', bank[0])
   }
   getAchmandateDetails(ach) {
     this.achMandateNSE  = ach
@@ -166,8 +168,10 @@ export class RedemptionTransactionComponent implements OnInit {
       userAccountType: this.getDataSummary.defaultCredential.accountType,
     }
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
-      data => this.getSchemeDetailsRes(data)
-    );
+      data => this.getSchemeDetailsRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   getSchemeDetailsRes(data) {
     console.log('getSchemeDetailsRes == ', data)
@@ -189,6 +193,7 @@ export class RedemptionTransactionComponent implements OnInit {
     console.log('schemeDetails == ', this.schemeDetails)
   }
   getSchemeWiseFolios() {
+    this.showSpinner = true
     let obj1 = {
       mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -199,10 +204,13 @@ export class RedemptionTransactionComponent implements OnInit {
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
     }
     this.onlineTransact.getSchemeWiseFolios(obj1).subscribe(
-      data => this.getSchemeWiseFoliosRes(data)
-    );
+      data => this.getSchemeWiseFoliosRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   getSchemeWiseFoliosRes(data) {
+    this.showSpinner = false
     console.log('res scheme folio', data)
     this.folioList = data
   }
@@ -210,14 +218,16 @@ export class RedemptionTransactionComponent implements OnInit {
     this.folioDetails = folio
     this.showUnits = true
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
+    Object.assign(this.transactionSummary, { mutualFundId: folio.id });
+    this.transactionSummary = {...this.transactionSummary};
   }
   redeem() {
     let obj = {
-      productDbId: 67,//this.schemeDetails.id,
+      productDbId: this.schemeDetails.id,
       mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
-      productCode:"DBGPGGR", //this.schemeDetails.schemeCode,
-      isin:"INF846K01917", //this.schemeDetails.isin,
-      folioNo: '91031058953',//(this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+      productCode:this.schemeDetails.schemeCode,
+      isin:this.schemeDetails.isin,
+      folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
       tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
       tpSubBrokerCredentialId: this.getDataSummary.defaultCredential.tpSubBrokerCredentialId,
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
@@ -250,8 +260,10 @@ export class RedemptionTransactionComponent implements OnInit {
     }
     console.log('redeem obj json',obj)
     this.onlineTransact.transactionBSE(obj).subscribe(
-      data => this.redeemBSERes(data)
-    );
+      data => this.redeemBSERes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   redeemBSERes(data){
     console.log('redeem res',data)

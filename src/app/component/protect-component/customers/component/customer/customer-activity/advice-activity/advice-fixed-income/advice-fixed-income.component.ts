@@ -82,16 +82,19 @@ export class AdviceFixedIncomeComponent implements OnInit {
     console.log('data', data)
     this.dataSource = data;
     this.fixedDataSource = new MatTableDataSource(data.FIXED_DEPOSIT);
-    this.fixedDataSource.sort = this.sort
+    // this.fixedDataSource.sort = this.sort
     this.recurringDataSource = new MatTableDataSource(data.RECURRING_DEPOSIT);
-    this.recurringDataSource.sort = this.sort
+    // this.recurringDataSource.sort = this.sort
     this.bondDataSource = new MatTableDataSource(data.BONDS);
-    this.bondDataSource.sort = this.sort
+    // this.bondDataSource.sort = this.sort
+    this.fixedDataSource['tableFlag'] = (data.FIXED_DEPOSIT.length == 0) ? false : true;
+    this.recurringDataSource['tableFlag'] = (data.RECURRING_DEPOSIT.length == 0) ? false : true;
+    this.bondDataSource['tableFlag'] = (data.BONDS.length == 0) ? false : true;
   }
   checkAll(flag, tableDataList) {
     console.log(flag, tableDataList)
     const { dataList, selectedIdList } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
-    this.dataSource = new MatTableDataSource(dataList);
+    // this.dataSource = new MatTableDataSource(dataList);
     this.selectedAssetId = selectedIdList;
     console.log(this.selectedAssetId);
   }

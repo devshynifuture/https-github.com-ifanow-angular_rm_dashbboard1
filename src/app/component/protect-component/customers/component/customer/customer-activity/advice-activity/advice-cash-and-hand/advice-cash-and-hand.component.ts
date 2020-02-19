@@ -8,6 +8,7 @@ import { BankAccountsComponent } from '../../../accounts/assets/cash&bank/bank-a
 import { AuthService } from 'src/app/auth-service/authService';
 import { ActiityService } from '../../actiity.service';
 import { MatTableDataSource, MatSort } from '@angular/material';
+import { AdviceUtilsService } from '../advice-utils.service';
 
 @Component({
   selector: 'app-advice-cash-and-hand',
@@ -16,19 +17,28 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 })
 export class AdviceCashAndHandComponent implements OnInit {
   displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'balance', 'advice', 'astatus', 'adate', 'icon'];
-  dataSource3 = new MatTableDataSource(ELEMENT_DATA1);
   advisorId: any;
   clientId: any;
   isLoading: any;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  bankAccDataSource: any = new MatTableDataSource();
+  cashInHandDataSource: any = new MatTableDataSource();
+  selectedAssetId: any = [];
 
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
 
   ngOnInit() {
-    this.dataSource3.sort = this.sort;
+    // this.dataSource3.sort = this.sort;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getAdviceByAsset();
+  }
+  checkAll(flag, tableDataList) {
+    console.log(flag, tableDataList)
+    const { dataList, selectedIdList } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
+    // this.dataSource = new MatTableDataSource(dataList);
+    this.selectedAssetId = selectedIdList;
+    console.log(this.selectedAssetId);
   }
   getAdviceByAsset() {
     let obj = {
@@ -36,6 +46,8 @@ export class AdviceCashAndHandComponent implements OnInit {
       clientId: this.clientId,
       assetCategory: 11
     }
+    this.cashInHandDataSource.data = [{}, {}, {}];
+    this.bankAccDataSource.data = [{}, {}, {}]
     this.isLoading = true;
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {
@@ -44,6 +56,10 @@ export class AdviceCashAndHandComponent implements OnInit {
   }
   getAllSchemeResponse(data) {
     console.log(data);
+    this.bankAccDataSource.data = data.BANK_ACCOUNTS;
+    this.cashInHandDataSource.data = data.CASH_IN_HAND;
+    this.bankAccDataSource['tableFlag'] = (data.BANK_ACCOUNTS.length == 0) ? false : true;
+    this.cashInHandDataSource['tableFlag'] = (data.CASH_IN_HAND.length == 0) ? false : true;
     this.isLoading = false;
     // this.cashinHandData=data.CASH IN HAND;
   }
@@ -96,18 +112,3 @@ export class AdviceCashAndHandComponent implements OnInit {
     );
   }
 }
-export interface PeriodicElement1 {
-  name: string;
-  desc: string;
-  balance: string;
-  advice: string;
-  adate: string;
-  astatus: string;
-
-}
-
-const ELEMENT_DATA1: PeriodicElement1[] = [
-  { name: 'Rahul Jain', desc: '1', balance: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-  { name: 'Rahul Jain', desc: '2', balance: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-
-];

@@ -5,6 +5,7 @@ import { ConfirmationTransactionComponent } from '../confirmation-transaction/co
 import { UtilService } from 'src/app/services/util.service';
 import { OnlineTransactionService } from '../../../online-transaction.service';
 import { ProcessTransactionService } from '../process-transaction.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-sip-transaction',
@@ -49,7 +50,7 @@ export class SipTransactionComponent implements OnInit {
   bankDetails: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-    private processTransaction: ProcessTransactionService, private fb: FormBuilder) { }
+    private processTransaction: ProcessTransactionService, private fb: FormBuilder,private eventService : EventService) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -122,11 +123,15 @@ export class SipTransactionComponent implements OnInit {
     }
     if (this.selectScheme == 2 && value.length > 2) {
       this.onlineTransact.getNewSchemes(obj).subscribe(
-        data => this.getNewSchemesRes(data)
+        data => this.getNewSchemesRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
       );
     } else {
       this.onlineTransact.getExistingSchemes(obj).subscribe(
-        data => this.getExistingSchemesRes(data)
+        data => this.getExistingSchemesRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
       );
     }
   }
@@ -163,8 +168,10 @@ export class SipTransactionComponent implements OnInit {
       userAccountType: this.getDataSummary.defaultCredential.accountType,
     }
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
-      data => this.getSchemeDetailsRes(data)
-    );
+      data => this.getSchemeDetailsRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   getSchemeDetailsRes(data) {
     console.log('getSchemeDetailsRes == ', data)
@@ -189,8 +196,10 @@ export class SipTransactionComponent implements OnInit {
       tpUserCredFamilyMappingId:this.getDataSummary.defaultClient.tpUserCredFamilyMappingId
     }
     this.onlineTransact.getNSEAchmandate(obj1).subscribe(
-      data => this.getNSEAchmandateRes(data)
-    );
+      data => this.getNSEAchmandateRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   getNSEAchmandateRes(data){
     console.log('getNSEAchmandateRes',data)
@@ -199,16 +208,18 @@ export class SipTransactionComponent implements OnInit {
   getFrequency() {
     let obj = {
       isin: this.schemeDetails.isin,
+      aggregatorType:this.getDataSummary.defaultClient.aggregatorType,
+      orderType:'SIP'
     }
     this.onlineTransact.getSipFrequency(obj).subscribe(
       data => this.getSipFrequencyRes(data)
     );
   }
   getSipFrequencyRes(data) {
-    console.log('isin ----', data)
+    console.log('isin Frequency ----', data)
     this.sipFrequency = data
     this.sipFrequency = data.filter(function (element) {
-      return element.sipFrequency
+      return element.frequency
     })
   }
   selectedFrequency(getFrerq) {
@@ -239,14 +250,17 @@ export class SipTransactionComponent implements OnInit {
       tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
     }
     this.onlineTransact.getMandateDetails(obj1).subscribe(
-      data => this.getMandateDetailsRes(data)
-    );
+      data => this.getMandateDetailsRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   getMandateDetailsRes(data) {
-    console.log('mandate details :', data)
+    console.log('mandate details :', data[0])
     this.mandateDetails = data
   }
   getAmcWiseFolio() {
+    this.showSpinner = true
     let obj1 = {
       amcId: this.scheme.amcId,
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -261,6 +275,7 @@ export class SipTransactionComponent implements OnInit {
     );
   }
   getFoliosAmcWiseRes(data) {
+    this.showSpinner = false
     console.log('getFoliosAmcWiseRes', data)
     this.folioList = data
   }
@@ -268,6 +283,8 @@ export class SipTransactionComponent implements OnInit {
   selectedFolio(folio) {
     this.folioDetails = folio
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
+    Object.assign(this.transactionSummary, { mutualFundId: folio.id });
+    this.transactionSummary = {...this.transactionSummary};
   }
   reinvest(scheme) {
     this.schemeDetails = scheme
@@ -359,8 +376,10 @@ export class SipTransactionComponent implements OnInit {
        obj.noOfInstallments =  this.sipTransaction.controls.installment.value
      }
      this.onlineTransact.transactionBSE(obj).subscribe(
-      data => this.sipBSERes(data)
-    );
+      data => this.sipBSERes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   sipBSERes(data){
     console.log('sip',data)

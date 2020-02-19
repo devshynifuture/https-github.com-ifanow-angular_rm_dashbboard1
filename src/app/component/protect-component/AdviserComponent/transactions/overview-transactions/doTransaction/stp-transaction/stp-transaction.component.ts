@@ -5,6 +5,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 import { OnlineTransactionService } from '../../../online-transaction.service';
 import { ProcessTransactionService } from '../process-transaction.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-stp-transaction',
@@ -47,7 +48,7 @@ export class StpTransactionComponent implements OnInit {
   bankDetails: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-    private processTransaction: ProcessTransactionService,
+    private processTransaction: ProcessTransactionService, private eventService : EventService,
     private fb: FormBuilder) { }
   @Input()
   set data(data) {
@@ -85,8 +86,10 @@ export class StpTransactionComponent implements OnInit {
       tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
     }
     this.onlineTransact.getMandateDetails(obj1).subscribe(
-      data => this.getMandateDetailsRes(data)
-    );
+      data => this.getMandateDetailsRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   getMandateDetailsRes(data) {
     console.log('mandate details :', data)
@@ -106,10 +109,13 @@ export class StpTransactionComponent implements OnInit {
         userAccountType: this.getDataSummary.defaultCredential.accountType,
         holdingType: this.getDataSummary.defaultClient.holdingType,
         tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
+        schemeSequence : 2
       }
       this.onlineTransact.getNewSchemes(obj).subscribe(
-        data => this.getNewSchemesRes(data)
-      );
+        data => this.getNewSchemesRes(data), (error) => {
+          this.eventService.showErrorMessage(error);
+        }
+        );
     }
   }
   getNewSchemesRes(data) {
@@ -131,10 +137,13 @@ export class StpTransactionComponent implements OnInit {
         userAccountType: this.getDataSummary.defaultCredential.accountType,
         holdingType: this.getDataSummary.defaultClient.holdingType,
         tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
+        schemeSequence : 1
       }
       this.onlineTransact.getExistingSchemes(obj).subscribe(
-        data => this.getExistingSchemesRes(data)
-      );
+        data => this.getExistingSchemesRes(data), (error) => {
+          this.eventService.showErrorMessage(error);
+        }
+        );
     } else {
 
     }
@@ -149,6 +158,8 @@ export class StpTransactionComponent implements OnInit {
     this.folioDetails = folio
     this.showUnits = true
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
+    Object.assign(this.transactionSummary, { mutualFundId: folio.id });
+    this.transactionSummary = {...this.transactionSummary};
   }
   selectedSchemeTransfer(schemeTransfer) {
     this.schemeTransfer = schemeTransfer
@@ -161,12 +172,28 @@ export class StpTransactionComponent implements OnInit {
       userAccountType: this.getDataSummary.defaultCredential.accountType,
     }
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
-      data => this.getSchemeDetailsTranferRes(data)
-    );
+      data => this.getSchemeDetailsTranferRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   getSchemeDetailsTranferRes(data) {
     // this.maiSchemeList = data
     this.schemeDetailsTransfer = data[0]
+    if (data.length > 1) {
+      this.reInvestmentOpt = data
+      console.log('reinvestment', this.reInvestmentOpt)
+    } if (data.length == 1) {
+      this.reInvestmentOpt = []
+    }
+    if(this.getDataSummary.defaultClient.aggregatorType == 2){
+      this.getMandateDetails()
+      }
+  }
+  reinvest(scheme) {
+    this.schemeDetails = scheme
+    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
+    console.log('schemeDetails == ', this.schemeDetails)
   }
   selectedScheme(scheme) {
     this.scheme = scheme
@@ -180,32 +207,21 @@ export class StpTransactionComponent implements OnInit {
       userAccountType: this.getDataSummary.defaultCredential.accountType,
     }
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
-      data => this.getSchemeDetailsRes(data)
-    );
+      data => this.getSchemeDetailsRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   getSchemeDetailsRes(data) {
     console.log('getSchemeDetailsRes == ', data)
     this.maiSchemeList = data
     this.schemeDetails = data[0]
     this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
-    if (data.length > 1) {
-      this.reInvestmentOpt = data
-      console.log('reinvestment', this.reInvestmentOpt)
-    } if (data.length == 1) {
-      this.reInvestmentOpt = []
-    }
     this.getSchemeWiseFolios()
-    if(this.getDataSummary.defaultClient.aggregatorType == 2){
-      this.getMandateDetails()
-      }
     this.getFrequency()
   }
-  reinvest(scheme) {
-    this.schemeDetails = scheme
-    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
-    console.log('schemeDetails == ', this.schemeDetails)
-  }
   getSchemeWiseFolios() {
+    this.showSpinner = true
     let obj1 = {
       mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -220,22 +236,27 @@ export class StpTransactionComponent implements OnInit {
     );
   }
   getSchemeWiseFoliosRes(data) {
+    this.showSpinner = false
     console.log('res scheme folio', data)
     this.folioList = data
   }
   getFrequency() {
     let obj = {
       isin: this.schemeDetails.isin,
+      aggregatorType:this.getDataSummary.defaultClient.aggregatorType,
+      orderType:'STP'
     }
     this.onlineTransact.getSipFrequency(obj).subscribe(
-      data => this.getSipFrequencyRes(data)
-    );
+      data => this.getSipFrequencyRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   getSipFrequencyRes(data) {
-    console.log('isin ----', data)
+    console.log('isin Frequency ----', data)
     this.switchFrequency = data
     this.switchFrequency = data.filter(function (element) {
-      return element.sipFrequency
+      return element.frequency
     })
   }
   selectedFrequency(getFrerq) {
@@ -285,7 +306,7 @@ export class StpTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { enteredAmount: value });
   }
   getbankDetails(value){
-    this.bankDetails = value
+    this.bankDetails = value[0]
     console.log('bank details',value)
   }
   getdataForm(data) {
@@ -362,8 +383,10 @@ export class StpTransactionComponent implements OnInit {
     }
     console.log('json stp', obj)
     this.onlineTransact.transactionBSE(obj).subscribe(
-      data => this.stpBSERes(data)
-    );
+      data => this.stpBSERes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+      );
   }
   stpBSERes(data) {
     console.log('stp res == ', data)

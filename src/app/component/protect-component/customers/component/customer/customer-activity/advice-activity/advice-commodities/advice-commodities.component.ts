@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { GoldComponent } from '../../../accounts/assets/commodities/gold/gold.component';
@@ -14,20 +14,24 @@ import { AdviceUtilsService } from '../advice-utils.service';
   templateUrl: './advice-commodities.component.html',
   styleUrls: ['./advice-commodities.component.scss']
 })
-export class AdviceCommoditiesComponent implements OnInit {
+export class AdviceCommoditiesComponent implements OnInit, AfterViewInit {
   displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'mvalue', 'advice', 'astatus', 'adate', 'icon'];
   // dataSource1 = new MatTableDataSource(ELEMENT_DATA1);
   dataSource2 = new MatTableDataSource(ELEMENT_DATA2);
   advisorId: any;
   clientId: any;
   isLoading: boolean;
-  @ViewChild("tableOne", { static: true }) sort1: MatSort;
-  @ViewChild("tableTwo", { static: true }) sort2: MatSort;
-  goldDataSource: any;
+  @ViewChild("tableOne", { static: false }) sort1: MatSort;
+  @ViewChild("tableTwo", { static: false }) sort2: MatSort;
+  goldDataSource: any = new MatTableDataSource();
   selectedAssetId: any = [];
+  otherDataSource: any = new MatTableDataSource();
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
-
+  ngAfterViewInit() {
+    this.goldDataSource.sort = this.sort1;
+  }
   ngOnInit() {
+    // this.goldDataSource.sort = this.sort1;
     this.dataSource2.sort = this.sort2;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -35,13 +39,15 @@ export class AdviceCommoditiesComponent implements OnInit {
   }
   allAdvice = false
   getAdviceByAsset() {
-    this.goldDataSource = [{}, {}, {}];
+
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
       assetCategory: 12
     }
     this.isLoading = true
+    this.goldDataSource.data = [{}, {}, {}];
+    this.otherDataSource.data = [{}, {}, {}]
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {
       }
@@ -50,13 +56,15 @@ export class AdviceCommoditiesComponent implements OnInit {
   checkAll(flag, tableDataList) {
     console.log(flag, tableDataList)
     const { dataList, selectedIdList } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
-    this.goldDataSource = new MatTableDataSource(dataList);
     this.selectedAssetId = selectedIdList;
     // console.log(this.selectedAssetId);
   }
   getAllSchemeResponse(data) {
-    this.goldDataSource = new MatTableDataSource(data.GOLD);
+    this.goldDataSource.data = data.GOLD;
     this.goldDataSource.sort = this.sort1;
+    this.otherDataSource.data = data.OTHERS;
+    this.goldDataSource['tableFlag'] = (data.GOLD.length == 0) ? false : true;
+    this.otherDataSource['tableFlag'] = (data.OTHERS.length == 0) ? false : true;
     console.log(data);
     this.isLoading = false
   }

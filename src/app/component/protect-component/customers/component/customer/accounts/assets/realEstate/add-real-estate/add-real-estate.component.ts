@@ -15,7 +15,6 @@ export class AddRealEstateComponent implements OnInit {
   validatorType = ValidatorType
   addrealEstateForm: any;
   ownerData: any;
-  ownerName: any;
   selectedFamilyData: any;
   advisorId: any;
   addOwner: boolean;
@@ -46,6 +45,7 @@ export class AddRealEstateComponent implements OnInit {
   ownerDataName: any;
   ownershipPerc: any;
   flag: any;
+  ownerName: any;
   constructor(public custumService: CustomerService, public subInjectService: SubscriptionInject, private fb: FormBuilder, public custmService: CustomerService, public eventService: EventService, public utils: UtilService) { }
   @Input()
   set data(inputData) {
@@ -121,6 +121,7 @@ export class AddRealEstateComponent implements OnInit {
   display(value) {
     console.log('value selected', value)
     this.ownerName = value;
+    this.familyMemberId = value.id;
     this.selectedFamilyData = value
   }
   showMore() {
@@ -211,6 +212,9 @@ export class AddRealEstateComponent implements OnInit {
 
     // });
   }
+  ownerDetails(value) {
+    this.familyMemberId = value.id;
+  }
   onChange(data) {
     if (data == 'owner') {
       this.nexNomineePer = 0;
@@ -243,7 +247,7 @@ export class AddRealEstateComponent implements OnInit {
     this.flag = data;
     this.addOwner = false;
     this.addrealEstateForm = this.fb.group({
-      ownerName: this.ownerName,
+      ownerName: [(!data) ? '' : this.ownerName, [Validators.required]],
       getCoOwnerName: this.fb.array([this.fb.group({
         ownerName: null,
         ownershipPerc: null,
@@ -324,19 +328,19 @@ export class AddRealEstateComponent implements OnInit {
   }
   saveFormData() {
     this.addrealEstateForm.controls.familyMemberId.setValue(this.familyMemberId)
-    if (this.addrealEstateForm.get('type').invalid) {
-      this.addrealEstateForm.get('type').markAsTouched();
-      return
-    } else if (this.addrealEstateForm.get('ownerName').invalid) {
+    if (this.addrealEstateForm.get('ownerName').invalid) {
       this.addrealEstateForm.get('ownerName').markAsTouched();
       return;
+    } else if (this.addrealEstateForm.get('ownerPercent').invalid) {
+      this.addrealEstateForm.get('ownerPercent').markAsTouched();
+      return
+    } else if (this.addrealEstateForm.get('type').invalid) {
+      this.addrealEstateForm.get('type').markAsTouched();
+      return
     } else if (this.addrealEstateForm.get('marketValue').invalid) {
       this.addrealEstateForm.get('marketValue').markAsTouched();
       return
 
-    } else if (this.addrealEstateForm.get('ownerPercent').invalid) {
-      this.addrealEstateForm.get('ownerPercent').markAsTouched();
-      return
     } else {
 
       const obj = {

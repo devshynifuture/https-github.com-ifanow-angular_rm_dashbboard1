@@ -78,10 +78,10 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   @Input() set data(data) {
     this.copyStoreData = data;
     this.storeData = data;
-    console.log('@@@@@@@@ yo1', data.id, data.id == undefined);
+    console.log('@@@@@@@@ yo1', data, data.id == undefined || data.flag);
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    if(data.id == undefined){
+    if(data.id == undefined || data.flag){
       this.getClients();
     }
     this.initFormsAndVariable(data);

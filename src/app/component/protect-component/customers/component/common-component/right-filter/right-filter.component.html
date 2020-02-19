@@ -31,7 +31,7 @@
       </mat-expansion-panel-header>
       <div>
         <mat-list-item role="listitem" *ngFor="let item of familyMember">
-          <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterFamily($event)">{{item.name}}</mat-checkbox>
+          <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterFamily()">{{item.name}}</mat-checkbox>
         </mat-list-item>
       </div>
     </mat-expansion-panel>
@@ -58,7 +58,7 @@
       </mat-expansion-panel-header>
       <div>
         <mat-list-item role="listitem" *ngFor="let item of scheme">
-          <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterScheme($event)" class="wb">{{item.schemeName}}
+          <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterScheme()" class="wb">{{item.schemeName}}
           </mat-checkbox>
         </mat-list-item>
       </div>
@@ -73,7 +73,8 @@
       </mat-expansion-panel-header>
       <div>
         <mat-list-item role="listitem" *ngFor="let item of folio">
-          <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterFolio($event)">{{item.folioNumber}}</mat-checkbox>
+          <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterFolio()">{{item.folioNumber}}
+          </mat-checkbox>
         </mat-list-item>
       </div>
     </mat-expansion-panel>
@@ -117,7 +118,8 @@
       </mat-expansion-panel-header>
       <div>
         <mat-list-item role="listitem" *ngFor="let item of category">
-          <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterCategory($event)">{{item.category}}</mat-checkbox>
+          <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterCategory()">{{item.category}}
+          </mat-checkbox>
         </mat-list-item>
       </div>
     </mat-expansion-panel>
@@ -129,15 +131,15 @@
       <h5 class="m-0 pb-8">Report as on</h5>
       <div class="col-md-8 pl-0">
         <mat-form-field>
-            <input class="form-control br-0" matInput [matDatepicker]="picker" formControlName="reportAsOn"  readonly>
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-            <mat-error class="f-12">
-              This field is required
+          <input class="form-control br-0" matInput [matDatepicker]="picker" formControlName="reportAsOn" readonly>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error class="f-12">
+            This field is required
           </mat-error>
         </mat-form-field>
 
-    </div>
+      </div>
     </div>
     <div class="col-md-6 p-0">
       <h5 class="m-0 pb-8">Show zero folios?</h5>
@@ -145,7 +147,7 @@
         <mat-radio-button value="1" class="text-custom b-ua">Yes</mat-radio-button>
         <mat-radio-button value="2" class="text-primary bu-primary">No</mat-radio-button>
       </mat-radio-group>
-     
+
     </div>
   </div>
   <!-- Transaction view -->
