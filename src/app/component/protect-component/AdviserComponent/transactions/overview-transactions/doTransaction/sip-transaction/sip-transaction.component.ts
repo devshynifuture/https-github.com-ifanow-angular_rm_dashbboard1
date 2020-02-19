@@ -48,6 +48,7 @@ export class SipTransactionComponent implements OnInit {
   achMandateNSE: any;
   platformType: any;
   bankDetails: any;
+  showSpinnerFolio=false;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private processTransaction: ProcessTransactionService, private fb: FormBuilder,private eventService : EventService) { }
@@ -229,10 +230,13 @@ export class SipTransactionComponent implements OnInit {
     this.dateArray(getFrerq.sipDates)
   }
   dateArray(sipDates) {
+    var currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() + 7);
+
     this.dates = sipDates.split(",")
     this.dateDisplay = this.processTransaction.getDateByArray(this.dates, true)
     this.dateDisplay = this.dateDisplay.filter(element => {
-      return element.date > new Date()
+      return element.date > currentDate
     });
     console.log('dateDisplay = ', this.dateDisplay)
   }
@@ -260,7 +264,7 @@ export class SipTransactionComponent implements OnInit {
     this.mandateDetails = data
   }
   getAmcWiseFolio() {
-    this.showSpinner = true
+    this.showSpinnerFolio = true
     let obj1 = {
       amcId: this.scheme.amcId,
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -275,7 +279,7 @@ export class SipTransactionComponent implements OnInit {
     );
   }
   getFoliosAmcWiseRes(data) {
-    this.showSpinner = false
+    this.showSpinnerFolio = false
     console.log('getFoliosAmcWiseRes', data)
     this.folioList = data
   }

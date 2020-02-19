@@ -160,7 +160,7 @@ export const appConfig = {
   ADD_SCRIP: 'account/asset/stock/scrip-name/add',
   EDIT_SCRIP_HOLDING_TRANSACTION: 'account/asset/stock/holding/transaction/edit',
   MUTUAL_FUND_GET: 'mutual-fund/mutualfund/list/get',
-  FOLIO_MASTER_DETAILS:'mutual-fund/folioMasterDetails/list/get',
+  FOLIO_MASTER_DETAILS: 'mutual-fund/folioMasterDetails/list/get',
   ////////////////////////////////plan////////////////////////////
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
   SUBMIT_RISK: 'plan/risk-assessment/add',
@@ -362,8 +362,9 @@ export const appConfig = {
   GET_AMCWISE_FOLIO: 'mutual-fund/folios/amc-wise/get',
   GET_SCHEMEWISE_FOLIO: 'mutual-fund/folios/scheme-wise/get',
   GET_MANDATE_DETAILS: 'bse/mandate/view',
-  GET_UNMAPPED_FOLIO: '/bse/user/mapped-unmapped-clients/view',
-  MAP_UNMAP_FOLIOS: '/map-iin',
+  GET_UNMAPPED_FOLIO: 'client/unmapped/view',
+  GET_MAPPED_FOLIO: 'client/mapped/view',
+  MAP_UNMAP_FOLIOS: 'map-iin',
   GET_FREQUENCY: 'bse/scheme/sip/view',
   SIP_BSE: 'bse/order/create',
   BSE_TRANSACTION: 'bse/order/create',
@@ -390,6 +391,14 @@ export const appConfig = {
   CASHFLOW_ADD_LIABILITIES: 'cashflow/liability/add',
   CASHFLOW_EDIT_LIABILITIES: 'cashflow/liability/edit',
   CASHFLOW_DELETE_LIABILITIES: 'cashflow/liability/delete',
+
+  // backoffice
+
+  BACKOFFICE_GET_ALL_SCHEMES_NJ: 'backoffice/get/allshemes/nj',
+  BACKOFFICE_GET_ALL_SCHEMES_PRUDENT: 'backoffice/get/allshemes/prudent',
+  BACKOFFICE_GET_UNMAPPED_SCHEMES_NJ: 'backoffice/get/unmapped/njschemes',
+  BACKOFFICE_GET_UNMAPPED_SCHEMES_PRUDENT: 'backoffice/get/unmapped/prudentschemes',
+  BACKOFFICE_GET_FILTERED_SCHEMES: 'backoffice/get/filtered/shemes',
 
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',

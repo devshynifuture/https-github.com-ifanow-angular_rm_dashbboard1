@@ -2,9 +2,10 @@ import { SubscriptionInject } from './../../AdviserComponent/Subscriptions/subsc
 import { UtilService } from './../../../../services/util.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 // import { IfaDetailsComponent } from './ifa-details/ifa-details.component';
-import { SupportService } from '../support.service';
+
 import { IfasDetailsComponent } from './ifas-details/ifas-details.component';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { MatSort, MatTableDataSource, MatDialog } from '@angular/material';
+import { OrderHistoricalFileComponent } from './../order-historical-file/order-historical-file.component';
 
 @Component({
   selector: 'app-my-ifas',
@@ -16,39 +17,37 @@ import { MatSort, MatTableDataSource } from '@angular/material';
 export class MyIfasComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   isLoading = false;
-  constructor(private supportService: SupportService, private subInjectService: SubscriptionInject) { }
+  constructor(
+    private subInjectService: SubscriptionInject
+  ) { }
 
   dataSource;
   displayedColumns = ['adminName', 'email', 'mobile', 'usingSince', 'lastLogin', 'accStatus', 'plan', 'nextBilling', 'team', 'arn', 'logout', 'menu']
-
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
     this.dataSource.sort = this.sort;
   }
 
-  // openDetailsComponent(value, data) {
-  //   const fragmentData = {
-  //     flag: value,
-  //     data,
-  //     id: 1,
-  //     state: 'open70',
-  //     componentName: IfasDetailsComponent
-  //   };
-  //   const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-  //     sideBarData => {
-  //       console.log('this is sidebardata in subs subs : ', sideBarData);
-  //       if (UtilService.isDialogClose(sideBarData)) {
-  //         if (UtilService.isRefreshRequired(sideBarData)) {
-  //           console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+  openOrderHistoricalFile(data) {
+    const fragmentData = {
+      flag: 'ifaDetails',
+      data,
+      id: 1,
+      state: 'open30',
+      componentName: OrderHistoricalFileComponent,
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
 
-  //         }
-  //         rightSideDataSub.unsubscribe();
-  //       }
-
-  //     }
-  //   );
-  // }
+        }
+      }
+    );
+  }
 
   openIfaRightSilder(data) {
     const fragmentData = {

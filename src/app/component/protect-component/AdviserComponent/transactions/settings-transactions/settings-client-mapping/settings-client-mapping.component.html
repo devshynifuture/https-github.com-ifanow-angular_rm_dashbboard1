@@ -6,30 +6,29 @@
         <div class="row">
             <div class="col-md-5 pl-0">
                 <div class="form-group mb-0">
-                    <mat-form-field>
-                        <mat-select class="form-control br-0">
-                            <mat-option value="Unmapped clients">Unmapped clients</mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                    <mat-select [(ngModel)]="type" (selectionChange)="sortDataFilterWise()" class="form-control br-0">
+                        <mat-option value="1">Mapped clients</mat-option>
+                        <mat-option value="2">Unmapped clients</mat-option>
+                    </mat-select>
                 </div>
             </div>
             <div class="col-md-5 pl-0">
                 <div class="form-group mb-0">
-                    <mat-form-field>
-                        <mat-select class="form-control br-0">
-                            <mat-option value="ARN-83865">ARN-83865</mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                    <mat-select [(ngModel)]="selectedBrokerCode" (selectionChange)="sortDataFilterWise()"
+                        class="form-control br-0">
+                        <mat-option *ngFor="let singleBrokerCode of filterData" [value]="singleBrokerCode">
+                            {{singleBrokerCode.brokerCode}}
+                        </mat-option>
+                    </mat-select>
                 </div>
             </div>
             <div class="col-md-2 pl-0">
                 <div class="form-group mb-0">
-                    <mat-form-field>
-                        <mat-select (selectionChange)="getDefaultDetails($event.value)" class="form-control br-0">
-                            <mat-option value="1">NSE</mat-option>
-                            <mat-option value="1">BSE</mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                    <mat-select [(ngModel)]="selectedPlatform" (selectionChange)="sortDataFilterWise()"
+                        class="form-control br-0">
+                        <mat-option *ngFor="let singlePlatform of filterData" [value]="singlePlatform">
+                            {{singlePlatform.platformName}}</mat-option>
+                    </mat-select>
                 </div>
             </div>
         </div>
@@ -37,16 +36,6 @@
     </div>
     <div class="col-md-12 client-mapping">
         <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
-            <ng-container matColumnDef="position">
-                <th mat-header-cell *matHeaderCellDef class="br"> Platform </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
-            </ng-container>
-
             <ng-container matColumnDef="weight">
                 <th mat-header-cell *matHeaderCellDef class="br"> Client code </th>
                 <td mat-cell *matCellDef="let element" class="br"> {{element.clientCode}} </td>

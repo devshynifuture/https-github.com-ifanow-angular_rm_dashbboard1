@@ -145,6 +145,17 @@ export class UtilService {
     return this.getFamilyMemberData;
   }
 
+  formValidations(whichTable) {
+    // console.log("this is formGroup::::::::::", whichTable);
+    for (let key in whichTable.controls) {
+      if (whichTable.get(key).invalid) {
+        whichTable.get(key).markAsTouched();
+        return false;
+      }
+    }
+    return (whichTable.valid) ? true : false;
+  }
+
   // Allows only numbers
   keyPress(event: any) {
     const pattern = /[0-9\+\-\. ]/;
@@ -218,6 +229,7 @@ export class ValidatorType {
   // static NUMBER_ONLY = new RegExp(/^\d{1,6}(\.\d{1,2})?$/);
   static NUMBER_ONLY = new RegExp(/^\d+(\.\d{0,4})?$/);
   static PERSON_NAME = new RegExp(/^[a-zA-Z]*[a-zA-Z]+[a-zA-Z ]*$/);
+  static ALPHA_NUMERIC_PARANTHESIS_DOT_SPACE = new RegExp(/^[\w .,(),-]+$/);
   // static PERSON_NAME = new RegExp(/^[a-zA-Z0-9]*[ a-zA-Z]+[a-zA-Z0-9]*$/);/*With Number*/
   static NUMBER_KEY_ONLY = new RegExp(/[^0-9.]+/g);
   // static TEXT_ONLY = new RegExp(/^[a-zA-Z ]/);
