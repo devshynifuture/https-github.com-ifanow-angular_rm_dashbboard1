@@ -59,7 +59,7 @@ export class TransactionSummaryComponent implements OnInit {
   }
   openDialog(): void {
     const dialogRef = this.dialog.open(PopUpComponent, {
-      width: '250px',
+      width: '470px',
       data: { name: this.value, animal: this.element }
     });
 
