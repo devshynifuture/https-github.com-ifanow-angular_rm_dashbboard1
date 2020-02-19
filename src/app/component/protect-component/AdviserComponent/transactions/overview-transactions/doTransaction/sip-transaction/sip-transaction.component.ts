@@ -237,7 +237,7 @@ export class SipTransactionComponent implements OnInit {
     console.log('dateDisplay = ', this.dateDisplay)
   }
   getbankDetails(value){
-    this.bankDetails = value
+    this.bankDetails = value[0]
     console.log('bank details',value)
   }
   getAchmandateDetails(value){
@@ -340,9 +340,9 @@ export class SipTransactionComponent implements OnInit {
       clientId: this.getDataSummary.defaultClient.clientId,
       startDate: Number(new Date(this.sipTransaction.controls.date.value.replace(/"/g, ""))),
       frequencyType:this.frequency,
-      //endDate :sipTransaction.sip.scheme.,
       noOfInstallments: this.sipTransaction.controls.installment.value,
-      orderType: (this.mandateDetails==undefined)?null:this.mandateDetails[0].mandateType,
+      orderType:'SIP', //(this.mandateDetails==undefined)?null:this.mandateDetails[0].mandateType,
+      mandateType:(this.mandateDetails==undefined)?null:this.mandateDetails[0].mandateType,
       buySell: 'PURCHASE',
       transCode: 'NEW',
       buySellType: "FRESH",
@@ -352,6 +352,7 @@ export class SipTransactionComponent implements OnInit {
       orderVal: this.sipTransaction.controls.employeeContry.value,
       euin: this.getDataSummary.defaultCredential.euin,
       xSipMandateId:(this.mandateDetails==undefined)?null:this.mandateDetails[0].mandateId,
+      aggregatorType:this.getDataSummary.defaultClient.aggregatorType,
       schemeCd: this.schemeDetails.schemeCode,
       transMode: 'PHYSICAL',
       bseDPTransType: 'PHYSICAL',

@@ -35,6 +35,10 @@ export class ProcessTransactionService {
   getEuinList() {
 
   }
+  calculateCurrentValue(value){
+
+
+  }
   static errorValidator(familyList) {
     return (control: AbstractControl): ValidationErrors | null => {
       if(familyList==undefined)
