@@ -117,12 +117,15 @@
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select class="form-control" formControlName="investmentAccountSelection">
-                                    <mat-option value="option" (onSelectionChange)="selectedFolio(folio)"
+                                    <mat-option value="option" (click)="selectedFolio(folio)"
                                         *ngFor="let folio of folioList">{{folio.folioNumber}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
                     </div>
+                </div>
+                <div class="col-md-1" *ngIf="showSpinner == true">
+                    <mat-spinner class="mt-8"></mat-spinner>
                 </div>
 
                 <div class="row pt-40 ">

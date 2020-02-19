@@ -84,7 +84,7 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  openPayeeSettings(profileData, value, state) {
+  openPayeeSettings(profileData, value) {
     profileData['clientData'] = this.upperData;
     profileData['flag'] = value;
     const fragmentData = {

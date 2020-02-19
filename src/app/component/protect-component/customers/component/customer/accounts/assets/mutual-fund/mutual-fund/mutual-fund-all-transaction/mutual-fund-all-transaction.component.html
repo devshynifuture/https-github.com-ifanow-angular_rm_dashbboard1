@@ -42,7 +42,7 @@
                     <ng-container matColumnDef="no">
                         <th mat-header-cell *matHeaderCellDef class="br">Sr no. </th>
                         <td mat-cell *matCellDef="let element;index as i" class="br">
-                            <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
+                            <div class="bar"> {{ i + 1 }} </div>
                         </td>
                         <td *matFooterCellDef class="br  text-right" mat-footer-cell></td>
                     </ng-container>
@@ -136,9 +136,9 @@
                     </ng-container>
 
                     <ng-container matColumnDef="groupHeader4">
-                        <td *matCellDef="let group" [attr.colspan]="displayedColumns.length"
-                            class="text-center f-600">
-                            {{group.total}}{{group.totalTransactionAmt}}{{group.totalUnit}}{{group.totalNav}}{{group.totalBalanceUnit}}</td>
+                        <td *matCellDef="let group" [attr.colspan]="displayedColumns.length" class="text-center f-600">
+                            {{group.total}}{{group.totalTransactionAmt}}{{group.totalUnit}}{{group.totalNav}}{{group.totalBalanceUnit}}
+                        </td>
                     </ng-container>
 
                     <ng-container matColumnDef="icons">
@@ -150,8 +150,8 @@
                             <mat-menu #menu25="matMenu">
                                 <button mat-menu-item>View factsheet</button>
                                 <button mat-menu-item>Download SOA</button>
-                                <button mat-menu-item (click)="openFolioMaster()">Folio master details</button>
-                                <button mat-menu-item (click)="openSipDetails()">SIP details</button>
+                                <button mat-menu-item>Folio master details</button>
+                                <button mat-menu-item>SIP details</button>
                                 <button mat-menu-item class="bt-1">Transact online</button>
                                 <button mat-menu-item>Transaction slip</button>
                                 <button mat-menu-item class="bt-1">View transactions</button>

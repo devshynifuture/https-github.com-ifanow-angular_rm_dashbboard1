@@ -109,6 +109,7 @@ export class StpTransactionComponent implements OnInit {
         userAccountType: this.getDataSummary.defaultCredential.accountType,
         holdingType: this.getDataSummary.defaultClient.holdingType,
         tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
+        schemeSequence : 2
       }
       this.onlineTransact.getNewSchemes(obj).subscribe(
         data => this.getNewSchemesRes(data), (error) => {
@@ -136,6 +137,7 @@ export class StpTransactionComponent implements OnInit {
         userAccountType: this.getDataSummary.defaultCredential.accountType,
         holdingType: this.getDataSummary.defaultClient.holdingType,
         tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
+        schemeSequence : 1
       }
       this.onlineTransact.getExistingSchemes(obj).subscribe(
         data => this.getExistingSchemesRes(data), (error) => {
@@ -156,6 +158,8 @@ export class StpTransactionComponent implements OnInit {
     this.folioDetails = folio
     this.showUnits = true
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
+    Object.assign(this.transactionSummary, { mutualFundId: folio.id });
+    this.transactionSummary = {...this.transactionSummary};
   }
   selectedSchemeTransfer(schemeTransfer) {
     this.schemeTransfer = schemeTransfer
@@ -176,6 +180,20 @@ export class StpTransactionComponent implements OnInit {
   getSchemeDetailsTranferRes(data) {
     // this.maiSchemeList = data
     this.schemeDetailsTransfer = data[0]
+    if (data.length > 1) {
+      this.reInvestmentOpt = data
+      console.log('reinvestment', this.reInvestmentOpt)
+    } if (data.length == 1) {
+      this.reInvestmentOpt = []
+    }
+    if(this.getDataSummary.defaultClient.aggregatorType == 2){
+      this.getMandateDetails()
+      }
+  }
+  reinvest(scheme) {
+    this.schemeDetails = scheme
+    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
+    console.log('schemeDetails == ', this.schemeDetails)
   }
   selectedScheme(scheme) {
     this.scheme = scheme
@@ -199,24 +217,11 @@ export class StpTransactionComponent implements OnInit {
     this.maiSchemeList = data
     this.schemeDetails = data[0]
     this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
-    if (data.length > 1) {
-      this.reInvestmentOpt = data
-      console.log('reinvestment', this.reInvestmentOpt)
-    } if (data.length == 1) {
-      this.reInvestmentOpt = []
-    }
     this.getSchemeWiseFolios()
-    if(this.getDataSummary.defaultClient.aggregatorType == 2){
-      this.getMandateDetails()
-      }
     this.getFrequency()
   }
-  reinvest(scheme) {
-    this.schemeDetails = scheme
-    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
-    console.log('schemeDetails == ', this.schemeDetails)
-  }
   getSchemeWiseFolios() {
+    this.showSpinner = true
     let obj1 = {
       mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -231,6 +236,7 @@ export class StpTransactionComponent implements OnInit {
     );
   }
   getSchemeWiseFoliosRes(data) {
+    this.showSpinner = false
     console.log('res scheme folio', data)
     this.folioList = data
   }
@@ -300,7 +306,7 @@ export class StpTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { enteredAmount: value });
   }
   getbankDetails(value){
-    this.bankDetails = value
+    this.bankDetails = value[0]
     console.log('bank details',value)
   }
   getdataForm(data) {

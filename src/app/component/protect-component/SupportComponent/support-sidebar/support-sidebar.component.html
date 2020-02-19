@@ -19,16 +19,18 @@
 
         <div class="row">
             <div class="col-md-2 bb d-flex align-items-center">
-                <img class="imgWidth" src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
+                <img class="imgWidth"
+                    src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
                 <h5 class="logoh5">YOUR LOGO HERE</h5>
             </div>
             <div class="col-md-7 d-flex align-items-center bg-grey lt">
-                <mat-form-field class="serachbox">
+                <!-- <mat-form-field class="serachbox">
                     <div class="form-group searchBoxHeader">
                         <input #inputSearch [matAutocomplete]="auto" class="form-control pl-40" matInput type="text">
                         <i class="material-icons searchIcon"> search </i>
                         <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete">
-                            <mat-option (click)="selectClient(singleClient)" *ngFor="let singleClient of filteredOptions | async" [value]="singleClient">
+                            <mat-option (click)="selectClient(singleClient)"
+                                *ngFor="let singleClient of filteredOptions | async" [value]="singleClient">
                                 <div class="row">
                                     <div class="col-md-1 d-flex align-items-center">
                                         <i class="material-icons"> person </i>
@@ -42,7 +44,7 @@
                                 </div>
                             </mat-option>
 
-                            <mat-option disabled *ngIf="showDefaultDropDownOnSearch">
+                            <mat-option disabled>
                                 <div class="row">
                                     <div class="col-md-1 d-flex align-items-center">
                                         <i class="material-icons"> person </i>
@@ -58,7 +60,7 @@
                             </mat-option>
                         </mat-autocomplete>
                     </div>
-                </mat-form-field>
+                </mat-form-field> -->
             </div>
 
             <div class="col-md-3 bg-grey lt justify-content-end d-flex align-items-center support_menu_social">
@@ -105,7 +107,8 @@
                     <img src="assets/images/svg/people.svg">
                     <span class="title" mat-line>My IFAs</span>
                 </a>
-                <a class="sidenav-link" routerLink="/support/ifa-onboarding" routerLinkActive="router-link-active" mat-list-item>
+                <a class="sidenav-link" routerLink="/support/ifa-onboarding" routerLinkActive="router-link-active"
+                    mat-list-item>
                     <img src="assets/images/svg/file-lines.svg">
                     <span class="title" mat-line>IFA onboarding</span>
                 </a>

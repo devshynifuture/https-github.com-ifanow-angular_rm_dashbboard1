@@ -20,6 +20,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 })
 export class AddEPFComponent implements OnInit {
   validatorType=ValidatorType
+  maxDate = new Date();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   isBalanceAsOn = false;
   isAnnualSalGrowth = false;
