@@ -47,6 +47,7 @@ export class SwpTransactionComponent implements OnInit {
   mandateDetails: any;
   bankDetails: any;
   achMandateNSE: any;
+  showSpinnerFolio=false;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private processTransaction: ProcessTransactionService, private fb: FormBuilder, private eventService : EventService) { }
@@ -102,6 +103,10 @@ export class SwpTransactionComponent implements OnInit {
 
     }
   }
+  getbankDetails(value){
+    this.bankDetails = value[0]
+    console.log('bank details',value)
+  }
   getSchemeDetailsRes(data) {
     console.log('getSchemeDetailsRes == ', data)
     this.maiSchemeList = data
@@ -133,7 +138,6 @@ export class SwpTransactionComponent implements OnInit {
     this.scheme = scheme
     this.showUnits = true
     Object.assign(this.transactionSummary, {schemeName:  scheme.schemeName});
-    this.transactionSummary = { schemeName: scheme.schemeName }
     this.navOfSelectedScheme = scheme.nav
     let obj1 = {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
@@ -148,6 +152,7 @@ export class SwpTransactionComponent implements OnInit {
       );
   }
   getSchemeWiseFolios() {
+    this.showSpinnerFolio =true
     let obj1 = {
       mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -165,6 +170,7 @@ export class SwpTransactionComponent implements OnInit {
   }
   getSchemeWiseFoliosRes(data) {
     console.log('res scheme folio', data)
+    this.showSpinnerFolio =false
     this.folioList = data
   }
   enteredAmount(value) {
@@ -201,10 +207,12 @@ export class SwpTransactionComponent implements OnInit {
     this.dateArray(getFrerq.sipDates)
   }
   dateArray(sipDates) {
+    var currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() + 7);
     this.dates = sipDates.split(",")
     this.dateDisplay = this.processTransaction.getDateByArray(this.dates, true)
     this.dateDisplay = this.dateDisplay.filter(element => {
-      return element.date > new Date()
+      return element.date > currentDate
     });
     console.log('dateDisplay = ', this.dateDisplay)
   }
@@ -301,12 +309,10 @@ export class SwpTransactionComponent implements OnInit {
       orderType: "SWP",
       amountType: "Amount",
       bseDPTransType: "PHYSICAL",
-      mandateId:null,
       bankDetailId:null,
       nsePaymentMode:null,
     }
     if (this.getDataSummary.defaultClient.aggregatorType == 1) {
-      obj.mandateId = (this.achMandateNSE == undefined)?null:this.achMandateNSE.id
       obj.bankDetailId = this.bankDetails.id
       obj.nsePaymentMode = (this.swpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE'
     }

@@ -17,7 +17,8 @@
 
 <div class="row">
     <div class="col-md-12 overflow-hidden back-office-table">
-        <table mat-table id="table-low" [dataSource]="dataSource" class="skeletonAnimation mt-8" appSkeletonLoading [appSkeletonLoading]="isLoading" matSort>
+        <table mat-table id="table-low" [dataSource]="dataSource" class="skeletonAnimation mt-8" appSkeletonLoading
+            [appSkeletonLoading]="isLoading" matSort>
             <!-- admin name Column -->
             <ng-container matColumnDef="adminName">
                 <th mat-header-cell *matHeaderCellDef class="b-a w-12" mat-sort-header="adminName"> Admin Name </th>
@@ -115,7 +116,7 @@
                             <button mat-menu-item>Recalculate Balance Units</button>
                             <button mat-menu-item>Deactivate Account</button>
                             <button mat-menu-item>Merge Scheme Code</button>
-                            <button mat-menu-item>Order Historical file</button>
+                            <button mat-menu-item (click)="openOrderHistoricalFile('')">Order Historical file</button>
                         </mat-menu>
 
                         <button mat-icon-button [matMenuTriggerFor]="appMenu">

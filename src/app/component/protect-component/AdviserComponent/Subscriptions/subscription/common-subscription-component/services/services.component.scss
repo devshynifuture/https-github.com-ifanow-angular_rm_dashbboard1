@@ -1,58 +1,65 @@
 h2 {
-    color: #3F3F3F;
-    text-align: center;
-    padding: 16px 12px;
-    font-family: "Playfair Display";
-    letter-spacing: 0.2px;
-    line-height: 32px;
-    margin: 0;
+  color: #3F3F3F;
+  text-align: center;
+  padding: 16px 12px;
+  font-family: "Playfair Display";
+  letter-spacing: 0.2px;
+  line-height: 32px;
+  margin: 0;
 }
 
 h3 {
-    font-family: "Playfair Display";
-    letter-spacing: 0.2px;
-    line-height: 26px;
+  font-family: "Playfair Display";
+  letter-spacing: 0.2px;
+  line-height: 26px;
 }
 
 .padder-80 {
-    padding-right: 80px;
-    padding-left: 80px;
+  padding-right: 80px;
+  padding-left: 80px;
 }
 
 p {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
-.serDic{
-    height: 33px ; margin-top: 5px; overflow: hidden;
-    p{white-space: initial; color: #4c4949; width: 100%;}
+.serDic {
+  height: 40px;
+  margin-top: 5px;
+  overflow: hidden;
+
+  p {
+    white-space: initial;
+    color: #4c4949;
+    width: 100%;
+  }
 }
 
 .height130 {
-    height: 130px;
-    width: 100%;
+  height: 130px;
+  width: 100%;
 }
 
-.h-a{
-    height: auto !important;
-    padding-bottom: 23px;
+.h-a {
+  height: auto !important;
+  padding-bottom: 23px;
 }
 
 h3 p {
-    color: #757575;
+  color: #757575;
 }
 
-.read-more{
-    text-align: right;
-    color: #008FFF;
-    font-size: 14px;
-    position: absolute;
-    bottom:178px;
-    right:10px;
+.read-more {
+  text-align: right;
+  color: #008FFF;
+  font-size: 14px;
+  position: absolute;
+  bottom: 141px;
+  right: 10px;
 }
 
-.example-card{
-    position: relative;
+.example-card {
+  position: relative;
 }
 
 // .button-fix{
@@ -63,67 +70,67 @@ h3 p {
 //     z-index: 2;
 // }
 .btn-primary {
-    border-radius: 0px !important;
+  border-radius: 0px !important;
 }
 
 .material-icons {
-    line-height: .7;
+  line-height: .7;
 }
 
 .content {
-    position: relative;
-    right: 20%;
+  position: relative;
+  right: 20%;
 }
 
 label {
-    background: #004164;
-    border-radius: 4px;
-    letter-spacing: 0.2px;
-    color: #FFFFFF;
-    font-family: "Proxima Nova", sans-serif;
-    font-size: 14px;
-    line-height: 17px;
-    display: inline-block;
-    min-width: 10px;
-    padding: 3px 10px;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: baseline;
+  background: #004164;
+  border-radius: 4px;
+  letter-spacing: 0.2px;
+  color: #FFFFFF;
+  font-family: "Proxima Nova", sans-serif;
+  font-size: 14px;
+  line-height: 17px;
+  display: inline-block;
+  min-width: 10px;
+  padding: 3px 10px;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
 }
 
 .done-icons {
-    background: #02B875;
-    padding: 0px 0px 4px 4px;
-    color: #fff;
-    float: right;
-    text-align: right;
-    line-height: .9;
+  background: #02B875;
+  padding: 0px 0px 4px 4px;
+  color: #fff;
+  float: right;
+  text-align: right;
+  line-height: .9;
 }
 
 ::ng-deep .mat-checkbox-checked .mat-checkbox-background,
 .mat-checkbox-indeterminate .mat-checkbox-background {
-    background-color: #008FFF !important;
+  background-color: #008FFF !important;
 }
 
 // overwrite the ripple overlay on hover and click
- ::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
-    background-color: #008FFF !important;
+::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
+  background-color: #008FFF !important;
 }
 
 .height155 {
-    height: 155px;
+  height: 155px;
 }
 
 .height24 {
-    height: 24px;
+  height: 24px;
 }
 
 .baBlue {
-    outline: 3px solid #008FFF;
+  outline: 3px solid #008FFF;
 }
 
 
 
 ::ng-deep .example-card:hover {
-    box-shadow: none;
+  box-shadow: none;
 }

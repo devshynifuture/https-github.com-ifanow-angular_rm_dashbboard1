@@ -12,15 +12,224 @@
     </div>
 </div>
 
-<div class="row pt-150">
+<div class="row pt-100">
     <div class="col-md-3">
-        <h5 class="m-0">Role name</h5>
-        <p class="m-0 text-custom roboto f-12">E.g. para planner, relationship manager</p>
-        <div class="form-control">
+        <h5 class="m-0 pt-12">Role name</h5>
+        <p class="m-0 text-custom roboto f-12 pb-4">E.g. para planner, relationship manager</p>
+        <div class="form-group mb-0">
             <mat-form-field>
-                <input matInput class="form-group b-0">
+                <input matInput class="form-control">
+                <mat-hint align="end">0 / 30</mat-hint>
+            </mat-form-field>
+        </div>
+        <h5 class="m-0 pt-36">Role description</h5>
+        <p class="m-0 text-custom roboto f-12 pb-4">E.g. write something descriptive for easy recall.</p>
+        <div class="form-group mb-0">
+            <mat-form-field hintLabel="optional">
+                <textarea matInput class="form-control" rows="5"></textarea>
+                <mat-hint align="end">0 / 400</mat-hint>
             </mat-form-field>
         </div>
     </div>
-    <div class="col-md-9"></div>
+    <div class="col-md-9 p-0 bl-1">
+        <div class="wrapper-40 pt-24">
+            <h5 class="m-0">Manage role based access permissions from here.</h5>
+            <h5 class="m-0 text-black f-500 pt-20">Accounts</h5>
+            <table mat-table [dataSource]="dataSource" class="mt-8 w-90" id="table-low">
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Module </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Full access </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <mat-checkbox checked="false"></mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="weight">
+                    <th mat-header-cell *matHeaderCellDef class="br"> View </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <mat-checkbox checked="false"></mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="symbol">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Add </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <mat-checkbox checked="false"></mat-checkbox>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="edit">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Edit </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <mat-checkbox checked="false"></mat-checkbox>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="del">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Delete </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <mat-checkbox checked="false"></mat-checkbox>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="adv">
+                    <th mat-header-cell *matHeaderCellDef> Advanced permissions </th>
+                    <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu"
+                        class="text-primary text-underline f-500 c-p roboto">
+
+                        {{element.adv}}
+
+                        <mat-menu #menu="matMenu" class="min-152">
+                            <button mat-menu-item>
+                                <div class="row">
+                                    <div class="col-md-2 pl-0">
+                                        <mat-checkbox checked="false"></mat-checkbox>
+                                    </div>
+                                    <div class="col-md-5"> Invest</div>
+
+                                </div>
+                            </button>
+                            <button mat-menu-item>
+                                <div class="row">
+                                    <div class="col-md-2 pl-0">
+                                        <mat-checkbox checked="false"></mat-checkbox>
+                                    </div>
+                                    <div class="col-md-5"> Redeem</div>
+
+                                </div>
+                            </button>
+                            <button mat-menu-item>
+                                <div class="row">
+                                    <div class="col-md-2 pl-0">
+                                        <mat-checkbox checked="false"></mat-checkbox>
+                                    </div>
+                                    <div class="col-md-5"> Download SOA</div>
+
+                                </div>
+                            </button>
+
+                        </mat-menu>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <h5 class="m-0 text-black f-500 pt-32">Subscriptions</h5>
+            <table mat-table [dataSource]="dataSource" class="mt-8 w-90" id="table-low">
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Module </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Full access </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <mat-checkbox checked="false"></mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="weight">
+                    <th mat-header-cell *matHeaderCellDef class="br"> View </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <mat-checkbox checked="false"></mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="symbol">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Add </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <mat-checkbox checked="false"></mat-checkbox>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="edit">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Edit </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <mat-checkbox checked="false"></mat-checkbox>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="del">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Delete </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <mat-checkbox checked="false"></mat-checkbox>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="adv">
+                    <th mat-header-cell *matHeaderCellDef> Advanced permissions </th>
+                    <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu1"
+                        class="text-primary text-underline f-500 c-p roboto">
+
+                        {{element.adv}}
+
+                        <mat-menu #menu1="matMenu" class="min-152">
+                            <button mat-menu-item>
+                                <div class="row">
+                                    <div class="col-md-2 pl-0">
+                                        <mat-checkbox checked="false"></mat-checkbox>
+                                    </div>
+                                    <div class="col-md-5"> Invest</div>
+
+                                </div>
+                            </button>
+                            <button mat-menu-item>
+                                <div class="row">
+                                    <div class="col-md-2 pl-0">
+                                        <mat-checkbox checked="false"></mat-checkbox>
+                                    </div>
+                                    <div class="col-md-5"> Redeem</div>
+
+                                </div>
+                            </button>
+                            <button mat-menu-item>
+                                <div class="row">
+                                    <div class="col-md-2 pl-0">
+                                        <mat-checkbox checked="false"></mat-checkbox>
+                                    </div>
+                                    <div class="col-md-5"> Download SOA</div>
+
+                                </div>
+                            </button>
+
+                        </mat-menu>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <h5 class="m-0 text-black f-500 pt-32">Settings</h5>
+            <table mat-table [dataSource]="dataSource1" class="mt-8 w-40 mb-44" id="table-low">
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Module </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="adv">
+                    <th mat-header-cell *matHeaderCellDef> Grant access </th>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-checkbox checked="false"></mat-checkbox>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="bottom-fixed wrapper-12 w-100">
+    <div class="row">
+        <div class="col-md-6">
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
+        </div>
+
+        <div class="col-md-6 text-right">
+
+            <button mat-button class="btn-bottom br-0 text-inherit">SAVE</button>
+
+        </div>
+    </div>
 </div>

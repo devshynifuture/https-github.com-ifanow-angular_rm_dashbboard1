@@ -127,7 +127,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     document.getElementById('left').style.transition = "0.2s";
     this.showTabs = true;
     this.arrow = false;
-    console.log("i was call left bar 3");
+ //   console.log("i was call left bar 3");
 
   }
 

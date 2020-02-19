@@ -1,24 +1,28 @@
-import { SubscriptionInject } from './../../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { MatTableDataSource } from '@angular/material';
 
 @Component({
-  selector: 'app-support-upper-slider',
-  templateUrl: './support-upper-slider.component.html',
-  styleUrls: ['./support-upper-slider.component.scss']
+  selector: 'app-support-upper-all-rta',
+  templateUrl: './support-upper-all-rta.component.html',
+  styleUrls: ['./support-upper-all-rta.component.scss']
 })
-export class SupportUpperSliderComponent implements OnInit {
-  constructor(private subInjectService: SubscriptionInject) { }
-
+export class SupportUpperAllRtaComponent implements OnInit {
   displayedColumns: string[] = ['name', 'nav', 'schemeName', 'schemeCode', 'amficode', 'navTwo', 'navDate', 'njCount', 'map'];
-  dataSource = ELEMENT_DATA;
+  dataSource;
+
+  constructor(
+    private subInjectService: SubscriptionInject
+  ) { }
+
+
 
   ngOnInit() {
+    this.dataSource = new MatTableDataSource(ELEMENT_DATA);
   }
 
-  close() {
+  dialogClose() {
     this.subInjectService.changeUpperRightSliderState({ state: 'close' });
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
     console.log('close');
   }
 

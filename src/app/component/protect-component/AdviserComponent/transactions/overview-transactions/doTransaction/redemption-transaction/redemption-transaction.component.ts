@@ -33,6 +33,7 @@ export class RedemptionTransactionComponent implements OnInit {
   folioDetails: any;
   showUnits = false
   bankDetails: any;
+  showSpinnerFolio = false;
   achMandateNSE: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
@@ -45,7 +46,7 @@ export class RedemptionTransactionComponent implements OnInit {
     console.log('This is Input data of FixedDepositComponent ', data);
 
     if (this.isViewInitCalled) {
-      this.getdataForm('');
+      // this.getdataForm('');
     }
   }
 
@@ -107,7 +108,7 @@ export class RedemptionTransactionComponent implements OnInit {
       transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
-      investor: [(!data) ? '' : data.investor, [Validators.required]],
+      //investor: [(!data) ? '' : this.scheme, [Validators.required]],
       employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required]],
       redeemType:[(!data) ? '' : data.redeemType ,[Validators.required]],
       investmentAccountSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
@@ -151,7 +152,7 @@ export class RedemptionTransactionComponent implements OnInit {
   }
   getbankDetails(bank) {
     this.bankDetails = bank
-    console.log('bank details', bank)
+    console.log('bank details', bank[0])
   }
   getAchmandateDetails(ach) {
     this.achMandateNSE  = ach
@@ -193,6 +194,7 @@ export class RedemptionTransactionComponent implements OnInit {
     console.log('schemeDetails == ', this.schemeDetails)
   }
   getSchemeWiseFolios() {
+    this.showSpinnerFolio = true
     let obj1 = {
       mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -209,21 +211,24 @@ export class RedemptionTransactionComponent implements OnInit {
       );
   }
   getSchemeWiseFoliosRes(data) {
+    this.showSpinnerFolio = false
     console.log('res scheme folio', data)
     this.folioList = data
   }
   selectedFolio(folio) {
-    this.folioDetails = folio
     this.showUnits = true
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
+    Object.assign(this.transactionSummary, { mutualFundId: folio.id });
+    // this.transactionSummary = {...this.transactionSummary};
+    this.folioDetails = folio
   }
   redeem() {
     let obj = {
-      productDbId: 67,//this.schemeDetails.id,
+      productDbId: this.schemeDetails.id,
       mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
-      productCode:"DBGPGGR", //this.schemeDetails.schemeCode,
-      isin:"INF846K01917", //this.schemeDetails.isin,
-      folioNo: '91031058953',//(this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+      productCode:this.schemeDetails.schemeCode,
+      isin:this.schemeDetails.isin,
+      folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
       tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
       tpSubBrokerCredentialId: this.getDataSummary.defaultCredential.tpSubBrokerCredentialId,
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,

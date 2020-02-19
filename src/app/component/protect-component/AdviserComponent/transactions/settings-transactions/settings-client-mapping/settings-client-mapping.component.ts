@@ -11,7 +11,7 @@ import { EventService } from 'src/app/Data-service/event.service';
   styleUrls: ['./settings-client-mapping.component.scss']
 })
 export class SettingsClientMappingComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'pan', 'hold', 'tstatus', 'status', 'map'];
+  displayedColumns: string[] = ['weight', 'symbol', 'pan', 'hold', 'tstatus', 'status', 'map'];
   dataSource;
   defaultDetails: any;
   allData: any;
@@ -19,23 +19,67 @@ export class SettingsClientMappingComponent implements OnInit {
   defaultCredential: any;
   defaultClient: any;
   selectedPlatform: any;
-  brokerCodeList: any;
-  constructor(private eventService: EventService, private utilService: UtilService, private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) { }
+  brokerCodeList: any = [];
+  platformList: any = [];
+  brokerCodeDisplayList: any = [];
+  selectedBrokerCode: any;
+  type: string;
+  filterData: any;
+  constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService, private utilService: UtilService, private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) { }
 
   ngOnInit() {
-    this.getUnmappedFolios()
+    this.getFilterOptionData();
   }
-  getUnmappedFolios() {
-    const obj =
+  getFilterOptionData() {
+    let obj = {
+      advisorId: 414,
+      onlyBrokerCred: true
+    }
+    console.log('encode', obj)
+    this.onlineTransact.getBSECredentials(obj).subscribe(
+      data => this.getFilterOptionDataRes(data)
+    );
+  }
+  getFilterOptionDataRes(data) {
+    console.log(data);
+    this.filterData = data;
+    this.filterData.forEach(element => {
+      element['platformName'] = (element.aggregatorType == 1) ? "NSC" : "BSC"
+    });
+    this.type = '1';
+    this.selectedBrokerCode = data[0];
+    this.selectedPlatform = data[0];
+    (this.type == '1') ? this.getMappedData() : this.getUnmappedData();
+  }
+
+  getMappedData() {
+    let obj =
     {
-      advisorId: 3021
+      advisorId: 414,
+      tpUserCredentialId: this.selectedBrokerCode.id,
+      aggregatorType: this.selectedPlatform.aggregatorType
+    }
+    this.tranService.getMapppedFolios(obj).subscribe(
+      data => {
+        console.log(data);
+        this.dataSource = data;
+      },
+      err => this.eventService.openSnackBar(err, 'dismiss')
+    )
+  }
+  getUnmappedData() {
+    let obj =
+    {
+      advisorId: 414,
+      tpUserCredentialId: this.selectedBrokerCode,
+      aggregatorType: this.selectedPlatform
     }
     this.tranService.getUnmappedFolios(obj).subscribe(
       data => {
+        console.log(data);
         this.dataSource = data;
-        console.log(data)
       },
-      err => this.eventService.openSnackBar(err, "dismiss")
+      err => this.eventService.openSnackBar(err, 'dismiss')
     )
   }
   getDefaultDetails(platform) {
@@ -57,6 +101,9 @@ export class SettingsClientMappingComponent implements OnInit {
     // this.defaultCredential = data.defaultCredential
     // this.defaultClient = data.defaultClient
     // this.selectedPlatform = this.defaultCredential.aggregatorType
+  }
+  sortDataFilterWise() {
+    (this.type == '1') ? this.getMappedData() : this.getUnmappedData();
   }
   openAddMappiing(data, flag) {
     const fragmentData = {

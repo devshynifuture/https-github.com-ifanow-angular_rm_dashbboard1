@@ -47,7 +47,10 @@ export class OnlineTransactionService {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_MANDATE_DETAILS, data, 1)
   }
   getUnmappedFolios(data) {
-    return this.http.getEncoded("https://ifanow.in/futurewise/api/v1/web" + appConfig.GET_UNMAPPED_FOLIO, data, 1)
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_UNMAPPED_FOLIO, data, 1)
+  }
+  getMapppedFolios(data) {
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_MAPPED_FOLIO, data, 1)
   }
   mapUnmappedFolios(data) {
     return this.http.post(apiConfig.TRANSACT + appConfig.MAP_UNMAP_FOLIOS, data);
@@ -55,13 +58,13 @@ export class OnlineTransactionService {
   getSipFrequency(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_FREQUENCY, data, 1)
   }
-  getNSEAchmandate(data){
+  getNSEAchmandate(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.NSE_ACHMANDATE, data, 1)
   }
-  getBankDetailsNSE(data){
+  getBankDetailsNSE(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.BANK_DETAILS_NSE, data, 1)
   }
-  getIINDetails(data){
+  getIINDetails(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GETIIN_DETAILS, data, 1)
   }
   // sipBSE(data){

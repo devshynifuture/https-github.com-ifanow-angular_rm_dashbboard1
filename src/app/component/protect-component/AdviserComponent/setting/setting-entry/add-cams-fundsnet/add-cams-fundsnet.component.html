@@ -1,1 +1,84 @@
-<p>add-cams-fundsnet works!</p>
+<div class="row bb-1 popup-header-fix-50">
+    <div class="col-md-10 p-0">
+        <h4 class="mb-0 l-22 wrapper-20">ADD CAMS FUNDSNET DETAILS</h4>
+    </div>
+    <div class="col-md-2 text-right">
+        <i (click)="Close(false)" class="material-icons pt-20 c-p pr-16">
+            clear
+        </i>
+    </div>
+</div>
+<div class="row pt-100">
+    <div class="col-md-4 pr-0">
+        <h5 class="m-0 text-right pt-12">ARN/RIA number</h5>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group mb-0">
+            <mat-form-field>
+                <input type="text" matInput class="form-control">
+            </mat-form-field>
+        </div>
+    </div>
+</div>
+<div class="row pt-44">
+    <div class="col-md-4 pr-0">
+        <h5 class="m-0 text-right pt-12">Login ID</h5>
+    </div>
+    <div class="col-md-5">
+        <div class="form-group mb-0">
+            <mat-form-field>
+                <input type="text" matInput class="form-control">
+            </mat-form-field>
+        </div>
+    </div>
+</div>
+<div class="row pt-44">
+    <div class="col-md-4 pr-0">
+        <h5 class="m-0 text-right pt-12">Login password</h5>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group mb-0">
+            <mat-form-field>
+                <input type="text" matInput class="form-control">
+            </mat-form-field>
+        </div>
+    </div>
+</div>
+<div class="row pt-44">
+    <div class="col-md-4 pr-0">
+        <h5 class="m-0 text-right pt-12">Secret question & answer</h5>
+    </div>
+    <div class="col-md-5">
+        <div class="form-group mb-0">
+            <mat-form-field>
+                <mat-select class="form-control">
+                    <mat-option value="volvo">Volvo</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="col-md-3 pl-0">
+        <div class="form-group mb-0">
+            <mat-form-field>
+                <input type="text" matInput class="form-control">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="col-md-1 pl-0">
+        <i class="material-icons c-p text-custom">
+            add
+        </i>
+    </div>
+</div>
+
+<div class="bottom-fixed wrapper-12 w-50">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+            <button mat-button class="btn-bottom br-0 text-inherit">Save
+            </button>
+        </div>
+    </div>
+</div>

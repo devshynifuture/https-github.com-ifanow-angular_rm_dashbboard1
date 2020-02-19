@@ -1,0 +1,145 @@
+<div class="popup-header-fix-40">
+    <div class="row bb-1">
+        <div class="col-md-8 p-0">
+            <h4 class="mb-0 wrapper-20"> Historical file ordering setup</h4>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12">
+                <i class="material-icons c-p pt-8 v-middle" (click)="dialogClose(false)"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div [formGroup]="orderHistoryFileForm">
+    <div class="row pt-28">
+        <div class="col-md-5 pr-0">
+            <h5 class="text-right pt-12 mb-0">Select RTA</h5>
+        </div>
+        <div class="col-md-7">
+            <mat-radio-group formControlName="selectRta">
+                <mat-radio-button value="1"
+                    [ngClass]="orderHistoryFileForm.get('selectRta').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
+                    CAMS
+                </mat-radio-button>
+                <mat-radio-button value="2"
+                    [ngClass]="orderHistoryFileForm.get('selectRta').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
+                    Karvy </mat-radio-button>
+                <mat-radio-button value="3"
+                    [ngClass]="orderHistoryFileForm.get('selectRta').value === '3' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
+                    Franklin </mat-radio-button>
+            </mat-radio-group>
+            <mat-error
+                *ngIf="orderHistoryFileForm.get('selectRta').touched && orderHistoryFileForm.get('selectRta').invalid">
+                This field is required
+            </mat-error>
+        </div>
+    </div>
+
+    <div class="row pt-24">
+        <div class="col-md-5 pr-0">
+            <h5 class="text-right pt-12 mb-0">Select ARN/RIA</h5>
+        </div>
+        <div class="col-md-6">
+            <mat-radio-group formControlName="selectArnRia">
+                <mat-radio-button value="1" class="d-block">RIA-INA000004409
+                </mat-radio-button>
+                <mat-radio-button value="2" class="d-block">ARN-83865 </mat-radio-button>
+            </mat-radio-group>
+            <mat-error
+                *ngIf="orderHistoryFileForm.get('selectArnRia').touched && orderHistoryFileForm.get('selectArnRia').invalid">
+                This field is required
+            </mat-error>
+        </div>
+    </div>
+
+    <div class="pt-32 pl-20 pr-20">
+        <div class="row b-t pt-14 ">
+            <div class="col-md-5 pr-0">
+                <h5 class="text-right pt-48 mb-0">Date range</h5>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-6 pl-0">
+                        <h5 class="mb-4 pt-16">From date</h5>
+                        <mat-form-field>
+                            <input class="form-control" formControlName="fromDate" (click)="picker1.open()" matInput
+                                [matDatepicker]="picker1">
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-6 pl-0">
+                        <h5 class="mb-4 pt-16">To date</h5>
+                        <mat-form-field>
+                            <input class="form-control" formControlName="toDate" (focus)="picker.open()" matInput
+                                [matDatepicker]="picker">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row pt-24">
+        <div class="col-md-5 pr-0">
+            <h5 class="text-right pt-12 mb-0">Ordering frequency</h5>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field>
+                <mat-select class="form-control" formControlName="orderingFreq">
+                    <mat-option value="1">
+                        Ordering frequency
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row pt-24">
+        <div class="col-md-5 pr-0">
+            <h5 class="text-right pt-12 mb-0"> Select files to order </h5>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6 pl-0">
+                    <h3 class="f-14 m-0 f-600">Transactions</h3>
+                    <mat-checkbox class="d-block" formControlName="wbr2">WBR2</mat-checkbox>
+                    <mat-checkbox class="d-block" formControlName="wbr2a">WBR2A</mat-checkbox>
+                </div>
+                <div class="col-md-6 pl-0">
+                    <h3 class="f-14 m-0 f-600">SIP/STP</h3>
+                    <mat-checkbox class="d-block" formControlName="wbr49Active">WBR49 Active</mat-checkbox>
+                    <mat-checkbox class="d-block" formControlName="wbr49Close">WBR49 Ceased</mat-checkbox>
+                </div>
+            </div>
+
+            <div class="row pt-14">
+                <div class="col-md-6 pl-0">
+                    <h3 class="f-14 m-0 f-600">Folio master</h3>
+                    <mat-checkbox class="d-block" formControlName="wbr9">WBR9</mat-checkbox>
+                </div>
+                <div class="col-md-6 pl-0">
+                    <h3 class="f-14 m-0 f-600">AUM</h3>
+                    <mat-checkbox class="d-block" formControlName="wbr22">WBR22</mat-checkbox>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<div class="bottom-fixed wrapper-12 pt-16 w-50">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="dialogClose(false)">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="orderHistoricalFileSave()">Save</button>
+        </div>
+    </div>
+</div>

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IfaBoardingHistoryComponent } from './ifa-boarding-history.component';
+import { SupportUpperNjComponent } from './support-upper-nj.component';
 
-describe('IfaBoradingHistoryComponent', () => {
-  let component: IfaBoardingHistoryComponent;
-  let fixture: ComponentFixture<IfaBoardingHistoryComponent>;
+describe('SupportUpperNjComponent', () => {
+  let component: SupportUpperNjComponent;
+  let fixture: ComponentFixture<SupportUpperNjComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [IfaBoardingHistoryComponent]
+      declarations: [SupportUpperNjComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IfaBoardingHistoryComponent);
+    fixture = TestBed.createComponent(SupportUpperNjComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
