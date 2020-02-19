@@ -111,7 +111,7 @@ export class SingleDocumentViewComponent implements OnInit {
 
   //   });
   // }
-  deleteModal(value, data) {
+  deleteModal(value, deleteData) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -120,11 +120,11 @@ export class SingleDocumentViewComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.subService.deleteSettingsDocument(data).subscribe(
+        this.subService.deleteSettingsDocument(deleteData).subscribe(
           data => {
             this.eventService.openSnackBar('document is deleted', 'dismiss');
             this.valueChange.emit('close');
-            dialogRef.close();
+            dialogRef.close(deleteData);
             // this.getRealEstate();
           },
           error => this.eventService.showErrorMessage(error)
@@ -144,7 +144,7 @@ export class SingleDocumentViewComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-
+      this.valueChange.emit(result);
     });
   }
 }

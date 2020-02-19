@@ -17,12 +17,55 @@
                     </div>
                     <div class="mat-button-focus-overlay"></div>
                 </button>
+                <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1"><i
+                    class="material-icons">add</i>ADD NEW</button>
+                <mat-menu #menu1="matMenu" class="add-new">
+                  <button (click)="openMutualFund('addPortfolio',null)" mat-menu-item class="b-b">
+                    <div class="row">
+                      <div class="col-md-2 pr-8 text-right">
+                        <img src="assets/images/svg/dark-three-dot.svg">
+                      </div>
+                      <div class="col-md-10">
+                        <p class="m-0 text-black">Portfolio summary</p>
+                        <p class="m-0 f-13 pt-4 text-custom">Add just the overall portfolio
+                          <br> summary. Time saver!
+                        </p>
+                      </div>
+                    </div>
+                  </button>
+                  <button (click)="openMutualFund('holding',null)" mat-menu-item class="b-b">
+                    <div class="row">
+                      <div class="col-md-2 pr-8 text-right">
+                        <img src="assets/images/svg/scheme-icon.svg">
+                      </div>
+                      <div class="col-md-10">
+                        <p class="m-0 text-black">Scheme level transactions</p>
+                        <p class="m-0 pt-4 f-13 text-custom">Add transaction data at
+                          <br> scheme level for better reporting
+                        </p>
+                      </div>
+                    </div>
+                  </button>
+                  <button (click)="openMutualFund('transaction',null)" mat-menu-item>
+                    <div class="row">
+                      <div class="col-md-2 pr-8 text-right">
+                        <img src="assets/images/svg/dark-download.svg">
+                      </div>
+                      <div class="col-md-10">
+                        <p class="m-0 text-black">Import data</p>
+                        <p class="m-0 pt-4 f-13 text-custom">Add transaction data at
+                          <br> scheme level for better reporting
+                        </p>
+                      </div>
+                    </div>
+                  </button>
+                </mat-menu>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-12 pl-0 mb-8">
-                <table matSort mat-table [dataSource]="subCatArray()" id="table-low" class="mutualfunds-capital-equity">
+                <table matSort mat-table [dataSource]="customDataSource" id="table-low" class="mutualfunds-capital-equity">
 
                     <ng-container matColumnDef="schemeName">
                         <th class="br" mat-sort-header="schemeName" mat-header-cell *matHeaderCellDef> Scheme name </th>
@@ -148,7 +191,7 @@
                             <button mat-menu-item >View factsheet</button>
                             <button mat-menu-item>Download SOA</button>
                             <button mat-menu-item (click)="openFolioMaster(element)">Folio master details</button>
-                            <button mat-menu-item (click)="openSipDetails()">SIP details</button>
+                            <button mat-menu-item (click)="openSipDetails(element)">SIP details</button>
                             <button mat-menu-item class="bt-1">Transact online</button>
                             <button mat-menu-item >Transaction slip</button>
                             <button mat-menu-item class="bt-1">View transactions</button>

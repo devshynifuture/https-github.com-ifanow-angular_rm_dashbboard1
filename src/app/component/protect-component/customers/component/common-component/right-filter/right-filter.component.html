@@ -54,7 +54,7 @@
         <mat-panel-title>
           <h5 class="m-0">Schemes<span class="text-right f-14 pl-12">{{countScheme}} of {{scheme.length}}
               selected</span></h5>
-        </mat-panel-title>
+      </mat-panel-title>
       </mat-expansion-panel-header>
       <div>
         <mat-list-item role="listitem" *ngFor="let item of scheme">
@@ -118,7 +118,7 @@
       </mat-expansion-panel-header>
       <div>
         <mat-list-item role="listitem" *ngFor="let item of category">
-          <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterCategory()">{{item.category}}
+          <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterCategory(this.category)">{{item.category}}
           </mat-checkbox>
         </mat-list-item>
       </div>

@@ -875,7 +875,7 @@ export class DocumentComponent implements OnInit {
     }
 
 
-    this.subService.mapDocumentToService(obj).subscribe(
+    this.subService.mapServiceToDocument(obj).subscribe(
       data => {
         this.barButtonOptions.active = false;
         this.mapDocumentToServiceResponse(data);

@@ -11,7 +11,7 @@
     </div>
 </div>
 
-<div class="ptb-100 pl-20 pr-20">
+<div class="ptb-100 pl-20 pr-20" *ngFor="let item of sipDetails">
     <div class="row">
         <div class="col-md-12 p-0">
             <h5 class="m-0 f-500 text-black roboto">Scheme details</h5>
@@ -23,7 +23,7 @@
                 <p class="m-0 roboto">Applicant name</p>
             </div>
             <div class="col-md-8 p-0 text-right">
-                <p class="m-0 roboto">Aakanksha Tanwar</p>
+                <p class="m-0 roboto">{{(item.investorName)?item.investorName:'-'}}</p>
             </div>
         </div>
         <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -31,7 +31,7 @@
                 <p class="m-0 roboto">Scheme name</p>
             </div>
             <div class="col-md-8 p-0 text-right">
-                <p class="m-0 roboto">DSP Tax Saver Fund - Regular plan - Growth</p>
+                <p class="m-0 roboto">{{(item.schemeName)?item.schemeName:'-'}}</p>
             </div>
         </div>
         <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -39,7 +39,7 @@
                 <p class="m-0 roboto">Folio number</p>
             </div>
             <div class="col-md-8 p-0 text-right">
-                <p class="m-0 roboto">4327911/08</p>
+                <p class="m-0 roboto">{{(item.folioNumber)?item.folioNumber:'-'}}</p>
             </div>
         </div>
         <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -47,7 +47,7 @@
                 <p class="m-0 roboto">Registered date</p>
             </div>
             <div class="col-md-8 p-0 text-right">
-                <p class="m-0 roboto">22/04/2017</p>
+                <p class="m-0 roboto">{{(item.registeredDate)?(item.registeredDate | date:'dd/MM/yyyy'):'-'}}</p>
             </div>
         </div>
         <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -55,7 +55,7 @@
                 <p class="m-0 roboto">From date</p>
             </div>
             <div class="col-md-8 p-0 text-right">
-                <p class="m-0 roboto">08/06/2017</p>
+                <p class="m-0 roboto">{{(item.fromDate)?(item.fromDate | date:'dd/MM/yyyy'):'-'}}</p>
             </div>
         </div>
         <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -63,7 +63,7 @@
                 <p class="m-0 roboto">To date</p>
             </div>
             <div class="col-md-8 p-0 text-right">
-                <p class="m-0 roboto">08/05/2027</p>
+                <p class="m-0 roboto">{{(item.toDate)?(item.toDate | date:'dd/MM/yyyy'):'-'}}</p>
             </div>
         </div>
         <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -71,7 +71,7 @@
                 <p class="m-0 roboto">Trigger day</p>
             </div>
             <div class="col-md-8 p-0 text-right">
-                <p class="m-0 roboto">8</p>
+                <p class="m-0 roboto">{{(item.triggerDay)?item.triggerDay:'-'}}</p>
             </div>
         </div>
         <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -79,7 +79,7 @@
                 <p class="m-0 roboto">Frequency</p>
             </div>
             <div class="col-md-8 p-0 text-right">
-                <p class="m-0 roboto">Monthly</p>
+                <p class="m-0 roboto">{{(item.frequency)?item.frequency:'-'}}</p>
             </div>
         </div>
         <div class="row pt-8 pb-8 pl-4 pr-4">
@@ -87,7 +87,7 @@
                 <p class="m-0 roboto">Amount</p>
             </div>
             <div class="col-md-8 p-0 text-right">
-                <p class="m-0 roboto">50000</p>
+                <p class="m-0 roboto">{{(item.amount)?item.amount:'-'}}</p>
             </div>
         </div>
 
@@ -108,7 +108,7 @@
                 <p class="m-0 roboto">Bank name</p>
             </div>
             <div class="col-md-8 p-0 text-right">
-                <p class="m-0 roboto">ICICI bank</p>
+                <p class="m-0 roboto">{{(item.bankName)?item.bankName:'-'}}</p>
             </div>
         </div>
         <div class="row pt-8 pb-8 pl-4 pr-4">
@@ -116,7 +116,7 @@
                 <p class="m-0 roboto">Bank account number</p>
             </div>
             <div class="col-md-8 p-0 text-right">
-                <p class="m-0 roboto">65765765987</p>
+                <p class="m-0 roboto">{{(item.accountNumber)?item.accountNumber:'-'}}</p>
             </div>
         </div>
     </div>

@@ -9,7 +9,7 @@ import { MatTableDataSource } from '@angular/material';
   styleUrls: ['./mutual-fund-unrealized-tran.component.scss']
 })
 export class MutualFundUnrealizedTranComponent implements OnInit {
-  displayedColumns: string[] = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav', 'units', 'currentValue', 'dividendPayout', 'dividendReinvest', 'totalAmount', 'gain', 'absReturn', 'xirr', 'icons'];
+  displayedColumns: string[] = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav', 'units', 'currentValue', 'dividendPayout', 'dividendReinvest', 'totalAmount', 'gain', 'absReturn', 'xirr'];
   displayedColumns2: string[] = ['categoryName', 'amtInvested', 'currentValue', 'dividendPayout', 'dividendReinvest', 'gain', 'absReturn', 'xirr', 'allocation'];
   mfData: any;
   filteredArray: any[];
