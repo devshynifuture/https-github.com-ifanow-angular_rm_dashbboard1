@@ -1,1 +1,302 @@
-<p>add-model-portfolio works!</p>
+<div class="row popup-header-fix-100">
+    <div class="col-md-2 border-right-1 p-0">
+        <img class="pt-4 w-100" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+    </div>
+    <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
+        <p class="f-16 mb-0"> Add model portfolio</p>
+    </div>
+    <div class="col-md-2 text-right">
+        <i class="material-icons pt-16 c-p pr-16">
+            clear
+        </i>
+    </div>
+</div>
+<!-- Add model portfolio -->
+<!-- <div class="row add-model-portfolio">
+    <div class="col-md-6 p-0 bg-grey lter">
+        <div class="row pt-100 pl-20 pr-20 pb-48">
+            <div class="col-md-6">
+                <h5 class="m-0 text-black pb-8">Give this portfolio a name</h5>
+                <div class="form-group">
+                    <mat-form-field>
+                        <input matInput class="form-control">
+                        <mat-hint align="end">0 / 40</mat-hint>
+                    </mat-form-field>
+                </div>
+                <h5 class="m-0 text-black pb-8">Short bio</h5>
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <textarea matInput class="form-control" rows="3"></textarea>
+                        <mat-hint align="end">0 / 100</mat-hint>
+                    </mat-form-field>
+                </div>
+                <h5 class="m-0 text-black pt-60 pb-8">Rationale</h5>
+                <div class="form-group">
+                    <mat-form-field>
+                        <textarea matInput class="form-control" rows="5"></textarea>
+                        <mat-hint align="end">0 / 2000</mat-hint>
+                    </mat-form-field>
+                </div>
+                <h5 class="m-0 text-black pt-90 pb-8">Factsheet</h5>
+                <button mat-stroked-button class="f-14 text-custom pl-8"><img
+                        src="/assets/images/svg/Attachment-icons-grey.svg" class="pr-4">Model portfolio 1 -
+                    Fact sheet.pdf<img src="/assets/images/svg/close.svg" class="pl-8"></button>
+            </div>
+            <div class="col-md-6">
+                <h5 class="m-0 text-black">Asset allocation strategy<img src="/assets/images/svg/info.svg"></h5>
+                <p class="f-12 m-0 text-custom roboto">Multiple options can be selected</p>
+                <mat-checkbox class="text-black" checked="false">Static</mat-checkbox>
+                <p class="m-0 text-black pl-24 f-12">In absence of any underlying asset allocation strategy (e.g. goal
+                    based)
+                    deployed, the system will follow the asset allocation as mentioned here.</p>
+                <div class="row pt-10">
+                    <div class="col-md-3 p-0 text-right">
+                        <p class="m-0 roboto pt-12">Equity</p>
+                    </div>
+                    <div class="col-md-4 pr-0">
+                        <div class="form-group">
+                            <mat-form-field>
+                                <input matInput class="form-control" value="80%">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 p-0 text-right">
+                        <p class="m-0 roboto pt-12">Debt</p>
+                    </div>
+                    <div class="col-md-4 pr-0">
+                        <div class="form-group">
+                            <mat-form-field>
+                                <input matInput class="form-control" value="20%">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 p-0 text-right">
+                        <p class="m-0 roboto pt-12">Liquid</p>
+                    </div>
+                    <div class="col-md-4 pr-0">
+                        <div class="form-group">
+                            <mat-form-field>
+                                <input matInput class="form-control" value="0%">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 p-0 text-right">
+                        <p class="m-0 roboto pt-8">Gold</p>
+                    </div>
+                    <div class="col-md-4 pr-0">
+                        <div class="form-group">
+                            <mat-form-field>
+                                <input matInput class="form-control" value="0%">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <mat-checkbox class="text-black">Flexible</mat-checkbox>
+                <p class="m-0 text-black pl-24 f-12">When you chose to make this portfolio available for flexible asset
+                    allocation then whenever money is to be deployed for specific purpose (e.g. goals) which already
+                    have an underlying asset allocation, the system will pickup the asset allocation from there, whereas
+                    the schemes will be picked up from here.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 p-0">
+        <div class="row  pt-100 pl-20 pr-20 pb-44">
+            <div class="col-md-12 p-0">
+                <h5 class="m-0 text-black">Scheme selection</h5>
+                <div class="row pt-20">
+                    <div class="col-md-6 p-0">
+                        <p class="m-0 f-500 pt-8 text-black">EQUITY (80%)</p>
+                    </div>
+                    <div class="col-md-6 p-0 text-right">
+                        <button mat-stroked-button class="btn-primary">ADD NEW</button>
+                    </div>
+                </div>
+                <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
+
+                    <ng-container matColumnDef="position">
+                        <th mat-header-cell *matHeaderCellDef> Description </th>
+                        <td mat-cell *matCellDef="let element"> {{element.position}}
+                            <br> <span class="text-custom f-12">STP scheme: Mirae Liquid Fund Regular Plan -
+                                Growth</span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> Category </th>
+                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
+
+                   
+                    <ng-container matColumnDef="weight">
+                        <th mat-header-cell *matHeaderCellDef> Weightage </th>
+                        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="symbol">
+                        <th mat-header-cell *matHeaderCellDef> </th>
+                        <td mat-cell *matCellDef="let element">
+                            <i class="material-icons text-custom c-p">
+                                more_vert
+                            </i>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <div class="row pt-44">
+                    <div class="col-md-6 p-0">
+                        <p class="m-0 f-500 pt-8 text-black">DEBT (20%)</p>
+                    </div>
+                    <div class="col-md-6 p-0 text-right">
+                        <button mat-stroked-button class="btn-primary">ADD NEW</button>
+                    </div>
+                </div>
+                <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
+
+                    <ng-container matColumnDef="position">
+                        <th mat-header-cell *matHeaderCellDef> Description </th>
+                        <td mat-cell *matCellDef="let element"> {{element.position}}
+                            <br> <span class="text-custom f-12">STP scheme: Mirae Liquid Fund Regular Plan -
+                                Growth</span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> Category </th>
+                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="weight">
+                        <th mat-header-cell *matHeaderCellDef> Weightage </th>
+                        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="symbol">
+                        <th mat-header-cell *matHeaderCellDef> </th>
+                        <td mat-cell *matCellDef="let element">
+                            <i class="material-icons text-custom c-p">
+                                more_vert
+                            </i>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- close Add model portfolio -->
+
+<div class="row pt-100 aggressive-card">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <mat-card class="p-0 b-a">
+            <mat-card-header class="bg-grey lter pt-24 pl-20 pb-20">
+                <div class="row">
+                    <div class="col-md-11 pl-0">
+                        <h2 class="m-0">Aggressive - Smart beta</h2>
+                        <h5 class="m-0">Large cap focused aggressive portfolio good for long term investing
+                            with a 20% allocation to short duration funds</h5>
+                    </div>
+                    <div class="col-md-1">
+                        <i class="material-icons c-p text-custom">
+                            more_vert
+                        </i>
+                    </div>
+                </div>
+            </mat-card-header>
+            <mat-card-content class="pt-16">
+                <div class="row bb-1 pb-24">
+                    <div class="col-md-3">
+                        <p class="m-0 f-12 text-primitive">1 YEAR CAGR</p>
+                        <h4 class="m-0">12.23%</h4>
+                    </div>
+                    <div class="col-md-3">
+                        <p class="m-0 f-12 text-primitive">MIN INVESTMENT</p>
+                        <h4 class="m-0">₹500</h4>
+                    </div>
+                    <div class="col-md-3">
+                        <p class="m-0 f-12 text-primitive">LAST REVIEW DATE</p>
+                        <h4 class="m-0">01/01/2020</h4>
+                    </div>
+                    <div class="col-md-3">
+                        <p class="m-0 f-12 text-primitive">FACTSHEET</p>
+                        <h4 class="m-0">Download</h4>
+                    </div>
+                </div>
+                <div class="row pt-24">
+                    <div class="col-md-7">
+                        <p class="m-0 f-12 text-custom">RATIONALE</p>
+                        <p>Large cap companies are usually well established and the chances of such companies going bust
+                            are low. Adding such schemes to the portfolio increases stability of the portfolio as their
+                            NAV are not very volatile. They are also best suited for long term wealth creation.
+                        </p>
+                        <p class="m-0 text-primary">READ MORE</p>
+                    </div>
+                    <div class="col-md-5">
+                        <img src="/assets/images/svg/graph.svg">
+                    </div>
+                </div>
+                <div class="pl-20 pr-20">
+                    <table mat-table [dataSource]="dataSource1" class="mt-8" id="table-low">
+
+                        <!--- Note that these columns can be defined in any order.
+                          The actual rendered columns are set as a property on the row definition" -->
+
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="position">
+                            <th mat-header-cell *matHeaderCellDef> Scheme name </th>
+                            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef> Category </th>
+                            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                        </ng-container>
+
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="weight">
+                            <th mat-header-cell *matHeaderCellDef> Sub category </th>
+                            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                        </ng-container>
+
+                        <!-- Symbol Column -->
+                        <ng-container matColumnDef="symbol">
+                            <th mat-header-cell *matHeaderCellDef> Weightage </th>
+                            <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                    </table>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+<div class="bottom-fixed wrapper-12 w-100">
+    <div class="row">
+        <div class="col-md-6">
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
+        </div>
+
+        <div class="col-md-6 text-right">
+
+            <button mat-button class="btn-bottom br-0 text-inherit">SAVE</button>
+
+        </div>
+    </div>
+</div>
