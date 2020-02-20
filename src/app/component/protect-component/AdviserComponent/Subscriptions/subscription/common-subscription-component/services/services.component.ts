@@ -130,17 +130,10 @@ export class ServicesComponent implements OnInit {
       this.planServiceData = data;
       const modifiedArray = []
       this.planServiceData.forEach(element => {
-        // const newElement = {
-        //   ...element,
-        //   ...element.servicePricing
-        // };
-        // const newElement = {
-        
-          if (element.selected == true) {
-            this.mappedData.push(element);
-          }
-          element.servicePricing['pricingList'] = element.servicePricing;
-        // };
+        if (element.selected == true) {
+          this.mappedData.push(element);
+        }
+        element.servicePricing['pricingList'] = element.servicePricing;
         modifiedArray.push(element);
       });
 
@@ -170,17 +163,9 @@ export class ServicesComponent implements OnInit {
   }
 
   unmapPlanToService(data) {
-    // data.selected = false;
-    // _.reject(this.mappedData, delData => {
-    //   return delData.id == data.id;
-    // });
     data.selected = false;
-    // _.remove(this.mappedData, function (delData) {
-    //   return delData.id == data.id;
-    // });
     this.mappedData = this.mappedData.filter(delData => delData.id != data.id)
-    console.log(data);
-    // console.log(this.mappedData.length);
+    console.log(this.mappedData,data, "unmappedData");
   }
 
   
@@ -197,16 +182,29 @@ export class ServicesComponent implements OnInit {
 
   mapDocumentToPlan() {
     const obj = [];
-    this.mappedData.forEach(planData => {
-      const data = {
+    let data = {}
+    if(this.mappedData.length > 0){
+      this.mappedData.forEach(planData => {
+        data = {
+          // advisorId: 12345,
+          advisorId: this.advisorId,
+          documentRepositoryId: this.upperData.documentData.documentRepositoryId,
+          mappedType: this.upperData.documentData.mappedType,
+          mappingId: planData.id
+        };
+        obj.push(data);
+      });
+    }
+    else{
+      data = {
         // advisorId: 12345,
         advisorId: this.advisorId,
         documentRepositoryId: this.upperData.documentData.documentRepositoryId,
         mappedType: this.upperData.documentData.mappedType,
-        mappingId: planData.id
+        mappingId: 0
       };
       obj.push(data);
-    });
+    }
     this.subService.mapDocumentToService(obj).subscribe(
       data =>{
         this.mapPlanToServiceRes(data)
@@ -217,6 +215,7 @@ export class ServicesComponent implements OnInit {
       }
     );
   }
+
   mapPlanToServiceRes(data) {
     console.log(data)
     this.changeServiceData.emit(true);

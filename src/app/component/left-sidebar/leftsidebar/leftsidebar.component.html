@@ -1,9 +1,12 @@
 <mat-sidenav-container (window:resize)="onResize()" class="sidenav-container">
   <mat-sidenav #sidenav mode="side" opened role="navigation">
     <mat-nav-list class="pt-0" id="d" [ngStyle]="{'width':showTabs?'230px':''}">
-      <mat-toolbar *ngIf="showTabs && userInfo" class="bg-white p-0 h-60 logoWrap">
-        <img class="logo" src="{{userInfo.profilePic}}">
-        <h5>{{logoText | uppercase}}</h5>
+      <mat-toolbar *ngIf="showTabs && userInfo" class="bg-white p-0 h-60 logoWrap" >
+        <img *ngIf="userInfo.profilePic"  src="{{userInfo.profilePic}}" class="logo" >
+        <h5 *ngIf="!userInfo.profilePic">{{logoText | uppercase}}</h5>
+        <!-- <div>
+          <img class="logo" src="{{userInfo.profilePic}}">
+        </div> -->
       </mat-toolbar>
       <!-- <div *ngIf="showTabs" class="pt-16">
           <img class="header-img pt-0 pb-0" src="assets/images/img1.jpg">
@@ -78,7 +81,7 @@
       </div>
     </mat-nav-list>
   </mat-sidenav>
-  <mat-sidenav-content id="left" [ngClass]="showTabs?'mainNav':'smallNav'">
+  <mat-sidenav-content id="left" class="mainNav" [ngClass]="showTabs?'mainNav':'smallNav'">
     <mat-toolbar class="bg-white bl-1 fix-top pl-0" >
       <button (click)="showMainNavWrapper()" *ngIf="showTabs==false" aria-label="Toggle sidenav" mat-icon-button
         type="button">

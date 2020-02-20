@@ -57,15 +57,13 @@
                     <div class="col-md-9 pl-10 d-flex align-items-center">
                         <h4 class="f-20 m-0 f-600 roboto">RM Dashboard</h4>
                     </div>
-                    <div class="col-md-3 text-right">
-                        <mat-form-field>
-                            <mat-select class="form-control ba-light">
-                                <mat-option> Quick actions </mat-option>
-                                <mat-option> Add to stock master </mat-option>
-                                <mat-option> Add to LI master </mat-option>
-                                <mat-option> Update NJ/Prudent Switch trx </mat-option>
-                            </mat-select>
-                        </mat-form-field>
+                    <div class="col-md-3">
+                        <button mat-button [matMenuTriggerFor]="menu">Quick actions</button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="openAddStockMaster('')">Add to stock master</button>
+                            <button mat-menu-item (click)="openAddLifeInsuranceMaster('')">Add to LI master</button>
+                            <button mat-menu-item>Update NJ/Prudent Switch trx</button>
+                        </mat-menu>
                     </div>
                 </div>
 
@@ -579,51 +577,30 @@
 
                 <h4 class="f-16 f-600 mt-32">Scheme mapping</h4>
                 <div class="row">
-                    <div class="col-md-12 p-0 d-flex justify-content-between ">
-
-                        <div class="b-primitive mapping_box">
-                            <p class="f-12 mb-4 text-custom">ALL RTA</p>
-                            <h3 class="f-20">7</h3>
+                    <div class="col-md-4">
+                        <div class="b-primitive" (click)="openUpperSlider('all-rta')">
+                            <p>ALL RTA</p>
+                            <h3>7</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="b-primitive" (click)="openUpperSlider('nj')">
+                            <p>NJ</p>
+                            <h3>2</h3>
                         </div>
 
-                        <div class="b-primitive mapping_box" (click)="openUpperSlider('')">
-                            <p class="f-12 mb-4 text-custom">NJ</p>
-                            <h3 class="f-20">2</h3>
-                        </div>
-
-                        <div class="b-primitive mapping_box">
-                            <p class="f-12 mb-4 text-custom">PRUDENT</p>
-                            <h3 class="f-20">0</h3>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="b-primitive" (click)="openUpperSlider('prudent')">
+                            <p>PRUDENT</p>
+                            <h3>0</h3>
                         </div>
 
                     </div>
                 </div>
 
 
-                <h4 class="f-16 f-600 mt-32">Tickets</h4>
-                <div class="row">
-                    <div class="col-md-12 p-0 d-flex justify-content-between ">
 
-                        <div class="b-primitive mapping_box">
-                            <p class="f-12 mb-4 text-custom">ALL</p>
-                            <h3 class="f-20">19</h3>
-                        </div>
-
-                        <div class="b-primitive mapping_box">
-                            <p class="f-12 mb-4 text-custom">OPEN</p>
-                            <h3 class="f-20">16</h3>
-                        </div>
-
-                        <div class="b-primitive mapping_box">
-                            <p class="f-12 mb-4 text-custom">ON HOLD</p>
-                            <h3 class="f-20">3</h3>
-                        </div>
-
-                    </div>
-                </div>
-
-
-                
 
             </div>
         </div>

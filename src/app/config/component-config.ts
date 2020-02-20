@@ -160,7 +160,8 @@ export const appConfig = {
   ADD_SCRIP: 'account/asset/stock/scrip-name/add',
   EDIT_SCRIP_HOLDING_TRANSACTION: 'account/asset/stock/holding/transaction/edit',
   MUTUAL_FUND_GET: 'mutual-fund/mutualfund/list/get',
-  FOLIO_MASTER_DETAILS:'mutual-fund/folioMasterDetails/list/get',
+  FOLIO_MASTER_DETAILS: 'mutual-fund/folioMasterDetails/list/get',
+  SIP_DETAILS: 'mutual-fund/sipDetails/list/get',
   ////////////////////////////////plan////////////////////////////
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
   SUBMIT_RISK: 'plan/risk-assessment/add',
@@ -197,6 +198,8 @@ export const appConfig = {
   DELETE_DEPLOYMENT: '/activity/deployment/archive-record/put',
   ADD_FILTER_SCHEME_LIST: '/activity/deployment/add/filter/goal/scheme',
   GET_DEPLOYMENT_DETAILS: '/activity/deployment/deployment/detail/get',
+  ADD_PURCHASE_SCHEME: '/activity/deployment/purchase/scheme/post',
+  GET_MUTUAL_FUND_SCHEME: '/activity/deployment/scheme/get',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   GET_EPF: 'account/asset/retirement/epf/list/get',
@@ -280,6 +283,7 @@ export const appConfig = {
   GET_PAYEE_PROFILE: 'subscription/client-biller/profiles/get',
   SET_AS_PRIMARY: 'subscription/client/setting/profile/setprimary',
   MAP_DOCUMENTS_TO_SERVICE: 'subscription/map/plan/service/to/document/insert',
+  MAP_SERVICE_TO_DOCUMENT: 'subscription/setting/service/map/document',
   GET_DATA_FOR_CREATE_SERVICE: 'subscription/service/create/details/get',
   EDIT_FEE_MODIFY_STRUCTURE: 'subscription/client/subscription/fees/edit',
   GET_SUBSCRIPTION_START_DATA: 'subscription/start/subscription/detail/get',
@@ -362,8 +366,9 @@ export const appConfig = {
   GET_AMCWISE_FOLIO: 'mutual-fund/folios/amc-wise/get',
   GET_SCHEMEWISE_FOLIO: 'mutual-fund/folios/scheme-wise/get',
   GET_MANDATE_DETAILS: 'bse/mandate/view',
-  GET_UNMAPPED_FOLIO: '/bse/user/mapped-unmapped-clients/view',
-  MAP_UNMAP_FOLIOS: '/map-iin',
+  GET_UNMAPPED_FOLIO: '/bse/user/client/unmapped/view',
+  GET_MAPPED_FOLIO: '/bse/user/client/mapped/view',
+  MAP_UNMAP_FOLIOS: '/bse/user/clients/remap/manual',
   GET_FREQUENCY: 'bse/scheme/sip/view',
   SIP_BSE: 'bse/order/create',
   BSE_TRANSACTION: 'bse/order/create',
@@ -390,6 +395,14 @@ export const appConfig = {
   CASHFLOW_ADD_LIABILITIES: 'cashflow/liability/add',
   CASHFLOW_EDIT_LIABILITIES: 'cashflow/liability/edit',
   CASHFLOW_DELETE_LIABILITIES: 'cashflow/liability/delete',
+
+  // backoffice
+
+  BACKOFFICE_GET_ALL_SCHEMES_NJ: 'backoffice/get/allshemes/nj',
+  BACKOFFICE_GET_ALL_SCHEMES_PRUDENT: 'backoffice/get/allshemes/prudent',
+  BACKOFFICE_GET_UNMAPPED_SCHEMES_NJ: 'backoffice/get/unmapped/njschemes',
+  BACKOFFICE_GET_UNMAPPED_SCHEMES_PRUDENT: 'backoffice/get/unmapped/prudentschemes',
+  BACKOFFICE_GET_FILTERED_SCHEMES: 'backoffice/get/filtered/shemes',
 
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',

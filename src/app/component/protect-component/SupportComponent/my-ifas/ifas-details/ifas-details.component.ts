@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SubscriptionInject } from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import { MyIfaSelectArnRiaComponent } from '../my-ifa-select-arn-ria/my-ifa-select-arn-ria.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-ifas-details',
@@ -28,10 +30,31 @@ export class IfasDetailsComponent implements OnInit {
 
 
 
-  constructor(public subInjectService: SubscriptionInject, ) { }
+  constructor(public subInjectService: SubscriptionInject,
+    public dialog: MatDialog) { }
 
   ngOnInit() {
   }
+
+  openSelectArnRiaPopup() {
+
+  }
+
+  openSelectArnRiaDialog(data) {
+    const Fragmentdata = {
+      flag: data,
+    };
+    const dialogRef = this.dialog.open(MyIfaSelectArnRiaComponent, {
+      width: '30%',
+      data: Fragmentdata,
+      autoFocus: false,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+
+  }
+
 
   Close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });

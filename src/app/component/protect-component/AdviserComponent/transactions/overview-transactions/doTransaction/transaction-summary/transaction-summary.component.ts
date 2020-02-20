@@ -5,6 +5,12 @@ import { SubscriptionInject } from '../../../../Subscriptions/subscription-injec
 import { PopUpComponent } from '../pop-up/pop-up.component';
 import { MatDialog } from '@angular/material';
 import { of } from 'rxjs';
+import { PlatformPopUpComponent } from '../platform-pop-up/platform-pop-up.component';
+import { EuinSelectPopUpComponent } from '../euin-select-pop-up/euin-select-pop-up.component';
+import { BankSelectPopUpComponent } from '../bank-select-pop-up/bank-select-pop-up.component';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-transaction-summary',
@@ -29,22 +35,36 @@ export class TransactionSummaryComponent implements OnInit {
   bankDetails: any;
   achMandateNSE: any;
   showBankEdit = false;
+  showEuin = false
   value: any;
   element: any;
+  subBrokerCredList: any;
+  platForm = [{
+    value: 1,
+    platform: 'NSE'
+  }, {
+    value: 2,
+    platform: 'BSE'
+  }]
+  checkAlert: any;
+  changeDetails: any;
+
   constructor(private onlineTransact: OnlineTransactionService, private processTransaction: ProcessTransactionService,
-    private subInjectService: SubscriptionInject, public dialog: MatDialog) { }
+    private subInjectService: SubscriptionInject, public dialog: MatDialog, private customerService: CustomerService, private eventService: EventService, ) { }
   showPlatform = false;
+
   @Output() defaultDetails = new EventEmitter();
   @Output() bankDetailsSend = new EventEmitter();
-  @Output() achmandateDetails = new EventEmitter();
+  @Output() folioEmpty = new EventEmitter();
   @Input() set folioChange(data) {
     console.log('This is Input data of foolio ### ', data);
-    this.getDefaultDetails(this.transactionSummary.aggregatorType);
   }
   @Input() set data(data) {
     this.inputData = data;
-    console.log('This is Input data of FixedDepositComponent ', data);
     this.transactionSummary = data
+    console.log('This is Input data of FixedDepositComponent ', data);
+    this.getDefaultDetails(this.transactionSummary.aggregatorType);
+    this.checkAlert = this.transactionSummary.tpUserCredFamilyMappingId
   }
 
   get data() {
@@ -59,13 +79,56 @@ export class TransactionSummaryComponent implements OnInit {
   }
   openDialog(): void {
     const dialogRef = this.dialog.open(PopUpComponent, {
-      width: '250px',
-      data: { name: this.value, animal: this.element }
+      width: '470px',
+      data: { investor: this.clientDataList, animal: this.element }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       this.element = result;
+      this.selectedInvestor = result
+      this.defaultClient = result
+      this.allData.defaultClient = this.selectedInvestor
+      this.defaultDetails.emit(this.allData);
+    });
+  }
+  openEuin(): void {
+    const dialogRef = this.dialog.open(EuinSelectPopUpComponent, {
+      width: '470px',
+      data: { subBroker: this.subBrokerCredList, animal: this.element }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.element = result;
+      this.allData.euin = result
+      this.defaultDetails.emit(this.allData);
+    });
+  }
+  openPlatform(): void {
+    const dialogRef = this.dialog.open(PlatformPopUpComponent, {
+      width: '470px',
+      data: { platform: this.platForm, animal: this.element }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.element = result;
+      this.selectedPlatform = result.value
+      this.showPlatform = false
+      this.getDefaultDetails(this.selectedPlatform)
+    });
+  }
+  openBank(): void {
+    const dialogRef = this.dialog.open(BankSelectPopUpComponent, {
+      width: '470px',
+      data: { bank: this.bankDetails, animal: this.element }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.element = result;
+      this.bankDetailsSend.emit(result);
     });
   }
   getBankDetails() {
@@ -85,24 +148,8 @@ export class TransactionSummaryComponent implements OnInit {
     }
 
   }
-  getNSEAchmandate() {
-    let obj1 = {
-      tpUserCredFamilyMappingId: this.defaultClient.tpUserCredFamilyMappingId
-    }
-    this.onlineTransact.getNSEAchmandate(obj1).subscribe(
-      data => this.getNSEAchmandateRes(data)
-    );
-  }
-  getNSEAchmandateRes(data) {
-    console.log('getNSEAchmandateRes', data)
-    this.achMandateNSE = data[0]
-    this.achmandateDetails.emit(this.bankDetails);
-  }
   selectBank(bank) {
     this.bankDetailsSend.emit(bank);
-  }
-  selectUmrn(umrn) {
-    this.achmandateDetails.emit(umrn);
   }
 
   getDefaultDetails(platform) {
@@ -122,25 +169,53 @@ export class TransactionSummaryComponent implements OnInit {
     if (data == undefined) {
       return
     }
+    this.changeDetails = data
+    if (this.changeDetails.noAlert == undefined && this.checkAlert && this.checkAlert != data.defaultClient.tpUserCredFamilyMappingId) {
+      this.alertModal(data, null)
+      return
+    }
+    data.euin = data.subBrokerCredList[0];
     this.defaultDetails.emit(data);
     this.allData = data
     this.clientDataList = data.clientDataList
     this.defaultCredential = data.defaultCredential
     this.defaultClient = data.defaultClient
+    this.subBrokerCredList = data.subBrokerCredList
     this.selectedPlatform = this.defaultCredential.aggregatorType
     if (this.selectedPlatform == 1) {
       this.getBankDetails()
     }
   }
-  setPlatform(value) {
-    this.selectedPlatform = value.value
-    this.showPlatform = false
-    this.getDefaultDetails(this.selectedPlatform)
-  }
-  setInvestor(value) {
-    this.selectedInvestor = value
-    this.allData.defaultClient = this.selectedInvestor
-    this.defaultDetails.emit(this.allData);
-    this.showInvestor = false
+  alertModal(value, data) {
+    const dialogData = {
+      data: value,
+      header: 'ALERT',
+      body: 'Holding nature of selected FOLIO matches different client code',
+      body2: 'Are you sure you want to proceed',
+      btnYes: 'NO',
+      btnNo: 'OK,POCEED',
+      positiveMethod: () => {
+        this.eventService.openSnackBar('Sucessfully changed', 'dismiss');
+        this.changeDetails.noAlert = true
+        this.getDefaultDetailsRes(this.changeDetails)
+        dialogRef.close();
+      },
+      negativeMethod: () => {
+        console.log('');
+        this.folioChange.emit(this.bankDetails);
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
 }

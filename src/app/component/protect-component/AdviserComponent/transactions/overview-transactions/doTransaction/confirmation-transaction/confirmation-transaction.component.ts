@@ -10,12 +10,13 @@ export class ConfirmationTransactionComponent implements OnInit {
   transactionSummary: any;
   inputData: any;
   isViewInitCalled: any;
+  confirmData: any;
 
   constructor(private subInjectService: SubscriptionInject) { }
   @Input() set data(data) {
     this.inputData = data;
-    console.log('This is Input data of FixedDepositComponent ', data);
-    this.transactionSummary = data
+    console.log('This is Input ConfirmationTransactionComponent@@  ', data);
+    this.confirmData = data
     if (this.isViewInitCalled) {
       // this.getdataForm('');
     }

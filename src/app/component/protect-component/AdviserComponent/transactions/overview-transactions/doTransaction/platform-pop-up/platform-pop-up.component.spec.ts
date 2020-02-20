@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SupportUpperSliderComponent } from './support-upper-slider.component';
+import { PlatformPopUpComponent } from './platform-pop-up.component';
 
-describe('SupportUpperSliderComponent', () => {
-  let component: SupportUpperSliderComponent;
-  let fixture: ComponentFixture<SupportUpperSliderComponent>;
+describe('PlatformPopUpComponent', () => {
+  let component: PlatformPopUpComponent;
+  let fixture: ComponentFixture<PlatformPopUpComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SupportUpperSliderComponent ]
+      declarations: [ PlatformPopUpComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SupportUpperSliderComponent);
+    fixture = TestBed.createComponent(PlatformPopUpComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

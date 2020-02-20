@@ -25,7 +25,7 @@ export class SwpTransactionComponent implements OnInit {
   selectScheme = 2;
   maiSchemeList: any;
   schemeDetails: any;
-  reInvestmentOpt=[];
+  reInvestmentOpt = [];
   schemeList: any;
   showUnits = false;
   showSpinner = false;
@@ -47,9 +47,13 @@ export class SwpTransactionComponent implements OnInit {
   mandateDetails: any;
   bankDetails: any;
   achMandateNSE: any;
-
+  showSpinnerFolio = false;
+  currentValue: number;
+  multiTransact=false;
+  childTransactions=[];
+  displayedColumns: string[] = ['no','folio', 'ownerName','amount'];
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-    private processTransaction: ProcessTransactionService, private fb: FormBuilder, private eventService : EventService) { }
+    private processTransaction: ProcessTransactionService, private fb: FormBuilder, private eventService: EventService) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -67,16 +71,16 @@ export class SwpTransactionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.transactionSummary ={}
+    this.transactionSummary = {}
+    this.childTransactions = []
     this.getdataForm(this.inputData)
     Object.assign(this.transactionSummary, { transactType: 'SWP' });
     Object.assign(this.transactionSummary, { allEdit: true });
-    Object.assign(this.transactionSummary, {selectedFamilyMember: this.inputData.selectedFamilyMember});
+    Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
   }
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
-    this.swpTransaction.controls.investor.reset();
   }
   getSchemeList(value) {
     this.showSpinner = true
@@ -95,16 +99,16 @@ export class SwpTransactionComponent implements OnInit {
       }
       this.onlineTransact.getExistingSchemes(obj).subscribe(
         data => this.getExistingSchemesRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
-      }
+          this.eventService.showErrorMessage(error);
+        }
       );
     } else {
 
     }
   }
-  getbankDetails(value){
+  getbankDetails(value) {
     this.bankDetails = value[0]
-    console.log('bank details',value)
+    console.log('bank details', value)
   }
   getSchemeDetailsRes(data) {
     console.log('getSchemeDetailsRes == ', data)
@@ -118,9 +122,9 @@ export class SwpTransactionComponent implements OnInit {
       this.reInvestmentOpt = []
     }
     this.getFrequency()
-    if(this.getDataSummary.defaultClient.aggregatorType == 2){
+    if (this.getDataSummary.defaultClient.aggregatorType == 2) {
       this.getMandateDetails()
-      }
+    }
     this.getSchemeWiseFolios()
   }
   reinvest(scheme) {
@@ -136,7 +140,7 @@ export class SwpTransactionComponent implements OnInit {
   selectedScheme(scheme) {
     this.scheme = scheme
     this.showUnits = true
-    Object.assign(this.transactionSummary, {schemeName:  scheme.schemeName});
+    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav
     let obj1 = {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
@@ -148,9 +152,10 @@ export class SwpTransactionComponent implements OnInit {
       data => this.getSchemeDetailsRes(data), (error) => {
         this.eventService.showErrorMessage(error);
       }
-      );
+    );
   }
   getSchemeWiseFolios() {
+    this.showSpinnerFolio = true
     let obj1 = {
       mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -159,36 +164,45 @@ export class SwpTransactionComponent implements OnInit {
       userAccountType: this.getDataSummary.defaultCredential.accountType,
       holdingType: this.getDataSummary.defaultClient.holdingType,
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+      showOnlyNonZero: true,
     }
     this.onlineTransact.getSchemeWiseFolios(obj1).subscribe(
       data => this.getSchemeWiseFoliosRes(data), (error) => {
         this.eventService.showErrorMessage(error);
       }
-      );
+    );
   }
   getSchemeWiseFoliosRes(data) {
     console.log('res scheme folio', data)
+    this.showSpinnerFolio = false
     this.folioList = data
   }
   enteredAmount(value) {
     Object.assign(this.transactionSummary, { enteredAmount: value });
   }
+  onFolioChange(folio) {
+    this.swpTransaction.controls.folioSelection.reset()
+   }
   selectedFolio(folio) {
     this.folioDetails = folio
+    this.currentValue =this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme,folio.balanceUnit)
     this.showUnits = true
-    Object.assign(this.transactionSummary, {folioNumber:  folio.folioNumber});
+    Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
+    Object.assign(this.transactionSummary, { mutualFundId: folio.id });
+    Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId});
+    this.transactionSummary = { ...this.transactionSummary };
   }
   getFrequency() {
     let obj = {
       isin: this.schemeDetails.isin,
-      aggregatorType:this.getDataSummary.defaultClient.aggregatorType,
-      orderType:'SWP'
+      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+      orderType: 'SWP'
     }
     this.onlineTransact.getSipFrequency(obj).subscribe(
       data => this.getSipFrequencyRes(data), (error) => {
         this.eventService.showErrorMessage(error);
       }
-      );
+    );
   }
   getSipFrequencyRes(data) {
     console.log('isin Frequency ----', data)
@@ -199,15 +213,21 @@ export class SwpTransactionComponent implements OnInit {
   }
   selectedFrequency(getFrerq) {
     this.fre = getFrerq
-    this.frequency = getFrerq.sipFrequency
+    this.frequency = getFrerq.frequency
     this.swpTransaction.controls["employeeContry"].setValidators([Validators.min(getFrerq.sipMinimumInstallmentAmount)])
-    this.dateArray(getFrerq.sipDates)
+    if (this.getDataSummary.defaultClient.aggregatorType == 1) {
+      this.dateArray(getFrerq.swpDates)
+    } else {
+      this.dateArray(getFrerq.sipDates)
+    }
   }
   dateArray(sipDates) {
+    var currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() + 7);
     this.dates = sipDates.split(",")
     this.dateDisplay = this.processTransaction.getDateByArray(this.dates, true)
     this.dateDisplay = this.dateDisplay.filter(element => {
-      return element.date > new Date()
+      return element.date > currentDate
     });
     console.log('dateDisplay = ', this.dateDisplay)
   }
@@ -221,14 +241,14 @@ export class SwpTransactionComponent implements OnInit {
       data => this.getMandateDetailsRes(data), (error) => {
         this.eventService.showErrorMessage(error);
       }
-      );
+    );
   }
   getMandateDetailsRes(data) {
     console.log('mandate details :', data)
     this.mandateDetails = data
   }
   onAddTransaction(value, data) {
-    Object.assign(this.transactionSummary, {allEdit: false});
+    Object.assign(this.transactionSummary, { allEdit: false });
     this.confirmTrasaction = true
     const fragmentData = {
       flag: 'addNsc',
@@ -273,6 +293,7 @@ export class SwpTransactionComponent implements OnInit {
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       date: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       frequency: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      tenure: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       installment: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
     });
 
@@ -282,48 +303,94 @@ export class SwpTransactionComponent implements OnInit {
     return this.swpTransaction.controls;
   }
   swp() {
-    let obj = {
-      productDbId: this.schemeDetails.id,
-      mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
-      productCode: this.schemeDetails.schemeCode,
-      isin: this.schemeDetails.isin,
-      folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
-      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
-      tpSubBrokerCredentialId: this.getDataSummary.defaultCredential.tpSubBrokerCredentialId,
-      familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
-      adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
-      clientId: this.getDataSummary.defaultClient.clientId,
-      startDate: Number(new Date(this.swpTransaction.controls.date.value.replace(/"/g, ""))),
-      noOfInstallments: this.swpTransaction.controls.installment.value,
-      frequencyType:this.frequency,
-      schemeCd: this.schemeDetails.schemeCode,
-      euin: this.getDataSummary.defaultCredential.euin,
-      clientCode: this.getDataSummary.defaultClient.clientCode,
-      orderVal: this.swpTransaction.controls.employeeContry.value,
-      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-      orderType: "SWP",
-      amountType: "Amount",
-      bseDPTransType: "PHYSICAL",
-      bankDetailId:null,
-      nsePaymentMode:null,
-    }
-    if (this.getDataSummary.defaultClient.aggregatorType == 1) {
-      obj.bankDetailId = this.bankDetails.id
-      obj.nsePaymentMode = (this.swpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE'
-    }
-    this.onlineTransact.transactionBSE(obj).subscribe(
-      data => this.swpBSERes(data), (error) => {
-        this.eventService.showErrorMessage(error);
-      }
-      );
-    console.log('swp json obj',obj)
-  }
-  swpBSERes(data){
-    console.log('swp res == ',data)
-    if(data == undefined){
 
-    }else{
-    this.onAddTransaction('confirm',this.transactionSummary)
+    if (this.swpTransaction.get('date').invalid) {
+      this.swpTransaction.get('date').markAsTouched();
+      return;
+    } else if (this.swpTransaction.get('frequency').invalid) {
+      this.swpTransaction.get('frequency').markAsTouched();
+      return;
+    } else if (this.swpTransaction.get('employeeContry').invalid) {
+      this.swpTransaction.get('employeeContry').markAsTouched();
+      return;
+    } else if (this.swpTransaction.get('installment').invalid) {
+      this.swpTransaction.get('installment').markAsTouched();
+      return;
+    } else {
+      let obj = {
+        productDbId: this.schemeDetails.id,
+        mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
+        productCode: this.schemeDetails.schemeCode,
+        isin: this.schemeDetails.isin,
+        folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+        tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+        tpSubBrokerCredentialId: this.getDataSummary.euin.id,
+        familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+        adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
+        clientId: this.getDataSummary.defaultClient.clientId,
+        startDate: Number(new Date(this.swpTransaction.controls.date.value.replace(/"/g, ""))),
+        noOfInstallments: this.swpTransaction.controls.installment.value,
+        frequencyType: this.frequency,
+        schemeCd: this.schemeDetails.schemeCode,
+        euin: this.getDataSummary.euin.euin,
+        clientCode: this.getDataSummary.defaultClient.clientCode,
+        orderVal: this.swpTransaction.controls.employeeContry.value,
+        aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+        orderType: "SWP",
+        amountType: "Amount",
+        bseDPTransType: "PHYSICAL",
+        bankDetailId: null,
+        nsePaymentMode: null,
+        childTransactions:null,
+      }
+      if (this.getDataSummary.defaultClient.aggregatorType == 1) {
+        obj.bankDetailId = this.bankDetails.id
+        obj.nsePaymentMode = (this.swpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE'
+      }
+      obj = this.processTransaction.checkInstallments(obj)
+      if(this.multiTransact == true){
+        console.log('new purchase obj', this.childTransactions)
+         obj.childTransactions = this.childTransactions
+      }
+      console.log('swp json obj', obj)
+      this.onlineTransact.transactionBSE(obj).subscribe(
+        data => this.swpBSERes(data), (error) => {
+          this.eventService.showErrorMessage(error);
+        }
+      );
     }
+
+  }
+  swpBSERes(data) {
+    console.log('swp res == ', data)
+    if (data == undefined) {
+
+    } else {
+      this.onAddTransaction('confirm', this.transactionSummary)
+    }
+  }
+  AddMultiTransaction() {
+    this.multiTransact = true
+    let obj = {
+      amc: this.scheme.amcId,
+      folioNo:(this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+      productCode:this.schemeDetails.schemeCode,
+      dividendReinvestmentFlag:this.schemeDetails.dividendReinvestmentFlag,
+      orderVal:this.swpTransaction.controls.employeeContry.value,
+      productDbId:this.schemeDetails.id,
+      frequencyType: this.frequency,
+      startDate: Number(new Date(this.swpTransaction.controls.date.value.replace(/"/g, ""))),
+      schemeName:this.scheme.schemeName,
+    }
+    obj = this.processTransaction.checkInstallments(obj)
+    this.childTransactions.push(obj)
+    console.log(this.childTransactions)
+    this.schemeList = [];
+    this.swpTransaction.controls.date.reset()
+    this.swpTransaction.controls.employeeContry.reset()
+    this.swpTransaction.controls.tenure.reset()
+    this.swpTransaction.controls.frequency.reset()
+
+    this.swpTransaction.controls.investmentAccountSelection.reset()
   }
 }

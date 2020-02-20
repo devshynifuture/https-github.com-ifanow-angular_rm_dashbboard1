@@ -24,8 +24,7 @@
 
 .logoWrap {
   .logo {
-    width: 62px !important;
-    height: auto;
+    width: auto; height: 100%; margin: 0px auto;
   }
 
   h5 {
@@ -125,7 +124,7 @@ img.header-img {
 }
 
 .mainNav{
-  margin-left:230px !important;
+  margin-left:230px;
   
 }
 

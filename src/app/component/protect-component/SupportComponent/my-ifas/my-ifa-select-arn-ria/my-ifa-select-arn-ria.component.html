@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="p-15-9">
+        <h3 class="strong">Select ARN/RIA for AUM Reconciliation</h3>
+        <mat-radio-group aria-label="Select an option">
+            <mat-radio-button class="d-block" value="1"> RIA-INA000004409 </mat-radio-button>
+            <mat-radio-button class="d-block" value="2"> ARN-83865 </mat-radio-button>
+        </mat-radio-group>
+    </div>
+    <div class="right pt-44">
+        <button mat-button (click)="dialogClose()">
+            CANCEL
+        </button>
+        <button mat-stroked-button (click)="start()">
+            START
+        </button>
+    </div>
+</div>

@@ -64,7 +64,8 @@
                     (change)="checkAll($event,ppfDataSource)"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false" [checked]="element.selected"></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element)"
+                    [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -171,10 +172,12 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox *ngIf="isLoading==false && nscDataSpurce.tableFlag"></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false && nscDataSpurce.tableFlag"
+                    (change)="checkAll($event,nscDataSpurce)"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false"></mat-checkbox>
+                <mat-checkbox [checked]="element.selected" (change)="checkSingle($event,element)"
+                    *ngIf="isLoading==false"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -186,7 +189,7 @@
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.desc}}</div>
+                <div class="bar"> {{element.adviceToAsset.adviceDescription}}</div>
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
@@ -204,19 +207,37 @@
         <ng-container matColumnDef="advice">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.advice}}</div>
+                <div class="bar">
+                    <span>
+                        <span *ngIf="element.adviceToAsset.adviceId==1">Continue till maturity</span>
+                        <span *ngIf="element.adviceToAsset.adviceId==2">Open new account</span>
+                        <span *ngIf="element.adviceToAsset.adviceId==3">Take loan against NSC</span>
+                    </span>
+                </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status</th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.astatus}}</div>
+                <div class="bar">
+                    <span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==1">GIVEN</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==2">AWAITING CONSENT</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==3">ACCEPTED</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==4">IN PROGRESS</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==5">IMPLEMENTED</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==6">DECLINED</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==7">PENDING</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==8">SYSTEM GENERATED</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==9">REVISED</span>
+                    </span>
+                </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Applicable date </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.adate}}</div>
+                <div class="bar"> {{element.applicableDate | date:'dd/MM/yyyy'}}</div>
             </td>
         </ng-container>
         <ng-container matColumnDef="icon">
@@ -255,7 +276,7 @@
                 <mat-checkbox *ngIf="isLoading==false && ssyDataSpurce.tableFlag"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false"></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element)"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -303,7 +324,7 @@
         <ng-container matColumnDef="adate">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Applicable date </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar">{{element.adate}}</div>
+                <div class="bar">{{element.applicableDate | date:'dd/MM/yyyy'}}</div>
             </td>
         </ng-container>
         <ng-container matColumnDef="icon">
@@ -339,10 +360,12 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox *ngIf="isLoading==false && kvpDataSpurce.tableFlag"></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false && kvpDataSpurce.tableFlag"
+                    (change)="checkAll($event,kvpDataSpurce)"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false"></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element)"
+                    [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -354,7 +377,7 @@
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.desc}}</div>
+                <div class="bar"> {{element.adviceToAsset.adviceDescription}}</div>
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
@@ -378,19 +401,39 @@
         <ng-container matColumnDef="advice">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.advice}}</div>
+                <div class="bar">
+                    <span>
+                        <span *ngIf="element.adviceToAsset.adviceId==1">Continue contributions as per rule</span>
+                        <span *ngIf="element.adviceToAsset.adviceId==2">Withdraw as on same date</span>
+                        <span *ngIf="element.adviceToAsset.adviceId==3">Premature encashment</span>
+                        <span *ngIf="element.adviceToAsset.adviceId==4">Withdrawal</span>
+                        <span *ngIf="element.adviceToAsset.adviceId==5">Take loan against Kvp</span>
+                    </span>
+                </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status</th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.astatus}}</div>
+                <div class="bar">
+                    <span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==1">GIVEN</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==2">AWAITING CONSENT</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==3">ACCEPTED</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==4">IN PROGRESS</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==5">IMPLEMENTED</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==6">DECLINED</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==7">PENDING</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==8">SYSTEM GENERATED</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==9">REVISED</span>
+                    </span>
+                </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Applicable date </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.adate}}</div>
+                <div class="bar"> {{element.applicableDate | date:'dd/MM/yyyy'}}</div>
             </td>
         </ng-container>
         <ng-container matColumnDef="icon">
@@ -427,10 +470,12 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox *ngIf="isLoading==false && scssDataSpurce.tableFlag"></mat-checkbox>
+                <mat-checkbox (change)="checkAll($event,scssDataSpurce)"
+                    *ngIf="isLoading==false && scssDataSpurce.tableFlag"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false"></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element)"
+                    [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -443,25 +488,43 @@
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar">{{element.name}}</div>
+                <div class="bar">{{element.adviceToAsset.adviceDescription}}</div>
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar">{{element.astatus}}</div>
+                <div class="bar">
+                    <span>
+                        <span *ngIf="element.adviceToAsset.adviceId==1">Continue contributions as per rule</span>
+                        <span *ngIf="element.adviceToAsset.adviceId==2">Withdraw as on same date</span>
+                        <span *ngIf="element.adviceToAsset.adviceId==3">Premature encashment</span>
+                    </span>
+                </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar">{{element.adate}}</div>
+                <div class="bar">
+                    <span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==1">GIVEN</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==2">AWAITING CONSENT</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==3">ACCEPTED</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==4">IN PROGRESS</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==5">IMPLEMENTED</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==6">DECLINED</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==7">PENDING</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==8">SYSTEM GENERATED</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==9">REVISED</span>
+                    </span>
+                </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Applicable date </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar">{{element.adate}}</div>
+                <div class="bar">{{element.applicableDate | date:'dd/MM/yyyy'}}</div>
             </td>
         </ng-container>
         <ng-container matColumnDef="icon">
@@ -578,7 +641,7 @@
                 <mat-checkbox *ngIf="isLoading==false && pordDataSpurce.tableFlag"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false"></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element)"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -590,7 +653,7 @@
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar">{{element.desc}}</div>
+                <div class="bar">{{element.adviceToAsset.adviceDescription}}</div>
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
@@ -667,7 +730,8 @@
                     (change)="checkAll($event,potdDataSource)"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false" [checked]="element.selected"></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element)"
+                    [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -764,10 +828,12 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox *ngIf="isLoading==false && pomisDataSpurce.tableFlag"></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false && pomisDataSpurce.tableFlag"
+                    (change)="checkAll($event,pomisDataSpurce)"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false"></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element)"
+                    [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -786,13 +852,32 @@
         <ng-container matColumnDef="advice">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar">{{element.astatus}}</div>
+                <div class="bar">
+                    <span>
+                        <span *ngIf="element.adviceToAsset.adviceId==1">Open new account</span>
+                        <span *ngIf="element.adviceToAsset.adviceId==2">Withdraw</span>
+                        <span *ngIf="element.adviceToAsset.adviceId==3">Close the account</span>
+
+                    </span>
+                </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar">{{element.adate}}</div>
+                <div class="bar">
+                    <span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==1">GIVEN</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==2">AWAITING CONSENT</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==3">ACCEPTED</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==4">IN PROGRESS</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==5">IMPLEMENTED</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==6">DECLINED</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==7">PENDING</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==8">SYSTEM GENERATED</span>
+                        <span *ngIf="element.adviceToAsset.adviceStatusId==9">REVISED</span>
+                    </span>
+                </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
