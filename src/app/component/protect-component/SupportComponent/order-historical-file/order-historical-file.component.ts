@@ -27,12 +27,30 @@ export class OrderHistoricalFileComponent implements OnInit {
     "fromDate": [, Validators.required],
     "toDate": [, Validators.required],
     "orderingFreq": [, Validators.required],
-    "wbr2": [,],
-    "wbr2a": [,],
+    // "selectFilesToOrder": this.fb.group({
+    //   "cams": this.fb.group({
+    //     "transaction": 
+    //   }),
+    //   "karvy": this.fb.group({
+
+    //   }),
+    //   "franklin": this.fb.group({
+
+    //   })
+    // }),
+
     "wbr49Active": [,],
-    "wbr49Close": [,],
+    "wbr49Ceased": [,],
+    "mfsd243Active": [,],
+    "mfsd231Ceased": [,],
+    "activeSip": [,],
+    "ceasedSip": [,],
     "wbr9": [,],
-    "wbr22": [,]
+    "mfsd211": [,],
+    "investorFolioDetails": [,],
+    "wbr22": [,],
+    "mfsd203": [,],
+    "clientwiseAumOrWhoseBalExceedsN": [,]
   });
 
   dialogClose(flag) {
