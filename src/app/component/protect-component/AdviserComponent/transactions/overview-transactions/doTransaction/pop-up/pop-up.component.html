@@ -12,21 +12,21 @@
 </div>
 
 <div class="col-md-12 mt-70 all-transactions">
-    <table mat-table [dataSource]="dataSource" id="table-low">
+    <table mat-table [dataSource]="investorList" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef class="br f-18" style="width: 2%;">
-                <mat-checkbox (change)="selectAll($event)" name="selectAll" [indeterminate]="dataCount > 0 && dataCount != dataSource.length" [checked]="dataCount == dataSource.length"></mat-checkbox>
+                Select
             </th>
             <td mat-cell *matCellDef="let element" style="width: 2%;" class="c-p br">
-                <mat-checkbox name="selectedData">
-                </mat-checkbox>
+                <mat-radio-button value="1" class="radioBtn custom-radio" (click)="selectedIINUCC(element)">
+                </mat-radio-button>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
         </ng-container>
         <ng-container matColumnDef="no">
-            <th mat-header-cell *matHeaderCellDef class="br w-20"> Select IIN/UCC </th>
+            <th mat-header-cell *matHeaderCellDef class="br w-20"> IIN/UCC </th>
             <td mat-cell *matCellDef="let element" class="br">
-                <div class="bar"> {{element.no}} </div>
+                <div class="bar"> {{element.clientCode}} </div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
         </ng-container>
@@ -34,7 +34,7 @@
             <th mat-header-cell *matHeaderCellDef class="br w-15"> Holding Type</th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
-                    {{element.ownerName}}
+                    {{(element.holdingType == 'SI')?'SINGLE':(element.holdingType == 'JO')?'JOINT':'ANYONE/SERVIVAL'}}
                 </div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br text-right"></td>
@@ -47,9 +47,10 @@
 
 <div class="row pt-16 pb-16">
     <div class="col-md-12 text-right">
-        <button class="br-0 text-inherit f-14" (click)="onNoClick()" mat-button mat-raised-button>
-            SELECT
+        <button class="br-0 text-inherit f-14"  mat-button [mat-dialog-close]="data.investor" >
+            CANCEL
         </button>
-        <button class="btn-green text-white f-14 ml-12" mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>OK</button>
+        <button class="btn-green text-white f-14 ml-12"  (click)="onNoClick()" mat-button mat-raised-button
+            cdkFocusInitial>SELECT</button>
     </div>
 </div>

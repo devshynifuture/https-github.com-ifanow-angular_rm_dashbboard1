@@ -475,7 +475,7 @@ export class EmailListingComponent implements OnInit {
     });
 
     if (ids.length === 0) {
-      this.eventService.openSnackBar("Please select email or emails to Delete!", "DISMISS");
+      this.eventService.openSnackBar("Please select email or emails to delete!", "DISMISS");
     } else {
       this.threadsToTrashService(ids);
     }

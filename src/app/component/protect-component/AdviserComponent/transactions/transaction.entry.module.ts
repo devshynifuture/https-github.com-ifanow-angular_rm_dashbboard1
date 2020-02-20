@@ -24,6 +24,9 @@ import { BackDetailsComponent } from './overview-transactions/know-your-customer
 import { PermanentAddressComponent } from './overview-transactions/know-your-customer/permanent-address/permanent-address.component';
 import { NomineeDetailsComponent } from './overview-transactions/know-your-customer/nominee-details/nominee-details.component';
 import { PopUpComponent } from './overview-transactions/doTransaction/pop-up/pop-up.component';
+import { PlatformPopUpComponent } from './overview-transactions/doTransaction/platform-pop-up/platform-pop-up.component';
+import { EuinSelectPopUpComponent } from './overview-transactions/doTransaction/euin-select-pop-up/euin-select-pop-up.component';
+import { BankSelectPopUpComponent } from './overview-transactions/doTransaction/bank-select-pop-up/bank-select-pop-up.component';
 
 export const componentList = [
     TransactionAddComponent,
@@ -46,7 +49,9 @@ export const componentList = [
     BackDetailsComponent,
     NomineeDetailsComponent,
     PopUpComponent,
-
+    PlatformPopUpComponent,
+    EuinSelectPopUpComponent,
+    BankSelectPopUpComponent
     // FatcaDetailsComponent,
     // VideoKycComponent
 

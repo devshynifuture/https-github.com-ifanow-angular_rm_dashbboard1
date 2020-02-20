@@ -267,7 +267,7 @@ export class EmailOnlyComponent implements OnInit {
 
   sendEmail() {
     if (this.emailIdList.length == 0) {
-      this.eventService.openSnackBar('Please enter To email');
+      this.eventService.openSnackBar('Please enter to email');
       return;
     }
     if (this._inputData && this._inputData.documentList.length > 0) {

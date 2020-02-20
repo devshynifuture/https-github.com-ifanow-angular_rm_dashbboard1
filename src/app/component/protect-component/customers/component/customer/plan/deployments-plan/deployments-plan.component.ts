@@ -48,6 +48,9 @@ export class DeploymentsPlanComponent implements OnInit {
     )
 
   }
+  selectSingleDeployment(value) {
+    console.log(value);
+  }
   openPopup(flagVlaue, singleDeployment) {
     let componentName;
     let dialogRef

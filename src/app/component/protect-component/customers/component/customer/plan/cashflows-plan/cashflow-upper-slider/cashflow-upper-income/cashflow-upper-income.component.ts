@@ -133,7 +133,7 @@ export class CashflowUpperIncomeComponent implements OnInit {
       this.dataSource.data = updatedTable;
     } else {
       this.onlyNumbers = '';
-      this.eventService.openSnackBar("This Input only takes Numbers", "DISMISS");
+      this.eventService.openSnackBar("This input only takes numbers", "DISMISS");
     }
   }
 

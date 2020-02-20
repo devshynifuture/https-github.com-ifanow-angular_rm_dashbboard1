@@ -63,15 +63,14 @@
                     <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                         autocomplete="off" #amtInvested maxlength="10" class="form-control br-0 rupess"
                         formControlName="amtInvested">
-                    <mat-error *ngIf="pomisForm.get('amtInvested').errors?.required" class="f-12">
-                        This field is required
-                    </mat-error>
-                    <mat-error *ngIf="(pomisForm.get('amtInvested').errors?.min)" class="f-12">
-                        Should be greater than or equal to 1500
-                    </mat-error>
-                    <mat-error *ngIf="(pomisForm.get('amtInvested').errors?.max)" class="f-12">
-                        Should be greater than or equal to 450000
-                    </mat-error>
+                        <mat-error class="f-12" *ngIf="(pomisForm.get('amtInvested').errors?.required)"> This field
+                            is required</mat-error>
+                        <mat-error *ngIf="(pomisForm.get('amtInvested').errors?.min)" class="f-12">
+                            Should be greater than or equal to 1500
+                        </mat-error>
+                        <mat-error *ngIf="(pomisForm.get('amtInvested').errors?.max)" class="f-12">
+                            Should be less than 450000
+                        </mat-error>
                     <mat-hint align="end" class="f-12">{{amtInvested.value.length}}/10</mat-hint>
                 </mat-form-field>
             </div>
