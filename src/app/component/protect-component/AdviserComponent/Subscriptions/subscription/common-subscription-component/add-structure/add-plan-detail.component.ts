@@ -49,7 +49,7 @@ export class AddPlanDetailComponent implements OnInit {
   planDataForm = this.fb.group({
     planName: ['', [Validators.required]],
     code: ['', [Validators.required]],
-    description: ['', [Validators.required]]
+    description: ['']
   });
 
   // planName = {maxLength: 20, placeholder: '', formControlName: 'planName', data: ''};

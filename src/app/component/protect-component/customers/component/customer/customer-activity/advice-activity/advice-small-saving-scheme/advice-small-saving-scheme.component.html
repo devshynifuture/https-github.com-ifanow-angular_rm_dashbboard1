@@ -64,7 +64,8 @@
                     (change)="checkAll($event,ppfDataSource)"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false" [checked]="element.selected"></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element)"
+                    [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -175,7 +176,8 @@
                     (change)="checkAll($event,nscDataSpurce)"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox [checked]="element.selected" *ngIf="isLoading==false"></mat-checkbox>
+                <mat-checkbox [checked]="element.selected" (change)="checkSingle($event,element)"
+                    *ngIf="isLoading==false"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -274,7 +276,7 @@
                 <mat-checkbox *ngIf="isLoading==false && ssyDataSpurce.tableFlag"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false"></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element)"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -362,7 +364,8 @@
                     (change)="checkAll($event,kvpDataSpurce)"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false" [checked]="element.selected"></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element)"
+                    [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -471,7 +474,8 @@
                     *ngIf="isLoading==false && scssDataSpurce.tableFlag"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false" [checked]="element.selected"></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element)"
+                    [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -637,7 +641,7 @@
                 <mat-checkbox *ngIf="isLoading==false && pordDataSpurce.tableFlag"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false"></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element)"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -726,7 +730,8 @@
                     (change)="checkAll($event,potdDataSource)"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false" [checked]="element.selected"></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element)"
+                    [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -827,7 +832,8 @@
                     (change)="checkAll($event,pomisDataSpurce)"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false" [checked]="element.selected"></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element)"
+                    [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">

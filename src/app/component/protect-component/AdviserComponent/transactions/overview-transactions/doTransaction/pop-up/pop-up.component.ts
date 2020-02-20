@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { DialogData } from '../../../../Activities/calendar/calendar.component';
+import { FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-pop-up',
   templateUrl: './pop-up.component.html',
@@ -10,7 +11,10 @@ export class PopUpComponent implements OnInit {
   dataCount: number;
   displayedColumns: string[] = ['checkbox', 'no', 'ownerName'];
     dataSource = ELEMENT_DATA;
-  constructor( public dialogRef: MatDialogRef<PopUpComponent>,
+  investorList: any;
+  popUP: any;
+  iin: any;
+  constructor( public dialogRef: MatDialogRef<PopUpComponent>,private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
   
     
@@ -18,31 +22,16 @@ export class PopUpComponent implements OnInit {
     dataS =[]
   ngOnInit() {
     const ELEMENT_DATA = this.dataS;
-      // this.invoiceClientData = data;
+     console.log('investorList == ',this.data)
+     this.investorList = this.data.investor;
       ELEMENT_DATA.forEach(item => item.selected = false);
   }
-  onNoClick(): void {
-    this.dialogRef.close();
+  selectedIINUCC(iin){
+    this.iin = iin
   }
-  // changeSelect() {
-  //   this.dataCount = 0;
-  //   this.dataSource.forEach(item => {
-  //     if (item.selected) {
-  //       this.dataCount++;
-  //     }
-  //   });
-  // }
-  // selectAll(event) {
-  //   this.dataCount = 0;
-  //   if (this.dataSource != undefined) {
-  //     this.dataSource.forEach(item => {
-  //       item.selected = event.checked;
-  //       if (item.selected) {
-  //         this.dataCount++;
-  //       }
-  //     });
-  //   }
-  // }
+  onNoClick(): void {
+    this.dialogRef.close(this.iin);
+  }
 
 }
 export interface PeriodicElement {

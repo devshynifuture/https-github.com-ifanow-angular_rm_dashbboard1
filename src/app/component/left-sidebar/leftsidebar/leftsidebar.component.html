@@ -81,7 +81,7 @@
       </div>
     </mat-nav-list>
   </mat-sidenav>
-  <mat-sidenav-content id="left" [ngClass]="showTabs?'mainNav':'smallNav'">
+  <mat-sidenav-content id="left" class="mainNav" [ngClass]="showTabs?'mainNav':'smallNav'">
     <mat-toolbar class="bg-white bl-1 fix-top pl-0" >
       <button (click)="showMainNavWrapper()" *ngIf="showTabs==false" aria-label="Toggle sidenav" mat-icon-button
         type="button">

@@ -54,39 +54,17 @@ export class AddClientMappingComponent implements OnInit {
   }
   mapUnmapFolios() {
     let obj = {
-      "iin": "ARCHANAW",
-      "client_id": this.clientId,
-      "family_member_id": this.familyMemberId,
-      "pan": "ACXPW8851E",
-      "tp_user_credential_id": 429,
-      "id": 5165,
-      "advisorId": 3021,
-      "clientCode": this.singleFolioData.clientCode,
-      "holdingType": this.singleFolioData.holdingType,
-      "taxStatus": this.singleFolioData.taxStatus,
-      "firstApplicantName": this.singleFolioData.firstApplicantName,
-      "clientGuardianPan": this.singleFolioData.clientGuardianPan,
-      "firstApplicantPan": this.singleFolioData.firstApplicantPan,
-      "secondApplicantPan": this.singleFolioData.secondApplicantPan,
-      "thirdApplicantPan": this.singleFolioData.thirdApplicantPan,
-      "mobile": this.familyMemberData.mobileNumber,
-      "userId": "1260601",
-      "clientEmail": "khushboo.wakade3@gmail.com",
-      "tpUserProfileId": 5165,
-      "ACTIVATION_STATUS": "YES",
-      "CUSTOMER_ID": "ARCHANAW",
-      "INVESTOR_NAME": "ARCHANA ANAND WAKADE",
-      "FH_PAN_NO": "AAKPW5723C",
-      "HOLD_NATURE_DESC": "SI",
-      "TAX_STATUS_DESC": "INDIVIDUAL",
-      "HOLD_N_CODE": "SI",
-      "GUARDIAN_PAN_NO": "",
-      "JH1_PAN_NO": "",
-      "EMAIL": "khushboo.wakade3@gmail.com"
+      clientCode: this.singleFolioData.clientCode,
+      familyMemberId: this.familyMemberData.familyMemberId,
+      clientId: this.familyMemberData.clientId,
+      taxStatus: this.singleFolioData.taxStatus,
+      holdingType: this.singleFolioData.holdingType,
+      holdingDesc: ''
     }
     this.onlineTransact.mapUnmappedFolios(obj).subscribe(
       data => {
         console.log(data);
+        this.close();
       },
       err => this.eventService.openSnackBar(err, "dismiss")
     )

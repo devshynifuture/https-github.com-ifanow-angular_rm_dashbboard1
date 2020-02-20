@@ -23,3 +23,31 @@
 .ba-Tr {
     border: 1px solid transparent;
 }
+::ng-deep .mat-progress-spinner circle,
+.mat-spinner circle {
+    stroke: #008FFF;
+}
+::ng-deep .mat-progress-spinner {
+    width: 24px !important;
+    height: 24px !important;
+}
+
+::ng-deep .mat-progress-spinner svg {
+    width: 24px !important;
+    height: 24px !important;
+}
+
+::ng-deep .mat-form-field-subscript-wrapper {
+    margin-top: 5px !important;
+    margin-left: 10px !important;
+    padding-left: 0px !important;
+}
+
+.radio-border {
+    border: 1px solid rgba(25, 25, 25, 0.32) !important;
+}
+
+.bor_top_tb_left {
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+}

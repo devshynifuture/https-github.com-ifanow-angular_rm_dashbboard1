@@ -7,15 +7,15 @@ import { AbstractControl, ValidationErrors } from '@angular/forms';
 export class ProcessTransactionService {
   [x: string]: any;
   inverstorList: any;
-  schemeSelection : any;
+  schemeSelection: any;
   constructor() { }
   selectionList() {
     this.schemeSelection = [{
       select: 'Invest in existing scheme',
-      value : 1
+      value: 1
     }, {
       select: 'Select a new scheme',
-      value : 2
+      value: 2
     }]
   }
   getIINList() {
@@ -35,96 +35,107 @@ export class ProcessTransactionService {
   getEuinList() {
 
   }
-  calculateCurrentValue(value){
-
-
+  checkInstallments(obj){
+    if (this.frequency == 'MONTHLY' && this.sipTransaction.controls.tenure.value == 2) {
+      obj.noOfInstallments = obj.noOfInstallments * 12
+    } else if (this.frequency == 'QUATERLY' && this.sipTransaction.controls.tenure.value == 2) {
+      obj.noOfInstallments = obj.noOfInstallments * 4
+    } else if (this.frequency == 'WEEKLY' && this.sipTransaction.controls.tenure.value == 2) {
+      obj.noOfInstallments = obj.noOfInstallments * 52
+    } else {
+      obj.noOfInstallments = this.sipTransaction.controls.installment.value
+    }
+    return obj
+  }
+  calculateCurrentValue(nav, unit) {
+    var currentValue = nav * unit
+    return currentValue
   }
   static errorValidator(familyList) {
     return (control: AbstractControl): ValidationErrors | null => {
-      if(familyList==undefined)
-      {
+      if (familyList == undefined) {
         return { isFamilyListInvalid: true }
       }
       return null;
     }
 
   }
-  getDateByArray = function(arr,flag){
-    var dArr = [],datesArr=[];
-    var t=(flag==true)? moment().add('days',7) : moment().add('days',30);
-    console.log("setting t as step date",t)
-    for(var i = 0;i<arr.length;i++){
-      datesArr.push(moment(t).set('date',arr[i]))
+  getDateByArray = function (arr, flag) {
+    var dArr = [], datesArr = [];
+    var t = (flag == true) ? moment().add('days', 7) : moment().add('days', 30);
+    console.log("setting t as step date", t)
+    for (var i = 0; i < arr.length; i++) {
+      datesArr.push(moment(t).set('date', arr[i]))
     }
-    console.log("step date array",datesArr)
-    datesArr=datesArr.filter(function(dt){
+    console.log("step date array", datesArr)
+    datesArr = datesArr.filter(function (dt) {
       return (moment(dt).isSameOrBefore(t))
     })
-    console.log("step date array filtered isSameOrBefore of step date",datesArr)
-    for(var i = 0;i<arr.length;i++){
-      datesArr.push(moment(t).set('date',arr[i]).add(1,'months'))
+    console.log("step date array filtered isSameOrBefore of step date", datesArr)
+    for (var i = 0; i < arr.length; i++) {
+      datesArr.push(moment(t).set('date', arr[i]).add(1, 'months'))
     }
-    console.log("after step datesArr adition of next month",datesArr)
+    console.log("after step datesArr adition of next month", datesArr)
     datesArr.forEach(_dt => {
       dArr.push({
-        date:_dt.toDate(),
-        dateToDisplay:this.formatApiDates(_dt),
-        tomm:moment(_dt).add('days',1).toDate()
+        date: _dt.toDate(),
+        dateToDisplay: this.formatApiDates(_dt),
+        tomm: moment(_dt).add('days', 1).toDate()
       })
     });
-    console.log("dArr",dArr);
+    console.log("dArr", dArr);
     return dArr;
   }
-  formatApiDates = function(_date) {
-    var d = (_date)? new Date(_date) : new Date(),
-      minutes = d.getMinutes().toString().length == 1 ? '0'+d.getMinutes() : d.getMinutes(),
-      hours = d.getHours().toString().length == 1 ? '0'+d.getHours() : d.getHours(),
+  formatApiDates = function (_date) {
+    var d = (_date) ? new Date(_date) : new Date(),
+      minutes = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes(),
+      hours = d.getHours().toString().length == 1 ? '0' + d.getHours() : d.getHours(),
       ampm = d.getHours() >= 12 ? 'PM' : 'AM',
-      months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-      days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-    var date = (d.getDate()<10)?'0'+d.getDate(): d.getDate();
-    return date+'-'+months[d.getMonth()]+'-'+d.getFullYear();
+      months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    var date = (d.getDate() < 10) ? '0' + d.getDate() : d.getDate();
+    return date + '-' + months[d.getMonth()] + '-' + d.getFullYear();
   }
-  getMonth = function(mnth){
+  getMonth = function (mnth) {
     var mm;
     var m = parseInt(mnth)
-    switch(m -1){
+    switch (m - 1) {
       case 0:
-      mm = "January";
-      break;
+        mm = "January";
+        break;
       case 1:
-      mm = "February";
-      break;
+        mm = "February";
+        break;
       case 2:
-      mm = "March";
-      break;
+        mm = "March";
+        break;
       case 3:
-      mm = "April";
-      break;
+        mm = "April";
+        break;
       case 4:
-      mm = "May";
-      break;
+        mm = "May";
+        break;
       case 5:
-      mm = "June";
-      break;
+        mm = "June";
+        break;
       case 6:
-      mm = "July";
-      break;
+        mm = "July";
+        break;
       case 7:
-      mm = "August";
-      break;
+        mm = "August";
+        break;
       case 8:
-      mm = "September";
-      break;
+        mm = "September";
+        break;
       case 9:
-      mm = "October";
-      break;
+        mm = "October";
+        break;
       case 10:
-      mm = "November";
-      break;
+        mm = "November";
+        break;
       case 11:
-      mm = "December";
-      break;
+        mm = "December";
+        break;
     }
     return mm;
   }

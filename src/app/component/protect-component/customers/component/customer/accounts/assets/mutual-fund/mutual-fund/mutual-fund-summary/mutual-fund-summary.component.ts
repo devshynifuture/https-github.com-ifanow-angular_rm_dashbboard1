@@ -5,7 +5,9 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { UtilService } from 'src/app/services/util.service';
 import { FolioMasterDetailsComponent } from 'src/app/component/protect-component/customers/component/common-component/folio-master-details/folio-master-details.component';
 import { SipDetailsComponent } from 'src/app/component/protect-component/customers/component/common-component/sip-details/sip-details.component';
-import { single } from 'rxjs/operators';
+import { AddMutualFundComponent } from '../add-mutual-fund/add-mutual-fund.component';
+import { MFSchemeLevelHoldingsComponent } from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
+import { MFSchemeLevelTransactionsComponent } from '../mfscheme-level-transactions/mfscheme-level-transactions.component';
 
 @Component({
   selector: 'app-mutual-fund-summary',
@@ -30,20 +32,23 @@ export class MutualFundSummaryComponent implements OnInit {
   balanceUnit: any;
   sip: any;
   totalObj: any;
+  customDataSource: any;
 
   constructor(private subInjectService: SubscriptionInject, private UtilService: UtilService) { }
   @Input() mutualFund;
 
   ngOnInit() {
     if (this.mutualFund != undefined) {
-      this.getSubCategoryWise(this.mutualFund)
-      this.getSchemeWise();
-      this.mfSchemes();
+      this.getSubCategoryWise(this.mutualFund)//get subCategoryWise list
+      this.getSchemeWise();//get scheme wise list
+      this.mfSchemes();//get mutualFund list
+      this.subCatArray();//for displaying table values as per category
     }
   }
   subCatArray() {
     let catObj = {};
     const categoryArray = [];
+    let filteredArray=[];
     if (this.mutualFundList != undefined) {
       this.mutualFundList.forEach(ele => {
         if (ele.subCategoryName) {
@@ -54,7 +59,6 @@ export class MutualFundSummaryComponent implements OnInit {
           categoryArray.push(ele);
         }
       });
-      const customDataSource = new MatTableDataSource(categoryArray);
       Object.keys(catObj).map(key => {
         this.amtInvested = 0;
         this.currentValue = 0;
@@ -65,17 +69,18 @@ export class MutualFundSummaryComponent implements OnInit {
         this.withdrawals = 0;
         this.balanceUnit = 0;
         this.sip = 0;
-        customDataSource.data.push({ groupName: key });
+        filteredArray.push({ groupName: key });
         catObj[key].forEach((singleData) => {
-          customDataSource.data.push(singleData);
+          filteredArray.push(singleData);
           this.calculateTotalValue(singleData);
         });
-        customDataSource.data.push(this.totalObj);
+        filteredArray.push(this.totalObj);
       });
-      return customDataSource;
+      this.customDataSource=filteredArray;
+      return this.customDataSource;
     }
   }
-  calculateTotalValue(data){
+  calculateTotalValue(data){//for getting total value as per category
     this.amtInvested += data.amountInvested;
     this.currentValue += data.currentValue;
     this.unrealizedGainLoss += data.unrealizedGain;
@@ -99,10 +104,10 @@ export class MutualFundSummaryComponent implements OnInit {
     }
     this.totalObj=obj
   }
-  isGroup(index, item): boolean {
+  isGroup(index, item): boolean {//for display name as per category
     return item.groupName;
   }
-  isGroup2(index, item) {
+  isGroup2(index, item) {//for displaying total as per category
        return item.total;
         return item.amountInvested;
         return item.currentValue;
@@ -113,7 +118,6 @@ export class MutualFundSummaryComponent implements OnInit {
         return item.switchOut;
         return item.balanceUnit;
         return item.sipAmount;
-
   }
   getSubCategoryWise(data) {
     this.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
@@ -127,8 +131,7 @@ export class MutualFundSummaryComponent implements OnInit {
     this.filter(this.schemeWise, 'mutualFund');
     this.mutualFundList = this.filteredArray;
   }
-  //Used for filtering the data 
-  filter(data, key) {
+  filter(data, key) {//Used for filtering the data 
     const filterData = [];
     const finalDataSource = [];
     data.filter(function (element) {
@@ -142,7 +145,6 @@ export class MutualFundSummaryComponent implements OnInit {
       });
     }
     this.filteredArray = finalDataSource;//final dataSource Value
-    return;
   }
   openFilter() {
     const fragmentData = {
@@ -187,10 +189,10 @@ export class MutualFundSummaryComponent implements OnInit {
       }
     );
   }
-  openSipDetails() {
+  openSipDetails(data) {
     const fragmentData = {
       flag: 'openSipDetails',
-      data: {},
+      data: data,
       id: 1,
       state: 'open45',
       componentName: SipDetailsComponent
@@ -205,5 +207,34 @@ export class MutualFundSummaryComponent implements OnInit {
       }
     );
   }
+  openMutualFund(flag, data) {
+    let component;
+    switch (true) {
+      case (flag == "addPortfolio"):
+        component = AddMutualFundComponent;
+        break;
+      case (flag == "holding"):
+        component = MFSchemeLevelHoldingsComponent;
+        break;
+      default:
+        component = MFSchemeLevelTransactionsComponent
+    }
+    const fragmentData = {
+      flag: 'editMF',
+      data,
+      id: 1,
+      state: 'open',
+      componentName: component
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
 
+        }
+      }
+    );
+  }
 }

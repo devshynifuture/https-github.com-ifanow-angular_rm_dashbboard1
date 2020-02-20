@@ -71,8 +71,8 @@ export class SettingsClientMappingComponent implements OnInit {
     let obj =
     {
       advisorId: 414,
-      tpUserCredentialId: this.selectedBrokerCode,
-      aggregatorType: this.selectedPlatform
+      tpUserCredentialId: this.selectedBrokerCode.id,
+      aggregatorType: this.selectedPlatform.aggregatorType
     }
     this.tranService.getUnmappedFolios(obj).subscribe(
       data => {

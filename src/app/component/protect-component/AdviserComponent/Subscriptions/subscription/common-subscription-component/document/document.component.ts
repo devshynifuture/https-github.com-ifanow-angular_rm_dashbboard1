@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, Output ,EventEmitter} from '@angular/core';
+import { Component, Input, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
@@ -750,14 +750,14 @@ export class DocumentComponent implements OnInit {
       if (result.length > 0) {
         const tempList = [];
         this.dataSource.data.forEach(singleElement => {
-          if ( result.length > 1) {
-            if(!singleElement.selected){
+          if (result.length > 1) {
+            if (!singleElement.selected) {
               tempList.push(singleElement);
             }
-          } else{ 
-            if (result[0] != singleElement.id){
+          } else {
+            if (result[0] != singleElement.id) {
               tempList.push(singleElement);
-            } 
+            }
           }
         });
         this.dataSource.data = tempList;
@@ -875,7 +875,7 @@ export class DocumentComponent implements OnInit {
     }
 
 
-    this.subService.mapDocumentToService(obj).subscribe(
+    this.subService.mapServiceToDocument(obj).subscribe(
       data => {
         this.barButtonOptions.active = false;
         this.mapDocumentToServiceResponse(data);
