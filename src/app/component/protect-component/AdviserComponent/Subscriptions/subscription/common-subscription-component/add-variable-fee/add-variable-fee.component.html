@@ -164,13 +164,13 @@
                                 formControlName="liquid" placeholder="%" type="text">
                         </div>
                     </div>
-                    <mat-error class="f-12" *ngIf="
+                    <!-- <mat-error class="f-12" *ngIf="
                     (getFormControl().directFees.controls.equity.touched && getFormControl().directFees.controls.equity.hasError('required')) ||
                     (getFormControl().directFees.controls.debt.touched && getFormControl().directFees.controls.debt.hasError('required')) ||
                     (getFormControl().directFees.controls.liquid.touched && getFormControl().directFees.controls.liquid.hasError('required'))
                     ">
-                        All direct fees required
-                    </mat-error>
+                       Put 0 if dont want to specify mutual fund fees
+                    </mat-error> -->
 
                 </div>
 
@@ -205,15 +205,19 @@
                                 formControlName="liquid" placeholder="%" type="text">
                         </div>
                     </div>
-                    <mat-error class="f-12" *ngIf="
-                    (getFormControl().regularFees.controls.equity.touched && getFormControl().regularFees.controls.equity.hasError('required')) ||
-                    (getFormControl().regularFees.controls.debt.touched && getFormControl().regularFees.controls.debt.hasError('required')) ||
-                    (getFormControl().regularFees.controls.liquid.touched && getFormControl().regularFees.controls.liquid.hasError('required'))
-                    ">
-                        All regular fees required
-                    </mat-error>
+                   
                 </div>
             </div>
+            <mat-error class="f-12" *ngIf="
+            (getFormControl().directFees.controls.equity.touched && getFormControl().directFees.controls.equity.hasError('required')) ||
+            (getFormControl().regularFees.controls.equity.touched && getFormControl().regularFees.controls.equity.hasError('required')) ||
+            (getFormControl().directFees.controls.debt.touched && getFormControl().directFees.controls.debt.hasError('required')) ||
+            (getFormControl().regularFees.controls.debt.touched && getFormControl().regularFees.controls.debt.hasError('required')) ||
+            (getFormControl().directFees.controls.liquid.touched && getFormControl().directFees.controls.liquid.hasError('required'))||
+            (getFormControl().regularFees.controls.liquid.touched && getFormControl().regularFees.controls.liquid.hasError('required'))
+            ">
+            Put 0 if you do not want to specify mutual fund fees
+            </mat-error>
             <mat-error [ngClass]="{'v-h':!mutualFundFees}" class="f-12">Please fill fees details</mat-error>
         </div>
     </div>
@@ -238,6 +242,12 @@
                             </mat-chip>
                         </mat-chip-list>
                     </div>
+                    <div>
+                        <mat-error class="f-12"
+                        *ngIf="getFormControl().pricing.touched && getFormControl().pricing.hasError('required')">
+                        Put 0 if you do not want to specify other asset fees
+                        </mat-error>
+                    </div>
                 </div>
                 <div class="col-md-2 p-0">
                     <!--          [minValue]="0.001" [maxValue]="99"-->
@@ -250,10 +260,7 @@
                     <mat-error *ngIf="isSelectOtherAssets" class="f-12">
                         Please select atlest one other asset class fees
                     </mat-error>
-                    <mat-error class="f-12"
-                        *ngIf="getFormControl().pricing.touched && getFormControl().pricing.hasError('required')">
-                        Please fill other asset class fees
-                    </mat-error>
+
                 </div>
             </div>
             <mat-error *ngIf="pricing && getFormControl().pricing.invalid" class="f-12 pr-10">Please fill details
