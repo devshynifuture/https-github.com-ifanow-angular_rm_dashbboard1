@@ -176,7 +176,7 @@ export class LoginComponent implements OnInit {
       id: 2978, name: 'Aryendra Kumar Saxena'
     });
     // this.authService.setToken(loginData.payLoad);
-    this.eventService.openSnackBar('Login SuccessFully', 'dismiss');
+    this.eventService.openSnackBar('Login successFully', 'dismiss');
     this.router.navigate(['admin', 'subscription', 'dashboard']);
   }
 
@@ -185,7 +185,7 @@ export class LoginComponent implements OnInit {
     console.log(data);
     if (data.status === 200) {
       this.authService.setToken(loginData.payLoad);
-      this.eventService.openSnackBar('Login SuccessFully ', 'dismiss');
+      this.eventService.openSnackBar('Login successFully ', 'dismiss');
       this.router.navigate(['/admin/service']);
     } else {
       this.eventService.openSnackBar(loginData.message, 'dismiss');

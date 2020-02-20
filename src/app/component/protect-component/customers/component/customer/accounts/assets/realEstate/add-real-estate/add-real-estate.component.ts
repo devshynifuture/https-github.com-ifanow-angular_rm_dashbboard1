@@ -423,7 +423,7 @@ export class AddRealEstateComponent implements OnInit {
     }
   }
   getAdviceRealEstateRes(data) {
-    this.eventService.openSnackBar('Real Estate added successfully', 'OK');
+    this.eventService.openSnackBar('Real estate added successfully', 'OK');
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true })
   }
   addRealEstateRes(data) {
@@ -431,7 +431,7 @@ export class AddRealEstateComponent implements OnInit {
     if (data) {
       console.log(data);
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true })
-      this.eventService.openSnackBar('Real Estate added successfully', 'OK');
+      this.eventService.openSnackBar('Real estate added successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'dismiss');
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true })

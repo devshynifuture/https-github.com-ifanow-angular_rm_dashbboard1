@@ -280,13 +280,13 @@ export class AddVariableFeeComponent implements OnInit {
   }
 
   saveVariableFeeDataResponse(data, obj) {
-    this.eventService.openSnackBar('Service is Created', 'OK');
+    this.eventService.openSnackBar('Service is created', 'OK');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data: data });
   }
 
   saveFeeTypeDataEditResponse(data) {
     this.dataToSend.servicePricing.pricingList[2].serviceSubAssets = this.otherAssetData;
-    this.eventService.openSnackBar('Service is Edited', 'OK');
+    this.eventService.openSnackBar('Service is edited', 'OK');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data: this.dataToSend });
   }
 

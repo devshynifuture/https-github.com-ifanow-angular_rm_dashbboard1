@@ -30,12 +30,12 @@
                 </mat-tab>
                 <mat-tab #tab [disabled]='fragmentDataSubsUpper.data=="plan" && !addedData' label="SERVICES">
                     <ng-template matTabContent>
-                        <app-services (changeServiceData)="getData($event)" [componentFlag]='flag' [planData]="fragmentDataSubsUpper.data"></app-services>
+                        <app-services (changeServiceData)="getData($event)" [componentFlag]='flag' [planData]="!addedData?fragmentDataSubsUpper.data:addedData"></app-services>
                     </ng-template>
                 </mat-tab>
                 <mat-tab #tab [disabled]='fragmentDataSubsUpper.data=="plan" && !addedData' label="DOCUMENTS">
                     <ng-template matTabContent>
-                        <app-document (changeServiceData)="getData($event)" [componentFlag1]='documents' [upperData]="fragmentDataSubsUpper.data"></app-document>
+                        <app-document (changeServiceData)="getData($event)" [componentFlag1]='documents' [upperData]="!addedData?fragmentDataSubsUpper.data:addedData"></app-document>
                     </ng-template>
                 </mat-tab>
 
@@ -52,18 +52,18 @@
                 <mat-tab #tab [disabled]='fragmentDataSubsUpper.data=="" && !addedData' label="PLANS">
                     <ng-template matTabContent>
                         <!--*ngIf="subscriptionTab=='PLANS'"-->
-                        <app-plans (changePlanData)="getData($event)" *ngIf="fragmentDataSubsUpper" [componentFlag]='plans' [upperData]="fragmentDataSubsUpper.data">
+                        <app-plans (changePlanData)="getData($event)" *ngIf="fragmentDataSubsUpper" [componentFlag]='plans' [upperData]="!addedData?fragmentDataSubsUpper.data:addedData">
                         </app-plans>
                     </ng-template>
                 </mat-tab>
                 <mat-tab #tab [disabled]='fragmentDataSubsUpper.data=="" && !addedData' label="DOCUMENTS">
                     <ng-template matTabContent>
-                        <app-document (changeServiceData)="getData($event)" *ngIf="fragmentDataSubsUpper" [componentFlag1]='servicesDocuments' [upperData]="fragmentDataSubsUpper.data"></app-document>
+                        <app-document (changeServiceData)="getData($event)" *ngIf="fragmentDataSubsUpper" [componentFlag1]='servicesDocuments' [upperData]="!addedData?fragmentDataSubsUpper.data:addedData"></app-document>
                     </ng-template>
                 </mat-tab>
                 <mat-tab #tab [disabled]='fragmentDataSubsUpper.data=="" && !addedData' label="MODULES">
                     <ng-template matTabContent>
-                        <app-modules (changeServiceData)="getData($event)" *ngIf="subscriptionTab=='MODULES'" [upperData]="fragmentDataSubsUpper.data"></app-modules>
+                        <app-modules (changeServiceData)="getData($event)" *ngIf="subscriptionTab=='MODULES'" [upperData]="!addedData?fragmentDataSubsUpper.data:addedData"></app-modules>
                     </ng-template>
                 </mat-tab>
             </mat-tab-group>

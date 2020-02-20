@@ -146,20 +146,20 @@ export class CashInHandComponent implements OnInit {
     }
   }
   getAdviceCashInHandRes(data) {
-    this.eventService.openSnackBar('Cash In Hand added successfully', 'OK');
+    this.eventService.openSnackBar('Cash in hand added successfully', 'OK');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
 
   }
   addCashInHandRes(data) {
     console.log('addrecuringDepositRes', data);
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
-    this.eventService.openSnackBar('Cash In Hand added successfully', 'OK');
+    this.eventService.openSnackBar('Cash in hand added successfully', 'OK');
 
   }
 
   editCashInHandRes(data) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
-    this.eventService.openSnackBar('Cash In Hand added successfully', 'OK');
+    this.eventService.openSnackBar('Cash in hand added successfully', 'OK');
 
   }
 
