@@ -19,39 +19,52 @@ export class OrderHistoricalFileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.isOnlyAumSelected()
   }
 
   orderHistoryFileForm = this.fb.group({
-    "selectRta": [, Validators.required],
+    "selectRta": ['1', Validators.required],
     "selectArnRia": [, Validators.required],
     "fromDate": [, Validators.required],
     "toDate": [, Validators.required],
     "orderingFreq": [, Validators.required],
-    // "selectFilesToOrder": this.fb.group({
-    //   "cams": this.fb.group({
-    //     "transaction": 
-    //   }),
-    //   "karvy": this.fb.group({
-
-    //   }),
-    //   "franklin": this.fb.group({
-
-    //   })
-    // }),
-
-    "wbr49Active": [,],
-    "wbr49Ceased": [,],
-    "mfsd243Active": [,],
-    "mfsd231Ceased": [,],
-    "activeSip": [,],
-    "ceasedSip": [,],
-    "wbr9": [,],
-    "mfsd211": [,],
-    "investorFolioDetails": [,],
-    "wbr22": [,],
-    "mfsd203": [,],
-    "clientwiseAumOrWhoseBalExceedsN": [,]
+    "selectFilesToOrder": this.fb.group({
+      "cams": this.fb.group({
+        "wbr2": [,],
+        "wbr2a": [,],
+        "wbr49Active": [,],
+        "wbr49Ceased": [,],
+        "wbr9": [,],
+        "wbr22": [,]
+      }),
+      "karvy": this.fb.group({
+        "mfsd201": [,],
+        "mfsd243Active": [,],
+        "mfsd231Ceased": [,],
+        "mfsd211": [,],
+        "mfsd203": [,]
+      }),
+      "franklin": this.fb.group({
+        "myTransactionsForAPeriod": [,],
+        "activeSip": [,],
+        "ceasedSip": [,],
+        "investorFolioDetails": [,],
+        "clientsWiseAumOrWhoseBalExceedsN": [,]
+      })
+    }),
   });
+
+  isOnlyAumSelected() {
+    for (const key in this.orderHistoryFileForm) {
+      if (this.orderHistoryFileForm.hasOwnProperty(key)) {
+        const element = this.orderHistoryFileForm[key];
+        if (key === 'selectFilesToOrder') {
+
+        }
+        console.log("this is form control values:::", element);
+      }
+    }
+  }
 
   dialogClose(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
