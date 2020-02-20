@@ -22,7 +22,7 @@ import { Location } from '@angular/common';
 })
 
 export class SubscriptionUpperSliderComponent extends DialogContainerComponent implements OnInit {
-  fragmentDataSubsUpper;
+  fragmentDataSubsUpper:any;
   selectedServiceTab = 0;
   sessionData: any;
   upperState: string = "close";
@@ -141,8 +141,10 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
   }
   addedData:any;
   getData(event) {
-    console.log(event, "data overview");
     this.addedData = event
+    
+    console.log(event, this.fragmentDataSubsUpper.data, "data overview 123");
+    // this.fragmentDataSubsUpper.data = this.addedData ;
     if (event != undefined) {
       this.isRefreshData = true;
     }
