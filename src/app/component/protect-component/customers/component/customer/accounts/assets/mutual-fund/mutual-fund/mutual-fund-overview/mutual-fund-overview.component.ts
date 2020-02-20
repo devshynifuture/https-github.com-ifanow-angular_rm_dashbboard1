@@ -9,6 +9,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import * as Highcharts from 'highcharts';
 import { CustomerService } from '../../../../../customer.service';
 import { MatTableDataSource } from '@angular/material';
+import { MfServiceService } from '../../mf-service.service';
 
 @Component({
   selector: 'app-mutual-fund-overview',
@@ -36,7 +37,7 @@ export class MutualFundOverviewComponent implements OnInit {
   dataSource2: MatTableDataSource<any>;
   dataSource: MatTableDataSource<unknown>;
   constructor(public subInjectService: SubscriptionInject, public UtilService: UtilService,
-    public eventService: EventService, private custumService: CustomerService) {
+    public eventService: EventService, private custumService: CustomerService,private MfServiceService:MfServiceService) {
   }
 
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
@@ -69,8 +70,7 @@ export class MutualFundOverviewComponent implements OnInit {
     this.getFamilyMemberWiseAllocation(data)//for FamilyMemberWiseAllocation
     this.schemeWiseAllocation(data);//for shemeWiseAllocation
   }
-  //function for calculating percentage
-  calculatePercentage(data) {
+  calculatePercentage(data) {//function for calculating percentage
     this.categoryList = data.mutualFundCategoryMastersList;
     this.categoryList.forEach(element => {
       if (element.category == 'DEBT') {
@@ -133,37 +133,16 @@ export class MutualFundOverviewComponent implements OnInit {
     });
   }
   getsubCategorywiseAllocation(data) {
-    this.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
+    this.filteredArray=this.MfServiceService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
     this.dataSource3 = new MatTableDataSource(this.filteredArray);
   }
   getFamilyMemberWiseAllocation(data) {
     this.dataSource=new MatTableDataSource(data.family_member_list);
   }
   schemeWiseAllocation(data) {
-    this.filter(this.filteredArray, 'mutualFundSchemeMaster');
+    this.filteredArray=this.MfServiceService.filter(this.filteredArray, 'mutualFundSchemeMaster');
     this.dataSource2 = new MatTableDataSource(this.filteredArray);
   }
-  //Used for filtering the data 
-  filter(data, key) {
-    const filterData = [];
-    const finalDataSource = [];
-    data.filter(function (element) {
-      filterData.push(element[key])
-    })
-    if (filterData.length > 0) {
-      filterData.forEach(element => {
-        element.forEach(data => {
-          finalDataSource.push(data)
-        });
-      });
-    }
-    console.log(finalDataSource)
-    this.filteredArray = finalDataSource;//final dataSource Value
-  }
-  onClick(referenceKeyName) {
-    alert(referenceKeyName.id);
-  }
-
   pieChart(id) {
     Highcharts.chart('piechartMutualFund', {
       chart: {
@@ -246,7 +225,6 @@ export class MutualFundOverviewComponent implements OnInit {
       }]
     });
   }
-
   openMutualFund(flag, data) {
     let component;
     switch (true) {
@@ -295,13 +273,11 @@ export class MutualFundOverviewComponent implements OnInit {
       }
     );
   }
-
 }
 export interface PeriodicElement1 {
   data: string;
   amts: string;
 }
-
 const ELEMENT_DATA1: PeriodicElement1[] = [
   { data: 'a. Investment', amts: '0' },
   { data: 'b. Switch In', amts: '0' },
@@ -314,4 +290,3 @@ const ELEMENT_DATA1: PeriodicElement1[] = [
   { data: 'i. Realized XIRR (All Transactions)', amts: '0' },
 
 ];
-
