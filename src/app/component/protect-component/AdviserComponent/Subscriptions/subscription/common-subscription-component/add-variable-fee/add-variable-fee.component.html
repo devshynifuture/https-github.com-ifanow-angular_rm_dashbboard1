@@ -20,12 +20,12 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input type="text" (changedValue)="getFormControl().serviceName.setValue($event)"
-                        [inputValidator]="validatorType.COMPULSORY_ALPHA_NUMERIC" appInputValueValidation
+                        [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" appInputValueValidation
                         maxlength="{{getFormControl().serviceName.maxLength}}" formControlName="serviceName"
                         class="form-control br-0" matInput>
                     <mat-error class="f-12"
                         [ngClass]="{'v-h':!(isServiceValid && getFormControl().serviceName.invalid || (getFormControl().serviceName.touched && getFormControl().serviceName.invalid))}">
-                        Service Name is required
+                        Service name is required
                     </mat-error>
                     <mat-hint align="end" class="f-12">
                         {{getFormControl().serviceName.value?.length ? getFormControl().serviceName.value.length : 0}}
@@ -169,7 +169,7 @@
                     (getFormControl().directFees.controls.debt.touched && getFormControl().directFees.controls.debt.hasError('required')) ||
                     (getFormControl().directFees.controls.liquid.touched && getFormControl().directFees.controls.liquid.hasError('required'))
                     ">
-                        All direct Fees required
+                        All direct fees required
                     </mat-error>
 
                 </div>
@@ -210,7 +210,7 @@
                     (getFormControl().regularFees.controls.debt.touched && getFormControl().regularFees.controls.debt.hasError('required')) ||
                     (getFormControl().regularFees.controls.liquid.touched && getFormControl().regularFees.controls.liquid.hasError('required'))
                     ">
-                        All regular Fees required
+                        All regular fees required
                     </mat-error>
                 </div>
             </div>
