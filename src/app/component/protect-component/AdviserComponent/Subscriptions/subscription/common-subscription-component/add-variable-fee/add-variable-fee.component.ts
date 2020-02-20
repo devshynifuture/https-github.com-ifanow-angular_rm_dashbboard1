@@ -118,7 +118,7 @@ export class AddVariableFeeComponent implements OnInit {
         liquid: [, [Validators.required]]
       }),
       otherAssetClassFees: [],
-      pricing: [, [Validators.required, Validators.min(0.01)]]
+      pricing: [, [Validators.required, Validators.min(0.00)]]
     });
     // , Validators.max(99) 
     this.getFormControl().serviceName.maxLength = 40;
@@ -187,8 +187,23 @@ export class AddVariableFeeComponent implements OnInit {
     this.subInjectService.closeSlider(value);
   }
 
+  variableFees:boolean = true;
+
+  validateFees(){
+    let reg = this.getFormControl().regularFees.value
+    let dir = this.getFormControl().directFees.value
+    let sum = parseInt(reg.equity) + parseInt(reg.debt)+parseInt(reg.liquid)+parseInt(dir.equity)+parseInt(dir.debt)+parseInt(dir.liquid)+parseInt(this.variableFeeData.controls.pricing.value);
+    if(sum >=1){
+      return false;
+    }
+    else{
+      this.variableFees = true;
+      return true
+    }
+  }
+
   saveVariableFeeData(feeType) {
-    if (this.variableFeeData.invalid) {
+    if (this.variableFeeData.invalid || this.variableFeeData.controls.directFees.invalid || this.variableFeeData.controls.regularFees.invalid ) {
       this.variableFeeData.get('serviceName').markAsTouched();
       this.variableFeeData.get('code').markAsTouched();
       this.variableFeeData.get('billEvery').markAsTouched();
@@ -199,16 +214,15 @@ export class AddVariableFeeComponent implements OnInit {
       this.getFormControl().directFees.controls.equity.markAsTouched();
       this.getFormControl().directFees.controls.debt.markAsTouched();
       this.getFormControl().directFees.controls.liquid.markAsTouched();
-    } else if (this.variableFeeData.controls.directFees.invalid || this.variableFeeData.controls.regularFees.invalid) {
-      this.mutualFundFees = true;
-      return;
-    } else if (this.variableFeeData.controls.pricing.invalid) {
-      this.pricing = true;
-      return;
-    } else if (this.selectedOtherAssets.length == 0) {
-      this.isSelectOtherAssets = true;
-      return;
-    } else {
+      this.variableFeeData.controls.pricing.markAsTouched();
+      if (this.variableFeeData.controls.pricing.invalid) {
+          this.pricing = true;
+        } 
+    }
+    else if(this.validateFees()){
+      this.variableFees = false;
+    }
+    else {
       this.barButtonOptions.active = true;
       let obj = {
         serviceRepoId: this.serviceId,
@@ -291,6 +305,7 @@ export class AddVariableFeeComponent implements OnInit {
   }
 
   select(assetData) {
+    this.pricing = false;
     (assetData.isActive == 1) ? this.unselectAssets(assetData) : this.selectAssets(assetData);
   }
 

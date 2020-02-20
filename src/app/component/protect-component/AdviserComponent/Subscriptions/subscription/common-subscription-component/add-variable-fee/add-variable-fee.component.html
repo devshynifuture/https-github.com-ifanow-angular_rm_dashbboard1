@@ -149,17 +149,17 @@
                     </div>
                     <div class="row ui-mff">
                         <div class="col-md-4 p-0 bl-0 br-grey bb-grey">
-                            <input [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)"
+                            <input (keyup)="validateFees()"  [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)"
                                 [maxLength]="4" appInputValueValidation class="form-control br-0 h-39"
                                 formControlName="equity" placeholder="%" type="text">
                         </div>
                         <div class="col-md-4 p-0 br-grey bb-grey">
-                            <input [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)"
+                            <input (keyup)="validateFees()"  [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)"
                                 [maxLength]="4" appInputValueValidation class="form-control br-0 h-39"
                                 formControlName="debt" placeholder="%" type="text">
                         </div>
                         <div class="col-md-4 p-0 bb-grey br-grey">
-                            <input [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)"
+                            <input (keyup)="validateFees()"  [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)"
                                 [maxLength]="4" appInputValueValidation class="form-control br-0 h-39"
                                 formControlName="liquid" placeholder="%" type="text">
                         </div>
@@ -190,17 +190,17 @@
                     </div>
                     <div class="row ui-mff">
                         <div class="col-md-4 p-0 bl-0 bb-grey br-grey">
-                            <input [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)"
+                            <input (keyup)="validateFees()"  [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)"
                                 [maxLength]="4" appInputValueValidation class="form-control br-0 h-39 br-grey"
                                 formControlName="equity" placeholder="%" type="text">
                         </div>
                         <div class="col-md-4 p-0 br-grey bb-grey">
-                            <input [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)"
+                            <input (keyup)="validateFees()"  [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)"
                                 [maxLength]="4" appInputValueValidation class="form-control br-0 h-39"
                                 formControlName="debt" placeholder="%" type="text">
                         </div>
                         <div class="col-md-4 p-0 br-grey bb-grey">
-                            <input [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)"
+                            <input (keyup)="validateFees()" [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)"
                                 [maxLength]="4" appInputValueValidation class="form-control br-0 h-39"
                                 formControlName="liquid" placeholder="%" type="text">
                         </div>
@@ -218,7 +218,7 @@
             ">
             Put 0 if you do not want to specify mutual fund fees
             </mat-error>
-            <mat-error [ngClass]="{'v-h':!mutualFundFees}" class="f-12">Please fill fees details</mat-error>
+            <!-- <mat-error [ngClass]="{'v-h':!mutualFundFees}" class="f-12">Please fill fees details</mat-error> -->
         </div>
     </div>
 
@@ -247,24 +247,28 @@
                         *ngIf="getFormControl().pricing.touched && getFormControl().pricing.hasError('required')">
                         Put 0 if you do not want to specify other asset fees
                         </mat-error>
+                        <mat-error *ngIf="pricing && !getFormControl().pricing.hasError('required')" class="f-12">
+                            Please select the asset class fees
+                        </mat-error>
+                        <mat-error *ngIf="!variableFees && !getFormControl().pricing.hasError('required')" class="f-12">
+                            At least one fee should not be 0.
+                        </mat-error>
                     </div>
                 </div>
                 <div class="col-md-2 p-0">
                     <!--          [minValue]="0.001" [maxValue]="99"-->
-                    <input [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)"
+                    <input (keyup)="validateFees()" [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)"
                         [maxLength]="4" appInputValueValidation formControlName="pricing" placeholder="%" type="text"
                         class="form-control bl-0 br-0 h-39 br-grey">
-                    <mat-error *ngIf="pricing == true" class="f-12">
+                    <!-- <mat-error *ngIf="pricing == true" class="f-12">
                         Should be between than 0 to 99
-                    </mat-error>
-                    <mat-error *ngIf="isSelectOtherAssets" class="f-12">
-                        Please select atlest one other asset class fees
-                    </mat-error>
+                    </mat-error> -->
+                    
 
                 </div>
             </div>
-            <mat-error *ngIf="pricing && getFormControl().pricing.invalid" class="f-12 pr-10">Please fill details
-            </mat-error>
+            <!-- <mat-error *ngIf="pricing && getFormControl().pricing.invalid" class="f-12 pr-10">Please fill details
+            </mat-error> -->
         </div>
     </div>
 </div>
