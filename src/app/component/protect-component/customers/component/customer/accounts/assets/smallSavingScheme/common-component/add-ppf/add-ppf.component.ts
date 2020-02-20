@@ -145,31 +145,14 @@ export class AddPpfComponent implements OnInit {
         this.nominees.push(obj)
       });
     }
-    if (this.ppfSchemeForm.get('ownerName').invalid) {
+    if (this.ppfSchemeForm.invalid) {
       this.ppfSchemeForm.get('ownerName').markAsTouched();
-      return;
-    } else if (this.ppfSchemeForm.get('accountBalance').invalid) {
       this.ppfSchemeForm.get('accountBalance').markAsTouched();
-      return;
-    } else if (this.ppfSchemeForm.get('ownerName').invalid) {
       this.ppfSchemeForm.get('ownerName').markAsTouched();
-      return;
-    }
-    else if (this.ppfSchemeForm.get('balanceAsOn').invalid) {
       this.ppfSchemeForm.get('balanceAsOn').markAsTouched();
-      return;
-    }
-    else if (this.ppfSchemeForm.get('commencementDate').invalid) {
       this.ppfSchemeForm.get('commencementDate').markAsTouched();
-      return;
-    }
-    else if (this.ppfSchemeForm.get('futureContribution').invalid) {
       this.ppfSchemeForm.get('futureContribution').markAsTouched();
-      return;
-    }
-    else if (this.ppfSchemeForm.get('frquency').invalid) {
       this.ppfSchemeForm.get('frquency').markAsTouched();
-      return;
     }
     else {
       let obj = {
