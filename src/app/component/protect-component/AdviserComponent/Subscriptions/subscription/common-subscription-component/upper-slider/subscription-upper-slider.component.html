@@ -61,11 +61,11 @@
                         <app-document (changeServiceData)="getData($event)" *ngIf="fragmentDataSubsUpper" [componentFlag1]='servicesDocuments' [upperData]="!addedData?fragmentDataSubsUpper.data:addedData"></app-document>
                     </ng-template>
                 </mat-tab>
-                <mat-tab #tab [disabled]='fragmentDataSubsUpper.data=="" && !addedData' label="MODULES">
+                <!-- <mat-tab #tab [disabled]='fragmentDataSubsUpper.data=="" && !addedData' label="MODULES">
                     <ng-template matTabContent>
                         <app-modules (changeServiceData)="getData($event)" *ngIf="subscriptionTab=='MODULES'" [upperData]="!addedData?fragmentDataSubsUpper.data:addedData"></app-modules>
                     </ng-template>
-                </mat-tab>
+                </mat-tab> -->
             </mat-tab-group>
         </div>
     </div>

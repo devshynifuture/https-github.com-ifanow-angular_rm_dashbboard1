@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { PlanService } from '../../../plan.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -19,8 +19,11 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
   advisorId: any;
   clientId: any;
   filterSchemeData: any;
+  deploymentList: any;
   constructor(private subInjectService: SubscriptionInject, private planService: PlanService, private eventService: EventService) { }
-
+  @Input() set data(data) {
+    this.deploymentList = data.deploymentIdList;
+  }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
