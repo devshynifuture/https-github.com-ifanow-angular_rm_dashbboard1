@@ -69,6 +69,12 @@
                                         <div class="col-md-2">
                                             <p class="text-white f-16">{{documentData.type}}
                                             </p>
+                                            <div class="col-md-2 pt-8 pr-0" *ngIf="documentData.mappedType == 1">
+                                                <p class="blue text-white f-16" matTooltip="Plan document">P</p>
+                                            </div>
+                                            <div class="col-md-2 pt-8 pr-0" *ngIf="documentData.mappedType == 3">
+                                                <p class="green text-white f-16" matTooltip="Global document">G</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </mat-card-actions>
@@ -157,14 +163,23 @@
                                 <div class="row">
                                     <div class="col-md-10 titleClass relClass">
                                         <div class="bar" [ngClass]="{'height24': isLoading}">
-                                            <h4 class="f-16 p-0 text-left mb-0"> {{document.name}} </h4>
+                                            <h4 class="f-16 p-0 text-left mb-0"> {{document.name}}</h4>
                                             <p class="pt-8 d-block pb-0 mb-0 text-left f-14">
                                                 {{document.code}} </p>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
-                                        <p class="text-white f-16"> {{document.type}}
+                                        
+                                        <p class="text-white f-16"> 
+                                            <!-- {{document.type}} -->
                                         </p>
+                                        <!-- *ngIf="singleDocument.mappedType == 1" -->
+                                        <div class="col-md-2 pt-8 pr-0" *ngIf="document.mappedType == 2">
+                                            <p class="green text-white f-16" matTooltip="Service document">S</p>
+                                        </div>
+                                        <div class="col-md-2 pt-8 pr-0" *ngIf="document.mappedType == 3">
+                                            <p class="green text-white f-16" matTooltip="Global document">G</p>
+                                        </div>
                                     </div>
                                 </div>
                             </mat-card-actions>
