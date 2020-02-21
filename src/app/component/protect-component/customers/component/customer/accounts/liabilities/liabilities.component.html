@@ -59,7 +59,7 @@
                         <div class="col-md-2 p-0 text-custom">{{this.mortgage.length}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab2'" [ngClass]="{'activeColor':viewMode =='tab2'}" class=" c-p">
+                <li (click)="viewMode ='tab2'" [ngClass]="viewMode =='tab2' ? 'activeColor': ''" class=" c-p">
                     <div class="row">
                         <div class="col-md-10 p-0 f-700">OTHERS</div>
                         <div class="col-md-2 p-0 text-custom">{{OtherData}}</div>
@@ -134,13 +134,15 @@
                                 *ngIf="dataSource.filteredData.length > 0" id="table-low" class="skeletonAnimation"
                                 appSkeletonLoading [appSkeletonLoading]="isLoading">
                                 <ng-container matColumnDef="no">
-                                    <th mat-header-cell *matHeaderCellDef class="br"> No.</th>
-                                    <td mat-cell *matCellDef="let element; let i = index;" class="br">
-
-                                        <div class="bar"> {{isLoading ? '' : i+1}} </div>
-
+                                    <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No</th>
+                                    <td *matCellDef="let element let i = index;" class="br " mat-cell>
+                                        <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                                     </td>
-                                    <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
+                                    <td mat-footer-cell *matFooterCellDef class="f-600 pl-4 proximaFont text-left">
+                                        <div class="bar">
+                                            {{isLoading ? '' : 'Total' }}
+                                        </div>
+                                    </td>
                                 </ng-container>
                                 <ng-container matColumnDef="name">
                                     <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br"> Owner
@@ -148,10 +150,7 @@
                                     <td mat-cell *matCellDef="let element" class="br">
                                         <div class="bar">{{element.ownerName}} </div>
                                     </td>
-                                    <td mat-footer-cell *matFooterCellDef class="br text-left pl-8 f-600"
-                                        [hidden]="dataSource==undefined">
-                                        <div class="bar"> {{isLoading ? '' : 'Total' }} </div>
-                                    </td>
+                                    <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="type">
                                     <th mat-sort-header="loanTypeId" mat-header-cell *matHeaderCellDef class="br"> Type
@@ -268,7 +267,7 @@
                                 </ng-container>
                                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                                <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+                                <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
                             </table>
 
                             <div *ngIf="dataSource.filteredData.length == 0"
