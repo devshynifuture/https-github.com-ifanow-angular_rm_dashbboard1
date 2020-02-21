@@ -15,6 +15,7 @@ export class ProcessTransactionService {
   transactionSummary :{}
   schemeSelection: any;
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject,) {
+    this.transactionSummary = {}
   }
   selectionList() {
     this.schemeSelection = [{

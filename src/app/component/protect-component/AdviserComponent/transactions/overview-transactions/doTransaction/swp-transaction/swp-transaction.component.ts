@@ -349,7 +349,7 @@ export class SwpTransactionComponent implements OnInit {
 
     } else {
       this.processTransaction.onAddTransaction('confirm', this.transactionSummary)
-      Object.assign(data, { allEdit: false });
+      Object.assign(this.transactionSummary, { allEdit: false });
     }
   }
   AddMultiTransaction() {

@@ -1,9 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { ConfirmationTransactionComponent } from '../confirmation-transaction/confirmation-transaction.component';
-import { OnlineTrasactionComponent } from '../online-trasaction/online-trasaction.component';
 import { OnlineTransactionService } from '../../../online-transaction.service';
 import { ProcessTransactionService } from '../process-transaction.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -354,7 +351,7 @@ export class PurchaseTrasactionComponent implements OnInit {
 
     } else {
       this.processTransaction.onAddTransaction('confirm', this.transactionSummary)
-      Object.assign(data, { allEdit: false });
+      Object.assign(this.transactionSummary, { allEdit: false });
     }
   }
   AddMultiTransaction() {
