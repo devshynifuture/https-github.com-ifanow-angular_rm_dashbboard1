@@ -49,9 +49,9 @@ export class SwpTransactionComponent implements OnInit {
   achMandateNSE: any;
   showSpinnerFolio = false;
   currentValue: number;
-  multiTransact=false;
-  childTransactions=[];
-  displayedColumns: string[] = ['no','folio', 'ownerName','amount'];
+  multiTransact = false;
+  childTransactions = [];
+  displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount'];
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private processTransaction: ProcessTransactionService, private fb: FormBuilder, private eventService: EventService) { }
   @Input()
@@ -182,14 +182,14 @@ export class SwpTransactionComponent implements OnInit {
   }
   onFolioChange(folio) {
     this.swpTransaction.controls.folioSelection.reset()
-   }
+  }
   selectedFolio(folio) {
     this.folioDetails = folio
-    this.currentValue =this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme,folio.balanceUnit)
+    this.currentValue = this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit)
     this.showUnits = true
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
     Object.assign(this.transactionSummary, { mutualFundId: folio.id });
-    Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId});
+    Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId });
     this.transactionSummary = { ...this.transactionSummary };
   }
   getFrequency() {
@@ -280,12 +280,10 @@ export class SwpTransactionComponent implements OnInit {
     return this.swpTransaction.controls;
   }
   swp() {
-    if (this.swpTransaction.get('folioSelection').value == 1) {
-      if (this.swpTransaction.get('investmentAccountSelection').invalid) {
-        this.swpTransaction.get('investmentAccountSelection').markAsTouched();
-      }
-    } 
-    else if (this.swpTransaction.get('date').invalid) {
+
+    if (this.swpTransaction.get('investmentAccountSelection').invalid) {
+      this.swpTransaction.get('investmentAccountSelection').markAsTouched();
+    }else if (this.swpTransaction.get('date').invalid) {
       this.swpTransaction.get('date').markAsTouched();
       return;
     } else if (this.swpTransaction.get('frequency').invalid) {
@@ -322,18 +320,18 @@ export class SwpTransactionComponent implements OnInit {
         bseDPTransType: "PHYSICAL",
         bankDetailId: null,
         nsePaymentMode: null,
-        childTransactions:null,
+        childTransactions: null,
       }
       if (this.getDataSummary.defaultClient.aggregatorType == 1) {
         obj.bankDetailId = this.bankDetails.id
         obj.nsePaymentMode = (this.swpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE'
       }
-      const tenure =this.swpTransaction.controls.tenure.value;
-      const installment=this.swpTransaction.controls.installment.value;
-      obj = this.processTransaction.checkInstallments(obj,tenure,installment)
-      if(this.multiTransact == true){
+      const tenure = this.swpTransaction.controls.tenure.value;
+      const installment = this.swpTransaction.controls.installment.value;
+      obj = this.processTransaction.checkInstallments(obj, tenure, installment)
+      if (this.multiTransact == true) {
         console.log('new purchase obj', this.childTransactions)
-         obj.childTransactions = this.childTransactions
+        obj.childTransactions = this.childTransactions
       }
       console.log('swp json obj', obj)
       this.onlineTransact.transactionBSE(obj).subscribe(
@@ -356,18 +354,18 @@ export class SwpTransactionComponent implements OnInit {
     this.multiTransact = true
     let obj = {
       amc: this.scheme.amcId,
-      folioNo:(this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
-      productCode:this.schemeDetails.schemeCode,
-      dividendReinvestmentFlag:this.schemeDetails.dividendReinvestmentFlag,
-      orderVal:this.swpTransaction.controls.employeeContry.value,
-      productDbId:this.schemeDetails.id,
+      folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+      productCode: this.schemeDetails.schemeCode,
+      dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
+      orderVal: this.swpTransaction.controls.employeeContry.value,
+      productDbId: this.schemeDetails.id,
       frequencyType: this.frequency,
       startDate: Number(new Date(this.swpTransaction.controls.date.value.replace(/"/g, ""))),
-      schemeName:this.scheme.schemeName,
+      schemeName: this.scheme.schemeName,
     }
-    const tenure =this.swpTransaction.controls.tenure.value;
-    const installment=this.swpTransaction.controls.installment.value;
-    obj = this.processTransaction.checkInstallments(obj,tenure,installment)
+    const tenure = this.swpTransaction.controls.tenure.value;
+    const installment = this.swpTransaction.controls.installment.value;
+    obj = this.processTransaction.checkInstallments(obj, tenure, installment)
     this.childTransactions.push(obj)
     console.log(this.childTransactions)
     this.schemeList = [];
