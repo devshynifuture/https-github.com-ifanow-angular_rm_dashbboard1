@@ -6,29 +6,29 @@
         <div class="row">
             <div class="col-md-5 pl-0">
                 <div class="form-group mb-0">
-                    <mat-form-field>
-                        <mat-select class="form-control br-0">
-                            <mat-option value="Unmapped clients">Unmapped clients</mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                    <mat-select [(ngModel)]="type" (selectionChange)="sortDataFilterWise()" class="form-control br-0">
+                        <mat-option value="1">Mapped clients</mat-option>
+                        <mat-option value="2">Unmapped clients</mat-option>
+                    </mat-select>
                 </div>
             </div>
             <div class="col-md-5 pl-0">
                 <div class="form-group mb-0">
-                    <mat-form-field>
-                        <mat-select class="form-control br-0">
-                            <mat-option value="ARN-83865">ARN-83865</mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                    <mat-select [(ngModel)]="selectedBrokerCode" (selectionChange)="sortDataFilterWise()"
+                        class="form-control br-0">
+                        <mat-option *ngFor="let singleBrokerCode of filterData" [value]="singleBrokerCode">
+                            {{singleBrokerCode.brokerCode}}
+                        </mat-option>
+                    </mat-select>
                 </div>
             </div>
             <div class="col-md-2 pl-0">
                 <div class="form-group mb-0">
-                    <mat-form-field>
-                        <mat-select class="form-control br-0">
-                            <mat-option value="Unmapped clients">NSE</mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                    <mat-select [(ngModel)]="selectedPlatform" (selectionChange)="sortDataFilterWise()"
+                        class="form-control br-0">
+                        <mat-option *ngFor="let singlePlatform of filterData" [value]="singlePlatform">
+                            {{singlePlatform.platformName}}</mat-option>
+                    </mat-select>
                 </div>
             </div>
         </div>
@@ -45,28 +45,29 @@
             <!-- Name Column -->
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef class="br"> Folio number </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.folioNumber}} </td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="weight">
                 <th mat-header-cell *matHeaderCellDef class="br"> Scheme name </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.schemeName}} </td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="iname">
                 <th mat-header-cell *matHeaderCellDef class="br"> Investor name </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.iname}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.invName}} </td>
             </ng-container>
             <ng-container matColumnDef="hold">
                 <th mat-header-cell *matHeaderCellDef class="br"> Holding nature </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.hold}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.modeOfHold}} </td>
             </ng-container>
             <ng-container matColumnDef="map">
                 <th mat-header-cell *matHeaderCellDef>Map </th>
                 <td mat-cell *matCellDef="let element">
-                    <button mat-stroked-button class="primary-sm bg-primary text-white br-0">MAP</button>
+                    <button (click)="openAddMappiing(element,'')" mat-stroked-button
+                        class="primary-sm bg-primary text-white br-0">MAP</button>
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
