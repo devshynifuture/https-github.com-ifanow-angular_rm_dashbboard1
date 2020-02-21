@@ -1,11 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FlatTreeControl } from '@angular/cdk/tree';
-import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { element } from 'protractor';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CustomerService } from '../../customer/customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { MfServiceService } from '../../customer/accounts/assets/mutual-fund/mf-service.service';
 
 @Component({
   selector: 'app-right-filter',
@@ -36,7 +34,8 @@ export class RightFilterComponent implements OnInit {
   categoryObj: [];
   familyMemObj: [];
   amcObj: [];
-  constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder, private custumService: CustomerService, private eventService: EventService) {
+  obj: any;
+  constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder, private custumService: CustomerService, private eventService: EventService,private mfService:MfServiceService) {
   }
   @Input()
   set data(inputData) {
@@ -46,15 +45,15 @@ export class RightFilterComponent implements OnInit {
     return this._data;
   }
   ngOnInit(): void {
-    this.amc = this._data.schemeWise;
-    this.folio = this._data.folioWise;
-    this.getCategoryWise(this._data.category)
-    this.getSchemeWise(this.amc);
-    this.getFamilyMember(this._data.folioWise)
-    this.getTransactionView(this._data.transactionView);
-    this.getReportType();
-    this.setDefaultFilters();
-    this.showSummaryFilterForm('');
+    this.amc = this._data.schemeWise;//amc wise data 
+    this.folio = this._data.folioWise;//for getting all folios
+    this.getCategoryWise(this._data.category)//get category wise data
+    this.getSchemeWise(this.amc);//scheme wise data
+    this.getFamilyMember(this._data.folioWise)//for family memeber
+    this.getTransactionView(this._data.transactionView);//for displaying how many columns to show in table
+    this.getReportType();//get type of report categorywise,investor,sub category wise
+    this.setDefaultFilters();//setting default selected in each above array
+    this.showSummaryFilterForm('');//as on date and showZero folio form
   }
   getFormControl(): any {
     return this.summaryFilerForm.controls;
@@ -132,7 +131,6 @@ export class RightFilterComponent implements OnInit {
     this.category.forEach(item => item.selected = true);
     this.transactionView.forEach(item => item.selected = true);
     this.reportType.forEach(item => item.selected = true);
-
     this.countFamily = this.familyMember.length;
     this.countAmc = this.amc.length;
     this.countScheme = this.scheme.length;
@@ -140,7 +138,6 @@ export class RightFilterComponent implements OnInit {
     this.countTranView = this.transactionView.length;
     this.countReport = this.reportType.length;
     this.countCategory = this.category.length;
-
   }
   changeFilterFamily() {
     let filterData = this._data.schemeWise;
@@ -270,89 +267,19 @@ export class RightFilterComponent implements OnInit {
     this.changeSelect();
   }
   changeFilterAmc() {
-    let filterData = [];
-    let filterData2 = [];
-    let filterData3 = [];
-    let filterData4 = []
-    this.amc.filter(function (element) {
-      if (element.selected == true) {
-        element.mutualFund.forEach(ele => {
-          const obj = {
-            "folioNumber": ele.folioNumber,
-            "selected": true
-          }
-          const obj2 = {
-            "name": ele.ownerName,
-            "familyMemberId": ele.familyMemberId,
-            "selected": true
-          }
-          const obj3 = {
-            "category": ele.categoryName,
-            "categoryId": ele.categoryId,
-            "selected": true
-          }
-          filterData.push(obj);
-          filterData2.push(obj2);
-          filterData3.push(obj3)
-        });
-        const obj = {
-          "schemeName": element.schemeName,
-          "amc_name": element.amc_name,
-          "mutualFund": element.mutualFund,
-          "id": element.id,
-          "amc_id": element.amc_id,
-          "selected": true
-        }
-        filterData4.push(obj);
-      }
-    })
-    this.folio = filterData;
-    this.familyMember = [...new Map(filterData2.map(item => [item['familyMemberId'], item])).values()];
-    this.category = [...new Map(filterData3.map(item => [item['categoryId'], item])).values()];
-    this.scheme = [...new Map(filterData4.map(item => [item['id'], item])).values()];;
+    this.obj=this.mfService.filterScheme(this.amc)
+    this.folio = this.obj.filterData;
+    this.familyMember = [...new Map(this.obj.filterData2.map(item => [item['familyMemberId'], item])).values()];
+    this.category = [...new Map(this.obj.filterData3.map(item => [item['categoryId'], item])).values()];
+    this.scheme = [...new Map(this.obj.filterData4.map(item => [item['id'], item])).values()];;
     this.changeSelect();
   }
   changeFilterScheme() {
-    let filterData = [];
-    let filterData2 = [];
-    let filterData3 = [];
-    let filterData4 = [];
-    this.scheme.filter(function (element) {
-      if (element.selected == true) {
-        element.mutualFund.forEach(ele => {
-          const obj = {
-            "folioNumber": ele.folioNumber,
-            "selected": true
-          }
-          const obj2 = {
-            "name": ele.ownerName,
-            "familyMemberId": ele.familyMemberId,
-            "selected": true
-          }
-          const obj3 = {
-            "category": ele.categoryName,
-            "categoryId": ele.categoryId,
-            "selected": true
-          }
-          filterData.push(obj);
-          filterData2.push(obj2);
-          filterData3.push(obj3)
-        });
-        const obj = {
-          "amc_name": element.amc_name,
-          "schemeName": element.schemeName,
-          "mutualFund": element.mutualFund,
-          "id": element.id,
-          "amc_id": element.amc_id,
-          "selected": true
-        }
-        filterData4.push(obj);
-      }
-    })
-    this.folio = filterData;
-    this.familyMember = [...new Map(filterData2.map(item => [item['familyMemberId'], item])).values()];
-    this.category = [...new Map(filterData3.map(item => [item['categoryId'], item])).values()];
-    this.amc = [...new Map(filterData4.map(item => [item['amc_id'], item])).values()];
+    this.obj=this.mfService.filterScheme(this.scheme)
+    this.folio = this.obj.filterData;
+    this.familyMember = [...new Map(this.obj.filterData2.map(item => [item['familyMemberId'], item])).values()];
+    this.category = [...new Map(this.obj.filterData3.map(item => [item['categoryId'], item])).values()];
+    this.amc = [...new Map(this.obj.filterData4.map(item => [item['amc_id'], item])).values()];
     this.changeSelect();
   }
   changeSelect = function () {
