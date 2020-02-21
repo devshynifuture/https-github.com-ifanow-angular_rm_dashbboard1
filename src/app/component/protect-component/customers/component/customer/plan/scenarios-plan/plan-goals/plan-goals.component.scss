@@ -1,3 +1,35 @@
 .imgAdLogo {
     max-width: 100%;
 }
+
+.black-border {
+    border: 1px solid #000000;
+}
+
+.headingSenarioBox {
+    border: 1px solid #DADCE0;
+    border-bottom: none;
+    padding: 8px 5px;
+    font-size: 14px;
+    width: 118px;
+    text-align: center;
+}
+
+.leftBorderNone {
+    border-left: transparent;
+}
+
+.planTable {
+    #table-low {
+        tr.mat-header-row {
+            height: 46px !important;
+        }
+    }
+}
+
+.lineborder {
+    border: 0.5px solid #000000;
+    width: 90px;
+    display: block;
+    margin: 3px auto;
+}
