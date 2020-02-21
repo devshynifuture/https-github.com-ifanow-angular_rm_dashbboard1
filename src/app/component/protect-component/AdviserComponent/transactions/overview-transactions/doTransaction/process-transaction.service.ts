@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
-import { OnlineTrasactionComponent } from './online-trasaction/online-trasaction.component';
 import { UtilService } from 'src/app/services/util.service';
+import { ConfirmationTransactionComponent } from './confirmation-transaction/confirmation-transaction.component';
 @Injectable({
   providedIn: 'root'
 })
@@ -37,31 +37,30 @@ export class ProcessTransactionService {
   getEuinList() {
 
   }
-  //   backToTransact(value,data){
-  //   data = {
-  //     formStep : 'step-2'
-  //   }
-  //   this.confirmTrasaction = true
-  //   const fragmentData = {
-  //     flag: 'addNsc',
-  //     data:data,
-  //     id: 1,
-  //     state: 'open65',
-  //     componentName: OnlineTrasactionComponent
-  //   };
-  //   const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-  //     sideBarData => {
-  //       console.log('this is sidebardata in subs subs : ', sideBarData);
-  //       if (UtilService.isDialogClose(sideBarData)) {
-  //         if (UtilService.isRefreshRequired(sideBarData)) {
-  //           console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-  //         }
-  //         rightSideDataSub.unsubscribe();
-  //       }
-
-  //     }
-  //   );
-  // }
+  onAddTransaction(value, data) {
+    Object.assign(this.transactionSummary, { allEdit: false });
+    this.confirmTrasaction = true
+    const fragmentData = {
+      flag: 'addNsc',
+      data,
+      id: 1,
+      state: 'open65',
+      componentName: ConfirmationTransactionComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            // this.getNscSchemedata();
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+          }
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
+  
   checkInstallments(obj,tenure, installment){
     if (this.frequency == 'MONTHLY' && tenure== 2) {
       obj.noOfInstallments = obj.noOfInstallments * 12

@@ -181,6 +181,9 @@
                                 <mat-error *ngIf="(swpTransaction.get('employeeContry').errors?.min)" class="f-12">
                                     Should be greater than or equal to {{schemeDetails.minimumPurchaseAmount}}
                                 </mat-error>
+                                <mat-error *ngIf="(swpTransaction.get('employeeContry').errors?.required)" class="f-12">
+                                    This field is requied
+                                 </mat-error>
                             </mat-form-field>
                         </div>
                     </div>

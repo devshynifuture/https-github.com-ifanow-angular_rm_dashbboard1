@@ -247,29 +247,6 @@ export class SwpTransactionComponent implements OnInit {
     console.log('mandate details :', data)
     this.mandateDetails = data
   }
-  onAddTransaction(value, data) {
-    Object.assign(this.transactionSummary, { allEdit: false });
-    this.confirmTrasaction = true
-    const fragmentData = {
-      flag: 'addNsc',
-      data,
-      id: 1,
-      state: 'open65',
-      componentName: ConfirmationTransactionComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getNscSchemedata();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-          }
-          rightSideDataSub.unsubscribe();
-        }
-      }
-    );
-  }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
@@ -303,8 +280,12 @@ export class SwpTransactionComponent implements OnInit {
     return this.swpTransaction.controls;
   }
   swp() {
-
-    if (this.swpTransaction.get('date').invalid) {
+    if (this.swpTransaction.get('folioSelection').value == 1) {
+      if (this.swpTransaction.get('investmentAccountSelection').invalid) {
+        this.swpTransaction.get('investmentAccountSelection').markAsTouched();
+      }
+    } 
+    else if (this.swpTransaction.get('date').invalid) {
       this.swpTransaction.get('date').markAsTouched();
       return;
     } else if (this.swpTransaction.get('frequency').invalid) {
@@ -368,7 +349,7 @@ export class SwpTransactionComponent implements OnInit {
     if (data == undefined) {
 
     } else {
-      this.onAddTransaction('confirm', this.transactionSummary)
+      this.processTransaction.onAddTransaction('confirm', this.transactionSummary)
     }
   }
   AddMultiTransaction() {

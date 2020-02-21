@@ -299,29 +299,6 @@ export class StpTransactionComponent implements OnInit {
     });
     console.log('dateDisplay = ', this.dateDisplay)
   }
-  onAddTransaction(value, data) {
-    Object.assign(this.transactionSummary, { allEdit: false });
-    this.confirmTrasaction = true
-    const fragmentData = {
-      flag: 'addNsc',
-      data,
-      id: 1,
-      state: 'open65',
-      componentName: ConfirmationTransactionComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getNscSchemedata();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-          }
-          rightSideDataSub.unsubscribe();
-        }
-      }
-    );
-  }
   stpType(value) {
 
   }
@@ -368,7 +345,15 @@ export class StpTransactionComponent implements OnInit {
     return this.stpTransaction.controls;
   }
   stp() {
-    if (this.stpTransaction.get('employeeContry').invalid) {
+     if (this.reInvestmentOpt.length > 1) {
+      if (this.stpTransaction.get('reinvest').invalid) {
+        this.stpTransaction.get('reinvest').markAsTouched();
+      }
+    } else if (this.stpTransaction.get('folioSelection').value == 1) {
+      if (this.stpTransaction.get('investmentAccountSelection').invalid) {
+        this.stpTransaction.get('investmentAccountSelection').markAsTouched();
+      }
+    } else if (this.stpTransaction.get('employeeContry').invalid) {
       this.stpTransaction.get('employeeContry').markAsTouched();
       return;
     } else if (this.stpTransaction.get('frequency').invalid) {
@@ -444,7 +429,7 @@ export class StpTransactionComponent implements OnInit {
     if (data == undefined) {
 
     } else {
-      this.onAddTransaction('confirm', this.transactionSummary)
+      this.processTransaction.onAddTransaction('confirm', this.transactionSummary)
     }
   }
   AddMultiTransaction() {
