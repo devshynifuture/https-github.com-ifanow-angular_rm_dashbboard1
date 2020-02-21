@@ -58,7 +58,7 @@ export class RecordPaymentComponent implements OnInit {
     this.rPayment = this.fb.group({
       amountReceived: [data.amountReceived, [Validators.required, Validators.max(this.balDue)]],
       chargesIfAny: [data.chargesIfAny, [Validators.required]],
-      tds: [data.tds, [Validators.required, Validators.max(this.tdsAmt)]],
+      tds: [data.tds, [Validators.max(this.tdsAmt)]],
       paymentDate: [new Date(data.paymentDate), [Validators.required]],
       paymentMode: [data.paymentMode, [Validators.required]],
       gstTreatment: [(data.gstTreatmentId == 1) ? 'Registered Business - Regular' : (data.gstTreatmentId == 2) ? 'Registered Business - Composition' : 'Unregistered Business', [Validators.required]],
