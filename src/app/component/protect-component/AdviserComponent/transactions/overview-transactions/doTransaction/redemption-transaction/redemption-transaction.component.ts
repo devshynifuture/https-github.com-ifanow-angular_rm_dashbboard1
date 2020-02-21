@@ -138,7 +138,7 @@ export class RedemptionTransactionComponent implements OnInit {
     console.log('bank details', bank[0])
   }
   onFolioChange(folio) {
-    this.redemptionTransaction.controls.folioSelection.reset()
+    this.redemptionTransaction.controls.investmentAccountSelection.reset()
   }
   selectedScheme(scheme) {
     this.scheme = scheme

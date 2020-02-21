@@ -236,7 +236,7 @@ export class SipTransactionComponent implements OnInit {
     console.log('bank details', value)
   }
   onFolioChange(folio) {
-    this.sipTransaction.controls.folioSelection.reset()
+    this.sipTransaction.controls.investmentAccountSelection.reset()
   }
   getMandateDetails() {
     let obj1 = {

@@ -104,7 +104,7 @@ export class SwitchTransactionComponent implements OnInit {
     this.schemeList = data
   }
   onFolioChange(folio) {
-    this.switchTransaction.controls.folioSelection.reset()
+    this.switchTransaction.controls.investmentAccountSelection.reset()
   }
   selectedFolio(folio) {
     this.folioDetails = folio

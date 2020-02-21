@@ -132,7 +132,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     console.log('bank details', bank)
   }
   onFolioChange(folio) {
-    this.purchaseTransaction.controls.folioSelection.reset()
+    this.purchaseTransaction.controls.investmentAccountSelection.reset()
   }
   selectedScheme(scheme) {
     this.scheme = scheme

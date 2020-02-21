@@ -56,10 +56,8 @@ export class TransactionSummaryComponent implements OnInit {
 
   @Output() defaultDetails = new EventEmitter();
   @Output() bankDetailsSend = new EventEmitter();
-  @Output() folioEmpty = new EventEmitter();
-  @Input() set folioChange(data) {
-    console.log('This is Input data of foolio ### ', data);
-  }
+  @Output() folioChange = new EventEmitter();
+
   @Input() set data(data) {
     this.inputData = data;
     this.transactionSummary = data
@@ -228,12 +226,12 @@ export class TransactionSummaryComponent implements OnInit {
   }
   alertModal(value, data) {
     const dialogData = {
-      data: value,
+      data: '',
       header: 'ALERT',
       body: 'Holding nature of selected FOLIO matches different client code',
       body2: 'Are you sure you want to proceed',
       btnYes: 'NO',
-      btnNo: 'OK,POCEED',
+      btnNo: 'OK,PROCEED',
       positiveMethod: () => {
         this.eventService.openSnackBar('Sucessfully changed', 'dismiss');
         this.changeDetails.noAlert = true
