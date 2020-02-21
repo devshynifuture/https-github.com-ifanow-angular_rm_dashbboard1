@@ -347,7 +347,9 @@ export class SwpTransactionComponent implements OnInit {
         obj.bankDetailId = this.bankDetails.id
         obj.nsePaymentMode = (this.swpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE'
       }
-      obj = this.processTransaction.checkInstallments(obj)
+      const tenure =this.swpTransaction.controls.tenure.value;
+      const installment=this.swpTransaction.controls.installment.value;
+      obj = this.processTransaction.checkInstallments(obj,tenure,installment)
       if(this.multiTransact == true){
         console.log('new purchase obj', this.childTransactions)
          obj.childTransactions = this.childTransactions
@@ -382,7 +384,9 @@ export class SwpTransactionComponent implements OnInit {
       startDate: Number(new Date(this.swpTransaction.controls.date.value.replace(/"/g, ""))),
       schemeName:this.scheme.schemeName,
     }
-    obj = this.processTransaction.checkInstallments(obj)
+    const tenure =this.swpTransaction.controls.tenure.value;
+    const installment=this.swpTransaction.controls.installment.value;
+    obj = this.processTransaction.checkInstallments(obj,tenure,installment)
     this.childTransactions.push(obj)
     console.log(this.childTransactions)
     this.schemeList = [];

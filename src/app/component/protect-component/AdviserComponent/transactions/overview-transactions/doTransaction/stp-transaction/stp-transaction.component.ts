@@ -424,7 +424,9 @@ export class StpTransactionComponent implements OnInit {
         obj.bankDetailId = this.bankDetails.id
         obj.nsePaymentMode = (this.stpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE'
       }
-      obj = this.processTransaction.checkInstallments(obj)
+      const tenure =this.stpTransaction.controls.tenure.value;
+      const installment=this.stpTransaction.controls.installment.value;
+      obj = this.processTransaction.checkInstallments(obj,tenure,installment)
       console.log('json stp', obj)
       if (this.multiTransact == true) {
         console.log('new purchase obj', this.childTransactions)
@@ -462,7 +464,9 @@ export class StpTransactionComponent implements OnInit {
       frequencyType: this.frequency,
       startDate: Number(new Date(this.stpTransaction.controls.date.value.replace(/"/g, ""))),
     }
-    obj = this.processTransaction.checkInstallments(obj)
+    const tenure =this.stpTransaction.controls.tenure.value;
+      const installment=this.stpTransaction.controls.installment.value;
+      obj = this.processTransaction.checkInstallments(obj,tenure,installment)
     this.childTransactions.push(obj)
     console.log(this.childTransactions)
     this.schemeList = [];

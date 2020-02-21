@@ -215,7 +215,11 @@ export class SipTransactionComponent implements OnInit {
   getNSEAchmandateRes(data) {
     this.showSpinnerMandate = false
     console.log('getNSEAchmandateRes', data)
+    if(data.length >1){
+      Object.assign(this.transactionSummary, { showUmrnEdit: true });
+    }
     this.achMandateNSE = data[0]
+    Object.assign(this.transactionSummary, { umrnNo: this.achMandateNSE.umrnNo });
   }
   getFrequency() {
     let obj = {
@@ -398,7 +402,9 @@ export class SipTransactionComponent implements OnInit {
         obj.nsePaymentMode = (this.sipTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE'
       }
       console.log('sip json', obj)
-      obj = this.processTransaction.checkInstallments(obj)
+      const tenure =this.sipTransaction.controls.tenure.value;
+      const installment=this.sipTransaction.controls.installment.value;
+      obj = this.processTransaction.checkInstallments(obj,tenure,installment)
       if (this.multiTransact == true) {
         obj.childTransactions = this.childTransactions
       }
@@ -434,7 +440,9 @@ export class SipTransactionComponent implements OnInit {
       frequencyType: this.frequency,
       startDate: Number(new Date(this.sipTransaction.controls.date.value.replace(/"/g, ""))),
     }
-    obj = this.processTransaction.checkInstallments(obj)
+    const tenure =this.sipTransaction.controls.tenure.value;
+    const installment=this.sipTransaction.controls.installment.value;
+    obj = this.processTransaction.checkInstallments(obj,tenure,installment)
     this.childTransactions.push(obj)
     console.log(this.childTransactions)
     this.schemeList = [];

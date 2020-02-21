@@ -27,6 +27,7 @@ import { PopUpComponent } from './overview-transactions/doTransaction/pop-up/pop
 import { PlatformPopUpComponent } from './overview-transactions/doTransaction/platform-pop-up/platform-pop-up.component';
 import { EuinSelectPopUpComponent } from './overview-transactions/doTransaction/euin-select-pop-up/euin-select-pop-up.component';
 import { BankSelectPopUpComponent } from './overview-transactions/doTransaction/bank-select-pop-up/bank-select-pop-up.component';
+import { UmrnPopUpComponent } from './overview-transactions/doTransaction/umrn-pop-up/umrn-pop-up.component';
 
 export const componentList = [
     TransactionAddComponent,
@@ -51,7 +52,8 @@ export const componentList = [
     PopUpComponent,
     PlatformPopUpComponent,
     EuinSelectPopUpComponent,
-    BankSelectPopUpComponent
+    BankSelectPopUpComponent,
+    UmrnPopUpComponent,
     // FatcaDetailsComponent,
     // VideoKycComponent
 
