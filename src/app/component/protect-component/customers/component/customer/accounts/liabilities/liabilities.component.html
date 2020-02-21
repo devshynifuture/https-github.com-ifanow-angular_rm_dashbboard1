@@ -59,7 +59,7 @@
                         <div class="col-md-2 p-0 text-custom">{{this.mortgage.length}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab2'" [ngClass]="viewMode =='tab2' ? 'activeColor': ''" class=" c-p">
+                <li (click)="viewMode ='tab2'" [ngClass]="{'activeColor':viewMode =='tab2'}"class=" c-p">
                     <div class="row">
                         <div class="col-md-10 p-0 f-700">OTHERS</div>
                         <div class="col-md-2 p-0 text-custom">{{OtherData}}</div>
