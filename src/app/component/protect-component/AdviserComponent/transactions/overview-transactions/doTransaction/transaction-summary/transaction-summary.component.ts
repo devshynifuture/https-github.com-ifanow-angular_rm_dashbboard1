@@ -85,6 +85,9 @@ export class TransactionSummaryComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      if (result == undefined) {
+        return
+      }
       this.element = result;
       this.selectedInvestor = result
       this.defaultClient = result
@@ -118,7 +121,7 @@ export class TransactionSummaryComponent implements OnInit {
         return
       }
       this.element = result;
-      this.selectedPlatform = result.value
+      this.selectedPlatform = (result == undefined)?this.selectedPlatform : result.value
       this.showPlatform = false
       this.getDefaultDetails(this.selectedPlatform)
     });
