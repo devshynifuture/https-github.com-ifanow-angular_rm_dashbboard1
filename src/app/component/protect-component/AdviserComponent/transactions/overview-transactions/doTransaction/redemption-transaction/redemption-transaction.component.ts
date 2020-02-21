@@ -138,7 +138,7 @@ export class RedemptionTransactionComponent implements OnInit {
     console.log('bank details', bank[0])
   }
   onFolioChange(folio) {
-    this.redemptionTransaction.controls.folioSelection.reset()
+    this.redemptionTransaction.controls.investmentAccountSelection.reset()
   }
   selectedScheme(scheme) {
     this.scheme = scheme
@@ -216,6 +216,7 @@ export class RedemptionTransactionComponent implements OnInit {
     } else if (this.redemptionTransaction.get('folioSelection').value == 1) {
       if (this.redemptionTransaction.get('investmentAccountSelection').invalid) {
         this.redemptionTransaction.get('investmentAccountSelection').markAsTouched();
+        return;
       }
     } else if (this.redemptionTransaction.get('redeemType').invalid) {
       this.redemptionTransaction.get('redeemType').markAsTouched();
@@ -277,6 +278,7 @@ export class RedemptionTransactionComponent implements OnInit {
 
     } else {
       this.processTransaction.onAddTransaction('confirm', this.transactionSummary)
+      Object.assign(this.transactionSummary, { allEdit: false });
     }
   }
   AddMultiTransaction() {
