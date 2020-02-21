@@ -53,7 +53,7 @@
         </div>
     </div>
 
-    <div class="row pt-24" *ngIf="orderHistoryFileForm.get('selectRta').touched">
+    <div class="row pt-24" *ngIf="orderHistoryFileForm.get('selectRta').value === '1'">
         <div class="col-md-5 pr-0">
             <h5 class="text-right pt-12 mb-0"> Select files to order </h5>
         </div>
@@ -64,7 +64,8 @@
                     <div *ngIf="orderHistoryFileForm.get('selectRta').value === '1'">
                         <!-- cams option -->
                         <div formGroupName="cams">
-                            <mat-checkbox class="d-block" formControlName="wbr2">WBR2</mat-checkbox>
+                            <mat-checkbox class="d-block" formControlName="wbr2">WBR2
+                            </mat-checkbox>
                             <mat-checkbox class="d-block" formControlName="wbr2a">WBR2A</mat-checkbox>
                         </div>
                     </div>
@@ -94,7 +95,7 @@
                     </div>
                     <div *ngIf="orderHistoryFileForm.get('selectRta').value === '2'">
                         <!-- karvy options -->
-                        <div formGroupName="karvy">
+                        <div formGroupName="kaasOnDatervy">
                             <mat-checkbox class="d-block" formControlName="mfsd243Active">MFSD 243 Active
                             </mat-checkbox>
                             <mat-checkbox class="d-block" formControlName="mfsd231Ceased">MFSD 231 Ceased
@@ -141,7 +142,8 @@
                     <div *ngIf="orderHistoryFileForm.get('selectRta').value === '1'">
                         <!-- cams options -->
                         <div formGroupName="cams">
-                            <mat-checkbox class="d-block" formControlName="wbr22">WBR22</mat-checkbox>
+                            <mat-checkbox class="d-block" (click)="isOnlyAumSelected()" formControlName="wbr22">WBR22
+                            </mat-checkbox>
                         </div>
                     </div>
                     <div *ngIf="orderHistoryFileForm.get('selectRta').value === '2'">
@@ -173,7 +175,7 @@
                 <h5 class="text-right pt-48 mb-0">Date range</h5>
             </div>
             <div class="col-md-6">
-                <div class="row">
+                <div class="row" *ngIf="!asOnDate">
                     <div class="col-md-6 pl-0">
                         <h5 class="mb-4 pt-16">From date</h5>
                         <mat-form-field>
@@ -202,7 +204,7 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="row" *ngIf="">
+                <div class="row" *ngIf="asOnDate">
                     <div class="col-md-12 pl-0">
                         <h5 class="mb-4 pt-16">As On Date</h5>
                         <mat-form-field>

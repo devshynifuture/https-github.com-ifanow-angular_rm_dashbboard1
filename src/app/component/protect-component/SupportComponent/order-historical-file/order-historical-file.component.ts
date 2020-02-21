@@ -10,6 +10,7 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./order-historical-file.component.scss']
 })
 export class OrderHistoricalFileComponent implements OnInit {
+  asOnDate: boolean = false;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -19,7 +20,15 @@ export class OrderHistoricalFileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.isOnlyAumSelected()
+    // this.isOnlyAumSelected()
+    this.orderHistoryFileForm.get('selectFilesToOrder.cams').valueChanges.subscribe(val => {
+      console.log(val);
+      if (val['wbr22'] === true) {
+        this.asOnDate = true;
+      } else {
+        this.asOnDate = false;
+      }
+    });
   }
 
   orderHistoryFileForm = this.fb.group({
@@ -35,7 +44,7 @@ export class OrderHistoricalFileComponent implements OnInit {
         "wbr49Active": [,],
         "wbr49Ceased": [,],
         "wbr9": [,],
-        "wbr22": [,]
+        "wbr22": [false,]
       }),
       "karvy": this.fb.group({
         "mfsd201": [,],
@@ -55,15 +64,55 @@ export class OrderHistoricalFileComponent implements OnInit {
   });
 
   isOnlyAumSelected() {
-    for (const key in this.orderHistoryFileForm) {
-      if (this.orderHistoryFileForm.hasOwnProperty(key)) {
-        const element = this.orderHistoryFileForm[key];
-        if (key === 'selectFilesToOrder') {
-
-        }
-        console.log("this is form control values:::", element);
-      }
-    }
+    let selectedRta = false;
+    let onlyCamsWbr22Selected = false;
+    // for (const key in this.orderHistoryFileForm.controls) {
+    //   if (this.orderHistoryFileForm.controls.hasOwnProperty(key)) {
+    //     const element = this.orderHistoryFileForm.controls[key];
+    //     console.log('form key and value:::', key, element);
+    //     if (key === 'selectRta' && element.touched && element.value === '1') {
+    //       selectedRta = true;
+    //     }
+    //     if (key === 'selectFilesToOrder' && element['controls'] && selectedRta) {
+    //       for (const key in element.get('cams')['controls']) {
+    //         if (element.get('cams')['controls'].hasOwnProperty(key)) {
+    //           const el = element.get('cams')['controls'][key];
+    //           if (el.value === false) {
+    //             onlyCamsWbr22Selected = true;
+    //           } else {
+    //             onlyCamsWbr22Selected = false;
+    //           }
+    //         }
+    //       }
+    //       if (onlyCamsWbr22Selected) {
+    //         this.asOnDate = true;
+    //       } else {
+    //         this.asOnDate = false;
+    //       }
+    //     }
+    //   }
+    // }
+    // this.orderHistoryFileForm.get('selectFilesToOrder').valueChanges.subscribe(val => {
+    //   let trueCount = 0;
+    //   for (const key in val) {
+    //     if (val.hasOwnProperty(key)) {
+    //       if (key === 'cams') {
+    //         for (const k in val[key]) {
+    //           if (val[key].hasOwnProperty(k)) {
+    //             const element = val[key][k];
+    //             console.log(element);
+    //             if (val[key][k] === true) {
+    //               trueCount++;
+    //             }
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
+    //   if (trueCount > 1) {
+    //     this.asOnDate = false;
+    //   }
+    // });
   }
 
   dialogClose(flag) {
