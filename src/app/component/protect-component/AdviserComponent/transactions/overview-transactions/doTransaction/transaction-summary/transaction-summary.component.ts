@@ -119,7 +119,7 @@ export class TransactionSummaryComponent implements OnInit {
         return
       }
       this.element = result;
-      this.selectedPlatform = (result == undefined)?this.selectedPlatform : result.value
+      this.selectedPlatform = (result == undefined) ? this.selectedPlatform : result.value
       this.showPlatform = false
       this.getDefaultDetails(this.selectedPlatform)
     });
@@ -139,10 +139,10 @@ export class TransactionSummaryComponent implements OnInit {
     });
   }
   openUmrn(): void {
-      this.getNSEAchmandate()
+    this.getNSEAchmandate()
     const dialogRef = this.dialog.open(UmrnPopUpComponent, {
       width: '470px',
-      data: { mandate: this.achMandateNSE , animal: this.element }
+      data: { mandate: this.achMandateNSE, animal: this.element }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == undefined) {
@@ -172,7 +172,9 @@ export class TransactionSummaryComponent implements OnInit {
       tpUserCredFamilyMappingId: this.defaultClient.tpUserCredFamilyMappingId
     }
     this.onlineTransact.getBankDetailsNSE(obj).subscribe(
-      data => this.getBankDetailsNSERes(data)
+      data => this.getBankDetailsNSERes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
     );
   }
   getBankDetailsNSERes(data) {
@@ -197,7 +199,9 @@ export class TransactionSummaryComponent implements OnInit {
       mutualFundId: this.transactionSummary.mutualFundId
     }
     this.onlineTransact.getDefaultDetails(obj).subscribe(
-      data => this.getDefaultDetailsRes(data)
+      data => this.getDefaultDetailsRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
     );
   }
   getDefaultDetailsRes(data) {
@@ -207,7 +211,7 @@ export class TransactionSummaryComponent implements OnInit {
     }
     this.changeDetails = data
     if (this.transactionSummary.allEdit == true && this.changeDetails.noAlert == undefined) {
-      if(this.checkAlert && this.checkAlert != data.defaultClient.tpUserCredFamilyMappingId){
+      if (this.checkAlert && this.checkAlert != data.defaultClient.tpUserCredFamilyMappingId) {
         this.alertModal(data, null)
         return
       }
@@ -233,7 +237,7 @@ export class TransactionSummaryComponent implements OnInit {
       btnYes: 'NO',
       btnNo: 'OK,PROCEED',
       positiveMethod: () => {
-        this.eventService.openSnackBar('Sucessfully changed', 'dismiss');
+        this.eventService.openSnackBar('Holding nature sucessfully changed', 'dismiss');
         this.changeDetails.noAlert = true
         this.getDefaultDetailsRes(this.changeDetails)
         dialogRef.close();
