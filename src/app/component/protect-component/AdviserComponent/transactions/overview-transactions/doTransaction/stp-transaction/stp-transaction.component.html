@@ -64,8 +64,7 @@
                         <div class="form-group">
                             <mat-form-field>
                                 <input type="text" aria-label="Number" class="form-control" matInput
-                                    formControlName="investor" [matAutocomplete]="auto"
-                                    (keyup)="getSchemeList($event.target.value)"
+                                    [matAutocomplete]="auto" (keyup)="getSchemeList($event.target.value)"
                                     placeholder="Start typing to see investor names">
                                 <mat-autocomplete #auto="matAutocomplete">
                                     <mat-option (onSelectionChange)="selectedScheme(scheme)"
@@ -219,6 +218,9 @@
                                 <mat-error *ngIf="(stpTransaction.get('employeeContry').errors?.min)" class="f-12">
                                     Should be greater than or equal to {{schemeDetails.minimumPurchaseAmount}}
                                 </mat-error>
+                                <mat-error *ngIf="(stpTransaction.get('employeeContry').errors?.required)" class="f-12">
+                                    This field is requied
+                                 </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -266,9 +268,9 @@
                         <mat-form-field>
                             <input #employeeContry matInput maxlength="10" type="text" class="form-control br-0 rupess"
                                 formControlName="installment">
-                                <mat-error class="f-12 pt-4">
-                                    This field is required
-                                </mat-error>
+                            <mat-error class="f-12 pt-4">
+                                This field is required
+                            </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -276,8 +278,8 @@
             <div class="col-md-4 bg-grey lter p-0">
                 <!-- (achmandateDetails)='getAchmandateDetails($event)' for prod build -->
                 <app-transaction-summary [data]="transactionSummary" (defaultDetails)='getDefaultDetails($event)'
-                (bankDetailsSend)='getbankDetails($event)'(folioChange)='onFolioChange($event)' >
-            </app-transaction-summary>
+                    (bankDetailsSend)='getbankDetails($event)' (folioChange)='onFolioChange($event)'>
+                </app-transaction-summary>
             </div>
         </div>
     </div>

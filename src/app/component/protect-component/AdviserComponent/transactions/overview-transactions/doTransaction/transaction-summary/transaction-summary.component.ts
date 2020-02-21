@@ -11,6 +11,7 @@ import { BankSelectPopUpComponent } from '../bank-select-pop-up/bank-select-pop-
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { UmrnPopUpComponent } from '../umrn-pop-up/umrn-pop-up.component';
 
 @Component({
   selector: 'app-transaction-summary',
@@ -82,7 +83,6 @@ export class TransactionSummaryComponent implements OnInit {
       width: '470px',
       data: { investor: this.clientDataList, animal: this.element }
     });
-
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       this.element = result;
@@ -97,8 +97,10 @@ export class TransactionSummaryComponent implements OnInit {
       width: '470px',
       data: { subBroker: this.subBrokerCredList, animal: this.element }
     });
-
     dialogRef.afterClosed().subscribe(result => {
+      if (result == undefined) {
+        return
+      }
       console.log('The dialog was closed');
       this.element = result;
       this.allData.euin = result
@@ -110,9 +112,11 @@ export class TransactionSummaryComponent implements OnInit {
       width: '470px',
       data: { platform: this.platForm, animal: this.element }
     });
-
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      if (result == undefined) {
+        return
+      }
       this.element = result;
       this.selectedPlatform = result.value
       this.showPlatform = false
@@ -124,12 +128,43 @@ export class TransactionSummaryComponent implements OnInit {
       width: '470px',
       data: { bank: this.bankDetails, animal: this.element }
     });
-
     dialogRef.afterClosed().subscribe(result => {
+      if (result == undefined) {
+        return
+      }
       console.log('The dialog was closed');
       this.element = result;
       this.bankDetailsSend.emit(result);
     });
+  }
+  openUmrn(): void {
+      this.getNSEAchmandate()
+    const dialogRef = this.dialog.open(UmrnPopUpComponent, {
+      width: '470px',
+      data: { mandate: this.achMandateNSE , animal: this.element }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == undefined) {
+        return
+      }
+      console.log('The dialog was closed');
+      this.element = result;
+      this.bankDetailsSend.emit(result);
+    });
+  }
+  getNSEAchmandate() {
+    let obj1 = {
+      tpUserCredFamilyMappingId: this.defaultClient.tpUserCredFamilyMappingId
+    }
+    this.onlineTransact.getNSEAchmandate(obj1).subscribe(
+      data => this.getNSEAchmandateRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+    );
+  }
+  getNSEAchmandateRes(data) {
+    console.log('getNSEAchmandateRes', data)
+    this.achMandateNSE = data
   }
   getBankDetails() {
     let obj = {
@@ -170,9 +205,11 @@ export class TransactionSummaryComponent implements OnInit {
       return
     }
     this.changeDetails = data
-    if (this.changeDetails.noAlert == undefined && this.checkAlert && this.checkAlert != data.defaultClient.tpUserCredFamilyMappingId) {
-      this.alertModal(data, null)
-      return
+    if (this.transactionSummary.allEdit == true && this.changeDetails.noAlert == undefined) {
+      if(this.checkAlert && this.checkAlert != data.defaultClient.tpUserCredFamilyMappingId){
+        this.alertModal(data, null)
+        return
+      }
     }
     data.euin = data.subBrokerCredList[0];
     this.defaultDetails.emit(data);
