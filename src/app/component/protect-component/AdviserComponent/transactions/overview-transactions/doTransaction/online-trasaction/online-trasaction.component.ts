@@ -110,15 +110,20 @@ export class OnlineTrasactionComponent implements OnInit {
     this.selectedPlatform = this.defaultCredential.aggregatorType
   }
   getFamilyList(value) {
-    this.showSpinnerOwner = true
-    let obj = {
-      advisorId: this.advisorId,
-      name: value
+    if(value != ""){
+      this.showSpinnerOwner = true
+      let obj = {
+        advisorId: this.advisorId,
+        name: value
+      }
+      if (value.length > 2) {
+        this.onlineTransact.getFamilyMemberList(obj).subscribe(
+          data => this.getFamilyMemberListRes(data)
+        );
+      }
     }
-    if (value.length > 2) {
-      this.onlineTransact.getFamilyMemberList(obj).subscribe(
-        data => this.getFamilyMemberListRes(data)
-      );
+    else{
+      this.showSpinnerOwner = false;
     }
   }
   getFamilyMemberListRes(data) {

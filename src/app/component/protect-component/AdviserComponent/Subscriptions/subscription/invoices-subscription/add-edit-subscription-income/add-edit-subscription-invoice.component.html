@@ -204,7 +204,7 @@
                             type="number">
                         <div class="col-md-8">
                             <mat-error
-                                *ngIf=" getFormControlEdit().finalAmount.invalid || (getFormControlEdit().finalAmount.touched && getFormControlEdit().finalAmount.invalid)"
+                                *ngIf=" getFormControlEdit().finalAmount.invalid && getFormControlEdit().finalAmount.touched "
                                 class="f-12">
                                 Price is required
                             </mat-error>

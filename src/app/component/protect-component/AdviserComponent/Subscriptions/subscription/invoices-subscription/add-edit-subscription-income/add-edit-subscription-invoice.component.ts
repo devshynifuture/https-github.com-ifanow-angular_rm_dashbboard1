@@ -120,15 +120,16 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     this.editAdd1 = false;
     this.editAdd2 = false;
     console.log(this.storeData);
+    // , [Validators.required]
     this.editPayment = this.fb.group({
       clientName: [data.clientName, [Validators.required]],
-      billerName: [data.billerName ? data.billerName : '', [Validators.required]],
+      billerName: [data.billerName ? data.billerName : ''],
       billerAddress: [data.billerAddress, [Validators.required]],
       billingAddress: [(data.billingAddress == undefined) ? '' : data.billingAddress, [Validators.required]],
       invoiceNumber: [data.invoiceNumber, [Validators.required, Validators.maxLength(150)]],
       invoiceDate: [new Date(data.invoiceDate), [Validators.required]],
-      finalAmount: [(data.subTotal == undefined) ? 0 : parseInt(data.subTotal), [Validators.required]],
-      discount: [(data.discount == undefined) ? 0 : data.discount, [Validators.required]],
+      finalAmount: [(data.subTotal == undefined) ? 0 : parseInt(data.subTotal), [Validators.required, Validators.min(1.00)]],
+      discount: [(data.discount == undefined) ? 0 : data.discount],
       dueDate: [new Date(data.dueDate), [Validators.required]],
       footnote: [data.footnote, [Validators.required]],
       terms: [data.terms, [Validators.required]],
@@ -282,26 +283,22 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   }
 
   updateInvoice() {
-    this.showErr = false;
-    if (this.editPayment.value.discount == '') {
-      this.editPayment.value.discount = 0;
-    }
-    if (this.showDateError) {
-      return;
-    }
-    if (this.editPayment.get('dueDate').invalid) {
+    // this.showErr = false;
+   
+    if (this.showDateError || this.editPayment.invalid ) {
       this.editPayment.get('dueDate').markAsTouched();
-      return;
-    } else if (this.editPayment.get('invoiceDate').invalid) {
-      this.editPayment.get('invoiceDate').markAsTouched();
-      return;
-    } else if (this.editPayment.get('taxStatus').invalid) {
       this.editPayment.get('taxStatus').markAsTouched();
-      return;
-    } else if (isNaN(this.editPayment.controls.finalAmount.value)) {
-      this.showErr = true;
-      return;
-    } else {
+      this.editPayment.get('invoiceDate').markAsTouched();
+      this.editPayment.get('clientName').markAsTouched();
+      this.editPayment.get('serviceName').markAsTouched();
+      this.editPayment.get('finalAmount').markAsTouched();
+      console.log(this.editPayment.controls.finalAmount.valid,this.editPayment.value, "finalAmount 123");
+    }
+    //  else if (isNaN(this.editPayment.controls.finalAmount.value)) {
+    //   this.showErr = true;
+    //   return;
+    // } 
+    else {
       this.barButtonOptions.active = true;
       let obj = {
         clientName: this.editPayment.value.clientName,
@@ -310,7 +307,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
         invoiceNumber: this.editPayment.value.invoiceNumber,
         billerName : this.billerName,
         subTotal: this.editPayment.value.finalAmount,
-        discount: this.editPayment.value.discount,
+        discount: this.editPayment.value.discount==''?0:this.editPayment.value.discount,
         finalAmount:parseInt(this.finAmount),
         invoiceDate: this.editPayment.value.invoiceDate,
         dueDate: this.editPayment.value.dueDate,
@@ -440,6 +437,8 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     } else {
 
       // (this.invoiceTab == 'invoiceUpperSlider') ?
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
+
       this.subInjectService.rightSliderData(state)
       this.subInjectService.rightSideData(state);
       // this.valueChange.emit(closeObj);
