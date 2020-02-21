@@ -344,7 +344,7 @@ export class PayeeSettingsComponent implements OnInit {
       console.log('addClientBillerProfileRes', data);
       this.updatedData = data;
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
-      this.eventService.openSnackBar('Client profile added Successfully', 'OK');
+      this.eventService.openSnackBar('Client profile added successfully', 'OK');
     }
     this.Close(data);
     // }
@@ -354,7 +354,7 @@ export class PayeeSettingsComponent implements OnInit {
     this.barButtonOptions.active = false;
     if (data.status == 1) {
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
-      this.eventService.openSnackBar('Client profile update Successfully', 'OK');
+      this.eventService.openSnackBar('Client profile update successfully', 'OK');
       this.getEditData.emit(this.sendData);
       this.Close(data);
     }

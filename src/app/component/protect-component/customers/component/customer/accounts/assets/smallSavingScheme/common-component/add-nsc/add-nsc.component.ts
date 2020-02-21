@@ -130,27 +130,13 @@ export class AddNscComponent implements OnInit {
     //     finalTransctList.push(obj)
     //   });
     // }
-    if (this.nscFormField.get('ownerName').invalid) {
+    if (this.nscFormField.invalid) {
       this.nscFormField.get('ownerName').markAsTouched();
-      return;
-    } else if (this.nscFormField.get('amountInvested').invalid) {
       this.nscFormField.get('amountInvested').markAsTouched();
-      return
-    } else if (this.nscFormField.get('ownerName').invalid) {
       this.nscFormField.get('ownerName').markAsTouched();
-      return;
-    }
-    else if (this.nscFormField.get('commDate').invalid) {
       this.nscFormField.get('commDate').markAsTouched();
-      return
-    }
-    else if (this.nscFormField.get('Tenure').invalid) {
       this.nscFormField.get('Tenure').markAsTouched();
-      return
-    }
-    else if (this.nscFormField.get('ownershipType').invalid) {
       this.nscFormField.get('ownershipType').markAsTouched();
-      return
     }
     else {
       if (this.editApi != undefined && this.editApi != 'adviceNSC') {
