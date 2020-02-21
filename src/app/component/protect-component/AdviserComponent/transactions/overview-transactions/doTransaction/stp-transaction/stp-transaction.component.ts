@@ -299,29 +299,6 @@ export class StpTransactionComponent implements OnInit {
     });
     console.log('dateDisplay = ', this.dateDisplay)
   }
-  onAddTransaction(value, data) {
-    Object.assign(this.transactionSummary, { allEdit: false });
-    this.confirmTrasaction = true
-    const fragmentData = {
-      flag: 'addNsc',
-      data,
-      id: 1,
-      state: 'open65',
-      componentName: ConfirmationTransactionComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getNscSchemedata();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-          }
-          rightSideDataSub.unsubscribe();
-        }
-      }
-    );
-  }
   stpType(value) {
 
   }
@@ -368,7 +345,14 @@ export class StpTransactionComponent implements OnInit {
     return this.stpTransaction.controls;
   }
   stp() {
-    if (this.stpTransaction.get('employeeContry').invalid) {
+    if (this.reInvestmentOpt.length > 1) {
+      if (this.stpTransaction.get('reinvest').invalid) {
+        this.stpTransaction.get('reinvest').markAsTouched();
+      }
+    } else if (this.stpTransaction.get('investmentAccountSelection').invalid) {
+      this.stpTransaction.get('investmentAccountSelection').markAsTouched();
+      return;
+    } else if (this.stpTransaction.get('employeeContry').invalid) {
       this.stpTransaction.get('employeeContry').markAsTouched();
       return;
     } else if (this.stpTransaction.get('frequency').invalid) {
@@ -424,7 +408,9 @@ export class StpTransactionComponent implements OnInit {
         obj.bankDetailId = this.bankDetails.id
         obj.nsePaymentMode = (this.stpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE'
       }
-      obj = this.processTransaction.checkInstallments(obj)
+      const tenure = this.stpTransaction.controls.tenure.value;
+      const installment = this.stpTransaction.controls.installment.value;
+      obj = this.processTransaction.checkInstallments(obj, tenure, installment)
       console.log('json stp', obj)
       if (this.multiTransact == true) {
         console.log('new purchase obj', this.childTransactions)
@@ -442,7 +428,8 @@ export class StpTransactionComponent implements OnInit {
     if (data == undefined) {
 
     } else {
-      this.onAddTransaction('confirm', this.transactionSummary)
+      this.processTransaction.onAddTransaction('confirm', this.transactionSummary)
+      Object.assign(data, { allEdit: false });
     }
   }
   AddMultiTransaction() {
@@ -462,7 +449,9 @@ export class StpTransactionComponent implements OnInit {
       frequencyType: this.frequency,
       startDate: Number(new Date(this.stpTransaction.controls.date.value.replace(/"/g, ""))),
     }
-    obj = this.processTransaction.checkInstallments(obj)
+    const tenure = this.stpTransaction.controls.tenure.value;
+    const installment = this.stpTransaction.controls.installment.value;
+    obj = this.processTransaction.checkInstallments(obj, tenure, installment)
     this.childTransactions.push(obj)
     console.log(this.childTransactions)
     this.schemeList = [];

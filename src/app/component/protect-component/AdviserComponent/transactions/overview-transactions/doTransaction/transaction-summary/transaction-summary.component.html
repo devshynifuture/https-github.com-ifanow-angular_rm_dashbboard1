@@ -107,17 +107,12 @@
                     <p class="m-0 roboto text-custom">UMRN details</p>
                     <h5 class="m-0">
                         <span class="f-500">UMRN no.:</span>
-                        {{(transactionSummary==undefined)?'':(transactionSummary.paymentMode==2)?'Debit mandate':'Net banking'}}
+                        {{(transactionSummary == undefined)?'-': transactionSummary.umrnNo}}
                     </h5>
-                    <!-- <mat-select class="form-control">
-                        <mat-option *ngFor="let umrn of achMandateNSE" (click)="selectUmrn(umrn)" [value]="umrn.umrnNo">
-                            {{umrn.umrnNo}}
-                        </mat-option>
-                    </mat-select> -->
                 </div>
                 <div class="col-md-2"
-                    *ngIf=" transactionSummary && transactionSummary.allEdit == true  && (transactionSummary.transactType == 'PURCHASE'|| transactionSummary.transactType == 'SIP')">
-                    <button mat-stroked-button class="primary-sm">Edit</button>
+                    *ngIf=" transactionSummary && transactionSummary.allEdit == true  && (transactionSummary.transactType == 'PURCHASE'|| transactionSummary.transactType == 'SIP') && transactionSummary.showUmrnEdit ==2">
+                    <button mat-stroked-button class="primary-sm" (click)="openUmrn()">Edit</button>
                 </div>
             </div>
             <div class="row  pt-16 pb-16">

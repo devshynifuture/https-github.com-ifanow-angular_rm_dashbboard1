@@ -181,6 +181,9 @@
                                 <mat-error *ngIf="(swpTransaction.get('employeeContry').errors?.min)" class="f-12">
                                     Should be greater than or equal to {{schemeDetails.minimumPurchaseAmount}}
                                 </mat-error>
+                                <mat-error *ngIf="(swpTransaction.get('employeeContry').errors?.required)" class="f-12">
+                                    This field is requied
+                                 </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -189,7 +192,6 @@
                     <div class="col-md-12 p-0 text-left">
                         <h5 class="m-0 pt-40 text-black pb-12">Select 1st date SWP</h5>
                     </div>
-
                     <div class="col-md-5 p-0">
                         <mat-form-field>
                             <mat-select class="form-control" formControlName="date">

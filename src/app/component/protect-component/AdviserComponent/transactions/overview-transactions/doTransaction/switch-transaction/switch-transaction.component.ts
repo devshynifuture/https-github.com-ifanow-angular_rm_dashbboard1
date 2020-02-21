@@ -104,7 +104,7 @@ export class SwitchTransactionComponent implements OnInit {
     this.schemeList = data
   }
   onFolioChange(folio) {
-    this.switchTransaction.controls.folioSelection.reset()
+    this.switchTransaction.controls.investmentAccountSelection.reset()
   }
   selectedFolio(folio) {
     this.folioDetails = folio
@@ -178,31 +178,6 @@ export class SwitchTransactionComponent implements OnInit {
     this.showSpinnerFolio = false
     console.log('res scheme folio', data)
     this.folioList = data
-  }
-
-  onAddTransaction(value, data) {
-    Object.assign(this.transactionSummary, { allEdit: false });
-    this.confirmTrasaction = true
-    const fragmentData = {
-      flag: 'addNsc',
-      data,
-      id: 1,
-      state: 'open65',
-      componentName: ConfirmationTransactionComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getNscSchemedata();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-          }
-          rightSideDataSub.unsubscribe();
-        }
-
-      }
-    );
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
@@ -293,8 +268,16 @@ export class SwitchTransactionComponent implements OnInit {
     return this.switchTransaction.controls;
   }
   switch() {
-
-    if (this.switchTransaction.get('employeeContry').invalid) {
+    if (this.reInvestmentOpt.length > 1) {
+      if (this.switchTransaction.get('reinvest').invalid) {
+        this.switchTransaction.get('reinvest').markAsTouched();
+      }
+    } else if (this.switchTransaction.get('folioSelection').value == 1) {
+      if (this.switchTransaction.get('investmentAccountSelection').invalid) {
+        this.switchTransaction.get('investmentAccountSelection').markAsTouched();
+        return;
+      }
+    }  else if (this.switchTransaction.get('employeeContry').invalid) {
       this.switchTransaction.get('employeeContry').markAsTouched();
       return;
     } else if (this.switchTransaction.get('switchType').invalid) {
@@ -352,7 +335,8 @@ export class SwitchTransactionComponent implements OnInit {
     if (data == undefined) {
 
     } else {
-      this.onAddTransaction('confirm', this.transactionSummary)
+      this.processTransaction.onAddTransaction('confirm', this.transactionSummary)
+      Object.assign(data, { allEdit: false });
     }
   }
   AddMultiTransaction() {

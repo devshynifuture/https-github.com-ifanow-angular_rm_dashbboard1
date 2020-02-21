@@ -197,6 +197,9 @@
                                     class="f-12">
                                     Should be greater than or equal to {{schemeDetails.redemptionAmountMinimum}}
                                 </mat-error>
+                                <mat-error *ngIf="(redemptionTransaction.get('employeeContry').errors?.required)" class="f-12">
+                                    This field is requied
+                                 </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -205,8 +208,7 @@
 
             <div class="col-md-4 bg-grey lter p-0">
                 <app-transaction-summary [data]="transactionSummary" (defaultDetails)='getDefaultDetails($event)'
-                    (bankDetailsSend)='getbankDetails($event)' (folioChange)='onFolioChange($event)'
-                    [folioChange]="folioDetails">
+                    (bankDetailsSend)='getbankDetails($event)' (folioChange)='onFolioChange($event)'>
                 </app-transaction-summary>
             </div>
         </div>

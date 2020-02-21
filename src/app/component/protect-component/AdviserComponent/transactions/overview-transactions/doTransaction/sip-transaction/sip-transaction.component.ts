@@ -80,30 +80,6 @@ export class SipTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { allEdit: true });
     Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
   }
-  onAddTransaction(value, data) {
-    Object.assign(this.transactionSummary, { allEdit: false });
-    this.confirmTrasaction = true
-    const fragmentData = {
-      flag: 'addNsc',
-      data,
-      id: 1,
-      state: 'open65',
-      componentName: ConfirmationTransactionComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getNscSchemedata();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-          }
-          rightSideDataSub.unsubscribe();
-        }
-
-      }
-    );
-  }
   enteredAmount(value) {
     Object.assign(this.transactionSummary, { enteredAmount: value });
   }
@@ -156,7 +132,7 @@ export class SipTransactionComponent implements OnInit {
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
-   // this.sipTransaction.controls.investor.reset();
+    // this.sipTransaction.controls.investor.reset();
     this.platformType = this.getDataSummary.defaultClient.aggregatorType
     Object.assign(this.transactionSummary, { aggregatorType: this.platformType });
   }
@@ -215,7 +191,11 @@ export class SipTransactionComponent implements OnInit {
   getNSEAchmandateRes(data) {
     this.showSpinnerMandate = false
     console.log('getNSEAchmandateRes', data)
+    if (data.length > 1) {
+      Object.assign(this.transactionSummary, { showUmrnEdit: true });
+    }
     this.achMandateNSE = data[0]
+    Object.assign(this.transactionSummary, { umrnNo: this.achMandateNSE.umrnNo });
   }
   getFrequency() {
     let obj = {
@@ -256,8 +236,8 @@ export class SipTransactionComponent implements OnInit {
     console.log('bank details', value)
   }
   onFolioChange(folio) {
-    this.sipTransaction.controls.folioSelection.reset()
-   }
+    this.sipTransaction.controls.investmentAccountSelection.reset()
+  }
   getMandateDetails() {
     let obj1 = {
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -343,8 +323,16 @@ export class SipTransactionComponent implements OnInit {
     return this.sipTransaction.controls;
   }
   sip() {
-
-    if (this.sipTransaction.get('employeeContry').invalid) {
+     if (this.reInvestmentOpt.length > 1) {
+      if (this.sipTransaction.get('reinvest').invalid) {
+        this.sipTransaction.get('reinvest').markAsTouched();
+      }
+    } else if (this.sipTransaction.get('folioSelection').value == 1) {
+      if (this.sipTransaction.get('investmentAccountSelection').invalid) {
+        this.sipTransaction.get('investmentAccountSelection').markAsTouched();
+        return;
+      }
+    }  else if (this.sipTransaction.get('employeeContry').invalid) {
       this.sipTransaction.get('employeeContry').markAsTouched();
       return;
     } else if (this.sipTransaction.get('date').invalid) {
@@ -398,11 +386,13 @@ export class SipTransactionComponent implements OnInit {
         obj.nsePaymentMode = (this.sipTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE'
       }
       console.log('sip json', obj)
-      obj = this.processTransaction.checkInstallments(obj)
+      const tenure = this.sipTransaction.controls.tenure.value;
+      const installment = this.sipTransaction.controls.installment.value;
+      obj = this.processTransaction.checkInstallments(obj, tenure, installment)
       if (this.multiTransact == true) {
         obj.childTransactions = this.childTransactions
       }
-      
+
       this.onlineTransact.transactionBSE(obj).subscribe(
         data => this.sipBSERes(data), (error) => {
           this.eventService.showErrorMessage(error);
@@ -415,7 +405,8 @@ export class SipTransactionComponent implements OnInit {
     if (data == undefined) {
 
     } else {
-      this.onAddTransaction('confirm', this.transactionSummary)
+      this.processTransaction.onAddTransaction('confirm', this.transactionSummary)
+      Object.assign(data, { allEdit: false });
     }
   }
   AddMultiTransaction() {
@@ -434,7 +425,9 @@ export class SipTransactionComponent implements OnInit {
       frequencyType: this.frequency,
       startDate: Number(new Date(this.sipTransaction.controls.date.value.replace(/"/g, ""))),
     }
-    obj = this.processTransaction.checkInstallments(obj)
+    const tenure = this.sipTransaction.controls.tenure.value;
+    const installment = this.sipTransaction.controls.installment.value;
+    obj = this.processTransaction.checkInstallments(obj, tenure, installment)
     this.childTransactions.push(obj)
     console.log(this.childTransactions)
     this.schemeList = [];
