@@ -70,7 +70,7 @@ export class GoogleConnectComponent implements OnInit {
         }
       }, 1000);
     } else {
-      this.eventService.openSnackBar("Your Email id is not same as your login credentials", "DISMISS")
+      this.eventService.openSnackBar("Your email id is not same as your login credentials", "DISMISS")
     }
 
 

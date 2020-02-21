@@ -11,6 +11,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { DeploymentDetailsComponent } from './deployment-details/deployment-details.component';
 import { PlanService } from '../plan.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-investments-plan',
@@ -22,6 +23,7 @@ export class DeploymentsPlanComponent implements OnInit {
   dataSource;
   clientId: any;
   advisorId: any;
+  selectedDeployments: any = [];
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService, public dialog: MatDialog, private planService: PlanService) { }
   isLoading = false;
   ngOnInit() {
@@ -48,8 +50,10 @@ export class DeploymentsPlanComponent implements OnInit {
     )
 
   }
-  selectSingleDeployment(value) {
-    console.log(value);
+  selectSingleDeployment(flag, value) {
+    console.log(flag, value);
+    (flag.checked) ? this.selectedDeployments.push({ id: value.id }) : this.selectedDeployments = this.selectedDeployments.filter(element => element.id != value.id);
+    console.log(this.selectedDeployments)
   }
   openPopup(flagVlaue, singleDeployment) {
     let componentName;
@@ -89,7 +93,8 @@ export class DeploymentsPlanComponent implements OnInit {
       positiveMethod: () => {
         this.cusService.deletePPF(deleteData.id).subscribe(
           data => {
-            this.eventService.openSnackBar("Deployment is deleted", "dismiss")
+            this.eventService.openSnackBar("Deployment is deleted", "dismiss");
+            this.getDeploymentData();
             dialogRef.close();
           },
           error => this.eventService.showErrorMessage(error)
@@ -114,11 +119,25 @@ export class DeploymentsPlanComponent implements OnInit {
   }
 
   openDep(flagValue, data) {
-    let component;
-    component = (flagValue == 'open') ? component = DeploymentDetailsComponent : component = SetupLumpsumDeploymentComponent;
+    let component, deploymentData;
+    if (flagValue == 'open') {
+      component = DeploymentDetailsComponent
+      deploymentData =
+      {
+        data
+      }
+    }
+    else {
+      component = SetupLumpsumDeploymentComponent;
+      deploymentData =
+      {
+        data,
+        deploymentIdList: this.selectedDeployments
+      }
+    }
     const fragmentData = {
       id: 1,
-      data,
+      data: deploymentData,
       state: flagValue,
       componentName: component
     };

@@ -73,7 +73,7 @@
                         <td class="br text-left" mat-cell *matCellDef="let element" appFormatNumber>
                             {{element.amount}} </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                            {{(mutualFund)?this.totalTransactionAmt:'0'}}</td>
+                            {{(grandTotal)?grandTotal.totalTransactionAmt:'0'}}</td>
 
                     </ng-container>
 
@@ -84,7 +84,7 @@
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
                             {{element.transactionNav}} </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                            {{(mutualFund)?this.totalNav:'0'}}</td>
+                            {{(grandTotal)?grandTotal.totalNav:'0'}}</td>
 
                     </ng-container>
 
@@ -93,7 +93,7 @@
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
                             {{element.unit}} </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                            {{(mutualFund)?this.totalUnit:'0'}}</td>
+                            {{(grandTotal)?grandTotal.totalUnit:'0'}}</td>
 
                     </ng-container>
 
@@ -104,7 +104,7 @@
                             {{element.balanceUnits}}
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                            {{(mutualFund)?this.totalBalanceUnit:'0'}}</td>
+                            {{(grandTotal)?grandTotal.totalBalanceUnit:'0'}}</td>
 
                     </ng-container>
 

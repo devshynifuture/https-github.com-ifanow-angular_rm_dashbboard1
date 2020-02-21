@@ -53,7 +53,7 @@
                         <td class="br text-left" mat-cell *matCellDef="let element" appFormatNumber>
                             {{element.totalTransactionAmt}} </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                            {{(mutualFund)?this.finalTotalTransactionAmt:'0'}}</td>
+                            {{(grandTotal)?grandTotal.totalTransactionAmt:'0'}}</td>
 
                     </ng-container>
 
@@ -64,7 +64,7 @@
                             {{element.currentValue}}
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                            {{(mutualFund)?this.finalCurrentValue:'0'}}</td>
+                            {{(grandTotal)?grandTotal.currentValue:'0'}}</td>
 
                     </ng-container>
                     <ng-container matColumnDef="dividendPayout">
@@ -74,7 +74,7 @@
                             {{element.dividendPayout}}
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                            {{(mutualFund)?this.finalDividendPayout:'0'}}</td>
+                            {{(grandTotal)?grandTotal.dividendPayout:'0'}}</td>
 
                     </ng-container>
 
@@ -85,7 +85,7 @@
                             {{element.dividendReinvest}}
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                            {{(mutualFund)?this.finalDivReinvestment:'0'}}</td>
+                            {{(grandTotal)?grandTotal.dividendReinvest:'0'}}</td>
 
                     </ng-container>
 
@@ -96,7 +96,7 @@
                             {{element.gain}}
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                            {{(mutualFund)?this.finalGain:'0'}}</td>
+                            {{(grandTotal)?grandTotal.totalGain:'0'}}</td>
 
                     </ng-container>
 
@@ -107,7 +107,7 @@
                             {{element.absReturn}}
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                            {{(mutualFund)?this.finalAbsReturn:'0'}}</td>
+                            {{(grandTotal)?grandTotal.totalGain:'0'}}</td>
 
                     </ng-container>
 
@@ -118,7 +118,7 @@
                             {{element.xirr}}
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                            {{(mutualFund)?this.finalXirr:'0'}}</td>
+                            {{(grandTotal)?grandTotal.xirr:'0'}}</td>
 
                     </ng-container>
 
@@ -129,7 +129,7 @@
                             {{element.allocation}}
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                            {{(mutualFund)?this.finalAllocationPer:'0'}}</td>
+                            {{(grandTotal)?grandTotal.allocationPer:'0'}}</td>
 
                     </ng-container>
 
@@ -180,7 +180,7 @@
                         <td class="br text-left" mat-cell *matCellDef="let element" appFormatNumber>
                             {{element.amount}} </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                            {{(mutualFund)?this.finalTotalTransactionAmt:'0'}}</td>
+                            {{(grandTotal)?grandTotal.totalTransactionAmt:'0'}}</td>
 
                     </ng-container>
 
@@ -191,7 +191,7 @@
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
                             {{element.transactionNav}} </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                            {{(mutualFund)?this.finalTotalNav:'0'}}</td>
+                            {{(grandTotal)?grandTotal.totalNav:'0'}}</td>
 
                     </ng-container>
 
@@ -200,7 +200,7 @@
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
                             {{element.unit}} </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                            {{(mutualFund)?this.finalTotalUnit:'0'}}</td>
+                            {{(grandTotal)?grandTotal.finalTotalUnit:'0'}}</td>
 
                     </ng-container>
 
@@ -211,7 +211,7 @@
                             {{element.currentValue}}
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                            {{(mutualFund)?this.finalCurrentValue:'0'}}</td>
+                            {{(grandTotal)?grandTotal.currentValue:'0'}}</td>
 
                     </ng-container>
                     <ng-container matColumnDef="dividendPayout">
@@ -221,7 +221,7 @@
                             {{element.dividendPayout}}
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                            {{(mutualFund)?this.finalDividendPayout:'0'}}</td>
+                            {{(grandTotal)?grandTotal.dividendPayout:'0'}}</td>
 
                     </ng-container>
                     <ng-container matColumnDef="dividendReinvest">
@@ -231,7 +231,7 @@
                             {{element.dividendReinvest}}
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                            {{(mutualFund)?this.finalDivReinvestment:'0'}}</td>
+                            {{(grandTotal)?grandTotal.dividendReinvest:'0'}}</td>
 
                     </ng-container>
                     <ng-container matColumnDef="totalAmount">
@@ -241,7 +241,7 @@
                             {{element.totalAmount}}
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                            {{(mutualFund)?this.finalTotalAmount:'0'}}</td>
+                            {{(grandTotal)?grandTotal.totalAmount:'0'}}</td>
 
                     </ng-container>
 
@@ -252,7 +252,7 @@
                             {{element.gain}}
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                            {{(mutualFund)?this.finalGain:'0'}}</td>
+                            {{(grandTotal)?grandTotal.totalGain:'0'}}</td>
 
                     </ng-container>
 
@@ -263,7 +263,7 @@
                             {{element.absReturn}}
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                            {{(mutualFund)?this.finalAbsReturn:'0'}}</td>
+                            {{(grandTotal)?grandTotal.absReturn:'0'}}</td>
 
                     </ng-container>
 
@@ -274,7 +274,7 @@
                             {{element.xirr}}
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                            {{(mutualFund)?this.finalXirr:'0'}}</td>
+                            {{(grandTotal)?grandTotal.xirr:'0'}}</td>
 
                     </ng-container>
 

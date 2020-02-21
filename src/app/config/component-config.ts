@@ -375,6 +375,8 @@ export const appConfig = {
   NSE_ACHMANDATE: 'nse/ach-mandate/report/get',
   BANK_DETAILS_NSE: 'nse/iin/bank-detail/get',
   GETIIN_DETAILS: 'nse/iin/detail/get',
+  GET_FOLIO_MAPPED: '/mutual-fund/folios/mapped/get',
+  GET_FOLIO_UNMAPPED: '/mutual-fund/folios/unmapped/get',
   // SIP_BSE:'bse/order/create',
 
   // cashflow 

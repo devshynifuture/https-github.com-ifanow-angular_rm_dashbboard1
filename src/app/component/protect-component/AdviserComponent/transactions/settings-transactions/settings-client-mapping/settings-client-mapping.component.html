@@ -64,7 +64,9 @@
             <ng-container matColumnDef="map">
                 <th mat-header-cell *matHeaderCellDef> Map </th>
                 <td mat-cell *matCellDef="let element">
-                    <button mat-stroked-button class="primary-sm text-white bg-primary br-0"
+                    <button mat-stroked-button *ngIf="type=='1'" class="primary-sm text-white bg-primary br-0"
+                        (click)="openAddMappiing(element,'')">UNMAP</button>
+                    <button mat-stroked-button *ngIf="type=='2'" class="primary-sm text-white bg-primary br-0"
                         (click)="openAddMappiing(element,'')">MAP</button>
                 </td>
             </ng-container>

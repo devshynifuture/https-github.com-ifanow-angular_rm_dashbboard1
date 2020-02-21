@@ -195,7 +195,7 @@ export class EmailViewComponent implements OnInit, OnDestroy {
     this.emailSubscription = this.emailService.data.subscribe(response => {
       this.emailObj = response;
       if (!this.emailObj) {
-        this.eventService.openSnackBar("No Email Data !", "DISMISS");
+        this.eventService.openSnackBar("No email data !", "DISMISS");
         this.router.navigate(['../'], { relativeTo: this.activatedRoute });
       }
       if (this.emailObj) {
