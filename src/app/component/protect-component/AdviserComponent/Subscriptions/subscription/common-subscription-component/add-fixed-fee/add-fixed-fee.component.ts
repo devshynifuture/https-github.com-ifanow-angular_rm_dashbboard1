@@ -203,12 +203,12 @@ export class AddFixedFeeComponent implements OnInit {
 
   saveFeeTypeDataResponse(data, state) {
     // this.outputFixedData.emit(data)
-    this.eventService.openSnackBar('Service is Created', 'OK');
+    this.eventService.openSnackBar('Service is created', 'OK');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data: data });
   }
   saveFeeTypeDataEditResponse(data, state) {
     // this.outputFixedData.emit(this.dataToSend)
-    this.eventService.openSnackBar('Service is Created', 'OK');
+    this.eventService.openSnackBar('Service is created', 'OK');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data: this.dataToSend });
   }
 }

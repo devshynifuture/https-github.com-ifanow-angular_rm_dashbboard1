@@ -67,6 +67,12 @@ export class OnlineTransactionService {
   getIINDetails(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GETIIN_DETAILS, data, 1)
   }
+  getFolioMappedData(data) {
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_FOLIO_MAPPED, data, 1)
+  }
+  getFolioUnmappedData(data) {
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_UNMAPPED_FOLIO, data, 1)
+  }
   // sipBSE(data){
   //   return this.http.postEncoded(apiConfig.TRANSACT + appConfig.SIP_BSE, data)
   // }

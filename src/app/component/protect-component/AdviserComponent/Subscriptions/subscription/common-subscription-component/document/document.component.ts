@@ -797,7 +797,7 @@ export class DocumentComponent implements OnInit {
           this.saveMappingDocumentToPlansResponse(data);
         }
         else if (data === 204) {
-          this.eventService.openSnackBar('No Documents Created', 'dismiss');
+          this.eventService.openSnackBar('No documents created', 'dismiss');
           this.barButtonOptions.active = false;
         }
       },
@@ -814,7 +814,7 @@ export class DocumentComponent implements OnInit {
     this.changeServiceData.emit(true);
     // this.eventService.changeUpperSliderState({ state: 'close' });
     if (this.mappedData.length == 0) {
-      this.eventService.openSnackBar('No Document mapped', 'Dismiss');
+      this.eventService.openSnackBar('No document mapped', 'Dismiss');
     } else {
       this.eventService.openSnackBar('Document is mapped', 'OK');
     }

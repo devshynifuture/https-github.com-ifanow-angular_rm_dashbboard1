@@ -29,3 +29,15 @@
 .pb-100{
     padding-bottom: 100px !important;
 }
+::ng-deep{
+    .order-historical{
+            .mat-checkbox-layout .mat-checkbox-label{
+            white-space: normal;
+            word-break: break-word;
+        }
+        .mat-checkbox-inner-container{
+            margin: 2px;
+            top: 4px;
+        }
+    }
+}

@@ -9,18 +9,19 @@
 </div>
 <mat-sidenav-container class="sidenav-container" [hasBackdrop]="false">
     <mat-sidenav-content id="left">
-        <div [ngClass]="sidenavState ? 'd-none': ''" class="leftside-overlay-toggle-button" (click)=" sidenav.toggle()">
+        <div [ngClass]="sidenavState ? 'd-none': ''" class="leftside-overlay-toggle-button" (click)="sidenav.toggle()">
             <i class="material-icons f-30 text-custom">
                 keyboard_arrow_right
             </i>
         </div>
 
         <div class="row">
-            <div class="col-md-2 bb d-flex align-items-center">
-                <img class="imgWidth" src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
+            <div class="col-md-2 bb d-flex align-items-center" *ngIf="!shouldShowMainNav">
+                <img class="imgWidth"
+                    src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
                 <h5 class="logoh5">YOUR LOGO HERE</h5>
             </div>
-            <div class="d-flex align-items-center bg-grey lt col-md-7">
+            <div class="d-flex align-items-center bg-grey lt" [ngClass]="!shouldShowMainNav ? ' col-md-7': 'col-md-9'">
                 <!-- <mat-form-field class="serachbox">
                     <div class="form-group searchBoxHeader">
                         <input #inputSearch [matAutocomplete]="auto" class="form-control pl-40" matInput type="text">
@@ -84,6 +85,11 @@
     <mat-sidenav #sidenav class="sideNavClass" role="navigation">
         <mat-nav-list class="width-230 pt-0" id="d">
 
+            <div class="bb d-flex align-items-center" *ngIf="shouldShowMainNav">
+                <img class="imgWidth"
+                    src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
+                <h5 class="logoh5">YOUR LOGO HERE</h5>
+            </div>
 
             <div class="mt-50">
 
@@ -96,15 +102,18 @@
                     <img src="assets/images/svg/people.svg">
                     <span class="title" mat-line>My IFAs</span>
                 </a>
-                <a class="sidenav-link" routerLink="/support/ifa-onboarding" (click)="checkUrl('ifa-onboarding')" routerLinkActive="router-link-active" mat-list-item>
+                <a class="sidenav-link" routerLink="/support/ifa-onboarding" (click)="checkUrl('ifa-onboarding')"
+                    routerLinkActive="router-link-active" mat-list-item>
                     <img src="assets/images/svg/file-lines.svg">
                     <span class="title" mat-line>IFA onboarding</span>
                 </a>
-                <a class="sidenav-link" routerLink="/support/aum-reconciliation" (click)="checkUrl('aum-reconciliation')" mat-list-item>
+                <a class="sidenav-link" routerLink="/support/aum-reconciliation"
+                    (click)="checkUrl('aum-reconciliation')" mat-list-item>
                     <img src="assets/images/svg/mail.svg">
                     <span class="title" mat-line>AUM Reconciliation</span>
                 </a>
-                <a class="sidenav-link" routerLink="/support/file-ordering" (click)="checkUrl('file-ordering')" mat-list-item>
+                <a class="sidenav-link" routerLink="/support/file-ordering" (click)="checkUrl('file-ordering')"
+                    mat-list-item>
                     <img src="assets/images/svg/cart.svg">
                     <span class="title" mat-line>File ordering & uploads</span>
                 </a>
@@ -112,7 +121,8 @@
                     <img src="assets/images/svg/ruppes.svg">
                     <span class="title" mat-line>Reports</span>
                 </a>
-                <a class="sidenav-link" routerLink="/support/miscellaneous" (click)="checkUrl('miscellaneous')" mat-list-item>
+                <a class="sidenav-link" routerLink="/support/miscellaneous" (click)="checkUrl('miscellaneous')"
+                    mat-list-item>
                     <img src="assets/images/svg/ruppes.svg">
                     <span class="title" mat-line>Miscellaneous</span>
                 </a>
@@ -120,7 +130,8 @@
 
         </mat-nav-list>
 
-        <div class="leftside-overlay-toggle-button-close" [ngClass]="sidenavState ? 'd-none': ''" (click)="toggleSideNav()">
+        <div class="leftside-overlay-toggle-button-close" [ngClass]="sidenavState ? 'd-none': ''"
+            (click)="toggleSideNav()">
             <i class="material-icons f-30 text-custom">
                 keyboard_arrow_left
             </i>

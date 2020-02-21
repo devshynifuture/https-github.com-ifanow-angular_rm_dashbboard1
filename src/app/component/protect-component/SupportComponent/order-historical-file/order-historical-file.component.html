@@ -11,7 +11,7 @@
     </div>
 </div>
 
-<div class="pb-100" [formGroup]="orderHistoryFileForm">
+<div class="pb-100 order-historical" [formGroup]="orderHistoryFileForm">
     <div class="row pt-28">
         <div class="col-md-5 pr-0">
             <h5 class="text-right pt-12 mb-0">Select RTA</h5>
@@ -50,6 +50,89 @@
                 *ngIf="orderHistoryFileForm.get('selectArnRia').touched && orderHistoryFileForm.get('selectArnRia').invalid">
                 This field is required
             </mat-error>
+        </div>
+    </div>
+
+    <div class="row pt-24" *ngIf="orderHistoryFileForm.get('selectRta').touched">
+        <div class="col-md-5 pr-0">
+            <h5 class="text-right pt-12 mb-0"> Select files to order </h5>
+        </div>
+        <div class="col-md-6 pr-0">
+            <div class="row ">
+                <div class="col-md-6 p-0">
+                    <h3 class="f-14 m-0 f-600">Transactions</h3>
+                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === '1'">
+                        <!-- cams option -->
+                        <mat-checkbox class="d-block" formControlName="wbr2">WBR2</mat-checkbox>
+                        <mat-checkbox class="d-block" formControlName="wbr2a">WBR2A</mat-checkbox>
+                    </div>
+                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === '2'">
+                        <!-- karvy option -->
+                        <mat-checkbox class="d-block" formControlName="mfsd201">MFSD 201</mat-checkbox>
+                    </div>
+                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === '3'">
+                        <!-- franklin option -->
+                        <mat-checkbox class="d-block wb ws-normal" formControlName="myTransactionsForAPeriod">My
+                            transactions for a
+                            period</mat-checkbox>
+                    </div>
+                </div>
+                <div class="col-md-6 p-0">
+                    <h3 class="f-14 m-0 f-600">SIP/STP</h3>
+                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === '1'">
+                        <!-- cams options -->
+                        <mat-checkbox class="d-block" formControlName="wbr49Active">WBR49 Active</mat-checkbox>
+                        <mat-checkbox class="d-block" formControlName="wbr49Ceased">WBR49 Ceased</mat-checkbox>
+                    </div>
+                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === '2'">
+                        <!-- karvy options -->
+                        <mat-checkbox class="d-block" formControlName="mfsd243Active">MFSD 243 Active </mat-checkbox>
+                        <mat-checkbox class="d-block" formControlName="mfsd231Ceased">MFSD 243 Active </mat-checkbox>
+                    </div>
+                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === '3'">
+                        <!-- franklin options -->
+                        <mat-checkbox class="d-block" formControlName="activeSip">Active SIP</mat-checkbox>
+                        <mat-checkbox class="d-block" formControlName="ceasedSip">Ceased SIP </mat-checkbox>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row pt-14">
+                <div class="col-md-6 p-0">
+                    <h3 class="f-14 m-0 f-600">Folio master</h3>
+                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === '1'">
+                        <!-- cams options -->
+                        <mat-checkbox class="d-block" formControlName="wbr9">WBR9</mat-checkbox>
+                    </div>
+                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === '2'">
+                        <!-- karvy options -->
+                        <mat-checkbox class="d-block" formControlName="mfsd211">MFSD 211</mat-checkbox>
+                    </div>
+                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === '3'">
+                        <!-- franklin options -->
+                        <mat-checkbox class="d-block wb ws-normal" formControlName="investorFolioDetails">Investor Folio
+                            Details
+                        </mat-checkbox>
+                    </div>
+                </div>
+                <div class="col-md-6 p-0">
+                    <h3 class="f-14 m-0 f-600">AUM</h3>
+                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === '1'">
+                        <!-- cams options -->
+                        <mat-checkbox class="d-block" formControlName="wbr22">WBR22</mat-checkbox>
+                    </div>
+                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === '2'">
+                        <!-- karvy options -->
+                        <mat-checkbox class="d-block" formControlName="mfsd203">MFSD 203</mat-checkbox>
+                    </div>
+                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === '3'">
+                        <!-- franklin options -->
+                        <mat-checkbox class="d-block wb ws-normal" formControlName="clientwiseAumOrWhoseBalExceedsN">
+                            Clients wise AUM or whose Balance exceeds 'N'
+                        </mat-checkbox>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -92,7 +175,6 @@
         </div>
     </div>
 
-
     <div class="row pt-24">
         <div class="col-md-5 pr-0">
             <h5 class="text-right pt-12 mb-0">Ordering frequency</h5>
@@ -104,7 +186,13 @@
                         select option
                     </mat-option>
                     <mat-option value="1">
-                        Ordering frequency
+                        Yearly
+                    </mat-option>
+                    <mat-option value="2">
+                        Monthly
+                    </mat-option>
+                    <mat-option value="3">
+                        All at once
                     </mat-option>
                 </mat-select>
                 <mat-error
@@ -114,38 +202,6 @@
             </mat-form-field>
         </div>
     </div>
-
-    <div class="row pt-24">
-        <div class="col-md-5 pr-0">
-            <h5 class="text-right pt-12 mb-0"> Select files to order </h5>
-        </div>
-        <div class="col-md-6">
-            <div class="row">
-                <div class="col-md-6 pl-0">
-                    <h3 class="f-14 m-0 f-600">Transactions</h3>
-                    <mat-checkbox class="d-block" formControlName="wbr2">WBR2</mat-checkbox>
-                    <mat-checkbox class="d-block" formControlName="wbr2a">WBR2A</mat-checkbox>
-                </div>
-                <div class="col-md-6 pl-0">
-                    <h3 class="f-14 m-0 f-600">SIP/STP</h3>
-                    <mat-checkbox class="d-block" formControlName="wbr49Active">WBR49 Active</mat-checkbox>
-                    <mat-checkbox class="d-block" formControlName="wbr49Close">WBR49 Ceased</mat-checkbox>
-                </div>
-            </div>
-
-            <div class="row pt-14">
-                <div class="col-md-6 pl-0">
-                    <h3 class="f-14 m-0 f-600">Folio master</h3>
-                    <mat-checkbox class="d-block" formControlName="wbr9">WBR9</mat-checkbox>
-                </div>
-                <div class="col-md-6 pl-0">
-                    <h3 class="f-14 m-0 f-600">AUM</h3>
-                    <mat-checkbox class="d-block" formControlName="wbr22">WBR22</mat-checkbox>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
 </div>
 <div class="bottom-fixed wrapper-12 pt-16 w-50">

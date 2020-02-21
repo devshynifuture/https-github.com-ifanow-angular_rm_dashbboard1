@@ -135,7 +135,7 @@ export class CashAndBankComponent implements OnInit {
         } else {
           this.custumService.deleteCashInHand(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar('Cash In Hand is deleted', 'dismiss');
+              this.eventService.openSnackBar('Cash in hand is deleted', 'dismiss');
               dialogRef.close();
               this.getCashInHandList();
             },

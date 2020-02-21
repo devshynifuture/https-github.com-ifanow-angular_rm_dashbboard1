@@ -3,6 +3,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { UtilService } from 'src/app/services/util.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MFSchemeLevelHoldingsComponent } from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
+import { MfServiceService } from '../../mf-service.service';
 
 @Component({
   selector: 'app-mutual-fund-all-transaction',
@@ -16,14 +17,11 @@ export class MutualFundAllTransactionComponent implements OnInit {
   subCategoryData: any[];
   schemeWise: any[];
   mutualFundList: any[];
-  totalTransactionAmt: number;
-  totalUnit: number;
-  totalBalanceUnit: number;
-  totalNav: number;
-  totalObj: { 'total': string; 'totalTransactionAmt': number; 'totalUnit': number; 'totalNav': number; 'totalBalanceUnit': number; };
+  totalObj: any;
   customDataSource: any;
-
-  constructor(private subInjectService: SubscriptionInject, private UtilService: UtilService) { }
+  grandTotal: any;
+  catObj: any;
+  constructor(private subInjectService: SubscriptionInject, private UtilService: UtilService, private MfServiceService: MfServiceService) { }
   @Input() mutualFund;
 
   ngOnInit() {
@@ -36,22 +34,13 @@ export class MutualFundAllTransactionComponent implements OnInit {
     }
   }
   subCatArray() {
-    let catObj = {};
-    const categoryArray = [];
-    let filteredArray=[];
+    let filteredArray = [];
     if (this.mutualFundList != undefined) {
-      this.mutualFundList.forEach(ele => {
-        if (ele.subCategoryName) {
-          const categoryArray = catObj[ele.subCategoryName] ? catObj[ele.subCategoryName] : [];
-          categoryArray.push(ele);
-          catObj[ele.subCategoryName] = categoryArray;
-        } else {
-          categoryArray.push(ele);
-        }
-      });
-      Object.keys(catObj).map(key => {
+      this.catObj = this.MfServiceService.categoryFilter(this.mutualFundList);
+      Object.keys(this.catObj).map(key => {
+        this.MfServiceService.initializeValues();//for initializing total values object
         filteredArray.push({ groupName: key });
-        catObj[key].forEach((singleData) => {
+        this.catObj[key].forEach((singleData) => {
           const obj = {
             'schemeName': singleData.schemeName,
             'nav': singleData.nav
@@ -66,12 +55,11 @@ export class MutualFundAllTransactionComponent implements OnInit {
           singleData.mutualFundTransactions.forEach((ele) => {
             filteredArray.push(ele);
           })
-          this.getEachTotalValue(singleData);
+          this.totalObj = this.MfServiceService.getEachTotalValue(singleData);
           filteredArray.push(this.totalObj);
         });
       });
-      this.customDataSource=filteredArray
-      return this.customDataSource;
+      this.customDataSource = filteredArray
     }
   }
   isGroup(index, item): boolean {//get headerName as per category
@@ -94,71 +82,24 @@ export class MutualFundAllTransactionComponent implements OnInit {
     return item.totalBalanceUnit;
   }
   getSubCategoryWise(data) {
-    this.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
-    this.subCategoryData = this.filteredArray
+    this.subCategoryData = this.MfServiceService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
   }
   getSchemeWise() {
-    this.filter(this.filteredArray, 'mutualFundSchemeMaster');
-    this.schemeWise = this.filteredArray
+    this.schemeWise = this.MfServiceService.filter(this.subCategoryData, 'mutualFundSchemeMaster');
   }
   mfSchemes() {
-    this.filter(this.schemeWise, 'mutualFund');
-    this.mutualFundList = this.filteredArray;
+    this.mutualFundList = this.MfServiceService.filter(this.schemeWise, 'mutualFund');
   }
   getTotalValue() {
-    this.totalTransactionAmt = 0;
-    this.totalUnit = 0;
-    this.totalNav = 0;
-    this.totalBalanceUnit = 0;
+    this.MfServiceService.initializeValues()
     this.mutualFundList.forEach(element => {
-      element.mutualFundTransactions.forEach(ele => {
-        this.totalTransactionAmt += ele.amount;
-        this.totalUnit += ele.unit;
-        this.totalNav += ele.transactionNav;
-        this.totalBalanceUnit += ele.balanceUnits;
-      });
+      this.grandTotal = this.MfServiceService.getEachTotalValue(element)
     })
   }
-  getEachTotalValue(data) { //get total value as per category
-    this.totalTransactionAmt = 0;
-    this.totalUnit = 0;
-    this.totalNav = 0;
-    this.totalBalanceUnit = 0;
-    data.mutualFundTransactions.forEach(ele => {
-      this.totalTransactionAmt += ele.amount;
-      this.totalUnit += ele.unit;
-      this.totalNav += ele.transactionNav;
-      this.totalBalanceUnit += ele.balanceUnits;
-    });
-    const obj = {
-      'total': 'Total',
-      'totalTransactionAmt': this.totalTransactionAmt,
-      'totalUnit': this.totalUnit,
-      'totalNav': this.totalNav,
-      'totalBalanceUnit': this.totalBalanceUnit,
-    }
-    this.totalObj = obj
-  }
-  filter(data, key) { //Used for filtering the data 
-    const filterData = [];
-    const finalDataSource = [];
-    data.filter(function (element) {
-      filterData.push(element[key])
-    })
-    if (filterData.length > 0) {
-      filterData.forEach(element => {
-        element.forEach(data => {
-          finalDataSource.push(data)
-        });
-      });
-    }
-    this.filteredArray = finalDataSource;//final dataSource Value
-    return;
-  }
-  editTransaction(portfolioData,data) {
+  editTransaction(portfolioData, data) {
     const fragmentData = {
       flag: portfolioData,
-      data:data,
+      data: data,
       id: 1,
       state: 'open',
       componentName: MFSchemeLevelHoldingsComponent

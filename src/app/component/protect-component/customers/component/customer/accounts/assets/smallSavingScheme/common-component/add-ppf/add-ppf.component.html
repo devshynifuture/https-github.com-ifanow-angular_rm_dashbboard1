@@ -68,7 +68,7 @@
             <div class="col-md-3">
                 <div class="form-group form-group_one mb-0">
                     <mat-form-field>
-                        <input [matDatepicker]="balanceAsOn" class="form-control br-0" formControlName="balanceAsOn"
+                        <input [matDatepicker]="balanceAsOn" (click)="balanceAsOn.open()" class="form-control br-0" formControlName="balanceAsOn"
                             matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                         <mat-datepicker #balanceAsOn></mat-datepicker>
@@ -85,7 +85,7 @@
             <div class="col-md-3">
                 <div class="form-group form-group_one mb-0">
                     <mat-form-field>
-                        <input autocomplete="off" [matDatepicker]="CommencementPicker"
+                        <input autocomplete="off" (click)="CommencementPicker.open()" [matDatepicker]="CommencementPicker"
                             (dateChange)="setCommencementDate($event.target.value)" class="form-control br-0"
                             formControlName="commencementDate" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="CommencementPicker"></mat-datepicker-toggle>
@@ -103,7 +103,7 @@
             <div class="col-md-3 pr-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                        <input autocomplete="off"  appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                             #futureContribution class="form-control rupess br-0" formControlName="futureContribution"
                             matInput maxlength="20" type="text">
                         <mat-error class="f-12">
@@ -122,6 +122,7 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <mat-select formControlName="tenure" class="form-control br-0">
+                            <mat-option value="">Selet tenure years</mat-option>
                             <mat-option value="5">5 Years</mat-option>
                             <mat-option value="6">6 Years</mat-option>
                             <mat-option value="7">7 Years</mat-option>
