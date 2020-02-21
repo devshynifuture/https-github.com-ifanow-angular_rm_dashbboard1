@@ -85,43 +85,42 @@
 
 </div>  -->
 
-
 <div class="dialogclose">
     <div class="row popup-header-fix-100">
         <div class="col-md-2 border-right-1 p-0">
             <img class="imgAdLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
         </div>
         <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
+
             <p class="f-16 mb-0">
                 Investment onboarding - KYC
             </p>
         </div>
+        <!-- (click)="dialogClose()" for prod build  -->
         <div class="col-md-2 text-right">
-            <i (click)="Close(null)" class="material-icons pt-16 c-p pr-16">
+            <i class="material-icons pt-16 c-p pr-16">
                 clear
             </i>
         </div>
     </div>
 </div>
+
+
 <div class="pt-60 mb-100">
     <div class="row">
         <div class="col-md-2 col-2 fixed-top">
             <div class="details_ui">
                 <ul>
-                    <li class="text-success">
-                        <span class="bg-success "> <i class="material-icons text-white">
-                                done
-                            </i> </span> Personal details
-                    </li>
-
-                    <li class="text-success">
-                        <span class="bg-success "> <i class="material-icons text-white">
-                                done
-                            </i> </span> Address details
-                    </li>
-
                     <li class="text-primary">
-                        <span class="bg-primary text-white"> 3 </span> Bank details
+                        <span class="bg-primary text-white"> 1 </span> Personal details
+                    </li>
+
+                    <li>
+                        <span class="bg-grey lt"> 2 </span> Address details
+                    </li>
+
+                    <li>
+                        <span class="bg-grey lt"> 3 </span> Bank details
                     </li>
 
                     <li>
@@ -144,6 +143,11 @@
                         <span class="bg-grey lt"> 8 </span> Review & submit
                     </li>
 
+
+
+
+
+
                 </ul>
             </div>
 
@@ -151,24 +155,11 @@
 
         <div class="col-md-7 offset-2 p-0 bl-1 ">
             <div class="p-20">
-                <h3 class="f-18 mb-28 f-600">Nominee details #1</h3>
+                <h3 class="f-18 mb-28 f-600">Personal details</h3>
 
                 <div class="row">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Nominee name </h3>
-                    </div>
-                    <div class="col-md-5">
-                        <mat-form-field>
-                            <input matInput maxlength="10" type="text" class="form-control">
-
-                        </mat-form-field>
-                    </div>
-                </div>
-
-
-                <div class="row pt-32">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Nominee relation </h3>
+                        <h3 class="f-16 pt-8 m-0">Tax status</h3>
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
@@ -182,24 +173,59 @@
 
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-10 m-0">Nominee type</h3>
+                        <h3 class="f-16 pt-10 m-0"> Holding nature</h3>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-8">
+
                         <mat-radio-group aria-label="Select an option">
                             <mat-radio-button value="1" class="b-a-custom bor_top_tb_left radioBtnSmall  text-primary custom-radio">
-                                Major
+                                Single
                             </mat-radio-button>
                             <mat-radio-button value="2" class="radioBtnSmall radio-border custom-radio">
-                                Minor </mat-radio-button>
-                        </mat-radio-group>
-                    </div>
+                                Joint </mat-radio-button>
 
+                            <mat-radio-button value="3" class="  bor_top_tb_right radioBtnBig radio-border  custom-radio">
+                                Anyone or survivor </mat-radio-button>
+                        </mat-radio-group>
+
+                    </div>
                 </div>
 
 
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Nominee date of birth </h3>
+                        <h3 class="f-16 pt-8 m-0"> PAN</h3>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput maxlength="10" type="text" class="form-control">
+                            <mat-hint align="end" class="f-12 text-custom">
+                                0 / 10
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Name as per PAN</h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <input matInput maxlength="10" type="text" class="form-control">
+                            <mat-hint align="end" class="f-12 text-custom">
+                                0 / 10
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Date of birth</h3>
                     </div>
                     <div class="col-md-3">
                         <mat-form-field>
@@ -213,10 +239,157 @@
 
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Nominee percentage </h3>
+                        <h3 class="f-16 pt-8 m-0"> Aadhaar number</h3>
                     </div>
-                    <div class="col-md-3 iconPetage">
-                        <input matInput maxlength="10" type="text" class="form-control percentage">
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput maxlength="10" type="text" class="form-control">
+                            <mat-hint align="end" class="f-12 text-custom">
+                                0 / 10
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+                <h3 class="f-18 mb-12 mt-44 f-600"> Contact person details </h3>
+
+                <div class="row">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Same as above</h3>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-checkbox> </mat-checkbox>
+                    </div>
+                </div>
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Name </h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <input matInput maxlength="10" type="text" class="form-control">
+
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Email </h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <input matInput maxlength="10" type="text" class="form-control">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Mobile number </h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <div class="row">
+                                <div class="col-md-5 pl-0">
+                                    <input matInput maxlength="10" type="text" class="form-control">
+                                </div>
+                                <div class="col-md-7 p-0">
+                                    <input matInput maxlength="10" type="text" class="form-control">
+                                </div>
+                            </div>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Gender</h3>
+                    </div>
+                    <div class="col-md-8">
+
+                        <mat-radio-group aria-label="Select an option">
+                            <mat-radio-button value="1" class="b-a-custom bor_top_tb_left radioBtnSmall  text-primary custom-radio">
+                                Male
+                            </mat-radio-button>
+                            <mat-radio-button value="2" class="radioBtnSmall radio-border custom-radio">
+                                Female </mat-radio-button>
+
+                            <mat-radio-button value="3" class="  bor_top_tb_right radioBtnSmall radio-border  custom-radio">
+                                Other </mat-radio-button>
+                        </mat-radio-group>
+
+                    </div>
+                </div>
+
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Marital status</h3>
+                    </div>
+                    <div class="col-md-8">
+
+                        <mat-radio-group aria-label="Select an option">
+                            <mat-radio-button value="1" class="b-a-custom bor_top_tb_left radioBtnSmall  text-primary custom-radio">
+                                Married
+                            </mat-radio-button>
+                            <mat-radio-button value="2" class="radioBtnSmall radio-border custom-radio pr-12">
+                                Unmarried </mat-radio-button>
+
+                            <mat-radio-button value="3" class="  bor_top_tb_right radioBtnSmall radio-border  custom-radio">
+                                Other </mat-radio-button>
+                        </mat-radio-group>
+
+                    </div>
+                </div>
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Father’s name </h3>
+                    </div>
+                    <div class="col-md-8">
+                        <mat-form-field>
+                            <div class="row">
+                                <div class="col-md-4 pl-0">
+                                    <input matInput maxlength="10" type="text" class="form-control">
+                                </div>
+                                <div class="col-md-4 pl-0">
+                                    <input matInput maxlength="10" type="text" class="form-control">
+                                </div>
+                                <div class="col-md-4 pl-0">
+                                    <input matInput maxlength="10" type="text" class="form-control">
+                                </div>
+                            </div>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Mother’s name </h3>
+                    </div>
+                    <div class="col-md-8">
+                        <mat-form-field>
+                            <div class="row">
+                                <div class="col-md-4 pl-0">
+                                    <input matInput maxlength="10" type="text" class="form-control">
+                                </div>
+                                <div class="col-md-4 pl-0">
+                                    <input matInput maxlength="10" type="text" class="form-control">
+                                </div>
+                                <div class="col-md-4 pl-0">
+                                    <input matInput maxlength="10" type="text" class="form-control">
+                                </div>
+                            </div>
+                        </mat-form-field>
                     </div>
                 </div>
 
@@ -226,56 +399,24 @@
         </div>
 
 
-        <div class="col-md-3 fixed-top-right bl-1 mt-28">
-            <div class="heightScroll">
-
-                <div class="row ">
-                    <div class="col-md-12">
-                        <h3 class="f-16 f-600 mt-4 mb-10">NOMINATION FAQ</h3>
-                        <p class="f-16 m-0 f-600">What is nomination?</p>
-                        <p class="text-primitive mb-12">Nomination is an instruction that you give to the investment provider (mutual fund, in this case) to record the name of the person or persons entitled to receive the investment or its value when you die.</p>
+        <div class="col-md-3 bl-1 mt-28 fixed-top-right ">
+            <div class="row ">
+                <div class="col-md-12">
+                    <h3 class="f-16 mt-4 mb-10">Upload PAN</h3>
+                    <div class="dragDropCLass">
+                        Drag & drop file here <br> or <br> Browse
                     </div>
                 </div>
-
-                <div class="row ">
-                    <div class="col-md-12">
-                        <p class="f-16 m-0 f-600">Why is nomination important?</p>
-                        <p class="text-primitive mb-12">
-                            When you nominate, you make it easy for your dependants to have access to the investments done by you. They just have to establish your death by providing a death certificate and provide proof of their identity and address as the nominee and the mutual
-                            fund AMC will transmit the investment to the nominee.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="row ">
-                    <div class="col-md-12">
-                        <p class="f-16 m-0 f-600">Who can I appoint as a nominee?</p>
-                        <p class="text-primitive mb-12">
-                            You are free to nominate whoever you want. More common examples of nominees are your immediate family members like spouse, children, parents etc.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="row ">
-                    <div class="col-md-12">
-                        <p class="f-16 m-0 f-600">Things to note</p>
-                        <p class="text-primitive mb-12">
-                            While a nomination is an uncomplicated way for your dependants to receive the proceeds of your investment, don’t confuse it with estate planning. If you have also left a Will, then it supersedes any nomination.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="row ">
-                    <div class="col-md-12">
-                        <p class="f-16 m-0 f-600">Disclaimer</p>
-                        <p class="text-primitive mb-12">
-                            The advice given here is provided for informational purposes only, and should not be construed as legal advice. You should not act or refrain from acting on the basis of any content included here without seeking legal or other professional advice.
-                        </p>
-                    </div>
-                </div>
-
             </div>
 
+            <div class="row pt-32 ">
+                <div class="col-md-12">
+                    <h3 class="f-16 mt-4 mb-10">Upload Aadhaar</h3>
+                    <div class="dragDropCLass">
+                        Drag & drop file here <br> or <br> Browse
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -283,24 +424,19 @@
 
 
 <div class="bottom-fixed  pl-20 pr-20 d-flex  w-100 row">
-
     <div class="col-md-3 p-0 d-flex align-items-center ">
         <a href="#" class="text-white f-300"> Skip this step </a>
     </div>
-
     <div class="col-md-5 center_menu">
-        <a class="activeLink" href=""> Nominee 1 </a>
-        <a class=" " href=""> Nominee 2 </a>
-        <a class=" " href=""> Nominee 3 </a>
+        <a class="activeLink" href=""> First holder </a>
+        <a class="activeLink" href=""> Second holder </a>
+        <a class="activeLink" href=""> Third holder </a>
     </div>
-
     <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">
-
         <button class="br-0 perviousBtn text-inherit f-14" mat-button mat-raised-button>
             PREVIOUS
         </button>
-
-        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4">NEXT STEP</button>
+        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4">SAVE</button>
         <button mat-button class="greenBtn  p-0 mw-40 br-left-white " [matMenuTriggerFor]="menu">
             <i class="material-icons">
                 keyboard_arrow_up
@@ -309,8 +445,5 @@
             <button class="btn-bottom br-0 text-inherit" mat-menu-item>
                 Item 1 </button>
         </mat-menu>
-
-
     </div>
-
 </div>

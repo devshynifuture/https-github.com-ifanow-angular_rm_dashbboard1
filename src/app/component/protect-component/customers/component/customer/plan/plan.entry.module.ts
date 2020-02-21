@@ -34,6 +34,7 @@ import { SelectAssetClassComponent } from './deployments-plan/select-asset-class
 import { CashflowUpperIncomeComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-upper-income/cashflow-upper-income.component';
 import { CashflowUpperExpenseComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-upper-expense/cashflow-upper-expense.component';
 import { CashflowUpperLiabilitiesComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-upper-liabilities/cashflow-upper-liabilities.component';
+import { PlanGoalsComponent } from './scenarios-plan/plan-goals/plan-goals.component';
 
 export const componentList = [
   PreferencesComponent,
@@ -61,6 +62,7 @@ export const componentList = [
   CashflowUpperIncomeComponent,
   CashflowUpperExpenseComponent,
   CashflowUpperLiabilitiesComponent,
+  PlanGoalsComponent
 ];
 // import { AddPlaninsuranceComponent } from './insurance-plan/add-planinsurance/add-planinsurance.component';
 
