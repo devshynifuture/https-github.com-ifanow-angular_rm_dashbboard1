@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class PlanGoalsComponent implements OnInit {
 
   constructor() { }
-
+  isLoading = true;
   displayedColumns: string[] = ['details', 'value', 'monthly', 'lumpsum'];
   dataSource = ELEMENT_DATA;
 
