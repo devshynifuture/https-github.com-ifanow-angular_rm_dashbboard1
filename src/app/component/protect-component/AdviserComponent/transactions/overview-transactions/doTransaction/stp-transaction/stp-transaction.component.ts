@@ -429,6 +429,7 @@ export class StpTransactionComponent implements OnInit {
 
     } else {
       this.processTransaction.onAddTransaction('confirm', this.transactionSummary)
+      Object.assign(data, { allEdit: false });
     }
   }
   AddMultiTransaction() {

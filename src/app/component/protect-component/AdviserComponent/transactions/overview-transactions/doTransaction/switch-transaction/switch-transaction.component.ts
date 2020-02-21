@@ -275,6 +275,7 @@ export class SwitchTransactionComponent implements OnInit {
     } else if (this.switchTransaction.get('folioSelection').value == 1) {
       if (this.switchTransaction.get('investmentAccountSelection').invalid) {
         this.switchTransaction.get('investmentAccountSelection').markAsTouched();
+        return;
       }
     }  else if (this.switchTransaction.get('employeeContry').invalid) {
       this.switchTransaction.get('employeeContry').markAsTouched();
@@ -335,6 +336,7 @@ export class SwitchTransactionComponent implements OnInit {
 
     } else {
       this.processTransaction.onAddTransaction('confirm', this.transactionSummary)
+      Object.assign(data, { allEdit: false });
     }
   }
   AddMultiTransaction() {

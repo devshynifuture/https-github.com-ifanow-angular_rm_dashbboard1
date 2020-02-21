@@ -330,6 +330,7 @@ export class SipTransactionComponent implements OnInit {
     } else if (this.sipTransaction.get('folioSelection').value == 1) {
       if (this.sipTransaction.get('investmentAccountSelection').invalid) {
         this.sipTransaction.get('investmentAccountSelection').markAsTouched();
+        return;
       }
     }  else if (this.sipTransaction.get('employeeContry').invalid) {
       this.sipTransaction.get('employeeContry').markAsTouched();
@@ -405,6 +406,7 @@ export class SipTransactionComponent implements OnInit {
 
     } else {
       this.processTransaction.onAddTransaction('confirm', this.transactionSummary)
+      Object.assign(data, { allEdit: false });
     }
   }
   AddMultiTransaction() {

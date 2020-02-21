@@ -296,10 +296,12 @@ export class PurchaseTrasactionComponent implements OnInit {
     } else if (this.reInvestmentOpt.length > 1) {
       if (this.purchaseTransaction.get('reinvest').invalid) {
         this.purchaseTransaction.get('reinvest').markAsTouched();
+        return;
       }
     } else if (this.purchaseTransaction.get('folioSelection').value == 1) {
       if (this.purchaseTransaction.get('investmentAccountSelection').invalid) {
         this.purchaseTransaction.get('investmentAccountSelection').markAsTouched();
+        return;
       }
     } else {
       let obj = {
@@ -352,6 +354,7 @@ export class PurchaseTrasactionComponent implements OnInit {
 
     } else {
       this.processTransaction.onAddTransaction('confirm', this.transactionSummary)
+      Object.assign(data, { allEdit: false });
     }
   }
   AddMultiTransaction() {

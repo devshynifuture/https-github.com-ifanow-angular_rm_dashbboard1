@@ -3,14 +3,19 @@ import * as moment from 'moment';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { UtilService } from 'src/app/services/util.service';
 import { ConfirmationTransactionComponent } from './confirmation-transaction/confirmation-transaction.component';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ProcessTransactionService {
   [x: string]: any;
   inverstorList: any;
+  transactionSummary :{}
   schemeSelection: any;
-  constructor() { }
+  constructor(private eventService: EventService, private subInjectService: SubscriptionInject,) {
+  }
   selectionList() {
     this.schemeSelection = [{
       select: 'Invest in existing scheme',
@@ -38,7 +43,6 @@ export class ProcessTransactionService {
 
   }
   onAddTransaction(value, data) {
-    Object.assign(this.transactionSummary, { allEdit: false });
     this.confirmTrasaction = true
     const fragmentData = {
       flag: 'addNsc',

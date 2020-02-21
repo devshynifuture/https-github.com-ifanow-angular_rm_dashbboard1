@@ -283,7 +283,8 @@ export class SwpTransactionComponent implements OnInit {
 
     if (this.swpTransaction.get('investmentAccountSelection').invalid) {
       this.swpTransaction.get('investmentAccountSelection').markAsTouched();
-    }else if (this.swpTransaction.get('date').invalid) {
+      return;
+    } else if (this.swpTransaction.get('date').invalid) {
       this.swpTransaction.get('date').markAsTouched();
       return;
     } else if (this.swpTransaction.get('frequency').invalid) {
@@ -348,6 +349,7 @@ export class SwpTransactionComponent implements OnInit {
 
     } else {
       this.processTransaction.onAddTransaction('confirm', this.transactionSummary)
+      Object.assign(data, { allEdit: false });
     }
   }
   AddMultiTransaction() {
