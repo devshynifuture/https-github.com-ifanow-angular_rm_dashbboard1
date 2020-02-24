@@ -84,7 +84,8 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
         const data = this.addLiabilityForm.get('loanType').value;
         this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: flag });
       } else {
-        const data = this._data.showFilter;
+        // const data = this._data.showFilter;
+        const data = this.addLiabilityForm.get('loanType').value;
         this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: flag });
       }
     } else {

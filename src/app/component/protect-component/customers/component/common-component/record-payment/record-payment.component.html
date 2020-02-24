@@ -7,22 +7,16 @@
             </div>
             <div class="col-md-4">
                 <div class="form-group mb-0">
-                    <input #amountReceiveRef [maxLength]="10" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control" formControlName="amountReceived" matInput type="text">
-                </div>
-                <div class="row">
-                    <div class="col-md-10 pr-0">
+                    <mat-form-field>
+                        <input #amountReceiveRef [maxLength]="10" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control" formControlName="amountReceived" matInput type="text">
+                        <mat-hint align="end" class="f-12">{{ amountReceiveRef.value.length }}/{{ getFormControl().amountReceived.maxLength }}</mat-hint>
                         <mat-error class="f-12" *ngIf="rPayment.get('amountReceived').errors?.required && rPayment.get('amountReceived').touched">
                             This feild is required
                         </mat-error>
                         <mat-error *ngIf="(rPayment.get('amountReceived').errors?.max)" class="f-12">
                             Should be less than or equal to {{this.balDue}}
                         </mat-error>
-                    </div>
-                    <div class="col-md-2 pl-0">
-                        <p class="mb-0 f-12 text-custom text-right pt-4">
-                            {{ amountReceiveRef.value.length }}/{{ getFormControl().amountReceived.maxLength }}
-                        </p>
-                    </div>
+                    </mat-form-field>
                 </div>
             </div>
         </div>
@@ -32,20 +26,11 @@
             </div>
             <div class="col-md-4">
                 <div class="form-group mb-0">
-                    <input #chargesIfAnyRef [maxLength]="10" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation class="form-control" formControlName="chargesIfAny" type="text">
-                </div>
-                <div class="row">
-                    <div class="col-md-10">
-                        <p class="f-12 m-0 text-custom pt-4">Optional</p>
-                    </div>
-                    <!-- <mat-error class="f-12 " *ngIf="rPayment.get('chargesIfAny').errors?.required && rPayment.get('chargesIfAny').touched">
-              This feild is required
-            </mat-error> -->
-                    <div class="col-md-2 pl-0">
-                        <p class="mb-0 f-12 text-custom text-right pt-4">
-                            {{ chargesIfAnyRef.value.length }}/{{getFormControl().chargesIfAny.maxLength}}
-                        </p>
-                    </div>
+                    <mat-form-field>
+                        <input #chargesIfAnyRef [maxLength]="10" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation class="form-control" formControlName="chargesIfAny" type="text" matInput>
+                        <!-- <mat-hint align="start" class="f-12">Optional</mat-hint> -->
+                        <mat-hint align="end" class="f-12">{{chargesIfAnyRef.value.length}}/10</mat-hint>
+                    </mat-form-field>
                 </div>
             </div>
         </div>
@@ -55,22 +40,14 @@
             </div>
             <div class="col-md-4">
                 <div class="form-group mb-0">
-                    <input #tdsRef [maxLength]="10" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="onChange()" appInputValueValidation class="form-control" formControlName="tds" type="text">
-                </div>
-                <div class="row">
-                    <div class="col-md-10 pr-0">
-                        <!-- <mat-error class="f-12" *ngIf="rPayment.get('tds').errors?.required && rPayment.get('tds').touched && showError==false">
-                            This field is required
-                        </mat-error> -->
+                    <mat-form-field>
+                        <input #tdsRef [maxLength]="10" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="onChange()" appInputValueValidation class="form-control" formControlName="tds" type="text" matInput>
+                        <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="end" class="f-12">{{chargesIfAnyRef.value.length}}/{{getFormControl().tds.maxLength}}</mat-hint>
                         <mat-error *ngIf="showError==true" class="f-12">
                             Should be less than or equal to {{this.tdsAmt}}
                         </mat-error>
-                    </div>
-                    <div class="col-md-2 pl-0">
-                        <p class="mb-0 f-12 text-custom text-right pt-4">
-                            {{ tdsRef.value.length }}/{{getFormControl().tds.maxLength}}
-                        </p>
-                    </div>
+                    </mat-form-field>
                 </div>
             </div>
         </div>
@@ -81,7 +58,7 @@
             <div class="col-md-4">
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input matInput formControlName="paymentDate" class="form-control br-0 b-0" [matDatepicker]="picker" readonly>
+                        <input matInput (click)="picker.open()" formControlName="paymentDate" class="form-control br-0 b-0" [matDatepicker]="picker" readonly>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-error class="f-12">
@@ -97,19 +74,18 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <select class="form-control" formControlName="paymentMode" id="Category">
-                        <option disabled hidden selected value="">Select payment mode</option>
-                        <option *ngFor="let feeCollectionMode of feeCollectionMode" value="{{feeCollectionMode.name}}">
+                    <mat-form-field>
+
+                    <mat-select class="form-control" formControlName="paymentMode" id="Category">
+                        <mat-option disabled hidden selected value="">Select payment mode</mat-option>
+                        <mat-option *ngFor="let feeCollectionMode of feeCollectionMode" value="{{feeCollectionMode.name}}">
                             {{feeCollectionMode.name}}
-                        </option>
-                    </select>
-                </div>
-                <div class="row">
-                    <div class="col-md-10 pr-0">
-                        <mat-error class="f-12" *ngIf="rPayment.get('paymentMode').errors?.required && rPayment.get('paymentMode').touched">
-                            This field is required
-                        </mat-error>
-                    </div>
+                        </mat-option>
+                    </mat-select>
+                    <mat-error class="f-12" *ngIf="rPayment.get('paymentMode').errors?.required && rPayment.get('paymentMode').touched">
+                        This field is required
+                    </mat-error>
+                    </mat-form-field>
                 </div>
             </div>
         </div>
@@ -119,18 +95,16 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <select class="form-control" formControlName="gstTreatment">
-                        <option disabled hidden selected value="">Select gst treatment</option>
-                        <option *ngFor="let gst of this.gstTreatment" value="{{gst.name}}">{{gst.name}}
-                        </option>
-                    </select>
-                </div>
-                <div class="row">
-                    <div class="col-md-10 pr-0">
-                        <mat-error class="f-12" *ngIf="rPayment.get('gstTreatment').errors?.required && rPayment.get('gstTreatment').touched">
-                            This field is required
-                        </mat-error>
-                    </div>
+                    <mat-form-field>
+                    <mat-select class="form-control" formControlName="gstTreatment">
+                        <mat-option disabled hidden selected value="">Select gst treatment</mat-option>
+                        <mat-option *ngFor="let gst of this.gstTreatment" value="{{gst.name}}">{{gst.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error class="f-12" *ngIf="rPayment.get('gstTreatment').errors?.required && rPayment.get('gstTreatment').touched">
+                        This field is required
+                    </mat-error>
+                    </mat-form-field>
                 </div>
             </div>
         </div>
@@ -141,7 +115,7 @@
             <div class="col-md-5 height110">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <textarea class="form-control" #notesRef formControlName="notes" maxlength="{{getFormControl().notes.maxLength}}" rows="3"></textarea>
+                        <textarea class="form-control br-2" #notesRef formControlName="notes" maxlength="{{getFormControl().notes.maxLength}}" rows="3" matInput></textarea>
 
                         <mat-hint align="end" class="f-12">
                             {{getFormControl().notes.value?.length ? getFormControl().notes.value.length : 0}} /{{getFormControl().notes.maxLength}}

@@ -5,14 +5,9 @@
                 <div class="col-md-9">
                     <p class="m-0 roboto text-custom">Transaction platform</p>
                     <div *ngIf="showPlatform == false">
-                        <h5 class="m-0">{{(selectedPlatform =='2')?'BSE':(selectedPlatform =='1')?'NSE':'-'}} NMF II
-                        </h5>
+                        <div class="m-0" *ngIf="selectedPlatform == 2">{{(selectedPlatform =='2')?'BSE':(selectedPlatform =='1')?'NSE':'-'}} STAR MF</div>
+                        <div class="m-0" *ngIf="selectedPlatform == 1">{{(selectedPlatform =='2')?'BSE':(selectedPlatform =='1')?'NSE':'-'}} NMF II</div>
                     </div>
-                    <!-- <mat-select *ngIf="showPlatform == true" class="form-control"
-                        (selectionChange)="setPlatform($event)">
-                        <mat-option value="1">NSE</mat-option>
-                        <mat-option value="2">BSE</mat-option>
-                    </mat-select> -->
                 </div>
                 <div class="col-md-2" *ngIf="allData">
                     <button mat-stroked-button
@@ -42,11 +37,6 @@
                     </h5>
                     <h5 class="m-0"> {{allData.euin.euin}} - Ankit Mehta</h5>
                 </div>
-                <!-- <mat-select *ngIf="showEuin == true" class="form-control">
-                    <mat-option *ngFor="let euin of subBrokerCredList" (click)="setEuin(euin)" [value]="euin.euin">
-                        {{euin.euin}}
-                    </mat-option>
-                </mat-select> -->
                 <div class="col-md-2"
                     *ngIf="transactionSummary && transactionSummary.allEdit == true && subBrokerCredList.length >1">
                     <button mat-stroked-button class="primary-sm" (click)="showEuin = true;openEuin()">Edit</button>
@@ -107,17 +97,12 @@
                     <p class="m-0 roboto text-custom">UMRN details</p>
                     <h5 class="m-0">
                         <span class="f-500">UMRN no.:</span>
-                        {{(transactionSummary==undefined)?'':(transactionSummary.paymentMode==2)?'Debit mandate':'Net banking'}}
+                        {{(transactionSummary == undefined)?'-': transactionSummary.umrnNo}}
                     </h5>
-                    <!-- <mat-select class="form-control">
-                        <mat-option *ngFor="let umrn of achMandateNSE" (click)="selectUmrn(umrn)" [value]="umrn.umrnNo">
-                            {{umrn.umrnNo}}
-                        </mat-option>
-                    </mat-select> -->
                 </div>
                 <div class="col-md-2"
-                    *ngIf=" transactionSummary && transactionSummary.allEdit == true  && (transactionSummary.transactType == 'PURCHASE'|| transactionSummary.transactType == 'SIP')">
-                    <button mat-stroked-button class="primary-sm">Edit</button>
+                    *ngIf=" transactionSummary && transactionSummary.allEdit == true  && (transactionSummary.transactType == 'PURCHASE'|| transactionSummary.transactType == 'SIP') && transactionSummary.showUmrnEdit ==2">
+                    <button mat-stroked-button class="primary-sm" (click)="openUmrn()">Edit</button>
                 </div>
             </div>
             <div class="row  pt-16 pb-16">
@@ -125,9 +110,6 @@
                     <p class="m-0 roboto text-custom">TRANSACTION INITIATION</p>
                     <h5 class="m-0">Immediate</h5>
                 </div>
-                <!-- <div class="col-md-2">
-                    <button mat-stroked-button class="primary-sm">Edit</button>
-                </div> -->
             </div>
         </div>
     </mat-tab>

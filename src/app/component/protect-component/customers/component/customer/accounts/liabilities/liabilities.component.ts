@@ -43,7 +43,7 @@ export class LiabilitiesComponent implements OnInit {
   isLoading = false;
   noData: string;
   totalLoanAmt: any;
-  outStandingAmt = 0;
+  outStandingAmt:any;
   filterData: any;
   excelData: any[];
   footer = [];
@@ -287,6 +287,7 @@ export class LiabilitiesComponent implements OnInit {
       this.dataSource.data = []
 
     } else {
+      this.outStandingAmt=0;
       this.totalLoanAmt = data.totalLoanAmount;
       // this.outStandingAmt = data.outstandingAmount;
       data.loans.forEach(element => {
