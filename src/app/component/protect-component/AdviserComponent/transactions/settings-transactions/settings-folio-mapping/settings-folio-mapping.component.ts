@@ -22,6 +22,7 @@ export class SettingsFolioMappingComponent implements OnInit {
   nomineesListFM: any;
   familyMemberData: any;
   isLoading: boolean;
+  clientData: any;
   constructor(public dialog: MatDialog, private onlineTransact: OnlineTransactionService, private eventService: EventService, private utilService: UtilService, private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) { }
 
   ngOnInit() {
@@ -29,6 +30,10 @@ export class SettingsFolioMappingComponent implements OnInit {
   }
   sortDataFilterWise() {
     (this.type == '1') ? this.getFolioMappedData() : this.getFolioUnmappedData();
+  }
+  ownerDetails(value) {
+    console.log(value)
+    this.clientData = value;
   }
   getFilterOptionData() {
     let obj = {
