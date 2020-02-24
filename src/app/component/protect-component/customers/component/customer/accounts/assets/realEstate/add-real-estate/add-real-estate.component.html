@@ -48,7 +48,7 @@
 
     <div formArrayName="getCoOwnerName" *ngIf="addOwner==true">
         <div class="row pt-36" *ngFor="let obj of getCoOwner.controls; let pointIndex=index" [formGroupName]="pointIndex">
-            <div class="col-md-5 pr-0 text-righutilst">
+            <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8 ">Co-owner{{pointIndex+1}}</h5>
             </div>
             <div class="col-md-3 pr-0">
@@ -74,7 +74,7 @@
                 </div>
             </div>
             <div class="col-md-2 p-0">
-                <h5 class="m-0 text-primitive pt-8 c-p" (click)="removeCoOwner(pointIndex)">Remove</h5>
+                <h5 class="mb-0 ml-12 text-primitive pt-8 c-p" (click)="removeCoOwner(pointIndex)">Remove</h5>
             </div>
         </div>
 
@@ -111,7 +111,7 @@
     <div class="row pt-36">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Market value</h5>
-            <p class="m-0 f-12 text-custom">Market value has to be<br> updated manually
+            <p class="m-0 f-12 text-custom">Market value has to be updated manually
             </p>
         </div>
         <div class="col-md-3 pr-0">
@@ -230,14 +230,14 @@
                 </div>
             </div>
             <div class="col-md-2 p-0" *ngIf="showArea==true">
-                <h5 class="m-0 text-custom pt-36 c-p" (click)="removeArea()">Remove</h5>
+                <h5 class="mb-0 ml-12 text-custom pt-36 c-p" (click)="removeArea()">Remove</h5>
             </div>
         </div>
 
         <div class="row pt-44">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Charges</h5>
-                <p class="m-0 f-12 text-custom">Market value has to be<br /> updated manually
+                <p class="m-0 f-12 text-custom">Market value has to be updated manually
                 </p>
             </div>
             <div class="col-md-6">
@@ -341,7 +341,7 @@
                     <h5 class="m-0 text-primitive pt-8 c-p" (click)="addNominee()">+ Add Nominee</h5>
                 </div>
                 <div class="col-md-3 p-0" *ngIf="pointIndex > 0">
-                    <h5 class="m-0 text-primitive pt-8 c-p" (click)="removeNominee(pointIndex)">Remove</h5>
+                    <h5 class="mb-0 ml-12 text-primitive pt-8 c-p" (click)="removeNominee(pointIndex)">Remove</h5>
                 </div>
 
             </div>

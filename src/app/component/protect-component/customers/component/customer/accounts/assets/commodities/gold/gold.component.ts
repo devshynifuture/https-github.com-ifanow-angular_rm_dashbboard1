@@ -20,6 +20,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 })
 export class GoldComponent implements OnInit {
   validatorType = ValidatorType
+  maxDate=new Date();
   inputData: any;
   familyMemberId: any;
   ownerName: any;

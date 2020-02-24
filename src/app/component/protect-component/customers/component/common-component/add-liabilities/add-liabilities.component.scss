@@ -1,3 +1,17 @@
+::ng-deep input.mat-input-element {
+    border: 1px solid rgba(25, 25, 25, 0.32);
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
+    width: 1.5em !important;
+}
+
+::ng-deep .mat-datepicker-toggle {
+    position: absolute;
+    right: 8px !important;
+    top: 10px !important;
+    left: auto !important;
+}
 ::ng-deep .mat-checkbox label {
     margin: inherit !important;
 }
