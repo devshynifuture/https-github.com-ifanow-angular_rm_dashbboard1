@@ -12,13 +12,15 @@
 </div>
 
 <div class="col-md-12 mt-70 all-transactions">
-    <table mat-table [dataSource]="bankList" id="table-low">
+    <!-- [dataSource]="bankList" removed for prod build-->
+    <table mat-table  id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef class="br f-18" style="width: 2%;">
                 Select
             </th>
             <td mat-cell *matCellDef="let element" style="width: 2%;" class="c-p br">
-                <mat-radio-button value="1" class="radioBtn custom-radio" (click)="selectedBank(element)">
+                <!-- (click)="selectedBank(element)" removed for prod build -->
+                <mat-radio-button value="1" class="radioBtn custom-radio" >
                 </mat-radio-button>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>

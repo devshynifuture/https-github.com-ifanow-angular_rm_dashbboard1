@@ -109,42 +109,43 @@ export class OnlineTrasactionComponent implements OnInit {
     this.defaultClient = data.defaultClient
     this.selectedPlatform = this.defaultCredential.aggregatorType
   }
-  getFamilyList(value) {
-    this.showSpinnerOwner = true
-    let obj = {
-      advisorId: this.advisorId,
-      name: value
-    }
-    if (value.length > 2) {
-      this.onlineTransact.getFamilyMemberList(obj).subscribe(
-        data => this.getFamilyMemberListRes(data)
-      );
-    }
-  }
-  getFamilyMemberListRes(data) {
-    this.showSpinnerOwner = false
-    if (data == undefined) {
+  // getFamilyList(value) {
+  //   this.showSpinnerOwner = true
+  //   let obj = {
+  //     advisorId: this.advisorId,
+  //     name: value
+  //   }
+  //   if (value.length > 2) {
+  //     this.onlineTransact.getFamilyMemberList(obj).subscribe(
+  //       data => this.getFamilyMemberListRes(data),
+  //       err => this.eventService.openSnackBar(err, 'dismiss')
+  //     );
+  //   }
+  // }
+  // getFamilyMemberListRes(data) {
+  //   this.showSpinnerOwner = false
+  //   if (data == undefined) {
 
-    } else {
-      this.nomineesListFM = data.familyMembers
-    }
-    console.log('getFamilyMemberListRes', data)
-  }
+  //   } else {
+  //     this.nomineesListFM = data.familyMembers
+  //   }
+  //   console.log('getFamilyMemberListRes', data)
+  // }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
-  display(value) {
-    console.log('value selected', value);
-    this.ownerName = value.userName;
-    this.familyMemberId = value.id;
-  }
+  // display(value) {
+  //   console.log('value selected', value);
+  //   this.ownerName = value.userName;
+  //   this.familyMemberId = value.id;
+  // }
   ownerDetails(value) {
     this.familyMemberId = value.id;
     if (this.nomineesListFM && this.transactionAddForm.get('ownerName').valid) {
-      this.nomineesListFM.forEach(element => {
-        this.checkFamilyMem = element.name.includes(this.transactionAddForm.controls.ownerName.value)
-      });
-      if (this.formStep == 'step-1' == this.checkFamilyMem == true) {
+      // this.nomineesListFM.forEach(element => {
+      //   this.checkFamilyMem = element.name.includes(this.transactionAddForm.controls.ownerName.value)
+      // });
+      if (this.formStep == 'step-1') {
         if (this.allData && this.allData.length > 0) {
           this.formStep = 'step-2';
         }
@@ -160,7 +161,7 @@ export class OnlineTrasactionComponent implements OnInit {
   }
   lisNominee(value) {
     console.log(value)
-    this.nomineesListFM = Object.assign([], value.familyMembersList);
+    this.nomineesListFM = Object.assign([], value);
   }
 
   getdataForm(data) {

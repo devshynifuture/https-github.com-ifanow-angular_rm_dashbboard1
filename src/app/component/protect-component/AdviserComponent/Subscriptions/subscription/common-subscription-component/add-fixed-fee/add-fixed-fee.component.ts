@@ -176,22 +176,22 @@ export class AddFixedFeeComponent implements OnInit {
       Object.assign(this.dataToSend, { id: this.serviceId });
       if (this.serviceId == undefined) {
         this.subService.createSettingService(obj).subscribe(
-          data =>{
+          data => {
             this.barButtonOptions.active = false;
             this.saveFeeTypeDataResponse(data, state);
-          }, 
-          err =>{
+          },
+          err => {
             this.barButtonOptions.active = false;
             console.log(err, "error createSettingService");
           }
         );
       } else {
         this.subService.editSettingService(obj).subscribe(
-          data =>{
+          data => {
             this.barButtonOptions.active = false;
             this.saveFeeTypeDataEditResponse(data, state);
           },
-          err =>{
+          err => {
             this.barButtonOptions.active = false;
             console.log(err, "error editSettingService");
           }
