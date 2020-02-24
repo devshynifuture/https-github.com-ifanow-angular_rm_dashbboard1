@@ -50,7 +50,7 @@ export class SettingsFolioMappingComponent implements OnInit {
     this.selectedBrokerCode = data[0];
     this.selectedPlatform = data[0];
     this.dataSource = [{}, {}, {}];
-    (this.type == '1') ? this.getFolioMappedData() : this.getFolioUnmappedData();
+    this.sortDataFilterWise();
   }
   getFolioMappedData() {
     this.isLoading = true;
@@ -104,7 +104,7 @@ export class SettingsFolioMappingComponent implements OnInit {
         this.onlineTransact.unmapMappedFolios(obj).subscribe(
           data => {
             console.log(data);
-            (this.type == '1') ? this.getFolioMappedData() : this.getFolioUnmappedData();
+            this.sortDataFilterWise();
             dialogRef.close();
           },
           err => this.eventService.openSnackBar(err, 'dismiss')
@@ -142,6 +142,7 @@ export class SettingsFolioMappingComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             // this.getNscSchemedata();
+            this.sortDataFilterWise();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
