@@ -17,7 +17,7 @@
             <h5 class="text-right pt-12 mb-0">Select RTA</h5>
         </div>
         <div class="col-md-7">
-            <mat-radio-group formControlName="selectRta">
+            <mat-radio-group formControlName="selectRta" (change)="resetDateAsOnDateAndFormCheckbox()">
                 <mat-radio-button value="1"
                     [ngClass]="orderHistoryFileForm.get('selectRta').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
                     CAMS
@@ -46,14 +46,14 @@
                 </mat-radio-button>
                 <mat-radio-button value="2" class="d-block">ARN-83865 </mat-radio-button>
             </mat-radio-group>
-            <mat-error
+            <mat-error class="f-11 f-500"
                 *ngIf="orderHistoryFileForm.get('selectArnRia').touched && orderHistoryFileForm.get('selectArnRia').invalid">
                 This field is required
             </mat-error>
         </div>
     </div>
 
-    <div class="row pt-24" *ngIf="orderHistoryFileForm.get('selectRta').value === '1'">
+    <div class="row pt-24">
         <div class="col-md-5 pr-0">
             <h5 class="text-right pt-12 mb-0"> Select files to order </h5>
         </div>
@@ -95,7 +95,7 @@
                     </div>
                     <div *ngIf="orderHistoryFileForm.get('selectRta').value === '2'">
                         <!-- karvy options -->
-                        <div formGroupName="kaasOnDatervy">
+                        <div formGroupName="karvy">
                             <mat-checkbox class="d-block" formControlName="mfsd243Active">MFSD 243 Active
                             </mat-checkbox>
                             <mat-checkbox class="d-block" formControlName="mfsd231Ceased">MFSD 231 Ceased
@@ -142,8 +142,7 @@
                     <div *ngIf="orderHistoryFileForm.get('selectRta').value === '1'">
                         <!-- cams options -->
                         <div formGroupName="cams">
-                            <mat-checkbox class="d-block" (click)="dateRangeAndAsOnDateHandler('wbr22')"
-                                formControlName="wbr22">WBR22
+                            <mat-checkbox class="d-block" formControlName="wbr22">WBR22
                             </mat-checkbox>
                         </div>
                     </div>
@@ -164,7 +163,7 @@
                     </div>
                 </div>
             </div>
-            <mat-error *ngIf="orderHistoryFileForm.get('selectFilesToOrder').invalid">
+            <mat-error class="f-11 roboto f-500 pt-12" *ngIf="orderHistoryFileForm.get('selectFilesToOrder').invalid">
                 Atleast one must be selected
             </mat-error>
         </div>
@@ -180,8 +179,8 @@
                     <div class="col-md-6 pl-0">
                         <h5 class="mb-4 pt-16">From date</h5>
                         <mat-form-field>
-                            <input class="form-control" formControlName="fromDate" (click)="picker1.open()" matInput
-                                [matDatepicker]="picker1">
+                            <input class="form-control" [min]="camsAsOnDatePastMaxDate" [max]="dateYesterday"
+                                formControlName="fromDate" (click)="picker1.open()" matInput [matDatepicker]="picker1">
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                             <mat-datepicker #picker1></mat-datepicker>
                             <mat-error
@@ -194,8 +193,8 @@
                     <div class="col-md-6 pl-0">
                         <h5 class="mb-4 pt-16">To date</h5>
                         <mat-form-field>
-                            <input class="form-control" formControlName="toDate" (focus)="picker.open()" matInput
-                                [matDatepicker]="picker">
+                            <input class="form-control" [max]="dateToday" [min]="camsAsOnDatePastMaxDate"
+                                formControlName="toDate" (focus)="picker.open()" matInput [matDatepicker]="picker">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                             <mat-error
@@ -209,12 +208,12 @@
                     <div class="col-md-12 pl-0">
                         <h5 class="mb-4 pt-16">As On Date</h5>
                         <mat-form-field>
-                            <input class="form-control" formControlName="fromDate" (click)="picker2.open()" matInput
-                                [matDatepicker]="picker2">
+                            <input class="form-control" formControlName="asOnDate" [min]="camsAsOnDatePastMaxDate"
+                                [max]="dateToday" (click)="picker2.open()" matInput [matDatepicker]="picker2">
                             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                             <mat-datepicker #picker2></mat-datepicker>
                             <mat-error
-                                *ngIf="orderHistoryFileForm.get('fromDate').touched && orderHistoryFileForm.get('fromDate').invalid">
+                                *ngIf="orderHistoryFileForm.get('asOnDate').touched && orderHistoryFileForm.get('asOnDate').invalid">
                                 This field is required
                             </mat-error>
                         </mat-form-field>
@@ -231,17 +230,11 @@
         <div class="col-md-3">
             <mat-form-field>
                 <mat-select class="form-control" formControlName="orderingFreq">
-                    <mat-option value="" selected>
-                        select option
+                    <mat-option value="">
+                        Select Option
                     </mat-option>
-                    <mat-option value="1">
-                        Yearly
-                    </mat-option>
-                    <mat-option value="2">
-                        Monthly
-                    </mat-option>
-                    <mat-option value="3">
-                        All at once
+                    <mat-option [value]="freq.id" *ngFor="let freq of orderingFreq">
+                        {{ freq.name }}
                     </mat-option>
                 </mat-select>
                 <mat-error
