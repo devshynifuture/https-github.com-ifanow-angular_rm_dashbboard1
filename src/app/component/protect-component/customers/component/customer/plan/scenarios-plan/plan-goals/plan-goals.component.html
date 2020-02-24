@@ -122,7 +122,7 @@
 </div> -->
 
 
-    <div class="col-md-10 p-0">
+    <!-- <div class="col-md-10 p-0">
         <div class="row">
             <div class="col-md-12 text-right d-flex justify-content-end">
                 <div class="headingSenarioBox">SCENARIO 1</div>
@@ -201,7 +201,205 @@
                 </table>
             </div>
         </div>
+    </div> -->
+
+
+    <!-- <div class="col-md-10 p-0">
+
+        <div class="row">
+            <div class="col-md-3">
+                <h6>Select other scenarios</h6>
+                <mat-form-field>
+                    <mat-select class="form-control br-0">
+                        <mat-option value="1">Rahul Jain</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 text-right d-flex justify-content-end">
+                <div class="headingSenarioBoxNew">SCENARIO 1</div>
+                <div class="headingSenarioBoxNew leftBorderNone">SCENARIO 2</div>
+                <div class="headingSenarioBox3 leftBorderNone"> </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 planTable">
+                <table mat-table id="table-low" [dataSource]="dataSource2" class=" ">
+                    <ng-container matColumnDef="particulars">
+                        <th class="br w-73" mat-header-cell *matHeaderCellDef> Particulars </th>
+                        <td mat-cell class="br w-73" *matCellDef="let element">
+                            {{element.particulars}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="amountOne">
+                        <th mat-header-cell class="br w-11" *matHeaderCellDef> Total amount </th>
+                        <td mat-cell class="br w-11" *matCellDef="let element">
+                            <div class="bar">
+                                {{element.amountOne}} </div>
+                        </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="amountTwo">
+                        <th mat-header-cell class="br w-11" *matHeaderCellDef>Total amount</th>
+                        <td mat-cell class="br w-11" *matCellDef="let element">
+                            <div class="bar"> {{element.amountTwo}} </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="emptybox">
+                        <th mat-header-cell class="br w-4" *matHeaderCellDef> </th>
+                        <td mat-cell class="br w-4" *matCellDef="let element">
+                            <div class="bar"> <i class="material-icons">
+                                    keyboard_arrow_down
+                                </i> </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="row pt-20">
+            <div class="col-md-12">
+                <div class="borderTable">
+                    <div class="row p-12 bb">
+                        <div class="col-md-8 p-0 f-14 text-left">
+                            ACTUAL LIFE INSURANCE
+                        </div>
+                        <div class="col-md-2 p-0 f-14 text-right">
+                            50,00,000
+                        </div>
+                        <div class="col-md-2 p-0 f-14 text-right">
+                            40,00,000
+                        </div>
+                    </div>
+                    <div class="row p-12">
+                        <div class="col-md-8 p-0 f-14 text-left">
+                            LIFE INSURANCE ADVICED
+                        </div>
+                        <div class="col-md-2 p-0 f-14 text-right">
+                            1,25,50,000
+                        </div>
+                        <div class="col-md-2 p-0 f-14 text-right">
+                            1,25,50,000
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+
+    <div class="col-md-10 p-0">
+        <div class="row">
+            <div class="col-md-3">
+                <h6>Select family member</h6>
+                <mat-form-field>
+                    <mat-select class="form-control br-0">
+                        <mat-option value="1">Rahul Jain</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-3">
+                <h6>Select financial year</h6>
+                <mat-form-field>
+                    <mat-select class="form-control br-0">
+                        <mat-option value="1"> 2019-20</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+
+            <div class="col-md-3">
+                <h6>Tax calculation method</h6>
+                <mat-form-field>
+                    <mat-select class="form-control br-0">
+                        <mat-option value="1"> Assume tax deductions </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-11 mt-20 text-right d-flex justify-content-end">
+                <div class="headingSenarioBox4">SCENARIO 1</div>
+                <div class="headingSenarioBox4 leftBorderNone">SCENARIO 2</div>
+                <div class="headingSenarioBox3 leftBorderNone"> </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-11 planTable">
+                <table mat-table id="table-low" [dataSource]="dataSource3" class=" ">
+                    <ng-container matColumnDef="description">
+                        <th class="br w-44" mat-header-cell *matHeaderCellDef> Description </th>
+                        <td mat-cell class="br w-44" *matCellDef="let element">
+                            {{element.description}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actualOne">
+                        <th mat-header-cell class="text-right" *matHeaderCellDef> Actual </th>
+                        <td mat-cell class="text-right " *matCellDef="let element">
+                            <div class="bar">
+                                {{element.actualOne}} </div>
+                        </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="applicableOne">
+                        <th mat-header-cell class="text-right br" *matHeaderCellDef> Applicable</th>
+                        <td mat-cell class=" br text-right" *matCellDef="let element">
+                            <div class="bar"> {{element.applicableOne}} </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actualTwo">
+                        <th mat-header-cell class="text-right" *matHeaderCellDef> Actual</th>
+                        <td mat-cell class=" text-right" *matCellDef="let element">
+                            <div class="bar"> {{element.actualTwo}} </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="applicableTwo">
+                        <th mat-header-cell class="br text-right" *matHeaderCellDef> Applicable</th>
+                        <td mat-cell class="br text-right" *matCellDef="let element">
+                            <div class="bar text-right"> {{element.applicableTwo}} </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="emptybox">
+                        <th mat-header-cell class="br w-4 text-center" *matHeaderCellDef> </th>
+                        <td mat-cell class="br w-4 text-center" *matCellDef="let element">
+                            <div class="bar"> <i class="material-icons">
+                                    keyboard_arrow_down
+                                </i></div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+                </table>
+            </div>
+        </div>
+
+
+
+
+
+
     </div>
+
 
 
 
@@ -248,8 +446,6 @@
                 <button mat-stroked-button class="black-border f-14"> Add to financial plan </button>
             </div>
         </div>
-
-
 
     </div>
 
