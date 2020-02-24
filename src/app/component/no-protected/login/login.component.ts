@@ -9,7 +9,7 @@ import { MatProgressButtonOptions } from "../../../common/progress-button/progre
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login-otp.component.html',
+  templateUrl: './login-new.component.html',
   styleUrls: ['./login.component.scss'],
   animations: [
     trigger('btnProgress', [
