@@ -104,6 +104,11 @@ input.mat-input-element {
     height: 515px;
 }
 
+.loginBoxverifyOtp {
+    width: 60%;
+    margin-top: 60px;
+}
+
 .form_container_new_wrapper {
     width: 80%;
 }
@@ -115,7 +120,7 @@ input.mat-input-element {
 }
 
 .imgBoxlogin {
-    height: 100vh;
+    // height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -126,4 +131,43 @@ input.mat-input-element {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+::ng-deep .mat-form-field-appearance-standard .mat-form-field-flex {
+    padding-top: 0px !important;
+}
+
+.eyesPassword {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+.otpBox {
+    background: #FF7272;
+    width: 176px;
+    height: 40px;
+    border-radius: 4px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-weight: 500;
+    margin-bottom: 87px;
+}
+
+.lightRead {
+    color: #FF7272;
+}
+
+.verifyDiv {
+    width: 35px;
+    text-align: center;
+    margin-right: 10px;
+}
+
+.iconPosition {
+    position: absolute;
+    top: 8px;
+    left: 8px;
 }

@@ -11,9 +11,9 @@
                 <div [formGroup]="loginForm" class="form_container_new_wrapper">
                     <div class="row">
                         <div class="col-md-12 form-group p-0">
-                            <h5 class="pt-12">User Name</h5>
-                            <mat-form-field>
-                                <input (keypress)="enterEvent($event)" tabindex="1" class="form-control br-0" formControlName="name" matInput>
+                            <h5 class="pt-12 mb-4">User Name</h5>
+                            <mat-form-field floatLabel="never" appearance="standard">
+                                <input (keypress)="enterEvent($event)" placeholder="Enter username" tabindex="1" class="form-control br-0" formControlName="name" matInput>
                                 <mat-error *ngIf="loginForm.controls.name.touched">Username required</mat-error>
                             </mat-form-field>
                         </div>
@@ -23,8 +23,11 @@
                         <div class="col-md-12 form-group p-0">
                             <h5 class="left mb-4">Password</h5>
                             <h5 class="right f-12 mb-4 c-p text-primitive">Forgot password?</h5>
-                            <mat-form-field>
-                                <input (keypress)="enterEvent($event)" tabindex="2" class="form-control br-0" formControlName="password" matInput type="password">
+                            <mat-form-field floatLabel="never" appearance="standard">
+                                <input (keypress)="enterEvent($event)" placeholder="Enter password" tabindex="2" class="form-control br-0" formControlName="password" matInput type="password">
+                                <i class="material-icons eyesPassword c-p text-primitive">
+                                    remove_red_eye
+                                </i>
                                 <mat-error *ngIf="loginForm.controls.password.touched">Password required</mat-error>
                             </mat-form-field>
 
@@ -44,7 +47,7 @@
                 </div>
             </div>
 
-            <p class="f-12 l-18 ml-24 text-primitive">Before logging in, please ensure that the URL on the address bar starts with “https” or has a padlock icon. The communication of your private information from any address beginning with "https" is encrypted and secured using SSL.</p>
+            <p class="f-12 l-18 ml-24 mb-0 text-primitive">Before logging in, please ensure that the URL on the address bar starts with “https” or has a padlock icon. The communication of your private information from any address beginning with "https" is encrypted and secured using SSL.</p>
         </div>
     </div>
 </div>
