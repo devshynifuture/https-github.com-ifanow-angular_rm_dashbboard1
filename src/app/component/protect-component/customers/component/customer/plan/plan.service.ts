@@ -136,7 +136,7 @@ export class PlanService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.ADD_FILTER_SCHEME_LIST, httpParams);
   }
   getDeploymentDetailsdata(data) {
-    let httpParams = new HttpParams().set('deploymentId', data.deploymentId);
+    let httpParams = new HttpParams().set('deploymentIds', data.deploymentIds);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DEPLOYMENT_DETAILS, httpParams)
   }
   getMututalFundSchemeData() {

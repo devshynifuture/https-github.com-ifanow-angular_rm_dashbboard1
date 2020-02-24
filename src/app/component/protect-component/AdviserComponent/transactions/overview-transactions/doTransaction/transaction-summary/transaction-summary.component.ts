@@ -11,6 +11,7 @@ import { BankSelectPopUpComponent } from '../bank-select-pop-up/bank-select-pop-
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { UmrnPopUpComponent } from '../umrn-pop-up/umrn-pop-up.component';
 
 @Component({
   selector: 'app-transaction-summary',
@@ -55,10 +56,8 @@ export class TransactionSummaryComponent implements OnInit {
 
   @Output() defaultDetails = new EventEmitter();
   @Output() bankDetailsSend = new EventEmitter();
-  @Output() folioEmpty = new EventEmitter();
-  @Input() set folioChange(data) {
-    console.log('This is Input data of foolio ### ', data);
-  }
+  @Output() folioChange = new EventEmitter();
+
   @Input() set data(data) {
     this.inputData = data;
     this.transactionSummary = data
@@ -82,9 +81,11 @@ export class TransactionSummaryComponent implements OnInit {
       width: '470px',
       data: { investor: this.clientDataList, animal: this.element }
     });
-
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      if (result == undefined) {
+        return
+      }
       this.element = result;
       this.selectedInvestor = result
       this.defaultClient = result
@@ -97,8 +98,10 @@ export class TransactionSummaryComponent implements OnInit {
       width: '470px',
       data: { subBroker: this.subBrokerCredList, animal: this.element }
     });
-
     dialogRef.afterClosed().subscribe(result => {
+      if (result == undefined) {
+        return
+      }
       console.log('The dialog was closed');
       this.element = result;
       this.allData.euin = result
@@ -110,11 +113,13 @@ export class TransactionSummaryComponent implements OnInit {
       width: '470px',
       data: { platform: this.platForm, animal: this.element }
     });
-
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      if (result == undefined) {
+        return
+      }
       this.element = result;
-      this.selectedPlatform = result.value
+      this.selectedPlatform = (result == undefined) ? this.selectedPlatform : result.value
       this.showPlatform = false
       this.getDefaultDetails(this.selectedPlatform)
     });
@@ -124,19 +129,52 @@ export class TransactionSummaryComponent implements OnInit {
       width: '470px',
       data: { bank: this.bankDetails, animal: this.element }
     });
-
     dialogRef.afterClosed().subscribe(result => {
+      if (result == undefined) {
+        return
+      }
       console.log('The dialog was closed');
       this.element = result;
       this.bankDetailsSend.emit(result);
     });
+  }
+  openUmrn(): void {
+    this.getNSEAchmandate()
+    const dialogRef = this.dialog.open(UmrnPopUpComponent, {
+      width: '470px',
+      data: { mandate: this.achMandateNSE, animal: this.element }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == undefined) {
+        return
+      }
+      console.log('The dialog was closed');
+      this.element = result;
+      this.bankDetailsSend.emit(result);
+    });
+  }
+  getNSEAchmandate() {
+    let obj1 = {
+      tpUserCredFamilyMappingId: this.defaultClient.tpUserCredFamilyMappingId
+    }
+    this.onlineTransact.getNSEAchmandate(obj1).subscribe(
+      data => this.getNSEAchmandateRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+    );
+  }
+  getNSEAchmandateRes(data) {
+    console.log('getNSEAchmandateRes', data)
+    this.achMandateNSE = data
   }
   getBankDetails() {
     let obj = {
       tpUserCredFamilyMappingId: this.defaultClient.tpUserCredFamilyMappingId
     }
     this.onlineTransact.getBankDetailsNSE(obj).subscribe(
-      data => this.getBankDetailsNSERes(data)
+      data => this.getBankDetailsNSERes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
     );
   }
   getBankDetailsNSERes(data) {
@@ -161,7 +199,9 @@ export class TransactionSummaryComponent implements OnInit {
       mutualFundId: this.transactionSummary.mutualFundId
     }
     this.onlineTransact.getDefaultDetails(obj).subscribe(
-      data => this.getDefaultDetailsRes(data)
+      data => this.getDefaultDetailsRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
     );
   }
   getDefaultDetailsRes(data) {
@@ -170,9 +210,11 @@ export class TransactionSummaryComponent implements OnInit {
       return
     }
     this.changeDetails = data
-    if (this.changeDetails.noAlert == undefined && this.checkAlert && this.checkAlert != data.defaultClient.tpUserCredFamilyMappingId) {
-      this.alertModal(data, null)
-      return
+    if (this.transactionSummary.allEdit == true && this.changeDetails.noAlert == undefined) {
+      if (this.checkAlert && this.checkAlert != data.defaultClient.tpUserCredFamilyMappingId) {
+        this.alertModal(data, null)
+        return
+      }
     }
     data.euin = data.subBrokerCredList[0];
     this.defaultDetails.emit(data);
@@ -188,14 +230,14 @@ export class TransactionSummaryComponent implements OnInit {
   }
   alertModal(value, data) {
     const dialogData = {
-      data: value,
+      data: '',
       header: 'ALERT',
       body: 'Holding nature of selected FOLIO matches different client code',
       body2: 'Are you sure you want to proceed',
       btnYes: 'NO',
-      btnNo: 'OK,POCEED',
+      btnNo: 'OK,PROCEED',
       positiveMethod: () => {
-        this.eventService.openSnackBar('Sucessfully changed', 'dismiss');
+        this.eventService.openSnackBar('Holding nature sucessfully changed', 'dismiss');
         this.changeDetails.noAlert = true
         this.getDefaultDetailsRes(this.changeDetails)
         dialogRef.close();

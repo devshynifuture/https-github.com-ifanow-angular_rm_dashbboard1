@@ -1,14 +1,22 @@
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { UtilService } from 'src/app/services/util.service';
+import { ConfirmationTransactionComponent } from './confirmation-transaction/confirmation-transaction.component';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ProcessTransactionService {
   [x: string]: any;
   inverstorList: any;
+  transactionSummary :{}
   schemeSelection: any;
-  constructor() { }
+  constructor(private eventService: EventService, private subInjectService: SubscriptionInject,) {
+    this.transactionSummary = {}
+  }
   selectionList() {
     this.schemeSelection = [{
       select: 'Invest in existing scheme',
@@ -35,15 +43,38 @@ export class ProcessTransactionService {
   getEuinList() {
 
   }
-  checkInstallments(obj){
-    if (this.frequency == 'MONTHLY' && this.sipTransaction.controls.tenure.value == 2) {
+  onAddTransaction(value, data) {
+    this.confirmTrasaction = true
+    const fragmentData = {
+      flag: 'addNsc',
+      data,
+      id: 1,
+      state: 'open65',
+      componentName: ConfirmationTransactionComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            // this.getNscSchemedata();
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+          }
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
+  
+  checkInstallments(obj,tenure, installment){
+    if (this.frequency == 'MONTHLY' && tenure== 2) {
       obj.noOfInstallments = obj.noOfInstallments * 12
-    } else if (this.frequency == 'QUATERLY' && this.sipTransaction.controls.tenure.value == 2) {
+    } else if (this.frequency == 'QUATERLY' && tenure == 2) {
       obj.noOfInstallments = obj.noOfInstallments * 4
-    } else if (this.frequency == 'WEEKLY' && this.sipTransaction.controls.tenure.value == 2) {
+    } else if (this.frequency == 'WEEKLY' && tenure == 2) {
       obj.noOfInstallments = obj.noOfInstallments * 52
     } else {
-      obj.noOfInstallments = this.sipTransaction.controls.installment.value
+      obj.noOfInstallments = installment
     }
     return obj
   }

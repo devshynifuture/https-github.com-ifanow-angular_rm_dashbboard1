@@ -197,7 +197,7 @@ export const appConfig = {
   ADD_MANAGE_EXCLUSIVE: '/activity/deployment/exclusion/edit',
   DELETE_DEPLOYMENT: '/activity/deployment/archive-record/put',
   ADD_FILTER_SCHEME_LIST: '/activity/deployment/add/filter/goal/scheme',
-  GET_DEPLOYMENT_DETAILS: '/activity/deployment/deployment/detail/get',
+  GET_DEPLOYMENT_DETAILS: '/activity/deployment/combined/deployment/detail/get',
   ADD_PURCHASE_SCHEME: '/activity/deployment/purchase/scheme/post',
   GET_MUTUAL_FUND_SCHEME: '/activity/deployment/scheme/get',
   ////////////////////////////// subscription////////////////////////////////////////////

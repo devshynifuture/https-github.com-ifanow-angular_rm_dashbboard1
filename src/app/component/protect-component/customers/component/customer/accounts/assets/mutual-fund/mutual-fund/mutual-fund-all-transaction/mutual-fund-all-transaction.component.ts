@@ -12,6 +12,8 @@ import { MfServiceService } from '../../mf-service.service';
 })
 export class MutualFundAllTransactionComponent implements OnInit {
   displayedColumns: string[] = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav', 'units', 'balanceUnits', 'days', 'icons'];
+  // totalColumns: string[] = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav', 'units', 'balanceUnits', 'days', 'icons'];
+
   mfData: any;
   filteredArray: any[];
   subCategoryData: any[];
