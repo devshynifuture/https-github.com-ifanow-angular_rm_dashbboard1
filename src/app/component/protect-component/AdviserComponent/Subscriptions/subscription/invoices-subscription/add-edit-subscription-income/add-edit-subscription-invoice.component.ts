@@ -46,7 +46,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   finAmountC = 0;
   finAmountS = 0;
   finAmount: any = 0;
-  showDateError: string;
+  showDateError: boolean = false;
   showErr: boolean;
   advisorId: any;
   showRecord: any;
@@ -131,8 +131,8 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       finalAmount: [(data.subTotal == undefined) ? 0 : parseInt(data.subTotal), [Validators.required, Validators.min(1.00)]],
       discount: [(data.discount == undefined) ? 0 : data.discount],
       dueDate: [new Date(data.dueDate), [Validators.required]],
-      footnote: [data.footnote, [Validators.required]],
-      terms: [data.terms, [Validators.required]],
+      footnote: [data.footnote, [ Validators.maxLength(500)]],
+      terms: [data.terms, [Validators.maxLength(500)]],
       taxStatus: [data=='' || !data.cgst ? 'IGST(18%)' : 'SGST(9%)|CGST(9%)' ],
       serviceName: [(!data.services) ? '0' : (data.services.length == 0) ? '0' : data.services[0].serviceName,
       [Validators.required]],
@@ -277,14 +277,13 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       dueDate = new Date((this.editPayment.get('dueDate').value._d) ? this.editPayment.get('dueDate').value._d : this.editPayment.get('dueDate').value).getTime();
       (invoiceDate == undefined && dueDate == undefined) ? ''
         : (dueDate <= invoiceDate)
-          ? this.showDateError = 'Due date should be greater than invoice date' :
-          this.showDateError = undefined;
+          ? this.showDateError = true :
+          this.showDateError = false;
     }
   }
 
   updateInvoice() {
     // this.showErr = false;
-   
     if (this.showDateError || this.editPayment.invalid ) {
       this.editPayment.get('dueDate').markAsTouched();
       this.editPayment.get('taxStatus').markAsTouched();
