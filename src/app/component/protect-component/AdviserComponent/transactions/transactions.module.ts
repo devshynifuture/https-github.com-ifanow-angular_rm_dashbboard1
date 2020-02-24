@@ -17,6 +17,7 @@ import { CustomCommonModule } from 'src/app/common/custom.common.module';
 import { PhotoSigntureComponent } from './overview-transactions/know-your-customer/photo-signture/photo-signture.component';
 import { FatcaDetailsComponent } from './overview-transactions/know-your-customer/fatca-details/fatca-details.component';
 import { VideoKycComponent } from './overview-transactions/know-your-customer/video-kyc/video-kyc.component';
+import { ClientSearchDirective } from './client-search.directive';
 //import { VideoKycComponent } from './overview-transactions/know-your-customer/video-kyc/video-kyc.component';
 //import { FatcaDetailsComponent } from './overview-transactions/know-your-customer/fatca-details/fatca-details.component';
 //import { NomineeDetailsComponent } from './overview-transactions/know-your-customer/nominee-details/nominee-details.component';
@@ -42,13 +43,6 @@ import { VideoKycComponent } from './overview-transactions/know-your-customer/vi
     PhotoSigntureComponent,
     FatcaDetailsComponent,
     VideoKycComponent
-
-
-
-
-
-
-
   ],
   imports: [
     CommonModule,
@@ -61,7 +55,6 @@ import { VideoKycComponent } from './overview-transactions/know-your-customer/vi
     CustomCommonModule,
     SettingsTransactionsModule,
   ], exports: [
-
     TransactionsComponent
   ]
 })

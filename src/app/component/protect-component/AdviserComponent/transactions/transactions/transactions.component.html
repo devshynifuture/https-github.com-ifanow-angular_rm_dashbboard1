@@ -6,13 +6,19 @@
         <div class="col-md-10 p-0">
             <div class="subnav-fixed">
                 <nav (selectedTabChange)="tabClick($event)" mat-align-tabs="end" mat-tab-nav-bar>
-                    <a (click)="value=1" [ngClass]="_value == 1 ? 'active': ''" [routerLink]="'./overview'" mat-tab-link routerLinkActive="active">OVERVIEW</a>
-                    <a class="transactionsWidth" (click)="value=2" [ngClass]="_value == 2 ? 'active': ''" [routerLink]="'./transactions'" mat-tab-link routerLinkActive="active">TRANSACTIONS</a>
-                    <a (click)="value=3" [ngClass]="_value == 3 ? 'active': ''" [routerLink]="'./investors'" mat-tab-link routerLinkActive="active">INVESTORS</a>
-                    <a (click)="value=4" [ngClass]="_value == 4 ? 'active': ''" [routerLink]="'./mandates'" mat-tab-link routerLinkActive="active">MANDATES</a>
+                    <a (click)="value=1" [ngClass]="_value == 1 ? 'active': ''" [routerLink]="'./overview'" mat-tab-link
+                        routerLinkActive="active">OVERVIEW</a>
+                    <a class="transactionsWidth" (click)="value=2" [ngClass]="_value == 2 ? 'active': ''"
+                        [routerLink]="'./transactions'" mat-tab-link routerLinkActive="active">TRANSACTIONS</a>
+                    <a (click)="value=3" [ngClass]="_value == 3 ? 'active': ''" [routerLink]="'./investors'"
+                        mat-tab-link routerLinkActive="active">INVESTORS</a>
+                    <a (click)="value=4" [ngClass]="_value == 4 ? 'active': ''" [routerLink]="'./mandates'" mat-tab-link
+                        routerLinkActive="active">MANDATES</a>
                     <!-- <a mat-tab-link [routerLink]="'expenses'">EXPENSES</a> -->
-                    <a class="kycWidth" (click)="value=5" [ngClass]="_value == 5 ? 'active': ''" [routerLink]="'./kyc'" mat-tab-link routerLinkActive="active">KYC</a>
-                    <a (click)="value=6" [ngClass]="_value == 6 ? 'active': ''" [routerLink]="'./settings/manage-credentials/arn-ria-creds'" [state]="{ example: 0 }" mat-tab-link routerLinkActive="active">SETTINGS</a>
+                    <a class="kycWidth" (click)="value=5" [ngClass]="_value == 5 ? 'active': ''" [routerLink]="'./kyc'"
+                        mat-tab-link routerLinkActive="active">KYC</a>
+                    <a (click)="value=6" [ngClass]="_value == 6 ? 'active': ''" [routerLink]="'./settings'"
+                        [state]="{ example: 0 }" mat-tab-link routerLinkActive="active">SETTINGS</a>
                 </nav>
             </div>
         </div>

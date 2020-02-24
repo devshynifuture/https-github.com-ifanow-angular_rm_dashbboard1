@@ -4,6 +4,8 @@ import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
 import { OnlineTransactionService } from '../../online-transaction.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-settings-client-mapping',
@@ -25,7 +27,8 @@ export class SettingsClientMappingComponent implements OnInit {
   selectedBrokerCode: any;
   type: string;
   filterData: any;
-  constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService, private utilService: UtilService, private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) { }
+  isLoading: any;
+  constructor(public dialog: MatDialog, private onlineTransact: OnlineTransactionService, private eventService: EventService, private utilService: UtilService, private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) { }
 
   ngOnInit() {
     this.getFilterOptionData();
@@ -49,38 +52,85 @@ export class SettingsClientMappingComponent implements OnInit {
     this.type = '1';
     this.selectedBrokerCode = data[0];
     this.selectedPlatform = data[0];
+    this.dataSource = [{}, {}, {}];
     (this.type == '1') ? this.getMappedData() : this.getUnmappedData();
   }
 
   getMappedData() {
+    this.isLoading = true;
+    this.dataSource = [{}, {}, {}];
     let obj =
     {
       advisorId: 414,
       tpUserCredentialId: this.selectedBrokerCode.id,
       aggregatorType: this.selectedPlatform.aggregatorType
     }
-    this.tranService.getMapppedFolios(obj).subscribe(
+    this.tranService.getMapppedClients(obj).subscribe(
       data => {
         console.log(data);
         this.dataSource = data;
+        this.isLoading = false;
       },
       err => this.eventService.openSnackBar(err, 'dismiss')
     )
   }
   getUnmappedData() {
+    this.isLoading = true;
+    this.dataSource = [{}, {}, {}];
     let obj =
     {
       advisorId: 414,
       tpUserCredentialId: this.selectedBrokerCode.id,
       aggregatorType: this.selectedPlatform.aggregatorType
     }
-    this.tranService.getUnmappedFolios(obj).subscribe(
+    this.tranService.getUnmappedClients(obj).subscribe(
       data => {
         console.log(data);
         this.dataSource = data;
+        this.isLoading = false;
       },
       err => this.eventService.openSnackBar(err, 'dismiss')
     )
+  }
+  unmapClient(value, data) {
+    const dialogData = {
+      data: value,
+      header: 'UNMAP',
+      body: 'Are you sure you want to unmap?',
+      body2: 'This cannot be undone',
+      btnYes: 'CANCEL',
+      btnNo: 'UNMAP',
+      positiveMethod: () => {
+        let obj =
+        {
+          tpUserCredFamilyMappingId: value.tpUserCredFamilyMappingId,
+          aggregatorType: this.selectedPlatform.aggregatorType
+        }
+        this.onlineTransact.unmapMappedClient(obj).subscribe(
+          data => {
+            console.log(data);
+            (this.type == '1') ? this.getMappedData() : this.getUnmappedData();
+            dialogRef.close();
+          },
+          err => this.eventService.openSnackBar(err, 'dismiss')
+        )
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
   getDefaultDetails(platform) {
     let obj = {

@@ -25,6 +25,11 @@ const routes: Routes = [
                     {
                         path: 'sub-broker-team-member',
                         component: SubBrokerTeamMemberComponent
+                    },
+                    {
+                        path: '',
+                        redirectTo: 'arn-ria-creds',
+                        pathMatch: 'full'
                     }
                 ]
             },
@@ -43,6 +48,11 @@ const routes: Routes = [
             {
                 path: 'empanelled-amc',
                 component: SettingsEmpanelledAmcComponent
+            },
+            {
+                path: '',
+                redirectTo: 'manage-credentials',
+                pathMatch: 'full'
             }
         ]
     }
