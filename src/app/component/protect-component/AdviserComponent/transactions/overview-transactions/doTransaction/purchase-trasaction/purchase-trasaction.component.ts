@@ -276,6 +276,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       folioSelection: ['2'],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       reinvest: [(!data) ? '' : data.reinvest, [Validators.required]],
+      schemePurchase: [null, [Validators.required]],
     });
 
     this.ownerData = this.purchaseTransaction.controls;
@@ -355,11 +356,15 @@ export class PurchaseTrasactionComponent implements OnInit {
     }
   }
   AddMultiTransaction() {
-    if (this.ExistingOrNew==1 && this.purchaseTransaction.get('investmentAccountSelection').invalid) {
+   if (this.purchaseTransaction.get('schemePurchase').invalid) {
+      this.purchaseTransaction.get('schemePurchase').markAsTouched();
+      return;
+    }else if (this.ExistingOrNew==1 && this.purchaseTransaction.get('investmentAccountSelection').invalid) {
       this.purchaseTransaction.get('investmentAccountSelection').markAsTouched();
       return;
     } else if (this.purchaseTransaction.get('employeeContry').invalid) {
       this.purchaseTransaction.get('employeeContry').markAsTouched();
+      return;
     } else if (this.reInvestmentOpt.length > 1) {
       if (this.purchaseTransaction.get('reinvest').invalid) {
         this.purchaseTransaction.get('reinvest').markAsTouched();
@@ -367,7 +372,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       }
     } else {
       this.multiTransact = true
-      if (this.scheme != undefined && this.schemeDetails != undefined && this.bankDetails != undefined) {
+      if (this.scheme != undefined && this.schemeDetails != undefined) {
         let obj = {
           amc: (this.scheme) ? this.scheme.amcId : null,
           folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,

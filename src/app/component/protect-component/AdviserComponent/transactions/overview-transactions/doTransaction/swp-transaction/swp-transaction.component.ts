@@ -272,6 +272,7 @@ export class SwpTransactionComponent implements OnInit {
       frequency: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       tenure: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       installment: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      schemeSwp: [null, [Validators.required]],
     });
 
     this.ownerData = this.swpTransaction.controls;
@@ -352,7 +353,10 @@ export class SwpTransactionComponent implements OnInit {
     }
   }
   AddMultiTransaction() {
-    if (this.swpTransaction.get('investmentAccountSelection').invalid) {
+    if (this.swpTransaction.get('schemeSwp').invalid) {
+      this.swpTransaction.get('schemeSwp').markAsTouched();
+      return;
+    } else if (this.swpTransaction.get('investmentAccountSelection').invalid) {
       this.swpTransaction.get('investmentAccountSelection').markAsTouched();
       return;
     }  else if (this.swpTransaction.get('frequency').invalid) {

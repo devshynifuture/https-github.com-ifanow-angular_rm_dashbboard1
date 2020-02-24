@@ -64,7 +64,7 @@
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard">
                                 <input type="text" aria-label="Number" class="form-control" matInput
-                                    [matAutocomplete]="auto" (keyup)="getSchemeList($event.target.value)"
+                                    [matAutocomplete]="auto"  formControlName="schemeStp" (keyup)="getSchemeList($event.target.value)"
                                     placeholder="Start typing to see scheme names">
                                 <mat-autocomplete #auto="matAutocomplete">
                                     <mat-option (onSelectionChange)="selectedScheme(scheme)"

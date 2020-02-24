@@ -74,6 +74,7 @@ export class SwitchTransactionComponent implements OnInit {
     this.getDataSummary = data
     Object.assign(this.transactionSummary, { aggregatorType: this.getDataSummary.defaultClient.aggregatorType });
     this.switchTransaction.controls.transferIn.reset();
+
   }
   getSchemeList(value) {
     this.showSpinner = true
@@ -257,6 +258,7 @@ export class SwitchTransactionComponent implements OnInit {
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       installment: [(!data) ? '' : data.employeeContry, [Validators.required]],
       tenure: [(!data) ? '' : data.employeeContry, [Validators.required]],
+      schemeSwitch: [(!data) ? '' : data.employeeContry, [Validators.required]],
       transferIn: [(!data) ? '' : data.employeeContry, [Validators.required]],
       switchType: [(!data) ? '' : data.employeeContry, [Validators.required]],
     });
@@ -344,17 +346,20 @@ export class SwitchTransactionComponent implements OnInit {
       if (this.switchTransaction.get('reinvest').invalid) {
         this.switchTransaction.get('reinvest').markAsTouched();
       }
-    } else if (this.switchTransaction.get('investmentAccountSelection').invalid) {
-        this.switchTransaction.get('investmentAccountSelection').markAsTouched();
-        return;
-    }else if(this.switchTransaction.get('transferIn').invalid){
-      this.switchTransaction.get('transferIn').markAsTouched();
+    } else if (this.switchTransaction.get('schemeSwitch').invalid) {
+      this.switchTransaction.get('schemeSwitch').markAsTouched();
       return;
-    } else if (this.switchTransaction.get('employeeContry').invalid) {
-      this.switchTransaction.get('employeeContry').markAsTouched();
+    } else if (this.switchTransaction.get('investmentAccountSelection').invalid) {
+      this.switchTransaction.get('investmentAccountSelection').markAsTouched();
+      return;
+    } else if (this.switchTransaction.get('transferIn').invalid) {
+      this.switchTransaction.get('transferIn').markAsTouched();
       return;
     } else if (this.switchTransaction.get('switchType').invalid) {
       this.switchTransaction.get('switchType').markAsTouched();
+      return;
+    } else if (this.switchTransaction.get('employeeContry').invalid) {
+      this.switchTransaction.get('employeeContry').markAsTouched();
       return;
     } else {
       this.multiTransact = true

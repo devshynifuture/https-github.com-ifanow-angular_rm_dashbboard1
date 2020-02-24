@@ -98,6 +98,7 @@ export class RedemptionTransactionComponent implements OnInit {
       modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
       folioSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      schemeRedeem: [null, [Validators.required]],
     });
 
     this.ownerData = this.redemptionTransaction.controls;
@@ -286,9 +287,12 @@ export class RedemptionTransactionComponent implements OnInit {
       if (this.redemptionTransaction.get('reinvest').invalid) {
         this.redemptionTransaction.get('reinvest').markAsTouched();
       }
+    } else if (this.redemptionTransaction.get('schemeRedeem').invalid) {
+      this.redemptionTransaction.get('schemeRedeem').markAsTouched();
+      return;
     } else if (this.redemptionTransaction.get('investmentAccountSelection').invalid) {
-        this.redemptionTransaction.get('investmentAccountSelection').markAsTouched();
-        return;
+      this.redemptionTransaction.get('investmentAccountSelection').markAsTouched();
+      return;
     } else if (this.redemptionTransaction.get('redeemType').invalid) {
       this.redemptionTransaction.get('redeemType').markAsTouched();
       return;

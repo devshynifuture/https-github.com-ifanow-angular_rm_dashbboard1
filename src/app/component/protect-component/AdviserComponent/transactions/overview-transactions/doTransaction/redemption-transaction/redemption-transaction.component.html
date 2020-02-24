@@ -66,8 +66,8 @@
                     <div class="col-md-11 p-0">
                         <div class="form-group ">
                             <mat-form-field floatLabel="never" appearance="standard">
-                                <input type="text" aria-label="Number" class="form-control " matInput
-                                    [matAutocomplete]="auto" (keyup)="getSchemeList($event.target.value)"
+                                <input type="text" aria-label="Number" class="form-control" matInput
+                                    [matAutocomplete]="auto" formControlName="schemeRedeem" (keyup)="getSchemeList($event.target.value)"
                                     placeholder="Start typing to see scheme names">
                                 <mat-autocomplete #auto="matAutocomplete">
                                     <mat-option (click)="selectedScheme(scheme)" *ngFor="let scheme of schemeList"

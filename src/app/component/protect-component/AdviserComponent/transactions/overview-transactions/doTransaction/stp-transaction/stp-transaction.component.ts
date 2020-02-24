@@ -334,6 +334,7 @@ export class StpTransactionComponent implements OnInit {
       tenure: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       installment: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       STPType: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      schemeStp: [null, [Validators.required]],
       transferIn: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
     });
 
@@ -436,6 +437,9 @@ export class StpTransactionComponent implements OnInit {
       if (this.stpTransaction.get('reinvest').invalid) {
         this.stpTransaction.get('reinvest').markAsTouched();
       }
+    }else if (this.stpTransaction.get('schemeStp').invalid) {
+      this.stpTransaction.get('schemeStp').markAsTouched();
+      return;
     } else if (this.stpTransaction.get('investmentAccountSelection').invalid) {
       this.stpTransaction.get('investmentAccountSelection').markAsTouched();
       return;
