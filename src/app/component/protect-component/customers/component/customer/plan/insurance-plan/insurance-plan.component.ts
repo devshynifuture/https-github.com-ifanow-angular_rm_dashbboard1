@@ -5,6 +5,8 @@ import { AddPlaninsuranceComponent } from './add-planinsurance/add-planinsurance
 import { AddSuggestPolicyComponent } from './add-suggest-policy/add-suggest-policy.component';
 import { CurrentPolicyComponent } from './current-policy/current-policy.component';
 import { AddInsurancePlanningComponent } from './add-insurance-planning/add-insurance-planning.component';
+import { AddNewInsuranceComponent } from './add-new-insurance/add-new-insurance.component';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-insurance-plan',
@@ -19,14 +21,33 @@ export class InsurancePlanComponent implements OnInit {
   displayedColumns2 = ['name', 'annual', 'amt', 'icons'];
   dataSource2 = ELEMENT_DATA2;
 
-  constructor(private subInjectService: SubscriptionInject) {
+  constructor(private subInjectService: SubscriptionInject, private eventService: EventService) {
   }
 
   isLoading = true;
 
   ngOnInit() {
   }
+  addnewinsurance(data) {
+    console.log('hello mf button clicked');
+    const fragmentData = {
+      flag: 'openAddgoals',
+      id: 1,
+      data,
+      direction: 'top',
+      componentName: AddNewInsuranceComponent,
+      state: 'open'
+    };
 
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getClientSubscriptionList();
+          subscription.unsubscribe();
+        }
+      }
+    );
+  }
   openAddPlanInsurance(data) {
     this.isLoading = true;
     const fragmentData = {

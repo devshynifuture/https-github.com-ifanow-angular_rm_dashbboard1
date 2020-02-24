@@ -159,6 +159,10 @@
 
                     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <!-- <tr *matRowDef="let row; columns: ['displayedColumns']; when: isGroup" mat-row></tr>
+                    <tr *matRowDef="let row; columns: ['displayedColumns']; when: isGroup2" mat-row></tr>
+                    <tr *matRowDef="let row; columns: ['displayedColumns']; when: isGroup3" mat-row></tr>
+                    <tr *matRowDef="let row; columns: ['displayedColumns']; when: isGroup4" mat-row></tr> -->
                     <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
                     <tr *matRowDef="let row; columns: ['groupHeader2']; when: isGroup2" mat-row></tr>
                     <tr *matRowDef="let row; columns: ['groupHeader3']; when: isGroup3" mat-row></tr>
