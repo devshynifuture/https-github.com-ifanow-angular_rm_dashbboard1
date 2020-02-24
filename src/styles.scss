@@ -1555,3 +1555,21 @@ textarea {
 .mat-row:hover {
   background-color: rgba(0, 0, 0, .04);
 }
+
+#health-radio {
+  .mat-radio-button {
+    margin-top: 20px;
+    min-width: 200px !important;
+    font-size: 14px;
+
+    label {
+      min-width: 152px;
+      height: 40px;
+      display: flex !important;
+      justify-content: left;
+      align-items: center;
+      padding-left: 10px !important;
+    }
+  }
+
+}

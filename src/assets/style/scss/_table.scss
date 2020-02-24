@@ -127,7 +127,7 @@ table {
     color: #202020;
     background-color: #F5F7F7 !important;
     letter-spacing: 0.2px;
-    // z-index: 9 !important;
+    z-index: 9 !important;
     top: -2px !important;
 
   }
@@ -173,7 +173,7 @@ table {
     .mat-table-sticky:first-child {
       border-right: 1px solid #dadce0 !important;
       left: -2px !important;
-      // z-index: 999 !important;
+      z-index: 101 !important;
     }
 
     .mat-table-sticky:last-child {

@@ -1,0 +1,92 @@
+<div class="p-20">
+    <h5 class="m-0 text-black f-500">Advice on health insurance policy</h5>
+    <div class="row pt-20">
+        <div class="col-md-4 p-0 br-1">
+            <p class="m-0 pb-8">Select primary advice<img src="/assets/images/svg/info.svg"></p>
+            <mat-radio-group aria-label="Select an option" id="health-radio">
+                <mat-radio-button value="1" class="b-ua mt-0">Continue</mat-radio-button>
+                <mat-radio-button value="2" class="b-ua">Discontinue</mat-radio-button>
+                <mat-radio-button value="1" class="bu-primary text-primary">Port policy</mat-radio-button>
+                <mat-radio-button value="2" class="b-ua">Increase sum assured</mat-radio-button>
+                <mat-radio-button value="1" class="b-ua">Decrease sum assured</mat-radio-button>
+                <mat-radio-button value="2" class="b-ua">Add members</mat-radio-button>
+                <mat-radio-button value="2" class="b-ua">Remove members</mat-radio-button>
+            </mat-radio-group>
+            <div class="col-md-11 pl-0 pr-24">
+                <p class="m-0 text-black pb-8 pt-20">Non financial advice</p>
+                <div class="form-group">
+                    <mat-form-field>
+                        <mat-select class="form-control">
+                            <mat-option value="option">Add nominee</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 p-0 bl-1">
+            <div class="row">
+                <div class="col-md-8">
+                    <p class="m-0 text-black pb-8">Advice header</p>
+                    <div class="form-group">
+                        <mat-form-field>
+                            <input matInput value="Port policy" class="form-control">
+                        </mat-form-field>
+                    </div>
+                    <p class="m-0 text-black pb-8">Advice rationale</p>
+                    <div class="form-group">
+                        <mat-form-field>
+                            <textarea matInput rows="6" class="form-control"
+                                value="We recommend you to port the policy to a different company, increase the sum assured and add your father Manu Jain as well."></textarea>
+                        </mat-form-field>
+                    </div>
+                    <p class="m-0 text-black pb-8 pt-120">Advice status</p>
+                    <div class="form-group">
+                        <mat-form-field>
+                            <input matInput value="Port policy" class="form-control" value="Given">
+                        </mat-form-field>
+                    </div>
+                    <p class="m-0">Consent option<img src="/assets/images/svg/info.svg"></p>
+                    <mat-radio-group aria-label="Select an option">
+                        <mat-radio-button value="1">Take client consent <button mat-stroked-button
+                                class="btn-primary-outline btn-sm f-12">RECOMMENDED</button></mat-radio-button>
+                        <p class="f-12 roboto text-custom">If this option is selected, further action on this advice is
+                            possible only after your client
+                            gives explicit consent via email.</p>
+                        <mat-checkbox>Create a linked task</mat-checkbox>
+                    </mat-radio-group>
+                    <mat-radio-group aria-label="Select an option" class="pt-20">
+                        <mat-radio-button value="1">Bypass client consent</mat-radio-button>
+                        <p class="f-12 roboto text-custom">If this option is selected, you can directly start further
+                            work on this advice without taking any explicit consent from your client.</p>
+                    </mat-radio-group>
+
+                </div>
+                <div class="col-md-4">
+                    <p class="m-0 text-black pb-8">Advice header</p>
+                    <div class="form-group">
+                        <mat-form-field class="ba-date">
+                            <input matInput [matDatepicker]="picker" class="form-control b-0">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <p class="m-0 text-black pb-8">Implementation date</p>
+                    <div class="form-group">
+                        <mat-form-field class="ba-date">
+                            <input matInput [matDatepicker]="picker" class="form-control b-0">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row pt-20">
+        <div class="col-md-12 text-right">
+            <button mat-button class="text-primary">SAVE</button>
+            <button mat-button>cancel</button>
+        </div>
+    </div>
+</div>
