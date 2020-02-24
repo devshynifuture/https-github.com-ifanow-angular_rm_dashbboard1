@@ -142,7 +142,8 @@
                     <div *ngIf="orderHistoryFileForm.get('selectRta').value === '1'">
                         <!-- cams options -->
                         <div formGroupName="cams">
-                            <mat-checkbox class="d-block" (click)="isOnlyAumSelected()" formControlName="wbr22">WBR22
+                            <mat-checkbox class="d-block" (click)="dateRangeAndAsOnDateHandler('wbr22')"
+                                formControlName="wbr22">WBR22
                             </mat-checkbox>
                         </div>
                     </div>

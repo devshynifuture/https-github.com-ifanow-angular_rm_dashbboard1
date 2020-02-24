@@ -132,4 +132,50 @@ export class MfServiceService {
     });
     return catObj;
   }
+  filterScheme(data){
+    let filterData = [];
+    let filterData2 = [];
+    let filterData3 = [];
+    let filterData4 = [];
+    let sendData={};
+    data.filter(function (element) {
+      if (element.selected == true) {
+        element.mutualFund.forEach(ele => {
+          const obj = {
+            "folioNumber": ele.folioNumber,
+            "selected": true
+          }
+          const obj2 = {
+            "name": ele.ownerName,
+            "familyMemberId": ele.familyMemberId,
+            "selected": true
+          }
+          const obj3 = {
+            "category": ele.categoryName,
+            "categoryId": ele.categoryId,
+            "selected": true
+          }
+          filterData.push(obj);
+          filterData2.push(obj2);
+          filterData3.push(obj3)
+        });
+        const obj = {
+          "amc_name": element.amc_name,
+          "schemeName": element.schemeName,
+          "mutualFund": element.mutualFund,
+          "id": element.id,
+          "amc_id": element.amc_id,
+          "selected": true
+        }
+        filterData4.push(obj);
+      }
+    })
+    sendData={
+      filterData:filterData,
+      filterData2:filterData2,
+      filterData3:filterData3,
+      filterData4:filterData4
+    }
+    return sendData;
+  }
 }

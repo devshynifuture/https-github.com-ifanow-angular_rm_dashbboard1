@@ -31,7 +31,7 @@ export class DeploymentDetailsComponent implements OnInit {
     this.isLoading = true;
     let obj =
     {
-      deploymentId: data.id
+      deploymentIds: [data.data.id]
     }
     this.planService.getDeploymentDetailsdata(obj).subscribe(
       data => {

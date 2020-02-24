@@ -41,12 +41,12 @@
                         <div [ngClass]="{'baBlue':serviceData.selected,'b-ua':serviceData.selected==false }"
                             (click)="selectService(serviceData,i)" class="overflow-hidden">
                             <div class="bg-grey lter text-left">
-                                <div *ngIf="!isLoading">
+                                <div *ngIf="!isLoading" >
                                     <mat-checkbox class="custom-checkbox"
                                         [ngStyle]="{'pointer-events':(serviceData.selected)?'none':'all'}"
                                         checked="false" [ngClass]="{'v-h':serviceData.selected==false }"></mat-checkbox>
                                 </div>
-                                <div class="pl-20 pr-20 overflow-hidden" [ngClass]="serviceData.read? '':'height130'">
+                                <div class="pl-20 pr-20 overflow-hidden w-100" [ngClass]="serviceData.read? '':'height130'">
                                     <div class="relClass">
                                         <div class="bar f-24 p-0 l-26 mb-10" [ngClass]="{'height24': isLoading}">
                                             <h3 class="f-24" matTooltip="Service name">

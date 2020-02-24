@@ -72,3 +72,38 @@
     }
   }
 }
+
+.add-model-portfolio {
+  tr.mat-header-row {
+    height: 52px;
+  }
+
+  #table-low tbody td {
+    padding: 6px 8px !important;
+  }
+}
+
+.aggressive-card {
+  .mat-card-header-text {
+    display: none;
+  }
+
+  h2,
+  h5 {
+    color: #3F3F3F;
+  }
+
+  h2 {
+    font-family: "Playfair Display";
+
+  }
+
+  .tr.mat-header-row {
+    height: 44px;
+  }
+
+  #table-low tbody td {
+    height: 36px;
+    padding: 9px 8px !important;
+  }
+}

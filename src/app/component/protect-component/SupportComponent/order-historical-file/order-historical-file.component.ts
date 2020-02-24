@@ -31,6 +31,22 @@ export class OrderHistoricalFileComponent implements OnInit {
     });
   }
 
+  dateRangeAndAsOnDateHandler(selector) {
+    if (selector === 'wbr22') {
+      if (this.orderHistoryFileForm.get('selectFileToOrder.cams.wbr22').value == true) {
+        if (this.asOnDate) {
+          this.asOnDate = false;
+        } else {
+          this.asOnDate = true;
+        }
+      }
+    } else {
+      if (this.orderHistoryFileForm.get('selectFileToOrder.cams')) {
+
+      }
+    }
+  }
+
   orderHistoryFileForm = this.fb.group({
     "selectRta": ['1', Validators.required],
     "selectArnRia": [, Validators.required],
