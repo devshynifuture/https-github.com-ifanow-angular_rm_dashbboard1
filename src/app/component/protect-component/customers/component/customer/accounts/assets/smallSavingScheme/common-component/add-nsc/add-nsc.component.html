@@ -61,11 +61,11 @@
                 <div class="col-md-3">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input [matDatepicker]="commpicker" [max]="maxDate" class="form-control br-0"
+                            <input (click)="commpicker.open()" [matDatepicker]="commpicker" [max]="maxDate" class="form-control br-0"
                                 formControlName="commDate" matInput readonly>
                             <mat-datepicker-toggle matSuffix [for]="commpicker"></mat-datepicker-toggle>
                             <mat-datepicker #commpicker></mat-datepicker>
-                            <mat-error *ngIf="nscFormField.get('commDate').errors?.required" class="f-12">
+                            <mat-error  class="f-12">
                                 This field is required
                             </mat-error>
                         </mat-form-field>
@@ -74,7 +74,7 @@
             </div>
             <div class="row pt-40">
                 <div class="col-md-5 pr-0 text-right">
-                    <h5 class="m-0 pt-8">Tenure(in months)</h5>
+                    <h5 class="m-0 pt-8">Tenure(in years)</h5>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group mb-0">

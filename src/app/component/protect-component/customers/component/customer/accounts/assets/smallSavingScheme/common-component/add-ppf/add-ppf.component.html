@@ -22,12 +22,12 @@
                 <mat-form-field class="w-100">
                     <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
                         [data]='ownerData' formControlName="ownerName" class="form-control br-0">
-                        <mat-option value=''>Search family members</mat-option>
+                        <mat-option value=''>Select family members</mat-option>
                         <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
                             <span>{{f.userName}}</span>
                         </mat-option>
                     </mat-select>
-                    <mat-error class="f-12">
+                    <mat-error *ngIf="ppfSchemeForm.controls.ownerName.value == ''&& ppfSchemeForm.controls.ownerName.touched" class="f-12">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -118,11 +118,11 @@
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Tenure(in Years)</h5>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <mat-select formControlName="tenure" class="form-control br-0">
-                            <mat-option value="">Selet tenure years</mat-option>
+                            <mat-option value="">Select tenure years</mat-option>
                             <mat-option value="5">5 Years</mat-option>
                             <mat-option value="6">6 Years</mat-option>
                             <mat-option value="7">7 Years</mat-option>
@@ -135,7 +135,7 @@
                             <mat-option value="14">14 Years</mat-option>
                             <mat-option value="15">15 Years</mat-option>
                         </mat-select>
-                        <mat-error class="f-12">
+                        <mat-error *ngIf="ppfSchemeForm.controls.tenure.value == ''&& ppfSchemeForm.controls.tenure.touched" class="f-12">
                             This field is required
                         </mat-error>
                     </mat-form-field>
