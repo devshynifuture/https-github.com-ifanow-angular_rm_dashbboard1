@@ -36,7 +36,6 @@ export class StpTransactionComponent implements OnInit {
   folioList: any;
   showSpinner = false;
   switchFrequency: any;
-  fre: any;
   frequency: any;
   dates: any;
   dateDisplay: any;
@@ -78,12 +77,12 @@ export class StpTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { allEdit: true });
     Object.assign(this.transactionSummary, { transactType: 'STP' });
     Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
-    Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId });
   }
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
     Object.assign(this.transactionSummary, { aggregatorType: this.getDataSummary.defaultClient.aggregatorType });
+    Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId });
     // this.stpTransaction.controls.investor.reset();
 
     this.stpTransaction.controls.transferIn.reset();
@@ -278,7 +277,7 @@ export class StpTransactionComponent implements OnInit {
     })
   }
   selectedFrequency(getFrerq) {
-    this.fre = getFrerq
+   // this.fre = getFrerq
     this.frequency = getFrerq.frequency
     this.stpTransaction.controls["employeeContry"].setValidators([Validators.min(getFrerq.sipMinimumInstallmentAmount)])
     if (this.getDataSummary.defaultClient.aggregatorType == 1) {
@@ -429,6 +428,7 @@ export class StpTransactionComponent implements OnInit {
 
     } else {
       this.processTransaction.onAddTransaction('confirm', this.transactionSummary)
+      Object.assign(this.transactionSummary, { allEdit: false });
     }
   }
   AddMultiTransaction() {

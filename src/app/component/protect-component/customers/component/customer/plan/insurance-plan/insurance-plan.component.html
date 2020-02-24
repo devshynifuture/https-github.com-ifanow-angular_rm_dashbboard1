@@ -84,92 +84,125 @@
   <div class="row">
     <div class="col-md-3 br-grey pb-44">
       <div class="row pt-20 pb-20 bb-grey">
-        <div class="col-md-7 pl-0">
+        <div class="col-md-6 pl-0">
           <h3 class="m-0 text-black pt-4">Insurance</h3>
         </div>
-        <div class="col-md-4">
-          <button (click)="insuranceplanning('open70')" class="btn-primary br-2" mat-stroked-button>Setup
+        <div class="col-md-4 pl-0">
+          <!-- <button (click)="insuranceplanning('open70')" class="btn-primary br-2 pl-8" mat-stroked-button><i
+              class="material-icons text-white pr-8">
+              add
+            </i>ADD NEW
+          </button> -->
+          <button (click)="addnewinsurance(null)" class="btn-primary br-2 pl-8" mat-stroked-button><i
+              class="material-icons text-white pr-8">
+              add
+            </i>ADD NEW
           </button>
         </div>
-        <div class="col-md-1 p-0">
-          <i class="material-icons pt-4 text-black">
+        <div class="col-md-2 p-0">
+          <i class="material-icons pt-4 text-black right c-p">
             more_vert
           </i>
         </div>
       </div>
       <!-- Life insurance - Rahul Jain -->
-      <div class="row pt-16">
-        <div class="col-md-12 p-0">
-          <h4 class="m-0 text-primary">Life insurance</h4>
-        </div>
-      </div>
-      <div class="row pt-12">
-        <div class="col-md-12 p-0 c-p">
+
+      <div class="row pt-10 ">
+        <div class="col-md-12 p-0 c-p ba-2x br-4 h-105">
           <div class="bg-grey lter">
-            <p class="m-0 f-500 roboto p-8 pb-0">Rahul Jain</p>
-            <div class="row pt-12">
-              <div class="col-md-3 pr-0 pl-8">
-                <img src="/assets/images/svg/insurance-chart1.svg">
+            <p class="m-0 f-500 roboto p-8 pb-0">Life insurance</p>
+            <div class="row pt-4">
+              <div class="col-md-3 pr-0 pl-8 pb-8">
+                <img src="/assets/images/svg/life-insurance.svg">
               </div>
-              <div class="col-md-9">
-                <p class="m-0 text-black roboto pt-12"><span class="f-500">Actual:</span> 54,50,000</p>
-                <p class="m-0 text-black roboto pt-8"><span class="f-500">Advice: </span> 1,80,00,000
+              <div class="col-md-9 pl-0">
+                <p class="m-0 text-black roboto">Rahul Jain</p>
+                <p class="m-0 text-black roboto pt-16"><span class="f-500">Advice: </span> 1,80,00,000
                 </p>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="row pt-12">
-        <div class="col-md-12 p-0 c-p">
+      <div class="row pt-10 ">
+        <div class="col-md-12 p-0 c-p br-4 h-105">
           <div class="bg-grey lter">
-            <p class="m-0 f-500 roboto p-8 pb-0">Shilpa Jain</p>
-            <div class="row pt-12">
-              <div class="col-md-3 pr-0 pl-8">
-                <img src="/assets/images/svg/insurance-chart1.svg">
+            <p class="m-0 f-500 roboto p-8 pb-0">Personal accident</p>
+            <div class="row pt-4">
+              <div class="col-md-3 pr-0 pl-8 pb-8">
+                <img src="/assets/images/svg/life-insurance.svg">
               </div>
-              <div class="col-md-9">
-                <p class="m-0 text-black roboto pt-12"><span class="f-500">Actual:</span> 54,50,000</p>
-                <p class="m-0 text-black roboto pt-8"><span class="f-500">Advice: </span> 1,80,00,000
+              <div class="col-md-9 pl-0">
+                <p class="m-0 text-black roboto">Rahul Jain</p>
+                <p class="m-0 text-black roboto pt-16"><span class="f-500">Advice: </span> 1,80,00,000
                 </p>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="row pt-32">
-        <div class="col-md-12 p-0">
-          <h4 class="m-0 text-primary">Health insurance</h4>
-        </div>
-      </div>
-      <div class="row pt-12">
-        <div class="col-md-12 p-0 c-p">
+      <div class="row pt-10 ">
+        <div class="col-md-12 p-0 c-p br-4 h-105">
           <div class="bg-grey lter">
-            <p class="m-0 f-500 roboto p-8 pb-0">Family floater</p>
-            <div class="row pt-12">
-              <div class="col-md-3 pr-0 pl-8">
-                <img src="/assets/images/svg/insurance-chart1.svg">
+            <p class="m-0 f-500 roboto p-8 pb-0">Health insurance</p>
+            <div class="row pt-4">
+              <div class="col-md-3 pr-0 pl-8 pb-8">
+                <img src="/assets/images/svg/life-insurance.svg">
               </div>
-              <div class="col-md-9">
-                <p class="m-0 text-black roboto pt-12"><span class="f-500">Actual:</span> 54,50,000</p>
-                <p class="m-0 text-black roboto pt-8"><span class="f-500">Advice: </span> 1,80,00,000
+              <div class="col-md-9 pl-0">
+                <p class="m-0 text-black roboto">Rahul Jain, Shilpa Jain, Manu Jain, Shreya Jain, Aryan Ja...</p>
+                <p class="m-0 text-black roboto pt-8 pb-8"><span class="f-500">Advice: </span> 1,80,00,000
                 </p>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="row pt-12">
-        <div class="col-md-12 p-0 c-p">
+      <div class="row pt-16 ">
+        <div class="col-md-12 p-0 c-p br-4 h-105">
           <div class="bg-grey lter">
-            <p class="m-0 f-500 roboto p-8 pb-0">Manu Jain</p>
-            <div class="row pt-12">
-              <div class="col-md-3 pr-0 pl-8">
-                <img src="/assets/images/svg/insurance-chart1.svg">
+            <p class="m-0 f-500 roboto p-8 pb-0">Personal accident</p>
+            <div class="row pt-4">
+              <div class="col-md-3 pr-0 pl-8 pb-8">
+                <img src="/assets/images/svg/life-insurance.svg">
               </div>
-              <div class="col-md-9">
-                <p class="m-0 text-black roboto pt-12"><span class="f-500">Actual:</span> 54,50,000</p>
-                <p class="m-0 text-black roboto pt-8"><span class="f-500">Advice: </span> 1,80,00,000
+              <div class="col-md-9 pl-0">
+                <p class="m-0 text-black roboto">Shilpa Jain</p>
+                <p class="m-0 text-black roboto pt-16"><span class="f-500">Advice: </span> 1,80,00,000
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-10 ">
+        <div class="col-md-12 p-0 c-p br-4 h-105">
+          <div class="bg-grey lter">
+            <p class="m-0 f-500 roboto p-8 pb-0">Life insurance</p>
+            <div class="row pt-4">
+              <div class="col-md-3 pr-0 pl-8 pb-8">
+                <img src="/assets/images/svg/life-insurance.svg">
+              </div>
+              <div class="col-md-9 pl-0">
+                <p class="m-0 text-black roboto">Rahul Jain</p>
+                <p class="m-0 text-black roboto pt-16"><span class="f-500">Advice: </span> 1,80,00,000
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-10 ">
+        <div class="col-md-12 p-0 c-p  br-4 h-105">
+          <div class="bg-grey lter">
+            <p class="m-0 f-500 roboto p-8 pb-0">Life insurance</p>
+            <div class="row pt-4">
+              <div class="col-md-3 pr-0 pl-8 pb-8">
+                <img src="/assets/images/svg/life-insurance.svg">
+              </div>
+              <div class="col-md-9 pl-0">
+                <p class="m-0 text-black roboto">Rahul Jain</p>
+                <p class="m-0 text-black roboto pt-16"><span class="f-500">Advice: </span> 1,80,00,000
                 </p>
               </div>
             </div>

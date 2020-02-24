@@ -1,9 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { ConfirmationTransactionComponent } from '../confirmation-transaction/confirmation-transaction.component';
-import { OnlineTrasactionComponent } from '../online-trasaction/online-trasaction.component';
 import { OnlineTransactionService } from '../../../online-transaction.service';
 import { ProcessTransactionService } from '../process-transaction.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -132,7 +129,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     console.log('bank details', bank)
   }
   onFolioChange(folio) {
-    this.purchaseTransaction.controls.folioSelection.reset()
+    this.purchaseTransaction.controls.investmentAccountSelection.reset()
   }
   selectedScheme(scheme) {
     this.scheme = scheme
@@ -296,10 +293,12 @@ export class PurchaseTrasactionComponent implements OnInit {
     } else if (this.reInvestmentOpt.length > 1) {
       if (this.purchaseTransaction.get('reinvest').invalid) {
         this.purchaseTransaction.get('reinvest').markAsTouched();
+        return;
       }
     } else if (this.purchaseTransaction.get('folioSelection').value == 1) {
       if (this.purchaseTransaction.get('investmentAccountSelection').invalid) {
         this.purchaseTransaction.get('investmentAccountSelection').markAsTouched();
+        return;
       }
     } else {
       let obj = {
@@ -352,6 +351,7 @@ export class PurchaseTrasactionComponent implements OnInit {
 
     } else {
       this.processTransaction.onAddTransaction('confirm', this.transactionSummary)
+      Object.assign(this.transactionSummary, { allEdit: false });
     }
   }
   AddMultiTransaction() {
