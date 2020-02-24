@@ -52,6 +52,22 @@ export class AddClientMappingComponent implements OnInit {
       holdingType: this.singleFolioData.holdingType,
       holdingDesc: ''
     }
+    this.onlineTransact.mapUnmappedClient(obj).subscribe(
+      data => {
+        console.log(data);
+        this.close();
+      },
+      err => this.eventService.openSnackBar(err, "dismiss")
+    )
+  }
+  mapUnmapFolio() {
+    let obj =
+    {
+      clientId: this.familyMemberData.clientId,
+      familyMemberId: this.familyMemberData.familyMemberId,
+      clientCode: this.singleFolioData.clientCode,
+      folioNumber: this.singleFolioData.folioNumber
+    }
     this.onlineTransact.mapUnmappedFolios(obj).subscribe(
       data => {
         console.log(data);

@@ -53,7 +53,7 @@ export class SettingsClientMappingComponent implements OnInit {
     this.selectedBrokerCode = data[0];
     this.selectedPlatform = data[0];
     this.dataSource = [{}, {}, {}];
-    (this.type == '1') ? this.getMappedData() : this.getUnmappedData();
+    this.sortDataFilterWise();
   }
 
   getMappedData() {
@@ -109,7 +109,7 @@ export class SettingsClientMappingComponent implements OnInit {
         this.onlineTransact.unmapMappedClient(obj).subscribe(
           data => {
             console.log(data);
-            (this.type == '1') ? this.getMappedData() : this.getUnmappedData();
+            this.sortDataFilterWise();
             dialogRef.close();
           },
           err => this.eventService.openSnackBar(err, 'dismiss')
@@ -156,8 +156,9 @@ export class SettingsClientMappingComponent implements OnInit {
     (this.type == '1') ? this.getMappedData() : this.getUnmappedData();
   }
   openAddMappiing(data, flag) {
+    data['flag'] = "client";
     const fragmentData = {
-      flag: 'addNsc',
+      flag: 'clientMapping',
       data,
       id: 1,
       state: 'open45',
@@ -169,6 +170,7 @@ export class SettingsClientMappingComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             // this.getNscSchemedata();
+            this.sortDataFilterWise();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }

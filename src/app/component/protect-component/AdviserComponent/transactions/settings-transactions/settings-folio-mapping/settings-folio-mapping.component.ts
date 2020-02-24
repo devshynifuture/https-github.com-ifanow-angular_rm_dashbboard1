@@ -22,6 +22,7 @@ export class SettingsFolioMappingComponent implements OnInit {
   nomineesListFM: any;
   familyMemberData: any;
   isLoading: boolean;
+  clientData: any;
   constructor(public dialog: MatDialog, private onlineTransact: OnlineTransactionService, private eventService: EventService, private utilService: UtilService, private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) { }
 
   ngOnInit() {
@@ -29,6 +30,10 @@ export class SettingsFolioMappingComponent implements OnInit {
   }
   sortDataFilterWise() {
     (this.type == '1') ? this.getFolioMappedData() : this.getFolioUnmappedData();
+  }
+  ownerDetails(value) {
+    console.log(value)
+    this.clientData = value;
   }
   getFilterOptionData() {
     let obj = {
@@ -50,7 +55,7 @@ export class SettingsFolioMappingComponent implements OnInit {
     this.selectedBrokerCode = data[0];
     this.selectedPlatform = data[0];
     this.dataSource = [{}, {}, {}];
-    (this.type == '1') ? this.getFolioMappedData() : this.getFolioUnmappedData();
+    this.sortDataFilterWise();
   }
   getFolioMappedData() {
     this.isLoading = true;
@@ -104,7 +109,7 @@ export class SettingsFolioMappingComponent implements OnInit {
         this.onlineTransact.unmapMappedFolios(obj).subscribe(
           data => {
             console.log(data);
-            (this.type == '1') ? this.getFolioMappedData() : this.getFolioUnmappedData();
+            this.sortDataFilterWise();
             dialogRef.close();
           },
           err => this.eventService.openSnackBar(err, 'dismiss')
@@ -128,11 +133,12 @@ export class SettingsFolioMappingComponent implements OnInit {
     });
   }
   openAddMappiing(data, flag) {
+    data['flag'] = "folio";
     const fragmentData = {
-      flag: 'addNsc',
+      flag: 'folioMapping',
       data,
       id: 1,
-      state: 'open',
+      state: 'open45',
       componentName: AddClientMappingComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -141,6 +147,7 @@ export class SettingsFolioMappingComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             // this.getNscSchemedata();
+            this.sortDataFilterWise();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
