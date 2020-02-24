@@ -5,6 +5,9 @@ import * as Highcharts from 'highcharts';
 import { SeriesColumnOptions } from 'highcharts';
 import { AddScenariosComponent } from './add-scenarios/add-scenarios.component';
 import { MatDialog } from '@angular/material';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { PlanGoalsComponent } from './plan-goals/plan-goals.component';
 
 @Component({
   selector: 'app-scenarios-plan',
@@ -14,7 +17,7 @@ import { MatDialog } from '@angular/material';
 export class ScenariosPlanComponent implements OnInit {
 
 
-  constructor(private subInjectService: SubscriptionInject, public dialog: MatDialog) {
+  constructor(private subInjectService: SubscriptionInject, public dialog: MatDialog, public eventService: EventService) {
   }
 
   displayedColumns: string[] = ['description', 'year', 'month', 'lumpsum'];
@@ -251,6 +254,28 @@ export class ScenariosPlanComponent implements OnInit {
         }
       }
     );
+  }
+
+
+  openNewgoalsPlans() {
+    const fragmentData = {
+      flag: 'addNewCustomer',
+      id: 1,
+      direction: 'top',
+      componentName: PlanGoalsComponent,
+      state: 'open'
+    };
+    // this.router.navigate(['/subscription-upper'])
+    AuthService.setSubscriptionUpperSliderData(fragmentData);
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getClientSubscriptionList();
+          subscription.unsubscribe();
+        }
+      }
+    );
+
   }
 
 

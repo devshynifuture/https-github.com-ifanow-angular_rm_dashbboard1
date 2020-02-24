@@ -1,0 +1,452 @@
+<div class="dialogclose">
+    <div class="row popup-header-fix-100">
+        <div class="col-md-2 border-right-1 p-0">
+            <img class="imgAdLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+        </div>
+        <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
+
+            <p class="f-16 mb-0">
+                Financial goals comparision
+            </p>
+        </div>
+        <!-- (click)="dialogClose()" for prod build  -->
+        <div class="col-md-2 text-right">
+            <i class="material-icons pt-16 c-p pr-16">
+                clear
+            </i>
+        </div>
+    </div>
+</div>
+
+
+<div class="row pt-100">
+    <!-- <div class="col-md-10 p-0">
+        <div class="row">
+            <div class="col-md-6 pr-10">
+                <h5 class="text-center">SCENARIO 1</h5>
+
+                <table mat-table id="table-low" [appSkeletonLoading]="isLoading" appSkeletonLoading [dataSource]="dataSource" class=" ">
+
+                    <ng-container matColumnDef="details">
+                        <th mat-header-cell *matHeaderCellDef> Goal details </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="d-flex align-items-center justify-content-around">
+                                <div>
+                                    <img src="assets/images/svg/planGoalsIcon.svg">
+                                </div>
+                                <div>
+                                    <p class="f-14 m-0"> Shreya’s higher education </p>
+                                    <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+                    
+    <ng-container matColumnDef="value">
+        <th mat-header-cell *matHeaderCellDef> Goal value </th>
+        <td mat-cell *matCellDef="let element">
+            <div class="bar">
+                {{element.value}} </div>
+        </td>
+    </ng-container>
+
+    
+    <ng-container matColumnDef="monthly">
+        <th mat-header-cell *matHeaderCellDef> Monthly </th>
+        <td mat-cell *matCellDef="let element">
+            <div class="bar"> {{element.monthly}} </div>
+        </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="lumpsum">
+        <th mat-header-cell *matHeaderCellDef> Lumpsum </th>
+        <td mat-cell *matCellDef="let element">
+            <div class="bar"> {{element.lumpsum}} </div>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+</div>
+<div class="col-md-6 pl-10 ">
+    <h5 class="text-center">SCENARIO 2</h5>
+    <table mat-table id="table-low" [appSkeletonLoading]="isLoading" appSkeletonLoading [dataSource]="dataSource" class=" ">
+
+        <ng-container matColumnDef="details">
+            <th mat-header-cell *matHeaderCellDef> Goal details </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="d-flex align-items-center justify-content-around">
+                    <div>
+                        <img src="assets/images/svg/planGoalsIcon.svg">
+                    </div>
+                    <div>
+                        <p class="f-14 m-0"> Shreya’s higher education </p>
+                        <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+
+                    </div>
+                </div>
+            </td>
+        </ng-container>
+        
+    <ng-container matColumnDef="value">
+        <th mat-header-cell *matHeaderCellDef> Goal value </th>
+        <td mat-cell *matCellDef="let element">
+            <div class="bar">
+                {{element.value}} </div>
+        </td>
+    </ng-container>
+ 
+    <ng-container matColumnDef="monthly">
+        <th mat-header-cell *matHeaderCellDef> Monthly </th>
+        <td mat-cell *matCellDef="let element">
+            <div class="bar"> {{element.monthly}} </div>
+        </td>
+    </ng-container>
+ 
+    <ng-container matColumnDef="lumpsum">
+        <th mat-header-cell *matHeaderCellDef> Lumpsum </th>
+        <td mat-cell *matCellDef="let element">
+            <div class="bar"> {{element.lumpsum}} </div>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>
+</div>
+</div> -->
+
+
+    <!-- <div class="col-md-10 p-0">
+        <div class="row">
+            <div class="col-md-12 text-right d-flex justify-content-end">
+                <div class="headingSenarioBox">SCENARIO 1</div>
+                <div class="headingSenarioBox leftBorderNone">SCENARIO 2</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 planTable">
+                <table mat-table id="table-low" [dataSource]="dataSource1" class=" ">
+                    <ng-container matColumnDef="name">
+                        <th class="br w-15 " mat-header-cell *matHeaderCellDef> Ratio </th>
+                        <td mat-cell class="br w-15 " *matCellDef="let element">
+                            {{element.name}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="description">
+                        <th mat-header-cell class="br w-30" *matHeaderCellDef> Description </th>
+                        <td mat-cell class="br w-30 text-primitive" *matCellDef="let element">
+                            <div class="bar">
+                                {{element.description}} </div>
+                        </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="derived">
+                        <th mat-header-cell class="br" *matHeaderCellDef> How it’s derived </th>
+                        <td mat-cell class="br f-14 text-center" *matCellDef="let element">
+                            <div class="bar">
+                                <span class="d-block"> Liquid assets </span>
+                                <span class="lineborder"></span>
+                                <span class="d-block"> Monthly expenses</span>
+
+                            </div>
+                        </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="adverse">
+                        <th mat-header-cell class="br" *matHeaderCellDef> Adverse </th>
+                        <td mat-cell class="br" *matCellDef="let element">
+                            <div class="bar"> {{element.adverse}} </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="moderate">
+                        <th mat-header-cell class="br" *matHeaderCellDef> Moderate </th>
+                        <td mat-cell class="br" *matCellDef="let element">
+                            <div class="bar"> {{element.moderate}} </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="optimum">
+                        <th mat-header-cell class="br" *matHeaderCellDef> Optimum </th>
+                        <td mat-cell class="br" *matCellDef="let element">
+                            <div class="bar"> {{element.optimum}} </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="radioOne">
+                        <th mat-header-cell class="br w-11 text-center" *matHeaderCellDef> Ratio </th>
+                        <td mat-cell class="br w-11 text-center text-success f-20" *matCellDef="let element">
+                            <div class="bar"> {{element.radioOne}} </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="radioTwo">
+                        <th class="br w-11 text-center" mat-header-cell *matHeaderCellDef> Ratio </th>
+                        <td mat-cell class="br w-11 text-center f-20 text-success" *matCellDef="let element">
+                            <div class="bar"> {{element.radioTwo}} </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                </table>
+            </div>
+        </div>
+    </div> -->
+
+
+    <!-- <div class="col-md-10 p-0">
+
+        <div class="row">
+            <div class="col-md-3">
+                <h6>Select other scenarios</h6>
+                <mat-form-field>
+                    <mat-select class="form-control br-0">
+                        <mat-option value="1">Rahul Jain</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 text-right d-flex justify-content-end">
+                <div class="headingSenarioBoxNew">SCENARIO 1</div>
+                <div class="headingSenarioBoxNew leftBorderNone">SCENARIO 2</div>
+                <div class="headingSenarioBox3 leftBorderNone"> </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 planTable">
+                <table mat-table id="table-low" [dataSource]="dataSource2" class=" ">
+                    <ng-container matColumnDef="particulars">
+                        <th class="br w-73" mat-header-cell *matHeaderCellDef> Particulars </th>
+                        <td mat-cell class="br w-73" *matCellDef="let element">
+                            {{element.particulars}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="amountOne">
+                        <th mat-header-cell class="br w-11" *matHeaderCellDef> Total amount </th>
+                        <td mat-cell class="br w-11" *matCellDef="let element">
+                            <div class="bar">
+                                {{element.amountOne}} </div>
+                        </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="amountTwo">
+                        <th mat-header-cell class="br w-11" *matHeaderCellDef>Total amount</th>
+                        <td mat-cell class="br w-11" *matCellDef="let element">
+                            <div class="bar"> {{element.amountTwo}} </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="emptybox">
+                        <th mat-header-cell class="br w-4" *matHeaderCellDef> </th>
+                        <td mat-cell class="br w-4" *matCellDef="let element">
+                            <div class="bar"> <i class="material-icons">
+                                    keyboard_arrow_down
+                                </i> </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="row pt-20">
+            <div class="col-md-12">
+                <div class="borderTable">
+                    <div class="row p-12 bb">
+                        <div class="col-md-8 p-0 f-14 text-left">
+                            ACTUAL LIFE INSURANCE
+                        </div>
+                        <div class="col-md-2 p-0 f-14 text-right">
+                            50,00,000
+                        </div>
+                        <div class="col-md-2 p-0 f-14 text-right">
+                            40,00,000
+                        </div>
+                    </div>
+                    <div class="row p-12">
+                        <div class="col-md-8 p-0 f-14 text-left">
+                            LIFE INSURANCE ADVICED
+                        </div>
+                        <div class="col-md-2 p-0 f-14 text-right">
+                            1,25,50,000
+                        </div>
+                        <div class="col-md-2 p-0 f-14 text-right">
+                            1,25,50,000
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+
+    <div class="col-md-10 p-0">
+        <div class="row">
+            <div class="col-md-3">
+                <h6>Select family member</h6>
+                <mat-form-field>
+                    <mat-select class="form-control br-0">
+                        <mat-option value="1">Rahul Jain</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-3">
+                <h6>Select financial year</h6>
+                <mat-form-field>
+                    <mat-select class="form-control br-0">
+                        <mat-option value="1"> 2019-20</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+
+            <div class="col-md-3">
+                <h6>Tax calculation method</h6>
+                <mat-form-field>
+                    <mat-select class="form-control br-0">
+                        <mat-option value="1"> Assume tax deductions </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-11 mt-20 text-right d-flex justify-content-end">
+                <div class="headingSenarioBox4">SCENARIO 1</div>
+                <div class="headingSenarioBox4 leftBorderNone">SCENARIO 2</div>
+                <div class="headingSenarioBox3 leftBorderNone"> </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-11 planTable">
+                <table mat-table id="table-low" [dataSource]="dataSource3" class=" ">
+                    <ng-container matColumnDef="description">
+                        <th class="br w-44" mat-header-cell *matHeaderCellDef> Description </th>
+                        <td mat-cell class="br w-44" *matCellDef="let element">
+                            {{element.description}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actualOne">
+                        <th mat-header-cell class="text-right" *matHeaderCellDef> Actual </th>
+                        <td mat-cell class="text-right " *matCellDef="let element">
+                            <div class="bar">
+                                {{element.actualOne}} </div>
+                        </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="applicableOne">
+                        <th mat-header-cell class="text-right br" *matHeaderCellDef> Applicable</th>
+                        <td mat-cell class=" br text-right" *matCellDef="let element">
+                            <div class="bar"> {{element.applicableOne}} </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actualTwo">
+                        <th mat-header-cell class="text-right" *matHeaderCellDef> Actual</th>
+                        <td mat-cell class=" text-right" *matCellDef="let element">
+                            <div class="bar"> {{element.actualTwo}} </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="applicableTwo">
+                        <th mat-header-cell class="br text-right" *matHeaderCellDef> Applicable</th>
+                        <td mat-cell class="br text-right" *matCellDef="let element">
+                            <div class="bar text-right"> {{element.applicableTwo}} </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="emptybox">
+                        <th mat-header-cell class="br w-4 text-center" *matHeaderCellDef> </th>
+                        <td mat-cell class="br w-4 text-center" *matCellDef="let element">
+                            <div class="bar"> <i class="material-icons">
+                                    keyboard_arrow_down
+                                </i></div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+                </table>
+            </div>
+        </div>
+
+
+
+
+
+
+    </div>
+
+
+
+
+    <div class="col-md-2 b-l ">
+        <div class="row">
+            <div class="p-0 b-h-dashed mb-40 col-md-12">
+                <button mat-stroked-button class="btn-primary br-0 mb-40 ">
+                    SCENARIO HOME</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 p-0 mb-28">
+                <h6>Select other scenarios</h6>
+                <mat-form-field>
+                    <mat-select class="form-control br-0" id="sel1">
+                        <mat-option value="1">Scenario 1 & 2</mat-option>
+                        <mat-option value="2">Scenario 1 & 2</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 p-0">
+                <h6>Select other modules</h6>
+                <mat-form-field>
+                    <mat-select class="form-control br-0" id="sel1">
+                        <mat-option value="1"> Life cash flows</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 mb-36 p-0 b-h-dashed">
+                <button (click)="openNewgoalsPlans('addPlansGoals')" mat-raised-button class="btn-primitive mb-32 mt-12">PROCEED</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 p-0">
+                <p class="f-14">Want to add this comparision to the financial plan?</p>
+                <button mat-stroked-button class="black-border f-14"> Add to financial plan </button>
+            </div>
+        </div>
+
+    </div>
+
+</div>

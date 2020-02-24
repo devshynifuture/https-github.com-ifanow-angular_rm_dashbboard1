@@ -32,6 +32,7 @@ import { CashflowPlanSurplusComponent } from './cashflows-plan/cashflow-plan-sur
 import { CashflowUpperIncomeComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-upper-income/cashflow-upper-income.component';
 import { CashflowUpperExpenseComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-upper-expense/cashflow-upper-expense.component';
 import { CashflowUpperLiabilitiesComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-upper-liabilities/cashflow-upper-liabilities.component';
+//import { AddNewInsuranceComponent } from './insurance-plan/add-new-insurance/add-new-insurance.component';
 // import { AddInsurancePlanningComponent } from './insurance-plan/add-insurance-planning/add-insurance-planning.component';
 // import { EditApplicableTaxComponent } from './texes-plan/edit-applicable-tax/edit-applicable-tax.component';
 // import { SetupLumpsumDeploymentComponent } from './investments-plan/add-investment-plan/setup-lumpsum-deployment/setup-lumpsum-deployment.component';
@@ -73,6 +74,7 @@ import { CashflowUpperLiabilitiesComponent } from './cashflows-plan/cashflow-upp
     CashflowPlanAssetsComponent,
     CashflowPlanInsuranceComponent,
     CashflowPlanSurplusComponent,
+
 
     // DeploymentDetailsComponent,
     // AddInsurancePlanningComponent,

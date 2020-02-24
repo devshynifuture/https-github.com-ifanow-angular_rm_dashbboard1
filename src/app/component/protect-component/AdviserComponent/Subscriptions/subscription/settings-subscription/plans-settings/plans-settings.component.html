@@ -6,7 +6,7 @@
         <div class="row">
 
             <div *ngIf="planSettingData.length > 0" (click)="openFragment('','plan')" class="col-md-4 pr-20 pb-20 pl-0 c-p">
-                <mat-card class="example-card b-a height-460 bg-grey lter bd-1">
+                <mat-card class="example-card b-a h-468 bg-grey lter bd-1">
                     <mat-card-content>
                         <p class="text-center">
                             <i class="material-icons icon-center">add </i>
@@ -16,6 +16,7 @@
             </div>
 
             <div class="col-md-4  pr-20 pb-20 pl-0 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngFor="let singlePlan of planSettingData">
+                
                 <mat-card class="example-card b-a  bg-grey lter p-0">
                     <mat-card-header class="overflow-hidden">
                         <div class="wrapper-20 pb-10 height120 width100per">

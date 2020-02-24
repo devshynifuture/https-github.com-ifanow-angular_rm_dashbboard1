@@ -215,16 +215,21 @@ export class InvoicesComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
+        console.log('this is sidebardata in subs subs a2s : ', sideBarData);
         this.dataTOget = sideBarData;
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ');
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getInvoiceList();
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
           rightSideDataSub.unsubscribe();
         }
-      }
-
-    );
+      });
   }
+
+  
+
   getCancelInvoiceSubscription(data) {
     console.log(data);
     this.ngOnInit();
