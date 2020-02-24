@@ -114,7 +114,7 @@
       <div class="form-group mb-0">
         <label>Outstanding as on</label>
         <mat-form-field>
-          <input class="form-control br-0" matInput (focus)="picker.open()" (input)="preventDefault($event)"
+          <input class="form-control br-0" matInput (focus)="picker.open()" [max]="maxDate" (input)="preventDefault($event)"
             [matDatepicker]="picker" formControlName="poDate" readonly>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
@@ -129,7 +129,7 @@
       <div class="form-group mb-0">
         <label>Outstanding amount</label>
         <mat-form-field>
-          <input type="text" matInput #loanTenure class="form-control br-0" appInputValueValidation
+          <input type="text" matInput #loanTenure class="form-control br-0"  appInputValueValidation
             [inputValidator]="validatorType.NUMBER_ONLY" formControlName="outstandingAmt"
             maxlength="{{getFormControl().outstandingAmt.maxLength}}">
           <mat-error class="f-12 pt-4">
