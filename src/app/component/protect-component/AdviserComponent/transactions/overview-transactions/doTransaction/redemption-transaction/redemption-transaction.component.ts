@@ -282,24 +282,41 @@ export class RedemptionTransactionComponent implements OnInit {
     }
   }
   AddMultiTransaction() {
-    this.multiTransact = true
-    let obj = {
-      amc: this.scheme.amcId,
-      productDbId: this.schemeDetails.id,
-      folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
-      productCode: this.schemeDetails.schemeCode,
-      dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
-      orderVal: this.redemptionTransaction.controls.employeeContry.value,
-      allRedeem: (this.redemptionTransaction.controls.redeemType.value == 3) ? true : false,
-      amountType: (this.redemptionTransaction.controls.redeemType.value == 1) ? 'Amount' : 'Unit',
-      qty: (this.redemptionTransaction.controls.redeemType.value == 1) ? 0 : (this.redemptionTransaction.controls.redeemType.value == 3) ? this.schemeDetails.balance_units : this.redemptionTransaction.controls.employeeContry.value,
-      bankDetailId: this.bankDetails.id,
-      schemeName: this.scheme.schemeName,
+    if (this.reInvestmentOpt.length > 1) {
+      if (this.redemptionTransaction.get('reinvest').invalid) {
+        this.redemptionTransaction.get('reinvest').markAsTouched();
+      }
+    } else if (this.redemptionTransaction.get('investmentAccountSelection').invalid) {
+        this.redemptionTransaction.get('investmentAccountSelection').markAsTouched();
+        return;
+    } else if (this.redemptionTransaction.get('redeemType').invalid) {
+      this.redemptionTransaction.get('redeemType').markAsTouched();
+      return;
+
+    } else if (this.redemptionTransaction.get('employeeContry').invalid) {
+      this.redemptionTransaction.get('employeeContry').markAsTouched();
+    } else {
+      this.multiTransact = true
+      if (this.scheme != undefined && this.schemeDetails != undefined && this.redemptionTransaction != undefined) {
+        let obj = {
+          amc: this.scheme.amcId,
+          productDbId: this.schemeDetails.id,
+          folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+          productCode: this.schemeDetails.schemeCode,
+          dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
+          orderVal: this.redemptionTransaction.controls.employeeContry.value,
+          allRedeem: (this.redemptionTransaction.controls.redeemType.value == 3) ? true : false,
+          amountType: (this.redemptionTransaction.controls.redeemType.value == 1) ? 'Amount' : 'Unit',
+          qty: (this.redemptionTransaction.controls.redeemType.value == 1) ? 0 : (this.redemptionTransaction.controls.redeemType.value == 3) ? this.schemeDetails.balance_units : this.redemptionTransaction.controls.employeeContry.value,
+          bankDetailId: this.bankDetails.id,
+          schemeName: this.scheme.schemeName,
+        }
+        this.childTransactions.push(obj)
+        console.log(this.childTransactions)
+        this.schemeList = [];
+        this.redemptionTransaction.controls.employeeContry.reset()
+        this.redemptionTransaction.controls.investmentAccountSelection.reset()
+      }
     }
-    this.childTransactions.push(obj)
-    console.log(this.childTransactions)
-    this.schemeList = [];
-    this.redemptionTransaction.controls.employeeContry.reset()
-    this.redemptionTransaction.controls.investmentAccountSelection.reset()
   }
 }

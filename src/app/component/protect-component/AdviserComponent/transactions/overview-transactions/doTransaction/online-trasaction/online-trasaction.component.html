@@ -17,8 +17,8 @@
         <div class="row">
             <div class="col-md-8 p-0">
                 <h5 class="m-0 text-black pb-12">Select an investor from the search box below...</h5>
-                <mat-form-field>
-                    <input [matAutocomplete]="auto1" aria-label="client" class="form-control pl-8" (keyup)="getFamilyList($event.target.value)" formControlName="ownerName" matInput>
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input [matAutocomplete]="auto1" aria-label="client" class="form-control pl-8" placeholder="Start typing to see investor names" (keyup)="getFamilyList($event.target.value)" formControlName="ownerName" matInput>
                     <mat-autocomplete #auto1="matAutocomplete">
                         <!-- <mat-option value=''>Search family members</mat-option> -->
                         <mat-option *ngFor="let f of nomineesListFM" [value]="f.name" (click)="ownerDetails(f)">

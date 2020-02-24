@@ -20,8 +20,8 @@
                 </h5>
             </div>
         </div>
-        <div class="col-md-12 mt-20 all-transactions" *ngIf="multiTransact == true">
-            <table mat-table [dataSource]="childTransactions" id="table-low">
+        <div class="col-md-12 mt-20 all-transactions" *ngIf="multiTransact == true && childTransactions.length>0">
+            <table mat-table [dataSource]="childTransactions"  id="table-low">
                 <ng-container matColumnDef="no">
                     <th mat-header-cell *matHeaderCellDef class="br"> No</th>
                     <td *matCellDef="let element let i = index;" class="br w-15 " mat-cell>
@@ -75,17 +75,19 @@
                 <div class="row">
                     <div class="col-md-11 p-0">
                         <div class="form-group">
-                            <mat-form-field>
-                                <input type="text" aria-label="Number" class="form-control" matInput [matAutocomplete]="auto" (keyup)="getSchemeList($event.target.value)" placeholder="Start typing to see investor names">
+                            <mat-form-field floatLabel="never" appearance="standard">
+                                <input type="text" aria-label="Number" class="form-control" matInput (keyup)="getSchemeList($event.target.value)"  [matAutocomplete]="auto"  placeholder="Start typing to see scheme names">
                                 <mat-autocomplete #auto="matAutocomplete">
                                     <mat-option (onSelectionChange)="selectedScheme(scheme)" *ngFor="let scheme of schemeList" [value]="scheme.schemeName">
                                         {{scheme.schemeName}}
                                     </mat-option>
                                 </mat-autocomplete>
-                                <mat-error class="f-12">
+                                <!-- <mat-error class="f-12" *ngIf="schemeList==undefined">
                                     This field is required
-                                </mat-error>
-                                <mat-hint align="start" class="f-12 text-custom">Last closing NAV: {{navOfSelectedScheme}}
+                                </mat-error> -->
+                                <mat-hint align="start" *ngIf="schemeList==undefined" class="f-12">This field is required
+                                    </mat-hint>
+                                <mat-hint align="start" class="f-12 text-custom" *ngIf="schemeList!=undefined">Last closing NAV: {{navOfSelectedScheme}}
                                 </mat-hint>
                             </mat-form-field>
                         </div>

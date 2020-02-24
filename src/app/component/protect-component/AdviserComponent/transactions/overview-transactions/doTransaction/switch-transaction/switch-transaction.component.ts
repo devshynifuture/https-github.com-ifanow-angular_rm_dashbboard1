@@ -277,7 +277,7 @@ export class SwitchTransactionComponent implements OnInit {
         this.switchTransaction.get('investmentAccountSelection').markAsTouched();
         return;
       }
-    }  else if (this.switchTransaction.get('employeeContry').invalid) {
+    } else if (this.switchTransaction.get('employeeContry').invalid) {
       this.switchTransaction.get('employeeContry').markAsTouched();
       return;
     } else if (this.switchTransaction.get('switchType').invalid) {
@@ -340,28 +340,48 @@ export class SwitchTransactionComponent implements OnInit {
     }
   }
   AddMultiTransaction() {
-    this.multiTransact = true
-    let obj = {
-      amc: this.scheme.amcId,
-      productDbId: this.schemeDetails.id,
-      amountType: (this.switchTransaction.controls.switchType.value == 1) ? 'Amount' : 'Unit',
-      toProductDbId: this.schemeDetailsTransfer.id,
-      qty: (this.switchTransaction.controls.switchType.value == 1) ? 0 : (this.switchTransaction.controls.switchType.value == 3) ? this.schemeDetails.balance_units : this.switchTransaction.controls.employeeContry.value,
-      allRedeem: (this.switchTransaction.controls.switchType.value == 3) ? true : false,
-      toIsin: this.schemeDetailsTransfer.isin,
-      isin: this.schemeDetails.isin,
-      folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
-      productCode: this.schemeDetails.schemeCode,
-      dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
-      orderVal: this.switchTransaction.controls.employeeContry.value,
+    if (this.reInvestmentOpt.length > 1) {
+      if (this.switchTransaction.get('reinvest').invalid) {
+        this.switchTransaction.get('reinvest').markAsTouched();
+      }
+    } else if (this.switchTransaction.get('investmentAccountSelection').invalid) {
+        this.switchTransaction.get('investmentAccountSelection').markAsTouched();
+        return;
+    }else if(this.switchTransaction.get('transferIn').invalid){
+      this.switchTransaction.get('transferIn').markAsTouched();
+      return;
+    } else if (this.switchTransaction.get('employeeContry').invalid) {
+      this.switchTransaction.get('employeeContry').markAsTouched();
+      return;
+    } else if (this.switchTransaction.get('switchType').invalid) {
+      this.switchTransaction.get('switchType').markAsTouched();
+      return;
+    } else {
+      this.multiTransact = true
+      if (this.scheme != undefined && this.schemeDetails != undefined && this.switchTransaction != undefined) {
+        let obj = {
+          amc: this.scheme.amcId,
+          productDbId: this.schemeDetails.id,
+          amountType: (this.switchTransaction.controls.switchType.value == 1) ? 'Amount' : 'Unit',
+          toProductDbId: this.schemeDetailsTransfer.id,
+          qty: (this.switchTransaction.controls.switchType.value == 1) ? 0 : (this.switchTransaction.controls.switchType.value == 3) ? this.schemeDetails.balance_units : this.switchTransaction.controls.employeeContry.value,
+          allRedeem: (this.switchTransaction.controls.switchType.value == 3) ? true : false,
+          toIsin: this.schemeDetailsTransfer.isin,
+          isin: this.schemeDetails.isin,
+          folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+          productCode: this.schemeDetails.schemeCode,
+          dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
+          orderVal: this.switchTransaction.controls.employeeContry.value,
 
-      schemeName: this.scheme.schemeName,
+          schemeName: this.scheme.schemeName,
+        }
+        this.childTransactions.push(obj)
+        console.log(this.childTransactions)
+        this.schemeList = [];
+        this.switchTransaction.controls.switchType.reset()
+        this.switchTransaction.controls.employeeContry.reset()
+        this.switchTransaction.controls.investmentAccountSelection.reset()
+      }
     }
-    this.childTransactions.push(obj)
-    console.log(this.childTransactions)
-    this.schemeList = [];
-    this.switchTransaction.controls.switchType.reset()
-    this.switchTransaction.controls.employeeContry.reset()
-    this.switchTransaction.controls.investmentAccountSelection.reset()
   }
 }

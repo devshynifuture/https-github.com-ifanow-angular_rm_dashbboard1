@@ -4,7 +4,7 @@
             <div class="row pt-16 pb-16">
                 <div class="col-md-9">
                     <p class="m-0 roboto text-custom">Transaction platform</p>
-                    <div *ngIf="showPlatform == false">
+                    <div *ngIf="showPlatform == false && selectedPlatform!=undefined">
                         <div class="m-0" *ngIf="selectedPlatform == 2">{{(selectedPlatform =='2')?'BSE':(selectedPlatform =='1')?'NSE':'-'}} STAR MF</div>
                         <div class="m-0" *ngIf="selectedPlatform == 1">{{(selectedPlatform =='2')?'BSE':(selectedPlatform =='1')?'NSE':'-'}} NMF II</div>
                     </div>

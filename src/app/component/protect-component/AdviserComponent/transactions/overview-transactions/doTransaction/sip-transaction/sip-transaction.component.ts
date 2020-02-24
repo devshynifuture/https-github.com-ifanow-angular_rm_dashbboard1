@@ -323,7 +323,7 @@ export class SipTransactionComponent implements OnInit {
     return this.sipTransaction.controls;
   }
   sip() {
-     if (this.reInvestmentOpt.length > 1) {
+    if (this.reInvestmentOpt.length > 1) {
       if (this.sipTransaction.get('reinvest').invalid) {
         this.sipTransaction.get('reinvest').markAsTouched();
       }
@@ -332,7 +332,7 @@ export class SipTransactionComponent implements OnInit {
         this.sipTransaction.get('investmentAccountSelection').markAsTouched();
         return;
       }
-    }  else if (this.sipTransaction.get('employeeContry').invalid) {
+    } else if (this.sipTransaction.get('employeeContry').invalid) {
       this.sipTransaction.get('employeeContry').markAsTouched();
       return;
     } else if (this.sipTransaction.get('date').invalid) {
@@ -410,32 +410,56 @@ export class SipTransactionComponent implements OnInit {
     }
   }
   AddMultiTransaction() {
-    this.multiTransact = true
-    let obj = {
-      amc: this.scheme.amcId,
-      folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
-      productCode: this.schemeDetails.schemeCode,
-      dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
-      orderVal: this.sipTransaction.controls.employeeContry.value,
-      bankDetailId: this.bankDetails.id,
-      schemeName: this.scheme.schemeName,
-      mandateId: this.achMandateNSE.id,
-      noOfInstallments: this.sipTransaction.controls.installment.value,
-      productDbId: this.schemeDetails.id,
-      frequencyType: this.frequency,
-      startDate: Number(new Date(this.sipTransaction.controls.date.value.replace(/"/g, ""))),
+    if (this.reInvestmentOpt.length > 1) {
+      if (this.sipTransaction.get('reinvest').invalid) {
+        this.sipTransaction.get('reinvest').markAsTouched();
+      }
+    } else  if (this.ExistingOrNew==1 && this.sipTransaction.get('investmentAccountSelection').invalid) {
+        this.sipTransaction.get('investmentAccountSelection').markAsTouched();
+        return;
+    } else if (this.sipTransaction.get('frequency').invalid) {
+      this.sipTransaction.get('frequency').markAsTouched();
+      return;
+    } else if (this.sipTransaction.get('employeeContry').invalid) {
+      this.sipTransaction.get('employeeContry').markAsTouched();
+      return;
+    } else if (this.sipTransaction.get('date').invalid) {
+      this.sipTransaction.get('date').markAsTouched();
+      return;
+    } else if (this.sipTransaction.get('tenure').invalid) {
+      this.sipTransaction.get('tenure').markAsTouched();
+      return;
+    } else if (this.sipTransaction.get('installment').invalid) {
+      this.sipTransaction.get('installment').markAsTouched();
+      return;
+    }else {
+      this.multiTransact = true
+      let obj = {
+        amc: this.scheme.amcId,
+        folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+        productCode: this.schemeDetails.schemeCode,
+        dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
+        orderVal: this.sipTransaction.controls.employeeContry.value,
+        bankDetailId: this.bankDetails.id,
+        schemeName: this.scheme.schemeName,
+        mandateId: this.achMandateNSE.id,
+        noOfInstallments: this.sipTransaction.controls.installment.value,
+        productDbId: this.schemeDetails.id,
+        frequencyType: this.frequency,
+        startDate: Number(new Date(this.sipTransaction.controls.date.value.replace(/"/g, ""))),
+      }
+      const tenure = this.sipTransaction.controls.tenure.value;
+      const installment = this.sipTransaction.controls.installment.value;
+      obj = this.processTransaction.checkInstallments(obj, tenure, installment)
+      this.childTransactions.push(obj)
+      console.log(this.childTransactions)
+      this.schemeList = [];
+      this.sipTransaction.controls.date.reset()
+      this.sipTransaction.controls.tenure.reset()
+      this.sipTransaction.controls.installment.reset()
+      this.sipTransaction.controls.frequency.reset()
+      this.sipTransaction.controls.employeeContry.reset()
+      this.sipTransaction.controls.investmentAccountSelection.reset()
     }
-    const tenure = this.sipTransaction.controls.tenure.value;
-    const installment = this.sipTransaction.controls.installment.value;
-    obj = this.processTransaction.checkInstallments(obj, tenure, installment)
-    this.childTransactions.push(obj)
-    console.log(this.childTransactions)
-    this.schemeList = [];
-    this.sipTransaction.controls.date.reset()
-    this.sipTransaction.controls.tenure.reset()
-    this.sipTransaction.controls.installment.reset()
-    this.sipTransaction.controls.frequency.reset()
-    this.sipTransaction.controls.employeeContry.reset()
-    this.sipTransaction.controls.investmentAccountSelection.reset()
   }
 }

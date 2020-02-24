@@ -355,23 +355,37 @@ export class PurchaseTrasactionComponent implements OnInit {
     }
   }
   AddMultiTransaction() {
-    this.multiTransact = true
-    let obj = {
-      amc: this.scheme.amcId,
-      folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
-      productCode: this.schemeDetails.schemeCode,
-      dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
-      orderVal: this.purchaseTransaction.controls.employeeContry.value,
-      bankDetailId: this.bankDetails.id,
-      schemeName: this.scheme.schemeName,
-      productDbId: this.schemeDetails.id,
+    if (this.ExistingOrNew==1 && this.purchaseTransaction.get('investmentAccountSelection').invalid) {
+      this.purchaseTransaction.get('investmentAccountSelection').markAsTouched();
+      return;
+    } else if (this.purchaseTransaction.get('employeeContry').invalid) {
+      this.purchaseTransaction.get('employeeContry').markAsTouched();
+    } else if (this.reInvestmentOpt.length > 1) {
+      if (this.purchaseTransaction.get('reinvest').invalid) {
+        this.purchaseTransaction.get('reinvest').markAsTouched();
+        return;
+      }
+    } else {
+      this.multiTransact = true
+      if (this.scheme != undefined && this.schemeDetails != undefined && this.bankDetails != undefined) {
+        let obj = {
+          amc: (this.scheme) ? this.scheme.amcId : null,
+          folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+          productCode: (this.schemeDetails) ? this.schemeDetails.schemeCode : null,
+          dividendReinvestmentFlag: (this.schemeDetails) ? this.schemeDetails.dividendReinvestmentFlag : null,
+          orderVal: this.purchaseTransaction.controls.employeeContry.value,
+          bankDetailId: (this.bankDetails) ? this.bankDetails.id : null,
+          schemeName: (this.scheme) ? this.scheme.schemeName : null,
+          productDbId: (this.schemeDetails) ? this.schemeDetails.id : null,
+        }
+        this.childTransactions.push(obj)
+        console.log(this.childTransactions)
+        this.schemeList = [];
+        this.purchaseTransaction.controls.reinvest.reset()
+        this.purchaseTransaction.controls.employeeContry.reset()
+        this.purchaseTransaction.controls.investmentAccountSelection.reset()
+      }
     }
-    this.childTransactions.push(obj)
-    console.log(this.childTransactions)
-    this.schemeList = [];
-    this.purchaseTransaction.controls.reinvest.reset()
-    this.purchaseTransaction.controls.employeeContry.reset()
-    this.purchaseTransaction.controls.investmentAccountSelection.reset()
   }
 }
 export interface PeriodicElement {

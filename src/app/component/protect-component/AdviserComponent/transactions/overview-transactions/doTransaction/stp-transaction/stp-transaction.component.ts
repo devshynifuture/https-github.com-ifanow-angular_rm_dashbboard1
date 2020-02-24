@@ -277,7 +277,7 @@ export class StpTransactionComponent implements OnInit {
     })
   }
   selectedFrequency(getFrerq) {
-   // this.fre = getFrerq
+    // this.fre = getFrerq
     this.frequency = getFrerq.frequency
     this.stpTransaction.controls["employeeContry"].setValidators([Validators.min(getFrerq.sipMinimumInstallmentAmount)])
     if (this.getDataSummary.defaultClient.aggregatorType == 1) {
@@ -432,32 +432,60 @@ export class StpTransactionComponent implements OnInit {
     }
   }
   AddMultiTransaction() {
-    this.multiTransact = true
-
-    let obj = {
-      amc: this.scheme.amcId,
-      folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
-      productCode: this.schemeDetails.schemeCode,
-      dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
-      orderVal: this.stpTransaction.controls.employeeContry.value,
-      bankDetailId: this.bankDetails.id,
-      toIsin: this.schemeDetailsTransfer.isin,
-      schemeName: this.scheme.schemeName,
-      mandateId: this.achMandateNSE.id,
-      productDbId: this.schemeDetails.id,
-      frequencyType: this.frequency,
-      startDate: Number(new Date(this.stpTransaction.controls.date.value.replace(/"/g, ""))),
+    if (this.reInvestmentOpt.length > 1) {
+      if (this.stpTransaction.get('reinvest').invalid) {
+        this.stpTransaction.get('reinvest').markAsTouched();
+      }
+    } else if (this.stpTransaction.get('investmentAccountSelection').invalid) {
+      this.stpTransaction.get('investmentAccountSelection').markAsTouched();
+      return;
+    } else if (this.stpTransaction.get('transferIn').invalid) {
+      this.stpTransaction.get('transferIn').markAsTouched();
+      return;
+    } else if (this.stpTransaction.get('frequency').invalid) {
+      this.stpTransaction.get('frequency').markAsTouched();
+      return;
+    } else if (this.stpTransaction.get('employeeContry').invalid) {
+      this.stpTransaction.get('employeeContry').markAsTouched();
+      return;
+    } else if (this.stpTransaction.get('date').invalid) {
+      this.stpTransaction.get('date').markAsTouched();
+      return;
+    } else if (this.stpTransaction.get('tenure').invalid) {
+      this.stpTransaction.get('tenure').markAsTouched();
+      return;
+    } else if (this.stpTransaction.get('installment').invalid) {
+      this.stpTransaction.get('installment').markAsTouched();
+      return;
+    } else {
+      this.multiTransact = true
+      if (this.scheme != undefined && this.schemeDetails != undefined && this.stpTransaction != undefined) {
+        let obj = {
+          amc: this.scheme.amcId,
+          folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+          productCode: this.schemeDetails.schemeCode,
+          dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
+          orderVal: this.stpTransaction.controls.employeeContry.value,
+          bankDetailId: this.bankDetails.id,
+          toIsin: this.schemeDetailsTransfer.isin,
+          schemeName: this.scheme.schemeName,
+          mandateId: (this.achMandateNSE)?this.achMandateNSE.id:null,
+          productDbId: this.schemeDetails.id,
+          frequencyType: this.frequency,
+          startDate: Number(new Date(this.stpTransaction.controls.date.value.replace(/"/g, ""))),
+        }
+        const tenure = this.stpTransaction.controls.tenure.value;
+        const installment = this.stpTransaction.controls.installment.value;
+        obj = this.processTransaction.checkInstallments(obj, tenure, installment)
+        this.childTransactions.push(obj)
+        console.log(this.childTransactions)
+        this.schemeList = [];
+        this.stpTransaction.controls.frequency.reset()
+        this.stpTransaction.controls.date.reset()
+        this.stpTransaction.controls.installment.reset()
+        this.stpTransaction.controls.employeeContry.reset()
+        this.stpTransaction.controls.investmentAccountSelection.reset()
+      }
     }
-    const tenure = this.stpTransaction.controls.tenure.value;
-    const installment = this.stpTransaction.controls.installment.value;
-    obj = this.processTransaction.checkInstallments(obj, tenure, installment)
-    this.childTransactions.push(obj)
-    console.log(this.childTransactions)
-    this.schemeList = [];
-    this.stpTransaction.controls.frequency.reset()
-    this.stpTransaction.controls.date.reset()
-    this.stpTransaction.controls.installment.reset()
-    this.stpTransaction.controls.employeeContry.reset()
-    this.stpTransaction.controls.investmentAccountSelection.reset()
   }
 }

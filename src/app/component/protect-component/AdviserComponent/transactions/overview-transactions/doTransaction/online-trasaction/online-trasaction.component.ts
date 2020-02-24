@@ -60,7 +60,7 @@ export class OnlineTrasactionComponent implements OnInit {
   getPlatformCount: any;
   showSpinnerOwner = false
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-    private eventService : EventService,private fb: FormBuilder,private processTransaction : ProcessTransactionService) {
+    private eventService: EventService, private fb: FormBuilder, private processTransaction: ProcessTransactionService) {
   }
 
   @Input()
@@ -96,15 +96,15 @@ export class OnlineTrasactionComponent implements OnInit {
   }
   getDefaultDetailsRes(data) {
     console.log('deault', data)
-    if(data == undefined) {
+    if (data == undefined) {
       return
     }
     this.allData = data
     this.credentialList = data.credentialList
-    this.getPlatformCount = data.credentialList.filter(function(ele){
+    this.getPlatformCount = data.credentialList.filter(function (ele) {
       return ele.id
     })
-    console.log('platform count',this.getPlatformCount)
+    console.log('platform count', this.getPlatformCount)
     this.defaultCredential = data.defaultCredential
     this.defaultClient = data.defaultClient
     this.selectedPlatform = this.defaultCredential.aggregatorType
@@ -123,12 +123,12 @@ export class OnlineTrasactionComponent implements OnInit {
   }
   getFamilyMemberListRes(data) {
     this.showSpinnerOwner = false
-    if(data == undefined){
-    
-    }else{
+    if (data == undefined) {
+
+    } else {
       this.nomineesListFM = data.familyMembers
     }
-    console.log('getFamilyMemberListRes', data) 
+    console.log('getFamilyMemberListRes', data)
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
@@ -145,7 +145,7 @@ export class OnlineTrasactionComponent implements OnInit {
         this.checkFamilyMem = element.name.includes(this.transactionAddForm.controls.ownerName.value)
       });
       if (this.formStep == 'step-1' == this.checkFamilyMem == true) {
-        if(this.allData && this.allData.length > 0){
+        if (this.allData && this.allData.length > 0) {
           this.formStep = 'step-2';
         }
         this.formStep = 'step-2';
@@ -238,7 +238,7 @@ export class OnlineTrasactionComponent implements OnInit {
         this.checkFamilyMem = element.name.includes(this.transactionAddForm.controls.ownerName.value)
       });
       if (this.formStep == 'step-1' == this.checkFamilyMem == true) {
-        if(this.allData && this.allData.length > 0){
+        if (this.allData && this.allData.length > 0) {
           this.formStep = 'step-2';
         }
         this.formStep = 'step-2';
@@ -248,6 +248,8 @@ export class OnlineTrasactionComponent implements OnInit {
           transactionType: this.transactionAddForm.controls.transactionType.value
         }
         this.openPurchaseTransaction(data.transactionType, data)
+      }else{
+        this.eventService.openSnackBar("Please select atleast one transaction type", "Ok")
       }
     } else {
       if (this.formStep == 'step-1') {

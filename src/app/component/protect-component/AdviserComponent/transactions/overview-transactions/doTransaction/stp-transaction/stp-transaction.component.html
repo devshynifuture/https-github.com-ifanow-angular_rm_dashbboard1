@@ -20,7 +20,7 @@
                 </h5>
             </div>
         </div>
-        <div class="col-md-12 mt-20 all-transactions" *ngIf="multiTransact == true">
+        <div class="col-md-12 mt-20 all-transactions" *ngIf="multiTransact == true && childTransactions.length>0">
             <table mat-table [dataSource]="childTransactions" id="table-low">
                 <ng-container matColumnDef="no">
                     <th mat-header-cell *matHeaderCellDef class="br"> No</th>
@@ -62,10 +62,10 @@
                 <div class="row">
                     <div class="col-md-11 p-0">
                         <div class="form-group">
-                            <mat-form-field>
+                            <mat-form-field floatLabel="never" appearance="standard">
                                 <input type="text" aria-label="Number" class="form-control" matInput
                                     [matAutocomplete]="auto" (keyup)="getSchemeList($event.target.value)"
-                                    placeholder="Start typing to see investor names">
+                                    placeholder="Start typing to see scheme names">
                                 <mat-autocomplete #auto="matAutocomplete">
                                     <mat-option (onSelectionChange)="selectedScheme(scheme)"
                                         *ngFor="let scheme of schemeList" [value]="scheme.schemeName">
@@ -137,7 +137,7 @@
                 <div class="row">
                     <div class="col-md-11 p-0">
                         <div class="form-group">
-                            <mat-form-field>
+                            <mat-form-field floatLabel="never" appearance="standard">
                                 <input type="text" aria-label="Number" class="form-control" matInput
                                     formControlName="transferIn" [matAutocomplete]="auto1"
                                     (keyup)="getSchemeListTranfer($event.target.value)"
@@ -289,12 +289,12 @@
         <div class="col-md-4 pt-8">
             <h5 class="mb-0  text-white c-p" (click)="close()">Cancel</h5>
         </div>
-        <div class="col-md-8 right pt-8">
+        <div class="col-md-8 text-right">
             <!-- commented for prod build -->
-            <button mat-button class="text-success" (click)="AddMultiTransaction()">
+            <button mat-raised-button class="br-0 text-success f-14"  (click)="AddMultiTransaction()">
                 SAVE & ADD ANOTHER
             </button>
-            <button mat-button class="text-success" (click)="stp()">
+            <button mat-button class="btn-green text-white ml-12" (click)="stp()">
                 SAVE & PROCEED
             </button>
         </div>
