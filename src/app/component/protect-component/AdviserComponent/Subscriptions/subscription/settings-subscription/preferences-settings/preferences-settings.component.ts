@@ -229,7 +229,11 @@ export class PreferencesSettingsComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.subService.deleteSubSettingBillerProfile(singleBillerProfile.id).subscribe(
+        const obj = {
+          advisorId: this.advisorId,
+          id: singleBillerProfile.id
+        }
+        this.subService.deleteSubSettingBillerProfile(obj).subscribe(
           data => {
             this.getProfileBillerData();
             dialogRef.close();
