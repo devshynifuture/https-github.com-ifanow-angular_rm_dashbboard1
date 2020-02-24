@@ -35,6 +35,7 @@ import { CashflowUpperIncomeComponent } from './cashflows-plan/cashflow-upper-sl
 import { CashflowUpperExpenseComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-upper-expense/cashflow-upper-expense.component';
 import { CashflowUpperLiabilitiesComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-upper-liabilities/cashflow-upper-liabilities.component';
 import { AddNewInsuranceComponent } from './insurance-plan/add-new-insurance/add-new-insurance.component';
+import { PlanGoalsComponent } from './scenarios-plan/plan-goals/plan-goals.component';
 
 export const componentList = [
   PreferencesComponent,
@@ -62,7 +63,8 @@ export const componentList = [
   CashflowUpperIncomeComponent,
   CashflowUpperExpenseComponent,
   CashflowUpperLiabilitiesComponent,
-  AddNewInsuranceComponent
+  AddNewInsuranceComponent,
+  PlanGoalsComponent
 ];
 // import { AddPlaninsuranceComponent } from './insurance-plan/add-planinsurance/add-planinsurance.component';
 

@@ -1,69 +1,69 @@
 #ui-overview-transactions {
-  padding-top: 120px;
-  background: #F5F7F7;
+    padding-top: 120px;
+    background: #F5F7F7;
 }
 
 .btn-transaction {
-  width: 100%;
-  text-align: left;
-  padding: 0px 0px 0px 10px;
-  margin-bottom: 10px;
-  letter-spacing: 0.02px;
-  border-radius: 2px !important;
-  border: 1px solid #008FFF;
+    width: 100%;
+    text-align: left;
+    padding: 0px 0px 0px 10px;
+    margin-bottom: 10px;
+    letter-spacing: 0.02px;
+    border-radius: 2px !important;
+    border: 1px solid #008FFF;
 }
 
 .borderTransactions {
-  border: 1px solid #BCC6CA;
-  border-radius: 2px;
-  padding: 10px;
-  margin: 0px 12px 20px 12px;
+    border: 1px solid #BCC6CA;
+    border-radius: 2px;
+    padding: 10px;
+    margin: 0px 12px 20px 12px;
 }
 
 .width20 {
-  width: 20px;
+    width: 20px;
 }
 
 .detailsRecent {
-  border-bottom: 0.5px solid #83959D;
-  padding: 0px 10px 15px 10px;
-  margin-bottom: 15px;
+    border-bottom: 0.5px solid #83959D;
+    padding: 0px 10px 15px 10px;
+    margin-bottom: 15px;
 }
 
 .bPrimitive {
-  border: 0.5px solid #BCC6CA;
+    border: 0.5px solid #BCC6CA;
 }
 
 .b-a-danger {
-  border: 1px solid #FF6823;
+    border: 1px solid #FF6823;
 }
 
 .b-a-success {
-  border: 1px solid #00B294;
+    border: 1px solid #00B294;
 }
 
 ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar {
-  background-color: transparent !important;
+    background-color: transparent !important;
 }
 
 ::ng-deep .overviewTab .mat-tab-label {
-  height: auto !important;
-  padding: 0px !important;
-  font-weight: 600;
-  opacity: 1;
-  width: 35%;
-  text-align: left;
-  font-size: 16px;
-  justify-content: flex-start;
+    height: auto !important;
+    padding: 0px !important;
+    font-weight: 600;
+    opacity: 1;
+    width: 35%;
+    text-align: left;
+    font-size: 16px;
+    justify-content: flex-start;
 }
 
 ::ng-deep .overviewTab .mat-tab-label-active {
-  color: #008FFF;
+    color: #008FFF;
 }
 
 // ------------------- media css ----------------------------
 @media screen and (min-width: 1024px) {
-  #uiTransactions {
-    display: none;
-  }
+    #uiTransactions {
+        display: none;
+    }
 }

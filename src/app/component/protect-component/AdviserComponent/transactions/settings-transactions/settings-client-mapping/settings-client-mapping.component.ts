@@ -110,7 +110,7 @@ export class SettingsClientMappingComponent implements OnInit {
       flag: 'addNsc',
       data,
       id: 1,
-      state: 'open50',
+      state: 'open45',
       componentName: AddClientMappingComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

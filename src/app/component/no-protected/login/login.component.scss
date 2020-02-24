@@ -97,3 +97,33 @@ input.mat-input-element {
 
 // .animationBox:hover {
 // }
+// ------------------------------ new design --------------------
+.loginBox {
+    width: 60%;
+    margin-top: 60px;
+    height: 515px;
+}
+
+.form_container_new_wrapper {
+    width: 80%;
+}
+
+.namebtn {
+    button.mainloginBtn {
+        width: 100% !important;
+    }
+}
+
+.imgBoxlogin {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flexLogin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
