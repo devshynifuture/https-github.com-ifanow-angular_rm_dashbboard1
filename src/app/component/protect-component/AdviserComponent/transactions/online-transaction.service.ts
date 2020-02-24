@@ -46,14 +46,23 @@ export class OnlineTransactionService {
   getMandateDetails(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_MANDATE_DETAILS, data, 1)
   }
-  getUnmappedFolios(data) {
-    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_UNMAPPED_FOLIO, data, 1)
+  getUnmappedClients(data) {
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_UNMAPPED_CLIENTS, data, 1)
   }
-  getMapppedFolios(data) {
-    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_MAPPED_FOLIO, data, 1)
+  getMapppedClients(data) {
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_MAPPED_CLIENTS, data, 1)
+  }
+  mapUnmappedClient(data) {
+    return this.http.postEncoded(apiConfig.TRANSACT + appConfig.MAP_UNMAP_CLIENT, data);
+  }
+  unmapMappedClient(data) {
+    return this.http.postEncoded(apiConfig.TRANSACT + appConfig.UNMAP_MAP_CLIENT, data);
   }
   mapUnmappedFolios(data) {
-    return this.http.post(apiConfig.TRANSACT + appConfig.MAP_UNMAP_FOLIOS, data);
+    return this.http.postEncoded(apiConfig.TRANSACT + appConfig.MAP_UNMAP_FOLIO, data)
+  }
+  unmapMappedFolios(data) {
+    return this.http.postEncoded(apiConfig.TRANSACT + appConfig.UNMAP_MAP_FOLIO, data)
   }
   getSipFrequency(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_FREQUENCY, data, 1)
@@ -71,7 +80,7 @@ export class OnlineTransactionService {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_FOLIO_MAPPED, data, 1)
   }
   getFolioUnmappedData(data) {
-    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_UNMAPPED_FOLIO, data, 1)
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_FOLIO_UNMAPPED, data, 1)
   }
   // sipBSE(data){
   //   return this.http.postEncoded(apiConfig.TRANSACT + appConfig.SIP_BSE, data)

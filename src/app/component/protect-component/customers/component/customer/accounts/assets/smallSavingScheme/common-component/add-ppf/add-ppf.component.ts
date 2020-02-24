@@ -92,11 +92,12 @@ export class AddPpfComponent implements OnInit {
     }
     this.ppfData = data;
     this.ppfSchemeForm = this.fb.group({
-      ownerName: [data.ownerName, [Validators.required]],
+      ownerName: [!data.ownerName?'':data.ownerName, [Validators.required]],
       accountBalance: [data.accountBalance, [Validators.required, Validators.min(500), Validators.max(150000)]],
       balanceAsOn: [new Date(data.balanceAsOn), [Validators.required]],
       commencementDate: [new Date(data.commencementDate), [Validators.required]],
       futureContribution: [data.futureApproxcontribution, [Validators.required]],
+      tenure: [!data.tenure?'':data.tenure, [Validators.required]],
       frquency: [(data.frequency == undefined) ? "1" : data.frequency, [Validators.required]],
     })
     this.optionalppfSchemeForm = this.fb.group({
@@ -148,11 +149,11 @@ export class AddPpfComponent implements OnInit {
     if (this.ppfSchemeForm.invalid) {
       this.ppfSchemeForm.get('ownerName').markAsTouched();
       this.ppfSchemeForm.get('accountBalance').markAsTouched();
-      this.ppfSchemeForm.get('ownerName').markAsTouched();
       this.ppfSchemeForm.get('balanceAsOn').markAsTouched();
       this.ppfSchemeForm.get('commencementDate').markAsTouched();
       this.ppfSchemeForm.get('futureContribution').markAsTouched();
       this.ppfSchemeForm.get('frquency').markAsTouched();
+      this.ppfSchemeForm.get('tenure').markAsTouched();
     }
     else {
       let obj = {

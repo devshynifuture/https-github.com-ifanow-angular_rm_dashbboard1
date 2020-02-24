@@ -1,7 +1,8 @@
 <div class="popup-header-fix-45">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h3 class="mb-0 wrapper-20">MAP FOLIO TO IIN/UCC</h3>
+            <h3 class="mb-0 wrapper-20" *ngIf="singleFolioData.flag=='client'">MAP FOLIO TO IIN/UCC</h3>
+            <h3 class="mb-0 wrapper-20" *ngIf="singleFolioData.flag=='folio'">MAP FOLIO TO IIN/UCC1</h3>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -12,17 +13,25 @@
 </div>
 
 <div class="pt-90 pr-20 pl-20">
-    <h5 class="m-0">Mapping of Client code <b>{{singleFolioData.clientCode}}</b> belonging to
+    <h5 *ngIf="singleFolioData.flag=='client'" class="m-0">Mapping of Client code <b>{{singleFolioData.clientCode}}</b>
+        belonging to
         <b>{{singleFolioData.firstApplicantName}}</b></h5>
+    <h5 *ngIf="singleFolioData.flag=='folio'" class="m-0">Mapping of Client code <b>{{singleFolioData.folioNumber}}</b>
+        belonging to
+        <b>{{singleFolioData.invName}}</b></h5>
     <h5 class="m-0 pt-40">Select an investor from the search box below...</h5>
     <div class="row pt-12">
         <div class="col-md-10 p-0">
             <div class="form-group">
                 <form [formGroup]="folioForm">
                     <mat-form-field>
-                        <input [matAutocomplete]="auto1" aria-label="client" class="form-control br-0 pl-8" (keyup)="getFamilyList($event.target.value)" formControlName="ownerName" matInput>
+                        <input appClientSearch (input)="checkInputData($event)" [data]='searchClient.value'
+                            (valueChange1)='lisNominee($event)' #searchClient [matAutocomplete]="auto1"
+                            aria-label="client" class="form-control br-0 pl-8" formControlName="ownerName" matInput>
                         <mat-autocomplete #auto1="matAutocomplete">
-                            <mat-option *ngFor="let f of nomineesListFM" [value]="f.name" (click)="ownerDetails(f)">
+                            <!-- (onSelectionChange)="ownerDetails(f)" -->
+                            <mat-option (onSelectionChange)="ownerDetails(f)" *ngFor="let f of nomineesListFM"
+                                [value]="f.name">
                                 <span>{{f.name}}</span>
                             </mat-option>
                         </mat-autocomplete>
@@ -118,7 +127,11 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
         </div>
         <div *ngIf="familyMemberData" class="col-md-8 right text-right">
-            <button (click)="mapUnmapFolios()" mat-button class="btn-bottom br-0 text-inherit">MAP
+            <button (click)="mapUnmapClient()" *ngIf="singleFolioData.flag=='client'" mat-button
+                class="btn-bottom br-0 text-inherit">MAP
+            </button>
+            <button (click)="mapUnmapFolio()" *ngIf="singleFolioData.flag=='folio'" mat-button
+                class="btn-bottom br-0 text-inherit">MAP
             </button>
         </div>
     </div>
