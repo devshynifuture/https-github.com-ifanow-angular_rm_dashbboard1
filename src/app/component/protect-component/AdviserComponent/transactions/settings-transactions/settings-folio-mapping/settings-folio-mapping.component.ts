@@ -128,11 +128,12 @@ export class SettingsFolioMappingComponent implements OnInit {
     });
   }
   openAddMappiing(data, flag) {
+    data['flag'] = "folio";
     const fragmentData = {
-      flag: 'addNsc',
+      flag: 'folioMapping',
       data,
       id: 1,
-      state: 'open',
+      state: 'open45',
       componentName: AddClientMappingComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

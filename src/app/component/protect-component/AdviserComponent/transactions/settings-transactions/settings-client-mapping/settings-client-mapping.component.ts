@@ -156,8 +156,9 @@ export class SettingsClientMappingComponent implements OnInit {
     (this.type == '1') ? this.getMappedData() : this.getUnmappedData();
   }
   openAddMappiing(data, flag) {
+    data['flag'] = "client";
     const fragmentData = {
-      flag: 'addNsc',
+      flag: 'clientMapping',
       data,
       id: 1,
       state: 'open45',
