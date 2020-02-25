@@ -153,9 +153,9 @@ export class SettingsFolioMappingComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          this.sortDataFilterWise();
           if (UtilService.isRefreshRequired(sideBarData)) {
             // this.getNscSchemedata();
-            this.sortDataFilterWise();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
