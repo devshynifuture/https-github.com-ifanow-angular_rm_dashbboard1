@@ -137,7 +137,7 @@
                         </div>
                         <div class="p-9">
                             <div class="b-a">
-                                <div class="row bg-grey lter b-b p-16 pr-0 pl-0">
+                                <div class="row bg-grey lter b-t b-b p-16 pr-0 pl-0">
                                     <div class="col-md-9">
                                         <h4 class="m-0 f-14 f-500"> Service Details
 
@@ -386,7 +386,7 @@
                 <div>
                     <div class="p-9">
                         <div class="b-a">
-                            <div class="row bg-grey lter b-b p-16 pr-0 pl-0">
+                            <div class="row bg-grey lter b-b b-t p-16 pr-0 pl-0">
                                 <div class="col-md-9">
                                     <h4 class="m-0 f-14 f-500"> Service Details
                                     </h4>
@@ -557,7 +557,7 @@
     </div>
 </div>
 <!--Add and edit invoice section-->
-<div *ngIf="showEdit"  [ngClass]="!inputData?'pt-60':''">
+<div *ngIf="showEdit" [ngClass]="!inputData?'pt-60':''">
     <app-add-edit-subscription-invoice (cancelAddInvoice)="getAddCancelFlag($event)"
         (cancelEditInvoice)="getCancelFlag($event)" (valueChange)='display($event)' [data]="storeData"
         [invoiceInSub]="invoiceInSub" [invoiceValue]="invoiceValue">

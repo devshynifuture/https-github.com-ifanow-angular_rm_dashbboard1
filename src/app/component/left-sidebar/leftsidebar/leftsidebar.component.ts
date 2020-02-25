@@ -147,7 +147,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     if (window.innerHeight >= 670 || window.innerHeight == 670) {
       this.showSettings = false;
     }
-    if (window.innerWidth <= 600) {
+    if (window.innerWidth <= 1100) {
       // this.showTabs = false;
       // $('#left').css('margin-left', '60px');
       // $('#d').addClass('width,60px');

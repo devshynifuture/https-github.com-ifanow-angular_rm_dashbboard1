@@ -86,7 +86,7 @@ export class AddPoSavingComponent implements OnInit {
     }
     this.posavingData = data
     this.poSavingForm = this.fb.group({
-      ownerName: [data.ownerName, [Validators.required, UtilService.ageValidators]],
+      ownerName: [!data.ownerName?'':data.ownerName, [Validators.required, UtilService.ageValidators]],
       accBal: [data.accountBalance, [Validators.required, Validators.min(20)]],
       balAsOn: [new Date(data.balanceAsOn), [Validators.required]],
       ownershipType: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]],
@@ -122,21 +122,11 @@ export class AddPoSavingComponent implements OnInit {
         this.nominees.push(obj)
       });
     }
-    if (this.poSavingForm.get('ownerName').invalid) {
+    if (this.poSavingForm.invalid) {
       this.poSavingForm.get('ownerName').markAsTouched();
-      return;
-    } else if (this.poSavingForm.get('accBal').invalid) {
       this.poSavingForm.get('accBal').markAsTouched();
-      return;
-    } else if (this.poSavingForm.get('ownerName').invalid) {
-      this.poSavingForm.get('ownerName').markAsTouched();
-      return;
-    } else if (this.poSavingForm.get('balAsOn').invalid) {
       this.poSavingForm.get('balAsOn').markAsTouched();
-      return;
-    } else if (this.poSavingForm.get('ownershipType').invalid) {
       this.poSavingForm.get('ownershipType').markAsTouched();
-      return;
     } else {
       if (this.editApi != undefined && this.editApi != 'advicePoSaving') {
         const obj = {

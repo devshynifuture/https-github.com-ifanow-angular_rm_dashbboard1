@@ -1,41 +1,53 @@
 <div>
     <div class="dialogclose">
         <div class="row popup-header-fix-100">
-            <div class="col-md-2 border-right-1 p-0">
-                <img class="pt-4" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+            <div class="col-md-2 border-right-1 d-flex justify-content-center align-items-center p-0">
+                <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
             </div>
             <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
-                <p class="f-16 mb-0" *ngIf="fragmentDataSubsUpper.data.flag=='plan' || fragmentDataSubsUpper.data==='plan'">Add plan details, map services/documents to the selected plan</p>
-                <p class="f-16 mb-0" *ngIf="fragmentDataSubsUpper.data.flag=='services' || fragmentDataSubsUpper.data===''">Add fee structure, map plans/documents/modules to the selected service</p>
-                <p class="f-16 mb-0" *ngIf="fragmentDataSubsUpper.data.flag=='documents' || fragmentDataSubsUpper.data==='documents'">Add documents, map them to services/plans
+                <p class="f-16 mb-0"
+                    *ngIf="fragmentDataSubsUpper.data.flag=='plan' || fragmentDataSubsUpper.data==='plan'">Add plan
+                    details, map services/documents to the selected plan</p>
+                <p class="f-16 mb-0"
+                    *ngIf="fragmentDataSubsUpper.data.flag=='services' || fragmentDataSubsUpper.data===''">Add fee
+                    structure, map plans/documents/modules to the selected service</p>
+                <p class="f-16 mb-0"
+                    *ngIf="fragmentDataSubsUpper.data.flag=='documents' || fragmentDataSubsUpper.data==='documents'">Add
+                    documents, map them to services/plans
                 </p>
-                <p class="f-16 mb-0" *ngIf="fragmentDataSubsUpper.data.flag=='clients' || fragmentDataSubsUpper.data==='clients'">
+                <p class="f-16 mb-0"
+                    *ngIf="fragmentDataSubsUpper.data.flag=='clients' || fragmentDataSubsUpper.data==='clients'">
                     Add fee structure, send quotations/invoices, execute documents for the selected client</p>
             </div>
             <div class="col-md-2 text-right">
                 <i (click)="dialogClose()" class="material-icons pt-16 c-p pr-16">
-          clear
-        </i>
+                    clear
+                </i>
             </div>
         </div>
     </div>
-    <div *ngIf="fragmentDataSubsUpper&&fragmentDataSubsUpper.data.flag==='plan' || fragmentDataSubsUpper.data==='plan'" class="row">
+    <div *ngIf="fragmentDataSubsUpper&&fragmentDataSubsUpper.data.flag==='plan' || fragmentDataSubsUpper.data==='plan'"
+        class="row">
         <div class="col-md-12 p-0">
-            <mat-tab-group (selectedTabChange)="tabClick($event)" animationDuration="0ms" class="popup-header-fix-tabs" mat-align-tabs="center">
+            <mat-tab-group (selectedTabChange)="tabClick($event)" animationDuration="0ms" class="popup-header-fix-tabs"
+                mat-align-tabs="center">
                 <mat-tab #tab delay="500" label="OVERVIEW" placement="left" tooltip="tootip on left">
                     <ng-template matTabContent>
-                        <app-overview [componentFlag]='flag' (changePlanData)="getData($event)" [upperData]="fragmentDataSubsUpper.data">
+                        <app-overview [componentFlag]='flag' (changePlanData)="getData($event)"
+                            [upperData]="fragmentDataSubsUpper.data">
                         </app-overview>
                     </ng-template>
                 </mat-tab>
                 <mat-tab #tab [disabled]='fragmentDataSubsUpper.data=="plan" && !addedData' label="SERVICES">
                     <ng-template matTabContent>
-                        <app-services (changeServiceData)="getData($event)" [componentFlag]='flag' [planData]="!addedData?fragmentDataSubsUpper.data:addedData"></app-services>
+                        <app-services (changeServiceData)="getData($event)" [componentFlag]='flag'
+                            [planData]="!addedData?fragmentDataSubsUpper.data:addedData"></app-services>
                     </ng-template>
                 </mat-tab>
                 <mat-tab #tab [disabled]='fragmentDataSubsUpper.data=="plan" && !addedData' label="DOCUMENTS">
                     <ng-template matTabContent>
-                        <app-document (changeServiceData)="getData($event)" [componentFlag1]='documents' [upperData]="!addedData?fragmentDataSubsUpper.data:addedData"></app-document>
+                        <app-document (changeServiceData)="getData($event)" [componentFlag1]='documents'
+                            [upperData]="!addedData?fragmentDataSubsUpper.data:addedData"></app-document>
                     </ng-template>
                 </mat-tab>
 
@@ -44,7 +56,8 @@
     </div>
     <div *ngIf="fragmentDataSubsUpper.data.flag=='services' || fragmentDataSubsUpper.data===''" class="row z-value-100">
         <div class="col-md-12 p-0">
-            <mat-tab-group (selectedTabChange)="tabClick($event)" [selectedIndex]="selectedServiceTab" animationDuration="0ms" class="popup-header-fix-tabs" mat-align-tabs="center">
+            <mat-tab-group (selectedTabChange)="tabClick($event)" [selectedIndex]="selectedServiceTab"
+                animationDuration="0ms" class="popup-header-fix-tabs" mat-align-tabs="center">
                 <mat-tab label="FEE STRUCTURE">
                     <app-fee-structure (changeServiceData)="getData($event)" [upperData]="fragmentDataSubsUpper.data">
                     </app-fee-structure>
@@ -52,13 +65,16 @@
                 <mat-tab #tab [disabled]='fragmentDataSubsUpper.data=="" && !addedData' label="PLANS">
                     <ng-template matTabContent>
                         <!--*ngIf="subscriptionTab=='PLANS'"-->
-                        <app-plans (changePlanData)="getData($event)" *ngIf="fragmentDataSubsUpper" [componentFlag]='plans' [upperData]="!addedData?fragmentDataSubsUpper.data:addedData">
+                        <app-plans (changePlanData)="getData($event)" *ngIf="fragmentDataSubsUpper"
+                            [componentFlag]='plans' [upperData]="!addedData?fragmentDataSubsUpper.data:addedData">
                         </app-plans>
                     </ng-template>
                 </mat-tab>
                 <mat-tab #tab [disabled]='fragmentDataSubsUpper.data=="" && !addedData' label="DOCUMENTS">
                     <ng-template matTabContent>
-                        <app-document (changeServiceData)="getData($event)" *ngIf="fragmentDataSubsUpper" [componentFlag1]='servicesDocuments' [upperData]="!addedData?fragmentDataSubsUpper.data:addedData"></app-document>
+                        <app-document (changeServiceData)="getData($event)" *ngIf="fragmentDataSubsUpper"
+                            [componentFlag1]='servicesDocuments'
+                            [upperData]="!addedData?fragmentDataSubsUpper.data:addedData"></app-document>
                     </ng-template>
                 </mat-tab>
                 <!-- <mat-tab #tab [disabled]='fragmentDataSubsUpper.data=="" && !addedData' label="MODULES">
@@ -78,14 +94,18 @@
                         </app-overview>
                     </ng-template>
                 </mat-tab>
-                <mat-tab label="PLANS" *ngIf="upperDataSubsUpper && upperDataSubsUpper.documentData && upperDataSubsUpper.documentData.availableAt == 1 && upperDataSubsUpper.documentData.planId==0">
+                <mat-tab label="PLANS"
+                    *ngIf="upperDataSubsUpper && upperDataSubsUpper.documentData && upperDataSubsUpper.documentData.availableAt == 1 && upperDataSubsUpper.documentData.planId==0">
                     <ng-template matTabContent>
-                        <app-plans (changePlanData)="getData($event)" [componentFlag]='"plans"' [upperData]="fragmentDataSubsUpper.data"></app-plans>
+                        <app-plans (changePlanData)="getData($event)" [componentFlag]='"plans"'
+                            [upperData]="fragmentDataSubsUpper.data"></app-plans>
                     </ng-template>
                 </mat-tab>
-                <mat-tab label="SERVICES" *ngIf="upperDataSubsUpper && upperDataSubsUpper.documentData && upperDataSubsUpper.documentData.availableAt == 2">
+                <mat-tab label="SERVICES"
+                    *ngIf="upperDataSubsUpper && upperDataSubsUpper.documentData && upperDataSubsUpper.documentData.availableAt == 2">
                     <ng-template matTabContent>
-                        <app-services (changeServiceData)="getData($event)" [componentFlag]='"services"' [upperData]="fragmentDataSubsUpper.data"></app-services>
+                        <app-services (changeServiceData)="getData($event)" [componentFlag]='"services"'
+                            [upperData]="fragmentDataSubsUpper.data"></app-services>
                     </ng-template>
                 </mat-tab>
 
@@ -95,7 +115,8 @@
     <div *ngIf="fragmentDataSubsUpper.data.flag=='clients' || fragmentDataSubsUpper.data==='clients'" class="row">
         <div class="col-md-12 p-0 popup-header-fix-tabs">
 
-            <mat-tab-group (selectedTabChange)="tabClick($event)" [selectedIndex]="selectedServiceTab" animationDuration="0ms" mat-align-tabs="center">
+            <mat-tab-group (selectedTabChange)="tabClick($event)" [selectedIndex]="selectedServiceTab"
+                animationDuration="0ms" mat-align-tabs="center">
 
                 <mat-tab label="SUBSCRIPTIONS">
                     <ng-template matTabContent>
@@ -134,7 +155,8 @@
                         <div class="wrapper-20 bg-grey lter heading-fix b-a">
                             <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.data.name}}</h3>
                         </div>
-                        <app-document [clientData]="fragmentDataSubsUpper.data" [componentFlag1]='clientDocuments' [upperData]="fragmentDataSubsUpper.data">
+                        <app-document [clientData]="fragmentDataSubsUpper.data" [componentFlag1]='clientDocuments'
+                            [upperData]="fragmentDataSubsUpper.data">
                         </app-document>
                     </ng-template>
                 </mat-tab>

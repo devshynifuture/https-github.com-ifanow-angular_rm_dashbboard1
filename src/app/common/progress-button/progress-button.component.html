@@ -9,7 +9,7 @@
       {{ options.buttonIcon.fontSet ? '' : options.buttonIcon.fontIcon }}
     </mat-icon>
   </ng-container>
-  <img class="iconPosition" src="assets/images/svg/login-btn-icon.svg">
+  <img *ngIf="islogBut" class="iconPosition" src="assets/images/svg/login-btn-icon.svg">
   <span class="textZindex">
     {{ options.text }}</span>
 

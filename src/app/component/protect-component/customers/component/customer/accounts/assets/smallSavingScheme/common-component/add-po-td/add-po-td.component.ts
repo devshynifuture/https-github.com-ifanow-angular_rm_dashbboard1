@@ -69,10 +69,10 @@ export class AddPoTdComponent implements OnInit {
     }
     this.potdData = data;
     this.POTDForm = this.fb.group({
-      ownerName: [data.ownerName, [Validators.required, UtilService.ageValidators(10)]],
+      ownerName: [!data.ownerName?'':data.ownerName, [Validators.required, UtilService.ageValidators(10)]],
       amtInvested: [data.amountInvested, [Validators.required, Validators.min(200)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
-      description: [data.description, [Validators.required]],
+      description: [data.description],
 
       tenure: [(data.tenure) ? data.tenure : '5', [Validators.required]],
       ownershipType: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]]
@@ -126,27 +126,12 @@ export class AddPoTdComponent implements OnInit {
         this.nominees.push(obj)
       });
     }
-    if (this.POTDForm.get('ownerName').invalid) {
+    if (this.POTDForm.invalid) {
       this.POTDForm.get('ownerName').markAsTouched();
-      return;
-    } else if (this.POTDForm.get('amtInvested').invalid) {
       this.POTDForm.get('amtInvested').markAsTouched();
-      return
-    } else if (this.POTDForm.get('ownerName').invalid) {
-      this.POTDForm.get('ownerName').markAsTouched();
-      return;
-    }
-    else if (this.POTDForm.get('commDate').invalid) {
       this.POTDForm.get('commDate').markAsTouched();
-      return
-    }
-    else if (this.POTDForm.get('tenure').invalid) {
       this.POTDForm.get('tenure').markAsTouched();
-      return
-    }
-    else if (this.POTDForm.get('ownershipType').invalid) {
       this.POTDForm.get('ownershipType').markAsTouched();
-      return
     }
     else {
       if (this.editApi != undefined && this.editApi != 'advicePOTD') {
