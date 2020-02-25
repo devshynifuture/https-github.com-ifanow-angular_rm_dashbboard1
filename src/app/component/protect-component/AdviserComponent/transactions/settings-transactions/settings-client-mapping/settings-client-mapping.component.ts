@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { AddClientMappingComponent } from './add-client-mapping/add-client-mapping.component';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
-import { OnlineTransactionService } from '../../online-transaction.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
-import { AuthService } from 'src/app/auth-service/authService';
+import {Component, OnInit} from '@angular/core';
+import {AddClientMappingComponent} from './add-client-mapping/add-client-mapping.component';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
+import {OnlineTransactionService} from '../../online-transaction.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
+import {AuthService} from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-settings-client-mapping',
@@ -105,10 +105,11 @@ export class SettingsClientMappingComponent implements OnInit {
       btnNo: 'UNMAP',
       positiveMethod: () => {
         let obj =
-        {
-          tpUserCredFamilyMappingId: value.tpUserCredFamilyMappingId,
-          aggregatorType: this.selectedPlatform.aggregatorType
-        }
+          {
+            tpUserCredentialId: this.selectedBrokerCode.id,
+            tpUserCredFamilyMappingId: value.tpUserCredFamilyMappingId,
+            aggregatorType: this.selectedPlatform.aggregatorType
+          }
         this.onlineTransact.unmapMappedClient(obj).subscribe(
           data => {
             console.log(data);
