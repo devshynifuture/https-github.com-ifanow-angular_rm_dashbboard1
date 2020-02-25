@@ -24,7 +24,9 @@
 
 .logoWrap {
   .logo {
-    width: auto; height: 100%; margin: 0px auto;
+    width: auto;
+    height: 100%;
+    margin: 0px auto;
   }
 
   h5 {
@@ -62,7 +64,7 @@
   position: fixed;
   top: 0;
   bottom: 20px;
-  z-index: 10;
+  z-index: 101;
   background: #fff !important;
   /* box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .3); */
 }
@@ -87,6 +89,7 @@
   justify-content: center;
   align-items: center;
   display: flex;
+  text-align: center;
 }
 
 .main-details .mat-form-field-infix {
@@ -119,18 +122,19 @@ img.header-img {
   border-radius: 50%;
 }
 
-.smallNav{
-  margin-left:60px !important;
+.smallNav {
+  margin-left: 60px !important;
 }
 
-.mainNav{
-  margin-left:230px;
-  
+.mainNav {
+  margin-left: 230px;
+
 }
 
-#d{
+#d {
   transition: width 0.2s,
 }
+
 ::ng-deep .mat-menu-content:not(:empty) {
   padding-bottom: 0px !important;
   padding-top: 0px !important;

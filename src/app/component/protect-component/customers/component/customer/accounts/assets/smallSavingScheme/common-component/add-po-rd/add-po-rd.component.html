@@ -19,7 +19,7 @@
             <mat-form-field class="w-100">
                 <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
                     [data]='ownerData' formControlName="ownerName" class="form-control br-0">
-                    <mat-option value=''>Search family members</mat-option>
+                    <mat-option value=''>Select family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
                         <span>{{f.userName}}</span>
                     </mat-option>
@@ -59,7 +59,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput formControlName="commDate" [max]="maxDate" [matDatepicker]="KVPpicker"
+                        <input matInput (click)="KVPpicker.open()" formControlName="commDate" [max]="maxDate" [matDatepicker]="KVPpicker"
                             class="form-control br-0" readonly>
                         <mat-datepicker-toggle matSuffix [for]="KVPpicker"></mat-datepicker-toggle>
                         <mat-datepicker #KVPpicker></mat-datepicker>
@@ -74,15 +74,16 @@
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Tenure(in Years)</h5>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <mat-select formControlName="tenure" class="form-control br-0">
+                            <mat-option value="">select tenure years</mat-option>
                             <mat-option value="3">3 Years</mat-option>
                             <mat-option value="4">4 Years</mat-option>
                             <mat-option value="5">5 Years</mat-option>
                         </mat-select>
-                        <mat-error class="f-12">
+                        <mat-error class="f-12" *ngIf="PORDForm.get('tenure').value == '' && PORDForm.get('tenure').touched">
                             This field is required
                         </mat-error>
                     </mat-form-field>

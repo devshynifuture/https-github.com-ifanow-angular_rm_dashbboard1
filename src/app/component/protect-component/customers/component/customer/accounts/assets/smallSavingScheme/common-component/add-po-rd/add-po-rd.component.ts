@@ -82,10 +82,10 @@ export class AddPoRdComponent implements OnInit {
     }
     this.pordData = data;
     this.PORDForm = this.fb.group({
-      ownerName: [data.ownerName, [Validators.required]],
+      ownerName: [!data.ownerName?'':data.ownerName, [Validators.required]],
       monthlyContribution: [data.monthlyContribution, [Validators.required, Validators.min(10)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
-      tenure: [(data.tenure) ? data.tenure : '3'],
+      tenure: [(data.tenure) ? data.tenure : '', [Validators.required]],
       ownership: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]]
     });
     this.PORDFormoptionalForm = this.fb.group({
@@ -113,21 +113,12 @@ export class AddPoRdComponent implements OnInit {
         this.nominees.push(obj)
       });
     }
-    if (this.PORDForm.get('ownerName').invalid) {
+    if (this.PORDForm.invalid) {
       this.PORDForm.get('ownerName').markAsTouched();
-      return;
-    } else if (this.PORDForm.get('monthlyContribution').invalid) {
       this.PORDForm.get('monthlyContribution').markAsTouched();
-      return;
-    } else if (this.PORDForm.get('ownerName').invalid) {
-      this.PORDForm.get('ownerName').markAsTouched();
-      return;
-    } else if (this.PORDForm.get('commDate').invalid) {
+      this.PORDForm.get('tenure').markAsTouched();
       this.PORDForm.get('commDate').markAsTouched();
-      return;
-    } else if (this.PORDForm.get('ownership').invalid) {
       this.PORDForm.get('ownership').markAsTouched();
-      return;
     } else {
       if (this.editApi != undefined && this.editApi != 'advicePORD') {
         const obj = {

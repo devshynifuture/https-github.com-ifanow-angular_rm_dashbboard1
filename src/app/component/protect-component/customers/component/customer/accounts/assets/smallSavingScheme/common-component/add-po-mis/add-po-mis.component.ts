@@ -82,7 +82,7 @@ export class AddPoMisComponent implements OnInit {
       this.editApi = data;
     }
     this.pomisForm = this.fb.group({
-      ownerName: [data.ownerName, [Validators.required, UtilService.ageValidators(10)]],
+      ownerName: [!data.ownerName?'':data.ownerName, [Validators.required, UtilService.ageValidators(10)]],
       amtInvested: [data.amountInvested, [Validators.required, Validators.min(1500), Validators.max(450000)]],
       commencementdate: [new Date(data.commencementDate), [Validators.required]],
       tenure: [(data.tenure) ? data.tenure : '5', [Validators.required]],
@@ -128,23 +128,11 @@ export class AddPoMisComponent implements OnInit {
         this.nominees.push(obj)
       });
     }
-    if (this.pomisForm.get('ownerName').invalid) {
+    if (this.pomisForm.invalid) {
       this.pomisForm.get('ownerName').markAsTouched();
-      return;
-    } else if (this.pomisForm.controls.amtInvested.invalid) {
       this.pomisForm.get('amtInvested').markAsTouched();
-      return;
-    } else if (this.pomisForm.get('ownerName').invalid) {
-      this.pomisForm.get('ownerName').markAsTouched();
-      return;
-    } else if (this.pomisForm.controls.commencementdate.invalid) {
       this.pomisForm.get('commencementdate').markAsTouched();
-
-      return;
-    } else if (this.pomisForm.controls.ownershipType.invalid) {
       this.pomisForm.get('ownershipType').markAsTouched();
-
-      return;
     } else {
       const obj = {
         ownerName: (this.ownerName == null) ? this.pomisForm.controls.ownerName.value : this.ownerName,
