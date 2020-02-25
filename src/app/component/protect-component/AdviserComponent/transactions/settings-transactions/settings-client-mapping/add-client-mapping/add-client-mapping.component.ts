@@ -11,7 +11,7 @@ import { EventService } from 'src/app/Data-service/event.service';
   styleUrls: ['./add-client-mapping.component.scss']
 })
 export class AddClientMappingComponent implements OnInit {
-  displayedColumns: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'hname'];
+  displayedColumns: string[] = ['checkbox', 'no', 'name', 'weight', 'symbol', 'hname'];
   singleFolioData: any;
   folioForm: any;
   advisorId: any;
@@ -20,6 +20,8 @@ export class AddClientMappingComponent implements OnInit {
   familyMemberId: any;
   familyMemberData: any;
   ownerName: any;
+  clientCodeData: any;
+  selectedIIN: any;
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject, private fb: FormBuilder, private onlineTransact: OnlineTransactionService) { }
   set data(data) {
     this.advisorId = AuthService.getAdvisorId();
@@ -37,11 +39,39 @@ export class AddClientMappingComponent implements OnInit {
     this.nomineesListFM = Object.assign([], value);
   }
   checkInputData(value) {
-    (value.data == null) ? this.familyMemberData = undefined : console.log("data is Present")
+    if (value.data == null) {
+      this.familyMemberData = undefined;
+      this.clientCodeData = undefined;
+    }
   }
-  ownerDetails(value) {
+  selectedIINUCC(value) {
+    console.log(value);
+    this.selectedIIN = value;
+  }
+  ownerDetails(value, type) {
     this.familyMemberId = value.id;
     this.familyMemberData = value;
+    console.log(value)
+    if (type == 'folio') {
+      let obj =
+      {
+        clientId: value.clientId,
+        advisorId: value.advisorId,
+        familyMemberId: value.familyMemberId
+      }
+      // let obj = {
+      //   "advisorId": 414,
+      //   "familyMemberId": 112166,
+      //   "clientId": 53637
+      // }
+      this.onlineTransact.getClientCodes(obj).subscribe(
+        data => {
+          console.log(data);
+          this.clientCodeData = data;
+        },
+        err => this.eventService.openSnackBar(err, 'dismiss')
+      )
+    }
   }
   mapUnmapClient() {
     let obj = {
@@ -50,7 +80,7 @@ export class AddClientMappingComponent implements OnInit {
       clientId: this.familyMemberData.clientId,
       taxStatus: this.singleFolioData.taxStatus,
       holdingType: this.singleFolioData.holdingType,
-      holdingDesc: ''
+      aggregatorType: this.singleFolioData.aggregatorType
     }
     this.onlineTransact.mapUnmappedClient(obj).subscribe(
       data => {
@@ -64,8 +94,8 @@ export class AddClientMappingComponent implements OnInit {
     let obj =
     {
       clientId: this.familyMemberData.clientId,
-      familyMemberId: this.familyMemberData.familyMemberId,
-      clientCode: this.singleFolioData.clientCode,
+      familyMemberId: this.selectedIIN.familyMemberId,
+      clientCode: this.selectedIIN.clientCode,
       folioNumber: this.singleFolioData.folioNumber
     }
     this.onlineTransact.mapUnmappedFolios(obj).subscribe(

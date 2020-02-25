@@ -6,6 +6,7 @@ import { OnlineTransactionService } from '../../online-transaction.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-settings-client-mapping',
@@ -28,14 +29,16 @@ export class SettingsClientMappingComponent implements OnInit {
   type: string;
   filterData: any;
   isLoading: any;
+  advisorId: any;
   constructor(public dialog: MatDialog, private onlineTransact: OnlineTransactionService, private eventService: EventService, private utilService: UtilService, private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) { }
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId()
     this.getFilterOptionData();
   }
   getFilterOptionData() {
     let obj = {
-      advisorId: 414,
+      advisorId: this.advisorId,
       onlyBrokerCred: true
     }
     console.log('encode', obj)
@@ -61,7 +64,7 @@ export class SettingsClientMappingComponent implements OnInit {
     this.dataSource = [{}, {}, {}];
     let obj =
     {
-      advisorId: 414,
+      advisorId: this.advisorId,
       tpUserCredentialId: this.selectedBrokerCode.id,
       aggregatorType: this.selectedPlatform.aggregatorType
     }
@@ -79,7 +82,7 @@ export class SettingsClientMappingComponent implements OnInit {
     this.dataSource = [{}, {}, {}];
     let obj =
     {
-      advisorId: 414,
+      advisorId: this.advisorId,
       tpUserCredentialId: this.selectedBrokerCode.id,
       aggregatorType: this.selectedPlatform.aggregatorType
     }
@@ -134,7 +137,7 @@ export class SettingsClientMappingComponent implements OnInit {
   }
   getDefaultDetails(platform) {
     let obj = {
-      advisorId: 414,
+      advisorId: this.advisorId,
       familyMemberId: 112166,
       clientId: 53637,
       aggregatorType: platform
