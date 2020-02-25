@@ -5,6 +5,7 @@ import { EventService } from "../../../../../../../Data-service/event.service";
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { SubscriptionUpperSliderComponent } from '../upper-slider/subscription-upper-slider.component';
 import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from 'src/app/auth-service/authService';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -15,7 +16,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./single-document-view.component.scss']
 })
 export class SingleDocumentViewComponent implements OnInit {
-
+  advisorId:any
 
   constructor(public dialog: MatDialog, private eventService: EventService, private subService: SubscriptionService, private router: Router, private location: Location) {
   }
@@ -24,6 +25,8 @@ export class SingleDocumentViewComponent implements OnInit {
   @Output() valueChange = new EventEmitter();
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+
   }
 
   // editDocument() {
@@ -120,7 +123,11 @@ export class SingleDocumentViewComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.subService.deleteSettingsDocument(deleteData).subscribe(
+        const obj = {
+          advisorId: this.advisorId,
+          id: deleteData
+        }
+        this.subService.deleteSettingsDocument(obj).subscribe(
           data => {
             this.eventService.openSnackBar('document is deleted', 'dismiss');
             this.valueChange.emit('close');

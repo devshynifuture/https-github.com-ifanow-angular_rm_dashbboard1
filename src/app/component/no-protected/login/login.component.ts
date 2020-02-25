@@ -9,7 +9,7 @@ import { MatProgressButtonOptions } from "../../../common/progress-button/progre
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
+  templateUrl: './login-new.component.html',
   styleUrls: ['./login.component.scss'],
   animations: [
     trigger('btnProgress', [
@@ -32,7 +32,7 @@ import { MatProgressButtonOptions } from "../../../common/progress-button/progre
 export class LoginComponent implements OnInit {
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'Login',
+    text: 'Login to your account',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -41,11 +41,12 @@ export class LoginComponent implements OnInit {
     value: 10,
     disabled: false,
     fullWidth: false,
+    
     // buttonIcon: {
     //   fontIcon: 'favorite'
     // }
   }
-  errorRequired:boolean = false;
+  errorRequired: boolean = false;
   errorMsg: boolean = false;
   errorStyle = {}
   constructor(

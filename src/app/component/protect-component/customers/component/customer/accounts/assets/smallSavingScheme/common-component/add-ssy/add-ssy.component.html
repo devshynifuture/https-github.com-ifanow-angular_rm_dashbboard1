@@ -19,7 +19,7 @@
             <mat-form-field class="w-100">
                 <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
                     [data]='ownerData' formControlName="ownerName" class="form-control br-0">
-                    <mat-option value=''>Search family members</mat-option>
+                    <mat-option value=''>Select family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
                         <span>{{f.userName}}</span>
                     </mat-option>
@@ -77,7 +77,7 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group form-group_one mb-0">
-                    <mat-form-field><input [matDatepicker]="balanceAsOn" [max]="maxDate" class="form-control br-0"
+                    <mat-form-field><input (click)="balanceAsOn.open()" [matDatepicker]="balanceAsOn" [max]="maxDate" class="form-control br-0"
                             formControlName="balanceAsOn" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                         <mat-datepicker #balanceAsOn></mat-datepicker>
@@ -93,7 +93,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input [matDatepicker]="SSYpicker" [max]="maxDate" class="form-control br-0"
+                        <input (click)="SSYpicker.open()" [matDatepicker]="SSYpicker" [max]="maxDate" class="form-control br-0"
                             (dateChange)="setCommencementDate($event.target.value)" formControlName="commDate" matInput
                             readonly>
                         <mat-datepicker-toggle matSuffix [for]="SSYpicker"></mat-datepicker-toggle>
