@@ -18,7 +18,7 @@
             <div class="col-md-8 p-0">
                 <h5 class="m-0 text-black pb-12">Select an investor from the search box below...</h5>
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input appClientSearch [data]='searchClient.value' placeholder="Start typing to see investor names" (valueChange1)='lisNominee($event)' #searchClient
+                    <input appClientSearch [data]='searchClient.value' placeholder="Start typing to see investor names" (keyup)="ownerList($event.target.value)" (valueChange1)='lisNominee($event)' #searchClient
                         [matAutocomplete]="auto1" aria-label="client" class="form-control pl-8"
                         formControlName="ownerName" matInput>
                     <mat-autocomplete #auto1="matAutocomplete">
@@ -31,9 +31,13 @@
                     <mat-error class="f-12 pt-4" *ngIf="transactionAddForm.get('ownerName').errors?.required">
                         This field is required
                     </mat-error>
-                    <mat-error class="f-12" *ngIf="transactionAddForm.get('ownerName').errors?.isFamilyListInvalid">
+                    <!-- <mat-error class="f-12" *ngIf="transactionAddForm.get('ownerName').errors?.isFamilyListInvalid">
+                        This family member dose not exist
+                    </mat-error> -->
+                    <mat-error class="f-12" *ngIf="transactionAddForm.get('ownerName').errors?.setValue">
                         This family member dose not exist
                     </mat-error>
+                    <!-- {{transactionAddForm.get('ownerName').errors.setValue}} -->
                 </mat-form-field>
             </div>
             <div class="col-md-1 " *ngIf="showSpinnerOwner == true">

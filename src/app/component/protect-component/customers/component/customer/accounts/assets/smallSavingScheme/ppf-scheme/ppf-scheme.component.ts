@@ -25,6 +25,8 @@ export class PPFSchemeComponent implements OnInit {
   dataSource = new MatTableDataSource(this.data);
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  SumOfAmountInvested: any;
+  SumOfCurrentValue: any;
   constructor(private excel: ExcelService, public dialog: MatDialog, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
   displayedColumns = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
 
@@ -58,7 +60,7 @@ export class PPFSchemeComponent implements OnInit {
       this.dataSource.data = data.PPFList;
       this.dataSource.sort = this.sort;
       UtilService.checkStatusId(this.dataSource.filteredData);
-
+      this.SumOfCurrentValue = data.SumOfCurrentValue
     } else {
       this.noData = 'No scheme found';
       this.dataSource.data = []

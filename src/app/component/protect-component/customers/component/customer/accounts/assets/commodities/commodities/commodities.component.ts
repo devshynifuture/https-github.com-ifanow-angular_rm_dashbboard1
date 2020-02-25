@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../../customer.service';
@@ -177,8 +177,9 @@ export class CommoditiesComponent implements OnInit {
       }
     );
   }
+  @Output() changeCount = new EventEmitter();
   getGoldRes(data) {
-
+    this.changeCount.emit("call")
     console.log('getGoldList @@@@', data);
     this.isLoading = false;
     if (data == undefined) {

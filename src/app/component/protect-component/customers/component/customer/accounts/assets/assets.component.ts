@@ -28,7 +28,7 @@ export class AssetsComponent implements OnInit {
   ];
   tab: any;
   Settab: any;
-  viewMode = 'tab6';
+  viewMode = 'tab1';
 
   constructor(private subInjectService: SubscriptionInject, private eventService: EventService,
     public dialog: MatDialog, private cusService: CustomerService, private route: ActivatedRoute) {
@@ -135,7 +135,8 @@ export class AssetsComponent implements OnInit {
       fixedIncome,
       real_estate,
       retirementAccounts,
-      smallSavingSchemes
+      smallSavingSchemes,
+      commodities
     } = data;
 
     this.assetSideBarData[2].count = fixedIncome;
@@ -143,6 +144,7 @@ export class AssetsComponent implements OnInit {
     this.assetSideBarData[4].count = retirementAccounts;
     this.assetSideBarData[5].count = smallSavingSchemes;
     this.assetSideBarData[6].count = cashAndBank;
+    this.assetSideBarData[7].count = commodities;
   }
 
   openFragment(value) {

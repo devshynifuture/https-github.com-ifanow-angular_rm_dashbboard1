@@ -29,6 +29,9 @@ export class PoTdSchemeComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
+  sumOfCurrentValue: any;
+  sumOfAmountInvested: any;
+  sumOfMaturityValue: any;
 
   constructor(private excel: ExcelService, public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) {
   }
@@ -89,10 +92,13 @@ export class PoTdSchemeComponent implements OnInit {
     if (data == undefined) {
       this.noData = 'No scheme found';
       this.dataSource.data = [];
-    }else if (data && data.postOfficeTdList.length != 0) {
-      console.log('getPoTdSchemedataResponse',data);
+    } else if (data && data.postOfficeTdList.length != 0) {
+      console.log('getPoTdSchemedataResponse', data);
       this.dataSource.data = data.postOfficeTdList;
       this.dataSource.sort = this.sort;
+      this.sumOfCurrentValue = data.sumOfCurrentValue;
+      this.sumOfAmountInvested = data.sumOfAmountInvested;
+      this.sumOfMaturityValue = data.sumOfMaturityValue;
       UtilService.checkStatusId(this.dataSource.filteredData);
     } else {
       this.noData = 'No scheme found';
@@ -159,7 +165,7 @@ export class PoTdSchemeComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-        
+
       }
     );
   }
@@ -183,7 +189,7 @@ export class PoTdSchemeComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-        
+
       }
     );
   }

@@ -83,11 +83,11 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput [matDatepicker]="KVPpicker" [max]="maxDate" class="form-control br-0"
+                    <input matInput (click)="KVPpicker.open()" [matDatepicker]="KVPpicker" [max]="maxDate" class="form-control br-0"
                         formControlName="commencementdate" readonly>
                     <mat-datepicker-toggle matSuffix [for]="KVPpicker"></mat-datepicker-toggle>
                     <mat-datepicker #KVPpicker></mat-datepicker>
-                    <mat-error class="f-12" *ngIf="pomisForm.get('commencementdate').errors?.required">
+                    <mat-error class="f-12" >
                         This field is required
                     </mat-error>
                 </mat-form-field>

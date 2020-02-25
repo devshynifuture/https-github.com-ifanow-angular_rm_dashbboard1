@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   }
+  otpNumber: boolean = false;
   errorRequired: boolean = false;
   errorMsg: boolean = false;
   errorStyle = {}
@@ -76,6 +77,10 @@ export class LoginComponent implements OnInit {
     this.createForm();
     // }
     this.btnProgressData = "state1";
+  }
+
+  otpClick() {
+    this.otpNumber = true;
   }
 
   private createForm() {

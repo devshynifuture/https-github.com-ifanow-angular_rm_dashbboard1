@@ -33,7 +33,7 @@
                             </div>
                             <div class="row pt-12">
                                 <div class="col-md-7 pl-0">
-                                    <div class="example-container mb-24 fixed-deposite">
+                                    <div class="example-container mb-24 fixed-DEPOSIT">
                                         <table *ngIf="dataSource.filteredData.length > 0" mat-table
                                             [dataSource]="dataSource" id="table-low" class="skeletonAnimation"
                                             appSkeletonLoading [appSkeletonLoading]="isLoading">
@@ -100,7 +100,7 @@
                                                     <mat-menu #menu4="matMenu">
                                                         <button mat-menu-item
                                                             (click)="element.isRecuring = false;openExpenses('editExpenses',element)">Edit</button>
-                                                        <button mat-menu-item>Deatiled View</button>
+                                                        <button mat-menu-item>Detailed view</button>
                                                         <button mat-menu-item>Activity</button>
                                                         <button mat-menu-item
                                                             (click)="deleteModal('expense',element)">Delete</button>
@@ -122,7 +122,7 @@
                                     <div *ngIf="dataSource1">
                                         <h5 class="m-0 text-black" *ngIf="dataSource1.filteredData.length > 0">Other
                                             commitments</h5>
-                                        <div class="example-container mt-8 mb-24 fixed-deposite">
+                                        <div class="example-container mt-8 mb-24 fixed-DEPOSIT">
                                             <table *ngIf="dataSource1.filteredData.length > 0" mat-table
                                                 [dataSource]="dataSource1" id="table-low" class="skeletonAnimation"
                                                 appSkeletonLoading [appSkeletonLoading]="isLoading">
@@ -196,7 +196,7 @@
                                                         <mat-menu #menu4="matMenu">
                                                             <button mat-menu-item
                                                                 (click)="element.isRecuring = true;openExpenses('editExpenses',element)">Edit</button>
-                                                            <button mat-menu-item>Deatiled View</button>
+                                                            <button mat-menu-item>Detailed view</button>
                                                             <button mat-menu-item>Activity</button>
                                                             <button mat-menu-item
                                                                 (click)="deleteModal('expenseRecuring',element)">Delete</button>
@@ -277,7 +277,7 @@
 
                         <div class="row pt-12">
                             <div class="col-md-7 pl-0">
-                                <div class="example-container  mb-24 fixed-deposite">
+                                <div class="example-container  mb-24 fixed-DEPOSIT">
                                     <table *ngIf="dataSource4.filteredData.length > 0" mat-table
                                         [dataSource]="dataSource4" id="table-low" class="skeletonAnimation"
                                         appSkeletonLoading [appSkeletonLoading]="isLoading">
@@ -331,7 +331,7 @@
                                                 <mat-menu #menu4="matMenu">
                                                     <button mat-menu-item
                                                         (click)="element.isRecuring = false;openExpenses('editBudget',element)">Edit</button>
-                                                    <button mat-menu-item>Deatiled View</button>
+                                                    <button mat-menu-item>Detailed view</button>
                                                     <button mat-menu-item>Activity</button>
                                                     <button mat-menu-item
                                                         (click)="deleteModal('budget',element)">Delete</button>
@@ -354,7 +354,7 @@
                                 <h5 class="m-0 text-black" *ngIf="dataSource5.filteredData.length > 0"> Other
                                     commitments</h5>
 
-                                <div class="example-container mt-8 mb-24 fixed-deposite">
+                                <div class="example-container mt-8 mb-24 fixed-DEPOSIT">
                                     <table *ngIf="dataSource5.filteredData.length > 0" mat-table
                                         [dataSource]="dataSource5" id="table-low" class="skeletonAnimation"
                                         appSkeletonLoading [appSkeletonLoading]="isLoading">
@@ -406,7 +406,7 @@
                                                 <mat-menu #menu4="matMenu">
                                                     <button mat-menu-item
                                                         (click)="element.isRecuring = true;openExpenses('editBudget',element)">Edit</button>
-                                                    <button mat-menu-item>Deatiled View</button>
+                                                    <button mat-menu-item>Detailed view</button>
                                                     <button mat-menu-item>Activity</button>
                                                     <button mat-menu-item
                                                         (click)="deleteModal('budgetRecuring',element)">Delete</button>

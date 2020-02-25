@@ -4,6 +4,8 @@
       font-size: 18px;
     }
 
+
+
     .mat-tab-link {
       font-size: 12px !important;
       min-width: 100px !important;
@@ -11,6 +13,12 @@
 
     .subnav-fixed {
       margin-right: 8px !important;
+    }
+  }
+
+  #ui-dashboard {
+    h2 {
+      font-size: 20px !important;
     }
   }
 
@@ -36,6 +44,7 @@
   .variblefee {
     h5 {
       font-size: 14px;
+      padding: 7px !important;
     }
   }
 
@@ -170,5 +179,15 @@
 
   .mat-radio-button {
     min-width: 135px;
+  }
+}
+
+@media(max-width:1042px) {
+  .mat-radio-label {
+    width: 128px !important;
+  }
+
+  .tab-flex {
+    display: flex;
   }
 }

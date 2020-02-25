@@ -5,7 +5,7 @@
     <div class="col-md-8">
         <div class="row">
             <div class="col-md-3 pl-0">
-                <div class="form-group mb-0">
+                <div *ngIf="type=='1'" class="form-group mb-0">
                     <input appClientSearch [data]='searchClient.value' (valueChange1)='lisNominee($event)' #searchClient
                         [matAutocomplete]="auto1" aria-label="client" class="form-control br-0 pl-8"
                         formControlName="ownerName" matInput>
@@ -48,8 +48,8 @@
 
     </div>
     <div class="col-md-12 folio-mapping">
-        <table mat-table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" class="mt-8 skeletonAnimation"
-            id="table-low">
+        <table mat-table *ngIf="dataSource" [appSkeletonLoading]="isLoading" [dataSource]="dataSource"
+            class="mt-8 skeletonAnimation" id="table-low">
 
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef class="br">ARN/RIA </th>
@@ -91,9 +91,9 @@
                 <th mat-header-cell *matHeaderCellDef>Map </th>
                 <td mat-cell *matCellDef="let element">
                     <div class="bar">
-                        <button (click)="openAddMappiing(element,'')" *ngIf="type=='2'" mat-stroked-button
-                            class="primary-sm bg-primary text-white br-0">MAP</button>
-                        <button (click)="unmapFolio(element,'')" *ngIf="type=='1'" mat-stroked-button
+                        <button (click)="openAddMappiing(element,'')" *ngIf="type=='2'  && element.id"
+                            mat-stroked-button class="primary-sm bg-primary text-white br-0">MAP</button>
+                        <button (click)="unmapFolio(element,'')" *ngIf="type=='1'  && element.id" mat-stroked-button
                             class="primary-sm bg-primary text-white br-0">UNMAP</button>
                     </div>
                 </td>
@@ -101,6 +101,8 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-
+        <div *ngIf="dataSource==undefined && isLoading==false">
+            <h4 class="text-center pt-44">No Data Found</h4>
+        </div>
     </div>
 </div>

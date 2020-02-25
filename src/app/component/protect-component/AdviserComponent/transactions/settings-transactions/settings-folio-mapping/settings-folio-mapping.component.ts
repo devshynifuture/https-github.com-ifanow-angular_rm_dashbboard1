@@ -6,6 +6,7 @@ import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.s
 import { AddClientMappingComponent } from '../settings-client-mapping/add-client-mapping/add-client-mapping.component';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-settings-folio-mapping',
@@ -23,9 +24,11 @@ export class SettingsFolioMappingComponent implements OnInit {
   familyMemberData: any;
   isLoading: boolean;
   clientData: any;
+  advisorId: any;
   constructor(public dialog: MatDialog, private onlineTransact: OnlineTransactionService, private eventService: EventService, private utilService: UtilService, private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) { }
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId()
     this.getFilterOptionData();
   }
   sortDataFilterWise() {
@@ -34,10 +37,11 @@ export class SettingsFolioMappingComponent implements OnInit {
   ownerDetails(value) {
     console.log(value)
     this.clientData = value;
+    this.sortDataFilterWise();
   }
   getFilterOptionData() {
     let obj = {
-      advisorId: 414,
+      advisorId: this.advisorId,
       onlyBrokerCred: true
     }
     console.log('encode', obj)
@@ -60,10 +64,13 @@ export class SettingsFolioMappingComponent implements OnInit {
   getFolioMappedData() {
     this.isLoading = true;
     this.dataSource = [{}, {}, {}];
+    (this.clientData == undefined) ? this.clientData = { clientId: '', familyMemberId: '' } : '';
     const obj =
     {
-      advisorId: 414,
-      onlyBrokerCred: true
+      advisorId: this.advisorId,
+      onlyBrokerCred: true,
+      clientId: this.clientData.clientId,
+      familyMemberId: this.clientData.familyMemberId
     }
     this.onlineTransact.getFolioMappedData(obj).subscribe(
       data => {
@@ -76,10 +83,11 @@ export class SettingsFolioMappingComponent implements OnInit {
   getFolioUnmappedData() {
     this.dataSource = [{}, {}, {}];
     this.isLoading = true;
+    (this.clientData == undefined) ? this.clientData = { clientId: '', familyMemberId: '' } : '';
     const obj =
     {
-      advisorId: 414,
-      onlyBrokerCred: true
+      advisorId: this.advisorId,
+      onlyBrokerCred: true,
     }
     this.onlineTransact.getFolioUnmappedData(obj).subscribe(
       data => {
@@ -145,9 +153,9 @@ export class SettingsFolioMappingComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          this.sortDataFilterWise();
           if (UtilService.isRefreshRequired(sideBarData)) {
             // this.getNscSchemedata();
-            this.sortDataFilterWise();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }

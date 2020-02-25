@@ -17,12 +17,10 @@
                                 actions
                             </a>
 
-                            <a (click)="deleteModal(null)" *ngIf="dataCount != 0 && dataCount > 1"
-                                mat-menu-item>Delete
+                            <a (click)="deleteModal(null)" *ngIf="dataCount != 0 && dataCount > 1" mat-menu-item>Delete
                                 documents
                             </a>
-                            <a (click)="deleteModal(null)" *ngIf="dataCount != 0 && dataCount <= 1"
-                                mat-menu-item>Delete
+                            <a (click)="deleteModal(null)" *ngIf="dataCount != 0 && dataCount <= 1" mat-menu-item>Delete
                                 document
                             </a>
                         </mat-menu>
@@ -50,11 +48,11 @@
         </div>
     </div>
 
-    <div class="" [ngClass]="dataSource.data.length > 0 ? 'block' : 'none'">
+    <div class="table-scroll" [ngClass]="dataSource.data.length > 0 ? 'block' : 'none'">
         <!-- {{dataCount == dataSource.data.length}} -->
         <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class=" skeletonAnimation"
-            id="table-low" mat-table matSort>
-            <ng-container matColumnDef="checkbox">
+            id="tbs" mat-table matSort>
+            <ng-container matColumnDef="checkbox" sticky>
                 <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;">
                     <mat-checkbox (change)="selectAll($event)" name="selectAll"
                         [checked]="dataCount == dataSource.data.length"
@@ -134,7 +132,7 @@
                     </div>
                 </td>
             </ng-container>
-            <ng-container matColumnDef="icons">
+            <ng-container matColumnDef="icons" sticky>
                 <th *matHeaderCellDef class="f-18" mat-header-cell></th>
                 <td *matCellDef="let element" mat-cell>
                     <div *ngIf="!isLoading">

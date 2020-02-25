@@ -30,8 +30,8 @@
                             aria-label="client" class="form-control br-0 pl-8" formControlName="ownerName" matInput>
                         <mat-autocomplete #auto1="matAutocomplete">
                             <!-- (onSelectionChange)="ownerDetails(f)" -->
-                            <mat-option (onSelectionChange)="ownerDetails(f)" *ngFor="let f of nomineesListFM"
-                                [value]="f.name">
+                            <mat-option (onSelectionChange)="ownerDetails(f,singleFolioData.flag)"
+                                *ngFor="let f of nomineesListFM" [value]="f.name">
                                 <span>{{f.name}}</span>
                             </mat-option>
                         </mat-autocomplete>
@@ -42,8 +42,7 @@
                 </form>
             </div>
         </div>
-
-        <div *ngIf="familyMemberData" class="col-md-12 pt-60 p-0">
+        <div *ngIf="familyMemberData && singleFolioData.flag=='client'" class="col-md-12 pt-48 p-0">
             <h5 class="m-0 f-500 pb-12">Following are the details of Sneha Vishal Shah</h5>
             <div class="row b-a">
                 <div class="col-md-6 p-0 b-b">
@@ -78,46 +77,92 @@
                 </div>
             </div>
         </div>
-
-        <!-- <div class="col-md-12 pt-60 p-0 folio-mapping-popuptable">
-            <h5 class="m-0 f-500">Select an investment account you would like to map this folio to (multi select
-                allowed)</h5>
-            <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
+        <!-- <div *ngIf="clientCodeData && singleFolioData.flag=='folio'" class="col-md-12 pt-48 mb-48 p-0">
+            <table mat-table [dataSource]="clientCodeData" id="table-low">
                 <ng-container matColumnDef="checkbox">
-                    <th mat-header-cell *matHeaderCellDef class="br"> </th>
-                    <td mat-cell *matCellDef="let element" class="br">
-
-                        <mat-checkbox></mat-checkbox>
+                    <th mat-header-cell *matHeaderCellDef class="br f-18" style="width: 2%;">
+                        Select
+                    </th>
+                    <td mat-cell *matCellDef="let element" style="width: 2%;" class="c-p br">
+                        <mat-radio-button class="radioBtn custom-radio" (change)="selectedIINUCC(element)">
+                        </mat-radio-button>
                     </td>
                 </ng-container>
-                <ng-container matColumnDef="position">
+                <ng-container matColumnDef="no">
+                    <th mat-header-cell *matHeaderCellDef class="br w-20"> IIN/UCC </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar"> {{element.clientCode}} </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="ownerName">
+                    <th mat-header-cell *matHeaderCellDef class="br w-15"> Holding Type</th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar">
+                            {{(element.holdingType == 'SI')?'SINGLE':(element.holdingType == 'JO')?'JOINT':'ANYONE/SERVIVAL'}}
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="platform">
+                    <th mat-header-cell *matHeaderCellDef class="br w-15"> Platform</th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar">
+                            {{(element.aggregatorType == 1)?'NSC':(element.aggregatorType ==2)?'BSC':''}}
+                        </div>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div> -->
+        <div *ngIf="clientCodeData && singleFolioData.flag=='folio'"
+            class="col-md-12 pt-60 p-0 folio-mapping-popuptable">
+            <h5 class="m-0 f-500">Select an investment account you would like to map this folio to (multi select
+                allowed)</h5>
+            <table mat-table [dataSource]="clientCodeData" class="mt-8" id="table-low">
+                <ng-container matColumnDef="checkbox">
+                    <th mat-header-cell *matHeaderCellDef class="br"> </th>
+                    <td mat-cell *matCellDef="let element" style="width: 2%;" class="c-p br">
+                        <mat-radio-button class="radioBtn custom-radio" (change)="selectedIINUCC(element)">
+                        </mat-radio-button>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="no">
                     <th mat-header-cell *matHeaderCellDef class="br"> Platform </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        {{(element.aggregatorType == 1)?'NSC':(element.aggregatorType ==2)?'BSC':''}}</td>
                 </ng-container>
 
-             
+
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar">
+
+                        </div>
+                    </td>
                 </ng-container>
 
                 <ng-container matColumnDef="weight">
-                    <th mat-header-cell *matHeaderCellDef class="br"> Account number </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+                    <th mat-header-cell *matHeaderCellDef class="br"> IIN/UCC </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.clientCode}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="symbol">
                     <th mat-header-cell *matHeaderCellDef class="br"> Holding nature </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar">
+                            {{(element.holdingType == 'SI')?'SINGLE':(element.holdingType == 'JO')?'JOINT':'ANYONE/SERVIVAL'}}
+                        </div>
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="hname">
                     <th mat-header-cell *matHeaderCellDef> Joint holder names </th>
-                    <td mat-cell *matCellDef="let element"> {{element.hname}} </td>
+                    <td mat-cell *matCellDef="let element"> {{familyMemberData.name}} </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
-        </div> -->
+        </div>
     </div>
 </div>
 
@@ -130,7 +175,7 @@
             <button (click)="mapUnmapClient()" *ngIf="singleFolioData.flag=='client'" mat-button
                 class="btn-bottom br-0 text-inherit">MAP
             </button>
-            <button (click)="mapUnmapFolio()" *ngIf="singleFolioData.flag=='folio'" mat-button
+            <button (click)="mapUnmapFolio()" *ngIf="singleFolioData.flag=='folio' && selectedIIN" mat-button
                 class="btn-bottom br-0 text-inherit">MAP
             </button>
         </div>
