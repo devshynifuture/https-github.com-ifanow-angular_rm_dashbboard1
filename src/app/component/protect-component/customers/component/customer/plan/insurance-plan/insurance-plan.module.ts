@@ -14,6 +14,7 @@ import { InsurancePlanComponent } from './insurance-plan.component';
     InsurancePlanRoutingModule,
     MaterialModule,
     CustomDirectiveModule
-  ]
+  ],
+  entryComponents: []
 })
 export class InsurancePlanModule { }

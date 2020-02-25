@@ -61,10 +61,10 @@
     <!-- id="pdfDoc"  removed from above div-->
 
     <div class="wrapper-20 pt-8 bg-white" id="wrapper" *ngIf="dataSource.data.length > 0">
-        <div class="">
+        <div class="table-scroll">
             <table class="mt-8" [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
-                class=" skeletonAnimation" id="table-low" mat-table matSort>
-                <ng-container matColumnDef="checkbox">
+                class=" skeletonAnimation" id="tbs" mat-table matSort>
+                <ng-container matColumnDef="checkbox" sticky>
                     <th mat-header-cell *matHeaderCellDef class="f-18">
                         <mat-checkbox (change)="selectAll($event)" name="selectAll"
                             [indeterminate]="dataCount > 0 && dataCount != dataSource.data.length"
@@ -141,7 +141,7 @@
                         </div>
                     </td>
                 </ng-container>
-                <ng-container matColumnDef="balance">
+                <ng-container matColumnDef="balance" sticky>
                     <th *matHeaderCellDef class="f-18 text-right common-right pr-24" mat-header-cell
                         mat-sort-header="balanceDue">
                         Balance due
