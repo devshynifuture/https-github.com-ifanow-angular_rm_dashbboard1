@@ -161,6 +161,8 @@ export class SettingsClientMappingComponent implements OnInit {
   }
   openAddMappiing(data, flag) {
     data['flag'] = "client";
+    data.selectedBroker = this.selectedBrokerCode;
+
     const fragmentData = {
       flag: 'clientMapping',
       data,
