@@ -6,6 +6,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { OnlineTransactionService } from '../../../online-transaction.service';
 import { ProcessTransactionService } from '../process-transaction.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-sip-transaction',
@@ -88,6 +89,7 @@ export class SipTransactionComponent implements OnInit {
   }
   selectSchemeOption(value) {
     console.log('value selction scheme', value)
+    this.sipTransaction.controls.schemeSip.reset()
     this.selectScheme = value
   }
   getSchemeList(value) {
