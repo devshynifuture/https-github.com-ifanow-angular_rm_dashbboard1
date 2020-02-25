@@ -36,7 +36,7 @@ export class ClientSearchDirective implements OnInit {
   }
   getFamilyMemberListRes(data) {
     console.log('getFamilyMemberListRes', data)
-    this.nomineesListFM = data.familyMembers
+    this.nomineesListFM = (data)?data.familyMembers:null;
     this.valueChange1.emit(this.nomineesListFM)
   }
 }

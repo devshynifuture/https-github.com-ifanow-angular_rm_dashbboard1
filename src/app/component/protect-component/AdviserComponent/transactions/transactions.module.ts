@@ -42,7 +42,7 @@ import { ClientSearchDirective } from './client-search.directive';
     KycTransactionsComponent,
     PhotoSigntureComponent,
     FatcaDetailsComponent,
-    VideoKycComponent
+    VideoKycComponent,
   ],
   imports: [
     CommonModule,
@@ -55,7 +55,7 @@ import { ClientSearchDirective } from './client-search.directive';
     CustomCommonModule,
     SettingsTransactionsModule,
   ], exports: [
-    TransactionsComponent
+    TransactionsComponent,
   ]
 })
 export class TransactionsModule {
