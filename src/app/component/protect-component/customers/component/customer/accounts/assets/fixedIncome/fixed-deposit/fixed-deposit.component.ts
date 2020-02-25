@@ -179,7 +179,7 @@ export class FixedDepositComponent implements OnInit {
       commencementDate: [(!data) ? '' : new Date(data.commencementDate), [Validators.required]],
       interestRate: [(!data) ? '' : data.interestRate, [Validators.required]],
       maturity: [(!data) ? '' : data.maturity, [Validators.required]],
-      compound: [(!data.interestCompoundingId) ? '' : (data.interestCompoundingId) + '', [Validators.required]],
+      compound: [(!data.interestCompoundingId) ? '' : (data.interestCompoundingId) + ''],
       institution: [(!data) ? '' : data.institutionName, [Validators.required]],
       description: [(!data) ? '' : data.description, [Validators.required]],
       tenureY: [(!data) ? '' : data.tenureY, [Validators.required]],
@@ -207,6 +207,16 @@ export class FixedDepositComponent implements OnInit {
   getFormControl(): any {
     return this.fixedDeposit.controls;
   }
+
+  getIntPayout(){
+    if(this.fixedDeposit.value.payOpt == 1){
+      this.getFormControl().compound.setValidators([Validators.required]);
+    }
+    else{
+      this.getFormControl().compound.setValidators(null);
+    }
+  }
+
   saveFixedDeposit() {
      if (this.showTenure==true) {
       this.tenure = this.getDateYMD();
@@ -256,13 +266,13 @@ export class FixedDepositComponent implements OnInit {
         commencementDate: this.datePipe.transform(this.fixedDeposit.controls.commencementDate.value, 'yyyy-MM-dd'),
         institutionName: this.fixedDeposit.controls.institution.value,
         description: this.fixedDeposit.controls.description.value,
-        frequencyOfPayoutPerYear: (this.fixedDeposit.controls.frequencyOfPayoutPerYear.value != "") ? this.fixedDeposit.controls.frequencyOfPayoutPerYear.value : null,
+        frequencyOfPayoutPerYear: this.fixedDeposit.value.compound==''?this.fixedDeposit.value.frequencyOfPayoutPerYear:this.fixedDeposit.value.compound,
         maturityDate: this.datePipe.transform(this.maturityDate, 'yyyy-MM-dd'),
         interestPayoutOption: this.fixedDeposit.controls.payOpt.value,
         bankAcNumber: this.fixedDeposit.controls.bankACNo.value,
         fdNumber: this.fixedDeposit.controls.fdNo.value,
         fdType: this.fixedDeposit.controls.FDType.value,
-        interestCompoundingId: this.fixedDeposit.controls.compound.value,
+        interestCompoundingId: this.fixedDeposit.value.compound,
         id: this.fixedDeposit.controls.id.value
       };
       console.log('fixedDeposit', obj);
