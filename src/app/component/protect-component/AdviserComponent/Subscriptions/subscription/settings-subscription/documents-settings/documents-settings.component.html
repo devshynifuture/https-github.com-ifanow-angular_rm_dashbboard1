@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <div class="row skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
-                    <div class="col-md-4 pr-20 pb-20 pl-0" (click)="openFragment('documents',null)">
+                    <div class="col-xl-4 col-md-6 pr-20 pb-20 pl-0" (click)="openFragment('documents',null)">
                         <mat-card class="example-card height-484 bg-grey lter b-a">
                             <mat-card-content>
                                 <p class="text-center">
@@ -27,7 +27,7 @@
                         </mat-card>
                     </div>
 
-                    <div class="col-md-4 overflow-hidden " *ngIf="isLoading">
+                    <div class="col-xl-4 col-md-6 overflow-hidden " *ngIf="isLoading">
                         <div class="emptyDocumentBox ">
 
                             <div class="relClass mb-12 ">
@@ -41,7 +41,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4 overflow-hidden " *ngIf="isLoading">
+                    <div class="col-xl-4 col-md-6 overflow-hidden " *ngIf="isLoading">
                         <div class="emptyDocumentBox ">
 
                             <div class="relClass mb-12 ">
@@ -56,7 +56,7 @@
                     </div>
 
                     <div [hidden]="documentSettingData==undefined" *ngFor="let singleDocument of documentSettingData"
-                        class="col-md-4 pr-20 pb-20 pl-0 documents-body">
+                        class="col-xl-4 col-md-6 pr-20 pb-20 pl-0 documents-body">
                         <div class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                             <div class="relClass">
                                 <div class="bar">
