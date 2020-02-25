@@ -1,8 +1,10 @@
+import { ConfirmDialogComponent } from './../../../common-component/confirm-dialog/confirm-dialog.component';
 import { EventService } from './../../../../../Data-service/event.service';
 import { UtilService } from './../../../../../services/util.service';
 import { Component, OnInit } from '@angular/core';
 import { ReconciliationDetailsViewComponent } from '../reconciliation-details-view/reconciliation-details-view.component';
 import { SubscriptionInject } from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import { MatDialog } from '@angular/material';
 
 
 @Component({
@@ -27,7 +29,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
 
   constructor(private subInjectService: SubscriptionInject,
-    private eventService: EventService) { }
+    private eventService: EventService,
+    private dialog: MatDialog) { }
 
   ngOnInit() {
   }
@@ -62,6 +65,34 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
   setSubTabState(state) {
     this.subTabState = state;
+  }
+
+  openDeleteAndReorderDialog() {
+    const dialogData = {
+      header: 'DELETE & REORDER?',
+      body: 'Are you sure you want to delete and reorder the unmatched folios?',
+      body2: 'This cannot be undone',
+      btnYes: 'CANCEL',
+      btnNo: 'YES',
+      positiveMethod: () => {
+        console.log('successfully deleted');
+
+        dialogRef.close();
+      },
+      negativeMethod: () => {
+        console.log('aborted');
+      }
+
+    }
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
 
 }
