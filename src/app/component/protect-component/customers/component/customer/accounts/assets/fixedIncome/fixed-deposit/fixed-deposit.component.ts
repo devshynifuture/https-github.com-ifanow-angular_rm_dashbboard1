@@ -224,36 +224,15 @@ export class FixedDepositComponent implements OnInit {
     } else {
       this.maturityDate = this.fixedDeposit.controls.maturityDate.value;
     }
-    if (this.fixedDeposit.get('ownerName').invalid) {
+    if (this.fixedDeposit.invalid) {
       this.fixedDeposit.get('ownerName').markAsTouched();
-      return;
-    } else if (this.fixedDeposit.get('FDType').invalid) {
       this.fixedDeposit.get('FDType').markAsTouched();
-      return
-    }
-    else if (this.fixedDeposit.get('ownerName').invalid) {
-      this.fixedDeposit.get('ownerName').markAsTouched();
-      return
-    }
-    else if (this.fixedDeposit.get('amountInvest').invalid) {
+      this.fixedDeposit.get('maturityDate').markAsTouched();
       this.fixedDeposit.get('amountInvest').markAsTouched();
-      return
-    }
-    else if (this.fixedDeposit.get('commencementDate').invalid) {
       this.fixedDeposit.get('commencementDate').markAsTouched();
-      return
-    }
-    else if (this.fixedDeposit.get('interestRate').invalid) {
       this.fixedDeposit.get('interestRate').markAsTouched();
-      return
-    }
-    else if (this.fixedDeposit.get('compound').invalid) {
       this.fixedDeposit.get('compound').markAsTouched();
-      return
-    }
-    else if (this.showFreqPayOpt == true && this.fixedDeposit.get('frequencyOfPayoutPerYear').invalid) {
       this.fixedDeposit.get('frequencyOfPayoutPerYear').markAsTouched();
-      return
     } else {
       const obj = {
         advisorId: this.advisorId,
@@ -272,7 +251,7 @@ export class FixedDepositComponent implements OnInit {
         bankAcNumber: this.fixedDeposit.controls.bankACNo.value,
         fdNumber: this.fixedDeposit.controls.fdNo.value,
         fdType: this.fixedDeposit.controls.FDType.value,
-        interestCompoundingId: this.fixedDeposit.value.compound,
+        interestCompoundingId: this.fixedDeposit.value.compound==""?0:this.fixedDeposit.value.compound,
         id: this.fixedDeposit.controls.id.value
       };
       console.log('fixedDeposit', obj);
