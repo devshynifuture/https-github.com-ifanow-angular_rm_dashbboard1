@@ -4,8 +4,11 @@
             <img src="assets/images/svg/login-img.svg">
         </div>
         <div class="col-md-6 p-0 bg-white flexLogin">
-            <div class="loginBox">
-                <p class="f-16 mb-28">Advisor Logo</p>
+
+            <div class="loginBox" *ngIf="!otpNumber">
+                <p class="f-16 mb-12">
+                    <img class="advisorLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
+                </p>
                 <h1 class="mb-16 f-600">Welcome back!</h1>
                 <p class="mb-24 f-16">This is a secure system and you will need to provide your login details to access your account.</p>
                 <div [formGroup]="loginForm" class="form_container_new_wrapper">
@@ -22,7 +25,10 @@
                     <div class="row">
                         <div class="col-md-12 form-group p-0">
                             <h5 class="left mb-4">Password</h5>
-                            <h5 class="right f-12 mb-4 c-p text-primitive">Forgot password?</h5>
+
+                            <a class="right f-12 mb-4 c-p text-primitive" [routerLink]="[ '/forgot-password']"> Forgot
+                                password? </a>
+
                             <mat-form-field floatLabel="never" appearance="standard">
                                 <input (keypress)="enterEvent($event)" placeholder="Enter password" tabindex="2" class="form-control br-0" formControlName="password" matInput type="password">
                                 <i class="material-icons eyesPassword c-p text-primitive">
@@ -41,11 +47,46 @@
                         </div>
                     </div>
 
-                    <h5 class="mt-20 text-primary c-p f-600">Login with OTP</h5>
+                    <h5 (click)="otpClick()" class="mt-20 text-primary c-p f-600">Login with OTP</h5>
 
-                    <h5 class="mt-32 mb-24">Don’t have an account? <span class="text-primary c-p"> Sign up </span> </h5>
+                    <h5 class="mt-32 mb-24">Don’t have an account? <span [routerLink]="[ '/sign-up']" class="text-primary c-p"> Sign up </span> </h5>
                 </div>
             </div>
+
+            <div class="loginBox" *ngIf="otpNumber">
+                <p class="f-16 mb-12">
+                    <img class="advisorLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
+                </p>
+                <h1 class="mb-16 f-600">Welcome back!</h1>
+                <p class="mb-24 f-16">This is a secure system and you will need to provide your login details to access your account.</p>
+                <div class="form_container_new_wrapper">
+                    <div class="row">
+                        <div class="col-md-12 form-group p-0">
+                            <h5 class="pt-12">User Name</h5>
+                            <mat-form-field floatLabel="never" appearance="standard">
+                                <input placeholder="Enter username" tabindex="1" class="form-control br-0" matInput>
+                                <mat-error>Username required</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 p-0">
+                            <div class="otpBox" [routerLink]="[ '/otp']">
+                                <span>* * * *</span>
+                                <span>GET OTP</span>
+                            </div>
+                        </div>
+                    </div>
+                    <h5 [routerLink]="[ '/login']" class="mt-20 text-primary c-p f-600">Login with password</h5>
+
+                    <h5 class="mt-32 mb-24">Don’t have an account? <span [routerLink]="[ '/sign-up']" class="text-primary c-p"> Sign up </span> </h5>
+                </div>
+            </div>
+
+
+
+
             <p class="f-12 l-18 ml-24 mb-0 text-primitive">Before logging in, please ensure that the URL on the address bar starts with “https” or has a padlock icon. The communication of your private information from any address beginning with "https" is encrypted and secured using SSL.</p>
         </div>
     </div>

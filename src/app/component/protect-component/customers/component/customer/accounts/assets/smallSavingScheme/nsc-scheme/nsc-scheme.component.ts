@@ -27,6 +27,8 @@ export class NscSchemeComponent implements OnInit {
   sumOfCurrentValue: number;
   sumOfMaturityValue: number;
   data: Array<any> = [{}, {}, {}];
+  SumOfMaturityValue;
+  SumOfCurrentValue;
   datasource = new MatTableDataSource(this.data);
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -95,11 +97,13 @@ export class NscSchemeComponent implements OnInit {
     if (data == undefined) {
       this.noData = 'No scheme found';
       this.datasource.data = [];
-    }else if (data && data.NationalSavingCertificate.length != 0) {
+    } else if (data && data.NationalSavingCertificate.length != 0) {
       console.log(data, 'getNscSchemedataResponse');
       this.datasource.data = data.NationalSavingCertificate;
       this.datasource.sort = this.sort;
-       UtilService.checkStatusId(this.datasource.filteredData)
+      UtilService.checkStatusId(this.datasource.filteredData);
+      this.SumOfCurrentValue = data.SumOfCurrentValue;
+      this.SumOfMaturityValue = data.SumOfMaturityValue
       this.nscData = data;
     } else {
       this.noData = 'No scheme found';
@@ -161,7 +165,7 @@ export class NscSchemeComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-       
+
       }
     );
   }
