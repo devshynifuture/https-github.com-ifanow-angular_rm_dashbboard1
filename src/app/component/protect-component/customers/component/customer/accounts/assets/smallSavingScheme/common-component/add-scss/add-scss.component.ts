@@ -74,7 +74,7 @@ export class AddScssComponent implements OnInit {
     }
     this.scssData = data;
     this.scssSchemeForm = this.fb.group({
-      ownerName: [data.ownerName, [Validators.required, UtilService.ageValidators(60)]],
+      ownerName: [!data.ownerName?'':data.ownerName, [Validators.required, UtilService.ageValidators(60)]],
       amtInvested: [data.amountInvested, [Validators.required, Validators.min(1000), Validators.max(1500000)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
       ownershipType: [data.ownerTypeI ? String(data.ownerTypeId) : '2', [Validators.required]]
@@ -106,21 +106,12 @@ export class AddScssComponent implements OnInit {
         this.nominees.push(obj)
       });
     }
-    if (this.scssSchemeForm.get('ownerName').invalid) {
+    if (this.scssSchemeForm.invalid) {
       this.scssSchemeForm.get('ownerName').markAsTouched();
-      return;
-    } else if (this.scssSchemeForm.get('amtInvested').invalid) {
       this.scssSchemeForm.get('amtInvested').markAsTouched();
-      return;
-    } else if (this.scssSchemeForm.get('ownerName').invalid) {
       this.scssSchemeForm.get('ownerName').markAsTouched();
-      return;
-    } else if (this.scssSchemeForm.get('commDate').invalid) {
       this.scssSchemeForm.get('commDate').markAsTouched();
-      return;
-    } else if (this.scssSchemeForm.get('ownershipType').invalid) {
       this.scssSchemeForm.get('ownershipType').markAsTouched();
-      return;
     } else {
       const obj = {
         id: 0,

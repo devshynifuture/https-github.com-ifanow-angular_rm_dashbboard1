@@ -4,6 +4,8 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
 import { AddClientMappingComponent } from '../settings-client-mapping/add-client-mapping/add-client-mapping.component';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-settings-folio-mapping',
@@ -12,18 +14,26 @@ import { AddClientMappingComponent } from '../settings-client-mapping/add-client
 })
 export class SettingsFolioMappingComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'iname', 'hold', 'map'];
-  dataSource;
+  dataSource: any;
   filterData: any;
   type: string;
   selectedBrokerCode: any;
   selectedPlatform: any;
-  constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService, private utilService: UtilService, private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) { }
+  nomineesListFM: any;
+  familyMemberData: any;
+  isLoading: boolean;
+  clientData: any;
+  constructor(public dialog: MatDialog, private onlineTransact: OnlineTransactionService, private eventService: EventService, private utilService: UtilService, private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) { }
 
   ngOnInit() {
     this.getFilterOptionData();
   }
   sortDataFilterWise() {
     (this.type == '1') ? this.getFolioMappedData() : this.getFolioUnmappedData();
+  }
+  ownerDetails(value) {
+    console.log(value)
+    this.clientData = value;
   }
   getFilterOptionData() {
     let obj = {
@@ -44,9 +54,12 @@ export class SettingsFolioMappingComponent implements OnInit {
     this.type = '1';
     this.selectedBrokerCode = data[0];
     this.selectedPlatform = data[0];
-    (this.type == '1') ? this.getFolioMappedData() : this.getFolioUnmappedData();
+    this.dataSource = [{}, {}, {}];
+    this.sortDataFilterWise();
   }
   getFolioMappedData() {
+    this.isLoading = true;
+    this.dataSource = [{}, {}, {}];
     const obj =
     {
       advisorId: 414,
@@ -56,28 +69,76 @@ export class SettingsFolioMappingComponent implements OnInit {
       data => {
         console.log(data);
         this.dataSource = data;
+        this.isLoading = false;
       }
     )
   }
   getFolioUnmappedData() {
+    this.dataSource = [{}, {}, {}];
+    this.isLoading = true;
     const obj =
     {
       advisorId: 414,
       onlyBrokerCred: true
     }
-    this.onlineTransact.getUnmappedFolios(obj).subscribe(
+    this.onlineTransact.getFolioUnmappedData(obj).subscribe(
       data => {
         console.log(data);
         this.dataSource = data;
+        this.isLoading = false
       }
     )
   }
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value);
+  }
+  unmapFolio(value, data) {
+    const dialogData = {
+      data: value,
+      header: 'UNMAP',
+      body: 'Are you sure you want to unmap?',
+      body2: 'This cannot be undone',
+      btnYes: 'CANCEL',
+      btnNo: 'UNMAP',
+      positiveMethod: () => {
+        let obj =
+        {
+          tpFolioClientCodeMappingId: value.tpFolioClientCodeMappingId,
+        }
+        this.onlineTransact.unmapMappedFolios(obj).subscribe(
+          data => {
+            console.log(data);
+            this.sortDataFilterWise();
+            dialogRef.close();
+          },
+          err => this.eventService.openSnackBar(err, 'dismiss')
+        )
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
   openAddMappiing(data, flag) {
+    data['flag'] = "folio";
     const fragmentData = {
-      flag: 'addNsc',
+      flag: 'folioMapping',
       data,
       id: 1,
-      state: 'open',
+      state: 'open45',
       componentName: AddClientMappingComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -86,6 +147,7 @@ export class SettingsFolioMappingComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             // this.getNscSchemedata();
+            this.sortDataFilterWise();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
