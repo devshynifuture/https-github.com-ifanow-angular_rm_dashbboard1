@@ -64,7 +64,7 @@
                 </button>
             </div>
         </div>
-        <div class="col-md-12 p-0 mt-8 overflow-hidden newFont fixed-deposite">
+        <div class="col-md-12 p-0 mt-8 overflow-hidden newFont fixed-DEPOSIT">
             <table *ngIf="dataSourceFixed.filteredData.length > 0" matSort #fixedIncomeTableSort="matSort" mat-table
                 [dataSource]="dataSourceFixed" id="table-low" class="skeletonAnimation" appSkeletonLoading
                 [appSkeletonLoading]="isLoading">
@@ -185,7 +185,7 @@
                                     View
                                 </button>
                                 <button mat-menu-item>Activity</button>
-                                <button (click)="deleteModal('FIXED DEPOSITE',element)" mat-menu-item>Delete</button>
+                                <button (click)="deleteModal('FIXED DEPOSIT',element)" mat-menu-item>Delete</button>
                             </mat-menu>
                         </div>
                     </td>
@@ -248,7 +248,7 @@
                 </button>
             </div>
         </div>
-        <div class=" col-md-12 overflow-hidden p-0 mt-8 mb-44 fixed-deposite">
+        <div class=" col-md-12 overflow-hidden p-0 mt-8 mb-44 fixed-DEPOSIT">
 
             <table *ngIf="dataSourceRecurring.filteredData.length > 0" matSort #recurringDepositTable="matSort"
                 mat-table [dataSource]="dataSourceRecurring" id="table-low" class="skeletonAnimation" appSkeletonLoading
@@ -346,7 +346,7 @@
                                     View</button>
                                 <button mat-menu-item>Activity</button>
                                 <button mat-menu-item
-                                    (click)="deleteModal('RECURRING DEPOSITE',element)">Delete</button>
+                                    (click)="deleteModal('RECURRING DEPOSIT',element)">Delete</button>
                             </mat-menu>
                         </div>
                     </td>
@@ -392,7 +392,7 @@
                 </button>
             </div>
         </div>
-        <div class=" p-0 col-md-12  mt-8 mb-44 fixed-deposite">
+        <div class=" p-0 col-md-12  mt-8 mb-44 fixed-DEPOSIT">
             <div class="overflow-hidden">
                 <table *ngIf="dataSourceBond.filteredData.length > 0" matSort #bondListTable="matSort" mat-table
                     [dataSource]="dataSourceBond" id="table-low" class="skeletonAnimation" appSkeletonLoading
@@ -523,7 +523,7 @@
                                 </i>
                                 <mat-menu #menu4="matMenu">
                                     <button mat-menu-item (click)="openBonds(element)">Edit</button>
-                                    <button mat-menu-item (click)="detailedViewBonds(element)">Deatiled View</button>
+                                    <button mat-menu-item (click)="detailedViewBonds(element)">Detailed view</button>
                                     <button mat-menu-item>Activity</button>
                                     <button mat-menu-item (click)="deleteModal('BOND',element)">Delete</button>
                                 </mat-menu>
