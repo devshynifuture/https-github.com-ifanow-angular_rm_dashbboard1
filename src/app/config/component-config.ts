@@ -368,10 +368,10 @@ export const appConfig = {
   GET_MANDATE_DETAILS: 'bse/mandate/view',
   GET_UNMAPPED_CLIENTS: '/bse/user/client/unmapped/view',
   GET_MAPPED_CLIENTS: '/bse/user/client/mapped/view',
-  MAP_UNMAP_CLIENT: '/bse/user/clients/remap/manual',
-  UNMAP_MAP_CLIENT: '/bse/user/clients/unmap',
-  MAP_UNMAP_FOLIO: '',
-  UNMAP_MAP_FOLIO: '/mutual-fund/folio/unmap',
+  MAP_UNMAP_CLIENT: 'bse/user/clients/map/manual',
+  UNMAP_MAP_CLIENT: 'bse/user/clients/unmap',
+  MAP_UNMAP_FOLIO: 'mutual-fund/folio/map/manual',
+  UNMAP_MAP_FOLIO: 'mutual-fund/folio/unmap',
   GET_FREQUENCY: 'bse/scheme/sip/view',
   SIP_BSE: 'bse/order/create',
   BSE_TRANSACTION: 'bse/order/create',
@@ -380,6 +380,7 @@ export const appConfig = {
   GETIIN_DETAILS: 'nse/iin/detail/get',
   GET_FOLIO_MAPPED: '/mutual-fund/folios/mapped/get',
   GET_FOLIO_UNMAPPED: '/mutual-fund/folios/unmapped/get',
+  GET_CLIENT_CODE: '/bse/user/family-member/client-code',
   // SIP_BSE:'bse/order/create',
 
   // cashflow 
