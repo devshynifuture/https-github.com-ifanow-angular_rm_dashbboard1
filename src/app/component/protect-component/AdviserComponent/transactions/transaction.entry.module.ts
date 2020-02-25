@@ -28,6 +28,7 @@ import { PlatformPopUpComponent } from './overview-transactions/doTransaction/pl
 import { EuinSelectPopUpComponent } from './overview-transactions/doTransaction/euin-select-pop-up/euin-select-pop-up.component';
 import { BankSelectPopUpComponent } from './overview-transactions/doTransaction/bank-select-pop-up/bank-select-pop-up.component';
 import { UmrnPopUpComponent } from './overview-transactions/doTransaction/umrn-pop-up/umrn-pop-up.component';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
 
 export const componentList = [
     TransactionAddComponent,
@@ -68,6 +69,7 @@ export const componentList = [
         FormsModule,
         ReactiveFormsModule,
         CustomDirectiveModule,
+        CustomCommonModule
     ],
     exports: [
         FormsModule,

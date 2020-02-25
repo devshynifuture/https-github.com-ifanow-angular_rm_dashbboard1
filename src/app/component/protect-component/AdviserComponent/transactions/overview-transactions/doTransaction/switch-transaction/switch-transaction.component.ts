@@ -14,6 +14,21 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
   styleUrls: ['./switch-transaction.component.scss']
 })
 export class SwitchTransactionComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE & PROCEED',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  }
   confirmTrasaction: boolean;
   switchTransaction: any;
   dataSource: any;
@@ -326,6 +341,7 @@ export class SwitchTransactionComponent implements OnInit {
         console.log('new purchase obj', this.childTransactions)
         obj.childTransactions = this.childTransactions
       }
+      this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
         data => this.switchBSERes(data), (error) => {
           this.eventService.showErrorMessage(error);
@@ -334,6 +350,7 @@ export class SwitchTransactionComponent implements OnInit {
     }
   }
   switchBSERes(data) {
+    this.barButtonOptions.active = false;
     console.log('switch res == ', data)
     if (data == undefined) {
 
@@ -387,6 +404,7 @@ export class SwitchTransactionComponent implements OnInit {
         this.switchTransaction.controls.switchType.reset()
         this.switchTransaction.controls.employeeContry.reset()
         this.switchTransaction.controls.investmentAccountSelection.reset()
+        this.switchTransaction.controls.schemeSwitch.reset()
       }
     }
   }

@@ -161,7 +161,7 @@
         </div>
     </div>
 
-    <div class="row pt-24" *ngIf="showTenure == false">
+    <div class="row pt-24" [hidden]="showTenure == true">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-16">Maturity date</h5>
         </div>
@@ -171,7 +171,7 @@
                     <input (click)="picker1.open()" matInput formControlName="maturityDate" [matDatepicker]="picker1" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
-                    <mat-error class="f-12 pt-4" *ngIf="getFormControl().maturityDate.value == ''">
+                    <mat-error class="f-12 pt-4" >
                         This field is required
                     </mat-error>
                 </mat-form-field>
