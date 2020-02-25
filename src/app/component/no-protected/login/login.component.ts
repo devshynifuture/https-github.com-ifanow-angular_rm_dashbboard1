@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
     value: 10,
     disabled: false,
     fullWidth: false,
+    
     // buttonIcon: {
     //   fontIcon: 'favorite'
     // }

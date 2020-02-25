@@ -75,7 +75,7 @@ export class AddSsyComponent implements OnInit {
     }
     this.ssyData = data;
     this.ssySchemeForm = this.fb.group({
-      ownerName: [data.ownerName, [Validators.required]],
+      ownerName: [!data.ownerName?'':data.ownerName, [Validators.required]],
       guardian: [data.guardianName, [Validators.required]],
       accBalance: [data.accountBalance, [Validators.required, Validators.min(250), Validators.max(150000)]],
       balanceAsOn: [new Date(data.balanceAsOn), [Validators.required]],
@@ -131,35 +131,15 @@ export class AddSsyComponent implements OnInit {
         this.nominees.push(obj)
       });
     }
-    if (this.ssySchemeForm.get('ownerName').invalid) {
+    if (this.ssySchemeForm.invalid) {
       this.ssySchemeForm.get('ownerName').markAsTouched();
-      return;
-    } else if (this.ssySchemeForm.get('guardian').invalid) {
       this.ssySchemeForm.get('guardian').markAsTouched();
-      return
-    } else if (this.ssySchemeForm.get('ownerName').invalid) {
       this.ssySchemeForm.get('ownerName').markAsTouched();
-      return;
-    }
-    else if (this.ssySchemeForm.get('accBalance').invalid) {
       this.ssySchemeForm.get('accBalance').markAsTouched();
-      return
-    }
-    else if (this.ssySchemeForm.get('balanceAsOn').invalid) {
       this.ssySchemeForm.get('balanceAsOn').markAsTouched();
-      return
-    }
-    else if (this.ssySchemeForm.get('commDate').invalid) {
       this.ssySchemeForm.get('commDate').markAsTouched();
-      return
-    }
-    else if (this.ssySchemeForm.get('futureAppx').invalid) {
       this.ssySchemeForm.get('futureAppx').markAsTouched();
-      return
-    }
-    else if (this.ssySchemeForm.get('frquency').invalid) {
       this.ssySchemeForm.get('frquency').markAsTouched();
-      return
     }
     else {
       if (this.editApi != undefined && this.editApi != 'adviceSSY') {

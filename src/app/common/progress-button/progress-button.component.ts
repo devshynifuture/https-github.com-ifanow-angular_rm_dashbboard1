@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, HostListener, Input, Output, OnInit } from '@angular/core';
 import { ProgressSpinnerMode, ThemePalette } from '@angular/material';
 
 // import { MatProgressButtonOptions } from '../../mat-progress-buttons.interface';
@@ -8,8 +8,10 @@ import { ProgressSpinnerMode, ThemePalette } from '@angular/material';
   templateUrl: './progress-button.component.html',
   styleUrls: ['./progress-button.component.scss']
 })
-export class ProgressButtonComponent implements AfterViewInit {
+export class ProgressButtonComponent implements AfterViewInit, OnInit {
+  islogBut:boolean = false;
   @Input() options: MatProgressButtonOptions;
+  
   @Output() btnClick: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
 
   _logEvent: any;
@@ -25,6 +27,14 @@ export class ProgressButtonComponent implements AfterViewInit {
   @Input() set disabled(disabled){
     this.options.disabled = disabled;
   };
+
+  ngOnInit() {
+    if(this.options.text == "Login to your account"){
+      this.islogBut = true;
+    }
+   console.log(this.islogBut, this.options.customClass, "logbutton 123");
+   
+  }
 
   get logEvent() {
     return this._logEvent
