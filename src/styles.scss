@@ -1573,3 +1573,40 @@ textarea {
   }
 
 }
+
+#addinsuranceradio {
+  .mat-radio-label {
+    height: 53px;
+    font-size: 14px;
+    width: 214px;
+    white-space: normal;
+    text-align: left;
+  }
+
+  .mat-radio-container {
+    top: -10px;
+    left: 10px;
+  }
+
+  .mat-radio-label-content {
+    padding-left: 20px;
+  }
+}
+
+.health-insuranceplanning {
+  #table-low {
+    tr.mat-header-row {
+      height: 28px !important;
+    }
+
+    tbody td {
+      padding: 7px 8px !important;
+    }
+  }
+
+  .center-items {
+    height: 75%;
+    justify-content: center;
+    align-items: center;
+  }
+}
