@@ -1,6 +1,6 @@
 <button [class.active]="options.active" [class.fullWidth]="options.fullWidth" [class.mat-flat-button]="options.flat" [class.mat-raised-button]="options.raised" [class.mat-stroked-button]="options.stroked" [color]="options.buttonColor" [disabled]="options.active || options.disabled"
     [ngClass]="islogBut?'mainloginBtn':''" [type]="options.type" class="btn-primary  boxShadowNone" mat-stroked-button>
-    <!-- mainloginBtn -->
+  <!-- mainloginBtn -->
   <ng-container *ngIf="options.buttonIcon">
     <mat-icon [class.is-mat-icon]="!options.buttonIcon.fontSet" [color]="options.buttonIcon.color"
       [fontIcon]="options.buttonIcon.fontIcon" [fontSet]="options.buttonIcon.fontSet"
@@ -9,8 +9,9 @@
       {{ options.buttonIcon.fontSet ? '' : options.buttonIcon.fontIcon }}
     </mat-icon>
   </ng-container>
-
-  <span class="textZindex">{{ options.text }}</span>
+  <img *ngIf="islogBut" class="iconPosition" src="assets/images/svg/login-btn-icon.svg">
+  <span class="textZindex">
+    {{ options.text }}</span>
 
   <mat-progress-bar #progressBar *ngIf="options.active && !options.disabled" [color]="options.barColor"
     [mode]="options.mode" [value]="options.value" class="bar">

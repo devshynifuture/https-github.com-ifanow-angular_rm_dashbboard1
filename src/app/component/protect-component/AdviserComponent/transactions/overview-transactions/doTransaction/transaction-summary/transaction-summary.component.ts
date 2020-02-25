@@ -224,7 +224,7 @@ export class TransactionSummaryComponent implements OnInit {
     this.defaultClient = data.defaultClient
     this.subBrokerCredList = data.subBrokerCredList
     // this.selectedPlatform = this.defaultCredential.aggregatorType
-    this.selectedPlatform = data.defaultCredential.aggregatorType
+    this.selectedPlatform = this.defaultCredential.aggregatorType
     if (this.selectedPlatform == 1) {
       this.getBankDetails()
     }
@@ -232,13 +232,13 @@ export class TransactionSummaryComponent implements OnInit {
   alertModal(value, data) {
     const dialogData = {
       data: '',
-      header: 'ALERT',
-      body: 'Holding nature of selected FOLIO matches different client code',
-      body2: 'Are you sure you want to proceed',
+      header: 'Are you sure ?',
+      body: 'Holding nature of selected folio matches different client code',
+      body2: 'Are you sure you want to proceed ?',
       btnYes: 'NO',
-      btnNo: 'OK,PROCEED',
+      btnNo: 'OK, PROCEED',
       positiveMethod: () => {
-        this.eventService.openSnackBar('Holding nature sucessfully changed', 'dismiss');
+        this.eventService.openSnackBar('Holding nature changed sucessfully', 'dismiss');
         this.changeDetails.noAlert = true
         this.getDefaultDetailsRes(this.changeDetails)
         dialogRef.close();
