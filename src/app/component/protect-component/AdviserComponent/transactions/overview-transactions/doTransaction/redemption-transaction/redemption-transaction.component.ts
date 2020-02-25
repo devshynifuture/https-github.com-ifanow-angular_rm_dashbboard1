@@ -6,6 +6,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { OnlineTransactionService } from '../../../online-transaction.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ProcessTransactionService } from '../process-transaction.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-redemption-transaction',
@@ -13,6 +14,21 @@ import { ProcessTransactionService } from '../process-transaction.service';
   styleUrls: ['./redemption-transaction.component.scss']
 })
 export class RedemptionTransactionComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE & PROCEED',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  }
   confirmTrasaction: boolean;
   dataSource: any;
   ownerData: any;
@@ -266,6 +282,7 @@ export class RedemptionTransactionComponent implements OnInit {
         console.log('new purchase obj', this.childTransactions)
         obj.childTransactions = this.childTransactions
       }
+      this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
         data => this.redeemBSERes(data), (error) => {
           this.eventService.showErrorMessage(error);
@@ -274,6 +291,7 @@ export class RedemptionTransactionComponent implements OnInit {
     }
   }
   redeemBSERes(data) {
+    this.barButtonOptions.active = false;
     console.log('redeem res', data)
     if (data == undefined) {
 
@@ -320,6 +338,7 @@ export class RedemptionTransactionComponent implements OnInit {
         this.schemeList = [];
         this.redemptionTransaction.controls.employeeContry.reset()
         this.redemptionTransaction.controls.investmentAccountSelection.reset()
+        this.redemptionTransaction.controls.schemeRedeem.reset()
       }
     }
   }

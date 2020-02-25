@@ -6,6 +6,7 @@ import { SubscriptionInject } from '../../../../Subscriptions/subscription-injec
 import { OnlineTransactionService } from '../../../online-transaction.service';
 import { ProcessTransactionService } from '../process-transaction.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-swp-transaction',
@@ -13,7 +14,21 @@ import { EventService } from 'src/app/Data-service/event.service';
   styleUrls: ['./swp-transaction.component.scss']
 })
 export class SwpTransactionComponent implements OnInit {
-
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE & PROCEED',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  }
   confirmTrasaction: boolean;
   dataSource: any;
   ownerData: any;
@@ -335,6 +350,7 @@ export class SwpTransactionComponent implements OnInit {
         obj.childTransactions = this.childTransactions
       }
       console.log('swp json obj', obj)
+      this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
         data => this.swpBSERes(data), (error) => {
           this.eventService.showErrorMessage(error);
@@ -344,6 +360,7 @@ export class SwpTransactionComponent implements OnInit {
 
   }
   swpBSERes(data) {
+    this.barButtonOptions.active = false;
     console.log('swp res == ', data)
     if (data == undefined) {
 
@@ -398,7 +415,7 @@ export class SwpTransactionComponent implements OnInit {
         this.swpTransaction.controls.employeeContry.reset()
         this.swpTransaction.controls.tenure.reset()
         this.swpTransaction.controls.frequency.reset()
-
+        this.swpTransaction.controls.schemeSwp.reset()
         this.swpTransaction.controls.investmentAccountSelection.reset()
       }
     }

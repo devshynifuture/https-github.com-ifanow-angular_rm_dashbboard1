@@ -4,9 +4,11 @@
             <div class="row pt-16 pb-16">
                 <div class="col-md-9">
                     <p class="m-0 roboto text-custom">Transaction platform</p>
-                    <div *ngIf="showPlatform == false && defaultClient">
-                        <div class="m-0" *ngIf="selectedPlatform == 2">{{(selectedPlatform =='2')?'BSE':(selectedPlatform =='1')?'NSE':'-'}} STAR MF</div>
-                        <div class="m-0" *ngIf="selectedPlatform == 1">{{(selectedPlatform =='2')?'BSE':(selectedPlatform =='1')?'NSE':'-'}} NMF II</div>
+                    <div *ngIf="showPlatform == false">
+                        <div class="m-0" *ngIf="selectedPlatform == 2">
+                            {{(selectedPlatform =='2')?'BSE':(selectedPlatform =='1')?'NSE':'-'}} STAR MF</div>
+                        <div class="m-0" *ngIf="selectedPlatform == 1">
+                            {{(selectedPlatform =='2')?'BSE':(selectedPlatform =='1')?'NSE':'-'}} NMF II</div>
                     </div>
                 </div>
                 <div class="col-md-2" *ngIf="allData">
@@ -72,7 +74,7 @@
                     </h5>
                 </div>
             </div>
-            <div class="row  pt-16 pb-16" *ngIf="selectedPlatform== 1">
+            <!-- <div class="row  pt-16 pb-16" *ngIf="selectedPlatform== 1">
                 <div class="col-md-9">
                     <p class="m-0 roboto text-custom">Bank A/c details</p>
                     <h5 class="m-0">
@@ -90,6 +92,29 @@
                 <div class="col-md-2"
                     *ngIf=" transactionSummary && showBankEdit == true && transactionSummary.allEdit == true && (transactionSummary.transactType != 'STP'|| transactionSummary.transactType != 'SWITCH')">
                     <button mat-stroked-button class="primary-sm" (click)="showbank = true;openBank()">Edit</button>
+                </div>
+            </div> -->
+            <div *ngIf="selectedPlatform== 1 && bankDetails">
+                <div class="row  pt-16 pb-16" *ngFor="let bank of bankDetails">
+                    <div class="col-md-10 p-0">
+                        <p class="m-0 roboto text-custom">Bank A/c details</p>
+                        <h5 class="m-0">
+                            <span class="f-500">Bank Name:</span> {{bank.bankName}}
+                        </h5>
+                        <mat-select class="form-control" *ngIf="bankDetails && bankDetails.length > 1">
+                            <mat-option *ngFor="let bank of bankDetails" (click)="selectBank(bank)"
+                                [value]="bank.bankName">
+                                {{bank.bankName}}
+                            </mat-option>
+                        </mat-select>
+                        <h5 class="m-0">
+                            <span class="f-500">Ac no.:</span>
+                            {{bank.accountNo}}</h5>
+                    </div>
+                    <div class="col-md-2"
+                        *ngIf=" transactionSummary && showBankEdit == true && transactionSummary.allEdit == true && (transactionSummary.transactType != 'STP'|| transactionSummary.transactType != 'SWITCH')">
+                        <button mat-stroked-button class="primary-sm" (click)="showbank = true;openBank()">Edit</button>
+                    </div>
                 </div>
             </div>
             <div class="row  pt-16 pb-16" *ngIf="selectedPlatform== 1 && transactionSummary.paymentMode ==2">
