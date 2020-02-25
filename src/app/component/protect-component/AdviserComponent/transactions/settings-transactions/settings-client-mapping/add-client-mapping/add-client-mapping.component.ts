@@ -80,7 +80,8 @@ export class AddClientMappingComponent implements OnInit {
       clientId: this.familyMemberData.clientId,
       taxStatus: this.singleFolioData.taxStatus,
       holdingType: this.singleFolioData.holdingType,
-      aggregatorType: this.singleFolioData.aggregatorType
+      aggregatorType: this.singleFolioData.aggregatorType,
+      advisorId: this.advisorId
     }
     this.onlineTransact.mapUnmappedClient(obj).subscribe(
       data => {
