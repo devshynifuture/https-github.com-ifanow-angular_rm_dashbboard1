@@ -134,6 +134,13 @@ export class OnlineTrasactionComponent implements OnInit {
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
+  ownerList(value){
+    if(value==""){
+      this.showSpinnerOwner = false
+    }else{
+      this.showSpinnerOwner = true
+    }
+  }
   // display(value) {
   //   console.log('value selected', value);
   //   this.ownerName = value.userName;
@@ -160,6 +167,11 @@ export class OnlineTrasactionComponent implements OnInit {
     }
   }
   lisNominee(value) {
+    this.showSpinnerOwner = false
+    if(value==null){
+      this.transactionAddForm.get('ownerName').setErrors({'setValue':'family member does not exist'});
+      this.transactionAddForm.get('ownerName').markAsTouched();
+    }
     console.log(value)
     this.nomineesListFM = Object.assign([], value);
   }

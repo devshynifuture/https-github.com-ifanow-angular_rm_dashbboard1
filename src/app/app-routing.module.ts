@@ -9,6 +9,10 @@ import { FormTestComponent } from './test/form-test/form-test.component';
 import { SubscriptionUpperSliderComponent } from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/upper-slider/subscription-upper-slider.component';
 import { BackofficeDashboardComponent } from './component/protect-component/AdviserComponent/backOffice/backoffice-dashboard/backoffice-dashboard.component';
 import { TransactionsComponent } from './component/protect-component/customers/component/common-component/transactions/transactions.component';
+import { ForgotPasswordComponent } from './component/no-protected/login/forgot-password/forgot-password.component';
+import { SignUpComponent } from './component/no-protected/login/sign-up/sign-up.component';
+import { SetNewPasswordComponent } from './component/no-protected/login/set-new-password/set-new-password.component';
+import { VerifyOtpComponent } from './component/no-protected/login/verify-otp/verify-otp.component';
 
 const routes: Routes = [
   {
@@ -17,6 +21,32 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     // outlet: 'mainrouter'
   },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
+    //canActivate: [AuthGuard],
+    // outlet: 'mainrouter'
+  },
+  {
+    path: 'sign-up',
+    component: SignUpComponent,
+    //canActivate: [AuthGuard],
+    // outlet: 'mainrouter'
+  },
+
+  {
+    path: 'set-new-password',
+    component: SetNewPasswordComponent,
+    //canActivate: [AuthGuard],
+    // outlet: 'mainrouter'
+  },
+  {
+    path: 'otp',
+    component: VerifyOtpComponent,
+    //canActivate: [AuthGuard],
+    // outlet: 'mainrouter'
+  },
+
   {
     path: 'admin',
     loadChildren: () => import('./component/left-sidebar/leftsidebar/leftsidebar.module').then(m => m.LeftsidebarModule),

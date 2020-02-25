@@ -76,6 +76,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
   selectSchemeOption(value) {
     console.log('value selction scheme', value)
+    this.purchaseTransaction.controls.schemePurchase.reset()
     this.selectScheme = value
   }
   getSchemeList(value) {
@@ -296,11 +297,9 @@ export class PurchaseTrasactionComponent implements OnInit {
         this.purchaseTransaction.get('reinvest').markAsTouched();
         return;
       }
-    } else if (this.purchaseTransaction.get('folioSelection').value == 1) {
-      if (this.purchaseTransaction.get('investmentAccountSelection').invalid) {
-        this.purchaseTransaction.get('investmentAccountSelection').markAsTouched();
-        return;
-      }
+    } else if (this.ExistingOrNew == 1 && this.purchaseTransaction.get('investmentAccountSelection').invalid) {
+      this.purchaseTransaction.get('investmentAccountSelection').markAsTouched();
+      return;
     } else {
       let obj = {
         productDbId: this.schemeDetails.id,
@@ -356,10 +355,10 @@ export class PurchaseTrasactionComponent implements OnInit {
     }
   }
   AddMultiTransaction() {
-   if (this.purchaseTransaction.get('schemePurchase').invalid) {
+    if (this.purchaseTransaction.get('schemePurchase').invalid) {
       this.purchaseTransaction.get('schemePurchase').markAsTouched();
       return;
-    }else if (this.ExistingOrNew==1 && this.purchaseTransaction.get('investmentAccountSelection').invalid) {
+    } else if (this.ExistingOrNew == 1 && this.purchaseTransaction.get('investmentAccountSelection').invalid) {
       this.purchaseTransaction.get('investmentAccountSelection').markAsTouched();
       return;
     } else if (this.purchaseTransaction.get('employeeContry').invalid) {
