@@ -34,6 +34,8 @@ export class PoSavingsComponent implements OnInit {
   footerRowColumn = ['no', 'owner', 'cvalue', 'rate', 'balanceM', 'balAs', 'desc', 'status', 'icons'];
 
   displayedColumns20 = ['no', 'owner', 'cvalue', 'rate', 'balanceM', 'balAs', 'desc', 'status', 'icons'];
+  SumOfCurrentValue: any;
+  SumOfBalancementioned: any;
 
 
   constructor(private excel: ExcelService, public dialog: MatDialog, private eventService: EventService,
@@ -90,13 +92,13 @@ export class PoSavingsComponent implements OnInit {
     if (data == undefined) {
       this.noData = 'No scheme found';
       this.datasource.data = [];
-    }else if (data && data.PostOfficeSavingsList.length != 0) {
-      console.log('getPoSavingSchemedataResponse',data);
+    } else if (data && data.PostOfficeSavingsList.length != 0) {
+      console.log('getPoSavingSchemedataResponse', data);
       this.datasource.data = data.PostOfficeSavingsList;
       this.datasource.sort = this.sort;
       UtilService.checkStatusId(this.datasource.filteredData);
-      this.currentValueSum = data.currentValueSum;
-      this.balanceMentionedSum = data.balanceMentionedSum;
+      this.SumOfCurrentValue = data.SumOfCurrentValue;
+      this.SumOfBalancementioned = data.SumOfBalancementioned;
       this.posavingdata = data;
     } else {
       this.noData = 'No scheme found';
@@ -160,7 +162,7 @@ export class PoSavingsComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-        
+
       }
     );
   }
@@ -184,7 +186,7 @@ export class PoSavingsComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-        
+
       }
     );
   }

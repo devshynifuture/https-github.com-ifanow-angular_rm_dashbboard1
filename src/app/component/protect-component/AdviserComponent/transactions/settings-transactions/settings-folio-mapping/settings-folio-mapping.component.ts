@@ -34,6 +34,7 @@ export class SettingsFolioMappingComponent implements OnInit {
   ownerDetails(value) {
     console.log(value)
     this.clientData = value;
+    this.sortDataFilterWise();
   }
   getFilterOptionData() {
     let obj = {
@@ -60,10 +61,13 @@ export class SettingsFolioMappingComponent implements OnInit {
   getFolioMappedData() {
     this.isLoading = true;
     this.dataSource = [{}, {}, {}];
+    (this.clientData == undefined) ? this.clientData = { clientId: '', familyMemberId: '' } : '';
     const obj =
     {
       advisorId: 414,
-      onlyBrokerCred: true
+      onlyBrokerCred: true,
+      clientId: this.clientData.clientId,
+      familyMemberId: this.clientData.familyMemberId
     }
     this.onlineTransact.getFolioMappedData(obj).subscribe(
       data => {
@@ -76,10 +80,13 @@ export class SettingsFolioMappingComponent implements OnInit {
   getFolioUnmappedData() {
     this.dataSource = [{}, {}, {}];
     this.isLoading = true;
+    (this.clientData == undefined) ? this.clientData = { clientId: '', familyMemberId: '' } : '';
     const obj =
     {
       advisorId: 414,
-      onlyBrokerCred: true
+      onlyBrokerCred: true,
+      clientId: this.clientData.clientId,
+      familyMemberId: this.clientData.familyMemberId
     }
     this.onlineTransact.getFolioUnmappedData(obj).subscribe(
       data => {
