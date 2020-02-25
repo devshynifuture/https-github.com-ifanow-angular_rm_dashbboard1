@@ -30,6 +30,9 @@ import { FormTestComponent } from "./test/form-test/form-test.component";
 import { CustomDirectiveModule } from "./common/directives/common-directive.module";
 import { SubscriptionUpperEntry } from './component/protect-component/AdviserComponent/Subscriptions/subscription-upper-entry-module';
 import { BackofficeDashboardComponent } from './component/protect-component/AdviserComponent/backOffice/backoffice-dashboard/backoffice-dashboard.component';
+import { ForgotPasswordComponent } from './component/no-protected/login/forgot-password/forgot-password.component';
+import { SignUpComponent } from './component/no-protected/login/sign-up/sign-up.component';
+import { SetNewPasswordComponent } from './component/no-protected/login/set-new-password/set-new-password.component';
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
@@ -38,6 +41,9 @@ import { BackofficeDashboardComponent } from './component/protect-component/Advi
     AppComponent,
     DashboardComponent,
     LoginComponent,
+    ForgotPasswordComponent,
+    SignUpComponent,
+    SetNewPasswordComponent,
     // ConfirmDialogComponent,
     DialogComponent,
     CustomFormInputComponent,
