@@ -12,6 +12,7 @@ import { TransactionsComponent } from './component/protect-component/customers/c
 import { ForgotPasswordComponent } from './component/no-protected/login/forgot-password/forgot-password.component';
 import { SignUpComponent } from './component/no-protected/login/sign-up/sign-up.component';
 import { SetNewPasswordComponent } from './component/no-protected/login/set-new-password/set-new-password.component';
+import { VerifyOtpComponent } from './component/no-protected/login/verify-otp/verify-otp.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,12 @@ const routes: Routes = [
   {
     path: 'set-new-password',
     component: SetNewPasswordComponent,
+    //canActivate: [AuthGuard],
+    // outlet: 'mainrouter'
+  },
+  {
+    path: 'otp',
+    component: VerifyOtpComponent,
     //canActivate: [AuthGuard],
     // outlet: 'mainrouter'
   },
