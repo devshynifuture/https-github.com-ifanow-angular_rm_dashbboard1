@@ -187,23 +187,23 @@ export class AddVariableFeeComponent implements OnInit {
     this.subInjectService.closeSlider(value);
   }
 
-  variableFees:boolean = true;
+  variableFees: boolean = true;
 
-  validateFees(){
+  validateFees() {
     let reg = this.getFormControl().regularFees.value
     let dir = this.getFormControl().directFees.value
-    let sum = parseInt(reg.equity) + parseInt(reg.debt)+parseInt(reg.liquid)+parseInt(dir.equity)+parseInt(dir.debt)+parseInt(dir.liquid)+parseInt(this.variableFeeData.controls.pricing.value);
-    if(sum >=1){
+    let sum = parseInt(reg.equity) + parseInt(reg.debt) + parseInt(reg.liquid) + parseInt(dir.equity) + parseInt(dir.debt) + parseInt(dir.liquid) + parseInt(this.variableFeeData.controls.pricing.value);
+    if (sum >= 1) {
       return false;
     }
-    else{
+    else {
       this.variableFees = true;
       return true
     }
   }
 
   saveVariableFeeData(feeType) {
-    if (this.variableFeeData.invalid || this.variableFeeData.controls.directFees.invalid || this.variableFeeData.controls.regularFees.invalid ) {
+    if (this.variableFeeData.invalid || this.variableFeeData.controls.directFees.invalid || this.variableFeeData.controls.regularFees.invalid) {
       this.variableFeeData.get('serviceName').markAsTouched();
       this.variableFeeData.get('code').markAsTouched();
       this.variableFeeData.get('billEvery').markAsTouched();
@@ -216,10 +216,10 @@ export class AddVariableFeeComponent implements OnInit {
       this.getFormControl().directFees.controls.liquid.markAsTouched();
       this.variableFeeData.controls.pricing.markAsTouched();
       if (this.variableFeeData.controls.pricing.invalid) {
-          this.pricing = true;
-        } 
+        this.pricing = true;
+      }
     }
-    else if(this.validateFees()){
+    else if (this.validateFees()) {
       this.variableFees = false;
     }
     else {

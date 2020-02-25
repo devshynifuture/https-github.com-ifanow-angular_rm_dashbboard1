@@ -50,7 +50,7 @@ export class IfasDetailsComponent implements OnInit {
       autoFocus: false,
     });
     dialogRef.afterClosed().subscribe(result => {
-
+      this.Close(false);
     });
 
   }

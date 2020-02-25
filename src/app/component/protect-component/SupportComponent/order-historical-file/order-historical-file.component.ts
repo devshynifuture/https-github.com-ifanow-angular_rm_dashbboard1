@@ -3,6 +3,7 @@ import { UtilService } from './../../../../services/util.service';
 import { SubscriptionInject } from './../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-order-historical-file',
@@ -32,6 +33,10 @@ export class OrderHistoricalFileComponent implements OnInit {
       name: 'All at once'
     }
   ];
+
+  camsValueChangeSubscription: Subscription;
+  karvyValueChangeSubscription: Subscription;
+  franklinValueChangeSubscription: Subscription;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -108,54 +113,77 @@ export class OrderHistoricalFileComponent implements OnInit {
   ngOnInit() {
     console.log("this is yesterday's date::::   ", this.dateYesterday);
     // this.isOnlyAumSelected()
+    this.conditionalRenderingOfForm();
+
+  }
+
+  conditionalRenderingOfForm() {
     this.orderHistoryFileForm.valueChanges.subscribe(val => console.log(val));
-    this.orderHistoryFileForm.get('selectFilesToOrder.cams').valueChanges.subscribe(val => {
+    this.camsValueChangeSubscription = this.orderHistoryFileForm.get('selectFilesToOrder.cams').valueChanges.subscribe(val => {
       if (val['wbr2']) {
-        this.asOnDate = false;
-        this.orderHistoryFileForm.get('orderingFreq').reset();
-        this.orderHistoryFileForm.get('asOnDate').setValidators([]);
-        this.orderHistoryFileForm.addControl('fromDate', new FormControl('', Validators.required));
-        this.orderHistoryFileForm.addControl('toDate', new FormControl('', Validators.required));
+        this.changesDueToCamsSelection(1)
       } else if (val['wbr2a']) {
-        this.asOnDate = false;
-        this.orderHistoryFileForm.get('orderingFreq').reset();
-        this.orderHistoryFileForm.get('asOnDate').setValidators([]);
-        this.orderHistoryFileForm.addControl('fromDate', new FormControl('', Validators.required));
-        this.orderHistoryFileForm.addControl('toDate', new FormControl('', Validators.required));
+        this.changesDueToCamsSelection(1);
       } else if (val['wbr49Active']) {
-        this.asOnDate = false;
-        this.orderHistoryFileForm.get('orderingFreq').reset();
-        this.orderHistoryFileForm.get('asOnDate').setValidators([]);
-        this.orderHistoryFileForm.addControl('fromDate', new FormControl('', Validators.required));
-        this.orderHistoryFileForm.addControl('toDate', new FormControl('', Validators.required));
+        this.changesDueToCamsSelection(1)
       } else if (val['wbr49Ceased']) {
-        this.asOnDate = false;
-        this.orderHistoryFileForm.get('orderingFreq').reset();
-        this.orderHistoryFileForm.get('asOnDate').setValidators([]);
-        this.orderHistoryFileForm.addControl('fromDate', new FormControl('', Validators.required));
-        this.orderHistoryFileForm.addControl('toDate', new FormControl('', Validators.required));
+        this.changesDueToCamsSelection(1)
       } else if (val['wbr9']) {
-        this.asOnDate = false;
-        this.orderHistoryFileForm.get('orderingFreq').reset();
-        this.orderHistoryFileForm.get('asOnDate').setValidators([]);
-        this.orderHistoryFileForm.addControl('fromDate', new FormControl('', Validators.required));
-        this.orderHistoryFileForm.addControl('toDate', new FormControl('', Validators.required));
+        this.changesDueToCamsSelection(1)
       } else if (val['wbr22']) {
-        this.asOnDate = true;
-        this.orderHistoryFileForm.get('orderingFreq').setValue('3');
-        this.orderHistoryFileForm.get('asOnDate').setValidators(Validators.required);
-        this.orderHistoryFileForm.get('asOnDate').setErrors({ 'error': true });
-        this.orderHistoryFileForm.removeControl('fromDate');
-        this.orderHistoryFileForm.removeControl('toDate');
+        this.changesDueToCamsSelection(2);
       } else {
-        this.asOnDate = false;
-        this.orderHistoryFileForm.get('orderingFreq').reset();
-        this.orderHistoryFileForm.get('asOnDate').setValidators([]);
-        this.orderHistoryFileForm.addControl('fromDate', new FormControl('', Validators.required));
-        this.orderHistoryFileForm.addControl('toDate', new FormControl('', Validators.required));
+        this.changesDueToCamsSelection(1);
+      }
+    });
+    this.karvyValueChangeSubscription = this.orderHistoryFileForm.get('selectFilesToOrder.karvy').valueChanges.subscribe(val => {
+      if (val['mfsd201']) {
+        this.changesDueToCamsSelection(1)
+      } else if (val['mfsd243Active']) {
+        this.changesDueToCamsSelection(1)
+      } else if (val['mfsd231Ceased']) {
+        this.changesDueToCamsSelection(1)
+      } else if (val['mfsd211']) {
+        this.changesDueToCamsSelection(1)
+      } else if (val['mfsd203']) {
+        this.changesDueToCamsSelection(2)
+      } else {
+        this.changesDueToCamsSelection(1);
       }
     });
 
+    this.franklinValueChangeSubscription = this.orderHistoryFileForm.get('selectFilesToOrder.franklin').valueChanges.subscribe(val => {
+      if (val['myTransactionsForAPeriod']) {
+        this.changesDueToCamsSelection(1);
+      } else if (val['activeSip']) {
+        this.changesDueToCamsSelection(1);
+      } else if (val['ceasedSip']) {
+        this.changesDueToCamsSelection(1);
+      } else if (val['investorFolioDetails']) {
+        this.changesDueToCamsSelection(1);
+      } else if (val['clientsWiseAumOrWhoseBalExceedsN']) {
+        this.changesDueToCamsSelection(2);
+      } else {
+        this.changesDueToCamsSelection(1);
+      }
+    });
+  }
+
+  changesDueToCamsSelection(option) {
+    if (option === 1) {
+      this.asOnDate = false;
+      this.orderHistoryFileForm.get('orderingFreq').reset();
+      this.orderHistoryFileForm.get('asOnDate').setValidators([]);
+      this.orderHistoryFileForm.addControl('fromDate', new FormControl('', Validators.required));
+      this.orderHistoryFileForm.addControl('toDate', new FormControl('', Validators.required));
+    } else if (option === 2) {
+      this.asOnDate = true;
+      this.orderHistoryFileForm.get('orderingFreq').setValue('3');
+      this.orderHistoryFileForm.get('asOnDate').setValidators(Validators.required);
+      this.orderHistoryFileForm.get('asOnDate').setErrors({ 'error': true });
+      this.orderHistoryFileForm.removeControl('fromDate');
+      this.orderHistoryFileForm.removeControl('toDate');
+    }
   }
 
   dialogClose(flag) {

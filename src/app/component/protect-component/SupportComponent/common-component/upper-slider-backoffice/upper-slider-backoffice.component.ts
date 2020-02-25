@@ -1,7 +1,9 @@
+import { EventService } from './../../../../../Data-service/event.service';
+import { UtilService } from './../../../../../services/util.service';
 import { Component, OnInit } from '@angular/core';
 import { ReconciliationDetailsViewComponent } from '../reconciliation-details-view/reconciliation-details-view.component';
 import { SubscriptionInject } from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
+
 
 @Component({
   selector: 'app-upper-slider-backoffice',
@@ -15,21 +17,25 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
   displayedColumns1: string[] = ['name', 'folioNumber', 'unitsIfnow', 'unitsRta', 'difference', 'transactions'];
   dataSource1 = ELEMENT_DATA1;
+  dataSource2 = ELEMENT_DATA2;
 
   displayedColumns3: string[] = ['foliosOrdered', 'file_order', 'file_status', 'id', 'trx_file', 'trx_added', 'file_name', 'download'];
   dataSource3 = ELEMENT_DATA3;
 
+  subTabState: number = 1;
 
 
-  constructor(private subInjectService: SubscriptionInject) { }
+
+  constructor(private subInjectService: SubscriptionInject,
+    private eventService: EventService) { }
 
   ngOnInit() {
   }
 
-  openReconciliationDetails(value, data) {
+  openReconciliationDetails(value, data, tableType) {
     const fragmentData = {
       flag: value,
-      data,
+      data: { ...data, tableType },
       id: 1,
       state: 'open',
       componentName: ReconciliationDetailsViewComponent
@@ -47,6 +53,15 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
       }
     );
+  }
+
+  dialogClose() {
+    console.log('this is clicked');
+    this.eventService.changeUpperSliderState({ state: 'close' });
+  }
+
+  setSubTabState(state) {
+    this.subTabState = state;
   }
 
 }
@@ -70,15 +85,20 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export interface PeriodicElement1 {
   name: string;
   folioNumber: string;
-  unitsIfnow: string;
+  unitsIfanow: string;
   unitsRta: string;
   difference: string;
   transactions: string;
-
-
 }
+
 const ELEMENT_DATA1: PeriodicElement1[] = [
-  { name: 'IIFL Dividend Opportunities Index Fund - Growth', folioNumber: '7716853/43	', unitsIfnow: '0', unitsRta: '463.820', difference: '463.82', transactions: ' ' },
+  { name: 'IIFL Dividend Opportunities Index Fund - Growth', folioNumber: '7716853/43	', unitsIfanow: '0', unitsRta: '463.820', difference: '463.82', transactions: '5' },
+  { name: 'IIFL Dividend Opportunities Index Fund - Growth', folioNumber: '7716853/43	', unitsIfanow: '0', unitsRta: '463.820', difference: '463.82', transactions: '5' },
+];
+
+const ELEMENT_DATA2: PeriodicElement1[] = [
+  { name: 'HDFC Prudents Fund - Growth', folioNumber: '47471/80	', unitsIfanow: '520.90', unitsRta: '420.90', difference: '100.00', transactions: '6' },
+  { name: 'HDFC Prudents Fund - Growth', folioNumber: '47471/80	', unitsIfanow: '520.90', unitsRta: '420.90', difference: '100.00', transactions: '6' },
 ];
 
 
