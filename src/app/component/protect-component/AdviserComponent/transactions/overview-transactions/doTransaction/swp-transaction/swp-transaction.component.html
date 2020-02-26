@@ -263,9 +263,11 @@
             <button mat-raised-button class="br-0 text-success f-14" (click)="AddMultiTransaction()" >
                 SAVE & ADD ANOTHER
             </button>
-            <button mat-button  class="btn-green text-white ml-12" (click)="swp()">
+            <!-- <button mat-button  class="btn-green text-white ml-12" (click)="swp()">
                 SAVE & PROCEED
-            </button>
+            </button> -->
+            <app-progress-button class="btn-green text-white ml-12" (click)="swp()" [options]="barButtonOptions" >
+            </app-progress-button>
         </div>
     </div>
 </div>

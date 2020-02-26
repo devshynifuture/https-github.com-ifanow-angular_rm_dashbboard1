@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { OnlineTransactionService } from '../../online-transaction.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
-import { AddClientMappingComponent } from '../settings-client-mapping/add-client-mapping/add-client-mapping.component';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
-import { AuthService } from 'src/app/auth-service/authService';
+import {Component, OnInit} from '@angular/core';
+import {OnlineTransactionService} from '../../online-transaction.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
+import {AddClientMappingComponent} from '../settings-client-mapping/add-client-mapping/add-client-mapping.component';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
+import {AuthService} from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-settings-folio-mapping',
@@ -142,6 +142,7 @@ export class SettingsFolioMappingComponent implements OnInit {
   }
   openAddMappiing(data, flag) {
     data['flag'] = "folio";
+    data.selectedBroker = this.selectedBrokerCode;
     const fragmentData = {
       flag: 'folioMapping',
       data,
