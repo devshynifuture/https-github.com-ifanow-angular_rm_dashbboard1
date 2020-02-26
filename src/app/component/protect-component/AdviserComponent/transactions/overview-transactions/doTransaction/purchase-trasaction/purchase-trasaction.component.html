@@ -16,13 +16,13 @@
         <div class="row">
             <div class="col-md-12 p-0">
                 <!-- (click)="backToTransact('back',null)" removed for prod build -->
-             <img  src="/assets/images/svg/back-arrow.svg">
+                <img src="/assets/images/svg/back-arrow.svg">
                 <h5 class="m-0 text-black"> <img class="v-initial pr-12">Investor name: {{selectedFamilyMember}}
                 </h5>
             </div>
         </div>
         <div class="col-md-12 mt-20 all-transactions" *ngIf="multiTransact == true && childTransactions.length>0">
-            <table mat-table [dataSource]="childTransactions"  id="table-low">
+            <table mat-table [dataSource]="childTransactions" id="table-low">
                 <ng-container matColumnDef="no">
                     <th mat-header-cell *matHeaderCellDef class="br"> No</th>
                     <td *matCellDef="let element let i = index;" class="br w-15 " mat-cell>
@@ -77,7 +77,7 @@
                     <div class="col-md-11 p-0">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard">
-                                <input type="text" aria-label="Number" formControlName="schemePurchase" class="form-control" matInput (keyup)="getSchemeList($event.target.value)"  [matAutocomplete]="auto"  placeholder="Start typing to see scheme names">
+                                <input type="text" aria-label="Number" formControlName="schemePurchase" class="form-control" matInput (keyup)="getSchemeList($event.target.value)" [matAutocomplete]="auto" placeholder="Start typing to see scheme names">
                                 <mat-autocomplete #auto="matAutocomplete">
                                     <mat-option (onSelectionChange)="selectedScheme(scheme)" *ngFor="let scheme of schemeList" [value]="scheme.schemeName">
                                         {{scheme.schemeName}}
@@ -86,7 +86,7 @@
                                 <mat-error class="f-12">
                                     This field is required
                                 </mat-error>
-                                <mat-hint align="start" class="f-12 text-custom" >Last closing NAV: {{navOfSelectedScheme}}
+                                <mat-hint align="start" class="f-12 text-custom">Last closing NAV: {{navOfSelectedScheme}}
                                 </mat-hint>
                             </mat-form-field>
                         </div>
@@ -168,7 +168,7 @@
                                     Should be greater than or equal to {{schemeDetails.minimumPurchaseAmount}}
                                 </mat-error>
                                 <mat-error *ngIf="(purchaseTransaction.get('employeeContry').errors?.required)" class="f-12">
-                                   This field is requied
+                                    This field is requied
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -199,10 +199,10 @@
                 </app-transaction-summary>
             </div>
         </div>
-        
-        </div>
+
     </div>
-    
+</div>
+
 <div class="bottom-fixed row pl-20 pr-20 w-65 d-flex align-items-center">
 
     <div class="col-md-4 p-0 d-flex align-item-center justifly-content-start">
@@ -219,7 +219,7 @@
         <!-- <button mat-button class="btn-green text-white ml-12" (click)="purchase()">
             SAVE & PROCEED
         </button> -->
-        <app-progress-button class="btn-green text-white ml-12" (click)="purchase()" [options]="barButtonOptions" >
+        <app-progress-button class="btn-green text-white ml-12" (click)="purchase()" [options]="barButtonOptions">
         </app-progress-button>
     </div>
 
