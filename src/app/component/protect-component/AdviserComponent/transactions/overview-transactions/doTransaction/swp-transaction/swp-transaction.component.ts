@@ -99,6 +99,12 @@ export class SwpTransactionComponent implements OnInit {
   }
   getSchemeList(value) {
     this.showSpinner = true
+    if(this.swpTransaction.get('schemeSwp').invalid){
+      this.showSpinner = false;
+      Object.assign(this.transactionSummary, { schemeName: '' });
+      Object.assign(this.transactionSummary, { folioNumber: '' });
+      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;//if scheme not present then min amt is 0
+    }
     if (this.selectScheme == 2 && value.length > 2) {
       let obj = {
         searchQuery: value,
@@ -114,7 +120,11 @@ export class SwpTransactionComponent implements OnInit {
       }
       this.onlineTransact.getExistingSchemes(obj).subscribe(
         data => this.getExistingSchemesRes(data), (error) => {
-          this.eventService.showErrorMessage(error);
+          this.showSpinner = false;
+          this.swpTransaction.get('schemeSwp').setErrors({'setValue':error.message});
+          this.swpTransaction.get('schemeSwp').markAsTouched();
+          (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;
+          // this.eventService.showErrorMessage(error);
         }
       );
     } else {
@@ -149,10 +159,6 @@ export class SwpTransactionComponent implements OnInit {
   }
   getExistingSchemesRes(data) {
     this.showSpinner = false
-    if(data.length==0){
-      this.swpTransaction.get('schemeSwp').setErrors({'setValue':'Selected scheme does not exist'});
-      this.swpTransaction.get('schemeSwp').markAsTouched();
-    }
     console.log('getExistingSchemesRes =', data)
     this.schemeList = data
   }

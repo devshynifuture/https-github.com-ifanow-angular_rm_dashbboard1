@@ -1,4 +1,8 @@
+import { EventService } from './../../../../Data-service/event.service';
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { UtilService } from 'src/app/services/util.service';
+import { FileOrderingUpperComponent } from './file-ordering-upper/file-ordering-upper.component';
 
 @Component({
   selector: 'app-file-ordering-upload',
@@ -7,7 +11,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FileOrderingUploadComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private eventService: EventService
+  ) { }
 
   ngOnInit() {
   }

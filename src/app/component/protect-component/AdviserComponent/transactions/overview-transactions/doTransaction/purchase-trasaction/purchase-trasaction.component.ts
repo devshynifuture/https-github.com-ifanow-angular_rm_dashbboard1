@@ -44,7 +44,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   navOfSelectedScheme: any;
   schemeDetails: any;
   reInvestmentOpt = [];
-  transactionSummary: {};
+  transactionSummary:any;
   ExistingOrNew: any;
   maiSchemeList: any;
   getDataSummary: any;
@@ -98,7 +98,12 @@ export class PurchaseTrasactionComponent implements OnInit {
   getSchemeList(value) {
     this.showSpinner = true
     this.platformType = this.getDataSummary.defaultClient.aggregatorType
-    console.log("valuelength-------------->",value.length)
+    if(this.purchaseTransaction.get('schemePurchase').invalid){
+      this.showSpinner = false
+      Object.assign(this.transactionSummary, { schemeName: '' });//to disable scheme name from transaction summary
+      Object.assign(this.transactionSummary, { folioNumber: '' });//to disable folio number from transaction summary
+      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;//if scheme not present then min amt is 0
+    }
     let obj = {
       searchQuery: value,
       bseOrderType: 'ORDER',
@@ -111,35 +116,37 @@ export class PurchaseTrasactionComponent implements OnInit {
       holdingType: this.getDataSummary.defaultClient.holdingType,
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
     }
-    if (this.selectScheme == 2 && value.length > 2) {
-      this.onlineTransact.getNewSchemes(obj).subscribe(
-        data => this.getNewSchemesRes(data), (error) => {
-          this.eventService.showErrorMessage(error);
-        }
-      );
-    } else {
-      this.onlineTransact.getExistingSchemes(obj).subscribe(
-        data => this.getExistingSchemesRes(data), (error) => {
-          this.eventService.showErrorMessage(error);
-        }
-      );
+    if(value.length > 2){
+      if (this.selectScheme == 2) {
+        this.onlineTransact.getNewSchemes(obj).subscribe(
+          data => this.getNewSchemesRes(data), (error) => {
+            this.showSpinner = false
+            this.purchaseTransaction.get('schemePurchase').setErrors({'setValue':error.message});
+            this.purchaseTransaction.get('schemePurchase').markAsTouched();
+            (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;
+            // this.eventService.showErrorMessage(error);
+          }
+        );
+      } else {
+        this.onlineTransact.getExistingSchemes(obj).subscribe(
+          data => this.getExistingSchemesRes(data), (error) => {
+            this.showSpinner = false
+            this.purchaseTransaction.get('schemePurchase').setErrors({'setValue':error.message});
+            this.purchaseTransaction.get('schemePurchase').markAsTouched();
+            (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;
+            // this.eventService.showErrorMessage(error);
+          }
+        );
+      }
     }
   }
   getNewSchemesRes(data) {
     this.showSpinner = false
-    if(data.length==0){
-      this.purchaseTransaction.get('schemePurchase').setErrors({'setValue':'Selected scheme does not exist'});
-      this.purchaseTransaction.get('schemePurchase').markAsTouched();
-    }
     console.log('new schemes', data)
     this.schemeList = data
   }
   getExistingSchemesRes(data) {
     this.showSpinner = false
-    if(data.length==0){
-      this.purchaseTransaction.get('schemePurchase').setErrors({'setValue':'Selected scheme does not exist'});
-      this.purchaseTransaction.get('schemePurchase').markAsTouched();
-    }
     this.schemeList = data
   }
   reinvest(scheme) {
@@ -148,6 +155,9 @@ export class PurchaseTrasactionComponent implements OnInit {
     console.log('schemeDetails == ', this.schemeDetails)
   }
   selectExistingOrNew(value) {
+    if(value=="2"){
+      Object.assign(this.transactionSummary, { folioNumber: '' });
+    }
     this.ExistingOrNew = value
   }
   getbankDetails(bank) {
@@ -360,6 +370,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       }
       if (this.multiTransact == true) {
         console.log('new purchase obj', this.childTransactions)
+        this.AddMultiTransaction();
         obj.childTransactions = this.childTransactions
       }
       console.log('new purchase obj', obj)
