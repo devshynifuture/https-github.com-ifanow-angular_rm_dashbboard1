@@ -99,6 +99,9 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.showSpinner = true
     this.platformType = this.getDataSummary.defaultClient.aggregatorType
     console.log("valuelength-------------->",value.length)
+    if(this.purchaseTransaction.get('schemePurchase').invalid){
+      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;//if scheme not present then min amt is 0
+    }
     let obj = {
       searchQuery: value,
       bseOrderType: 'ORDER',
@@ -130,6 +133,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     if(data.length==0){
       this.purchaseTransaction.get('schemePurchase').setErrors({'setValue':'Selected scheme does not exist'});
       this.purchaseTransaction.get('schemePurchase').markAsTouched();
+      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;
     }
     console.log('new schemes', data)
     this.schemeList = data
@@ -139,6 +143,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     if(data.length==0){
       this.purchaseTransaction.get('schemePurchase').setErrors({'setValue':'Selected scheme does not exist'});
       this.purchaseTransaction.get('schemePurchase').markAsTouched();
+      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;//if scheme not exist then min amt is 0
     }
     this.schemeList = data
   }
@@ -360,6 +365,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       }
       if (this.multiTransact == true) {
         console.log('new purchase obj', this.childTransactions)
+        this.AddMultiTransaction();
         obj.childTransactions = this.childTransactions
       }
       console.log('new purchase obj', obj)

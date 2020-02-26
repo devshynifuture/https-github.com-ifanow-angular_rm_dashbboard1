@@ -94,6 +94,9 @@ export class SwitchTransactionComponent implements OnInit {
   }
   getSchemeList(value) {
     this.showSpinner = true
+    if(this.switchTransaction.get('schemeSwitch').invalid){
+      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;//if scheme not present then min amt is 0
+    }
     if (this.selectScheme == 2 && value.length > 2) {
       let obj = {
         searchQuery: value,
@@ -121,6 +124,7 @@ export class SwitchTransactionComponent implements OnInit {
     if(data.length==0){
       this.switchTransaction.get('schemeSwitch').setErrors({'setValue':'Selected scheme does not exist'});
       this.switchTransaction.get('schemeSwitch').markAsTouched();
+      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;//if scheme not present then min amt is 0
     }
     this.schemeList = data
   }

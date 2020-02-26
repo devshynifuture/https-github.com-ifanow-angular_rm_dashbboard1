@@ -99,6 +99,9 @@ export class SwpTransactionComponent implements OnInit {
   }
   getSchemeList(value) {
     this.showSpinner = true
+    if(this.swpTransaction.get('schemeSwp').invalid){
+      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;//if scheme not present then min amt is 0
+    }
     if (this.selectScheme == 2 && value.length > 2) {
       let obj = {
         searchQuery: value,
@@ -152,6 +155,7 @@ export class SwpTransactionComponent implements OnInit {
     if(data.length==0){
       this.swpTransaction.get('schemeSwp').setErrors({'setValue':'Selected scheme does not exist'});
       this.swpTransaction.get('schemeSwp').markAsTouched();
+      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;
     }
     console.log('getExistingSchemesRes =', data)
     this.schemeList = data

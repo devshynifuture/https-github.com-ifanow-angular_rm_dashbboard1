@@ -155,6 +155,9 @@ export class StpTransactionComponent implements OnInit {
   }
   getSchemeList(value) {
     this.showSpinner = true
+    if(this.stpTransaction.get('schemeStp').invalid){
+      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;//if scheme not present then min amt is 0
+    }
     if (this.selectScheme == 2 && value.length > 2) {
       let obj = {
         searchQuery: value,
@@ -183,6 +186,7 @@ export class StpTransactionComponent implements OnInit {
     if(data.length==0){
       this.stpTransaction.get('schemeStp').setErrors({'setValue':'Selected scheme does not exist'});
       this.stpTransaction.get('schemeStp').markAsTouched();
+      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;
     }
     this.schemeList = data
     console.log('data schemelist res', data)

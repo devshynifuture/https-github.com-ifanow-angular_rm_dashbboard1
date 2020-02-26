@@ -109,6 +109,9 @@ export class SipTransactionComponent implements OnInit {
   }
   getSchemeList(value) {
     this.showSpinner = true
+    if(this.sipTransaction.get('schemeSip').invalid){
+      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;//if scheme not present then min amt is 0
+    }
     let obj = {
       searchQuery: value,
       bseOrderType: 'ORDER',
@@ -141,6 +144,7 @@ export class SipTransactionComponent implements OnInit {
     if(data.length==0){
       this.sipTransaction.get('schemeSip').setErrors({'setValue':'Selected scheme does not exist'});
       this.sipTransaction.get('schemeSip').markAsTouched();
+      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;
     }
     console.log('new schemes', data)
     this.schemeList = data
@@ -151,6 +155,7 @@ export class SipTransactionComponent implements OnInit {
     if(data.length==0){
       this.sipTransaction.get('schemeSip').setErrors({'setValue':'Selected scheme does not exist'});
       this.sipTransaction.get('schemeSip').markAsTouched();
+      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;
     }
     this.schemeList = data
   }
