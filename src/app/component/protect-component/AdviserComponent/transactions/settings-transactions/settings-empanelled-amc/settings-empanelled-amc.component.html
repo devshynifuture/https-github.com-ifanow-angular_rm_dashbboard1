@@ -3,17 +3,22 @@
         <h4 class="m-0 text-black">Empanelled AMCs</h4>
     </div>
     <div class="col-md-6 clientsetting-transactions">
-        <table mat-table [dataSource]="dataSource" class="mt-20" id="table-low">
+        <table mat-table [dataSource]="dataSource" appSkeletonLoading [appSkeletonLoading]="isLoading"
+            class="mt-20 skeletonAnimation" id="table-low">
             <ng-container matColumnDef="{{column}}" *ngFor="let column of columns">
                 <th mat-header-cell *matHeaderCellDef> {{column}} </th>
                 <td mat-cell *matCellDef="let element">
-                    <span *ngIf="column=='AMC name'">{{element.amcName}}</span>
-                    <span *ngFor="let singleBroker of element.data">
-                        <span *ngIf="singleBroker.brokerCode==column">
-                            <mat-checkbox *ngIf="column!='AMC name'" [checked]="singleBroker.selected">
-                            </mat-checkbox>
+                    <div class="bar">
+                        <span *ngIf="column=='AMC name'">{{element.amcName}}</span>
+                        <span *ngFor="let singleBroker of element.data">
+                            <span *ngIf="singleBroker.brokerCode==column">
+                                <mat-checkbox *ngIf="column!='AMC name'"
+                                    (change)="addDeleteHiddenAmc($event,element,singleBroker)"
+                                    [checked]="singleBroker.selected">
+                                </mat-checkbox>
+                            </span>
                         </span>
-                    </span>
+                    </div>
                 </td>
             </ng-container>
 
