@@ -127,6 +127,11 @@ export class RedemptionTransactionComponent implements OnInit {
   }
   getSchemeList(value) {
     this.showSpinner = true
+    if (this.redemptionTransaction.get('schemeRedeem').invalid) {
+      this.showSpinner = false
+      Object.assign(this.transactionSummary, { schemeName: '' });
+      Object.assign(this.transactionSummary, { folioNumber: '' });
+    }
     let obj = {
       searchQuery: value,
       bseOrderType: 'ORDER',
@@ -140,18 +145,19 @@ export class RedemptionTransactionComponent implements OnInit {
       holdingType: this.getDataSummary.defaultClient.holdingType,
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
     }
-    this.onlineTransact.getExistingSchemes(obj).subscribe(
-      data => this.getExistingSchemesRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
-      }
-    );
+    if (value.length > 2) {
+      this.onlineTransact.getExistingSchemes(obj).subscribe(
+        data => this.getExistingSchemesRes(data), (error) => {
+          this.showSpinner = false
+          this.redemptionTransaction.get('schemeRedeem').setErrors({ 'setValue': error.message });
+          this.redemptionTransaction.get('schemeRedeem').markAsTouched();
+          // this.eventService.showErrorMessage(error);
+        }
+      );
+    }
   }
   getExistingSchemesRes(data) {
     this.showSpinner = false
-    if(data.length==0){
-      this.redemptionTransaction.get('schemeRedeem').setErrors({'setValue':'Selected scheme does not exist'});
-      this.redemptionTransaction.get('schemeRedeem').markAsTouched();
-    }
     this.schemeList = data
   }
   getbankDetails(bank) {
