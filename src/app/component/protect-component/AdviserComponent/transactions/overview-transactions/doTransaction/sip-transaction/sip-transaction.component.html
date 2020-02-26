@@ -93,8 +93,12 @@
                                 <mat-hint align="start" class="f-12 text-custom">
                                     Last closing NAV: {{navOfSelectedScheme}}
                                 </mat-hint>
-                                <mat-error class="f-12 pt-4">
+                                <mat-error class="f-12 pt-4" *ngIf="sipTransaction.get('schemeSip').errors?.required">
                                     This field is required
+                                </mat-error>
+                                <mat-error class="f-12"
+                                    *ngIf="sipTransaction.get('schemeSip').errors?.setValue">
+                                    Selected scheme does not exist
                                 </mat-error>
                             </mat-form-field>
                         </div>

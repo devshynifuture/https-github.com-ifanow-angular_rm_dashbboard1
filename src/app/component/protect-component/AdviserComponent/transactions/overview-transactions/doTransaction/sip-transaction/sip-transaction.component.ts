@@ -138,12 +138,20 @@ export class SipTransactionComponent implements OnInit {
   getNewSchemesRes(data) {
     this.getNSEAchmandate()
     this.showSpinner = false
+    if(data.length==0){
+      this.sipTransaction.get('schemeSip').setErrors({'setValue':'Selected scheme does not exist'});
+      this.sipTransaction.get('schemeSip').markAsTouched();
+    }
     console.log('new schemes', data)
     this.schemeList = data
   }
   getExistingSchemesRes(data) {
     this.getNSEAchmandate()
     this.showSpinner = false
+    if(data.length==0){
+      this.sipTransaction.get('schemeSip').setErrors({'setValue':'Selected scheme does not exist'});
+      this.sipTransaction.get('schemeSip').markAsTouched();
+    }
     this.schemeList = data
   }
   getDefaultDetails(data) {

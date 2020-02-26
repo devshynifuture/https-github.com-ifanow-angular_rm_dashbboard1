@@ -72,8 +72,12 @@
                                         {{scheme.schemeName}}
                                     </mat-option>
                                 </mat-autocomplete>
-                                <mat-error class="f-12">
+                                <mat-error class="f-12" *ngIf="stpTransaction.get('schemeStp').errors?.required">
                                     This field is required
+                                </mat-error>
+                                <mat-error class="f-12"
+                                    *ngIf="stpTransaction.get('schemeStp').errors?.setValue">
+                                    Selected scheme does not exist
                                 </mat-error>
                                 <mat-hint align="start" class="f-12 text-custom">Last closing NAV:
                                     {{navOfSelectedScheme}}
@@ -148,8 +152,12 @@
                                         {{scheme.schemeName}}
                                     </mat-option>
                                 </mat-autocomplete>
-                                <mat-error class="f-12">
+                                <mat-error class="f-12" *ngIf="stpTransaction.get('transferIn').errors?.required">
                                     This field is required
+                                </mat-error>
+                                <mat-error class="f-12"
+                                    *ngIf="stpTransaction.get('transferIn').errors?.setValue">
+                                    Selected scheme does not exist
                                 </mat-error>
                                 <mat-hint align="start" class="f-12 text-custom">Last closing NAV:
                                     {{navOfSelectedScheme}}

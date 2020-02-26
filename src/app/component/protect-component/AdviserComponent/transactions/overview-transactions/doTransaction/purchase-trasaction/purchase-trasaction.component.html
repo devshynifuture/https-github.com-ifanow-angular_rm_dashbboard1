@@ -73,7 +73,7 @@
                         <h5 class="m-0 pt-28 text-black pb-12">Select a scheme to invest in</h5>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" cdkScrollable>
                     <div class="col-md-11 p-0">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard">
@@ -83,8 +83,11 @@
                                         {{scheme.schemeName}}
                                     </mat-option>
                                 </mat-autocomplete>
-                                <mat-error class="f-12">
+                                <mat-error class="f-12" *ngIf="purchaseTransaction.get('schemePurchase').errors?.required">
                                     This field is required
+                                </mat-error>
+                                <mat-error class="f-12" *ngIf="purchaseTransaction.get('schemePurchase').errors?.setValue">
+                                    Selected scheme does not exist
                                 </mat-error>
                                 <mat-hint align="start" class="f-12 text-custom">Last closing NAV: {{navOfSelectedScheme}}
                                 </mat-hint>
@@ -162,14 +165,16 @@
                             <mat-form-field>
                                 <input #employeeContry matInput maxlength="10" type="text" class="form-control rupess" formControlName="employeeContry" (keyup)="enteredAmount($event.target.value)">
                                 <mat-hint align="start" class="f-12 text-custom">
-                                    Min amount: ₹{{(schemeDetails == undefined)?'-':schemeDetails.minimumPurchaseAmount }}
+                                    Min amount: ₹{{(schemeDetails == undefined)?'0':schemeDetails.minimumPurchaseAmount }}
                                 </mat-hint>
                                 <mat-error *ngIf="(purchaseTransaction.get('employeeContry').errors?.min)" class="f-12">
                                     Should be greater than or equal to {{schemeDetails.minimumPurchaseAmount}}
                                 </mat-error>
-                                <mat-error *ngIf="(purchaseTransaction.get('employeeContry').errors?.required)" class="f-12">
-                                    This field is requied
-                                </mat-error>
+                                <<<<<<< HEAD <mat-error *ngIf="(purchaseTransaction.get('employeeContry').errors?.required)" class="f-12">
+                                    =======
+                                    <mat-error *ngIf="(purchaseTransaction.get('employeeContry').errors?.required)" class="f-12">
+                                        >>>>>>> 31f2f5765ad1220dfa6ff453478660875fbb19ea This field is requied
+                                    </mat-error>
                             </mat-form-field>
                         </div>
                     </div>

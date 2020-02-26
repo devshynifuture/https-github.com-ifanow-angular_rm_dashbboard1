@@ -85,6 +85,15 @@ export class OnlineTransactionService {
   getClientCodes(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_CLIENT_CODE, data, 1);
   }
+  getHiddenAmcFromAdvisorIdAmcWise(data) {
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_EMPANELLED_AMC, data, 1);
+  }
+  addHiddenAmc(data) {
+    return this.http.postEncoded(apiConfig.TRANSACT + appConfig.ADD_HIDDEN_AMC, data)
+  }
+  deleteHiddenAmc(data) {
+    return this.http.postEncoded(apiConfig.TRANSACT + appConfig.DELETE_HIDDEN_AMC, data)
+  }
   // sipBSE(data){
   //   return this.http.postEncoded(apiConfig.TRANSACT + appConfig.SIP_BSE, data)
   // }
