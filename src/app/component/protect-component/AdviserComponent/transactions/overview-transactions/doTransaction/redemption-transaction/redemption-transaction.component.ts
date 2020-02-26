@@ -148,6 +148,10 @@ export class RedemptionTransactionComponent implements OnInit {
   }
   getExistingSchemesRes(data) {
     this.showSpinner = false
+    if(data.length==0){
+      this.redemptionTransaction.get('schemeRedeem').setErrors({'setValue':'Selected scheme does not exist'});
+      this.redemptionTransaction.get('schemeRedeem').markAsTouched();
+    }
     this.schemeList = data
   }
   getbankDetails(bank) {
