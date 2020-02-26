@@ -381,6 +381,7 @@ export const appConfig = {
   GET_FOLIO_MAPPED: '/mutual-fund/folios/mapped/get',
   GET_FOLIO_UNMAPPED: '/mutual-fund/folios/unmapped/get',
   GET_CLIENT_CODE: '/bse/user/family-member/client-code',
+  GET_EMPANELLED_AMC: 'mutual-fund/hidden-amc/amc-wise/get',
   // SIP_BSE:'bse/order/create',
 
   // cashflow 
