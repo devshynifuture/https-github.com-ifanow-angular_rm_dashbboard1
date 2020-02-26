@@ -146,6 +146,10 @@ export class StpTransactionComponent implements OnInit {
   }
   getNewSchemesRes(data) {
     this.showSpinnerTrans = false
+    if(data.length==0){
+      this.stpTransaction.get('transferIn').setErrors({'setValue':'Selected scheme does not exist'});
+      this.stpTransaction.get('transferIn').markAsTouched();
+    }
     console.log('new schemes', data)
     this.schemeListTransfer = data
   }
@@ -176,6 +180,10 @@ export class StpTransactionComponent implements OnInit {
   }
   getExistingSchemesRes(data) {
     this.showSpinner = false
+    if(data.length==0){
+      this.stpTransaction.get('schemeStp').setErrors({'setValue':'Selected scheme does not exist'});
+      this.stpTransaction.get('schemeStp').markAsTouched();
+    }
     this.schemeList = data
     console.log('data schemelist res', data)
   }

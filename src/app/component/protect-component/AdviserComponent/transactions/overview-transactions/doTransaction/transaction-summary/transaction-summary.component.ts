@@ -109,6 +109,7 @@ export class TransactionSummaryComponent implements OnInit {
     });
   }
   openPlatform(): void {
+    this.showPlatform = false;
     const dialogRef = this.dialog.open(PlatformPopUpComponent, {
       width: '470px',
       data: { platform: this.platForm, animal: this.element }
@@ -116,6 +117,7 @@ export class TransactionSummaryComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       if (result == undefined) {
+        this.showPlatform = false
         return
       }
       this.element = result;

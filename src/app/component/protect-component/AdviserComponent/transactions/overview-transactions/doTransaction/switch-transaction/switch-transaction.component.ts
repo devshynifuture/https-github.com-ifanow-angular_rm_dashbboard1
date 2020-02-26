@@ -118,6 +118,10 @@ export class SwitchTransactionComponent implements OnInit {
   }
   getExistingSchemesRes(data) {
     this.showSpinner = false
+    if(data.length==0){
+      this.switchTransaction.get('schemeSwitch').setErrors({'setValue':'Selected scheme does not exist'});
+      this.switchTransaction.get('schemeSwitch').markAsTouched();
+    }
     this.schemeList = data
   }
   onFolioChange(folio) {
@@ -251,6 +255,10 @@ export class SwitchTransactionComponent implements OnInit {
   }
   getNewSchemesRes(data) {
     this.showSpinnerTran = false
+    if(data.length==0){
+      this.switchTransaction.get('transferIn').setErrors({'setValue':'Selected scheme does not exist'});
+      this.switchTransaction.get('transferIn').markAsTouched();
+    }
     console.log('new schemes', data)
     this.schemeListTransfer = data
   }

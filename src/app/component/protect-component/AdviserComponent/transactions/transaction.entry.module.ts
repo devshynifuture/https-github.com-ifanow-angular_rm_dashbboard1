@@ -29,6 +29,7 @@ import { EuinSelectPopUpComponent } from './overview-transactions/doTransaction/
 import { BankSelectPopUpComponent } from './overview-transactions/doTransaction/bank-select-pop-up/bank-select-pop-up.component';
 import { UmrnPopUpComponent } from './overview-transactions/doTransaction/umrn-pop-up/umrn-pop-up.component';
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
+import { ScrollDispatchModule, ScrollingModule } from '@angular/cdk/scrolling';
 
 export const componentList = [
     TransactionAddComponent,
@@ -69,11 +70,13 @@ export const componentList = [
         FormsModule,
         ReactiveFormsModule,
         CustomDirectiveModule,
-        CustomCommonModule
+        CustomCommonModule,
+        ScrollingModule
     ],
     exports: [
         FormsModule,
-        ReactiveFormsModule],
+        ReactiveFormsModule,
+        ScrollDispatchModule,ScrollingModule],
     entryComponents: [componentList]
 })
 

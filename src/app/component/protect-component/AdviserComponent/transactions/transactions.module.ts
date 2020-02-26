@@ -18,6 +18,7 @@ import { FatcaDetailsComponent } from './overview-transactions/know-your-custome
 import { VideoKycComponent } from './overview-transactions/know-your-customer/video-kyc/video-kyc.component';
 import { ClientSearchDirective } from './client-search.directive';
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
+import { ScrollDispatchModule, ScrollingModule } from '@angular/cdk/scrolling';
 //import { VideoKycComponent } from './overview-transactions/know-your-customer/video-kyc/video-kyc.component';
 //import { FatcaDetailsComponent } from './overview-transactions/know-your-customer/fatca-details/fatca-details.component';
 //import { NomineeDetailsComponent } from './overview-transactions/know-your-customer/nominee-details/nominee-details.component';
@@ -54,8 +55,12 @@ import { CustomCommonModule } from 'src/app/common/custom.common.module';
     CustomDirectiveModule,
     CustomCommonModule,
     SettingsTransactionsModule,
+    ScrollDispatchModule,
+    ScrollingModule
   ], exports: [
     TransactionsComponent,
+    ScrollDispatchModule,
+    ScrollingModule
   ]
 })
 export class TransactionsModule {

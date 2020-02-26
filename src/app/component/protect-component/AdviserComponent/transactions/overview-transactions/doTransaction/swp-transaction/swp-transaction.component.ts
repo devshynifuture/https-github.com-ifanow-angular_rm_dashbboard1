@@ -149,6 +149,10 @@ export class SwpTransactionComponent implements OnInit {
   }
   getExistingSchemesRes(data) {
     this.showSpinner = false
+    if(data.length==0){
+      this.swpTransaction.get('schemeSwp').setErrors({'setValue':'Selected scheme does not exist'});
+      this.swpTransaction.get('schemeSwp').markAsTouched();
+    }
     console.log('getExistingSchemesRes =', data)
     this.schemeList = data
   }
