@@ -234,6 +234,14 @@
   }
 }
 
+#ui-dashboard {
+  .h-513 {
+
+    height: 513px;
+    overflow: auto !important;
+  }
+}
+
 #ui-subscriptions,
 #uiTransactions {
   position: fixed;

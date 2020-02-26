@@ -99,9 +99,9 @@
             <div class="col-md-4 pr-0 pl-12">
               <p class="text-custom m-0">Returns</p>
               <h5 *ngIf="assetStockData" class="m-0 text-danger">{{assetStockData.grandTotalAbsReturns}}
-              </h5> <i class="material-icons text-danger v-sub f-18 f-700">
-                arrow_upward
-              </i>
+                <i class="material-icons text-danger v-sub f-18 f-700">
+                  arrow_upward
+                </i></h5>
             </div>
           </div>
         </div>
@@ -272,7 +272,7 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="groupHeader">
-          <td *matCellDef="let group" [attr.colspan]="displayedColumns25.length" class="text-center">
+          <td *matCellDef="let group" [attr.colspan]="displayedColumns25.length" class="text-center text-primary f-500">
             {{group.groupName}}</td>
         </ng-container>
 

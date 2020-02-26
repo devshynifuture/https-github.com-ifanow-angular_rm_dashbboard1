@@ -85,16 +85,18 @@
                                 <input type="text" aria-label="Number" formControlName="schemePurchase"
                                     class="form-control" matInput (keyup)="getSchemeList($event.target.value)"
                                     [matAutocomplete]="auto" placeholder="Start typing to see scheme names">
-                                <mat-autocomplete #auto="matAutocomplete">
+                                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                                     <mat-option (onSelectionChange)="selectedScheme(scheme)"
                                         *ngFor="let scheme of schemeList" [value]="scheme.schemeName">
                                         {{scheme.schemeName}}
                                     </mat-option>
                                 </mat-autocomplete>
-                                <mat-error class="f-12" *ngIf="purchaseTransaction.get('schemePurchase').errors?.required">
+                                <mat-error class="f-12"
+                                    *ngIf="purchaseTransaction.get('schemePurchase').errors?.required">
                                     This field is required
                                 </mat-error>
-                                <mat-error class="f-12" *ngIf="purchaseTransaction.get('schemePurchase').errors?.setValue">
+                                <mat-error class="f-12"
+                                    *ngIf="purchaseTransaction.get('schemePurchase').errors?.setValue">
                                     Selected scheme does not exist
                                 </mat-error>
                                 <mat-hint align="start" class="f-12 text-custom">Last closing NAV:
