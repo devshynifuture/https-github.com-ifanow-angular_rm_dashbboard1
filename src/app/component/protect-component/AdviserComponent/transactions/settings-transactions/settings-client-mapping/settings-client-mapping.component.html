@@ -14,8 +14,8 @@
             </div>
             <div class="col-md-5 pl-0">
                 <div class="form-group mb-0">
-                    <mat-select [(ngModel)]="selectedBrokerCode" (selectionChange)="sortDataFilterWise()"
-                        class="form-control br-0">
+                    <mat-select [(ngModel)]="selectedBrokerCode"
+                        (selectionChange)="chnageBrokerCode(selectedBrokerCode)" class="form-control br-0">
                         <mat-option *ngFor="let singleBrokerCode of filterData" [value]="singleBrokerCode">
                             {{singleBrokerCode.brokerCode}}
                         </mat-option>
@@ -24,7 +24,7 @@
             </div>
             <div class="col-md-2 pl-0">
                 <div class="form-group mb-0">
-                    <mat-select [(ngModel)]="selectedPlatform" (selectionChange)="sortDataFilterWise()"
+                    <mat-select [(ngModel)]="selectedPlatform" (selectionChange)="changePlatform(selectedPlatform)"
                         class="form-control br-0">
                         <mat-option *ngFor="let singlePlatform of filterData" [value]="singlePlatform">
                             {{singlePlatform.platformName}}</mat-option>
