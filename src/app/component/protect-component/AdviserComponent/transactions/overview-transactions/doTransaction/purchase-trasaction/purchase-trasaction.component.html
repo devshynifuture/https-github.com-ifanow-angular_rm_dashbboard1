@@ -216,9 +216,11 @@
             SAVE & ADD ANOTHER
         </button>
 
-        <button mat-button class="btn-green text-white ml-12" (click)="purchase()">
+        <!-- <button mat-button class="btn-green text-white ml-12" (click)="purchase()">
             SAVE & PROCEED
-        </button>
+        </button> -->
+        <app-progress-button class="btn-green text-white ml-12" (click)="purchase()" [options]="barButtonOptions" >
+        </app-progress-button>
     </div>
 
 </div>

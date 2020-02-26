@@ -1,7 +1,11 @@
+import { EventService } from './../../../../../Data-service/event.service';
 import { Component, OnInit } from '@angular/core';
 import { SubscriptionInject } from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { MyIfaSelectArnRiaComponent } from '../my-ifa-select-arn-ria/my-ifa-select-arn-ria.component';
 import { MatDialog } from '@angular/material';
+import { UpperSliderBackofficeComponent } from '../../common-component/upper-slider-backoffice/upper-slider-backoffice.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-ifas-details',
@@ -31,12 +35,33 @@ export class IfasDetailsComponent implements OnInit {
 
 
   constructor(public subInjectService: SubscriptionInject,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private eventService: EventService) { }
 
   ngOnInit() {
   }
 
-  openSelectArnRiaPopup() {
+  openUpperSliderBackoffice(flag, data) {
+    const fragmentData = {
+      flag: "clients",
+      id: 1,
+      data,
+      direction: 'top',
+      componentName: UpperSliderBackofficeComponent,
+      state: 'open'
+    };
+    // this.router.navigate(['/subscription-upper'])
+    AuthService.setSubscriptionUpperSliderData(fragmentData);
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getClientSubscriptionList();
+          subscription.unsubscribe();
+
+        }
+      }
+    );
 
   }
 
@@ -50,7 +75,7 @@ export class IfasDetailsComponent implements OnInit {
       autoFocus: false,
     });
     dialogRef.afterClosed().subscribe(result => {
-
+      this.Close(false);
     });
 
   }

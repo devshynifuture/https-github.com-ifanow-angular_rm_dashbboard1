@@ -259,11 +259,11 @@
             <button mat-button mat-raised-button class="br-0 text-success f-14" (click)="AddMultiTransaction()">
                 SAVE & ADD ANOTHER
             </button>
-            <button mat-button class="btn-green text-white ml-12" (click)="switch()">
+            <!-- <button mat-button class="btn-green text-white ml-12" (click)="switch()">
                 SAVE & PROCEED
-            </button>
-            <!-- <app-progress-button (btnClick)="switch()" [options]="barButtonOptions" >
-            </app-progress-button> -->
+            </button> -->
+            <app-progress-button class="btn-green text-white ml-12" (btnClick)="switch()" [options]="barButtonOptions" >
+            </app-progress-button>
         </div>
     </div>
 </div>

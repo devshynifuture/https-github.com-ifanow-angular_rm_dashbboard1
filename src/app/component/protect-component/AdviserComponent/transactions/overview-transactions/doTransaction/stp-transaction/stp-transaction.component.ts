@@ -6,6 +6,7 @@ import { SubscriptionInject } from '../../../../Subscriptions/subscription-injec
 import { OnlineTransactionService } from '../../../online-transaction.service';
 import { ProcessTransactionService } from '../process-transaction.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-stp-transaction',
@@ -13,7 +14,21 @@ import { EventService } from 'src/app/Data-service/event.service';
   styleUrls: ['./stp-transaction.component.scss']
 })
 export class StpTransactionComponent implements OnInit {
-
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE & PROCEED',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  }
   confirmTrasaction: boolean;
   dataSource: any;
   ownerData: any;
@@ -416,6 +431,7 @@ export class StpTransactionComponent implements OnInit {
         console.log('new purchase obj', this.childTransactions)
         obj.childTransactions = this.childTransactions
       }
+      this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
         data => this.stpBSERes(data), (error) => {
           this.eventService.showErrorMessage(error);
@@ -424,6 +440,7 @@ export class StpTransactionComponent implements OnInit {
     }
   }
   stpBSERes(data) {
+    this.barButtonOptions.active = false;
     console.log('stp res == ', data)
     if (data == undefined) {
 
@@ -489,6 +506,7 @@ export class StpTransactionComponent implements OnInit {
         this.stpTransaction.controls.installment.reset()
         this.stpTransaction.controls.employeeContry.reset()
         this.stpTransaction.controls.investmentAccountSelection.reset()
+        this.stpTransaction.controls.schemeStp.reset()
       }
     }
   }

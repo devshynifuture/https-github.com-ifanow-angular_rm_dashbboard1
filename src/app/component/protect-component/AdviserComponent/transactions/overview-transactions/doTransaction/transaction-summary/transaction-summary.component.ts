@@ -223,7 +223,6 @@ export class TransactionSummaryComponent implements OnInit {
     this.defaultCredential = data.defaultCredential
     this.defaultClient = data.defaultClient
     this.subBrokerCredList = data.subBrokerCredList
-    // this.selectedPlatform = this.defaultCredential.aggregatorType
     this.selectedPlatform = this.defaultCredential.aggregatorType
     if (this.selectedPlatform == 1) {
       this.getBankDetails()

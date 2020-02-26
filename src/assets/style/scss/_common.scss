@@ -49,6 +49,10 @@ h5 {
   margin: 0 !important;
 }
 
+*:focus {
+  outline: none;
+}
+
 .roboto {
   font-family: "Roboto", sans-serif !important;
 }

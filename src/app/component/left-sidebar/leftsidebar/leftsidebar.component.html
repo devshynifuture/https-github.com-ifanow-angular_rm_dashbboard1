@@ -21,7 +21,8 @@
                     <img src="assets/images/svg/time-meter.svg">
                     <span *ngIf="showTabs" class="title" mat-line>Dashboard</span>
                 </a>
-                <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/customer/detail/account/summary">
+                <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
+                    routerLink="/customer/detail/account/summary">
                     <img routerLink="/customer/detail/overview" src="assets/images/svg/people.svg">
                     <span *ngIf="showTabs" class="title" mat-line>People</span>
                 </a>
@@ -32,15 +33,18 @@
                         keyboard_arrow_right
                     </mat-icon>
                 </a>
-                <a class="sidenav-link" [ngClass]="getActiveLink('emails') ? 'bg-grey lter': ''" mat-list-item routerLink="./emails/inbox/google-connect">
+                <a class="sidenav-link" [ngClass]="getActiveLink('emails') ? 'bg-grey lter': ''" mat-list-item
+                    routerLink="./emails/inbox/google-connect">
                     <img src="assets/images/svg/mail.svg">
                     <span *ngIf="showTabs" class="title" mat-line>Email</span>
                 </a>
-                <a class="sidenav-link" [ngClass]="getActiveLink('transactions') ? 'bg-grey lter': ''" mat-list-item routerLink="./transactions/overview">
+                <a class="sidenav-link" [ngClass]="getActiveLink('transactions') ? 'bg-grey lter': ''" mat-list-item
+                    routerLink="./transactions/overview">
                     <img src="assets/images/svg/cart.svg">
                     <span *ngIf="showTabs" class="title" mat-line>Transactions</span>
                 </a>
-                <a class="sidenav-link" [ngClass]="getActiveLink('subscription') ? 'bg-grey lter': ''" mat-list-item routerLink="./subscription/dashboard">
+                <a class="sidenav-link" [ngClass]="getActiveLink('subscription') ? 'bg-grey lter': ''" mat-list-item
+                    routerLink="./subscription/dashboard">
                     <img src="assets/images/svg/ruppes.svg">
                     <span *ngIf="showTabs" class="title" mat-line>Subscription</span>
                 </a>
@@ -59,7 +63,7 @@
                 </a>
                 <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item>
                     <span *ngIf="showTabs" class="title" routerLink="/admin/backoffice-aum-reconciliation" mat-line>AUM
-            reconsilation</span>
+                        reconsilation</span>
                 </a>
                 <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item>
                     <span *ngIf="showTabs" class="title" routerLink="/admin/backoffice-mis" mat-line>MIS</span>
@@ -75,23 +79,27 @@
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content id="left" class="mainNav" [ngClass]="showTabs?'mainNav':'smallNav'">
-        <mat-toolbar class="bg-white bl-1 fix-top pl-0">
-            <button (click)="showMainNavWrapper()" *ngIf="showTabs==false" aria-label="Toggle sidenav" mat-icon-button type="button">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-            <button (click)="showsmallNavWrapper()" *ngIf="showTabs" aria-label="Toggle sidenav" class="btn_nav" mat-icon-button type="button">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
+        <mat-toolbar class="bg-white fix-top pl-0">
+            <button (click)="showMainNavWrapper()" *ngIf="showTabs==false" aria-label="Toggle sidenav" mat-icon-button
+                type="button">
+                <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+            </button>
+            <button (click)="showsmallNavWrapper()" *ngIf="showTabs" aria-label="Toggle sidenav" class="btn_nav"
+                mat-icon-button type="button">
+                <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+            </button>
 
             <mat-form-field class="width40 serachbox">
                 <div class="form-group searchBoxHeader">
-                    <input #inputSearch [formControl]="myControl" [matAutocomplete]="auto" class="form-control pl-40" matInput type="text">
+                    <input #inputSearch [formControl]="myControl" [matAutocomplete]="auto" class="form-control pl-40"
+                        matInput type="text">
                     <i class="material-icons searchIcon"> search </i>
                     <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete">
                         <!-- <mat-option>
     <p>Start typing to search clients,leads otr team members</p>
 </mat-option> -->
-                        <mat-option (click)="selectClient(singleClient)" *ngFor="let singleClient of filteredOptions | async" [value]="singleClient">
+                        <mat-option (click)="selectClient(singleClient)"
+                            *ngFor="let singleClient of filteredOptions | async" [value]="singleClient">
                             <div class="row">
                                 <div class="col-md-1 d-flex align-items-center">
                                     <i class="material-icons"> person </i>
@@ -135,87 +143,92 @@
 
                     <mat-menu #appMenu="matMenu" class="minwidth-400">
                         <button mat-menu-item class="bb-1 event-none">
-              <div class="row">
-                <div class="col-md-10 p-0">
-                  <h3 class="m-0 pt-12">Settings</h3>
-                </div>
-                <div class="col-md-2 pl-0 text-right">
-                  <img src="/assets/images/svg/close.svg" class="c-p w-40">
-                </div>
-              </div>
-            </button>
+                            <div class="row">
+                                <div class="col-md-10 p-0">
+                                    <h3 class="m-0 pt-12">Settings</h3>
+                                </div>
+                                <div class="col-md-2 pl-0 text-right">
+                                    <img src="/assets/images/svg/close.svg" class="c-p w-40">
+                                </div>
+                            </div>
+                        </button>
                         <button mat-menu-item class="mt-28">
-              <div class="row">
-                <div class="col-md-2">
-                  <img src="/assets/images/svg/settings-circle.svg" class="v-super">
-                </div>
-                <div class="col-md-10 pl-0">
-                  <p class="m-0 roboto">Organisation profile</p>
-                  <p class="text-regular pt-4 ws-normal">Add key details about your organisation that reflects
-                    across the
-                    system</p>
-                </div>
-              </div>
-            </button>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="/assets/images/svg/settings-circle.svg" class="v-super">
+                                </div>
+                                <div class="col-md-10 pl-0">
+                                    <p class="m-0 roboto">Organisation profile</p>
+                                    <p class="text-regular pt-4 ws-normal">Add key details about your organisation that
+                                        reflects
+                                        across the
+                                        system</p>
+                                </div>
+                            </div>
+                        </button>
                         <button mat-menu-item>
-              <div class="row">
-                <div class="col-md-2">
-                  <img src="/assets/images/svg/settings-circle.svg" class="v-super">
-                </div>
-                <div class="col-md-10 pl-0">
-                  <p class="m-0 roboto">CRM</p>
-                  <p class="text-regular pt-4 ws-normal">Manage settings related to leads, tasks, email, calendars,
-                    notifications, reminders etc.</p>
-                </div>
-              </div>
-            </button>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="/assets/images/svg/settings-circle.svg" class="v-super">
+                                </div>
+                                <div class="col-md-10 pl-0">
+                                    <p class="m-0 roboto">CRM</p>
+                                    <p class="text-regular pt-4 ws-normal">Manage settings related to leads, tasks,
+                                        email, calendars,
+                                        notifications, reminders etc.</p>
+                                </div>
+                            </div>
+                        </button>
                         <button [routerLink]="['/admin/setting/plan']" mat-menu-item>
-              <div class="row">
-                <div class="col-md-2">
-                  <img src="/assets/images/svg/settings-circle.svg" class="v-super">
-                </div>
-                <div class="col-md-10 pl-0">
-                  <p class="m-0 roboto">Plan</p>
-                  <p class="text-regular pt-4 ws-normal">Manage settings related to key financial planning assumptions,
-                    asset allocation etc.</p>
-                </div>
-              </div>
-            </button>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="/assets/images/svg/settings-circle.svg" class="v-super">
+                                </div>
+                                <div class="col-md-10 pl-0">
+                                    <p class="m-0 roboto">Plan</p>
+                                    <p class="text-regular pt-4 ws-normal">Manage settings related to key financial
+                                        planning assumptions,
+                                        asset allocation etc.</p>
+                                </div>
+                            </div>
+                        </button>
                         <button [routerLink]="['/admin/setting/users&roles']" mat-menu-item>
-              <div class="row">
-                <div class="col-md-2">
-                  <img src="/assets/images/svg/settings-circle.svg" class="v-super">
-                </div>
-                <div class="col-md-10 pl-0">
-                  <p class="m-0 roboto">Users & roles</p>
-                  <p class="text-regular pt-4 ws-normal">Manage adding and updating of your team, sub brokers. Define
-                    roles and assign it to your team and sub brokers.</p>
-                </div>
-              </div>
-            </button>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="/assets/images/svg/settings-circle.svg" class="v-super">
+                                </div>
+                                <div class="col-md-10 pl-0">
+                                    <p class="m-0 roboto">Users & roles</p>
+                                    <p class="text-regular pt-4 ws-normal">Manage adding and updating of your team, sub
+                                        brokers. Define
+                                        roles and assign it to your team and sub brokers.</p>
+                                </div>
+                            </div>
+                        </button>
                         <button [routerLink]="['/admin/setting/backoffice']" mat-menu-item>
-              <div class="row">
-                <div class="col-md-2">
-                  <img src="/assets/images/svg/settings-circle.svg" class="v-super">
-                </div>
-                <div class="col-md-10 pl-0">
-                  <p class="m-0 roboto">Back office</p>
-                  <p class="text-regular pt-4 ws-normal">Add your ARN/RIA details, Manage RTA credentials, SOA settings
-                    etc.</p>
-                </div>
-              </div>
-            </button>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="/assets/images/svg/settings-circle.svg" class="v-super">
+                                </div>
+                                <div class="col-md-10 pl-0">
+                                    <p class="m-0 roboto">Back office</p>
+                                    <p class="text-regular pt-4 ws-normal">Add your ARN/RIA details, Manage RTA
+                                        credentials, SOA settings
+                                        etc.</p>
+                                </div>
+                            </div>
+                        </button>
                         <button mat-menu-item class="mb-28">
-              <div class="row">
-                <div class="col-md-2">
-                  <img src="/assets/images/svg/settings-circle.svg" class="v-super">
-                </div>
-                <div class="col-md-10 pl-0">
-                  <p class="m-0 roboto">Backup</p>
-                  <p class="text-regular pt-4 ws-normal">Securely backup your data in excel.</p>
-                </div>
-              </div>
-            </button>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="/assets/images/svg/settings-circle.svg" class="v-super">
+                                </div>
+                                <div class="col-md-10 pl-0">
+                                    <p class="m-0 roboto">Backup</p>
+                                    <p class="text-regular pt-4 ws-normal">Securely backup your data in excel.</p>
+                                </div>
+                            </div>
+                        </button>
 
 
                         <div class="bottom-fixed wrapper-12 w-29">
@@ -232,15 +245,15 @@
                 </a>
             </div>
             <i (click)="openSettings()" class="material-icons tabs-right desktop-none">
-        more_vert
-      </i>
+                more_vert
+            </i>
         </mat-toolbar>
         <div *ngIf="showSettings" class="desktop-none tabs-mt-70" id="showSettings">
             <div class="bg-success">
                 <div class="search-container tabs-block">
                     <i class="material-icons icon">
-            search
-          </i>
+                        search
+                    </i>
                     <input class="search-field" name="email" placeholder="SEARCH" type="text">
                 </div>
                 <div class="pl-48 flex tabs-right">
