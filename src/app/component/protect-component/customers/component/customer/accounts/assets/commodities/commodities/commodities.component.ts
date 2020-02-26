@@ -37,6 +37,7 @@ export class CommoditiesComponent implements OnInit {
   sumOfPurchaseValue: any;
   sumOfMarketValueOther: any;
   sumOfPurchaseValueOther: any;
+  currentDate= new Date();
   footer = [];
 
   @ViewChild('goldListTable', { static: false }) goldListTableSort: MatSort;

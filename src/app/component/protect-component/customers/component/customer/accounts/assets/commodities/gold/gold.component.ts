@@ -38,6 +38,7 @@ export class GoldComponent implements OnInit {
   clientId: any;
   nomineesListFM: any;
   flag: any;
+  currentYear:any = new Date().getFullYear();
 
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
 
@@ -83,51 +84,42 @@ export class GoldComponent implements OnInit {
       data = {}
     }
     this.gold = this.fb.group({
-      ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
+      ownerName: [!data.ownerName? '' : data.ownerName, [Validators.required]],
       appPurValue: [data.approximatePurchaseValue, [Validators.required]],
       totalsGrams: [(data.gramsOrTola == undefined) ? '' : (data.gramsOrTola) + "", [Validators.required]],
       noTolasGramsPur: [(data == undefined) ? '' : (data.purchasedGramsOrTola), [Validators.required]],
-      tenure: [(data == undefined) ? '' : (data.purchaseYear), [Validators.required]],
+      tenure: [(data == undefined) ? '' : (data.purchaseYear), [Validators.required, Validators.minLength(4), Validators.min(1900), Validators.max(this.currentYear)]],
       carats: [(data.carat == undefined) ? '' : (data.carat) + "", [Validators.required]],
       balanceAsOn: [(data == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
-      marketValue: [(data == undefined) ? '' : data.marketValue, [Validators.required]],
-      description: [(data == undefined) ? '' : data.description, [Validators.required]],
-      bankAcNo: [(data == undefined) ? '' : data.bankAcNo, [Validators.required]],
-      id: [(data == undefined) ? '' : data.id, [Validators.required]],
-      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
+      marketValue: [(data == undefined) ? '' : data.marketValue],
+      description: [(data == undefined) ? '' : data.description],
+      bankAcNo: [(data == undefined) ? '' : data.bankAcNo],
+      id: [(data == undefined) ? '' : data.id],
+      familyMemberId: [(data == undefined) ? '': data.familyMemberId]
     });
     this.ownerData = this.gold.controls;
-    this.familyMemberId = this.gold.controls.familyMemberId.value
-    this.familyMemberId = this.familyMemberId[0]
+      this.familyMemberId = this.gold.value.familyMemberId
+      
   }
   getFormControl(): any {
     return this.gold.controls;
   }
+
+  // validateYear(){
+  //   if(parseInt(this.gold.get('tenure').value) > new Date().getFullYear() && parseInt(this.gold.get('tenure').value) < 1900){
+    
+  //   }
+  //   console.log(parseInt(this.gold.get('tenure').value), new Date().getFullYear(),"new Date().getFullYear");
+  // }
   saveGold() {
-    if (this.gold.get('ownerName').invalid) {
+    if (this.gold.invalid) {
       this.gold.get('ownerName').markAsTouched();
-      return;
-    } else if (this.gold.get('appPurValue').invalid) {
       this.gold.get('appPurValue').markAsTouched();
-      return;
-    } else if (this.gold.get('ownerName').invalid) {
-      this.gold.get('ownerName').markAsTouched();
-      return
-    } else if (this.gold.get('totalsGrams').invalid) {
       this.gold.get('totalsGrams').markAsTouched();
-      return;
-    } else if (this.gold.get('noTolasGramsPur').invalid) {
       this.gold.get('noTolasGramsPur').markAsTouched();
-      return;
-    } else if (this.gold.get('balanceAsOn').invalid) {
       this.gold.get('balanceAsOn').markAsTouched();
-      return;
-    } else if (this.gold.get('tenure').invalid) {
       this.gold.get('tenure').markAsTouched();
-      return;
-    } else if (this.gold.get('carats').invalid) {
       this.gold.get('carats').markAsTouched();
-      return;
     } else {
       let obj = {
         advisorId: this.advisorId,
