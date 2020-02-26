@@ -31,11 +31,11 @@
         </div>
     </div>
     <div class="row pt-24">
-        <div class="col-md-5 text-right">
+        <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Annual employer contribution</h5>
         </div>
         <div class="col-md-3">
-            <div class="form-group mb-0">
+            <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
                     <input matInput #employeeContry type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess" formControlName="employeeContry">
                     <mat-error class="f-12" [ngClass]="{'v-h':!(isEmployeeContry && getFormControl().employeeContry.invalid || getFormControl().employeeContry.touched && getFormControl().employeeContry.invalid)}">
@@ -52,7 +52,7 @@
             <h5 class="m-0 pt-8">Annual employee contribution</h5>
         </div>
         <div class="col-md-3">
-            <div class="form-group mb-0">
+            <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
                     <input matInput #employerContry type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess" formControlName="employerContry">
                     <mat-error class="f-12" [ngClass]="{'v-h':!(isEmployerContry && getFormControl().employerContry.invalid || getFormControl().employerContry.touched && getFormControl().employerContry.invalid)}">
@@ -68,9 +68,9 @@
             <h5 class="m-0 pt-8">Assumed rate of returns</h5>
         </div>
         <div class="col-md-3">
-            <div class="form-group mb-0">
+            <div class="form-group mb-0 iconPetage">
                 <mat-form-field>
-                    <input matInput #assumedRateReturn type="text" (keyup)="onChange($event,'assumedRateReturn')" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="20" class="form-control br-0 rupess" formControlName="assumedRateReturn">
+                    <input matInput #assumedRateReturn type="text" (keyup)="onChange($event,'assumedRateReturn')" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="20" class="form-control br-0 percentage " formControlName="assumedRateReturn">
                     <mat-error class="f-12" [ngClass]="{'v-h':!(isAssumedRateReturn && getFormControl().assumedRateReturn.invalid || getFormControl().assumedRateReturn.touched && getFormControl().assumedRateReturn.invalid)}">
                         This field is required
                     </mat-error>
@@ -83,7 +83,7 @@
             <h5 class="m-0 pt-8">Growth rate of employer contribution</h5>
         </div>
         <div class="col-md-3">
-            <div class="form-group mb-0">
+            <div class="form-group mb-0 iconPetage">
                 <mat-form-field>
                     <input matInput type="text" (keyup)="onChange($event,'growthEmployer')" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage" formControlName="growthEmployer">
                     <mat-error class="f-12" [ngClass]="{'v-h':!(isGrowthEmployer && getFormControl().growthEmployer.invalid || getFormControl().growthEmployer.touched && getFormControl().growthEmployer.invalid)}">
@@ -98,7 +98,7 @@
             <h5 class="m-0 pt-8">Growth rate of employee contribution</h5>
         </div>
         <div class="col-md-3">
-            <div class="form-group mb-0">
+            <div class="form-group mb-0 iconPetage">
                 <mat-form-field>
                     <input matInput type="text" (keyup)="onChange($event,'growthEmployee')" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage" formControlName="growthEmployee">
                     <mat-error class="f-12" [ngClass]="{'v-h':!(isGrowthEmployee && getFormControl().growthEmployee.invalid || getFormControl().growthEmployee.touched && getFormControl().growthEmployee.invalid)}">
@@ -110,7 +110,7 @@
     </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Date first contribution</h5>
+            <h5 class="m-0 pt-8">Date of first contribution</h5>
         </div>
         <div class="col-md-3">
             <mat-form-field>
@@ -138,7 +138,7 @@
     <div *ngIf="showHide == true">
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Link bank account</h5>
+                <h5 class="m-0 pt-8">Linked bank account</h5>
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">

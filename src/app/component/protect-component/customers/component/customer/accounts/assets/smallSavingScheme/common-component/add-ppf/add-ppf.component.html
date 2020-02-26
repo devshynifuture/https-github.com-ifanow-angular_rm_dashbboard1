@@ -20,8 +20,7 @@
             </div>
             <div class="col-md-5">
                 <mat-form-field class="w-100">
-                    <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
-                        [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                    <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                         <mat-option value=''>Select family members</mat-option>
                         <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
                             <span>{{f.userName}}</span>
@@ -39,12 +38,10 @@
                 <p class="m-0 f-12 text-custom">Leave blank if you want to enter</p>
                 <p class="m-0 f-12 text-custom">complete transaction history</p>
             </div>
-            <div class="col-md-3 pr-0">
-                <div class="form-group mb-0">
+            <div class="col-md-3">
+                <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
-                        <input #accBal appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                            autocomplete="off" class="form-control rupess br-0" formControlName="accountBalance"
-                            matInput type="text" maxlength="10">
+                        <input #accBal appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" autocomplete="off" class="form-control rupess br-0" formControlName="accountBalance" matInput type="text" maxlength="10">
                         <mat-error *ngIf="ppfSchemeForm.get('accountBalance').errors?.required" class="f-12">
                             This field is required
                         </mat-error>
@@ -68,8 +65,7 @@
             <div class="col-md-3">
                 <div class="form-group form-group_one mb-0">
                     <mat-form-field>
-                        <input [matDatepicker]="balanceAsOn" (click)="balanceAsOn.open()" class="form-control br-0" formControlName="balanceAsOn"
-                            matInput readonly>
+                        <input [matDatepicker]="balanceAsOn" (click)="balanceAsOn.open()" class="form-control br-0" formControlName="balanceAsOn" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                         <mat-datepicker #balanceAsOn></mat-datepicker>
                         <mat-error class="f-12">This field is required
@@ -85,9 +81,7 @@
             <div class="col-md-3">
                 <div class="form-group form-group_one mb-0">
                     <mat-form-field>
-                        <input autocomplete="off" (click)="CommencementPicker.open()" [matDatepicker]="CommencementPicker"
-                            (dateChange)="setCommencementDate($event.target.value)" class="form-control br-0"
-                            formControlName="commencementDate" matInput readonly>
+                        <input autocomplete="off" (click)="CommencementPicker.open()" [matDatepicker]="CommencementPicker" (dateChange)="setCommencementDate($event.target.value)" class="form-control br-0" formControlName="commencementDate" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="CommencementPicker"></mat-datepicker-toggle>
                         <mat-datepicker #CommencementPicker></mat-datepicker>
                         <mat-error class="f-12">This field is required
@@ -100,12 +94,10 @@
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Future approx contribution</h5>
             </div>
-            <div class="col-md-3 pr-0">
-                <div class="form-group mb-0">
+            <div class="col-md-3 ">
+                <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
-                        <input autocomplete="off"  appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                            #futureContribution class="form-control rupess br-0" formControlName="futureContribution"
-                            matInput maxlength="20" type="text">
+                        <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" #futureContribution class="form-control rupess br-0" formControlName="futureContribution" matInput maxlength="20" type="text">
                         <mat-error class="f-12">
                             This field is required
                         </mat-error>
@@ -118,7 +110,7 @@
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Tenure(in Years)</h5>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <mat-select formControlName="tenure" class="form-control br-0">
@@ -182,8 +174,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input autocomplete="off" #fdNo class="form-control br-0" #description
-                            formControlName="description" matInput maxlength="60" type="text">
+                        <input autocomplete="off" #fdNo class="form-control br-0" #description formControlName="description" matInput maxlength="60" type="text">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                     </mat-form-field>
@@ -197,9 +188,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input autocomplete="off" #bankACNo class="form-control br-0" #bankName
-                            formControlName="bankName" matInput maxlength="40" type="text" appInputValueValidation
-                            [inputValidator]="validatorType.TEXT_ONLY">
+                        <input autocomplete="off" #bankACNo class="form-control br-0" #bankName formControlName="bankName" matInput maxlength="40" type="text" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{bankName.value.length}}/40</mat-hint>
                     </mat-form-field>
@@ -213,9 +202,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                            #linkedBankAccount class="form-control br-0" formControlName="linkedBankAccount" matInput
-                            maxlength="20">
+                        <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" #linkedBankAccount class="form-control br-0" formControlName="linkedBankAccount" matInput maxlength="20">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{linkedBankAccount.value.length}}/20</mat-hint>
                     </mat-form-field>

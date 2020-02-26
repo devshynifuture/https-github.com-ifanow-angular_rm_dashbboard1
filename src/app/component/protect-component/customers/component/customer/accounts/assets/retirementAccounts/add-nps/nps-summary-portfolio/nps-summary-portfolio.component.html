@@ -39,7 +39,7 @@
                 <p class="m-0 text-custom f-12">This has to be updated<br> manually at all times</p>
             </div>
             <div class="col-md-3">
-                <div class="form-group mb-0">
+                <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
                         <input matInput #currentValue type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess" formControlName="currentValue">
                         <mat-error class="f-12" [ngClass]="{'v-h':!(isCurrentValue && getFormControl().currentValue.invalid || getFormControl().currentValue.touched && getFormControl().currentValue.invalid)}">
@@ -71,7 +71,7 @@
                 <h5 class="m-0 pt-8">Total contribution</h5>
             </div>
             <div class="col-md-3">
-                <div class="form-group mb-0">
+                <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
                         <input matInput #totalContry type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess" formControlName="totalContry">
                         <mat-error class="f-12" [ngClass]="{'v-h':!(isTotalContry && getFormControl().totalContry.invalid || getFormControl().totalContry.touched && getFormControl().totalContry.invalid)}">
@@ -90,18 +90,18 @@
             <div class="col-md-9 p-0">
                 <div class="row">
                     <div class="col-md-3 p-0">
-                        <label class="mb-5"> Account preference </label>
+                        <label class="f-14"> Account preference </label>
                     </div>
                     <div class="col-md-4">
-                        <label class="mb-5"> Frequency </label>
+                        <label class="f-14"> Frequency </label>
                     </div>
                     <div class="col-md-3 p-0">
-                        <label class="mb-5"> Approx contribution </label>
+                        <label class="f-14"> Approx contribution </label>
                     </div>
                 </div>
 
                 <div formArrayName="futureContributionList">
-                    <div class="row pb-16" *ngFor="let creds of futureContry.controls; let i = index" [formGroupName]="i">
+                    <div class="row pb-24" *ngFor="let creds of futureContry.controls; let i = index" [formGroupName]="i">
                         <div class="col-md-3 p-0">
                             <div class="form-group mb-0">
                                 <mat-form-field>
@@ -135,7 +135,7 @@
                             </div>
                         </div>
                         <div class="col-md-3 p-0">
-                            <div class="form-group mb-0">
+                            <div class="form-group mb-0 iconRupess">
                                 <mat-form-field>
                                     <input matInput #currentValue type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess" formControlName="approxContribution">
                                     <mat-hint align="end" class="f-12">{{currentValue.value.length}}/10</mat-hint>
@@ -147,10 +147,10 @@
                         </div>
                         <div class="col-md-2 d-flex align-items-center justify-content-around">
 
-                            <i class="material-icons text-custom c-p" (click)="addFutureContry()">
+                            <i class="material-icons text-custom f-20 c-p" (click)="addFutureContry()">
                                 add
                             </i>
-                            <i class="material-icons text-custom c-p right text-right" (click)="removeFutureContry(i)">
+                            <i class="material-icons text-custom c-p f-20 right text-right" (click)="removeFutureContry(i)">
                                 remove
                             </i>
 
@@ -208,10 +208,10 @@
                     <div class="col-md-5 text-right pr-0">
                         <h5 class="m-0 pt-8">Nominee{{i+1}}</h5>
                     </div>
-                    <div class="col-md-7 pr-0">
+                    <div class="col-md-5 pr-0">
                         <div class="form-group mb-0">
                             <div class="row">
-                                <div class="col-md-4 p-0">
+                                <div class="col-md-8 pl-0">
                                     <mat-form-field>
                                         <input matInput aria-label="State" (click)="nomineesList()" [matAutocomplete]="auto" list="userName" class="form-control br-0 pl-8" formControlName="name">
                                         <mat-autocomplete #auto="matAutocomplete">
@@ -221,17 +221,12 @@
                                         </mat-autocomplete>
                                     </mat-form-field>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4 pl-0 iconPetage">
                                     <mat-form-field>
                                         <input matInput #nomineePercentageShare type="number" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage" formControlName="sharePercentage">
                                     </mat-form-field>
                                 </div>
-                                <div class="col-md-5" *ngIf="i==0">
-                                    <p class="m-0 c-p text-custom pt-12" (click)="addNominee()">+ Add nominee</p>
-                                </div>
-                                <div class="col-md-3" *ngIf="i > 0">
-                                    <p class="m-0 c-p text-custom pt-12" (click)="removeNominee(i)">Remove</p>
-                                </div>
+
                             </div>
                         </div>
                         <div class="row">
@@ -239,6 +234,17 @@
                                 <p class="f-12 text-custom pt-4 mb-0">Optional</p>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="col-md-1 pl-0 pt-10" *ngIf="i==0">
+                        <i class="material-icons text-custom c-p f-20" (click)="addNominee()">
+                            add
+                        </i>
+                    </div>
+                    <div class="col-md-1 pl-0 pt-10" *ngIf="i > 0">
+                        <i class="material-icons text-custom c-p f-20 " (click)="removeNominee(i)">
+                            remove
+                        </i>
                     </div>
 
                 </div>
