@@ -78,8 +78,12 @@
                                 <mat-hint align="start" class="f-12 text-custom  ">
                                     Last closing NAV: {{navOfSelectedScheme}}
                                 </mat-hint>
-                                <mat-error class="f-12 pt-4">
+                                <mat-error class="f-12 pt-4"  *ngIf="redemptionTransaction.get('schemeRedeem').errors?.required">
                                     This field is required
+                                </mat-error>
+                                <mat-error class="f-12"
+                                    *ngIf="redemptionTransaction.get('schemeRedeem').errors?.setValue">
+                                    Selected scheme does not exist
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -229,9 +233,11 @@
             <button mat-button  mat-raised-button class="br-0 text-success f-14" (click)="AddMultiTransaction()">
                 SAVE & ADD ANOTHER
             </button>
-            <button mat-button class="btn-green text-white ml-12" (click)="redeem()">
+            <!-- <button mat-button class="btn-green text-white ml-12" (click)="redeem()">
                 SAVE & PROCEED
-            </button>
+            </button> -->
+            <app-progress-button class="btn-green text-white ml-12"  (click)="redeem()" [options]="barButtonOptions" >
+            </app-progress-button>
         </div>
     </div>
 </div>

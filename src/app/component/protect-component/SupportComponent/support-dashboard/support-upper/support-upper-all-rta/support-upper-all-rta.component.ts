@@ -1,3 +1,4 @@
+import { EventService } from './../../../../../../Data-service/event.service';
 import { Component, OnInit } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { MatTableDataSource } from '@angular/material';
@@ -12,7 +13,8 @@ export class SupportUpperAllRtaComponent implements OnInit {
   dataSource;
 
   constructor(
-    private subInjectService: SubscriptionInject
+    private subInjectService: SubscriptionInject,
+    private eventService: EventService
   ) { }
 
 
@@ -22,8 +24,8 @@ export class SupportUpperAllRtaComponent implements OnInit {
   }
 
   dialogClose() {
-    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
     console.log('close');
+    this.eventService.changeUpperSliderState({ state: 'close' });
   }
 
 }

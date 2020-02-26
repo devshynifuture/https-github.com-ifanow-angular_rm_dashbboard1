@@ -14,6 +14,21 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
   styleUrls: ['./switch-transaction.component.scss']
 })
 export class SwitchTransactionComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE & PROCEED',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  }
   confirmTrasaction: boolean;
   switchTransaction: any;
   dataSource: any;
@@ -79,6 +94,9 @@ export class SwitchTransactionComponent implements OnInit {
   }
   getSchemeList(value) {
     this.showSpinner = true
+    if(this.switchTransaction.get('schemeSwitch').invalid){
+      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;//if scheme not present then min amt is 0
+    }
     if (this.selectScheme == 2 && value.length > 2) {
       let obj = {
         searchQuery: value,
@@ -103,6 +121,11 @@ export class SwitchTransactionComponent implements OnInit {
   }
   getExistingSchemesRes(data) {
     this.showSpinner = false
+    if(data.length==0){
+      this.switchTransaction.get('schemeSwitch').setErrors({'setValue':'Selected scheme does not exist'});
+      this.switchTransaction.get('schemeSwitch').markAsTouched();
+      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;//if scheme not present then min amt is 0
+    }
     this.schemeList = data
   }
   onFolioChange(folio) {
@@ -236,6 +259,10 @@ export class SwitchTransactionComponent implements OnInit {
   }
   getNewSchemesRes(data) {
     this.showSpinnerTran = false
+    if(data.length==0){
+      this.switchTransaction.get('transferIn').setErrors({'setValue':'Selected scheme does not exist'});
+      this.switchTransaction.get('transferIn').markAsTouched();
+    }
     console.log('new schemes', data)
     this.schemeListTransfer = data
   }
@@ -326,6 +353,7 @@ export class SwitchTransactionComponent implements OnInit {
         console.log('new purchase obj', this.childTransactions)
         obj.childTransactions = this.childTransactions
       }
+      this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
         data => this.switchBSERes(data), (error) => {
           this.eventService.showErrorMessage(error);
@@ -334,6 +362,7 @@ export class SwitchTransactionComponent implements OnInit {
     }
   }
   switchBSERes(data) {
+    this.barButtonOptions.active = false;
     console.log('switch res == ', data)
     if (data == undefined) {
 
@@ -387,6 +416,7 @@ export class SwitchTransactionComponent implements OnInit {
         this.switchTransaction.controls.switchType.reset()
         this.switchTransaction.controls.employeeContry.reset()
         this.switchTransaction.controls.investmentAccountSelection.reset()
+        this.switchTransaction.controls.schemeSwitch.reset()
       }
     }
   }

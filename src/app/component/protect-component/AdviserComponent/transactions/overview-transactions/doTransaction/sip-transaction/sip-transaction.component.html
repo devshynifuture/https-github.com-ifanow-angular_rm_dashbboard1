@@ -93,8 +93,12 @@
                                 <mat-hint align="start" class="f-12 text-custom">
                                     Last closing NAV: {{navOfSelectedScheme}}
                                 </mat-hint>
-                                <mat-error class="f-12 pt-4">
+                                <mat-error class="f-12 pt-4" *ngIf="sipTransaction.get('schemeSip').errors?.required">
                                     This field is required
+                                </mat-error>
+                                <mat-error class="f-12"
+                                    *ngIf="sipTransaction.get('schemeSip').errors?.setValue">
+                                    Selected scheme does not exist
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -198,7 +202,7 @@
                                     (change)="enteredAmount($event.target.value)">
                                 <mat-hint align="start" class="f-12 text-custom">
                                     Min amount:
-                                    ₹{{(schemeDetails == undefined)?'-':schemeDetails.minimumPurchaseAmount }}
+                                    ₹{{(schemeDetails == undefined)?'0':schemeDetails.minimumPurchaseAmount }}
                                 </mat-hint>
                                 <mat-error *ngIf="(sipTransaction.get('employeeContry').errors?.min)" class="f-12">
                                     Should be greater than or equal to {{schemeDetails.minimumPurchaseAmount}}
@@ -308,9 +312,11 @@
             <button  mat-raised-button class="br-0 text-success f-14" (click)="AddMultiTransaction()">
                 SAVE & ADD ANOTHER
             </button>
-            <button mat-button  class="btn-green text-white ml-12" (click)="sip()">
+            <!-- <button mat-button  class="btn-green text-white ml-12" (click)="sip()">
                 SAVE & PROCEED
-            </button>
+            </button> -->
+            <app-progress-button class="btn-green text-white ml-12" (click)="sip()" [options]="barButtonOptions" >
+            </app-progress-button>
         </div>
     </div>
 </div>

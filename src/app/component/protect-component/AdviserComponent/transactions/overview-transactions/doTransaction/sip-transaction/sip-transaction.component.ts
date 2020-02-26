@@ -7,6 +7,7 @@ import { OnlineTransactionService } from '../../../online-transaction.service';
 import { ProcessTransactionService } from '../process-transaction.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-sip-transaction',
@@ -14,7 +15,21 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
   styleUrls: ['./sip-transaction.component.scss']
 })
 export class SipTransactionComponent implements OnInit {
-
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE & PROCEED',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  }
   confirmTrasaction: boolean;
   dataSource: any;
   ownerData: any;
@@ -94,6 +109,9 @@ export class SipTransactionComponent implements OnInit {
   }
   getSchemeList(value) {
     this.showSpinner = true
+    if(this.sipTransaction.get('schemeSip').invalid){
+      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;//if scheme not present then min amt is 0
+    }
     let obj = {
       searchQuery: value,
       bseOrderType: 'ORDER',
@@ -123,12 +141,22 @@ export class SipTransactionComponent implements OnInit {
   getNewSchemesRes(data) {
     this.getNSEAchmandate()
     this.showSpinner = false
+    if(data.length==0){
+      this.sipTransaction.get('schemeSip').setErrors({'setValue':'Selected scheme does not exist'});
+      this.sipTransaction.get('schemeSip').markAsTouched();
+      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;
+    }
     console.log('new schemes', data)
     this.schemeList = data
   }
   getExistingSchemesRes(data) {
     this.getNSEAchmandate()
     this.showSpinner = false
+    if(data.length==0){
+      this.sipTransaction.get('schemeSip').setErrors({'setValue':'Selected scheme does not exist'});
+      this.sipTransaction.get('schemeSip').markAsTouched();
+      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;
+    }
     this.schemeList = data
   }
   getDefaultDetails(data) {
@@ -395,7 +423,7 @@ export class SipTransactionComponent implements OnInit {
       if (this.multiTransact == true) {
         obj.childTransactions = this.childTransactions
       }
-
+      this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
         data => this.sipBSERes(data), (error) => {
           this.eventService.showErrorMessage(error);
@@ -404,6 +432,7 @@ export class SipTransactionComponent implements OnInit {
     }
   }
   sipBSERes(data) {
+    this.barButtonOptions.active = false;
     console.log('sip', data)
     if (data == undefined) {
 
@@ -467,6 +496,7 @@ export class SipTransactionComponent implements OnInit {
         this.sipTransaction.controls.frequency.reset()
         this.sipTransaction.controls.employeeContry.reset()
         this.sipTransaction.controls.investmentAccountSelection.reset()
+        this.sipTransaction.controls.schemeSip.reset()
       }
      
     }

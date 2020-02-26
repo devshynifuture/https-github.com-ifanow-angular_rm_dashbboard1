@@ -63,8 +63,9 @@
                     <div class="col-md-11 p-0">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard">
-                                <input type="text" aria-label="Number" formControlName="schemeSwitch" class="form-control" matInput
-                                    [matAutocomplete]="auto" (keyup)="getSchemeList($event.target.value)"
+                                <input type="text" aria-label="Number" formControlName="schemeSwitch"
+                                    class="form-control" matInput [matAutocomplete]="auto"
+                                    (keyup)="getSchemeList($event.target.value)"
                                     placeholder="Start typing to see scheme names">
                                 <mat-autocomplete #auto="matAutocomplete">
                                     <mat-option (onSelectionChange)="selectedScheme(scheme)"
@@ -75,9 +76,12 @@
                                 <mat-hint align="start" class="f-12 text-custom">Last closing NAV:
                                     {{navOfSelectedScheme}}
                                 </mat-hint>
-                                <mat-error class="f-12 pt-4">
+                                <mat-error class="f-12 pt-4" *ngIf="switchTransaction.get('schemeSwitch').errors?.required">
                                     This field is required
                                 </mat-error>
+                                <mat-error class="f-12" *ngIf="switchTransaction.get('schemeSwitch').errors?.setValue">
+                                        Selected scheme does not exist
+                                    </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -174,8 +178,12 @@
                                 <mat-hint align="start" class="f-12 text-custom">Last closing NAV:
                                     {{navOfSelectedScheme}}
                                 </mat-hint>
-                                <mat-error class="f-12 pt-4">
+                                <mat-error class="f-12 pt-4" *ngIf="switchTransaction.get('transferIn').errors?.required">
                                     This field is required
+                                </mat-error>
+                                <mat-error class="f-12"
+                                    *ngIf="switchTransaction.get('transferIn').errors?.setValue">
+                                    Selected scheme does not exist
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -219,19 +227,20 @@
                                     (change)="enteredAmount($event.target.value)">
                                 <mat-hint align="start" class="f-12 text-custom">
                                     Min amount:
-                                    ₹{{(schemeDetails == undefined)?'-':schemeDetails.minimumPurchaseAmount }}
+                                    ₹{{(schemeDetails == undefined)?'0':schemeDetails.minimumPurchaseAmount }}
                                 </mat-hint>
                                 <mat-hint align="start" class="f-12 text-custom"
                                     *ngIf="(switchTransaction.get('switchType').value == 2)">
                                     Min units:
-                                    ₹{{(schemeDetails == undefined)?'-':schemeDetails.minimumRedemptionQty }}
+                                    ₹{{(schemeDetails == undefined)?'0':schemeDetails.minimumRedemptionQty }}
                                 </mat-hint>
                                 <mat-error *ngIf="(switchTransaction.get('employeeContry').errors?.min)" class="f-12">
                                     Should be greater than or equal to {{schemeDetails.minimumPurchaseAmount}}
                                 </mat-error>
-                                <mat-error *ngIf="(switchTransaction.get('employeeContry').errors?.required)" class="f-12">
+                                <mat-error *ngIf="(switchTransaction.get('employeeContry').errors?.required)"
+                                    class="f-12">
                                     This field is requied
-                                 </mat-error>
+                                </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -259,11 +268,11 @@
             <button mat-button mat-raised-button class="br-0 text-success f-14" (click)="AddMultiTransaction()">
                 SAVE & ADD ANOTHER
             </button>
-            <button mat-button class="btn-green text-white ml-12" (click)="switch()">
+            <!-- <button mat-button class="btn-green text-white ml-12" (click)="switch()">
                 SAVE & PROCEED
-            </button>
-            <!-- <app-progress-button (btnClick)="switch()" [options]="barButtonOptions" >
-            </app-progress-button> -->
+            </button> -->
+            <app-progress-button class="btn-green text-white ml-12" (btnClick)="switch()" [options]="barButtonOptions">
+            </app-progress-button>
         </div>
     </div>
 </div>

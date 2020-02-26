@@ -63,8 +63,8 @@
                     <div class="col-md-11 p-0">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard">
-                                <input type="text" aria-label="Number" formControlName="schemeSwp" class="form-control" matInput
-                                    [matAutocomplete]="auto" (keyup)="getSchemeList($event.target.value)"
+                                <input type="text" aria-label="Number" formControlName="schemeSwp" class="form-control"
+                                    matInput [matAutocomplete]="auto" (keyup)="getSchemeList($event.target.value)"
                                     placeholder="Start typing to see scheme names">
                                 <mat-autocomplete #auto="matAutocomplete">
                                     <mat-option (onSelectionChange)="selectedScheme(scheme)"
@@ -72,8 +72,11 @@
                                         {{scheme.schemeName}}
                                     </mat-option>
                                 </mat-autocomplete>
-                                <mat-error class="f-12">
+                                <mat-error class="f-12" *ngIf="swpTransaction.get('schemeSwp').errors?.required">
                                     This field is required
+                                </mat-error>
+                                <mat-error class="f-12" *ngIf="swpTransaction.get('schemeSwp').errors?.setValue">
+                                    Selected scheme does not exist
                                 </mat-error>
                                 <mat-hint align="start" class="f-12 text-custom">Last closing NAV:
                                     {{navOfSelectedScheme}}
@@ -176,14 +179,14 @@
                                     (change)="enteredAmount($event.target.value)">
                                 <mat-hint align="start" class="f-12 text-custom">
                                     Min amount:
-                                    ₹{{(schemeDetails == undefined)?'-':schemeDetails.minimumPurchaseAmount }}
+                                    ₹{{(schemeDetails == undefined)?'0':schemeDetails.minimumPurchaseAmount }}
                                 </mat-hint>
                                 <mat-error *ngIf="(swpTransaction.get('employeeContry').errors?.min)" class="f-12">
                                     Should be greater than or equal to {{schemeDetails.minimumPurchaseAmount}}
                                 </mat-error>
                                 <mat-error *ngIf="(swpTransaction.get('employeeContry').errors?.required)" class="f-12">
                                     This field is requied
-                                 </mat-error>
+                                </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -260,12 +263,14 @@
         </div> -->
         <div class="col-md-8 text-right">
             <!-- commented for prod build -->
-            <button mat-raised-button class="br-0 text-success f-14" (click)="AddMultiTransaction()" >
+            <button mat-raised-button class="br-0 text-success f-14" (click)="AddMultiTransaction()">
                 SAVE & ADD ANOTHER
             </button>
-            <button mat-button  class="btn-green text-white ml-12" (click)="swp()">
+            <!-- <button mat-button  class="btn-green text-white ml-12" (click)="swp()">
                 SAVE & PROCEED
-            </button>
+            </button> -->
+            <app-progress-button class="btn-green text-white ml-12" (click)="swp()" [options]="barButtonOptions">
+            </app-progress-button>
         </div>
     </div>
 </div>

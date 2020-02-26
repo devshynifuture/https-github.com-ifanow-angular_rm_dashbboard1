@@ -61,7 +61,24 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <mat-select formControlName="category" class="form-control br-0">
-                        <mat-option value="0">Select option</mat-option>
+                        <mat-option value="">
+                            Select option
+                        </mat-option>
+                        <mat-option value="1">
+                            Traditional
+                        </mat-option>
+                        <mat-option value="2">
+                            ULIP
+                        </mat-option>
+                        <mat-option value="3">
+                            Pension
+                        </mat-option>
+                        <mat-option value="4">
+                            Term
+                        </mat-option>
+                        <mat-option value="5">
+                            Term - Return of Premium
+                        </mat-option>
                     </mat-select>
                     <mat-error
                         *ngIf="addLifeInsuranceMasterForm.get('category').invalid && addLifeInsuranceMasterForm.get('category').touched">

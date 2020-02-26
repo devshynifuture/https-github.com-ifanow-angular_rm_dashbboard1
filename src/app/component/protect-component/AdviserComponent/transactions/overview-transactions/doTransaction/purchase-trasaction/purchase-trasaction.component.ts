@@ -5,6 +5,7 @@ import { OnlineTransactionService } from '../../../online-transaction.service';
 import { ProcessTransactionService } from '../process-transaction.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-purchase-trasaction',
@@ -12,6 +13,21 @@ import { CustomerService } from 'src/app/component/protect-component/customers/c
   styleUrls: ['./purchase-trasaction.component.scss']
 })
 export class PurchaseTrasactionComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE & PROCEED',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  }
   purchaseTransaction: any;
   dataSource: any;
   ownerData: any;
@@ -82,6 +98,10 @@ export class PurchaseTrasactionComponent implements OnInit {
   getSchemeList(value) {
     this.showSpinner = true
     this.platformType = this.getDataSummary.defaultClient.aggregatorType
+    console.log("valuelength-------------->",value.length)
+    if(this.purchaseTransaction.get('schemePurchase').invalid){
+      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;//if scheme not present then min amt is 0
+    }
     let obj = {
       searchQuery: value,
       bseOrderType: 'ORDER',
@@ -110,11 +130,21 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
   getNewSchemesRes(data) {
     this.showSpinner = false
+    if(data.length==0){
+      this.purchaseTransaction.get('schemePurchase').setErrors({'setValue':'Selected scheme does not exist'});
+      this.purchaseTransaction.get('schemePurchase').markAsTouched();
+      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;
+    }
     console.log('new schemes', data)
     this.schemeList = data
   }
   getExistingSchemesRes(data) {
     this.showSpinner = false
+    if(data.length==0){
+      this.purchaseTransaction.get('schemePurchase').setErrors({'setValue':'Selected scheme does not exist'});
+      this.purchaseTransaction.get('schemePurchase').markAsTouched();
+      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;//if scheme not exist then min amt is 0
+    }
     this.schemeList = data
   }
   reinvest(scheme) {
@@ -335,9 +365,11 @@ export class PurchaseTrasactionComponent implements OnInit {
       }
       if (this.multiTransact == true) {
         console.log('new purchase obj', this.childTransactions)
+        this.AddMultiTransaction();
         obj.childTransactions = this.childTransactions
       }
       console.log('new purchase obj', obj)
+      this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
         data => this.purchaseRes(data), (error) => {
           this.eventService.showErrorMessage(error);
@@ -346,6 +378,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     }
   }
   purchaseRes(data) {
+    this.barButtonOptions.active = false;
     console.log('purchase transaction ==', data)
     if (data == undefined) {
 
@@ -388,6 +421,7 @@ export class PurchaseTrasactionComponent implements OnInit {
         this.purchaseTransaction.controls.reinvest.reset()
         this.purchaseTransaction.controls.employeeContry.reset()
         this.purchaseTransaction.controls.investmentAccountSelection.reset()
+        this.purchaseTransaction.controls.schemePurchase.reset()
       }
     }
   }
