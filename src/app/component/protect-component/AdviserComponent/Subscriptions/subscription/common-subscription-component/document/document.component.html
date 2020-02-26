@@ -12,9 +12,9 @@
             </div>
         </div>
     </div>
-    <div class="bg-grey lter heading-fix">
+    <div class="bg-grey lter heading-fix b-a">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 p-0">
                 <h2 class="m-0">{{upperData.name}}</h2>
             </div>
         </div>
@@ -42,9 +42,9 @@
                 </div>
             </div>
             <div class="wrapper-40">
-                <div class="row   padder-80">
+                <div class="row padder-80">
 
-                    <div class="col-md-4 pr-20 pb-20 pl-0 skeletonAnimation"
+                    <div class="col-xl-4 col-md-6 pr-20 pb-20 pl-0 skeletonAnimation"
                         *ngFor="let documentData of planDocumentData" appSkeletonLoading
                         [appSkeletonLoading]="isLoading">
                         <div (click)="selectDocument(documentData)">

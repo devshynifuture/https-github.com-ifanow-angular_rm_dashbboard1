@@ -132,7 +132,8 @@ img.header-img {
 }
 
 #d {
-  transition: width 0.2s,
+  transition: width 0.2s;
+
 }
 
 ::ng-deep .mat-menu-content:not(:empty) {
@@ -299,8 +300,8 @@ img.header-img {
 }
 
 .scorllable {
-  // max-height: calc(100vh - 9rem);
   height: 100vh;
+  // height: 100%;
   overflow-y: scroll;
   // padding-bottom: 80px;
 }

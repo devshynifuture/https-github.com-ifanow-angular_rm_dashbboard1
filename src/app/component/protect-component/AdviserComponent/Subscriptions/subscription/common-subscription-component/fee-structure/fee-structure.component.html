@@ -1,4 +1,4 @@
-    <div *ngIf="_upperData==''" class="wrapper-20 pt-150">
+<div *ngIf="_upperData==''" class="wrapper-20 pt-150">
     <div class="content-center">
         <div class="row">
             <div class="col-md-12">
@@ -7,10 +7,13 @@
         </div>
         <div class="row pt-40">
             <div class="col-md-6 hover c-p" (click)="selectedFees('fixed')">
-                <mat-card [ngClass]="{'ba-blue': selectedFee=='fixed','b-ua':selectedFee!='fixed'}" class="p-0" (click)="openPlanSliderFee('','fixedFee')">
+                <mat-card [ngClass]="{'ba-blue': selectedFee=='fixed','b-ua':selectedFee!='fixed'}" class="p-0"
+                    (click)="openPlanSliderFee('','fixedFee')">
                     <div class="row bg-grey lter">
                         <div class="col-md-12 p-0">
-                            <mat-checkbox class="right text-right" [ngStyle]="{'pointer-events': (selectedFee=='fixed')?'none':'all'}" *ngIf="selectedFee=='fixed'" checked="false"></mat-checkbox>
+                            <mat-checkbox class="right text-right"
+                                [ngStyle]="{'pointer-events': (selectedFee=='fixed')?'none':'all'}"
+                                *ngIf="selectedFee=='fixed'" checked="false"></mat-checkbox>
                             <h4 class="f-20 playfair">Fixed fee</h4>
                         </div>
                     </div>
@@ -23,15 +26,19 @@
 
             </div>
             <div class="col-md-6 hover c-p" (click)="selectedFees('variable')">
-                <mat-card class="p-0" [ngClass]="{'ba-blue': selectedFee=='variable','b-ua':selectedFee!='variable'}" (click)="openPlanSliderFee('','varibleFee')">
+                <mat-card class="p-0" [ngClass]="{'ba-blue': selectedFee=='variable','b-ua':selectedFee!='variable'}"
+                    (click)="openPlanSliderFee('','varibleFee')">
                     <div class="row bg-grey lter">
                         <div class="col-md-12 p-0">
-                            <mat-checkbox class="right text-right" [ngStyle]="{'pointer-events': (selectedFee=='variable')?'none':'all'}" *ngIf="selectedFee=='variable'" checked="false"></mat-checkbox>
+                            <mat-checkbox class="right text-right"
+                                [ngStyle]="{'pointer-events': (selectedFee=='variable')?'none':'all'}"
+                                *ngIf="selectedFee=='variable'" checked="false"></mat-checkbox>
                             <h4 class="f-20 playfair">Variable fee</h4>
                         </div>
                     </div>
                     <div class="col-md-12 p-0">
-                        <h5 class="p-20 f-14 proxima height100">Choose this fee type if you want to charge a variable fee. E.g. for AUM linked fee.
+                        <h5 class="p-20 f-14 proxima height100">Choose this fee type if you want to charge a variable
+                            fee. E.g. for AUM linked fee.
                         </h5>
                     </div>
                 </mat-card>
@@ -42,7 +49,7 @@
 
     </div>
 </div>
-<div *ngIf="_upperData" class="wrapper-44 pt-180">
+<div *ngIf="_upperData" class="wrapper-44 pt-180 pb-100">
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
@@ -50,18 +57,23 @@
                 <mat-card class="p-0 b-a">
                     <div class="row bg-grey lter">
                         <div class="col-md-10 p-0">
-                            <h3 class="m-0 pt-18 pt-24 f-24 pb-0 pl-24" *ngIf="_upperData" matTooltip="Service name">{{_upperData.serviceName}}
+                            <h3 class="m-0 pt-18 pt-24 f-24 pb-0 pl-24" *ngIf="_upperData" matTooltip="Service name">
+                                {{_upperData.serviceName}}
                             </h3>
-                            <h5 class="m-0 pt-4 pb-44 pl-24 text-custom proxima" *ngIf="_upperData" matTooltip="Service code">
+                            <h5 class="m-0 pt-4 pb-44 pl-24 text-custom proxima" *ngIf="_upperData"
+                                matTooltip="Service code">
                                 {{_upperData.serviceCode}}</h5>
                         </div>
                         <div *ngIf="_upperData" class="col-md-2">
-                            <i class="material-icons text-right right text-custom f-28 pt-12 c-p" [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
+                            <i class="material-icons text-right right text-custom f-28 pt-12 c-p"
+                                [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
                                 more_vert
                             </i>
                             <mat-menu #menu="matMenu">
-                                <a mat-menu-item *ngIf="_upperData.servicePricing.feeTypeId==1" (click)="openPlanSliderFee(_upperData,'fixedFee')">Edit Service</a>
-                                <a mat-menu-item *ngIf="_upperData.servicePricing.feeTypeId==2" (click)="openPlanSliderFee(_upperData,'varibleFee')">Edit Service</a>
+                                <a mat-menu-item *ngIf="_upperData.servicePricing.feeTypeId==1"
+                                    (click)="openPlanSliderFee(_upperData,'fixedFee')">Edit Service</a>
+                                <a mat-menu-item *ngIf="_upperData.servicePricing.feeTypeId==2"
+                                    (click)="openPlanSliderFee(_upperData,'varibleFee')">Edit Service</a>
                                 <a mat-menu-item (click)="deleteService(_upperData,'SERVICE')">Delete Service</a>
                             </mat-menu>
                         </div>
@@ -83,14 +95,16 @@
                             </div>
                             <div *ngIf="_upperData" class="col-md-3 text-left">
                                 <p class="text-custom m-0 f-12">BILLING MODE</p>
-                                <h4 class="m-0 p-0 lh-16" *ngIf="_upperData.servicePricing.billingMode==1">Start of period
+                                <h4 class="m-0 p-0 lh-16" *ngIf="_upperData.servicePricing.billingMode==1">Start of
+                                    period
                                 </h4>
                                 <h4 class="m-0 p-0 lh-16" *ngIf="_upperData.servicePricing.billingMode==2">End of period
                                 </h4>
                             </div>
                             <div *ngIf="_upperData" class="col-md-3 text-left">
                                 <p class="text-custom m-0 f-12" *ngIf="_upperData.servicePricing.feeTypeId==1">FEES</p>
-                                <p class="text-custom m-0 f-12" *ngIf="_upperData.servicePricing.feeTypeId==2">OTHER ASSET FEES</p>
+                                <p class="text-custom m-0 f-12" *ngIf="_upperData.servicePricing.feeTypeId==2">OTHER
+                                    ASSET FEES</p>
                                 <h4 class="m-0 p-0 lh-16" *ngIf="_upperData.servicePricing.feeTypeId==2">
                                     {{_upperData.servicePricing.pricingList[2].pricing}}%</h4>
                                 <h4 class="m-0 p-0 lh-16" *ngIf="_upperData.servicePricing.feeTypeId==1">
@@ -99,12 +113,12 @@
                         </div>
                         <div class="wrapper-24 pl-16 bt-1">
                             <div class="row">
-                                <div class="col-md-6 p-0">
+                                <div class="col-xl-6 col-md-12 p-0">
                                     <p class="f-12 m-0 text-custom">DESCRIPTION</p>
                                     <h5 class="mb-0 text-black pt-12" *ngIf="_upperData.description">
                                         {{_upperData.description}}</h5>
                                 </div>
-                                <div *ngIf="_upperData.servicePricing.feeTypeId==2" class="col-md-6">
+                                <div *ngIf="_upperData.servicePricing.feeTypeId==2" class="col-xl-6 col-md-12 tab-p-0">
                                     <p class="text-custom f-12 m-0">VARIABLE FEE DETAILS</p>
                                     <h5 class="m-0 pt-8">Mutual Funds</h5>
                                     <div class="row bg-grey lter">
