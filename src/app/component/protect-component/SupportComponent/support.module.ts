@@ -13,6 +13,7 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
 import { DynamicComponentService } from 'src/app/services/dynamic-component.service';
 import { SupportEntryModule } from './support.entry.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { SupportDeleteReorderComponent } from './common-component/upper-slider-backoffice/support-delete-reorder/support-delete-reorder.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     MyIfasComponent,
     IfaOnboardingComponent,
     SupportMiscellaneousComponent,
-    SchemeMappingComponent
+    SchemeMappingComponent,
+    SupportDeleteReorderComponent
   ],
   imports: [
     CommonModule,

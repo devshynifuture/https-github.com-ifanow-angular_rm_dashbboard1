@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 
 import {
   MatAutocompleteModule,
@@ -34,8 +34,9 @@ import {
   MatToolbarModule,
   MatTooltipModule,
   MatBottomSheetModule,
-  MatTreeModule
+  MatTreeModule,
 } from '@angular/material';
+import { CdkTableModule } from '@angular/cdk/table';
 // import { DialogModule } from '@angular/cdk-experimental/dialog';
 // import {MatDialogModule} from '../component/overridden/dialog';
 
@@ -75,7 +76,8 @@ import {
     MatToolbarModule,
     MatTooltipModule,
     MatBottomSheetModule,
-    MatTreeModule
+    MatTreeModule,
+    CdkTableModule
   ],
   exports: [
     // DialogModule,

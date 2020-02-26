@@ -665,3 +665,13 @@ button.primary-sm {
 .event-none {
   pointer-events: none !important;
 }
+
+@media(max-width:1100px) {
+  .mat-stroked-button {
+    min-width: auto !important;
+  }
+
+  .tabs-wsn {
+    white-space: nowrap !important;
+  }
+}
