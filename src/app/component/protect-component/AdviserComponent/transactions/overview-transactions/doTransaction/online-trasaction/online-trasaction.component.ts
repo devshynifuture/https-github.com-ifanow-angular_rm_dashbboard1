@@ -262,7 +262,7 @@ export class OnlineTrasactionComponent implements OnInit {
         }
         this.openPurchaseTransaction(data.transactionType, data)
       }else{
-        this.eventService.openSnackBar("Please select atleast one transaction type", "Ok")
+        this.eventService.openSnackBar("Please select transaction type", "Ok")
       }
     } else {
       if (this.formStep == 'step-1') {
