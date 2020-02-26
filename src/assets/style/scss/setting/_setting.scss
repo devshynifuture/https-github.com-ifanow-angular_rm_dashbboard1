@@ -107,3 +107,16 @@
     padding: 9px 8px !important;
   }
 }
+
+#ui-setting-profile {
+  .mat-card {
+    h2 {
+      font-family: "Playfair Display";
+      font-size: 24px;
+    }
+
+    .mat-card-header-text {
+      display: none;
+    }
+  }
+}

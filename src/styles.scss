@@ -243,7 +243,8 @@
 }
 
 #ui-subscriptions,
-#uiTransactions {
+#uiTransactions,
+#ui-setting {
   position: fixed;
   margin-top: 4px;
   float: right;
@@ -391,6 +392,7 @@
 }
 
 #ui-subscriptions,
+#ui-setting,
 #ui-plans,
 #ui-transactions,
 #ui-settingsHeaders,
@@ -519,6 +521,7 @@
 }
 
 #ui-subscriptions,
+#ui-setting,
 #uiTransactions {
   .mat-tab-link {
     color: #595252 !important;
