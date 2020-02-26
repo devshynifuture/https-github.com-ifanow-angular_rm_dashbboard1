@@ -61,11 +61,13 @@
         [dataSource]="dataSource" class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef>
-                <mat-checkbox *ngIf="isLoading==false && dataSource.tableFlag" (change)="checkAll($event,dataSource)">
+                <mat-checkbox [checked]="realEstateCount==dataSource.data.length"
+                    [indeterminate]="realEstateCount>0 && realEstateCount<dataSource.data.length"
+                    *ngIf="isLoading==false && dataSource.tableFlag" (change)="checkAll($event,dataSource)">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element)"
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,dataSource)"
                     [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>

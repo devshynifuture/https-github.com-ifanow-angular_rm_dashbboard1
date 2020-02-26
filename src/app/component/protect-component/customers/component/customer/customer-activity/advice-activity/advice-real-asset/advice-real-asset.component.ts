@@ -24,6 +24,7 @@ export class AdviceRealAssetComponent implements OnInit {
   dataSource: any;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   selectedAssetId: any = [];
+  realEstateCount: number;
 
   constructor(private eventService: EventService, public dialog: MatDialog, private subInjectService: SubscriptionInject,
     private cusService: CustomerService, private activityService: ActiityService) { }
@@ -63,9 +64,16 @@ export class AdviceRealAssetComponent implements OnInit {
     this.selectedAssetId = selectedIdList;
     console.log(this.selectedAssetId);
   }
-  checkSingle(flag, selectedData) {
-    (flag.checked) ? this.selectedAssetId.push(selectedData.id) : this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
-    console.log(this.selectedAssetId)
+  checkSingle(flag, selectedData, tableData) {
+    if (flag.checked) {
+      selectedData.selected = true;
+      this.selectedAssetId.push(selectedData.id)
+    }
+    else {
+      selectedData.selected = false
+      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
+    }
+    this.realEstateCount = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
   }
   openRealEstate(data, value) {
     const fragmentData = {

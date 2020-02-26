@@ -22,4 +22,11 @@ export class AdviceUtilsService {
     });
     return { dataList, selectedIdList };
   }
+  static selectSingleCheckbox(tableDataSource) {
+    let count = 0;
+    tableDataSource.filteredData.forEach(element => {
+      (element.selected) ? count++ : ''
+    });
+    return count;
+  }
 }
