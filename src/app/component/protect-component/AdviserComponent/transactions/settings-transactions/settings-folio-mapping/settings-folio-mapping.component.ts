@@ -7,6 +7,7 @@ import { AddClientMappingComponent } from '../settings-client-mapping/add-client
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
+import { TransactionEnumService } from '../../transaction-enum.service';
 
 @Component({
   selector: 'app-settings-folio-mapping',
@@ -53,10 +54,7 @@ export class SettingsFolioMappingComponent implements OnInit {
   }
   getFilterOptionDataRes(data) {
     console.log(data);
-    this.filterData = data;
-    this.filterData.forEach(element => {
-      element['platformName'] = (element.aggregatorType == 1) ? "NSC" : "BSE"
-    });
+    this.filterData = TransactionEnumService.setPlatformEnum(data);
     this.type = '1';
     this.selectedBrokerCode = data[0];
     this.selectedPlatform = data[0];
@@ -77,7 +75,7 @@ export class SettingsFolioMappingComponent implements OnInit {
     this.onlineTransact.getFolioMappedData(obj).subscribe(
       data => {
         console.log(data);
-        this.dataSource = data;
+        this.dataSource = TransactionEnumService.setHoldingTypeEnum(data);
         this.isLoading = false;
       }
     )
@@ -94,7 +92,7 @@ export class SettingsFolioMappingComponent implements OnInit {
     this.onlineTransact.getFolioUnmappedData(obj).subscribe(
       data => {
         console.log(data);
-        this.dataSource = data;
+        this.dataSource = TransactionEnumService.setHoldingTypeEnum(data);
         this.isLoading = false
       }
     )

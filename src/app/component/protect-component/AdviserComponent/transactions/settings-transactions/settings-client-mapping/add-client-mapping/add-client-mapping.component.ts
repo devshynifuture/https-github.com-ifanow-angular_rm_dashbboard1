@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {OnlineTransactionService} from '../../../online-transaction.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
+import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { OnlineTransactionService } from '../../../online-transaction.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-add-client-mapping',
@@ -41,6 +41,10 @@ export class AddClientMappingComponent implements OnInit {
 
   lisNominee(value) {
     console.log(value);
+    if (value == null) {
+      this.folioForm.get('ownerName').setErrors({ 'setValue': 'family member does not exist' });
+      this.folioForm.get('ownerName').markAsTouched();
+    }
     this.nomineesListFM = Object.assign([], value);
   }
 
@@ -122,6 +126,6 @@ export class AddClientMappingComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 }
