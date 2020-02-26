@@ -94,6 +94,12 @@ export class SwitchTransactionComponent implements OnInit {
   }
   getSchemeList(value) {
     this.showSpinner = true
+    if(this.switchTransaction.get('schemeSwitch').invalid){
+      this.showSpinner = false
+      Object.assign(this.transactionSummary, { schemeName: '' });
+      Object.assign(this.transactionSummary, { folioNumber: '' });
+      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;//if scheme not present then min amt is 0
+    }
     if (this.selectScheme == 2 && value.length > 2) {
       let obj = {
         searchQuery: value,
@@ -109,7 +115,11 @@ export class SwitchTransactionComponent implements OnInit {
       }
       this.onlineTransact.getExistingSchemes(obj).subscribe(
         data => this.getExistingSchemesRes(data), (error) => {
-          this.eventService.showErrorMessage(error);
+          this.showSpinner = false;
+          this.switchTransaction.get('schemeSwitch').setErrors({'setValue':error.message});
+          this.switchTransaction.get('schemeSwitch').markAsTouched();
+          (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;//if scheme not present then min amt is 0
+          // this.eventService.showErrorMessage(error);
         }
       );
     } else {
@@ -118,10 +128,6 @@ export class SwitchTransactionComponent implements OnInit {
   }
   getExistingSchemesRes(data) {
     this.showSpinner = false
-    if(data.length==0){
-      this.switchTransaction.get('schemeSwitch').setErrors({'setValue':'Selected scheme does not exist'});
-      this.switchTransaction.get('schemeSwitch').markAsTouched();
-    }
     this.schemeList = data
   }
   onFolioChange(folio) {
@@ -227,6 +233,10 @@ export class SwitchTransactionComponent implements OnInit {
   }
   getSchemeListTranfer(value) {
     this.showSpinnerTran = true
+    if(this.switchTransaction.get('transferIn').invalid){
+      this.showSpinnerTran = false
+      Object.assign(this.transactionSummary, { schemeNameTranfer: '' });
+    }
     if (this.selectScheme == 2 && value.length > 2) {
       let obj = {
         searchQuery: value,
@@ -242,7 +252,10 @@ export class SwitchTransactionComponent implements OnInit {
       }
       this.onlineTransact.getNewSchemes(obj).subscribe(
         data => this.getNewSchemesRes(data), (error) => {
-          this.eventService.showErrorMessage(error);
+          this.showSpinnerTran = false
+          this.switchTransaction.get('transferIn').setErrors({'setValue':error.message});
+          this.switchTransaction.get('transferIn').markAsTouched();
+          // this.eventService.showErrorMessage(error);
         }
       );
     }
@@ -255,10 +268,6 @@ export class SwitchTransactionComponent implements OnInit {
   }
   getNewSchemesRes(data) {
     this.showSpinnerTran = false
-    if(data.length==0){
-      this.switchTransaction.get('transferIn').setErrors({'setValue':'Selected scheme does not exist'});
-      this.switchTransaction.get('transferIn').markAsTouched();
-    }
     console.log('new schemes', data)
     this.schemeListTransfer = data
   }

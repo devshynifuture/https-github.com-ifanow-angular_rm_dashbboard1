@@ -1,3 +1,4 @@
+import { SubscriptionInject } from './../../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { EventService } from './../../../../../Data-service/event.service';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -17,7 +18,8 @@ export class MyIfaSelectArnRiaComponent implements OnInit {
     public dialogRef: MatDialogRef<MyIfaSelectArnRiaComponent>,
     @Inject(MAT_DIALOG_DATA) public fragmentData: any,
     private fb: FormBuilder,
-    private eventService: EventService
+    private eventService: EventService,
+    private subscriptionInject: SubscriptionInject
   ) { }
 
   selectArnRiaForm = this.fb.group({
@@ -54,9 +56,11 @@ export class MyIfaSelectArnRiaComponent implements OnInit {
     if (this.selectArnRiaForm.valid) {
       this.dialogClose();
       this.openUpperModule('', '');
+      this.subscriptionInject.changeNewRightSliderState({ state: 'close' });
     } else if (this.selectArnRiaForm.invalid) {
       this.selectArnRiaForm.get('arnOrRia').markAsTouched();
     }
+
   }
 
   dialogClose() {
