@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { SubscriptionInject } from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-details',
@@ -8,7 +9,10 @@ import { SubscriptionInject } from '../../../AdviserComponent/Subscriptions/subs
 })
 export class AdminDetailsComponent implements OnInit {
 
-  constructor(public subInjectService: SubscriptionInject, ) { }
+  constructor(
+    public subInjectService: SubscriptionInject,
+    private fb: FormBuilder
+  ) { }
   displayedColumns: string[] = ['name', 'email', 'mobile', 'role'];
   dataSource = ELEMENT_DATA;
 
@@ -24,8 +28,19 @@ export class AdminDetailsComponent implements OnInit {
   displayedColumns4: string[] = ['arn', 'loginId'];
   dataSource4 = ELEMENT_DATA4;
 
+  onboardingActivityForm = this.fb.group({
+    "firstCall": [,],
+    "autoForwardStep": [,],
+    "dataUploadAndAumReconciliation": [,],
+    "dailyScheduleNCamsExpiryDateAdd": [,],
+    "demoAndHandover": [,],
+    "done": [,]
+  })
+
   ngOnInit() {
   }
+
+
 
   Close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });

@@ -20,7 +20,8 @@
                     <div class="col-md-9 pl-0 miscellaneousBox">
                         <mat-form-field class="example-full-width">
                             <textarea matInput class="form-control height160"></textarea>
-                            <button mat-button class=" bg-primary text-white right br-0 text-inherit mt-12">EDIT</button>
+                            <button mat-button
+                                class=" bg-primary text-white right br-0 text-inherit mt-12">EDIT</button>
                         </mat-form-field>
                     </div>
                 </div>
@@ -28,51 +29,73 @@
 
 
             <mat-tab label="Onboarding activity">
-                <div class="cardList">
+                <h3 class="f-500">
+                    Stages
+                </h3>
+                <div class="cardList" [formGroup]="onboardingActivityForm">
                     <div class="row pt-10 pb-10 bb">
                         <div class="col-md-8 f-14">
-                            <mat-checkbox class="mr-8"> </mat-checkbox>
-                            First call
+                            <mat-checkbox class="mr-8" formControlName="firstCall"> </mat-checkbox>
+                            <span
+                                [ngStyle]="{ 'text-decoration': onboardingActivityForm.get('firstCall').value == true ? 'line-through': 'initial' }">
+                                First call
+                            </span>
                         </div>
                         <div class="col-md-4"></div>
                     </div>
 
                     <div class="row pt-10 pb-10 bb">
                         <div class="col-md-8 f-14">
-                            <mat-checkbox class="mr-8"> </mat-checkbox>
-                            Auto forward setup
+                            <mat-checkbox class="mr-8" formControlName="autoForwardStep"> </mat-checkbox>
+                            <span
+                                [ngStyle]="{ 'text-decoration': onboardingActivityForm.get('autoForwardStep').value == true ? 'line-through': 'initial' }">
+                                Auto forward setup
+                            </span>
                         </div>
                         <div class="col-md-4"></div>
                     </div>
 
                     <div class="row pt-10 pb-10 bb">
                         <div class="col-md-8 f-14">
-                            <mat-checkbox class="mr-8"> </mat-checkbox>
-                            Data upload and AUM reconciliation
+                            <mat-checkbox class="mr-8" formControlName="dataUploadAndAumReconciliation"> </mat-checkbox>
+                            <span
+                                [ngStyle]="{ 'text-decoration': onboardingActivityForm.get('dataUploadAndAumReconciliation').value == true ? 'line-through': 'initial' }">
+                                Data upload and AUM reconciliation
+                            </span>
                         </div>
                         <div class="col-md-4"></div>
                     </div>
 
                     <div class="row pt-10 pb-10 bb">
                         <div class="col-md-8 f-14">
-                            <mat-checkbox class="mr-8"> </mat-checkbox>
-                            Daily schedule & CAMS expiry date addition
+                            <mat-checkbox class="mr-8" formControlName="dailyScheduleNCamsExpiryDateAdd">
+                            </mat-checkbox>
+                            <span
+                                [ngStyle]="{ 'text-decoration': onboardingActivityForm.get('dailyScheduleNCamsExpiryDateAdd').value == true ? 'line-through': 'initial' }">
+                                Daily schedule & CAMS expiry date addition
+                            </span>
                         </div>
                         <div class="col-md-4"></div>
                     </div>
 
                     <div class="row pt-10 pb-10 bb">
                         <div class="col-md-8 f-14">
-                            <mat-checkbox class="mr-8"> </mat-checkbox>
-                            Demo and handover
+                            <mat-checkbox class="mr-8" formControlName="demoAndHandover"> </mat-checkbox>
+                            <span
+                                [ngStyle]="{ 'text-decoration': onboardingActivityForm.get('demoAndHandover').value == true ? 'line-through': 'initial' }">
+                                Demo and handover
+                            </span>
                         </div>
                         <div class="col-md-4"></div>
                     </div>
 
                     <div class="row pt-10 pb-10 bb">
                         <div class="col-md-8 f-14">
-                            <mat-checkbox class="mr-8"> </mat-checkbox>
-                            Done
+                            <mat-checkbox class="mr-8" formControlName="done"> </mat-checkbox>
+                            <span
+                                [ngStyle]="{ 'text-decoration': onboardingActivityForm.get('done').value == true ? 'line-through': 'initial' }">
+                                Done
+                            </span>
                         </div>
                         <div class="col-md-4"></div>
                     </div>
@@ -88,7 +111,8 @@
                         </div>
                         <div class="col-md-9 pl-0">
                             <h4 class="f-14">Ronak Hindocha <span class="text-primitive">a minute ago </span> </h4>
-                            <p>This is a test comment. All comments related to tasks come here. This is second line of the comment.</p>
+                            <p>This is a test comment. All comments related to tasks come here. This is second line of
+                                the comment.</p>
                         </div>
                         <div class="col-md-2 p-0 text-right">
                             <p class="f-12 c-p mr-8 d-inline-block"> Edit </p>
@@ -102,7 +126,8 @@
                         </div>
                         <div class="col-md-9 pl-0">
                             <h4 class="f-14">Nita Shinde <span class="text-primitive">30 minutes ago </span> </h4>
-                            <p>This is a test comment. All comments related to tasks come here. This is second line of the comment.</p>
+                            <p>This is a test comment. All comments related to tasks come here. This is second line of
+                                the comment.</p>
                         </div>
                         <div class="col-md-2 p-0 text-right">
                             <p class="f-12 text_underLine c-p mr-8 d-inline-block"> Edit </p>

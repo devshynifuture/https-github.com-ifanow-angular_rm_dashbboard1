@@ -74,8 +74,9 @@ export class IfasDetailsComponent implements OnInit {
       data: Fragmentdata,
       autoFocus: false,
     });
+
     dialogRef.afterClosed().subscribe(result => {
-      this.Close(false);
+
     });
 
   }

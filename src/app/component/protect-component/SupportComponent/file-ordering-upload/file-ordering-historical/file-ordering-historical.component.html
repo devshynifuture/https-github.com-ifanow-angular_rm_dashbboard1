@@ -4,16 +4,91 @@
     </div>
 </div>
 
-<div class="row ">
-    <div class="col-md-6">
+<div class="row pt-20">
+    <div class="col-md-4">
+        <div class="example-chip-list">
+            <mat-chip-list #chipList aria-label="Filtering Table">
+                <mat-chip *ngFor="let filter of filterBy" [selectable]="selectable" [removable]="removable"
+                    (removed)="remove(filter)">
+                    {{filter.name}}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+            </mat-chip-list>
+        </div>
         <!-- <button class="btn-primary addon" mat-stroked-button> Order bulk files </button> -->
     </div>
-    <div class="col-md-6">
-
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="form-group mb-0">
+                    <input class="form-control m-0" placeholder="Search by advisor" [matChipInputFor]="chipList"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                        (matChipInputTokenEnd)="add($event)">
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <mat-select class="form-control br-0" placeholder="Ordered By" (change)="add($event)">
+                            <mat-option>None</mat-option>
+                            <mat-option value="1">
+                                Name
+                            </mat-option>
+                            <mat-option value="2">
+                                Size
+                            </mat-option>
+                            <mat-option value="3">
+                                Date
+                            </mat-option>
+                            <mat-option value="4">
+                                Last Modified
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <mat-form-field>
+                    <mat-select class="form-control br-0" (change)="add($event)">
+                        <mat-option>None</mat-option>
+                        <mat-option value="">
+                            Last 7 Days
+                        </mat-option>
+                        <mat-option value="1">
+                            last Month
+                        </mat-option>
+                        <mat-option value="2">
+                            last year
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-lg-3">
+                <mat-form-field>
+                    <mat-select class="form-control br-0" (change)="add($event)">
+                        <mat-option>
+                            None
+                        </mat-option>
+                        <mat-option value="1">
+                            All RTA
+                        </mat-option>
+                        <mat-option value="2">
+                            CAMS
+                        </mat-option>
+                        <mat-option value="3">
+                            KARVY
+                        </mat-option>
+                        <mat-option value="4">
+                            FRANKLIN
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="row">
+<div class="row pt-20">
     <div class="col-md-12">
         <table mat-table id="table-low" [dataSource]="dataSource" class="">
             <ng-container matColumnDef="advisorName">
