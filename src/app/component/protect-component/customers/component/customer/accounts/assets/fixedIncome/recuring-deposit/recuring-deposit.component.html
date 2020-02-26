@@ -36,7 +36,7 @@
             <h5 class="m-0 pt-8">Monthly contrubution</h5>
         </div>
         <div class="col-md-3">
-            <div class="form-group mb-0">
+            <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
                     <input matInput #monthlyContribution type="number" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" class="form-control rupess br-0" formControlName="monthlyContribution">
                     <mat-error class="f-12" [ngClass]="{'v-h':!(isMonthlyContribution && getFormControl().monthlyContribution.invalid || getFormControl().monthlyContribution.touched && getFormControl().monthlyContribution.invalid)}">
@@ -52,7 +52,7 @@
             <h5 class="m-0 pt-8">Interest rate</h5>
         </div>
         <div class="col-md-3">
-            <div class="form-group mb-0">
+            <div class="form-group mb-0 iconPetage">
                 <mat-form-field>
                     <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="onChange($event)" class="form-control br-0 percentage" formControlName="interestRate">
                     <mat-error class="f-12" [ngClass]="{'v-h':!(isInterestRate && getFormControl().interestRate.invalid || getFormControl().interestRate.touched && getFormControl().interestRate.invalid)}">

@@ -37,9 +37,9 @@
     </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-16">Type of fixed deposit</h5>
+            <h5 class="m-0 pt-12">Type of fixed deposit</h5>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-3 pr-0">
             <div class="form-group mb-0">
                 <mat-form-field>
                     <mat-select #FDType formControlName="FDType" class="form-control br-0">
@@ -57,7 +57,7 @@
 
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-16">Amount invested</h5>
+            <h5 class="m-0 pt-12">Amount invested</h5>
         </div>
         <div class="col-md-3">
             <div class="form-group iconRupess mb-0">
@@ -73,7 +73,7 @@
     </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-16">Commencement date</h5>
+            <h5 class="m-0 pt-12">Commencement date</h5>
         </div>
         <div class="col-md-3">
             <mat-form-field>
@@ -89,7 +89,7 @@
     </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-16">Interest rate</h5>
+            <h5 class="m-0 pt-12">Interest rate</h5>
         </div>
         <div class="col-md-3 iconPetage">
             <div class="form-group mb-0">
@@ -104,7 +104,7 @@
     </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-16">FD end date</h5>
+            <h5 class="m-0 pt-12">FD end date</h5>
         </div>
         <div class="col-md-6 pr-0">
             <mat-radio-group aria-label="Select an option" id="custom-radio" formControlName="maturity">
@@ -113,7 +113,8 @@
                 <!-- <mat-radio-button value="2" class="b-a-custom text-primary" (click)="haveMaturity(isMaturity = true)">I
     have maturity date
     </mat-radio-button> -->
-                <mat-radio-button class="classBlue radioBtn" value="2" [checked]='true' [ngClass]="{'b-a-custom': fixedDeposit.get('maturity').value==2,'text-primary':fixedDeposit.get('maturity').value==2,'b-a text-custom':fixedDeposit.get('maturity').value==1}" (click)="haveMaturity(isMaturity = true)">I have maturity date
+                <mat-radio-button class="classBlue pr-10 radioBtn" value="2" [checked]='true' [ngClass]="{'b-a-custom': fixedDeposit.get('maturity').value==2,'text-primary':fixedDeposit.get('maturity').value==2,'b-a text-custom':fixedDeposit.get('maturity').value==1}"
+                    (click)="haveMaturity(isMaturity = true)">I have maturity date
                 </mat-radio-button>
             </mat-radio-group>
             <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isMaturity && getFormControl().maturity.invalid || getFormControl().maturity.touched && getFormControl().maturity.invalid)}">
@@ -124,7 +125,7 @@
     </div>
     <div class="row pt-24" *ngIf="showTenure == true">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-16">Tenure</h5>
+            <h5 class="m-0 pt-12">Tenure</h5>
         </div>
         <div class="col-md-6">
             <div class="row">
@@ -163,7 +164,7 @@
 
     <div class="row pt-24" [hidden]="showTenure == true">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-16">Maturity date</h5>
+            <h5 class="m-0 pt-12">Maturity date</h5>
         </div>
         <div class="col-md-3 pr-0">
             <div class="form-group mb-0 d-flex">
@@ -195,8 +196,8 @@
     </div>
 
     <div class="row pt-40">
-        <div class="col-md-5 text-right">
-            <h5 class="m-0 pt-16">Interest Payout option</h5>
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-12">Interest Payout option</h5>
         </div>
         <div class="col-md-3 pr-0">
             <mat-form-field>
@@ -213,9 +214,9 @@
     </div>
     <div class="row pt-40" *ngIf="fixedDeposit.value.payOpt == 1">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-16">Interest compounding</h5>
+            <h5 class="m-0 pt-12">Interest compounding</h5>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 pr-0">
             <div class="form-group mb-0">
                 <mat-form-field>
                     <mat-select #compound formControlName="compound" class="form-control br-0">
@@ -235,7 +236,7 @@
     </div>
     <div class="row pt-24" *ngIf="fixedDeposit.value.payOpt == 2">
         <div class="col-md-5 text-right">
-            <h5 class="m-0 pt-16">Frequency of payout per year</h5>
+            <h5 class="m-0 pt-12">Frequency of payout per year</h5>
         </div>
         <div class="col-md-3 pr-0">
             <mat-form-field>
@@ -256,10 +257,10 @@
 
 
     <div class="row pt-40">
-        <div class="col-md-5 text-right">
-            <h5 class="m-0 pt-16">Ownership type</h5>
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-12">Ownership type</h5>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-3 pr-0">
             <mat-form-field>
                 <mat-select #ownerType class="form-control br-0" formControlName="ownerType">
                     <mat-option value="" disabled> Select option</mat-option>
@@ -288,7 +289,7 @@
         <div *ngIf="showHide == true">
             <div class="row pt-40">
                 <div class="col-md-5 pr-0 text-right">
-                    <h5 class="m-0 pt-16">FD Number</h5>
+                    <h5 class="m-0 pt-12">FD Number</h5>
                 </div>
                 <div class="col-md-5">
                     <div class="form-group mb-0">
@@ -302,7 +303,7 @@
             </div>
             <div class="row pt-40">
                 <div class="col-md-5 pr-0 text-right">
-                    <h5 class="m-0 pt-16">Bank Account Number</h5>
+                    <h5 class="m-0 pt-12">Linked bank account </h5>
                 </div>
                 <div class="col-md-5">
                     <div class="form-group mb-0">
@@ -316,7 +317,7 @@
             </div>
             <div class="row pt-40">
                 <div class="col-md-5 pr-0 text-right">
-                    <h5 class="m-0 pt-16">Institution name</h5>
+                    <h5 class="m-0 pt-12">Institution name</h5>
                 </div>
                 <div class="col-md-5">
                     <div class="form-group mb-0">
@@ -330,7 +331,7 @@
             </div>
             <div class="row pt-40">
                 <div class="col-md-5 pr-0 text-right">
-                    <h5 class="m-0 pt-16">Description</h5>
+                    <h5 class="m-0 pt-12">Description</h5>
                 </div>
                 <div class="col-md-5">
                     <div class="form-group mb-0">
