@@ -1,6 +1,8 @@
 <div class="row pt-130">
     <div class="col-md-12 text-right">
-        <button class="btn-primary addon" mat-stroked-button> Order bulk files </button>
+        <button class="btn-primary addon" mat-stroked-button (click)="openUpperModule('', '')">
+            <mat-icon>add</mat-icon> Order Historical files
+        </button>
     </div>
 </div>
 
@@ -29,19 +31,19 @@
             <div class="col-lg-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select class="form-control br-0" placeholder="Ordered By" (change)="add($event)">
+                        <mat-select class="form-control br-0" placeholder="Ordered By" (selectionChange)="add($event)">
                             <mat-option>None</mat-option>
-                            <mat-option value="1">
+                            <mat-option value="name">
                                 Name
                             </mat-option>
-                            <mat-option value="2">
+                            <mat-option value="size">
                                 Size
                             </mat-option>
-                            <mat-option value="3">
+                            <mat-option value="date">
                                 Date
                             </mat-option>
-                            <mat-option value="4">
-                                Last Modified
+                            <mat-option value="last modified date">
+                                Last Modified Date
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -49,15 +51,15 @@
             </div>
             <div class="col-lg-3">
                 <mat-form-field>
-                    <mat-select class="form-control br-0" (change)="add($event)">
+                    <mat-select class="form-control br-0" (selectionChange)="add($event)">
                         <mat-option>None</mat-option>
-                        <mat-option value="">
+                        <mat-option value="last 7 days">
                             Last 7 Days
                         </mat-option>
-                        <mat-option value="1">
+                        <mat-option value="last month">
                             last Month
                         </mat-option>
-                        <mat-option value="2">
+                        <mat-option value="last year">
                             last year
                         </mat-option>
                     </mat-select>
@@ -65,20 +67,20 @@
             </div>
             <div class="col-lg-3">
                 <mat-form-field>
-                    <mat-select class="form-control br-0" (change)="add($event)">
+                    <mat-select class="form-control br-0" (selectionChange)="add($event)">
                         <mat-option>
                             None
                         </mat-option>
-                        <mat-option value="1">
+                        <mat-option value="all rta">
                             All RTA
                         </mat-option>
-                        <mat-option value="2">
+                        <mat-option value="cams">
                             CAMS
                         </mat-option>
-                        <mat-option value="3">
+                        <mat-option value="karvy">
                             KARVY
                         </mat-option>
-                        <mat-option value="4">
+                        <mat-option value="franklin">
                             FRANKLIN
                         </mat-option>
                     </mat-select>
@@ -113,7 +115,8 @@
 
             <ng-container matColumnDef="totalfiles">
                 <th class="br" mat-header-cell *matHeaderCellDef> Total files </th>
-                <td class="br" mat-cell *matCellDef="let element"> {{element.totalfiles}} </td>
+                <td class="c-p br" mat-cell *matCellDef="let element"
+                    (click)="openUpperFileOrdering('openUpperFileOrdering', element)"> {{element.totalfiles}} </td>
             </ng-container>
 
             <ng-container matColumnDef="queue">
@@ -146,12 +149,23 @@
 
             <ng-container matColumnDef="refresh">
                 <th class="br" mat-header-cell *matHeaderCellDef> Refresh </th>
-                <td class="br" mat-cell *matCellDef="let element"> {{element.refresh}} </td>
+                <td class="br" mat-cell *matCellDef="let element">
+                    <button mat-button class="bg-grey mr-12 h-22 btn-xs">
+                        <mat-icon>
+                            refresh
+                        </mat-icon>
+                        Refresh
+                    </button>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="empty">
                 <th class="br" mat-header-cell *matHeaderCellDef> </th>
-                <td class="br" mat-cell *matCellDef="let element"> </td>
+                <td class="br" mat-cell *matCellDef="let element">
+                    <mat-icon>
+                        more_vert
+                    </mat-icon>
+                </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

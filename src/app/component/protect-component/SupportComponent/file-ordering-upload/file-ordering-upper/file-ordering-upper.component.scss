@@ -1,0 +1,22 @@
+.imgLogoCLass {
+    max-width: 100%;
+}
+
+::ng-deep .mat-tab-body.mat-tab-body-active {
+    overflow-x: hidden !important;
+    overflow-y: hidden !important;
+}
+
+.border_h2 {
+    border: 1px solid #e0e0e0;
+    border-bottom: transparent;
+}
+
+.borderleft_none {
+    border-left: transparent !important;
+}
+
+.widthBoxUpperSlider {
+    width: 34%;
+    margin-bottom: 0px;
+}
