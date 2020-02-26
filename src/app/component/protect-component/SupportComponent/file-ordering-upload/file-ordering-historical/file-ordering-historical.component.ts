@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { MatChipInputEvent } from '@angular/material';
 
 @Component({
   selector: 'app-file-ordering-historical',
@@ -12,6 +14,38 @@ export class FileOrderingHistoricalComponent implements OnInit {
   dataSource = ELEMENT_DATA;
 
   ngOnInit() {
+  }
+
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  filterBy = [];
+
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    console.log("this some event:::::::", event.value);
+
+    // Add our filterBy
+    if ((value || '').trim()) {
+      this.filterBy.push({ name: value.trim() });
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  remove(filterBy): void {
+    const index = this.filterBy.indexOf(filterBy);
+
+    if (index >= 0) {
+      this.filterBy.splice(index, 1);
+    }
   }
 
 }

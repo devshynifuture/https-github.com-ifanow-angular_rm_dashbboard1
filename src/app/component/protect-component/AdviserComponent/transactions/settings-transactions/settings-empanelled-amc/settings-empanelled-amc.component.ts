@@ -21,7 +21,6 @@ export class SettingsEmpanelledAmcComponent implements OnInit {
     this.getEmpanelledAmcData();
   }
   getEmpanelledAmcData() {
-    this.isLoading = true;
     let obj =
     {
       advisorId: this.advisorId
