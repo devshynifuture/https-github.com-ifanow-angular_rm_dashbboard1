@@ -1,12 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {OnlineTransactionService} from '../../online-transaction.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService} from 'src/app/services/util.service';
-import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
-import {AddClientMappingComponent} from '../settings-client-mapping/add-client-mapping/add-client-mapping.component';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {AuthService} from 'src/app/auth-service/authService';
+import { Component, OnInit } from '@angular/core';
+import { OnlineTransactionService } from '../../online-transaction.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
+import { AddClientMappingComponent } from '../settings-client-mapping/add-client-mapping/add-client-mapping.component';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { AuthService } from 'src/app/auth-service/authService';
+import { TransactionEnumService } from '../../transaction-enum.service';
 
 @Component({
   selector: 'app-settings-folio-mapping',
@@ -29,6 +30,8 @@ export class SettingsFolioMappingComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId()
+    this.dataSource = [{}, {}, {}];
+    this.isLoading = true;
     this.getFilterOptionData();
   }
   sortDataFilterWise() {
@@ -51,10 +54,7 @@ export class SettingsFolioMappingComponent implements OnInit {
   }
   getFilterOptionDataRes(data) {
     console.log(data);
-    this.filterData = data;
-    this.filterData.forEach(element => {
-      element['platformName'] = (element.aggregatorType == 1) ? "NSC" : "BSC"
-    });
+    this.filterData = TransactionEnumService.setPlatformEnum(data);
     this.type = '1';
     this.selectedBrokerCode = data[0];
     this.selectedPlatform = data[0];
@@ -75,7 +75,7 @@ export class SettingsFolioMappingComponent implements OnInit {
     this.onlineTransact.getFolioMappedData(obj).subscribe(
       data => {
         console.log(data);
-        this.dataSource = data;
+        this.dataSource = TransactionEnumService.setHoldingTypeEnum(data);
         this.isLoading = false;
       }
     )
@@ -92,10 +92,18 @@ export class SettingsFolioMappingComponent implements OnInit {
     this.onlineTransact.getFolioUnmappedData(obj).subscribe(
       data => {
         console.log(data);
-        this.dataSource = data;
+        this.dataSource = TransactionEnumService.setHoldingTypeEnum(data);
         this.isLoading = false
       }
     )
+  }
+  chnageBrokerCode(value) {
+    this.selectedPlatform = value;
+    this.sortDataFilterWise();
+  }
+  changePlatform(value) {
+    this.selectedBrokerCode = value
+    this.sortDataFilterWise();
   }
   lisNominee(value) {
     console.log(value)

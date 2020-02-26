@@ -35,8 +35,11 @@
                                 <span>{{f.name}}</span>
                             </mat-option>
                         </mat-autocomplete>
-                        <mat-error class="f-12 pt-4">
+                        <mat-error class="f-12 pt-4" *ngIf="folioForm.get('ownerName').errors?.required">
                             This field is required
+                        </mat-error>
+                        <mat-error class="f-12" *ngIf="folioForm.get('ownerName').errors?.setValue">
+                            This family member does not exist
                         </mat-error>
                     </mat-form-field>
                 </form>

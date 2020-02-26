@@ -98,6 +98,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   getSchemeList(value) {
     this.showSpinner = true
     this.platformType = this.getDataSummary.defaultClient.aggregatorType
+    console.log("valuelength-------------->",value.length)
     let obj = {
       searchQuery: value,
       bseOrderType: 'ORDER',
@@ -126,11 +127,19 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
   getNewSchemesRes(data) {
     this.showSpinner = false
+    if(data.length==0){
+      this.purchaseTransaction.get('schemePurchase').setErrors({'setValue':'Selected scheme does not exist'});
+      this.purchaseTransaction.get('schemePurchase').markAsTouched();
+    }
     console.log('new schemes', data)
     this.schemeList = data
   }
   getExistingSchemesRes(data) {
     this.showSpinner = false
+    if(data.length==0){
+      this.purchaseTransaction.get('schemePurchase').setErrors({'setValue':'Selected scheme does not exist'});
+      this.purchaseTransaction.get('schemePurchase').markAsTouched();
+    }
     this.schemeList = data
   }
   reinvest(scheme) {
