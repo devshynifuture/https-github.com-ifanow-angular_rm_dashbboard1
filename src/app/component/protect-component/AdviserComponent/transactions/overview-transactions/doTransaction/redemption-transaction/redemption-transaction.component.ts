@@ -129,6 +129,7 @@ export class RedemptionTransactionComponent implements OnInit {
     this.showSpinner = true
     if (this.redemptionTransaction.get('schemeRedeem').invalid) {
       this.showSpinner = false
+      this.folioList=[];
       Object.assign(this.transactionSummary, { schemeName: '' });
       Object.assign(this.transactionSummary, { folioNumber: '' });
     }

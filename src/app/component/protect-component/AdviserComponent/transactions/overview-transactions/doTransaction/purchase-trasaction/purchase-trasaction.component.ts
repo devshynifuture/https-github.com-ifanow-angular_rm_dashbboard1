@@ -100,6 +100,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.platformType = this.getDataSummary.defaultClient.aggregatorType
     if(this.purchaseTransaction.get('schemePurchase').invalid){
       this.showSpinner = false
+      this.folioList=[];
       Object.assign(this.transactionSummary, { schemeName: '' });//to disable scheme name from transaction summary
       Object.assign(this.transactionSummary, { folioNumber: '' });//to disable folio number from transaction summary
       (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;//if scheme not present then min amt is 0
@@ -327,11 +328,9 @@ export class PurchaseTrasactionComponent implements OnInit {
       return;
     } else if (this.purchaseTransaction.get('employeeContry').invalid) {
       this.purchaseTransaction.get('employeeContry').markAsTouched();
-    } else if (this.reInvestmentOpt.length > 1) {
-      if (this.purchaseTransaction.get('reinvest').invalid) {
+    } else if (this.reInvestmentOpt.length > 1 && this.purchaseTransaction.get('reinvest').invalid) {
         this.purchaseTransaction.get('reinvest').markAsTouched();
         return;
-      }
     } else if (this.ExistingOrNew == 1 && this.purchaseTransaction.get('investmentAccountSelection').invalid) {
       this.purchaseTransaction.get('investmentAccountSelection').markAsTouched();
       return;
@@ -402,11 +401,9 @@ export class PurchaseTrasactionComponent implements OnInit {
     } else if (this.purchaseTransaction.get('employeeContry').invalid) {
       this.purchaseTransaction.get('employeeContry').markAsTouched();
       return;
-    } else if (this.reInvestmentOpt.length > 1) {
-      if (this.purchaseTransaction.get('reinvest').invalid) {
+    } else if (this.reInvestmentOpt.length > 1 && this.purchaseTransaction.get('reinvest').invalid) {
         this.purchaseTransaction.get('reinvest').markAsTouched();
         return;
-      }
     } else {
       this.multiTransact = true
       if (this.scheme != undefined && this.schemeDetails != undefined) {

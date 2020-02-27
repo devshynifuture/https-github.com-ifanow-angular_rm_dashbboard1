@@ -157,7 +157,8 @@
                     <div class="col-md-7 p-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <mat-select class="form-control" formControlName="investmentAccountSelection">
+                                <mat-select class="form-control" formControlName="investmentAccountSelection" >
+                                   <mat-option value='' disabled>Select option</mat-option>
                                     <mat-option value="option" (click)="selectedFolio(folio)"
                                         *ngFor="let folio of folioList">{{folio.folioNumber}}</mat-option>
                                 </mat-select>
