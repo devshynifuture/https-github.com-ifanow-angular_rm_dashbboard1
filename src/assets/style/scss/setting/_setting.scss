@@ -169,3 +169,19 @@
     min-height: 450px;
   }
 }
+
+#ui-setting-preference {
+  table {
+    tbody td {
+      padding: 6px 8px !important;
+    }
+
+    tr.mat-header-row {
+      height: 40px;
+    }
+
+    tr.mat-row {
+      height: 40px;
+    }
+  }
+}
