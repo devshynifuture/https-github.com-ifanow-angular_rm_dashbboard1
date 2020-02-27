@@ -61,7 +61,7 @@
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox *ngIf="isLoading==false && epfDataSource.tableFlag"
-                    (change)="checkAll($event,epfDataSource)" [checked]="epfCount==epfDataSource.data.length"
+                    (change)="checkAll($event,epfDataSource,'epf')" [checked]="epfCount==epfDataSource.data.length"
                     [indeterminate]="epfCount>0 && epfCount<epfDataSource.data.length"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
@@ -191,7 +191,7 @@
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox *ngIf="isLoading==false && npsDataSource.tableFlag"
-                    (change)="checkAll($event,npsDataSource)" [checked]="npsCOunt==npsDataSource.data.length"
+                    (change)="checkAll($event,npsDataSource,'nps')" [checked]="npsCOunt==npsDataSource.data.length"
                     [indeterminate]="npsCOunt>0 && npsCOunt<npsDataSource.data.length"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
@@ -281,7 +281,7 @@
                 <mat-checkbox *ngIf="isLoading==false && gratuityDataSource.tableFlag"
                     [checked]="gratuityCount==gratuityDataSource.data.length"
                     [indeterminate]="gratuityCount>0 && gratuityCount<gratuityDataSource.data.length"
-                    (change)="checkAll($event,gratuityDataSource)"></mat-checkbox>
+                    (change)="checkAll($event,gratuityDataSource,'gratuity')"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
                 <mat-checkbox *ngIf="isLoading==false"
@@ -369,7 +369,7 @@
                 <mat-checkbox *ngIf="isLoading==false && superannuationDataSource.tableFlag"
                     [checked]="superannuationCount==superannuationDataSource.data.length"
                     [indeterminate]="superannuationCount>0 && superannuationCount<superannuationDataSource.data.length"
-                    (change)="checkAll($event,superannuationDataSource)"></mat-checkbox>
+                    (change)="checkAll($event,superannuationDataSource,'superannuation')"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
                 <mat-checkbox *ngIf="isLoading==false"
@@ -470,7 +470,7 @@
             <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox [checked]="epsCount==epsDataSource.data.length"
                     [indeterminate]="epsCount>0 && epsCount<epsDataSource.data.length"
-                    *ngIf="isLoading==false && epsDataSource.tableFlag" (change)="checkAll($event,epsDataSource)">
+                    *ngIf="isLoading==false && epsDataSource.tableFlag" (change)="checkAll($event,epsDataSource,'eps')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">

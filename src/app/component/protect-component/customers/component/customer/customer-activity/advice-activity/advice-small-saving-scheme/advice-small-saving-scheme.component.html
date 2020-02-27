@@ -62,7 +62,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
                 <mat-checkbox [checked]="ppfCount==ppfDataSource.data.length"
                     [indeterminate]="ppfCount>0 && ppfCount<ppfDataSource.data.length"
-                    *ngIf="isLoading==false && ppfDataSource.tableFlag" (change)="checkAll($event,ppfDataSource)">
+                    *ngIf="isLoading==false && ppfDataSource.tableFlag" (change)="checkAll($event,ppfDataSource,'ppf')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
@@ -177,7 +177,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
                 <mat-checkbox [checked]="nscCount==nscDataSpurce.data.length"
                     [indeterminate]="nscCount>0 && nscCount<nscDataSpurce.data.length"
-                    *ngIf="isLoading==false && nscDataSpurce.tableFlag" (change)="checkAll($event,nscDataSpurce)">
+                    *ngIf="isLoading==false && nscDataSpurce.tableFlag" (change)="checkAll($event,nscDataSpurce,'nsc')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
@@ -280,7 +280,8 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
                 <mat-checkbox [checked]="ssyCount==ssyDataSpurce.data.length"
                     [indeterminate]="ssyCount>0 && ssyCount<ssyDataSpurce.data.length"
-                    *ngIf="isLoading==false && ssyDataSpurce.tableFlag"></mat-checkbox>
+                    *ngIf="isLoading==false && ssyDataSpurce.tableFlag" (change)="checkAll($event,nscDataSpurce,'ssy')">
+                </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
                 <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,ssyDataSpurce,'ssy')">
@@ -370,7 +371,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
                 <mat-checkbox [checked]="kvpCount==kvpDataSpurce.data.length"
                     [indeterminate]="kvpCount>0 && kvpCount<kvpDataSpurce.data.length"
-                    *ngIf="isLoading==false && kvpDataSpurce.tableFlag" (change)="checkAll($event,kvpDataSpurce)">
+                    *ngIf="isLoading==false && kvpDataSpurce.tableFlag" (change)="checkAll($event,kvpDataSpurce,'kvp')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
@@ -482,7 +483,8 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
                 <mat-checkbox [checked]="scssCount==scssDataSpurce.data.length"
                     [indeterminate]="scssCount>0 && scssCount<scssDataSpurce.data.length"
-                    (change)="checkAll($event,scssDataSpurce)" *ngIf="isLoading==false && scssDataSpurce.tableFlag">
+                    (change)="checkAll($event,scssDataSpurce,'scss')"
+                    *ngIf="isLoading==false && scssDataSpurce.tableFlag">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
@@ -650,7 +652,8 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox [checked]="pordCount==pordDataSpurce.data.length"
+                <mat-checkbox (change)="checkAll($event,scssDataSpurce,'pord')"
+                    [checked]="pordCount==pordDataSpurce.data.length"
                     [indeterminate]="pordCount>0 && pordCount<pordDataSpurce.data.length"
                     *ngIf="isLoading==false && pordDataSpurce.tableFlag"></mat-checkbox>
             </th>
@@ -741,9 +744,10 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox [checked]="pomisCount==potdDataSource.data.length"
-                    [indeterminate]="pomisCount>0 && pomisCount<potdDataSource.data.length"
-                    *ngIf="isLoading==false && potdDataSource.tableFlag" (change)="checkAll($event,potdDataSource)">
+                <mat-checkbox [checked]="potdCount==potdDataSource.data.length"
+                    [indeterminate]="potdCount>0 && potdCount<potdDataSource.data.length"
+                    *ngIf="isLoading==false && potdDataSource.tableFlag"
+                    (change)="checkAll($event,potdDataSource,'potd')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
@@ -847,7 +851,8 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
                 <mat-checkbox [checked]="pomisCount==pomisDataSpurce.data.length"
                     [indeterminate]="pomisCount>0 && pomisCount<pomisDataSpurce.data.length"
-                    *ngIf="isLoading==false && pomisDataSpurce.tableFlag" (change)="checkAll($event,pomisDataSpurce)">
+                    *ngIf="isLoading==false && pomisDataSpurce.tableFlag"
+                    (change)="checkAll($event,pomisDataSpurce,'pomis')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">

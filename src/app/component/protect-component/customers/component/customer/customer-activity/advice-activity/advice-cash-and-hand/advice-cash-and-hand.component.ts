@@ -35,10 +35,10 @@ export class AdviceCashAndHandComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getAdviceByAsset();
   }
-  checkAll(flag, tableDataList) {
+  checkAll(flag, tableDataList, tableFlag) {
     console.log(flag, tableDataList)
-    const { dataList, selectedIdList } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
-    // this.dataSource = new MatTableDataSource(dataList);
+    const { selectedIdList, count } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
+    this.getFlagCount(tableFlag, count)
     this.selectedAssetId = selectedIdList;
     console.log(this.selectedAssetId);
   }
@@ -52,8 +52,11 @@ export class AdviceCashAndHandComponent implements OnInit {
       this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
     }
     let countValue = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
-    (tableFlag == 'bank') ? this.bankCount = countValue : this.cashCount = countValue
+    this.getFlagCount(tableFlag, countValue)
     console.log(this.selectedAssetId)
+  }
+  getFlagCount(flag, count) {
+    (flag == 'bank') ? this.bankCount = count : this.cashCount = count
   }
   getAdviceByAsset() {
     let obj = {

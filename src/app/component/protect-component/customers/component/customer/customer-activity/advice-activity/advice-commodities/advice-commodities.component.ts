@@ -55,11 +55,15 @@ export class AdviceCommoditiesComponent implements OnInit, AfterViewInit {
       }
     );
   }
-  checkAll(flag, tableDataList) {
+  checkAll(flag, tableDataList, tableFlag) {
     console.log(flag, tableDataList)
-    const { dataList, selectedIdList } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
+    const { selectedIdList, count } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
     this.selectedAssetId = selectedIdList;
+    this.getFlagCount(tableFlag, count);
     // console.log(this.selectedAssetId);
+  }
+  getFlagCount(flag, count) {
+    (flag == 'gold') ? this.goalCount = count : this.othersCount = count
   }
   checkSingle(flag, selectedData, tableData, tableFlag) {
     if (flag.checked) {
@@ -71,7 +75,7 @@ export class AdviceCommoditiesComponent implements OnInit, AfterViewInit {
       this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
     }
     let countValue = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
-    (tableFlag == "gold") ? this.goalCount = countValue : this.othersCount = countValue;
+    this.getFlagCount(tableFlag, countValue);
     console.log(this.selectedAssetId)
   }
   getAllSchemeResponse(data) {

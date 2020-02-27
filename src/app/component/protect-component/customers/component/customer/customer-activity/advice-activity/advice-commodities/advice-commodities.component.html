@@ -64,7 +64,8 @@
                 <div class="bar">
                     <mat-checkbox [checked]="goalCount==goldDataSource.data.length"
                         [indeterminate]="goalCount>0 && goalCount<goldDataSource.data.length"
-                        *ngIf="isLoading==false && goldDataSource.tableFlag" (change)="checkAll($event,goldDataSource)">
+                        *ngIf="isLoading==false && goldDataSource.tableFlag"
+                        (change)="checkAll($event,goldDataSource,'gold')">
                     </mat-checkbox>
                 </div>
             </th>
@@ -165,7 +166,8 @@
             <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox [checked]="othersCount==otherDataSource.data.length"
                     [indeterminate]="othersCount>0 && othersCount<otherDataSource.data.length"
-                    *ngIf="isLoading==false && otherDataSource.tableFlag" (change)="checkAll($event,otherDataSource)">
+                    *ngIf="isLoading==false && otherDataSource.tableFlag"
+                    (change)="checkAll($event,otherDataSource,'others')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">

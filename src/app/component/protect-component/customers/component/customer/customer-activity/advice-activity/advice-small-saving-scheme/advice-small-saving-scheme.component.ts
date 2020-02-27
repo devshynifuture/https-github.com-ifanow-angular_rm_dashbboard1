@@ -98,11 +98,40 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
     this.potdDataSource['tableFlag'] = (data.PO_TD.length == 0) ? false : true;
     console.log(data)
   }
-  checkAll(flag, tableDataList) {
+  checkAll(flag, tableDataList, tableFlag) {
     console.log(flag, tableDataList)
-    const { dataList, selectedIdList } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
+    const { selectedIdList, count } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
     this.selectedAssetId = selectedIdList;
+    this.getFlagCount(tableFlag, count)
     // console.log(this.selectedAssetId);
+  }
+  getFlagCount(flag, count) {
+    switch (true) {
+      case (flag == 'ppf'):
+        this.ppfCount = count;
+        break;
+      case (flag == 'nsc'):
+        this.nscCount = count;
+        break;
+      case (flag == 'ssy'):
+        this.ssyCount = count;
+        break;
+      case (flag == 'kvp'):
+        this.kvpCount = count;
+        break;
+      case (flag == 'scss'):
+        this.scssCount = count;
+        break;
+      case (flag == 'pord'):
+        this.scssCount = count;
+        break;
+      case (flag == 'potd'):
+        this.potdCount = count;
+        break;
+      default:
+        this.pomisCount = count;
+        break;
+    }
   }
   checkSingle(flag, selectedData, tableData, tableFlag) {
     if (flag.checked) {
@@ -114,7 +143,7 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
       this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1);
     }
     let countValue = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
-    (tableFlag == "ppf") ? this.ppfCount = countValue : (tableFlag == "nsc") ? this.nscCount = countValue : (tableFlag == 'ssy') ? this.ssyCount = countValue : (tableFlag == 'kvp') ? this.kvpCount = countValue : (tableFlag == 'scss') ? this.scssCount = countValue : (tableFlag == 'pord') ? this.pordCount = countValue : this.pomisCount = countValue;
+    this.getFlagCount(tableFlag, countValue)
     console.log(this.selectedAssetId)
   }
   openAddPPF(data, value) {

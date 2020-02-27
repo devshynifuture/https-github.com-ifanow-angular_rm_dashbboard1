@@ -64,7 +64,7 @@
                 <mat-checkbox [checked]="bankCount==bankAccDataSource.data.length"
                     [indeterminate]="bankCount>0 && bankCount<bankAccDataSource.data.length"
                     *ngIf="isLoading==false && bankAccDataSource.tableFlag"
-                    (change)="checkAll($event,bankAccDataSource)"></mat-checkbox>
+                    (change)="checkAll($event,bankAccDataSource,'bank')"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
                 <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,bankAccDataSource,'bank')"
@@ -157,7 +157,7 @@
                 <mat-checkbox [checked]="cashCount==cashInHandDataSource.data.length"
                     [indeterminate]="cashCount>0 && cashCount<cashInHandDataSource.data.length"
                     *ngIf="isLoading==false && cashInHandDataSource.tableFlag"
-                    (change)="checkAll($event,cashInHandDataSource)"></mat-checkbox>
+                    (change)="checkAll($event,cashInHandDataSource,'cash')"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
                 <mat-checkbox *ngIf="isLoading==false"
