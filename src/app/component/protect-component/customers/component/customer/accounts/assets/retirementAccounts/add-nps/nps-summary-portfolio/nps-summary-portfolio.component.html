@@ -204,7 +204,7 @@
             </div>
 
             <div class="pt-44" formArrayName="nominees">
-                <div class="row pb-16" *ngFor="let creds of nominee.controls; let i = index" [formGroupName]="i">
+                <div class="row pb-36" *ngFor="let creds of nominee.controls; let i = index" [formGroupName]="i">
                     <div class="col-md-5 text-right pr-0">
                         <h5 class="m-0 pt-8">Nominee{{i+1}}</h5>
                     </div>
@@ -219,6 +219,7 @@
                                                 <span>{{item.userName}}</span>
                                             </mat-option>
                                         </mat-autocomplete>
+                                        <mat-hint align="start" class="f-12"> Optional </mat-hint>
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-4 pl-0 iconPetage">
@@ -229,11 +230,7 @@
 
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <p class="f-12 text-custom pt-4 mb-0">Optional</p>
-                            </div>
-                        </div>
+
                     </div>
 
                     <div class="col-md-1 pl-0 pt-10" *ngIf="i==0">
