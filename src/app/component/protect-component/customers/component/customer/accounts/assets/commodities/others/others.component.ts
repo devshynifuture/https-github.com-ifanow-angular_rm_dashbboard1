@@ -30,6 +30,7 @@ export class OthersComponent implements OnInit {
   advisorId: any;
   clientId: any;
   nomineesListFM: any;
+  nomineesList: any;
   flag: any;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
@@ -51,6 +52,11 @@ export class OthersComponent implements OnInit {
 
     this.getdataForm(this.inputData);
 
+  }
+
+  getFormDataNominee(data) {
+    console.log(data)
+    this.nomineesList = data.controls
   }
 
   display(value) {

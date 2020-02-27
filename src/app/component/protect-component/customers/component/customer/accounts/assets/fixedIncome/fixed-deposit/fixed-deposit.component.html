@@ -2,11 +2,7 @@
 <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-<<<<<<< HEAD
             <h4 class="mb-0 wrapper-20">{{inputData.id?'EDIT':'ADD'}} FIXED DEPOSIT</h4>
-=======
-            <h4 class="mb-0 wrapper-20">Add Fixed deposit</h4>
->>>>>>> 915356ef600b928a81eb08b70c9c6bd093c7c9a9
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -134,7 +130,7 @@
             <div class="row">
                 <div class="col-md-4 p-0">
                     <mat-select formControlName="tenureY" class="form-control br-0 br-none" (change)="getDateYMD()">
-                        <mat-option value="0">Years</mat-option>
+                        <mat-option value="0">0 Year</mat-option>
                         <mat-option *ngFor="let Y of fdYears" [value]="Y">
                             <span>{{Y == 1? Y+" year" : Y+" years"}}</span>
                         </mat-option>
@@ -142,7 +138,7 @@
                 </div>
                 <div class="col-md-4 p-0">
                     <mat-select formControlName="tenureM" class="form-control br-0 br-none" (change)="getDateYMD()">
-                        <mat-option value="0">Months</mat-option>
+                        <mat-option value="0">0 Month</mat-option>
                         <mat-option *ngFor="let M of fdMonths" [value]="M">
                             <span>{{M == 1? M+" Month" : M+" Months" }}</span>
                         </mat-option>
@@ -151,7 +147,7 @@
                 <div class="col-md-4 p-0">
                     <mat-form-field>
                         <mat-select formControlName="tenureD" class="form-control br-0" (change)="getDateYMD()">
-                            <mat-option value="0">Days</mat-option>
+                            <mat-option value="0">0 Day</mat-option>
                             <mat-option *ngFor="let D of fdDays" [value]="D">
                                 <span>{{D == 1? D+" Day" : D+" Days" }}</span>
                             </mat-option>

@@ -200,7 +200,7 @@ export class FixedDepositComponent implements OnInit {
       data = this.dataSource;
     }
     this.fixedDeposit = this.fb.group({
-      ownerName: [(!data) ? '' : data.ownerName , [Validators.required] ],
+      ownerName: [(!data.ownerName) ? '' : data.ownerName , [Validators.required] ],
       amountInvest: [(!data) ? '' : data.amountInvested, [Validators.required] ],
       commencementDate: [(!data) ? '' : new Date(data.commencementDate), [Validators.required] ],
       interestRate: [(!data) ? '' : data.interestRate, [Validators.required] ],
