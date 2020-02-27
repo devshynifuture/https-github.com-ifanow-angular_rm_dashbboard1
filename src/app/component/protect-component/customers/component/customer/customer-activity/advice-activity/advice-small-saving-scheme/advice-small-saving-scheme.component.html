@@ -571,14 +571,18 @@
                     class="pr-8">Suggest new PO SAVINGS</button>
         </div>
     </div>
-    <!-- <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="dataSource3"
+    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="posavingDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox *ngIf="isLoading==false"></mat-checkbox>
+                <mat-checkbox [checked]="posavingCount==posavingDataSource.data.length"
+                    [indeterminate]="posavingCount>0 && posavingCount<posavingDataSource.data.length"
+                    (change)="checkAll($event,posavingDataSource,'posaving')"
+                    *ngIf="isLoading==false && posavingDataSource.tableFlag"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false"></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false" [checked]="element.selected"
+                    (change)="checkSingle($event,element,posavingDataSource,'posaving')"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -591,7 +595,7 @@
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.name}}</div>
+                <div class="bar"> {{element.adviceToAsset.adviceDescription}}</div>
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
@@ -615,7 +619,7 @@
         <ng-container matColumnDef="adate">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Applicable date </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.adate}}</div>
+                <div class="bar"> {{element.applicableDate | date:'dd/MM/yyyy'}}</div>
             </td>
         </ng-container>
         <ng-container matColumnDef="icon">
@@ -632,8 +636,8 @@
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
-    </table> -->
-    <!-- <div *ngIf="goldDataSource.tableFlag==false">
+    </table>
+    <!-- <div *ngIf="posavingDataSource.tableFlag==false">
         <h4 class="text-center pt-44">No Data Found</h4>
     </div> -->
     <div class="row pt-32">
