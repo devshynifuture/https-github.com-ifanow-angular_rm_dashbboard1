@@ -17,8 +17,8 @@
             <p class="m-0 f-12 text-custom">In whose name is this asset</p>
         </div>
         <div class="col-md-5">
-          <app-owner-column (valueChange)='display($event)' [data]='ownerData'>
-          </app-owner-column>
+            <app-owner-column (valueChange)='display($event)' [data]='ownerData'>
+            </app-owner-column>
         </div>
     </div>
     <div class="row pt-40">
@@ -29,7 +29,8 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput autocomplete="off" formControlName="currentMarketValue" type="number" #institution maxlength="30" class="form-control rupess br-0">
+                    <input matInput autocomplete="off" formControlName="currentMarketValue" type="number" #institution
+                        maxlength="30" class="form-control rupess br-0">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -42,7 +43,8 @@
         <div class="col-md-3">
             <div class="form-group form-group_one mb-0">
                 <mat-form-field>
-                    <input matInput (focus)="balanceAsOn.open()" (input)="preventDefault($event)" autocomplete="off" formControlName="valueAsOn" class="form-control br-0" [matDatepicker]="balanceAsOn">
+                    <input matInput (focus)="balanceAsOn.open()" (input)="preventDefault($event)" autocomplete="off"
+                        formControlName="valueAsOn" class="form-control br-0" [matDatepicker]="balanceAsOn">
                     <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                     <mat-datepicker #balanceAsOn></mat-datepicker>
                     <mat-error>This field is required
@@ -58,7 +60,8 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput autocomplete="off" formControlName="amtInvested" type="number" #institution maxlength="30" class="form-control rupess br-0">
+                    <input matInput autocomplete="off" formControlName="amtInvested" type="number" #institution
+                        maxlength="30" class="form-control rupess br-0">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -71,7 +74,8 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput autocomplete="off" type="text" formControlName="portfolioName" #institution maxlength="30" class="form-control ruppes br-0">
+                    <input matInput autocomplete="off" type="text" formControlName="portfolioName" #institution
+                        maxlength="30" class="form-control ruppes br-0">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -83,7 +87,7 @@
         <div class="col-md-10">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
         </div>
-        <div class="col-md-2 pr-0">
+        <div class="col-md-2">
             <button mat-stroked-button class="br-0 btn-bottom right" (click)="submitStockData()">Save</button>
         </div>
     </div>

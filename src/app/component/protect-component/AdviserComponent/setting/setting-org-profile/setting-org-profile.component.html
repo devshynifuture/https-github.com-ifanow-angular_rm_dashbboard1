@@ -1,1 +1,54 @@
-<p>setting-org-profile works!</p>
+<div class="row pt-130">
+    <div class="col-md-12 text-right">
+        <button mat-stroked-button class="text-primary">Personal profile</button>
+        <button mat-button>Organization profile</button>
+    </div>
+</div>
+<div class="row pt-28">
+    <div class="col-md-12">
+        <h4 class="m-0">Personal profile</h4>
+    </div>
+</div>
+
+<div class="row pt-40 pb-20" id="ui-setting-profile">
+    <div class="col-xl-2"></div>
+    <div class="col-xl-8">
+        <mat-card class="b-a p-0">
+            <mat-card-header class="bg-grey lter p-24">
+                <div class="row w-100">
+                    <div class="col-md-9 pl-0">
+                        <h2 class="m-0">Archit Gupta</h2>
+                    </div>
+                    <div class="col-md-3 p-0 text-right">
+                        <button mat-stroked-button class="text-primary">ADMIN</button>
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon class="text-custom">more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item>Edit</button>
+                            <button mat-menu-item>Delete</button>
+                        </mat-menu>
+                    </div>
+                </div>
+            </mat-card-header>
+            <mat-card-content class="">
+                <div class="row">
+                    <div class="col-md-6 pb-28">
+                        <p class="f-12 m-0 text-custom pt-28"> EMAIL</p>
+                        <p class="m-0">archit.gupta@acmefinancial.com</p>
+                        <p class="f-12 m-0 text-custom pt-28"> MOBILE</p>
+                        <p class="m-0">+91 99874 12342</p>
+                        <p class="f-12 m-0 text-custom pt-28"> USERNAME</p>
+                        <p class="m-0">archit.gupta@acmefinancial.com</p>
+                    </div>
+                    <div class="col-md-6 bl-1 pb-28">
+                        <p class="f-12 m-0 text-custom pt-28 pb-16"> PROFILE PIC</p>
+                        <img src="/assets/images/icons.png" class="w-50">
+
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="col-xl-2"></div>
+</div>

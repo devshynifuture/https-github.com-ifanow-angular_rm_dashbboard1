@@ -13,41 +13,42 @@ import { EventService } from 'src/app/Data-service/event.service';
 })
 export class ArnRiaCredentialsComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'aid', 'mid', 'apip', 'euin', 'set', 'icons'];
-  dataSource : Array<any> = [{}, {}, {}];
+  dataSource: Array<any> = [{}, {}, {}];
   advisorId: any;
   brokerCredentials: any;
   noData: string;
-  constructor(private eventService : EventService,private onlineTransact: OnlineTransactionService,private utilService: UtilService, private subInjectService: SubscriptionInject) { }
+  constructor(private eventService: EventService, private onlineTransact: OnlineTransactionService, private utilService: UtilService, private subInjectService: SubscriptionInject) { }
   isLoading = false;
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
     this.getBSECredentials()
     this.advisorId = AuthService.getAdvisorId()
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
-  getBSECredentials(){
+  getBSECredentials() {
     this.isLoading = true;
     let obj = {
-      advisorId:414,
-      onlyBrokerCred : true
+      advisorId: this.advisorId,
+      onlyBrokerCred: true
     }
-    console.log('encode',obj)
+    console.log('encode', obj)
     this.onlineTransact.getBSECredentials(obj).subscribe(
       data => this.getBSECredentialsRes(data)
     );
   }
-  getBSECredentialsRes(data){
+  getBSECredentialsRes(data) {
     this.getBSESubBrokerCredentials()
-    console.log('getBSECredentialsRes',data)
+    console.log('getBSECredentialsRes', data)
     this.brokerCredentials = data
   }
-  getBSESubBrokerCredentials(){
+  getBSESubBrokerCredentials() {
     let obj = {
-      advisorId:414,
-      onlyBrokerCred : true
+      advisorId: this.advisorId,
+      onlyBrokerCred: true
     }
-    console.log('encode',obj)
+    console.log('encode', obj)
     this.onlineTransact.getBSESubBrokerCredentials(obj).subscribe(
       data => this.getBSESubBrokerCredentialsRes(data), (error) => {
         this.eventService.showErrorMessage(error);
@@ -56,25 +57,25 @@ export class ArnRiaCredentialsComponent implements OnInit {
       }
     );
   }
-  getBSESubBrokerCredentialsRes(data){
+  getBSESubBrokerCredentialsRes(data) {
     this.isLoading = false;
-    if(data == undefined || data.length == 0){
+    if (data == undefined || data.length == 0) {
       this.noData = "No scheme found";
       this.dataSource = [];
-    }else{
-      console.log('getBSESubBrokerCredentialsRes',data)
-      this.brokerCredentials.forEach(function(ad){
-        var subBrokerMatch = data.find(function(tm){
-        return ad.id == tm.tpUserCredentialId
-      })
-      if(subBrokerMatch && subBrokerMatch.euin){
-        ad.euin = subBrokerMatch.euin
-        ad.tp_nse_subbroker_mapping_id = subBrokerMatch.tpUserCredentialId
-        ad.subBrokerCode = subBrokerMatch.subBrokerCode
-      }
+    } else {
+      console.log('getBSESubBrokerCredentialsRes', data)
+      this.brokerCredentials.forEach(function (ad) {
+        var subBrokerMatch = data.find(function (tm) {
+          return ad.id == tm.tpUserCredentialId
+        })
+        if (subBrokerMatch && subBrokerMatch.euin) {
+          ad.euin = subBrokerMatch.euin
+          ad.tp_nse_subbroker_mapping_id = subBrokerMatch.tpUserCredentialId
+          ad.subBrokerCode = subBrokerMatch.subBrokerCode
+        }
       })
       this.dataSource = this.brokerCredentials
-      console.log('subBrokerMatch',this.dataSource)
+      console.log('subBrokerMatch', this.dataSource)
     }
   }
   openAddCredential(data, flag) {

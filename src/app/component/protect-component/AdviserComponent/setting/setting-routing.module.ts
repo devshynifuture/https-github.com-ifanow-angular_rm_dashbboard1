@@ -7,6 +7,8 @@ import { SettingPlanComponent } from './setting-plan/setting-plan.component';
 import { SettingUserRolesComponent } from './setting-user-roles/setting-user-roles.component';
 import { SettingBackupComponent } from './setting-backup/setting-backup.component';
 import { SettingBackofficeComponent } from './setting-backoffice/setting-backoffice.component';
+import { SettingPreferenceComponent } from './setting-preference/setting-preference.component';
+import { SettingActivityComponent } from './setting-activity/setting-activity.component';
 
 
 const routes: Routes = [
@@ -19,9 +21,17 @@ const routes: Routes = [
         component: SettingOrgProfileComponent
       },
       {
-        path: 'crm',
-        component: SettingCrmComponent
+        path: 'preference',
+        component: SettingPreferenceComponent
       },
+      {
+        path: 'activity',
+        component: SettingActivityComponent
+      },
+      // {
+      //   path: 'crm',
+      //   component: SettingCrmComponent
+      // },
       {
         path: 'plan',
         loadChildren: () => import('src/app/component/protect-component/AdviserComponent/setting/setting-plan/setting-plan/setting-plan.module').then(m => m.SettingPlanModule)

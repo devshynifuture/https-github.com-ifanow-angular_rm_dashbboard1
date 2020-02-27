@@ -79,7 +79,7 @@ export class PoRdSchemeComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: this.clientId,
     };
-    this.dataSource.data = [{}, {}, {}];
+    // this.dataSource.data = [{}, {}, {}];
     this.cusService.getSmallSavingSchemePORDData(obj).subscribe(
       data => this.getPoRdSchemedataResponse(data), (error) => {
         this.eventService.showErrorMessage(error);

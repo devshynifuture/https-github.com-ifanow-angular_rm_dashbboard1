@@ -123,7 +123,7 @@ export class StpTransactionComponent implements OnInit {
   }
   getSchemeListTranfer(value) {
     this.showSpinnerTrans = true
-    if(this.stpTransaction.get('transferIn').invalid){
+    if (this.stpTransaction.get('transferIn').invalid) {
       this.showSpinnerTrans = false
       Object.assign(this.transactionSummary, { schemeNameTranfer: '' });
     }
@@ -132,7 +132,7 @@ export class StpTransactionComponent implements OnInit {
         searchQuery: value,
         bseOrderType: 'ORDER',
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-        advisorId: 414,
+        advisorId: this.getDataSummary.defaultClient.advisorId,
         tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
         familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
         clientId: this.getDataSummary.defaultClient.clientId,
@@ -144,7 +144,7 @@ export class StpTransactionComponent implements OnInit {
       this.onlineTransact.getNewSchemes(obj).subscribe(
         data => this.getNewSchemesRes(data), (error) => {
           this.showSpinnerTrans = false
-          this.stpTransaction.get('transferIn').setErrors({'setValue':error.message});
+          this.stpTransaction.get('transferIn').setErrors({ 'setValue': error.message });
           this.stpTransaction.get('transferIn').markAsTouched();
           // this.eventService.showErrorMessage(error);
         }
@@ -158,18 +158,18 @@ export class StpTransactionComponent implements OnInit {
   }
   getSchemeList(value) {
     this.showSpinner = true
-    if(this.stpTransaction.get('schemeStp').invalid){
+    if (this.stpTransaction.get('schemeStp').invalid) {
       this.showSpinner = false
       Object.assign(this.transactionSummary, { schemeName: '' });
       Object.assign(this.transactionSummary, { folioNumber: '' });
-      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;//if scheme not present then min amt is 0
+      (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0;//if scheme not present then min amt is 0
     }
     if (this.selectScheme == 2 && value.length > 2) {
       let obj = {
         searchQuery: value,
         bseOrderType: 'ORDER',
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-        advisorId: 414,
+        advisorId: this.getDataSummary.defaultClient.advisorId,
         tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
         familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
         clientId: this.getDataSummary.defaultClient.clientId,
@@ -181,9 +181,9 @@ export class StpTransactionComponent implements OnInit {
       this.onlineTransact.getExistingSchemes(obj).subscribe(
         data => this.getExistingSchemesRes(data), (error) => {
           this.showSpinner = false
-          this.stpTransaction.get('schemeStp').setErrors({'setValue':error.message});
+          this.stpTransaction.get('schemeStp').setErrors({ 'setValue': error.message });
           this.stpTransaction.get('schemeStp').markAsTouched();
-          (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;
+          (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0;
           // this.eventService.showErrorMessage(error);
         }
       );
@@ -474,7 +474,7 @@ export class StpTransactionComponent implements OnInit {
       if (this.stpTransaction.get('reinvest').invalid) {
         this.stpTransaction.get('reinvest').markAsTouched();
       }
-    }else if (this.stpTransaction.get('schemeStp').invalid) {
+    } else if (this.stpTransaction.get('schemeStp').invalid) {
       this.stpTransaction.get('schemeStp').markAsTouched();
       return;
     } else if (this.stpTransaction.get('investmentAccountSelection').invalid) {
@@ -510,7 +510,7 @@ export class StpTransactionComponent implements OnInit {
           bankDetailId: this.bankDetails.id,
           toIsin: this.schemeDetailsTransfer.isin,
           schemeName: this.scheme.schemeName,
-          mandateId: (this.achMandateNSE)?this.achMandateNSE.id:null,
+          mandateId: (this.achMandateNSE) ? this.achMandateNSE.id : null,
           productDbId: this.schemeDetails.id,
           frequencyType: this.frequency,
           startDate: Number(new Date(this.stpTransaction.controls.date.value.replace(/"/g, ""))),

@@ -73,6 +73,10 @@
     background-color: #2680EB !important;
 }
 
+.mat-selected{
+  color:#008FFF !important; 
+}
+
 .main-details {
     .mat-form-field,
     .mat-option {
@@ -210,8 +214,16 @@
     }
 }
 
+#ui-dashboard {
+    .h-513 {
+        height: 513px;
+        overflow: auto !important;
+    }
+}
+
 #ui-subscriptions,
-#uiTransactions {
+#uiTransactions,
+#ui-setting {
     position: fixed;
     margin-top: 4px;
     float: right;
@@ -222,6 +234,53 @@
     background: #fff !important;
     box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2), 0px 1px 0px rgba(0, 0, 0, 0.12), 0px 3px 3px rgba(0, 0, 0, 0.14);
     height: 60px;
+}
+
+#ui-transactions {
+    h3.top-head {
+        padding-left: 20px !important;
+        padding-top: 20px !important;
+    }
+    .mat-tab-header {
+        border-bottom: 0px;
+    }
+    li {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    li:after {
+        @include breadcrumbafter;
+    }
+    li:last-child:after {
+        content: '';
+    }
+    a {
+        @include breadcrumblinks;
+    }
+    .mat-tab-label {
+        @include tab-label;
+        padding: 0px 15px !important;
+        margin-right: 1px !important;
+    }
+    .actions {
+        color: #757575;
+        text-align: right;
+    }
+    .mat-progress-bar-fill::after {
+        background-color: $white;
+    }
+    .mat-tab-header {
+        position: fixed;
+        margin-top: 4px;
+        float: right;
+        width: 100%;
+        padding-right: 0px;
+        // right: 0;
+        z-index: 101;
+        background: #fff !important;
+        box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2), 0px 1px 0px rgba(0, 0, 0, 0.12), 0px 3px 3px rgba(0, 0, 0, 0.14);
+        height: 60px;
+    }
 }
 
 #ui-transactions {
@@ -341,6 +400,7 @@
 }
 
 #ui-subscriptions,
+#ui-setting,
 #ui-plans,
 #ui-transactions,
 #ui-settingsHeaders,
@@ -451,15 +511,15 @@
     background: #fff;
 }
 
-#ui-subscriptions .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
-    display: none;
-}
-
-#uiTransactions .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
-    display: none;
+#ui-subscriptions,
+#uiTransactions {
+    .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
+        display: none;
+    }
 }
 
 #ui-subscriptions,
+#ui-setting,
 #uiTransactions {
     .mat-tab-link {
         color: #595252 !important;
@@ -1459,5 +1519,5 @@ textarea {
 }
 
 .borderRadio {
-    outline: 1px solid rgba(25, 25, 25, 0.32)
+    border: 1px solid rgba(25, 25, 25, 0.32) !important;
 }

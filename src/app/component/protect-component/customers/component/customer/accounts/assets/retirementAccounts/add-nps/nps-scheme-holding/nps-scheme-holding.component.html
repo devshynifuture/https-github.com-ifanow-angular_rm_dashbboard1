@@ -1,7 +1,7 @@
 <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20">ADD SCHEME LEVEL HOLDINGS</h4>
+            <h4 class="mb-0 wrapper-20">Add Scheme level holdins</h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -18,7 +18,7 @@
             <h5 class="m-0 f-14">Owner</h5>
             <mat-form-field class="w-100">
                 <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData' formControlName="ownerName" class="form-control br-0">
-                    <mat-option value=''>Search family members</mat-option>
+                    <mat-option value=''>Select family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
                         <span>{{f.userName}}</span>
                     </mat-option>
@@ -233,7 +233,7 @@
             <i class="material-icons text-custom f-20 c-p" (click)="addFutureContry()">
                 add
             </i>
-            <i class="material-icons text-custom f-20 c-p pl-10 right text-right" (click)="removeFutureContry(i)">
+            <i class="material-icons text-custom f-20 c-p pl-10 right text-right" (click)="removeFutureContry()">
                 remove
             </i>
 
@@ -241,7 +241,7 @@
 
     </div>
     <div class=" pt-24" formArrayName="nominees">
-        <div class="row" *ngFor="let creds of nominee.controls; let i = index" [formGroupName]="i">
+        <div class="row pb-20" *ngFor="let creds of nominee.controls; let i = index" [formGroupName]="i">
             <div class="col-md-4 text-right pr-0">
                 <h5 class="m-0 pt-8">Nominee{{i+1}}</h5>
             </div>
@@ -256,6 +256,7 @@
                                         <span>{{item.userName}}</span>
                                     </mat-option>
                                 </mat-autocomplete>
+                                <mat-hint align="start" class="f-12">Optional</mat-hint>
                             </mat-form-field>
                         </div>
                         <div class="col-md-4 pl-0 iconPetage">
@@ -263,15 +264,9 @@
                                 <input matInput maxlength="30" class="form-control br-0 percentage" formControlName="sharePercentage">
                             </mat-form-field>
                         </div>
-
-
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <p class="f-12 text-custom pt-4 mb-0">Optional</p>
-                    </div>
-                </div>
+
             </div>
 
             <div class="col-md-1 pl-0 pt-10" *ngIf="i==0">

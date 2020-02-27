@@ -137,7 +137,7 @@ export class RedemptionTransactionComponent implements OnInit {
       searchQuery: value,
       bseOrderType: 'ORDER',
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-      advisorId: 414,
+      advisorId: this.getDataSummary.defaultClient.advisorId,
       showOnlyNonZero: true,
       tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,

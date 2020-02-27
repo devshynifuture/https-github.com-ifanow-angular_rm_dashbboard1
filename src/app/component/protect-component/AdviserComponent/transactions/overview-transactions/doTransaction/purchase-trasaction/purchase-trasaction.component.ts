@@ -84,6 +84,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.transactionSummary = {}
     this.childTransactions = []
     this.getdataForm(this.inputData);
+    Object.assign(this.transactionSummary, { clientId: this.inputData.clientId })
     Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
     Object.assign(this.transactionSummary, { paymentMode: 1 });
     Object.assign(this.transactionSummary, { allEdit: true });
@@ -114,7 +115,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       searchQuery: value,
       bseOrderType: 'ORDER',
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-      advisorId: 414,
+      advisorId: this.getDataSummary.defaultClient.advisorId,
       tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
       clientId: this.getDataSummary.defaultClient.clientId,

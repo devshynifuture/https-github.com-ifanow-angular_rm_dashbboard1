@@ -7,6 +7,7 @@ import { OnlineTransactionService } from '../../../online-transaction.service';
 import { ProcessTransactionService } from '../process-transaction.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-swp-transaction',
@@ -67,10 +68,12 @@ export class SwpTransactionComponent implements OnInit {
   multiTransact = false;
   childTransactions = [];
   displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount'];
+  advisorId: any;
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private processTransaction: ProcessTransactionService, private fb: FormBuilder, private eventService: EventService) { }
   @Input()
   set data(data) {
+    this.advisorId = AuthService.getAdvisorId();
     this.inputData = data;
     this.transactionType = data.transactionType
     this.selectedFamilyMember = data.selectedFamilyMember
@@ -99,18 +102,18 @@ export class SwpTransactionComponent implements OnInit {
   }
   getSchemeList(value) {
     this.showSpinner = true
-    if(this.swpTransaction.get('schemeSwp').invalid){
+    if (this.swpTransaction.get('schemeSwp').invalid) {
       this.showSpinner = false;
       Object.assign(this.transactionSummary, { schemeName: '' });
       Object.assign(this.transactionSummary, { folioNumber: '' });
-      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;//if scheme not present then min amt is 0
+      (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0;//if scheme not present then min amt is 0
     }
     if (this.selectScheme == 2 && value.length > 2) {
       let obj = {
         searchQuery: value,
         bseOrderType: 'ORDER',
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-        advisorId: 414,
+        advisorId: this.advisorId,
         tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
         familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
         clientId: this.getDataSummary.defaultClient.clientId,
@@ -121,9 +124,9 @@ export class SwpTransactionComponent implements OnInit {
       this.onlineTransact.getExistingSchemes(obj).subscribe(
         data => this.getExistingSchemesRes(data), (error) => {
           this.showSpinner = false;
-          this.swpTransaction.get('schemeSwp').setErrors({'setValue':error.message});
+          this.swpTransaction.get('schemeSwp').setErrors({ 'setValue': error.message });
           this.swpTransaction.get('schemeSwp').markAsTouched();
-          (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;
+          (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0;
           // this.eventService.showErrorMessage(error);
         }
       );
@@ -389,10 +392,10 @@ export class SwpTransactionComponent implements OnInit {
     } else if (this.swpTransaction.get('investmentAccountSelection').invalid) {
       this.swpTransaction.get('investmentAccountSelection').markAsTouched();
       return;
-    }  else if (this.swpTransaction.get('frequency').invalid) {
+    } else if (this.swpTransaction.get('frequency').invalid) {
       this.swpTransaction.get('frequency').markAsTouched();
       return;
-    }else if (this.swpTransaction.get('employeeContry').invalid) {
+    } else if (this.swpTransaction.get('employeeContry').invalid) {
       this.swpTransaction.get('employeeContry').markAsTouched();
       return;
     } else if (this.swpTransaction.get('date').invalid) {
@@ -401,10 +404,10 @@ export class SwpTransactionComponent implements OnInit {
     } else if (this.swpTransaction.get('tenure').invalid) {
       this.swpTransaction.get('tenure').markAsTouched();
       return;
-    }else if (this.swpTransaction.get('installment').invalid) {
+    } else if (this.swpTransaction.get('installment').invalid) {
       this.swpTransaction.get('installment').markAsTouched();
       return;
-    }  else {
+    } else {
       this.multiTransact = true
       if (this.scheme != undefined && this.schemeDetails != undefined && this.swpTransaction != undefined) {
         let obj = {
