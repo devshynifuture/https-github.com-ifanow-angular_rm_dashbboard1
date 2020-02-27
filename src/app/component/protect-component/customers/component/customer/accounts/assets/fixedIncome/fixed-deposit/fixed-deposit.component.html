@@ -77,7 +77,7 @@
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <input (click)="picker.open()" matInput formControlName="commencementDate" [max]="maxDate" [matDatepicker]="picker" readonly>
+                <input (click)="picker.open()" (dateChange)="checkDate()" matInput formControlName="commencementDate" [max]="maxDate" [matDatepicker]="picker" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error class="f-12 pt-4">
@@ -108,21 +108,21 @@
         </div>
         <div class="col-md-6 pr-0">
             <mat-radio-group aria-label="Select an option" id="custom-radio" formControlName="maturity">
-                <mat-radio-button value="1" class="b-ua radioBtn text-custom" [ngClass]="{'b-a-custom': fixedDeposit.get('maturity').value==1,'text-primary':fixedDeposit.get('maturity').value==1,'b-a':fixedDeposit.get('maturity').value==2}" (click)="haveMaturity(isMaturity = false)">I have tenure
+                <mat-radio-button value="1" class="b-ua radioBtn text-custom" [checked]='true' [ngClass]="{'b-a-custom': fixedDeposit.get('maturity').value==1,'text-primary':fixedDeposit.get('maturity').value==1,'b-a':fixedDeposit.get('maturity').value==2}" (click)="haveMaturity(false)">I have tenure
                 </mat-radio-button>
                 <!-- <mat-radio-button value="2" class="b-a-custom text-primary" (click)="haveMaturity(isMaturity = true)">I
     have maturity date
     </mat-radio-button> -->
-                <mat-radio-button class="classBlue radioBtn" value="2" [checked]='true' [ngClass]="{'b-a-custom': fixedDeposit.get('maturity').value==2,'text-primary':fixedDeposit.get('maturity').value==2,'b-a text-custom':fixedDeposit.get('maturity').value==1}" (click)="haveMaturity(isMaturity = true)">I have maturity date
+                <mat-radio-button class="classBlue radioBtn" value="2"  [ngClass]="{'b-a-custom': fixedDeposit.get('maturity').value==2,'text-primary':fixedDeposit.get('maturity').value==2,'b-a text-custom':fixedDeposit.get('maturity').value==1}" (click)="haveMaturity(true)">I have maturity date
                 </mat-radio-button>
             </mat-radio-group>
-            <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isMaturity && getFormControl().maturity.invalid || getFormControl().maturity.touched && getFormControl().maturity.invalid)}">
+            <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(!tenureValid && getFormControl().maturity.invalid || getFormControl().maturity.touched && getFormControl().maturity.invalid)}">
                 This field is required
             </mat-error>
 
         </div>
     </div>
-    <div class="row pt-24" *ngIf="showTenure == true">
+    <div class="row pt-24" *ngIf="showTenure">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-16">Tenure</h5>
         </div>
@@ -161,14 +161,14 @@
         </div>
     </div>
 
-    <div class="row pt-24" [hidden]="showTenure == true">
+    <div class="row pt-24" *ngIf="!showTenure">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-16">Maturity date</h5>
         </div>
         <div class="col-md-3 pr-0">
             <div class="form-group mb-0 d-flex">
                 <mat-form-field>
-                    <input (click)="picker1.open()" matInput formControlName="maturityDate" [matDatepicker]="picker1" readonly>
+                    <input (click)="picker1.open()" (dateChange)="checkDate()" matInput formControlName="maturityDate" [min]="validMaturity" [matDatepicker]="picker1" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
                     <mat-error class="f-12 pt-4" >
