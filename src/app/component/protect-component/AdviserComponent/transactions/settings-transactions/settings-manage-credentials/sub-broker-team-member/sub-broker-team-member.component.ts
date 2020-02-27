@@ -3,6 +3,7 @@ import { AddSubBrokerCredentialsComponent } from './add-sub-broker-credentials/a
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 import { OnlineTransactionService } from '../../../online-transaction.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-sub-broker-team-member',
@@ -11,20 +12,22 @@ import { OnlineTransactionService } from '../../../online-transaction.service';
 })
 export class SubBrokerTeamMemberComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'code', 'euin', 'icons'];
-  dataSource : Array<any> = [{}, {}, {}];
+  dataSource: Array<any> = [{}, {}, {}];
+  advisorId: any;
   constructor(private onlineTransact: OnlineTransactionService, private utilService: UtilService, private subInjectService: SubscriptionInject) { }
   isLoading = false;
 
 
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
     this.getBSESubBrokerCredentials()
   }
 
   getBSESubBrokerCredentials() {
     this.isLoading = true;
     let obj = {
-      advisorId: 414,
+      advisorId: this.advisorId,
       onlyBrokerCred: true
     }
     console.log('encode', obj)
