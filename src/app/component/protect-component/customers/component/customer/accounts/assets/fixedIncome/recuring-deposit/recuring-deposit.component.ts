@@ -8,7 +8,7 @@ import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import * as moment from 'moment';
 import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService,ValidatorType } from 'src/app/services/util.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 
 
 @Component({
@@ -69,6 +69,7 @@ export class RecuringDepositComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getdataForm(this.inputData);
@@ -79,7 +80,7 @@ export class RecuringDepositComponent implements OnInit {
 
 
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' ,refreshRequired:flag})
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag })
   }
 
   display(value) {
@@ -87,8 +88,8 @@ export class RecuringDepositComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
-  ownerDetails(value){
-    this.familyMemberId=value.id;
+  ownerDetails(value) {
+    this.familyMemberId = value.id;
   }
   lisNominee(value) {
     console.log(value)
@@ -110,7 +111,7 @@ export class RecuringDepositComponent implements OnInit {
   getDateYMD() {
     this.tenure = moment(this.recuringDeposit.controls.commencementDate.value).add(this.recuringDeposit.controls.tenure.value, 'months');
     this.getDate = this.datePipe.transform(this.tenure, 'yyyy-MM-dd')
-    console.log('recurring deposit',this.getDate)
+    console.log('recurring deposit', this.getDate)
     return this.getDate;
   }
 
@@ -127,7 +128,7 @@ export class RecuringDepositComponent implements OnInit {
       compound: [(data.interestCompounding == undefined) ? '' : (data.interestCompounding) + "", [Validators.required]],
       linkBankAc: [(data == undefined) ? '' : data.linkedBankAccount, [Validators.required]],
       tenure: [(data == undefined) ? '' : data.tenure, [Validators.required, Validators.min(0), Validators.max(120)]],
-      description: [(data == undefined  ) ? '' : data.description, [Validators.required]],
+      description: [(data == undefined) ? '' : data.description, [Validators.required]],
       bankName: [(data == undefined) ? '' : data.bankName, [Validators.required]],
       ownerType: [(data == undefined) ? '' : (data.ownershipType) + "", [Validators.required]],
       rdNo: [(data == undefined) ? '' : data.rdNumber, [Validators.required]],
@@ -152,14 +153,14 @@ export class RecuringDepositComponent implements OnInit {
   }
 
   saveRecuringDeposit() {
-    if(this.recuringDeposit.controls.commencementDate.value!=null || this.recuringDeposit.controls.tenure.value!=null){
+    if (this.recuringDeposit.controls.commencementDate.value != null || this.recuringDeposit.controls.tenure.value != null) {
       this.tenure = this.getDateYMD()
       this.maturityDate = this.tenure
     }
     if (this.recuringDeposit.get('ownerName').invalid) {
       this.recuringDeposit.get('ownerName').markAsTouched();
       return;
-     } else if (this.recuringDeposit.get('monthlyContribution').invalid) {
+    } else if (this.recuringDeposit.get('monthlyContribution').invalid) {
       this.recuringDeposit.get('monthlyContribution').markAsTouched();
       this.isMonthlyContribution = true;
       return;
@@ -194,7 +195,7 @@ export class RecuringDepositComponent implements OnInit {
         commencementDate: this.datePipe.transform(this.recuringDeposit.controls.commencementDate.value, 'yyyy-MM-dd'),
         linkedBankAccount: this.recuringDeposit.controls.linkBankAc.value,
         description: this.recuringDeposit.controls.description.value,
-        tenure:this.recuringDeposit.controls.tenure.value,
+        tenure: this.recuringDeposit.controls.tenure.value,
         maturityDate: this.maturityDate,
         bankName: this.recuringDeposit.controls.bankName.value,
         rdNumber: this.recuringDeposit.controls.rdNo.value,
@@ -236,17 +237,17 @@ export class RecuringDepositComponent implements OnInit {
       this.recuringDeposit.get('interestRate').setValue(event.target.value);
     }
   }
-  getAdviceRdRes(data){
+  getAdviceRdRes(data) {
     console.log(data);
   }
   addrecuringDepositRes(data) {
     console.log('addrecuringDepositRes', data)
     this.event.openSnackBar('Added successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data ,refreshRequired:true})
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }
 
   editrecuringDepositRes(data) {
     this.event.openSnackBar('Updated successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data ,refreshRequired:true})
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }
 }
