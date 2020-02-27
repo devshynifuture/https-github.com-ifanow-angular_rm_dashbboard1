@@ -40,6 +40,15 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
   posavingDataSpurce: any;
   pordDataSpurce: any;
   pomisDataSpurce: any;
+  ppfCount: any;
+  nscCount: any;
+  ssyCount: any;
+  kvpCount: any;
+  scssCount: any;
+  posavingCount: any;
+  potdCount: any;
+  pomisCount: any;
+  pordCount: any;
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
   allAdvice = false
   ngOnInit() {
@@ -95,8 +104,17 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
     this.selectedAssetId = selectedIdList;
     // console.log(this.selectedAssetId);
   }
-  checkSingle(flag, selectedData) {
-    (flag.checked) ? this.selectedAssetId.push(selectedData.id) : this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
+  checkSingle(flag, selectedData, tableData, tableFlag) {
+    if (flag.checked) {
+      selectedData.selected = true;
+      this.selectedAssetId.push(selectedData.id)
+    }
+    else {
+      selectedData.selected = false
+      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1);
+    }
+    let countValue = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
+    (tableFlag == "ppf") ? this.ppfCount = countValue : (tableFlag == "nsc") ? this.nscCount = countValue : (tableFlag == 'ssy') ? this.ssyCount = countValue : (tableFlag == 'kvp') ? this.kvpCount = countValue : (tableFlag == 'scss') ? this.scssCount = countValue : (tableFlag == 'pord') ? this.pordCount = countValue : this.pomisCount = countValue;
     console.log(this.selectedAssetId)
   }
   openAddPPF(data, value) {
@@ -303,65 +321,3 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
     );
   }
 }
-export interface PeriodicElement1 {
-  name: string;
-  desc: string;
-  advice: string;
-  adate: string;
-  astatus: string;
-
-}
-
-const ELEMENT_DATA1: PeriodicElement1[] = [
-  { name: 'Rahul Jain', desc: '1', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-  { name: 'Rahul Jain', desc: '2', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-
-];
-export interface PeriodicElement {
-  name: string;
-  desc: string;
-  cvalue: string;
-  empcon: string;
-  emprcon: string;
-  advice: string;
-  adate: string;
-  astatus: string;
-
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { name: 'Rahul Jain', desc: '1', cvalue: 'This is', empcon: '54000', emprcon: '23123', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-  { name: 'Rahul Jain', desc: '2', cvalue: 'This is', empcon: '54000', emprcon: '23123', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-
-];
-export interface PeriodicElement2 {
-  name: string;
-  desc: string;
-  cvalue: string;
-  emprcon: string;
-  advice: string;
-  adate: string;
-  astatus: string;
-
-}
-
-const ELEMENT_DATA2: PeriodicElement2[] = [
-  { name: 'Rahul Jain', desc: '1', cvalue: 'This is', emprcon: '23123', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-  { name: 'Rahul Jain', desc: '2', cvalue: 'This is', emprcon: '23123', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-
-];
-export interface PeriodicElement4 {
-  name: string;
-  desc: string;
-  cvalue: string;
-  advice: string;
-  adate: string;
-  astatus: string;
-
-}
-
-const ELEMENT_DATA4: PeriodicElement4[] = [
-  { name: 'Rahul Jain', desc: '1', cvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-  { name: 'Rahul Jain', desc: '2', cvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-
-];

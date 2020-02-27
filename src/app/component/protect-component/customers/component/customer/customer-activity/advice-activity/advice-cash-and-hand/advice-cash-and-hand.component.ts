@@ -24,6 +24,8 @@ export class AdviceCashAndHandComponent implements OnInit {
   bankAccDataSource: any = new MatTableDataSource();
   cashInHandDataSource: any = new MatTableDataSource();
   selectedAssetId: any = [];
+  bankCount: number;
+  cashCount: number;
 
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
 
@@ -40,8 +42,17 @@ export class AdviceCashAndHandComponent implements OnInit {
     this.selectedAssetId = selectedIdList;
     console.log(this.selectedAssetId);
   }
-  checkSingle(flag, selectedData) {
-    (flag.checked) ? this.selectedAssetId.push(selectedData.id) : this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
+  checkSingle(flag, selectedData, tableData, tableFlag) {
+    if (flag.checked) {
+      selectedData.selected = true;
+      this.selectedAssetId.push(selectedData.id)
+    }
+    else {
+      selectedData.selected = false
+      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
+    }
+    let countValue = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
+    (tableFlag == 'bank') ? this.bankCount = countValue : this.cashCount = countValue
     console.log(this.selectedAssetId)
   }
   getAdviceByAsset() {

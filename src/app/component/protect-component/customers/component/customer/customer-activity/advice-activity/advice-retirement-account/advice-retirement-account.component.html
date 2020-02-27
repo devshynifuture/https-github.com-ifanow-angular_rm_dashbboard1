@@ -186,7 +186,7 @@
             </mat-menu>
         </div>
     </div>
-    <table matSort mat-table appSkeletonLoading *ngIf="npsDataSource" [appSkeletonLoading]="isLoading"
+    <table *ngIf="npsDataSource" matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading"
         [dataSource]="npsDataSource" class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef>
