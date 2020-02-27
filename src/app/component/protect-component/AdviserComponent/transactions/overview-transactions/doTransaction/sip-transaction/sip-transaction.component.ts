@@ -100,7 +100,7 @@ export class SipTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { enteredAmount: value });
   }
   selectExistingOrNew(value) {
-    if(value=="2"){
+    if (value == "2") {
       Object.assign(this.transactionSummary, { folioNumber: '' });
     }
     this.ExistingOrNew = value
@@ -112,17 +112,17 @@ export class SipTransactionComponent implements OnInit {
   }
   getSchemeList(value) {
     this.showSpinner = true
-    if(this.sipTransaction.get('schemeSip').invalid){
+    if (this.sipTransaction.get('schemeSip').invalid) {
       this.showSpinner = false
       Object.assign(this.transactionSummary, { schemeName: '' });
       Object.assign(this.transactionSummary, { folioNumber: '' });
-      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;//if scheme not present then min amt is 0
+      (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0;//if scheme not present then min amt is 0
     }
     let obj = {
       searchQuery: value,
       bseOrderType: 'ORDER',
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-      advisorId: 414,
+      advisorId: this.getDataSummary.defaultClient.advisorId,
       tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
       clientId: this.getDataSummary.defaultClient.clientId,
@@ -130,14 +130,14 @@ export class SipTransactionComponent implements OnInit {
       holdingType: this.getDataSummary.defaultClient.holdingType,
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
     }
-    if(value.length > 2){
+    if (value.length > 2) {
       if (this.selectScheme == 2) {
         this.onlineTransact.getNewSchemes(obj).subscribe(
           data => this.getNewSchemesRes(data), (error) => {
             this.showSpinner = false
-            this.sipTransaction.get('schemeSip').setErrors({'setValue':error.message});
+            this.sipTransaction.get('schemeSip').setErrors({ 'setValue': error.message });
             this.sipTransaction.get('schemeSip').markAsTouched();
-            (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;
+            (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0;
             // this.eventService.showErrorMessage(error);
           }
         );
@@ -145,9 +145,9 @@ export class SipTransactionComponent implements OnInit {
         this.onlineTransact.getExistingSchemes(obj).subscribe(
           data => this.getExistingSchemesRes(data), (error) => {
             this.showSpinner = false
-            this.sipTransaction.get('schemeSip').setErrors({'setValue':error.message});
+            this.sipTransaction.get('schemeSip').setErrors({ 'setValue': error.message });
             this.sipTransaction.get('schemeSip').markAsTouched();
-            (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;
+            (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0;
             // this.eventService.showErrorMessage(error);
           }
         );
@@ -475,14 +475,14 @@ export class SipTransactionComponent implements OnInit {
       return;
     } else {
       this.multiTransact = true
-      if(this.scheme != undefined && this.schemeDetails != undefined && this.sipTransaction != undefined){
+      if (this.scheme != undefined && this.schemeDetails != undefined && this.sipTransaction != undefined) {
         let obj = {
           amc: this.scheme.amcId,
           folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
           productCode: this.schemeDetails.schemeCode,
           dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
           orderVal: this.sipTransaction.controls.employeeContry.value,
-          bankDetailId: (this.bankDetails)?this.bankDetails.id:null,
+          bankDetailId: (this.bankDetails) ? this.bankDetails.id : null,
           schemeName: this.scheme.schemeName,
           mandateId: this.achMandateNSE.id,
           noOfInstallments: this.sipTransaction.controls.installment.value,
@@ -504,7 +504,7 @@ export class SipTransactionComponent implements OnInit {
         this.sipTransaction.controls.investmentAccountSelection.reset()
         this.sipTransaction.controls.schemeSip.reset()
       }
-     
+
     }
   }
 }

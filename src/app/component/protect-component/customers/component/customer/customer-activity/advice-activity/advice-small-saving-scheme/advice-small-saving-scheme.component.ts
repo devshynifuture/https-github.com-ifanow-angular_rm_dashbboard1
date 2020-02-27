@@ -40,6 +40,15 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
   posavingDataSpurce: any;
   pordDataSpurce: any;
   pomisDataSpurce: any;
+  ppfCount: any;
+  nscCount: any;
+  ssyCount: any;
+  kvpCount: any;
+  scssCount: any;
+  posavingCount: any;
+  potdCount: any;
+  pomisCount: any;
+  pordCount: any;
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
   allAdvice = false
   ngOnInit() {
@@ -89,14 +98,52 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
     this.potdDataSource['tableFlag'] = (data.PO_TD.length == 0) ? false : true;
     console.log(data)
   }
-  checkAll(flag, tableDataList) {
+  checkAll(flag, tableDataList, tableFlag) {
     console.log(flag, tableDataList)
-    const { dataList, selectedIdList } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
+    const { selectedIdList, count } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
     this.selectedAssetId = selectedIdList;
+    this.getFlagCount(tableFlag, count)
     // console.log(this.selectedAssetId);
   }
-  checkSingle(flag, selectedData) {
-    (flag.checked) ? this.selectedAssetId.push(selectedData.id) : this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
+  getFlagCount(flag, count) {
+    switch (true) {
+      case (flag == 'ppf'):
+        this.ppfCount = count;
+        break;
+      case (flag == 'nsc'):
+        this.nscCount = count;
+        break;
+      case (flag == 'ssy'):
+        this.ssyCount = count;
+        break;
+      case (flag == 'kvp'):
+        this.kvpCount = count;
+        break;
+      case (flag == 'scss'):
+        this.scssCount = count;
+        break;
+      case (flag == 'pord'):
+        this.scssCount = count;
+        break;
+      case (flag == 'potd'):
+        this.potdCount = count;
+        break;
+      default:
+        this.pomisCount = count;
+        break;
+    }
+  }
+  checkSingle(flag, selectedData, tableData, tableFlag) {
+    if (flag.checked) {
+      selectedData.selected = true;
+      this.selectedAssetId.push(selectedData.id)
+    }
+    else {
+      selectedData.selected = false
+      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1);
+    }
+    let countValue = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
+    this.getFlagCount(tableFlag, countValue)
     console.log(this.selectedAssetId)
   }
   openAddPPF(data, value) {
@@ -303,65 +350,3 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
     );
   }
 }
-export interface PeriodicElement1 {
-  name: string;
-  desc: string;
-  advice: string;
-  adate: string;
-  astatus: string;
-
-}
-
-const ELEMENT_DATA1: PeriodicElement1[] = [
-  { name: 'Rahul Jain', desc: '1', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-  { name: 'Rahul Jain', desc: '2', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-
-];
-export interface PeriodicElement {
-  name: string;
-  desc: string;
-  cvalue: string;
-  empcon: string;
-  emprcon: string;
-  advice: string;
-  adate: string;
-  astatus: string;
-
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { name: 'Rahul Jain', desc: '1', cvalue: 'This is', empcon: '54000', emprcon: '23123', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-  { name: 'Rahul Jain', desc: '2', cvalue: 'This is', empcon: '54000', emprcon: '23123', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-
-];
-export interface PeriodicElement2 {
-  name: string;
-  desc: string;
-  cvalue: string;
-  emprcon: string;
-  advice: string;
-  adate: string;
-  astatus: string;
-
-}
-
-const ELEMENT_DATA2: PeriodicElement2[] = [
-  { name: 'Rahul Jain', desc: '1', cvalue: 'This is', emprcon: '23123', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-  { name: 'Rahul Jain', desc: '2', cvalue: 'This is', emprcon: '23123', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-
-];
-export interface PeriodicElement4 {
-  name: string;
-  desc: string;
-  cvalue: string;
-  advice: string;
-  adate: string;
-  astatus: string;
-
-}
-
-const ELEMENT_DATA4: PeriodicElement4[] = [
-  { name: 'Rahul Jain', desc: '1', cvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-  { name: 'Rahul Jain', desc: '2', cvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-
-];
