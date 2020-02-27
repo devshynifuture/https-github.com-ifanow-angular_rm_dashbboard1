@@ -56,8 +56,8 @@
                     src="/assets/images/svg/plus.svg" class="pr-8">Suggest new EPF</button>
         </div>
     </div>
-    <table matSort mat-table appSkeletonLoading *ngIf="epfDataSource" [appSkeletonLoading]="isLoading"
-        [dataSource]="epfDataSource" class="mt-8 skeletonAnimation" id="table-low">
+    <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="epfDataSource"
+        class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox *ngIf="isLoading==false && epfDataSource.tableFlag"
@@ -186,8 +186,8 @@
             </mat-menu>
         </div>
     </div>
-    <table *ngIf="npsDataSource" matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading"
-        [dataSource]="npsDataSource" class="mt-8 skeletonAnimation" id="table-low">
+    <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="npsDataSource"
+        class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox *ngIf="isLoading==false && npsDataSource.tableFlag"
@@ -274,8 +274,8 @@
                     src="/assets/images/svg/plus.svg" class="pr-8">Suggest new gratuity</button>
         </div>
     </div>
-    <table matSort mat-table *ngIf="gratuityDataSource" appSkeletonLoading [appSkeletonLoading]="isLoading"
-        [dataSource]="gratuityDataSource" class="mt-8 skeletonAnimation" id="table-low">
+    <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="gratuityDataSource"
+        class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox *ngIf="isLoading==false && gratuityDataSource.tableFlag"
@@ -362,8 +362,8 @@
                     class="pr-8">Suggest new supperannuation</button>
         </div>
     </div>
-    <table matSort mat-table *ngIf="superannuationDataSource" [dataSource]="superannuationDataSource" appSkeletonLoading
-        [appSkeletonLoading]="isLoading" class="mt-8 skeletonAnimation" id="table-low">
+    <table matSort mat-table [dataSource]="superannuationDataSource" appSkeletonLoading [appSkeletonLoading]="isLoading"
+        class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox *ngIf="isLoading==false && superannuationDataSource.tableFlag"
@@ -464,8 +464,8 @@
                     src="/assets/images/svg/plus.svg" class="pr-8">Suggest new eps</button>
         </div>
     </div>
-    <table matSort mat-table *ngIf="epsDataSource" [dataSource]="epsDataSource" appSkeletonLoading
-        [appSkeletonLoading]="isLoading" class="mt-8 skeletonAnimation" id="table-low">
+    <table matSort mat-table [dataSource]="epsDataSource" appSkeletonLoading [appSkeletonLoading]="isLoading"
+        class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox [checked]="epsCount==epsDataSource.data.length"
