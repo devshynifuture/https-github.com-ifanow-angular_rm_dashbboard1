@@ -1,6 +1,11 @@
+import { EventService } from './../../../../../Data-service/event.service';
 import { Component, OnInit } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material';
+import { UpperSliderBackofficeComponent } from '../../common-component/upper-slider-backoffice/upper-slider-backoffice.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { UtilService } from 'src/app/services/util.service';
+import { FileOrderingUpperComponent } from '../file-ordering-upper/file-ordering-upper.component';
 
 @Component({
   selector: 'app-file-ordering-historical',
@@ -9,7 +14,9 @@ import { MatChipInputEvent } from '@angular/material';
 })
 export class FileOrderingHistoricalComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private eventService: EventService
+  ) { }
   displayedColumns: string[] = ['advisorName', 'rta', 'orderedby', 'startedOn', 'totalfiles', 'queue', 'ordering', 'ordered', 'failed', 'uploaded', 'refresh', 'empty'];
   dataSource = ELEMENT_DATA;
 
@@ -40,12 +47,57 @@ export class FileOrderingHistoricalComponent implements OnInit {
     }
   }
 
+  openUpperModule(flag, data) {
+    const fragmentData = {
+      flag: "clients",
+      id: 1,
+      data,
+      direction: 'top',
+      componentName: UpperSliderBackofficeComponent,
+      state: 'open'
+    };
+    // this.router.navigate(['/subscription-upper'])
+    AuthService.setSubscriptionUpperSliderData(fragmentData);
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getClientSubscriptionList();
+          subscription.unsubscribe();
+
+        }
+      }
+    );
+
+  }
+
   remove(filterBy): void {
     const index = this.filterBy.indexOf(filterBy);
 
     if (index >= 0) {
       this.filterBy.splice(index, 1);
     }
+  }
+
+  openUpperFileOrdering(flag, data) {
+    console.log('hello mf button clicked');
+    const fragmentData = {
+      flag,
+      id: 1,
+      data,
+      direction: 'top',
+      componentName: FileOrderingUpperComponent,
+      state: 'open'
+    };
+    // this.router.navigate(['/subscription-upper'])
+    AuthService.setSubscriptionUpperSliderData(fragmentData);
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getClientSubscriptionList();
+          subscription.unsubscribe();
+        }
+      }
+    );
   }
 
 }

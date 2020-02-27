@@ -56,7 +56,7 @@
             <p class="m-0 text-custom f-12">Leave bank if you want to enter<br> complete transaction history </p>
         </div>
         <div class="col-md-3">
-            <div class="form-group mb-0">
+            <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
                     <input matInput #accountBalance type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess" formControlName="accountBalance">
                     <mat-error class="f-12" [ngClass]="{'v-h':!(isAccountBalance && getFormControl().accountBalance.invalid || getFormControl().accountBalance.touched && getFormControl().accountBalance.invalid)}">
@@ -89,7 +89,7 @@
             <h5 class="m-0 pt-8">Interest rate</h5>
         </div>
         <div class="col-md-3">
-            <div class="form-group mb-0">
+            <div class="form-group mb-0 iconPetage">
                 <mat-form-field>
                     <input matInput type="number" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage" formControlName="interestRate" (keyup)="onChange($event)">
                     <mat-error class="f-12" [ngClass]="{'v-h':!(isInterestRate && getFormControl().interestRate.invalid || getFormControl().interestRate.touched && getFormControl().interestRate.invalid)}">
@@ -150,7 +150,7 @@
         </div>
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Bank account number</h5>
+                <h5 class="m-0 pt-8">Linked bank account</h5>
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">

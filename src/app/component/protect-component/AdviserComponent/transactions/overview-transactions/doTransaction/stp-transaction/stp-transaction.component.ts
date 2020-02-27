@@ -123,6 +123,10 @@ export class StpTransactionComponent implements OnInit {
   }
   getSchemeListTranfer(value) {
     this.showSpinnerTrans = true
+    if(this.stpTransaction.get('transferIn').invalid){
+      this.showSpinnerTrans = false
+      Object.assign(this.transactionSummary, { schemeNameTranfer: '' });
+    }
     if (this.selectScheme == 2 && value.length > 2) {
       let obj = {
         searchQuery: value,
@@ -139,23 +143,25 @@ export class StpTransactionComponent implements OnInit {
       }
       this.onlineTransact.getNewSchemes(obj).subscribe(
         data => this.getNewSchemesRes(data), (error) => {
-          this.eventService.showErrorMessage(error);
+          this.showSpinnerTrans = false
+          this.stpTransaction.get('transferIn').setErrors({'setValue':error.message});
+          this.stpTransaction.get('transferIn').markAsTouched();
+          // this.eventService.showErrorMessage(error);
         }
       );
     }
   }
   getNewSchemesRes(data) {
     this.showSpinnerTrans = false
-    if(data.length==0){
-      this.stpTransaction.get('transferIn').setErrors({'setValue':'Selected scheme does not exist'});
-      this.stpTransaction.get('transferIn').markAsTouched();
-    }
     console.log('new schemes', data)
     this.schemeListTransfer = data
   }
   getSchemeList(value) {
     this.showSpinner = true
     if(this.stpTransaction.get('schemeStp').invalid){
+      this.showSpinner = false
+      Object.assign(this.transactionSummary, { schemeName: '' });
+      Object.assign(this.transactionSummary, { folioNumber: '' });
       (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;//if scheme not present then min amt is 0
     }
     if (this.selectScheme == 2 && value.length > 2) {
@@ -174,7 +180,11 @@ export class StpTransactionComponent implements OnInit {
       }
       this.onlineTransact.getExistingSchemes(obj).subscribe(
         data => this.getExistingSchemesRes(data), (error) => {
-          this.eventService.showErrorMessage(error);
+          this.showSpinner = false
+          this.stpTransaction.get('schemeStp').setErrors({'setValue':error.message});
+          this.stpTransaction.get('schemeStp').markAsTouched();
+          (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;
+          // this.eventService.showErrorMessage(error);
         }
       );
     } else {
@@ -183,11 +193,6 @@ export class StpTransactionComponent implements OnInit {
   }
   getExistingSchemesRes(data) {
     this.showSpinner = false
-    if(data.length==0){
-      this.stpTransaction.get('schemeStp').setErrors({'setValue':'Selected scheme does not exist'});
-      this.stpTransaction.get('schemeStp').markAsTouched();
-      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;
-    }
     this.schemeList = data
     console.log('data schemelist res', data)
   }

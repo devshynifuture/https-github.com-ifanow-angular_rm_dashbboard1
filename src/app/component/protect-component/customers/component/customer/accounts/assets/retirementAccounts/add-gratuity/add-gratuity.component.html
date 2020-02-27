@@ -36,8 +36,8 @@
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input matInput #noOfcompleteYrs type="number" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="20" class="form-control br-0" formControlName="noOfcompleteYrs">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input matInput matInput placeholder="E.g. 8" #noOfcompleteYrs type="number" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="20" class="form-control br-0" formControlName="noOfcompleteYrs">
                     <mat-error class="f-12" [ngClass]="{'v-h':!(isNoOfcompleteYrs && getFormControl().noOfcompleteYrs.invalid || getFormControl().noOfcompleteYrs.touched && getFormControl().noOfcompleteYrs.invalid)}">
                         This field is required
                     </mat-error>
@@ -50,7 +50,7 @@
             <h5 class="m-0 pt-8">Amount recieved</h5>
         </div>
         <div class="col-md-3">
-            <div class="form-group mb-0">
+            <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
                     <input matInput #amountRecived type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess" formControlName="amountRecived">
                     <mat-error class="f-12" [ngClass]="{'v-h':!(isAmountRecived && getFormControl().amountRecived.invalid || getFormControl().amountRecived.touched && getFormControl().amountRecived.invalid)}">
@@ -92,13 +92,13 @@
         </div>
 
         <div class="row pt-40">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Year of receipt</h5>
+            <div class="col-md-5 d-flex align-items-end justify-content-end pr-0 text-right">
+                <h5 class="m-0  ">Year of receipt</h5>
             </div>
             <div class="col-md-3">
                 <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput maxlength="30" formControlName="yearOfReceipt" class="form-control br-0">
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <input matInput placeholder="E.g. 2030" maxlength="30" formControlName="yearOfReceipt" class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>

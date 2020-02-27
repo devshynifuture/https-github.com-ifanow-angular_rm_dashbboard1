@@ -100,6 +100,9 @@ export class SipTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { enteredAmount: value });
   }
   selectExistingOrNew(value) {
+    if(value=="2"){
+      Object.assign(this.transactionSummary, { folioNumber: '' });
+    }
     this.ExistingOrNew = value
   }
   selectSchemeOption(value) {
@@ -110,6 +113,9 @@ export class SipTransactionComponent implements OnInit {
   getSchemeList(value) {
     this.showSpinner = true
     if(this.sipTransaction.get('schemeSip').invalid){
+      this.showSpinner = false
+      Object.assign(this.transactionSummary, { schemeName: '' });
+      Object.assign(this.transactionSummary, { folioNumber: '' });
       (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;//if scheme not present then min amt is 0
     }
     let obj = {
@@ -124,39 +130,39 @@ export class SipTransactionComponent implements OnInit {
       holdingType: this.getDataSummary.defaultClient.holdingType,
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
     }
-    if (this.selectScheme == 2 && value.length > 2) {
-      this.onlineTransact.getNewSchemes(obj).subscribe(
-        data => this.getNewSchemesRes(data), (error) => {
-          this.eventService.showErrorMessage(error);
-        }
-      );
-    } else {
-      this.onlineTransact.getExistingSchemes(obj).subscribe(
-        data => this.getExistingSchemesRes(data), (error) => {
-          this.eventService.showErrorMessage(error);
-        }
-      );
+    if(value.length > 2){
+      if (this.selectScheme == 2) {
+        this.onlineTransact.getNewSchemes(obj).subscribe(
+          data => this.getNewSchemesRes(data), (error) => {
+            this.showSpinner = false
+            this.sipTransaction.get('schemeSip').setErrors({'setValue':error.message});
+            this.sipTransaction.get('schemeSip').markAsTouched();
+            (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;
+            // this.eventService.showErrorMessage(error);
+          }
+        );
+      } else {
+        this.onlineTransact.getExistingSchemes(obj).subscribe(
+          data => this.getExistingSchemesRes(data), (error) => {
+            this.showSpinner = false
+            this.sipTransaction.get('schemeSip').setErrors({'setValue':error.message});
+            this.sipTransaction.get('schemeSip').markAsTouched();
+            (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;
+            // this.eventService.showErrorMessage(error);
+          }
+        );
+      }
     }
   }
   getNewSchemesRes(data) {
     this.getNSEAchmandate()
     this.showSpinner = false
-    if(data.length==0){
-      this.sipTransaction.get('schemeSip').setErrors({'setValue':'Selected scheme does not exist'});
-      this.sipTransaction.get('schemeSip').markAsTouched();
-      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;
-    }
     console.log('new schemes', data)
     this.schemeList = data
   }
   getExistingSchemesRes(data) {
     this.getNSEAchmandate()
     this.showSpinner = false
-    if(data.length==0){
-      this.sipTransaction.get('schemeSip').setErrors({'setValue':'Selected scheme does not exist'});
-      this.sipTransaction.get('schemeSip').markAsTouched();
-      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;
-    }
     this.schemeList = data
   }
   getDefaultDetails(data) {
