@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { DatePipe } from '@angular/common';
@@ -26,12 +26,14 @@ export class OthersComponent implements OnInit {
   isTypeOfCommodity = false;
   isMarketValue = false;
   others: any;
+  othersNominee: any;
   ownerData: any;
   advisorId: any;
   clientId: any;
   nomineesListFM: any;
   nomineesList: any;
   flag: any;
+  otherData:any;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
   }
@@ -90,6 +92,7 @@ export class OthersComponent implements OnInit {
     if (data == undefined) {
       data = {};
     }
+    this.otherData = data;
     this.others = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       typeOfCommodity: [(data.commodityTypeId == undefined) ? '' : (data.commodityTypeId) + '', [Validators.required]],
@@ -102,10 +105,16 @@ export class OthersComponent implements OnInit {
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
     });
+    // this.othersNominee = this.fb.group({})
     this.ownerData = this.others.controls;
     this.familyMemberId = this.others.controls.familyMemberId.value;
     this.familyMemberId = this.familyMemberId[0];
   }
+  
+
+  // get nominee() {
+  //   return this.othersNominee.get('NomineesList') as FormArray;
+  // }
 
   getFormControl(): any {
     return this.others.controls;
