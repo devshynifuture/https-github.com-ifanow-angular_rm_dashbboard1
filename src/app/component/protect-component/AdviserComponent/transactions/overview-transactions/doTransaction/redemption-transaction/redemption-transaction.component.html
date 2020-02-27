@@ -67,7 +67,8 @@
                         <div class="form-group ">
                             <mat-form-field floatLabel="never" appearance="standard">
                                 <input type="text" aria-label="Number" class="form-control" matInput
-                                    [matAutocomplete]="auto" formControlName="schemeRedeem" (keyup)="getSchemeList($event.target.value)"
+                                    [matAutocomplete]="auto" formControlName="schemeRedeem"
+                                    (keyup)="getSchemeList($event.target.value)"
                                     placeholder="Start typing to see scheme names">
                                 <mat-autocomplete #auto="matAutocomplete">
                                     <mat-option (click)="selectedScheme(scheme)" *ngFor="let scheme of schemeList"
@@ -78,7 +79,8 @@
                                 <mat-hint align="start" class="f-12 text-custom  ">
                                     Last closing NAV: {{navOfSelectedScheme}}
                                 </mat-hint>
-                                <mat-error class="f-12 pt-4"  *ngIf="redemptionTransaction.get('schemeRedeem').errors?.required">
+                                <mat-error class="f-12 pt-4"
+                                    *ngIf="redemptionTransaction.get('schemeRedeem').errors?.required">
                                     This field is required
                                 </mat-error>
                                 <mat-error class="f-12"
@@ -99,7 +101,7 @@
                     <div class="col-md-5 p-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <mat-select class="form-control" formControlName="investmentAccountSelection">
+                                <mat-select class="form-control" formControlName="investmentAccountSelection" >
                                     <mat-option value="option" *ngFor="let flag of reInvestmentOpt"
                                         (click)="reinvest(flag)">
                                         {{(flag.dividendReinvestmentFlag == 0)?'Dividend payout':'Dividend reinvestment'}}
@@ -201,9 +203,10 @@
                                     class="f-12">
                                     Should be greater than or equal to {{schemeDetails.redemptionAmountMinimum}}
                                 </mat-error>
-                                <mat-error *ngIf="(redemptionTransaction.get('employeeContry').errors?.required)" class="f-12">
+                                <mat-error *ngIf="(redemptionTransaction.get('employeeContry').errors?.required)"
+                                    class="f-12">
                                     This field is requied
-                                 </mat-error>
+                                </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -230,13 +233,13 @@
         </div> -->
         <div class="col-md-8 text-right">
             <!-- commented for prod build -->
-            <button mat-button  mat-raised-button class="br-0 text-success f-14" (click)="AddMultiTransaction()">
+            <button mat-button mat-raised-button class="br-0 text-success f-14" (click)="AddMultiTransaction()">
                 SAVE & ADD ANOTHER
             </button>
             <!-- <button mat-button class="btn-green text-white ml-12" (click)="redeem()">
                 SAVE & PROCEED
             </button> -->
-            <app-progress-button class="btn-green text-white ml-12"  (click)="redeem()" [options]="barButtonOptions" >
+            <app-progress-button class="btn-green text-white ml-12" (click)="redeem()" [options]="barButtonOptions">
             </app-progress-button>
         </div>
     </div>

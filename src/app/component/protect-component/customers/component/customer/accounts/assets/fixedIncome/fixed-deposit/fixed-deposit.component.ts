@@ -200,7 +200,7 @@ export class FixedDepositComponent implements OnInit {
       data = this.dataSource;
     }
     this.fixedDeposit = this.fb.group({
-      ownerName: [(!data) ? '' : data.ownerName , [Validators.required] ],
+      ownerName: [(!data.ownerName) ? '' : data.ownerName , [Validators.required] ],
       amountInvest: [(!data) ? '' : data.amountInvested, [Validators.required] ],
       commencementDate: [(!data) ? '' : new Date(data.commencementDate), [Validators.required] ],
       interestRate: [(!data) ? '' : data.interestRate, [Validators.required] ],
@@ -208,9 +208,9 @@ export class FixedDepositComponent implements OnInit {
       compound: [(!data.interestCompoundingId) ? '' : data.interestCompoundingId],
       institution: [(!data) ? '' : data.institutionName ],
       description: [(!data) ? '' : data.description ],
-      tenureY: [(!data.tenureY) ? '0' : data.tenureY ],
-      tenureM: [(!data.tenureM) ? '0' : data.tenureM ],
-      tenureD: [(!data.tenureD) ? '0' : data.tenureD ],
+      tenureY: [(!data.tenureY) ? '0' : data.tenureY.toString()],
+      tenureM: [(!data.tenureM) ? '0' : data.tenureM.toString()],
+      tenureD: [(!data.tenureD) ? '0' : data.tenureD.toString()],
       frequencyOfPayoutPerYear: [(!data.frequencyOfPayoutPerYear) ? '' : data.frequencyOfPayoutPerYear ],
       maturityDate: [(!data) ? '' : new Date(data.maturityDate) ],
       payOpt: [(!data.interestPayoutOption) ? '' : data.interestPayoutOption, [Validators.required]],
@@ -280,6 +280,10 @@ export class FixedDepositComponent implements OnInit {
         fdNumber: this.fixedDeposit.controls.fdNo.value,
         fdType: this.fixedDeposit.controls.FDType.value,
         interestCompoundingId: this.fixedDeposit.value.compound==""?0:this.fixedDeposit.value.compound,
+        tenureInYear: this.fixedDeposit.controls.tenureY.value,
+        tenureInMonth: this.fixedDeposit.controls.tenureM.value,
+        tenureInDay: this.fixedDeposit.controls.tenureD.value,
+        fdEndDateIn: this.fixedDeposit.controls.maturity.value,
         id: this.fixedDeposit.controls.id.value
       };
       console.log('fixedDeposit', obj);

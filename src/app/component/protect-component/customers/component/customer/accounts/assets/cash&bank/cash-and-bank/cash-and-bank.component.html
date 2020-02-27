@@ -1,14 +1,10 @@
 <div class="wrapper-8">
-    <div class="row pt-28 pb-28">
+    <div class="row pt-10 pb-28">
         <div class="col-md-8 pl-0" id="custom-toggle">
-            <button (click)="getfixedIncomeData('1')"
-                [ngClass]="{'mat-stroked-button': showRequring == '1','text-primary':showRequring == '1'}"
-                class="br-0 text-custom" mat-button>
+            <button (click)="getfixedIncomeData('1')" [ngClass]="{'mat-stroked-button': showRequring == '1','text-primary':showRequring == '1'}" class="br-0 text-custom" mat-button>
                 Bank accounts
             </button>
-            <button (click)="getfixedIncomeData('2')"
-                [ngClass]="{'mat-stroked-button': showRequring == '2','text-primary':showRequring == '2'}"
-                class="br-0 text-custom" mat-button>
+            <button (click)="getfixedIncomeData('2')" [ngClass]="{'mat-stroked-button': showRequring == '2','text-primary':showRequring == '2'}" class="br-0 text-custom" mat-button>
                 Cash in hand
             </button>
         </div>
@@ -35,16 +31,13 @@
                 <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
                         class="material-icons">filter_list</i>FILTERS
                 </button>
-                <button (click)="openCashAndBank('', 'adviceNAn')" class="btn-primary addon v-middle"
-                    mat-stroked-button>ADD
+                <button (click)="openCashAndBank('', 'adviceNAn')" class="btn-primary addon v-middle" mat-stroked-button>ADD
                     NEW
                 </button>
             </div>
         </div>
         <div class="overflow-hidden mt-8 col-md-12 p-0 real-estate">
-            <table *ngIf="bankAccountList.filteredData.length > 0" matSort #bankAccountListTable="matSort"
-                [dataSource]="bankAccountList" id="table-low" mat-table class="skeletonAnimation" appSkeletonLoading
-                [appSkeletonLoading]="isLoading">
+            <table *ngIf="bankAccountList.filteredData.length > 0" matSort #bankAccountListTable="matSort" [dataSource]="bankAccountList" id="table-low" mat-table class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no">
                     <th mat-sort-header="no" *matHeaderCellDef class="br" mat-header-cell> No</th>
                     <td *matCellDef="let element let i = index" class="br" mat-cell>
@@ -70,8 +63,7 @@
                     <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
                 </ng-container>
                 <ng-container matColumnDef="amt">
-                    <th mat-sort-header="balanceAsOn" *matHeaderCellDef class="br text-left" mat-header-cell> Balance as
-                        on
+                    <th mat-sort-header="balanceAsOn" *matHeaderCellDef class="br text-left" mat-header-cell> Balance as on
                     </th>
                     <td *matCellDef="let element" class="br text-left" mat-cell>
                         <div class="bar"> {{element.balanceAsOn | date:'dd/MM/yyyy'}} </div>
@@ -93,8 +85,7 @@
                     <td *matCellDef="let element" class="br amt text-right t-5" mat-cell>
                         <div class="bar"> {{element.accountBalance}} </div>
                     </td>
-                    <td *matFooterCellDef class="br t-20 f-500 p-8 text-right" mat-footer-cell appFormatNumber
-                        [value]="totalAccountBalance">
+                    <td *matFooterCellDef class="br t-20 f-500 p-8 text-right" mat-footer-cell appFormatNumber [value]="totalAccountBalance">
                         <div class="bar"> {{totalAccountBalance || '-'}} </div>
                     </td>
                 </ng-container>
@@ -184,9 +175,7 @@
             </div>
         </div>
         <div class=" mt-8 overflow-hidden col-md-12 p-0 real-estate">
-            <table *ngIf="cashInHandList.filteredData.length > 0" matSort #cashInHandListTable="matSort"
-                [dataSource]="cashInHandList" id="table-low" mat-table class="skeletonAnimation" appSkeletonLoading
-                [appSkeletonLoading]="isLoading">
+            <table *ngIf="cashInHandList.filteredData.length > 0" matSort #cashInHandListTable="matSort" [dataSource]="cashInHandList" id="table-low" mat-table class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
                 <ng-container matColumnDef="no">
                     <th mat-sort-header="no" *matHeaderCellDef class="br t-2" mat-header-cell> No</th>
@@ -210,14 +199,12 @@
                     <td *matCellDef="let element" class="br text-right" mat-cell>
                         <div class="bar amt" appFormatNumber> {{isLoading ? ' ' : element.cashValue}} </div>
                     </td>
-                    <td *matFooterCellDef class="br t-20 p-8 f-500 text-right" mat-footer-cell appFormatNumber
-                        [value]="sumOfCashValue">
+                    <td *matFooterCellDef class="br t-20 p-8 f-500 text-right" mat-footer-cell appFormatNumber [value]="sumOfCashValue">
                         <div class="bar"> {{isLoading ? '' : sumOfCashValue || '-'}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="bal">
-                    <th mat-sort-header="balanceAsOn" *matHeaderCellDef class="br text-left" mat-header-cell> Balance as
-                        on
+                    <th mat-sort-header="balanceAsOn" *matHeaderCellDef class="br text-left" mat-header-cell> Balance as on
                     </th>
                     <td *matCellDef="let element" class="br text-left" mat-cell>
                         <div class="bar"> {{element.balanceAsOn | date:'dd/MM/yyyy'}} </div>

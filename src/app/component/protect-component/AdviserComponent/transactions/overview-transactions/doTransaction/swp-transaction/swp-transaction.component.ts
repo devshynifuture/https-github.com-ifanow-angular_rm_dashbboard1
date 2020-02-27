@@ -204,6 +204,9 @@ export class SwpTransactionComponent implements OnInit {
     console.log('res scheme folio', data)
     this.showSpinnerFolio = false
     this.folioList = data
+    if(this.swpTransaction.get('investmentAccountSelection').valid){
+      Object.assign(this.transactionSummary, { folioNumber: this.folioList[0].folioNumber });
+    }
   }
   enteredAmount(value) {
     Object.assign(this.transactionSummary, { enteredAmount: value });

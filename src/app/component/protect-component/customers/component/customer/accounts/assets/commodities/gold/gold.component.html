@@ -20,7 +20,7 @@
         <div class="col-md-5">
             <mat-form-field class="w-100">
                 <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData' formControlName="ownerName" class="form-control br-0">
-                    <mat-option value=''>Search family members</mat-option>
+                    <mat-option value='' disabled>Select family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
                         <span>{{f.userName}}</span>
                     </mat-option>
@@ -72,8 +72,8 @@
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input matInput #noTolasGramsPur type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0" formControlName="noTolasGramsPur">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input placeholder="E.g. 20" matInput #noTolasGramsPur type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0" formControlName="noTolasGramsPur">
                     <mat-error class="f-12" [ngClass]="{'v-h':!(isNoTolasGramsPur && getFormControl().noTolasGramsPur.invalid || getFormControl().noTolasGramsPur.touched && getFormControl().noTolasGramsPur.invalid)}">
                         This field is required
                     </mat-error>
@@ -105,7 +105,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input [placeholder]="'e.g. '+ currentYear" matInput type="text" appInputValueValidation maxlength="4" [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 " formControlName="tenure">
+                    <input [placeholder]="'E.g. '+ currentYear" matInput type="text" appInputValueValidation maxlength="4" [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 " formControlName="tenure">
                     <mat-error class="f-12" *ngIf="getFormControl().tenure.touched && getFormControl().tenure.hasError('required')">
                         This field is required
                     </mat-error>
@@ -162,16 +162,16 @@
                 <h5 class="m-0 pt-8">Market value</h5>
             </div>
             <div class="col-md-3">
-                <div class="form-group mb-0">
+                <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
-                        <input matInput #marketValue type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0" formControlName="marketValue">
+                        <input matInput #marketValue type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10"  class="form-control rupess br-0" formControlName="marketValue">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{marketValue.value.length}}/10</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
         </div>
-        <div class="row pt-40">
+        <!-- <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Linked bank account</h5>
             </div>
@@ -184,7 +184,7 @@
                     </mat-form-field>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">

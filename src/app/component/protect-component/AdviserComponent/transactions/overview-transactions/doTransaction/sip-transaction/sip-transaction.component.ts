@@ -107,7 +107,12 @@ export class SipTransactionComponent implements OnInit {
   }
   selectSchemeOption(value) {
     console.log('value selction scheme', value)
-    this.sipTransaction.controls.schemeSip.reset()
+    this.sipTransaction.controls.schemeSip.reset();
+    this.folioList=[];
+    this.navOfSelectedScheme=0;
+    this.schemeDetails.minimumPurchaseAmount=0
+    Object.assign(this.transactionSummary, { schemeName: '' });//to disable scheme name from transaction summary
+      Object.assign(this.transactionSummary, { folioNumber: '' });//to disable folio number from transaction summary
     this.selectScheme = value
   }
   getSchemeList(value) {
@@ -309,6 +314,9 @@ export class SipTransactionComponent implements OnInit {
     this.showSpinnerFolio = false
     console.log('getFoliosAmcWiseRes', data)
     this.folioList = data
+    if(this.sipTransaction.get('investmentAccountSelection').valid){
+      Object.assign(this.transactionSummary, { folioNumber: this.folioList[0].folioNumber });
+    }
   }
 
   selectedFolio(folio) {
