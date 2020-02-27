@@ -43,7 +43,7 @@ export class FixedDepositComponent implements OnInit {
   isPayOpt = false;
   isOwnerType = false;
   isFdNo = false;
-  isTenure = false;
+  // isTenure = false;
   isInstitution = false;
   fixedDeposit: any;
   advisorId: any;
@@ -72,7 +72,7 @@ export class FixedDepositComponent implements OnInit {
   isViewInitCalled = false;
   nomineesListFM: any;
   flag: string;
-  fdMonths = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
+  fdMonths = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
     '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26',
     '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41',
     '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56',
@@ -81,9 +81,9 @@ export class FixedDepositComponent implements OnInit {
     '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101',
     '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114',
     '115', '116', '117', '118', '119', '120'];
-  fdDays = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14',
+  fdDays = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14',
     '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'];
-  fdYears = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'];
+  fdYears = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'];
 
   constructor(public utils: UtilService, private event: EventService, private router: Router,
     private fb: FormBuilder, private custumService: CustomerService,
@@ -168,6 +168,7 @@ export class FixedDepositComponent implements OnInit {
       this.getFormControl().tenureM.setValidators([Validators.required]);
       this.getFormControl().tenureY.setValidators([Validators.required]);
       this.getFormControl().maturityDate.setValidators(null);
+      this.getFormControl().maturityDate.setValue('');
     }
   }
 
@@ -185,6 +186,7 @@ export class FixedDepositComponent implements OnInit {
     }
     else{
       this.tenureValid = false;
+      this.fixedDeposit.get('tenureD').setErrors(this.tenureValid)
     }
   }
   
@@ -205,9 +207,9 @@ export class FixedDepositComponent implements OnInit {
       compound: [(!data.interestCompoundingId) ? '' : (data.interestCompoundingId) + ''],
       institution: [(!data) ? '' : data.institutionName ],
       description: [(!data) ? '' : data.description ],
-      tenureY: [(!data.maturity) ? '0' : data.tenureY ],
-      tenureM: [(!data.maturity) ? '0' : data.tenureM ],
-      tenureD: [(!data.maturity) ? '0' : data.tenureD ],
+      tenureY: [(!data.tenureY) ? '0' : data.tenureY ],
+      tenureM: [(!data.tenureM) ? '0' : data.tenureM ],
+      tenureD: [(!data.tenureD) ? '0' : data.tenureD ],
       frequencyOfPayoutPerYear: [(!data.frequencyOfPayoutPerYear) ? '' : data.frequencyOfPayoutPerYear ],
       maturityDate: [(!data) ? '' : new Date(data.maturityDate) ],
       payOpt: [(!data.interestPayoutOption) ? '' : (data.interestPayoutOption) + '', [Validators.required]],
