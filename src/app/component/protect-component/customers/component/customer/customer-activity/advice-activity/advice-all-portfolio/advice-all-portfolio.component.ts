@@ -20,15 +20,14 @@ export class AdviceAllPortfolioComponent implements OnInit {
   constructor(private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   @ViewChild("tableOne", { static: true }) sort1: MatSort;
   @ViewChild("tableTwo", { static: true }) sort2: MatSort;
-  isLoading:boolean =false;
+  isLoading: boolean = false;
   ngOnInit() {
     this.dataSource.sort = this.sort1;
     this.dataSource1.sort = this.sort2;
   }
   checkAll(flag, tableDataList) {
     console.log(flag, tableDataList)
-    const { dataList, selectedIdList } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
-    this.dataSource = new MatTableDataSource(dataList);
+    const { selectedIdList, count } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
     this.selectedAssetId = selectedIdList;
     console.log(this.selectedAssetId);
   }

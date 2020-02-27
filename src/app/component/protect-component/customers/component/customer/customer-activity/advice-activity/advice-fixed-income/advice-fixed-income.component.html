@@ -62,11 +62,14 @@
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
                 <mat-checkbox *ngIf="isLoading==false && fixedDataSource.tableFlag"
-                    (change)="checkAll($event,fixedDataSource)"></mat-checkbox>
+                    [checked]="fixedCount==fixedDataSource.data.length"
+                    [indeterminate]="fixedCount>0 && fixedCount<fixedDataSource.data.length"
+                    (change)="checkAll($event,fixedDataSource,'fixedDeposit')">
+                </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element;index as i">
-                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element)"
-                    [checked]="element.selected">
+                <mat-checkbox *ngIf="isLoading==false"
+                    (change)="checkSingle($event,element,fixedDataSource,'fixedDeposit')" [checked]="element.selected">
                 </mat-checkbox>
             </td>
         </ng-container>
@@ -168,10 +171,13 @@
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox *ngIf="isLoading==false && recurringDataSource.tableFlag"
-                    (change)="checkAll($event,recurringDataSource)"></mat-checkbox>
+                    [checked]="recurringCount==recurringDataSource.data.length"
+                    [indeterminate]="recurringCount>0 && recurringCount<recurringDataSource.data.length"
+                    (change)=" checkAll($event,recurringDataSource,'recurringDeposit')"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element)"
+                <mat-checkbox *ngIf="isLoading==false"
+                    (change)="checkSingle($event,element,recurringDataSource,'recurringDeposit')"
                     [checked]="element.selected">
                 </mat-checkbox>
             </td>

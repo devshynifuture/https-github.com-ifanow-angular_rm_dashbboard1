@@ -33,6 +33,11 @@ export class AdviceRetirementAccountComponent implements OnInit {
   console: any;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   selectedAssetId: any = [];
+  epfCount: number;
+  npsCOunt: number;
+  gratuityCount: number;
+  superannuationCount: number;
+  epsCount: number;
 
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
 
@@ -123,9 +128,36 @@ export class AdviceRetirementAccountComponent implements OnInit {
     this.npsDataSource['tableFlag'] = (data.NPS.length == 0) ? false : true;
     console.log(data);
   }
-  checkSingle(flag, selectedData) {
-    (flag.checked) ? this.selectedAssetId.push(selectedData.id) : this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
-    console.log(this.selectedAssetId)
+  checkSingle(flag, selectedData, tableData, tableFlag) {
+    if (flag.checked) {
+      selectedData.selected = true;
+      this.selectedAssetId.push(selectedData.id)
+    }
+    else {
+      selectedData.selected = false
+      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
+    }
+    let countValue = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
+    this.getFlagCount(tableFlag, countValue);
+  }
+  getFlagCount(flag, count) {
+    switch (true) {
+      case (flag == 'epf'):
+        this.epfCount = count;
+        break;
+      case (flag == 'nps'):
+        this.npsCOunt = count;
+        break;
+      case (flag == 'gratuity'):
+        this.gratuityCount = count;
+        break;
+      case (flag == 'superannuation'):
+        this.superannuationCount = count;
+        break;
+      default:
+        this.epsCount = count;
+        break;
+    }
   }
   openAddEPF(data, value) {
     const fragmentData = {
@@ -150,11 +182,12 @@ export class AdviceRetirementAccountComponent implements OnInit {
       }
     );
   }
-  checkAll(flag, tableDataList) {
+  checkAll(flag, tableDataList, tableFlag) {
     console.log(flag, tableDataList)
-    const { dataList, selectedIdList } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
+    const { selectedIdList, count } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
     // this.dataSource = new MatTableDataSource(dataList);
     this.selectedAssetId = selectedIdList;
+    this.getFlagCount(tableFlag, count);
     console.log(this.selectedAssetId);
   }
   openAddSchemeHolding(data) {
