@@ -23,13 +23,15 @@ import { SettingBackupModule } from './setting-backup/setting-backup/setting-bac
   declarations: [LeftsidebarSettingComponent, SettingOrgProfileComponent, SettingCrmComponent,
     SettingUserRolesComponent, SettingBackofficeComponent, UsersComponent, RolesComponent,
     HierachyComponent, ArnRiaDetailsComponent, MfRtaDetailsComponent, SchemeBasketComponent,
-    ModelPortfolioComponent],
+    ModelPortfolioComponent
+  ],
   imports: [
     CommonModule,
     SettingRoutingModule,
     MaterialModule,
     SettingEntryModule,
     SettingBackupModule
+
   ]
 })
 export class SettingModule { }
