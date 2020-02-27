@@ -60,12 +60,15 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox *ngIf="isLoading==false && ppfDataSource.tableFlag"
-                    (change)="checkAll($event,ppfDataSource)"></mat-checkbox>
+                <mat-checkbox [checked]="ppfCount==ppfDataSource.data.length"
+                    [indeterminate]="ppfCount>0 && ppfCount<ppfDataSource.data.length"
+                    *ngIf="isLoading==false && ppfDataSource.tableFlag" (change)="checkAll($event,ppfDataSource,'ppf')">
+                </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element)"
-                    [checked]="element.selected"></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,ppfDataSource,'ppf')"
+                    [checked]="element.selected">
+                </mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -172,11 +175,13 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox *ngIf="isLoading==false && nscDataSpurce.tableFlag"
-                    (change)="checkAll($event,nscDataSpurce)"></mat-checkbox>
+                <mat-checkbox [checked]="nscCount==nscDataSpurce.data.length"
+                    [indeterminate]="nscCount>0 && nscCount<nscDataSpurce.data.length"
+                    *ngIf="isLoading==false && nscDataSpurce.tableFlag" (change)="checkAll($event,nscDataSpurce,'nsc')">
+                </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox [checked]="element.selected" (change)="checkSingle($event,element)"
+                <mat-checkbox [checked]="element.selected" (change)="checkSingle($event,element,nscDataSpurce,'nsc')"
                     *ngIf="isLoading==false"></mat-checkbox>
             </td>
         </ng-container>
@@ -273,10 +278,14 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox *ngIf="isLoading==false && ssyDataSpurce.tableFlag"></mat-checkbox>
+                <mat-checkbox [checked]="ssyCount==ssyDataSpurce.data.length"
+                    [indeterminate]="ssyCount>0 && ssyCount<ssyDataSpurce.data.length"
+                    *ngIf="isLoading==false && ssyDataSpurce.tableFlag" (change)="checkAll($event,nscDataSpurce,'ssy')">
+                </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element)"></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,ssyDataSpurce,'ssy')">
+                </mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -360,11 +369,13 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox *ngIf="isLoading==false && kvpDataSpurce.tableFlag"
-                    (change)="checkAll($event,kvpDataSpurce)"></mat-checkbox>
+                <mat-checkbox [checked]="kvpCount==kvpDataSpurce.data.length"
+                    [indeterminate]="kvpCount>0 && kvpCount<kvpDataSpurce.data.length"
+                    *ngIf="isLoading==false && kvpDataSpurce.tableFlag" (change)="checkAll($event,kvpDataSpurce,'kvp')">
+                </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element)"
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,kvpDataSpurce,'kvp')"
                     [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
@@ -470,11 +481,14 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox (change)="checkAll($event,scssDataSpurce)"
-                    *ngIf="isLoading==false && scssDataSpurce.tableFlag"></mat-checkbox>
+                <mat-checkbox [checked]="scssCount==scssDataSpurce.data.length"
+                    [indeterminate]="scssCount>0 && scssCount<scssDataSpurce.data.length"
+                    (change)="checkAll($event,scssDataSpurce,'scss')"
+                    *ngIf="isLoading==false && scssDataSpurce.tableFlag">
+                </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element)"
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,scssDataSpurce,'scss')"
                     [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
@@ -638,10 +652,14 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox *ngIf="isLoading==false && pordDataSpurce.tableFlag"></mat-checkbox>
+                <mat-checkbox (change)="checkAll($event,scssDataSpurce,'pord')"
+                    [checked]="pordCount==pordDataSpurce.data.length"
+                    [indeterminate]="pordCount>0 && pordCount<pordDataSpurce.data.length"
+                    *ngIf="isLoading==false && pordDataSpurce.tableFlag"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element)"></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,pordDataSpurce,'pord')">
+                </mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -726,11 +744,14 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox *ngIf="isLoading==false && potdDataSource.tableFlag"
-                    (change)="checkAll($event,potdDataSource)"></mat-checkbox>
+                <mat-checkbox [checked]="potdCount==potdDataSource.data.length"
+                    [indeterminate]="potdCount>0 && potdCount<potdDataSource.data.length"
+                    *ngIf="isLoading==false && potdDataSource.tableFlag"
+                    (change)="checkAll($event,potdDataSource,'potd')">
+                </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element)"
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,potdDataSource,'potd')"
                     [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
@@ -828,11 +849,14 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox *ngIf="isLoading==false && pomisDataSpurce.tableFlag"
-                    (change)="checkAll($event,pomisDataSpurce)"></mat-checkbox>
+                <mat-checkbox [checked]="pomisCount==pomisDataSpurce.data.length"
+                    [indeterminate]="pomisCount>0 && pomisCount<pomisDataSpurce.data.length"
+                    *ngIf="isLoading==false && pomisDataSpurce.tableFlag"
+                    (change)="checkAll($event,pomisDataSpurce,'pomis')">
+                </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element)"
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,pomisDataSpurce,'pomis')"
                     [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>

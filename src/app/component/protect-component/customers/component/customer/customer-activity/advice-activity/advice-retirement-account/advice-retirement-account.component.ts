@@ -138,7 +138,26 @@ export class AdviceRetirementAccountComponent implements OnInit {
       this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
     }
     let countValue = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
-    (tableFlag == 'epf') ? this.epfCount = countValue : (tableFlag == 'nps') ? this.npsCOunt = countValue : (tableFlag == 'gratuity') ? this.gratuityCount = countValue : (tableFlag == 'superannuation') ? this.superannuationCount = countValue : this.epsCount = countValue;
+    this.getFlagCount(tableFlag, countValue);
+  }
+  getFlagCount(flag, count) {
+    switch (true) {
+      case (flag == 'epf'):
+        this.epfCount = count;
+        break;
+      case (flag == 'nps'):
+        this.npsCOunt = count;
+        break;
+      case (flag == 'gratuity'):
+        this.gratuityCount = count;
+        break;
+      case (flag == 'superannuation'):
+        this.superannuationCount = count;
+        break;
+      default:
+        this.epsCount = count;
+        break;
+    }
   }
   openAddEPF(data, value) {
     const fragmentData = {
@@ -163,11 +182,12 @@ export class AdviceRetirementAccountComponent implements OnInit {
       }
     );
   }
-  checkAll(flag, tableDataList) {
+  checkAll(flag, tableDataList, tableFlag) {
     console.log(flag, tableDataList)
-    const { dataList, selectedIdList } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
+    const { selectedIdList, count } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
     // this.dataSource = new MatTableDataSource(dataList);
     this.selectedAssetId = selectedIdList;
+    this.getFlagCount(tableFlag, count);
     console.log(this.selectedAssetId);
   }
   openAddSchemeHolding(data) {

@@ -26,6 +26,8 @@ export class AdviceCommoditiesComponent implements OnInit, AfterViewInit {
   goldDataSource: any = new MatTableDataSource();
   selectedAssetId: any = [];
   otherDataSource: any = new MatTableDataSource();
+  goalCount: number;
+  othersCount: number;
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
   ngAfterViewInit() {
     this.goldDataSource.sort = this.sort1;
@@ -53,14 +55,27 @@ export class AdviceCommoditiesComponent implements OnInit, AfterViewInit {
       }
     );
   }
-  checkAll(flag, tableDataList) {
+  checkAll(flag, tableDataList, tableFlag) {
     console.log(flag, tableDataList)
-    const { dataList, selectedIdList } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
+    const { selectedIdList, count } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
     this.selectedAssetId = selectedIdList;
+    this.getFlagCount(tableFlag, count);
     // console.log(this.selectedAssetId);
   }
-  checkSingle(flag, selectedData) {
-    (flag.checked) ? this.selectedAssetId.push(selectedData.id) : this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
+  getFlagCount(flag, count) {
+    (flag == 'gold') ? this.goalCount = count : this.othersCount = count
+  }
+  checkSingle(flag, selectedData, tableData, tableFlag) {
+    if (flag.checked) {
+      selectedData.selected = true;
+      this.selectedAssetId.push(selectedData.id)
+    }
+    else {
+      selectedData.selected = false
+      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
+    }
+    let countValue = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
+    this.getFlagCount(tableFlag, countValue);
     console.log(this.selectedAssetId)
   }
   getAllSchemeResponse(data) {

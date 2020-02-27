@@ -2,7 +2,7 @@
 <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20">{{inputData.id?'EDIT':'ADD'}} FIXED DEPOSIT</h4>
+            <h4 class="mb-0 wrapper-20">{{inputData.id?'Edit':'Add'}} Fixed deposit</h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -152,10 +152,10 @@
                                 <span>{{D == 1? D+" Day" : D+" Days" }}</span>
                             </mat-option>
                         </mat-select>
-                        
+
                     </mat-form-field>
                 </div>
-                <mat-error class="f-12 pt-4" *ngIf="!tenureValid" >
+                <mat-error class="f-12 pt-4" *ngIf="!tenureValid">
                     <b>This field is required</b>
                 </mat-error>
             </div>

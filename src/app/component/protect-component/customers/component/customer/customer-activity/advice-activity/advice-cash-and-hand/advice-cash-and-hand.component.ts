@@ -24,6 +24,8 @@ export class AdviceCashAndHandComponent implements OnInit {
   bankAccDataSource: any = new MatTableDataSource();
   cashInHandDataSource: any = new MatTableDataSource();
   selectedAssetId: any = [];
+  bankCount: number;
+  cashCount: number;
 
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
 
@@ -33,16 +35,28 @@ export class AdviceCashAndHandComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getAdviceByAsset();
   }
-  checkAll(flag, tableDataList) {
+  checkAll(flag, tableDataList, tableFlag) {
     console.log(flag, tableDataList)
-    const { dataList, selectedIdList } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
-    // this.dataSource = new MatTableDataSource(dataList);
+    const { selectedIdList, count } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
+    this.getFlagCount(tableFlag, count)
     this.selectedAssetId = selectedIdList;
     console.log(this.selectedAssetId);
   }
-  checkSingle(flag, selectedData) {
-    (flag.checked) ? this.selectedAssetId.push(selectedData.id) : this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
+  checkSingle(flag, selectedData, tableData, tableFlag) {
+    if (flag.checked) {
+      selectedData.selected = true;
+      this.selectedAssetId.push(selectedData.id)
+    }
+    else {
+      selectedData.selected = false
+      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
+    }
+    let countValue = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
+    this.getFlagCount(tableFlag, countValue)
     console.log(this.selectedAssetId)
+  }
+  getFlagCount(flag, count) {
+    (flag == 'bank') ? this.bankCount = count : this.cashCount = count
   }
   getAdviceByAsset() {
     let obj = {

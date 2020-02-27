@@ -17,13 +17,17 @@ import { SettingEntryModule } from './setting-entry/setting-entry.module';
 import { SchemeBasketComponent } from './setting-backup/setting-backup/scheme-basket/scheme-basket.component';
 import { ModelPortfolioComponent } from './setting-backup/setting-backup/model-portfolio/model-portfolio.component';
 import { SettingBackupModule } from './setting-backup/setting-backup/setting-backup.module';
+import { SettingPreferenceComponent } from './setting-preference/setting-preference.component';
+import { SettingActivityComponent } from './setting-activity/setting-activity.component';
 
 
 @NgModule({
   declarations: [LeftsidebarSettingComponent, SettingOrgProfileComponent, SettingCrmComponent,
     SettingUserRolesComponent, SettingBackofficeComponent, UsersComponent, RolesComponent,
     HierachyComponent, ArnRiaDetailsComponent, MfRtaDetailsComponent, SchemeBasketComponent,
-    ModelPortfolioComponent],
+    ModelPortfolioComponent,
+    SettingPreferenceComponent,
+    SettingActivityComponent],
   imports: [
     CommonModule,
     SettingRoutingModule,
