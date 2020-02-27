@@ -12,6 +12,7 @@ import { CustomerService } from 'src/app/component/protect-component/customers/c
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { UmrnPopUpComponent } from '../umrn-pop-up/umrn-pop-up.component';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-transaction-summary',
@@ -49,6 +50,8 @@ export class TransactionSummaryComponent implements OnInit {
   }]
   checkAlert: any;
   changeDetails: any;
+  advisorId: any;
+  clientId: any;
 
   constructor(private onlineTransact: OnlineTransactionService, private processTransaction: ProcessTransactionService,
     private subInjectService: SubscriptionInject, public dialog: MatDialog, private customerService: CustomerService, private eventService: EventService, ) { }
@@ -59,6 +62,8 @@ export class TransactionSummaryComponent implements OnInit {
   @Output() folioChange = new EventEmitter();
 
   @Input() set data(data) {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
     this.inputData = data;
     this.transactionSummary = data
     console.log('This is Input data of FixedDepositComponent ', data);
@@ -194,9 +199,9 @@ export class TransactionSummaryComponent implements OnInit {
 
   getDefaultDetails(platform) {
     let obj = {
-      advisorId: 414,
+      advisorId: this.advisorId,
       familyMemberId: 112166,
-      clientId: 53637,
+      clientId: this.transactionSummary.clientId,
       aggregatorType: platform,
       mutualFundId: this.transactionSummary.mutualFundId
     }

@@ -59,8 +59,8 @@ export class AdviceRealAssetComponent implements OnInit {
   }
   checkAll(flag, tableDataList) {
     console.log(flag, tableDataList)
-    const { dataList, selectedIdList } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
-    this.dataSource = new MatTableDataSource(dataList);
+    const { selectedIdList, count } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
+    this.realEstateCount = count;
     this.selectedAssetId = selectedIdList;
     console.log(this.selectedAssetId);
   }

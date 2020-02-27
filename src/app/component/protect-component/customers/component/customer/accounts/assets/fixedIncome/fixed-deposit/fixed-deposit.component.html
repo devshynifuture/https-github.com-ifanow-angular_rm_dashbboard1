@@ -128,7 +128,7 @@
             <div class="row">
                 <div class="col-md-4 p-0">
                     <mat-select formControlName="tenureY" class="form-control br-0 br-none" (change)="getDateYMD()">
-                        <mat-option value="0">Years</mat-option>
+                        <mat-option value="0">0 Year</mat-option>
                         <mat-option *ngFor="let Y of fdYears" [value]="Y">
                             <span>{{Y == 1? Y+" year" : Y+" years"}}</span>
                         </mat-option>
@@ -136,7 +136,7 @@
                 </div>
                 <div class="col-md-4 p-0">
                     <mat-select formControlName="tenureM" class="form-control br-0 br-none" (change)="getDateYMD()">
-                        <mat-option value="0">Months</mat-option>
+                        <mat-option value="0">0 Month</mat-option>
                         <mat-option *ngFor="let M of fdMonths" [value]="M">
                             <span>{{M == 1? M+" Month" : M+" Months" }}</span>
                         </mat-option>
@@ -145,7 +145,7 @@
                 <div class="col-md-4 p-0">
                     <mat-form-field>
                         <mat-select formControlName="tenureD" class="form-control br-0" (change)="getDateYMD()">
-                            <mat-option value="0">Days</mat-option>
+                            <mat-option value="0">0 Day</mat-option>
                             <mat-option *ngFor="let D of fdDays" [value]="D">
                                 <span>{{D == 1? D+" Day" : D+" Days" }}</span>
                             </mat-option>

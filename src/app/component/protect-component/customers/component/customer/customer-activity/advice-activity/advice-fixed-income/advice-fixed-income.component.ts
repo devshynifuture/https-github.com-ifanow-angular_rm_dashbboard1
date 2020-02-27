@@ -95,12 +95,25 @@ export class AdviceFixedIncomeComponent implements OnInit {
     this.recurringDataSource['tableFlag'] = (data.RECURRING_DEPOSIT.length == 0) ? false : true;
     this.bondDataSource['tableFlag'] = (data.BONDS.length == 0) ? false : true;
   }
-  checkAll(flag, tableDataList) {
+  checkAll(flag, tableDataList, tableFlag) {
     console.log(flag, tableDataList)
-    const { dataList, selectedIdList } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
-    // this.dataSource = new MatTableDataSource(dataList);
+    const { selectedIdList, count } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
+    this.getFlagCount(tableFlag, count)
     this.selectedAssetId = selectedIdList;
     console.log(this.selectedAssetId);
+  }
+  getFlagCount(flag, count) {
+    switch (true) {
+      case (flag == 'fixedDeposit'):
+        this.fixedCount = count;
+        break;
+      case (flag == 'recurringDeposit'):
+        this.recurringCount = count;
+        break;
+      default:
+        this.bondCount = count;
+        break;
+    }
   }
   checkSingle(flag, selectedData, tableData, tableFlag) {
     if (flag.checked) {
@@ -112,8 +125,7 @@ export class AdviceFixedIncomeComponent implements OnInit {
       this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
     }
     let countValue = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
-    (tableFlag == 'fixedDeposit') ? this.fixedCount = countValue : (tableFlag == 'recurringDeposit') ? this.recurringCount = countValue :
-      this.bondCount = countValue;
+    this.getFlagCount(tableFlag, countValue);
   }
   openselectAdvice(data) {
     const fragmentData = {
