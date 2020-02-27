@@ -210,9 +210,9 @@ export class NpsSchemeHoldingComponent implements OnInit {
     }));
 
   }
-  removeFutureContry(item) {
+  removeFutureContry() {
     if (this.futureContry.value.length > 1) {
-      this.futureContry.removeAt(item);
+      // this.futureContry.removeAt(item);
     }
   }
   get nominee() {
