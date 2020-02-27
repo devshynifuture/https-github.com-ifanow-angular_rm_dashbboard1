@@ -59,6 +59,7 @@ export class OnlineTrasactionComponent implements OnInit {
   credentialList: any;
   getPlatformCount: any;
   showSpinnerOwner = false
+  familyMemberData: any;
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private eventService: EventService, private fb: FormBuilder, private processTransaction: ProcessTransactionService) {
   }
@@ -81,13 +82,13 @@ export class OnlineTrasactionComponent implements OnInit {
 
   ngOnInit() {
     this.getdataForm(this.inputData)
-    this.getDefaultDetails(null)
+    // this.getDefaultDetails(null)
   }
   getDefaultDetails(platform) {
     let obj = {
       advisorId: this.advisorId,
       familyMemberId: 112166,
-      clientId: this.clientId,
+      clientId: this.familyMemberData.clientId,
       aggregatorType: platform
     }
     this.onlineTransact.getDefaultDetails(obj).subscribe(
@@ -147,6 +148,7 @@ export class OnlineTrasactionComponent implements OnInit {
   //   this.familyMemberId = value.id;
   // }
   ownerDetails(value) {
+    this.familyMemberData = value;
     this.familyMemberId = value.id;
     if (this.nomineesListFM && this.transactionAddForm.get('ownerName').valid) {
       // this.nomineesListFM.forEach(element => {
@@ -160,7 +162,8 @@ export class OnlineTrasactionComponent implements OnInit {
       } else if (this.transactionAddForm.get('transactionType').valid && this.formStep == 'step-2') {
         let data = {
           selectedFamilyMember: this.ownerData.ownerName.value,
-          transactionType: this.transactionAddForm.controls.transactionType.value
+          transactionType: this.transactionAddForm.controls.transactionType.value,
+          clientId: value.clientId
         }
         this.openPurchaseTransaction(data.transactionType, data)
       }
@@ -258,7 +261,8 @@ export class OnlineTrasactionComponent implements OnInit {
       } else if (this.transactionAddForm.get('transactionType').valid && this.formStep == 'step-2') {
         let data = {
           selectedFamilyMember: this.ownerData.ownerName.value,
-          transactionType: this.transactionAddForm.controls.transactionType.value
+          transactionType: this.transactionAddForm.controls.transactionType.value,
+          clientId: this.familyMemberData.clientId
         }
         this.openPurchaseTransaction(data.transactionType, data)
       } else {

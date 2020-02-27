@@ -57,7 +57,7 @@
                     src="/assets/images/svg/plus.svg" class="pr-8">Suggest new FD</button>
         </div>
     </div>
-    <table matSort *ngIf="fixedDataSource" mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="
+    <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="
         fixedDataSource" class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -166,8 +166,8 @@
                     src="/assets/images/svg/plus.svg" class="pr-8">Suggest new RD</button>
         </div>
     </div>
-    <table matSort mat-table *ngIf="recurringDataSource" appSkeletonLoading [appSkeletonLoading]="isLoading"
-        [dataSource]=" recurringDataSource" class="mt-8 skeletonAnimation" id="table-low">
+    <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]=" recurringDataSource"
+        class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox *ngIf="isLoading==false && recurringDataSource.tableFlag"
@@ -277,8 +277,8 @@
                     src="/assets/images/svg/plus.svg" class="pr-8">Suggest new Bond</button>
         </div>
     </div>
-    <table matSort mat-table *ngIf="bondDataSource" appSkeletonLoading [appSkeletonLoading]="isLoading"
-        [dataSource]=" bondDataSource" class="mt-8 skeletonAnimation" id="table-low">
+    <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]=" bondDataSource"
+        class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
                 <mat-checkbox *ngIf="isLoading==false && bondDataSource.tableFlag"></mat-checkbox>

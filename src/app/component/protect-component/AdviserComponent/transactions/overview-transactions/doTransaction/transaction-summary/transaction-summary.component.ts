@@ -201,7 +201,7 @@ export class TransactionSummaryComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       familyMemberId: 112166,
-      clientId: this.clientId,
+      clientId: this.transactionSummary.clientId,
       aggregatorType: platform,
       mutualFundId: this.transactionSummary.mutualFundId
     }
