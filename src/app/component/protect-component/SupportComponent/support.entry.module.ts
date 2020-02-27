@@ -16,6 +16,8 @@ import { SupportUpperNjComponent } from './support-dashboard/support-upper/suppo
 import { SupportUpperPrudentComponent } from './support-dashboard/support-upper/support-upper-prudent/support-upper-prudent.component';
 import { OrderHistoricalFileComponent } from './order-historical-file/order-historical-file.component'
 import { MyIfaSelectArnRiaComponent } from './my-ifas/my-ifa-select-arn-ria/my-ifa-select-arn-ria.component';
+import { FileOrderingUpperComponent } from './file-ordering-upload/file-ordering-upper/file-ordering-upper.component';
+import { FileOrderingDetailComponent } from './file-ordering-upload/file-ordering-detail/file-ordering-detail.component';
 
 const componentList = [
     AdminDetailsComponent,
@@ -29,7 +31,9 @@ const componentList = [
     SupportUpperNjComponent,
     SupportUpperPrudentComponent,
     OrderHistoricalFileComponent,
-    MyIfaSelectArnRiaComponent
+    MyIfaSelectArnRiaComponent,
+    FileOrderingUpperComponent,
+    FileOrderingDetailComponent
 ]
 
 @NgModule({

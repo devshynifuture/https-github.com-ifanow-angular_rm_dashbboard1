@@ -190,6 +190,7 @@
                                 <mat-error *ngIf="(purchaseTransaction.get('employeeContry').errors?.min)" class="f-12">
                                     Should be greater than or equal to {{schemeDetails.minimumPurchaseAmount}}
                                 </mat-error>
+
                                 <mat-error *ngIf="(purchaseTransaction.get('employeeContry').errors?.required)"
                                     class="f-12">
                                     This field is requied

@@ -71,7 +71,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
     const dialogData = {
       header: 'DELETE & REORDER?',
       body: 'Are you sure you want to delete and reorder the unmatched folios?',
-      body2: 'This cannot be undone',
+      body2: '',
       btnYes: 'CANCEL',
       btnNo: 'YES',
       positiveMethod: () => {

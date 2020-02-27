@@ -40,3 +40,27 @@
         height: 46px !important;
     }
 }
+
+.ratiosGreen {
+    background: rgba(2, 184, 117, 0.1);
+    border: 1px solid #02B875;
+    border-radius: 2px;
+    height: 96px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.ratiosOrange {
+    background: rgba(255, 104, 35, 0.1);
+    border: 1px solid #FF6823;
+    border-radius: 2px;
+    height: 96px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}

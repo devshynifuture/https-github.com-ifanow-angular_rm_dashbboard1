@@ -1,5 +1,175 @@
-<div class="row pt-150">
+<div class="row pt-130">
+    <div class="col-md-12 text-right">
+        <button class="btn-primary addon" mat-stroked-button (click)="openUpperModule('', '')">
+            <mat-icon>add</mat-icon> Order Historical files
+        </button>
+    </div>
+</div>
+
+<div class="row pt-20">
+    <div class="col-md-4">
+        <div class="example-chip-list">
+            <mat-chip-list #chipList aria-label="Filtering Table">
+                <mat-chip *ngFor="let filter of filterBy" [selectable]="selectable" [removable]="removable"
+                    (removed)="remove(filter)">
+                    {{filter.name}}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+            </mat-chip-list>
+        </div>
+        <!-- <button class="btn-primary addon" mat-stroked-button> Order bulk files </button> -->
+    </div>
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="form-group mb-0">
+                    <input class="form-control m-0" placeholder="Search by advisor" [matChipInputFor]="chipList"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                        (matChipInputTokenEnd)="add($event)">
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <mat-select class="form-control br-0" placeholder="Ordered By" (selectionChange)="add($event)">
+                            <mat-option>None</mat-option>
+                            <mat-option value="name">
+                                Name
+                            </mat-option>
+                            <mat-option value="size">
+                                Size
+                            </mat-option>
+                            <mat-option value="date">
+                                Date
+                            </mat-option>
+                            <mat-option value="last modified date">
+                                Last Modified Date
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <mat-form-field>
+                    <mat-select class="form-control br-0" (selectionChange)="add($event)">
+                        <mat-option>None</mat-option>
+                        <mat-option value="last 7 days">
+                            Last 7 Days
+                        </mat-option>
+                        <mat-option value="last month">
+                            last Month
+                        </mat-option>
+                        <mat-option value="last year">
+                            last year
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-lg-3">
+                <mat-form-field>
+                    <mat-select class="form-control br-0" (selectionChange)="add($event)">
+                        <mat-option>
+                            None
+                        </mat-option>
+                        <mat-option value="all rta">
+                            All RTA
+                        </mat-option>
+                        <mat-option value="cams">
+                            CAMS
+                        </mat-option>
+                        <mat-option value="karvy">
+                            KARVY
+                        </mat-option>
+                        <mat-option value="franklin">
+                            FRANKLIN
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row pt-20">
     <div class="col-md-12">
-        <h1>hello</h1>
+        <table mat-table id="table-low" [dataSource]="dataSource" class="">
+            <ng-container matColumnDef="rta">
+                <th class="br" mat-header-cell *matHeaderCellDef> RTA </th>
+                <td class="br" mat-cell *matCellDef="let element"> {{element.rta}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="description">
+                <th class="br" mat-header-cell *matHeaderCellDef> Description </th>
+                <td class="br" mat-cell *matCellDef="let element"> {{element.description}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="orderedby">
+                <th class="br" mat-header-cell *matHeaderCellDef> Ordered by </th>
+                <td class="br" mat-cell *matCellDef="let element"> {{element.orderedby}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="startedOn">
+                <th class="br" mat-header-cell *matHeaderCellDef> Started on </th>
+                <td class="br" mat-cell *matCellDef="let element"> {{element.startedOn}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalfiles">
+                <th class="br" mat-header-cell *matHeaderCellDef> Total files </th>
+                <td class="br" mat-cell *matCellDef="let element" class="c-p"
+                    (click)="openUpperFileOrdering('openUpperFileOrdering', element)"> {{element.totalfiles}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="queue">
+                <th class="br" mat-header-cell *matHeaderCellDef> In queue </th>
+                <td class="br" mat-cell *matCellDef="let element"> {{element.queue}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="ordering">
+                <th class="br" mat-header-cell *matHeaderCellDef> Ordering </th>
+                <td class="br" mat-cell *matCellDef="let element"> {{element.ordering}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="ordered">
+                <th class="br" mat-header-cell *matHeaderCellDef> Ordered </th>
+                <td class="br" mat-cell *matCellDef="let element"> {{element.ordered}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="failed">
+                <th class="br" mat-header-cell *matHeaderCellDef> Failed </th>
+                <td class="br" mat-cell *matCellDef="let element"> {{element.failed}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="uploaded">
+                <th class="br" mat-header-cell *matHeaderCellDef> Uploaded </th>
+                <td class="br" mat-cell *matCellDef="let element"> {{element.uploaded}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="refresh">
+                <th class="br" mat-header-cell *matHeaderCellDef> Refresh </th>
+                <td class="br" mat-cell *matCellDef="let element">
+                    <button mat-button class="bg-grey mr-12 h-22 btn-xs">
+                        <mat-icon>
+                            refresh
+                        </mat-icon>
+                        Refresh
+                    </button>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="empty">
+                <th class="br" mat-header-cell *matHeaderCellDef> </th>
+                <td class="br" mat-cell *matCellDef="let element">
+                    <mat-icon>
+                        more_vert
+                    </mat-icon>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
     </div>
 </div>

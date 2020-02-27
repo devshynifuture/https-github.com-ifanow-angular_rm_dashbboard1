@@ -28,7 +28,7 @@ export class FixedDepositComponent implements OnInit {
   maxDate = new Date();
   showHide = false;
   isownerName = false;
-  showTenure = false;
+  showTenure = true;
   isDescription = false;
   isBankACNo = false;
   isInterestRate = false;
@@ -37,7 +37,7 @@ export class FixedDepositComponent implements OnInit {
   isCommencementDate = false;
   isInterestDate = false;
   isCompound = false;
-  isMaturity = false;
+  // isMaturity = false;
   isMaturityDate = false;
   isFrequencyOfPayoutPerYear = false;
   isPayOpt = false;
@@ -51,6 +51,7 @@ export class FixedDepositComponent implements OnInit {
   family: Observable<string[]>;
   options: any;
   inputData: any;
+  validMaturity:any;
   compoundValue = [
     { name: 'Daily', value: 2 },
     { name: 'Monthly', value: 3 },
@@ -115,6 +116,10 @@ export class FixedDepositComponent implements OnInit {
   getOwnerListRes(data) {
     console.log('familymember', data);
   }
+
+  checkDate(){
+   this.validMaturity = new Date(new Date().setDate( new Date(this.getFormControl().commencementDate.value).getDate() + 1))
+  }
   Close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
@@ -153,18 +158,36 @@ export class FixedDepositComponent implements OnInit {
   haveMaturity(maturity) {
     if (maturity) {
       this.showTenure = false;
+      this.getFormControl().tenureD.setValidators(null);
+      this.getFormControl().tenureM.setValidators(null);
+      this.getFormControl().tenureY.setValidators(null);
+      this.getFormControl().maturityDate.setValidators([Validators.required]);
     } else {
       this.showTenure = true;
+      this.getFormControl().tenureD.setValidators([Validators.required]);
+      this.getFormControl().tenureM.setValidators([Validators.required]);
+      this.getFormControl().tenureY.setValidators([Validators.required]);
+      this.getFormControl().maturityDate.setValidators(null);
     }
   }
+
+  tenureValid:boolean = true;
   getDateYMD() {
-    ;
-    this.tenure = moment(this.fixedDeposit.controls.commencementDate.value).add(this.fixedDeposit.controls.tenureM.value, 'months');
-    this.tenure = moment(this.tenure).add(this.fixedDeposit.controls.tenureY.value, 'years');
-    this.tenure = moment(this.tenure).add(this.fixedDeposit.controls.tenureD.value, 'days');
-    this.getDate = this.datePipe.transform(this.tenure, 'yyyy-MM-dd');
-    return this.getDate;
+    let d = this.fixedDeposit.controls.tenureD.value;
+    let m = this.fixedDeposit.controls.tenureM.value;
+    let y = this.fixedDeposit.controls.tenureY.value;
+    if(d != 0 || m != 0 || y != 0){
+      this.tenure = moment(this.fixedDeposit.controls.commencementDate.value).add(m, 'months');
+      this.tenure = moment(this.tenure).add(y, 'years');
+      this.tenure = moment(this.tenure).add(d, 'days');
+      this.getDate = this.datePipe.transform(this.tenure, 'yyyy-MM-dd');
+      return this.getDate;
+    }
+    else{
+      this.tenureValid = false;
+    }
   }
+  
   getdataForm(data) {
     this.flag = data
     if (!data) {
@@ -174,26 +197,26 @@ export class FixedDepositComponent implements OnInit {
       data = this.dataSource;
     }
     this.fixedDeposit = this.fb.group({
-      ownerName: [(!data) ? '' : data.ownerName, [Validators.required]],
-      amountInvest: [(!data) ? '' : data.amountInvested, [Validators.required]],
-      commencementDate: [(!data) ? '' : new Date(data.commencementDate), [Validators.required]],
-      interestRate: [(!data) ? '' : data.interestRate, [Validators.required]],
-      maturity: [(!data) ? '' : data.maturity, [Validators.required]],
+      ownerName: [(!data) ? '' : data.ownerName , [Validators.required] ],
+      amountInvest: [(!data) ? '' : data.amountInvested, [Validators.required] ],
+      commencementDate: [(!data) ? '' : new Date(data.commencementDate), [Validators.required] ],
+      interestRate: [(!data) ? '' : data.interestRate, [Validators.required] ],
+      maturity: [!data.maturity ? 1 : data.maturity, [Validators.required] ],
       compound: [(!data.interestCompoundingId) ? '' : (data.interestCompoundingId) + ''],
-      institution: [(!data) ? '' : data.institutionName, [Validators.required]],
-      description: [(!data) ? '' : data.description, [Validators.required]],
-      tenureY: [(!data) ? '' : data.tenureY, [Validators.required]],
-      tenureM: [(!data) ? '' : data.tenureM, [Validators.required]],
-      tenureD: [(!data) ? '' : data.tenureD, [Validators.required]],
-      frequencyOfPayoutPerYear: [(!data.frequencyOfPayoutPerYear) ? '' : data.frequencyOfPayoutPerYear, [Validators.required]],
-      maturityDate: [(!data) ? '' : new Date(data.maturityDate), [Validators.required]],
+      institution: [(!data) ? '' : data.institutionName ],
+      description: [(!data) ? '' : data.description ],
+      tenureY: [(!data.maturity) ? '0' : data.tenureY ],
+      tenureM: [(!data.maturity) ? '0' : data.tenureM ],
+      tenureD: [(!data.maturity) ? '0' : data.tenureD ],
+      frequencyOfPayoutPerYear: [(!data.frequencyOfPayoutPerYear) ? '' : data.frequencyOfPayoutPerYear ],
+      maturityDate: [(!data) ? '' : new Date(data.maturityDate) ],
       payOpt: [(!data.interestPayoutOption) ? '' : (data.interestPayoutOption) + '', [Validators.required]],
-      bankACNo: [(!data) ? '' : data.bankAcNumber, [Validators.required]],
+      bankACNo: [(!data) ? '' : data.bankAcNumber],
       ownerType: [(!data.ownershipType) ? '' : (data.ownershipType) + '', [Validators.required]],
-      fdNo: [(!data) ? '' : data.fdNumber, [Validators.required]],
-      FDType: [(!data.fdType) ? '' : (data.fdType) + '', [Validators.required]],
-      id: [(!data) ? '' : data.id, [Validators.required]],
-      familyMemberId: [[(!data) ? '' : data.familyMemberId], [Validators.required]]
+      fdNo: [(!data) ? '' : data.fdNumber],
+      FDType: [(!data.fdType) ? '' : (data.fdType) + '', [Validators.required] ],
+      id: [(!data) ? '' : data.id, ],
+      familyMemberId: [(!data) ? '' : data.familyMemberId]
     });
     this.getFormControl().ownerName.maxLength = 40;
     this.getFormControl().description.maxLength = 60;
@@ -201,7 +224,7 @@ export class FixedDepositComponent implements OnInit {
     this.getFormControl().bankACNo.maxLength = 15;
     this.ownerData = this.fixedDeposit.controls;
     this.familyMemberId = this.fixedDeposit.controls.familyMemberId.value;
-    this.familyMemberId = this.familyMemberId[0];
+    // this.familyMemberId = this.familyMemberId[0];
     this.fixedDeposit.controls.maturityDate.setValue(new Date(data.maturityDate));
   }
   getFormControl(): any {
