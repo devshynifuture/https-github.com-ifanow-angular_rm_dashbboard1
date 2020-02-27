@@ -2,7 +2,7 @@
 <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20">ADD FIXED DEPOSIT</h4>
+            <h4 class="mb-0 wrapper-20">{{inputData.id?'EDIT':'ADD'}} FIXED DEPOSIT</h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -152,11 +152,12 @@
                                 <span>{{D == 1? D+" Day" : D+" Days" }}</span>
                             </mat-option>
                         </mat-select>
-                        <mat-error class="f-12 pt-4" >
-                            This field is required
-                        </mat-error>
+                        
                     </mat-form-field>
                 </div>
+                <mat-error class="f-12 pt-4" *ngIf="!tenureValid" >
+                    <b>This field is required</b>
+                </mat-error>
             </div>
         </div>
     </div>
@@ -171,8 +172,8 @@
                     <input (click)="picker1.open()" (dateChange)="checkDate()" matInput formControlName="maturityDate" [min]="validMaturity" [matDatepicker]="picker1" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
-                    <mat-error class="f-12 pt-4">
-                        This field is required
+                    <mat-error class="f-12 pt-4 w-s">
+                        {{fixedDeposit.get('maturityDate').value == "Invalid Date"? 'This field is required':'Maturity date should be greater than commencement date'}}
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -202,8 +203,8 @@
             <mat-form-field>
                 <mat-select #payOpt formControlName="payOpt" class="form-control br-0" (change)="getIntPayout()">
                     <mat-option value="" disabled> Select option</mat-option>
-                    <mat-option value="1"> Cumulative payout</mat-option>
-                    <mat-option value="2">Interest payout</mat-option>
+                    <mat-option [value]="1"> Cumulative payout</mat-option>
+                    <mat-option [value]="2">Interest payout</mat-option>
                 </mat-select>
                 <mat-error class="f-12 pt-4">
                     This field is required
@@ -220,11 +221,11 @@
                 <mat-form-field>
                     <mat-select #compound formControlName="compound" class="form-control br-0">
                         <mat-option value="" disabled>Select option</mat-option>
-                        <mat-option value="1">Daily</mat-option>
-                        <mat-option value="2">Monthly</mat-option>
-                        <mat-option value="3">Quarterly</mat-option>
-                        <mat-option value="4">Half yearly</mat-option>
-                        <mat-option value="5">Yearly</mat-option>
+                        <mat-option [value]="1">Daily</mat-option>
+                        <mat-option [value]="2">Monthly</mat-option>
+                        <mat-option [value]="3">Quarterly</mat-option>
+                        <mat-option [value]="4">Half yearly</mat-option>
+                        <mat-option [value]="5">Yearly</mat-option>
                     </mat-select>
                     <mat-error class="f-12 pt-4">
                         This field is required
@@ -241,11 +242,11 @@
             <mat-form-field>
                 <mat-select #frequencyOfPayoutPerYear formControlName="frequencyOfPayoutPerYear" class="form-control br-0">
                     <mat-option value="" disabled> Select option</mat-option>
-                    <mat-option value="1">Daily</mat-option>
-                    <mat-option value="2">Monthly</mat-option>
-                    <mat-option value="3">Quarterly</mat-option>
-                    <mat-option value="4">Half yearly</mat-option>
-                    <mat-option value="5">Yearly</mat-option>
+                    <mat-option [value]="1">Daily</mat-option>
+                    <mat-option [value]="2">Monthly</mat-option>
+                    <mat-option [value]="3">Quarterly</mat-option>
+                    <mat-option [value]="4">Half yearly</mat-option>
+                    <mat-option [value]="5">Yearly</mat-option>
                 </mat-select>
                 <mat-error class="f-12 pt-4">
                     This field is required
