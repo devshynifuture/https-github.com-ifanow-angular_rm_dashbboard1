@@ -1,1 +1,134 @@
-<p>report-receivables works!</p>
+<div class="row pt-130">
+    <div class="col-md-12">
+        <h5 class="f-500">
+            Receivables
+        </h5>
+        <p class="text-primitive">
+            Summary of past and current unpaid invoices
+        </p>
+    </div>
+</div>
+
+
+<div class="row pt-20">
+    <div class="col-md-4">
+        <div class="example-chip-list">
+            <mat-chip-list #chipList aria-label="Filtering Table">
+                <mat-chip *ngFor="let filter of filterBy" [selectable]="selectable" [removable]="removable"
+                    (removed)="remove(filter)">
+                    {{filter.name}}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+            </mat-chip-list>
+        </div>
+        <!-- <button class="btn-primary addon" mat-stroked-button> Order bulk files </button> -->
+    </div>
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-lg-4 pl-0">
+                <div class="form-group mb-0">
+                    <input class="form-control m-0 w-100" placeholder="Search by advisor" [matChipInputFor]="chipList"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                        (matChipInputTokenEnd)="add($event)">
+                </div>
+            </div>
+            <div class="col-lg-3 pl-0 pr-0">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <mat-select class="form-control br-0" placeholder="No of Days" (selectionChange)="add($event)">
+                            <mat-option>None</mat-option>
+                            <mat-option value="10 - 20 days">
+                                10 - 20 days
+                            </mat-option>
+                            <mat-option value="21 - 30 days">
+                                21 - 30 days
+                            </mat-option>
+                            <mat-option value="31 - 45 days">
+                                31 - 45 days
+                            </mat-option>
+                            <mat-option value="46 - 60 days">
+                                46 - 60 days
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="col-lg-5 pr-0">
+                <mat-form-field>
+                    <mat-select class="form-control br-0" (selectionChange)="add($event)">
+                        <mat-option>
+                            None
+                        </mat-option>
+                        <mat-option value="Balance - High to Low">
+                            Balance - High to Low
+                        </mat-option>
+                        <mat-option value="Balance - Low to High">
+                            Balance - Low to High
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row pt-12">
+    <div class="col-xl-12">
+        <table mat-table id="table-low" [dataSource]="dataSource" class="">
+            <ng-container matColumnDef="adminName">
+                <th class="br" mat-header-cell *matHeaderCellDef> Admin name </th>
+                <td class="br" mat-cell *matCellDef="let element" (click)="openAdminDetails('',element)">
+                    {{element.adminName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="email">
+                <th class="br" mat-header-cell *matHeaderCellDef> Email </th>
+                <td class="br" mat-cell *matCellDef="let element"> {{element.email}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="mobile">
+                <th class="br" mat-header-cell *matHeaderCellDef> Mobile </th>
+                <td class="br" mat-cell *matCellDef="let element"> {{element.mobile}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="invoice">
+                <th class="br" mat-header-cell *matHeaderCellDef> Invoice </th>
+                <td class="br" mat-cell *matCellDef="let element">
+                    <a href="javascript:void(0)">
+                        {{element.invoice}}
+                    </a>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="sentDate">
+                <th class="br" mat-header-cell *matHeaderCellDef> Sent Date </th>
+                <td class="br" mat-cell *matCellDef="let element"> {{element.sentDate}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="dueDate">
+                <th class="br" mat-header-cell *matHeaderCellDef> Due Date </th>
+                <td class="br" mat-cell *matCellDef="let element"> {{element.dueDate}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="dueSince">
+                <th class="br" mat-header-cell *matHeaderCellDef> Due Since </th>
+                <td class="br" mat-cell *matCellDef="let element"> {{element.dueSince}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="amount">
+                <th class="br" mat-header-cell *matHeaderCellDef> Amount </th>
+                <td class="br" mat-cell *matCellDef="let element"> {{element.amount}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="balance">
+                <th class="br" mat-header-cell *matHeaderCellDef> Balance </th>
+                <td class="br" mat-cell *matCellDef="let element"> {{element.balance}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>

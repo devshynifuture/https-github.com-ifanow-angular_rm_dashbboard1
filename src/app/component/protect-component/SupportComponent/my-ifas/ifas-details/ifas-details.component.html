@@ -501,8 +501,12 @@
                 <div class="col-md-8 miscellaneousBox">
                     <h2 class="f-16 roboto">Miscellaneous</h2>
                     <mat-form-field class="example-full-width">
-                        <textarea matInput class="form-control height160"></textarea>
-                        <button mat-button class=" bg-primary text-white right br-0 text-inherit mt-12">EDIT</button>
+                        <textarea matInput [disabled]="!isInEditMode" class="form-control height160"></textarea>
+                        <button mat-button class=" bg-primary text-white right br-0 text-inherit mt-12"
+                            *ngIf="!isInEditMode" (click)="toggleEditMode()">EDIT</button>
+                        <button mat-button class=" bg-primary text-white right br-0 text-inherit mt-12"
+                            *ngIf="isInEditMode" (click)="toggleEditMode()">SAVE</button>
+
                     </mat-form-field>
 
                 </div>
@@ -513,7 +517,7 @@
 </div>
 
 
-<div class="bottom-fixed-70 wrapper-12 pt-16 zIndex">
+<div class=" bottom-fixed-70 wrapper-12 pt-16 zIndex">
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>

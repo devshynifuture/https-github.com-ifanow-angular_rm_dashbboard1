@@ -38,7 +38,13 @@ export class IfasDetailsComponent implements OnInit {
     public dialog: MatDialog,
     private eventService: EventService) { }
 
+  isInEditMode: boolean = false;
+
   ngOnInit() {
+  }
+
+  toggleEditMode() {
+    this.isInEditMode = !this.isInEditMode;
   }
 
   openUpperSliderBackoffice(flag, data) {
