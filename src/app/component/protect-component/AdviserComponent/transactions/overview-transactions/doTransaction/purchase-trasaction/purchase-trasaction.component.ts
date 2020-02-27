@@ -84,6 +84,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.transactionSummary = {}
     this.childTransactions = []
     this.getdataForm(this.inputData);
+    Object.assign(this.transactionSummary, { clientId: this.inputData.clientId })
     Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
     Object.assign(this.transactionSummary, { paymentMode: 1 });
     Object.assign(this.transactionSummary, { allEdit: true });
