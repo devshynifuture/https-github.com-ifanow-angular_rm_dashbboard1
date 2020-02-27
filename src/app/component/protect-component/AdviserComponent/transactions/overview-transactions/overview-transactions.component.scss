@@ -28,6 +28,7 @@
     border-bottom: 0.5px solid #83959D;
     padding: 0px 10px 15px 10px;
     margin-bottom: 15px;
+    margin-top: 15px;
 }
 
 .bPrimitive {
@@ -49,7 +50,7 @@
 ::ng-deep .overviewTab .mat-tab-label {
     height: auto !important;
     padding: 0px !important;
-    font-weight: 600;
+    font-weight: 500;
     opacity: 1;
     width: 35%;
     text-align: left;
