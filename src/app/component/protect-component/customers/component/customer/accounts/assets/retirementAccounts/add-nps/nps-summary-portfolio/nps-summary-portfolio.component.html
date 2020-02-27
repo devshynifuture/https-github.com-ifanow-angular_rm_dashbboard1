@@ -2,7 +2,7 @@
 <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20">ADD PORTFOLIO SUMMARY</h4>
+            <h4 class="mb-0 wrapper-20">Add Portfolio summary</h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -21,7 +21,7 @@
             <div class="col-md-5">
                 <mat-form-field class="w-100">
                     <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData' formControlName="ownerName" class="form-control br-0">
-                        <mat-option value=''>Search family members</mat-option>
+                        <mat-option value=''>Select family members</mat-option>
                         <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
                             <span>{{f.userName}}</span>
                         </mat-option>
