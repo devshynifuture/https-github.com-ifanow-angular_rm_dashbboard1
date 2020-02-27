@@ -14,6 +14,16 @@
     float: right;
 }
 
-.width400 {
-    width: 400px;
+.width300 {
+    width: 300px;
+}
+
+::ng-deep .tableHeightClass #table-low tbody td {
+    padding-top: 7px !important;
+    padding-bottom: 8px !important;
+}
+
+::ng-deep .tableHeightClass #table-low tr.mat-footer-row,
+tr.mat-row {
+    height: 40px !important;
 }

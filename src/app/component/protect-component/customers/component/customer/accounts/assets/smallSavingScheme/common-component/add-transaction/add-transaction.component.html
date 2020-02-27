@@ -11,15 +11,15 @@
 </div>
 <div *ngIf="addTransactionList>0" class="row pt-20">
     <div class="col-md-4">
-        <label class="f-16"> Transaction Type
+        <label class="f-14"> Transaction Type
         </label>
     </div>
-    <div class="col-md-3">
-        <label class="f-16"> Date
+    <div class="col-md-3 pl-0">
+        <label class="f-14"> Date
         </label>
     </div>
-    <div class="col-md-1">
-        <label class="f-16">Amount</label>
+    <div class="col-md-3 pl-0">
+        <label class="f-14">Amount</label>
     </div>
 </div>
 <div [formGroup]="transactionForm">
@@ -29,14 +29,14 @@
                 <mat-form-field>
                     <mat-select formControlName="transactionType" class="form-control br-0">
                         <mat-option value="1">Deposit</mat-option>
-                        <mat-option value="2">Withdrawl</mat-option>
+                        <mat-option value="2">Withdrawal</mat-option>
                     </mat-select>
                     <mat-error class="f-12">
                         This field is required
                     </mat-error>
                 </mat-form-field>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 pl-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input class="form-control br-0" [min]="minDate" [max]="maxDate" matInput formControlName="date" [matDatepicker]="picker" readonly>
@@ -48,10 +48,10 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="form-group mb-0">
+            <div class="col-md-3 pl-0">
+                <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
-                        <input matInput type="text" formControlName="amount" maxlength="10" #partPayment class="form-control br-0">
+                        <input matInput type="text" formControlName="amount" maxlength="10" #partPayment class="form-control rupess br-0">
                         <mat-error class="f-12">
                             This field is required
                         </mat-error>
@@ -61,8 +61,8 @@
             </div>
             <div class="col-md-2 p-0">
                 <div class="pt-8">
-                    <i class="material-icons text-primitive c-p float-left" *ngIf="i==addTransactionList-1" (click)="addTransaction()">add</i>
-                    <i class="material-icons text-primitive c-p " (click)="removeTransaction(i)">remove</i>
+                    <i class="material-icons text-primitive c-p f-20 float-left" *ngIf="i==addTransactionList-1" (click)="addTransaction()">add</i>
+                    <i class="material-icons text-primitive c-p f-20 pl-10 " (click)="removeTransaction(i)">remove</i>
                 </div>
             </div>
         </div>
