@@ -65,6 +65,8 @@ export class OnlineTrasactionComponent implements OnInit {
 
   @Input()
   set data(data) {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
     this.inputData = data;
     console.log('This is Input data of FixedDepositComponent ', data);
 
@@ -79,15 +81,13 @@ export class OnlineTrasactionComponent implements OnInit {
 
   ngOnInit() {
     this.getdataForm(this.inputData)
-    this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId();
     this.getDefaultDetails(null)
   }
   getDefaultDetails(platform) {
     let obj = {
-      advisorId: 414,
+      advisorId: this.advisorId,
       familyMemberId: 112166,
-      clientId: 53637,
+      clientId: this.clientId,
       aggregatorType: platform
     }
     this.onlineTransact.getDefaultDetails(obj).subscribe(
@@ -134,10 +134,10 @@ export class OnlineTrasactionComponent implements OnInit {
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
-  ownerList(value){
-    if(value==""){
+  ownerList(value) {
+    if (value == "") {
       this.showSpinnerOwner = false
-    }else{
+    } else {
       this.showSpinnerOwner = true
     }
   }
@@ -168,8 +168,8 @@ export class OnlineTrasactionComponent implements OnInit {
   }
   lisNominee(value) {
     this.showSpinnerOwner = false
-    if(value==null){
-      this.transactionAddForm.get('ownerName').setErrors({'setValue':'family member does not exist'});
+    if (value == null) {
+      this.transactionAddForm.get('ownerName').setErrors({ 'setValue': 'family member does not exist' });
       this.transactionAddForm.get('ownerName').markAsTouched();
     }
     console.log(value)
@@ -261,7 +261,7 @@ export class OnlineTrasactionComponent implements OnInit {
           transactionType: this.transactionAddForm.controls.transactionType.value
         }
         this.openPurchaseTransaction(data.transactionType, data)
-      }else{
+      } else {
         this.eventService.openSnackBar("Please select transaction type", "Ok")
       }
     } else {

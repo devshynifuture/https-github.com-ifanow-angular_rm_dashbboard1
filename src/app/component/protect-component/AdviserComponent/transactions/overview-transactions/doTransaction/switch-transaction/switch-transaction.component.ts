@@ -7,6 +7,7 @@ import { OnlineTransactionService } from '../../../online-transaction.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ProcessTransactionService } from '../process-transaction.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-switch-transaction',
@@ -59,10 +60,12 @@ export class SwitchTransactionComponent implements OnInit {
   multiTransact = false;
   childTransactions = [];
   displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount'];
+  advisorId: any;
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private fb: FormBuilder, private eventService: EventService, private processTransaction: ProcessTransactionService) { }
   @Input()
   set data(data) {
+    this.advisorId = AuthService.getAdvisorId();
     this.inputData = data;
     this.transactionType = data.transactionType
     this.selectedFamilyMember = data.selectedFamilyMember
@@ -94,18 +97,18 @@ export class SwitchTransactionComponent implements OnInit {
   }
   getSchemeList(value) {
     this.showSpinner = true
-    if(this.switchTransaction.get('schemeSwitch').invalid){
+    if (this.switchTransaction.get('schemeSwitch').invalid) {
       this.showSpinner = false
       Object.assign(this.transactionSummary, { schemeName: '' });
       Object.assign(this.transactionSummary, { folioNumber: '' });
-      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;//if scheme not present then min amt is 0
+      (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0;//if scheme not present then min amt is 0
     }
     if (this.selectScheme == 2 && value.length > 2) {
       let obj = {
         searchQuery: value,
         bseOrderType: 'ORDER',
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-        advisorId: 414,
+        advisorId: this.advisorId,
         tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
         familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
         clientId: this.getDataSummary.defaultClient.clientId,
@@ -116,9 +119,9 @@ export class SwitchTransactionComponent implements OnInit {
       this.onlineTransact.getExistingSchemes(obj).subscribe(
         data => this.getExistingSchemesRes(data), (error) => {
           this.showSpinner = false;
-          this.switchTransaction.get('schemeSwitch').setErrors({'setValue':error.message});
+          this.switchTransaction.get('schemeSwitch').setErrors({ 'setValue': error.message });
           this.switchTransaction.get('schemeSwitch').markAsTouched();
-          (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;//if scheme not present then min amt is 0
+          (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0;//if scheme not present then min amt is 0
           // this.eventService.showErrorMessage(error);
         }
       );
@@ -233,7 +236,7 @@ export class SwitchTransactionComponent implements OnInit {
   }
   getSchemeListTranfer(value) {
     this.showSpinnerTran = true
-    if(this.switchTransaction.get('transferIn').invalid){
+    if (this.switchTransaction.get('transferIn').invalid) {
       this.showSpinnerTran = false
       Object.assign(this.transactionSummary, { schemeNameTranfer: '' });
     }
@@ -253,7 +256,7 @@ export class SwitchTransactionComponent implements OnInit {
       this.onlineTransact.getNewSchemes(obj).subscribe(
         data => this.getNewSchemesRes(data), (error) => {
           this.showSpinnerTran = false
-          this.switchTransaction.get('transferIn').setErrors({'setValue':error.message});
+          this.switchTransaction.get('transferIn').setErrors({ 'setValue': error.message });
           this.switchTransaction.get('transferIn').markAsTouched();
           // this.eventService.showErrorMessage(error);
         }
