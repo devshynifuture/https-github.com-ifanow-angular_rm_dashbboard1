@@ -137,7 +137,8 @@
                         <ng-container matColumnDef="report">
                             <th class="br" mat-header-cell *matHeaderCellDef> Report </th>
                             <td class="br" mat-cell *matCellDef="let element">
-                                <button mat-stroked-button class="bg-primary text-white">
+                                <button mat-stroked-button class="bg-primary text-white"
+                                    (click)="openUpperSliderBackoffice('', element)">
                                     Report
                                 </button>
                             </td>
@@ -204,7 +205,8 @@
                         <ng-container matColumnDef="report">
                             <th class="br" mat-header-cell *matHeaderCellDef> Report </th>
                             <td class="br" mat-cell *matCellDef="let element">
-                                <button mat-stroked-button class="bg-primary text-white">
+                                <button mat-stroked-button class="bg-primary text-white"
+                                    (click)="openUpperSliderBackoffice('', element)">
                                     Report
                                 </button>
                             </td>
@@ -215,8 +217,6 @@
                     </table>
                 </div>
             </div>
-
-
         </mat-tab>
 
         <mat-tab label="Suggestions">

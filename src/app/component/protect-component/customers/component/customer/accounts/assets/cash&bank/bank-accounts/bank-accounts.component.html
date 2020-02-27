@@ -19,7 +19,8 @@
         </div>
         <div class="col-md-5">
             <mat-form-field class="w-100">
-                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                    [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Search family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
                         <span>{{f.userName}}</span>
@@ -43,7 +44,8 @@
                         <mat-option value="1">Current</mat-option>
                         <mat-option value="2">Savings</mat-option>
                     </mat-select>
-                    <mat-error class="f-12" [ngClass]="{'v-h':!(isAccountType && getFormControl().accountType.invalid || getFormControl().accountType.touched && getFormControl().accountType.invalid)}">
+                    <mat-error class="f-12"
+                        [ngClass]="{'v-h':!(isAccountType && getFormControl().accountType.invalid || getFormControl().accountType.touched && getFormControl().accountType.invalid)}">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -58,8 +60,11 @@
         <div class="col-md-3">
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input matInput #accountBalance type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess" formControlName="accountBalance">
-                    <mat-error class="f-12" [ngClass]="{'v-h':!(isAccountBalance && getFormControl().accountBalance.invalid || getFormControl().accountBalance.touched && getFormControl().accountBalance.invalid)}">
+                    <input matInput #accountBalance type="text" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess"
+                        formControlName="accountBalance">
+                    <mat-error class="f-12"
+                        [ngClass]="{'v-h':!(isAccountBalance && getFormControl().accountBalance.invalid || getFormControl().accountBalance.touched && getFormControl().accountBalance.invalid)}">
                         This field is required
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{accountBalance.value.length}}/10</mat-hint>
@@ -74,10 +79,12 @@
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <input matInput formControlName="balanceAsOn" class="form-control br-0" [matDatepicker]="picker" readonly>
+                <input matInput formControlName="balanceAsOn" class="form-control br-0" [matDatepicker]="picker"
+                    readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-                <mat-error class="f-12" [ngClass]="{'v-h':!(isBalanceAsOn && getFormControl().balanceAsOn.invalid || getFormControl().balanceAsOn.touched && getFormControl().balanceAsOn.invalid)}">
+                <mat-error class="f-12"
+                    [ngClass]="{'v-h':!(isBalanceAsOn && getFormControl().balanceAsOn.invalid || getFormControl().balanceAsOn.touched && getFormControl().balanceAsOn.invalid)}">
                     This field is required
                 </mat-error>
             </mat-form-field>
@@ -91,8 +98,10 @@
         <div class="col-md-3">
             <div class="form-group mb-0 iconPetage">
                 <mat-form-field>
-                    <input matInput type="number" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage" formControlName="interestRate" (keyup)="onChange($event)">
-                    <mat-error class="f-12" [ngClass]="{'v-h':!(isInterestRate && getFormControl().interestRate.invalid || getFormControl().interestRate.touched && getFormControl().interestRate.invalid)}">
+                    <input matInput type="number" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                        class="form-control br-0 percentage" formControlName="interestRate" (keyup)="onChange($event)">
+                    <mat-error class="f-12"
+                        [ngClass]="{'v-h':!(isInterestRate && getFormControl().interestRate.invalid || getFormControl().interestRate.touched && getFormControl().interestRate.invalid)}">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -114,7 +123,8 @@
                         <mat-option value="4">Half yearly</mat-option>
                         <mat-option value="5">Yearly</mat-option>
                     </mat-select>
-                    <mat-error class="f-12" [ngClass]="{'v-h':!(isCompound && getFormControl().compound.invalid || getFormControl().compound.touched && getFormControl().compound.invalid)}">
+                    <mat-error class="f-12"
+                        [ngClass]="{'v-h':!(isCompound && getFormControl().compound.invalid || getFormControl().compound.touched && getFormControl().compound.invalid)}">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -141,7 +151,9 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #bankName maxlength="60" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" class="form-control br-0" formControlName="bankName">
+                        <input matInput #bankName maxlength="60" appInputValueValidation
+                            [inputValidator]="validatorType.TEXT_ONLY" class="form-control br-0"
+                            formControlName="bankName">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{bankName.value.length}}/60</mat-hint>
                     </mat-form-field>
@@ -155,13 +167,16 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #bankAcNo type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="16" class="form-control br-0" formControlName="bankAcNo">
+                        <input matInput #bankAcNo type="text" appInputValueValidation
+                            [inputValidator]="validatorType.NUMBER_ONLY" maxlength="16" class="form-control br-0"
+                            formControlName="bankAcNo">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{bankAcNo.value.length}}/16</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
         </div>
+
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Description</h5>
@@ -169,13 +184,16 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #description maxlength="60" class="form-control br-0" formControlName="description">
+                        <input matInput #description maxlength="60" class="form-control br-0"
+                            formControlName="description">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
         </div>
+        <app-add-nominee [ownerName]="ownerName" [data]="data" (outputEvent)="getFormDataNominee($event)">
+        </app-add-nominee>
     </div>
 </div>
 <div class="bottom-fixed wrapper-12 pt-16">
