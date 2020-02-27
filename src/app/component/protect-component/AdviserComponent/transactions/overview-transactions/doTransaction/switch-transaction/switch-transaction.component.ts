@@ -205,6 +205,9 @@ export class SwitchTransactionComponent implements OnInit {
     this.showSpinnerFolio = false
     console.log('res scheme folio', data)
     this.folioList = data
+    if(this.switchTransaction.get('investmentAccountSelection').valid){
+      Object.assign(this.transactionSummary, { folioNumber: this.folioList[0].folioNumber });
+    }
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });

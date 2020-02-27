@@ -44,7 +44,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   navOfSelectedScheme: any;
   schemeDetails: any;
   reInvestmentOpt = [];
-  transactionSummary:any;
+  transactionSummary: any;
   ExistingOrNew: any;
   maiSchemeList: any;
   getDataSummary: any;
@@ -93,17 +93,22 @@ export class PurchaseTrasactionComponent implements OnInit {
   selectSchemeOption(value) {
     console.log('value selction scheme', value)
     this.purchaseTransaction.controls.schemePurchase.reset()
+    this.folioList=[];
+    this.navOfSelectedScheme=0;
+    this.schemeDetails.minimumPurchaseAmount=0
+    Object.assign(this.transactionSummary, { schemeName: '' });//to disable scheme name from transaction summary
+    Object.assign(this.transactionSummary, { folioNumber: '' });//to disable folio number from transaction summary
     this.selectScheme = value
   }
   getSchemeList(value) {
     this.showSpinner = true
     this.platformType = this.getDataSummary.defaultClient.aggregatorType
-    if(this.purchaseTransaction.get('schemePurchase').invalid){
+    if (this.purchaseTransaction.get('schemePurchase').invalid) {
       this.showSpinner = false
-      this.folioList=[];
+      this.folioList = [];
       Object.assign(this.transactionSummary, { schemeName: '' });//to disable scheme name from transaction summary
       Object.assign(this.transactionSummary, { folioNumber: '' });//to disable folio number from transaction summary
-      (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;//if scheme not present then min amt is 0
+      (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0;//if scheme not present then min amt is 0
     }
     let obj = {
       searchQuery: value,
@@ -117,14 +122,14 @@ export class PurchaseTrasactionComponent implements OnInit {
       holdingType: this.getDataSummary.defaultClient.holdingType,
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
     }
-    if(value.length > 2){
+    if (value.length > 2) {
       if (this.selectScheme == 2) {
         this.onlineTransact.getNewSchemes(obj).subscribe(
           data => this.getNewSchemesRes(data), (error) => {
             this.showSpinner = false
-            this.purchaseTransaction.get('schemePurchase').setErrors({'setValue':error.message});
+            this.purchaseTransaction.get('schemePurchase').setErrors({ 'setValue': error.message });
             this.purchaseTransaction.get('schemePurchase').markAsTouched();
-            (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;
+            (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0;
             // this.eventService.showErrorMessage(error);
           }
         );
@@ -132,9 +137,9 @@ export class PurchaseTrasactionComponent implements OnInit {
         this.onlineTransact.getExistingSchemes(obj).subscribe(
           data => this.getExistingSchemesRes(data), (error) => {
             this.showSpinner = false
-            this.purchaseTransaction.get('schemePurchase').setErrors({'setValue':error.message});
+            this.purchaseTransaction.get('schemePurchase').setErrors({ 'setValue': error.message });
             this.purchaseTransaction.get('schemePurchase').markAsTouched();
-            (this.schemeDetails)?(this.schemeDetails.minimumPurchaseAmount=0):0;
+            (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0;
             // this.eventService.showErrorMessage(error);
           }
         );
@@ -156,7 +161,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     console.log('schemeDetails == ', this.schemeDetails)
   }
   selectExistingOrNew(value) {
-    if(value=="2"){
+    if (value == "2") {
       Object.assign(this.transactionSummary, { folioNumber: '' });
     }
     this.ExistingOrNew = value
@@ -246,6 +251,9 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.showSpinnerFolio = false
     console.log('getFoliosAmcWiseRes', data)
     this.folioList = data
+    if(this.purchaseTransaction.get('investmentAccountSelection').valid){
+      Object.assign(this.transactionSummary, { folioNumber: this.folioList[0].folioNumber });
+    }
   }
   selectedFolio(folio) {
     this.folioDetails = folio
@@ -329,8 +337,8 @@ export class PurchaseTrasactionComponent implements OnInit {
     } else if (this.purchaseTransaction.get('employeeContry').invalid) {
       this.purchaseTransaction.get('employeeContry').markAsTouched();
     } else if (this.reInvestmentOpt.length > 1 && this.purchaseTransaction.get('reinvest').invalid) {
-        this.purchaseTransaction.get('reinvest').markAsTouched();
-        return;
+      this.purchaseTransaction.get('reinvest').markAsTouched();
+      return;
     } else if (this.ExistingOrNew == 1 && this.purchaseTransaction.get('investmentAccountSelection').invalid) {
       this.purchaseTransaction.get('investmentAccountSelection').markAsTouched();
       return;
@@ -402,8 +410,8 @@ export class PurchaseTrasactionComponent implements OnInit {
       this.purchaseTransaction.get('employeeContry').markAsTouched();
       return;
     } else if (this.reInvestmentOpt.length > 1 && this.purchaseTransaction.get('reinvest').invalid) {
-        this.purchaseTransaction.get('reinvest').markAsTouched();
-        return;
+      this.purchaseTransaction.get('reinvest').markAsTouched();
+      return;
     } else {
       this.multiTransact = true
       if (this.scheme != undefined && this.schemeDetails != undefined) {
