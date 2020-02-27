@@ -85,7 +85,7 @@
                                 <input type="text" aria-label="Number" formControlName="schemePurchase"
                                     class="form-control" matInput (keyup)="getSchemeList($event.target.value)"
                                     [matAutocomplete]="auto" placeholder="Start typing to see scheme names">
-                                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                                <mat-autocomplete #auto="matAutocomplete">
                                     <mat-option (onSelectionChange)="selectedScheme(scheme)"
                                         *ngFor="let scheme of schemeList" [value]="scheme.schemeName">
                                         {{scheme.schemeName}}
@@ -199,7 +199,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" *ngIf="platformType == 1 && multiTransact!=true">
+                <div class="row" *ngIf="platformType == 1">
                     <div class="col-md-5 p-0 text-left">
                         <h5 class="m-0 pt-40 text-black pb-12">Select mode of payment</h5>
                     </div>
