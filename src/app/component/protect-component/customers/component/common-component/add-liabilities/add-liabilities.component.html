@@ -277,7 +277,7 @@
             </div>
 
             <div formArrayName="transact">
-                <div class="row" *ngFor="let obj of transactEntries.controls; let pointIndex=index" [formGroupName]="pointIndex">
+                <div class="row pb-28" *ngFor="let obj of transactEntries.controls; let pointIndex=index" [formGroupName]="pointIndex">
                     <div class="col-md-3">
                         <mat-form-field>
                             <input class="form-control br-0" matInput (focus)="picker.open()" (input)="preventDefault($event)" [matDatepicker]="picker" formControlName="partPaymentDate" readonly>
@@ -314,7 +314,7 @@
                         </div>
                     </div>
                     <div class="col-md-1 p-0 align-items-center d-flex">
-                        <i class="material-icons text-primitive f-20 " (click)="addTransaction()">add</i>
+                        <i class="material-icons text-primitive c-p f-20 " (click)="addTransaction()">add</i>
                         <i class="material-icons text-primitive pl-10 c-p f-20 " (click)="removeTransaction(pointIndex)">remove</i>
                     </div>
                 </div>

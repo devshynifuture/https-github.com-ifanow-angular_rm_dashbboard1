@@ -20,7 +20,7 @@
         <div class="col-md-3 pr-0">
             <mat-form-field class="w-100">
                 <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData' formControlName="ownerName" class="form-control br-0">
-                    <mat-option value=''>Search family members</mat-option>
+                    <mat-option value=''>Select family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" (click)="ownerList(f)" [value]="f.userName" (click)="ownerDetails(f)">
                         <span>{{f.userName}}</span>
                     </mat-option>
@@ -32,10 +32,10 @@
         </div>
 
         <div class="col-md-2">
-            <div class="form-group mb-0">
+            <div class="form-group mb-0 iconPetage">
                 <mat-form-field>
-                    <input matInput class=" form-control br-0" type="number" formControlName="ownerPercent" (keyup)="onChange('owner')">
-                    <mat-error class="f-12" [ngClass]="{'v-h':!(isOwnerPercent && getFormControl().ownerPercent.invalid || getFormControl().ownerPercent.touched && getFormControl().ownerPercent.invalid)}">
+                    <input matInput class=" form-control br-0 percentage" type="number" formControlName="ownerPercent" (keyup)="onChange('owner')">
+                    <mat-error class="f-12 " [ngClass]="{'v-h':!(isOwnerPercent && getFormControl().ownerPercent.invalid || getFormControl().ownerPercent.touched && getFormControl().ownerPercent.invalid)}">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -54,19 +54,25 @@
             <div class="col-md-3 pr-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput aria-label="State" (click)="nomineesList()" [matAutocomplete]="auto" list="userName" class="form-control br-0 pl-8" formControlName="ownerName">
+                        <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                            <mat-option value=''>Select family members</mat-option>
+                            <mat-option *ngFor="let f of nomineesListFM" (click)="ownerList(f)" [value]="f.userName" (click)="ownerDetails(f)">
+                            <span>{{f.userName}}</span>
+                            </mat-option>
+                        </mat-select>
+                        <!-- <input matInput aria-label="State" (click)="nomineesList()" [matAutocomplete]="auto" list="userName" class="form-control br-0 pl-8" formControlName="ownerName">
                         <mat-autocomplete #auto="matAutocomplete">
                             <mat-option *ngFor="let item of familyList" (click)="getCoOwnerDetails(item)" [value]="item.userName">
                                 <span>{{item.userName}}</span>
                             </mat-option>
-                        </mat-autocomplete>
+                        </mat-autocomplete> -->
                     </mat-form-field>
                 </div>
             </div>
             <div class="col-md-2">
-                <div class="form-group mb-0">
+                <div class="form-group mb-0 iconPetage">
                     <mat-form-field>
-                        <input matInput class="form-control br-0" type="number" formControlName="ownershipPerc" (keyup)="onChange('owner')">
+                        <input matInput class="form-control br-0 percentage" type="number" formControlName="ownershipPerc" (keyup)="onChange('owner')">
                         <mat-error class="f-12">
                             This field is required
                         </mat-error>
@@ -74,7 +80,8 @@
                 </div>
             </div>
             <div class="col-md-2 p-0">
-                <h5 class="mb-0 ml-12 text-primitive pt-8 c-p" (click)="removeCoOwner(pointIndex)">Remove</h5>
+                <i class="material-icons text-primitive f-20 c-p pl-10 pt-8" (click)="removeCoOwner(pointIndex)">remove</i>
+                <!-- <h5 class="mb-0 ml-12 text-primitive pt-8 c-p" (click)="removeCoOwner(pointIndex)">-</h5> -->
             </div>
         </div>
 
@@ -150,6 +157,7 @@
                         <input class="form-control br-0" matInput (focus)="picker.open()" (input)="preventDefault($event)" [matDatepicker]="picker" formControlName="purchasePeriod" readonly>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
+                        <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-error class="f-12">
                             This field is required
                         </mat-error>
@@ -186,8 +194,17 @@
             <div class="col-md-5 text-right">
                 <h5 class="m-0 pt-36">Area details</h5>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-5 iconRupess">
                 <div class="row">
+                    <div class="col-md-6 pr-0">
+                        <h5 class="m-0 f-14">Rate per unit</h5>
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <input matInput #unit maxlength="10" type="text" class="form-control rupess br-0 " formControlName="unit">
+
+                            </mat-form-field>
+                        </div>
+                    </div>
                     <div class="col-md-6 pr-0 pl-0">
                         <h5 class="m-0 f-14">Unit</h5>
                         <div class="form-group mb-0">
@@ -222,15 +239,7 @@
 
 
                     </div>
-                    <div class="col-md-6 pr-0">
-                        <h5 class="m-0 f-14">Rate per unit</h5>
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <input matInput #unit maxlength="10" type="text" class="form-control br-0 " formControlName="unit">
-
-                            </mat-form-field>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
             <div class="col-md-2 p-0" *ngIf="showArea==true">
