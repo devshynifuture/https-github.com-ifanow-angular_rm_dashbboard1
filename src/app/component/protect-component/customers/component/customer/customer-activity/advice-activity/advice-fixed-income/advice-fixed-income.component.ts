@@ -27,6 +27,10 @@ export class AdviceFixedIncomeComponent implements OnInit {
   recurringDataSource: any;
   bondDataSource: any;
   selectedAssetId: any = [];
+  checkCount: number;
+  fixedCount: number;
+  recurringCount: number;
+  bondCount: number;
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private utilService: UtilService, private activityService: ActiityService) { }
   allAdvice = false;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -98,9 +102,18 @@ export class AdviceFixedIncomeComponent implements OnInit {
     this.selectedAssetId = selectedIdList;
     console.log(this.selectedAssetId);
   }
-  checkSingle(flag, selectedData) {
-    (flag.checked) ? this.selectedAssetId.push(selectedData.id) : this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
-    console.log(this.selectedAssetId)
+  checkSingle(flag, selectedData, tableData, tableFlag) {
+    if (flag.checked) {
+      selectedData.selected = true;
+      this.selectedAssetId.push(selectedData.id)
+    }
+    else {
+      selectedData.selected = false
+      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
+    }
+    let countValue = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
+    (tableFlag == 'fixedDeposit') ? this.fixedCount = countValue : (tableFlag == 'recurringDeposit') ? this.recurringCount = countValue :
+      this.bondCount = countValue;
   }
   openselectAdvice(data) {
     const fragmentData = {

@@ -33,6 +33,11 @@ export class AdviceRetirementAccountComponent implements OnInit {
   console: any;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   selectedAssetId: any = [];
+  epfCount: number;
+  npsCOunt: number;
+  gratuityCount: number;
+  superannuationCount: number;
+  epsCount: number;
 
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
 
@@ -123,9 +128,17 @@ export class AdviceRetirementAccountComponent implements OnInit {
     this.npsDataSource['tableFlag'] = (data.NPS.length == 0) ? false : true;
     console.log(data);
   }
-  checkSingle(flag, selectedData) {
-    (flag.checked) ? this.selectedAssetId.push(selectedData.id) : this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
-    console.log(this.selectedAssetId)
+  checkSingle(flag, selectedData, tableData, tableFlag) {
+    if (flag.checked) {
+      selectedData.selected = true;
+      this.selectedAssetId.push(selectedData.id)
+    }
+    else {
+      selectedData.selected = false
+      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
+    }
+    let countValue = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
+    (tableFlag == 'epf') ? this.epfCount = countValue : (tableFlag == 'nps') ? this.npsCOunt = countValue : (tableFlag == 'gratuity') ? this.gratuityCount = countValue : (tableFlag == 'superannuation') ? this.superannuationCount = countValue : this.epsCount = countValue;
   }
   openAddEPF(data, value) {
     const fragmentData = {
