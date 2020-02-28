@@ -52,9 +52,8 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 "
-                (click)="openCommodities('adviceGOLD','adviceGOLD')"><img src="/assets/images/svg/plus.svg"
-                    class="pr-8">Suggest new gold</button>
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEdit('adviceGOLD',null)"><img
+                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new gold</button>
         </div>
     </div>
     <table #tableOne="matSort" matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table
@@ -133,7 +132,7 @@
                     more_vert
                 </i>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Edit</button>
+                    <button mat-menu-item (click)="openAddEdit('adviceGOLD',element)">Edit</button>
                     <button mat-menu-item>Delete</button>
                 </mat-menu>
             </td>
@@ -151,9 +150,8 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 "
-                (click)="openOthers('adviceOTHERS','adviceOTHERS')"><img src="/assets/images/svg/plus.svg"
-                    class="pr-8">Suggest new others</button>
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEdit('adviceOTHERS',null)"><img
+                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new others</button>
         </div>
     </div>
     <table #tableTwo="matSort" matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table
@@ -227,7 +225,7 @@
                     more_vert
                 </i>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Edit</button>
+                    <button mat-menu-item (click)="openAddEdit('adviceOTHERS',element)">Edit</button>
                     <button mat-menu-item>Delete</button>
                 </mat-menu>
             </td>

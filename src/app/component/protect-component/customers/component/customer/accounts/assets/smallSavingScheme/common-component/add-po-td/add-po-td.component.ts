@@ -61,6 +61,7 @@ export class AddPoTdComponent implements OnInit {
   }
   getdataForm(data) {
     this.flag = data;
+    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
     if (data == undefined) {
       data = {};
     }
@@ -69,7 +70,7 @@ export class AddPoTdComponent implements OnInit {
     }
     this.potdData = data;
     this.POTDForm = this.fb.group({
-      ownerName: [!data.ownerName?'':data.ownerName, [Validators.required, UtilService.ageValidators(10)]],
+      ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required, UtilService.ageValidators(10)]],
       amtInvested: [data.amountInvested, [Validators.required, Validators.min(200)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
       description: [data.description],

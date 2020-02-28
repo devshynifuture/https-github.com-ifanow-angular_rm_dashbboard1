@@ -52,7 +52,7 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddPPF('advicePPF','advicePPF')"><img
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEdit('advicePPF',null)"><img
                     src="/assets/images/svg/plus.svg" class="pr-8">Suggest new PPF</button>
         </div>
     </div>
@@ -149,7 +149,7 @@
                     more_vert
                 </i>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Edit</button>
+                    <button mat-menu-item (click)="openAddEdit('advicePPF',element)">Edit</button>
                     <button mat-menu-item>Delete</button>
                 </mat-menu>
             </td>
@@ -167,7 +167,7 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button (click)="openAddNSC('adviceNSC','adviceNSC')" mat-stroked-button class="btn-primary br-0 pl-8 "><img
+            <button (click)="openAddEdit('adviceNSC',null)" mat-stroked-button class="btn-primary br-0 pl-8 "><img
                     src="/assets/images/svg/plus.svg" class="pr-8">Suggest new NSC</button>
         </div>
     </div>
@@ -252,7 +252,7 @@
                     more_vert
                 </i>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Edit</button>
+                    <button mat-menu-item (click)="openAddEdit('adviceNSC',element)">Edit</button>
                     <button mat-menu-item>Delete</button>
                 </mat-menu>
             </td>
@@ -270,7 +270,7 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="addOpenSSY('adviceSSY','adviceSSY')"><img
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEdit('adviceSSY',null)"><img
                     src="/assets/images/svg/plus.svg" class="pr-8">Suggest new SSY</button>
         </div>
     </div>
@@ -343,7 +343,7 @@
                     more_vert
                 </i>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Edit</button>
+                    <button mat-menu-item (click)="openAddEdit('adviceSSY',element)">Edit</button>
                     <button mat-menu-item>Delete</button>
                 </mat-menu>
             </td>
@@ -361,7 +361,7 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddKVP('adviceKVP','adviceKVP')"><img
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEdit('adviceKVP',null)"><img
                     src="/assets/images/svg/plus.svg" class="pr-8">Suggest new KVP</button>
         </div>
     </div>
@@ -454,7 +454,7 @@
                     more_vert
                 </i>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Edit</button>
+                    <button mat-menu-item (click)="openAddEdit('adviceKVP',element)">Edit</button>
                     <button mat-menu-item>Delete</button>
                 </mat-menu>
             </td>
@@ -472,9 +472,8 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 "
-                (click)="openAddSCSS('adviceSCSS','adviceSCSS')"><img src="/assets/images/svg/plus.svg"
-                    class="pr-8">Suggest new SCSS</button>
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEdit('adviceSCSS',null)"><img
+                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new SCSS</button>
         </div>
     </div>
     <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="scssDataSpurce"
@@ -548,7 +547,7 @@
                     more_vert
                 </i>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Edit</button>
+                    <button mat-menu-item (click)="openAddEdit('adviceSCSS',element)">Edit</button>
                     <button mat-menu-item>Delete</button>
                 </mat-menu>
             </td>
@@ -566,9 +565,8 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 "
-                (click)="openAddPOSAVING('advicePoSaving','advicePoSaving')"><img src="/assets/images/svg/plus.svg"
-                    class="pr-8">Suggest new PO SAVINGS</button>
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEdit('advicePoSaving',null)"><img
+                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new PO SAVINGS</button>
         </div>
     </div>
     <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="posavingDataSource"
@@ -629,7 +627,7 @@
                     more_vert
                 </i>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Item 1</button>
+                    <button mat-menu-item (click)="openAddEdit('advicePoSaving',element)">Item 1</button>
                     <button mat-menu-item>Item 2</button>
                 </mat-menu>
             </td>
@@ -647,9 +645,8 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 "
-                (click)="openAddPORD('advicePORD','advicePORD')"><img src="/assets/images/svg/plus.svg"
-                    class="pr-8">Suggest new PO RD</button>
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEdit('advicePORD',null)"><img
+                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new PO RD</button>
         </div>
     </div>
     <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="pordDataSpurce"
@@ -721,7 +718,7 @@
                     more_vert
                 </i>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Edit</button>
+                    <button mat-menu-item (click)="openAddEdit('advicePORD',element)">Edit</button>
                     <button mat-menu-item>Delete</button>
                 </mat-menu>
             </td>
@@ -739,9 +736,8 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 "
-                (click)="openAddPOTD('advicePOTD','advicePOTD')"><img src="/assets/images/svg/plus.svg"
-                    class="pr-8">Suggest new PO TD</button>
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEdit('advicePOTD',null)"><img
+                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new PO TD</button>
         </div>
     </div>
     <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="potdDataSource"
@@ -826,7 +822,7 @@
                     more_vert
                 </i>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Edit</button>
+                    <button mat-menu-item (click)="openAddEdit('advicePOTD',element)">Edit</button>
                     <button mat-menu-item>Delete</button>
                 </mat-menu>
             </td>
@@ -844,9 +840,8 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 "
-                (click)="openAddPOMIS('advicePOMIS','advicePOMIS')"><img src="/assets/images/svg/plus.svg"
-                    class="pr-8">Suggest new PO MIS</button>
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEdit('advicePOMIS',null)"><img
+                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new PO MIS</button>
         </div>
     </div>
     <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="pomisDataSpurce"
@@ -921,7 +916,7 @@
                     more_vert
                 </i>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Edit</button>
+                    <button mat-menu-item (click)="openAddEdit('advicePOMIS',element)">Edit</button>
                     <button mat-menu-item>Delete</button>
                 </mat-menu>
             </td>

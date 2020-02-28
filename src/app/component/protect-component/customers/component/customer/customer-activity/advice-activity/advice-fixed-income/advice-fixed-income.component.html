@@ -53,8 +53,8 @@
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
             <button mat-stroked-button class="btn-primary br-0 pl-8 "
-                (click)="openFixedDeposit('adviceFixedDeposit','adviceFixedDeposit')"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new FD</button>
+                (click)="openAddEdit('adviceFixedDeposit',null)"><img src="/assets/images/svg/plus.svg"
+                    class="pr-8">Suggest new FD</button>
         </div>
     </div>
     <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="
@@ -143,7 +143,7 @@
                     more_vert
                 </i>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Edit</button>
+                    <button mat-menu-item (click)="openAddEdit('adviceFixedDeposit',element)">Edit</button>
                     <button mat-menu-item>Delete</button>
                 </mat-menu>
             </td>
@@ -162,8 +162,8 @@
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
             <button mat-stroked-button class="btn-primary br-0 pl-8 "
-                (click)="openRecurringDeposit('adviceRecurringDeposit','adviceRecurringDeposit')"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new RD</button>
+                (click)="openAddEdit('adviceRecurringDeposit',null)"><img src="/assets/images/svg/plus.svg"
+                    class="pr-8">Suggest new RD</button>
         </div>
     </div>
     <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]=" recurringDataSource"
@@ -255,7 +255,7 @@
                     more_vert
                 </i>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Edit</button>
+                    <button mat-menu-item (click)="openAddEdit('adviceRecurringDeposit',element)">Edit</button>
                     <button mat-menu-item>Delete</button>
                 </mat-menu>
             </td>
@@ -273,7 +273,7 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openBond('adviceBonds','open')"><img
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEdit('adviceBonds',null)"><img
                     src="/assets/images/svg/plus.svg" class="pr-8">Suggest new Bond</button>
         </div>
     </div>
@@ -363,7 +363,7 @@
                     more_vert
                 </i>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Edit </button>
+                    <button mat-menu-item (click)="openAddEdit('adviceBonds',element)">Edit </button>
                     <button mat-menu-item>Delete</button>
                 </mat-menu>
             </td>

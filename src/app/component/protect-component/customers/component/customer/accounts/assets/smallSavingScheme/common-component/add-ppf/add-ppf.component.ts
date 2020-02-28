@@ -84,6 +84,8 @@ export class AddPpfComponent implements OnInit {
   }
   getdataForm(data) {
     this.flag = data;
+    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
+
     if (data == undefined) {
       data = {};
     }
@@ -92,12 +94,12 @@ export class AddPpfComponent implements OnInit {
     }
     this.ppfData = data;
     this.ppfSchemeForm = this.fb.group({
-      ownerName: [!data.ownerName?'':data.ownerName, [Validators.required]],
+      ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
       accountBalance: [data.accountBalance, [Validators.required, Validators.min(500), Validators.max(150000)]],
       balanceAsOn: [new Date(data.balanceAsOn), [Validators.required]],
       commencementDate: [new Date(data.commencementDate), [Validators.required]],
       futureContribution: [data.futureApproxcontribution, [Validators.required]],
-      tenure: [!data.tenure?'':data.tenure, [Validators.required]],
+      tenure: [!data.tenure ? '' : data.tenure, [Validators.required]],
       frquency: [(data.frequency == undefined) ? "1" : data.frequency, [Validators.required]],
     })
     this.optionalppfSchemeForm = this.fb.group({

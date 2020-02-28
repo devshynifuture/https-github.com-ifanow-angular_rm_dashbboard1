@@ -2,7 +2,7 @@
 <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20">{{inputData.id?'Edit':'Add'}} Fixed deposit</h4>
+            <h4 class="mb-0 wrapper-20">{{inputData==null?'Add':'Edit'}} Fixed deposit</h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -19,7 +19,8 @@
         </div>
         <div class="col-md-5">
             <mat-form-field class="w-100">
-                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                    [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Select family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName" (click)="ownerDetails(f)">
                         <span>{{f.userName}}</span>
@@ -47,7 +48,8 @@
                         <mat-option value="1">Bank FD</mat-option>
                         <mat-option value="2">Corporate FD</mat-option>
                     </mat-select>
-                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isFDType && getFormControl().FDType.invalid || getFormControl().FDType.touched && getFormControl().FDType.invalid)}">
+                    <mat-error class="f-12 pt-4"
+                        [ngClass]="{'v-h':!(isFDType && getFormControl().FDType.invalid || getFormControl().FDType.touched && getFormControl().FDType.invalid)}">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -62,7 +64,9 @@
         <div class="col-md-3">
             <div class="form-group iconRupess mb-0">
                 <mat-form-field>
-                    <input matInput #amountInvest type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess" formControlName="amountInvest">
+                    <input matInput #amountInvest type="text" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess"
+                        formControlName="amountInvest">
                     <mat-error class="f-12 pt-4">
                         This field is required
                     </mat-error>
@@ -77,7 +81,8 @@
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <input (click)="picker.open()" (dateChange)="checkDate()" matInput formControlName="commencementDate" [max]="maxDate" [matDatepicker]="picker" readonly>
+                <input (click)="picker.open()" (dateChange)="checkDate()" matInput formControlName="commencementDate"
+                    [max]="maxDate" [matDatepicker]="picker" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error class="f-12 pt-4">
@@ -94,7 +99,9 @@
         <div class="col-md-3 iconPetage">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input #interestRate matInput type="number" (keyup)="onChange($event)" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage" formControlName="interestRate">
+                    <input #interestRate matInput type="number" (keyup)="onChange($event)" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage"
+                        formControlName="interestRate">
                     <mat-error class="f-12 pt-4">
                         This field is required
                     </mat-error>
@@ -108,13 +115,18 @@
         </div>
         <div class="col-md-6 pr-0">
             <mat-radio-group aria-label="Select an option" id="custom-radio" formControlName="maturity">
-                <mat-radio-button value="1" class="b-ua radioBtn text-custom" [checked]='true' [ngClass]="{'b-a-custom': fixedDeposit.get('maturity').value==1,'text-primary':fixedDeposit.get('maturity').value==1,'borderRadio':fixedDeposit.get('maturity').value==2}" (click)="haveMaturity(false)">I have tenure
+                <mat-radio-button value="1" class="b-ua radioBtn text-custom" [checked]='true'
+                    [ngClass]="{'b-a-custom': fixedDeposit.get('maturity').value==1,'text-primary':fixedDeposit.get('maturity').value==1,'borderRadio':fixedDeposit.get('maturity').value==2}"
+                    (click)="haveMaturity(false)">I have tenure
                 </mat-radio-button>
 
-                <mat-radio-button class="classBlue pr-10 radioBtn" value="2" [ngClass]="{'b-a-custom': fixedDeposit.get('maturity').value==2,'text-primary':fixedDeposit.get('maturity').value==2,'borderRadio text-custom':fixedDeposit.get('maturity').value==1}" (click)="haveMaturity(true)">I have maturity date
+                <mat-radio-button class="classBlue pr-10 radioBtn" value="2"
+                    [ngClass]="{'b-a-custom': fixedDeposit.get('maturity').value==2,'text-primary':fixedDeposit.get('maturity').value==2,'borderRadio text-custom':fixedDeposit.get('maturity').value==1}"
+                    (click)="haveMaturity(true)">I have maturity date
                 </mat-radio-button>
             </mat-radio-group>
-            <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(!tenureValid && getFormControl().maturity.invalid || getFormControl().maturity.touched && getFormControl().maturity.invalid)}">
+            <mat-error class="f-12 pt-4"
+                [ngClass]="{'v-h':!(!tenureValid && getFormControl().maturity.invalid || getFormControl().maturity.touched && getFormControl().maturity.invalid)}">
                 This field is required
             </mat-error>
 
@@ -167,7 +179,8 @@
         <div class="col-md-3 pr-0">
             <div class="form-group mb-0 d-flex">
                 <mat-form-field>
-                    <input (click)="picker1.open()" (dateChange)="checkDate()" matInput formControlName="maturityDate" [min]="validMaturity" [matDatepicker]="picker1" readonly>
+                    <input (click)="picker1.open()" (dateChange)="checkDate()" matInput formControlName="maturityDate"
+                        [min]="validMaturity" [matDatepicker]="picker1" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
                     <mat-error class="f-12 pt-4 w-s">
@@ -238,7 +251,8 @@
         </div>
         <div class="col-md-3 pr-0">
             <mat-form-field>
-                <mat-select #frequencyOfPayoutPerYear formControlName="frequencyOfPayoutPerYear" class="form-control br-0">
+                <mat-select #frequencyOfPayoutPerYear formControlName="frequencyOfPayoutPerYear"
+                    class="form-control br-0">
                     <mat-option value="" disabled> Select option</mat-option>
                     <mat-option [value]="1">Daily</mat-option>
                     <mat-option [value]="2">Monthly</mat-option>
@@ -292,7 +306,8 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput #fdNo type="text" (keypress)="keyPress($event)" maxlength="20" class="form-control br-0" formControlName="fdNo">
+                            <input matInput #fdNo type="text" (keypress)="keyPress($event)" maxlength="20"
+                                class="form-control br-0" formControlName="fdNo">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
                             <mat-hint align="end" class="f-12">{{fdNo.value.length}}/20</mat-hint>
                         </mat-form-field>
@@ -306,7 +321,9 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput #bankACNo type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="16" class="form-control br-0" formControlName="bankACNo">
+                            <input matInput #bankACNo type="text" appInputValueValidation
+                                [inputValidator]="validatorType.NUMBER_ONLY" maxlength="16" class="form-control br-0"
+                                formControlName="bankACNo">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
                             <mat-hint align="end" class="f-12">{{bankACNo.value.length}}/16</mat-hint>
                         </mat-form-field>
@@ -320,7 +337,8 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input type="text" matInput #institution maxlength="50" class="form-control br-0" formControlName="institution">
+                            <input type="text" matInput #institution maxlength="50" class="form-control br-0"
+                                formControlName="institution">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
                             <mat-hint align="end" class="f-12">{{institution.value.length}}/50</mat-hint>
                         </mat-form-field>
@@ -334,7 +352,8 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput #description maxlength="60" class="form-control br-0" formControlName="description" type="text">
+                            <input matInput #description maxlength="60" class="form-control br-0"
+                                formControlName="description" type="text">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
                             <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                         </mat-form-field>
