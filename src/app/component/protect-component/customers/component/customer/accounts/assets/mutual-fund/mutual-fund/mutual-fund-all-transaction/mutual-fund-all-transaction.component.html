@@ -43,7 +43,7 @@
                     <ng-container matColumnDef="no">
                         <th mat-header-cell *matHeaderCellDef class="br">Sr no. </th>
                         <td mat-cell *matCellDef="let element;index as i" class="br">
-                            <div class="bar"> {{ i + 1 }} </div>
+                            <div class="bar"><span *ngIf="element.fwTransactionType">{{ i + 1 }}</span> </div>
                         </td>
                         <td *matFooterCellDef class="br  text-right" mat-footer-cell></td>
                     </ng-container>
@@ -51,7 +51,10 @@
                     <ng-container matColumnDef="transactionType">
                         <th class="br" mat-sort-header="transactionType" mat-header-cell *matHeaderCellDef> Transaction
                             Type </th>
-                        <td class="br" mat-cell *matCellDef="let element"> {{element.fwTransactionType}} </td>
+                        <td class="br" mat-cell *matCellDef="let element">
+                            <span class="f-700" *ngIf="element.total=='Total'">{{element.total}}</span>
+                            <span *ngIf="element.fwTransactionType">{{element.fwTransactionType}}</span>
+                        </td>
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left">Grand Total
                         </td>
 
@@ -70,8 +73,12 @@
                     <ng-container matColumnDef="transactionAmount">
                         <th class="br text-left" mat-sort-header="transactionAmount" mat-header-cell *matHeaderCellDef>
                             Transaction amount</th>
-                        <td class="br text-left" mat-cell *matCellDef="let element" appFormatNumber>
-                            {{element.amount}} </td>
+                        <td class="br text-left" mat-cell *matCellDef="let element">
+                            {{element.amount}}
+                            <span appFormatNumber *ngIf="element.amount">{{element.amount}}</span>
+                            <span appFormatNumber class="f-700"
+                                *ngIf="element.totalTransactionAmt">{{element.totalTransactionAmt}}</span>
+                        </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                             {{(grandTotal)?grandTotal.totalTransactionAmt:'0'}}</td>
 
@@ -90,8 +97,10 @@
 
                     <ng-container matColumnDef="units">
                         <th class="br text-right" mat-sort-header="units" mat-header-cell *matHeaderCellDef>Units</th>
-                        <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
-                            {{element.unit}} </td>
+                        <td class="br text-right" mat-cell *matCellDef="let element">
+                            <span appFormatNumber *ngIf="element.unit">{{element.unit}}</span>
+                            <span appFormatNumber class="f-700" *ngIf="element.totalUnit">{{element.totalUnit}}</span>
+                        </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                             {{(grandTotal)?grandTotal.totalUnit:'0'}}</td>
 
@@ -100,8 +109,10 @@
                     <ng-container matColumnDef="balanceUnits">
                         <th class="br text-right" mat-sort-header="balanceUnits" mat-header-cell *matHeaderCellDef>
                             Balance units </th>
-                        <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
-                            {{element.balanceUnits}}
+                        <td class="br text-right" mat-cell *matCellDef="let element">
+                            <span appFormatNumber *ngIf="element.balanceUnits">{{element.balanceUnits}}</span>
+                            <span appFormatNumber class="f-700"
+                                *ngIf="element.totalBalanceUnit">{{element.totalBalanceUnit}}</span>
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                             {{(grandTotal)?grandTotal.totalBalanceUnit:'0'}}</td>
@@ -136,11 +147,11 @@
                             {{group.name}}(PAN:{{group.pan}})|{{group.folio}}</td>
                     </ng-container>
 
-                    <ng-container matColumnDef="groupHeader4">
+                    <!-- <ng-container matColumnDef="groupHeader4">
                         <td *matCellDef="let group" [attr.colspan]="displayedColumns.length" class="text-center f-600">
                             {{group.total}}{{group.totalTransactionAmt}}{{group.totalUnit}}{{group.totalNav}}{{group.totalBalanceUnit}}
                         </td>
-                    </ng-container>
+                    </ng-container> -->
 
                     <ng-container matColumnDef="icons">
                         <th *matHeaderCellDef class="" mat-header-cell></th>
@@ -166,7 +177,7 @@
                     <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
                     <tr *matRowDef="let row; columns: ['groupHeader2']; when: isGroup2" mat-row></tr>
                     <tr *matRowDef="let row; columns: ['groupHeader3']; when: isGroup3" mat-row></tr>
-                    <tr *matRowDef="let row; columns: ['groupHeader4']; when: isGroup4" mat-row></tr>
+                    <!-- <tr *matRowDef="let row; columns: ['groupHeader4']; when: isGroup4" mat-row></tr> -->
                     <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true"></tr>
 
 
