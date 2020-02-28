@@ -91,6 +91,7 @@ export class SipTransactionComponent implements OnInit {
     this.getdataForm(this.inputData)
     this.childTransactions = []
     this.transactionSummary = {}
+    Object.assign(this.transactionSummary, { clientId: this.inputData.clientId })
     Object.assign(this.transactionSummary, { transactType: 'SIP' });
     Object.assign(this.transactionSummary, { paymentMode: 1 });
     Object.assign(this.transactionSummary, { allEdit: true });
@@ -102,6 +103,8 @@ export class SipTransactionComponent implements OnInit {
   selectExistingOrNew(value) {
     if (value == "2") {
       Object.assign(this.transactionSummary, { folioNumber: '' });
+    }else{
+      this.getAmcWiseFolio()
     }
     this.ExistingOrNew = value
   }
@@ -212,7 +215,9 @@ export class SipTransactionComponent implements OnInit {
     } if (data.length == 1) {
       this.reInvestmentOpt = []
     }
-    this.getAmcWiseFolio()
+    if(this.sipTransaction.controls.folioSelection.value == '1'){
+      this.getAmcWiseFolio()
+    }
     if (this.getDataSummary.defaultClient.aggregatorType == 2) {
       this.getMandateDetails()
     }
