@@ -1,3 +1,4 @@
+import { SubscriptionInject } from './../../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { Component, OnInit } from '@angular/core';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
@@ -6,6 +7,7 @@ import { UpperSliderBackofficeComponent } from '../../common-component/upper-sli
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
 import { FileOrderingUpperComponent } from '../file-ordering-upper/file-ordering-upper.component';
+import { FileOrderingSetupComponent } from './file-ordering-setup/file-ordering-setup.component';
 
 @Component({
   selector: 'app-file-ordering-bulk',
@@ -15,7 +17,8 @@ import { FileOrderingUpperComponent } from '../file-ordering-upper/file-ordering
 export class FileOrderingBulkComponent implements OnInit {
 
   constructor(
-    private eventService: EventService
+    private eventService: EventService,
+    private subInjectService: SubscriptionInject
   ) { }
   displayedColumns: string[] = ['rta', 'description', 'orderedby', 'startedOn', 'totalfiles', 'queue', 'ordering', 'ordered', 'failed', 'uploaded', 'refresh', 'empty'];
   dataSource = ELEMENT_DATA;
@@ -43,6 +46,30 @@ export class FileOrderingBulkComponent implements OnInit {
           // this.getClientSubscriptionList();
           subscription.unsubscribe();
         }
+      }
+    );
+  }
+
+  openUpperBulkFileOrdering(data) {
+    const fragmentData = {
+      flag: 'openFileOrderingSetup',
+      data,
+      id: 1,
+      state: 'open45',
+      componentName: FileOrderingSetupComponent
+    };
+
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
+          rightSideDataSub.unsubscribe();
+        }
+
       }
     );
   }

@@ -18,6 +18,7 @@ import { OrderHistoricalFileComponent } from './order-historical-file/order-hist
 import { MyIfaSelectArnRiaComponent } from './my-ifas/my-ifa-select-arn-ria/my-ifa-select-arn-ria.component';
 import { FileOrderingUpperComponent } from './file-ordering-upload/file-ordering-upper/file-ordering-upper.component';
 import { FileOrderingDetailComponent } from './file-ordering-upload/file-ordering-detail/file-ordering-detail.component';
+import { FileOrderingSetupComponent } from './file-ordering-upload/file-ordering-bulk/file-ordering-setup/file-ordering-setup.component';
 
 const componentList = [
     AdminDetailsComponent,
@@ -33,7 +34,8 @@ const componentList = [
     OrderHistoricalFileComponent,
     MyIfaSelectArnRiaComponent,
     FileOrderingUpperComponent,
-    FileOrderingDetailComponent
+    FileOrderingDetailComponent,
+    FileOrderingSetupComponent
 ]
 
 @NgModule({
