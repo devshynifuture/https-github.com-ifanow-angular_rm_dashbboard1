@@ -53,6 +53,9 @@ export class RecuringDepositComponent implements OnInit {
   clientId: any;
   nomineesListFM: any;
   flag: any;
+  nomineesList= [];
+  depoData:any = [];
+  nominees:any = [];
 
   constructor(private event: EventService, private fb: FormBuilder, private custumService: CustomerService,
     public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) {
@@ -120,6 +123,7 @@ export class RecuringDepositComponent implements OnInit {
     if (data == undefined) {
       data = {}
     }
+    this.depoData = data;
     this.recuringDeposit = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       monthlyContribution: [(data == undefined) ? '' : data.monthlyContribution, [Validators.required]],
@@ -148,11 +152,28 @@ export class RecuringDepositComponent implements OnInit {
 
   }
 
+  getFormDataNominee(data) {
+    this.nomineesList = data.controls;
+    console.log(this.nomineesList, "this.nomineesList 123")
+  }
+
   getFormControl(): any {
     return this.recuringDeposit.controls;
   }
 
   saveRecuringDeposit() {
+    if (this.nomineesList) {
+
+      this.nomineesList.forEach(element => {
+        let obj = {
+          "name": element.controls.name.value,
+          "sharePercentage": element.controls.sharePercentage.value,
+          "id": (element.controls.id.value) ? element.controls.id.value : 0,
+          "familyMemberId": (element.controls.familyMemberId.value) ? element.controls.familyMemberId.value : 0
+        }
+        this.nominees.push(obj)
+      });
+    }
     if (this.recuringDeposit.controls.commencementDate.value != null || this.recuringDeposit.controls.tenure.value != null) {
       this.tenure = this.getDateYMD()
       this.maturityDate = this.tenure
@@ -200,6 +221,7 @@ export class RecuringDepositComponent implements OnInit {
         bankName: this.recuringDeposit.controls.bankName.value,
         rdNumber: this.recuringDeposit.controls.rdNo.value,
         interestCompounding: this.recuringDeposit.controls.compound.value,
+        nominees: this.nominees,
         id: this.recuringDeposit.controls.id.value
       }
       console.log('recuringDeposit', obj)

@@ -114,7 +114,7 @@ export class SettingsFolioMappingComponent implements OnInit {
       data: value,
       header: 'UNMAP',
       body: 'Are you sure you want to unmap?',
-      body2: 'This cannot be undone',
+      body2: 'This cannot be undone.',
       btnYes: 'CANCEL',
       btnNo: 'UNMAP',
       positiveMethod: () => {

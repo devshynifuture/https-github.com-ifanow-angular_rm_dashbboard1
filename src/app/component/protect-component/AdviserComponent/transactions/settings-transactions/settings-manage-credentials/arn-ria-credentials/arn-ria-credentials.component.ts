@@ -106,7 +106,7 @@ export class ArnRiaCredentialsComponent implements OnInit {
   //     data: value,
   //     header: 'DELETE',
   //     body: 'Are you sure you want to delete?',
-  //     body2: 'This cannot be undone',
+  //     body2: 'This cannot be undone.',
   //     btnYes: 'CANCEL',
   //     btnNo: 'DELETE',
   //     positiveMethod: () => {
