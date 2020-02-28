@@ -34,6 +34,7 @@ import { SettingActivityComponent } from './setting-activity/setting-activity.co
     MaterialModule,
     SettingEntryModule,
     SettingBackupModule
+
   ]
 })
 export class SettingModule { }

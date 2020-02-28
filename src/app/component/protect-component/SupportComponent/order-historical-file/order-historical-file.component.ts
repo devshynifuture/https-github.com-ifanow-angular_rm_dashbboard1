@@ -1,5 +1,4 @@
 import { EventService } from './../../../../Data-service/event.service';
-import { UtilService } from './../../../../services/util.service';
 import { SubscriptionInject } from './../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormControl } from '@angular/forms';
@@ -37,6 +36,7 @@ export class OrderHistoricalFileComponent implements OnInit {
   camsValueChangeSubscription: Subscription;
   karvyValueChangeSubscription: Subscription;
   franklinValueChangeSubscription: Subscription;
+  isArnOrRiaSelected: boolean = false;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -79,7 +79,10 @@ export class OrderHistoricalFileComponent implements OnInit {
 
   orderHistoryFileForm = this.fb.group({
     "selectRta": ['1', Validators.required],
-    "selectArnRia": [, Validators.required],
+    "selectArnRia": this.fb.group({
+      "selectArn": [,],
+      "selectRia": [,],
+    }, Validators.required),
     "fromDate": [, Validators.required],
     "toDate": [, Validators.required],
     "asOnDate": [,],
@@ -222,6 +225,15 @@ export class OrderHistoricalFileComponent implements OnInit {
     for (let key in whichTable.controls) {
       if (key === 'selectFilesToOrder') {
         selectFileOrderValidation = this.validationOfSelectFilesToOrder(this.orderHistoryFileForm.get('selectRta').value);
+      } else if (key === 'selectArnRia') {
+        let isRiaSelected = false;
+        if (this.orderHistoryFileForm.get('selectArnRia.selectRia').value !== true) {
+          isRiaSelected = true;
+        }
+        if (this.orderHistoryFileForm.get('selectArnRia.selectArn').value !== true && isRiaSelected) {
+          this.orderHistoryFileForm.get('selectArnRia').setErrors({ error: true });
+        }
+
       } else if (whichTable.get(key).invalid) {
         whichTable.get(key).markAsTouched();
         return (selectFileOrderValidation && false);

@@ -167,7 +167,9 @@
         </ng-container>
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
-            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar"> {{element.name}}</div>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="desc">

@@ -120,3 +120,68 @@
     }
   }
 }
+
+#ui-add-personal-profile {
+  .mat-tab-body-content {
+    min-height: 450px !important;
+  }
+}
+
+#ui-add-personal-profile,
+#ui-organization-profile {
+  .mat-ink-bar {
+    display: none;
+  }
+
+  .mat-tab-header {
+    border-bottom: 0px;
+  }
+
+  .mat-tab-body-wrapper {
+    border: 1px solid #e9eaec;
+    margin-top: -1px;
+  }
+
+  .mat-tab-label {
+    height: 40px !important;
+    min-width: 100px !important;
+    font-weight: 400;
+  }
+
+  .mat-tab-label-active {
+    border: 1px solid #e9eaec;
+    border-bottom: 0 !important;
+    opacity: initial;
+    background: #fff;
+    color: #212121;
+  }
+
+  .profile-img {
+    border: 2px solid rgba(25, 25, 25, 0.32);
+    height: 148px;
+    width: 140px;
+  }
+}
+
+#ui-organization-profile {
+  .mat-tab-body-content {
+    overflow: hidden;
+    min-height: 450px;
+  }
+}
+
+#ui-setting-preference {
+  table {
+    tbody td {
+      padding: 6px 8px !important;
+    }
+
+    tr.mat-header-row {
+      height: 40px;
+    }
+
+    tr.mat-row {
+      height: 40px;
+    }
+  }
+}

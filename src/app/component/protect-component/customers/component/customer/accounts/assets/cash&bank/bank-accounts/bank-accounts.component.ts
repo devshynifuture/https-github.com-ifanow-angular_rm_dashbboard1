@@ -35,6 +35,7 @@ export class BankAccountsComponent implements OnInit {
   clientId: any;
   nomineesListFM: any;
   flag: any;
+  nomineesList: any;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
 
@@ -58,6 +59,12 @@ export class BankAccountsComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
+
+  getFormDataNominee(data) {
+    console.log(data)
+    this.nomineesList = data.controls
+  }
+
   lisNominee(value) {
     console.log(value)
     this.nomineesListFM = Object.assign([], value.familyMembersList);

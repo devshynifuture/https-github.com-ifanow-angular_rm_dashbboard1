@@ -1,3 +1,5 @@
+import { SubscriptionInject } from './../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import { OrderHistoricalFileComponent } from './../../order-historical-file/order-historical-file.component';
 import { EventService } from './../../../../../Data-service/event.service';
 import { Component, OnInit } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
@@ -15,7 +17,8 @@ import { FileOrderingUpperComponent } from '../file-ordering-upper/file-ordering
 export class FileOrderingHistoricalComponent implements OnInit {
 
   constructor(
-    private eventService: EventService
+    private eventService: EventService,
+    private subInjectService: SubscriptionInject
   ) { }
   displayedColumns: string[] = ['advisorName', 'rta', 'orderedby', 'startedOn', 'totalfiles', 'queue', 'ordering', 'ordered', 'failed', 'uploaded', 'refresh', 'empty'];
   dataSource = ELEMENT_DATA;
@@ -76,6 +79,25 @@ export class FileOrderingHistoricalComponent implements OnInit {
     if (index >= 0) {
       this.filterBy.splice(index, 1);
     }
+  }
+
+  openHistoricalFileOrderingSlider(data) {
+    const fragmentData = {
+      flag: 'openHistoricalFileOrdering',
+      data,
+      id: 1,
+      state: 'open50',
+      componentName: OrderHistoricalFileComponent,
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
   }
 
   openUpperFileOrdering(flag, data) {

@@ -85,7 +85,7 @@
                                 <input type="text" aria-label="Number" formControlName="schemePurchase"
                                     class="form-control" matInput (keyup)="getSchemeList($event.target.value)"
                                     [matAutocomplete]="auto" placeholder="Start typing to see scheme names">
-                                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                                <mat-autocomplete #auto="matAutocomplete">
                                     <mat-option (onSelectionChange)="selectedScheme(scheme)"
                                         *ngFor="let scheme of schemeList" [value]="scheme.schemeName">
                                         {{scheme.schemeName}}
@@ -134,7 +134,7 @@
                     <div class="col-md-12 p-0 text-left">
                         <h5 class="m-0 text-black pb-12">Select folio</h5>
                     </div>
-                    <div class="col-md-12 p-0">
+                    <div>
                         <mat-radio-group aria-label="Select an option" formControlName="folioSelection"
                             (ngModelChange)="selectExistingOrNew($event)">
                             <mat-radio-button value="1"
@@ -157,7 +157,7 @@
                     <div class="col-md-7 p-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <mat-select class="form-control" formControlName="investmentAccountSelection">
+                                <mat-select class="form-control" formControlName="investmentAccountSelection" >
                                     <mat-option value="option" (click)="selectedFolio(folio)"
                                         *ngFor="let folio of folioList">{{folio.folioNumber}}</mat-option>
                                 </mat-select>
@@ -193,13 +193,13 @@
 
                                 <mat-error *ngIf="(purchaseTransaction.get('employeeContry').errors?.required)"
                                     class="f-12">
-                                    This field is requied
+                                    This field is requied                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
                                 </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
                 </div>
-                <div class="row" *ngIf="platformType == 1">
+                <div class="row" *ngIf="platformType == 1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ">
                     <div class="col-md-5 p-0 text-left">
                         <h5 class="m-0 pt-40 text-black pb-12">Select mode of payment</h5>
                     </div>
