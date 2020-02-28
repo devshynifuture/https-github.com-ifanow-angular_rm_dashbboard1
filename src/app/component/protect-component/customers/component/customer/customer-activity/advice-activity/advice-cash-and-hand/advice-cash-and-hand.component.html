@@ -81,7 +81,8 @@
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.adviceToAsset.adviceDescription}}</div>
+                <div class="bar"> <span *ngIf="element.adviceToAsset">{{element.adviceToAsset.adviceDescription}}</span>
+                </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="balance">
@@ -100,7 +101,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span>
+                    <span *ngIf="element.adviceToAsset">
                         <span *ngIf="element.adviceToAsset.adviceStatusId==1">GIVEN</span>
                         <span *ngIf="element.adviceToAsset.adviceStatusId==2">AWAITING CONSENT</span>
                         <span *ngIf="element.adviceToAsset.adviceStatusId==3">ACCEPTED</span>
@@ -175,7 +176,8 @@
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar">{{element.adviceToAsset.adviceDescription}}</div>
+                <div class="bar"><span *ngIf="element.adviceToAsset">{{element.adviceToAsset.adviceDescription}}</span>
+                </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="balance">
@@ -194,7 +196,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span>
+                    <span *ngIf="element.adviceToAsset">
                         <span *ngIf="element.adviceToAsset.adviceStatusId==1">GIVEN</span>
                         <span *ngIf="element.adviceToAsset.adviceStatusId==2">AWAITING CONSENT</span>
                         <span *ngIf="element.adviceToAsset.adviceStatusId==3">ACCEPTED</span>

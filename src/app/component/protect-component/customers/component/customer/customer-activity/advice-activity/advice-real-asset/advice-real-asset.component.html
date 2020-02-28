@@ -81,7 +81,8 @@
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.adviceToAsset.adviceDescription}}
+                <div class="bar">
+                    <span *ngIf="element.adviceToAsset"> {{element.adviceToAsset.adviceDescription}}</span>
                 </div>
             </td>
         </ng-container>
@@ -98,7 +99,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span>
+                    <span *ngIf="element.adviceToAsset">
                         <span *ngIf="element.adviceToAsset.adviceId==1">Hold</span>
                         <span *ngIf="element.adviceToAsset.adviceId==2">Sell</span>
                         <span *ngIf="element.adviceToAsset.adviceId==3">Buy</span>
@@ -110,7 +111,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span>
+                    <span *ngIf="element.adviceToAsset">
                         <span *ngIf="element.adviceToAsset.adviceStatusId==1">GIVEN</span>
                         <span *ngIf="element.adviceToAsset.adviceStatusId==2">AWAITING CONSENT</span>
                         <span *ngIf="element.adviceToAsset.adviceStatusId==3">ACCEPTED</span>
