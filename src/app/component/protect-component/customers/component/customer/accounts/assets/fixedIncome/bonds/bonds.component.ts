@@ -25,6 +25,7 @@ export class BondsComponent implements OnInit {
   maxDate = new Date();
   dataSource: any;
   bonds: any;
+  bondData: any;
   showHide = false;
   inputData: any;
   ownerName: any;
@@ -37,10 +38,12 @@ export class BondsComponent implements OnInit {
   tenure: any;
   maturityDate: any;
   getDate: string;
+  nomineesList= [];
   selectedFamilyData: any;
   advisorId: any;
   familyMemberId: any;
   ownerData: any;
+  nominees:any = [];
   clientId: any;
   nomineesListFM: any;
 
@@ -61,14 +64,22 @@ export class BondsComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.fdMonths = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120']
   }
+
   display(value) {
     console.log('value selected', value)
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
+
+  getFormDataNominee(data) {
+    this.nomineesList = data.controls;
+    console.log(this.nomineesList, "this.nomineesList 123")
+  }
+
   ownerDetails(value) {
     this.familyMemberId = value.id;
   }
+
   lisNominee(value) {
     console.log(value)
     this.nomineesListFM = Object.assign([], value.familyMembersList);
@@ -94,6 +105,7 @@ export class BondsComponent implements OnInit {
     if (data == undefined) {
       data = {}
     }
+    this.bondData = data;
     this.bonds = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       bondName: [(data == undefined) ? '' : data.bondName, [Validators.required]],
@@ -139,6 +151,18 @@ export class BondsComponent implements OnInit {
   saveBonds() {
     // this.tenure = this.getDateYMD()
     // this.maturityDate = this.tenure
+    if (this.nomineesList) {
+
+      this.nomineesList.forEach(element => {
+        let obj = {
+          "name": element.controls.name.value,
+          "sharePercentage": element.controls.sharePercentage.value,
+          "id": (element.controls.id.value) ? element.controls.id.value : 0,
+          "familyMemberId": (element.controls.familyMemberId.value) ? element.controls.familyMemberId.value : 0
+        }
+        this.nominees.push(obj)
+      });
+    }
     if (this.bonds.get('ownerName').invalid) {
       this.bonds.get('ownerName').markAsTouched();
       return;
@@ -187,6 +211,8 @@ export class BondsComponent implements OnInit {
         description: this.bonds.controls.description.value,
         // maturityDate: this.datePipe.transform(this.maturityDate, 'yyyy-MM-dd'),
         // bankName: this.bonds.controls.bankName.value,
+        nominees: this.nominees,
+
         tenure: this.bonds.controls.tenure.value,
         type: this.bonds.controls.type.value,
         compounding: this.bonds.controls.compound.value,
