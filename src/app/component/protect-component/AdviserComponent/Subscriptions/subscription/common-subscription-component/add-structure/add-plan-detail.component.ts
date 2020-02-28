@@ -103,6 +103,7 @@ export class AddPlanDetailComponent implements OnInit {
         const obj = {
           name: this.getFormControl().planName.value,
           description: this.getFormControl().description.value,
+          role: this.getFormControl().role.value,
           // "advisorId": 12345,
           advisorId: this.advisorId,
           // logoUrl: 'url',
