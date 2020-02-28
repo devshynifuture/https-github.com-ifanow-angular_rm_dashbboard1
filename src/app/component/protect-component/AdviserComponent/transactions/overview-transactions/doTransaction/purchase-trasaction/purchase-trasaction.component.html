@@ -132,9 +132,9 @@
                 </div>
                 <div class="row pt-28">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 text-black pb-12">Select folio</h5>
+                        <h5 class="m-0      ext-black pb-12">Select folio</h5>
                     </div>
-                    <div class="col-md-12 p-0">
+                    <div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             v class="col-md-12 p-0">
                         <mat-radio-group aria-label="Select an option" formControlName="folioSelection"
                             (ngModelChange)="selectExistingOrNew($event)">
                             <mat-radio-button value="1"
@@ -193,13 +193,13 @@
 
                                 <mat-error *ngIf="(purchaseTransaction.get('employeeContry').errors?.required)"
                                     class="f-12">
-                                    This field is requied
+                                    This field is requied                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
                                 </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
                 </div>
-                <div class="row" *ngIf="platformType == 1">
+                <div class="row" *ngIf="platformType == 1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ">
                     <div class="col-md-5 p-0 text-left">
                         <h5 class="m-0 pt-40 text-black pb-12">Select mode of payment</h5>
                     </div>
