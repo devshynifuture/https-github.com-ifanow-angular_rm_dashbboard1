@@ -75,7 +75,7 @@ export class AdviceRealAssetComponent implements OnInit {
     }
     this.realEstateCount = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
   }
-  openRealEstate(data, value) {
+  openRealEstate(value, data) {
     const fragmentData = {
       flag: value,
       data,

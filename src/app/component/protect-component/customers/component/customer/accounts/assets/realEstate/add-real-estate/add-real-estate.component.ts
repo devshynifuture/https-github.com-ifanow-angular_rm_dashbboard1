@@ -245,6 +245,7 @@ export class AddRealEstateComponent implements OnInit {
   }
   getRealEstate(data) {
     this.flag = data;
+    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
     this.addOwner = false;
     this.addrealEstateForm = this.fb.group({
       ownerName: [(!data) ? '' : this.ownerName, [Validators.required]],

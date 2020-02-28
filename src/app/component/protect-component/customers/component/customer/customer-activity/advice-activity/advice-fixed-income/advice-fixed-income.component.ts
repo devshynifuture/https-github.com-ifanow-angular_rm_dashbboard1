@@ -18,7 +18,6 @@ import { AdviceUtilsService } from '../advice-utils.service';
 
 export class AdviceFixedIncomeComponent implements OnInit {
   displayedColumns3: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'advice', 'astatus', 'adate', 'icon'];
-  dataSource3 = ELEMENT_DATA3;
   advisorId: any;
   clientId: any;
   dataSource: any;
@@ -146,13 +145,14 @@ export class AdviceFixedIncomeComponent implements OnInit {
       }
     );
   }
-  openFixedDeposit(value, data) {
+  openAddEdit(value, data) {
+    let component = (value == 'adviceFixedDeposit') ? FixedDepositComponent : (value == 'adviceRecurringDeposit') ? RecuringDepositComponent : BondsComponent
     const fragmentData = {
       flag: value,
       data,
       id: 1,
       state: 'open',
-      componentName: FixedDepositComponent
+      componentName: component
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -215,19 +215,3 @@ export class AdviceFixedIncomeComponent implements OnInit {
     );
   }
 }
-
-export interface PeriodicElement3 {
-  name: string;
-  position: string;
-  weight: number;
-  symbol: string;
-  advice: string;
-  astatus: string;
-  adate: string;
-}
-
-const ELEMENT_DATA3: PeriodicElement3[] = [
-  { position: 'Rahul Jain', name: '35,000', weight: 23 / 12 / 2019, symbol: 'ICICI FD', advice: 'Continue holding till maturity', astatus: 'Given', adate: '23/12/2019' },
-  { position: 'Rahul Jain', name: '35,000', weight: 23 / 12 / 2019, symbol: 'ICICI FD', advice: 'Continue holding till maturity', astatus: 'Given', adate: '23/12/2019' },
-  { position: 'Rahul Jain', name: '35,000', weight: 23 / 12 / 2019, symbol: 'ICICI FD', advice: 'Continue holding till maturity', astatus: 'Given', adate: '23/12/2019' },
-];

@@ -67,6 +67,7 @@ export class AddScssComponent implements OnInit {
   }
   getdataForm(data) {
     this.flag = data;
+    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
     if (data == undefined) {
       data = {};
     } else {
@@ -74,7 +75,7 @@ export class AddScssComponent implements OnInit {
     }
     this.scssData = data;
     this.scssSchemeForm = this.fb.group({
-      ownerName: [!data.ownerName?'':data.ownerName, [Validators.required, UtilService.ageValidators(60)]],
+      ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required, UtilService.ageValidators(60)]],
       amtInvested: [data.amountInvested, [Validators.required, Validators.min(1000), Validators.max(1500000)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
       ownershipType: [data.ownerTypeI ? String(data.ownerTypeId) : '2', [Validators.required]]
