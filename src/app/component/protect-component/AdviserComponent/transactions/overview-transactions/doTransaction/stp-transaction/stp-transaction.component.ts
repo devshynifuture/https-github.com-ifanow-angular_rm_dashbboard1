@@ -288,6 +288,9 @@ export class StpTransactionComponent implements OnInit {
     this.showSpinnerFolio = false
     console.log('res scheme folio', data)
     this.folioList = data
+    if(this.stpTransaction.get('investmentAccountSelection').valid){
+      Object.assign(this.transactionSummary, { folioNumber: this.folioList[0].folioNumber });
+    }
   }
   getFrequency() {
     let obj = {

@@ -37,7 +37,7 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
   ssyDataSpurce: any;
   kvpDataSpurce: any;
   scssDataSpurce: any;
-  posavingDataSpurce: any;
+  posavingDataSource: any;
   pordDataSpurce: any;
   pomisDataSpurce: any;
   ppfCount: any;
@@ -62,6 +62,7 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
       clientId: this.clientId,
       assetCategory: 10
     }
+    this.isLoading = true;
     this.ppfDataSource = [{}, {}, {}];
     this.nscDataSpurce = [{}, {}, {}];
     this.ssyDataSpurce = [{}, {}, {}];
@@ -70,7 +71,6 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
     this.pordDataSpurce = [{}, {}, {}];
     this.pomisDataSpurce = [{}, {}, {}];
     this.potdDataSource = [{}, {}, {}];
-    this.isLoading = true;
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {
       }
@@ -83,7 +83,7 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
     this.ssyDataSpurce = new MatTableDataSource(data.SSY);
     this.kvpDataSpurce = new MatTableDataSource(data.KVP);
     this.scssDataSpurce = new MatTableDataSource(data.SCSS);
-    this.posavingDataSpurce = new MatTableDataSource(data);
+    this.posavingDataSource = new MatTableDataSource(data.PO_Savings);
     this.pordDataSpurce = new MatTableDataSource(data.PO_RD);
     this.pomisDataSpurce = new MatTableDataSource(data.PO_MIS);
     this.potdDataSource = new MatTableDataSource(data.PO_TD);
@@ -92,7 +92,7 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
     this.ssyDataSpurce['tableFlag'] = (data.SSY.length == 0) ? false : true;
     this.kvpDataSpurce['tableFlag'] = (data.KVP.length == 0) ? false : true;
     this.scssDataSpurce['tableFlag'] = (data.SCSS.length == 0) ? false : true;
-    this.posavingDataSpurce['tableFlag'] = (data.PPF.length == 0) ? false : true;
+    this.posavingDataSource['tableFlag'] = (data.PO_Savings.length == 0) ? false : true;
     this.pordDataSpurce['tableFlag'] = (data.PO_RD.length == 0) ? false : true;
     this.pomisDataSpurce['tableFlag'] = (data.PO_MIS.length == 0) ? false : true;
     this.potdDataSource['tableFlag'] = (data.PO_TD.length == 0) ? false : true;
@@ -121,6 +121,9 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
         break;
       case (flag == 'scss'):
         this.scssCount = count;
+        break;
+      case (flag == 'posaving'):
+        this.posavingCount = count;
         break;
       case (flag == 'pord'):
         this.scssCount = count;

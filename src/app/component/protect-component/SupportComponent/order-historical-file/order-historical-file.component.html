@@ -40,15 +40,15 @@
         <div class="col-md-5 pr-0">
             <h5 class="text-right pt-12 mb-0">Select ARN/RIA</h5>
         </div>
-        <div class="col-md-6">
-            <mat-radio-group formControlName="selectArnRia">
-                <mat-radio-button value="1" class="d-block">RIA-INA000004409
-                </mat-radio-button>
-                <mat-radio-button value="2" class="d-block">ARN-83865 </mat-radio-button>
-            </mat-radio-group>
-            <mat-error class="f-11 f-500"
-                *ngIf="orderHistoryFileForm.get('selectArnRia').touched && orderHistoryFileForm.get('selectArnRia').invalid">
-                This field is required
+        <div class="col-md-6" formGroupName="selectArnRia">
+            <mat-checkbox formControlName="selectRia" class="d-block">
+                RIA-INA000004409
+            </mat-checkbox>
+            <mat-checkbox formControlName="selectArn" class="d-block">
+                ARN-83865
+            </mat-checkbox>
+            <mat-error class=" f-11 f-500" *ngIf="orderHistoryFileForm.get('selectArnRia').invalid">
+                Atleast one must be selected
             </mat-error>
         </div>
     </div>
@@ -72,15 +72,14 @@
                     <div *ngIf="orderHistoryFileForm.get('selectRta').value === '2'">
                         <!-- karvy option -->
                         <div formGroupName="karvy">
-                            <mat-checkbox class="d-block" formControlName="mfsd201">MFSD 201</mat-checkbox>
+                            <mat-checkbox class="d-block" formControlName="mfsd201">201</mat-checkbox>
                         </div>
                     </div>
                     <div *ngIf="orderHistoryFileForm.get('selectRta').value === '3'">
                         <!-- franklin option -->
                         <div formGroupName="franklin">
                             <mat-checkbox class="d-block wb ws-normal" formControlName="myTransactionsForAPeriod">My
-                                transactions for a
-                                period</mat-checkbox>
+                                transactions </mat-checkbox>
                         </div>
                     </div>
                 </div>
@@ -96,9 +95,9 @@
                     <div *ngIf="orderHistoryFileForm.get('selectRta').value === '2'">
                         <!-- karvy options -->
                         <div formGroupName="karvy">
-                            <mat-checkbox class="d-block" formControlName="mfsd243Active">MFSD 243 Active
+                            <mat-checkbox class="d-block" formControlName="mfsd243Active">243 Active
                             </mat-checkbox>
-                            <mat-checkbox class="d-block" formControlName="mfsd231Ceased">MFSD 231 Ceased
+                            <mat-checkbox class="d-block" formControlName="mfsd231Ceased">231 Ceased
                             </mat-checkbox>
                         </div>
                     </div>
@@ -124,7 +123,7 @@
                     <div *ngIf="orderHistoryFileForm.get('selectRta').value === '2'">
                         <!-- karvy options -->
                         <div formGroupName="karvy">
-                            <mat-checkbox class="d-block" formControlName="mfsd211">MFSD 211</mat-checkbox>
+                            <mat-checkbox class="d-block" formControlName="mfsd211">211</mat-checkbox>
                         </div>
                     </div>
                     <div *ngIf="orderHistoryFileForm.get('selectRta').value === '3'">
@@ -132,7 +131,6 @@
                         <div formGroupName="franklin">
                             <mat-checkbox class="d-block wb ws-normal" formControlName="investorFolioDetails">Investor
                                 Folio
-                                Details
                             </mat-checkbox>
                         </div>
                     </div>
@@ -149,7 +147,7 @@
                     <div *ngIf="orderHistoryFileForm.get('selectRta').value === '2'">
                         <!-- karvy options -->
                         <div formGroupName="karvy">
-                            <mat-checkbox class="d-block" formControlName="mfsd203">MFSD 203</mat-checkbox>
+                            <mat-checkbox class="d-block" formControlName="mfsd203">203</mat-checkbox>
                         </div>
                     </div>
                     <div *ngIf="orderHistoryFileForm.get('selectRta').value === '3'">
@@ -157,7 +155,7 @@
                         <div formGroupName="franklin">
                             <mat-checkbox class="d-block wb ws-normal"
                                 formControlName="clientsWiseAumOrWhoseBalExceedsN">
-                                Clients wise AUM or whose Balance exceeds 'N'
+                                Clients wise AUM
                             </mat-checkbox>
                         </div>
                     </div>

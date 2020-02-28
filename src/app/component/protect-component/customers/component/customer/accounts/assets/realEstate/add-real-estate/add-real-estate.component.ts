@@ -179,7 +179,7 @@ export class AddRealEstateComponent implements OnInit {
     if (this.addOwner == data) {
       if (this.showErrorOwner == false) {
         this.getCoOwner.push(this.fb.group({
-          ownerName: null, ownershipPerc: null, familyMemberId: null
+          ownerName: "", ownershipPerc: null, familyMemberId: null
         }));
       }
     } else {
@@ -187,7 +187,7 @@ export class AddRealEstateComponent implements OnInit {
         this.addOwner = data;
         if (this.getCoOwner.value.length == 0) {
           this.getCoOwner.push(this.fb.group({
-            ownerName: null, ownershipPerc: null, familyMemberId: null
+            ownerName: "", ownershipPerc: null, familyMemberId: null
           }));
         }
       }
@@ -249,7 +249,7 @@ export class AddRealEstateComponent implements OnInit {
     this.addrealEstateForm = this.fb.group({
       ownerName: [(!data) ? '' : this.ownerName, [Validators.required]],
       getCoOwnerName: this.fb.array([this.fb.group({
-        ownerName: null,
+        ownerName: '',
         ownershipPerc: null,
         familyMemberId: null
       })]),
