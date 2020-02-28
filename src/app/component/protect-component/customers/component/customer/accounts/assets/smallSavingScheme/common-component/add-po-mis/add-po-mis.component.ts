@@ -75,6 +75,7 @@ export class AddPoMisComponent implements OnInit {
   }
   getPomisData(data) {
     this.flag = data;
+    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
     this.pomisData = data;
     if (data == undefined) {
       data = {};
@@ -82,7 +83,7 @@ export class AddPoMisComponent implements OnInit {
       this.editApi = data;
     }
     this.pomisForm = this.fb.group({
-      ownerName: [!data.ownerName?'':data.ownerName, [Validators.required, UtilService.ageValidators(10)]],
+      ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required, UtilService.ageValidators(10)]],
       amtInvested: [data.amountInvested, [Validators.required, Validators.min(1500), Validators.max(450000)]],
       commencementdate: [new Date(data.commencementDate), [Validators.required]],
       tenure: [(data.tenure) ? data.tenure : '5', [Validators.required]],

@@ -52,7 +52,7 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEPF('adviceEPF','adviceEPF')"><img
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEdit('adviceEPF',null)"><img
                     src="/assets/images/svg/plus.svg" class="pr-8">Suggest new EPF</button>
         </div>
     </div>
@@ -78,7 +78,8 @@
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.adviceToAsset.adviceDescription}}</div>
+                <div class="bar"><span *ngIf="element.adviceToAsset">{{element.adviceToAsset.adviceDescription}}</span>
+                </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
@@ -109,7 +110,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status</th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span>
+                    <span *ngIf="element.adviceToAsset">
                         <span *ngIf="element.adviceToAsset.adviceStatusId==1">GIVEN</span>
                         <span *ngIf="element.adviceToAsset.adviceStatusId==2">AWAITING CONSENT</span>
                         <span *ngIf="element.adviceToAsset.adviceStatusId==3">ACCEPTED</span>
@@ -136,7 +137,7 @@
                     more_vert
                 </i>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Edit</button>
+                    <button mat-menu-item (click)="openAddEdit('adviceEPF',element)">Edit</button>
                     <button mat-menu-item>Delete</button>
                 </mat-menu>
             </td>
@@ -157,7 +158,7 @@
             <button [matMenuTriggerFor]="menu1" mat-stroked-button class="btn-primary br-0 pl-8 "><img
                     src="/assets/images/svg/plus.svg" class="pr-8">Suggest new RD</button>
             <mat-menu #menu1="matMenu" class="add-new">
-                <button (click)="openAddSummaryPort('adviceNPSSummary')" class="b-b" mat-menu-item>
+                <button (click)="openAddEdit('adviceNPSSummary',null)" class="b-b" mat-menu-item>
                     <div class="row">
                         <div class="col-md-2 pr-8 text-right">
                             <img src="assets/images/svg/dark-three-dot.svg">
@@ -211,7 +212,7 @@
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.adviceToAsset.adviceDescription}}
+                <div class="bar"> <span *ngIf="element.adviceToAsset">{{element.adviceToAsset.adviceDescription}}</span>
                 </div>
             </td>
         </ng-container>
@@ -225,7 +226,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span>
+                    <span *ngIf="element.adviceToAsset">
                         <span *ngIf="element.adviceToAsset.adviceStatusId==1">GIVEN</span>
                         <span *ngIf="element.adviceToAsset.adviceStatusId==2">AWAITING CONSENT</span>
                         <span *ngIf="element.adviceToAsset.adviceStatusId==3">ACCEPTED</span>
@@ -252,7 +253,7 @@
                     more_vert
                 </i>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Edit</button>
+                    <button mat-menu-item (click)="openAddEdit('adviceNPSSummary',element)">Edit</button>
                     <button mat-menu-item>Delete</button>
                 </mat-menu>
             </td>
@@ -270,7 +271,7 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddGratuity('adviceGratuity')"><img
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEdit('adviceGratuity',null)"><img
                     src="/assets/images/svg/plus.svg" class="pr-8">Suggest new gratuity</button>
         </div>
     </div>
@@ -299,14 +300,15 @@
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar">{{element.adviceToAsset.adviceDescription}} </div>
+                <div class="bar"><span *ngIf="element.adviceToAsset">{{element.adviceToAsset.adviceDescription}}</span>
+                </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span>
+                    <span *ngIf="element.adviceToAsset">
                         <span *ngIf="element.adviceToAsset.adviceStatusId==1">GIVEN</span>
                         <span *ngIf="element.adviceToAsset.adviceStatusId==2">AWAITING CONSENT</span>
                         <span *ngIf="element.adviceToAsset.adviceStatusId==3">ACCEPTED</span>
@@ -339,7 +341,7 @@
                     more_vert
                 </i>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Edit</button>
+                    <button mat-menu-item (click)="openAddEdit('adviceGratuity',element)">Edit</button>
                     <button mat-menu-item>Delete</button>
                 </mat-menu>
             </td>
@@ -358,7 +360,7 @@
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
             <button mat-stroked-button class="btn-primary br-0 pl-8 "
-                (click)="openAddSuperannuation('adviceSuperAnnuation')"><img src="/assets/images/svg/plus.svg"
+                (click)="openAddEdit('adviceSuperAnnuation',null)"><img src="/assets/images/svg/plus.svg"
                     class="pr-8">Suggest new supperannuation</button>
         </div>
     </div>
@@ -386,7 +388,8 @@
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.adviceToAsset.adviceDescription}}</div>
+                <div class="bar"> <span *ngIf="element.adviceToAsset">{{element.adviceToAsset.adviceDescription}}</span>
+                </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
@@ -416,7 +419,7 @@
         <ng-container matColumnDef="astatus">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status</th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> <span>
+                <div class="bar"> <span *ngIf="element.adviceToAsset">
                         <span *ngIf="element.adviceToAsset.adviceStatusId==1">GIVEN</span>
                         <span *ngIf="element.adviceToAsset.adviceStatusId==2">AWAITING CONSENT</span>
                         <span *ngIf="element.adviceToAsset.adviceStatusId==3">ACCEPTED</span>
@@ -442,7 +445,7 @@
                     more_vert
                 </i>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Edit</button>
+                    <button mat-menu-item (click)="openAddEdit('adviceSuperAnnuation',element)">Edit</button>
                     <button mat-menu-item>Delete</button>
                 </mat-menu>
             </td>
@@ -460,7 +463,7 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEPS('adviceEPS','adviceEPS')"><img
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEdit('adviceEPS',null)"><img
                     src="/assets/images/svg/plus.svg" class="pr-8">Suggest new eps</button>
         </div>
     </div>
@@ -488,14 +491,15 @@
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar">{{element.adviceToAsset.adviceDescription}}</div>
+                <div class="bar"><span *ngIf="element.adviceToAsset">{{element.adviceToAsset.adviceDescription}}</span>
+                </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span>
+                    <span *ngIf="element.adviceToAsset">
                         <span *ngIf="element.adviceToAsset.adviceStatusId==1">GIVEN</span>
                         <span *ngIf="element.adviceToAsset.adviceStatusId==2">AWAITING CONSENT</span>
                         <span *ngIf="element.adviceToAsset.adviceStatusId==3">ACCEPTED</span>
@@ -528,7 +532,7 @@
                     more_vert
                 </i>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Edit</button>
+                    <button mat-menu-item (click)="openAddEdit('adviceEPS',element)">Edit</button>
                     <button mat-menu-item>Delete</button>
                 </mat-menu>
             </td>

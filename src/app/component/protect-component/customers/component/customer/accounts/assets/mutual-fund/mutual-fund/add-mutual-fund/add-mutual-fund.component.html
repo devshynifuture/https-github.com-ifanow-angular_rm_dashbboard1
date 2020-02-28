@@ -1,7 +1,7 @@
 <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20">ADD PORTFOLIO SUMMARY</h4>
+            <h4 class="mb-0 wrapper-20">Add Portfolio summary</h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -19,7 +19,7 @@
         <div class="col-md-5">
             <mat-form-field class="w-100">
                 <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData' formControlName="ownerName" class="form-control br-0">
-                    <mat-option value=''>Search family members</mat-option>
+                    <mat-option value=''>Select family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
                         <span>{{f.userName}}</span>
                     </mat-option>
@@ -48,7 +48,7 @@
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Value as on</h5>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 pr-0">
             <div class="form-group form-group_one mb-0">
                 <mat-form-field>
                     <input matInput autocomplete="off" formControlName="valueAsOn" class="form-control br-0" [matDatepicker]="balanceAsOn">
@@ -64,8 +64,8 @@
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Amount invested</h5>
         </div>
-        <div class="col-md-3">
-            <div class="form-group mb-0">
+        <div class="col-md-3 pr-0">
+            <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
                     <input matInput autocomplete="off" formControlName="amtInvested" type="number" #institution maxlength="30" class="form-control rupess br-0">
                     <mat-error>This field is required</mat-error>
@@ -83,16 +83,13 @@
                 <mat-form-field>
                     <input matInput autocomplete="off" type="text" formControlName="description" #institution maxlength="30" class="form-control ruppes br-0">
                     <mat-error>This field is required</mat-error>
+                    <mat-hint align="start" class="f-12">Optional</mat-hint>
                 </mat-form-field>
-            </div>
-            <div class="col-md-12 p-0">
-                <p class="m-0 f-12 text-custom pt-4">Optional
-                </p>
             </div>
         </div>
     </div>
     <div formArrayName="getNomineeName">
-        <div *ngFor="let obj of getNominee.controls; let pointIndex=index" [formGroupName]="pointIndex" class="row pt-24">
+        <div *ngFor="let obj of getNominee.controls; let pointIndex=index" [formGroupName]="pointIndex" class="row pt-44">
             <div class="col-md-5 pr-0 text-right">
                 <h5 *ngIf="pointIndex==0" class="m-0 pt-8 ">Nominee</h5>
                 <h5 *ngIf="pointIndex!=0" class="m-0 pt-8 ">Nominee{{pointIndex}}</h5>
@@ -106,30 +103,22 @@
                                 <span>{{item.userName}}</span>
                             </mat-option>
                         </mat-autocomplete>
+                        <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
-                <div class="col-md-12 p-0">
-                    <p class="m-0 f-12 text-custom pt-4">Optional
-                    </p>
-                </div>
+
             </div>
             <div class="col-md-2">
-                <div class="form-group mb-0">
+                <div class="form-group mb-0 iconPetage">
                     <mat-form-field>
                         <input class="form-control br-0 percentage" formControlName="ownershipPer" (keyup)="onChange('nominee')" matInput type="number">
                     </mat-form-field>
                 </div>
             </div>
 
-            <div class="col-md-2 p-0">
-                <div class="row">
-                    <div *ngIf="pointIndex==0" class="col-md-12 p-0">
-                        <h5 class="m-0 text-primitive pt-8 f-15 c-p" (click)="addNominee()">+ Add Nominee</h5>
-                    </div>
-                    <div *ngIf="pointIndex > 0" class="col-md-12 pl-0">
-                        <h5 class="m-0 text-primitive pt-8 c-p" (click)="removeNominee(pointIndex)">Remove</h5>
-                    </div>
-                </div>
+            <div class="col-md-2 p-0 d-flex align-items-center">
+                <i *ngIf="pointIndex==0" class="material-icons text-primitive f-20 c-p float-left" (click)="addNominee()">add</i>
+                <i *ngIf="pointIndex > 0" class="material-icons text-primitive f-20 c-p pl-10" (click)="removeNominee(pointIndex)">remove</i>
             </div>
         </div>
         <mat-hint *ngIf="showError==true" align="end" class="f-12 text-danger">

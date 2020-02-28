@@ -75,6 +75,7 @@ export class AddPoRdComponent implements OnInit {
   }
   getdataForm(data) {
     this.flag = data;
+    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
     if (data == undefined) {
       data = {};
     } else {
@@ -82,7 +83,7 @@ export class AddPoRdComponent implements OnInit {
     }
     this.pordData = data;
     this.PORDForm = this.fb.group({
-      ownerName: [!data.ownerName?'':data.ownerName, [Validators.required]],
+      ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
       monthlyContribution: [data.monthlyContribution, [Validators.required, Validators.min(10)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
       tenure: [(data.tenure) ? data.tenure : '', [Validators.required]],

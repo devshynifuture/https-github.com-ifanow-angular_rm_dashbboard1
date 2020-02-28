@@ -20,7 +20,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 })
 export class GoldComponent implements OnInit {
   validatorType = ValidatorType
-  maxDate=new Date();
+  maxDate = new Date();
   inputData: any;
   familyMemberId: any;
   ownerName: any;
@@ -38,7 +38,7 @@ export class GoldComponent implements OnInit {
   clientId: any;
   nomineesListFM: any;
   flag: any;
-  currentYear:any = new Date().getFullYear();
+  currentYear: any = new Date().getFullYear();
 
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
 
@@ -80,11 +80,12 @@ export class GoldComponent implements OnInit {
   }
   getdataForm(data) {
     this.flag = data;
+    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
     if (data == undefined) {
       data = {}
     }
     this.gold = this.fb.group({
-      ownerName: [!data.ownerName? '' : data.ownerName, [Validators.required]],
+      ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
       appPurValue: [data.approximatePurchaseValue, [Validators.required]],
       totalsGrams: [(data.gramsOrTola == undefined) ? '' : (data.gramsOrTola) + "", [Validators.required]],
       noTolasGramsPur: [(data == undefined) ? '' : (data.purchasedGramsOrTola), [Validators.required]],
@@ -95,11 +96,11 @@ export class GoldComponent implements OnInit {
       description: [(data == undefined) ? '' : data.description],
       bankAcNo: [(data == undefined) ? '' : data.bankAcNo],
       id: [(data == undefined) ? '' : data.id],
-      familyMemberId: [(data == undefined) ? '': data.familyMemberId]
+      familyMemberId: [(data == undefined) ? '' : data.familyMemberId]
     });
     this.ownerData = this.gold.controls;
-      this.familyMemberId = this.gold.value.familyMemberId
-      
+    this.familyMemberId = this.gold.value.familyMemberId
+
   }
   getFormControl(): any {
     return this.gold.controls;
@@ -107,7 +108,7 @@ export class GoldComponent implements OnInit {
 
   // validateYear(){
   //   if(parseInt(this.gold.get('tenure').value) > new Date().getFullYear() && parseInt(this.gold.get('tenure').value) < 1900){
-    
+
   //   }
   //   console.log(parseInt(this.gold.get('tenure').value), new Date().getFullYear(),"new Date().getFullYear");
   // }
