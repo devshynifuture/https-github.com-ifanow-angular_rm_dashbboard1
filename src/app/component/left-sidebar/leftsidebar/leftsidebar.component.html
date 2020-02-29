@@ -282,7 +282,7 @@
 <div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
     <ng-template #dynamicUpper></ng-template>
 </div>
-<div [@openClose]="currentState" class="right_sidenav">
+<div [@openClose]="currentState" class="right_sidenav" cdkScrollable>
     <ng-template #dynamic></ng-template>
 </div>
 <!--<app-dialog-container [parentComponentName]="'leftSideBar'"></app-dialog-container>-->

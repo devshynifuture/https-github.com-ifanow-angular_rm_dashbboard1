@@ -13,6 +13,7 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
 import { DynamicComponentService } from 'src/app/services/dynamic-component.service';
 import { SupportEntryModule } from './support.entry.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     FormsModule,
     SupportRoutingModule,
     MaterialModule,
+    ScrollDispatchModule,
     CustomDirectiveModule,
     SupportEntryModule,
   ],
