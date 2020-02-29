@@ -89,10 +89,16 @@ export class OnlineTransactionService {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_EMPANELLED_AMC, data, 1);
   }
   addHiddenAmc(data) {
-    return this.http.postEncoded(apiConfig.TRANSACT + appConfig.ADD_HIDDEN_AMC, data)
+    return this.http.postEncoded(apiConfig.TRANSACT + appConfig.ADD_HIDDEN_AMC, data);
   }
   deleteHiddenAmc(data) {
-    return this.http.postEncoded(apiConfig.TRANSACT + appConfig.DELETE_HIDDEN_AMC, data)
+    return this.http.postEncoded(apiConfig.TRANSACT + appConfig.DELETE_HIDDEN_AMC, data);
+  }
+  getSearchScheme(data) {
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.SEARCH_SCHEME, data, 1);
+  }
+  getTransactionDetail(data) {
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_TRANSACTION_DETAILS, data, 1);
   }
   // sipBSE(data){
   //   return this.http.postEncoded(apiConfig.TRANSACT + appConfig.SIP_BSE, data)
