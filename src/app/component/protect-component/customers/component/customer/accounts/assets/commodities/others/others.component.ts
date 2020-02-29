@@ -33,7 +33,7 @@ export class OthersComponent implements OnInit {
   nomineesListFM: any;
   nomineesList: any;
   flag: any;
-  otherData:any;
+  otherData: any;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
   }
@@ -89,6 +89,7 @@ export class OthersComponent implements OnInit {
 
   getdataForm(data) {
     this.flag = data;
+    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
     if (data == undefined) {
       data = {};
     }
@@ -110,7 +111,7 @@ export class OthersComponent implements OnInit {
     this.familyMemberId = this.others.controls.familyMemberId.value;
     this.familyMemberId = this.familyMemberId[0];
   }
-  
+
 
   // get nominee() {
   //   return this.othersNominee.get('NomineesList') as FormArray;

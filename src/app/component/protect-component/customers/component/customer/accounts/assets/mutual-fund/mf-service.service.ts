@@ -54,9 +54,9 @@ export class MfServiceService {
     this.totalTransactionAmt = 0;
     this.totalUnit = 0;
     this.totalNav = 0;
-    this.dividendPayout =0;
+    this.dividendPayout = 0;
     this.dividendReinvest = 0;
-    this.totalAmount =0;
+    this.totalAmount = 0;
     this.totalGain = 0;
     this.allocationPer = 0;
   }
@@ -71,16 +71,16 @@ export class MfServiceService {
     this.balanceUnit += (data.balanceUnit) ? data.switchOut : 0;
     this.sip += (data.sipAmount) ? data.sipAmount : 0;
     const obj = {
-      'total': 'Total',
-      'amountInvested': this.amtInvested,
-      'currentValue': this.currentValue,
-      'unrealizedGain': this.unrealizedGainLoss,
-      'absoluteReturn': this.absReturn,
-      'xirr': this.xirr,
-      'dividendPayout': this.divPayout,
-      'switchOut': this.withdrawals,
-      'balanceUnit': this.balanceUnit,
-      'sipAmount': this.sip
+      'schemeName': 'Total',
+      'totalAmountInvested': this.amtInvested,
+      'totalCurrentValue': this.currentValue,
+      'totalUnrealizedGain': this.unrealizedGainLoss,
+      'totalAbsoluteReturn': this.absReturn,
+      'totalXirr': this.xirr,
+      'totalDividendPayout': this.divPayout,
+      'totalSwitchOut': this.withdrawals,
+      'totalBalanceUnit': this.balanceUnit,
+      'totalSipAmount': this.sip
     }
     this.totalObj = obj
     return this.totalObj
@@ -106,14 +106,14 @@ export class MfServiceService {
       'totalUnit': this.totalUnit,
       'totalNav': this.totalNav,
       'totalBalanceUnit': this.balanceUnit,
-      'currentValue':this.currentValue,
-      'dividendPayout':this.dividendPayout, 
-      'dividendReinvest':this.dividendReinvest, 
-      'totalAmount':this.totalAmount,
-      'totalGain' :this.totalGain,
-      'absReturn':this.absReturn,
-      'xirr' :this.xirr,
-      'allocationPer':this.allocationPer
+      'currentValue': this.currentValue,
+      'dividendPayout': this.dividendPayout,
+      'dividendReinvest': this.dividendReinvest,
+      'totalAmount': this.totalAmount,
+      'totalGain': this.totalGain,
+      'absReturn': this.absReturn,
+      'xirr': this.xirr,
+      'allocationPer': this.allocationPer
     }
     this.totalObj = obj
     return this.totalObj;
@@ -132,12 +132,12 @@ export class MfServiceService {
     });
     return catObj;
   }
-  filterScheme(data){
+  filterScheme(data) {
     let filterData = [];
     let filterData2 = [];
     let filterData3 = [];
     let filterData4 = [];
-    let sendData={};
+    let sendData = {};
     data.filter(function (element) {
       if (element.selected == true) {
         element.mutualFund.forEach(ele => {
@@ -170,11 +170,11 @@ export class MfServiceService {
         filterData4.push(obj);
       }
     })
-    sendData={
-      filterData:filterData,
-      filterData2:filterData2,
-      filterData3:filterData3,
-      filterData4:filterData4
+    sendData = {
+      filterData: filterData,
+      filterData2: filterData2,
+      filterData3: filterData3,
+      filterData4: filterData4
     }
     return sendData;
   }

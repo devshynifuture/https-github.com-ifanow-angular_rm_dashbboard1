@@ -67,6 +67,8 @@ export class AddSsyComponent implements OnInit {
   }
   getdataForm(data) {
     this.flag = data;
+    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
+
     if (data == undefined) {
       data = {};
     }
@@ -75,7 +77,7 @@ export class AddSsyComponent implements OnInit {
     }
     this.ssyData = data;
     this.ssySchemeForm = this.fb.group({
-      ownerName: [!data.ownerName?'':data.ownerName, [Validators.required]],
+      ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
       guardian: [data.guardianName, [Validators.required]],
       accBalance: [data.accountBalance, [Validators.required, Validators.min(250), Validators.max(150000)]],
       balanceAsOn: [new Date(data.balanceAsOn), [Validators.required]],

@@ -19,7 +19,7 @@ import { EventService } from 'src/app/Data-service/event.service';
   ],
 })
 export class AddEPFComponent implements OnInit {
-  validatorType=ValidatorType
+  validatorType = ValidatorType
   maxDate = new Date();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   isBalanceAsOn = false;
@@ -102,9 +102,7 @@ export class AddEPFComponent implements OnInit {
   }
   getdataForm(data) {
     this.flag = data;
-    if (data == undefined) {
-      data = {}
-    }
+    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : '';
     this.epf = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       employeeContry: [(data == undefined) ? '' : data.employeesMonthlyContribution, [Validators.required]],
@@ -127,14 +125,14 @@ export class AddEPFComponent implements OnInit {
     return this.epf.controls;
   }
   saveEPF() {
-     if (this.epf.get('ownerName').invalid) {
+    if (this.epf.get('ownerName').invalid) {
       this.epf.get('ownerName').markAsTouched();
       return;
-     }else if (this.epf.get('employeeContry').invalid) {
+    } else if (this.epf.get('employeeContry').invalid) {
       this.epf.get('employeeContry').markAsTouched();
       return;
     }
-     else if (this.epf.get('employerContry').invalid) {
+    else if (this.epf.get('employerContry').invalid) {
       this.epf.get('employerContry').markAsTouched();
       return;
     } else if (this.epf.get('currentEPFBal').invalid) {

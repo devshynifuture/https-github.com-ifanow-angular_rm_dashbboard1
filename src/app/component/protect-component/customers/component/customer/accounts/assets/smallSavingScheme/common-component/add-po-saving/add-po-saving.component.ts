@@ -77,6 +77,7 @@ export class AddPoSavingComponent implements OnInit {
   }
   getdataForm(data) {
     this.flag = data;
+    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
     if (data == undefined) {
       data = {
         ownerTypeId: 1
@@ -86,7 +87,7 @@ export class AddPoSavingComponent implements OnInit {
     }
     this.posavingData = data
     this.poSavingForm = this.fb.group({
-      ownerName: [!data.ownerName?'':data.ownerName, [Validators.required, UtilService.ageValidators]],
+      ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required, UtilService.ageValidators]],
       accBal: [data.accountBalance, [Validators.required, Validators.min(20)]],
       balAsOn: [new Date(data.balanceAsOn), [Validators.required]],
       ownershipType: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]],

@@ -40,7 +40,7 @@ export class MutualFundSummaryComponent implements OnInit {
   subCatArray() {
     let filteredArray = [];
     if (this.mutualFundList != undefined) {
-      this.catObj=this.MfServiceService.categoryFilter(this.mutualFundList);
+      this.catObj = this.MfServiceService.categoryFilter(this.mutualFundList);
       Object.keys(this.catObj).map(key => {
         this.MfServiceService.initializeValues();
         filteredArray.push({ groupName: key });
@@ -51,6 +51,7 @@ export class MutualFundSummaryComponent implements OnInit {
         filteredArray.push(this.totalObj);
       });
       this.customDataSource = filteredArray;
+      console.log(this.customDataSource)
       return this.customDataSource;
     }
   }

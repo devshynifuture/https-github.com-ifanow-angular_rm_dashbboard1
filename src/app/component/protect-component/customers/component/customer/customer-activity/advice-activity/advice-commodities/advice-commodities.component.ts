@@ -17,7 +17,6 @@ import { AdviceUtilsService } from '../advice-utils.service';
 export class AdviceCommoditiesComponent implements OnInit, AfterViewInit {
   displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'mvalue', 'advice', 'astatus', 'adate', 'icon'];
   // dataSource1 = new MatTableDataSource(ELEMENT_DATA1);
-  dataSource2 = new MatTableDataSource(ELEMENT_DATA2);
   advisorId: any;
   clientId: any;
   isLoading: boolean;
@@ -34,7 +33,6 @@ export class AdviceCommoditiesComponent implements OnInit, AfterViewInit {
   }
   ngOnInit() {
     // this.goldDataSource.sort = this.sort1;
-    this.dataSource2.sort = this.sort2;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getAdviceByAsset();
@@ -87,13 +85,14 @@ export class AdviceCommoditiesComponent implements OnInit, AfterViewInit {
     console.log(data);
     this.isLoading = false
   }
-  openCommodities(data, value) {
+  openAddEdit(value, data) {
+    let Component = (value == "adviceGOLD") ? GoldComponent : OthersComponent;
     const fragmentData = {
       flag: value,
       data: data,
       id: 1,
       state: 'open',
-      componentName: GoldComponent,
+      componentName: Component,
 
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -111,50 +110,4 @@ export class AdviceCommoditiesComponent implements OnInit, AfterViewInit {
       }
     );
   }
-  openOthers(data, value) {
-    const fragmentData = {
-      flag: value,
-      data: data,
-      id: 1,
-      state: 'open',
-      componentName: OthersComponent,
-
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getAdviceByAsset();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
-          }
-          rightSideDataSub.unsubscribe();
-        }
-
-      }
-    );
-  }
 }
-export interface PeriodicElement1 {
-  name: string;
-  desc: string;
-  mvalue: string;
-  advice: string;
-  adate: string;
-  astatus: string;
-
-}
-
-const ELEMENT_DATA1: PeriodicElement1[] = [
-  { name: 'Rahul Jain', desc: '1', mvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-  { name: 'Rahul sain1', desc: '2', mvalue: '20000', advice: 'do trasact1', adate: '2020-02-20', astatus: 'LIVE' },
-
-];
-
-const ELEMENT_DATA2: PeriodicElement1[] = [
-  { name: 'Rahul Jain', desc: '1', mvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-  { name: 'Rahul sain1', desc: '2', mvalue: '20000', advice: 'do trasact1', adate: '2020-02-20', astatus: 'LIVE' },
-
-];

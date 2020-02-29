@@ -783,7 +783,7 @@ export class InvoiceComponent implements OnInit {
       dataToShow: data,
       header: 'DELETE',
       body: 'Are you sure you want to delete the document?',
-      body2: 'This cannot be undone',
+      body2: 'This cannot be undone.',
       btnYes: 'CANCEL',
       btnNo: 'DELETE'
     };
