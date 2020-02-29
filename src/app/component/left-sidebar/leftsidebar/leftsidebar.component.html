@@ -56,15 +56,30 @@
                             </mat-panel-title>
                            
                           </mat-expansion-panel-header>
-                      
-                          <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/calendar">
-                            <span *ngIf="showTabs" class="title" mat-line>calendar</span>
-                            <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" class="text-custom">
-                                keyboard_arrow_right
-                            </mat-icon> -->
-                        </a>
+                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/advice">
+                                <span *ngIf="showTabs" class="title" mat-line>Advice</span>
+                            </a>
+                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/plans">
+                                <span *ngIf="showTabs" class="title" mat-line>Action plans</span>
+                            </a>
+                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/notes">
+                                <span *ngIf="showTabs" class="title" mat-line>Notes</span>
+                            </a>
+                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/tasks">
+                                <span *ngIf="showTabs" class="title" mat-line>Tasks</span>
+                            </a>
+                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/opportunities">
+                                <span *ngIf="showTabs" class="title" mat-line>Opportunities</span>
+                            </a>
+                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/calendar">
+                                <span *ngIf="showTabs" class="title" mat-line>calendar</span>
+                            </a>
                         </mat-expansion-panel>
                     </mat-accordion>
+                    <a class="sidenav-link" [ngClass]="getActiveLink('emails') ? 'bg-grey lter': ''" mat-list-item routerLink="./emails/inbox/google-connect">
+                        <img src="assets/images/svg/mail.svg">
+                        <span *ngIf="showTabs" class="title" mat-line>Advice</span>
+                    </a>
                     <a class="sidenav-link" [ngClass]="getActiveLink('emails') ? 'bg-grey lter': ''" mat-list-item routerLink="./emails/inbox/google-connect">
                         <img src="assets/images/svg/mail.svg">
                         <span *ngIf="showTabs" class="title" mat-line>Email</span>
