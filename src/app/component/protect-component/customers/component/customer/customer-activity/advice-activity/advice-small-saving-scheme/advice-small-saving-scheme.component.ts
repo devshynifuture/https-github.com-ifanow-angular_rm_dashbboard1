@@ -153,7 +153,7 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
     let Component = (value == "advicePPF") ? AddPpfComponent : (value == "adviceNSC") ? AddNscComponent : (value == "adviceSSY") ? AddSsyComponent : (value == "adviceKVP") ? AddKvpComponent : (value == "adviceSCSS") ? AddScssComponent : (value == "advicePoSaving") ? AddPoSavingComponent : (value == 'advicePORD') ? AddPoRdComponent : (value == "advicePOTD") ? AddPoTdComponent : AddPoMisComponent;
     const fragmentData = {
       flag: value,
-      data,
+      data: data == null? value:data,
       id: 1,
       state: 'open',
       componentName: Component
