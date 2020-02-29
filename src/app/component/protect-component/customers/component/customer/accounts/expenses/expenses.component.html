@@ -20,7 +20,7 @@
                                 <div class="col-md-4 p-0" *ngIf="dataSource">
                                     <h4 class="m-0 text-black roboto pt-8">Transactions</h4>
                                 </div>
-                                <div class="col-md-8 p-0 right text-right">
+                                <div class="col-md-8 p-0 right text-right"  *ngIf="dataSource5.filteredData.length > 0">
                                     <button mat-stroked-button class="br-0 btn-sm p-0 min-52 text-custom">Help</button>
                                     <img src="assets/images/svg/download-bordered.svg" class="c-p">
                                     <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
@@ -115,7 +115,7 @@
                                             <img class="width400" src="assets/images/svg/clients-img.svg">
                                             <h4 class="text-center pt-12">{{noData}}</h4>
                                             <button mat-stroked-button class="btn-primary proximaFont addon v-middle"
-                                                (click)="openExpenses('addFixedDeposit','open')"> ADD NEW
+                                                (click)="openExpenses('addFixedDeposit',null)"> ADD NEW
                                             </button>
                                         </div>
                                     </div>
@@ -268,7 +268,7 @@
                                     FILTERS
                                 </button>
                                 <button mat-stroked-button class="btn-primary addon v-middle"
-                                    (click)="openExpenses('addBudget', '')">
+                                    (click)="openExpenses('addBudget', null)">
                                     <i class="material-icons">add</i>
                                     ADD NEW
                                 </button>
