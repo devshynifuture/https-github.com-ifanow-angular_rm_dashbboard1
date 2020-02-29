@@ -59,8 +59,12 @@ export class SwitchTransactionComponent implements OnInit {
   currentValue: number;
   multiTransact = false;
   childTransactions = [];
-  displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount'];
+  displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount', 'icons'];
+
   advisorId: any;
+  isEdit=false;
+  editedId: any;
+  id=0;
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private fb: FormBuilder, private eventService: EventService, private processTransaction: ProcessTransactionService) { }
   @Input()
@@ -72,7 +76,7 @@ export class SwitchTransactionComponent implements OnInit {
     console.log('This is Input data of FixedDepositComponent ', data);
 
     if (this.isViewInitCalled) {
-      this.getdataForm('');
+      this.getdataForm('',false);
     }
   }
 
@@ -83,17 +87,17 @@ export class SwitchTransactionComponent implements OnInit {
   ngOnInit() {
     this.transactionSummary = {}
     this.childTransactions = []
-    this.getdataForm(this.inputData)
+    this.getdataForm(this.inputData,false)
+    Object.assign(this.transactionSummary, { clientId: this.inputData.clientId })
     Object.assign(this.transactionSummary, { transactType: 'SWITCH' });
     Object.assign(this.transactionSummary, { allEdit: true });
     Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
   }
-  getDefaultDetails(data) {
+  getDefaultDetails(data) { 
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
     Object.assign(this.transactionSummary, { aggregatorType: this.getDataSummary.defaultClient.aggregatorType });
     this.switchTransaction.controls.transferIn.reset();
-
   }
   getSchemeList(value) {
     this.showSpinner = true
@@ -277,7 +281,11 @@ export class SwitchTransactionComponent implements OnInit {
     console.log('new schemes', data)
     this.schemeListTransfer = data
   }
-  getdataForm(data) {
+  getdataForm(data,isEdit) {
+    if (isEdit == true) {
+      this.isEdit = isEdit
+      this.editedId = data.id;
+    }
     if (!data) {
       data = {};
     }
@@ -290,19 +298,23 @@ export class SwitchTransactionComponent implements OnInit {
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
       // investor: [(!data) ? '' : data.investor, [Validators.required]],
-      employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required]],
-      investmentAccountSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      employeeContry: [(!data) ? '' : data.orderVal, [Validators.required]],
+      investmentAccountSelection: [(!data) ? '' : data.folioNo, [Validators.required]],
       modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
       folioSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       installment: [(!data) ? '' : data.employeeContry, [Validators.required]],
       tenure: [(!data) ? '' : data.employeeContry, [Validators.required]],
-      schemeSwitch: [(!data) ? '' : data.employeeContry, [Validators.required]],
-      transferIn: [(!data) ? '' : data.employeeContry, [Validators.required]],
-      switchType: [(!data) ? '' : data.employeeContry, [Validators.required]],
+      schemeSwitch: [(!data) ? '' : data.schemeName, [Validators.required]],
+      transferIn: [(!data) ? '' : data.transferIn, [Validators.required]],
+      switchType: [(!data) ? '' : data.switchType, [Validators.required]],
     });
 
     this.ownerData = this.switchTransaction.controls;
+    if (data.folioNo) {
+      this.scheme.mutualFundSchemeMasterId=data.mutualFundSchemeMasterId;
+      this.getSchemeWiseFolios()
+    }
   }
 
   getFormControl(): any {
@@ -383,6 +395,9 @@ export class SwitchTransactionComponent implements OnInit {
     }
   }
   AddMultiTransaction() {
+    if (this.isEdit != true) {
+      this.id++
+    } 
     if (this.reInvestmentOpt.length > 1) {
       if (this.switchTransaction.get('reinvest').invalid) {
         this.switchTransaction.get('reinvest').markAsTouched();
@@ -406,7 +421,9 @@ export class SwitchTransactionComponent implements OnInit {
       this.multiTransact = true
       if (this.scheme != undefined && this.schemeDetails != undefined && this.switchTransaction != undefined) {
         let obj = {
+          id: this.id,
           amc: this.scheme.amcId,
+          mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
           productDbId: this.schemeDetails.id,
           amountType: (this.switchTransaction.controls.switchType.value == 1) ? 'Amount' : 'Unit',
           toProductDbId: this.schemeDetailsTransfer.id,
@@ -418,16 +435,36 @@ export class SwitchTransactionComponent implements OnInit {
           productCode: this.schemeDetails.schemeCode,
           dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
           orderVal: this.switchTransaction.controls.employeeContry.value,
-
           schemeName: this.scheme.schemeName,
+          transferIn:this.switchTransaction.get('transferIn').value,
+          switchType:this.switchTransaction.get('switchType').value
+
         }
-        this.childTransactions.push(obj)
+        if (this.isEdit == true) {
+          this.childTransactions.forEach(element => {
+            if (element.id == this.editedId) {
+              element.mutualFundSchemeMasterId=this.scheme.mutualFundSchemeMasterId;
+              element.id = this.editedId;
+              element.folioNo = this.switchTransaction.get('investmentAccountSelection').value;
+              element.orderVal = this.switchTransaction.get('employeeContry').value;
+              element.schemeName = this.switchTransaction.get('schemeSwitch').value;
+              element.switchType = this.switchTransaction.get('switchType').value;
+              element.modeOfPaymentSelection = this.switchTransaction.get('modeOfPaymentSelection').value;
+            }
+            console.log(element)
+          });
+          this.isEdit=false;
+        } else {
+          this.childTransactions.push(obj)
+        }
         console.log(this.childTransactions)
         this.schemeList = [];
+        this.showUnits = false;
         this.switchTransaction.controls.switchType.reset()
         this.switchTransaction.controls.employeeContry.reset()
         this.switchTransaction.controls.investmentAccountSelection.reset()
         this.switchTransaction.controls.schemeSwitch.reset()
+        this.switchTransaction.controls.transferIn.reset()
       }
     }
   }
