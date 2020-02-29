@@ -126,7 +126,7 @@
                 <div class="form-group mb-0 iconPetage">
                     <mat-form-field>
                         <input matInput class="form-control br-0 percentage" type="number"
-                            formControlName="ownershipPerc" (keyup)="onChange('owner')">
+                            formControlName="ownershipPerc" (keyup)="onChangeJointOwnership('owner')">
                         <mat-error class="f-12">
                             This field is required
                         </mat-error>
@@ -141,6 +141,10 @@
         </div>
 
     </div>
+    <mat-error class="f-12  text-right" *ngIf="showErrorOwner== true">
+        Percent cannot be more than 100%
+    </mat-error>
+
 
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
