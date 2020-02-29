@@ -34,6 +34,7 @@ import { ForgotPasswordComponent } from './component/no-protected/login/forgot-p
 import { SignUpComponent } from './component/no-protected/login/sign-up/sign-up.component';
 import { SetNewPasswordComponent } from './component/no-protected/login/set-new-password/set-new-password.component';
 import { VerifyOtpComponent } from './component/no-protected/login/verify-otp/verify-otp.component';
+import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
@@ -68,6 +69,7 @@ import { VerifyOtpComponent } from './component/no-protected/login/verify-otp/ve
     BrowserAnimationsModule,
     MaterialModule,
     MatExpansionModule,
+    ScrollDispatchModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
