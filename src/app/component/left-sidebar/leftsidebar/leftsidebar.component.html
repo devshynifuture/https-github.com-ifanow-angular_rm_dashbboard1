@@ -42,7 +42,7 @@
                             keyboard_arrow_right
                         </mat-icon>
                     </a> -->
-                    <mat-accordion class="expand-link">
+                    <mat-accordion class="menuAccordion">
                         <mat-expansion-panel>
                           <mat-expansion-panel-header >
                             <mat-panel-title >
@@ -76,10 +76,7 @@
                             </a>
                         </mat-expansion-panel>
                     </mat-accordion>
-                    <a class="sidenav-link" [ngClass]="getActiveLink('emails') ? 'bg-grey lter': ''" mat-list-item routerLink="./emails/inbox/google-connect">
-                        <img src="assets/images/svg/mail.svg">
-                        <span *ngIf="showTabs" class="title" mat-line>Advice</span>
-                    </a>
+
                     <a class="sidenav-link" [ngClass]="getActiveLink('emails') ? 'bg-grey lter': ''" mat-list-item routerLink="./emails/inbox/google-connect">
                         <img src="assets/images/svg/mail.svg">
                         <span *ngIf="showTabs" class="title" mat-line>Email</span>
