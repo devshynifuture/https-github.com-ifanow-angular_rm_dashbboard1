@@ -229,10 +229,8 @@ export class FixedDepositComponent implements OnInit {
   }
 
   getdataForm(data) {
-    this.flag = data
-    if (!data) {
-      data = {};
-    }
+    this.flag = data;
+    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
     if (this.dataSource) {
       data = this.dataSource;
     }
@@ -268,10 +266,7 @@ export class FixedDepositComponent implements OnInit {
         ownershipPer: null,
       })])
     });
-    this.getFormControl().ownerName.maxLength = 40;
-    this.getFormControl().description.maxLength = 60;
-    this.getFormControl().fdNo.maxLength = 10;
-    this.getFormControl().bankACNo.maxLength = 15;
+
     this.ownerData = this.fixedDeposit.controls;
     this.familyMemberId = this.fixedDeposit.controls.familyMemberId.value;
     // this.familyMemberId = this.familyMemberId[0];

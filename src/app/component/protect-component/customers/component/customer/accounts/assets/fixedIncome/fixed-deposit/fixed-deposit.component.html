@@ -2,7 +2,7 @@
 <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20">{{inputData.id?'Edit':'Add'}} Fixed deposit</h4>
+            <h4 class="mb-0 wrapper-20">{{inputData==null?'Add':'Edit'}} Fixed deposit</h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -338,7 +338,6 @@
                 <mat-form-field>
                     <mat-select #compound formControlName="compound" class="form-control br-0">
                         <mat-option value="" disabled>Select option</mat-option>
-                        <mat-option [value]="1">Daily</mat-option>
                         <mat-option [value]="2">Monthly</mat-option>
                         <mat-option [value]="3">Quarterly</mat-option>
                         <mat-option [value]="4">Half yearly</mat-option>
@@ -360,7 +359,6 @@
                 <mat-select #frequencyOfPayoutPerYear formControlName="frequencyOfPayoutPerYear"
                     class="form-control br-0">
                     <mat-option value="" disabled> Select option</mat-option>
-                    <mat-option [value]="1">Daily</mat-option>
                     <mat-option [value]="2">Monthly</mat-option>
                     <mat-option [value]="3">Quarterly</mat-option>
                     <mat-option [value]="4">Half yearly</mat-option>

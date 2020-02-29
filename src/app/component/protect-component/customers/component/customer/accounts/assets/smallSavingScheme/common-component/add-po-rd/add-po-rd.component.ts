@@ -86,6 +86,7 @@ export class AddPoRdComponent implements OnInit {
   }
   getdataForm(data) {
     this.flag = data;
+    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
     if (data == undefined) {
       data = {};
     } else {

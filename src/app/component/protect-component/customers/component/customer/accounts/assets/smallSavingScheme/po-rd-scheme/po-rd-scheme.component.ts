@@ -20,7 +20,7 @@ export class PoRdSchemeComponent implements OnInit {
   advisorId: any;
   clientId: number;
   noData: string;
-  isLoading = false;
+  isLoading = true;
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   pordData: any;
@@ -74,12 +74,14 @@ export class PoRdSchemeComponent implements OnInit {
   }
 
   getPoRdSchemedata() {
-    this.isLoading = true;
+    // console.log(this.dataSource.data);
+
+
+
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
     };
-    // this.dataSource.data = [{}, {}, {}];
     this.cusService.getSmallSavingSchemePORDData(obj).subscribe(
       data => this.getPoRdSchemedataResponse(data), (error) => {
         this.eventService.showErrorMessage(error);
@@ -104,7 +106,7 @@ export class PoRdSchemeComponent implements OnInit {
       this.sumOfMaturityValue = data.sumOfMaturityValue;
       this.pordData = data;
     } else {
-      this.dataSource = undefined
+      this.dataSource.data = [];
       this.noData = 'No scheme found';
     }
 
@@ -115,7 +117,7 @@ export class PoRdSchemeComponent implements OnInit {
       data: value,
       header: 'DELETE',
       body: 'Are you sure you want to delete?',
-      body2: 'This cannot be undone',
+      body2: 'This cannot be undone.',
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
@@ -158,6 +160,7 @@ export class PoRdSchemeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
+            this.isLoading = true;
             this.getPoRdSchemedata();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
@@ -181,6 +184,8 @@ export class PoRdSchemeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
+            this.dataSource.data = [{}, {}, {}]
+            this.isLoading = true;
             this.getPoRdSchemedata();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 

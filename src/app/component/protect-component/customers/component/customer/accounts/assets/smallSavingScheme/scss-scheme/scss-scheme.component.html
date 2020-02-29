@@ -31,7 +31,7 @@
                 <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
             </td>
             <td mat-footer-cell class="text-left f-500 pl-4 t-2" *matFooterCellDef>
-                <div class="bar"> {{isLoading ? '' : 'Total' }} </div>
+                <div class="bar"> </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="owner">
@@ -39,16 +39,19 @@
             <td mat-cell *matCellDef="let element" class="br t-25">
                 <div class="bar"> {{element.ownerName}} </div>
             </td>
-            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef> </td>
+            <td mat-footer-cell class="br text-right f-600 pr-20 t-7" *matFooterCellDef>
+                {{isLoading ? '' : 'Total' }}
+            </td>
         </ng-container>
         <ng-container matColumnDef="payout">
-            <th mat-sort-header="quarterlyPayout" mat-header-cell *matHeaderCellDef class="br t-14 text-right">
+            <th mat-sort-header="quarterlyPayout" mat-header-cell *matHeaderCellDef class="br t-14 textRight text-right">
                 Quarterly payout </th>
-            <td mat-cell *matCellDef="let element" class="br t-14 text-right">
+            <td mat-cell *matCellDef="let element" class="br amt t-14 text-right">
                 <div class="bar" appFormatNumber> {{element.quarterlyPayout}} </div>
             </td>
-            <td mat-footer-cell class="br text-right p-8 f-500 t-7" *matFooterCellDef appFormatNumber [value]="sumOfQuarterlyPayout">{{sumOfQuarterlyPayout}}</td>
+            <td mat-footer-cell class="br text-right amt p-8 f-600 t-7" *matFooterCellDef appFormatNumber [value]="sumOfQuarterlyPayout">{{sumOfQuarterlyPayout}}</td>
         </ng-container>
+
         <ng-container matColumnDef="pdate">
             <th mat-sort-header="pdate" mat-header-cell *matHeaderCellDef class="br t-10 text-right"> Payout date </th>
             <td mat-cell *matCellDef="let element" class="br t-10 text-right">
@@ -57,26 +60,28 @@
             <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="rate">
-            <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br text-right"> Rate </th>
-            <td mat-cell *matCellDef="let element" class="br text-right">
+            <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br textRight text-right"> Rate </th>
+            <td mat-cell *matCellDef="let element" class="br amt text-right">
                 <div class="bar"> {{element.rate}} </div>
             </td>
             <td mat-footer-cell class="br text-left t-7" *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="tamt">
-            <th mat-sort-header="totalAmountReceived" mat-header-cell *matHeaderCellDef class="br text-right"> Amount recieved </th>
-            <td mat-cell *matCellDef="let element" class="br text-right">
+            <th mat-sort-header="totalAmountReceived" mat-header-cell *matHeaderCellDef class="br textRight text-right">
+                Amount recieved </th>
+            <td mat-cell *matCellDef="let element" class="br amt text-right">
                 <div class="bar" appFormatNumber> {{element.totalAmountReceived}} </div>
             </td>
-            <td mat-footer-cell class="br text-right p-8 f-500 t-7" *matFooterCellDef appFormatNumber [value]="sumOfTotalAmountReceived">{{sumOfTotalAmountReceived}}</td>
+            <td mat-footer-cell class="br text-right p-8 f-600 amt t-7" *matFooterCellDef appFormatNumber [value]="sumOfTotalAmountReceived">{{sumOfTotalAmountReceived}}</td>
         </ng-container>
         <ng-container matColumnDef="amt">
-            <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef class="br text-right">Amount invested
+            <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef class="br textRight text-right">
+                Amount invested
             </th>
-            <td mat-cell *matCellDef="let element" class="br text-right">
+            <td mat-cell *matCellDef="let element" class="br amt text-right">
                 <div class="bar" appFormatNumber> {{element.amountInvested}} </div>
             </td>
-            <td mat-footer-cell class="br text-right p-8 f-500 t-7" *matFooterCellDef appFormatNumber [value]="sumOfAmountInvested">
+            <td mat-footer-cell class="br text-right p-8 amt f-600 t-7" *matFooterCellDef appFormatNumber [value]="sumOfAmountInvested">
                 <div class="bar"> {{sumOfAmountInvested}} </div>
             </td>
         </ng-container>
@@ -85,7 +90,7 @@
             <td mat-cell *matCellDef="let element" class="br t-12 text-left">
                 <div class="bar"> {{element.maturityDate | date: 'dd/MM/yyyy'}} </div>
             </td>
-            <td mat-footer-cell *matFooterCellDef> </td>
+            <td mat-footer-cell *matFooterCellDef class="br"> </td>
         </ng-container>
 
         <ng-container matColumnDef="desc">
@@ -93,14 +98,14 @@
             <td mat-cell *matCellDef="let element" class="br t-10">
                 <div class="bar"> {{isLoading ? '' : element.description || '-'}} </div>
             </td>
-            <td mat-footer-cell *matFooterCellDef> </td>
+            <td mat-footer-cell *matFooterCellDef class="br"> </td>
         </ng-container>
         <ng-container matColumnDef="status">
             <th mat-sort-header="statusId" mat-header-cell *matHeaderCellDef class="br"> Status </th>
             <td mat-cell *matCellDef="let element" class="br text-primary">
                 <div class="bar"> {{element.statusId}} </div>
             </td>
-            <td mat-footer-cell *matFooterCellDef> </td>
+            <td mat-footer-cell *matFooterCellDef class="br"> </td>
         </ng-container>
         <ng-container matColumnDef="icons">
             <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
@@ -113,7 +118,7 @@
                         <button mat-menu-item (click)="openAddSCSS(element,'editScss')">Edit</button>
                         <button mat-menu-item (click)="openAddSCSS(element,'detailedScss')">Detailed view</button>
                         <button mat-menu-item>Activity</button>
-                        <button mat-menu-item (click)="deleteModal('SUBSCRIPTION',element)">Delete</button>
+                        <button mat-menu-item (click)="deleteModal('SCSS',element)">Delete</button>
                     </mat-menu>
                 </div>
             </td>

@@ -12,17 +12,18 @@ import { AddModelPortfolioComponent } from './add-model-portfolio/add-model-port
 import { MaterialModule } from 'src/app/material/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonComponentModule } from '../../../common-component/common-component.module';
+import { AddPersonalProfileComponent } from '../setting-org-profile/add-personal-profile/add-personal-profile.component';
 
-export const componentList = [AddReportingManagerComponent, AddNewRoleComponent, AddArnRiaDetailsComponent, AddCamsDetailsComponent, AddKarvyDetailsComponent, AddFranklinTempletionDetailsComponent, AddCamsFundsnetComponent, SettingSchemeDetailsComponent, AddModelPortfolioComponent]
+export const componentList = [AddReportingManagerComponent, AddNewRoleComponent, AddArnRiaDetailsComponent, AddCamsDetailsComponent, AddKarvyDetailsComponent, AddFranklinTempletionDetailsComponent, AddCamsFundsnetComponent, SettingSchemeDetailsComponent, AddModelPortfolioComponent, AddPersonalProfileComponent]
 
 @NgModule({
-  declarations: [AddReportingManagerComponent, AddNewRoleComponent, AddArnRiaDetailsComponent, AddCamsDetailsComponent, AddKarvyDetailsComponent, AddFranklinTempletionDetailsComponent, AddCamsFundsnetComponent, SettingSchemeDetailsComponent, AddModelPortfolioComponent],
+  declarations: [componentList],
   imports: [
     CommonModule,
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    CommonComponentModule
+    CommonComponentModule,
   ],
   entryComponents: componentList
 })

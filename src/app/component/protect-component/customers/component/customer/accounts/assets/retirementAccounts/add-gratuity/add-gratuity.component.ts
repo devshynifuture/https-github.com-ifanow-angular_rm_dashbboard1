@@ -76,9 +76,7 @@ export class AddGratuityComponent implements OnInit {
   // }
   getdataForm(data) {
     this.flag = data;
-    if (data == undefined) {
-      data = {}
-    }
+    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : '';
     this.gratuity = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       noOfcompleteYrs: [(data == undefined) ? '' : data.yearsCompleted, [Validators.required]],
