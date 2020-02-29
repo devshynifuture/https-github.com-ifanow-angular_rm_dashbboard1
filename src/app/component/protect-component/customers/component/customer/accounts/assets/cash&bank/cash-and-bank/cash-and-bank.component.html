@@ -141,7 +141,7 @@
                 <tr *matFooterRowDef="displayedColumns7;sticky: true" [hidden]="isLoading" mat-footer-row></tr>
             </table>
             <div *ngIf="bankAccountList.filteredData.length == 0" class="d-flex flex-column align-items-center">
-                <img class="width400" src="assets/images/svg/noDataFound.svg">
+                <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12">{{noData}}</h4>
                 <button (click)="openCashAndBank('','')" class="btn-primary addon v-middle" mat-stroked-button>ADD NEW
                 </button>
@@ -250,9 +250,9 @@
                 <tr mat-footer-row *matFooterRowDef="displayedColumns8;sticky: true" [hidden]="isLoading"></tr>
             </table>
             <div *ngIf="cashInHandList.filteredData.length == 0" class="d-flex flex-column align-items-center">
-                <img class="width400" src="assets/images/svg/noDataFound.svg">
+                <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12">{{noData}}</h4>
-                <button (click)="openCashInHand('', '')" class="btn-primary addon v-middle mt-20" mat-stroked-button>ADD
+                <button (click)="openCashInHand('', '')" class="btn-primary addon v-middle" mat-stroked-button>ADD
                     NEW
                 </button>
             </div>
