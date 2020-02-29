@@ -48,6 +48,21 @@
                         <div class="bar"> {{element.orderVal}} </div>
                     </td>
                 </ng-container>
+                <ng-container matColumnDef="icons">
+                    <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
+                    <td mat-cell *matCellDef="let element" class="t-2">
+                        <div *ngIf="!isLoading">
+                            <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
+                                more_vert
+                            </i>
+                            <mat-menu #menubank="matMenu">
+                                <button mat-menu-item (click)="getdataForm(element,true)">Edit</button>
+                                <button mat-menu-item>Delete</button>
+                            </mat-menu>
+                        </div>
+                    </td>
+                    <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+                </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
@@ -122,7 +137,7 @@
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select class="form-control" formControlName="investmentAccountSelection">
-                                    <mat-option value="option" (click)="selectedFolio(folio)"
+                                    <mat-option [value]="folio.folioNumber" (click)="selectedFolio(folio)"
                                         *ngFor="let folio of folioList">{{folio.folioNumber}}</mat-option>
                                 </mat-select>
                                 <mat-error class="f-12 pt-4">
