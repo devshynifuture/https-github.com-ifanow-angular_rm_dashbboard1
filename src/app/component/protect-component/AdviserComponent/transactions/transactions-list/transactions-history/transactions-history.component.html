@@ -6,7 +6,7 @@
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
                 <!-- (click)="Close(false)" commented for prod -->
-                <i class="material-icons c-p pt-8 v-middle"> clear</i>
+                <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
             </div>
         </div>
     </div>
@@ -79,6 +79,46 @@
             <h5 class="m-0 text-black">Pending authorization</h5>
             <p class="m-0 roboto text-danger f-12">You will soon receive an OTP from NSE</p>
         </div>
+        <!-- <div class="col-md-1 pl-0">
+            <mat-radio-group aria-label="Select an option">
+                <mat-radio-button value="1"></mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div class="col-md-11">
+            <h5 class="m-0 text-black">Payment successful</h5>
+        </div>
+        <div class="col-md-1 pl-0">
+            <mat-radio-group aria-label="Select an option">
+                <mat-radio-button value="1"></mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div class="col-md-11">
+            <h5 class="m-0 text-black">Order submitted to AMC</h5>
+        </div>
+        <div class="col-md-1 pl-0">
+            <mat-radio-group aria-label="Select an option">
+                <mat-radio-button value="1"></mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div class="col-md-11">
+            <h5 class="m-0 text-black">Order processed</h5>
+        </div>
+        <div class="col-md-1 pl-0">
+            <mat-radio-group aria-label="Select an option">
+                <mat-radio-button value="1"></mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div class="col-md-11">
+            <h5 class="m-0 text-black">Units allotted</h5>
+        </div>
+        <div class="col-md-1 pl-0">
+            <mat-radio-group aria-label="Select an option">
+                <mat-radio-button value="1"></mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div class="col-md-11">
+            <h5 class="m-0 text-black">Transaction reflecting in portfolio</h5>
+        </div> -->
     </div>
 </div>
 
@@ -108,7 +148,7 @@
 <div class="bottom-fixed wrapper-12 w-35">
     <div class="row">
         <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p">Close</h5>
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Close</h5>
         </div>
     </div>
 </div>
