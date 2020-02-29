@@ -13,7 +13,7 @@
 <div class="row pt-40 pb-20" id="ui-setting-profile">
     <div class="col-xl-2"></div>
     <div class="col-xl-8">
-        <mat-card class="b-a p-0">
+        <mat-card class="b-a p-0 br-4">
             <mat-card-header class="bg-grey lter p-24">
                 <div class="row w-100">
                     <div class="col-md-9 pl-0">
@@ -21,11 +21,10 @@
                     </div>
                     <div class="col-md-3 p-0 text-right">
                         <button mat-stroked-button class="text-primary">ADMIN</button>
-                        <button mat-icon-button [matMenuTriggerFor]="menu">
-                            <mat-icon class="text-custom">more_vert</mat-icon>
-                        </button>
+                        <mat-icon class="text-custom" [matMenuTriggerFor]="menu" class="c-p v-middle">more_vert
+                        </mat-icon>
                         <mat-menu #menu="matMenu">
-                            <button mat-menu-item>Edit</button>
+                            <button mat-menu-item (click)="OpenpersonalProfile()">Edit</button>
                             <button mat-menu-item>Delete</button>
                         </mat-menu>
                     </div>
@@ -52,3 +51,86 @@
     </div>
     <div class="col-xl-2"></div>
 </div>
+<!-- Organization profile -->
+<!-- <div class="row pt-28">
+    <div class="col-md-12">
+        <h4 class="m-0">Organization profile</h4>
+    </div>
+</div>
+
+<div class="row pt-40 pb-20" id="ui-setting-profile">
+    <div class="col-xl-2"></div>
+    <div class="col-xl-8 p-0">
+        <mat-card class="b-a p-0 br-4">
+            <mat-card-header class="bg-grey lter p-24">
+                <div class="row w-100">
+                    <div class="col-md-9 pl-0">
+                        <h2 class="m-0">Acme Financial Advisors</h2>
+                    </div>
+                    <div class="col-md-3 p-0 text-right">
+                        <button mat-stroked-button class="text-primary">ADMIN</button>
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon class="text-custom">more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item>Edit</button>
+                            <button mat-menu-item>Delete</button>
+                        </mat-menu>
+                    </div>
+                </div>
+            </mat-card-header>
+            <mat-card-content class="">
+                <div class="row">
+                    <div class="col-md-6 pb-28">
+                        <p class="f-12 m-0 text-custom pt-28"> EMAIL</p>
+                        <p class="m-0">archit.gupta@acmefinancial.com</p>
+                        <p class="f-12 m-0 text-custom pt-28"> MOBILE</p>
+                        <p class="m-0">+91 99874 12342</p>
+                        <p class="f-12 m-0 text-custom pt-28"> WEBSITE</p>
+                        <p class="m-0">www.acmefinancial.com</p>
+                        <p class="f-12 m-0 text-custom pt-28"> ADDRESS</p>
+                        <p class="m-0">203-A,”A” Wing, Suashish IT Park,
+                            Off. Dattapada Road,
+                            Borivali East
+                            Mumbai 400 066
+                            Maharashtra, India</p>
+                        <div class="row pt-36">
+                            <div class="col-md-6 pl-0">
+                                <p class="m-0 f-12 text-custom">GST TREATMENT</p>
+                                <p class="m-0">Applicable</p>
+                            </div>
+                            <div class="col-md-6 pr-0">
+                                <p class="m-0 f-12 text-custom">GST</p>
+                                <p class="m-0">27AABCF7680A1Z7</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 bl-1 pb-28">
+                        <p class="f-12 m-0 text-custom pt-28 pb-16"> WEB APP LOGO</p>
+                        <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png"
+                            class="w-65">
+                        <p class="m-0 text-black pt-16">This logo is visible on top left of web login, About section in
+                            mobile
+                            app etc.</p>
+                        <p class="m-0 text-black pt-4 bb-1 pb-16">Image dimension: 50px x 200px</p>
+                        <p class="f-12 m-0 text-custom pt-28 pb-16"> LOGO FOR REPORTS</p>
+
+                        <div class="row">
+                            <div class="col-md-4 pl-0">
+                                <img src="/assets/images/svg/l-icon.svg" class="w-100">
+                            </div>
+                            <div class="col-md-8 pl-0">
+                                <p class="m-0 text-black pt-16">This logo is visible on various reports (MF, Financial
+                                    Plan
+                                    etc.). If left blank, we
+                                    will use the Web App Logo to show in reports.</p>
+                                <p class="m-0 text-black pt-16">Image dimension: 200px x 200px</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="col-xl-2"></div>
+</div> -->

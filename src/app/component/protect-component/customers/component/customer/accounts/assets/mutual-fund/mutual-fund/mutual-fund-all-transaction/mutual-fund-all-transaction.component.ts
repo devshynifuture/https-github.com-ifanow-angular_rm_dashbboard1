@@ -62,6 +62,7 @@ export class MutualFundAllTransactionComponent implements OnInit {
         });
       });
       this.customDataSource = filteredArray
+      console.log(this.customDataSource)
     }
   }
   isGroup(index, item): boolean {//get headerName as per category

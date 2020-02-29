@@ -306,7 +306,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
       data: 'QUOTATION',
       header: 'DELETE',
       body: this.list.length == 1 ? 'Are you sure you want to delete the document?' : 'Are you sure you want to delete these documents?',
-      body2: 'This cannot be undone',
+      body2: 'This cannot be undone.',
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {

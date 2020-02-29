@@ -113,8 +113,16 @@
   height: 20px !important;
 }
 
+.min-80 {
+  min-width: 80px !important;
+}
+
 .min-height-100 {
   min-height: 100px;
+}
+
+.minheight-900 {
+  min-height: 900px !important;
 }
 
 .h-25 {
@@ -527,7 +535,7 @@
 
 .t-60,
 .w-60 {
-  width: 60%;
+  width: 60% !important;
 }
 
 .t-61,

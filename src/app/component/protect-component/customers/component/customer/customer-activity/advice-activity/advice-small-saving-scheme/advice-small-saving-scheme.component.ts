@@ -149,13 +149,14 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
     this.getFlagCount(tableFlag, countValue)
     console.log(this.selectedAssetId)
   }
-  openAddPPF(data, value) {
+  openAddEdit(value, data) {
+    let Component = (value == "advicePPF") ? AddPpfComponent : (value == "adviceNSC") ? AddNscComponent : (value == "adviceSSY") ? AddSsyComponent : (value == "adviceKVP") ? AddKvpComponent : (value == "adviceSCSS") ? AddScssComponent : (value == "advicePoSaving") ? AddPoSavingComponent : (value == 'advicePORD') ? AddPoRdComponent : (value == "advicePOTD") ? AddPoTdComponent : AddPoMisComponent;
     const fragmentData = {
       flag: value,
       data,
       id: 1,
       state: 'open',
-      componentName: AddPpfComponent
+      componentName: Component
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -170,186 +171,5 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
       }
     );
   }
-  openAddNSC(data, value) {
-    const fragmentData = {
-      flag: value,
-      data,
-      id: 1,
-      state: 'open',
-      componentName: AddNscComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getAdviceByAsset();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
-          }
-          rightSideDataSub.unsubscribe();
-        }
-
-      }
-    );
-  }
-  openAddKVP(data, value) {
-    const fragmentData = {
-      flag: value,
-      data,
-      id: 1,
-      state: 'open',
-      componentName: AddKvpComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getAdviceByAsset();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
-          }
-          rightSideDataSub.unsubscribe();
-        }
-
-      }
-    );
-  }
-  openAddSCSS(data, value) {
-    const fragmentData = {
-      flag: value,
-      data,
-      id: 1,
-      state: 'open',
-      componentName: AddScssComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getAdviceByAsset();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
-          }
-          rightSideDataSub.unsubscribe();
-        }
-
-      }
-    );
-  }
-  openAddPOMIS(data, value) {
-    const fragmentData = {
-      flag: value,
-      data,
-      id: 1,
-      state: 'open',
-      componentName: AddPoMisComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getAdviceByAsset();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
-          }
-          rightSideDataSub.unsubscribe();
-        }
-
-      }
-    );
-  }
-  openAddPORD(data, value) {
-    const fragmentData = {
-      flag: value,
-      data,
-      id: 1,
-      state: 'open',
-      componentName: AddPoRdComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getAdviceByAsset();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
-          }
-          rightSideDataSub.unsubscribe();
-        }
-      }
-    );
-  }
-  openAddPOTD(data, value) {
-    const fragmentData = {
-      flag: value,
-      data,
-      id: 1,
-      state: 'open',
-      componentName: AddPoTdComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getAdviceByAsset();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
-          }
-          rightSideDataSub.unsubscribe();
-        }
-
-      }
-    );
-  }
-  openAddPOSAVING(data, value) {
-    const fragmentData = {
-      flag: value,
-      data,
-      id: 1,
-      state: 'open',
-      componentName: AddPoSavingComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getAdviceByAsset();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
-          }
-          rightSideDataSub.unsubscribe();
-        }
-
-      }
-    );
-  }
-  addOpenSSY(data, value) {
-    const fragmentData = {
-      flag: value,
-      data,
-      id: 1,
-      state: 'open',
-      componentName: AddSsyComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getAdviceByAsset();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
-          }
-          rightSideDataSub.unsubscribe();
-        }
-      }
-    );
-  }
 }

@@ -90,7 +90,7 @@ export class RealEstateComponent implements OnInit {
   getRealEstateRes(data) {
     this.isLoading = false;
     if (data == undefined) {
-      this.noData = 'No data found';
+      this.noData = 'No real estate found';
       this.datasource3.data = [];
     }
     else if (data.realEstateList.length > 0) {
@@ -120,7 +120,7 @@ export class RealEstateComponent implements OnInit {
       data: value,
       header: 'DELETE',
       body: 'Are you sure you want to delete?',
-      body2: 'This cannot be undone',
+      body2: 'This cannot be undone.',
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {

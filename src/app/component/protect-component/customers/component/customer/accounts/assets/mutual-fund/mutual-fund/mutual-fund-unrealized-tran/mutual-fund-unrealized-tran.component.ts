@@ -58,6 +58,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
           customDataSource.data.push(this.totalObj);
         });
       });
+      console.log(customDataSource)
       return customDataSource;
     }
   }

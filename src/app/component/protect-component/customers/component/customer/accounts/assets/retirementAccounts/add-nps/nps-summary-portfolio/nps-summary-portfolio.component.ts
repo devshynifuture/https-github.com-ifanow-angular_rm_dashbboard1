@@ -113,9 +113,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   }
   getdataForm(data) {
     this.flag = data;
-    if (data == undefined) {
-      data = {}
-    }
+    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : '';
     this.summaryNPS = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       currentValue: [(data == undefined) ? '' : data.currentValuation, [Validators.required]],

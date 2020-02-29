@@ -479,7 +479,7 @@ export class RetirementAccountComponent implements OnInit {
       data: value,
       header: 'DELETE',
       body: 'Are you sure you want to delete?',
-      body2: 'This cannot be undone',
+      body2: 'This cannot be undone.',
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
@@ -557,7 +557,7 @@ export class RetirementAccountComponent implements OnInit {
   getEPFRes(data) {
     this.isLoading = false;
     if (data == undefined) {
-      this.noData = "No scheme found";
+      this.noData = "No EPF found";
       this.dataEPFList.data = [];
     }
     else if (data.listOfEpf) {
@@ -600,7 +600,7 @@ export class RetirementAccountComponent implements OnInit {
   getGrauityRes(data) {
     this.isLoading = false;
     if (data == undefined) {
-      this.noData = 'No data found';
+      this.noData = 'No gratuity found';
       this.dataGratuityList.data = []
     }
     else if (data.gratuityList) {
@@ -611,7 +611,7 @@ export class RetirementAccountComponent implements OnInit {
       this.sumOfAmountReceived = data.sumOfAmountReceived;
     }
     else {
-      this.noData = "No scheme found";
+      this.noData = "No gratuity found";
       this.dataGratuityList.data = [];
     }
 
@@ -631,7 +631,7 @@ export class RetirementAccountComponent implements OnInit {
   getNPSRes(data) {
     this.isLoading = false;
     if (data == undefined) {
-      this.noData = 'No data found';
+      this.noData = 'No NPS found';
       this.dataNPSList.data = []
     } else if (data.npsList) {
       console.log('getNPSRes =', data);
@@ -642,7 +642,7 @@ export class RetirementAccountComponent implements OnInit {
       this.totalCurrentValue = data.totalCurrentValue;
     }
     else {
-      this.noData = "No scheme found";
+      this.noData = "No NPS found";
       this.dataNPSList.data = [];
     }
 
@@ -662,7 +662,7 @@ export class RetirementAccountComponent implements OnInit {
   getSuperannuationRes(data) {
     this.isLoading = false;
     if (data == undefined) {
-      this.noData = 'No data found';
+      this.noData = 'No superannuation found';
       this.dataSuperannuationList.data = []
     }else if (data.superannuationList) {
       console.log('getSuperannuationRes =', data);
@@ -673,7 +673,7 @@ export class RetirementAccountComponent implements OnInit {
       this.sumOfAnnualEmployerContribution = data.sumOfAnnualEmployerContribution;
     }
     else {
-      this.noData = "No scheme found";
+      this.noData = "No superannuation found";
       this.dataSuperannuationList.data = [];
     }
 
@@ -693,7 +693,7 @@ export class RetirementAccountComponent implements OnInit {
   getEPSRes(data) {
     this.isLoading = false;
     if (data == undefined) {
-      this.noData = 'No data found';
+      this.noData = 'No EPS found';
       this.EPSList.data = []
     }else if (data.epsList) {
       console.log('getEPSRes =', data);
@@ -704,7 +704,7 @@ export class RetirementAccountComponent implements OnInit {
       this.totalPensionAmount = data.totalPensionAmount;
     }
     else {
-      this.noData = "No scheme found";
+      this.noData = "No EPS found";
       this.EPSList.data = [];
     }
 
