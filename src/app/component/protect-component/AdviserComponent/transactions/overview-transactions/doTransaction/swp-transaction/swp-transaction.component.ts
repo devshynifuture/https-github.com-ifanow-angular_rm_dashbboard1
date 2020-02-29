@@ -92,6 +92,7 @@ export class SwpTransactionComponent implements OnInit {
     this.transactionSummary = {}
     this.childTransactions = []
     this.getdataForm(this.inputData)
+    Object.assign(this.transactionSummary, { clientId: this.inputData.clientId })
     Object.assign(this.transactionSummary, { transactType: 'SWP' });
     Object.assign(this.transactionSummary, { allEdit: true });
     Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });

@@ -35,13 +35,48 @@
                         <img routerLink="/customer/detail/overview" src="assets/images/svg/people.svg">
                         <span *ngIf="showTabs" class="title" mat-line>People</span>
                     </a>
-                    <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/calendar">
+                    <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/calendar">
                         <img src="assets/images/svg/file-lines.svg">
                         <span *ngIf="showTabs" class="title" mat-line>Activities</span>
                         <mat-icon aria-hidden="false" aria-label="Example home icon" class="text-custom">
                             keyboard_arrow_right
                         </mat-icon>
-                    </a>
+                    </a> -->
+                    <mat-accordion class="menuAccordion">
+                        <mat-expansion-panel>
+                          <mat-expansion-panel-header >
+                            <mat-panel-title >
+                                <a mat-list-item class="sidenav-link expand-link">
+                                    <img src="assets/images/svg/file-lines.svg">
+                                    <span *ngIf="showTabs" class="title" mat-line>Activities</span>
+                                    <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" class="text-custom">
+                                        keyboard_arrow_right
+                                    </mat-icon> -->
+                                </a>
+                            </mat-panel-title>
+                           
+                          </mat-expansion-panel-header>
+                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/advice">
+                                <span *ngIf="showTabs" class="title" mat-line>Advice</span>
+                            </a>
+                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/plans">
+                                <span *ngIf="showTabs" class="title" mat-line>Action plans</span>
+                            </a>
+                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/notes">
+                                <span *ngIf="showTabs" class="title" mat-line>Notes</span>
+                            </a>
+                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/tasks">
+                                <span *ngIf="showTabs" class="title" mat-line>Tasks</span>
+                            </a>
+                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/opportunities">
+                                <span *ngIf="showTabs" class="title" mat-line>Opportunities</span>
+                            </a>
+                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/calendar">
+                                <span *ngIf="showTabs" class="title" mat-line>calendar</span>
+                            </a>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
                     <a class="sidenav-link" [ngClass]="getActiveLink('emails') ? 'bg-grey lter': ''" mat-list-item routerLink="./emails/inbox/google-connect">
                         <img src="assets/images/svg/mail.svg">
                         <span *ngIf="showTabs" class="title" mat-line>Email</span>
@@ -282,7 +317,7 @@
 <div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
     <ng-template #dynamicUpper></ng-template>
 </div>
-<div [@openClose]="currentState" class="right_sidenav">
+<div [@openClose]="currentState" class="right_sidenav" cdkScrollable>
     <ng-template #dynamic></ng-template>
 </div>
 <!--<app-dialog-container [parentComponentName]="'leftSideBar'"></app-dialog-container>-->

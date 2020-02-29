@@ -4,7 +4,7 @@
 <div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
     <ng-template #dynamicUpper></ng-template>
 </div>
-<div [@openClose]="currentState" class="right_sidenav">
+<div [@openClose]="currentState" class="right_sidenav" cdkScrollable>
     <ng-template #dynamic></ng-template>
 </div>
 <mat-sidenav-container class="sidenav-container" [hasBackdrop]="false">

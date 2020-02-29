@@ -69,6 +69,7 @@
                 [dataSource]="dataSourceFixed" id="table-low" class="skeletonAnimation" appSkeletonLoading
                 [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no">
+
                     <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No</th>
                     <td *matCellDef="let element let i = index;" class="br " mat-cell>
                         <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
@@ -193,10 +194,14 @@
                     </td>
                     <td mat-footer-cell *matFooterCellDef></td>
                 </ng-container>
+
+
                 <tr mat-header-row *matHeaderRowDef="displayedColumns4; sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns4;"></tr>
                 <tr mat-footer-row *matFooterRowDef="displayedColumns4;sticky: true" [hidden]="isLoading"></tr>
             </table>
+
+
             <div *ngIf="dataSourceFixed.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12"> No Fixed deposit </h4>
@@ -250,7 +255,7 @@
                 </button>
             </div>
         </div>
-        <div class=" col-md-12 overflow-hidden tableHeightClass p-0 mt-8 mb-44 fixed-DEPOSIT">
+        <div class=" col-md-12 overflow-hidden tableHeightClass p-0 mt-8 fixed-DEPOSIT">
 
             <table *ngIf="dataSourceRecurring.filteredData.length > 0" matSort #recurringDepositTable="matSort"
                 mat-table [dataSource]="dataSourceRecurring" id="table-low" class="skeletonAnimation" appSkeletonLoading
@@ -394,7 +399,7 @@
                 </button>
             </div>
         </div>
-        <div class=" p-0 col-md-12  mt-8 mb-44 fixed-DEPOSIT">
+        <div class=" p-0 col-md-12  mt-8  fixed-DEPOSIT">
             <div class="overflow-hidden tableHeightClass">
                 <table *ngIf="dataSourceBond.filteredData.length > 0" matSort #bondListTable="matSort" mat-table
                     [dataSource]="dataSourceBond" id="table-low" class="skeletonAnimation" appSkeletonLoading

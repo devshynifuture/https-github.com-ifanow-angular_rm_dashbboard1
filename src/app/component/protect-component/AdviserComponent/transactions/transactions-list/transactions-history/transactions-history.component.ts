@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-transactions-history',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TransactionsHistoryComponent implements OnInit {
 
-  constructor() { }
+  constructor(private subInjectService: SubscriptionInject, public eventService: EventService, ) { }
 
   ngOnInit() {
+  }
+
+  close() {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
 }

@@ -54,8 +54,11 @@ export class RedemptionTransactionComponent implements OnInit {
   achMandateNSE: any;
   currentValue: number;
   multiTransact = false;
+  id = 0;
+  isEdit = false;
   childTransactions = [];
-  displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount'];
+  displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount','icons'];
+  editedId: any;
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private fb: FormBuilder, private eventService: EventService, private processTransaction: ProcessTransactionService) { }
   @Input()
@@ -75,10 +78,11 @@ export class RedemptionTransactionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getdataForm(this.inputData)
+    this.getdataForm(this.inputData,false)
     this.transactionSummary = {}
     this.childTransactions = []
     this.reInvestmentOpt = [];
+    Object.assign(this.transactionSummary, { clientId: this.inputData.clientId })
     Object.assign(this.transactionSummary, { allEdit: true });
     Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
     Object.assign(this.transactionSummary, { transactType: 'REDEEM' });
@@ -95,7 +99,11 @@ export class RedemptionTransactionComponent implements OnInit {
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
-  getdataForm(data) {
+  getdataForm(data,isEdit) {
+    if (isEdit == true) {
+      this.isEdit = isEdit
+      this.editedId = data.id;
+    }
     if (!data) {
       data = {};
     }
@@ -108,16 +116,22 @@ export class RedemptionTransactionComponent implements OnInit {
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
       //investor: [(!data) ? '' : this.scheme, [Validators.required]],
-      employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required]],
+      employeeContry: [(!data) ? '' : data.orderVal, [Validators.required]],
       redeemType: [(!data) ? '' : data.redeemType, [Validators.required]],
-      investmentAccountSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      investmentAccountSelection: [(!data) ? '' : data.folioNo, [Validators.required]],
       modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
       folioSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
-      schemeRedeem: [null, [Validators.required]],
+      redeem: [(!data) ? '' : data.switchType, [Validators.required]],
+      schemeRedeem: [(!data) ? '' : data.schemeName, [Validators.required]],
+
     });
 
     this.ownerData = this.redemptionTransaction.controls;
+    if (data.folioNo) {
+      this.scheme.mutualFundSchemeMasterId=data.mutualFundSchemeMasterId;
+      this.getSchemeWiseFolios()
+    }
   }
   enteredAmount(value) {
     Object.assign(this.transactionSummary, { enteredAmount: value });
@@ -315,6 +329,9 @@ export class RedemptionTransactionComponent implements OnInit {
     }
   }
   AddMultiTransaction() {
+    if (this.isEdit != true) {
+      this.id++
+    } 
     if (this.reInvestmentOpt.length > 1) {
       if (this.redemptionTransaction.get('reinvest').invalid) {
         this.redemptionTransaction.get('reinvest').markAsTouched();
@@ -335,8 +352,10 @@ export class RedemptionTransactionComponent implements OnInit {
       this.multiTransact = true
       if (this.scheme != undefined && this.schemeDetails != undefined && this.redemptionTransaction != undefined) {
         let obj = {
+          id: this.id,
           amc: this.scheme.amcId,
           productDbId: this.schemeDetails.id,
+          mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
           folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
           productCode: this.schemeDetails.schemeCode,
           dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
@@ -346,13 +365,31 @@ export class RedemptionTransactionComponent implements OnInit {
           qty: (this.redemptionTransaction.controls.redeemType.value == 1) ? 0 : (this.redemptionTransaction.controls.redeemType.value == 3) ? this.schemeDetails.balance_units : this.redemptionTransaction.controls.employeeContry.value,
           bankDetailId: this.bankDetails.id,
           schemeName: this.scheme.schemeName,
+          redeemType:this.redemptionTransaction.get('redeemType').value
+
         }
-        this.childTransactions.push(obj)
+        if (this.isEdit == true) {
+          this.childTransactions.forEach(element => {
+            if (element.id == this.editedId) {
+              element.id = this.editedId;
+              element.mutualFundSchemeMasterId=(this.scheme) ? this.scheme.mutualFundSchemeMasterId : null;
+              element.folioNo = this.redemptionTransaction.get('investmentAccountSelection').value;
+              element.orderVal = this.redemptionTransaction.get('employeeContry').value;
+              element.schemeName = this.redemptionTransaction.get('schemeRedeem').value;
+              element.redeemType = this.redemptionTransaction.get('redeemType').value;
+            }
+            console.log(element)
+          });
+          this.isEdit=false;
+        } else {
+          this.childTransactions.push(obj)
+        }
         console.log(this.childTransactions)
         this.schemeList = [];
         this.redemptionTransaction.controls.employeeContry.reset()
         this.redemptionTransaction.controls.investmentAccountSelection.reset()
         this.redemptionTransaction.controls.schemeRedeem.reset()
+        this.showUnits=false;
       }
     }
   }

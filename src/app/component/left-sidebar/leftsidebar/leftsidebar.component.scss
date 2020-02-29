@@ -326,3 +326,28 @@ img.header-img {
     left: 8px;
     top: 10px;
 }
+
+.mat-expansion-panel {
+    box-shadow: none;
+    .mat-expansion-panel-header {
+        padding: 0px;
+    }
+}
+
+.mat-expansion-panel-header:not([aria-disabled=true]) {
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.mat-expansion-indicator {
+    transform: rotate(90deg);
+}
+
+::ng-deep .menuAccordion mat-expansion-panel {
+    padding: 0px !important;
+    height: auto !important;
+}
+
+::ng-deep .menuAccordion .mat-expansion-panel-body {
+    padding: 0px !important;
+}

@@ -97,8 +97,10 @@ export class AddPoRdComponent implements OnInit {
       ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
       monthlyContribution: [data.monthlyContribution, [Validators.required, Validators.min(10)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
-      tenure: [(data.tenure) ? data.tenure : '', [Validators.required]],
-      ownership: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]]
+      tenure: [(data.tenure) ? data.tenure : '5', [Validators.required]],
+      ownership: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]],
+      interestRate: [!data.interestRate?'7.2':data.interestRate, [Validators.required]],
+      compound: [(!data.compound)?'3':data.compound, [Validators.required]]
     });
     this.PORDFormoptionalForm = this.fb.group({
       rdNum: [data.rdNumber],
@@ -109,6 +111,13 @@ export class AddPoRdComponent implements OnInit {
     });
     this.ownerData = this.PORDForm.controls;
 
+  }
+
+  onChange(event) {
+    if (parseInt(event.target.value) > 100) {
+      event.target.value = "100";
+      this.PORDFormoptionalForm.get('interestRate').setValue(event.target.value);
+    }
   }
 
   addPORD() {
@@ -132,45 +141,36 @@ export class AddPoRdComponent implements OnInit {
       this.PORDForm.get('commDate').markAsTouched();
       this.PORDForm.get('ownership').markAsTouched();
     } else {
-      if (this.editApi != undefined && this.editApi != 'advicePORD') {
-        const obj = {
-          monthlyContribution: this.PORDForm.get('monthlyContribution').value,
-          commencementDate: this.PORDForm.get('commDate').value,
-          rdNumber: this.PORDFormoptionalForm.get('rdNum').value,
-          postOfficeBranch: this.PORDFormoptionalForm.get('poBranch').value,
-          ownerTypeId: this.PORDForm.get('ownership').value,
-          nominees: this.nominees,
-          description: this.PORDFormoptionalForm.get('description').value,
-          isActive: 1,
-          id: this.editApi.id
-
-        };
+      const obj = {
+        clientId: this.clientId,
+        advisorId: this.advisorId,
+        familyMemberId: this.familyMemberId,
+        ownerName: this.ownerName,
+        monthlyContribution: this.PORDForm.get('monthlyContribution').value,
+        commencementDate: this.PORDForm.get('commDate').value,
+        rdNumber: this.PORDFormoptionalForm.get('rdNum').value,
+        postOfficeBranch: this.PORDFormoptionalForm.get('poBranch').value,
+        nominees: this.nominees,
+        description: this.PORDFormoptionalForm.get('description').value,
+        interestRate: this.PORDForm.get('interestRate').value,
+        ownerTypeId: this.PORDForm.get('ownership').value,
+        interestCompounding: this.PORDForm.get('compound').value,
+        isActive: 1,
+        id: this.editApi.id
+      };
+      if (this.editApi.id ) {
         this.cusService.editPORD(obj).subscribe(
           data => this.addPORDResponse(data),
           error => this.eventService.showErrorMessage(error)
         );
       } else {
-        const obj = {
-          clientId: this.clientId,
-          advisorId: this.advisorId,
-          familyMemberId: this.familyMemberId,
-          ownerName: this.ownerName,
-          monthlyContribution: this.PORDForm.get('monthlyContribution').value,
-          commencementDate: this.PORDForm.get('commDate').value,
-          rdNumber: this.PORDFormoptionalForm.get('rdNum').value,
-          postOfficeBranch: this.PORDFormoptionalForm.get('poBranch').value,
-          ownerTypeId: this.PORDForm.get('ownership').value,
-          nominees: this.nominees,
-          description: this.PORDFormoptionalForm.get('description').value
-
-        };
-        let adviceObj = {
-          advice_id: this.advisorId,
-          adviceStatusId: 5,
-          stringObject: obj,
-          adviceDescription: "manualAssetDescription"
-        }
         if (this.flag == 'advicePORD') {
+          let adviceObj = {
+            advice_id: this.advisorId,
+            adviceStatusId: 5,
+            stringObject: obj,
+            adviceDescription: "manualAssetDescription"
+          }
           this.cusService.getAdvicePord(adviceObj).subscribe(
             data => this.getAdvicePordRes(data),
             err => this.eventService.openSnackBar(err, "dismiss")

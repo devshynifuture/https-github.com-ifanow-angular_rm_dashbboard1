@@ -89,6 +89,7 @@ export class StpTransactionComponent implements OnInit {
     this.getdataForm(this.inputData)
     this.childTransactions = []
     this.transactionSummary = {}
+    Object.assign(this.transactionSummary, { clientId: this.inputData.clientId })
     Object.assign(this.transactionSummary, { allEdit: true });
     Object.assign(this.transactionSummary, { transactType: 'STP' });
     Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
