@@ -86,8 +86,10 @@ export class AddPoRdComponent implements OnInit {
       ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
       monthlyContribution: [data.monthlyContribution, [Validators.required, Validators.min(10)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
-      tenure: [(data.tenure) ? data.tenure : '', [Validators.required]],
-      ownership: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]]
+      tenure: [(data.tenure) ? data.tenure : '5', [Validators.required]],
+      ownership: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]],
+      interestRate: [!data.interestRate?'7.2':data.interestRate, [Validators.required]],
+      compound: [(!data.compound)?'3':data.compound, [Validators.required]]
     });
     this.PORDFormoptionalForm = this.fb.group({
       rdNum: [data.rdNumber],
@@ -98,6 +100,13 @@ export class AddPoRdComponent implements OnInit {
     });
     this.ownerData = this.PORDForm.controls;
 
+  }
+
+  onChange(event) {
+    if (parseInt(event.target.value) > 100) {
+      event.target.value = "100";
+      this.PORDFormoptionalForm.get('interestRate').setValue(event.target.value);
+    }
   }
 
   addPORD() {
@@ -150,8 +159,9 @@ export class AddPoRdComponent implements OnInit {
           postOfficeBranch: this.PORDFormoptionalForm.get('poBranch').value,
           ownerTypeId: this.PORDForm.get('ownership').value,
           nominees: this.nominees,
-          description: this.PORDFormoptionalForm.get('description').value
-
+          description: this.PORDFormoptionalForm.get('description').value,
+          interestRate: this.PORDForm.get('interestRate').value,
+          interestCompounding: this.PORDForm.get('compound').value
         };
         let adviceObj = {
           advice_id: this.advisorId,
