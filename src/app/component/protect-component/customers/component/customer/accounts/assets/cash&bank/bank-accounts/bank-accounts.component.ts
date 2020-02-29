@@ -36,6 +36,8 @@ export class BankAccountsComponent implements OnInit {
   nomineesListFM: any;
   flag: any;
   nomineesList: any;
+  bankData: any;
+  nominees: any[];
 
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
 
@@ -62,7 +64,7 @@ export class BankAccountsComponent implements OnInit {
 
   getFormDataNominee(data) {
     console.log(data)
-    this.nomineesList = data.controls
+    this.nomineesList = data.controls;
   }
 
   lisNominee(value) {
@@ -88,6 +90,7 @@ export class BankAccountsComponent implements OnInit {
     if (data == undefined) {
       data = {}
     }
+    this.bankData = {};
     this.bankAccounts = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       accountType: [(data.accountType == undefined) ? '' : (data.accountType) + "", [Validators.required]],
@@ -99,7 +102,8 @@ export class BankAccountsComponent implements OnInit {
       bankAcNo: [(data == undefined) ? '' : data.accountNo, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
-      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
+      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]],
+      nomineeList: this.nomineesList
     });
     this.ownerData = this.bankAccounts.controls;
     this.familyMemberId = this.bankAccounts.controls.familyMemberId.value
@@ -138,6 +142,19 @@ export class BankAccountsComponent implements OnInit {
       this.bankAccounts.get('compound').markAsTouched();
       return;
     } else {
+      this.nominees = []
+      if (this.nomineesList) {
+
+        this.nomineesList.forEach(element => {
+          let obj = {
+            "name": element.controls.name.value,
+            "sharePercentage": element.controls.sharePercentage.value,
+            "id": (element.controls.id.value) ? element.controls.id.value : 0,
+            "familyMemberId": (element.controls.familyMemberId.value) ? element.controls.familyMemberId.value : 0
+          }
+          this.nominees.push(obj)
+        });
+      }
       let obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
@@ -151,7 +168,8 @@ export class BankAccountsComponent implements OnInit {
         accountBalance: this.bankAccounts.controls.accountBalance.value,
         accountNo: this.bankAccounts.controls.bankAcNo.value,
         description: this.bankAccounts.controls.description.value,
-        id: this.bankAccounts.controls.id.value
+        id: this.bankAccounts.controls.id.value,
+        nominees: this.nominees
       }
       let adviceObj = {
         advice_id: this.advisorId,
