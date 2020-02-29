@@ -29,7 +29,7 @@ const routes: Routes = [
       },
       {
         path: 'activies',
-        loadChildren: () => import('src/app/component/protect-component/AdviserComponent/Activities/activities/activies.module').then(m => m.ActiviesModule),
+        loadChildren: () => import('src/app/component/protect-component/AdviserComponent/Activities/activies.module').then(m => m.ActiviesModule),
         data: { animation: 'Tab1', preload: true }
       },
       {

@@ -27,7 +27,7 @@ export class FixedIncomeComponent implements OnInit {
   showRequring: any;
   advisorId: any;
   dataSourceRecurring: any;
-  dataSourceBond: any;
+  dataSourceBond: any = new MatTableDataSource();
   clientId: any;
   sumAmountInvested: any;
   sumCurrentValue: any;
@@ -48,6 +48,7 @@ export class FixedIncomeComponent implements OnInit {
   dataSourceFixed = new MatTableDataSource(this.data);
   hidePdf: boolean;
   noData: string;
+  fixedDepositList: any;
 
 
   constructor(private excelSer: ExcelService, private subInjectService: SubscriptionInject,
@@ -161,24 +162,36 @@ export class FixedIncomeComponent implements OnInit {
   }
 
   filterFixedIncome(key: string, value: string) {
+    let dataFiltered;
+    dataFiltered = this.fixedDepositList.filter(function (item) {
+      return item[key] === value;
+    });
 
-    const obj = {
-      clientId: this.clientId,
-      advisorId: this.advisorId
-    };
-    this.customerService.getFixedDeposit(obj).subscribe(
-      data => {
-        data = data.fixedDepositList.filter(function (item) {
-          return item[`${key}`] === value;
-        });
-        console.log('this is filtered data ------------>', data);
-        this.isFixedIncomeFiltered = true;
-        this.dataSourceFixed.data = data;
-        // this.dataSourceFixed = new MatTableDataSource(data);
-        this.dataSourceFixed.sort = this.fixedIncomeTableSort;
-        console.log('sorted ------------>', this.dataSourceFixed);
-      }
-    );
+    this.isFixedIncomeFiltered = true;
+    this.dataSourceFixed.data = dataFiltered;
+    // this.dataSourceFixed = new MatTableDataSource(data);
+    this.dataSourceFixed.sort = this.fixedIncomeTableSort;
+    // const obj = {
+    //   clientId: this.clientId,
+    //   advisorId: this.advisorId
+    // };
+    // this.customerService.getFixedDeposit(obj).subscribe(
+    //   data => {
+    //     console.log(data.fixedDepositList);
+    //     let dataFiltered = data.fixedDepositList.filter(function (item) {
+    //       console.log("this is filtering values::::::::", item, item[key], value);
+    //       return item[key] === value;
+    //     });
+    //     // let dataFiltered = data.fixedDepositList.filter(function (item) {
+    //     //   if (item[`${key}`] === value) {
+    //     //     return item;
+    //     //   };
+    //     // });
+    //     console.log('this is filtered data ------------>', dataFiltered);
+
+    //     console.log('sorted ------------>', this.dataSourceFixed);
+    //   }
+    // );
   }
 
   changeRecurringFilterMode(value) {
@@ -227,11 +240,13 @@ export class FixedIncomeComponent implements OnInit {
 
   getFixedDepositRes(data) {
     this.isLoading = false;
+
     console.log('getFixedDepositRes ********** ', data);
     if (data == undefined) {
       this.noData = "No scheme found";
       this.dataSourceFixed.data = [];
     } else if (data.fixedDepositList) {
+      this.fixedDepositList = data.fixedDepositList;
       this.dataSourceFixed.data = data.fixedDepositList;
       this.dataSourceFixed.sort = this.fixedIncomeTableSort;
       console.log('soted &&&&&&&&&', this.dataSourceFixed);
@@ -336,7 +351,7 @@ export class FixedIncomeComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        if (value == 'FIXED DEPOSITE') {
+        if (value == 'FIXED DEPOSIT') {
           this.customerService.deleteFixedDeposite(data.id).subscribe(
             data => {
               this.eventService.openSnackBar('Fixed deposite is deleted', 'dismiss');
@@ -345,7 +360,7 @@ export class FixedIncomeComponent implements OnInit {
             },
             error => this.eventService.showErrorMessage(error)
           );
-        } else if (value == 'RECURRING DEPOSITE') {
+        } else if (value == 'RECURRING DEPOSIT') {
           this.customerService.deleteRecurringDeposite(data.id).subscribe(
             data => {
               this.eventService.openSnackBar('Recurring deposite is deleted', 'dismiss');

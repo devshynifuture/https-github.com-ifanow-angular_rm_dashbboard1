@@ -140,7 +140,7 @@
 
     <!-- third click -->
     <!-- last step ui -->
-    <div class="pt-90 pr-20 pl-20 pb-44" *ngIf="formStep== 'step-3'">
+    <!-- <div class="pt-90 pr-20 pl-20 pb-44" *ngIf="formStep== 'step-3'">
         <div class="row">
             <div class="col-md-12 p-0">
                 <h5 class="m-0 text-black"> <img (click)="baackToSelectTransaction()" src="/assets/images/svg/back-arrow.svg" class="v-initial pr-12">Investor name: Rahul Jain
@@ -328,14 +328,25 @@
                 </mat-tab-group>
             </div>
         </div>
+    </div> -->
+    <div class="pt-90 pr-20 pl-20 pb-44 text-center" *ngIf="noMapping==true">
+        <p>no mapping found</p>
+        <button mat-stroked-button class="btn-primary addon v-middle" (click)="noMapFunction()"> ADD
+                </button>
     </div>
+    <div class="pt-90 pr-20 pl-20 pb-44 text-center" *ngIf="noSubBroker==true">
+        <p>no broker found</p>
+        <button mat-stroked-button class="btn-primary addon v-middle" (click)="noBroakerFun()"> ADD
+                </button>
+    </div>
+
     <div class="bottom-fixed row pl-20 pr-20 w-65 d-flex align-items-center">
 
         <div class="col-md-4 p-0 d-flex align-item-center justifly-content-start">
             <h5 class="mb-0  text-white c-p" (click)="close()">Cancel</h5>
         </div>
 
-        <div class="col-md-8 p-0 d-flex align-item-center justify-content-end" *ngIf="formStep == 'step-1' || formStep == 'step-2'">
+        <div class="col-md-8 p-0 d-flex align-item-center justify-content-end" *ngIf="noSubBroker==false && noMapping==false ">
             <button mat-button class="btn-green text-white" (click)="saveAndNext()">NEXT</button>
         </div>
 

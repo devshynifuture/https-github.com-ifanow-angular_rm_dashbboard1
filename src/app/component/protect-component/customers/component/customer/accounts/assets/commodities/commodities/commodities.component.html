@@ -67,34 +67,36 @@
                     <td mat-footer-cell *matFooterCellDef class=" t-20 text-right"> </td>
                 </ng-container>
                 <ng-container matColumnDef="price">
-                    <th mat-sort-header="caratGoldPrice" mat-header-cell *matHeaderCellDef class="br text-right"> Carat gold price (10 gram)
+                    <th mat-sort-header="caratGoldPrice" mat-header-cell *matHeaderCellDef class="br textRight text-right"> Carat gold price (10 gram)
                     </th>
-                    <td mat-cell *matCellDef="let element" class="br text-right">
+                    <td mat-cell *matCellDef="let element" class="br text-right amt">
                         <div class="bar" appFormatNumber [value]="element.caratGoldPrice"> {{element.caratGoldPrice}}
                         </div>
                         <div *ngIf="!isLoading" class="text-custom f-12">(as on {{currentDate | date:'dd/MM/yyyy' }})
                         </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br t-7 f-600 pr-8 text-right">
+                    <td mat-footer-cell *matFooterCellDef class="br f-600 pr-8 amt text-right">
                         <div class="bar"> {{isLoading ? '' : 'Total'}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="mvalue">
-                    <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef class="br text-right"> Market value </th>
+                    <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef class="br textRight text-right">
+                        Market value </th>
                     <td mat-cell *matCellDef="let element" class="br text-right ">
                         <div class="bar" appFormatNumber> {{element.marketValue}} </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br t-20 p-8 f-500 text-right" appFormatNumber [value]="sumOfMarketValue">
+                    <td mat-footer-cell *matFooterCellDef class="br amt p-8 f-600 text-right" appFormatNumber [value]="sumOfMarketValue">
                         <div class="bar"> {{sumOfMarketValue}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="pvalue">
-                    <th mat-sort-header="approximatePurchaseValue" mat-header-cell *matHeaderCellDef class="br text-right"> Purchase value
+                    <th mat-sort-header="approximatePurchaseValue" mat-header-cell *matHeaderCellDef class="br textRight text-right">
+                        Purchase value
                     </th>
-                    <td mat-cell *matCellDef="let element" class="br text-right">
+                    <td mat-cell *matCellDef="let element" class="br amt text-right">
                         <div class="bar" appFormatNumber> {{element.approximatePurchaseValue}} </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br t-20 p-8 f-500 text-right" appFormatNumber [value]="sumOfPurchaseValue">
+                    <td mat-footer-cell *matFooterCellDef class="br amt p-8 f-600 text-right" appFormatNumber [value]="sumOfPurchaseValue">
                         <div class="bar"> {{isLoading ? '' : sumOfPurchaseValue || '-'}} </div>
                     </td>
                 </ng-container>
@@ -135,7 +137,7 @@
                 <tr mat-footer-row *matFooterRowDef="displayedColumns9;sticky: true" [hidden]="isLoading"></tr>
             </table>
             <div *ngIf="goldList.filteredData.length == 0" class="d-flex flex-column align-items-center">
-                <img class="width400" src="assets/images/svg/noDataFound.svg">
+                <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12">{{noData}}</h4>
                 <button mat-stroked-button class="btn-primary addon v-middle  " (click)="openCommodities('addGold','open',null)"> ADD NEW</button>
             </div>
@@ -173,14 +175,14 @@
                     <td mat-cell *matCellDef="let element let i = index" class="br">
                         <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="t-2 text-left pl-4 f-500"> Total</td>
+                    <td mat-footer-cell *matFooterCellDef class="t-2 text-left pl-4 f-500"> </td>
                 </ng-container>
                 <ng-container matColumnDef="owner">
                     <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br t-18"> Owner </th>
                     <td mat-cell *matCellDef="let element" class="br t-18">
                         <div class="bar"> {{element.ownerName}} </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> </td>
+                    <td mat-footer-cell *matFooterCellDef class="br pr-20 f-600 text-right"> Total </td>
                 </ng-container>
                 <ng-container matColumnDef="type">
                     <th mat-sort-header="commodityTypeId" mat-header-cell *matHeaderCellDef class="br text-right"> Type of commodity
@@ -194,25 +196,26 @@
                 </ng-container>
 
                 <ng-container matColumnDef="mvalue">
-                    <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef class="br text-right"> Market value </th>
-                    <td mat-cell *matCellDef="let element" class="br text-right ">
+                    <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef class="br textRight text-right">
+                        Market value </th>
+                    <td mat-cell *matCellDef="let element" class="br amt text-right ">
                         <div class="bar" appFormatNumber> {{isLoading? ' ' : utils.formatter(element.marketValue)}}
                         </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br p-8 f-500 t-20 text-right">
+                    <td mat-footer-cell *matFooterCellDef class="br p-8 f-600 amt text-right">
                         <div class="bar" appFormatNumber>
                             {{isLoading? ' ' : utils.formatter(sumOfMarketValueOther) || ' '}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="pvalue">
-                    <th mat-sort-header="purchaseValue" mat-header-cell *matHeaderCellDef class="br text-right">
+                    <th mat-sort-header="purchaseValue" mat-header-cell *matHeaderCellDef class="br textRight text-right">
                         Purchase value
                     </th>
-                    <td mat-cell *matCellDef="let element" class="br text-right">
+                    <td mat-cell *matCellDef="let element" class="br amt text-right">
                         <div class="bar" appFormatNumber> {{isLoading? ' ' : utils.formatter(element.purchaseValue)}}
                         </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br p-8 f-500 t-20 text-right">
+                    <td mat-footer-cell *matFooterCellDef class="br p-8 f-600 amt text-right">
                         <div class="bar" appFormatNumber> {{utils.formatter(sumOfPurchaseValueOther) || ' '}} </div>
                     </td>
                 </ng-container>
@@ -222,22 +225,22 @@
                     <td mat-cell *matCellDef="let element" class="br text-left t-8">
                         <div class="bar"> {{isLoading ? '' : element.dateOfPurchase | date:'dd/MM/yyyy' || '-'}} </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef> </td>
+                    <td mat-footer-cell *matFooterCellDef class="br"> </td>
                 </ng-container>
                 <ng-container matColumnDef="rate">
-                    <th mat-sort-header="growthRate" mat-header-cell *matHeaderCellDef class="br text-right t-8"> Growth rate
+                    <th mat-sort-header="growthRate" mat-header-cell *matHeaderCellDef class="br text-right textRight t-8"> Growth rate
                     </th>
-                    <td mat-cell *matCellDef="let element" class="br text-right t-8">
+                    <td mat-cell *matCellDef="let element" class="br amt text-right t-8">
                         <div class="bar"> {{element.growthRate}} </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef> </td>
+                    <td mat-footer-cell *matFooterCellDef class="br"> </td>
                 </ng-container>
                 <ng-container matColumnDef="desc">
                     <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br"> Description </th>
                     <td mat-cell *matCellDef="let element" class="br">
                         <div class="bar"> {{isLoading ? '' : element.description || '-'}} </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef> </td>
+                    <td mat-footer-cell *matFooterCellDef class="br"> </td>
                 </ng-container>
 
                 <ng-container matColumnDef="status">
@@ -268,9 +271,9 @@
                 <tr mat-footer-row *matFooterRowDef="displayedColumns10;sticky: true" [hidden]="isLoading"></tr>
             </table>
             <div *ngIf="otherCommodityList.filteredData.length == 0" class="d-flex flex-column align-items-center">
-                <img class="width400" src="assets/images/svg/noDataFound.svg">
+                <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12">{{noData}}</h4>
-                <button mat-stroked-button class="btn-primary addon v-middle mt-20" (click)="openOthers('addOthers','open',null)"> ADD
+                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openOthers('addOthers','open',null)"> ADD
                     NEW</button>
             </div>
         </div>

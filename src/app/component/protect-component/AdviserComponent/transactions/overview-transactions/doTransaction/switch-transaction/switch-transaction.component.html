@@ -48,6 +48,21 @@
                         <div class="bar"> {{element.orderVal}} </div>
                     </td>
                 </ng-container>
+                <ng-container matColumnDef="icons">
+                    <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
+                    <td mat-cell *matCellDef="let element" class="t-2">
+                        <div *ngIf="!isLoading">
+                            <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
+                                more_vert
+                            </i>
+                            <mat-menu #menubank="matMenu">
+                                <button mat-menu-item (click)="getdataForm(element,true)">Edit</button>
+                                <button mat-menu-item>Delete</button>
+                            </mat-menu>
+                        </div>
+                    </td>
+                    <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+                </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
@@ -76,12 +91,13 @@
                                 <mat-hint align="start" class="f-12 text-custom">Last closing NAV:
                                     {{navOfSelectedScheme}}
                                 </mat-hint>
-                                <mat-error class="f-12 pt-4" *ngIf="switchTransaction.get('schemeSwitch').errors?.required">
+                                <mat-error class="f-12 pt-4"
+                                    *ngIf="switchTransaction.get('schemeSwitch').errors?.required">
                                     This field is required
                                 </mat-error>
                                 <mat-error class="f-12" *ngIf="switchTransaction.get('schemeSwitch').errors?.setValue">
-                                        Selected scheme does not exist
-                                    </mat-error>
+                                    Selected scheme does not exist
+                                </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -117,7 +133,7 @@
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select class="form-control" formControlName="investmentAccountSelection">
-                                    <mat-option value="option" (click)="selectedFolio(folio)"
+                                    <mat-option [value]="folio.folioNumber" (click)="selectedFolio(folio)"
                                         *ngFor="let folio of folioList">{{folio.folioNumber}}</mat-option>
                                 </mat-select>
                                 <mat-error class="f-12 pt-4">
@@ -178,11 +194,11 @@
                                 <mat-hint align="start" class="f-12 text-custom">Last closing NAV:
                                     {{navOfSelectedScheme}}
                                 </mat-hint>
-                                <mat-error class="f-12 pt-4" *ngIf="switchTransaction.get('transferIn').errors?.required">
+                                <mat-error class="f-12 pt-4"
+                                    *ngIf="switchTransaction.get('transferIn').errors?.required">
                                     This field is required
                                 </mat-error>
-                                <mat-error class="f-12"
-                                    *ngIf="switchTransaction.get('transferIn').errors?.setValue">
+                                <mat-error class="f-12" *ngIf="switchTransaction.get('transferIn').errors?.setValue">
                                     Selected scheme does not exist
                                 </mat-error>
                             </mat-form-field>
@@ -265,9 +281,9 @@
         </div> -->
         <div class="col-md-8 text-right">
             <!-- commented for prod build -->
-            <button mat-button mat-raised-button class="br-0 text-success f-14" (click)="AddMultiTransaction()">
+            <!-- <button mat-button mat-raised-button class="br-0 text-success f-14" (click)="AddMultiTransaction()">
                 SAVE & ADD ANOTHER
-            </button>
+            </button> -->
             <!-- <button mat-button class="btn-green text-white ml-12" (click)="switch()">
                 SAVE & PROCEED
             </button> -->
