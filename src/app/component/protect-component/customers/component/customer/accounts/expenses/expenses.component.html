@@ -17,7 +17,7 @@
                     <div>
                         <div *ngSwitchCase="'Transactions'">
                             <div class="row">
-                                <div class="col-md-4 p-0" *ngIf="dataSource.filteredData.length > 0">
+                                <div class="col-md-4 p-0" *ngIf="dataSource">
                                     <h4 class="m-0 text-black roboto pt-8">Transactions</h4>
                                 </div>
                                 <div class="col-md-8 p-0 right text-right">
@@ -255,7 +255,7 @@
                     <!--- Budget --->
                     <div *ngSwitchCase="'Budget'">
                         <div class="row">
-                            <div class="col-md-4 p-0" *ngIf="dataSource4.filteredData.length > 0">
+                            <div class="col-md-4 p-0" *ngIf="dataSource4">
                                 <h4 class="m-0 text-black roboto pt-8">Budget</h4>
                             </div>
                             <div class="col-md-8 p-0 right text-right"
