@@ -93,7 +93,7 @@ export class SwitchTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { allEdit: true });
     Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
   }
-  getDefaultDetails(data) {
+  getDefaultDetails(data) { 
     console.log('get defaul here yupeeee', data)
     this.getDataSummary = data
     Object.assign(this.transactionSummary, { aggregatorType: this.getDataSummary.defaultClient.aggregatorType });
