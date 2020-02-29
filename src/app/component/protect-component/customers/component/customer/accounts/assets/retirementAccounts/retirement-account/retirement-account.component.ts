@@ -201,7 +201,7 @@ export class RetirementAccountComponent implements OnInit {
   datasource12;
   displayedColumns13 = ['no', 'owner', 'name', 'number', 'year', 'amt', 'reason', 'desc', 'status', 'icons'];
   datasource13;
-  displayedColumns14 = ['no', 'owner', 'aemp', 'aempe', 'rate', 'grate', 'grateemp', 'date', 'desc', 'status', 'icons'];
+  displayedColumns14 = ['no', 'owner', 'aemp', 'aempe', 'rate', 'date', 'desc', 'status', 'icons'];
   datasource14;
   displayedColumns15 = ['no', 'owner', 'nvalue', 'date', 'amt', 'pay', 'desc', 'status', 'icons'];
   datasource15;
@@ -664,7 +664,7 @@ export class RetirementAccountComponent implements OnInit {
     if (data == undefined) {
       this.noData = 'No superannuation found';
       this.dataSuperannuationList.data = []
-    }else if (data.superannuationList) {
+    } else if (data.superannuationList) {
       console.log('getSuperannuationRes =', data);
       this.dataSuperannuationList.data = data.superannuationList;
       this.dataSuperannuationList.sort = this.superAnnuationListTableSort;
@@ -695,7 +695,7 @@ export class RetirementAccountComponent implements OnInit {
     if (data == undefined) {
       this.noData = 'No EPS found';
       this.EPSList.data = []
-    }else if (data.epsList) {
+    } else if (data.epsList) {
       console.log('getEPSRes =', data);
       this.EPSList.data = data.epsList;
       this.EPSList.sort = this.epsListTableSort;
@@ -773,8 +773,6 @@ export interface PeriodicElement14 {
   aemp: string;
   aempe: string;
   rate: string;
-  grate: string;
-  grateemp: string;
   date: string;
   desc: string;
   status: string;

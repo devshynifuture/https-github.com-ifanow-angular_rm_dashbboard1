@@ -601,13 +601,11 @@
                     <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                 </td>
                 <td *matFooterCellDef class="  f-600 pl-4 text-left" mat-footer-cell>
-                    <div class="bar">
 
-                    </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="owner">
-                <th *matHeaderCellDef class="br  " mat-header-cell mat-sort-header="ownerName"> Owner</th>
+                <th *matHeaderCellDef class="br w-25" mat-header-cell mat-sort-header="ownerName"> Owner</th>
                 <td *matCellDef="let element" class="br  " mat-cell>
                     <div class="bar"> {{element.ownerName}} </div>
                 </td>
@@ -629,7 +627,7 @@
                 <th *matHeaderCellDef class="br textRight " mat-header-cell mat-sort-header="annualEmployeeContribution">
                     Annual employee <br> contribution
                 </th>
-                <td *matCellDef="let element" class="br textRight text-right " mat-cell>
+                <td *matCellDef="let element" class="br amt text-right " mat-cell>
                     <div class="bar amt" appFormatNumber> {{element.annualEmployeeContribution}} </div>
                 </td>
                 <td *matFooterCellDef [value]="sumOfAnnualEmployeeContribution" appFormatNumber class="br amt  f-600 p-8 text-right" mat-footer-cell>
@@ -644,7 +642,7 @@
                 </td>
                 <td *matFooterCellDef mat-footer-cell></td>
             </ng-container>
-            <ng-container matColumnDef="grate">
+            <!-- <ng-container matColumnDef="grate">
                 <th *matHeaderCellDef class="br text-right textRight " mat-header-cell mat-sort-header="growthRateEmployerContribution">
                     Growth rate <br> employer contribution
                 </th>
@@ -652,8 +650,8 @@
                     <div class="bar" appFormatNumber> {{element.growthRateEmployerContribution}} </div>
                 </td>
                 <td *matFooterCellDef mat-footer-cell></td>
-            </ng-container>
-            <ng-container matColumnDef="grateemp">
+            </ng-container> -->
+            <!-- <ng-container matColumnDef="grateemp">
                 <th *matHeaderCellDef class="br text-left textRight " mat-header-cell mat-sort-header="growthRateEmployeeContribution">
                     Growth rate <br> employee contribution
                 </th>
@@ -661,7 +659,7 @@
                     <div class="bar"> {{element.growthRateEmployeeContribution}} </div>
                 </td>
                 <td *matFooterCellDef mat-footer-cell></td>
-            </ng-container>
+            </ng-container> -->
             <ng-container matColumnDef="date">
                 <th *matHeaderCellDef class="br text-left " mat-header-cell mat-sort-header="firstContributionDate">
                     Date of first <br> contribution
@@ -672,7 +670,7 @@
                 <td *matFooterCellDef mat-footer-cell></td>
             </ng-container>
             <ng-container matColumnDef="desc">
-                <th *matHeaderCellDef class="br " mat-header-cell mat-sort-header="description"> Description
+                <th *matHeaderCellDef class="br w-20" mat-header-cell mat-sort-header="description"> Description
                 </th>
                 <td *matCellDef="let element" class="br" mat-cell>
                     <div class="bar"> {{isLoading ? '' : element.description || '-'}} </div>

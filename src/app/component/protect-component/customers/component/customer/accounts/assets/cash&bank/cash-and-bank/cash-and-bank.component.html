@@ -180,11 +180,11 @@
             <table *ngIf="cashInHandList.filteredData.length > 0" matSort #cashInHandListTable="matSort" [dataSource]="cashInHandList" id="table-low" mat-table class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
                 <ng-container matColumnDef="no">
-                    <th mat-sort-header="no" *matHeaderCellDef class="br t-2" mat-header-cell> No</th>
-                    <td *matCellDef="let element let i = index" class="br t-2" mat-cell>
+                    <th mat-sort-header="no" *matHeaderCellDef class="br " mat-header-cell> No</th>
+                    <td *matCellDef="let element let i = index" class="br " mat-cell>
                         <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                     </td>
-                    <td *matFooterCellDef class=" t-7 f-500 pl-4 text-left" mat-footer-cell>
+                    <td *matFooterCellDef class=" f-500 pl-4 text-left" mat-footer-cell>
                         <div class="bar"> </div>
                     </td>
                 </ng-container>
