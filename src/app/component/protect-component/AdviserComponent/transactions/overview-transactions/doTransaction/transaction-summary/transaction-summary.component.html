@@ -112,7 +112,7 @@
                             {{bank.accountNo}}</h5>
                     </div>
                     <div class="col-md-2"
-                        *ngIf=" transactionSummary && showBankEdit == true && transactionSummary.allEdit == true && (transactionSummary.transactType != 'STP'|| transactionSummary.transactType != 'SWITCH')">
+                        *ngIf=" transactionSummary && showBankEdit == true && transactionSummary.isMultiTransact==false && transactionSummary.allEdit == true && (transactionSummary.transactType != 'STP'|| transactionSummary.transactType != 'SWITCH')">
                         <button mat-stroked-button class="primary-sm" (click)="showbank = true;openBank()">Edit</button>
                     </div>
                 </div>

@@ -331,6 +331,8 @@ export class SwpTransactionComponent implements OnInit {
     } else {
       let obj = {
         productDbId: this.schemeDetails.id,
+        clientName:this.selectedFamilyMember,
+        holdingNature:this.getDataSummary.defaultClient.holdingType,
         mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
         productCode: this.schemeDetails.schemeCode,
         isin: this.schemeDetails.isin,
@@ -364,6 +366,7 @@ export class SwpTransactionComponent implements OnInit {
       obj = this.processTransaction.checkInstallments(obj, tenure, installment)
       if (this.multiTransact == true) {
         console.log('new purchase obj', this.childTransactions)
+        this.AddMultiTransaction();
         obj.childTransactions = this.childTransactions
       }
       console.log('swp json obj', obj)
