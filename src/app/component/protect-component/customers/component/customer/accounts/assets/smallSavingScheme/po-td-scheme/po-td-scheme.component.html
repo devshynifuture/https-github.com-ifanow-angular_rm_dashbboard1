@@ -60,8 +60,7 @@
     </div>
 </div>
 <div class=" overflow-hidden mt-8 real-estate">
-    <table *ngIf="dataSource.filteredData.length > 0" matSort mat-table [dataSource]="dataSource" id="table-low"
-        appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
+    <table *ngIf="dataSource.filteredData.length > 0" matSort mat-table [dataSource]="dataSource" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
 
         <ng-container matColumnDef="no">
             <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
@@ -78,13 +77,11 @@
             <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-14 text-right"> Current
-                value </th>
+            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-14 text-right"> Current value </th>
             <td mat-cell *matCellDef="let element" class="br t-14 text-right">
                 <div class="bar" appFormatNumber> {{element.currentValue}} </div>
             </td>
-            <td mat-footer-cell class="br text-right p-8 f-500 t-7" *matFooterCellDef appFormatNumber
-                [value]="sumOfCurrentValue">
+            <td mat-footer-cell class="br text-right p-8 f-500 t-7" *matFooterCellDef appFormatNumber [value]="sumOfCurrentValue">
                 <div class="bar"> {{sumOfCurrentValue}} </div>
             </td>
         </ng-container>
@@ -97,14 +94,12 @@
             <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="amt">
-            <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef class="br text-right t-10">Amount
-                invested
+            <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef class="br text-right t-10">Amount invested
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right t-10">
                 <div class="bar" appFormatNumber> {{element.amountInvested}} </div>
             </td>
-            <td mat-footer-cell class="br text-right p-8 f-500 t-7" *matFooterCellDef appFormatNumber
-                [value]="sumOfAmountInvested">
+            <td mat-footer-cell class="br text-right p-8 f-500 t-7" *matFooterCellDef appFormatNumber [value]="sumOfAmountInvested">
                 <div class="bar"> {{sumOfAmountInvested}} </div>
             </td>
         </ng-container>
@@ -116,13 +111,11 @@
             <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="mvalue">
-            <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br text-right t-10">Maturity
-                value </th>
+            <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br text-right t-10">Maturity value </th>
             <td mat-cell *matCellDef="let element" class="br text-right t-10">
                 <div class="bar" appFormatNumber> {{element.maturityValue}} </div>
             </td>
-            <td mat-footer-cell class="br text-right p-8 f-500 t-7" *matFooterCellDef appFormatNumber
-                [value]="sumOfMaturityValue">
+            <td mat-footer-cell class="br text-right p-8 f-500 t-7" *matFooterCellDef appFormatNumber [value]="sumOfMaturityValue">
                 <div class="bar"> {{sumOfMaturityValue}} </div>
             </td>
         </ng-container>
@@ -178,8 +171,8 @@
     </table>
 
     <div *ngIf="dataSource.filteredData.length == 0" class="d-flex flex-column align-items-center">
-        <img class="width400" src="assets/images/svg/noDataFound.svg">
-        <h4 class="text-center pt-12">No Scheme Found</h4>
+        <img class="width300" src="assets/images/svg/noDataFound.svg">
+        <h4 class="text-center pt-12">No data found</h4>
         <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPOTD(null)">ADD NEW</button>
     </div>
 </div>
