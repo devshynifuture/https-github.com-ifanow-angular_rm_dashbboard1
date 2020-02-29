@@ -35,13 +35,36 @@
                         <img routerLink="/customer/detail/overview" src="assets/images/svg/people.svg">
                         <span *ngIf="showTabs" class="title" mat-line>People</span>
                     </a>
-                    <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/calendar">
+                    <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/calendar">
                         <img src="assets/images/svg/file-lines.svg">
                         <span *ngIf="showTabs" class="title" mat-line>Activities</span>
                         <mat-icon aria-hidden="false" aria-label="Example home icon" class="text-custom">
                             keyboard_arrow_right
                         </mat-icon>
-                    </a>
+                    </a> -->
+                    <mat-accordion class="expand-link">
+                        <mat-expansion-panel>
+                          <mat-expansion-panel-header >
+                            <mat-panel-title >
+                                <a mat-list-item class="sidenav-link expand-link">
+                                    <img src="assets/images/svg/file-lines.svg">
+                                    <span *ngIf="showTabs" class="title" mat-line>Activities</span>
+                                    <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" class="text-custom">
+                                        keyboard_arrow_right
+                                    </mat-icon> -->
+                                </a>
+                            </mat-panel-title>
+                           
+                          </mat-expansion-panel-header>
+                      
+                          <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/calendar">
+                            <span *ngIf="showTabs" class="title" mat-line>calendar</span>
+                            <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" class="text-custom">
+                                keyboard_arrow_right
+                            </mat-icon> -->
+                        </a>
+                        </mat-expansion-panel>
+                    </mat-accordion>
                     <a class="sidenav-link" [ngClass]="getActiveLink('emails') ? 'bg-grey lter': ''" mat-list-item routerLink="./emails/inbox/google-connect">
                         <img src="assets/images/svg/mail.svg">
                         <span *ngIf="showTabs" class="title" mat-line>Email</span>
