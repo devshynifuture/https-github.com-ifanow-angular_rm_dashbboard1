@@ -230,9 +230,9 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       this.addLiabilityForm.value.transact.forEach(element => {
         if (element) {
           let obj1 = {
-            'partPaymentDate': (element.partPaymentDate) ? element.partPaymentDate.toISOString().slice(0, 10) : '',
-            'partPayment': parseInt(element.partPayment),
-            'option': parseInt(element.option),
+            'partPaymentDate': (element.partPaymentDate) ? element.partPaymentDate.toISOString().slice(0, 10) : null,
+            'partPayment': !element.partPayment?0 : parseInt(element.partPayment),
+            'option': !element.option? 0 : parseInt(element.option),
             'id': element.id,
             'delete': true
           }
