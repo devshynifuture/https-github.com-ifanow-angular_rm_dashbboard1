@@ -50,6 +50,8 @@ export class BankAccountsComponent implements OnInit {
   get data() {
     return this.inputData;
   }
+  @Input() popupHeaderText: String = 'Add Bank Account';
+
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
