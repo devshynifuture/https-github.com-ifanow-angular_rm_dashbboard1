@@ -112,7 +112,7 @@ export class SwpTransactionComponent implements OnInit {
     if (this.selectScheme == 2 && value.length > 2) {
       let obj = {
         searchQuery: value,
-        bseOrderType: 'ORDER',
+        bseOrderType: 'SWP',
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
         advisorId: this.advisorId,
         tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
