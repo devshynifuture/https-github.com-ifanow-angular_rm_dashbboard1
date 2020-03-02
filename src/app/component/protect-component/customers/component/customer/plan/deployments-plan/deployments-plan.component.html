@@ -37,7 +37,7 @@
             </div>
             <div class="row">
 
-                <div class="col-md-10 deployment">
+                <div class="col-md-10 deployment" *ngIf="dataSource">
                     <table *ngIf="dataSource" [appSkeletonLoading]="isLoading" appSkeletonLoading mat-table
                         [dataSource]="dataSource" class="skeletonAnimation" id="table-low">
 

@@ -37,6 +37,8 @@ import { CashflowUpperLiabilitiesComponent } from './cashflows-plan/cashflow-upp
 import { AddNewInsuranceComponent } from './insurance-plan/add-new-insurance/add-new-insurance.component';
 import { HelthInsurancePolicyComponent } from './insurance-plan/add-insurance-planning/helth-insurance-policy/helth-insurance-policy.component';
 import { PlanGoalsComponent } from './scenarios-plan/plan-goals/plan-goals.component';
+import { IncomeDetailedViewComponent } from './profile-plan/income/income-detailed-view/income-detailed-view.component';
+import { AddInsuranceUpperComponent } from './insurance-plan/add-insurance-upper/add-insurance-upper.component';
 
 export const componentList = [
   PreferencesComponent,
@@ -66,7 +68,9 @@ export const componentList = [
   CashflowUpperLiabilitiesComponent,
   AddNewInsuranceComponent,
   PlanGoalsComponent,
-  HelthInsurancePolicyComponent
+  HelthInsurancePolicyComponent,
+  IncomeDetailedViewComponent,
+  AddInsuranceUpperComponent
 ];
 // import { AddPlaninsuranceComponent } from './insurance-plan/add-planinsurance/add-planinsurance.component';
 
@@ -76,7 +80,7 @@ export const componentList = [
 // ];
 
 @NgModule({
-  declarations: [...componentList, CashflowTableEditDirective],
+  declarations: [...componentList, CashflowTableEditDirective,],
   imports: [
     CommonModule,
     MaterialModule,
