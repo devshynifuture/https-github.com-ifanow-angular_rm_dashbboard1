@@ -1,10 +1,12 @@
 <div id="investmentPlan">
     <div class="row">
-        <div class="col-md-2 bg-grey lter">
+        <div class="col-md-2 bg-grey lter p-0">
             <ul class="vertical-menu">
-                <li class="c-p d-flex pl-10 f-14 f-normal text-left"> <img src="assets/images/svg/investment-man.svg"
+                <li class="c-p d-flex pl-10 f-14 f-normal text-left " (click)="type=1;getDeploymentData()"
+                    [ngClass]="{'activeColor': type==1}"> <img src="assets/images/svg/investment-man.svg"
                         class="c-p pr-8 pt-12"> Goal based </li>
-                <li class="c-p d-flex pl-10 f-14 f-normal text-left"> <img src="assets/images/svg/Insurance-plan.svg"
+                <li class="c-p d-flex pl-10 f-14 f-normal text-left" (click)="type=2;getDeploymentData()"
+                    [ngClass]="{'activeColor': type==2}"> <img src="assets/images/svg/Insurance-plan.svg"
                         class="c-p pr-8 pt-12"> Non goal based </li>
             </ul>
         </div>
@@ -28,16 +30,16 @@
                         <button mat-menu-item (click)="openDep('open70',null)">Add deployments</button>
                     </mat-menu>
                 </div>
-                <div class="col-md-2 bt-grey b-l b-t br">
+                <div *ngIf="dataSource.length>0" class="col-md-2 bt-grey b-l b-t br">
                     <p class="m-0 f-500 roboto pt-12 pb-12 text-center">Amount details</p>
                 </div>
-                <div class="col-md-2 b-t br">
+                <div *ngIf="dataSource.length>0" class="col-md-2 b-t br">
                     <p class="m-0 f-500 roboto pt-12 pb-12 text-center">Deployment breakup</p>
                 </div>
             </div>
             <div class="row">
 
-                <div class="col-md-10 deployment">
+                <div class="col-md-10 deployment" *ngIf="dataSource">
                     <table *ngIf="dataSource" [appSkeletonLoading]="isLoading" appSkeletonLoading mat-table
                         [dataSource]="dataSource" class="skeletonAnimation" id="table-low">
 
@@ -84,13 +86,19 @@
                         <ng-container matColumnDef="symbol">
                             <th mat-header-cell *matHeaderCellDef> Equity </th>
                             <td mat-cell *matCellDef="let element">
-                                <div class="bar">{{element.deploymentAssetBreakUp.eqityAmount}} </div>
+                                <div class="bar">
+                                    <span
+                                        *ngIf="element.deploymentAssetBreakUp">{{element.deploymentAssetBreakUp.eqityAmount}}</span>
+                                </div>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="debt">
                             <th mat-header-cell *matHeaderCellDef class="br"> Debt </th>
                             <td mat-cell *matCellDef="let element" class="br">
-                                <div class="bar">{{element.deploymentAssetBreakUp.debtAmount}} </div>
+                                <div class="bar">
+                                    <span
+                                        *ngIf="element.deploymentAssetBreakUp">{{element.deploymentAssetBreakUp.debtAmount}}</span>
+                                </div>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="status">
@@ -124,19 +132,21 @@
                                 </div>
                             </td>
                         </ng-container>
-                        <ng-container matColumnDef="disclaimer">
+                        <!-- <ng-container matColumnDef="disclaimer">
                             <td mat-header-cell *matHeaderCellDef colspan="8"
                                 class="bg-white text-primary text-left pl-8">
                                 <div class="bar">
                                     Retirement Goal
                                 </div>
                             </td>
-                        </ng-container>
+                        </ng-container> -->
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                        <tr mat-header-row *matHeaderRowDef="['disclaimer']"></tr>
+                        <!-- <tr mat-header-row *matHeaderRowDef="['disclaimer']"></tr> -->
                     </table>
-
+                    <div *ngIf="dataSource.length==0">
+                        <h4 class="text-center pt-44">No Data Found</h4>
+                    </div>
                 </div>
             </div>
 

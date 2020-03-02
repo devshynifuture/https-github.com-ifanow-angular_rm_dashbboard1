@@ -7,6 +7,7 @@ import { CurrentPolicyComponent } from './current-policy/current-policy.componen
 import { AddInsurancePlanningComponent } from './add-insurance-planning/add-insurance-planning.component';
 import { AddNewInsuranceComponent } from './add-new-insurance/add-new-insurance.component';
 import { EventService } from 'src/app/Data-service/event.service';
+import { AddInsuranceUpperComponent } from './add-insurance-upper/add-insurance-upper.component';
 
 @Component({
   selector: 'app-insurance-plan',
@@ -87,6 +88,24 @@ export class InsurancePlanComponent implements OnInit {
           rightSideDataSub.unsubscribe();
           this.isLoading = false;
 
+        }
+      }
+    );
+  }
+  openUpperInsurance(data) {
+    const fragmentData = {
+      flag: 'app-upper-customer',
+      id: 1,
+      data,
+      direction: 'top',
+      componentName: AddInsuranceUpperComponent,
+      state: 'open'
+    };
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getClientSubscriptionList();
+          subscription.unsubscribe();
         }
       }
     );

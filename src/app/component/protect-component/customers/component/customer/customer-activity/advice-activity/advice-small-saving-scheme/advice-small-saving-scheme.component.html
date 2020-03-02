@@ -39,7 +39,7 @@
             </mat-menu>
         </div>
     </div>
-    <div class="row pt-44">
+    <div class="row ">
         <div class="col-md-12 p-0">
             <app-advice-action [data]="selectedAssetId" [ngClass]="{'v-h': selectedAssetId.length==0}">
             </app-advice-action>
@@ -52,8 +52,13 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEdit('advicePPF',null)"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new PPF</button>
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " [matMenuTriggerFor]="menu1"><img
+                    src="/assets/images/svg/plus.svg" class="pr-8">Add new PPF</button>
+            <mat-menu #menu1="matMenu">
+                <button mat-menu-item (click)="openAddEdit('advicePPF',null)">Suggest new
+                    PPF</button>
+                <button mat-menu-item>Add misc. advice</button>
+            </mat-menu>
         </div>
     </div>
     <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="ppfDataSource"
@@ -168,8 +173,13 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button (click)="openAddEdit('adviceNSC',null)" mat-stroked-button class="btn-primary br-0 pl-8 "><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new NSC</button>
+            <button [matMenuTriggerFor]="menu2" mat-stroked-button class="btn-primary br-0 pl-8 "><img
+                    src="/assets/images/svg/plus.svg" class="pr-8">Add new NSC</button>
+            <mat-menu #menu2="matMenu">
+                <button mat-menu-item (click)="openAddEdit('adviceNSC',null)">Suggest new
+                    NSC</button>
+                <button mat-menu-item>Add misc. advice</button>
+            </mat-menu>
         </div>
     </div>
     <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="nscDataSpurce"
@@ -272,8 +282,13 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEdit('adviceSSY',null)"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new SSY</button>
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " [matMenuTriggerFor]="menu3"><img
+                    src="/assets/images/svg/plus.svg" class="pr-8">Add new SSY</button>
+            <mat-menu #menu3="matMenu">
+                <button mat-menu-item (click)="openAddEdit('adviceSSY',null)">Suggest new
+                    SSY</button>
+                <button mat-menu-item>Add misc. advice</button>
+            </mat-menu>
         </div>
     </div>
     <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="ssyDataSpurce"
@@ -363,8 +378,13 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEdit('adviceKVP',null)"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new KVP</button>
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " [matMenuTriggerFor]="menu4"><img
+                    src="/assets/images/svg/plus.svg" class="pr-8">Add new KVP</button>
+            <mat-menu #menu4="matMenu">
+                <button mat-menu-item (click)="openAddEdit('adviceKVP',null)">Suggest new
+                    KVP</button>
+                <button mat-menu-item>Add misc. advice</button>
+            </mat-menu>
         </div>
     </div>
     <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="kvpDataSpurce"
@@ -475,8 +495,13 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEdit('adviceSCSS',null)"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new SCSS</button>
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " [matMenuTriggerFor]="menu5"><img
+                    src="/assets/images/svg/plus.svg" class="pr-8">Add new SCSS</button>
+            <mat-menu #menu5="matMenu">
+                <button mat-menu-item (click)="openAddEdit('adviceSCSS',null)">Suggest new
+                    SCSS</button>
+                <button mat-menu-item>Add misc. advice</button>
+            </mat-menu>
         </div>
     </div>
     <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="scssDataSpurce"
@@ -569,8 +594,13 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEdit('advicePoSaving',null)"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new PO SAVINGS</button>
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " [matMenuTriggerFor]="menu6"><img
+                    src="/assets/images/svg/plus.svg" class="pr-8">Add new PO SAVINGS</button>
+            <mat-menu #menu6="matMenu">
+                <button mat-menu-item (click)="openAddEdit('advicePoSaving',null)">Suggest new
+                    PO SAVINGS</button>
+                <button mat-menu-item>Add misc. advice</button>
+            </mat-menu>
         </div>
     </div>
     <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="posavingDataSource"
@@ -650,8 +680,13 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEdit('advicePORD',null)"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new PO RD</button>
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " [matMenuTriggerFor]="menu7"><img
+                    src="/assets/images/svg/plus.svg" class="pr-8">Add new PO RD</button>
+            <mat-menu #menu7="matMenu">
+                <button mat-menu-item (click)="openAddEdit('advicePORD',null)">Suggest new
+                    PO RD</button>
+                <button mat-menu-item>Add misc. advice</button>
+            </mat-menu>
         </div>
     </div>
     <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="pordDataSpurce"
@@ -742,8 +777,13 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEdit('advicePOTD',null)"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new PO TD</button>
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " [matMenuTriggerFor]="menu8"><img
+                    src="/assets/images/svg/plus.svg" class="pr-8">Add new PO TD</button>
+            <mat-menu #menu8="matMenu">
+                <button mat-menu-item (click)="openAddEdit('advicePOTD',null)">Suggest new
+                    PO TD</button>
+                <button mat-menu-item>Add misc. advice</button>
+            </mat-menu>
         </div>
     </div>
     <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="potdDataSource"
@@ -847,8 +887,13 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEdit('advicePOMIS',null)"><img
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " [matMenuTriggerFor]="menu9"><img
                     src="/assets/images/svg/plus.svg" class="pr-8">Suggest new PO MIS</button>
+            <mat-menu #menu9="matMenu">
+                <button mat-menu-item (click)="openAddEdit('advicePOMIS',null)">Suggest new
+                    PO MIS</button>
+                <button mat-menu-item>Add misc. advice</button>
+            </mat-menu>
         </div>
     </div>
     <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="pomisDataSpurce"

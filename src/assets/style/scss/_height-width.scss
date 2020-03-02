@@ -61,7 +61,7 @@
 }
 
 .h-72 {
-  height: 72px;
+  height: 72px !important;
 }
 
 .h-auto-300 {
@@ -75,6 +75,10 @@
   ::-webkit-scrollbar-track {
     margin-top: 0px !important;
   }
+}
+
+.h-350 {
+  height: 350px !important;
 }
 
 .h-460 {

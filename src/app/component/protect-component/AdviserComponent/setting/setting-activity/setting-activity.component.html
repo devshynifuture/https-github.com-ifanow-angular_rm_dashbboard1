@@ -9,7 +9,8 @@
         <h4 class="m-0 text-black pt-8">Task templates</h4>
     </div>
     <div class="col-md-3 text-right">
-        <button mat-stroked-button class="btn-primary pl-8" (click)="addTaskTemplate()"> <i
+        <!-- ng build prod issue expected argument added empty strings  -->
+        <button mat-stroked-button class="btn-primary pl-8" (click)="addTaskTemplate('', '')"> <i
                 class="material-icons pr-8 v-middle">
                 add
             </i>ADD NEW</button>

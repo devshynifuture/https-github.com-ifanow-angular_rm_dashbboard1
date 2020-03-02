@@ -14,16 +14,24 @@
                         class="c-p">
                         Portfolio section
                     </li>
-                    <li (click)="viewMode ='tab2';getPrefixData(1)"
+                    <!-- ng build prod issue removed getPrefixedData function -->
+                    <!-- <li (click)="viewMode ='tab2';getPrefixData(1) "
+                    <!-- <li (click)="viewMode ='tab2';getPrefixData(2) "
+                    <!-- <li (click)="viewMode ='tab2';getPrefixData(3) "
+                    <!-- <li (click)="viewMode ='tab2';getPrefixData(4) "
                         [ngClass]="{'b-outline':viewMode =='tab2','':viewMode =='tab2'}" class="c-p">
                         Plan section
+                    </li> -->
+                    <li (click)="viewMode ='tab2';" [ngClass]="{'b-outline':viewMode =='tab2','':viewMode =='tab2'}"
+                        class="c-p">
+                        Plan section
                     </li>
-                    <li (click)="viewMode ='tab3';getPrefixData(2)"
-                        [ngClass]="{'b-outline':viewMode =='tab3','':viewMode =='tab3'}" class="c-p">
+                    <li (click)="viewMode ='tab3';" [ngClass]="{'b-outline':viewMode =='tab3','':viewMode =='tab3'}"
+                        class="c-p">
                         Activity section
                     </li>
-                    <li (click)="viewMode ='tab4';getPrefixData(3)"
-                        [ngClass]="{'b-outline':viewMode =='tab4','':viewMode =='tab4'}" class=" c-p">
+                    <li (click)="viewMode ='tab4';" [ngClass]="{'b-outline':viewMode =='tab4','':viewMode =='tab4'}"
+                        class=" c-p">
                         Email verification
                     </li>
                     <li (click)="viewMode ='tab5'" [ngClass]="{'b-outline':viewMode =='tab5','':viewMode =='tab5'}"

@@ -8,6 +8,7 @@ import { ActiityService } from '../../actiity.service';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { AdviceUtilsService } from '../advice-utils.service';
+import { SuggestAdviceComponent } from '../suggest-advice/suggest-advice.component';
 
 @Component({
   selector: 'app-advice-commodities',
@@ -86,7 +87,7 @@ export class AdviceCommoditiesComponent implements OnInit, AfterViewInit {
     this.isLoading = false
   }
   openAddEdit(value, data) {
-    let Component = (value == "adviceGOLD") ? GoldComponent : OthersComponent;
+    let Component = (value == "adviceGOLD") ? SuggestAdviceComponent : OthersComponent;
     const fragmentData = {
       flag: value,
       data: data,
