@@ -39,12 +39,13 @@ export class AddSsyComponent implements OnInit {
   commencementDate: any;
   flag: any;
 
+  @Input() popupHeaderText:String = 'Add Sukanya samriddhi yojana (SSY)';
+
   constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService, private datePipe: DatePipe) { }
 
   @Input()
   set data(data) {
     this.inputData = data;
-    this.getdataForm(data);
   }
   display(value) {
     console.log('value selected', value)
@@ -98,6 +99,7 @@ export class AddSsyComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.isOptionalField = true
     this.advisorId = AuthService.getAdvisorId();
+    this.getdataForm(this.data);
   }
   moreFields() {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true

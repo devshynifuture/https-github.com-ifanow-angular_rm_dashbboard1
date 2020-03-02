@@ -16,7 +16,9 @@ import { SuggestAdviceComponent } from '../suggest-advice/suggest-advice.compone
   styleUrls: ['./advice-commodities.component.scss']
 })
 export class AdviceCommoditiesComponent implements OnInit, AfterViewInit {
-  displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'mvalue', 'advice', 'astatus', 'adate', 'icon'];
+  displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'pvalue', 'mvalue', 'total', 'advice', 'astatus', 'adate', 'icon'];
+  displayedColumns4: string[] = ['checkbox', 'name', 'desc', 'pvalue', 'mvalue', 'advice', 'astatus', 'adate', 'icon'];
+
   // dataSource1 = new MatTableDataSource(ELEMENT_DATA1);
   advisorId: any;
   clientId: any;

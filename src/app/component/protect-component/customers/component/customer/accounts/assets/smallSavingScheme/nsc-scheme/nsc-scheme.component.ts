@@ -147,6 +147,7 @@ export class NscSchemeComponent implements OnInit {
   }
 
   openAddNSC(data, flag) {
+    let popupHeaderText = !!data ? 'Edit National savings certificate (NSC)' : 'Add National savings certificate (NSC)';
     const fragmentData = {
       flag: 'addNsc',
       data,
@@ -154,6 +155,9 @@ export class NscSchemeComponent implements OnInit {
       state: (flag == 'detailedNsc') ? 'open35' : 'open',
       componentName: (flag == 'detailedNsc') ? DetailedNscComponent : AddNscComponent
     };
+    if(flag != 'detailedNsc') {
+      fragmentData['popupHeaderText'] = popupHeaderText;
+    }
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
