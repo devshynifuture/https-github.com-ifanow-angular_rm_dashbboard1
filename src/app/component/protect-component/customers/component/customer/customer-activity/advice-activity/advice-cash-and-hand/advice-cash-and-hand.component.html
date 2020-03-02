@@ -52,9 +52,14 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 "
-                (click)="openAddEdit('adviceBankAccount',null)"><img src="/assets/images/svg/plus.svg"
-                    class="pr-8">Suggest new bank account</button>
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " [matMenuTriggerFor]="menu"><img
+                    src="/assets/images/svg/plus.svg" class="pr-8">Add new bank
+                account</button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="openAddEdit('adviceBankAccount',null)">Suggest new
+                    bank accoun</button>
+                <button mat-menu-item>Add misc. advice</button>
+            </mat-menu>
         </div>
     </div>
     <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="bankAccDataSource"
@@ -146,9 +151,14 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 "
-                (click)="openAddEdit('adviceCashInHand',null)"><img src="/assets/images/svg/plus.svg"
-                    class="pr-8">Suggest new cash in hand</button>
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " [matMenuTriggerFor]="men1"><img
+                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new cash in
+                hand</button>
+            <mat-menu #menu1="matMenu">
+                <button mat-menu-item (click)="openAddEdit('adviceCashInHand',null)">Suggest new
+                    bank accoun</button>
+                <button mat-menu-item>Add misc. advice</button>
+            </mat-menu>
         </div>
     </div>
     <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="cashInHandDataSource"
