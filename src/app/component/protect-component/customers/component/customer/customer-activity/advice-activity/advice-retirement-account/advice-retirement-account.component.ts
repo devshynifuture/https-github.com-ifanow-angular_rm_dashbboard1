@@ -19,7 +19,10 @@ import { AdviceUtilsService } from '../advice-utils.service';
 })
 export class AdviceRetirementAccountComponent implements OnInit {
   displayedColumns: string[] = ['checkbox', 'name', 'desc', 'cvalue', 'empcon', 'emprcon', 'advice', 'astatus', 'adate', 'icon'];
+  displayedColumns1: string[] = ['checkbox', 'name', 'desc', 'cvalue', 'tcontro', 'advice', 'astatus', 'adate', 'icon'];
+  displayedColumns2: string[] = ['checkbox', 'name', 'desc', 'amtacc', 'advice', 'astatus', 'adate', 'icon'];
   displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'advice', 'astatus', 'adate', 'icon'];
+  displayedColumns4: string[] = ['checkbox', 'name', 'desc', 'pvalue', 'nvalue', 'advice', 'astatus', 'adate', 'icon'];
   advisorId: any;
   clientId: any;
   isLoading: any;

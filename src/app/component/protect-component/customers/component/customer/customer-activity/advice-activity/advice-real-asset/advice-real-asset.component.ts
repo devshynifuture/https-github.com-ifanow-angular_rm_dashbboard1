@@ -16,7 +16,7 @@ import { AdviceUtilsService } from '../advice-utils.service';
   styleUrls: ['./advice-real-asset.component.scss']
 })
 export class AdviceRealAssetComponent implements OnInit {
-  displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'mvalue', 'advice', 'astatus', 'adate', 'icon'];
+  displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'pvalue', 'mvalue', 'ngain', 'advice', 'astatus', 'adate', 'icon'];
   dataSource3 = ELEMENT_DATA1;
   advisorId: any;
   clientId: any;

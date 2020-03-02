@@ -79,7 +79,11 @@
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.name}}</div>
+                <div class="bar">
+                    <span *ngIf="element.assetDataOfAdvice">
+                        {{element.assetDataOfAdvice.ownerName}}
+                    </span>
+                </div>
             </td>
         </ng-container>
 
@@ -179,7 +183,11 @@
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.name}}</div>
+                <div class="bar">
+                    <span *ngIf="element.assetDataOfAdvice">
+                        {{element.assetDataOfAdvice.ownerName}}
+                    </span>
+                </div>
             </td>
         </ng-container>
 
