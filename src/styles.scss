@@ -1736,3 +1736,67 @@ textarea {
 .width300 {
   width: 300px;
 }
+
+#ui-suggest-advice {
+  // .mat-step-header {
+  //   border: 1px solid #e9eaec;
+  //   border-right: 0px !important;
+  // }
+
+  .mat-step-header .mat-step-icon {
+    background-color: #F5F7F7;
+    color: #212121;
+  }
+
+  .mat-step-header .mat-step-icon-selected {
+    background-color: #008FFF;
+    color: #fff;
+  }
+
+  .mat-step-icon {
+    height: 30px;
+    width: 30px;
+  }
+
+  .mat-stepper-horizontal-line {
+    display: none;
+  }
+
+  .mat-step-header {
+    content: "";
+    // border-top: px solid red;
+    // border-bottom: 1px solid red;
+    // border-left: 1px solid blue;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+
+
+    // right: -40px;
+    // border-bottom-right-radius: 208px;
+    // border-top-right-radius: 208px;
+    top: 0;
+  }
+
+  .mat-horizontal-stepper-header {
+    height: 60px;
+  }
+
+  #cdk-step-label-0-0 {
+
+    border-bottom-right-radius: 208px;
+    border-top-right-radius: 208px;
+
+  }
+
+  #cdk-step-label-0-1 {
+    border-left: 0px !important;
+    position: absolute;
+    left: 146px;
+    padding-left: 40px;
+
+
+  }
+
+  .mat-step-header::nth-child(2) {
+    border-left: 0px;
+  }
+}
