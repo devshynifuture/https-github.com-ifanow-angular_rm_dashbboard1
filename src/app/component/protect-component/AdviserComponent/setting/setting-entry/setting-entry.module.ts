@@ -14,9 +14,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonComponentModule } from '../../../common-component/common-component.module';
 import { AddPersonalProfileComponent } from '../setting-org-profile/add-personal-profile/add-personal-profile.component';
 import { AddTaskTemplateComponent } from '../setting-activity/add-task-template/add-task-template.component';
+import { NewTeamMemberComponent } from '../setting-user-roles/setting-users-roles/users/new-team-member/new-team-member.component';
 
 export const componentList = [AddReportingManagerComponent, AddNewRoleComponent, AddArnRiaDetailsComponent, AddCamsDetailsComponent, AddKarvyDetailsComponent, AddFranklinTempletionDetailsComponent, AddCamsFundsnetComponent, SettingSchemeDetailsComponent, AddModelPortfolioComponent,
-  AddPersonalProfileComponent, AddTaskTemplateComponent]
+  AddPersonalProfileComponent, AddTaskTemplateComponent, NewTeamMemberComponent]
 
 @NgModule({
   declarations: [componentList],

@@ -24,9 +24,11 @@ export class DeploymentsPlanComponent implements OnInit {
   clientId: any;
   advisorId: any;
   selectedDeployments: any = [];
+  type: number;
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService, public dialog: MatDialog, private planService: PlanService) { }
   isLoading = false;
   ngOnInit() {
+    this.type = 1;
     this.clientId = AuthService.getClientId();
     this.advisorId = AuthService.getAdvisorId();
     this.getDeploymentData();
@@ -38,13 +40,13 @@ export class DeploymentsPlanComponent implements OnInit {
     {
       clientId: this.clientId,
       advisorId: this.advisorId,
-      familyMemberId: 9
+      familyMemberId: 2
     }
     this.cusService.getAdviceDeploymentsData(obj).subscribe(
       data => {
         console.log(data);
         this.isLoading = false;
-        this.dataSource = data[0];
+        this.dataSource = (this.type == 1) ? data.GoalBaseDeploymentList : data.nonGoalBasedDeploymentList;
       },
       err => this.eventService.openSnackBar("something went wrong", "dismiss")
     )
