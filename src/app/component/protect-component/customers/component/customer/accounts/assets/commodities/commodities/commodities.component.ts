@@ -230,13 +230,14 @@ export class CommoditiesComponent implements OnInit {
     }
   }
   openCommodities(value, state, data) {
+    let popupHeaderText = !!data ? 'Edit Gold' : 'Add Gold';
     const fragmentData = {
       flag: value,
       data: data,
       id: 1,
       state: 'open',
       componentName: GoldComponent,
-
+      popupHeaderText: popupHeaderText,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -259,13 +260,14 @@ export class CommoditiesComponent implements OnInit {
     );
   }
   openOthers(value, state, data) {
+    let popupHeaderText = !!data ? 'Edit Other' : 'Add Other'
     const fragmentData = {
       flag: value,
       data: data,
       id: 1,
       state: 'open',
       componentName: OthersComponent,
-
+      popupHeaderText: popupHeaderText,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

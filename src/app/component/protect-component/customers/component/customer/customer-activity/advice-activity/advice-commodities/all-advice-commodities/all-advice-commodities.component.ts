@@ -25,7 +25,7 @@ export class AllAdviceCommoditiesComponent implements OnInit {
       id: 1,
       state: 'open',
       componentName: GoldComponent,
-
+      popupHeaderText: 'Add Gold',
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

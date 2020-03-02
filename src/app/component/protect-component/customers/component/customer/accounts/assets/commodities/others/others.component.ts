@@ -48,6 +48,8 @@ export class OthersComponent implements OnInit {
     return this.inputData;
   }
 
+  @Input() popupHeaderText: String = 'Add Others';
+
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
