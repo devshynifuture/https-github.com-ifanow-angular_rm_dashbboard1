@@ -52,9 +52,13 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 "
-                (click)="openRealEstate('adviceRealEstate',null)"><img src="/assets/images/svg/plus.svg"
-                    class="pr-8">Suggest new Real Estate</button>
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " [matMenuTriggerFor]="menu"><img
+                    src="/assets/images/svg/plus.svg" class="pr-8">Add new real estate</button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="openRealEstate('adviceRealEstate',null)">Suggest new
+                    real estate</button>
+                <button mat-menu-item>Add misc. advice</button>
+            </mat-menu>
         </div>
     </div>
     <table matSort mat-table *ngIf="dataSource" appSkeletonLoading [appSkeletonLoading]="isLoading"
