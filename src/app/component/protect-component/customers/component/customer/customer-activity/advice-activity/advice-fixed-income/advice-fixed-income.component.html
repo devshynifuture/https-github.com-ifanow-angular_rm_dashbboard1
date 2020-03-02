@@ -65,7 +65,7 @@
     <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="
         fixedDataSource" class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox *ngIf="isLoading==false && fixedDataSource.tableFlag"
                     [checked]="fixedCount==fixedDataSource.data.length"
                     [indeterminate]="fixedCount>0 && fixedCount<fixedDataSource.data.length"
@@ -184,8 +184,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
     </table>
-    <div *ngIf="fixedDataSource.tableFlag==false">
-        <h4 class="text-center pt-44">No Data Found</h4>
+    <div *ngIf="fixedDataSource.tableFlag==false" class="b-a">
+        <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
@@ -321,8 +321,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
     </table>
-    <div *ngIf="recurringDataSource.tableFlag==false">
-        <h4 class="text-center pt-44">No Data Found</h4>
+    <div *ngIf="recurringDataSource.tableFlag==false" class="b-a">
+        <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
@@ -343,7 +343,7 @@
     <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]=" bondDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox *ngIf="isLoading==false && bondDataSource.tableFlag"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
@@ -455,8 +455,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
     </table>
-    <div *ngIf="bondDataSource.tableFlag==false">
-        <h4 class="text-center pt-44">No Data Found</h4>
+    <div *ngIf="bondDataSource.tableFlag==false" class="b-a">
+        <h4 class="text-center p-44">No Data Found</h4>
     </div>
 </div>
 <div *ngIf="allAdvice == true">

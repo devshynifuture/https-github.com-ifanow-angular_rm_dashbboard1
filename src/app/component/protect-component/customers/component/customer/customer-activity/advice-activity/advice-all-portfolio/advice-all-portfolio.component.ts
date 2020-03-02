@@ -12,7 +12,7 @@ import { AdviceUtilsService } from '../advice-utils.service';
   styleUrls: ['./advice-all-portfolio.component.scss']
 })
 export class AdviceAllPortfolioComponent implements OnInit {
-  displayedColumns: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'icons'];
+  displayedColumns: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'status', 'date', 'icons'];
   dataSource: any = new MatTableDataSource(ELEMENT_DATA);
   selectedAssetId = [];
   displayedColumns1: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'status', 'date', 'adate', 'icons'];
