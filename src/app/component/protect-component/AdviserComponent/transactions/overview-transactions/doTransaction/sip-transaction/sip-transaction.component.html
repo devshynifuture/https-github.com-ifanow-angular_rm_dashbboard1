@@ -51,13 +51,15 @@
                 <ng-container matColumnDef="icons">
                     <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
                     <td mat-cell *matCellDef="let element" class="t-2">
-                        <div *ngIf="!isLoading">
+                        <!-- ng build prod issue isLoading removed -->
+                        <!-- <div *ngIf="!isLoading"> -->
+                        <div>
                             <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
                                 more_vert
                             </i>
                             <mat-menu #menubank="matMenu">
                                 <button mat-menu-item (click)="getdataForm(element,true)">Edit</button>
-                                <button mat-menu-item >Delete</button>
+                                <button mat-menu-item>Delete</button>
                             </mat-menu>
                         </div>
                     </td>
@@ -97,7 +99,8 @@
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard">
                                 <input type="text" aria-label="Number" class="form-control" matInput
-                                    [matAutocomplete]="auto" formControlName="schemeSip" (keyup)="getSchemeList($event.target.value)"
+                                    [matAutocomplete]="auto" formControlName="schemeSip"
+                                    (keyup)="getSchemeList($event.target.value)"
                                     placeholder="Start typing to see investor names">
                                 <mat-autocomplete #auto="matAutocomplete">
                                     <mat-option (onSelectionChange)="selectedScheme(scheme)"
@@ -111,8 +114,7 @@
                                 <mat-error class="f-12 pt-4" *ngIf="sipTransaction.get('schemeSip').errors?.required">
                                     This field is required
                                 </mat-error>
-                                <mat-error class="f-12"
-                                    *ngIf="sipTransaction.get('schemeSip').errors?.setValue">
+                                <mat-error class="f-12" *ngIf="sipTransaction.get('schemeSip').errors?.setValue">
                                     Selected scheme does not exist
                                 </mat-error>
                             </mat-form-field>
@@ -224,7 +226,7 @@
                                 </mat-error>
                                 <mat-error *ngIf="(sipTransaction.get('employeeContry').errors?.required)" class="f-12">
                                     This field is requied
-                                 </mat-error>
+                                </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -324,13 +326,13 @@
         </div> -->
         <div class="col-md-8 text-right">
             <!-- commented for prod build -->
-            <button  mat-raised-button class="br-0 text-success f-14" (click)="AddMultiTransaction()">
+            <button mat-raised-button class="br-0 text-success f-14" (click)="AddMultiTransaction()">
                 SAVE & ADD ANOTHER
             </button>
             <!-- <button mat-button  class="btn-green text-white ml-12" (click)="sip()">
                 SAVE & PROCEED
             </button> -->
-            <app-progress-button class="btn-green text-white ml-12" (click)="sip()" [options]="barButtonOptions" >
+            <app-progress-button class="btn-green text-white ml-12" (click)="sip()" [options]="barButtonOptions">
             </app-progress-button>
         </div>
     </div>

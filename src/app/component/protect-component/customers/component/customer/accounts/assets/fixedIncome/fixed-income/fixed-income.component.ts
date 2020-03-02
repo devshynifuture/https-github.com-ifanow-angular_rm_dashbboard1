@@ -161,7 +161,7 @@ export class FixedIncomeComponent implements OnInit {
     ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value);
   }
 
-  filterFixedIncome(key: string, value: string) {
+  filterFixedIncome(key: string, value: any) {
     let dataFiltered;
     dataFiltered = this.fixedDepositList.filter(function (item) {
       return item[key] === value;

@@ -169,13 +169,9 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " [matMenuTriggerFor]="menu2"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Add new RD</button>
-            <mat-menu #menu2="matMenu">
-                <button mat-menu-item (click)="openAddEdit('adviceRecurringDeposit',null)">Suggest new
-                    RD</button>
-                <button mat-menu-item>Add misc. advice</button>
-            </mat-menu>
+            <button mat-stroked-button class="btn-primary br-0 pl-8 "
+                (click)="openAddEdit('adviceRecurringDeposit', '')"><img src="/assets/images/svg/plus.svg"
+                    class="pr-8">Suggest new RD</button>
         </div>
     </div>
     <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]=" recurringDataSource"

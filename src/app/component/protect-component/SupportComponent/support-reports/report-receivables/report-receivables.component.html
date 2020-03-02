@@ -78,7 +78,7 @@
         <table mat-table id="table-low" [dataSource]="dataSource" class="">
             <ng-container matColumnDef="adminName">
                 <th class="br" mat-header-cell *matHeaderCellDef> Admin name </th>
-                <td class="br" mat-cell *matCellDef="let element" (click)="openAdminDetails('',element)">
+                <td class="br" mat-cell *matCellDef="let element" (click)="openAdminDetails(element)">
                     {{element.adminName}} </td>
             </ng-container>
 
