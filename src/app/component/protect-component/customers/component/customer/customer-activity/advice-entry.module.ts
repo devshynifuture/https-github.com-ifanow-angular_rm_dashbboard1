@@ -4,10 +4,12 @@ import { EmailAdviceComponent } from './advice-activity/email-advice/email-advic
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { SuggestAdviceComponent } from './advice-activity/suggest-advice/suggest-advice.component';
 import { MaterialModule } from 'src/app/material/material';
+import { GiveAdviceComponent } from './advice-activity/give-advice/give-advice.component';
 
 export const componentList = [
   EmailAdviceComponent,
-  SuggestAdviceComponent
+  SuggestAdviceComponent,
+  GiveAdviceComponent
 ];
 
 
