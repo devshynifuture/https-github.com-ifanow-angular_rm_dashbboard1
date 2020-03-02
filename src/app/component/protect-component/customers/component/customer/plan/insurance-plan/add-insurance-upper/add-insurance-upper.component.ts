@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from 'src/app/Data-service/event.service';
-import { AddHealthInsuranceComponent } from '../add-health-insurance/add-health-insurance.component';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../customer.service';
 import { UtilService } from 'src/app/services/util.service';
+import { AddHealthInsuranceComponent } from '../add-health-insurance/add-health-insurance.component';
 
 @Component({
   selector: 'app-add-insurance-upper',

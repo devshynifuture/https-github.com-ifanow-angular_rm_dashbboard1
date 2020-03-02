@@ -74,7 +74,7 @@ export const componentList = [
   IncomeDetailedViewComponent,
   AddInsuranceUpperComponent,
   SetupTaxPlanningComponent,
-  AddHealthInsuranceComponent
+  AddHealthInsuranceComponent,
 ];
 // import { AddPlaninsuranceComponent } from './insurance-plan/add-planinsurance/add-planinsurance.component';
 
