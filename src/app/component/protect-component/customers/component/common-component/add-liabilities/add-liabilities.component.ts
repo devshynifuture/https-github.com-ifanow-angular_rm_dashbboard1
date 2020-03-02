@@ -228,7 +228,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       obj.poDate = (obj.poDate) ? obj.poDate.toISOString().slice(0, 10) : '';
       obj.interest = parseInt(obj.interest);
       this.addLiabilityForm.value.transact.forEach(element => {
-        if (element) {
+        if (element.partPaymentDate != "") {
           let obj1 = {
             'partPaymentDate': (element.partPaymentDate) ? element.partPaymentDate.toISOString().slice(0, 10) : null,
             'partPayment': !element.partPayment?0 : parseInt(element.partPayment),
@@ -246,6 +246,9 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
             delete obj1.delete;
           }
           obj.transactData.push(obj1);
+        }
+        else{
+          obj.transactData = [];
         }
       });
       if (this._data.id == undefined) {

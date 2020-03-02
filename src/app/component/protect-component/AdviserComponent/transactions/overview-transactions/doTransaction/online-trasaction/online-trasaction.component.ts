@@ -12,6 +12,7 @@ import { OnlineTransactionService } from '../../../online-transaction.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ProcessTransactionService } from '../process-transaction.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-online-trasaction',
@@ -60,8 +61,10 @@ export class OnlineTrasactionComponent implements OnInit {
   getPlatformCount: any;
   showSpinnerOwner = false
   familyMemberData: any;
+  noSubBroker = false;
+  noMapping = false;
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-    private eventService: EventService, private fb: FormBuilder, private processTransaction: ProcessTransactionService) {
+    private eventService: EventService, private fb: FormBuilder, private processTransaction: ProcessTransactionService, private router: Router) {
   }
 
   @Input()
@@ -89,7 +92,7 @@ export class OnlineTrasactionComponent implements OnInit {
       advisorId: this.advisorId,
       familyMemberId: 112166,
       clientId: this.familyMemberData.clientId,
-      aggregatorType: platform
+      // aggregatorType: platform
     }
     this.onlineTransact.getDefaultDetails(obj).subscribe(
       data => this.getDefaultDetailsRes(data)
@@ -99,16 +102,60 @@ export class OnlineTrasactionComponent implements OnInit {
     console.log('deault', data)
     if (data == undefined) {
       return
+    } else {
+      if (data.defaultCredential != undefined) {
+        this.noSubBroker = false;
+        if (data.defaultClient == undefined) {
+          this.noMapping = true;
+        } else {
+          this.noMapping = false;
+        }
+      } else {
+        this.noSubBroker = true;
+      }
     }
-    this.allData = data
-    this.credentialList = data.credentialList
-    this.getPlatformCount = data.credentialList.filter(function (ele) {
-      return ele.id
-    })
-    console.log('platform count', this.getPlatformCount)
-    this.defaultCredential = data.defaultCredential
-    this.defaultClient = data.defaultClient
-    this.selectedPlatform = this.defaultCredential.aggregatorType
+    this.showData(data);
+    // this.allData = data
+    // this.credentialList = data.credentialList
+    // this.getPlatformCount = data.credentialList.filter(function (ele) {
+    //   return ele.id
+    // })
+    // console.log('platform count', this.getPlatformCount)
+    // this.defaultCredential = data.defaultCredential
+    // this.defaultClient = data.defaultClient
+    // this.selectedPlatform = this.defaultCredential.aggregatorType
+  }
+  showData(value) {
+    if (this.nomineesListFM && this.transactionAddForm.get('ownerName').valid) {
+      // this.nomineesListFM.forEach(element => {
+      //   this.checkFamilyMem = element.name.includes(this.transactionAddForm.controls.ownerName.value)
+      // });
+      if (this.formStep == 'step-1') {
+        // if (this.allData && this.allData.length > 0) {
+        //   this.formStep = 'step-2';
+        // }
+        if (this.noMapping == false && this.noSubBroker == false) {
+          this.formStep = 'step-2';
+        }
+      } else if (this.transactionAddForm.get('transactionType').valid && this.formStep == 'step-2') {
+        let data = {
+          selectedFamilyMember: this.ownerData.ownerName.value,
+          transactionType: this.transactionAddForm.controls.transactionType.value,
+          clientId: this.familyMemberData.clientId
+        }
+        this.openPurchaseTransaction(data.transactionType, data)
+      }
+
+    }
+  }
+  noMapFunction() {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.router.navigate(['/admin/transactions/investors'])
+  }
+  noBroakerFun() {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.router.navigate(['/admin/transactions/settings/manage-credentials/arn-ria-creds'])
+
   }
   // getFamilyList(value) {
   //   this.showSpinnerOwner = true
@@ -150,24 +197,26 @@ export class OnlineTrasactionComponent implements OnInit {
   ownerDetails(value) {
     this.familyMemberData = value;
     this.familyMemberId = value.id;
-    if (this.nomineesListFM && this.transactionAddForm.get('ownerName').valid) {
-      // this.nomineesListFM.forEach(element => {
-      //   this.checkFamilyMem = element.name.includes(this.transactionAddForm.controls.ownerName.value)
-      // });
-      if (this.formStep == 'step-1') {
-        if (this.allData && this.allData.length > 0) {
-          this.formStep = 'step-2';
-        }
-        this.formStep = 'step-2';
-      } else if (this.transactionAddForm.get('transactionType').valid && this.formStep == 'step-2') {
-        let data = {
-          selectedFamilyMember: this.ownerData.ownerName.value,
-          transactionType: this.transactionAddForm.controls.transactionType.value,
-          clientId: value.clientId
-        }
-        this.openPurchaseTransaction(data.transactionType, data)
-      }
-    }
+    this.getDefaultDetails(value);
+    //   if (this.nomineesListFM && this.transactionAddForm.get('ownerName').valid ) {
+    //     // this.nomineesListFM.forEach(element => {
+    //     //   this.checkFamilyMem = element.name.includes(this.transactionAddForm.controls.ownerName.value)
+    //     // });
+    //     if (this.formStep == 'step-1') {
+    //       if (this.allData && this.allData.length > 0) {
+    //         this.formStep = 'step-2';
+    //       }
+    //       this.formStep = 'step-2';
+    //     } else if (this.transactionAddForm.get('transactionType').valid && this.formStep == 'step-2') {
+    //       let data = {
+    //         selectedFamilyMember: this.ownerData.ownerName.value,
+    //         transactionType: this.transactionAddForm.controls.transactionType.value,
+    //         clientId: value.clientId
+    //       }
+    //       this.openPurchaseTransaction(data.transactionType, data)
+    //     }
+
+    // }
   }
   lisNominee(value) {
     this.showSpinnerOwner = false

@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { TransactionsHistoryComponent } from './transactions-history/transactions-history.component';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
+import { OnlineTransactionService } from '../online-transaction.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { TransactionEnumService } from '../transaction-enum.service';
 
 @Component({
   selector: 'app-transactions-list',
@@ -10,23 +14,83 @@ import { SubscriptionInject } from '../../Subscriptions/subscription-inject.serv
 })
 export class TransactionsListComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'type', 'units', 'order', 'status', 'icons'];
-  dataSource = ELEMENT_DATA;
-  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject) { }
+  dataSource;
+  advisorId: any;
+  selectedPreviousToShowDate;
+  filterData: any;
+  selectedBroker: any;
+  seletedPreviousDate;
+  finalStartDate;
+  finalEndDate
+  constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService, private utilService: UtilService, private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) { }
 
   isLoading = false;
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.getFilterOptionData()
   }
-
+  getFilterOptionData() {
+    this.dataSource = [{}, {}, {}];
+    this.isLoading = true;
+    let obj = {
+      advisorId: this.advisorId,
+      onlyBrokerCred: true
+    }
+    console.log('encode', obj)
+    this.onlineTransact.getBSECredentials(obj).subscribe(
+      data => this.getFilterOptionDataRes(data)
+    );
+  }
+  getFilterOptionDataRes(data) {
+    console.log(data);
+    this.filterData = data;
+    this.selectedBroker = data[0];
+    this.selectedPreviousToShowDate = '7';
+    this.finalStartDate = new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 1).getTime();
+    this.finalEndDate = new Date().getTime();
+    this.getAllTransactionList();
+  }
+  getAllTransactionList() {
+    this.dataSource = [{}, {}, {}];
+    this.isLoading = true;
+    let obj =
+    {
+      "advisorId": this.advisorId,
+      "tpUserCredentialId": this.selectedBroker.id,
+      "startDate": this.finalStartDate,
+      "endDate": this.finalEndDate
+    }
+    this.tranService.getSearchScheme(obj).subscribe(
+      data => {
+        console.log(data);
+        this.isLoading = false;
+        this.dataSource = TransactionEnumService.setPlatformEnum(data);
+        this.dataSource = TransactionEnumService.setTransactionStatus(data)
+        console.log(this.dataSource)
+      },
+      err => this.eventService.openSnackBar(err, "dismiss")
+    )
+  }
   Close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
-
-  openTransactionHistory() {
+  sortDateFilter(data) {
+    console.log(this.selectedPreviousToShowDate);
+    this.finalStartDate = new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * data.value).getTime();
+    (data.value == 'custom') ? '' : this.getAllTransactionList();
+  }
+  startAndEndDateEvent(data) {
+    this.finalStartDate = data.value.begin.getTime();
+    this.finalEndDate = data.value.end.getTime();
+    this.getAllTransactionList();
+    console.log(data);
+  }
+  openTransactionHistory(data) {
     const fragmentData = {
       flag: 'addNewTransaction',
-      data: null,
+      data,
       id: 1,
       state: 'open35',
       componentName: TransactionsHistoryComponent,
@@ -43,27 +107,3 @@ export class TransactionsListComponent implements OnInit {
     );
   }
 }
-export interface PeriodicElement {
-  name: string;
-  position: string;
-  weight: string;
-  symbol: string;
-  type: string;
-  units: string;
-  order: string;
-  status: string;
-
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    position: 'NSE', name: 'ARN-83865', weight: 'Rahul Jain',
-    symbol: 'Axis Liquid Fund -Regular Plan - Weekly Dividend Option', type: 'Purchase',
-    units: '50,000', order: '23/01/2020', status: 'Pending authorisation'
-  },
-  {
-    position: 'NSE', name: 'ARN-83865', weight: 'Rahul Jain',
-    symbol: 'Axis Liquid Fund -Regular Plan - Weekly Dividend Option', type: 'Purchase',
-    units: '50,000', order: '23/01/2020', status: 'Rejected'
-  },
-];

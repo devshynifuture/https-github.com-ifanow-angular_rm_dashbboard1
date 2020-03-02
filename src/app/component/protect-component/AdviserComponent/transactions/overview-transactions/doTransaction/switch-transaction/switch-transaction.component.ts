@@ -341,6 +341,8 @@ export class SwitchTransactionComponent implements OnInit {
       let obj = {
 
         productDbId: this.schemeDetails.id,
+        clientName:this.selectedFamilyMember,
+        holdingNature:this.getDataSummary.defaultClient.holdingType,
         toProductDbId: this.schemeDetailsTransfer.id,
         mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
         toMutualFundSchemeMasterId: this.schemeTransfer.mutualFundSchemeMasterId,
@@ -374,6 +376,7 @@ export class SwitchTransactionComponent implements OnInit {
       console.log('switch', obj)
       if (this.multiTransact == true) {
         console.log('new purchase obj', this.childTransactions)
+        this.AddMultiTransaction();
         obj.childTransactions = this.childTransactions
       }
       this.barButtonOptions.active = true;

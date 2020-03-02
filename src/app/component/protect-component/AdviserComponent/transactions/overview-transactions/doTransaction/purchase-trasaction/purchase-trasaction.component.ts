@@ -92,6 +92,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { paymentMode: 1 });
     Object.assign(this.transactionSummary, { allEdit: true });
     Object.assign(this.transactionSummary, { transactType: 'PURCHASE' });
+    Object.assign(this.transactionSummary, { isMultiTransact: false });//when multi transact then disabled edit button in transaction summary
     console.log('this.transactionSummary', this.transactionSummary)
   }
   selectSchemeOption(value) {
@@ -367,6 +368,8 @@ export class PurchaseTrasactionComponent implements OnInit {
     } else {
       let obj = {
         productDbId: this.schemeDetails.id,
+        clientName:this.selectedFamilyMember,
+        holdingNature:this.getDataSummary.defaultClient.holdingType,
         mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
         productCode: this.schemeDetails.schemeCode,
         isin: this.schemeDetails.isin,
@@ -422,6 +425,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     }
   }
   AddMultiTransaction() {
+    Object.assign(this.transactionSummary, { isMultiTransact: true });
     if (this.isEdit != true) {
       this.id++
     } 

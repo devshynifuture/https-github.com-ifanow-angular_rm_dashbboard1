@@ -79,8 +79,8 @@
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <input matInput formControlName="balanceAsOn" class="form-control br-0" [matDatepicker]="picker"
-                    readonly>
+                <input matInput (focus)="picker.open()" formControlName="balanceAsOn" class="form-control br-0"
+                    [matDatepicker]="picker" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error class="f-12"
@@ -191,7 +191,7 @@
                 </div>
             </div>
         </div>
-        <app-add-nominee [ownerName]="ownerName" [data]="data" (outputEvent)="getFormDataNominee($event)">
+        <app-add-nominee [ownerName]="ownerName" [data]="bankData" (outputEvent)="getFormDataNominee($event)">
         </app-add-nominee>
     </div>
 </div>

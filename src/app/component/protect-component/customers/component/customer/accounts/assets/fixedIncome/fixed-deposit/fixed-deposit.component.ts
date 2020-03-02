@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { CustomerService } from '../../../../customer.service';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
@@ -52,6 +52,7 @@ export class FixedDepositComponent implements OnInit {
   options: any;
   inputData: any;
   validMaturity: any;
+  showErrorOwner = false;
   compoundValue = [
     { name: 'Daily', value: 2 },
     { name: 'Monthly', value: 3 },
@@ -84,6 +85,10 @@ export class FixedDepositComponent implements OnInit {
   fdDays = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14',
     '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'];
   fdYears = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'];
+  addOwner: any;
+  showError: boolean;
+  nexNomineePer: number;
+  showErrorCoOwner: boolean;
 
   constructor(public utils: UtilService, private event: EventService, private router: Router,
     private fb: FormBuilder, private custumService: CustomerService,
@@ -96,6 +101,38 @@ export class FixedDepositComponent implements OnInit {
 
     if (this.isViewInitCalled) {
       this.getdataForm(data);
+    }
+  }
+
+  get getCoOwner() {
+    return this.fixedDeposit.get('getCoOwnerName') as FormArray;
+  }
+
+  removeCoOwner(item) {
+    this.getCoOwner.removeAt(item);
+  }
+
+  ownerList(value) {
+    console.log(value)
+    this.familyMemberId = value.id
+  }
+
+  addNewCoOwner(data) {
+    if (this.addOwner == data) {
+      if (this.showErrorOwner == false) {
+        this.getCoOwner.push(this.fb.group({
+          ownerName: "", ownershipPerc: null, familyMemberId: null
+        }));
+      }
+    } else {
+      if (this.showErrorOwner == false) {
+        this.addOwner = data;
+        if (this.getCoOwner.value.length == 0) {
+          this.getCoOwner.push(this.fb.group({
+            ownerName: "", ownershipPerc: null, familyMemberId: null
+          }));
+        }
+      }
     }
   }
   get data() {
@@ -199,6 +236,12 @@ export class FixedDepositComponent implements OnInit {
     }
     this.fixedDeposit = this.fb.group({
       ownerName: [(!data.ownerName) ? '' : data.ownerName, [Validators.required]],
+      getCoOwnerName: this.fb.array([this.fb.group({
+        ownerName: '',
+        ownershipPerc: null,
+        familyMemberId: null
+      })]),
+      ownerPercent: [data.ownerPerc, [Validators.required]],
       amountInvest: [(!data) ? '' : data.amountInvested, [Validators.required]],
       commencementDate: [(!data) ? '' : new Date(data.commencementDate), [Validators.required]],
       interestRate: [(!data) ? '' : data.interestRate, [Validators.required]],
@@ -217,7 +260,11 @@ export class FixedDepositComponent implements OnInit {
       fdNo: [(!data) ? '' : data.fdNumber],
       FDType: [(!data.fdType) ? '' : (data.fdType) + '', [Validators.required]],
       id: [(!data) ? '' : data.id,],
-      familyMemberId: [(!data) ? '' : data.familyMemberId]
+      familyMemberId: [(!data) ? '' : data.familyMemberId],
+      getNomineeName: this.fb.array([this.fb.group({
+        name: null,
+        ownershipPer: null,
+      })])
     });
 
     this.ownerData = this.fixedDeposit.controls;
@@ -318,6 +365,39 @@ export class FixedDepositComponent implements OnInit {
     if (parseInt(event.target.value) > 100) {
       event.target.value = "100";
       this.fixedDeposit.get('interestRate').setValue(event.target.value);
+    }
+  }
+
+  get getNominee() {
+    return this.fixedDeposit.get('getNomineeName') as FormArray;
+  }
+
+  onChangeJointOwnership(data) {
+    if (data == 'owner') {
+      this.nexNomineePer = 0;
+      this.getCoOwner.value.forEach(element => {
+        this.nexNomineePer += (element.ownershipPerc) ? parseInt(element.ownershipPerc) : null;
+      });
+      this.nexNomineePer = this.fixedDeposit.controls.ownerPercent.value + this.nexNomineePer
+      if (this.nexNomineePer > 100) {
+        this.showErrorOwner = true;
+        console.log('show error Percent cannot be more than 100%')
+      } else {
+        this.showErrorOwner = false
+        this.showErrorCoOwner = false;
+      }
+    } else {
+      this.nexNomineePer = 0;
+
+      this.getNominee.value.forEach(element => {
+        this.nexNomineePer += (element.ownershipPer) ? parseInt(element.ownershipPer) : null;
+      });
+      if (this.nexNomineePer > 100) {
+        this.showError = true
+        console.log('show error Percent cannot be more than 100%')
+      } else {
+        this.showError = false
+      }
     }
   }
   addFixedDepositRes(data) {

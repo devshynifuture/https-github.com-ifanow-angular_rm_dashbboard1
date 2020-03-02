@@ -72,6 +72,7 @@ export class SipTransactionComponent implements OnInit {
   isEdit = false;
   editedId: any;
   displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount', 'icons'];
+  umrn: any;
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private processTransaction: ProcessTransactionService, private fb: FormBuilder, private eventService: EventService) { }
   @Input()
@@ -98,6 +99,7 @@ export class SipTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { transactType: 'SIP' });
     Object.assign(this.transactionSummary, { paymentMode: 1 });
     Object.assign(this.transactionSummary, { allEdit: true });
+    Object.assign(this.transactionSummary, { isMultiTransact: false });//when multi transact then disabled edit button in transaction summary
     Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
   }
   enteredAmount(value) {
@@ -239,6 +241,7 @@ export class SipTransactionComponent implements OnInit {
   }
   getNSEAchmandateRes(data) {
     this.showSpinnerMandate = false
+    this.umrn=data[0].umrnNo;
     console.log('getNSEAchmandateRes', data)
     if (data.length > 1) {
       Object.assign(this.transactionSummary, { showUmrnEdit: true });
@@ -393,11 +396,9 @@ export class SipTransactionComponent implements OnInit {
       if (this.sipTransaction.get('reinvest').invalid) {
         this.sipTransaction.get('reinvest').markAsTouched();
       }
-    } else if (this.sipTransaction.get('folioSelection').value == 1) {
-      if (this.sipTransaction.get('investmentAccountSelection').invalid) {
+    } else if (this.sipTransaction.get('folioSelection').value == 1 && this.sipTransaction.get('investmentAccountSelection').invalid) {
         this.sipTransaction.get('investmentAccountSelection').markAsTouched();
         return;
-      }
     } else if (this.sipTransaction.get('employeeContry').invalid) {
       this.sipTransaction.get('employeeContry').markAsTouched();
       return;
@@ -413,9 +414,12 @@ export class SipTransactionComponent implements OnInit {
     } else {
       let obj = {
         productDbId: this.schemeDetails.id,
+        clientName:this.selectedFamilyMember,
+        holdingNature:this.getDataSummary.defaultClient.holdingType,
         mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
         productCode: this.schemeDetails.schemeCode,
         isin: this.schemeDetails.isin,
+        umrn:this.umrn,
         folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
         tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
         tpSubBrokerCredentialId: this.getDataSummary.euin.id,
@@ -455,7 +459,10 @@ export class SipTransactionComponent implements OnInit {
       const tenure = this.sipTransaction.controls.tenure.value;
       const installment = this.sipTransaction.controls.installment.value;
       obj = this.processTransaction.checkInstallments(obj, tenure, installment)
+
       if (this.multiTransact == true) {
+        console.log('new purchase obj', this.childTransactions)
+        this.AddMultiTransaction();
         obj.childTransactions = this.childTransactions
       }
       this.barButtonOptions.active = true;
@@ -477,6 +484,7 @@ export class SipTransactionComponent implements OnInit {
     }
   }
   AddMultiTransaction() {
+    Object.assign(this.transactionSummary, { isMultiTransact: true });
     if (this.isEdit != true) {
       this.id++
     } 

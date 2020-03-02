@@ -34,6 +34,7 @@ export class AddPoRdComponent implements OnInit {
   nomineesList: any;
   nominees: any[];
   flag: any;
+  multiplesOfFive: boolean = true;
 
   constructor(public utils: UtilService, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService,
     private subInjectService: SubscriptionInject) {
@@ -44,6 +45,16 @@ export class AddPoRdComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
 
+  }
+
+  numberMultiplesOfFive(event) {
+    const val = event.target.value;
+    if (val % 5 !== 0) {
+      event.target.value = (Math.round(val / 5) + 1) * 5;
+      this.multiplesOfFive = false;
+    } else {
+      event.target.value = val;
+    }
   }
 
   moreFields() {

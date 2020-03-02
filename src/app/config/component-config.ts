@@ -384,6 +384,8 @@ export const appConfig = {
   GET_EMPANELLED_AMC: 'mutual-fund/hidden-amc/amc-wise/get',
   ADD_HIDDEN_AMC: 'mutual-fund/hidden-amc/add',
   DELETE_HIDDEN_AMC: 'mutual-fund/hidden-amc/delete',
+  SEARCH_SCHEME: 'report/transaction/list/get',
+  GET_TRANSACTION_DETAILS: 'report/transaction/detail/get',
   // SIP_BSE:'bse/order/create',
 
   // cashflow 

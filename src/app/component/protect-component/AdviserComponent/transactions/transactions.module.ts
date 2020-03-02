@@ -19,6 +19,7 @@ import { VideoKycComponent } from './overview-transactions/know-your-customer/vi
 import { ClientSearchDirective } from './client-search.directive';
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
 import { ScrollDispatchModule, ScrollingModule } from '@angular/cdk/scrolling';
+import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 //import { VideoKycComponent } from './overview-transactions/know-your-customer/video-kyc/video-kyc.component';
 //import { FatcaDetailsComponent } from './overview-transactions/know-your-customer/fatca-details/fatca-details.component';
 //import { NomineeDetailsComponent } from './overview-transactions/know-your-customer/nominee-details/nominee-details.component';
@@ -56,7 +57,9 @@ import { ScrollDispatchModule, ScrollingModule } from '@angular/cdk/scrolling';
     CustomCommonModule,
     SettingsTransactionsModule,
     ScrollDispatchModule,
-    ScrollingModule
+    ScrollingModule,
+    SatDatepickerModule,
+    SatNativeDateModule
   ], exports: [
     TransactionsComponent,
     ScrollDispatchModule,

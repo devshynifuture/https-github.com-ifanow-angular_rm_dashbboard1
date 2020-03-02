@@ -28,7 +28,7 @@ export class AddNomineeComponent implements OnInit {
     this.nomineeForm = this.fb.group({
       nomineeList: new FormArray([])
     })
-    console.log(this.data);
+    console.log("this is data:::::::::::::::", this.data);
     console.log(this.ownerName);
     this.getListFamilyMem();
     this.getNominee(this.data);
