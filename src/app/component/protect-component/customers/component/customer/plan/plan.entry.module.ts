@@ -39,6 +39,8 @@ import { HelthInsurancePolicyComponent } from './insurance-plan/add-insurance-pl
 import { PlanGoalsComponent } from './scenarios-plan/plan-goals/plan-goals.component';
 import { IncomeDetailedViewComponent } from './profile-plan/income/income-detailed-view/income-detailed-view.component';
 import { AddInsuranceUpperComponent } from './insurance-plan/add-insurance-upper/add-insurance-upper.component';
+import { SetupTaxPlanningComponent } from './texes-plan/setup-tax-planning/setup-tax-planning.component';
+import { AddHealthInsuranceComponent } from './insurance-plan/add-health-insurance/add-health-insurance.component';
 
 export const componentList = [
   PreferencesComponent,
@@ -70,7 +72,9 @@ export const componentList = [
   PlanGoalsComponent,
   HelthInsurancePolicyComponent,
   IncomeDetailedViewComponent,
-  AddInsuranceUpperComponent
+  AddInsuranceUpperComponent,
+  SetupTaxPlanningComponent,
+  AddHealthInsuranceComponent
 ];
 // import { AddPlaninsuranceComponent } from './insurance-plan/add-planinsurance/add-planinsurance.component';
 
