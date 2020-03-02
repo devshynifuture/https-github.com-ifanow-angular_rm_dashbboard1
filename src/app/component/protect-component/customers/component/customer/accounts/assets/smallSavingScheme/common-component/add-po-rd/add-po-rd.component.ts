@@ -40,11 +40,13 @@ export class AddPoRdComponent implements OnInit {
     private subInjectService: SubscriptionInject) {
   }
 
+  @Input() popupHeaderText:String = 'Add Post office recurring deposit (PO RD)';
+
   ngOnInit() {
     this.isOptionalField = true;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-
+    this.getdataForm(this.data);
   }
 
   numberMultiplesOfFive(event) {
@@ -64,7 +66,6 @@ export class AddPoRdComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
-    this.getdataForm(data);
   }
 
   get data() {

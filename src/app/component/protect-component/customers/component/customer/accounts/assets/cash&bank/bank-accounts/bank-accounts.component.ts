@@ -44,7 +44,6 @@ export class BankAccountsComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
-    this.getdataForm(data);
   }
 
   get data() {
@@ -55,7 +54,7 @@ export class BankAccountsComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getdataForm(this.inputData);
+    this.getdataForm(this.data);
 
   }
   display(value) {

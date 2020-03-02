@@ -41,18 +41,21 @@ export class AddNscComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
-    this.getdataForm(data);
   }
 
   get data() {
     return this.inputData;
   }
+
+  @Input() popupHeaderText:String = 'Add National savings certificate (NSC)';
+
   constructor(private datePipe: DatePipe, public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   isOptionalField
   ngOnInit() {
     this.isOptionalField = true
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.getdataForm(this.data);
   }
   moreFields() {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true

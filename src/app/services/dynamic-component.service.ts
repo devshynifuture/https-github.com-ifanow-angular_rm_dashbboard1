@@ -16,7 +16,7 @@ export class DynamicComponentService {
     (componentRef.instance).data = data;
 
     // popupHeaderText is an input with default value in the respective components. Directly assigning changes the value inside it.
-    if (popupHeaderText) {
+    if (!!popupHeaderText) {
       (componentRef.instance).popupHeaderText = popupHeaderText;
     }
     // component.data = data;

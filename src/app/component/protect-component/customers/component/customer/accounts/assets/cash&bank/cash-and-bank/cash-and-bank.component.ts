@@ -250,7 +250,7 @@ export class CashAndBankComponent implements OnInit {
   }
 
   openCashInHand(data,value) {
-    let popupHeaderText = !!data ? 'Edit cash in hand' : 'add cash in hand';
+    let popupHeaderText = !!data ? 'Edit Cash In Hand' : 'Add Cash In Hand';
     const fragmentData = {
       flag: value,
       data,
