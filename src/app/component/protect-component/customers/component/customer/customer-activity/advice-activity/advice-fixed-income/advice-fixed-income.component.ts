@@ -17,7 +17,7 @@ import { AdviceUtilsService } from '../advice-utils.service';
 })
 
 export class AdviceFixedIncomeComponent implements OnInit {
-  displayedColumns3: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'advice', 'astatus', 'adate', 'icon'];
+  displayedColumns3: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'mdate', 'advice', 'astatus', 'adate', 'icon'];
   advisorId: any;
   clientId: any;
   dataSource: any;
