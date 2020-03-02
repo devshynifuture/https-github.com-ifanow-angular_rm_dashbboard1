@@ -47,7 +47,7 @@ export class AddNscComponent implements OnInit {
     return this.inputData;
   }
 
-  @Input() popupHeaderText:String = 'Add National savings certificate (NSC)';
+  @Input() popupHeaderText: string = 'Add National savings certificate (NSC)';
 
   constructor(private datePipe: DatePipe, public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   isOptionalField

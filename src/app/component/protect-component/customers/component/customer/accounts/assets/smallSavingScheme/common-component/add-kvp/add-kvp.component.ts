@@ -35,7 +35,7 @@ export class AddKvpComponent implements OnInit {
   kvpData;
   flag: any;
   constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
-  
+
   @Input()
   set data(data) {
     this.inputData = data;
@@ -44,8 +44,8 @@ export class AddKvpComponent implements OnInit {
     return this.inputData;
   }
 
-  @Input() popupHeaderText:String = 'Add Kisan vikas patra (KVP)';
-  
+  @Input() popupHeaderText: string = 'Add Kisan vikas patra (KVP)';
+
   ngOnInit() {
     this.isOptionalField = true;
     this.advisorId = AuthService.getAdvisorId();

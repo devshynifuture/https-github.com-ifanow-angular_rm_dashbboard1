@@ -8,7 +8,7 @@
                 <mat-chip-list>
                     <mat-chip-list class="newDateIcon">
                         <mat-chip class="bg-white b-a c-p f-400 p-12">
-                            <input (click)="picker2.open()" (dateInput)="startAndEndDateEvent($event)" [max]="maxDate"
+                            <input (click)="picker2.open()" (dateInput)="startAndEndDateEvent($event)"
                                 [satDatepicker]="picker2" class="pL-20" matInput placeholder="Choose a date" readonly>
                             <sat-datepicker #picker2 [closeAfterSelection]="false"
                                 [calendarFooterComponent]="rangesFooter" [selectFirstDateOnClose]="true"
@@ -19,7 +19,7 @@
                     </mat-chip-list>
                 </mat-chip-list>
             </div>
-            <div class="col-md-3 pr-0" >
+            <div class="col-md-3 pr-0">
                 <div class="form-group mb-0">
                     <mat-select [(ngModel)]="selectedPreviousToShowDate" (selectionChange)="sortDateFilter($event)"
                         class="form-control br-0">
@@ -30,7 +30,7 @@
                     </mat-select>
                 </div>
             </div>
-            <div class="col-md-3 pr-0" >
+            <div class="col-md-3 pr-0">
                 <div class="form-group mb-0">
                     <mat-select [(ngModel)]="selectedBroker" (selectionChange)="sortDateFilter($event)"
                         class="form-control br-0">
@@ -39,8 +39,9 @@
                     </mat-select>
                 </div>
             </div>
-            <div class="col-md-2 pr-0" >
-                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openTransaction()"><i class="material-icons">add</i>ADD
+            <div class="col-md-2 pr-0">
+                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openTransaction()"><i
+                        class="material-icons">add</i>ADD
                     NEW</button>
             </div>
         </div>
