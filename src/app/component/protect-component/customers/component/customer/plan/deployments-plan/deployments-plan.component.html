@@ -39,8 +39,8 @@
             </div>
             <div class="row">
 
-                <div class="col-md-10 deployment">
-                    <table *ngIf="dataSource.length>0" [appSkeletonLoading]="isLoading" appSkeletonLoading mat-table
+                <div class="col-md-10 deployment" *ngIf="dataSource">
+                    <table *ngIf="dataSource" [appSkeletonLoading]="isLoading" appSkeletonLoading mat-table
                         [dataSource]="dataSource" class="skeletonAnimation" id="table-low">
 
                         <ng-container matColumnDef="checkbox">

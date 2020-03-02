@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { PlanService } from '../../plan.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { IncomeDetailedViewComponent } from './income-detailed-view/income-detailed-view.component';
 
 @Component({
   selector: 'app-income',
@@ -23,6 +24,7 @@ export class IncomeComponent implements OnInit {
   isLoading = false;
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
+  noData: string;
 
   constructor(public dialog: MatDialog, private eventService: EventService, private subInjectService: SubscriptionInject, private planService: PlanService) {
   }
@@ -54,7 +56,11 @@ export class IncomeComponent implements OnInit {
 
   getIncomeListRes(data) {
     this.isLoading = false;
-    if (data) {
+    if (data == undefined) {
+      this.noData = 'No income found';
+      this.dataSource.data = []
+    }
+   else if (data) {
       this.dataSource.data = data;
       this.dataSource.sort = this.sort;
 
@@ -98,7 +104,7 @@ export class IncomeComponent implements OnInit {
         )
       },
       negativeMethod: () => {
-        console.log('2222222222222222222222222222222222222');
+        console.log('2222222');
       }
     };
     console.log(dialogData + '11111111111111');
@@ -115,11 +121,13 @@ export class IncomeComponent implements OnInit {
     });
   }
 
-  addIncomeDetail(flagValue) {
+  addIncomeDetail(data) {
     const fragmentData = {
-      flag: flagValue,
+      flag: 'detailedView',
+      data,
       id: 1,
-      state: 'openHelp'
+      state: 'open35',
+      componentName: IncomeDetailedViewComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
