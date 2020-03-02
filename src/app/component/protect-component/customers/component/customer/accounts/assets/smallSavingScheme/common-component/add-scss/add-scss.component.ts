@@ -35,7 +35,7 @@ export class AddScssComponent implements OnInit {
   nominees: any[];
   flag: any;
 
-  @Input() popupHeaderText:String = 'Add Senior citizen savings scheme (SCSS)';
+  @Input() popupHeaderText: string = 'Add Senior citizen savings scheme (SCSS)';
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
     private cusService: CustomerService, private eventService: EventService, public utils: UtilService) {

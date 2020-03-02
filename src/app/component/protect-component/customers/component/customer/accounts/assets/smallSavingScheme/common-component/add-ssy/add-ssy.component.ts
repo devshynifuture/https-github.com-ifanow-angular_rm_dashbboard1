@@ -39,7 +39,7 @@ export class AddSsyComponent implements OnInit {
   commencementDate: any;
   flag: any;
 
-  @Input() popupHeaderText:String = 'Add Sukanya samriddhi yojana (SSY)';
+  @Input() popupHeaderText: string = 'Add Sukanya samriddhi yojana (SSY)';
 
   constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService, private datePipe: DatePipe) { }
 

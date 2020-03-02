@@ -49,7 +49,7 @@ export class AddPoSavingComponent implements OnInit {
     return this.inputData;
   }
 
-  @Input() popupHeaderText:String = 'Add Post office savings a/c';
+  @Input() popupHeaderText: string = 'Add Post office savings a/c';
 
   display(value) {
     console.log('value selected', value);
