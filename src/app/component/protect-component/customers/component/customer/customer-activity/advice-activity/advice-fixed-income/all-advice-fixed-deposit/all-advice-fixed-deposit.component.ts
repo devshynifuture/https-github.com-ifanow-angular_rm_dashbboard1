@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { SelectAdviceComponent } from '../../select-advice/select-advice.component';
@@ -15,10 +15,11 @@ import { BondsComponent } from '../../../../accounts/assets/fixedIncome/bonds/bo
 export class AllAdviceFixedDepositComponent implements OnInit {
 
   displayedColumns3: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'advice', 'astatus', 'adate', 'icon'];
-  dataSource3 = ELEMENT_DATA3;
+  dataSource3 = new MatTableDataSource<PeriodicElement3>(ELEMENT_DATA3);
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private utilService: UtilService) { }
-
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   ngOnInit() {
+    this.dataSource3.sort = this.sort;
   }
   allAdvice = true;
   openselectAdvice(data) {
@@ -40,7 +41,7 @@ export class AllAdviceFixedDepositComponent implements OnInit {
       }
     );
   }
-  openFixedDeposit(value,data){
+  openFixedDeposit(value, data) {
     const fragmentData = {
       flag: value,
       data,
@@ -63,7 +64,7 @@ export class AllAdviceFixedDepositComponent implements OnInit {
       }
     );
   }
-  openRecurringDeposit(value,data){
+  openRecurringDeposit(value, data) {
     const fragmentData = {
       flag: value,
       data,
@@ -86,7 +87,7 @@ export class AllAdviceFixedDepositComponent implements OnInit {
       }
     );
   }
-  openBond(value,data){
+  openBond(value, data) {
     const fragmentData = {
       flag: value,
       data,
@@ -122,7 +123,7 @@ export interface PeriodicElement3 {
 }
 
 const ELEMENT_DATA3: PeriodicElement3[] = [
-  { position: 'Rahul Jain', name: '35,000', weight: 23 / 12 / 2019, symbol: 'ICICI FD', advice: 'Continue holding till maturity', astatus: 'Given', adate: '23/12/2019' },
-  { position: 'Rahul Jain', name: '35,000', weight: 23 / 12 / 2019, symbol: 'ICICI FD', advice: 'Continue holding till maturity', astatus: 'Given', adate: '23/12/2019' },
-  { position: 'Rahul Jain', name: '35,000', weight: 23 / 12 / 2019, symbol: 'ICICI FD', advice: 'Continue holding till maturity', astatus: 'Given', adate: '23/12/2019' },
+  { position: 'Rahul ', name: '35,000', weight: 23 / 12 / 2019, symbol: 'ICICI FD', advice: 'Continue holding till maturity', astatus: 'Given', adate: '23/12/2019' },
+  { position: 'Rahul Jain', name: ',000', weight: 23 / 12 / 2019, symbol: 'ICICI FD', advice: 'Continue holding till maturity', astatus: 'Given', adate: '23/12/2019' },
+  { position: 'Rahul ', name: '35,000', weight: 23 / 12 / 2019, symbol: 'ICICI FD', advice: 'Continue holding till maturity', astatus: 'Given', adate: '23/12/2019' },
 ];

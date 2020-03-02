@@ -33,13 +33,13 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
   ppfDataSource: any;
   potdDataSource: any;
   selectedAssetId: any = [];
-  nscDataSpurce: any;
-  ssyDataSpurce: any;
-  kvpDataSpurce: any;
-  scssDataSpurce: any;
+  nscDataSource: any;
+  ssyDataSource: any;
+  kvpDataSource: any;
+  scssDataSource: any;
   posavingDataSource: any;
-  pordDataSpurce: any;
-  pomisDataSpurce: any;
+  pordDataSource: any;
+  pomisDataSource: any;
   ppfCount: any;
   nscCount: any;
   ssyCount: any;
@@ -63,14 +63,15 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
       assetCategory: 10
     }
     this.isLoading = true;
-    this.ppfDataSource = [{}, {}, {}];
-    this.nscDataSpurce = [{}, {}, {}];
-    this.ssyDataSpurce = [{}, {}, {}];
-    this.kvpDataSpurce = [{}, {}, {}];
-    this.scssDataSpurce = [{}, {}, {}];
-    this.pordDataSpurce = [{}, {}, {}];
-    this.pomisDataSpurce = [{}, {}, {}];
-    this.potdDataSource = [{}, {}, {}];
+    this.ppfDataSource = new MatTableDataSource([{}, {}, {}]);
+    this.nscDataSource = new MatTableDataSource([{}, {}, {}]);
+    this.ssyDataSource = new MatTableDataSource([{}, {}, {}]);
+    this.kvpDataSource = new MatTableDataSource([{}, {}, {}]);
+    this.scssDataSource = new MatTableDataSource([{}, {}, {}]);
+    this.posavingDataSource = new MatTableDataSource([{}, {}, {}]);
+    this.pordDataSource = new MatTableDataSource([{}, {}, {}]);
+    this.pomisDataSource = new MatTableDataSource([{}, {}, {}]);
+    this.potdDataSource = new MatTableDataSource([{}, {}, {}]);
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {
       }
@@ -78,25 +79,25 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
   }
   getAllSchemeResponse(data) {
     this.isLoading = false;
-    this.ppfDataSource = new MatTableDataSource(data.PPF);
-    this.nscDataSpurce = new MatTableDataSource(data.NSC);
-    this.ssyDataSpurce = new MatTableDataSource(data.SSY);
-    this.kvpDataSpurce = new MatTableDataSource(data.KVP);
-    this.scssDataSpurce = new MatTableDataSource(data.SCSS);
-    this.posavingDataSource = new MatTableDataSource(data.PO_Savings);
-    this.pordDataSpurce = new MatTableDataSource(data.PO_RD);
-    this.pomisDataSpurce = new MatTableDataSource(data.PO_MIS);
-    this.potdDataSource = new MatTableDataSource(data.PO_TD);
+    this.ppfDataSource.data = data.PPF;
+    this.nscDataSource.data = data.NSC;
+    this.ssyDataSource.data = data.SSY;
+    this.kvpDataSource.data = data.KVP;
+    this.scssDataSource.data = data.SCSS;
+    this.posavingDataSource.data = data.PO_Savings;
+    this.pordDataSource.data = data.PO_RD;
+    this.pomisDataSource.data = data.PO_MIS;
+    this.potdDataSource.data = data.PO_TD;
     this.ppfDataSource['tableFlag'] = (data.PPF.length == 0) ? false : true;
-    this.nscDataSpurce['tableFlag'] = (data.NSC.length == 0) ? false : true;
-    this.ssyDataSpurce['tableFlag'] = (data.SSY.length == 0) ? false : true;
-    this.kvpDataSpurce['tableFlag'] = (data.KVP.length == 0) ? false : true;
-    this.scssDataSpurce['tableFlag'] = (data.SCSS.length == 0) ? false : true;
+    this.nscDataSource['tableFlag'] = (data.NSC.length == 0) ? false : true;
+    this.ssyDataSource['tableFlag'] = (data.SSY.length == 0) ? false : true;
+    this.kvpDataSource['tableFlag'] = (data.KVP.length == 0) ? false : true;
+    this.scssDataSource['tableFlag'] = (data.SCSS.length == 0) ? false : true;
     this.posavingDataSource['tableFlag'] = (data.PO_Savings.length == 0) ? false : true;
-    this.pordDataSpurce['tableFlag'] = (data.PO_RD.length == 0) ? false : true;
-    this.pomisDataSpurce['tableFlag'] = (data.PO_MIS.length == 0) ? false : true;
+    this.pordDataSource['tableFlag'] = (data.PO_RD.length == 0) ? false : true;
+    this.pomisDataSource['tableFlag'] = (data.PO_MIS.length == 0) ? false : true;
     this.potdDataSource['tableFlag'] = (data.PO_TD.length == 0) ? false : true;
-    console.log(data)
+    console.log("::::::::::::::::", data)
   }
   checkAll(flag, tableDataList, tableFlag) {
     console.log(flag, tableDataList)
@@ -153,7 +154,7 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
     let Component = (value == "advicePPF") ? AddPpfComponent : (value == "adviceNSC") ? AddNscComponent : (value == "adviceSSY") ? AddSsyComponent : (value == "adviceKVP") ? AddKvpComponent : (value == "adviceSCSS") ? AddScssComponent : (value == "advicePoSaving") ? AddPoSavingComponent : (value == 'advicePORD') ? AddPoRdComponent : (value == "advicePOTD") ? AddPoTdComponent : AddPoMisComponent;
     const fragmentData = {
       flag: value,
-      data: data == null? value:data,
+      data: data == null ? value : data,
       id: 1,
       state: 'open',
       componentName: Component

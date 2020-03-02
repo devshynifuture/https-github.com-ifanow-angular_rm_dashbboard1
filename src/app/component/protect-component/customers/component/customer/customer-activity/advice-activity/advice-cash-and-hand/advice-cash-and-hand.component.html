@@ -145,8 +145,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
     </table>
-    <div *ngIf="bankAccDataSource.tableFlag==false">
-        <h4 class="text-center pt-72">No Data Found</h4>
+    <div *ngIf="bankAccDataSource.tableFlag==false" class="b-a">
+        <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
@@ -249,8 +249,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
     </table>
-    <div *ngIf="cashInHandDataSource.tableFlag==false">
-        <h4 class="text-center pt-72">No Data Found</h4>
+    <div *ngIf="cashInHandDataSource.tableFlag==false" class="b-a">
+        <h4 class="text-center p-44">No Data Found</h4>
     </div>
 </div>
 <div *ngIf="allAdvice == true">

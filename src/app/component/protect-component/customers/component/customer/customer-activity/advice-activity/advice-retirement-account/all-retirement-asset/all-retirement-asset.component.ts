@@ -9,11 +9,11 @@ import { AddSuperannuationComponent } from '../../../../accounts/assets/retireme
 import { AddEPSComponent } from '../../../../accounts/assets/retirementAccounts/add-eps/add-eps.component';
 
 @Component({
-  selector: 'app-all-retrirement-asset',
-  templateUrl: './all-retrirement-asset.component.html',
-  styleUrls: ['./all-retrirement-asset.component.scss']
+  selector: 'app-all-retirement-asset',
+  templateUrl: './all-retirement-asset.component.html',
+  styleUrls: ['./all-retirement-asset.component.scss']
 })
-export class AllRetrirementAssetComponent implements OnInit {
+export class AllRetirementAssetComponent implements OnInit {
   displayedColumns: string[] = ['checkbox', 'name', 'desc', 'cvalue', 'empcon', 'emprcon', 'advice', 'astatus', 'adate', 'icon'];
   dataSource = ELEMENT_DATA;
   displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'advice', 'astatus', 'adate', 'icon'];
