@@ -92,6 +92,7 @@ export class SwpTransactionComponent implements OnInit {
     this.transactionSummary = {}
     this.childTransactions = []
     this.getdataForm(this.inputData)
+    Object.assign(this.transactionSummary, { clientId: this.inputData.clientId })
     Object.assign(this.transactionSummary, { transactType: 'SWP' });
     Object.assign(this.transactionSummary, { allEdit: true });
     Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
@@ -330,6 +331,8 @@ export class SwpTransactionComponent implements OnInit {
     } else {
       let obj = {
         productDbId: this.schemeDetails.id,
+        clientName:this.selectedFamilyMember,
+        holdingNature:this.getDataSummary.defaultClient.holdingType,
         mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
         productCode: this.schemeDetails.schemeCode,
         isin: this.schemeDetails.isin,
@@ -363,6 +366,7 @@ export class SwpTransactionComponent implements OnInit {
       obj = this.processTransaction.checkInstallments(obj, tenure, installment)
       if (this.multiTransact == true) {
         console.log('new purchase obj', this.childTransactions)
+        this.AddMultiTransaction();
         obj.childTransactions = this.childTransactions
       }
       console.log('swp json obj', obj)

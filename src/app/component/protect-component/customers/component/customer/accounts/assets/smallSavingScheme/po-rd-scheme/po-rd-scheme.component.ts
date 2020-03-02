@@ -75,8 +75,8 @@ export class PoRdSchemeComponent implements OnInit {
 
   getPoRdSchemedata() {
     // console.log(this.dataSource.data);
-    
-    
+
+
 
     const obj = {
       advisorId: this.advisorId,
@@ -96,10 +96,9 @@ export class PoRdSchemeComponent implements OnInit {
     if (data == undefined) {
       this.noData = 'No scheme found';
       this.dataSource.data = [];
-    }else if (data && data.postOfficeRDList.length != 0) {
-      console.log('getPoRdSchemedataResponse',data);
-      let dataStore = data.postOfficeRDList
-      this.dataSource.data = dataStore;
+    } else if (data && data.postOfficeRDList.length != 0) {
+      console.log('getPoRdSchemedataResponse :::::::::::::::', data);
+      this.dataSource.data = data.postOfficeRDList;
       this.dataSource.sort = this.sort;
       UtilService.checkStatusId(this.dataSource.filteredData);
       this.sumOfCurrentValue = data.sumOfCurrentValue;
@@ -185,7 +184,7 @@ export class PoRdSchemeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.dataSource.data = [{},{},{}]
+            this.dataSource.data = [{}, {}, {}]
             this.isLoading = true;
             this.getPoRdSchemedata();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);

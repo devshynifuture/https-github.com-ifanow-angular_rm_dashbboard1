@@ -17,7 +17,8 @@
         </div>
         <div class="col-md-5">
             <mat-form-field class="w-100">
-                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                    [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Select family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
                         <span>{{f.userName}}</span>
@@ -37,7 +38,10 @@
             <div class="col-md-3">
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
-                        <input matInput type="text" formControlName="monthlyContribution" #amountInvest maxlength="10" class="form-control br-0 rupess" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY">
+                        <input matInput type="text" (focusout)="numberMultiplesOfFive($event)"
+                            formControlName="monthlyContribution" #amountInvest maxlength="10"
+                            class="form-control br-0 rupess" appInputValueValidation
+                            [inputValidator]="validatorType.NUMBER_ONLY">
                         <mat-error *ngIf="PORDForm.get('monthlyContribution').errors?.required" class="f-12">
                             This field is required
                         </mat-error>
@@ -45,6 +49,9 @@
                             Should be greater than or equal 10
                         </mat-error>
                         <mat-hint align="end" class="f-12">{{amountInvest.value.length}}/10</mat-hint>
+                        <mat-error *ngIf="multiplesOfFive && PORDForm.get('monthlyContribution').touched">
+                            Value must be in multiples of five
+                        </mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -56,7 +63,8 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput (click)="KVPpicker.open()" formControlName="commDate" [max]="maxDate" [matDatepicker]="KVPpicker" class="form-control br-0" readonly>
+                        <input matInput (click)="KVPpicker.open()" formControlName="commDate" [max]="maxDate"
+                            [matDatepicker]="KVPpicker" class="form-control br-0" readonly>
                         <mat-datepicker-toggle matSuffix [for]="KVPpicker"></mat-datepicker-toggle>
                         <mat-datepicker #KVPpicker></mat-datepicker>
                         <mat-error class="f-12">
@@ -74,12 +82,43 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <mat-select formControlName="tenure" class="form-control br-0">
-                            <mat-option value="">Select tenure</mat-option>
-                            <mat-option value="3">3 Years</mat-option>
-                            <mat-option value="4">4 Years</mat-option>
+                            <mat-option value="" disabled>Select tenure</mat-option>
                             <mat-option value="5">5 Years</mat-option>
                         </mat-select>
-                        <mat-error class="f-12" *ngIf="PORDForm.get('tenure').value == '' && PORDForm.get('tenure').touched">
+                        <mat-error class="f-12"
+                            *ngIf="PORDForm.get('tenure').value == '' && PORDForm.get('tenure').touched">
+                            This field is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-40">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8">Interest rate</h5>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input #interestRate matInput type="number" (keyup)="onChange($event)" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage"
+                        formControlName="interestRate">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-40" >
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-12">Interest compounding</h5>
+            </div>
+            <div class="col-md-3 pr-0">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <mat-select #compound formControlName="compound" class="form-control br-0">
+                            <mat-option value="" disabled>Select option</mat-option>
+                            <mat-option value="3">Quarterly</mat-option>
+                        </mat-select>
+                        <mat-error class="f-12 pt-4">
                             This field is required
                         </mat-error>
                     </mat-form-field>
@@ -120,7 +159,8 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input formControlName="rdNum" matInput #rdNum type="text" maxlength="20" class="form-control br-0">
+                    <mat-form-field> <input formControlName="rdNum" matInput #rdNum type="text" maxlength="20"
+                            class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{rdNum.value.length}}/20</mat-hint>
                     </mat-form-field>
@@ -133,7 +173,8 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input matInput formControlName="poBranch" #poBranch type="text" maxlength="20" class="form-control br-0">
+                    <mat-form-field> <input matInput formControlName="poBranch" #poBranch type="text" maxlength="20"
+                            class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{poBranch.value.length}}/20</mat-hint>
                     </mat-form-field>
@@ -148,7 +189,9 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input type="text" matInput formControlName="linkedBankAcc" #linkedBankAcc maxlength="16" class="form-control br-0" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY">
+                    <mat-form-field> <input type="text" matInput formControlName="linkedBankAcc" #linkedBankAcc
+                            maxlength="16" class="form-control br-0" appInputValueValidation
+                            [inputValidator]="validatorType.NUMBER_ONLY">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{linkedBankAcc.value.length}}/16</mat-hint>
                     </mat-form-field>
@@ -161,7 +204,8 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input matInput formControlName="description" #description maxlength="60" class="form-control br-0">
+                    <mat-form-field> <input matInput formControlName="description" #description maxlength="60"
+                            class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                     </mat-form-field>
@@ -178,7 +222,8 @@
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close(false)">Cancel</h5>
         </div>
-        <div class="col-md-8 right text-right" (click)="addPORD()"> <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
+        <div class="col-md-8 right text-right" (click)="addPORD()"> <button mat-button
+                class="btn-bottom br-0 text-inherit">Save</button>
         </div>
     </div>
 </div>

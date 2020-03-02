@@ -43,8 +43,8 @@
                     <td *matCellDef="let element let i = index" class="br" mat-cell>
                         <div class="bar">{{isLoading ? '' : i + 1 }} </div>
                     </td>
-                    <td *matFooterCellDef class=" f-600 pl-4 t-2 text-left" mat-footer-cell>
-                        <div class="bar">{{isLoading ? '' : 'Total' }} </div>
+                    <td *matFooterCellDef class=" " mat-footer-cell>
+                        <div class="bar"></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="owner">
@@ -52,7 +52,9 @@
                     <td *matCellDef="let element" class="br t-18" mat-cell>
                         <div class="bar"> {{element.ownerName}} </div>
                     </td>
-                    <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
+                    <td *matFooterCellDef class="br f-600 pr-20 text-right" mat-footer-cell>
+                        {{isLoading ? '' : 'Total' }}
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="type">
                     <th mat-sort-header="accountType" *matHeaderCellDef class="br" mat-header-cell> Account type</th>
@@ -60,7 +62,7 @@
                         <div class="bar">
                             {{isLoading? ' ' : (element.accountType == 1) ? 'Current' : 'Savings'}} </div>
                     </td>
-                    <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
+                    <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
                 </ng-container>
                 <ng-container matColumnDef="amt">
                     <th mat-sort-header="balanceAsOn" *matHeaderCellDef class="br text-left" mat-header-cell> Balance as on
@@ -68,15 +70,15 @@
                     <td *matCellDef="let element" class="br text-left" mat-cell>
                         <div class="bar"> {{element.balanceAsOn | date:'dd/MM/yyyy'}} </div>
                     </td>
-                    <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
+                    <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
                 </ng-container>
                 <ng-container matColumnDef="rate">
                     <th mat-sort-header="interestRate" *matHeaderCellDef class="br text-right" mat-header-cell> Rate
                     </th>
-                    <td *matCellDef="let element" class="br text-right" mat-cell>
+                    <td *matCellDef="let element" class="br text-left" mat-cell>
                         <div class="bar"> {{element.interestRate}} </div>
                     </td>
-                    <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
+                    <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
                 </ng-container>
                 <ng-container matColumnDef="bal">
                     <th mat-sort-header="accountBalance" *matHeaderCellDef class="br textRight t-5" mat-header-cell>
@@ -85,7 +87,7 @@
                     <td *matCellDef="let element" class="br amt text-right t-5" mat-cell>
                         <div class="bar"> {{element.accountBalance}} </div>
                     </td>
-                    <td *matFooterCellDef class="br t-20 f-500 p-8 text-right" mat-footer-cell appFormatNumber [value]="totalAccountBalance">
+                    <td *matFooterCellDef class="br t-20 f-600 p-8 text-right" mat-footer-cell appFormatNumber [value]="totalAccountBalance">
                         <div class="bar"> {{totalAccountBalance || '-'}} </div>
                     </td>
                 </ng-container>
@@ -141,7 +143,7 @@
                 <tr *matFooterRowDef="displayedColumns7;sticky: true" [hidden]="isLoading" mat-footer-row></tr>
             </table>
             <div *ngIf="bankAccountList.filteredData.length == 0" class="d-flex flex-column align-items-center">
-                <img class="width400" src="assets/images/svg/noDataFound.svg">
+                <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12">{{noData}}</h4>
                 <button (click)="openCashAndBank('','')" class="btn-primary addon v-middle" mat-stroked-button>ADD NEW
                 </button>
@@ -178,12 +180,12 @@
             <table *ngIf="cashInHandList.filteredData.length > 0" matSort #cashInHandListTable="matSort" [dataSource]="cashInHandList" id="table-low" mat-table class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
                 <ng-container matColumnDef="no">
-                    <th mat-sort-header="no" *matHeaderCellDef class="br t-2" mat-header-cell> No</th>
-                    <td *matCellDef="let element let i = index" class="br t-2" mat-cell>
+                    <th mat-sort-header="no" *matHeaderCellDef class="br " mat-header-cell> No</th>
+                    <td *matCellDef="let element let i = index" class="br " mat-cell>
                         <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                     </td>
-                    <td *matFooterCellDef class=" t-7 f-500 pl-4 text-left" mat-footer-cell>
-                        <div class="bar"> {{isLoading ? '' : 'Total' }} </div>
+                    <td *matFooterCellDef class=" f-500 pl-4 text-left" mat-footer-cell>
+                        <div class="bar"> </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="owner">
@@ -191,15 +193,18 @@
                     <td *matCellDef="let element" class="br t-25" mat-cell>
                         <div class="bar">{{element.ownerName}} </div>
                     </td>
-                    <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
+                    <td *matFooterCellDef class="br f-600 pr-20 text-right" mat-footer-cell>
+                        {{isLoading ? '' : 'Total' }}
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="cash">
-                    <th mat-sort-header="cashValue" *matHeaderCellDef class="br textRight" mat-header-cell> Cash balance
+                    <th mat-sort-header="cashValue" *matHeaderCellDef class="br textRight" mat-header-cell>
+                        Cash balance
                     </th>
-                    <td *matCellDef="let element" class="br text-right" mat-cell>
+                    <td *matCellDef="let element" class="br amt text-right" mat-cell>
                         <div class="bar amt" appFormatNumber> {{isLoading ? ' ' : element.cashValue}} </div>
                     </td>
-                    <td *matFooterCellDef class="br t-20 p-8 f-500 text-right" mat-footer-cell appFormatNumber [value]="sumOfCashValue">
+                    <td *matFooterCellDef class="br p-8 amt f-600 text-right" mat-footer-cell appFormatNumber [value]="sumOfCashValue">
                         <div class="bar"> {{isLoading ? '' : sumOfCashValue || '-'}} </div>
                     </td>
                 </ng-container>
@@ -250,9 +255,9 @@
                 <tr mat-footer-row *matFooterRowDef="displayedColumns8;sticky: true" [hidden]="isLoading"></tr>
             </table>
             <div *ngIf="cashInHandList.filteredData.length == 0" class="d-flex flex-column align-items-center">
-                <img class="width400" src="assets/images/svg/noDataFound.svg">
+                <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12">{{noData}}</h4>
-                <button (click)="openCashInHand('', '')" class="btn-primary addon v-middle mt-20" mat-stroked-button>ADD
+                <button (click)="openCashInHand('', '')" class="btn-primary addon v-middle" mat-stroked-button>ADD
                     NEW
                 </button>
             </div>

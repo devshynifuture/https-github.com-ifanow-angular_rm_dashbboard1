@@ -120,8 +120,8 @@
         <tr *matFooterRowDef="footerRowColumn;sticky: true" [hidden]="isLoading" mat-footer-row></tr>
     </table>
     <div *ngIf="datasource.filteredData.length == 0" class="d-flex flex-column align-items-center">
-        <img class="width400" src="assets/images/svg/noDataFound.svg">
-        <h4 class="text-center pt-12">No Scheme Found</h4>
+        <img class="width300" src="assets/images/svg/noDataFound.svg">
+        <h4 class="text-center pt-12">No data found</h4>
         <button (click)="openAddPOSAVING(null)" class="btn-primary addon v-middle" mat-stroked-button>
             ADD NEW
         </button>

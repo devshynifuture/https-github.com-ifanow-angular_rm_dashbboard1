@@ -89,6 +89,7 @@ export class StpTransactionComponent implements OnInit {
     this.getdataForm(this.inputData)
     this.childTransactions = []
     this.transactionSummary = {}
+    Object.assign(this.transactionSummary, { clientId: this.inputData.clientId })
     Object.assign(this.transactionSummary, { allEdit: true });
     Object.assign(this.transactionSummary, { transactType: 'STP' });
     Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
@@ -406,6 +407,8 @@ export class StpTransactionComponent implements OnInit {
       let obj = {
 
         productDbId: this.schemeDetails.id,
+        clientName:this.selectedFamilyMember,
+        holdingNature:this.getDataSummary.defaultClient.holdingType,
         toProductDbId: this.schemeDetailsTransfer.id,
         mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
         toMutualFundSchemeMasterId: this.schemeTransfer.mutualFundSchemeMasterId,
@@ -449,6 +452,7 @@ export class StpTransactionComponent implements OnInit {
       console.log('json stp', obj)
       if (this.multiTransact == true) {
         console.log('new purchase obj', this.childTransactions)
+        this.AddMultiTransaction();
         obj.childTransactions = this.childTransactions
       }
       this.barButtonOptions.active = true;

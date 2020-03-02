@@ -185,3 +185,66 @@
     }
   }
 }
+
+.color-picker-tabs {
+  .mat-tab-label {
+    height: 50px !important;
+    opacity: 1 !important;
+    color: #595252 !important;
+  }
+
+  .mat-tab-label-active {
+    color: #214B73 !important;
+  }
+
+
+  .mat-tab-group.mat-primary .mat-ink-bar {
+    background-color: #214B73 !important;
+
+  }
+
+}
+
+.url {
+  .mat-form-field-infix {
+    display: flex;
+  }
+}
+
+.url-details {
+  padding-left: 15px;
+  color: #83959D;
+  font-family: 'roboto';
+
+  ul {
+    list-style-type: circle;
+
+
+  }
+}
+
+.setting-activity {
+  tr.mat-header-row {
+    height: 40px;
+  }
+
+  #table-low tbody td {
+    padding: 6px 8px !important;
+
+  }
+
+  tr.mat-row {
+    height: 40px;
+  }
+}
+
+.add-task-template {
+  .mat-radio-button {
+    min-width: 200px;
+
+  }
+
+  .mat-radio-label {
+    height: 40px;
+  }
+}

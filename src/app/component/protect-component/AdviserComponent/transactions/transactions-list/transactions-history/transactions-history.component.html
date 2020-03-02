@@ -15,14 +15,14 @@
     <div class="row pb-20">
         <div class="col-md-12 p-0">
             <p class="m-0 text-custom text-uppercase f-12 roboto">SCHEME</p>
-            <p class="m-0 text-black">Axis Liquid Fund - Regular Plan - Weekly Dividend Option
+            <p class="m-0 text-black">{{transactionData.schemeName}}
             </p>
         </div>
     </div>
     <div class="row">
         <div class="col-md-6 pl-0">
             <p class="m-0 f-12 text-uppercase text-primitive">AMOUNT</p>
-            <p class="m-0 text-black roboto">₹5,00,000/Lumpsum</p>
+            <p class="m-0 text-black roboto">₹amount/Lumpsum</p>
         </div>
         <div class="col-md-6 pr-0">
             <p class="m-0 f-12 text-uppercase text-primitive">FOLIO</p>
@@ -30,7 +30,7 @@
         </div>
         <div class="col-md-6 pl-0 pt-20">
             <p class="m-0 f-12 text-uppercase text-primitive">Investor details</p>
-            <p class="m-0 text-black roboto">Rahul Jain IIN 5011102595 (Joint)</p>
+            <p class="m-0 text-black roboto">{{transactionData.clientName}} (Joint)</p>
         </div>
         <div class="col-md-6 pr-0 pt-20">
             <p class="m-0 f-12 text-uppercase text-primitive">ARN/RIA and EUIN</p>
@@ -38,7 +38,7 @@
         </div>
         <div class="col-md-6 pl-0 pt-20">
             <p class="m-0 f-12 text-uppercase text-primitive">Transaction platform</p>
-            <p class="m-0 text-black roboto">NSE NMF II</p>
+            <p class="m-0 text-black roboto">{{transactionData.platformName}}</p>
         </div>
         <div class="col-md-6 pr-0 pt-20">
             <p class="m-0 f-12 text-uppercase text-primitive">TRANSACTION INITIATION</p>
@@ -50,76 +50,50 @@
         </div>
         <div class="col-md-6 pr-0 pt-20">
             <p class="m-0 f-12 text-uppercase text-primitive">Bank A/c details</p>
-            <p class="m-0 text-black roboto">ICICI Bank SavingS A/c 1032*****710</p>
+            <p class="m-0 text-black roboto" *ngIf="transactionDetailData">{{transactionDetailData.bankName}}
+                {{transactionDetailData.bankAccountType}} A/c {{transactionDetailData.bankAccountNumber}}</p>
         </div>
         <div class="col-md-6 pl-0 pt-20">
             <p class="m-0 f-12 text-uppercase text-primitive">TRANSACTION ID</p>
-            <p class="m-0 text-black roboto">89798773239
+            <p class="m-0 text-black roboto">{{transactionData.transactionNumber}}
             </p>
         </div>
     </div>
 </div>
 
-<div class="p-28 pt-20">
-    <div class="row">
-        <div class="col-md-6 p-0">
-            <h5 class="m-0 f-500 text-black">Status</h5>
+<div class="p-28 pb-100">
+    <div *ngIf="!(transactionData.status==0 || transactionData.status==1)">
+        <div class="row">
+            <div class="col-md-6 p-0">
+                <h5 class="m-0 f-500 text-black">Status</h5>
+            </div>
+            <div class="col-md-6 p-0 text-right right">
+                <button mat-stroked-button class="primary-sm">REFRESH</button>
+            </div>
         </div>
-        <div class="col-md-6 p-0 text-right right">
-            <button mat-stroked-button class="primary-sm">REFRESH</button>
+        <div *ngFor="let singleStep of transactionDetails" class="row">
+            <div class="col-md-1 pl-0">
+                <mat-checkbox [checked]="singleStep.checked"></mat-checkbox>
+            </div>
+            <div class="col-md-11">
+                <h5 class="m-0 text-black">{{singleStep.name}}</h5>
+                <!-- <p class="m-0 roboto text-danger f-12">You will soon receive an OTP from NSE</p> -->
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-1 pl-0">
-            <mat-radio-group aria-label="Select an option">
-                <mat-radio-button value="1"></mat-radio-button>
-            </mat-radio-group>
+    <div *ngIf="transactionData.status==0 || transactionData.status==1">
+        <div class="row">
+            <div class="col-md-1 pl-0">
+                <mat-radio-group aria-label="Select an option">
+                    <mat-radio-button value="1"></mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="col-md-11">
+                <h5 class="m-0 text-black">Rejected</h5>
+            </div>
         </div>
-        <div class="col-md-11">
-            <h5 class="m-0 text-black">Pending authorization</h5>
-            <p class="m-0 roboto text-danger f-12">You will soon receive an OTP from NSE</p>
-        </div>
-        <!-- <div class="col-md-1 pl-0">
-            <mat-radio-group aria-label="Select an option">
-                <mat-radio-button value="1"></mat-radio-button>
-            </mat-radio-group>
-        </div>
-        <div class="col-md-11">
-            <h5 class="m-0 text-black">Payment successful</h5>
-        </div>
-        <div class="col-md-1 pl-0">
-            <mat-radio-group aria-label="Select an option">
-                <mat-radio-button value="1"></mat-radio-button>
-            </mat-radio-group>
-        </div>
-        <div class="col-md-11">
-            <h5 class="m-0 text-black">Order submitted to AMC</h5>
-        </div>
-        <div class="col-md-1 pl-0">
-            <mat-radio-group aria-label="Select an option">
-                <mat-radio-button value="1"></mat-radio-button>
-            </mat-radio-group>
-        </div>
-        <div class="col-md-11">
-            <h5 class="m-0 text-black">Order processed</h5>
-        </div>
-        <div class="col-md-1 pl-0">
-            <mat-radio-group aria-label="Select an option">
-                <mat-radio-button value="1"></mat-radio-button>
-            </mat-radio-group>
-        </div>
-        <div class="col-md-11">
-            <h5 class="m-0 text-black">Units allotted</h5>
-        </div>
-        <div class="col-md-1 pl-0">
-            <mat-radio-group aria-label="Select an option">
-                <mat-radio-button value="1"></mat-radio-button>
-            </mat-radio-group>
-        </div>
-        <div class="col-md-11">
-            <h5 class="m-0 text-black">Transaction reflecting in portfolio</h5>
-        </div> -->
     </div>
+
 </div>
 
 
