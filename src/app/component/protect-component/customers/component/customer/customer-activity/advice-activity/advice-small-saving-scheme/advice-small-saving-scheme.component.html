@@ -163,8 +163,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf="ppfDataSource.tableFlag==false">
-        <h4 class="text-center pt-44">No Data Found</h4>
+    <div *ngIf="ppfDataSource.tableFlag==false" class="b-a">
+        <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
@@ -182,17 +182,17 @@
             </mat-menu>
         </div>
     </div>
-    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="nscDataSpurce"
+    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="nscDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox [checked]="nscCount==nscDataSpurce.data.length"
-                    [indeterminate]="nscCount>0 && nscCount<nscDataSpurce.data.length"
-                    *ngIf="isLoading==false && nscDataSpurce.tableFlag" (change)="checkAll($event,nscDataSpurce,'nsc')">
+                <mat-checkbox [checked]="nscCount==nscDataSource.data.length"
+                    [indeterminate]="nscCount>0 && nscCount<nscDataSource.data.length"
+                    *ngIf="isLoading==false && nscDataSource.tableFlag" (change)="checkAll($event,nscDataSource,'nsc')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox [checked]="element.selected" (change)="checkSingle($event,element,nscDataSpurce,'nsc')"
+                <mat-checkbox [checked]="element.selected" (change)="checkSingle($event,element,nscDataSource,'nsc')"
                     *ngIf="isLoading==false"></mat-checkbox>
             </td>
         </ng-container>
@@ -272,8 +272,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
     </table>
-    <div *ngIf="nscDataSpurce.tableFlag==false">
-        <h4 class="text-center pt-44">No Data Found</h4>
+    <div *ngIf="nscDataSource.tableFlag==false" class="b-a">
+        <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
@@ -291,17 +291,17 @@
             </mat-menu>
         </div>
     </div>
-    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="ssyDataSpurce"
+    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="ssyDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox [checked]="ssyCount==ssyDataSpurce.data.length"
-                    [indeterminate]="ssyCount>0 && ssyCount<ssyDataSpurce.data.length"
-                    *ngIf="isLoading==false && ssyDataSpurce.tableFlag" (change)="checkAll($event,nscDataSpurce,'ssy')">
+                <mat-checkbox [checked]="ssyCount==ssyDataSource.data.length"
+                    [indeterminate]="ssyCount>0 && ssyCount<ssyDataSource.data.length"
+                    *ngIf="isLoading==false && ssyDataSource.tableFlag" (change)="checkAll($event,nscDataSource,'ssy')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,ssyDataSpurce,'ssy')">
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,ssyDataSource,'ssy')">
                 </mat-checkbox>
             </td>
         </ng-container>
@@ -368,8 +368,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf="ssyDataSpurce.tableFlag==false">
-        <h4 class="text-center pt-44">No Data Found</h4>
+    <div *ngIf="ssyDataSource.tableFlag==false" class="b-a">
+        <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
@@ -387,17 +387,17 @@
             </mat-menu>
         </div>
     </div>
-    <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="kvpDataSpurce"
+    <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="kvpDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox [checked]="kvpCount==kvpDataSpurce.data.length"
-                    [indeterminate]="kvpCount>0 && kvpCount<kvpDataSpurce.data.length"
-                    *ngIf="isLoading==false && kvpDataSpurce.tableFlag" (change)="checkAll($event,kvpDataSpurce,'kvp')">
+                <mat-checkbox [checked]="kvpCount==kvpDataSource.data.length"
+                    [indeterminate]="kvpCount>0 && kvpCount<kvpDataSource.data.length"
+                    *ngIf="isLoading==false && kvpDataSource.tableFlag" (change)="checkAll($event,kvpDataSource,'kvp')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,kvpDataSpurce,'kvp')"
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,kvpDataSource,'kvp')"
                     [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
@@ -485,8 +485,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf="kvpDataSpurce.tableFlag==false">
-        <h4 class="text-center pt-44">No Data Found</h4>
+    <div *ngIf="kvpDataSource.tableFlag==false" class="b-a">
+        <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
@@ -504,18 +504,18 @@
             </mat-menu>
         </div>
     </div>
-    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="scssDataSpurce"
+    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="scssDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox [checked]="scssCount==scssDataSpurce.data.length"
-                    [indeterminate]="scssCount>0 && scssCount<scssDataSpurce.data.length"
-                    (change)="checkAll($event,scssDataSpurce,'scss')"
-                    *ngIf="isLoading==false && scssDataSpurce.tableFlag">
+                <mat-checkbox [checked]="scssCount==scssDataSource.data.length"
+                    [indeterminate]="scssCount>0 && scssCount<scssDataSource.data.length"
+                    (change)="checkAll($event,scssDataSource,'scss')"
+                    *ngIf="isLoading==false && scssDataSource.tableFlag">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,scssDataSpurce,'scss')"
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,scssDataSource,'scss')"
                     [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
@@ -584,8 +584,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
     </table>
-    <div *ngIf="scssDataSpurce.tableFlag==false">
-        <h4 class="text-center pt-44">No Data Found</h4>
+    <div *ngIf="scssDataSource.tableFlag==false" class="b-a">
+        <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
@@ -614,7 +614,7 @@
             </th>
             <td mat-cell *matCellDef="let element">
                 <mat-checkbox *ngIf="isLoading==false" [checked]="element.selected"
-                    (change)="checkSingle($event,element,posavingDataSource,'posaving')"></mat-checkbox>
+                    (change)="checkSingle($event, element,posavingDataSource,'posaving')"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -670,9 +670,9 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
     </table>
-    <!-- <div *ngIf="posavingDataSource.tableFlag==false">
-        <h4 class="text-center pt-44">No Data Found</h4>
-    </div> -->
+    <div *ngIf="posavingDataSource.tableFlag==false" class="b-a">
+        <h4 class="text-center p-44">No Data Found</h4>
+    </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
             <h5 class="m-0 text-black pt-8">PO RD</h5>
@@ -689,17 +689,17 @@
             </mat-menu>
         </div>
     </div>
-    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="pordDataSpurce"
+    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="pordDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox (change)="checkAll($event,scssDataSpurce,'pord')"
-                    [checked]="pordCount==pordDataSpurce.data.length"
-                    [indeterminate]="pordCount>0 && pordCount<pordDataSpurce.data.length"
-                    *ngIf="isLoading==false && pordDataSpurce.tableFlag"></mat-checkbox>
+                <mat-checkbox (change)="checkAll($event,scssDataSource,'pord')"
+                    [checked]="pordCount==pordDataSource.data.length"
+                    [indeterminate]="pordCount>0 && pordCount<pordDataSource.data.length"
+                    *ngIf="isLoading==false && pordDataSource.tableFlag"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,pordDataSpurce,'pord')">
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,pordDataSource,'pord')">
                 </mat-checkbox>
             </td>
         </ng-container>
@@ -767,8 +767,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf="pordDataSpurce.tableFlag==false">
-        <h4 class="text-center pt-44">No Data Found</h4>
+    <div *ngIf="pordDataSource.tableFlag==false" class="b-a">
+        <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
@@ -877,8 +877,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
     </table>
-    <div *ngIf="potdDataSource.tableFlag==false">
-        <h4 class="text-center pt-44">No Data Found</h4>
+    <div *ngIf="potdDataSource.tableFlag==false" class="b-a">
+        <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
@@ -896,18 +896,18 @@
             </mat-menu>
         </div>
     </div>
-    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="pomisDataSpurce"
+    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="pomisDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <mat-checkbox [checked]="pomisCount==pomisDataSpurce.data.length"
-                    [indeterminate]="pomisCount>0 && pomisCount<pomisDataSpurce.data.length"
-                    *ngIf="isLoading==false && pomisDataSpurce.tableFlag"
-                    (change)="checkAll($event,pomisDataSpurce,'pomis')">
+                <mat-checkbox [checked]="pomisCount==pomisDataSource.data.length"
+                    [indeterminate]="pomisCount>0 && pomisCount<pomisDataSource.data.length"
+                    *ngIf="isLoading==false && pomisDataSource.tableFlag"
+                    (change)="checkAll($event,pomisDataSource,'pomis')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,pomisDataSpurce,'pomis')"
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,pomisDataSource,'pomis')"
                     [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
@@ -977,8 +977,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
     </table>
-    <div *ngIf="pomisDataSpurce.tableFlag==false">
-        <h4 class="text-center pt-44">No Data Found</h4>
+    <div *ngIf="pomisDataSource.tableFlag==false" class="b-a">
+        <h4 class="text-center p-44">No Data Found</h4>
     </div>
 </div>
 <div *ngIf="allAdvice == true">
