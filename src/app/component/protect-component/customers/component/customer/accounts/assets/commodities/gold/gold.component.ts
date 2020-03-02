@@ -45,7 +45,7 @@ export class GoldComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
-    this.getdataForm(data);
+    // this.getdataForm(data);
   }
 
   get data() {
