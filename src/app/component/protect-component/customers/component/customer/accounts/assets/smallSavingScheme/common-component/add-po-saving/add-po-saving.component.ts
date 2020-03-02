@@ -42,13 +42,14 @@ export class AddPoSavingComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
-    this.getdataForm(data);
     this.accBalance = 1500000;
   }
 
   get data() {
     return this.inputData;
   }
+
+  @Input() popupHeaderText:String = 'Add Post office savings a/c';
 
   display(value) {
     console.log('value selected', value);
@@ -69,6 +70,7 @@ export class AddPoSavingComponent implements OnInit {
     this.isOptionalField = true;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.getdataForm(this.data);
 
   }
   getFormDataNominee(data) {

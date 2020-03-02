@@ -34,26 +34,9 @@ export class CashflowUpperSurplusComponent implements OnInit {
     this.getCashflowMonthlySurplusData();
   }
 
-  alterTable(table: (UpperTableBox | Group)[], field: string, value: string, index: number): (UpperTableBox | Group)[] {
-    table[index][field] = value;
-    this.updateTotal(table[index]);
-    return table;
-  }
-
-  updateTotal(object: (UpperTableBox | Group)) {
-    let sum = 0;
-    for (let i = 1; i <= 12; i++) {
-      sum = sum + parseInt(object[`month${i}`]);
-    }
-    object['total'] = String(sum);
-  }
-
   changeTableTdValue(value: string, field: string, index: number) {
-    if (field === 'description' && this.editMode) {
-      this.cashflowService.alterTable(ELEMENT_DATA3, field, value, index);
-    } else if (ValidatorType.NUMBER_ONLY.test(value) && this.editMode) {
-      console.log("im here:::::::::::::");
-      this.alterTable(ELEMENT_DATA3, field, value, index);
+    if (ValidatorType.NUMBER_ONLY.test(value)) {
+      ELEMENT_DATA3 = this.cashflowService.alterTable(ELEMENT_DATA3, field, value, index);
     } else {
       this.onlyNumbers = '';
       this.eventService.openSnackBar("This input only takes numbers", "DISMISS");

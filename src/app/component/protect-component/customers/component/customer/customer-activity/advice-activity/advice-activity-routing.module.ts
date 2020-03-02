@@ -19,55 +19,55 @@ import { AdviceStocksComponent } from './advice-stocks/advice-stocks.component';
 const routes: Routes = [
   {
     path: '',
-    component : AdviceActivityComponent,
+    component: AdviceActivityComponent,
     children: [
-    {
-      path: 'all-portfolio',
-      component: AdviceAllPortfolioComponent
-    },
-    {
-      path:'',
-      redirectTo:'all-portfolio',
-      pathMatch:'full'
-    },
-    {
-      path: 'mutualFund',
-      component: AdviceMutualFundComponent
-    },{
-      path: 'stocks',
-      component: AdviceStocksComponent
-    },  {
-      path: 'asset',
-      component: AdviceAssetsComponent
-    }, {
-      path: 'fixedIncome',
-      component: AdviceFixedIncomeComponent
-    }, {
-      path: 'realAsset',
-      component: AdviceRealAssetComponent
-    }, {
-      path: 'retirement',
-      component: AdviceRetirementAccountComponent
-    }, {
-      path: 'smallSavingScheme',
-      component: AdviceSmallSavingSchemeComponent
-    },{
-      path: 'cashHand',
-      component: AdviceCashAndHandComponent
-    },{
-      path: 'commodities',
-      component: AdviceCommoditiesComponent
-    },{
-      path: 'libilities',
-      component: AdviceLibilitiesComponent
-    },{
-      path: 'lifeInsurance',
-      component: AdviceLifeInsuranceComponent
-    },{
-      path: 'generalInsurance',
-      component: AdviceGeneralInsuranceComponent
-    }
-  ]
+      {
+        path: 'all-portfolio',
+        component: AdviceAllPortfolioComponent
+      },
+      {
+        path: '',
+        redirectTo: 'all-portfolio',
+        pathMatch: 'full'
+      },
+      {
+        path: 'mutualFund',
+        component: AdviceMutualFundComponent
+      }, {
+        path: 'stocks',
+        component: AdviceStocksComponent
+      }, {
+        path: 'asset',
+        component: AdviceAssetsComponent
+      }, {
+        path: 'fixedIncome',
+        component: AdviceFixedIncomeComponent
+      }, {
+        path: 'realAsset',
+        component: AdviceRealAssetComponent
+      }, {
+        path: 'retirement',
+        component: AdviceRetirementAccountComponent
+      }, {
+        path: 'smallSavingScheme',
+        component: AdviceSmallSavingSchemeComponent
+      }, {
+        path: 'cashHand',
+        component: AdviceCashAndHandComponent
+      }, {
+        path: 'commodities',
+        component: AdviceCommoditiesComponent
+      }, {
+        path: 'libilities',
+        component: AdviceLibilitiesComponent
+      }, {
+        path: 'lifeInsurance',
+        component: AdviceLifeInsuranceComponent
+      }, {
+        path: 'generalInsurance',
+        component: AdviceGeneralInsuranceComponent
+      }
+    ]
   },
 ];
 

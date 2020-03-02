@@ -150,6 +150,7 @@ export class ScssSchemeComponent implements OnInit {
   }
 
   openAddSCSS(data, flag) {
+    let popupHeaderText = !!data ? 'Edit Senior citizen savings scheme (SCSS)' : 'Add Senior citizen savings scheme (SCSS)';
     const fragmentData = {
       flag: 'addSCSS',
       data,
@@ -157,6 +158,9 @@ export class ScssSchemeComponent implements OnInit {
       state: (flag == 'detailedScss') ? 'open35' : 'open',
       componentName: (flag == 'detailedScss') ? DetailedScssComponent : AddScssComponent
     };
+    if(flag != 'detailedScss') {
+      fragmentData['popupHeaderText'] = popupHeaderText;
+    }
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);

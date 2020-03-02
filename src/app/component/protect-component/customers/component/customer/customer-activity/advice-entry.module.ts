@@ -5,6 +5,7 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
 import { SuggestAdviceComponent } from './advice-activity/suggest-advice/suggest-advice.component';
 import { MaterialModule } from 'src/app/material/material';
 import { GiveAdviceComponent } from './advice-activity/give-advice/give-advice.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 export const componentList = [
   EmailAdviceComponent,
@@ -17,8 +18,10 @@ export const componentList = [
   declarations: [componentList],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     CustomDirectiveModule,
-    MaterialModule
+    MaterialModule,
   ]
 })
 export class AdviceEntryModule {
