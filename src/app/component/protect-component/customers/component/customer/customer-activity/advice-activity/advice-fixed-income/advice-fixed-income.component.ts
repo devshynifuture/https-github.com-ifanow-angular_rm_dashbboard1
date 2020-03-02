@@ -146,7 +146,7 @@ export class AdviceFixedIncomeComponent implements OnInit {
     );
   }
   openAddEdit(value, data) {
-    let component = (value == 'adviceFixedDeposit') ? FixedDepositComponent : (value == 'adviceRecurringDeposit') ? RecuringDepositComponent : BondsComponent
+    let component = (value == 'adviceFixedDeposit') ? FixedDepositComponent : (value == 'adviceRecurringDeposit') ? RecuringDepositComponent : BondsComponent;
     const fragmentData = {
       flag: value,
       data,
