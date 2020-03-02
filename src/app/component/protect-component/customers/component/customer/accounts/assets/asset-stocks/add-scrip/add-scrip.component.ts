@@ -27,30 +27,26 @@ export class AddScripComponent implements OnInit {
     priceDetailsPriceAsOn: [, [Validators.required]]
   })
   saveScrip() {
-    switch (true) {
-      case (this.scripForm.get('scripName').invalid):
-        this.scripForm.get('scripName').markAsTouched();
-        break;
-      case (this.scripForm.get('priceDetailsMarketPrice').invalid):
-        this.scripForm.get('priceDetailsMarketPrice').markAsTouched();
-        break;
-      case (this.scripForm.get('priceDetailsPriceAsOn').invalid):
-        this.scripForm.get('priceDetailsPriceAsOn').markAsTouched();
-        break;
-      default:
-        let obj =
-        {
-          "name": this.scripForm.get('scripName').value,
-          "currentValue": this.scripForm.get('priceDetailsMarketPrice').value
-        }
-        this.cusService.addScrip(obj).subscribe(
-          data => {
-            console.log(data)
-            this.eventService.openSnackBar("Scrip is added", "dismiss")
-            this.close();
-          },
-          error => this.eventService.showErrorMessage(error)
-        )
+    if (this.scripForm.invalid){
+      this.scripForm.get('scripName').markAsTouched();
+      this.scripForm.get('priceDetailsMarketPrice').markAsTouched();
+      this.scripForm.get('priceDetailsPriceAsOn').markAsTouched();
+    }
+    else{
+
+      let obj =
+      {
+        "name": this.scripForm.get('scripName').value,
+        "currentValue": this.scripForm.get('priceDetailsMarketPrice').value
+      }
+      this.cusService.addScrip(obj).subscribe(
+        data => {
+          console.log(data)
+          this.eventService.openSnackBar("Scrip is added", "dismiss")
+          this.close();
+        },
+        error => this.eventService.showErrorMessage(error)
+      )
     }
   }
   close() {

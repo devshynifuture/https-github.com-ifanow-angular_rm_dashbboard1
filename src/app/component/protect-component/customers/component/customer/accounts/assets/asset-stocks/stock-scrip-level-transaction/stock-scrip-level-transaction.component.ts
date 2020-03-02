@@ -124,91 +124,86 @@ export class StockScripLevelTransactionComponent implements OnInit {
     this.portfolioData = data
   }
   saveSchemeHolding() {
-    if (this.scipLevelTransactionForm.get('scripName').invalid) {
+    if (this.scipLevelTransactionForm.invalid) {
       this.scipLevelTransactionForm.get('scripName').markAsTouched();
-      return;
-    };
-    if (this.scipLevelTransactionForm.get('portfolioName').invalid) {
       this.scipLevelTransactionForm.get('portfolioName').markAsTouched();
-      return;
-    };
-    if (this.transactionArray.invalid) {
       this.transactionArray.controls.forEach(element => {
         element.get('transactionType').markAsTouched();
         element.get('date').markAsTouched();
         element.get('transactionAmount').markAsTouched();
         element.get('quantity').markAsTouched();
       })
-      return;
     }
-    if (this.editApiData) {
-      let finalStocks = [];
-      this.transactionArray.controls.forEach(element => {
-        let singleList =
-        {
-          "id": element.get('id').value,
-          "stockId": this.editApiData.id,
-          "holdingOrTransaction": 2,
-          "transactionTypeOrScripNameId": element.get('transactionType').value,
-          "quantity": element.get('quantity').value,
-          "holdingOrTransactionDate": element.get('date').value,
-          "investedOrTransactionAmount": element.get('transactionAmount').value
-        }
-        finalStocks.push(singleList);
-      })
-      let obj = {
-        "stocks": [
+    else{
+      if (this.editApiData) {
+        let finalStocks = [];
+        this.transactionArray.controls.forEach(element => {
+          let singleList =
           {
-            "transactionorHoldingSummaryList": finalStocks
+            "id": element.get('id').value,
+            "stockId": this.editApiData.id,
+            "holdingOrTransaction": 2,
+            "transactionTypeOrScripNameId": element.get('transactionType').value,
+            "quantity": element.get('quantity').value,
+            "holdingOrTransactionDate": element.get('date').value,
+            "investedOrTransactionAmount": element.get('transactionAmount').value
           }
-        ]
-      }
-      this.cusService.editScriplevelHoldingAndTransaction(obj).subscribe(
-        data => {
-          console.log(data);
-          this.Close();
-        },
-        error => this.eventService.showErrorMessage(error)
-      )
-    }
-    else {
-      let finalStocks = [];
-      this.transactionArray.controls.forEach(element => {
+          finalStocks.push(singleList);
+        })
         let obj = {
-          "scripNameId": this.scipLevelTransactionForm.get('scripName').value.id,
-          "scripCurrentValue": this.scipLevelTransactionForm.get('scripName').value.currentValue,
-          "stockType": 3,
-          "transactionorHoldingSummaryList": [
+          "stocks": [
             {
-              "holdingOrTransaction": 2,
-              "quantity": element.get('quantity').value,
-              "holdingOrTransactionDate": element.get('date').value,
-              "transactionTypeOrScripNameId": element.get('transactionType').value,
-              "investedOrTransactionAmount": element.get('transactionAmount').value
+              "transactionorHoldingSummaryList": finalStocks
             }
           ]
         }
-        finalStocks.push(obj)
-      })
-      console.log(finalStocks)
-      const obj =
-      {
-        "id": this.scipLevelTransactionForm.get('portfolioName').value.id,
-        "clientId": this.clientId,
-        "advisorId": this.advisorId,
-        "familyMemberId": this.familyMemberId,
-        "ownerName": this.ownerName,
-        "portfolioName": this.scipLevelTransactionForm.get('portfolioName').value.portfolioName,
-        "stocks": finalStocks
+        this.cusService.editScriplevelHoldingAndTransaction(obj).subscribe(
+          data => {
+            console.log(data);
+            this.Close();
+          },
+          error => this.eventService.showErrorMessage(error)
+        )
       }
-      console.log(obj)
-      this.cusService.addAssetStocks(obj).subscribe(
-        data => {
-          console.log(data);
-          this.Close();
-        },
-        error => this.eventService.showErrorMessage(error)
-      )
+      else {
+        let finalStocks = [];
+        this.transactionArray.controls.forEach(element => {
+          let obj = {
+            "scripNameId": this.scipLevelTransactionForm.get('scripName').value.id,
+            "scripCurrentValue": this.scipLevelTransactionForm.get('scripName').value.currentValue,
+            "stockType": 3,
+            "transactionorHoldingSummaryList": [
+              {
+                "holdingOrTransaction": 2,
+                "quantity": element.get('quantity').value,
+                "holdingOrTransactionDate": element.get('date').value,
+                "transactionTypeOrScripNameId": element.get('transactionType').value,
+                "investedOrTransactionAmount": element.get('transactionAmount').value
+              }
+            ]
+          }
+          finalStocks.push(obj)
+        })
+        console.log(finalStocks)
+        const obj =
+        {
+          "id": this.scipLevelTransactionForm.get('portfolioName').value.id,
+          "clientId": this.clientId,
+          "advisorId": this.advisorId,
+          "familyMemberId": this.familyMemberId,
+          "ownerName": this.ownerName,
+          "portfolioName": this.scipLevelTransactionForm.get('portfolioName').value.portfolioName,
+          "stocks": finalStocks
+        }
+        console.log(obj)
+        this.cusService.addAssetStocks(obj).subscribe(
+          data => {
+            console.log(data);
+            this.Close();
+          },
+          error => this.eventService.showErrorMessage(error)
+        )
+      }
     }
   }
   Close() {

@@ -42,7 +42,7 @@ export class AddMutualFundComponent implements OnInit {
       this.MfData = data
     }
     this.MfForm = this.fb.group({
-      ownerName: [data.ownerName, [Validators.required]],
+      ownerName: [!data.ownerName?'': data.ownerName, [Validators.required]],
       currentMarketValue: [data.currentMarketValue, [Validators.required]],
       valueAsOn: [new Date(data.valueAsOn), [Validators.required]],
       amtInvested: [data.amountInvested, [Validators.required]],
@@ -51,22 +51,18 @@ export class AddMutualFundComponent implements OnInit {
         name: null,
         ownershipPer: null,
       })]),
-      ownerPercent: [data.ownershipPer, [Validators.required]],
+      ownerPercent: [data.ownershipPer],
 
     })
     this.ownerData = this.MfForm.controls;
     console.log(this.MfForm)
   }
   SavePorfolio() {
-    if (this.MfForm.get('currentMarketValue').invalid) {
+    if (this.MfForm.invalid) {
+      this.MfForm.get('ownerName').markAsTouched();
       this.MfForm.get('currentMarketValue').markAsTouched();
-      return;
-    } else if (this.MfForm.get('valueAsOn').invalid) {
       this.MfForm.get('valueAsOn').markAsTouched();
-      return;
-    } else if (this.MfForm.get('amtInvested').invalid) {
       this.MfForm.get('amtInvested').markAsTouched();
-      return;
     } else {
       const obj = {
         ownerName: (this.ownerName == null) ? this.MfForm.controls.ownerName.value : this.ownerName,
