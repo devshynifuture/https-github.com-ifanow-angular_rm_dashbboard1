@@ -60,6 +60,7 @@ export class FixedDepositComponent implements OnInit {
     { name: 'Semi annually ', value: 4 },
     { name: 'Annually', value: 5 }
   ];
+  isOwnerPercent
   ownerData: any;
   tenure: any;
   getDate: string;
