@@ -348,7 +348,7 @@ export const appConfig = {
   ADVICE_ADD_GOLD: 'advice/asset/commodity/suggest-new-gold/add',
   ADVICE_ADD_OTHERS: 'advice/asset/commodity/suggest-new-other/add',
   GET_ADVICE_BY_CATEGORY: 'advice/assetType/get',
-  ADVICE_GET_DEPLOYMENTS: '/activity/deployment/get',
+  ADVICE_GET_DEPLOYMENTS: 'activity/deployment/get',
   GENERATE_GROUP_ID: 'advice/asset/consent/post',
   GET_ASSET_CONSENT: 'advice/advice/consent/get',
   UPDATE_ASSET_CONSENT: 'advice/asset/update/consent',
