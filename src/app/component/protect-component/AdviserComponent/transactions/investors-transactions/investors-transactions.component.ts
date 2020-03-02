@@ -10,11 +10,10 @@ import { EventService } from 'src/app/Data-service/event.service';
   styleUrls: ['./investors-transactions.component.scss']
 })
 export class InvestorsTransactionsComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'bank', 'bankac', 'amt', 'type', 'status', 'icons'];
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'bank', 'bankac', 'amt', 'status', 'icons'];
   dataSource: any;
   advisorId: any;
   filterData: any;
-  type: string;
   selectedBrokerCode: any;
   selectedPlatform: any;
   // dataSource = ELEMENT_DATA;
