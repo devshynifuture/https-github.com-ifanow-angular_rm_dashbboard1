@@ -2,7 +2,7 @@
     <div class="col-md-3 d-flex align-items-center">
         <h4 class="m-0">All transactions</h4>
     </div>
-    <div class="col-md-9">
+    <div class="col-md-9" *ngIf="dataSource!=undefined">
         <div class="row">
             <div class="col-md-4 pl-0" [ngClass]="{'v-h': selectedPreviousToShowDate!='custom'}">
                 <mat-chip-list>
@@ -19,7 +19,7 @@
                     </mat-chip-list>
                 </mat-chip-list>
             </div>
-            <div class="col-md-3 pr-0">
+            <div class="col-md-3 pr-0" >
                 <div class="form-group mb-0">
                     <mat-select [(ngModel)]="selectedPreviousToShowDate" (selectionChange)="sortDateFilter($event)"
                         class="form-control br-0">
@@ -30,7 +30,7 @@
                     </mat-select>
                 </div>
             </div>
-            <div class="col-md-3 pr-0">
+            <div class="col-md-3 pr-0" >
                 <div class="form-group mb-0">
                     <mat-select [(ngModel)]="selectedBroker" (selectionChange)="sortDateFilter($event)"
                         class="form-control br-0">
@@ -39,8 +39,8 @@
                     </mat-select>
                 </div>
             </div>
-            <div class="col-md-2 pr-0">
-                <button mat-stroked-button class="btn-primary addon v-middle"><i class="material-icons">add</i>ADD
+            <div class="col-md-2 pr-0" >
+                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openTransaction()"><i class="material-icons">add</i>ADD
                     NEW</button>
             </div>
         </div>
@@ -57,7 +57,7 @@
     </div> -->
     <div class="col-md-12 all-transactions">
         <table mat-table [dataSource]="dataSource" [appSkeletonLoading]="isLoading" appSkeletonLoading
-            class="skeletonAnimation" class="mt-8" id="table-low">
+            class="skeletonAnimation" class="mt-8" id="table-low" *ngIf="dataSource!=undefined">
 
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef class="br"> Platform </th>
@@ -125,8 +125,11 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <div *ngIf="dataSource==undefined">
-            <h4 class="text-center pt-44">No Data Found</h4>
+        <div *ngIf="dataSource==undefined && isLoading==false" class="d-flex flex-column align-items-center pt-44">
+            <img class="width300" src="assets/images/svg/noDataFound.svg">
+            <h4 class="pt-12">{{(errMessage)?errMessage:'No data found'}}</h4>
+            <button mat-stroked-button class="btn-primary addon v-middle  " (click)="openTransaction()">
+                ADD NEW</button>
         </div>
     </div>
 </div>

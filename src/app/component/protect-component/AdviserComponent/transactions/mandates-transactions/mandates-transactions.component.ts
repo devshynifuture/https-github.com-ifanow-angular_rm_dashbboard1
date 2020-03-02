@@ -13,27 +13,31 @@ export class MandatesTransactionsComponent implements OnInit {
   // dataSource = ELEMENT_DATA;
   advisorId: any;
   dataSource: any;
+  clientId: any;
   constructor( private onlineTransact: OnlineTransactionService,private eventService:EventService) { }
 
   isLoading = false;
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
     this.getNSEAchmandate()
   }
   getNSEAchmandate() {
     this.dataSource = [{}, {}, {}];
     this.isLoading = true;
     let obj1 = {
-     tpUserCredFamilyMappingId: 4792
+     advisorId:this.advisorId,
     }
-    this.onlineTransact.getNSEAchmandate(obj1).subscribe(
-      data => this.getNSEAchmandateRes(data), (error) => {
+    this.onlineTransact.getMandateList(obj1).subscribe(
+      data => this.getMandateListRes(data), (error) => {
+        this.isLoading = false;
+        this.dataSource=undefined;
         this.eventService.showErrorMessage(error);
       }
     );
   }
-  getNSEAchmandateRes(data){
+  getMandateListRes(data){
     this.isLoading = false;
     console.log(data);
     this.dataSource=data;

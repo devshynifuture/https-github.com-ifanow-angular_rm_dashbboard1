@@ -71,10 +71,17 @@ export class SettingsClientMappingComponent implements OnInit {
     this.tranService.getMapppedClients(obj).subscribe(
       data => {
         console.log(data);
-        this.dataSource = TransactionEnumService.setHoldingTypeEnum(data);
+        if (data) {
+          this.dataSource = TransactionEnumService.setHoldingTypeEnum(data);
+        }
+        else {
+          this.dataSource = data;
+        }
         this.isLoading = false;
       },
-      err => this.eventService.openSnackBar(err, 'dismiss')
+      err => {
+        this.isLoading = false;
+      }
     )
   }
   chnageBrokerCode(value) {
@@ -97,15 +104,22 @@ export class SettingsClientMappingComponent implements OnInit {
     this.tranService.getUnmappedClients(obj).subscribe(
       data => {
         console.log(data);
-        this.dataSource = TransactionEnumService.setHoldingTypeEnum(data);
+        if (data) {
+          this.dataSource = TransactionEnumService.setHoldingTypeEnum(data);
+        }
+        else {
+          this.dataSource = data;
+        }
         this.isLoading = false;
       },
-      err => this.eventService.openSnackBar(err, 'dismiss')
+      err => {
+        this.isLoading = false;
+      }
     )
   }
   unmapClient(value, data) {
     const dialogData = {
-      data: value,
+      data: data,
       header: 'UNMAP',
       body: 'Are you sure you want to unmap?',
       body2: 'This cannot be undone.',

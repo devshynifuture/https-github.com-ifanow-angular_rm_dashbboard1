@@ -100,6 +100,9 @@ export class OnlineTransactionService {
   getTransactionDetail(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_TRANSACTION_DETAILS, data, 1);
   }
+  getMandateList(data) {
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_MANDATE_LIST, data, 1)
+  }
   // sipBSE(data){
   //   return this.http.postEncoded(apiConfig.TRANSACT + appConfig.SIP_BSE, data)
   // }
