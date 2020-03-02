@@ -8,6 +8,7 @@ import { ActiityService } from '../../actiity.service';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { AdviceUtilsService } from '../advice-utils.service';
+import { SuggestAdviceComponent } from '../suggest-advice/suggest-advice.component';
 
 @Component({
   selector: 'app-advice-commodities',
@@ -15,7 +16,9 @@ import { AdviceUtilsService } from '../advice-utils.service';
   styleUrls: ['./advice-commodities.component.scss']
 })
 export class AdviceCommoditiesComponent implements OnInit, AfterViewInit {
-  displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'mvalue', 'advice', 'astatus', 'adate', 'icon'];
+  displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'pvalue', 'mvalue', 'total', 'advice', 'astatus', 'adate', 'icon'];
+  displayedColumns4: string[] = ['checkbox', 'name', 'desc', 'pvalue', 'mvalue', 'advice', 'astatus', 'adate', 'icon'];
+
   // dataSource1 = new MatTableDataSource(ELEMENT_DATA1);
   advisorId: any;
   clientId: any;
@@ -86,7 +89,7 @@ export class AdviceCommoditiesComponent implements OnInit, AfterViewInit {
     this.isLoading = false
   }
   openAddEdit(value, data) {
-    let Component = (value == "adviceGOLD") ? GoldComponent : OthersComponent;
+    let Component = (value == "adviceGOLD") ? SuggestAdviceComponent : OthersComponent;
     const fragmentData = {
       flag: value,
       data: data,

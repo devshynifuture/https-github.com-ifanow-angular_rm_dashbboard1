@@ -141,6 +141,7 @@ export class KvpSchemeComponent implements OnInit {
   }
 
   openAddKVP(data, flag) {
+    let popupHeaderText = !!data ? 'Edit Kisan Vikas Patra (KVP)' : 'Add Kisan Vikas Patra (KVP)';
     const fragmentData = {
       flag: 'addKVP',
       data,
@@ -148,6 +149,9 @@ export class KvpSchemeComponent implements OnInit {
       state: (flag == 'detailedKvp') ? 'open35' : 'open',
       componentName: (flag == 'detailedKvp') ? DetailedKvpComponent : AddKvpComponent
     };
+    if(flag != 'detailedKvp') {
+      fragmentData['popupHeaderText'] = popupHeaderText;
+    }
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);

@@ -40,12 +40,14 @@ export class AddPoTdComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
-    this.getdataForm(data);
   }
 
   get data() {
     return this.inputData;
   }
+
+  @Input() popupHeaderText: string = 'Add Post office time deposit (PO TD)';
+
   display(value) {
     console.log('value selected', value)
     this.ownerName = value;
@@ -93,9 +95,10 @@ export class AddPoTdComponent implements OnInit {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true
   }
   ngOnInit() {
+    this.getdataForm(this.data);
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.isOptionalField = true
+    this.isOptionalField = true;
   }
   getFormData(data) {
     console.log(data)

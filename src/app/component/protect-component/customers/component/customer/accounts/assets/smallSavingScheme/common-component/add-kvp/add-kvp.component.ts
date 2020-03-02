@@ -35,16 +35,24 @@ export class AddKvpComponent implements OnInit {
   kvpData;
   flag: any;
   constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
+
+  @Input()
+  set data(data) {
+    this.inputData = data;
+  }
+  get data() {
+    return this.inputData;
+  }
+
+  @Input() popupHeaderText: string = 'Add Kisan vikas patra (KVP)';
+
   ngOnInit() {
     this.isOptionalField = true;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.getdataForm(this.data);
   }
-  @Input()
-  set data(data) {
-    this.inputData = data;
-    this.getdataForm(data);
-  }
+
   display(value) {
     console.log('value selected', value)
     this.ownerName = value;
@@ -53,9 +61,6 @@ export class AddKvpComponent implements OnInit {
   lisNominee(value) {
     console.log(value)
     this.nomineesListFM = Object.assign([], value.familyMembersList);
-  }
-  get data() {
-    return this.inputData;
   }
   moreFields() {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true

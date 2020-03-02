@@ -4,6 +4,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { UtilService } from 'src/app/services/util.service';
 import { EditTaxComputationComponent } from './edit-tax-computation/edit-tax-computation.component';
 import { EditApplicableTaxComponent } from './edit-applicable-tax/edit-applicable-tax.component';
+import { SetupTaxPlanningComponent } from './setup-tax-planning/setup-tax-planning.component';
 
 @Component({
   selector: 'app-texes-plan',
@@ -43,7 +44,7 @@ export class TexesPlanComponent implements OnInit {
       flag: value,
       id: 1,
       state: 'open35',
-      componentName: EditApplicableTaxComponent
+      componentName: SetupTaxPlanningComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -53,7 +54,7 @@ export class TexesPlanComponent implements OnInit {
           // this.getQuotationsList();
 
         }
-        rightSideDataSub.unsubscribe();
+       // rightSideDataSub.unsubscribe();
       }
     );
   }

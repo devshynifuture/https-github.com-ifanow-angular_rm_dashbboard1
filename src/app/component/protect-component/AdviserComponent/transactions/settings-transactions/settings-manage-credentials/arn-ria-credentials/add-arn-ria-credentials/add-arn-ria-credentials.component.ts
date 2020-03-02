@@ -4,6 +4,7 @@ import {SubscriptionInject} from 'src/app/component/protect-component/AdviserCom
 import {OnlineTransactionService} from '../../../../online-transaction.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {AuthService} from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-add-arn-ria-credentials',
@@ -23,7 +24,7 @@ export class AddArnRiaCredentialsComponent implements OnInit {
   inputData: any;
   isViewInitCalled = false;
 
-  constructor(private fb: FormBuilder, private utilService: UtilService, private onlineTransact: OnlineTransactionService, private subInjectService: SubscriptionInject) {
+  constructor(private eventService: EventService, private fb: FormBuilder, private utilService: UtilService, private onlineTransact: OnlineTransactionService, private subInjectService: SubscriptionInject) {
   }
 
   @Input()
@@ -86,9 +87,9 @@ export class AddArnRiaCredentialsComponent implements OnInit {
       brokerCode: [(!data) ? '' : data.brokerCode, [Validators.required]],
       appId: [(!data) ? '' : data.userId, [Validators.required]],
       memberId:[(!data) ? '' : data.memberId, [Validators.required]],
-      pwd: [(!data) ? '' : data.apiPassword, [Validators.required]],
+      pwd: [(!data) ? '' : data.password, [Validators.required]],
       euin: [(!data) ? '' : data.euin, [Validators.required,Validators.max(7),Validators.pattern("/^E/i[0-9]{1,6}$/")]],
-      setDefault: [(!data) ? '' : data.defaultLogin, [Validators.required]],
+      setDefault: [(!data) ? '' : (data.defaultLogin), [Validators.required]],
     });
   }
 
@@ -117,17 +118,13 @@ export class AddArnRiaCredentialsComponent implements OnInit {
     else if (this.addCredential.get('pwd').invalid) {
       this.addCredential.get('pwd').markAsTouched();
       return
-    }
-    else if (this.addCredential.get('euin').invalid) {
-      this.addCredential.get('euin').markAsTouched();
-      return
     } else {
       let obj = {
         accountType : this.addCredential.controls.accType.value,
         advisorId : this.advisorId,
         aggregatorType : this.addCredential.controls.platform.value,
         brokerCode:this.addCredential.controls.brokerCode.value,
-        defaultLogin : this.addCredential.controls.setDefault.value,
+        defaultLogin : (this.addCredential.controls.setDefault.value==true)?1:0,
         euin : this.addCredential.controls.euin.value,
         memberId: (this.addCredential.controls.memberId == undefined)?'':this.addCredential.controls.memberId.value,
         id : (this.addCredential.controls.id== undefined)?'':this.addCredential.controls.memberId.value,
@@ -144,7 +141,8 @@ export class AddArnRiaCredentialsComponent implements OnInit {
 
   }
   addBSECredentilasRes(data) {
-
+    this.eventService.openSnackBar('Credential added successfully!', 'dismiss');
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });

@@ -39,7 +39,7 @@
             </mat-menu>
         </div>
     </div>
-    <div class="row pt-44">
+    <div class="row">
         <div class="col-md-12 p-0">
             <app-advice-action [data]="selectedAssetId" [ngClass]="{'v-h': selectedAssetId.length==0}">
             </app-advice-action>
@@ -52,8 +52,13 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEdit('adviceEPF',null)"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new EPF</button>
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " [matMenuTriggerFor]="menu1"><img
+                    src="/assets/images/svg/plus.svg" class="pr-8">Add new EPF</button>
+            <mat-menu #menu1="matMenu">
+                <button mat-menu-item (click)="openAddEdit('adviceEPF',null)">Suggest new
+                    EPF</button>
+                <button mat-menu-item>Add misc. advice</button>
+            </mat-menu>
         </div>
     </div>
     <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="epfDataSource"
@@ -72,7 +77,11 @@
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.name}}</div>
+                <div class="bar">
+                    <span *ngIf="element.assetDataOfAdvice">
+                        {{element.assetDataOfAdvice.ownerName}}
+                    </span>
+                </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="desc">
@@ -85,7 +94,11 @@
         <ng-container matColumnDef="cvalue">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Current value </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar">{{element.cvalue}}</div>
+                <div class="bar">
+                    <span *ngIf="element.assetDataOfAdvice">
+                        {{element.assetDataOfAdvice.currentValue}}
+                    </span>
+                </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="empcon">
@@ -145,8 +158,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf="epfDataSource.tableFlag==false">
-        <h4 class="text-center pt-44">No Data Found</h4>
+    <div *ngIf="epfDataSource.tableFlag==false" class="b-a">
+        <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
@@ -155,9 +168,9 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button [matMenuTriggerFor]="menu1" mat-stroked-button class="btn-primary br-0 pl-8 "><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new RD</button>
-            <mat-menu #menu1="matMenu" class="add-new">
+            <button [matMenuTriggerFor]="menu2" mat-stroked-button class="btn-primary br-0 pl-8 "><img
+                    src="/assets/images/svg/plus.svg" class="pr-8">Add new NPS</button>
+            <mat-menu #menu2="matMenu" class="add-new">
                 <button (click)="openAddEdit('adviceNPSSummary',null)" class="b-b" mat-menu-item>
                     <div class="row">
                         <div class="col-md-2 pr-8 text-right">
@@ -171,7 +184,10 @@
                         </div>
                     </div>
                 </button>
-                <button (click)="openAddSchemeHolding('adviceNPSSchemeHolding')" class="b-b" mat-menu-item>
+                <!-- ng build prod issue removed openAddSchemeHolding as it is not present -->
+                <!-- <button (click)="openAddSchemeHolding('adviceNPSSchemeHolding')" class="b-b" mat-menu-item> -->
+
+                <button class="b-b" mat-menu-item>
                     <div class="row">
                         <div class="col-md-2 pr-8 text-right">
                             <img src="assets/images/svg/scheme-icon.svg">
@@ -204,7 +220,10 @@
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.name}}
+                <div class="bar">
+                    <span *ngIf="element.assetDataOfAdvice">
+                        {{element.assetDataOfAdvice.ownerName}}
+                    </span>
                 </div>
             </td>
         </ng-container>
@@ -214,6 +233,22 @@
             <td mat-cell *matCellDef="let element">
                 <div class="bar"> <span *ngIf="element.adviceToAsset">{{element.adviceToAsset.adviceDescription}}</span>
                 </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="cvalue">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Current value </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar">
+                    <span *ngIf="element.assetDataOfAdvice">
+                        {{element.assetDataOfAdvice.currentValue}}
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="tcontro">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total contribution </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar"> {{element.astatus}}</div>
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
@@ -258,11 +293,11 @@
                 </mat-menu>
             </td>
         </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
     </table>
-    <div *ngIf="npsDataSource.tableFlag==false">
-        <h4 class="text-center pt-44">No Data Found</h4>
+    <div *ngIf="npsDataSource.tableFlag==false" class="b-a">
+        <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
@@ -271,8 +306,13 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEdit('adviceGratuity',null)"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new gratuity</button>
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " [matMenuTriggerFor]="menu3"><img
+                    src="/assets/images/svg/plus.svg" class="pr-8">Add new gratuity</button>
+            <mat-menu #menu3="matMenu">
+                <button mat-menu-item (click)="openAddEdit('adviceGratuity',null)">Suggest new
+                    gratuity</button>
+                <button mat-menu-item>Add misc. advice</button>
+            </mat-menu>
         </div>
     </div>
     <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="gratuityDataSource"
@@ -293,7 +333,11 @@
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar">{{element.name}} </div>
+                <div class="bar">
+                    <span *ngIf="element.assetDataOfAdvice">
+                        {{element.assetDataOfAdvice.ownerName}}
+                    </span>
+                </div>
             </td>
         </ng-container>
 
@@ -302,6 +346,12 @@
             <td mat-cell *matCellDef="let element">
                 <div class="bar"><span *ngIf="element.adviceToAsset">{{element.adviceToAsset.adviceDescription}}</span>
                 </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="amtacc">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount accumulated </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar"> {{element.astatus}}</div>
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
@@ -346,11 +396,11 @@
                 </mat-menu>
             </td>
         </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
     </table>
-    <div *ngIf="gratuityDataSource.tableFlag==false">
-        <h4 class="text-center pt-44">No Data Found</h4>
+    <div *ngIf="gratuityDataSource.tableFlag==false" class="b-a">
+        <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
@@ -359,9 +409,13 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 "
-                (click)="openAddEdit('adviceSuperAnnuation',null)"><img src="/assets/images/svg/plus.svg"
-                    class="pr-8">Suggest new supperannuation</button>
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " [matMenuTriggerFor]="menu4"><img
+                    src="/assets/images/svg/plus.svg" class="pr-8">Add new supperannuation</button>
+            <mat-menu #menu4="matMenu">
+                <button mat-menu-item (click)="openAddEdit('adviceSuperAnnuation',null)">Suggest new
+                    supperannuation</button>
+                <button mat-menu-item>Add misc. advice</button>
+            </mat-menu>
         </div>
     </div>
     <table matSort mat-table [dataSource]="superannuationDataSource" appSkeletonLoading [appSkeletonLoading]="isLoading"
@@ -382,7 +436,11 @@
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.name}}</div>
+                <div class="bar">
+                    <span *ngIf="element.assetDataOfAdvice">
+                        {{element.assetDataOfAdvice.ownerName}}
+                    </span>
+                </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="desc">
@@ -395,7 +453,11 @@
         <ng-container matColumnDef="cvalue">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Current value </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.cvalue}}</div>
+                <div class="bar">
+                    <span *ngIf="element.assetDataOfAdvice">
+                        {{element.assetDataOfAdvice.currentValue}}
+                    </span>
+                </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="empcon">
@@ -453,8 +515,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf="superannuationDataSource.tableFlag==false">
-        <h4 class="text-center pt-44">No Data Found</h4>
+    <div *ngIf="superannuationDataSource.tableFlag==false" class="b-a">
+        <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
@@ -463,8 +525,13 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openAddEdit('adviceEPS',null)"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new eps</button>
+            <button mat-stroked-button [matMenuTriggerFor]="menu5" class="btn-primary br-0 pl-8 "><img
+                    src="/assets/images/svg/plus.svg" class="pr-8">Add new eps</button>
+            <mat-menu #menu5="matMenu">
+                <button mat-menu-item (click)="openAddEdit('adviceEPS',null)">Suggest new
+                    eps</button>
+                <button mat-menu-item>Add misc. advice</button>
+            </mat-menu>
         </div>
     </div>
     <table matSort mat-table [dataSource]="epsDataSource" appSkeletonLoading [appSkeletonLoading]="isLoading"
@@ -484,7 +551,11 @@
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar">{{element.name}}</div>
+                <div class="bar">
+                    <span *ngIf="element.assetDataOfAdvice">
+                        {{element.assetDataOfAdvice.ownerName}}
+                    </span>
+                </div>
             </td>
         </ng-container>
 
@@ -492,6 +563,22 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar"><span *ngIf="element.adviceToAsset">{{element.adviceToAsset.adviceDescription}}</span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="pvalue">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Pension amount </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar">
+
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="nvalue">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> National value </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar">
+
                 </div>
             </td>
         </ng-container>
@@ -537,13 +624,13 @@
                 </mat-menu>
             </td>
         </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns4"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns4;"></tr>
     </table>
-    <div *ngIf="epsDataSource.tableFlag==false">
-        <h4 class="text-center pt-44">No Data Found</h4>
+    <div *ngIf="epsDataSource.tableFlag==false" class="b-a">
+        <h4 class="text-center p-44">No Data Found</h4>
     </div>
 </div>
 <div *ngIf="allAdvice == true">
-    <app-all-retrirement-asset></app-all-retrirement-asset>
+    <app-all-retirement-asset></app-all-retirement-asset>
 </div>

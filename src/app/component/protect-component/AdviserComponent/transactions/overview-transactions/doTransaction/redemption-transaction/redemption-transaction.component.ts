@@ -151,7 +151,7 @@ export class RedemptionTransactionComponent implements OnInit {
     }
     let obj = {
       searchQuery: value,
-      bseOrderType: 'ORDER',
+      bseOrderType: 'REDEMPTION',
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       advisorId: this.getDataSummary.defaultClient.advisorId,
       showOnlyNonZero: true,

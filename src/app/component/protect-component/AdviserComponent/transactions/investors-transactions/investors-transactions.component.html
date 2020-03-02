@@ -1,9 +1,9 @@
 <div class="pt-150  mandates">
     <div class="row">
         <div class="col-md-6  d-flex align-items-center">
-            <h3 class="m-0 pt-6">Mandates</h3>
+            <h3 class="m-0 pt-6">Investors</h3>
         </div>
-        <div class="col-md-6  text-right">
+        <div class="col-md-6  text-right" *ngIf="dataSource!=undefined">
             <img src="/assets/images/svg/download-black.svg" class="b-a p-5 c-p">
             <img src="/assets/images/svg/reload.svg" class="b-a p-8 c-p">
             <button mat-stroked-button class="btn-default addon ml-12 mr-12 v-middle"><i
@@ -15,59 +15,61 @@
 
     <div class="row">
         <div class="col-md-12 ">
-            <table mat-table [dataSource]="dataSource" [appSkeletonLoading]="isLoading" appSkeletonLoading class="skeletonAnimation" class="mt-8" id="table-low">
+            <table mat-table [dataSource]="dataSource" [appSkeletonLoading]="isLoading" appSkeletonLoading
+                class="skeletonAnimation" class="mt-8" id="table-low" *ngIf="dataSource!=undefined">
                 <ng-container matColumnDef="position">
                     <th mat-header-cell *matHeaderCellDef class="br"> Platform </th>
                     <td mat-cell *matCellDef="let element" class="br">
-                        <div class="bar"> {{element.position}} </div>
+                        <div class="bar">
+                            {{isLoading ? '' :(element.aggregatorType == 1)?'NSE':(element.aggregatorType == 2)?'BSE':'-'}}
+                        </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
                     <td mat-cell *matCellDef="let element" class="br">
-                        <div class="bar"> {{element.name}} </div>
+                        <div class="bar"> {{isLoading ? '' :(element.brokerCode)?element.brokerCode:'-'}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="weight">
                     <th mat-header-cell *matHeaderCellDef class="br"> Investor name </th>
                     <td mat-cell *matCellDef="let element" class="br">
-                        <div class="bar"> {{element.weight}} </div>
+                        <div class="bar">
+                            {{isLoading ? '' :(element.firstApplicantName)?element.firstApplicantName:'-'}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="symbol">
                     <th mat-header-cell *matHeaderCellDef class="br"> PAN </th>
                     <td mat-cell *matCellDef="let element" class="br">
-                        <div class="bar"> {{element.symbol}} </div>
+                        <div class="bar"> {{isLoading ? '' :(element.firstApplicantPan)?element.firstApplicantPan:'-'}}
+                        </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="bank">
                     <th mat-header-cell *matHeaderCellDef class="br"> Tax status </th>
                     <td mat-cell *matCellDef="let element" class="br">
-                        <div class="bar"> {{element.bank}} </div>
+                        <div class="bar"> {{isLoading ? '' :(element.taxStatus)?element.taxStatus:'-'}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="bankac">
                     <th mat-header-cell *matHeaderCellDef class="br"> Holding nature </th>
                     <td mat-cell *matCellDef="let element" class="br">
-                        <div class="bar"> {{element.bankac}} </div>
+                        <div class="bar"> {{isLoading ? '' :(element.holdingType)?element.holdingType:'-'}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="amt">
                     <th mat-header-cell *matHeaderCellDef class="br"> Account number </th>
                     <td mat-cell *matCellDef="let element" class="br">
-                        <div class="bar"> {{element.amt}} </div>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="type">
-                    <th mat-header-cell *matHeaderCellDef class="br"> Mandate amount </th>
-                    <td mat-cell *matCellDef="let element" class="br">
-                        <div class="bar"> {{element.type}} </div>
+                        <div class="bar"> {{isLoading ? '' :(element.accountNo)?element.accountNo:'-'}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="status">
                     <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
                     <td mat-cell *matCellDef="let element" class="br">
-                        <div class="bar"> {{element.status}} </div>
+                        <div class="bar">
+                            <span *ngIf="element.activationStatus=='YES'"
+                                class="text-success t-10 f-500 c-p">{{'Investment ready'}}</span>
+                        </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="icons">
@@ -82,6 +84,10 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
+            <div *ngIf="dataSource==undefined && isLoading==false" class="d-flex flex-column align-items-center pt-44">
+                <img class="width300" src="assets/images/svg/noDataFound.svg">
+                <h4 class="pt-12">No data found</h4>
+            </div>
         </div>
     </div>
 

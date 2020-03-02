@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { OnlineTransactionService } from '../online-transaction.service';
+import { TransactionEnumService } from '../transaction-enum.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-investors-transactions',
@@ -6,15 +10,88 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./investors-transactions.component.scss']
 })
 export class InvestorsTransactionsComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'bank', 'bankac', 'amt', 'type', 'status', 'icons'];
-  dataSource = ELEMENT_DATA;
-  constructor() { }
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'bank', 'bankac', 'amt', 'status', 'icons'];
+  dataSource: any;
+  advisorId: any;
+  filterData: any;
+  selectedBrokerCode: any;
+  selectedPlatform: any;
+  // dataSource = ELEMENT_DATA;
+  constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService) { }
 
   isLoading = false;
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId()
+    this.dataSource = [{}, {}, {}];
+    this.isLoading = true;
+    this.getMappedData();
+    // this.getFilterOptionData();
   }
+  // getFilterOptionData() {
+  //   let obj = {
+  //     advisorId: this.advisorId,
+  //     onlyBrokerCred: true
+  //   }
+  //   console.log('encode', obj)
+  //   this.onlineTransact.getBSECredentials(obj).subscribe(
+  //     data => this.getFilterOptionDataRes(data)
+  //   );
+  // }
+  getFilterOptionDataRes(data) {
 
+    console.log(data);
+    this.filterData = TransactionEnumService.setPlatformEnum(data);
+    // this.type = '1';
+    // this.selectedBrokerCode = data[0];
+    // this.selectedPlatform = data[0];
+    // this.dataSource = [{}, {}, {}];
+    // this.sortDataFilterWise();
+  }
+  // sortDataFilterWise() {
+  //   (this.type == '1') ? this.getMappedData() : this.getUnmappedData();
+  // }
+  getMappedData() {
+    this.isLoading = true;
+    this.dataSource = [{}, {}, {}];
+    let obj =
+    {
+      advisorId: this.advisorId,
+      // tpUserCredentialId: this.selectedBrokerCode.id,
+      // aggregatorType: this.selectedPlatform.aggregatorType
+    }
+    this.onlineTransact.getMapppedClients(obj).subscribe(
+      data => {
+        console.log(data);
+        if (data) {
+          this.dataSource = TransactionEnumService.setHoldingTypeEnum(data);
+
+        } else {
+          this.dataSource = data;
+        }
+        this.isLoading = false;
+      },
+      err => this.eventService.openSnackBar(err, 'dismiss')
+    )
+  }
+  // getUnmappedData() {
+  //   this.isLoading = true;
+  //   this.dataSource = [{}, {}, {}];
+  //   let obj =
+  //   {
+  //     advisorId: this.advisorId,
+  //     tpUserCredentialId: this.selectedBrokerCode.id,
+  //     aggregatorType: this.selectedPlatform.aggregatorType
+  //   }
+  //   this.onlineTransact.getUnmappedClients(obj).subscribe(
+  //     data => {
+  //       console.log(data);
+  //       this.dataSource = TransactionEnumService.setHoldingTypeEnum(data);
+  //       this.isLoading = false;
+  //     },
+  //     err => this.eventService.openSnackBar(err, 'dismiss')
+  //   )
+  // }
 }
 export interface PeriodicElement {
   name: string;

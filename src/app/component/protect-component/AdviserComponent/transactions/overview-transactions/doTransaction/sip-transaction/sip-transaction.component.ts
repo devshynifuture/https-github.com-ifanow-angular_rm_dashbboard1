@@ -133,7 +133,7 @@ export class SipTransactionComponent implements OnInit {
     }
     let obj = {
       searchQuery: value,
-      bseOrderType: 'ORDER',
+      bseOrderType: 'SIP',
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       advisorId: this.getDataSummary.defaultClient.advisorId,
       tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,

@@ -1,0 +1,151 @@
+<div class="row bb-1 popup-header-fix w-60">
+    <div class="col-md-10 p-0">
+        <h4 class="mb-0 l-22 wrapper-20">ADVICE</h4>
+    </div>
+    <div class="col-md-2 text-right">
+        <i class="material-icons pt-20 c-p pr-16" (click)="dialogClose()">
+            clear
+        </i>
+    </div>
+</div>
+<div class="pt-90 pl-28 pr-28 pb-60">
+    <div class="row">
+        <div class="col-md-12 p-0">
+            <mat-horizontal-stepper #stepper id="ui-suggest-advice">
+                <mat-step>
+                    <form [formGroup]="adviceForm">
+                        <ng-template matStepLabel>
+                            STEP 1
+                            <p class="m-0 text-black roboto">Advice details</p>
+                        </ng-template>
+                        <div class="pt-40">
+                            <div class="row">
+                                <div class="col-md-6 pl-0">
+                                    <p class="m-0 text-black roboto">Advice header</p>
+                                    <div class="form-group">
+                                        <mat-form-field>
+                                            <input matInput formControlName="header" class="form-control">
+                                            <mat-error
+                                                *ngIf="adviceForm.get('header').touched && adviceForm.get('header').invalid">
+                                                This field is required
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <p class="m-0 text-black roboto pt-20">Advice rationale</p>
+                                    <div class="form-group">
+                                        <mat-form-field>
+                                            <textarea matInput formControlName="rationale" class="form-control"
+                                                rows="7"></textarea>
+                                            <mat-error
+                                                *ngIf="adviceForm.get('rationale').touched && adviceForm.get('rationale').invalid">
+                                                This field is required
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-6 p-0">
+                                        <p class="m-0 text-black roboto pt-150">Advice status</p>
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <input matInput formControlName="status" class="form-control">
+                                                <mat-error
+                                                    *ngIf="adviceForm.get('status').touched && adviceForm.get('status').invalid">
+                                                    This field is required
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-3 pr-0">
+                                    <p class="m-0 text-black roboto">Advice given on</p>
+                                    <div class="form-group">
+                                        <mat-form-field class="ba-date">
+                                            <input matInput (focus)="picker.open()" formControlName="givenOnDate"
+                                                [matDatepicker]="picker" class="form-control b-0">
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                            <mat-error
+                                                *ngIf="adviceForm.get('givenOnDate').touched && adviceForm.get('givenOnDate').invalid">
+                                                This field is required
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <p class="m-0 text-black roboto pt-24">Implementation date</p>
+                                    <div class="form-group">
+                                        <mat-form-field class="ba-date">
+                                            <input matInput (focus)="picker1.open()" formControlName="implementDate"
+                                                [matDatepicker]="picker1" class="form-control b-0">
+                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1></mat-datepicker>
+                                            <mat-error
+                                                *ngIf="adviceForm.get('implementDate').touched && adviceForm.get('implementDate').invalid">
+                                                This field is required
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <p class="m-0 text-black roboto pt-60">Withdrawal amount</p>
+                                    <div class="form-group">
+                                        <mat-form-field class="ba-date">
+                                            <input matInput formControlName="withdrawalAmt" class="form-control b-0">
+                                            <mat-error
+                                                *ngIf="adviceForm.get('withdrawalAmt').touched && adviceForm.get('withdrawalAmt').invalid">
+                                                This field is required
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pt-44">
+                                <div class="col-md-7 p-0">
+                                    <p class="m-0 text-black pb-12 f-500 text-black">Consent option<img
+                                            src="/assets/images/svg/info.svg">
+                                    </p>
+                                    <mat-radio-group aria-label="Select an option" formControlName="consentOption">
+                                        <mat-radio-button value="1">Take client consent
+
+                                        </mat-radio-button>
+                                        <p class="f-12 m-0 roboto text-custom pl-32">If this option is selected,
+                                            further
+                                            action on this advice is possible only after your client gives
+                                            explicit
+                                            consent via email.</p>
+                                        <mat-radio-button value="2">Bypass client consent
+
+                                        </mat-radio-button>
+                                        <p class="f-12 m-0 roboto text-custom pl-32">If this option is selected,
+                                            you
+                                            can
+                                            directly start further work on this advice without taking any
+                                            explicit
+                                            consent from your client.</p>
+                                        <mat-error
+                                            *ngIf="adviceForm.get('consentOption').touched && adviceForm.get('consentOption').invalid"
+                                            class=" f-10 f-500 mt-4">
+                                            This field is required
+                                        </mat-error>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </mat-step>
+                <mat-step>
+                    <ng-template matStepLabel>
+                        STEP 2
+                        <p class="m-0 text-black roboto">Asset details</p>
+                    </ng-template>
+                </mat-step>
+            </mat-horizontal-stepper>
+        </div>
+    </div>
+</div>
+<div class="bottom-fixed wrapper-12 w-60">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="dialogClose()">Cancel</h5>
+        </div>
+        <div class="col-md-8 text-right">
+            <button mat-stroked-button class="btn-bottom" (click)="addOrNextStep()">PROCEED</button>
+        </div>
+    </div>
+</div>

@@ -35,6 +35,8 @@ export class AddScssComponent implements OnInit {
   nominees: any[];
   flag: any;
 
+  @Input() popupHeaderText: string = 'Add Senior citizen savings scheme (SCSS)';
+
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
     private cusService: CustomerService, private eventService: EventService, public utils: UtilService) {
   }
@@ -43,13 +45,13 @@ export class AddScssComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
 
+    this.getdataForm(this.data);
     this.isOptionalField = true;
   }
 
   @Input()
   set data(data) {
     this.inputData = data;
-    this.getdataForm(data);
   }
 
   display(value) {
