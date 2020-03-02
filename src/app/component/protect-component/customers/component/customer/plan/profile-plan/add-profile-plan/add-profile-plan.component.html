@@ -10,7 +10,7 @@
     </div>
   </div>
 </div>
-<div class="pt-100 pl-32">
+<div class="pt-100 pl-32" *ngIf="checkFamList == false">
   <div class="row">
     <div class="col-md-12 p-0">
       <h3 class="m-0 f-500">Rahul, first tell us a bit about you...</h3>
@@ -22,8 +22,8 @@
     </div>
     <div class="col-md-5">
       <mat-radio-group class="d-flex" aria-label="Select an option" id="custom-radio">
-        <mat-radio-button value="1" class="b-a-custom text-primary p-8" checked="checked">Option 1</mat-radio-button>
-        <mat-radio-button value="2" class="b-a p-8">Option 2</mat-radio-button>
+        <mat-radio-button value="1" class="b-a-custom text-primary p-8" checked="checked">Male</mat-radio-button>
+        <mat-radio-button value="2" class="b-a p-8">Female</mat-radio-button>
       </mat-radio-group>
     </div>
   </div>
@@ -38,6 +38,140 @@
           <mat-option value='2'>Singel</mat-option>
         </mat-select>
       </mat-form-field>
+    </div>
+  </div>
+</div>
+<div *ngIf="checkFamList" class="familyMemberBox">
+  <div class="pt-100 pl-32 pb-44 mb-44">
+    <div class="row">
+      <div class="col-md-12 p-0">
+        <h3 class="m-0 f-500">Great! Who’s in your family, Rahul?</h3>
+      </div>
+    </div>
+    <div class="row pt-60">
+      <div class="col-md-6 pl-0 right">
+        <div class="row">
+          <div class="col-md-12">
+              <mat-card class="card-selected right">
+                <mat-checkbox checked="true"></mat-checkbox>
+                <img mat-card-image src="/assets/images/svg/womenIcon.svg">
+              </mat-card>
+          </div>
+          <div class="col-md-12">
+            <p class="m-0 text-right pr-40 pt-10">You</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-12">
+              <mat-card class="card-selected left">
+                <mat-checkbox></mat-checkbox>
+                <img mat-card-image src="/assets/images/svg/familyMember2.svg">
+              </mat-card>
+          </div>
+          <div class="col-md-12">
+            <p class="m-0 text-left pl-40 pt-10">Wife</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row pt-60">
+      <div class="col-md-6 pl-0 right">
+        <div class="row">
+          <div class="col-md-12">
+            <mat-card class="card-unselected right">
+
+              <img mat-card-image src="/assets/images/svg/womenIcon.svg">
+            </mat-card>
+
+          </div>
+          <div class="col-md-12">
+            <p class="m-0 text-right pr-32 pt-10">Father</p>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-12">
+            <mat-card class="card-selected left">
+              <mat-checkbox></mat-checkbox>
+              <img mat-card-image src="/assets/images/svg/familyMember2.svg">
+            </mat-card>
+
+          </div>
+          <div class="col-md-12">
+            <p class="m-0 text-left pl-32 pt-10">Mother</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row pt-60">
+      <div class="col-md-4 pl-0 right">
+        <div class="row">
+          <div class="col-md-12 p-0">
+            <mat-card class="card-unselected right">
+
+              <img mat-card-image src="/assets/images/svg/womenIcon.svg">
+            </mat-card>
+
+          </div>
+          <div class="col-md-12">
+            <p class="m-0 text-right pr-28 pt-10">Son</p>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-12 p-0">
+            <mat-card class="card-selected center-block">
+              <mat-checkbox checked="false"></mat-checkbox>
+              <img mat-card-image src="/assets/images/svg/familyMember2.svg">
+            </mat-card>
+
+          </div>
+          <div class="col-md-12">
+            <p class="m-0 text-center pl-8 pt-10">Daughter</p>
+            <div class="d-flex justify-content-center mt-16">
+              <button mat-stroked-button class="custom-actions mr-12 f-16"><i class="material-icons f-16"
+                  (click)="addRemove('remove')">
+                  remove
+                </i></button>
+              <h5 class="m-0">{{removeCount}}</h5>
+              <button mat-stroked-button class="custom-actions ml-12 f-16"><i class="material-icons f-16"
+                  (click)="addRemove('add')">
+                  add
+                </i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-12 p-0">
+            <mat-card class="card-selected center-block">
+              <mat-checkbox checked="false"></mat-checkbox>
+              <img mat-card-image src="/assets/images/svg/familyMember2.svg">
+            </mat-card>
+          </div>
+          <div class="col-md-12">
+            <p class="m-0 text-center pl-8 pt-10">Others</p>
+            <div class="d-flex justify-content-center mt-16">
+              <button mat-stroked-button class="custom-actions mr-12 f-16"><i class="material-icons f-16"
+                  (click)="addRemoveOthers('remove')">
+                  remove
+                </i></button>
+              <h5 class="m-0">{{addCount}}</h5>
+              <button mat-stroked-button class="custom-actions ml-12 f-16"><i class="material-icons f-16"
+                  (click)="addRemoveOthers('add')">
+                  add
+                </i></button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -176,157 +310,162 @@
         </div> -->
 <!-- third sidebar-right popup -->
 <!-- <div class="pt-100 pl-32 pb-44 mb-44">
-        <div class="row">
-          <div class="col-md-12 p-0">
-            <h3 class="m-0 f-500">Thanks, just a bit more info and we’re done.</h3>
-          </div>
-        </div>
-        <div class="row pt-28">
-          <div class="col-md-1">
-            <h5 class="m-0 text-right pt-12">You</h5>
-          </div>
-          <div class="col-md-6">
-            <mat-form-field class="w-100">
-              <input matInput #message class="form-control br-0" value="Shilpa Jain">
+  <div class="row">
+    <div class="col-md-12 p-0">
+      <h3 class="m-0 f-500">Thanks, just a bit more info and we’re done.</h3>
+    </div>
+  </div>
+  <div class="row pt-28">
+    <div class="col-md-1">
+      <h5 class="m-0 text-right pt-12">You</h5>
+    </div>
+    <div class="col-md-6">
+      <mat-form-field class="w-100">
+        <input matInput #message class="form-control br-0" value="Shilpa Jain">
+      </mat-form-field>
+    </div>
+    <div class="col-md-2 pr-0">
+      <div class="form-group mb-0">
+        <mat-form-field class=" w-100">
+          <mat-select class="p-12">
+            <mat-option value='1'>Select age </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-md-3 pl-0">
+      <div class="form-group mb-0">
+        <mat-form-field class=" w-100">
+          <mat-select class="p-12">
+            <mat-option value='1'>37 Years </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
 
-            </mat-form-field>
-          </div>
-          <div class="col-md-2 pr-0">
-            <div class="form-group mb-0">
-              <mat-form-field class=" w-100">
-                <mat-select class="p-12">
-                  <mat-option value='1'>Select age </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="col-md-3 pl-0">
-            <div class="form-group mb-0">
-              <mat-form-field class=" w-100">
-                <mat-select class="p-12">
-                  <mat-option value='1'>37 Years </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          </div>
-        </div>
+  <div class="row pt-28">
+    <div class="col-md-1">
+      <h5 class="m-0 text-right pt-12">Wife</h5>
+    </div>
+    <div class="col-md-6">
+      <mat-form-field class="w-100">
+        <input matInput #message class="form-control br-0" value="Santosh Jain">
+      </mat-form-field>
+    </div>
+    <div class="col-md-2 pr-0">
+      <div class="form-group mb-0">
+        <mat-form-field class=" w-100">
+          <mat-select class="p-12">
+            <mat-option value='1'>Select age </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-md-3 pl-0">
+      <div class="form-group mb-0">
+        <mat-form-field class=" w-100">
+          <mat-select class="p-12">
+            <mat-option value='1'>35 Years </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-28">
+    <div class="col-md-1">
+      <h5 class="m-0 text-right pt-12">Father</h5>
+    </div>
+    <div class="col-md-6">
+      <mat-form-field class="w-100">
+        <input matInput #message class="form-control br-0" value="Rita Jain">
 
-        <div class="row pt-28">
-          <div class="col-md-1">
-            <h5 class="m-0 text-right pt-12">Wife</h5>
-          </div>
-          <div class="col-md-6">
-            <mat-form-field class="w-100">
-              <input matInput #message class="form-control br-0" value="Santosh Jain">
-                        </mat-form-field>
-          </div>
-          <div class="col-md-2 pr-0">
-            <div class="form-group mb-0">
-              <mat-form-field class=" w-100">
-                <mat-select class="p-12">
-                  <mat-option value='1'>Select age </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="col-md-3 pl-0">
-            <div class="form-group mb-0">
-              <mat-form-field class=" w-100">
-                <mat-select class="p-12">
-                  <mat-option value='1'>35 Years </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          </div>
-        </div>
-        <div class="row pt-28">
-          <div class="col-md-1">
-            <h5 class="m-0 text-right pt-12">Father</h5>
-          </div>
-          <div class="col-md-6">
-            <mat-form-field class="w-100">
-              <input matInput #message class="form-control br-0" value="Rita Jain">
+      </mat-form-field>
+    </div>
+    <div class="col-md-2 pr-0">
+      <div class="form-group mb-0">
+        <mat-form-field class=" w-100">
+          <mat-select class="p-12">
+            <mat-option value='1'>Select age </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-md-3 pl-0">
+      <div class="form-group mb-0">
+        <mat-form-field class=" w-100">
+          <mat-select class="p-12">
+            <mat-option value='1'>75 Years </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-28">
+    <div class="col-md-1">
+      <h5 class="m-0 text-right pt-12">Mother</h5>
+    </div>
+    <div class="col-md-6">
+      <mat-form-field class="w-100">
+        <input matInput #message class="form-control br-0" value="Rahul Jain">
 
-            </mat-form-field>
-          </div>
-          <div class="col-md-2 pr-0">
-            <div class="form-group mb-0">
-              <mat-form-field class=" w-100">
-                <mat-select class="p-12">
-                  <mat-option value='1'>Select age </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="col-md-3 pl-0">
-            <div class="form-group mb-0">
-              <mat-form-field class=" w-100">
-                <mat-select class="p-12">
-                  <mat-option value='1'>75 Years </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          </div>
-        </div>
-        <div class="row pt-28">
-          <div class="col-md-1">
-            <h5 class="m-0 text-right pt-12">Mother</h5>
-          </div>
-          <div class="col-md-6">
-            <mat-form-field class="w-100">
-              <input matInput #message class="form-control br-0" value="Rahul Jain">
+      </mat-form-field>
+    </div>
+    <div class="col-md-2 pr-0">
+      <div class="form-group mb-0">
+        <mat-form-field class=" w-100">
+          <mat-select class="p-12">
+            <mat-option value='1'>Select age </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-md-3 pl-0">
+      <div class="form-group mb-0">
+        <mat-form-field class=" w-100">
+          <mat-select class="p-12">
+            <mat-option value='1'>37 Years </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-28">
+    <div class="col-md-1 pl-0">
+      <h5 class="m-0 text-right pt-12">Daughter</h5>
+    </div>
+    <div class="col-md-6">
+      <mat-form-field class="w-100">
+        <input matInput #message class="form-control br-0" value="Shreya Jain">
 
-            </mat-form-field>
-          </div>
-          <div class="col-md-2 pr-0">
-            <div class="form-group mb-0">
-              <mat-form-field class=" w-100">
-                <mat-select class="p-12">
-                  <mat-option value='1'>Select age </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="col-md-3 pl-0">
-            <div class="form-group mb-0">
-              <mat-form-field class=" w-100">
-                <mat-select class="p-12">
-                  <mat-option value='1'>37 Years </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          </div>
-        </div>
-        <div class="row pt-28">
-                <div class="col-md-1 pl-0">
-                  <h5 class="m-0 text-right pt-12">Daughter</h5>
-                </div>
-                <div class="col-md-6">
-                  <mat-form-field class="w-100">
-                    <input matInput #message class="form-control br-0" value="Shreya Jain">
-
-                  </mat-form-field>
-                </div>
-                <div class="col-md-2 pr-0">
-                  <div class="form-group mb-0">
-                    <mat-form-field class=" w-100">
-                      <mat-select class="p-12">
-                        <mat-option value='1'>Select age </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-                </div>
-                <div class="col-md-3 pl-0">
-                  <div class="form-group mb-0">
-                    <mat-form-field class=" w-100">
-                      <mat-select class="p-12">
-                        <mat-option value='1'>72 Years </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-                </div>
-              </div>
-      </div> -->
+      </mat-form-field>
+    </div>
+    <div class="col-md-2 pr-0">
+      <div class="form-group mb-0">
+        <mat-form-field class=" w-100">
+          <mat-select class="p-12">
+            <mat-option value=''>Select age </mat-option>
+            <mat-option value='1'>Age </mat-option>
+            <mat-option value='2'>Select date birth </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-md-3 pl-0">
+      <div class="form-group mb-0">
+        <mat-form-field class=" w-100">
+          <input (click)="picker.open()" (dateChange)="checkDate()" matInput formControlName="birthDate" [max]="maxDate"
+            [matDatepicker]="picker" readonly>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error class="f-12 pt-4">
+            This field is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</div> -->
 <!-- 4th popup -->
 <!-- <div class="pt-100 pl-32 pb-44 mb-44">
 
@@ -445,7 +584,7 @@
       <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
     </div>
     <div class="col-md-8 right text-right">
-      <button mat-button class="btn-bottom br-0 text-inherit">NEXT</button>
+      <button mat-button class="btn-bottom br-0 text-inherit" (click)="nextStep()">NEXT</button>
     </div>
   </div>
 </div>

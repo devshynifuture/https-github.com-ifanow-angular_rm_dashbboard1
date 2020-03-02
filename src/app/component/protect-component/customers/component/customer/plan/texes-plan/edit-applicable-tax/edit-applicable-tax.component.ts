@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-edit-applicable-tax',
@@ -8,11 +9,13 @@ import { Component, OnInit } from '@angular/core';
 export class EditApplicableTaxComponent implements OnInit {
   displayedColumns: string[] = ['name', 'weight', 'symbol', 'symbol1'];
   dataSource = ELEMENT_DATA;
-  constructor() { }
+  constructor(private subInjectService: SubscriptionInject,) { }
 
   ngOnInit() {
   }
-
+  close() {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  }
 }
 
 export interface PeriodicElement {
