@@ -86,10 +86,10 @@
                 <div>
                     <button
                         [ngClass]="{'mat-button': element.acceptedOrDeclined==0,'mat-stroked-button':element.acceptedOrDeclined==1}"
-                        (click)="acceptConsent(element,i)">ACCEPTED</button>
+                        (click)="acceptOrDeclineConsent(element, i, 1)">ACCEPTED</button>
                     <button
                         [ngClass]="{'mat-button': element.acceptedOrDeclined==0,'mat-stroked-button':element.acceptedOrDeclined==2}"
-                        (click)="declineConsent(element,i)">DECLINE</button>
+                        (click)="acceptOrDeclineConsent(element, i, 2)">DECLINE</button>
                 </div>
             </td>
             <td *matFooterCellDef class="br text-right" mat-footer-cell></td>

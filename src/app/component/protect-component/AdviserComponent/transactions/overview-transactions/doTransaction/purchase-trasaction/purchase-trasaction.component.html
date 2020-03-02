@@ -52,13 +52,16 @@
                 <ng-container matColumnDef="icons">
                     <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
                     <td mat-cell *matCellDef="let element" class="t-2">
-                        <div *ngIf="!isLoading">
+                        <!-- ng build prod issue isLoading removed -->
+                        <!-- <div *ngIf="!isLoading"> -->
+
+                        <div>
                             <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
                                 more_vert
                             </i>
                             <mat-menu #menubank="matMenu">
                                 <button mat-menu-item (click)="getdataForm(element,true)">Edit</button>
-                                <button mat-menu-item >Delete</button>
+                                <button mat-menu-item>Delete</button>
                             </mat-menu>
                         </div>
                     </td>
@@ -99,7 +102,7 @@
                             <mat-form-field floatLabel="never" appearance="standard">
                                 <input type="text" aria-label="Number" formControlName="schemePurchase"
                                     class="form-control" matInput (keyup)="getSchemeList($event.target.value)"
-                                    [matAutocomplete]="auto"  placeholder="Start typing to see scheme names">
+                                    [matAutocomplete]="auto" placeholder="Start typing to see scheme names">
                                 <mat-autocomplete #auto="matAutocomplete">
                                     <mat-option (onSelectionChange)="selectedScheme(scheme)"
                                         *ngFor="let scheme of schemeList" [value]="scheme.schemeName">
