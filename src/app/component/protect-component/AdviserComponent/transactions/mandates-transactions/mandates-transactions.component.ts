@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { OnlineTransactionService } from '../online-transaction.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-mandates-transactions',
@@ -7,14 +10,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MandatesTransactionsComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'bank', 'bankac', 'amt', 'type', 'status', 'icons'];
-  dataSource = ELEMENT_DATA;
-  constructor() { }
+  // dataSource = ELEMENT_DATA;
+  advisorId: any;
+  dataSource: any;
+  constructor( private onlineTransact: OnlineTransactionService,private eventService:EventService) { }
 
   isLoading = false;
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.getNSEAchmandate()
   }
-
+  getNSEAchmandate() {
+    this.dataSource = [{}, {}, {}];
+    this.isLoading = true;
+    let obj1 = {
+     tpUserCredFamilyMappingId: 4792
+    }
+    this.onlineTransact.getNSEAchmandate(obj1).subscribe(
+      data => this.getNSEAchmandateRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+    );
+  }
+  getNSEAchmandateRes(data){
+    this.isLoading = false;
+    console.log(data);
+    this.dataSource=data;
+  }
 }
 export interface PeriodicElement {
   name: string;
