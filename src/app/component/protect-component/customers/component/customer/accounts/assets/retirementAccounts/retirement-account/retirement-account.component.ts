@@ -201,7 +201,7 @@ export class RetirementAccountComponent implements OnInit {
   datasource12;
   displayedColumns13 = ['no', 'owner', 'name', 'number', 'year', 'amt', 'reason', 'desc', 'status', 'icons'];
   datasource13;
-  displayedColumns14 = ['no', 'owner', 'aemp', 'aempe', 'rate', 'grate', 'grateemp', 'date', 'desc', 'status', 'icons'];
+  displayedColumns14 = ['no', 'owner', 'aemp', 'aempe', 'rate', 'date', 'desc', 'status', 'icons'];
   datasource14;
   displayedColumns15 = ['no', 'owner', 'nvalue', 'date', 'amt', 'pay', 'desc', 'status', 'icons'];
   datasource15;
@@ -557,7 +557,7 @@ export class RetirementAccountComponent implements OnInit {
   getEPFRes(data) {
     this.isLoading = false;
     if (data == undefined) {
-      this.noData = "No scheme found";
+      this.noData = "No EPF found";
       this.dataEPFList.data = [];
     }
     else if (data.listOfEpf) {
@@ -600,7 +600,7 @@ export class RetirementAccountComponent implements OnInit {
   getGrauityRes(data) {
     this.isLoading = false;
     if (data == undefined) {
-      this.noData = 'No data found';
+      this.noData = 'No gratuity found';
       this.dataGratuityList.data = []
     }
     else if (data.gratuityList) {
@@ -611,7 +611,7 @@ export class RetirementAccountComponent implements OnInit {
       this.sumOfAmountReceived = data.sumOfAmountReceived;
     }
     else {
-      this.noData = "No scheme found";
+      this.noData = "No gratuity found";
       this.dataGratuityList.data = [];
     }
 
@@ -631,7 +631,7 @@ export class RetirementAccountComponent implements OnInit {
   getNPSRes(data) {
     this.isLoading = false;
     if (data == undefined) {
-      this.noData = 'No data found';
+      this.noData = 'No NPS found';
       this.dataNPSList.data = []
     } else if (data.npsList) {
       console.log('getNPSRes =', data);
@@ -642,7 +642,7 @@ export class RetirementAccountComponent implements OnInit {
       this.totalCurrentValue = data.totalCurrentValue;
     }
     else {
-      this.noData = "No scheme found";
+      this.noData = "No NPS found";
       this.dataNPSList.data = [];
     }
 
@@ -662,9 +662,9 @@ export class RetirementAccountComponent implements OnInit {
   getSuperannuationRes(data) {
     this.isLoading = false;
     if (data == undefined) {
-      this.noData = 'No data found';
+      this.noData = 'No superannuation found';
       this.dataSuperannuationList.data = []
-    }else if (data.superannuationList) {
+    } else if (data.superannuationList) {
       console.log('getSuperannuationRes =', data);
       this.dataSuperannuationList.data = data.superannuationList;
       this.dataSuperannuationList.sort = this.superAnnuationListTableSort;
@@ -673,7 +673,7 @@ export class RetirementAccountComponent implements OnInit {
       this.sumOfAnnualEmployerContribution = data.sumOfAnnualEmployerContribution;
     }
     else {
-      this.noData = "No scheme found";
+      this.noData = "No superannuation found";
       this.dataSuperannuationList.data = [];
     }
 
@@ -693,9 +693,9 @@ export class RetirementAccountComponent implements OnInit {
   getEPSRes(data) {
     this.isLoading = false;
     if (data == undefined) {
-      this.noData = 'No data found';
+      this.noData = 'No EPS found';
       this.EPSList.data = []
-    }else if (data.epsList) {
+    } else if (data.epsList) {
       console.log('getEPSRes =', data);
       this.EPSList.data = data.epsList;
       this.EPSList.sort = this.epsListTableSort;
@@ -704,7 +704,7 @@ export class RetirementAccountComponent implements OnInit {
       this.totalPensionAmount = data.totalPensionAmount;
     }
     else {
-      this.noData = "No scheme found";
+      this.noData = "No EPS found";
       this.EPSList.data = [];
     }
 
@@ -773,8 +773,6 @@ export interface PeriodicElement14 {
   aemp: string;
   aempe: string;
   rate: string;
-  grate: string;
-  grateemp: string;
   date: string;
   desc: string;
   status: string;

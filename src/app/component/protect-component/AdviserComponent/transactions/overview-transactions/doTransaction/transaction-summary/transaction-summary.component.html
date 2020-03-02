@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-md-2" *ngIf="allData">
                     <button mat-stroked-button
-                        *ngIf="transactionSummary && allData.showPlatformEdit ==true && transactionSummary.allEdit == true"
+                        *ngIf="transactionSummary && allData.showPlatformEdit ==true && transactionSummary.isMultiTransact==false && transactionSummary.allEdit == true"
                         class="primary-sm" (click)="showPlatform = true;openPlatform()">Edit</button>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                 </div>
                 <div class="col-md-2">
                     <button mat-stroked-button class="primary-sm"
-                        *ngIf="transactionSummary && allData.showMappingEdit ==true && transactionSummary.allEdit == true"
+                        *ngIf="transactionSummary && allData.showMappingEdit ==true && transactionSummary.isMultiTransact==false && transactionSummary.allEdit == true"
                         (click)="openDialog()">Edit</button>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                     <h5 class="m-0"> {{allData.euin.euin}} - Ankit Mehta</h5>
                 </div>
                 <div class="col-md-2"
-                    *ngIf="transactionSummary && transactionSummary.allEdit == true && subBrokerCredList.length >1">
+                    *ngIf="transactionSummary && transactionSummary.allEdit == true && subBrokerCredList.length >1 && transactionSummary.isMultiTransact==false">
                     <button mat-stroked-button class="primary-sm" (click)="showEuin = true;openEuin()">Edit</button>
                 </div>
             </div>
@@ -112,7 +112,7 @@
                             {{bank.accountNo}}</h5>
                     </div>
                     <div class="col-md-2"
-                        *ngIf=" transactionSummary && showBankEdit == true && transactionSummary.allEdit == true && (transactionSummary.transactType != 'STP'|| transactionSummary.transactType != 'SWITCH')">
+                        *ngIf=" transactionSummary && showBankEdit == true && transactionSummary.isMultiTransact==false && transactionSummary.allEdit == true && (transactionSummary.transactType != 'STP'|| transactionSummary.transactType != 'SWITCH')">
                         <button mat-stroked-button class="primary-sm" (click)="showbank = true;openBank()">Edit</button>
                     </div>
                 </div>
@@ -126,7 +126,7 @@
                     </h5>
                 </div>
                 <div class="col-md-2"
-                    *ngIf=" transactionSummary && transactionSummary.allEdit == true  && (transactionSummary.transactType == 'PURCHASE'|| transactionSummary.transactType == 'SIP') && transactionSummary.showUmrnEdit ==2">
+                    *ngIf=" transactionSummary && transactionSummary.allEdit == true  && (transactionSummary.transactType == 'PURCHASE'|| transactionSummary.transactType == 'SIP') && transactionSummary.showUmrnEdit ==2 && transactionSummary.isMultiTransact==false">
                     <button mat-stroked-button class="primary-sm" (click)="openUmrn()">Edit</button>
                 </div>
             </div>

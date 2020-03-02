@@ -90,7 +90,7 @@ export class RealEstateComponent implements OnInit {
   getRealEstateRes(data) {
     this.isLoading = false;
     if (data == undefined) {
-      this.noData = 'No data found';
+      this.noData = 'No real estate found';
       this.datasource3.data = [];
     }
     else if (data.realEstateList.length > 0) {

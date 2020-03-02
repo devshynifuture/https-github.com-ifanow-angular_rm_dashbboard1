@@ -42,42 +42,46 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-14 text-right"> Current value </th>
-            <td mat-cell *matCellDef="let element" class="br t-14 text-right">
+            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-14 textRight text-right">
+                Current value </th>
+            <td mat-cell *matCellDef="let element" class="br amt t-14 text-right">
                 <div class="bar" appFormatNumber>{{element.currentValue}}</div>
             </td>
-            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef appFormatNumber [value]="sumOfCurrentValue">
+            <td mat-footer-cell class="br text-right t-14 amt f-600" *matFooterCellDef appFormatNumber [value]="sumOfCurrentValue">
                 <div class="bar"> {{sumOfCurrentValue}} </div>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="rate">
             <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br text-right"> Rate </th>
-            <td mat-cell *matCellDef="let element" class="br text-right">
+            <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar"> {{element.rate}} </div>
             </td>
             <td mat-footer-cell class="br text-left t-7" *matFooterCellDef> </td>
         </ng-container>
+
         <ng-container matColumnDef="deposit">
-            <th mat-sort-header="deposit" mat-header-cell *matHeaderCellDef class="br text-right t-18">Monthly deposit
+            <th mat-sort-header="deposit" mat-header-cell *matHeaderCellDef class="br text-right textRight t-18">
+                Monthly deposit
             </th>
-            <td mat-cell *matCellDef="let element" class="br text-right t-18">
-                <div class="bar" appFormatNumber> {{element.deposit}} </div>
+            <td mat-cell *matCellDef="let element" class="br amt text-right t-18">
+                <div class="bar" appFormatNumber> {{element.monthlyContribution}} </div>
             </td>
-            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef appFormatNumber [value]="sumOfMonthlyDeposit">{{sumOfMonthlyDeposit}}</td>
+            <td mat-footer-cell class="br text-right  t-18 f-600" *matFooterCellDef appFormatNumber [value]="sumOfMonthlyDeposit">{{sumOfMonthlyDeposit}}</td>
         </ng-container>
         <ng-container matColumnDef="mvalue">
-            <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br text-right t-15">Maturity value </th>
-            <td mat-cell *matCellDef="let element" class="br text-right t-15">
+            <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br textRight text-right t-15">
+                Maturity value </th>
+            <td mat-cell *matCellDef="let element" class="br amt text-right t-15">
                 <div class="bar" appFormatNumber> {{element.maturityValue}} </div>
             </td>
-            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef appFormatNumber [value]="sumOfMaturityValue">
+            <td mat-footer-cell class="br text-right amt f-600" *matFooterCellDef appFormatNumber [value]="sumOfMaturityValue">
                 <div class="bar"> {{sumOfMaturityValue}} </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="mdate">
             <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef class="br text-right t-15">Maturity date </th>
-            <td mat-cell *matCellDef="let element" class="br text-right t-15">
+            <td mat-cell *matCellDef="let element" class="br text-left t-15">
                 <div class="bar"> {{element.maturityDate | date:'dd/MM/yyyy'}} </div>
 
             </td>
@@ -85,7 +89,7 @@
         </ng-container>
         <ng-container matColumnDef="number">
             <th mat-sort-header="rdNumber" mat-header-cell *matHeaderCellDef class="br text-right">RD number </th>
-            <td mat-cell *matCellDef="let element" class="br text-right">
+            <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar"> {{isLoading ? '' : element.rdNumber || '-'}} </div>
             </td>
             <td mat-footer-cell *matFooterCellDef> </td>
@@ -127,8 +131,8 @@
     </table>
 
     <div *ngIf="dataSource.data.length <= 0" class="d-flex flex-column align-items-center">
-        <img class="width400" src="assets/images/svg/noDataFound.svg">
-        <h4 class="text-center pt-12">No Scheme Found</h4>
+        <img class="width300" src="assets/images/svg/noDataFound.svg">
+        <h4 class="text-center pt-12">No data found</h4>
         <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPORD(null)">
             ADD NEW</button>
     </div>
