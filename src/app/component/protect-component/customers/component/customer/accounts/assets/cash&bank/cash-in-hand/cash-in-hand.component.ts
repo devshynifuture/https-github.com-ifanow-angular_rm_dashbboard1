@@ -47,7 +47,7 @@ export class CashInHandComponent implements OnInit {
     return this.inputData;
   }
 
-  @Input() popupHeaderText: string = 'Add Cash In Hand';
+  @Input() popupHeaderText: string = 'Add Cash in hand';
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
