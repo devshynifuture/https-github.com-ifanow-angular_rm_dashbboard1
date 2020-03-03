@@ -353,6 +353,9 @@ export const appConfig = {
   GET_ASSET_CONSENT: 'advice/advice/consent/get',
   UPDATE_ASSET_CONSENT: 'advice/asset/update/consent',
   SENT_EMAIL_CONSENT: 'advice/asset/update/consent/sent',
+  GIVE_ADVICE_ON_GOLD: '/advice/asset/gold/advice/post',
+  GIVE_ADVICE_ON_PO_SAVING: '/advice/asset/po-savings/advice/post',
+  GIVE_ADVICE_ON_REAL_ESTATE: 'advice/asset/real-estate/advice/post',
   ////////////////////////////////////OnlineTransaction///////////////////////////////////////
   ADD_BSE_CREDENTIALS: 'bse/user/save',
   GET_BSE_CREDENTIALS: 'bse/user/view',
@@ -386,7 +389,7 @@ export const appConfig = {
   DELETE_HIDDEN_AMC: 'mutual-fund/hidden-amc/delete',
   SEARCH_SCHEME: 'report/transaction/list/get',
   GET_TRANSACTION_DETAILS: 'report/transaction/detail/get',
-  GET_MANDATE_LIST:'report/ach-mandate/get',
+  GET_MANDATE_LIST: 'report/ach-mandate/get',
   // SIP_BSE:'bse/order/create',
 
   // cashflow 
