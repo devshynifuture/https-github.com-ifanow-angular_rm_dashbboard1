@@ -127,7 +127,7 @@ export class PPFSchemeComponent implements OnInit {
     );
   }
   openAddPPF(data) {
-    let popupHeaderText = !!data ? 'Edit Public Provident Fund (PPF)' : 'Add Public Provident Fund (PPF)';
+    let popupHeaderText = !!data ? 'Edit Public provident fund (PPF)' : 'Add Public provident fund (PPF)';
     const fragmentData = {
       flag: 'addPpf',
       data,

@@ -4,7 +4,7 @@
             <h4 class="mb-0 wrapper-20">ADD HEALTH INSURANCE</h4>
         </div>
         <div class="col-md-4 text-right">
-            <div class="wrapper-12"> <i class="material-icons c-p pt-8 v-middle"> clear</i>
+            <div class="wrapper-12"> <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
             </div>
         </div>
     </div>
@@ -20,7 +20,8 @@
                 the next step
             </p>
             <mat-radio-group aria-label="Select an option" id="addinsuranceradio">
-                <mat-radio-button value="1" class="bu-primary text-primary mr-28" (click)="openExistingPolicy()">Review existing policies
+                <mat-radio-button value="1" class="bu-primary text-primary mr-28" (click)="openExistingPolicy()">Review
+                    existing policies
                     and suggest new</mat-radio-button>
                 <mat-radio-button value="2" class="b-ua text-custom">Suggest new insurance policies
                 </mat-radio-button>
@@ -35,7 +36,7 @@
             <h4 class="mb-0 wrapper-20">Select health insurance policy</h4>
         </div>
         <div class="col-md-4 text-right">
-            <div class="wrapper-12"> <i class="material-icons c-p pt-8 v-middle"> clear</i>
+            <div class="wrapper-12"> <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
             </div>
         </div>
     </div>
@@ -63,7 +64,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef class="br"> Policy name </th>
+                    <th mat-header-cell *matHeaderCellDef class="br"> Policy type </th>
                     <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
                 </ng-container>
 
@@ -88,11 +89,26 @@
                 </ng-container>
                 <ng-container matColumnDef="advice">
                     <th mat-header-cell *matHeaderCellDef> Advice </th>
-                    <td mat-cell *matCellDef="let element" class="c-p" (click)="openDialog()"> {{element.advice}} </td>
+                    <td mat-cell *matCellDef="let element" class="c-p" (click)="openDialog()"
+                    >  <img src="/assets/images/svg/plus-rounded.svg">{{element.advice}} </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
             </table>
+        </div>
+    </div>
+</div>
+<div class="bottom-fixed wrapper-12 pt-16" *ngIf="showExisting == false">
+    <div class="row">
+    </div>
+</div>
+<div class="bottom-fixed wrapper-12 pt-16" *ngIf="showExisting == true">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="showHealthInsurance(null)">Procced</button>
         </div>
     </div>
 </div>
