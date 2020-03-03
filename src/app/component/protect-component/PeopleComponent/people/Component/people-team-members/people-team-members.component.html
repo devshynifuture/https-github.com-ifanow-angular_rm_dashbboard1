@@ -1,1 +1,168 @@
-<p>people-team-members works!</p>
+<div class="row pt-120">
+    <div class="col-md-9 pt-28">
+        <h3 class="m-0">Team members</h3>
+        <div class="row pt-20">
+            <div class="col-md-4 pl-0">
+                <mat-card class="b-a p-9 br-4">
+                    <div class="row">
+                        <div class="col-md-4 p-0">
+                            <img src="https://ifanow.com/images/team/avinash.jpeg" class="w-100 h-80">
+                        </div>
+                        <div class="col-md-8 pr-0">
+                            <h5 class="m-0 text-black">Archit Gupta</h5>
+                            <p class="text-custom roboto m-0">Admin</p>
+                            <h3 class="m-0 f-500 text-primary pt-16">118 clients</h3>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+            <div class="col-md-4 pl-0">
+                <mat-card class="b-a p-9">
+                    <div class="row">
+                        <div class="col-md-4 p-0">
+                            <img src="https://ifanow.com/images/team/avinash.jpeg" class="w-100 h-80">
+                        </div>
+                        <div class="col-md-8 pr-0">
+                            <h5 class="m-0 text-black">Khushboo Sidapara</h5>
+                            <p class="text-custom roboto m-0">Relationship manager</p>
+                            <h3 class="m-0 f-500 text-primary pt-16">103 clients</h3>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+            <div class="col-md-4 pl-0">
+                <mat-card class="b-a p-9">
+                    <div class="row">
+                        <div class="col-md-4 p-0">
+                            <img src="https://ifanow.com/images/team/avinash.jpeg" class="w-100 h-80">
+                        </div>
+                        <div class="col-md-8 pr-0">
+                            <h5 class="m-0 text-black">Nita Shinde</h5>
+                            <p class="text-custom roboto m-0">Para planner</p>
+                            <h3 class="m-0 f-500 text-primary pt-16">12 clients</h3>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+
+        </div>
+        <div class="row pt-28">
+            <div class="col-md-4 pl-0">
+                <mat-card class="b-a p-9">
+                    <div class="row">
+                        <div class="col-md-4 p-0">
+                            <img src="https://ifanow.com/images/team/avinash.jpeg" class="w-100 h-80">
+                        </div>
+                        <div class="col-md-8 pr-0">
+                            <h5 class="m-0 text-black">Satish Patel</h5>
+                            <p class="text-custom roboto m-0">Para planner</p>
+                            <h3 class="m-0 f-500 text-primary pt-16">2 clients</h3>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+            <div class="col-md-4 pl-0">
+                <mat-card class="b-a p-9">
+                    <div class="row">
+                        <div class="col-md-4 p-0">
+                            <img src="https://ifanow.com/images/team/avinash.jpeg" class="w-100 h-80">
+                        </div>
+                        <div class="col-md-8 pr-0">
+                            <h5 class="m-0 text-black">Satish Patel</h5>
+                            <p class="text-custom roboto m-0">Para planner</p>
+                            <h3 class="m-0 f-500 text-primary pt-16">2 clients</h3>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+        <h5 class="m-0 pt-28 text-black">Map clients & leads to team members</h5>
+        <div class="people-team-member">
+            <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
+
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Group head name </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Registered mobile </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="weight">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Registered email </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="symbol">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Type </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
+                </ng-container>
+                <ng-container matColumnDef="map">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Map </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <button mat-stroked-button class="btn-primary btn-map">MAP</button>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef> Map </th>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-icon [matMenuTriggerFor]="menu" class="c-p">more_vert</mat-icon>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item>
+                                <span>Edit</span>
+                            </button>
+                            <button mat-menu-item>
+                                <span>Delete</span>
+                            </button>
+                        </mat-menu>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-3 bg-grey lter h-100vh">
+        <h5 class="m-0 f-500 text-black pt-28">Create team member</h5>
+        <h5 class="m-0 pt-20 pb-8">Full name</h5>
+        <div class="form-group mb-0">
+            <mat-form-field>
+                <input matInput class="form-control">
+            </mat-form-field>
+        </div>
+        <h5 class="m-0 pt-20 pb-8">Email</h5>
+        <div class="form-group mb-0">
+            <mat-form-field>
+                <input matInput class="form-control">
+            </mat-form-field>
+        </div>
+        <h5 class="m-0 pt-20 pb-8">Mobile</h5>
+        <div class="form-group mb-0">
+            <mat-form-field>
+                <input matInput class="form-control">
+            </mat-form-field>
+        </div>
+        <h5 class="m-0 pt-20 pb-8">Role</h5>
+        <div class="form-group mb-0">
+            <mat-form-field>
+                <mat-select class="form-control">
+                    <mat-option value="option">Select a role</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <h5 class="m-0 pt-20 pb-8">EUIN</h5>
+        <div class="form-group mb-0">
+            <mat-form-field>
+                <input matInput class="form-control">
+                <mat-hint>Optional</mat-hint>
+            </mat-form-field>
+        </div>
+        <button mat-stroked-button class="btn-primary w-100 mt-44 h-40 br-2">Send invite</button>
+    </div>
+
+</div>
