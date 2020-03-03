@@ -47,6 +47,8 @@ export class AddEPSComponent implements OnInit {
   get data() {
     return this.inputData;
   }
+  @Input() popupHeaderText: string = 'Add EPS';
+
   ngOnInit() {
     if (this.data && this.data.flag) {
       this.adviceShowHeaderAndFooter = false;

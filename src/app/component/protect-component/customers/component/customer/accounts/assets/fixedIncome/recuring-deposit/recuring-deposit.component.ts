@@ -71,6 +71,7 @@ export class RecuringDepositComponent implements OnInit {
   get data() {
     return this.inputData;
   }
+  @Input() popupHeaderText: string = 'Add Recurring deposits';
 
   ngOnInit() {
     if (this.data && this.data.flag) {

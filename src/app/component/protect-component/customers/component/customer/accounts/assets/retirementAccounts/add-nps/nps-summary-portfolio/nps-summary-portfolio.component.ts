@@ -62,6 +62,9 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   get data() {
     return this.inputData;
   }
+
+  @Input() popupHeaderText: string = 'Add Portfolio summary';
+
   ngOnInit() {
     if (this.data && this.data.flag) {
       this.adviceShowHeaderAndFooter = false;

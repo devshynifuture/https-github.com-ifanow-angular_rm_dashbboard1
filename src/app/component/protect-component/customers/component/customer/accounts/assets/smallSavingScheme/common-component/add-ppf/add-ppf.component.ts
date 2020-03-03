@@ -57,7 +57,7 @@ export class AddPpfComponent implements OnInit {
     return this.inputData;
   }
 
-  @Input() popupHeaderText: string = 'Add Public Provident Fund (PPF)';
+  @Input() popupHeaderText: string = 'Add Public provident fund (PPF)';
 
   ngOnInit() {
     if (this.data && this.data.flag) {

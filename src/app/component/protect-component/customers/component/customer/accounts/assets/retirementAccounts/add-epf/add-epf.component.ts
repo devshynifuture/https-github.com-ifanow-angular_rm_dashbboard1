@@ -52,6 +52,9 @@ export class AddEPFComponent implements OnInit {
   get data() {
     return this.inputData;
   }
+
+  @Input() popupHeaderText: string = 'Add Employees providend fund (EPF)';
+
   ngOnInit() {
     if (this.data && this.data.flag) {
       this.adviceShowHeaderAndFooter = false;

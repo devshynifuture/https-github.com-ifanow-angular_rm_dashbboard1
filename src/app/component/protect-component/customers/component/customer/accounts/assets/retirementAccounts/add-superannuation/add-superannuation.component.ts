@@ -51,6 +51,9 @@ export class AddSuperannuationComponent implements OnInit {
   get data() {
     return this.inputData;
   }
+  
+  @Input() popupHeaderText: string = 'Add Superannuation';
+
   ngOnInit() {
     if (this.data && this.data.flag) {
       this.adviceShowHeaderAndFooter = false;

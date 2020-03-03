@@ -226,7 +226,7 @@ export class CashAndBankComponent implements OnInit {
   }
 
   openCashAndBank(data,value) {
-    let popupHeaderText = !!data ? 'Edit bank account' : 'add bank account';
+    let popupHeaderText = !!data ? 'Edit Bank account' : 'Add Bank account';
     const fragmentData = {
       flag: value,
       data,
@@ -250,7 +250,7 @@ export class CashAndBankComponent implements OnInit {
   }
 
   openCashInHand(data,value) {
-    let popupHeaderText = !!data ? 'Edit Cash In Hand' : 'Add Cash In Hand';
+    let popupHeaderText = !!data ? 'Edit Cash in hand' : 'Add Cash in hand';
     const fragmentData = {
       flag: value,
       data,

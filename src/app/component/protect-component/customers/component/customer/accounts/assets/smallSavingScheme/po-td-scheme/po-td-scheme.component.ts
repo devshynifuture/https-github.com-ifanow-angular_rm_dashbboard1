@@ -171,13 +171,14 @@ export class PoTdSchemeComponent implements OnInit {
   }
 
   openAddPOTD(data) {
+    let popupHeaderText = !!data ? 'Edit Post office time deposit (PO TD)' : 'Add Post office time deposit (PO TD)';
     const fragmentData = {
       flag: 'addPoTd',
       data,
       id: 1,
       state: 'open',
       componentName: AddPoTdComponent,
-      popupHeaderText: (data) ? 'Edit Post office time deposit (PO TD)' : 'Add Post office time deposit (PO TD)'
+      popupHeaderText: popupHeaderText,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

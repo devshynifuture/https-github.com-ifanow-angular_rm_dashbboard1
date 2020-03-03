@@ -52,8 +52,9 @@ export class AddRealEstateComponent implements OnInit {
   set data(inputData) {
     this._data = inputData;
     this.getRealEstate(inputData);
-
   }
+
+  @Input() popupHeaderText: string = 'Add Real estate';
 
   preventDefault(e) {
     e.preventDefault();

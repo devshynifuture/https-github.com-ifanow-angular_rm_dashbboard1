@@ -59,6 +59,8 @@ export class BondsComponent implements OnInit {
   get data() {
     return this.inputData;
   }
+  @Input() popupHeaderText: string = 'Add Bond';
+
   ngOnInit() {
     if (this.data && this.data.flag) {
       this.adviceShowHeaderAndFooter = false;

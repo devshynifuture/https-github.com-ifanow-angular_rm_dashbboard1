@@ -109,6 +109,7 @@ export class FixedDepositComponent implements OnInit {
   get getCoOwner() {
     return this.fixedDeposit.get('getCoOwnerName') as FormArray;
   }
+  @Input() popupHeaderText: string = 'Add Fixed deposit';
 
   removeCoOwner(item) {
     this.getCoOwner.removeAt(item);

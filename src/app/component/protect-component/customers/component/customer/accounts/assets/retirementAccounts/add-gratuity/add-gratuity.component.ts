@@ -45,6 +45,9 @@ export class AddGratuityComponent implements OnInit {
   get data() {
     return this.inputData;
   }
+
+  @Input() popupHeaderText: string = 'Add Gratuity';
+
   ngOnInit() {
     if (this.data && this.data.flag) {
       this.adviceShowHeaderAndFooter = false;

@@ -1,11 +1,10 @@
+import { DynamicComponentService } from './../../../../../../../../services/dynamic-component.service';
+import { SubscriptionInject } from './../../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import { EventService } from './../../../../../../../../Data-service/event.service';
 import { UtilService } from './../../../../../../../../services/util.service';
-import { FixedDepositComponent } from './../../../accounts/assets/fixedIncome/fixed-deposit/fixed-deposit.component';
-import { Component, OnInit, ViewChild, OnDestroy, ComponentFactoryResolver, ViewContainerRef, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, ViewContainerRef, } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { DynamicComponentService } from 'src/app/services/dynamic-component.service';
 
 @Component({
   selector: 'app-suggest-advice',
