@@ -1,0 +1,118 @@
+<div class="popup-header-fix w-70">
+    <div class="row bb-1">
+        <div class="col-md-8 p-0">
+            <h4 class="mb-0 wrapper-20">{{showInsurance.header}}</h4>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12"> <i class="material-icons c-p pt-8 v-middle" (click)="close(showInsurance)"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pt-80 pl-28 pr-28 pb-44 mb-44">
+    <div class="row">
+        <div class="col-md-4 pl-0">
+            <h5 class="m-0 pb-8">Plan type</h5>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <mat-select class="form-control">
+                        <mat-option value="option">Option</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-3 pl-0 pt-28">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <mat-select class="form-control">
+                        <mat-option value="option">Option</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-md-4 pl-0">
+            <h5 class="m-0 pb-8">Name of insurer</h5>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <mat-select class="form-control">
+                        <mat-option value="option">Option</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-5 pl-0">
+            <h5 class="m-0 pb-8">Plan name</h5>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput class="form-control">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-md-4 pl-0">
+            <h5 class="m-0 pb-8">Name of policy holder</h5>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <mat-select class="form-control">
+                        <mat-option value="option">Option</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-md-4 pl-0">
+            <h5 class="m-0 pb-8">Member Name</h5>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <mat-select class="form-control">
+                        <mat-option value="option">Option</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <h5 class="m-0 pb-8">Sum insured</h5>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput class="form-control" value="₹">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-1">
+            <i class="material-icons c-p pt-36">
+                add
+            </i>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-md-3 pl-0">
+            <h5 class="m-0 pb-8">Approx annual premium</h5>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput class="form-control" value="₹">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-md-12 p-0">
+            <mat-checkbox>Recommended option <img src="/assets/images/svg/info.svg"> </mat-checkbox>
+            <p class="pt-20 mb-0 roboto text-black">Rationale (Policy details, features etc,)</p>
+        </div>
+    </div>
+</div>
+
+<div class="bottom-fixed wrapper-12 pt-16">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="close(showInsurance)">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+            <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { DialogData } from 'src/app/component/protect-component/AdviserComponent/Activities/calendar/calendar.component';
 
 @Component({
   selector: 'app-helth-insurance-policy',
@@ -9,8 +11,10 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class HelthInsurancePolicyComponent implements OnInit {
   healthInsurance: any;
   adviceHealthInsurance=[];
+  showInsurance: DialogData;
 
-  constructor(private fb: FormBuilder, ) { }
+  constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<HelthInsurancePolicyComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
   adviceData = [{ value: 1, advice: 'Continue' },
   {value: 2, advice:'Discontinue'},
   {value: 3, advice:'Port policy'},
@@ -20,6 +24,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
   {value: 7, advice:'Remove members'}]
   ngOnInit() {
     this.getdataForm('')
+    this.showInsurance = this.data
   }
   getdataForm(data) {
 
@@ -36,6 +41,9 @@ export class HelthInsurancePolicyComponent implements OnInit {
   }
   getFormControl(): any {
     return this.healthInsurance.controls;
+  }
+  close(){
+    this.dialogRef.close(this.showInsurance)
   }
   saveAdviceOnHealth(){
     let obj = {
