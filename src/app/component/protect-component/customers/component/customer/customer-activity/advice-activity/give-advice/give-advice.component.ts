@@ -11,6 +11,10 @@ export class GiveAdviceComponent implements OnInit {
 
   ngOnInit() {
   }
+  Close(flag) {
+
+    // this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag, sagar: false })
+  }
   advicelist = [{
     name: "Continue holding"
   },

@@ -27,6 +27,10 @@ export class AdviceMutualFundComponent implements OnInit {
     return item.groupName;
   }
 
+  open(){
+
+  }
+  
   openselectAdvice(data) {
     const fragmentData = {
       flag: 'openselectAdvice',
