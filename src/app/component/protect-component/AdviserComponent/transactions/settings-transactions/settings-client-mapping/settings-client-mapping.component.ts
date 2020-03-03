@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AddClientMappingComponent } from './add-client-mapping/add-client-mapping.component';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
 import { OnlineTransactionService } from '../../online-transaction.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatTableDataSource, MatSort } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
 import { TransactionEnumService } from '../../transaction-enum.service';
 
@@ -16,7 +16,8 @@ import { TransactionEnumService } from '../../transaction-enum.service';
 })
 export class SettingsClientMappingComponent implements OnInit {
   displayedColumns: string[] = ['weight', 'symbol', 'pan', 'hold', 'tstatus', 'status', 'map'];
-  dataSource;
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
   defaultDetails: any;
   allData: any;
   clientDataList: any;
@@ -31,11 +32,14 @@ export class SettingsClientMappingComponent implements OnInit {
   filterData: any;
   isLoading: any;
   advisorId: any;
+
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+
   constructor(public dialog: MatDialog, private onlineTransact: OnlineTransactionService, private eventService: EventService, private utilService: UtilService, private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId()
-    this.dataSource = [{}, {}, {}];
+    this.dataSource.data = [{}, {}, {}];
     this.isLoading = true;
     this.getFilterOptionData();
   }
@@ -55,13 +59,13 @@ export class SettingsClientMappingComponent implements OnInit {
     this.type = '1';
     this.selectedBrokerCode = data[0];
     this.selectedPlatform = data[0];
-    this.dataSource = [{}, {}, {}];
+    this.dataSource.data = [{}, {}, {}];
     this.sortDataFilterWise();
   }
 
   getMappedData() {
     this.isLoading = true;
-    this.dataSource = [{}, {}, {}];
+    this.dataSource.data = [{}, {}, {}];
     let obj =
     {
       advisorId: this.advisorId,
@@ -72,10 +76,8 @@ export class SettingsClientMappingComponent implements OnInit {
       data => {
         console.log(data);
         if (data) {
-          this.dataSource = TransactionEnumService.setHoldingTypeEnum(data);
-        }
-        else {
-          this.dataSource = data;
+          this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
+          this.dataSource.sort = this.sort;
         }
         this.isLoading = false;
       },
@@ -83,6 +85,11 @@ export class SettingsClientMappingComponent implements OnInit {
         this.isLoading = false;
       }
     )
+  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.sort = this.sort;
   }
   chnageBrokerCode(value) {
     this.selectedPlatform = value;
@@ -94,7 +101,7 @@ export class SettingsClientMappingComponent implements OnInit {
   }
   getUnmappedData() {
     this.isLoading = true;
-    this.dataSource = [{}, {}, {}];
+    this.dataSource.data = [{}, {}, {}];
     let obj =
     {
       advisorId: this.advisorId,
@@ -105,10 +112,8 @@ export class SettingsClientMappingComponent implements OnInit {
       data => {
         console.log(data);
         if (data) {
-          this.dataSource = TransactionEnumService.setHoldingTypeEnum(data);
-        }
-        else {
-          this.dataSource = data;
+          this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
+          this.dataSource.sort = this.sort;
         }
         this.isLoading = false;
       },

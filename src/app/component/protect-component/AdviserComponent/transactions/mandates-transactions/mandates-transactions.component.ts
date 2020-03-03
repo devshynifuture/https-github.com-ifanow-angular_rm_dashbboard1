@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { OnlineTransactionService } from '../online-transaction.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { MatTableDataSource, MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-mandates-transactions',
@@ -12,8 +13,12 @@ export class MandatesTransactionsComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'bank', 'bankac', 'amt', 'type', 'status'];
   // dataSource = ELEMENT_DATA;
   advisorId: any;
-  dataSource: any;
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
   clientId: any;
+
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+
   constructor( private onlineTransact: OnlineTransactionService,private eventService:EventService) { }
 
   isLoading = false;
@@ -24,7 +29,7 @@ export class MandatesTransactionsComponent implements OnInit {
     this.getNSEAchmandate()
   }
   getNSEAchmandate() {
-    this.dataSource = [{}, {}, {}];
+    this.dataSource.data = [{}, {}, {}];
     this.isLoading = true;
     let obj1 = {
      advisorId:this.advisorId,
@@ -32,7 +37,6 @@ export class MandatesTransactionsComponent implements OnInit {
     this.onlineTransact.getMandateList(obj1).subscribe(
       data => this.getMandateListRes(data), (error) => {
         this.isLoading = false;
-        this.dataSource=undefined;
         this.eventService.showErrorMessage(error);
       }
     );
@@ -40,7 +44,13 @@ export class MandatesTransactionsComponent implements OnInit {
   getMandateListRes(data){
     this.isLoading = false;
     console.log(data);
-    this.dataSource=data;
+    this.dataSource.data=data;
+     this.dataSource.sort = this.sort;
+  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.sort = this.sort;
   }
 }
 export interface PeriodicElement {

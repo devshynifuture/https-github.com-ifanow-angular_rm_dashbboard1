@@ -31,6 +31,11 @@ export class InvestorsTransactionsComponent implements OnInit {
     this.getMappedData();
     // this.getFilterOptionData();
   }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.sort = this.sort;
+  }
   // getFilterOptionData() {
   //   let obj = {
   //     advisorId: this.advisorId,

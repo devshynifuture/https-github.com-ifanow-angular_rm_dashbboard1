@@ -3,7 +3,15 @@
         <div class="col-md-6  d-flex align-items-center">
             <h3 class="m-0 pt-6">Investors</h3>
         </div>
-        <div class="col-md-6  text-right" *ngIf="dataSource.filteredData.length > 0">
+        <div class="col-md-6  text-right">
+            <div class="col-md-4 text-right pr-0">
+                <div class="form-group mb-0">
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <input autocomplete="off" matInput (keyup)="applyFilter($event)"
+                            placeholder="type to filter data" class="form-control br-0">
+                    </mat-form-field>
+                </div>
+            </div>
             <img src="/assets/images/svg/download-black.svg" class="b-a p-5 c-p">
             <img src="/assets/images/svg/reload.svg" class="b-a p-8 c-p">
             <button mat-stroked-button class="btn-default addon ml-12 mr-12 v-middle"><i
@@ -18,7 +26,7 @@
             <table mat-table [dataSource]="dataSource" matSort [appSkeletonLoading]="isLoading" appSkeletonLoading
                 class="skeletonAnimation" class="mt-8" id="table-low" *ngIf="dataSource.filteredData.length > 0">
                 <ng-container matColumnDef="position">
-                    <th  mat-sort-header="aggregatorType" mat-header-cell *matHeaderCellDef class="br"> Platform </th>
+                    <th mat-sort-header="aggregatorType" mat-header-cell *matHeaderCellDef class="br"> Platform </th>
                     <td mat-cell *matCellDef="let element" class="br">
                         <div class="bar">
                             {{isLoading ? '' :(element.aggregatorType == 1)?'NSE':(element.aggregatorType == 2)?'BSE':'-'}}
@@ -32,7 +40,8 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="weight">
-                    <th mat-sort-header="firstApplicantName" mat-header-cell *matHeaderCellDef class="br"> Investor name </th>
+                    <th mat-sort-header="firstApplicantName" mat-header-cell *matHeaderCellDef class="br"> Investor name
+                    </th>
                     <td mat-cell *matCellDef="let element" class="br">
                         <div class="bar">
                             {{isLoading ? '' :(element.firstApplicantName)?element.firstApplicantName:'-'}} </div>
@@ -87,7 +96,8 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
-            <div *ngIf="dataSource.filteredData.length==0 && isLoading==false" class="d-flex flex-column align-items-center pt-44">
+            <div *ngIf="dataSource.filteredData.length==0 && isLoading==false"
+                class="d-flex flex-column align-items-center pt-44">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="pt-12">No data found</h4>
             </div>

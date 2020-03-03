@@ -85,7 +85,11 @@ export class TransactionsListComponent implements OnInit {
   Close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
-
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.sort = this.sort;
+  }
   sortDateFilter(data) {
     console.log(this.selectedPreviousToShowDate);
     this.finalStartDate = new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * data.value).getTime();
