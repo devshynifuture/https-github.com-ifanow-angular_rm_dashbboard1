@@ -24,7 +24,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
   {value: 7, advice:'Remove members'}]
   ngOnInit() {
     this.getdataForm('')
-    this.showInsurance = this.data
+    this.showInsurance = this.data.data
   }
   getdataForm(data) {
 
