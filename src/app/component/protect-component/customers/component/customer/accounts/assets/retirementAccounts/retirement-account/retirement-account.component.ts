@@ -268,118 +268,82 @@ export class RetirementAccountComponent implements OnInit {
       }
     );
   }
-  openAddEPS(data) {
-    const fragmentData = {
-      flag: 'addEPS',
+
+  addDataFromSideBar(data, flag) {
+    let fragmentData = {
+      flag: flag,
       data,
       id: 1,
       state: 'open',
-      componentName: AddEPSComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getListEPS();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+      componentName: undefined,
+      popupHeaderText: (!!data ? 'Edit ' : 'Add '),
+    }
 
+    switch (flag) {
+      case 'addEPS':
+        fragmentData.popupHeaderText += 'EPS';
+        fragmentData.componentName = AddEPSComponent;
+        break;
+      case 'addSuperannuation':
+        fragmentData.popupHeaderText += 'Superannuation';
+        fragmentData.componentName = AddSuperannuationComponent;
+        break;
+      case 'addGratuity':
+        fragmentData.popupHeaderText += 'Gratuity';
+        fragmentData.componentName = AddGratuityComponent;
+        break;
+      case 'addSummaryPort':
+        fragmentData.popupHeaderText += 'Portfolio summary';
+        fragmentData.componentName = NpsSummaryPortfolioComponent;
+        break;
+      case 'addEPF':
+        fragmentData.popupHeaderText += 'Employees providend fund (EPF)';
+        fragmentData.componentName = AddEPFComponent;
+        break;
+      case 'addSchemeHolding':
+        fragmentData.popupHeaderText += 'Scheme level holdings';
+        fragmentData.componentName = NpsSchemeHoldingComponent;
+        break;
+      default:
+        console.error('A Non flagged parameter was called');
+        return;
+    }
+
+
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(sideBarData => {
+      console.log('this is sidebardata in subs subs : ', sideBarData);
+      if (UtilService.isDialogClose(sideBarData)) {
+        if (UtilService.isRefreshRequired(sideBarData)) {
+          switch (flag) {
+            case 'addEPS':
+              this.getListEPS();
+              break;
+            case 'addSuperannuation':
+              this.getListSuperannuation();
+              break;
+            case 'addGratuity':
+              this.getListGratuity();
+              break;
+            case 'addSummaryPort':
+              this.getListNPS();
+              break;
+            case 'addEPF':
+              this.getListEPF();
+              break;
+            case 'addSchemeHolding':
+              this.getListNPS();
+              break;
+            default:
+              console.error('A non flagged parameter was called');
+              break;
           }
-          rightSideDataSub.unsubscribe();
+          console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
         }
+        rightSideDataSub.unsubscribe();
       }
-    );
+    });
   }
-  openAddSuperannuation(data) {
-    const fragmentData = {
-      flag: 'addSuperannuation',
-      data,
-      id: 1,
-      state: 'open',
-      componentName: AddSuperannuationComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getListSuperannuation();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
-          }
-          rightSideDataSub.unsubscribe();
-        }
-      }
-    );
-  }
-  openAddGratuity(data) {
-    const fragmentData = {
-      flag: 'addGratuity',
-      data,
-      id: 1,
-      state: 'open',
-      componentName: AddGratuityComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getListGratuity();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
-          }
-          rightSideDataSub.unsubscribe();
-        }
-      }
-    );
-  }
-  openAddSummaryPort(data) {
-    const fragmentData = {
-      flag: 'addSummaryPort',
-      data,
-      id: 1,
-      state: 'open',
-      componentName: NpsSummaryPortfolioComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getListNPS();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
-          }
-          rightSideDataSub.unsubscribe();
-        }
-
-      }
-    );
-  }
-  openAddEPF(data) {
-    const fragmentData = {
-      flag: 'addEPF',
-      data,
-      id: 1,
-      state: 'open',
-      componentName: AddEPFComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getListEPF();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
-          }
-          rightSideDataSub.unsubscribe();
-        }
-
-      }
-    );
-  }
+  
   openDetailedViewEPF(data) {
     const fragmentData = {
       flag: 'addEPF',
@@ -452,28 +416,7 @@ export class RetirementAccountComponent implements OnInit {
       }
     );
   }
-  openAddSchemeHolding(data) {
-    const fragmentData = {
-      flag: 'addSchemeHolding',
-      data,
-      id: 1,
-      state: 'open',
-      componentName: NpsSchemeHoldingComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getListNPS();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
-          }
-          rightSideDataSub.unsubscribe();
-        }
-
-      }
-    );
-  }
+  
   deleteModal(value, data) {
     const dialogData = {
       data: value,

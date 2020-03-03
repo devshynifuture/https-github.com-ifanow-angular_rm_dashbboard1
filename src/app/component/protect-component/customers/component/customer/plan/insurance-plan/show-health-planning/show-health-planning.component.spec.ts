@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AllAdviceRealAssetComponent } from './all-advice-real-asset.component';
+import { ShowHealthPlanningComponent } from './show-health-planning.component';
 
-describe('AllAdviceRealAssetComponent', () => {
-  let component: AllAdviceRealAssetComponent;
-  let fixture: ComponentFixture<AllAdviceRealAssetComponent>;
+describe('ShowHealthPlanningComponent', () => {
+  let component: ShowHealthPlanningComponent;
+  let fixture: ComponentFixture<ShowHealthPlanningComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AllAdviceRealAssetComponent ]
+      declarations: [ ShowHealthPlanningComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AllAdviceRealAssetComponent);
+    fixture = TestBed.createComponent(ShowHealthPlanningComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

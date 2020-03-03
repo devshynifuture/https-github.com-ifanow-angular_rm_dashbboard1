@@ -16,17 +16,17 @@
     <div [formGroup]="scipLevelTransactionForm" class="row pt-100 pl-28">
         <div class="col-md-3 p-0">
             <h5 class="m-0 pb-8">Owner</h5>
-            <app-owner-column (valueChange)='display($event)' [data]='ownerData'>
+            <app-owner-column (valueChange)='display($event)' [checkValid]='checkValid' [data]='ownerData'>
             </app-owner-column>
         </div>
         <div class="col-md-3">
             <h5 class="m-0 pb-8">Scrip name</h5>
-            <app-scrip-field [data]="scipLevelTransactionForm"></app-scrip-field>
+            <app-scrip-field [data]="scipLevelTransactionForm" ></app-scrip-field>
         </div>
         <div class="col-md-3">
             <h5 class="m-0 pb-8">Portfolio name</h5>
             <div class="form-group mb-0">
-                <app-portfolio-field [ownerId]="portfolioFieldData" [owner]="scipLevelTransactionForm"
+                <app-portfolio-field [ownerId]="portfolioFieldData" [checkValid]='checkValid' [owner]="scipLevelTransactionForm"
                     (outputEvent)="getPortfolioData($event)">
                 </app-portfolio-field>
             </div>
@@ -73,7 +73,7 @@
             <div class="col-md-2 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input matInput autocomplete="off" formControlName="date" [matDatepicker]="picker"
+                        <input (click)="picker.open()" matInput autocomplete="off" formControlName="date" [matDatepicker]="picker"
                             class="form-control br-0 b-0">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>

@@ -50,6 +50,9 @@ export class NpsSchemeHoldingComponent implements OnInit {
   get data() {
     return this.inputData;
   }
+
+  @Input() popupHeaderText: string = 'Add Scheme level holding';
+
   ngOnInit() {
     this.idForscheme1 = []
     this.advisorId = AuthService.getAdvisorId()

@@ -1,7 +1,7 @@
-<div class="popup-header-fix-60">
+<div class="popup-header-fix-60" *ngIf="adviceShowHeaderAndFooter">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20">{{popupHeaderText | uppercase}}</h4>
+            <h4 class="mb-0 wrapper-20">{{popupHeaderText}}</h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -114,7 +114,7 @@
         </div>
     </div>
 </div>
-<div class="bottom-fixed wrapper-12 pt-16">
+<div class="bottom-fixed wrapper-12 pt-16" *ngIf="adviceShowHeaderAndFooter">
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>

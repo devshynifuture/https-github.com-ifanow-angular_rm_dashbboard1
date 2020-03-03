@@ -27,7 +27,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
   scripForm: any;
   portfolioFieldData: { familyMemberId: any; };
   nomineesListFM: any;
-
+  checkValid:boolean= false;
   constructor(public dialog: MatDialog, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
   ngOnInit() {
@@ -41,8 +41,8 @@ export class StockScripLevelHoldingComponent implements OnInit {
   display(value) {
     // this.ownerInfo = value.userName
     console.log('value selected', value)
-    this.ownerName = value.userName;
-    this.scipLevelHoldingForm.get('ownerName').setValue(this.ownerName)
+    // this.ownerName = value.userName;
+    this.scipLevelHoldingForm.get('ownerName').setValue(value.userName)
     this.familyMemberId = value.id;
     this.portfolioFieldData = {
       familyMemberId: this.familyMemberId
@@ -54,22 +54,24 @@ export class StockScripLevelHoldingComponent implements OnInit {
   }
   getPortfolioData(data) {
     console.log("", data)
-    this.portfolioData = data
+    this.portfolioData = data;
+    this.scipLevelHoldingForm.get('portfolioName').setValue(data.portfolioName)
   }
 
   getFormData(data) {
     if (data == null) {
       data = {};
       this.addHoldings();
-      this.ownerName = '';
+      // this.ownerName = '';
     }
     else {
       this.editApiData = data;
       this.familyMemberId = data.familyMemberId;
       this.ownerName = data.ownerName;
+      // this.scipLevelHoldingForm.get('ownerName').setValue(this.ownerName)
     }
     this.scipLevelHoldingForm = this.fb.group({
-      ownerName: ['', [Validators.required]],
+      ownerName: [this.ownerName, [Validators.required]],
       portfolioName: [data.portfolioName, [Validators.required]]
     })
     if (data.transactionorHoldingSummaryList) {
@@ -81,6 +83,8 @@ export class StockScripLevelHoldingComponent implements OnInit {
           investedAmt: [element.investedOrTransactionAmount, [Validators.required]],
           id: [element.id]
         })
+
+        
         this.HoldingArray.push(singleScripData);
       });
     }
@@ -115,6 +119,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
     //   return;
     // }
     if (this.scipLevelHoldingForm.invalid || this.HoldingArray.invalid) {
+      this.checkValid = true;
       this.scipLevelHoldingForm.get('portfolioName').markAsTouched();
       this.scipLevelHoldingForm.get('ownerName').markAsTouched();
       this.HoldingArray.controls.forEach(element => {

@@ -1,7 +1,7 @@
 <div class="wrapper-20" *ngIf="allAdvice == true">
     <div class="row">
         <div class="col-md-6 p-0">
-            <button mat-stroked-button class="text-primary mr-12 br-0 b-priamry" (click) = "allAdvice = false">Advice
+            <button mat-stroked-button class="text-primary mr-12 br-0 b-priamry" (click)="allAdvice = false">Advice
                 given</button>
             <button mat-stroked-button class="btn-primary br-0">All Real estate</button>
         </div>
@@ -80,7 +80,7 @@
         <ng-container matColumnDef="adate">
             <th mat-header-cell *matHeaderCellDef> Applicable date </th>
             <td mat-cell *matCellDef="let element"> {{element.adate}} </td>
-        </ng-container> 
+        </ng-container>
         <ng-container matColumnDef="icon">
             <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let element">
@@ -98,5 +98,5 @@
     </table>
 </div>
 <div *ngIf="allAdvice == false">
-    <app-advice-real-asset></app-advice-real-asset>
+    <app-advice-real-estate></app-advice-real-estate>
 </div>

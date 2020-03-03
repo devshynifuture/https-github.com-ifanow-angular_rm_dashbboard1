@@ -1,3 +1,4 @@
+import { SuggestAdviceComponent } from './../suggest-advice/suggest-advice.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -81,25 +82,29 @@ export class AdviceCashAndHandComponent implements OnInit {
     this.isLoading = false;
     // this.cashinHandData=data.CASH IN HAND;
   }
-  allAdvice = false
+  allAdvice = false;
+
   openAddEdit(value, data) {
     let Component = (value == 'adviceCashInHand') ? CashInHandComponent : BankAccountsComponent;
+
     const fragmentData = {
       flag: value,
       data,
       id: 1,
       state: 'open',
-      componentName: Component
+      componentName: SuggestAdviceComponent,
+      childComponent: Component,
+      childData: { data: null, flag: value },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
+
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
           }
+          this.getAdviceByAsset();
           rightSideDataSub.unsubscribe();
         }
 

@@ -25,9 +25,13 @@ export class OwnerColumnComponent implements OnInit {
   @Output() valueChange = new EventEmitter();
   @Output() valueChange1 = new EventEmitter();
 
+  @Input() set checkValid(checkValid){
+    this.checkFrom(checkValid)
+  }
+
   @Input()
   set data(data) {
-    this.ownerData = data;
+    this.ownerData = !data?'':data;
     console.log('1111121212121212121212 OwnerColumnComponent data : ', data);
     if (data) {
     }
@@ -104,5 +108,13 @@ export class OwnerColumnComponent implements OnInit {
 
   getFormControl(): any {
     return (this.owner.controls);
+  }
+
+  checkFrom(checkValid){
+    if(checkValid){
+      if(this.owner.invalid){
+        this.owner.get('ownerName').markAsTouched()
+      }
+    }
   }
 }

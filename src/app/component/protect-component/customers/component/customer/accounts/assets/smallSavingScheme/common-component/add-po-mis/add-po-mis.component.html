@@ -1,7 +1,7 @@
-<div class="popup-header-fix-60">
+<div class="popup-header-fix-60" *ngIf="adviceShowHeaderAndFooter">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 f-17 wrapper-20">{{popupHeaderText | uppercase}}</h4>
+            <h4 class="mb-0 f-17 wrapper-20">{{popupHeaderText}}</h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12"> <i class="material-icons c-p pt-8 v-middle" (click)="close(false)"> clear</i>
@@ -34,7 +34,8 @@
         </div>
         <div class="col-md-5">
             <mat-form-field class="w-100">
-                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                    [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Search family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f">
                         <span>{{f.userName}}</span>
@@ -56,8 +57,11 @@
         <div class="col-md-3">
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" autocomplete="off" #amtInvested maxlength="10" class="form-control br-0 rupess" formControlName="amtInvested">
-                    <mat-error class="f-12" *ngIf="(pomisForm.get('amtInvested').errors?.required)"> This field is required
+                    <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                        autocomplete="off" #amtInvested maxlength="10" class="form-control br-0 rupess"
+                        formControlName="amtInvested">
+                    <mat-error class="f-12" *ngIf="(pomisForm.get('amtInvested').errors?.required)"> This field is
+                        required
                     </mat-error>
                     <mat-error *ngIf="(pomisForm.get('amtInvested').errors?.min)" class="f-12">
                         Should be greater than or equal to 1500
@@ -77,7 +81,8 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput (click)="KVPpicker.open()" [matDatepicker]="KVPpicker" [max]="maxDate" class="form-control br-0" formControlName="commencementdate" readonly>
+                    <input matInput (click)="KVPpicker.open()" [matDatepicker]="KVPpicker" [max]="maxDate"
+                        class="form-control br-0" formControlName="commencementdate" readonly>
                     <mat-datepicker-toggle matSuffix [for]="KVPpicker"></mat-datepicker-toggle>
                     <mat-datepicker #KVPpicker></mat-datepicker>
                     <mat-error class="f-12">
@@ -110,7 +115,8 @@
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <mat-select class="form-control br-0" (selectionChange)="changeMaxValue($event)" formControlName="ownershipType">
+                <mat-select class="form-control br-0" (selectionChange)="changeMaxValue($event)"
+                    formControlName="ownershipType">
                     <mat-option value="1">Single </mat-option>
                     <mat-option value="0"> Joint </mat-option>
                 </mat-select>
@@ -135,7 +141,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #poBranch type="text" maxlength="20" class="form-control br-0" formControlName="poBranch">
+                        <input matInput #poBranch type="text" maxlength="20" class="form-control br-0"
+                            formControlName="poBranch">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{poBranch.value.length}}/20</mat-hint>
                     </mat-form-field>
@@ -151,7 +158,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" matInput #accNumber maxlength="16" class="form-control br-0" formControlName="accNumber">
+                        <input type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" matInput
+                            #accNumber maxlength="16" class="form-control br-0" formControlName="accNumber">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{accNumber.value.length}}/16</mat-hint>
                     </mat-form-field>
@@ -165,7 +173,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #description maxlength="60" class="form-control br-0" formControlName="description">
+                        <input matInput #description maxlength="60" class="form-control br-0"
+                            formControlName="description">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                     </mat-form-field>
@@ -177,12 +186,13 @@
 
     </div>
 </div>
-<div class="bottom-fixed wrapper-12 pt-16">
+<div class="bottom-fixed wrapper-12 pt-16" *ngIf="adviceShowHeaderAndFooter">
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close(false)">Cancel</h5>
         </div>
-        <div class="col-md-8 right text-right"> <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveFormData('close')">Save</button>
+        <div class="col-md-8 right text-right"> <button mat-button class="btn-bottom br-0 text-inherit"
+                (click)="saveFormData('close')">Save</button>
         </div>
     </div>
 </div>

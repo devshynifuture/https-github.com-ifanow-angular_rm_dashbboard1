@@ -399,12 +399,14 @@ export class FixedIncomeComponent implements OnInit {
   }
 
   openPortfolioSummary(value, data) {
+    let popupHeaderText = !!data ? 'Edit Fixed deposits' : 'Add Fixed deposits';
     const fragmentData = {
       flag: value,
       data,
       id: 1,
       state: 'open',
-      componentName: FixedDepositComponent
+      componentName: FixedDepositComponent,
+      popupHeaderText: popupHeaderText,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -455,12 +457,14 @@ export class FixedIncomeComponent implements OnInit {
   }
 
   openAddRecurringDeposit(data) {
+    let popupHeaderText = !!data ? 'Edit Recurring deposits' : 'Add Recurring deposits';
     const fragmentData = {
       flag: 'addRecuringDeposit',
       data,
       id: 1,
       state: 'open',
-      componentName: RecuringDepositComponent
+      componentName: RecuringDepositComponent,
+      popupHeaderText: popupHeaderText,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -478,12 +482,14 @@ export class FixedIncomeComponent implements OnInit {
   }
 
   openBonds(data) {
+    let popupHeaderText = !!data ? 'Edit Bond' : 'Add Bond';
     const fragmentData = {
       flag: 'BondsComponent',
       data,
       id: 1,
       state: 'open',
-      componentName: BondsComponent
+      componentName: BondsComponent,
+      popupHeaderText: popupHeaderText,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
