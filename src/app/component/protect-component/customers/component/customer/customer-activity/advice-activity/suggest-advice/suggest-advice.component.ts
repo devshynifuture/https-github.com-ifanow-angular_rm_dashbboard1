@@ -1,10 +1,6 @@
-<<<<<<< HEAD
 import { UtilService } from './../../../../../../../../services/util.service';
-import { SubscriptionInject } from './../../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
-=======
-import { Component, OnInit, ViewChild, ViewContainerRef, OnDestroy, ComponentFactoryResolver } from '@angular/core';
->>>>>>> 86ca67d8c29a6a93cc2ceac178be958915fd79ba
+import { FixedDepositComponent } from './../../../accounts/assets/fixedIncome/fixed-deposit/fixed-deposit.component';
+import { Component, OnInit, ViewChild, OnDestroy, ComponentFactoryResolver, ViewContainerRef, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -16,17 +12,14 @@ import { DynamicComponentService } from 'src/app/services/dynamic-component.serv
   templateUrl: './suggest-advice.component.html',
   styleUrls: ['./suggest-advice.component.scss']
 })
-<<<<<<< HEAD
-export class SuggestAdviceComponent implements OnInit {
-
-  constructor(
-    private fb: FormBuilder,
-    private subscriptionInject: SubscriptionInject,
-    private utilService: UtilService
-  ) { }
-  @ViewChild('stepper', { static: true }) stepper;
-
+export class SuggestAdviceComponent implements OnInit, OnDestroy {
   isLinear = false;
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
+  adviceSlider: Subscription;
+  formStep: number = 1;
+  componentRef;
+
   adviceForm: FormGroup = this.fb.group({
     "header": [, Validators.required],
     "rationale": [, Validators.required],
@@ -34,73 +27,62 @@ export class SuggestAdviceComponent implements OnInit {
     "givenOnDate": [, Validators.required],
     "implementDate": [, Validators.required],
     "withdrawalAmt": [, Validators.required],
-    "consentOption": [, Validators.required]
-  });
+    "consentOption": [, Validators.required],
+  })
 
-  // firstFormGroup: FormGroup = this.fb.group({
-  //   firstCtrl: ['', Validators.required]
-  // });
-
-  // secondFormGroup: FormGroup = this.fb.group({
-  //   secondCtrl: ['', Validators.required]
-  // });
-
-  ngOnInit() { }
-
-  dialogClose() {
-    this.subscriptionInject.changeNewRightSliderState({ state: 'close' });
-  }
-
-  addOrNextStep() {
-    if (this.utilService.formValidations(this.adviceForm)) {
-      this.stepper.next();
-    }
-=======
-export class SuggestAdviceComponent implements OnInit, OnDestroy {
-  isLinear = false;
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
-  adviceSlider: Subscription;
+  @ViewChild('stepper', { static: true }) stepper;
 
   @ViewChild('dynamic', {
     read: ViewContainerRef,
     static: true
   }) viewContainerRef: ViewContainerRef;
+  childComponentFlag: any;
 
   constructor(
-    private _formBuilder: FormBuilder,
+    private fb: FormBuilder,
     protected eventService: EventService,
     protected subinject: SubscriptionInject,
     protected dynamicComponentService: DynamicComponentService,
-  ) {
-  }
-inputData = {};
+    private utilService: UtilService
+  ) { }
+
+  inputData;
+
   ngOnInit() {
     this.adviceSlider = this.subinject.newRightSliderDataObs.subscribe((data) => {
-      const tempData: any = data;
-      if (tempData.componentName) {
-        this.addDynamicComponentService(this.viewContainerRef, this.inputData);
+      if (data.childComponent) {
+        this.componentRef = this.dynamicComponentService.addDynamicComponent(this.viewContainerRef, data.childComponent, data.childData);
+        this.childComponentFlag = data.flag;
       }
     });
-    this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required]
-    });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
->>>>>>> 86ca67d8c29a6a93cc2ceac178be958915fd79ba
   }
 
-  addDynamicComponentService(viewContainerRef, inputData) {
-    if (viewContainerRef) {
-      this.dynamicComponentService.addDynamicComponent(viewContainerRef, inputData.childComponent, inputData.data);
-    }
-  }
   ngOnDestroy() {
     this.adviceSlider.unsubscribe();
   }
 
-  test():void {
-    console.log(this.inputData);
+  addOrNextStep() {
+    if (this.utilService.formValidations(this.adviceForm)) {
+      if (this.formStep === 1) {
+        this.stepper.next();
+        this.formStep = 2;
+      } else {
+        // proceed on creating new suggest
+        console.log("this is component reference:::::::::::", this.componentRef, this.childComponentFlag);
+
+        if (this.childComponentFlag === 'adviceGOLD' && this.componentRef._component.gold.valid) {
+          const bothFormValues = {
+            ...this.adviceForm.value,
+            ...this.componentRef._component.gold.value
+          }
+          console.log("this is form value::::::::::::", bothFormValues);
+        }
+        // console.log(this.adviceForm);
+      }
+    }
+  }
+
+  dialogClose() {
+    this.subinject.changeNewRightSliderState({ state: 'close' });
   }
 }

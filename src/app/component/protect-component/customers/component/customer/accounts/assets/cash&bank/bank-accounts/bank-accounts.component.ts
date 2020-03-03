@@ -38,6 +38,7 @@ export class BankAccountsComponent implements OnInit {
   nomineesList: any;
   bankData: any;
   nominees: any[];
+  adviceShowHeaderAndFooter: boolean = true;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
 
@@ -52,6 +53,11 @@ export class BankAccountsComponent implements OnInit {
   @Input() popupHeaderText: string = 'Add Bank Account';
 
   ngOnInit() {
+    if (this.data && this.data.flag) {
+      this.adviceShowHeaderAndFooter = false;
+    } else {
+      this.adviceShowHeaderAndFooter = true;
+    }
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getdataForm(this.data);

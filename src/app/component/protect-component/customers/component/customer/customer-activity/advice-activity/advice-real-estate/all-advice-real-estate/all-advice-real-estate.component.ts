@@ -8,12 +8,12 @@ import { UtilService } from 'src/app/services/util.service';
 import { SelectAdviceComponent } from '../../select-advice/select-advice.component';
 
 @Component({
-  selector: 'app-all-advice-real-asset',
-  templateUrl: './all-advice-real-asset.component.html',
-  styleUrls: ['./all-advice-real-asset.component.scss']
+  selector: 'app-all-advice-real-estate',
+  templateUrl: './all-advice-real-estate.component.html',
+  styleUrls: ['./all-advice-real-estate.component.scss']
 })
 export class AllAdviceRealAssetComponent implements OnInit {
-  displayedColumns3: string[] = ['checkbox', 'name', 'desc','mvalue', 'advice', 'astatus', 'adate', 'icon'];
+  displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'mvalue', 'advice', 'astatus', 'adate', 'icon'];
   dataSource3 = ELEMENT_DATA1;
   constructor(private eventService: EventService, public dialog: MatDialog, private subInjectService: SubscriptionInject,
     private cusService: CustomerService) { }
@@ -75,7 +75,7 @@ export interface PeriodicElement1 {
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
-  { name: 'Rahul Jain', desc: '1', mvalue:'20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-  { name: 'Rahul Jain', desc: '2', mvalue:'20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
+  { name: 'Rahul Jain', desc: '1', mvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
+  { name: 'Rahul Jain', desc: '2', mvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
 
 ];

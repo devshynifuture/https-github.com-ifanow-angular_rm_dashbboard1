@@ -46,6 +46,7 @@ export class AddRealEstateComponent implements OnInit {
   ownershipPerc: any;
   flag: any;
   ownerName: any;
+  adviceShowHeaderFooter: boolean = true;
   constructor(public custumService: CustomerService, public subInjectService: SubscriptionInject, private fb: FormBuilder, public custmService: CustomerService, public eventService: EventService, public utils: UtilService) { }
   @Input()
   set data(inputData) {
@@ -62,6 +63,11 @@ export class AddRealEstateComponent implements OnInit {
     return this._data;
   }
   ngOnInit() {
+    if (this.data && this.data.flag) {
+      this.adviceShowHeaderFooter = false;
+    } else {
+      this.adviceShowHeaderFooter = true;
+    }
     this.showMoreData = false;
     this.showArea = false;
     this.showNominee = false;

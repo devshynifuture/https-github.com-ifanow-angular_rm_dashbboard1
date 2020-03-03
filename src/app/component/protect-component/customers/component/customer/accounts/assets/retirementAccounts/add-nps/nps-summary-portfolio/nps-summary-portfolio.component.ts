@@ -46,6 +46,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   dataFM: any[];
   showHide = false;
   flag: any;
+  adviceShowHeaderAndFooter: boolean = true;
   constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) {
     this.summaryNPS = this.fb.group({
       published: true,
@@ -62,6 +63,11 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     return this.inputData;
   }
   ngOnInit() {
+    if (this.data && this.data.flag) {
+      this.adviceShowHeaderAndFooter = false;
+    } else {
+      this.adviceShowHeaderAndFooter = true;
+    }
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
   }

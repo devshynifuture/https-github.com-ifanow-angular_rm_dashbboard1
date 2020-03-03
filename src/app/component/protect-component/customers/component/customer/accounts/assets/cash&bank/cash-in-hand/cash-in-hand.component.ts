@@ -32,6 +32,7 @@ export class CashInHandComponent implements OnInit {
   private clientId: any;
   nomineesListFM: any;
   flag: any;
+  adviceShowHeaderAndFooter: boolean = true;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService,
     public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
@@ -50,6 +51,11 @@ export class CashInHandComponent implements OnInit {
   @Input() popupHeaderText: string = 'Add Cash In Hand';
 
   ngOnInit() {
+    if (this.data && this.data.flag) {
+      this.adviceShowHeaderAndFooter = false;
+    } else {
+      this.adviceShowHeaderAndFooter = true;
+    }
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getdataForm(this.data);
@@ -86,7 +92,7 @@ export class CashInHandComponent implements OnInit {
     }
     this.cashInHand = this.fb.group({
       ownerName: [(data.ownerName == undefined) ? '' : data.ownerName, [Validators.required]],
-      balanceAsOn: [( data.balanceAsOn == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
+      balanceAsOn: [(data.balanceAsOn == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
       cashBalance: [(data.cashValue == undefined) ? '' : data.cashValue, [Validators.required]],
       // bankAcNo: [(data.bankAccountNumber == undefined) ? '' : data.bankAccountNumber, [Validators.required]],
       description: [(data.description == undefined) ? '' : data.description, [Validators.required]],

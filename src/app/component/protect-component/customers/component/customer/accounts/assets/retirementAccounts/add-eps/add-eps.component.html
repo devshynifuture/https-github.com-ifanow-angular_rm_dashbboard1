@@ -1,4 +1,4 @@
-<div class="popup-header-fix-60">
+<div class="popup-header-fix-60" *ngIf="adviceShowHeaderAndFooter">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
             <h4 class="mb-0 wrapper-20">Add EPS</h4>
@@ -18,7 +18,8 @@
         </div>
         <div class="col-md-5">
             <mat-form-field class="w-100">
-                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                    [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Search family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
                         <span>{{f.userName}}</span>
@@ -36,10 +37,12 @@
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <input matInput formControlName="commencementDate" [max]="maxDate" class="form-control br-0" [matDatepicker]="picker" readonly>
+                <input matInput formControlName="commencementDate" [max]="maxDate" class="form-control br-0"
+                    [matDatepicker]="picker" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-                <mat-error class="f-12" [ngClass]="{'v-h':!(isDate && getFormControl().commencementDate.invalid || getFormControl().commencementDate.touched && getFormControl().commencementDate.invalid)}">
+                <mat-error class="f-12"
+                    [ngClass]="{'v-h':!(isDate && getFormControl().commencementDate.invalid || getFormControl().commencementDate.touched && getFormControl().commencementDate.invalid)}">
                     This field is required
                 </mat-error>
             </mat-form-field>
@@ -53,8 +56,11 @@
         <div class="col-md-3">
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input matInput #pensionAmount type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" appNumberValidation [maxLength]="10" class="form-control br-0 rupess" formControlName="pensionAmount">
-                    <mat-error class="f-12" [ngClass]="{'v-h':!(isPensionAmount && getFormControl().pensionAmount.invalid || getFormControl().pensionAmount.touched && getFormControl().pensionAmount.invalid)}">
+                    <input matInput #pensionAmount type="text" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" appNumberValidation [maxLength]="10"
+                        class="form-control br-0 rupess" formControlName="pensionAmount">
+                    <mat-error class="f-12"
+                        [ngClass]="{'v-h':!(isPensionAmount && getFormControl().pensionAmount.invalid || getFormControl().pensionAmount.touched && getFormControl().pensionAmount.invalid)}">
                         This field is required
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{pensionAmount.value.length}}/10</mat-hint>
@@ -76,7 +82,8 @@
                         <mat-option value="4">Half yearly</mat-option>
                         <mat-option value="5">Yearly</mat-option>
                     </mat-select>
-                    <mat-error class="f-12" [ngClass]="{'v-h':!(isPensionPayFreq && getFormControl().pensionPayFreq.invalid || getFormControl().pensionPayFreq.touched && getFormControl().pensionPayFreq.invalid)}">
+                    <mat-error class="f-12"
+                        [ngClass]="{'v-h':!(isPensionPayFreq && getFormControl().pensionPayFreq.invalid || getFormControl().pensionPayFreq.touched && getFormControl().pensionPayFreq.invalid)}">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -103,7 +110,9 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #bankAcNo type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="16" class="form-control br-0" formControlName="bankAcNo">
+                        <input matInput #bankAcNo type="text" appInputValueValidation
+                            [inputValidator]="validatorType.NUMBER_ONLY" maxlength="16" class="form-control br-0"
+                            formControlName="bankAcNo">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{bankAcNo.value.length}}/16</mat-hint>
                     </mat-form-field>
@@ -117,7 +126,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #description maxlength="60" type="text" class="form-control br-0" formControlName="description">
+                        <input matInput #description maxlength="60" type="text" class="form-control br-0"
+                            formControlName="description">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
@@ -127,7 +137,7 @@
         </div>
     </div>
 </div>
-<div class="bottom-fixed wrapper-12 pt-16">
+<div class="bottom-fixed wrapper-12 pt-16" *ngIf="adviceShowHeaderAndFooter">
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>

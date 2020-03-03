@@ -1,4 +1,4 @@
-<div class="popup-header-fix-60">
+<div class="popup-header-fix-60" *ngIf="adviceShowHeaderAndFooter">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
             <h4 class="mb-0 wrapper-20">Add Gratuity</h4>
@@ -18,7 +18,8 @@
         </div>
         <div class="col-md-5">
             <mat-form-field class="w-100">
-                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                    [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Search family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
                         <span>{{f.userName}}</span>
@@ -37,8 +38,11 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input matInput matInput placeholder="E.g. 8" #noOfcompleteYrs type="number" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="20" class="form-control br-0" formControlName="noOfcompleteYrs">
-                    <mat-error class="f-12" [ngClass]="{'v-h':!(isNoOfcompleteYrs && getFormControl().noOfcompleteYrs.invalid || getFormControl().noOfcompleteYrs.touched && getFormControl().noOfcompleteYrs.invalid)}">
+                    <input matInput matInput placeholder="E.g. 8" #noOfcompleteYrs type="number" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" maxlength="20" class="form-control br-0"
+                        formControlName="noOfcompleteYrs">
+                    <mat-error class="f-12"
+                        [ngClass]="{'v-h':!(isNoOfcompleteYrs && getFormControl().noOfcompleteYrs.invalid || getFormControl().noOfcompleteYrs.touched && getFormControl().noOfcompleteYrs.invalid)}">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -52,8 +56,11 @@
         <div class="col-md-3">
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input matInput #amountRecived type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess" formControlName="amountRecived">
-                    <mat-error class="f-12" [ngClass]="{'v-h':!(isAmountRecived && getFormControl().amountRecived.invalid || getFormControl().amountRecived.touched && getFormControl().amountRecived.invalid)}">
+                    <input matInput #amountRecived type="text" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess"
+                        formControlName="amountRecived">
+                    <mat-error class="f-12"
+                        [ngClass]="{'v-h':!(isAmountRecived && getFormControl().amountRecived.invalid || getFormControl().amountRecived.touched && getFormControl().amountRecived.invalid)}">
                         This field is required
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{amountRecived.value.length}}/10</mat-hint>
@@ -98,7 +105,8 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field floatLabel="never" appearance="standard">
-                        <input matInput placeholder="E.g. 2030" maxlength="30" formControlName="yearOfReceipt" class="form-control br-0">
+                        <input matInput placeholder="E.g. 2030" maxlength="30" formControlName="yearOfReceipt"
+                            class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -112,7 +120,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #resonOfRecipt maxlength="40" class="form-control br-0" formControlName="resonOfRecipt">
+                        <input matInput #resonOfRecipt maxlength="40" class="form-control br-0"
+                            formControlName="resonOfRecipt">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{resonOfRecipt.value.length}}/40</mat-hint>
                     </mat-form-field>
@@ -126,7 +135,9 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #bankAcNo type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="16" class="form-control br-0" formControlName="bankAcNo">
+                        <input matInput #bankAcNo type="text" appInputValueValidation
+                            [inputValidator]="validatorType.NUMBER_ONLY" maxlength="16" class="form-control br-0"
+                            formControlName="bankAcNo">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{bankAcNo.value.length}}/16</mat-hint>
                     </mat-form-field>
@@ -140,7 +151,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #description maxlength="60" class="form-control br-0" formControlName="description">
+                        <input matInput #description maxlength="60" class="form-control br-0"
+                            formControlName="description">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                     </mat-form-field>
@@ -149,7 +161,7 @@
         </div>
     </div>
 </div>
-<div class="bottom-fixed wrapper-12 pt-16">
+<div class="bottom-fixed wrapper-12 pt-16" *ngIf="adviceShowHeaderAndFooter">
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
