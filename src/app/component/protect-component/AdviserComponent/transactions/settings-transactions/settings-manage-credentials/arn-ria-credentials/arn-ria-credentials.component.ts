@@ -15,7 +15,7 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
   styleUrls: ['./arn-ria-credentials.component.scss']
 })
 export class ArnRiaCredentialsComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'aid', 'mid', 'apip', 'euin', 'set', 'icons'];
+  displayedColumns: string[] = ['position', 'name', 'weight', 'aid', 'euin', 'set', 'icons'];
   dataSource: Array<any> = [{}, {}, {}];
   advisorId: any;
   brokerCredentials: any;

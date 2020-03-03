@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/auth-service/authService';
   styleUrls: ['./mandates-transactions.component.scss']
 })
 export class MandatesTransactionsComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'bank', 'bankac', 'amt', 'type', 'status', 'icons'];
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'bank', 'bankac', 'amt', 'type', 'status'];
   // dataSource = ELEMENT_DATA;
   advisorId: any;
   dataSource: any;

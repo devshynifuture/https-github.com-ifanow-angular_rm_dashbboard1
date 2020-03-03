@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TransactionsHistoryComponent } from './transactions-history/transactions-history.component';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
@@ -7,6 +7,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { TransactionEnumService } from '../transaction-enum.service';
 import { OnlineTrasactionComponent } from '../overview-transactions/doTransaction/online-trasaction/online-trasaction.component';
+import { MatTableDataSource, MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-transactions-list',
@@ -14,8 +15,9 @@ import { OnlineTrasactionComponent } from '../overview-transactions/doTransactio
   styleUrls: ['./transactions-list.component.scss']
 })
 export class TransactionsListComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'type', 'units', 'order', 'status', 'icons'];
-  dataSource;
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'type', 'amount', 'order', 'status', 'icons'];
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
   advisorId: any;
   selectedPreviousToShowDate;
   filterData: any;
@@ -24,6 +26,8 @@ export class TransactionsListComponent implements OnInit {
   finalStartDate;
   finalEndDate
   errMessage: any;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+
   constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService, private utilService: UtilService, private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) { }
 
   isLoading = false;
@@ -33,7 +37,7 @@ export class TransactionsListComponent implements OnInit {
     this.getFilterOptionData()
   }
   getFilterOptionData() {
-    this.dataSource = [{}, {}, {}];
+    this.dataSource.data = [{}, {}, {}];
     this.isLoading = true;
     let obj = {
       advisorId: this.advisorId,
@@ -54,7 +58,7 @@ export class TransactionsListComponent implements OnInit {
     this.getAllTransactionList();
   }
   getAllTransactionList() {
-    this.dataSource = [{}, {}, {}];
+    this.dataSource.data = [{}, {}, {}];
     this.isLoading = true;
     let obj =
     {
@@ -67,13 +71,13 @@ export class TransactionsListComponent implements OnInit {
       data => {
         console.log(data);
         this.isLoading = false;
-        this.dataSource = TransactionEnumService.setPlatformEnum(data);
-        this.dataSource = TransactionEnumService.setTransactionStatus(data)
-        console.log(this.dataSource)
+        this.dataSource.data = TransactionEnumService.setPlatformEnum(data);
+        this.dataSource.data = TransactionEnumService.setTransactionStatus(data)
+        this.dataSource.sort = this.sort;
+        console.log(this.dataSource.data)
       },
       err => {
         this.isLoading = false;
-        this.dataSource=undefined;
         this.errMessage=err.error.message;
       }
     )
