@@ -158,7 +158,7 @@
                     </i>
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item (click)="openAddEdit('adviceGOLD',element)">Edit</button>
-                        <button mat-menu-item>Delete</button>
+                        <button mat-menu-item (click)="deleteModal('GOLD',element)">Delete</button>
                     </mat-menu>
                 </div>
             </td>
@@ -269,7 +269,7 @@
                     </i>
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item (click)="openAddEdit('adviceOTHERS',element)">Edit</button>
-                        <button mat-menu-item>Delete</button>
+                        <button mat-menu-item (click)="deleteModal('OTHERS',element)">Delete</button>
                     </mat-menu>
                 </div>
             </td>

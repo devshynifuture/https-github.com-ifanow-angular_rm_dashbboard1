@@ -9,6 +9,7 @@ import { AddRealEstateComponent } from '../../../accounts/assets/realEstate/add-
 import { AuthService } from 'src/app/auth-service/authService';
 import { ActiityService } from '../../actiity.service';
 import { AdviceUtilsService } from '../advice-utils.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-advice-real-asset',
@@ -17,7 +18,7 @@ import { AdviceUtilsService } from '../advice-utils.service';
 })
 export class AdviceRealAssetComponent implements OnInit {
   displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'pvalue', 'mvalue', 'ngain', 'advice', 'astatus', 'adate', 'icon'];
-  dataSource3 = ELEMENT_DATA1;
+  dataSource3;
   advisorId: any;
   clientId: any;
   isLoading: any;
@@ -117,19 +118,41 @@ export class AdviceRealAssetComponent implements OnInit {
       }
     );
   }
+  deleteModal(value, subData) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != undefined) {
+        console.log(result, this.dataSource.data, 'delete result');
+        const tempList = [];
+        this.dataSource.data.forEach(singleElement => {
+          if (singleElement.id != result.id) {
+            tempList.push(singleElement);
+          }
+        });
+        this.dataSource.data = tempList;
+      }
+    });
+  }
 }
-export interface PeriodicElement1 {
-  name: string;
-  desc: string;
-  mvalue: string;
-  advice: string;
-  adate: string;
-  astatus: string;
-
-}
-
-const ELEMENT_DATA1: PeriodicElement1[] = [
-  { name: 'Rahul Jain', desc: '1', mvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-  { name: 'Rahul Jain', desc: '2', mvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-
-];
