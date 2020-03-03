@@ -1,0 +1,121 @@
+<div class="row bb-1 popup-header-fix-60">
+    <div class="col-md-10 p-0">
+        <h4 class="mb-0 l-22 wrapper-20">ADVICE</h4>
+    </div>
+    <div class="col-md-2 text-right">
+        <i (click)="Close(false)" class="material-icons pt-16 c-p pr-16">
+            clear
+        </i>
+    </div>
+</div>
+<div class="row pt-90 pl-28 pr-28 pb-100 give-adivce">
+    <div class="col-md-3 pl-0">
+        <h5 class="m-0 text-black f-500 pb-12">Mutual fund</h5>
+        <mat-radio-group class="d-block">
+            <mat-radio-button *ngFor="let lol of advicelist;index as i" [ngClass]="{'mt-20':i>0}" class="b-ua">
+                {{lol.name}}</mat-radio-button>
+        </mat-radio-group>
+        <mat-radio-group aria-label="Select an option" class="mt-20">
+            <mat-radio-button value="1" class="b-ua mt-20 pt-28 h-84">
+                Non financial advice
+                <div class="form-group pt-4">
+                    <mat-form-field class="w-100">
+                        <mat-select class="form-control">
+                            <mat-option value="option">Add nominee</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </mat-radio-button>
+        </mat-radio-group>
+    </div>
+    <div class="col-md-9 pr-0 pl-24">
+        <div class="row bl-1">
+            <div class="col-md-9">
+                <p class="m-0 roboto text-black">Advice header</p>
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input matInput class="form-control">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-3 p-0">
+                <p class="m-0">Advice given on</p>
+                <div class="form-group mb-0">
+                    <mat-form-field class="ba-date">
+                        <input matInput [matDatepicker]="picker" class="form-control b-0">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <p class="m-0 roboto text-black pt-20">Enter amount</p>
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input matInput class="form-control">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <p class="m-0 roboto text-black pt-44">Select bank account</p>
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <mat-select class="form-control">
+                            <mat-option value="option">Option</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-3 p-0">
+                <p class="m-0 pt-44 roboto">Advice given on</p>
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <mat-select class="form-control">
+                            <mat-option value="option">Option</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <p class="m-0 roboto text-black pt-44">Advice rationale</p>
+                <div class="form-group m-0">
+                    <textarea class="form-control" rows="5"></textarea>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <p class="m-0 roboto text-black pt-44">Consent option <img src="/assets/images/svg/info.svg"></p>
+                <mat-radio-group aria-label="Select an option">
+                    <mat-radio-button value="1">Take client consent
+
+                    </mat-radio-button>
+                    <p class="f-12 m-0 roboto text-custom pl-32">If this option is selected,
+                        further
+                        action on this advice is possible only after your client gives
+                        explicit
+                        consent via email.</p>
+                    <mat-radio-button value="2">Bypass client consent
+
+                    </mat-radio-button>
+                    <p class="f-12 m-0 roboto text-custom pl-32">If this option is selected,
+                        you
+                        can
+                        directly start further work on this advice without taking any
+                        explicit
+                        consent from your client.</p>
+                </mat-radio-group>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="bottom-fixed wrapper-12 w-60">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
+        </div>
+        <div class="col-md-8 text-right">
+            <button mat-stroked-button class="btn-bottom">SAVE</button>
+        </div>
+    </div>
+</div>

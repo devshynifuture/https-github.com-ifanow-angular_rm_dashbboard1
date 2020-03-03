@@ -5,30 +5,37 @@
                 keyboard_arrow_down
             </i></button>
         <mat-menu #menu="matMenu">
-            <div class="row pt-16">
-                <div class="col-md-6 ">
-                    <p class="m-0 text-black">Scenario 1</p>
+
+            <button mat-menu-item>
+                <div class="row pt-16">
+                    <div class="col-md-6 pl-0">
+                        <p class="m-0 text-black">Scenario 1</p>
+                    </div>
+                    <div class="col-md-6 p-0">
+                        <button mat-stroked-button class="primary-sm v-top"> UNAPPROVED</button>
+                    </div>
                 </div>
-                <div class="col-md-6 p-0">
-                    <button mat-stroked-button class="warning-sm">UNAPPROVED</button>
+            </button>
+            <button mat-menu-item>
+                <div class="row pt-16">
+                    <div class="col-md-6 pl-0">
+                        <p class="m-0 text-black">Scenario 2</p>
+                    </div>
+                    <div class="col-md-6 p-0">
+                        <button mat-stroked-button class="primary-sm v-top">APPROVED</button>
+                    </div>
                 </div>
-            </div>
-            <div class="row pt-16">
-                <div class="col-md-6 ">
-                    <p class="m-0 text-black">Scenario 2</p>
+            </button>
+            <button mat-menu-item>
+                <div class="row pt-16">
+                    <div class="col-md-6 pl-0">
+                        <p class="m-0 text-black">Scenario 3</p>
+                    </div>
+                    <div class="col-md-6 p-0">
+                        <button mat-stroked-button class="warning-sm v-top">UNAPPROVED</button>
+                    </div>
                 </div>
-                <div class="col-md-6 p-0">
-                    <button mat-stroked-button class="primary-sm">APPROVED</button>
-                </div>
-            </div>
-            <div class="row pt-16">
-                <div class="col-md-6 ">
-                    <p class="m-0 text-black">Scenario 3</p>
-                </div>
-                <div class="col-md-6 p-0">
-                    <button mat-stroked-button class="warning-sm">UNAPPROVED</button>
-                </div>
-            </div>
+            </button>
         </mat-menu>
     </div>
 </div>

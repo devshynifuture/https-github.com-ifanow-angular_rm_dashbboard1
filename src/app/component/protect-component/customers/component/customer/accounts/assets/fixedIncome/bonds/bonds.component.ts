@@ -58,6 +58,8 @@ export class BondsComponent implements OnInit {
   get data() {
     return this.inputData;
   }
+  @Input() popupHeaderText: string = 'Add Bond';
+
   ngOnInit() {
     // this.getdataForm()
     this.advisorId = AuthService.getAdvisorId();
