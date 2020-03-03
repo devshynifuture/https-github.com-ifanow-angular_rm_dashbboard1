@@ -94,17 +94,17 @@ export class BankAccountsComponent implements OnInit {
     }
     this.bankData = {};
     this.bankAccounts = this.fb.group({
-      ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
+      ownerName: [(data.ownerName == undefined) ? '' : data.ownerName, [Validators.required]],
       accountType: [(data.accountType == undefined) ? '' : (data.accountType) + "", [Validators.required]],
-      bankName: [(data == undefined) ? '' : data.bankName, [Validators.required]],
+      bankName: [(data.bankName == undefined) ? '' : data.bankName, [Validators.required]],
       compound: [(data.interestCompounding == undefined) ? '' : (data.interestCompounding) + "", [Validators.required]],
-      interestRate: [(data == undefined) ? '' : data.interestRate, [Validators.required]],
-      balanceAsOn: [(data == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
-      accountBalance: [(data == undefined) ? '' : data.accountBalance, [Validators.required]],
-      bankAcNo: [(data == undefined) ? '' : data.accountNo, [Validators.required]],
-      description: [(data == undefined) ? '' : data.description, [Validators.required]],
-      id: [(data == undefined) ? '' : data.id, [Validators.required]],
-      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]],
+      interestRate: [(data.interestRate == undefined) ? '' : data.interestRate, [Validators.required]],
+      balanceAsOn: [(data.balanceAsOn == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
+      accountBalance: [(data.accountBalance == undefined) ? '' : data.accountBalance, [Validators.required]],
+      bankAcNo: [(data.accountNo == undefined) ? '' : data.accountNo, [Validators.required]],
+      description: [(data.description == undefined) ? '' : data.description, [Validators.required]],
+      id: [(data.id == undefined) ? '' : data.id, [Validators.required]],
+      familyMemberId: [[(data.familyMemberId == undefined) ? '' : data.familyMemberId], [Validators.required]],
       nomineeList: this.nomineesList
     });
     this.ownerData = this.bankAccounts.controls;
@@ -122,27 +122,8 @@ export class BankAccountsComponent implements OnInit {
   }
   saveCashInHand() {
 
-    if (this.bankAccounts.get('ownerName').invalid) {
-      this.bankAccounts.get('ownerName').markAsTouched();
-      return;
-    } else if (this.bankAccounts.get('accountType').invalid) {
-      this.bankAccounts.get('accountType').markAsTouched();
-      return;
-    } else if (this.bankAccounts.get('ownerName').invalid) {
-      this.bankAccounts.get('ownerName').markAsTouched();
-      return
-    } else if (this.bankAccounts.get('accountBalance').invalid) {
-      this.bankAccounts.get('accountBalance').markAsTouched();
-      return;
-    } else if (this.bankAccounts.get('balanceAsOn').invalid) {
-      this.bankAccounts.get('balanceAsOn').markAsTouched();
-      return;
-    } else if (this.bankAccounts.get('interestRate').invalid) {
-      this.bankAccounts.get('interestRate').markAsTouched();
-      return;
-    } else if (this.bankAccounts.get('compound').invalid) {
-      this.bankAccounts.get('compound').markAsTouched();
-      return;
+    if (this.bankAccounts.invalid) {
+      this.bankAccounts.markAllAsTouched();
     } else {
       this.nominees = []
       if (this.nomineesList) {
