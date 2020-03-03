@@ -643,4 +643,13 @@ export class CustomerService {
   sentEmailConsent(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.SENT_EMAIL_CONSENT, data)
   }
+  giveAdviceOnGold(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.GIVE_ADVICE_ON_GOLD, data)
+  }
+  giveAdviceOnPoSavings(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.GIVE_ADVICE_ON_PO_SAVING, data)
+  }
+  giveAdviceOnRealEstate(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.GIVE_ADVICE_ON_REAL_ESTATE, data)
+  }
 }
