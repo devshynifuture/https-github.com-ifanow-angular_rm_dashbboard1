@@ -33,7 +33,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       data = {};
     }
     this.schemeLevelHoldingForm = this.fb.group({
-      ownerName: [data.ownerName, [Validators.required]],
+      ownerName: [!data.ownerName?'':data.ownerName, [Validators.required]],
       schemeName: [data.schemeName, [Validators.required]],
       folioNumber: [data.folioNumber, [Validators.required]],
       sip: [data.sip, [Validators.required]],
@@ -75,26 +75,18 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
     this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
   saveMfSchemeLevel() {
-    if (this.schemeLevelHoldingForm.get('schemeName').invalid) {
+    if (this.schemeLevelHoldingForm.invalid) {
+      this.schemeLevelHoldingForm.get('ownerName').markAsTouched();
       this.schemeLevelHoldingForm.get('schemeName').markAsTouched();
-      return;
-    } else if (this.schemeLevelHoldingForm.get('folioNumber').invalid) {
       this.schemeLevelHoldingForm.get('folioNumber').markAsTouched();
-      return;
-    } else if (this.schemeLevelHoldingForm.get('sip').invalid) {
       this.schemeLevelHoldingForm.get('sip').markAsTouched();
-      return;
-    } else if (this.schemeLevelHoldingForm.get('tag').invalid) {
       this.schemeLevelHoldingForm.get('tag').markAsTouched();
-      return;
-    } else if (this.transactionArray.invalid) {
       this.transactionArray.controls.forEach(element => {
         element.get('transactionType').markAsTouched();
         element.get('date').markAsTouched();
         element.get('transactionAmount').markAsTouched();
         element.get('Units').markAsTouched();
-      })
-      return;
+      });
     } else {
       const obj = {
         ownerName: (this.ownerName == null) ? this.schemeLevelHoldingForm.controls.ownerName.value : this.ownerName,

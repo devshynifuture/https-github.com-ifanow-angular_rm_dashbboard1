@@ -4,7 +4,7 @@ import {CustomerService} from '../../../../customer.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {AddPortfolioComponent} from '../add-portfolio/add-portfolio.component';
 import {MatDialog} from '@angular/material';
-import {FormBuilder, FormControl} from '@angular/forms';
+import {FormBuilder, FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-portfolio-field',
@@ -16,16 +16,21 @@ export class PortfolioFieldComponent implements OnInit {
   clientId: any;
   portfolioList: any;
   familyWisePortfolio: any[];
+  portfolioName:any;
   @Output() outputEvent = new EventEmitter();
-  portfolioForm: any;
+  portfolioForm =  this.fb.group({
+    portfolioName: ["", [Validators.required]],
+  });
   ownerIdData: any;
   constructor(private fb: FormBuilder, public dialog: MatDialog, private cusService: CustomerService, private eventService: EventService) { }
   ngOnInit() {
   }
   portfolioData = new FormControl();
   @Input() set owner(data) {
-    this.portfolioForm = data;
-    this.portfolioData.reset();
+    // this.portfolioForm = data;
+    console.log("owner", data);
+    if(data != undefined)
+    this.portfolioName = data.value.portfolioName
   }
   @Input() set ownerId(data) {
     if (data == undefined) {
@@ -35,6 +40,10 @@ export class PortfolioFieldComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getPortfolioList()
+    this.portfolioForm.get('portfolioName').setValue('');
+    if(this.portfolioName != undefined){
+      this.portfolioForm.get('portfolioName').setValue(this.portfolioName);
+    }
   };
   getPortfolioList() {
     const obj =
@@ -59,6 +68,7 @@ export class PortfolioFieldComponent implements OnInit {
     });
     (checkOwnerId) ? this.familyWisePortfolio : this.familyWisePortfolio = [];
     console.log(this.familyWisePortfolio)
+    
   }
   openAddPortfolio() {
     console.log(this.portfolioData)

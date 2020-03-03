@@ -108,7 +108,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
       this.incomeNetForm.controls.incomeEndDate.setValue(new Date(data.incomeEndYear, data.incomeEndMonth));
       this.incomeNetForm.controls.nextAppraisal.setValue(new Date(data.nextAppraisalOrNextRenewal));
       this.incomeNetForm.controls.description.setValue(data.description);
-      data.monthlyContributions.forEach(element => {
+      data.monthlyDistributions.forEach(element => {
         this.getBonusList.push(this.fb.group({
           id: [element.id, [Validators.required]],
           bonusOrInflow: [element.bonusOrInflow, [Validators.required]],
@@ -190,11 +190,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
       }
     }
     if (this.singleIndividualIncome.finalIncomeList.incomeTypeId != 1) {
-      if (this.incomeNetForm.get('monthlyAmount').invalid) {
-        this.incomeNetForm.get('monthlyAmount').markAsTouched();
-        return;
-      }
-
+     
     }
     if (this.incomeNetForm.get('incomeGrowthRate').invalid) {
       this.incomeNetForm.get('incomeGrowthRate').markAsTouched();

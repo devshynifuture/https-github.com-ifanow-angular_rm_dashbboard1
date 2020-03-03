@@ -84,8 +84,13 @@
                 <mat-form-field>
                     <input matInput class=" form-control br-0 percentage" type="number" formControlName="ownerPercent"
                         (keyup)="onChangeJointOwnership('owner')">
-                    <mat-error class="f-12 "
+                    <!-- ng build prod isOwnerPercent removed -->
+                    <!-- <mat-error class="f-12 "
                         [ngClass]="{'v-h':!(isOwnerPercent && getFormControl().ownerPercent.invalid || getFormControl().ownerPercent.touched && getFormControl().ownerPercent.invalid)}">
+                        This field is required
+                    </mat-error> -->
+                    <mat-error class="f-12 "
+                        [ngClass]="{'v-h':!(getFormControl().ownerPercent.invalid || getFormControl().ownerPercent.touched && getFormControl().ownerPercent.invalid)}">
                         This field is required
                     </mat-error>
                 </mat-form-field>

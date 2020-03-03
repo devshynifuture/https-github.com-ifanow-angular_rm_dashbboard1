@@ -39,9 +39,10 @@ export class StockScripLevelHoldingComponent implements OnInit {
   }
 
   display(value) {
-    this.ownerInfo = value
+    // this.ownerInfo = value.userName
     console.log('value selected', value)
     this.ownerName = value.userName;
+    this.scipLevelHoldingForm.get('ownerName').setValue(this.ownerName)
     this.familyMemberId = value.id;
     this.portfolioFieldData = {
       familyMemberId: this.familyMemberId
@@ -60,6 +61,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
     if (data == null) {
       data = {};
       this.addHoldings();
+      this.ownerName = '';
     }
     else {
       this.editApiData = data;
@@ -67,7 +69,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
       this.ownerName = data.ownerName;
     }
     this.scipLevelHoldingForm = this.fb.group({
-      ownerName: [data.ownerName, [Validators.required]],
+      ownerName: ['', [Validators.required]],
       portfolioName: [data.portfolioName, [Validators.required]]
     })
     if (data.transactionorHoldingSummaryList) {
@@ -83,10 +85,10 @@ export class StockScripLevelHoldingComponent implements OnInit {
       });
     }
     this.familyMemberId = data.familyMemberId;
-    this.portfolioFieldData = {
+    this.portfolioFieldData= {
       familyMemberId: this.familyMemberId
     }
-    this.ownerData = this.scipLevelHoldingForm.controls;
+    // this.ownerData = this.scipLevelHoldingForm.controls;
   }
   holdingListForm = this.fb.group({
     holdingListArray: new FormArray([])
@@ -94,7 +96,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
   get HoldingList() { return this.holdingListForm.controls };
   get HoldingArray() { return this.HoldingList.holdingListArray as FormArray };
 
-  addHoldings() {
+    addHoldings() {
     let singleForm = this.fb.group({
       scripName: [, [Validators.required]],
       holdings: [, [Validators.required]],
@@ -112,86 +114,85 @@ export class StockScripLevelHoldingComponent implements OnInit {
     // if (this.ownerData == undefined) {
     //   return;
     // }
-    if (this.scipLevelHoldingForm.get('portfolioName').invalid) {
+    if (this.scipLevelHoldingForm.invalid || this.HoldingArray.invalid) {
       this.scipLevelHoldingForm.get('portfolioName').markAsTouched();
-      return;
-    }
-    if (this.HoldingArray.invalid) {
+      this.scipLevelHoldingForm.get('ownerName').markAsTouched();
       this.HoldingArray.controls.forEach(element => {
         element.get('holdingAsOn').markAsTouched();
         element.get('holdings').markAsTouched();
         element.get('investedAmt').markAsTouched();
         element.get('scripName').markAsTouched();
       })
-      return;
     }
-    if (this.editApiData) {
-      let finalStocks = []
-      this.HoldingArray.controls.forEach(element => {
-        let singleList = {
-
-          "id": element.get('id').value,
-          "stockId": this.editApiData.id,
-          "holdingOrTransaction": 1,
-          "transactionTypeOrScripNameId": element.get('scripName').value.id,
-          "quantity": element.get('holdings').value,
-          "holdingOrTransactionDate": element.get('holdingAsOn').value,
-          "investedOrTransactionAmount": element.get('investedAmt').value
-        }
-        finalStocks.push(singleList);
-      });
-      let obj = {
-        "stocks": [
-          {
-            "transactionorHoldingSummaryList": finalStocks
+    else{
+      if (this.editApiData) {
+        let finalStocks = []
+        this.HoldingArray.controls.forEach(element => {
+          let singleList = {
+  
+            "id": element.get('id').value,
+            "stockId": this.editApiData.id,
+            "holdingOrTransaction": 1,
+            "transactionTypeOrScripNameId": element.get('scripName').value.id,
+            "quantity": element.get('holdings').value,
+            "holdingOrTransactionDate": element.get('holdingAsOn').value,
+            "investedOrTransactionAmount": element.get('investedAmt').value
           }
-        ]
-      }
-      this.cusService.editScriplevelHoldingAndTransaction(obj).subscribe(
-        data => {
-          console.log(data);
-          this.Close();
-        },
-        error => this.eventService.showErrorMessage(error)
-      )
-
-    }
-    else {
-      let finalStocks = [];
-      this.HoldingArray.controls.forEach(element => {
+          finalStocks.push(singleList);
+        });
         let obj = {
-          "scripNameId": element.get('scripName').value.id,
-          "scripCurrentValue": element.get('scripName').value.currentValue,
-          "stockType": 2,
-          "transactionorHoldingSummaryList": [
+          "stocks": [
             {
-              "holdingOrTransaction": 1,
-              "quantity": element.get('holdings').value,
-              "holdingOrTransactionDate": element.get('holdingAsOn').value,
-              "investedOrTransactionAmount": element.get('investedAmt').value
+              "transactionorHoldingSummaryList": finalStocks
             }
           ]
         }
-        finalStocks.push(obj)
-      })
-      const obj =
-      {
-        "id": this.portfolioData.id,
-        "clientId": this.clientId,
-        "advisorId": this.advisorId,
-        "familyMemberId": this.familyMemberId,
-        "ownerName": this.ownerName,
-        "portfolioName": this.portfolioData.portfolioName,
-        "stocks": finalStocks
+        this.cusService.editScriplevelHoldingAndTransaction(obj).subscribe(
+          data => {
+            console.log(data);
+            this.Close();
+          },
+          error => this.eventService.showErrorMessage(error)
+        )
+  
       }
-      console.log(obj)
-      this.cusService.addAssetStocks(obj).subscribe(
-        data => {
-          console.log(data);
-          this.Close();
-        },
-        error => this.eventService.showErrorMessage(error)
-      )
+      else {
+        let finalStocks = [];
+        this.HoldingArray.controls.forEach(element => {
+          let obj = {
+            "scripNameId": element.get('scripName').value.id,
+            "scripCurrentValue": element.get('scripName').value.currentValue,
+            "stockType": 2,
+            "transactionorHoldingSummaryList": [
+              {
+                "holdingOrTransaction": 1,
+                "quantity": element.get('holdings').value,
+                "holdingOrTransactionDate": element.get('holdingAsOn').value,
+                "investedOrTransactionAmount": element.get('investedAmt').value
+              }
+            ]
+          }
+          finalStocks.push(obj)
+        })
+        const obj =
+        {
+          "id": this.portfolioData.id,
+          "clientId": this.clientId,
+          "advisorId": this.advisorId,
+          "familyMemberId": this.familyMemberId,
+          "ownerName": this.ownerName,
+          "portfolioName": this.portfolioData.portfolioName,
+          "stocks": finalStocks
+        }
+        console.log(obj)
+        this.cusService.addAssetStocks(obj).subscribe(
+          data => {
+            console.log(data);
+            this.Close();
+          },
+          error => this.eventService.showErrorMessage(error)
+        )
+      }
     }
   }
   Close() {

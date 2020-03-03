@@ -1,7 +1,7 @@
 <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20">Add Scheme level transactions</h4>
+            <h4 class="mb-0 wrapper-20">Add scheme level transactions</h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -41,8 +41,8 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group">
-                    <mat-form-field>
-                        <input matInput #schemeName type="text" class="form-control br-0" formControlName="schemeName" value="Start typing to see scheme names">
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <input matInput #schemeName type="text" class="form-control br-0" formControlName="schemeName" placeholder="Start typing to see scheme names">
                         <mat-error class="f-12">
                             This field is required
                         </mat-error>
@@ -92,8 +92,8 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <mat-form-field>
-                        <input matInput #tag type="text" class="form-control br-0" value="Managed" formControlName="tag">
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <input matInput #tag type="text" class="form-control br-0" placeholder="Managed" formControlName="tag">
                         <mat-error class="f-12">
                             This field is required
                         </mat-error>
@@ -144,7 +144,7 @@
             <div class="col-md-2 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput autocomplete="off" formControlName="date" [matDatepicker]="picker" class="form-control br-0">
+                        <input (click)="picker.open()" matInput autocomplete="off" formControlName="date" [matDatepicker]="picker" class="form-control br-0">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-error>
@@ -177,10 +177,10 @@
             </div>
 
             <div class="col-md-1 d-flex pt-10 pl-0">
-                <i class="material-icons text-custom pl-10 c-p" *ngIf="i==transactionArray.length-1" (click)="addTransactions()">
+                <i class="material-icons text-primitive f-20 c-p float-left" *ngIf="i==transactionArray.length-1" (click)="addTransactions()">
           add
         </i>
-                <i class="material-icons text-custom c-p pl-10" [hidden]="i==transactionArray.length-1" (click)="removeTransactions(i)">
+                <i class="material-icons text-primitive f-20 c-p pl-10" *ngIf="transactionArray.length != 1" (click)="removeTransactions(i)">
           remove
         </i>
             </div>

@@ -141,6 +141,7 @@ export class SsySchemeComponent implements OnInit {
   }
 
   addOpenSSY(data, flag) {
+    let popupHeaderText = !!data ? 'Edit Sukanya samriddhi yojana (SSY)' : 'Add Sukanya samriddhi yojana (SSY)';
     const fragmentData = {
       flag: 'addSyss',
       data,
@@ -148,6 +149,9 @@ export class SsySchemeComponent implements OnInit {
       state: (flag == 'detailedSsy') ? 'open35' : 'open',
       componentName: (flag == 'detailedSsy') ? DetailedSsyComponent : AddSsyComponent
     };
+    if(flag != 'detailedSsy') {
+      fragmentData['popupHeaderText'] = popupHeaderText;
+    }
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);

@@ -23,7 +23,7 @@ export class ProfilePlanComponent implements OnInit {
       flag: flagValue,
       id: 1,
       data: null,
-      state: 'open35',
+      state: 'open',
       componentName: AddProfilePlanComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

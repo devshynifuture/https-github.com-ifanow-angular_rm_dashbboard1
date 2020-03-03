@@ -7,14 +7,12 @@
         <p class="t-right">Script type</p>
     </div>
     <div class="col-md-8">
-        <mat-form-field>
-            <mat-radio-group>
-                <mat-radio-button value="1" class="b-a-custom text-primary pt-8 pb-8 pr-52 pl-20 custom-radio">Domestic
-                </mat-radio-button>
-                <mat-radio-button value="2" class="b-a pt-8 pr-40 pl-20 pr-76 pb-8">International
-                </mat-radio-button>
-            </mat-radio-group>
-        </mat-form-field>
+        <mat-radio-group>
+            <mat-radio-button value="1" class="b-a-custom text-primary pt-8 pb-8 pr-52 pl-20 custom-radio">Domestic
+            </mat-radio-button>
+            <mat-radio-button value="2" class="b-a pt-8 pr-40 pl-20 pr-76 pb-8">International
+            </mat-radio-button>
+        </mat-radio-group>
     </div>
 </div>
 <div class="row">
@@ -38,7 +36,7 @@
     <div class="col-md-4">
         <mat-form-field>
             <div class="form-group">
-                <input type="number" class="form-control">
+                <input matInput type="number" class="form-control">
             </div>
             <mat-error>This field is required</mat-error>
         </mat-form-field>

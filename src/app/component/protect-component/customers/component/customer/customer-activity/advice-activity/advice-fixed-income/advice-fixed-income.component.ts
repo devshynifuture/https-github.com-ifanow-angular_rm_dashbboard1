@@ -17,7 +17,7 @@ import { AdviceUtilsService } from '../advice-utils.service';
 })
 
 export class AdviceFixedIncomeComponent implements OnInit {
-  displayedColumns3: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'advice', 'astatus', 'adate', 'icon'];
+  displayedColumns3: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'mdate', 'advice', 'astatus', 'adate', 'icon'];
   advisorId: any;
   clientId: any;
   dataSource: any;
@@ -146,7 +146,7 @@ export class AdviceFixedIncomeComponent implements OnInit {
     );
   }
   openAddEdit(value, data) {
-    let component = (value == 'adviceFixedDeposit') ? FixedDepositComponent : (value == 'adviceRecurringDeposit') ? RecuringDepositComponent : BondsComponent
+    let component = (value == 'adviceFixedDeposit') ? FixedDepositComponent : (value == 'adviceRecurringDeposit') ? RecuringDepositComponent : BondsComponent;
     const fragmentData = {
       flag: value,
       data,

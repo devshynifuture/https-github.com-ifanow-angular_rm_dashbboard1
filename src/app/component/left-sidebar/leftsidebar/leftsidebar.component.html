@@ -14,7 +14,8 @@
             <div *ngIf="showTabs" class="main-details min-height">
                 <p class="f-16 f-600 mb-0">{{advisorName}}</p>
 
-                <button (click)="showsmallNavWrapper()" *ngIf="showTabs" aria-label="Toggle sidenav" class="btn_nav" mat-icon-button type="button">
+                <button (click)="showsmallNavWrapper()" *ngIf="showTabs" aria-label="Toggle sidenav" class="btn_nav"
+                    mat-icon-button type="button">
                     <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
                 </button>
             </div>
@@ -23,7 +24,8 @@
 
             <div class="pt-12 scorllable row">
                 <div class="col-md-12 p-0">
-                    <button class="ml-8" (click)="showMainNavWrapper()" *ngIf="showTabs==false" aria-label="Toggle sidenav" mat-icon-button type="button">
+                    <button class="ml-8" (click)="showMainNavWrapper()" *ngIf="showTabs==false"
+                        aria-label="Toggle sidenav" mat-icon-button type="button">
                         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
                     </button>
 
@@ -31,7 +33,8 @@
                         <img src="assets/images/svg/time-meter.svg">
                         <span *ngIf="showTabs" class="title" mat-line>Dashboard</span>
                     </a>
-                    <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/customer/detail/account/summary">
+                    <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
+                        routerLink="/customer/detail/account/summary">
                         <img routerLink="/customer/detail/overview" src="assets/images/svg/people.svg">
                         <span *ngIf="showTabs" class="title" mat-line>People</span>
                     </a>
@@ -44,48 +47,57 @@
                     </a> -->
                     <mat-accordion class="menuAccordion">
                         <mat-expansion-panel>
-                          <mat-expansion-panel-header >
-                            <mat-panel-title >
-                                <a mat-list-item class="sidenav-link expand-link">
-                                    <img src="assets/images/svg/file-lines.svg">
-                                    <span *ngIf="showTabs" class="title" mat-line>Activities</span>
-                                    <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" class="text-custom">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <a mat-list-item class="sidenav-link expand-link">
+                                        <img src="assets/images/svg/file-lines.svg">
+                                        <span *ngIf="showTabs" class="title" mat-line>Activities</span>
+                                        <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" class="text-custom">
                                         keyboard_arrow_right
                                     </mat-icon> -->
-                                </a>
-                            </mat-panel-title>
-                           
-                          </mat-expansion-panel-header>
-                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/advice">
+                                    </a>
+                                </mat-panel-title>
+
+                            </mat-expansion-panel-header>
+                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
+                                routerLink="/admin/activies/advice">
                                 <span *ngIf="showTabs" class="title" mat-line>Advice</span>
                             </a>
-                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/plans">
+                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
+                                routerLink="/admin/activies/plans">
                                 <span *ngIf="showTabs" class="title" mat-line>Action plans</span>
                             </a>
-                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/notes">
+                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
+                                routerLink="/admin/activies/notes">
                                 <span *ngIf="showTabs" class="title" mat-line>Notes</span>
                             </a>
-                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/tasks">
+                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
+                                routerLink="/admin/activies/tasks">
                                 <span *ngIf="showTabs" class="title" mat-line>Tasks</span>
                             </a>
-                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/opportunities">
+                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
+                                routerLink="/admin/activies/opportunities">
                                 <span *ngIf="showTabs" class="title" mat-line>Opportunities</span>
                             </a>
-                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/calendar">
+                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
+                                routerLink="/admin/activies/calendar">
                                 <span *ngIf="showTabs" class="title" mat-line>calendar</span>
                             </a>
                         </mat-expansion-panel>
                     </mat-accordion>
 
-                    <a class="sidenav-link" [ngClass]="getActiveLink('emails') ? 'bg-grey lter': ''" mat-list-item routerLink="./emails/inbox/google-connect">
+                    <a class="sidenav-link" [ngClass]="getActiveLink('emails') ? 'bg-grey lter': ''" mat-list-item
+                        routerLink="./emails/inbox/google-connect">
                         <img src="assets/images/svg/mail.svg">
                         <span *ngIf="showTabs" class="title" mat-line>Email</span>
                     </a>
-                    <a class="sidenav-link" [ngClass]="getActiveLink('transactions') ? 'bg-grey lter': ''" mat-list-item routerLink="./transactions/overview">
+                    <a class="sidenav-link" [ngClass]="getActiveLink('transactions') ? 'bg-grey lter': ''" mat-list-item
+                        routerLink="./transactions/overview">
                         <img src="assets/images/svg/cart.svg">
                         <span *ngIf="showTabs" class="title" mat-line>Transactions</span>
                     </a>
-                    <a class="sidenav-link" [ngClass]="getActiveLink('subscription') ? 'bg-grey lter': ''" mat-list-item routerLink="./subscription/dashboard">
+                    <a class="sidenav-link" [ngClass]="getActiveLink('subscription') ? 'bg-grey lter': ''" mat-list-item
+                        routerLink="./subscription/dashboard">
                         <img src="assets/images/svg/ruppes.svg">
                         <span *ngIf="showTabs" class="title" mat-line>Subscription</span>
                     </a>
@@ -104,7 +116,7 @@
                     </a>
                     <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item>
                         <span *ngIf="showTabs" class="title" routerLink="/admin/backoffice-aum-reconciliation" mat-line>AUM
-                            reconsilation</span>
+                            Reconciliation</span>
                     </a>
                     <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item>
                         <span *ngIf="showTabs" class="title" routerLink="/admin/backoffice-mis" mat-line>MIS</span>
@@ -126,10 +138,12 @@
 
             <mat-form-field class="width40 serachbox ml-16">
                 <div class="form-group searchBoxHeader">
-                    <input #inputSearch [formControl]="myControl" [matAutocomplete]="auto" class="form-control pl-40" matInput type="text">
+                    <input #inputSearch [formControl]="myControl" [matAutocomplete]="auto" class="form-control pl-40"
+                        matInput type="text">
                     <i class="material-icons searchIcon"> search </i>
                     <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete">
-                        <mat-option (click)="selectClient(singleClient)" *ngFor="let singleClient of filteredOptions | async" [value]="singleClient">
+                        <mat-option (click)="selectClient(singleClient)"
+                            *ngFor="let singleClient of filteredOptions | async" [value]="singleClient">
                             <div class="row">
                                 <div class="col-md-1 d-flex align-items-center">
                                     <i class="material-icons"> person </i>
@@ -159,12 +173,111 @@
                     </mat-autocomplete>
                 </div>
             </mat-form-field>
-            <div class="hide-on-800 d-flex align-items-center justify-content-center right-fixed tablate-none">
+            <div class="hide-on-800 d-flex align-items-center justify-content-center right-fixed tablate-none"
+                id="right-sidemenu">
                 <a class="sidenav-link" mat-list-item>
                     <img class="t-12" src="assets/images/svg/bell.svg">
                 </a>
                 <a class="sidenav-link" mat-list-item>
-                    <img src="assets/images/svg/earphone.svg">
+                    <img src="assets/images/svg/earphone.svg" class="c-p" [matMenuTriggerFor]="menu1">
+                    <mat-menu #menu1="matMenu" class="minwidth-400">
+                        <button mat-menu-item class="bb-1 event-none h-60">
+                            <div class="row">
+                                <div class="col-md-12 p-0">
+                                    <h3 class="m-0 pt-12">Support</h3>
+                                </div>
+                            </div>
+                        </button>
+                        <div id="earphones-menu">
+                            <button mat-menu-item class="mt-28">
+                                <div class="row">
+                                    <div class="col-md-2 p-0">
+                                        <img src="/assets/images/svg/bulb-blue-btn.svg" class="v-super">
+                                    </div>
+                                    <div class="col-md-10 p-0">
+                                        <p class="m-0 text-black roboto">Knowledge base</p>
+                                        <p class="text-custom m-0 roboto">Find answers to key questions here</p>
+                                    </div>
+                                </div>
+                            </button>
+                            <button mat-menu-item>
+                                <div class="row">
+                                    <div class="col-md-2 p-0">
+                                        <img src="/assets/images/svg/new.svg" class="v-super">
+                                    </div>
+                                    <div class="col-md-10 p-0">
+                                        <p class="m-0 text-black roboto">New release notes</p>
+                                        <p class="text-custom m-0 roboto">All the latest developments in one place</p>
+                                    </div>
+                                </div>
+                            </button>
+                            <button mat-menu-item>
+                                <div class="row">
+                                    <div class="col-md-2 p-0">
+                                        <img src="/assets/images/svg/cash-flow-surplus-icon.svg" class="v-super">
+                                    </div>
+                                    <div class="col-md-10 p-0">
+                                        <p class="m-0 text-black roboto">Blog</p>
+                                        <p class="text-custom m-0 roboto">Get industry & IFANOW insights. Stay up to
+                                            date
+                                        </p>
+                                    </div>
+                                </div>
+                            </button>
+                            <button mat-menu-item>
+                                <div class="row">
+                                    <div class="col-md-2 p-0">
+                                        <img src="/assets/images/svg/tip.svg" class="v-super">
+                                    </div>
+                                    <div class="col-md-10 p-0">
+                                        <p class="m-0 text-black roboto">Tips & tricks</p>
+                                        <p class="text-custom m-0 roboto">Useful tips & tricks you should know </p>
+                                    </div>
+                                </div>
+                            </button>
+                            <button mat-menu-item>
+                                <div class="row">
+                                    <div class="col-md-2 p-0">
+                                        <img src="/assets/images/svg/ruppess.svg" class="v-super">
+                                    </div>
+                                    <div class="col-md-10 p-0">
+                                        <p class="m-0 text-black roboto">Pricing</p>
+                                        <p class="text-custom m-0 roboto">Compare pricing options & select what works
+                                        </p>
+                                    </div>
+                                </div>
+                            </button>
+                            <button mat-menu-item>
+                                <div class="row">
+                                    <div class="col-md-2 p-0">
+                                        <img src="/assets/images/svg/raise.svg">
+                                    </div>
+                                    <div class="col-md-10 p-0">
+                                        <p class="m-0 text-black roboto">Raise a support ticket</p>
+                                        <p class="text-custom m-0 roboto">Can’t find an answer? Our RMs are here to help
+                                        </p>
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+                        <p class="m-0 roboto text-primitive text-center pt-130 pb-28">Office hours: 10.00AM - 6.30PM
+                            (Monday
+                            to Friday)
+                        </p>
+                        <div class="p-20 bg-grey lter">
+                            <div class="row">
+                                <div class="col-md-4 pl-0">
+                                    <img src="https://ifanow.com/images/team/avinash.jpeg" class="w-70">
+                                </div>
+                                <div class="col-md-8">
+                                    <h3 class="m-0 f-500 text-black">Need help?</h3>
+                                    <p class="m-0 text-black roboto pt-4">I am your relationship manager</p>
+                                    <h5 class="m-0 text-black pt-4"></h5>
+                                    <button mat-stroked-button class="btn-primary mt-12">Contact me</button>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-menu>
                 </a>
 
 
@@ -172,95 +285,95 @@
                     <img class="c-p header-img" [matMenuTriggerFor]="appMenu" src="/assets/images/svg/setting.svg">
 
                     <mat-menu #appMenu="matMenu" class="minwidth-400">
-                        <button mat-menu-item class="bb-1 event-none">
+                        <button mat-menu-item class="bb-1 event-none h-60">
                             <div class="row">
-                                <div class="col-md-10 p-0">
+                                <div class="col-md-12 p-0">
                                     <h3 class="m-0 pt-12">Settings</h3>
                                 </div>
-                                <div class="col-md-2 pl-0 text-right">
-                                    <img src="/assets/images/svg/close.svg" class="c-p w-40">
-                                </div>
                             </div>
                         </button>
-                        <button mat-menu-item class="mt-28">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <img src="/assets/images/svg/settings-circle.svg" class="v-super">
+                        <div id="setting-menu">
+                            <button mat-menu-item class="mt-28">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="/assets/images/svg/settings-circle.svg" class="v-super">
+                                    </div>
+                                    <div class="col-md-10 pl-0">
+                                        <p class="m-0 roboto">Organisation profile</p>
+                                        <p class="text-regular ws-normal">Add key details about your organisation
+                                            that
+                                            reflects
+                                            across the
+                                            system</p>
+                                    </div>
                                 </div>
-                                <div class="col-md-10 pl-0">
-                                    <p class="m-0 roboto">Organisation profile</p>
-                                    <p class="text-regular pt-4 ws-normal">Add key details about your organisation that
-                                        reflects
-                                        across the
-                                        system</p>
+                            </button>
+                            <button mat-menu-item>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="/assets/images/svg/settings-circle.svg" class="v-super">
+                                    </div>
+                                    <div class="col-md-10 pl-0">
+                                        <p class="m-0 roboto">CRM</p>
+                                        <p class="text-regular ws-normal">Manage settings related to leads, tasks,
+                                            email, calendars,
+                                            notifications, reminders etc.</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </button>
-                        <button mat-menu-item>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <img src="/assets/images/svg/settings-circle.svg" class="v-super">
+                            </button>
+                            <button [routerLink]="['/admin/setting/plan']" mat-menu-item>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="/assets/images/svg/settings-circle.svg" class="v-super">
+                                    </div>
+                                    <div class="col-md-10 pl-0">
+                                        <p class="m-0 roboto">Plan</p>
+                                        <p class="text-regular ws-normal">Manage settings related to key financial
+                                            planning assumptions,
+                                            asset allocation etc.</p>
+                                    </div>
                                 </div>
-                                <div class="col-md-10 pl-0">
-                                    <p class="m-0 roboto">CRM</p>
-                                    <p class="text-regular pt-4 ws-normal">Manage settings related to leads, tasks,
-                                        email, calendars,
-                                        notifications, reminders etc.</p>
+                            </button>
+                            <button [routerLink]="['/admin/setting/users&roles']" mat-menu-item>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="/assets/images/svg/settings-circle.svg" class="v-super">
+                                    </div>
+                                    <div class="col-md-10 pl-0">
+                                        <p class="m-0 roboto">Users & roles</p>
+                                        <p class="text-regular ws-normal">Manage adding and updating of your team,
+                                            sub
+                                            brokers. Define
+                                            roles and assign it to your team and sub brokers.</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </button>
-                        <button [routerLink]="['/admin/setting/plan']" mat-menu-item>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <img src="/assets/images/svg/settings-circle.svg" class="v-super">
+                            </button>
+                            <button [routerLink]="['/admin/setting/backoffice']" mat-menu-item>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="/assets/images/svg/settings-circle.svg" class="v-super">
+                                    </div>
+                                    <div class="col-md-10 pl-0">
+                                        <p class="m-0 roboto">Back office</p>
+                                        <p class="text-regular ws-normal">Add your ARN/RIA details, Manage RTA
+                                            credentials, SOA settings
+                                            etc.</p>
+                                    </div>
                                 </div>
-                                <div class="col-md-10 pl-0">
-                                    <p class="m-0 roboto">Plan</p>
-                                    <p class="text-regular pt-4 ws-normal">Manage settings related to key financial
-                                        planning assumptions,
-                                        asset allocation etc.</p>
+                            </button>
+                            <button mat-menu-item class="mb-28">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="/assets/images/svg/settings-circle.svg" class="v-super">
+                                    </div>
+                                    <div class="col-md-10 pl-0">
+                                        <p class="m-0 roboto">Backup</p>
+                                        <p class="text-regular ws-normal">Securely backup your data in excel.</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </button>
-                        <button [routerLink]="['/admin/setting/users&roles']" mat-menu-item>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <img src="/assets/images/svg/settings-circle.svg" class="v-super">
-                                </div>
-                                <div class="col-md-10 pl-0">
-                                    <p class="m-0 roboto">Users & roles</p>
-                                    <p class="text-regular pt-4 ws-normal">Manage adding and updating of your team, sub
-                                        brokers. Define
-                                        roles and assign it to your team and sub brokers.</p>
-                                </div>
-                            </div>
-                        </button>
-                        <button [routerLink]="['/admin/setting/backoffice']" mat-menu-item>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <img src="/assets/images/svg/settings-circle.svg" class="v-super">
-                                </div>
-                                <div class="col-md-10 pl-0">
-                                    <p class="m-0 roboto">Back office</p>
-                                    <p class="text-regular pt-4 ws-normal">Add your ARN/RIA details, Manage RTA
-                                        credentials, SOA settings
-                                        etc.</p>
-                                </div>
-                            </div>
-                        </button>
-                        <button mat-menu-item class="mb-28">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <img src="/assets/images/svg/settings-circle.svg" class="v-super">
-                                </div>
-                                <div class="col-md-10 pl-0">
-                                    <p class="m-0 roboto">Backup</p>
-                                    <p class="text-regular pt-4 ws-normal">Securely backup your data in excel.</p>
-                                </div>
-                            </div>
-                        </button>
+                            </button>
 
-
+                        </div>
                         <div class="bottom-fixed wrapper-12 w-29">
                             <div class="row">
                                 <div class="col-md-4">

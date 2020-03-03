@@ -35,9 +35,9 @@ export class AddAssetStocksComponent implements OnInit {
     }
     this.assetForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
-      currentMarketValue: [data.stocks[0].currentMarketValue, [Validators.required]],
-      valueAsOn: [new Date(data.stocks[0].valueAsOn), [Validators.required]],
-      amtInvested: [data.stocks[0].amountInvested, [Validators.required]],
+      currentMarketValue: [!data.stocks?'':data.stocks[0].currentMarketValue, [Validators.required]],
+      valueAsOn: [!data.stocks?'':new Date(data.stocks[0].valueAsOn), [Validators.required]],
+      amtInvested: [!data.stocks?'':data.stocks[0].amountInvested, [Validators.required]],
       portfolioName: [data.portfolioName, [Validators.required]]
     })
     this.familyMemberId = data.familyMemberId;
@@ -57,23 +57,18 @@ export class AddAssetStocksComponent implements OnInit {
     e.preventDefault();
   }
   submitStockData() {
-    switch (true) {
+    
       // case (this.assetForm.get('ownerName').invalid):
       //   this.assetForm.get('ownerName').markAsTouched();
       //   break;
-      case (this.assetForm.get('currentMarketValue').invalid):
+      if(this.assetForm.invalid){
+        this.assetForm.get('ownerName').markAsTouched();
         this.assetForm.get('currentMarketValue').markAsTouched();
-        break;
-      case (this.assetForm.get('valueAsOn').invalid):
         this.assetForm.get('valueAsOn').markAsTouched();
-        break;
-      case (this.assetForm.get('amtInvested').invalid):
         this.assetForm.get('amtInvested').markAsTouched();
-        break;
-      case (this.assetForm.get('portfolioName').invalid):
         this.assetForm.get('portfolioName').markAsTouched();
-        break;
-      default:
+      }
+      else{
         if (this.editApiData) {
           let obj =
           {
