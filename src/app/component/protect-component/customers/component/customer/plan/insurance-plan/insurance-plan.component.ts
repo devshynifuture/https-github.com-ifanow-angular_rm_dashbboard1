@@ -15,9 +15,9 @@ import { AddInsuranceUpperComponent } from './add-insurance-upper/add-insurance-
   styleUrls: ['./insurance-plan.component.scss']
 })
 export class InsurancePlanComponent implements OnInit {
-  displayedColumns = ['position', 'name', 'weight', 'symbol', 'icons'];
+  displayedColumns = ['pname', 'sum2', 'premium2', 'status', 'empty'];
   dataSource = ELEMENT_DATA;
-  displayedColumns1 = ['name', 'sum', 'annual', 'ret', 'advice'];
+  displayedColumns1 = ['name', 'sum', 'premium', 'returns', 'advice'];
   dataSource1 = ELEMENT_DATA1;
   displayedColumns2 = ['name', 'annual', 'amt', 'icons'];
   dataSource2 = ELEMENT_DATA2;
@@ -171,13 +171,13 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export interface PeriodicElement1 {
   name: string;
   sum: string;
-  annual: string;
-  ret: string;
+  premium: string;
+  returns: string;
   advice: string;
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
-  { name: "LIC Jeevan Saral", sum: '20,00,000', annual: "27,000", ret: '4.78%', advice: 'Stop paying premiums' },
+  { name: "LIC Jeevan Saral", sum: '20,00,000', premium: "27,000", returns: '4.78%', advice: 'Stop paying premiums' },
 ];
 
 export interface PeriodicElement2 {

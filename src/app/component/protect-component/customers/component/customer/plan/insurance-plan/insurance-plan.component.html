@@ -8,7 +8,7 @@
                 <div class="col-md-6 text-right p-0">
                     <!-- right side  -->
                     <button (click)="openUpperInsurance('open70')" class="btn-primary insuranceAddBtn br-2" mat-stroked-button>
-            <i class="material-icons text-white"> add</i>ADD NEW</button>
+                        <i class="material-icons text-white"> add</i>ADD NEW</button>
                 </div>
                 <div class="col-md-1 p-0 d-flex align-items-center  ">
                     <i class="material-icons  text-black  c-p"> more_vert </i>
@@ -61,7 +61,8 @@
                                 <img src="/assets/images/svg/life-insurance.svg">
                             </div>
                             <div class="col-md-9 pl-10 pr-0">
-                                <p class="m-0 text-black l-18 roboto">Rahul Jain, Shilpa Jain, Manu Jain, Aryan Ja...</p>
+                                <p class="m-0 text-black l-18 roboto">Rahul Jain, Shilpa Jain, Manu Jain, Aryan Ja...
+                                </p>
                                 <p class="m-0 text-black roboto pt-8 pb-8"><span class="f-500">Advice: </span> 1,80,00,000
                                 </p>
                             </div>
@@ -126,12 +127,12 @@
         <!-- Life insurance - Rahul Jain -->
 
         <div class="col-width-79 pb-44">
-            <div class="row pb-12 pt-32 bb-grey">
+            <div class="row pb-12 pt-28 bb-grey">
                 <div class="col-md-10 p-0">
                     <h3 class="m-0">Life insurance - Rahul Jain</h3>
                 </div>
-                <div class="col-md-2 right text-right">
-                    <i class="material-icons text-black c-p"> close </i>
+                <div class="col-md-2 pr-0 right text-right">
+                    <img src="/assets/images/svg/insurance-delect-icon.svg">
                 </div>
             </div>
 
@@ -148,7 +149,9 @@
                         </div>
                         <div class="col-md-6">
                             <p class="f-12 m-0">STATUS</p>
-                            <mat-progress-bar mode="determinate" value="32" class="h-30" placeholder="32%">32%</mat-progress-bar>
+                            <mat-progress-bar mode="determinate" value="32" class="h-30 bg-primary " placeholder="32%">
+                                32%
+                            </mat-progress-bar>
                         </div>
                     </div>
 
@@ -165,43 +168,92 @@
                     </div>
 
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <mat-table #table [dataSource]="dataSource">
+                    <div class="row pt-32">
+                        <div class="col-md-12 p-0 insuranceTable">
 
-                                <!--- Note that these columns can be defined in any order.
-                                      The actual rendered columns are set as a property on the row definition" -->
-
-                                <!-- Position Column -->
-                                <ng-container matColumnDef="position">
-                                    <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
-                                    <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+                            <h5 class="roboto f-500">Suggested policies</h5>
+                            <table mat-table [dataSource]="dataSource1" class="mt-8" id="table-low">
+                                <ng-container matColumnDef="name">
+                                    <th mat-header-cell class="w-25" *matHeaderCellDef> Policy name </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                                 </ng-container>
 
                                 <!-- Name Column -->
-                                <ng-container matColumnDef="name">
-                                    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-                                    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+                                <ng-container matColumnDef="sum">
+                                    <th mat-header-cell class="textRight" *matHeaderCellDef> Sum assured </th>
+                                    <td mat-cell *matCellDef="let element" class="text-right  amt"> {{element.sum}}
+                                    </td>
                                 </ng-container>
 
                                 <!-- Weight Column -->
-                                <ng-container matColumnDef="weight">
-                                    <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>
-                                    <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
+                                <ng-container matColumnDef="premium">
+                                    <th mat-header-cell class="textRight" *matHeaderCellDef> Annual premium </th>
+                                    <td mat-cell class="text-right amt" *matCellDef="let element"> {{element.premium}}
+                                    </td>
                                 </ng-container>
 
-                                <!-- Expanded Content Column - The detail row is made up of this one column -->
-                                <ng-container matColumnDef="expandedDetail">
-                                    <mat-cell *matCellDef="let detail">
-                                        The symbol for {{detail.element.name}} is {{detail.element.symbol}}
-                                    </mat-cell>
+                                <!-- Symbol Column -->
+                                <ng-container matColumnDef="returns">
+                                    <th mat-header-cell class="textRight" *matHeaderCellDef> Returns </th>
+                                    <td mat-cell class="text-right amt" *matCellDef="let element"> {{element.returns}}
+                                    </td>
                                 </ng-container>
 
-                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                                <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="element-row" [class.expanded]="expandedElement == row" (click)="expandedElement = row"></mat-row>
-                                <mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isExpansionDetailRow" [@detailExpand]="row.element == expandedElement ? 'expanded' : 'collapsed'" style="overflow: hidden">
-                                </mat-row>
-                            </mat-table>
+                                <ng-container matColumnDef="advice">
+                                    <th mat-header-cell *matHeaderCellDef> Advice </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.advice}} </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                            </table>
+
+                        </div>
+                    </div>
+
+
+                    <div class="row pt-32">
+                        <div class="col-md-12 p-0 insuranceTable">
+
+                            <h5 class="roboto f-500">Recommendations on current policies</h5>
+
+                            <table mat-table [dataSource]="dataSource1" class="mt-8" id="table-low">
+                                <ng-container matColumnDef="name">
+                                    <th mat-header-cell class="w-25" *matHeaderCellDef> Policy name </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                                </ng-container>
+
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="sum">
+                                    <th mat-header-cell class="textRight" *matHeaderCellDef> Sum assured </th>
+                                    <td mat-cell *matCellDef="let element" class="text-right  amt"> {{element.sum}}
+                                    </td>
+                                </ng-container>
+
+                                <!-- Weight Column -->
+                                <ng-container matColumnDef="premium">
+                                    <th mat-header-cell class="textRight" *matHeaderCellDef> Annual premium </th>
+                                    <td mat-cell class="text-right amt" *matCellDef="let element"> {{element.premium}}
+                                    </td>
+                                </ng-container>
+
+                                <!-- Symbol Column -->
+                                <ng-container matColumnDef="returns">
+                                    <th mat-header-cell class="textRight" *matHeaderCellDef> Returns </th>
+                                    <td mat-cell class="text-right amt" *matCellDef="let element"> {{element.returns}}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="advice">
+                                    <th mat-header-cell *matHeaderCellDef> Advice </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.advice}} </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                            </table>
+
+
                         </div>
                     </div>
 
@@ -211,13 +263,29 @@
 
                 </div>
 
-                <div class="col-width-31 text-right p-0">
+                <div class="col-width-31 text-right">
                     <img class="mt-20" src="/assets/images/svg/insurance-big-icon.svg">
+
+
+
+                    <div class="d-flex mt-20 align-items-center justify-content-between">
+                        <button mat-stroked-button class="btn140 text-primary br-2">
+                            <img src="/assets/images/svg/insuranceBtn-icon.svg"> Needs analysis
+                        </button>
+
+                        <button mat-stroked-button class="btn140 text-primary br-2">
+                            <img src="/assets/images/svg/insuranceBtn-icon.svg"> Suggest policy
+                        </button>
+                    </div>
+
+                    <div class="d-flex mt-20 align-items-center">
+                        <button mat-stroked-button class="w-100 p-0 text-primary br-2">
+                            <img src="/assets/images/svg/insuranceBtn-icon.svg"> Recommendations on current policies
+                        </button>
+                    </div>
+
+
                 </div>
-
-
-
-
             </div>
         </div>
 
