@@ -37,6 +37,7 @@ export class AddPoMisComponent implements OnInit {
   pomisData: any;
   flag: any;
   editApi: any;
+  adviceShowHeaderAndFooter: boolean = true;
 
   constructor(public utils: UtilService, private fb: FormBuilder, public subInjectService: SubscriptionInject,
     public custumService: CustomerService, public eventService: EventService) {
@@ -54,6 +55,11 @@ export class AddPoMisComponent implements OnInit {
   @Input() popupHeaderText: string = 'Add Post office monthly income scheme (PO MIS)';
 
   ngOnInit() {
+    if (this.data && this.data.flag) {
+      this.adviceShowHeaderAndFooter = false;
+    } else {
+      this.adviceShowHeaderAndFooter = true;
+    }
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.show = false;

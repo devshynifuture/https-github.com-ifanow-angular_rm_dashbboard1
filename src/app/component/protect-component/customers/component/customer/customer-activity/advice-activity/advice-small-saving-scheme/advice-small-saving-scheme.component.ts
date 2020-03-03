@@ -1,3 +1,4 @@
+import { SuggestAdviceComponent } from './../suggest-advice/suggest-advice.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AddPpfComponent } from '../../../accounts/assets/smallSavingScheme/common-component/add-ppf/add-ppf.component';
 import { UtilService } from 'src/app/services/util.service';
@@ -152,23 +153,28 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
   }
   openAddEdit(value, data) {
     let Component = (value == "advicePPF") ? AddPpfComponent : (value == "adviceNSC") ? AddNscComponent : (value == "adviceSSY") ? AddSsyComponent : (value == "adviceKVP") ? AddKvpComponent : (value == "adviceSCSS") ? AddScssComponent : (value == "advicePoSaving") ? AddPoSavingComponent : (value == 'advicePORD') ? AddPoRdComponent : (value == "advicePOTD") ? AddPoTdComponent : AddPoMisComponent;
+
     const fragmentData = {
       flag: value,
-      data: data == null ? value : data,
+      data,
       id: 1,
       state: 'open',
-      componentName: Component
+      componentName: SuggestAdviceComponent,
+      childComponent: Component,
+      childData: { data: null, flag: value },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
+
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
           }
+          this.getAdviceByAsset();
           rightSideDataSub.unsubscribe();
         }
+
       }
     );
   }

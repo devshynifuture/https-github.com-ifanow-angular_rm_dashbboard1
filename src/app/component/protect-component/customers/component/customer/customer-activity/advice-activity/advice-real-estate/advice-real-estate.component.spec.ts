@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdviceRealAssetComponent } from './advice-real-asset.component';
+import { AdviceRealAssetComponent } from './advice-real-estate.component';
 
 describe('AdviceRealAssetComponent', () => {
   let component: AdviceRealAssetComponent;
@@ -8,9 +8,9 @@ describe('AdviceRealAssetComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdviceRealAssetComponent ]
+      declarations: [AdviceRealAssetComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

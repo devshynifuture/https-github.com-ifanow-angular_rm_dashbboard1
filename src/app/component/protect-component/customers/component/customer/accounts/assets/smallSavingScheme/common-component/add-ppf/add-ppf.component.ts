@@ -44,6 +44,7 @@ export class AddPpfComponent implements OnInit {
   nominees: any[];
   commencementDate: any;
   flag: any;
+  adviceShowHeaderAndFooter: boolean = true;
   dataSource: { "advisorId": any; "clientId": number; "ownerName": any; "familyMemberId": any; "accountBalance": any; "balanceAsOn": any; "commencementDate": any; "description": any; "bankName": any; "linkedBankAccount": any; "nominees": any[]; "frequency": any; "futureApproxcontribution": any; "publicprovidendfundtransactionlist": any[]; };
   constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
@@ -59,6 +60,11 @@ export class AddPpfComponent implements OnInit {
   @Input() popupHeaderText: string = 'Add Public provident fund (PPF)';
 
   ngOnInit() {
+    if (this.data && this.data.flag) {
+      this.adviceShowHeaderAndFooter = false;
+    } else {
+      this.adviceShowHeaderAndFooter = true;
+    }
     this.isOptionalField = true;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
