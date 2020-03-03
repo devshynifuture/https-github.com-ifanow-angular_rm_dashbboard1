@@ -1,5 +1,5 @@
 <div class="p-20" [formGroup]="healthInsurance">
-    <h5 class="m-0 text-black f-500">Advice on health insurance policy</h5>
+    <h5 class="m-0 text-black f-500">Advice on {{showInsurance.smallHeading}} policy</h5>
     <div class="row pt-20">
         <div class="col-md-4 p-0 br-1">
             <p class="m-0 pb-8">Select primary advice<img src="/assets/images/svg/info.svg"></p>
@@ -85,6 +85,6 @@
 <div class="row pt-10">
     <div class="col-md-12 text-right">
         <button mat-button class="text-primary"(click)="saveAdviceOnHealth()">SAVE</button>
-        <button mat-button>cancel</button>
+        <button mat-button (click)="close()">cancel</button>
     </div>
 </div>

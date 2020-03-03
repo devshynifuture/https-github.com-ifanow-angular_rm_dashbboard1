@@ -25,7 +25,10 @@ export class AddInsuranceUpperComponent implements OnInit {
 
     this.eventService.changeUpperSliderState(fragmentData);
   }
-  openHelthInsurance(data){
+  openHelthInsurance(obj){
+    let data = {
+      value : obj,
+    }
     const fragmentData = {
       flag: 'opencurrentpolicies',
       data,
