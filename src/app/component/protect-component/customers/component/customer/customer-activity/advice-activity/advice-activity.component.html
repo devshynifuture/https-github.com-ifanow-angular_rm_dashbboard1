@@ -46,11 +46,11 @@
                         </div>
                     </div>
                 </li> -->
-                <li [routerLink]="['/customer/detail/activity/advice/stocks']" routerLinkActive="activeColor"
-                    class="c-p">
-                    Stock
+                <li *ngFor="let singleAsset of leftSidebarList" routerLink={{singleAsset.urlPath}}
+                    routerLinkActive="activeColor" class="c-p">
+                    {{singleAsset.name}}
                 </li>
-                <li [routerLink]="['/customer/detail/activity/advice/fixedIncome']" routerLinkActive="activeColor"
+                <!-- <li [routerLink]="['/customer/detail/activity/advice/fixedIncome']" routerLinkActive="activeColor"
                     class="c-p">
                     Fixed Income
                 </li>
@@ -85,7 +85,7 @@
                 <li [routerLink]="['/customer/detail/activity/advice/generalInsurance']" routerLinkActive="activeColor"
                     class="c-p f-500">
                     GENERAL INSURANCE
-                </li>
+                </li> -->
             </ul>
 
         </div>
