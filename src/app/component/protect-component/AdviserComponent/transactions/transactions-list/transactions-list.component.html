@@ -10,7 +10,7 @@
                         <mat-chip class="bg-white b-a c-p f-400 p-12">
                             <input (click)="picker2.open()" (dateInput)="startAndEndDateEvent($event)"
                                 [satDatepicker]="picker2" class="pL-20" matInput placeholder="Choose a date" readonly>
-                            <sat-datepicker #picker2 [closeAfterSelection]="false" - [selectFirstDateOnClose]="true"
+                            <sat-datepicker #picker2 [closeAfterSelection]="false" [selectFirstDateOnClose]="true"
                                 [rangeMode]="true">
                             </sat-datepicker>
                             <sat-datepicker-toggle [for]="picker2" matSuffix></sat-datepicker-toggle>

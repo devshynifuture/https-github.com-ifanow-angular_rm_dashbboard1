@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ConfirmationTransactionComponent } from '../confirmation-transaction/confirmation-transaction.component';
@@ -75,6 +75,8 @@ export class SipTransactionComponent implements OnInit {
   umrn: any;
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private processTransaction: ProcessTransactionService, private fb: FormBuilder, private eventService: EventService) { }
+  @Output() changedValue = new EventEmitter();
+
   @Input()
   set data(data) {
     this.inputData = data;
@@ -83,7 +85,7 @@ export class SipTransactionComponent implements OnInit {
     console.log('This is Input data of FixedDepositComponent ', data);
 
     if (this.isViewInitCalled) {
-      this.getdataForm('',false);
+      this.getdataForm('', false);
     }
   }
 
@@ -92,7 +94,7 @@ export class SipTransactionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getdataForm(this.inputData,false)
+    this.getdataForm(this.inputData, false)
     this.childTransactions = []
     this.transactionSummary = {}
     Object.assign(this.transactionSummary, { clientId: this.inputData.clientId })
@@ -102,13 +104,17 @@ export class SipTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { isMultiTransact: false });//when multi transact then disabled edit button in transaction summary
     Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
   }
+
+  backToTransact() {
+    this.changedValue.emit('step-2');
+  }
   enteredAmount(value) {
     Object.assign(this.transactionSummary, { enteredAmount: value });
   }
   selectExistingOrNew(value) {
     if (value == "2") {
       Object.assign(this.transactionSummary, { folioNumber: '' });
-    }else{
+    } else {
       this.getAmcWiseFolio()
     }
     this.ExistingOrNew = value
@@ -116,11 +122,11 @@ export class SipTransactionComponent implements OnInit {
   selectSchemeOption(value) {
     console.log('value selction scheme', value)
     this.sipTransaction.controls.schemeSip.reset();
-    this.folioList=[];
-    this.navOfSelectedScheme=0;
-    this.schemeDetails.minimumPurchaseAmount=0
+    this.folioList = [];
+    this.navOfSelectedScheme = 0;
+    this.schemeDetails.minimumPurchaseAmount = 0
     Object.assign(this.transactionSummary, { schemeName: '' });//to disable scheme name from transaction summary
-      Object.assign(this.transactionSummary, { folioNumber: '' });//to disable folio number from transaction summary
+    Object.assign(this.transactionSummary, { folioNumber: '' });//to disable folio number from transaction summary
     this.selectScheme = value
   }
   getSchemeList(value) {
@@ -220,7 +226,7 @@ export class SipTransactionComponent implements OnInit {
     } if (data.length == 1) {
       this.reInvestmentOpt = []
     }
-    if(this.sipTransaction.controls.folioSelection.value == '1'){
+    if (this.sipTransaction.controls.folioSelection.value == '1') {
       this.getAmcWiseFolio()
     }
     if (this.getDataSummary.defaultClient.aggregatorType == 2) {
@@ -233,7 +239,7 @@ export class SipTransactionComponent implements OnInit {
     let obj1 = {
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId
     }
-    this.onlineTransact.getNSEAchmandate(obj1).subscribe(
+    this.onlineTransact.getMandateList(obj1).subscribe(
       data => this.getNSEAchmandateRes(data), (error) => {
         this.eventService.showErrorMessage(error);
       }
@@ -241,7 +247,7 @@ export class SipTransactionComponent implements OnInit {
   }
   getNSEAchmandateRes(data) {
     this.showSpinnerMandate = false
-    this.umrn=data[0].umrnNo;
+    this.umrn = data[0].umrnNo;
     console.log('getNSEAchmandateRes', data)
     if (data.length > 1) {
       Object.assign(this.transactionSummary, { showUmrnEdit: true });
@@ -325,7 +331,7 @@ export class SipTransactionComponent implements OnInit {
     this.showSpinnerFolio = false
     console.log('getFoliosAmcWiseRes', data)
     this.folioList = data
-    if(this.sipTransaction.get('investmentAccountSelection').valid){
+    if (this.sipTransaction.get('investmentAccountSelection').valid) {
       Object.assign(this.transactionSummary, { folioNumber: this.folioList[0].folioNumber });
     }
   }
@@ -347,7 +353,7 @@ export class SipTransactionComponent implements OnInit {
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
-  getdataForm(data,isEdit) {
+  getdataForm(data, isEdit) {
     if (isEdit == true) {
       this.isEdit = isEdit
       this.editedId = data.id;
@@ -372,7 +378,7 @@ export class SipTransactionComponent implements OnInit {
       modeOfPaymentSelection: [(!data.modeOfPaymentSelection) ? '1' : data.modeOfPaymentSelection],
       folioSelection: [(!data.folioSelection) ? '2' : data.folioSelection],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
-      date: [(!data) ? '' :data.date, [Validators.required]],
+      date: [(!data) ? '' : data.date, [Validators.required]],
       tenure: [(!data) ? '' : data.tenure, [Validators.required]],
       installment: [(!data) ? '' : data.noOfInstallments, [Validators.required]],
       schemeSip: [(!data) ? '' : data.schemeName, [Validators.required]],
@@ -380,10 +386,10 @@ export class SipTransactionComponent implements OnInit {
     });
     this.ownerData = this.sipTransaction.controls;
     if (data.folioNo) {
-      this.scheme.amcId=data.scheme.amcId;
-      this.schemeDetails.isin=data.isIn;
+      this.scheme.amcId = data.scheme.amcId;
+      this.schemeDetails.isin = data.isIn;
       this.selectedScheme(data.scheme);
-       //this.getFrequency()
+      //this.getFrequency()
       // this.getAmcWiseFolio()
     }
   }
@@ -397,8 +403,8 @@ export class SipTransactionComponent implements OnInit {
         this.sipTransaction.get('reinvest').markAsTouched();
       }
     } else if (this.sipTransaction.get('folioSelection').value == 1 && this.sipTransaction.get('investmentAccountSelection').invalid) {
-        this.sipTransaction.get('investmentAccountSelection').markAsTouched();
-        return;
+      this.sipTransaction.get('investmentAccountSelection').markAsTouched();
+      return;
     } else if (this.sipTransaction.get('employeeContry').invalid) {
       this.sipTransaction.get('employeeContry').markAsTouched();
       return;
@@ -414,12 +420,12 @@ export class SipTransactionComponent implements OnInit {
     } else {
       let obj = {
         productDbId: this.schemeDetails.id,
-        clientName:this.selectedFamilyMember,
-        holdingNature:this.getDataSummary.defaultClient.holdingType,
+        clientName: this.selectedFamilyMember,
+        holdingNature: this.getDataSummary.defaultClient.holdingType,
         mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
         productCode: this.schemeDetails.schemeCode,
         isin: this.schemeDetails.isin,
-        umrn:this.umrn,
+        umrn: this.umrn,
         folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
         tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
         tpSubBrokerCredentialId: this.getDataSummary.euin.id,
@@ -487,7 +493,7 @@ export class SipTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { isMultiTransact: true });
     if (this.isEdit != true) {
       this.id++
-    } 
+    }
     if (this.reInvestmentOpt.length > 1) {
       if (this.sipTransaction.get('reinvest').invalid) {
         this.sipTransaction.get('reinvest').markAsTouched();
@@ -534,9 +540,9 @@ export class SipTransactionComponent implements OnInit {
           schemeSelection: this.sipTransaction.get('schemeSelection').value,
           folioSelection: this.sipTransaction.get('folioSelection').value,
           modeOfPaymentSelection: this.sipTransaction.get('modeOfPaymentSelection').value,
-          tenure : this.sipTransaction.controls.tenure.value,
-          isIn:this.schemeDetails.isin,
-          date:this.sipTransaction.controls.date.value
+          tenure: this.sipTransaction.controls.tenure.value,
+          isIn: this.schemeDetails.isin,
+          date: this.sipTransaction.controls.date.value
         }
         const tenure = this.sipTransaction.controls.tenure.value;
         const installment = this.sipTransaction.controls.installment.value;
@@ -545,9 +551,9 @@ export class SipTransactionComponent implements OnInit {
           this.childTransactions.forEach(element => {
             if (element.id == this.editedId) {
               element.id = this.editedId;
-              element.date=this.sipTransaction.controls.date.value,
-              element.mutualFundSchemeMasterId= this.scheme.mutualFundSchemeMasterId,
-              element.amc=(this.scheme) ? this.scheme.amcId : null;
+              element.date = this.sipTransaction.controls.date.value,
+                element.mutualFundSchemeMasterId = this.scheme.mutualFundSchemeMasterId,
+                element.amc = (this.scheme) ? this.scheme.amcId : null;
               element.folioNo = this.sipTransaction.get('investmentAccountSelection').value;
               element.orderVal = this.sipTransaction.get('employeeContry').value;
               element.schemeName = this.sipTransaction.get('schemeSip').value;
@@ -557,7 +563,7 @@ export class SipTransactionComponent implements OnInit {
             }
             console.log(element)
           });
-          this.isEdit=false;
+          this.isEdit = false;
         } else {
           this.childTransactions.push(obj)
         }

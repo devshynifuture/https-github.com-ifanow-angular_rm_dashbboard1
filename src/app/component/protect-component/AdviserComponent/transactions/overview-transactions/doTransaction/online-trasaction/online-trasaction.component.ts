@@ -63,6 +63,8 @@ export class OnlineTrasactionComponent implements OnInit {
   familyMemberData: any;
   noSubBroker = false;
   noMapping = false;
+  transactionType: any;
+  transactionData: any;
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private eventService: EventService, private fb: FormBuilder, private processTransaction: ProcessTransactionService, private router: Router) {
   }
@@ -137,7 +139,7 @@ export class OnlineTrasactionComponent implements OnInit {
         if (this.noMapping == false && this.noSubBroker == false) {
           this.formStep = 'step-2';
         }
-      } else if (this.transactionAddForm.get('transactionType').valid && this.formStep == 'step-2') {
+      } else if (this.transactionAddForm.get('transactionType').valid && this.formStep == 'step-2' && this.transactionType!=undefined) {
         let data = {
           selectedFamilyMember: this.ownerData.ownerName.value,
           transactionType: this.transactionAddForm.controls.transactionType.value,
@@ -257,26 +259,28 @@ export class OnlineTrasactionComponent implements OnInit {
     return this.transactionAddForm.controls;
   }
   openPurchaseTransaction(value, data) {
-    const fragmentData = {
-      flag: 'addNsc',
-      data,
-      id: 1,
-      state: 'open65',
-      componentName: (value == 'PURCHASE') ? PurchaseTrasactionComponent : (value == 'REDEMPTION') ? RedemptionTransactionComponent : (value == 'SIP') ? SipTransactionComponent : (value == 'SWP') ? SwpTransactionComponent : (value == 'STP') ? StpTransactionComponent : (value == 'SWITCH') ? SwitchTransactionComponent : ''
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getNscSchemedata();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-          }
-          rightSideDataSub.unsubscribe();
-        }
+    this.transactionType=value;
+    this.transactionData=data;
+    // const fragmentData = {
+    //   flag: 'addNsc',
+    //   data,
+    //   id: 1,
+    //   state: 'open65',
+    //   componentName: (value == 'PURCHASE') ? PurchaseTrasactionComponent : (value == 'REDEMPTION') ? RedemptionTransactionComponent : (value == 'SIP') ? SipTransactionComponent : (value == 'SWP') ? SwpTransactionComponent : (value == 'STP') ? StpTransactionComponent : (value == 'SWITCH') ? SwitchTransactionComponent : ''
+    // };
+    // const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+    //   sideBarData => {
+    //     console.log('this is sidebardata in subs subs : ', sideBarData);
+    //     if (UtilService.isDialogClose(sideBarData)) {
+    //       if (UtilService.isRefreshRequired(sideBarData)) {
+    //         // this.getNscSchemedata();
+    //         console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+    //       }
+    //       rightSideDataSub.unsubscribe();
+    //     }
 
-      }
-    );
+    //   }
+    // );
   }
   selectTransactionType(value: string) {
     this.selectedDiv = value;
@@ -295,6 +299,10 @@ export class OnlineTrasactionComponent implements OnInit {
   }
   baackToSelectTransaction() {
     this.formStep = 'step-2';
+  }
+  getResponse(data){
+    this.formStep=data;
+    this.transactionType=undefined;
   }
   saveAndNext() {
     console.log(this.formStep);
