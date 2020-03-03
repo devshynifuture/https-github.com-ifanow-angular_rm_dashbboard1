@@ -261,24 +261,15 @@
         <ng-container matColumnDef="icon">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
             <td mat-cell *matCellDef="let element">
-                <<<<<<< HEAD <i class="material-icons c-p" [matMenuTriggerFor]="menu">
-                    more_vert
+                <div class="bar">
+                    <i *ngIf="isLoading==false" class="material-icons c-p" [matMenuTriggerFor]="menu">
+                        more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="openAddEditAdvice('adviceOTHERS',element)">Edit</button>
+                        <button mat-menu-item (click)="openAddEdit('adviceOTHERS',element)">Edit</button>
                         <button mat-menu-item>Delete</button>
                     </mat-menu>
-                    =======
-                    <div class="bar">
-                        <i *ngIf="isLoading==false" class="material-icons c-p" [matMenuTriggerFor]="menu">
-                            more_vert
-                        </i>
-                        <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="openAddEdit('adviceOTHERS',element)">Edit</button>
-                            <button mat-menu-item>Delete</button>
-                        </mat-menu>
-                    </div>
-                    >>>>>>> 94e4f64ffabce570fd728f8fca5e9744e318325d
+                </div>
             </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns4"></tr>
