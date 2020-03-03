@@ -70,6 +70,7 @@ export class RecuringDepositComponent implements OnInit {
   get data() {
     return this.inputData;
   }
+  @Input() popupHeaderText: string = 'Add Recurring deposits';
 
   ngOnInit() {
 
