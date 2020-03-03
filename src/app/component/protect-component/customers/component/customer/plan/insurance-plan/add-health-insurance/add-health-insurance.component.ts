@@ -76,15 +76,15 @@ export class AddHealthInsuranceComponent implements OnInit {
   },]
 
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private custumService: CustomerService, private utils: UtilService, private eventService: EventService) { }
-  openDialog(data): void {
+  openDialog(value,data): void {
     const dialogRef = this.dialog.open(HelthInsurancePolicyComponent, {
       width: '780px',
       height: '600px',
-      data: { data }
+      data: {value, data }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log('The dialog was closed',result);
     });
   }
   ngOnInit() {
@@ -161,14 +161,22 @@ export interface PeriodicElement2 {
   symbol: string;
   sum: string;
   mname: string;
-  advice: string;
+  advice:any;
 
 }
 
 const ELEMENT_DATA2: PeriodicElement2[] = [
   {
     position: 'Apollo Munich Optima Restore', name: 'Individual', weight: '27,290',
-    symbol: '38 Days', sum: '5,00,000', mname: 'Rahul Jain', advice: 'Port to another policy'
+    symbol: '38 Days', sum: '5,00,000', mname: 'Rahul Jain', advice: true
+  },
+  {
+    position: 'Apollo Munich Optima Restore', name: 'Individual', weight: '27,290',
+    symbol: '38 Days', sum: '5,00,000', mname: 'Rahul Jain', advice: true
+  },
+  {
+    position: 'Apollo Munich Optima Restore', name: 'Individual', weight: '27,290',
+    symbol: '38 Days', sum: '5,00,000', mname: 'Rahul Jain', advice: false
   },
 
 ];

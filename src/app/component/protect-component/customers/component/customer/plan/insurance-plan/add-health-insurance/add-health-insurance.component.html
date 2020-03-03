@@ -88,8 +88,9 @@
                 </ng-container>
                 <ng-container matColumnDef="advice">
                     <th mat-header-cell *matHeaderCellDef> Advice </th>
-                    <td mat-cell *matCellDef="let element" class="c-p" (click)="openDialog(showInsurance)"
-                    >  <img src="/assets/images/svg/plus-rounded.svg">{{element.advice}} </td>
+                    <td mat-cell *matCellDef="let element" class="c-p"> <img *ngIf="element.advice == true"
+                            src="/assets/images/svg/plus-rounded.svg"
+                            (click)="openDialog(element,showInsurance)">{{element.adviceValue}} </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
@@ -107,7 +108,8 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="showHealthInsurance(showInsurance)">Procced</button>
+            <button mat-button class="btn-bottom br-0 text-inherit"
+                (click)="showHealthInsurance(showInsurance)">Procced</button>
         </div>
     </div>
 </div>
