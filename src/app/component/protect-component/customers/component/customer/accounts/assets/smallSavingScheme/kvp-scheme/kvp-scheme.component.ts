@@ -141,7 +141,7 @@ export class KvpSchemeComponent implements OnInit {
   }
 
   openAddKVP(data, flag) {
-    let popupHeaderText = !!data ? 'Edit Kisan Vikas Patra (KVP)' : 'Add Kisan Vikas Patra (KVP)';
+    let popupHeaderText = !!data ? 'Edit Kisan vikas patra (KVP)' : 'Add Kisan vikas patra (KVP)';
     const fragmentData = {
       flag: 'addKVP',
       data,

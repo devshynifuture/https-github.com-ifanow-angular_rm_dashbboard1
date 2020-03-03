@@ -44,6 +44,9 @@ export class AddGratuityComponent implements OnInit {
   get data() {
     return this.inputData;
   }
+
+  @Input() popupHeaderText: string = 'Add Gratuity';
+
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();

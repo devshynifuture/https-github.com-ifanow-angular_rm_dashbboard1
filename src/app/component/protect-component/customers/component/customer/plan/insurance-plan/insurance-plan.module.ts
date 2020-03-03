@@ -8,7 +8,7 @@ import { InsurancePlanComponent } from './insurance-plan.component';
 
 
 @NgModule({
-  declarations: [InsurancePlanComponent],
+  declarations: [InsurancePlanComponent,],
   imports: [
     CommonModule,
     InsurancePlanRoutingModule,
