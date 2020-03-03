@@ -145,8 +145,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
     </table>
-    <div *ngIf="bankAccDataSource.tableFlag==false">
-        <h4 class="text-center pt-72">No Data Found</h4>
+    <div *ngIf="bankAccDataSource.tableFlag==false" class="b-a">
+        <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
         <div class="col-md-6 p-0">
@@ -155,7 +155,7 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " [matMenuTriggerFor]="men1"><img
+            <button mat-stroked-button class="btn-primary br-0 pl-8 " [matMenuTriggerFor]="menu1"><img
                     src="/assets/images/svg/plus.svg" class="pr-8">Suggest new cash in
                 hand</button>
             <mat-menu #menu1="matMenu">
@@ -249,8 +249,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
     </table>
-    <div *ngIf="cashInHandDataSource.tableFlag==false">
-        <h4 class="text-center pt-72">No Data Found</h4>
+    <div *ngIf="cashInHandDataSource.tableFlag==false" class="b-a">
+        <h4 class="text-center p-44">No Data Found</h4>
     </div>
 </div>
 <div *ngIf="allAdvice == true">

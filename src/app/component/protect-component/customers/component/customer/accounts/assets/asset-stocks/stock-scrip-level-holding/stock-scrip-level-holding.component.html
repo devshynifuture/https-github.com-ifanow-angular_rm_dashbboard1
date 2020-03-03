@@ -1,7 +1,7 @@
 <div class="popup-header-fix-70">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20">ADD SCHEME LEVEL HOLDINGS</h4>
+            <h4 class="mb-0 wrapper-20">{{editApiData?'Edit':'Add'}} scheme level holdings</h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -16,13 +16,13 @@
     <div [formGroup]="scipLevelHoldingForm" class="row pt-100 pl-28">
         <div class="col-md-3 p-0">
             <h5 class="m-0 pb-8">Owner</h5>
-            <app-owner-column [data]='ownerData' (valueChange)='display($event)'>
+            <app-owner-column [data]='ownerName' (valueChange)='display($event)'>
             </app-owner-column>
         </div>
 
         <div class="col-md-3">
             <h5 class="m-0 pb-8">Portfolio name</h5>
-            <app-portfolio-field [ownerId]="portfolioFieldData" [owner]="scipLevelHoldingForm"></app-portfolio-field>
+            <app-portfolio-field (outputEvent)='getPortfolioData($event)' [ownerId]="portfolioFieldData" [owner]="scipLevelHoldingForm"></app-portfolio-field>
         </div>
     </div>
     <div class="row pl-28">
@@ -61,21 +61,25 @@
                         <input matInput autocomplete="off" #totalUnits type="number" formControlName="holdings"
                             maxlength="20" class="form-control br-0 rupess">
                         <mat-hint align="start" class="m-0 f-11 text-custom pt-4">As in statement</mat-hint>
+                    <mat-error>This field is required</mat-error>
+
                     </mat-form-field>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput autocomplete="off" formControlName="holdingAsOn" [matDatepicker]="picker"
+                        <input (click)="picker.open()" matInput autocomplete="off" formControlName="holdingAsOn" [matDatepicker]="picker"
                             class="form-control br-0">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
+                    <mat-error>This field is required</mat-error>
+
                     </mat-form-field>
                 </div>
             </div>
             <div class="col-md-2 pl-0">
-                <div class="form-group mb-0">
+                <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
                         <input matInput autocomplete="off" #totalNetContribution formControlName="investedAmt"
                             type="number" maxlength="20" class="form-control br-0 rupess">

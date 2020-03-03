@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { OnlineTransactionService } from '../online-transaction.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-mandates-transactions',
@@ -7,14 +10,38 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MandatesTransactionsComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'bank', 'bankac', 'amt', 'type', 'status', 'icons'];
-  dataSource = ELEMENT_DATA;
-  constructor() { }
+  // dataSource = ELEMENT_DATA;
+  advisorId: any;
+  dataSource: any;
+  clientId: any;
+  constructor( private onlineTransact: OnlineTransactionService,private eventService:EventService) { }
 
   isLoading = false;
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    this.getNSEAchmandate()
   }
-
+  getNSEAchmandate() {
+    this.dataSource = [{}, {}, {}];
+    this.isLoading = true;
+    let obj1 = {
+     advisorId:this.advisorId,
+    }
+    this.onlineTransact.getMandateList(obj1).subscribe(
+      data => this.getMandateListRes(data), (error) => {
+        this.isLoading = false;
+        this.dataSource=undefined;
+        this.eventService.showErrorMessage(error);
+      }
+    );
+  }
+  getMandateListRes(data){
+    this.isLoading = false;
+    console.log(data);
+    this.dataSource=data;
+  }
 }
 export interface PeriodicElement {
   name: string;

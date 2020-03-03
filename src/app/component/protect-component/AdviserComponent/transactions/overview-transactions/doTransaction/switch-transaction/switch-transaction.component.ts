@@ -110,7 +110,7 @@ export class SwitchTransactionComponent implements OnInit {
     if (this.selectScheme == 2 && value.length > 2) {
       let obj = {
         searchQuery: value,
-        bseOrderType: 'ORDER',
+        bseOrderType: 'SWITCH',
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
         advisorId: this.advisorId,
         tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
@@ -250,7 +250,7 @@ export class SwitchTransactionComponent implements OnInit {
     if (this.selectScheme == 2 && value.length > 2) {
       let obj = {
         searchQuery: value,
-        bseOrderType: 'ORDER',
+        bseOrderType: 'SWITCH',
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
         advisorId: 414,
         tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,

@@ -47,7 +47,7 @@ export class ScripFieldComponent implements OnInit {
     )
   }
   getScripListRes(data) {
-    console.log(data)
+    console.log(data, "scripList")
     this.scripList = data.scripName;
   }
 }

@@ -43,6 +43,9 @@ export class OwnerColumnComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getdataForm();
     this.getListFamilyMem();
+    if(this.ownerData != undefined){
+      this.owner.get('ownerName').setValue(this.ownerData)
+    }
 
   }
 
@@ -58,27 +61,31 @@ export class OwnerColumnComponent implements OnInit {
     );
   }
 
-  getOwnerName(value) {
-    console.log('selected', value);
-    value.familyList = this.family;
-    this.valueChange.emit(value);
+  getOwnerName() {
+    // console.log('selected', value);
+    // value.familyList = this.family;
+    // this.valueChange.emit(value);
+    let owerJson = this.family.filter(f => f.userName == this.owner.get('ownerName').value);
+    this.valueChange.emit(owerJson[0]);
+
   }
 
   getListOfFamilyByClientRes(data) {
     console.log('family Memebers', data);
-    this.sendData = data;
-    if (data.familyMembersList && data.familyMembersList.length > 0) {
-      data.familyMembersList.forEach((singleData) => {
-        if (this.ownerData.ownerName.value && this.ownerData.ownerName.value.length > 0) {
-          if (singleData.userName == this.ownerData.ownerName.value) {
-            console.log('family Member matched Value singleData : ', singleData);
-            this.getFormControl().ownerName.setValue(singleData.userName);
-          }
-        }
-        this.family.push(singleData);
-      });
-    }
-    this.valueChange1.emit(this.sendData);
+    this.family = data.familyMembersList;
+    // this.sendData = data;
+    // if (data.familyMembersList && data.familyMembersList.length > 0) {
+    //   data.familyMembersList.forEach((singleData) => {
+    //     if (this.ownerData.ownerName.value && this.ownerData.ownerName.value.length > 0) {
+    //       if (singleData.userName == this.ownerData.ownerName.value) {
+    //         console.log('family Member matched Value singleData : ', singleData);
+    //         this.getFormControl().ownerName.setValue(singleData.userName);
+    //       }
+    //     }
+    //     this.family.push(singleData);
+    //   });
+    // }
+    // this.valueChange1.emit(this.owner.get('ownerName').value);
   }
 
   getdataForm() {
@@ -86,11 +93,11 @@ export class OwnerColumnComponent implements OnInit {
       // this.owner = this.fb.group({
       //   ownerName: [(this.ownerData.ownerName.value == null) ? '' : this.ownerData.ownerName.value, [Validators.required]],
       // });
-      console.log('OwnerColumn impossible getdataForm this.ownerData.ownerName.value : ', this.ownerData.ownerName.value);
-      this.getFormControl().ownerName.setValue(this.ownerData.ownerName.value);
+      // console.log('OwnerColumn impossible getdataForm this.ownerData.ownerName.value : ', this.ownerData.ownerName.value);
+      // this.getFormControl().ownerName.setValue(this.ownerData.ownerName.value);
     } else {
       this.owner = this.fb.group({
-        ownerName: [(this.ownerData.ownerName.value == null) ? '' : this.ownerData.ownerName.value, [Validators.required]],
+        ownerName: [this.ownerData, [Validators.required]],
       });
     }
   }
