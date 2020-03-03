@@ -90,6 +90,7 @@ export class FixedDepositComponent implements OnInit {
   showError: boolean;
   nexNomineePer: number;
   showErrorCoOwner: boolean;
+  adviceShowHeaderAndFooter: boolean = true;
 
   constructor(public utils: UtilService, private event: EventService, private router: Router,
     private fb: FormBuilder, private custumService: CustomerService,
@@ -108,6 +109,7 @@ export class FixedDepositComponent implements OnInit {
   get getCoOwner() {
     return this.fixedDeposit.get('getCoOwnerName') as FormArray;
   }
+  @Input() popupHeaderText: string = 'Add Fixed deposit';
 
   removeCoOwner(item) {
     this.getCoOwner.removeAt(item);
@@ -140,6 +142,11 @@ export class FixedDepositComponent implements OnInit {
     return this.inputData;
   }
   ngOnInit() {
+    if (this.data && this.data.flag) {
+      this.adviceShowHeaderAndFooter = false;
+    } else {
+      this.adviceShowHeaderAndFooter = true;
+    }
     console.log('This is ngOnInit data of FixedDepositComponent');
     this.getdataForm(this.inputData);
 

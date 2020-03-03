@@ -10,11 +10,12 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { ActiityService } from '../../actiity.service';
 import { AdviceUtilsService } from '../advice-utils.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { SuggestAdviceComponent } from '../suggest-advice/suggest-advice.component';
 
 @Component({
-  selector: 'app-advice-real-asset',
-  templateUrl: './advice-real-asset.component.html',
-  styleUrls: ['./advice-real-asset.component.scss']
+  selector: 'app-advice-real-estate',
+  templateUrl: './advice-real-estate.component.html',
+  styleUrls: ['./advice-real-estate.component.scss']
 })
 export class AdviceRealAssetComponent implements OnInit {
   displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'pvalue', 'mvalue', 'ngain', 'advice', 'astatus', 'adate', 'icon'];
@@ -82,17 +83,19 @@ export class AdviceRealAssetComponent implements OnInit {
       data,
       id: 1,
       state: 'open',
-      componentName: AddRealEstateComponent
+      componentName: SuggestAdviceComponent,
+      childComponent: AddRealEstateComponent,
+      childData: { data: null, flag: value },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
+
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getAssetAll();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
           }
+          this.getAssetAll();
           rightSideDataSub.unsubscribe();
         }
 

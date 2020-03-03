@@ -9,6 +9,7 @@ import { BondsComponent } from '../../../accounts/assets/fixedIncome/bonds/bonds
 import { ActiityService } from '../../actiity.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { AdviceUtilsService } from '../advice-utils.service';
+import { SuggestAdviceComponent } from '../suggest-advice/suggest-advice.component';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
@@ -147,23 +148,26 @@ export class AdviceFixedIncomeComponent implements OnInit {
     );
   }
   openAddEdit(value, data) {
-    let component = (value == 'adviceFixedDeposit') ? FixedDepositComponent : (value == 'adviceRecurringDeposit') ? RecuringDepositComponent : BondsComponent;
+    let Component = (value == 'adviceFixedDeposit') ? FixedDepositComponent : (value == 'adviceRecurringDeposit') ? RecuringDepositComponent : BondsComponent;
     const fragmentData = {
       flag: value,
       data,
       id: 1,
       state: 'open',
-      componentName: component
+      componentName: SuggestAdviceComponent,
+      childComponent: Component,
+      childData: { data: null, flag: value },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
+
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
           }
+          this.getAdviceByAsset();
+          rightSideDataSub.unsubscribe();
         }
 
       }

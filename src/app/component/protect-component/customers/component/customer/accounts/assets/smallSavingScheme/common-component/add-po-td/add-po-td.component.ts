@@ -35,6 +35,7 @@ export class AddPoTdComponent implements OnInit {
   nominees: any[];
   potdData: any;
   flag: any;
+  adviceShowHeaderAndFooter: boolean = true;
 
   constructor(public utils: UtilService, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject, private util: UtilService) { }
   @Input()
@@ -63,13 +64,9 @@ export class AddPoTdComponent implements OnInit {
   }
   getdataForm(data) {
     this.flag = data;
-    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
-    if (data == undefined) {
-      data = {};
-    }
-    else {
-      this.editApi = data;
-    }
+    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : '';
+
+    this.editApi = data;
     this.potdData = data;
     this.POTDForm = this.fb.group({
       ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required, UtilService.ageValidators(10)]],
@@ -95,6 +92,11 @@ export class AddPoTdComponent implements OnInit {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true
   }
   ngOnInit() {
+    if (this.data && this.data.flag) {
+      this.adviceShowHeaderAndFooter = false;
+    } else {
+      this.adviceShowHeaderAndFooter = true;
+    }
     this.getdataForm(this.data);
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();

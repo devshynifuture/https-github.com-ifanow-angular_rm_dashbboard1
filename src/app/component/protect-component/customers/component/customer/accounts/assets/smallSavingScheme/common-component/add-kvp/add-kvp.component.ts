@@ -34,6 +34,7 @@ export class AddKvpComponent implements OnInit {
   nominees: any[];
   kvpData;
   flag: any;
+  adviceShowHeaderAndFooter: boolean = true;
   constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
   @Input()
@@ -47,6 +48,11 @@ export class AddKvpComponent implements OnInit {
   @Input() popupHeaderText: string = 'Add Kisan vikas patra (KVP)';
 
   ngOnInit() {
+    if (this.data && this.data.flag) {
+      this.adviceShowHeaderAndFooter = false;
+    } else {
+      this.adviceShowHeaderAndFooter = true;
+    }
     this.isOptionalField = true;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();

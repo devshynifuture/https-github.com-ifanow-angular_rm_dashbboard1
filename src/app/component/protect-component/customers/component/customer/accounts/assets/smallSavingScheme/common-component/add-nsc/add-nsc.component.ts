@@ -38,6 +38,7 @@ export class AddNscComponent implements OnInit {
   nominees: any;
   flag: any;
   dataSource: { "id": any; "familyMemberId": any; "ownerName": any; "amountInvested": any; "commencementDate": string; "tenure": any; "certificateNumber": any; "postOfficeBranch": any; "bankAccountNumber": any; "ownerTypeId": number; "nominees": any; "description": any; };
+  adviceShowHeaderAndFooter: boolean = true;
   @Input()
   set data(data) {
     this.inputData = data;
@@ -52,6 +53,11 @@ export class AddNscComponent implements OnInit {
   constructor(private datePipe: DatePipe, public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   isOptionalField
   ngOnInit() {
+    if (this.data && this.data.flag) {
+      this.adviceShowHeaderAndFooter = false;
+    } else {
+      this.adviceShowHeaderAndFooter = true;
+    }
     this.isOptionalField = true
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
