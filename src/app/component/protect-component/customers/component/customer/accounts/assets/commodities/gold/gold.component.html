@@ -1,7 +1,7 @@
 <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20">{{popupHeaderText | uppercase}}</h4>
+            <h4 class="mb-0 wrapper-20">{{popupHeaderText}}</h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="row pt-24">
-        <div class="col-md-5 text-right">
+        <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Approx. purchase value</h5>
         </div>
         <div class="col-md-3">
@@ -67,8 +67,8 @@
         </div>
     </div>
     <div class="row pt-40">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Number of tolas/grams purchased</h5>
+        <div class="col-md-5 d-flex align-items-end justify-content-end pr-0 text-right">
+            <h5 class="m-0 pt-0">Number of tolas/grams purchased</h5>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0">
@@ -164,7 +164,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
-                        <input matInput #marketValue type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10"  class="form-control rupess br-0" formControlName="marketValue">
+                        <input matInput #marketValue type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control rupess br-0" formControlName="marketValue">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{marketValue.value.length}}/10</mat-hint>
                     </mat-form-field>
