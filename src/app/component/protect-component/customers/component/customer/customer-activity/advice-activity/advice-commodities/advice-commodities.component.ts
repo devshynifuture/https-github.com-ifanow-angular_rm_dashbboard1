@@ -89,14 +89,14 @@ export class AdviceCommoditiesComponent implements OnInit, AfterViewInit {
     this.isLoading = false
   }
   openAddEdit(value, data) {
-    let Component = (value == "adviceGOLD") ? SuggestAdviceComponent : OthersComponent;
+    let Component = (value == "adviceGOLD") ? GoldComponent : OthersComponent;
     const fragmentData = {
       flag: value,
       data: data,
       id: 1,
       state: 'open',
-      componentName: Component,
-
+      componentName: SuggestAdviceComponent,
+      childComponent: Component
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

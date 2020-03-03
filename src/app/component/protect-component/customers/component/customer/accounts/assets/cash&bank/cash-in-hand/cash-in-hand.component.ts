@@ -85,13 +85,13 @@ export class CashInHandComponent implements OnInit {
       data = {};
     }
     this.cashInHand = this.fb.group({
-      ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
-      balanceAsOn: [(data == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
-      cashBalance: [(data == undefined) ? '' : data.cashValue, [Validators.required]],
-      // bankAcNo: [(data == undefined) ? '' : data.bankAccountNumber, [Validators.required]],
-      description: [(data == undefined) ? '' : data.description, [Validators.required]],
-      id: [(data == undefined) ? '' : data.id, [Validators.required]],
-      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
+      ownerName: [(data.ownerName == undefined) ? '' : data.ownerName, [Validators.required]],
+      balanceAsOn: [( data.balanceAsOn == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
+      cashBalance: [(data.cashValue == undefined) ? '' : data.cashValue, [Validators.required]],
+      // bankAcNo: [(data.bankAccountNumber == undefined) ? '' : data.bankAccountNumber, [Validators.required]],
+      description: [(data.description == undefined) ? '' : data.description, [Validators.required]],
+      id: [(data.id == undefined) ? '' : data.id, [Validators.required]],
+      familyMemberId: [[(data.familyMemberId == undefined) ? '' : data.familyMemberId], [Validators.required]]
     });
     this.ownerData = this.cashInHand.controls;
     this.familyMemberId = this.cashInHand.controls.familyMemberId.value;
@@ -103,18 +103,8 @@ export class CashInHandComponent implements OnInit {
   }
 
   saveCashInHand() {
-    if (this.cashInHand.get('ownerName').invalid) {
-      this.cashInHand.get('ownerName').markAsTouched();
-      return;
-    } else if (this.cashInHand.get('cashBalance').invalid) {
-      this.cashInHand.get('cashBalance').markAsTouched();
-      return;
-    } else if (this.cashInHand.get('ownerName').invalid) {
-      this.cashInHand.get('ownerName').markAsTouched();
-      return
-    } else if (this.cashInHand.get('balanceAsOn').invalid) {
-      this.cashInHand.get('balanceAsOn').markAsTouched();
-      return;
+    if (this.cashInHand.invalid) {
+      this.cashInHand.markAllAsTouched();
     } else {
       const obj = {
         advisorId: this.advisorId,
