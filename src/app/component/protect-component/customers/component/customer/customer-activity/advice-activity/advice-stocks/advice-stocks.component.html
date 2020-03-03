@@ -129,7 +129,7 @@
             <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <i class="material-icons c-p" [matMenuTriggerFor]="menu">
+                    <i *ngIf="isLoading==false" class="material-icons c-p" [matMenuTriggerFor]="menu">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
