@@ -97,7 +97,7 @@ export class CashInHandComponent implements OnInit {
       // bankAcNo: [(data.bankAccountNumber == undefined) ? '' : data.bankAccountNumber, [Validators.required]],
       description: [(data.description == undefined) ? '' : data.description, [Validators.required]],
       id: [(data.id == undefined) ? '' : data.id, [Validators.required]],
-      familyMemberId: [[(data.familyMemberId == undefined) ? '' : data.familyMemberId], [Validators.required]]
+      familyMemberId: [[(data.familyMemberId == undefined) ? '' : data.familyMemberId],]
     });
     this.ownerData = this.cashInHand.controls;
     this.familyMemberId = this.cashInHand.controls.familyMemberId.value;
