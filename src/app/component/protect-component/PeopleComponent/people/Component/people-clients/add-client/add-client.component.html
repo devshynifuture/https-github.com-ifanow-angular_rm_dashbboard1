@@ -8,7 +8,7 @@
         </i>
     </div>
 </div>
-<div class="pt-90 pl-28 pr-28 pb-100">
+<div class="pt-90 pl-28 pr-28 pb-100 h-100">
     <div class="row">
         <div class="col-md-12 p-0">
             <mat-tab-group animationDuration="0ms" id="ui-add-client">
@@ -17,7 +17,7 @@
                         <div class="col-md-4 text-right">
                             <h5 class="m-0 pt-32">Investor type</h5>
                         </div>
-                        <div class="col-md-5 p-0">
+                        <div class="col-md-6 p-0">
                             <div class="row">
                                 <div class="col-md-6 pl-0 pr-8">
                                     <p class="m-0 roboto pb-4">Category</p>
@@ -44,12 +44,122 @@
                     </div>
                     <div class="row pt-44">
                         <div class="col-md-4 text-right">
-                            <h5 class="m-0 pt-24">Full name</h5>
+                            <h5 class="m-0 pt-12">Full name</h5>
                         </div>
-                        <div class="col-md-5 pr-0">
+                        <div class="col-md-5 p-0">
                             <div class="form-group mb-0">
                                 <mat-form-field>
                                     <input matInput class="form-control">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-12">Email</h5>
+                        </div>
+                        <div class="col-md-5 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                    <mat-hint>Optional</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-12">Mobile number</h5>
+                        </div>
+                        <div class="col-md-5 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                    <mat-hint>Optional</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-12">PAN</h5>
+                        </div>
+                        <div class="col-md-3 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                    <mat-hint>Optional</mat-hint>
+                                    <mat-hint align="end">0 / 10</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="m-0 roboto text-primary pt-12 f-400 c-p">KYC compliant</p>
+                        </div>
+                    </div>
+                    <div class="row pt-40">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-12">Username</h5>
+                            <p class="f-12 roboto text-custom">This will be the login ID. By
+                                default, email is the username</p>
+                        </div>
+                        <div class="col-md-5 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-36">Date of birth</h5>
+                        </div>
+                        <div class="col-md-3 p-0">
+                            <p class="m-0 roboto">As per records</p>
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                    <mat-hint>Optional</mat-hint>
+                                    <mat-hint align="end">0 / 10</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="m-0 roboto">As per records</p>
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                    <mat-hint>Optional</mat-hint>
+                                    <mat-hint align="end">0 / 10</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">Gender</h5>
+                        </div>
+                        <div class="col-md-7 p-0">
+                            <mat-radio-group aria-label="Select an option" class="d-block">
+                                <mat-radio-button value="1" class="bu-primary">Male</mat-radio-button>
+                                <mat-radio-button value="2" class="b-ua">Female 2</mat-radio-button>
+                                <mat-radio-button value="3" class="b-ua">Other</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-12">Client owner</h5>
+                            <p class="m-0 f-12 text-custom">Team Owner</p>
+                        </div>
+                        <div class="col-md-5 p-0">
+                            <div class="form-group m-0">
+                                <mat-form-field>
+                                    <mat-select class="form-control">
+                                        <mat-option value="option">Option</mat-option>
+                                    </mat-select>
                                 </mat-form-field>
                             </div>
                         </div>

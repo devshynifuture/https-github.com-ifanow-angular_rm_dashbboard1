@@ -59,4 +59,26 @@
   .mat-tab-header {
     border-bottom: 0 !important;
   }
+
+  .mat-tab-body-content {
+    overflow: hidden;
+  }
+
+  .mat-radio-button:nth-child(1) {
+    min-width: 90px;
+  }
+
+  .mat-radio-button:nth-child(2) {
+    min-width: 120px;
+  }
+
+  .mat-radio-button:nth-child(3) {
+    min-width: 100px;
+  }
+
+  .mat-radio-label {
+    height: 40px;
+    padding-left: 6px !important;
+
+  }
 }
