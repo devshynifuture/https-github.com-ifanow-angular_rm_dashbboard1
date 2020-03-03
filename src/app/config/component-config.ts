@@ -386,6 +386,7 @@ export const appConfig = {
   DELETE_HIDDEN_AMC: 'mutual-fund/hidden-amc/delete',
   SEARCH_SCHEME: 'report/transaction/list/get',
   GET_TRANSACTION_DETAILS: 'report/transaction/detail/get',
+  GET_MANDATE_LIST:'report/ach-mandate/get',
   // SIP_BSE:'bse/order/create',
 
   // cashflow 

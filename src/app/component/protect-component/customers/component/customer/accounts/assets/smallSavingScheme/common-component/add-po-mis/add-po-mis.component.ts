@@ -51,7 +51,7 @@ export class AddPoMisComponent implements OnInit {
     return this._inputData;
   }
 
-  @Input() popupHeaderText:String = 'Add Post office monthly income scheme (PO MIS)';
+  @Input() popupHeaderText: string = 'Add Post office monthly income scheme (PO MIS)';
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();

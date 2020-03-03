@@ -46,7 +46,7 @@ export class AddPoTdComponent implements OnInit {
     return this.inputData;
   }
 
-  @Input() popupHeaderText:String = 'Add Post office time deposit (PO TD)';
+  @Input() popupHeaderText: string = 'Add Post office time deposit (PO TD)';
 
   display(value) {
     console.log('value selected', value)

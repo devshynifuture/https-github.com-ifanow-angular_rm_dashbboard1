@@ -131,7 +131,7 @@ export class StpTransactionComponent implements OnInit {
     if (this.selectScheme == 2 && value.length > 2) {
       let obj = {
         searchQuery: value,
-        bseOrderType: 'ORDER',
+        bseOrderType: 'STP',
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
         advisorId: this.getDataSummary.defaultClient.advisorId,
         tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
@@ -168,7 +168,7 @@ export class StpTransactionComponent implements OnInit {
     if (this.selectScheme == 2 && value.length > 2) {
       let obj = {
         searchQuery: value,
-        bseOrderType: 'ORDER',
+        bseOrderType: 'STP',
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
         advisorId: this.getDataSummary.defaultClient.advisorId,
         tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,

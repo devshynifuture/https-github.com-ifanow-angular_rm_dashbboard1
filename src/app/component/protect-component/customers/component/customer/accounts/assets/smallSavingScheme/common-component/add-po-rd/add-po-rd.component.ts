@@ -40,7 +40,7 @@ export class AddPoRdComponent implements OnInit {
     private subInjectService: SubscriptionInject) {
   }
 
-  @Input() popupHeaderText:String = 'Add Post office recurring deposit (PO RD)';
+  @Input() popupHeaderText: string = 'Add Post office recurring deposit (PO RD)';
 
   ngOnInit() {
     this.isOptionalField = true;
@@ -100,8 +100,8 @@ export class AddPoRdComponent implements OnInit {
       commDate: [new Date(data.commencementDate), [Validators.required]],
       tenure: [(data.tenure) ? data.tenure : '5', [Validators.required]],
       ownership: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]],
-      interestRate: [!data.interestRate?'7.2':data.interestRate, [Validators.required]],
-      compound: [(!data.compound)?'3':data.compound, [Validators.required]]
+      interestRate: [!data.interestRate ? '7.2' : data.interestRate, [Validators.required]],
+      compound: [(!data.compound) ? '3' : data.compound, [Validators.required]]
     });
     this.PORDFormoptionalForm = this.fb.group({
       rdNum: [data.rdNumber],
@@ -159,7 +159,7 @@ export class AddPoRdComponent implements OnInit {
         isActive: 1,
         id: this.editApi.id
       };
-      if (this.editApi.id ) {
+      if (this.editApi.id) {
         this.cusService.editPORD(obj).subscribe(
           data => this.addPORDResponse(data),
           error => this.eventService.showErrorMessage(error)

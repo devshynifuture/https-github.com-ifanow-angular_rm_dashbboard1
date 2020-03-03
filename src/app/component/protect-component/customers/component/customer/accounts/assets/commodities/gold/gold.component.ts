@@ -51,7 +51,7 @@ export class GoldComponent implements OnInit {
     return this.inputData;
   }
 
-  @Input() popupHeaderText: String = 'Add Gold';
+  @Input() popupHeaderText: string = 'Add Gold';
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId()

@@ -75,7 +75,15 @@ export class SettingsFolioMappingComponent implements OnInit {
     this.onlineTransact.getFolioMappedData(obj).subscribe(
       data => {
         console.log(data);
-        this.dataSource = TransactionEnumService.setHoldingTypeEnum(data);
+        if (data) {
+          this.dataSource = TransactionEnumService.setHoldingTypeEnum(data);
+        }
+        else {
+          this.dataSource = data;
+        }
+        this.isLoading = false;
+      },
+      err => {
         this.isLoading = false;
       }
     )
@@ -92,8 +100,16 @@ export class SettingsFolioMappingComponent implements OnInit {
     this.onlineTransact.getFolioUnmappedData(obj).subscribe(
       data => {
         console.log(data);
-        this.dataSource = TransactionEnumService.setHoldingTypeEnum(data);
-        this.isLoading = false
+        if (data) {
+          this.dataSource = TransactionEnumService.setHoldingTypeEnum(data);
+        }
+        else {
+          this.dataSource = data;
+        }
+        this.isLoading = false;
+      },
+      err => {
+        this.isLoading = false;
       }
     )
   }
@@ -111,7 +127,7 @@ export class SettingsFolioMappingComponent implements OnInit {
   }
   unmapFolio(value, data) {
     const dialogData = {
-      data: value,
+      data: data,
       header: 'UNMAP',
       body: 'Are you sure you want to unmap?',
       body2: 'This cannot be undone.',

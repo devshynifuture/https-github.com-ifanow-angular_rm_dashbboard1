@@ -6,6 +6,7 @@ import { OnlineTransactionService } from '../online-transaction.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { TransactionEnumService } from '../transaction-enum.service';
+import { OnlineTrasactionComponent } from '../overview-transactions/doTransaction/online-trasaction/online-trasaction.component';
 
 @Component({
   selector: 'app-transactions-list',
@@ -22,6 +23,7 @@ export class TransactionsListComponent implements OnInit {
   seletedPreviousDate;
   finalStartDate;
   finalEndDate
+  errMessage: any;
   constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService, private utilService: UtilService, private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) { }
 
   isLoading = false;
@@ -69,7 +71,11 @@ export class TransactionsListComponent implements OnInit {
         this.dataSource = TransactionEnumService.setTransactionStatus(data)
         console.log(this.dataSource)
       },
-      err => this.eventService.openSnackBar(err, "dismiss")
+      err => {
+        this.isLoading = false;
+        this.dataSource=undefined;
+        this.errMessage=err.error.message;
+      }
     )
   }
   Close(flag) {
@@ -94,6 +100,25 @@ export class TransactionsListComponent implements OnInit {
       id: 1,
       state: 'open35',
       componentName: TransactionsHistoryComponent,
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
+  }
+  openTransaction() {
+    const fragmentData = {
+      flag: 'addNewTransaction',
+      data: null,
+      id: 1,
+      state: 'open65',
+      componentName: OnlineTrasactionComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
