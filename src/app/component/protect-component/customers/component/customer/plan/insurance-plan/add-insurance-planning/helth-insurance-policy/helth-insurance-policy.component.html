@@ -1,27 +1,23 @@
-<div class="p-20">
+<div class="p-20" [formGroup]="healthInsurance">
     <h5 class="m-0 text-black f-500">Advice on health insurance policy</h5>
     <div class="row pt-20">
         <div class="col-md-4 p-0 br-1">
             <p class="m-0 pb-8">Select primary advice<img src="/assets/images/svg/info.svg"></p>
-            <mat-radio-group aria-label="Select an option" id="health-radio">
-                <mat-radio-button value="1" class="b-ua mt-0">Continue</mat-radio-button>
-                <mat-radio-button value="2" class="b-ua">Discontinue</mat-radio-button>
-                <mat-radio-button value="1" class="bu-primary text-primary">Port policy</mat-radio-button>
-                <mat-radio-button value="2" class="b-ua">Increase sum assured</mat-radio-button>
-                <mat-radio-button value="1" class="b-ua">Decrease sum assured</mat-radio-button>
-                <mat-radio-button value="2" class="b-ua">Add members</mat-radio-button>
-                <mat-radio-button value="2" class="b-ua">Remove members</mat-radio-button>
+            <mat-radio-group aria-label="Select an option" id="health-radio" formControlName="selectAdvice">
+                <mat-radio-button [value]="advice.advice" class="b-ua mt-20" *ngFor="let advice of adviceData"
+                    [ngClass]="healthInsurance.get('selectAdvice').value == advice.advice ? 'bu-primary b-a-custom text-primary' : ''">
+                    {{advice.advice}}</mat-radio-button>
             </mat-radio-group>
-            <div class="col-md-11 pl-0 pr-24">
+            <!-- <div class="col-md-11 pl-0 pr-24">
                 <p class="m-0 text-black pb-8 pt-20">Non financial advice</p>
                 <div class="form-group">
                     <mat-form-field>
-                        <mat-select class="form-control">
+                        <mat-select class="form-control" formControlName="nominee">
                             <mat-option value="option">Add nominee</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="col-md-8 p-0 bl-1">
             <div class="row">
@@ -29,24 +25,24 @@
                     <p class="m-0 text-black pb-8">Advice header</p>
                     <div class="form-group">
                         <mat-form-field>
-                            <input matInput value="Port policy" class="form-control">
+                            <input matInput [value]="healthInsurance.get('selectAdvice').value" class="form-control" formControlName="adviceHeader">
                         </mat-form-field>
                     </div>
                     <p class="m-0 text-black pb-8">Advice rationale</p>
                     <div class="form-group">
                         <mat-form-field>
-                            <textarea matInput rows="6" class="form-control"
-                                value="We recommend you to port the policy to a different company, increase the sum assured and add your father Manu Jain as well."></textarea>
+                            <textarea matInput rows="6" class="form-control" formControlName="adviceRationale"></textarea>
                         </mat-form-field>
                     </div>
                     <p class="m-0 text-black pb-8 pt-110">Advice status</p>
                     <div class="form-group">
                         <mat-form-field>
-                            <input matInput value="Port policy" class="form-control" value="Given">
+                            <input matInput class="form-control" value="Given"
+                                formControlName="adviceStatus">
                         </mat-form-field>
                     </div>
                     <p class="m-0">Consent option<img src="/assets/images/svg/info.svg"></p>
-                    <mat-radio-group aria-label="Select an option">
+                    <mat-radio-group aria-label="Select an option" formControlName="consent">
                         <mat-radio-button value="1">Take client consent <button mat-stroked-button
                                 class="btn-primary-outline btn-xs h-20 f-12">RECOMMENDED</button></mat-radio-button>
                         <p class="f-12 roboto text-custom">If this option is selected, further action on this advice is
@@ -54,7 +50,7 @@
                             gives explicit consent via email.</p>
                         <mat-checkbox>Create a linked task</mat-checkbox>
                     </mat-radio-group>
-                    <mat-radio-group aria-label="Select an option" class="pt-20">
+                    <mat-radio-group aria-label="Select an option" class="pt-20" formControlName="bypassConsent">
                         <mat-radio-button value="1">Bypass client consent</mat-radio-button>
                         <p class="f-12 roboto text-custom">If this option is selected, you can directly start further
                             work on this advice without taking any explicit consent from your client.</p>
@@ -65,7 +61,8 @@
                     <p class="m-0 text-black pb-8">Advice header</p>
                     <div class="form-group">
                         <mat-form-field class="ba-date">
-                            <input matInput [matDatepicker]="picker" class="form-control b-0">
+                            <input matInput [matDatepicker]="picker" class="form-control b-0"
+                                formControlName="adviceHeaderDate">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
@@ -73,7 +70,8 @@
                     <p class="m-0 text-black pb-8">Implementation date</p>
                     <div class="form-group">
                         <mat-form-field class="ba-date">
-                            <input matInput [matDatepicker]="picker1" class="form-control b-0">
+                            <input matInput [matDatepicker]="picker1" class="form-control b-0"
+                                formControlName="implementationDate">
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                             <mat-datepicker #picker1></mat-datepicker>
                         </mat-form-field>
@@ -83,10 +81,10 @@
         </div>
 
     </div>
-    <div class="row pt-20">
-        <div class="col-md-12 text-right">
-            <button mat-button class="text-primary">SAVE</button>
-            <button mat-button>cancel</button>
-        </div>
+</div>
+<div class="row pt-10">
+    <div class="col-md-12 text-right">
+        <button mat-button class="text-primary"(click)="saveAdviceOnHealth()">SAVE</button>
+        <button mat-button>cancel</button>
     </div>
 </div>
