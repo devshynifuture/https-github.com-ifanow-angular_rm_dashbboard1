@@ -28,6 +28,10 @@ const routes: Routes = [
 
       },
       {
+        path: 'people',
+        loadChildren: () => import('src/app/component/protect-component/PeopleComponent/people/people.module').then(m => m.PeopleModule)
+      },
+      {
         path: 'activies',
         loadChildren: () => import('src/app/component/protect-component/AdviserComponent/Activities/activies.module').then(m => m.ActiviesModule),
         data: { animation: 'Tab1', preload: true }

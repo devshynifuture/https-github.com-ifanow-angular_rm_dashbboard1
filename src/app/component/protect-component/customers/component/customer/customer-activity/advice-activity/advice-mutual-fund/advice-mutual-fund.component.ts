@@ -4,6 +4,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { SelectAdviceComponent } from '../select-advice/select-advice.component';
 import { UtilService } from 'src/app/services/util.service';
 import { constructor } from 'moment';
+import { GiveAdviceComponent } from '../give-advice/give-advice.component';
 
 @Component({
   selector: 'app-advice-mutual-fund',
@@ -15,18 +16,17 @@ export class AdviceMutualFundComponent implements OnInit {
   dataSource2 = new MatTableDataSource(ELEMENT_DATA2);
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private utilService: UtilService) { }
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  isLoading:boolean =false;
+  isLoading: boolean = false;
 
   ngOnInit() {
     this.dataSource2.sort = this.sort;
   }
-  openselectAdvice(data) {
+  open(data) {
     const fragmentData = {
       flag: 'openselectAdvice',
       data,
-      componentName: SelectAdviceComponent,
-
-      state: 'open65'
+      componentName: GiveAdviceComponent,
+      state: 'open'
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

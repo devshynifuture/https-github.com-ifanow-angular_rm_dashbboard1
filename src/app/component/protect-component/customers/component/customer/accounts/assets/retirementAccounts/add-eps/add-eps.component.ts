@@ -46,6 +46,8 @@ export class AddEPSComponent implements OnInit {
   get data() {
     return this.inputData;
   }
+  @Input() popupHeaderText: string = 'Add EPS';
+
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();

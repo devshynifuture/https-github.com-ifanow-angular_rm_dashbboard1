@@ -44,7 +44,7 @@
                 <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                         class="material-icons c-p">filter_list</i>FILTERS
                 </button>
-                <button (click)="openAddEPF(null)" class="btn-primary addon v-middle" mat-stroked-button> ADD NEW
+                <button (click)="addDataFromSideBar(null, 'addEPF')" class="btn-primary addon v-middle" mat-stroked-button> ADD NEW
                 </button>
             </div>
         </div>
@@ -155,7 +155,7 @@
                                 more_vert
                             </i>
                             <mat-menu #menubank="matMenu">
-                                <button mat-menu-item class="c-p" (click)="openAddEPF(element)">Edit</button>
+                                <button mat-menu-item class="c-p" (click)="addDataFromSideBar(element, 'addEPF')">Edit</button>
                                 <button mat-menu-item class="c-p" (click)="openDetailedViewEPF(element)">Detailed
                                     view
                                 </button>
@@ -174,7 +174,7 @@
             <div *ngIf="dataEPFList.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12">No data found</h4>
-                <button (click)="openAddEPF(null)" class="btn-primary addon v-middle" mat-stroked-button>
+                <button (click)="addDataFromSideBar(null, 'addEPF')" class="btn-primary addon v-middle" mat-stroked-button>
                     ADD NEW
                 </button>
             </div>
@@ -199,7 +199,7 @@
                 <button [matMenuTriggerFor]="menu1" class="btn-primary addon v-middle" mat-stroked-button> ADD NEW
                 </button>
                 <mat-menu #menu1="matMenu" class="add-new">
-                    <button (click)="openAddSummaryPort(null)" class="b-b" mat-menu-item>
+                    <button (click)="addDataFromSideBar(null, 'addSummaryPort')" class="b-b" mat-menu-item>
                         <div class="row">
                             <div class="col-md-4 p-0">
                                 <h4 class="m-0 text-black roboto pt-8">National pension system (NPS)</h4>
@@ -223,7 +223,7 @@
                 <button [matMenuTriggerFor]="menu1" class="btn-primary addon v-middle" mat-stroked-button>ADD NEW
                                 </button>
                 <mat-menu #menu1="matMenu" class="add-new">
-                    <button (click)="openAddSummaryPort(null)" class="b-b" mat-menu-item>
+                    <button (click)="addDataFromSideBar(null, 'addSummaryPort')" class="b-b" mat-menu-item>
                                         <div class="row">
                                             <div class="col-md-2 pr-8 text-right">
                                                 <img src="assets/images/svg/dark-three-dot.svg">
@@ -236,7 +236,7 @@
                                             </div>
                                         </div>
                                     </button>
-                    <button (click)="openAddSchemeHolding(null)" class="b-b" mat-menu-item>
+                    <button (click)="addDataFromSideBar(null, 'addSchemeHolding')" class="b-b" mat-menu-item>
                                         <div class="row">
                                             <div class="col-md-2 pr-8 text-right">
                                                 <img src="assets/images/svg/scheme-icon.svg">
@@ -337,9 +337,9 @@
                                     more_vert
                                 </i>
                         <mat-menu #menubank="matMenu">
-                            <button mat-menu-item class="c-p" *ngIf="element.schemeChoice != undefined" (click)="openAddSummaryPort(element)">Edit
+                            <button mat-menu-item class="c-p" *ngIf="element.schemeChoice != undefined" (click)="addDataFromSideBar(element, 'addSummaryPort')">Edit
                                     </button>
-                            <button mat-menu-item class="c-p" *ngIf="element.schemeChoice == undefined" (click)="openAddSchemeHolding(element)">Edit
+                            <button mat-menu-item class="c-p" *ngIf="element.schemeChoice == undefined" (click)="addDataFromSideBar(element, 'addSchemeHolding')">Edit
                                     </button>
                             <button mat-menu-item class="c-p">Detailed view</button>
                             <button mat-menu-item class="c-p">Activity</button>
@@ -361,7 +361,7 @@
                         ADD NEW
                     </button>
             <mat-menu #menu1="matMenu" class="add-new">
-                <button (click)="openAddSummaryPort(null)" class="b-b" mat-menu-item>
+                <button (click)="addDataFromSideBar(null, 'addSummaryPort')" class="b-b" mat-menu-item>
                             <div class="row">
                                 <div class="col-md-4 p-0">
                                     <h4 class="m-0 text-black roboto pt-8">National pension system (NPS)</h4>
@@ -385,7 +385,7 @@
             <button [matMenuTriggerFor]="menu1" class="btn-primary addon v-middle" mat-stroked-button>ADD NEW
                                     </button>
             <mat-menu #menu1="matMenu" class="add-new">
-                <button (click)="openAddSummaryPort(null)" class="b-b" mat-menu-item>
+                <button (click)="addDataFromSideBar(null, 'addSummaryPort')" class="b-b" mat-menu-item>
                                             <div class="row">
                                                 <div class="col-md-2 pr-8 text-right">
                                                     <img src="assets/images/svg/dark-three-dot.svg">
@@ -398,7 +398,7 @@
                                                 </div>
                                             </div>
                                         </button>
-                <button (click)="openAddSchemeHolding(null)" class="b-b" mat-menu-item>
+                <button (click)="addDataFromSideBar(null, 'addSchemeHolding')" class="b-b" mat-menu-item>
                                             <div class="row">
                                                 <div class="col-md-2 pr-8 text-right">
                                                     <img src="assets/images/svg/scheme-icon.svg">
@@ -445,7 +445,7 @@
             <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
                         class="material-icons">filter_list</i>FILTERS
                 </button>
-            <button (click)="openAddGratuity(null)" class="btn-primary addon v-middle  " mat-stroked-button>ADD NEW
+            <button (click)="addDataFromSideBar(null, 'addGratuity')" class="btn-primary addon v-middle  " mat-stroked-button>ADD NEW
                 </button>
         </div>
     </div>
@@ -542,7 +542,7 @@
                                 more_vert
                             </i>
                         <mat-menu #menubank="matMenu">
-                            <button (click)="openAddGratuity(element)" class="c-p" mat-menu-item>Edit</button>
+                            <button (click)="addDataFromSideBar(element, 'addGratuity')" class="c-p" mat-menu-item>Edit</button>
                             <button (click)="detailedViewGratuity(element)" class="c-p" mat-menu-item>Detailed
                                     view
                                 </button>
@@ -560,7 +560,7 @@
         <div *ngIf="dataGratuityList.filteredData.length == 0" class="d-flex flex-column align-items-center">
             <img class="width300" src="assets/images/svg/noDataFound.svg">
             <h4 class="text-center pt-12">No data found</h4>
-            <button (click)="openAddGratuity(null)" class="btn-primary addon v-middle" mat-stroked-button>
+            <button (click)="addDataFromSideBar(null, 'addGratuity')" class="btn-primary addon v-middle" mat-stroked-button>
                     ADD NEW
                 </button>
         </div>
@@ -588,7 +588,7 @@
             <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
                         class="material-icons">filter_list</i>FILTERS
                 </button>
-            <button (click)="openAddSuperannuation(null)" class="btn-primary addon v-middle" mat-stroked-button>ADD
+            <button (click)="addDataFromSideBar(null, 'addSuperannuation')" class="btn-primary addon v-middle" mat-stroked-button>ADD
                     NEW
                 </button>
         </div>
@@ -691,7 +691,7 @@
                             more_vert
                         </i>
                     <mat-menu #menubank="matMenu">
-                        <button (click)="openAddSuperannuation(element)" class="c-p" mat-menu-item>Edit</button>
+                        <button (click)="addDataFromSideBar(element, 'addSuperannuation')" class="c-p" mat-menu-item>Edit</button>
                         <button (click)="detailedViewSuperannuation(element)" class="c-p" mat-menu-item>Detailed
                                 view</button>
                         <button class="c-p" mat-menu-item>Activity</button>
@@ -707,7 +707,7 @@
         <div *ngIf="dataSuperannuationList.filteredData.length == 0" class="d-flex flex-column align-items-center">
             <img class="width300" src="assets/images/svg/noDataFound.svg">
             <h4 class="text-center pt-12">No data found</h4>
-            <button (click)="openAddSuperannuation(null)" class="btn-primary addon v-middle" mat-stroked-button>
+            <button (click)="addDataFromSideBar(null, 'addSuperannuation')" class="btn-primary addon v-middle" mat-stroked-button>
                     ADD NEW
                 </button>
         </div>
@@ -735,7 +735,7 @@
             <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
                         class="material-icons">filter_list</i>FILTERS
                 </button>
-            <button (click)="openAddEPS(null)" class="btn-primary addon v-middle" mat-stroked-button> ADD NEW
+            <button (click)="addDataFromSideBar(null, 'addEPS')" class="btn-primary addon v-middle" mat-stroked-button> ADD NEW
                 </button>
         </div>
     </div>
@@ -824,7 +824,7 @@
                                 more_vert
                             </i>
                         <mat-menu #menubank="matMenu">
-                            <button (click)="openAddEPS(element)" class="c-p" mat-menu-item>Edit</button>
+                            <button (click)="addDataFromSideBar(element, 'addEPS')" class="c-p" mat-menu-item>Edit</button>
                             <button (click)="detailedViewEPS(element)" class="c-p" mat-menu-item>Detailed
                                     view</button>
                             <button class="c-p" mat-menu-item>Activity</button>
@@ -841,7 +841,7 @@
         <div *ngIf="EPSList.filteredData.length == 0" class="d-flex flex-column align-items-center">
             <img class="width300" src="assets/images/svg/noDataFound.svg">
             <h4 class="text-center pt-12">No data found </h4>
-            <button (click)="openAddEPS(null)" class="btn-primary addon v-middle" mat-stroked-button> ADD NEW
+            <button (click)="addDataFromSideBar(null, 'addEPS')" class="btn-primary addon v-middle" mat-stroked-button> ADD NEW
                 </button>
         </div>
     </div>

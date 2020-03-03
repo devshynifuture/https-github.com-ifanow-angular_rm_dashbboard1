@@ -71,7 +71,12 @@ export class GoldComponent implements OnInit {
     this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag })
+    
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag ,sagar:false})
+  }
+  saveInternal(flag) {
+    
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag ,sagar:false})
   }
   showLess(value) {
     if (value == true) {
@@ -90,15 +95,15 @@ export class GoldComponent implements OnInit {
       ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
       appPurValue: [data.approximatePurchaseValue, [Validators.required]],
       totalsGrams: [(data.gramsOrTola == undefined) ? '' : (data.gramsOrTola) + "", [Validators.required]],
-      noTolasGramsPur: [(data == undefined) ? '' : (data.purchasedGramsOrTola), [Validators.required]],
-      tenure: [(data == undefined) ? '' : (data.purchaseYear), [Validators.required, Validators.minLength(4), Validators.min(1900), Validators.max(this.currentYear)]],
+      noTolasGramsPur: [(data.purchasedGramsOrTola == undefined) ? '' : (data.purchasedGramsOrTola), [Validators.required]],
+      tenure: [(data.purchaseYear == undefined) ? '' : (data.purchaseYear), [Validators.required, Validators.minLength(4), Validators.min(1900), Validators.max(this.currentYear)]],
       carats: [(data.carat == undefined) ? '' : (data.carat) + "", [Validators.required]],
-      balanceAsOn: [(data == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
-      marketValue: [(data == undefined) ? '' : data.marketValue],
-      description: [(data == undefined) ? '' : data.description],
-      bankAcNo: [(data == undefined) ? '' : data.bankAcNo],
-      id: [(data == undefined) ? '' : data.id],
-      familyMemberId: [(data == undefined) ? '' : data.familyMemberId]
+      // balanceAsOn: [(data.balanceAsOn == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
+      marketValue: [(data.marketValue == undefined) ? '' : data.marketValue],
+      description: [(data.description == undefined) ? '' : data.description],
+      bankAcNo: [(data.bankAcNo == undefined) ? '' : data.bankAcNo],
+      id: [(data.id == undefined) ? '' : data.id],
+      familyMemberId: [(data.familyMemberId == undefined) ? '' : data.familyMemberId]
     });
     this.ownerData = this.gold.controls;
     this.familyMemberId = this.gold.value.familyMemberId
@@ -116,13 +121,7 @@ export class GoldComponent implements OnInit {
   // }
   saveGold() {
     if (this.gold.invalid) {
-      this.gold.get('ownerName').markAsTouched();
-      this.gold.get('appPurValue').markAsTouched();
-      this.gold.get('totalsGrams').markAsTouched();
-      this.gold.get('noTolasGramsPur').markAsTouched();
-      this.gold.get('balanceAsOn').markAsTouched();
-      this.gold.get('tenure').markAsTouched();
-      this.gold.get('carats').markAsTouched();
+      this.gold.markAllAsTouched();
     } else {
       let obj = {
         advisorId: this.advisorId,
