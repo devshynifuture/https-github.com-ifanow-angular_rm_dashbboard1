@@ -1,5 +1,5 @@
 <!-- start ADD RECURING DEPOSIT (RECURING DEPOSIT) -->
-<div class="popup-header-fix-60">
+<div class="popup-header-fix-60" *ngIf="adviceShowHeaderAndFooter">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
             <h4 class="mb-0 wrapper-20">{{popupHeaderText}}</h4>
@@ -19,7 +19,8 @@
         </div>
         <div class="col-md-5">
             <mat-form-field class="w-100">
-                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                    [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Select family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName" (click)="ownerDetails(f)">
                         <span>{{f.userName}}</span>
@@ -38,8 +39,11 @@
         <div class="col-md-3">
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input matInput #monthlyContribution type="number" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" class="form-control rupess br-0" formControlName="monthlyContribution">
-                    <mat-error class="f-12" [ngClass]="{'v-h':!(isMonthlyContribution && getFormControl().monthlyContribution.invalid || getFormControl().monthlyContribution.touched && getFormControl().monthlyContribution.invalid)}">
+                    <input matInput #monthlyContribution type="number" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" class="form-control rupess br-0"
+                        formControlName="monthlyContribution">
+                    <mat-error class="f-12"
+                        [ngClass]="{'v-h':!(isMonthlyContribution && getFormControl().monthlyContribution.invalid || getFormControl().monthlyContribution.touched && getFormControl().monthlyContribution.invalid)}">
                         This field is required
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{monthlyContribution.value.length}}/10</mat-hint>
@@ -54,8 +58,10 @@
         <div class="col-md-3">
             <div class="form-group mb-0 iconPetage">
                 <mat-form-field>
-                    <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="onChange($event)" class="form-control br-0 percentage" formControlName="interestRate">
-                    <mat-error class="f-12" [ngClass]="{'v-h':!(isInterestRate && getFormControl().interestRate.invalid || getFormControl().interestRate.touched && getFormControl().interestRate.invalid)}">
+                    <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                        (keyup)="onChange($event)" class="form-control br-0 percentage" formControlName="interestRate">
+                    <mat-error class="f-12"
+                        [ngClass]="{'v-h':!(isInterestRate && getFormControl().interestRate.invalid || getFormControl().interestRate.touched && getFormControl().interestRate.invalid)}">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -75,7 +81,8 @@
                     <mat-option value="4">Half yearly </mat-option>
                     <mat-option value="5">Yearly</mat-option>
                 </mat-select>
-                <mat-error class="f-12" [ngClass]="{'v-h':!(isCompound && getFormControl().compound.invalid || getFormControl().compound.touched && getFormControl().compound.invalid)}">
+                <mat-error class="f-12"
+                    [ngClass]="{'v-h':!(isCompound && getFormControl().compound.invalid || getFormControl().compound.touched && getFormControl().compound.invalid)}">
                     This field is required
                 </mat-error>
             </mat-form-field>
@@ -89,10 +96,12 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput formControlName="commencementDate" [max]="maxDate" class="form-control br-0" [matDatepicker]="picker" readonly>
+                    <input matInput formControlName="commencementDate" [max]="maxDate" class="form-control br-0"
+                        [matDatepicker]="picker" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
-                    <mat-error class="f-12" [ngClass]="{'v-h':!(isCommencementDate && getFormControl().commencementDate.invalid || getFormControl().commencementDate.touched && getFormControl().commencementDate.invalid)}">
+                    <mat-error class="f-12"
+                        [ngClass]="{'v-h':!(isCommencementDate && getFormControl().commencementDate.invalid || getFormControl().commencementDate.touched && getFormControl().commencementDate.invalid)}">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -106,14 +115,18 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput autocomplete="off" formControlName="tenure" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" #tenure type="text" maxlength="" class="form-control br-0">
+                    <input matInput autocomplete="off" formControlName="tenure" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" #tenure type="text" maxlength=""
+                        class="form-control br-0">
                     <!-- <mat-select formControlName="tenure" class="form-control br-0 ">
                         <mat-option [value]="">Months</mat-option>
                         <mat-option *ngFor="let M of fdMonths" [value]="M">
                             <span>{{M}}</span>
                         </mat-option>
                     </mat-select> -->
-                    <mat-error *ngIf="recuringDeposit.get('tenure').errors?.required && recuringDeposit.get('tenure').touched" class="f-12">
+                    <mat-error
+                        *ngIf="recuringDeposit.get('tenure').errors?.required && recuringDeposit.get('tenure').touched"
+                        class="f-12">
                         This field is required
                     </mat-error>
                     <mat-error *ngIf="(recuringDeposit.get('tenure').errors?.max)" class="f-12">
@@ -142,7 +155,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #rdNo type="text" (keypress)="keyPressRdNumber($event)" maxlength="20" class="form-control br-0" formControlName="rdNo">
+                        <input matInput #rdNo type="text" (keypress)="keyPressRdNumber($event)" maxlength="20"
+                            class="form-control br-0" formControlName="rdNo">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{rdNo.value.length}}/20</mat-hint>
                     </mat-form-field>
@@ -156,7 +170,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #bankName appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" type="text" maxlength="40" class="form-control br-0" formControlName="bankName">
+                        <input matInput #bankName appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY"
+                            type="text" maxlength="40" class="form-control br-0" formControlName="bankName">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{bankName.value.length}}/40</mat-hint>
                     </mat-form-field>
@@ -171,7 +186,9 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input type="text" matInput #linkBankAc appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="16" class="form-control br-0" formControlName="linkBankAc">
+                        <input type="text" matInput #linkBankAc appInputValueValidation
+                            [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="16" class="form-control br-0"
+                            formControlName="linkBankAc">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{linkBankAc.value.length}}/16</mat-hint>
                     </mat-form-field>
@@ -186,7 +203,9 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #description maxlength="60" appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" class="form-control br-0" formControlName="description">
+                        <input matInput #description maxlength="60" appInputValueValidation
+                            [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" class="form-control br-0"
+                            formControlName="description">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                     </mat-form-field>
@@ -198,7 +217,7 @@
         </app-add-nominee>
     </div>
 </div>
-<div class="bottom-fixed wrapper-12 pt-16">
+<div class="bottom-fixed wrapper-12 pt-16" *ngIf="adviceShowHeaderAndFooter">
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>

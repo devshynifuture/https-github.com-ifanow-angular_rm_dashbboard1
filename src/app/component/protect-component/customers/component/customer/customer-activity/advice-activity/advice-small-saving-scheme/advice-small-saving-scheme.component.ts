@@ -1,3 +1,4 @@
+import { SuggestAdviceComponent } from './../suggest-advice/suggest-advice.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AddPpfComponent } from '../../../accounts/assets/smallSavingScheme/common-component/add-ppf/add-ppf.component';
 import { UtilService } from 'src/app/services/util.service';
@@ -12,8 +13,9 @@ import { AddPoSavingComponent } from '../../../accounts/assets/smallSavingScheme
 import { AddSsyComponent } from '../../../accounts/assets/smallSavingScheme/common-component/add-ssy/add-ssy.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ActiityService } from '../../actiity.service';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { MatSort, MatTableDataSource, MatDialog } from '@angular/material';
 import { AdviceUtilsService } from '../advice-utils.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-advice-small-saving-scheme',
@@ -49,7 +51,7 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
   potdCount: any;
   pomisCount: any;
   pordCount: any;
-  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
+  constructor(public dialog: MatDialog, private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
   allAdvice = false
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -152,25 +154,57 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
   }
   openAddEdit(value, data) {
     let Component = (value == "advicePPF") ? AddPpfComponent : (value == "adviceNSC") ? AddNscComponent : (value == "adviceSSY") ? AddSsyComponent : (value == "adviceKVP") ? AddKvpComponent : (value == "adviceSCSS") ? AddScssComponent : (value == "advicePoSaving") ? AddPoSavingComponent : (value == 'advicePORD') ? AddPoRdComponent : (value == "advicePOTD") ? AddPoTdComponent : AddPoMisComponent;
+
     const fragmentData = {
       flag: value,
-      data: data == null ? value : data,
+      data,
       id: 1,
       state: 'open',
-      componentName: Component
+      componentName: SuggestAdviceComponent,
+      childComponent: Component,
+      childData: { data: null, flag: value },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
+
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
           }
+          this.getAdviceByAsset();
           rightSideDataSub.unsubscribe();
         }
+
       }
     );
   }
+  deleteModal(value, subData) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
 
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
 }

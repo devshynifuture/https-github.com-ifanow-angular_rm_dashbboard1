@@ -39,6 +39,7 @@ export class GoldComponent implements OnInit {
   nomineesListFM: any;
   flag: any;
   currentYear: any = new Date().getFullYear();
+  adviceFlagShowHeaderFooter: boolean = true;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
 
@@ -54,6 +55,12 @@ export class GoldComponent implements OnInit {
   @Input() popupHeaderText: string = 'Add Gold';
 
   ngOnInit() {
+    if (this.data && this.data.flag) {
+      this.adviceFlagShowHeaderFooter = false;
+    } else {
+      this.adviceFlagShowHeaderFooter = true;
+    }
+    console.log('this is flag::::::', this.data)
     this.advisorId = AuthService.getAdvisorId()
     this.clientId = AuthService.getClientId();
     this.getdataForm(this.data);
@@ -71,12 +78,12 @@ export class GoldComponent implements OnInit {
     this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
   Close(flag) {
-    
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag ,sagar:false})
+
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag, sagar: false })
   }
   saveInternal(flag) {
-    
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag ,sagar:false})
+
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag, sagar: false })
   }
   showLess(value) {
     if (value == true) {

@@ -1,10 +1,10 @@
+import { SuggestAdviceComponent } from './../suggest-advice/suggest-advice.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActiityService } from '../../actiity.service';
 import { SelectAdviceComponent } from '../select-advice/select-advice.component';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { AddAssetStocksComponent } from '../../../accounts/assets/asset-stocks/add-asset-stocks/add-asset-stocks.component';
-import { AssetStocksComponent } from '../../../accounts/assets/asset-stocks/asset-stocks.component';
 import { EventService } from 'src/app/Data-service/event.service';
 import { CustomerService } from '../../../customer.service';
 import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
@@ -63,22 +63,23 @@ export class AdviceStocksComponent implements OnInit {
     this.selectedAssetId = selectedIdList;
     console.log(this.selectedAssetId);
   }
-  openRealEstate(data, value) {
+  openAddEdit(data, value) {
     const fragmentData = {
       flag: value,
       data,
       id: 1,
       state: 'open',
-      componentName: AssetStocksComponent
+      componentName: SuggestAdviceComponent,
+      childComponent: AddAssetStocksComponent,
+      childData: { data: null, flag: value },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
+
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getFixedDepositList();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
           }
           rightSideDataSub.unsubscribe();
         }

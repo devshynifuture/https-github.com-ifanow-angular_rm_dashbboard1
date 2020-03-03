@@ -53,9 +53,10 @@ export class RecuringDepositComponent implements OnInit {
   clientId: any;
   nomineesListFM: any;
   flag: any;
-  nomineesList= [];
-  depoData:any = [];
-  nominees:any = [];
+  nomineesList = [];
+  depoData: any = [];
+  nominees: any = [];
+  adviceShowHeaderAndFooter: boolean = true;
 
   constructor(private event: EventService, private fb: FormBuilder, private custumService: CustomerService,
     public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) {
@@ -73,7 +74,11 @@ export class RecuringDepositComponent implements OnInit {
   @Input() popupHeaderText: string = 'Add Recurring deposits';
 
   ngOnInit() {
-
+    if (this.data && this.data.flag) {
+      this.adviceShowHeaderAndFooter = false;
+    } else {
+      this.adviceShowHeaderAndFooter = true;
+    }
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getdataForm(this.inputData);

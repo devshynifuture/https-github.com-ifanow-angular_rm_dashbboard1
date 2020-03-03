@@ -160,7 +160,7 @@
                     </i>
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item (click)="openRealEstate('adviceRealEstate',element)">Edit</button>
-                        <button mat-menu-item>Delete</button>
+                        <button mat-menu-item (click)="deleteModal('REAL ESTATE',element)">Delete</button>
                     </mat-menu>
                 </div>
             </td>
@@ -173,5 +173,5 @@
     </div>
 </div>
 <div *ngIf="allAdvice == true">
-    <app-all-advice-real-asset></app-all-advice-real-asset>
+    <app-all-advice-real-estate></app-all-advice-real-estate>
 </div>

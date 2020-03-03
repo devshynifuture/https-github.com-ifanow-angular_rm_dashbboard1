@@ -9,15 +9,17 @@ import { AddRealEstateComponent } from '../../../accounts/assets/realEstate/add-
 import { AuthService } from 'src/app/auth-service/authService';
 import { ActiityService } from '../../actiity.service';
 import { AdviceUtilsService } from '../advice-utils.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { SuggestAdviceComponent } from '../suggest-advice/suggest-advice.component';
 
 @Component({
-  selector: 'app-advice-real-asset',
-  templateUrl: './advice-real-asset.component.html',
-  styleUrls: ['./advice-real-asset.component.scss']
+  selector: 'app-advice-real-estate',
+  templateUrl: './advice-real-estate.component.html',
+  styleUrls: ['./advice-real-estate.component.scss']
 })
 export class AdviceRealAssetComponent implements OnInit {
   displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'pvalue', 'mvalue', 'ngain', 'advice', 'astatus', 'adate', 'icon'];
-  dataSource3 = ELEMENT_DATA1;
+  dataSource3;
   advisorId: any;
   clientId: any;
   isLoading: any;
@@ -81,17 +83,19 @@ export class AdviceRealAssetComponent implements OnInit {
       data,
       id: 1,
       state: 'open',
-      componentName: AddRealEstateComponent
+      componentName: SuggestAdviceComponent,
+      childComponent: AddRealEstateComponent,
+      childData: { data: null, flag: value },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
+
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getAssetAll();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
           }
+          this.getAssetAll();
           rightSideDataSub.unsubscribe();
         }
 
@@ -117,19 +121,41 @@ export class AdviceRealAssetComponent implements OnInit {
       }
     );
   }
+  deleteModal(value, subData) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != undefined) {
+        console.log(result, this.dataSource.data, 'delete result');
+        const tempList = [];
+        this.dataSource.data.forEach(singleElement => {
+          if (singleElement.id != result.id) {
+            tempList.push(singleElement);
+          }
+        });
+        this.dataSource.data = tempList;
+      }
+    });
+  }
 }
-export interface PeriodicElement1 {
-  name: string;
-  desc: string;
-  mvalue: string;
-  advice: string;
-  adate: string;
-  astatus: string;
-
-}
-
-const ELEMENT_DATA1: PeriodicElement1[] = [
-  { name: 'Rahul Jain', desc: '1', mvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-  { name: 'Rahul Jain', desc: '2', mvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-
-];

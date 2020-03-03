@@ -40,6 +40,7 @@ export class AddSsyComponent implements OnInit {
   flag: any;
 
   @Input() popupHeaderText: string = 'Add Sukanya samriddhi yojana (SSY)';
+  adviceShowHeaderAndFooter: boolean = true;
 
   constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService, private datePipe: DatePipe) { }
 
@@ -96,6 +97,11 @@ export class AddSsyComponent implements OnInit {
     this.ownerData = this.ssySchemeForm.controls;
   }
   ngOnInit() {
+    if (this.data && this.data.flag) {
+      this.adviceShowHeaderAndFooter = false;
+    } else {
+      this.adviceShowHeaderAndFooter = true;
+    }
     this.clientId = AuthService.getClientId();
     this.isOptionalField = true
     this.advisorId = AuthService.getAdvisorId();

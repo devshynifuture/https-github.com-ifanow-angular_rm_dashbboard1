@@ -60,6 +60,13 @@
                 <mat-checkbox></mat-checkbox>
             </td>
         </ng-container>
+
+        <ng-container matColumnDef="groupHeader">
+            <td class="br-grey text-primary text-center" [attr.colspan]="displayedColumns2.length" mat-cell
+                *matCellDef="let group">
+                {{ group.groupName }} </td>
+        </ng-container>
+
         <ng-container matColumnDef="position">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Investor name </th>
             <td mat-cell *matCellDef="let element" class="br">
@@ -124,5 +131,6 @@
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['groupHeader']; when: isGroup"> </tr>
     </table>
 </div>

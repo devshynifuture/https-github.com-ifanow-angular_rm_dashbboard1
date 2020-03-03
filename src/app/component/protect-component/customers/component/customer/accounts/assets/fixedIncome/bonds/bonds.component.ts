@@ -38,14 +38,15 @@ export class BondsComponent implements OnInit {
   tenure: any;
   maturityDate: any;
   getDate: string;
-  nomineesList= [];
+  nomineesList = [];
   selectedFamilyData: any;
   advisorId: any;
   familyMemberId: any;
   ownerData: any;
-  nominees:any = [];
+  nominees: any = [];
   clientId: any;
   nomineesListFM: any;
+  adviceShowHeaderAndFooter: boolean = true;
 
   constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
   }
@@ -61,6 +62,11 @@ export class BondsComponent implements OnInit {
   @Input() popupHeaderText: string = 'Add Bond';
 
   ngOnInit() {
+    if (this.data && this.data.flag) {
+      this.adviceShowHeaderAndFooter = false;
+    } else {
+      this.adviceShowHeaderAndFooter = true;
+    }
     // this.getdataForm()
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();

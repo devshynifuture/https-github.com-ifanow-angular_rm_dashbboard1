@@ -14,6 +14,7 @@ import { GiveAdviceComponent } from '../give-advice/give-advice.component';
 export class AdviceMutualFundComponent implements OnInit {
   displayedColumns2: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'status', 'date', 'adate', 'icons'];
   dataSource2 = new MatTableDataSource(ELEMENT_DATA2);
+  displayedColumns3: string[] = ['groupName'];
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private utilService: UtilService) { }
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   isLoading: boolean = false;
@@ -21,7 +22,16 @@ export class AdviceMutualFundComponent implements OnInit {
   ngOnInit() {
     this.dataSource2.sort = this.sort;
   }
-  open(data) {
+
+  isGroup(index, item): boolean {
+    return item.groupName;
+  }
+
+  open(){
+
+  }
+  
+  openselectAdvice(data) {
     const fragmentData = {
       flag: 'openselectAdvice',
       data,
@@ -50,7 +60,12 @@ export interface PeriodicElement2 {
   adate: string;
 }
 
-const ELEMENT_DATA2: PeriodicElement2[] = [
+export interface GroupNameI {
+  groupName: string;
+}
+
+const ELEMENT_DATA2: (PeriodicElement2 | GroupNameI)[] = [
+  { groupName: 'Equity Large & Mid Cap' },
   {
     position: 'Rahul Jain', name: 'Surplus from life csh flows (Lumpsum)', weight: '35, 000', symbol: 'Invest towards Shreya’s Higher education and Rahul’s Retirement goal', status: 'Given',
     date: '23/12/2019', adate: '23/12/2019'
