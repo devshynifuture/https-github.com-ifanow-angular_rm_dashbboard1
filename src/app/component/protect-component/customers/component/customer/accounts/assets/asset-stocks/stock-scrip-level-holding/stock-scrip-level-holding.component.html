@@ -16,13 +16,13 @@
     <div [formGroup]="scipLevelHoldingForm" class="row pt-100 pl-28">
         <div class="col-md-3 p-0">
             <h5 class="m-0 pb-8">Owner</h5>
-            <app-owner-column [data]='ownerName' (valueChange)='display($event)'>
+            <app-owner-column [data]='ownerName' [checkValid]='checkValid' (valueChange)='display($event)'>
             </app-owner-column>
         </div>
 
         <div class="col-md-3">
             <h5 class="m-0 pb-8">Portfolio name</h5>
-            <app-portfolio-field (outputEvent)='getPortfolioData($event)' [ownerId]="portfolioFieldData" [owner]="scipLevelHoldingForm"></app-portfolio-field>
+            <app-portfolio-field (outputEvent)='getPortfolioData($event)' [checkValid]='checkValid' [ownerId]="portfolioFieldData" [owner]="scipLevelHoldingForm"></app-portfolio-field>
         </div>
     </div>
     <div class="row pl-28">

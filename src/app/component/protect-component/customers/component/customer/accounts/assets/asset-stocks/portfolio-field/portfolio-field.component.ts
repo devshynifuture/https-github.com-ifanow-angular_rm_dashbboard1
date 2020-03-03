@@ -32,6 +32,10 @@ export class PortfolioFieldComponent implements OnInit {
     if(data != undefined)
     this.portfolioName = data.value.portfolioName
   }
+  @Input() set checkValid(checkValid){
+    this.checkFrom(checkValid)
+  }
+
   @Input() set ownerId(data) {
     if (data == undefined) {
       return;
@@ -111,5 +115,13 @@ export class PortfolioFieldComponent implements OnInit {
 
     this.outputEvent.emit(data);
 
+  }
+
+  checkFrom(checkValid){
+    if(checkValid){
+      if(this.portfolioForm.invalid){
+        this.portfolioForm.get('portfolioName').markAsTouched()
+      }
+    }
   }
 }

@@ -6,7 +6,7 @@ import { MaterialModule } from 'src/app/material/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AdviceActivityComponent } from './advice-activity.component';
 import { AdviceFixedIncomeComponent } from './advice-fixed-income/advice-fixed-income.component';
-import { AdviceRealAssetComponent } from './advice-real-asset/advice-real-asset.component';
+import { AdviceRealAssetComponent } from './advice-real-estate/advice-real-estate.component';
 import { AdviceAllPortfolioComponent } from './advice-all-portfolio/advice-all-portfolio.component';
 import { AdviceRetirementAccountComponent } from './advice-retirement-account/advice-retirement-account.component';
 import { AdviceSmallSavingSchemeComponent } from './advice-small-saving-scheme/advice-small-saving-scheme.component';
@@ -19,7 +19,7 @@ import { AdviceMutualFundComponent } from './advice-mutual-fund/advice-mutual-fu
 import { AdviceAssetsComponent } from './advice-assets/advice-assets.component';
 import { AdviceStocksComponent } from './advice-stocks/advice-stocks.component';
 import { AllAdviceFixedDepositComponent } from './advice-fixed-income/all-advice-fixed-deposit/all-advice-fixed-deposit.component';
-import { AllAdviceRealAssetComponent } from './advice-real-asset/all-advice-real-asset/all-advice-real-asset.component';
+import { AllAdviceRealAssetComponent } from './advice-real-estate/all-advice-real-estate/all-advice-real-estate.component';
 import { AllRetirementAssetComponent } from './advice-retirement-account/all-retirement-asset/all-retirement-asset.component';
 import { AllAdviceSmallSavingsSchemeComponent } from './advice-small-saving-scheme/all-advice-small-savings-scheme/all-advice-small-savings-scheme.component';
 import { AllAdviceCashAndHandComponent } from './advice-cash-and-hand/all-advice-cash-and-hand/all-advice-cash-and-hand.component';

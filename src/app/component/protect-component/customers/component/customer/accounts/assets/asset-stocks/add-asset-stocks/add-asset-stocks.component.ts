@@ -19,6 +19,7 @@ export class AddAssetStocksComponent implements OnInit {
   familyMemberId: any;
   editApiData: any;
   nomineesListFM: any;
+  checkValid:boolean= false;
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService) { }
 
@@ -31,7 +32,9 @@ export class AddAssetStocksComponent implements OnInit {
       data = {}
     }
     else {
-      this.editApiData = data
+      this.editApiData = data;
+      this.ownerName = data.ownerName;
+
     }
     this.assetForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
@@ -41,12 +44,13 @@ export class AddAssetStocksComponent implements OnInit {
       portfolioName: [data.portfolioName, [Validators.required]]
     })
     this.familyMemberId = data.familyMemberId;
-    this.ownerData = this.assetForm.controls;
+    // this.ownerData = this.assetForm.controls;
     console.log(this.assetForm)
   }
   display(value) {
     console.log('value selected', value)
-    this.ownerName = value.userName;
+    // this.ownerName = value.userName;
+    this.assetForm.get('ownerName').setValue(value.userName)
     this.familyMemberId = value.id
   }
   lisNominee(value) {
@@ -62,6 +66,7 @@ export class AddAssetStocksComponent implements OnInit {
       //   this.assetForm.get('ownerName').markAsTouched();
       //   break;
       if(this.assetForm.invalid){
+        this.checkValid = true;
         this.assetForm.get('ownerName').markAsTouched();
         this.assetForm.get('currentMarketValue').markAsTouched();
         this.assetForm.get('valueAsOn').markAsTouched();

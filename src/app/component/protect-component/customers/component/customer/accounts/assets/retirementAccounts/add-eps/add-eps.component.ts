@@ -34,6 +34,7 @@ export class AddEPSComponent implements OnInit {
   clientId: any;
   nomineesListFM: any;
   flag: any;
+  adviceShowHeaderAndFooter: boolean = true;
 
   constructor(private event: EventService, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) { }
 
@@ -49,6 +50,11 @@ export class AddEPSComponent implements OnInit {
   @Input() popupHeaderText: string = 'Add EPS';
 
   ngOnInit() {
+    if (this.data && this.data.flag) {
+      this.adviceShowHeaderAndFooter = false;
+    } else {
+      this.adviceShowHeaderAndFooter = true;
+    }
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
   }

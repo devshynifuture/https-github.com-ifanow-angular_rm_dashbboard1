@@ -5,7 +5,7 @@ import { AdviceAllPortfolioComponent } from './advice-all-portfolio/advice-all-p
 import { AdviceMutualFundComponent } from './advice-mutual-fund/advice-mutual-fund.component';
 import { AdviceAssetsComponent } from './advice-assets/advice-assets.component';
 import { AdviceFixedIncomeComponent } from './advice-fixed-income/advice-fixed-income.component';
-import { AdviceRealAssetComponent } from './advice-real-asset/advice-real-asset.component';
+import { AdviceRealAssetComponent } from './advice-real-estate/advice-real-estate.component';
 import { AdviceRetirementAccountComponent } from './advice-retirement-account/advice-retirement-account.component';
 import { AdviceSmallSavingSchemeComponent } from './advice-small-saving-scheme/advice-small-saving-scheme.component';
 import { AdviceLifeInsuranceComponent } from './advice-life-insurance/advice-life-insurance.component';
