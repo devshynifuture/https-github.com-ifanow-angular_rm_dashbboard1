@@ -41,19 +41,18 @@ export class OthersComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
-    this.getdataForm(data);
   }
 
   get data() {
     return this.inputData;
   }
 
+  @Input() popupHeaderText: string = 'Add Others';
+
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-
-    this.getdataForm(this.inputData);
-
+    this.getdataForm(this.data);
   }
 
   getFormDataNominee(data) {
@@ -95,21 +94,20 @@ export class OthersComponent implements OnInit {
     }
     this.otherData = data;
     this.others = this.fb.group({
-      ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
+      ownerName: [(data.ownerName == undefined) ? '' : data.ownerName, [Validators.required]],
       typeOfCommodity: [(data.commodityTypeId == undefined) ? '' : (data.commodityTypeId) + '', [Validators.required]],
-      marketValue: [(data == undefined) ? '' : (data.marketValue), [Validators.required]],
-      purchaseValue: [(data == undefined) ? '' : (data.purchaseValue), [Validators.required]],
-      interestRate: [(data == undefined) ? '' : data.interestRate, [Validators.required]],
-      dateOfPurchase: [(data == undefined) ? '' : new Date(data.dateOfPurchase), [Validators.required]],
-      growthRate: [(data == undefined) ? '' : data.growthRate, [Validators.required]],
-      description: [(data == undefined) ? '' : data.description, [Validators.required]],
-      id: [(data == undefined) ? '' : data.id, [Validators.required]],
-      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
+      marketValue: [(data.marketValue == undefined) ? '' : (data.marketValue), [Validators.required]],
+      purchaseValue: [(data.purchaseValue == undefined) ? '' : (data.purchaseValue), [Validators.required]],
+      interestRate: [(data.interestRate == undefined) ? '' : data.interestRate, [Validators.required]],
+      dateOfPurchase: [(data.dateOfPurchase == undefined) ? '' : new Date(data.dateOfPurchase), [Validators.required]],
+      growthRate: [(data.growthRate == undefined) ? '' : data.growthRate, [Validators.required]],
+      description: [(data.description == undefined) ? '' : data.description, [Validators.required]],
+      id: [(data.id == undefined) ? '' : data.id, [Validators.required]],
+      familyMemberId: [[(data.familyMemberId == undefined) ? '' : data.familyMemberId], [Validators.required]]
     });
     // this.othersNominee = this.fb.group({})
     this.ownerData = this.others.controls;
-    this.familyMemberId = this.others.controls.familyMemberId.value;
-    this.familyMemberId = this.familyMemberId[0];
+    this.familyMemberId = this.others.value.familyMemberId;
   }
 
 

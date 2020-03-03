@@ -122,14 +122,13 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
   openDynamicComponent(inputData) {
     console.log(this.componentName + 'dialog container inputData : ', inputData);
 
-    if (inputData.direction) {
-      if (inputData.direction == 'top') {
+    switch (inputData.direction) {
+      case 'top':
         this.addUpperDynamicComponentService(this.viewContainerRefUpper, inputData);
-      } else if (inputData.direction == 'right') {
+        break;
+      default: //right
         this.addDynamicComponentService(this.viewContainerRef, inputData);
-      }
-    } else {
-      this.addDynamicComponentService(this.viewContainerRef, inputData);
+        break;
     }
   }
 
@@ -145,7 +144,7 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
     if (viewContainerRef) {
       console.log(this.componentName + 'dialog container addDynamicComponentService inputData : ', inputData);
 
-      this.dynamicComponentService.addDynamicComponent(viewContainerRef, inputData.componentName, inputData.data);
+      this.dynamicComponentService.addDynamicComponent(viewContainerRef, inputData.componentName, inputData.data, inputData.popupHeaderText);
       // this.handleChangeOfState(this.tempState);
     }
   }

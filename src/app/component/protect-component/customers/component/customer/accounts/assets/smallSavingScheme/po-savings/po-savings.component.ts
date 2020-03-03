@@ -168,12 +168,14 @@ export class PoSavingsComponent implements OnInit {
   }
 
   openAddPOSAVING(data) {
+    let popupHeaderText = !!data ? 'Edit Post office savings a/c' : 'Add Post office savings a/c';
     const fragmentData = {
       flag: 'addPOSAVING',
       data,
       id: 1,
       state: 'open',
-      componentName: AddPoSavingComponent
+      componentName: AddPoSavingComponent,
+      popupHeaderText: popupHeaderText,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

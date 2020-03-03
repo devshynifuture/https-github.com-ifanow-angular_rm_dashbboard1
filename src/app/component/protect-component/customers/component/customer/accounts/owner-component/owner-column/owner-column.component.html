@@ -1,8 +1,8 @@
 <div class="form-group mb-0" [formGroup]="owner">
     <mat-form-field class="w-100">
-        <mat-select formControlName="ownerName" class="form-control br-0">
+        <mat-select formControlName="ownerName" class="form-control br-0" (selectionChange)="getOwnerName()">
             <mat-option value=''>Search family members</mat-option>
-            <mat-option *ngFor="let f of family" [value]="f.userName" (click)="getOwnerName(f)">
+            <mat-option *ngFor="let f of family" [value]="f.userName" >
                 <span>{{f.userName}}</span>
             </mat-option>
         </mat-select>

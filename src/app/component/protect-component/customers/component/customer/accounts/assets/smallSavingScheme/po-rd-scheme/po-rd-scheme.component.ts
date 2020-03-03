@@ -172,12 +172,14 @@ export class PoRdSchemeComponent implements OnInit {
   }
 
   openAddPORD(data) {
+    let popupHeaderText = !!data ? 'Edit Post office recurring deposit (PO RD)' : 'Add Post office recurring deposit (PO RD)';
     const fragmentData = {
       flag: 'addPORD',
       data,
       id: 1,
       state: 'open',
-      componentName: AddPoRdComponent
+      componentName: AddPoRdComponent,
+      popupHeaderText: popupHeaderText,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

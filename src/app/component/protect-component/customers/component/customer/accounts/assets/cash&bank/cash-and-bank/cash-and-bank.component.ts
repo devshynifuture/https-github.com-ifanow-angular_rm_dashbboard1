@@ -226,12 +226,14 @@ export class CashAndBankComponent implements OnInit {
   }
 
   openCashAndBank(data,value) {
+    let popupHeaderText = !!data ? 'Edit bank account' : 'add bank account';
     const fragmentData = {
       flag: value,
       data,
       id: 1,
       state: 'open',
-      componentName: BankAccountsComponent
+      componentName: BankAccountsComponent,
+      popupHeaderText: popupHeaderText,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -240,23 +242,22 @@ export class CashAndBankComponent implements OnInit {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getBankAccountList();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
           }
           rightSideDataSub.unsubscribe();
         }
-        
       }
     );
   }
 
   openCashInHand(data,value) {
+    let popupHeaderText = !!data ? 'Edit Cash In Hand' : 'Add Cash In Hand';
     const fragmentData = {
       flag: value,
       data,
       id: 1,
       state: 'open',
-      componentName: CashInHandComponent
-
+      componentName: CashInHandComponent,
+      popupHeaderText: popupHeaderText,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -265,7 +266,6 @@ export class CashAndBankComponent implements OnInit {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getCashInHandList();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
           }
           rightSideDataSub.unsubscribe();
         }

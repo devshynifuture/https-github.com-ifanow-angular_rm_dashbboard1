@@ -175,12 +175,14 @@ export class PoMisSchemeComponent implements OnInit {
   }
 
   openAddPOMIS(data) {
+    let popupHeaderText = !!data ? 'Edit Post office monthly income scheme (PO MIS)' : 'Add Post office monthly income scheme (PO MIS)';
     const fragmentData = {
       flag: 'addPOMIS',
       data,
       id: 1,
       state: 'open',
-      componentName: AddPoMisComponent
+      componentName: AddPoMisComponent,
+      popupHeaderText: popupHeaderText,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

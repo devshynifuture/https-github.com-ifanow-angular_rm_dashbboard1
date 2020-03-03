@@ -1,7 +1,7 @@
 <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20">ADD PORTFOLIO SUMMARY</h4>
+            <h4 class="mb-0 wrapper-20">{{editApiData?'Edit':'Add'}} portfolio summary</h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -43,7 +43,7 @@
         <div class="col-md-3">
             <div class="form-group form-group_one mb-0">
                 <mat-form-field>
-                    <input matInput (focus)="balanceAsOn.open()" (input)="preventDefault($event)" autocomplete="off"
+                    <input matInput (click)="balanceAsOn.open()" (input)="preventDefault($event)" autocomplete="off"
                         formControlName="valueAsOn" class="form-control br-0" [matDatepicker]="balanceAsOn">
                     <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                     <mat-datepicker #balanceAsOn></mat-datepicker>
