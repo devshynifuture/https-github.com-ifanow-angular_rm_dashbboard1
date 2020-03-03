@@ -41,6 +41,7 @@ import { IncomeDetailedViewComponent } from './profile-plan/income/income-detail
 import { AddInsuranceUpperComponent } from './insurance-plan/add-insurance-upper/add-insurance-upper.component';
 import { SetupTaxPlanningComponent } from './texes-plan/setup-tax-planning/setup-tax-planning.component';
 import { AddHealthInsuranceComponent } from './insurance-plan/add-health-insurance/add-health-insurance.component';
+import { ShowHealthPlanningComponent } from './insurance-plan/show-health-planning/show-health-planning.component';
 
 export const componentList = [
   PreferencesComponent,
@@ -75,6 +76,7 @@ export const componentList = [
   AddInsuranceUpperComponent,
   SetupTaxPlanningComponent,
   AddHealthInsuranceComponent,
+  ShowHealthPlanningComponent,
 ];
 // import { AddPlaninsuranceComponent } from './insurance-plan/add-planinsurance/add-planinsurance.component';
 

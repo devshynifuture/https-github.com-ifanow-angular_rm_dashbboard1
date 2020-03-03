@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { HelthInsurancePolicyComponent } from '../add-insurance-planning/helth-insurance-policy/helth-insurance-policy.component';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { CustomerService } from '../../../customer.service';
+import { UtilService } from 'src/app/services/util.service';
+import { ShowHealthPlanningComponent } from '../show-health-planning/show-health-planning.component';
+import { AddInsuranceUpperComponent } from '../add-insurance-upper/add-insurance-upper.component';
 
 @Component({
   selector: 'app-add-health-insurance',
@@ -8,18 +14,16 @@ import { HelthInsurancePolicyComponent } from '../add-insurance-planning/helth-i
   styleUrls: ['./add-health-insurance.component.scss']
 })
 export class AddHealthInsuranceComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'critical', 'cancer'];
-  dataSource = ELEMENT_DATA;
-  displayedColumns1: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource1 = ELEMENT_DATA1;
+
   displayedColumns2: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'sum', 'mname', 'advice'];
   dataSource2 = ELEMENT_DATA2;
-  showExisting=false;
+  showExisting = false;
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private custumService: CustomerService, private utils: UtilService, private eventService: EventService) { }
   openDialog(): void {
     const dialogRef = this.dialog.open(HelthInsurancePolicyComponent, {
       width: '780px',
+      height: '600px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -28,8 +32,30 @@ export class AddHealthInsuranceComponent implements OnInit {
   }
   ngOnInit() {
   }
-  openExistingPolicy(){
+  openExistingPolicy() {
     this.showExisting = true
+  }
+  close() {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  }
+  showHealthInsurance(data) {
+    this.close();
+    const fragmentData = {
+      flag: 'app-customer',
+      id: 1,
+      data,
+      direction: 'top',
+      componentName: ShowHealthPlanningComponent,
+      state: 'open'
+    };
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getClientSubscriptionList();
+          subscription.unsubscribe();
+        }
+      }
+    );
   }
 }
 
