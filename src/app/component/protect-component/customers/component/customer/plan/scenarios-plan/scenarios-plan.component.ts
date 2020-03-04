@@ -228,27 +228,10 @@ export class ScenariosPlanComponent implements OnInit {
       }]
     });
   }
-  addScenario(data){
-    const fragmentData = {
-      flag: 'opencurrentpolicies',
-      data,
-      componentName: AddScenariosComponent,
-      id: 1,
-      state: 'open',
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          rightSideDataSub.unsubscribe();
-        }
-      }
-    );
-  }
   openDialog(): void {
     const dialogRef = this.dialog.open(AddScenariosComponent, {
       width: '670px',
+      height:'600px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
