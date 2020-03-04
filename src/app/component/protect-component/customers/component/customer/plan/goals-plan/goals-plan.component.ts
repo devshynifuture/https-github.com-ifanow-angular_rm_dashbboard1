@@ -39,149 +39,7 @@ export class GoalsPlanComponent implements OnInit {
 
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'icons'];
   dataSource = ELEMENT_DATA;
-
-  openMfAllocation(data) {
-    console.log('hello mf button clicked');
-    const fragmentData = {
-      flag: 'openMfAllocation',
-      data,
-      componentName: MfAllocationsComponent,
-      id: 1,
-      state: 'open70'
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          rightSideDataSub.unsubscribe();
-
-        }
-      }
-    );
-  }
-  openPreferences(data) {
-    console.log('hello mf button clicked');
-    const fragmentData = {
-      flag: 'openPreferences',
-      data,
-      componentName: PreferencesComponent,
-      id: 1,
-      state: 'open40'
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          rightSideDataSub.unsubscribe();
-
-        }
-      }
-    );
-  }
-  openallocations(data) {
-    console.log('hello mf button clicked');
-    const fragmentData = {
-      flag: 'openallocations',
-      data,
-      componentName: AddGoalComponent,
-      id: 1,
-      state: 'open25'
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          rightSideDataSub.unsubscribe();
-
-        }
-      }
-    );
-  }
-  openKeyinfo(data) {
-    console.log('hello mf button clicked');
-    const fragmentData = {
-      flag: 'openKeyinfo',
-      data,
-      componentName: KeyInfoComponent,
-      id: 1,
-      state: 'open25'
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          rightSideDataSub.unsubscribe();
-
-        }
-      }
-    );
-  }
-  openEdit(data) {
-    console.log('hello mf button clicked');
-    const fragmentData = {
-      flag: 'openEdit',
-      data,
-      componentName: EditNoteGoalComponent,
-      id: 1,
-      state: 'open65'
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          rightSideDataSub.unsubscribe();
-
-        }
-      }
-    );
-  }
-  openView(data) {
-    console.log('hello mf button clicked');
-    const fragmentData = {
-      flag: 'openView',
-      data,
-      componentName: ViewPastnotGoalComponent,
-      id: 1,
-      state: 'open35'
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          rightSideDataSub.unsubscribe();
-
-        }
-      }
-    );
-  }
-
-  openCalculators(data) {
-    console.log('hello mf button clicked');
-    const fragmentData = {
-      flag: 'openCalculators',
-      data,
-      componentName: CalculatorsComponent,
-      id: 1,
-      state: 'open'
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          rightSideDataSub.unsubscribe();
-
-        }
-      }
-    );
-  }
-
+  
   openAddgoals(data) {
     console.log('hello mf button clicked');
     const fragmentData = {
@@ -201,6 +59,61 @@ export class GoalsPlanComponent implements OnInit {
         }
       }
     );
+  }
+
+  openInSideBar(data, flag) {
+    let fragmentData = {
+      flag: flag,
+      id: 1,
+      data,
+      componentName: undefined,
+      state: 'open'
+    };
+
+    switch (flag) {
+      case 'openCalculators':
+        fragmentData.componentName = CalculatorsComponent;
+        break;
+      case 'openPreferences':
+        fragmentData.componentName = PreferencesComponent;
+        fragmentData.state = 'open40';
+        break;
+      case 'openView':
+        fragmentData.componentName = ViewPastnotGoalComponent;
+        fragmentData.state = 'open35';
+        break;
+      case 'openEdit':
+        fragmentData.componentName = EditNoteGoalComponent;
+        fragmentData.state = 'open65';
+        fragmentData.
+        break;
+      case 'openKeyinfo':
+        fragmentData.componentName = KeyInfoComponent;
+        fragmentData.state = 'open25';
+        break;
+      case 'openallocations':
+        fragmentData.componentName = AddGoalComponent;
+        fragmentData.state = 'open25';
+        break;
+      case 'openMfAllocation':
+        fragmentData.componentName = MfAllocationsComponent;
+        fragmentData.state = 'open70';
+        break;
+      default:
+        console.error('Undefiend flag found');
+        return;
+    }
+
+    const subscription = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(sideBarData => {
+        if (UtilService.isDialogClose(sideBarData)) {
+          switch (flag) {
+            case 'openAddgoals':
+              // this.getClientSubscriptionList();
+              break;
+          }
+          subscription.unsubscribe();
+        }
+      });
   }
 }
 
