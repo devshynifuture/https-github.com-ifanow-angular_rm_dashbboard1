@@ -13,6 +13,7 @@ import { TransactionEntryModule } from '../../protect-component/AdviserComponent
 import { SupportEntryModule } from '../../protect-component/SupportComponent/support.entry.module';
 import { SettingEntryModule } from '../../protect-component/AdviserComponent/setting/setting-entry/setting-entry.module';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+import { PeopleEntryModule } from '../../protect-component/PeopleComponent/people/people-entry-module';
 import { ActivitesEntryModule } from '../../protect-component/AdviserComponent/Activities/activites-entry.module';
 
 @NgModule({
@@ -32,10 +33,10 @@ import { ActivitesEntryModule } from '../../protect-component/AdviserComponent/A
     TransactionEntryModule,
     SupportEntryModule,
     SettingEntryModule,
+    PeopleEntryModule,
     ActivitesEntryModule
-
   ],
-  entryComponents: [SubscriptionEntry.getComponentList(), SupportEntryModule.getComponentList(), SettingEntryModule.getComponentList()],
+  entryComponents: [SubscriptionEntry.getComponentList(), SupportEntryModule.getComponentList(), SettingEntryModule.getComponentList(), PeopleEntryModule.getComponentList()],
   providers: [DynamicComponentService]
   // providers: [DynamicComponentService]
 })

@@ -7,13 +7,18 @@ import { PeopleClientsComponent } from './Component/people-clients/people-client
 import { PeopleLeadsComponent } from './Component/people-leads/people-leads.component';
 import { PeopleTeamMembersComponent } from './Component/people-team-members/people-team-members.component';
 import { PeopleSubBrokersComponent } from './Component/people-sub-brokers/people-sub-brokers.component';
+import { MaterialModule } from 'src/app/material/material';
+import { PeopleEntryModule } from './people-entry-module';
 
 
 @NgModule({
-  declarations: [PeopleComponent, PeopleClientsComponent, PeopleLeadsComponent, PeopleTeamMembersComponent, PeopleSubBrokersComponent],
+  declarations: [PeopleComponent, PeopleClientsComponent, PeopleLeadsComponent,
+    PeopleTeamMembersComponent, PeopleSubBrokersComponent,],
   imports: [
     CommonModule,
-    PeopleRoutingModule
+    PeopleRoutingModule,
+    MaterialModule,
+    PeopleEntryModule
   ]
 })
 export class PeopleModule { }

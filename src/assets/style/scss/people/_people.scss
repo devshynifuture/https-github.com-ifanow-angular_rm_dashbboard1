@@ -1,0 +1,84 @@
+.people-clients,
+.people-leads {
+  tr.mat-header-row {
+    height: 44px;
+  }
+
+
+
+  #table-low {
+    tr.mat-row {
+      height: 34px !important;
+    }
+
+    tbody td {
+      padding: 4px 8px !important;
+    }
+  }
+}
+
+.people-team-member {
+  tr.mat-header-row {
+    height: 44px;
+  }
+
+  #table-low {
+    tr.mat-row {
+      height: 36px !important;
+    }
+
+    tbody td {
+      padding: 6px 8px !important;
+    }
+  }
+}
+
+#ui-add-client {
+  .mat-tab-label {
+    height: 40px !important;
+    font-weight: 400;
+  }
+
+  .mat-tab-body-wrapper {
+    border: 1px solid #e9eaec;
+    margin-top: -1px;
+  }
+
+  .mat-ink-bar {
+    display: none;
+  }
+
+  .mat-tab-label-active {
+    border: 1px solid #e9eaec;
+    border-bottom: 0 !important;
+    opacity: initial;
+    background: #fff;
+    color: #212121;
+  }
+
+  .mat-tab-header {
+    border-bottom: 0 !important;
+  }
+
+  .mat-tab-body-content {
+    overflow: hidden;
+  }
+
+  .mat-radio-button:nth-child(1) {
+    min-width: 90px;
+  }
+
+  .mat-radio-button:nth-child(2) {
+    min-width: 120px;
+  }
+
+  .mat-radio-button:nth-child(3) {
+    min-width: 100px;
+  }
+
+  .mat-radio-label {
+    height: 40px;
+    padding-left: 6px !important;
+
+  }
+}
