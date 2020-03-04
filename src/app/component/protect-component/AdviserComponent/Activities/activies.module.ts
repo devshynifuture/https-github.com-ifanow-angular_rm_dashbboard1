@@ -12,13 +12,17 @@ import { CrmTasksComponent } from './crm-tasks/crm-tasks.component';
 import { CrmOpportunitiesComponent } from './crm-opportunities/crm-opportunities.component';
 
 
+
+
 @NgModule({
-  declarations: [ActiviesComponent, AdviceComponent, CrmNotesComponent, CrmActionPlansComponent, CrmTasksComponent, CrmOpportunitiesComponent],
+  declarations: [ActiviesComponent, AdviceComponent, CrmNotesComponent,
+    CrmActionPlansComponent, CrmTasksComponent, CrmOpportunitiesComponent],
   imports: [
     CommonModule,
     MaterialModule,
     CalendarModule,
     ActiviesRoutingModule
-  ]
+  ],
+  entryComponents: []
 })
 export class ActiviesModule { }

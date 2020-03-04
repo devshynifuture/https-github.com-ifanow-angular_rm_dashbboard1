@@ -103,13 +103,12 @@ export class OthersComponent implements OnInit {
       ownerName: [(data.ownerName == undefined) ? '' : data.ownerName, [Validators.required]],
       typeOfCommodity: [(data.commodityTypeId == undefined) ? '' : (data.commodityTypeId) + '', [Validators.required]],
       marketValue: [(data.marketValue == undefined) ? '' : (data.marketValue), [Validators.required]],
-      purchaseValue: [(data.purchaseValue == undefined) ? '' : (data.purchaseValue), [Validators.required]],
-      interestRate: [(data.interestRate == undefined) ? '' : data.interestRate, [Validators.required]],
-      dateOfPurchase: [(data.dateOfPurchase == undefined) ? '' : new Date(data.dateOfPurchase), [Validators.required]],
-      growthRate: [(data.growthRate == undefined) ? '' : data.growthRate, [Validators.required]],
-      description: [(data.description == undefined) ? '' : data.description, [Validators.required]],
-      id: [(data.id == undefined) ? '' : data.id, [Validators.required]],
-      familyMemberId: [[(data.familyMemberId == undefined) ? '' : data.familyMemberId], [Validators.required]]
+      purchaseValue: [(data.purchaseValue == undefined) ? '' : (data.purchaseValue),],
+      dateOfPurchase: [(data.dateOfPurchase == undefined) ? '' : new Date(data.dateOfPurchase)],
+      growthRate: [(data.growthRate == undefined) ? '' : data.growthRate,],
+      description: [(data.description == undefined) ? '' : data.description,],
+      id: [(data.id == undefined) ? '' : data.id,],
+      familyMemberId: [[(data.familyMemberId == undefined) ? '' : data.familyMemberId],]
     });
     // this.othersNominee = this.fb.group({})
     this.ownerData = this.others.controls;
@@ -126,6 +125,7 @@ export class OthersComponent implements OnInit {
   }
 
   saveOthers() {
+    console.log("form group ::::::::::::", this.others);
     if (this.others.get('ownerName').invalid) {
       this.others.get('ownerName').markAsTouched();
       return;
