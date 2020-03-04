@@ -28,6 +28,7 @@ export class AddPlaninsuranceComponent implements OnInit {
       let data = this._inputData
       this.subInjectService.changeNewRightSliderState({state: 'close', data});
     }
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 
 }
