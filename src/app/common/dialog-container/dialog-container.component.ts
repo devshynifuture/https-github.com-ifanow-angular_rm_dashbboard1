@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, ViewContainerRef, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ViewContainerRef, OnDestroy, ElementRef, AfterViewInit } from '@angular/core';
 import { EventService } from '../../Data-service/event.service';
 import { SubscriptionInject } from '../../component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { DynamicComponentService } from '../../services/dynamic-component.service';
@@ -17,7 +17,7 @@ import { Subscription } from 'rxjs';
   ]
 })
 //
-export class DialogContainerComponent implements OnInit, OnDestroy {
+export class DialogContainerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('dynamic', {
     read: ViewContainerRef,
@@ -28,6 +28,15 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
     read: ViewContainerRef,
     static: true
   }) viewContainerRefUpper: ViewContainerRef;
+
+  @ViewChild('overlay', {
+    read: ElementRef,
+    static: false
+  }) overlay;
+
+  ngAfterViewInit(){
+    console.log('sagar', this.overlay);
+  }
 
   @Input() parentComponentName;
   invoiceHisData: any;
@@ -66,6 +75,8 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
     // );
     this.upperSliderDataObsSubscription = this.eventService.upperSliderDataObs.subscribe(
       data => {
+    console.log('sagar', this.overlay);
+
         console.log(this.componentName + ' DialogContainerComponent upper slider Subscription data', data);
 
         const tempData: any = data;
@@ -80,7 +91,8 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
       }
     );
     this.newRightSliderDataObsSubscription = this.subinject.newRightSliderDataObs.subscribe((data) => {
-      const tempData: any = data;
+    console.log('sagar', this.overlay);
+    const tempData: any = data;
       if (tempData.componentName) {
         this.openDynamicComponent(data);
       }
@@ -183,5 +195,9 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
 
     this.newRightSliderDataObsSubscription.unsubscribe();
     // throw new Error("Method not implemented.");
+  }
+
+  close(){
+    this.subinject.changeNewRightSliderState({ state: 'close' });
   }
 }

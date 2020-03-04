@@ -175,7 +175,7 @@
 </div>
 
 
-<div *ngIf="isOverlayVisible" [@dialogContainer]="upperState" class="custom-overlay">
+<div *ngIf="isOverlayVisible" [@dialogContainer]="upperState" class="custom-overlay" (click)="close()">
 </div>
 <div [@upperSliderOpenClose]="upperState" class="upper_slider">
     <ng-template #dynamicUpper></ng-template>
