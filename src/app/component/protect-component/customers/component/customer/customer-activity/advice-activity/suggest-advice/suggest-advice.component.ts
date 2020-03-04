@@ -268,6 +268,12 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
       case this.childComponentFlag === 'adviceNPSSchemeHolding' && componentRefComponentValues.schemeHoldingsNPS.valid:
         componentRefFormValues = componentRefComponentValues.schemeHoldingsNPS.value;
         break;
+      case this.childComponentFlag === 'adviceGratuity' && componentRefComponentValues.gratuity.valid:
+        componentRefFormValues = componentRefComponentValues.gratuity.value;
+        break;
+      case this.childComponentFlag === 'adviceSuperAnnuation' && componentRefFormValues.superannuation.valid:
+        componentRefFormValues = componentRefComponentValues.superannuation.value;
+        break;
     }
 
     // console.log(this.adviceForm);
