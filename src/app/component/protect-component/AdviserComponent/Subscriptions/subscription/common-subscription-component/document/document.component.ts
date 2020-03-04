@@ -12,6 +12,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { CommonFroalaComponent } from '../common-froala/common-froala.component';
 import { EmailOnlyComponent } from '../email-only/email-only.component';
+import { Router } from '@angular/router';
 // import { window } from 'rxjs/operators';
 
 // import {element} from 'protractor';
@@ -88,7 +89,7 @@ export class DocumentComponent implements OnInit {
 
   constructor(public subInjectService: SubscriptionInject,
     private eventService: EventService, public dialog: MatDialog, private subService: SubscriptionService,
-    public subscription: SubscriptionService) {
+    public subscription: SubscriptionService, private router: Router) {
     // this.subInjectService.rightSliderDocument.subscribe(
     //   data => this.getDocumentsDesignData(data)
     // );
@@ -302,7 +303,10 @@ export class DocumentComponent implements OnInit {
       planId: this.upperData.id
     };
     this.subService.getPlanDocumentsData(obj).subscribe(
-      data => this.getplanDocumentDataResponse(data)
+      data => this.getplanDocumentDataResponse(data), error => {
+        this.isLoading = false;
+        this.planDocumentData = [];
+      }
     );
 
   }
@@ -815,6 +819,7 @@ export class DocumentComponent implements OnInit {
 
   saveMappingDocumentToPlansResponse(data) {
     console.log("response status:::::::::::::::", data);
+    
     this.changeServiceData.emit(true);
     // this.eventService.changeUpperSliderState({ state: 'close' });
     if (this.mappedData.length == 0) {
@@ -822,6 +827,8 @@ export class DocumentComponent implements OnInit {
     } else {
       this.eventService.openSnackBar('Document is mapped', 'OK');
     }
+    this.router.navigate(['/admin/subscription/settings','plans']);
+    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired:true });
     this.barButtonOptions.active = false;
   }
 
@@ -899,6 +906,8 @@ export class DocumentComponent implements OnInit {
       this.eventService.openSnackBar('Documents mapped', 'OK');
     }
     this.changeServiceData.emit(true);
+    this.router.navigate(['/admin/subscription/settings','services']);
+    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired:true });
   }
 
   selectAll(event) {
