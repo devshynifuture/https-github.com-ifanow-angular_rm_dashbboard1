@@ -59,7 +59,7 @@ import { HelthInsurancePolicyComponent } from './insurance-plan/add-insurance-pl
     PlanComponent,
     // SummaryPlanComponent,
     // ProfilePlanComponent,
-    // InsurancePlanComponent,
+    InsurancePlanComponent,
     // GoalsPlanComponent,
     CashflowsPlanComponent,
     DeploymentsPlanComponent,
@@ -99,7 +99,7 @@ import { HelthInsurancePolicyComponent } from './insurance-plan/add-insurance-pl
   ],
   // exports: [PlanComponent, AddScenariosComponent, AddInvestmentPlanComponent,
   //   AddProfilePlanComponent, HistoryRiskProfileComponent, RiskProfileComponent],
-  entryComponents: [ ManageDeploymentComponent, ManageExclusionsComponent]
+  entryComponents: [ManageDeploymentComponent, ManageExclusionsComponent]
 })
 export class PlanModule {
 }

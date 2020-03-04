@@ -12,6 +12,12 @@ import { AddSuggestPolicyComponent } from '../../add-suggest-policy/add-suggest-
   styleUrls: ['./life-insurance.component.scss']
 })
 export class LifeInsuranceComponent implements OnInit {
+  displayedColumns = ['pname', 'sum2', 'premium2', 'status', 'empty'];
+  dataSource = ELEMENT_DATA;
+  displayedColumns1 = ['name', 'sum', 'premium', 'returns', 'advice'];
+  dataSource1 = ELEMENT_DATA1;
+  displayedColumns2 = ['name', 'annual', 'amt', 'icons'];
+  dataSource2 = ELEMENT_DATA2;
   inputData: any;
   setLogo = [{
     heading: 'Life insurance',
@@ -101,3 +107,45 @@ export class LifeInsuranceComponent implements OnInit {
     );
   }
 }
+export interface PeriodicElement {
+  name: string;
+  position: string;
+  weight: string;
+  symbol: string;
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  { position: "HDFC Ergo My Health Suraksha", name: '7,00,000', weight: "19,201", symbol: 'Waiting for approval' },
+];
+
+export interface PeriodicElement1 {
+  name: string;
+  sum: string;
+  premium: string;
+  returns: string;
+  advice: string;
+}
+
+const ELEMENT_DATA1: PeriodicElement1[] = [
+  { name: "LIC Jeevan Saral", sum: '20,00,000', premium: "27,000", returns: '4.78%', advice: 'Stop paying premiums' },
+];
+
+export interface PeriodicElement2 {
+
+  name: string;
+  annual: string;
+  amt: string;
+
+}
+
+const ELEMENT_DATA2: PeriodicElement2[] = [
+  { name: "LIC Jeevan Saral", annual: "-", amt: '12,000,00' },
+  { name: "LIC Jeevan Saral", annual: "-", amt: '12,000,00' },
+  { name: "LIC Jeevan Saral", annual: "-", amt: '12,000,00' },
+  { name: "LIC Jeevan Saral", annual: "-", amt: '12,000,00' },
+  { name: "LIC Jeevan Saral", annual: "-", amt: '12,000,00' },
+  { name: "LIC Jeevan Saral", annual: "-", amt: '12,000,00' },
+  { name: "LIC Jeevan Saral", annual: "-", amt: '12,000,00' },
+  { name: "LIC Jeevan Saral", annual: "-", amt: '12,000,00' },
+
+];

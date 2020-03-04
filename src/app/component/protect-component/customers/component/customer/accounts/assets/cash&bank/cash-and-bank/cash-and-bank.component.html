@@ -154,7 +154,8 @@
             <div *ngIf="bankAccountList.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12">{{noData}}</h4>
-                <button (click)="openCashAndBank('','')" class="btn-primary addon v-middle" mat-stroked-button>ADD NEW
+                <button (click)="openAddEdit('', 'bankAccount')" class="btn-primary addon v-middle"
+                    mat-stroked-button>ADD NEW
                 </button>
             </div>
         </div>
@@ -270,7 +271,8 @@
             <div *ngIf="cashInHandList.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12">{{noData}}</h4>
-                <button (click)="openAddEdit('', '')" class="btn-primary addon v-middle" mat-stroked-button>ADD
+                <button (click)="openAddEdit('', 'cashInHand')" class="btn-primary addon v-middle"
+                    mat-stroked-button>ADD
                     NEW
                 </button>
             </div>
