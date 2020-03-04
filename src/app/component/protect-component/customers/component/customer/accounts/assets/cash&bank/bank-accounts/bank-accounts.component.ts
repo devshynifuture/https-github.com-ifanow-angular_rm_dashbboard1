@@ -97,6 +97,7 @@ export class BankAccountsComponent implements OnInit {
     // // (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
     if (data == undefined) {
       data = {}
+      this.flag = "addBANK";
     }
     else {
       this.flag = "editBANK";
@@ -176,7 +177,7 @@ export class BankAccountsComponent implements OnInit {
         stringObject: obj,
         adviceDescription: "manualAssetDescription"
       }
-      if (this.bankAccounts.controls.id.value == "" && this.flag != 'adviceBankAccount') {
+      if (this.flag == "addBANK") {
         this.custumService.addBankAccounts(obj).subscribe(
           data => this.addBankAccountsRes(data)
         );
