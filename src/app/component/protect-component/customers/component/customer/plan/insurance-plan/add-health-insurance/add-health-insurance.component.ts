@@ -102,11 +102,11 @@ export class AddHealthInsuranceComponent implements OnInit {
   openExistingPolicy() {
     this.showExisting = true
   }
-  close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  close(data) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data});
   }
   showHealthInsurance(data) {
-    this.close();
+    this.close(data);
     const fragmentData = {
       flag: 'app-customer',
       id: 1,
