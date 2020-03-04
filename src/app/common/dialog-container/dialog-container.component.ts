@@ -17,7 +17,7 @@ import { Subscription } from 'rxjs';
   ]
 })
 //
-export class DialogContainerComponent implements OnInit, OnDestroy, AfterViewInit {
+export class DialogContainerComponent implements OnInit, OnDestroy {
 
   @ViewChild('dynamic', {
     read: ViewContainerRef,
@@ -28,15 +28,6 @@ export class DialogContainerComponent implements OnInit, OnDestroy, AfterViewIni
     read: ViewContainerRef,
     static: true
   }) viewContainerRefUpper: ViewContainerRef;
-
-  @ViewChild('overlay', {
-    read: ElementRef,
-    static: false
-  }) overlay;
-
-  ngAfterViewInit(){
-    console.log('sagar', this.overlay);
-  }
 
   @Input() parentComponentName;
   invoiceHisData: any;
@@ -75,8 +66,6 @@ export class DialogContainerComponent implements OnInit, OnDestroy, AfterViewIni
     // );
     this.upperSliderDataObsSubscription = this.eventService.upperSliderDataObs.subscribe(
       data => {
-    console.log('sagar', this.overlay);
-
         console.log(this.componentName + ' DialogContainerComponent upper slider Subscription data', data);
 
         const tempData: any = data;
@@ -91,7 +80,6 @@ export class DialogContainerComponent implements OnInit, OnDestroy, AfterViewIni
       }
     );
     this.newRightSliderDataObsSubscription = this.subinject.newRightSliderDataObs.subscribe((data) => {
-    console.log('sagar', this.overlay);
     const tempData: any = data;
       if (tempData.componentName) {
         this.openDynamicComponent(data);
