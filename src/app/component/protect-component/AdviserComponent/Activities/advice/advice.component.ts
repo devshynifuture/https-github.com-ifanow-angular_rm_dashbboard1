@@ -6,12 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./advice.component.scss']
 })
 export class AdviceComponent implements OnInit {
-  displayedColumns: string[] = ['checkbox', 'client', 'cat', 'des', 'assige', 'due', 'status', 'icons'];
+  displayedColumns: string[] = ['checkbox', 'client', 'cat', 'des', 'value', 'advice', 'status', 'date', 'icons'];
   dataSource = ELEMENT_DATA;
   constructor() { }
 
   ngOnInit() {
-    console.log('test')
+
   }
 
 }
@@ -19,12 +19,13 @@ export interface PeriodicElement {
   client: string;
   cat: string;
   des: string;
-  assige: string;
-  due: string;
-  status: string
+  value: string;
+  advice: string;
+  status: string;
+  date: string;
+  icons: string;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { client: 'Rahul Jain', cat: 'Mutual Funds', des: 'MF rebalancing', assige: 'Rahul Jain', due: '05/09/2019', status: 'OVERDUE' },
-
+  { client: 'Rahul Jain', cat: 'Mutual Funds', des: 'HDFC Equity fund - Regular plan - Growth option | 098098883', value: 'Rahul Jain', advice: 'STP 5,000/month to HDFC Dynamic bond fund regular plan monthly dividend', status: 'ACCEPTED', date: '05/09/2019', icons: '' },
 ];
