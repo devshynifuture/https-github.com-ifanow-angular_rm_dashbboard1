@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 import { AddArnRiaCredentialsComponent } from './add-arn-ria-credentials/add-arn-ria-credentials.component';
@@ -6,7 +6,7 @@ import { OnlineTransactionService } from '../../../online-transaction.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
@@ -15,11 +15,13 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
   styleUrls: ['./arn-ria-credentials.component.scss']
 })
 export class ArnRiaCredentialsComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'aid', 'mid', 'apip', 'euin', 'set', 'icons'];
-  dataSource: Array<any> = [{}, {}, {}];
-  advisorId: any;
+  displayedColumns: string[] = ['position', 'name', 'weight', 'aid', 'euin', 'set', 'icons'];
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);  advisorId: any;
   brokerCredentials: any;
   noData: string;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+
   constructor(private eventService: EventService, private onlineTransact: OnlineTransactionService,
      private utilService: UtilService, private subInjectService: SubscriptionInject,
      private customerService: CustomerService, public dialog: MatDialog) { }
@@ -48,6 +50,11 @@ export class ArnRiaCredentialsComponent implements OnInit {
     console.log('getBSECredentialsRes', data)
     this.brokerCredentials = data
   }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.sort = this.sort;
+  }
   getBSESubBrokerCredentials() {
     let obj = {
       advisorId: this.advisorId,
@@ -57,7 +64,7 @@ export class ArnRiaCredentialsComponent implements OnInit {
     this.onlineTransact.getBSESubBrokerCredentials(obj).subscribe(
       data => this.getBSESubBrokerCredentialsRes(data), (error) => {
         this.eventService.showErrorMessage(error);
-        this.dataSource = [];
+        this.dataSource.data = [];
         this.isLoading = false;
       }
     );
@@ -66,7 +73,7 @@ export class ArnRiaCredentialsComponent implements OnInit {
     this.isLoading = false;
     if (data == undefined || data.length == 0) {
       this.noData = "No scheme found";
-      this.dataSource = [];
+      this.dataSource.data = [];
     } else {
       console.log('getBSESubBrokerCredentialsRes', data)
       this.brokerCredentials.forEach(function (ad) {
@@ -79,7 +86,8 @@ export class ArnRiaCredentialsComponent implements OnInit {
           ad.subBrokerCode = subBrokerMatch.subBrokerCode
         }
       })
-      this.dataSource = this.brokerCredentials
+      this.dataSource.data = this.brokerCredentials
+      this.dataSource.sort = this.sort;
       console.log('subBrokerMatch', this.dataSource)
     }
   }
