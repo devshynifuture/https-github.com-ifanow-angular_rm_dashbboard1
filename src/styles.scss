@@ -521,8 +521,7 @@
         
         #ui-subscriptions,
         #ui-setting,
-        #uiTransactions,
-        #ui-people {
+        #uiTransactions{
             .mat-tab-link {
                 color: #595252 !important;
                 border-bottom: 4px solid transparent;
@@ -1580,3 +1579,25 @@
                         font-size: 14px;
                     }
                 }
+
+
+
+    #ui-people {
+        .mat-tab-link {
+            color: #595252 !important;
+            border-bottom: 4px solid transparent;
+            min-width: 80px;
+            background: transparent !important;
+            font-family: "roboto" !important;
+            letter-spacing: 0.75px !important;
+            opacity: 1 !important;
+            height: 60px !important;
+            padding-right: 10px;
+            padding-left: 10px;
+        }
+        .mat-tab-link.active {
+            background-color: transparent !important;
+            border-bottom: 4px solid #008FFF !important;
+            color: #008FFF !important;
+        }
+    }
