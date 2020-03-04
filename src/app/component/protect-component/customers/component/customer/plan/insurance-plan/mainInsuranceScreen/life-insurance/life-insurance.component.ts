@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AddPlaninsuranceComponent } from '../../add-planinsurance/add-planinsurance.component';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -12,12 +12,59 @@ import { AddSuggestPolicyComponent } from '../../add-suggest-policy/add-suggest-
   styleUrls: ['./life-insurance.component.scss']
 })
 export class LifeInsuranceComponent implements OnInit {
+  inputData: any;
+  setLogo = [{
+    heading: 'Life insurance',
+    logo: '/assets/images/svg/LIbig.svg',
 
+  }, {
+    heading: 'Health insurance',
+    logo: '/assets/images/svg/HIbig.svg',
+
+  }, {
+    heading: 'Critical illness',
+    logo: '/assets/images/svg/CIbig.svg',
+
+  }, {
+    heading: 'Cancer care',
+    logo: '/assets/images/svg/CCbig.svg',
+
+  }, {
+    heading: 'Personal accident',
+    logo: '/assets/images/svg/PAbig.svg',
+
+  }, {
+    heading: 'Fire insurance',
+    logo: '/assets/images/svg/Fibig.svg',
+  }, {
+    heading: 'Householders',
+    logo: '/assets/images/svg/Hbig.svg'
+  }]
+  logo: any;
+  getData: any;
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private utils: UtilService, private eventService: EventService) { }
 
-  ngOnInit() {
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    this.setDetails(data)
   }
-  needAnalysis(data){
+
+  get data() {
+    return this.inputData;
+  }
+  ngOnInit() {
+    console.log('inputData', this.inputData)
+  }
+  setDetails(data) {
+    this.getData = data
+    this.setLogo.forEach(element => {
+      if (element.heading == data.heading) {
+        this.logo = element.logo
+      }
+    });
+  }
+  needAnalysis(data) {
     const fragmentData = {
       flag: 'opencurrentpolicies',
       data,
@@ -35,7 +82,7 @@ export class LifeInsuranceComponent implements OnInit {
       }
     );
   }
-  suggestPolicy(data){
+  suggestPolicy(data) {
     const fragmentData = {
       flag: 'opencurrentpolicies',
       data,

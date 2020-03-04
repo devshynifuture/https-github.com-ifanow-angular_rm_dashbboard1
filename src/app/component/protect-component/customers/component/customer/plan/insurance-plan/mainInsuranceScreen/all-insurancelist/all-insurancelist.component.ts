@@ -26,45 +26,50 @@ export class AllInsurancelistComponent implements OnInit {
   insuranceList = [{
     heading:'Life insurance',
     advice:'1,80,00,000',
-    logo:'/assets/images/svg/life-insurance.svg',
+    logo:'/assets/images/svg/LIsmall.svg',
     familyMem :'Rahul Jain',
   }, {
     heading:'Health insurance',
     advice:'1,80,00,000',
-    logo:'/assets/images/svg/helth-insurance.svg',
+    logo:'/assets/images/svg/HIsmall.svg',
     familyMem :'Rahul Jain,Shilpa Jain',
   }, {
     heading:'Critical illness',
     advice:'1,80,00,000',
-    logo:'/assets/images/svg/Criticalillness.svg',
+    logo:'/assets/images/svg/CIsmall.svg',
     familyMem :'Rahul Jain',
   },{
     heading:'Cancer care',
     advice:'1,80,00,000',
-    logo:'/assets/images/svg/Cancercare.svg',
+    logo:'/assets/images/svg/CCsmall.svg',
     familyMem :'Rahul Jain',
   },{
     heading:'Personal accident',
     advice:'1,80,00,000',
-    logo:'/assets/images/svg/Personalaccident.svg',
+    logo:'/assets/images/svg/PAsmall.svg',
     familyMem :'Rahul Jain',
   },{
     heading:'Fire insurance',
     advice:'1,80,00,000',
-    logo:'/assets/images/svg/Householders.svg',
+    logo:'/assets/images/svg/FIsmall.svg',
     familyMem :'Rahul Jain',
   },{
     heading:'Householders',
     advice:'1,80,00,000',
-    logo:'/assets/images/svg/Fireinsurance.svg',
+    logo:'/assets/images/svg/Hsmall.svg',
     familyMem :'Rahul Jain',
   }]
+  detailsInsurance: any;
   constructor(private subInjectService: SubscriptionInject, private eventService: EventService) {
   }
 
   isLoading = true;
 
   ngOnInit() {
+    this.detailsInsurance = this.insuranceList[0]
+  }
+  openDetailsInsurance(insurance){
+    this.detailsInsurance = insurance
   }
   addnewinsurance(data) {
     console.log('hello mf button clicked');
