@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-calculators',
@@ -8,10 +9,23 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./calculators.component.scss']
 })
 export class CalculatorsComponent implements OnInit {
-  calculator: FormGroup;
   
   @Input() data: any = {};
   @Input() popupHeaderText: string = 'CALCULATORS - NEW HOUSE';
+  
+  incomeFG: FormGroup;
+  loanFG: FormGroup;
+  
+  maxAmtAvailable: number = 3481356;
+  incomeInGoalYr: number = 241577;
+  highestLoanAvailable: number = 3481356;
+  highestEMIAvailable: number = 120788;
+  loanToBeTaken: number = 3481356;
+  emiPayable: number = 120788;
+  originalGoalAmt: number = 3481356;
+  dwnPaymentAmt: number = 120788;
+  monthlyReq: number = 3481356;
+  lumpsumReq: number = 120788;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -19,18 +33,50 @@ export class CalculatorsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getdataForm();
+
+    // TODO:- remove the below method if no use found.
+    this.incomeFG.valueChanges.pipe(
+      debounceTime(300),
+    ).subscribe(() => {
+      if(this.incomeFG.valid) {
+        console.log('Wow it works!!!!');
+      }
+    })
   }
 
 
-  getdataForm(data) {
-    this.calculator = this.fb.group({
-      income: [data ? data.income : '', [Validators.required, Validators.pattern('[0-9]*')]],
-      growthRate: [data ? data.growth : '', [Validators.required, Validators.pattern('^\d+(\.\d{1,2})?$')]],
-      otherEMI: [data ? data.otherEMI : '', [Validators.required, Validators.pattern('[0-9]*')]],
-      loanAmt: [data ? data.loanAmt : '', [Validators.required, Validators.pattern('[0-9]*')]],
-      loanTenure: [data ? data.loanTenure : '', [Validators.required, Validators.pattern('[0-9]*')]],
-      interestRate: [data ? data.interestRate : '', [Validators.required, Validators.pattern('^\d+(\.\d{1,2})?$')]],
+  getdataForm() {
+    this.incomeFG = this.fb.group({
+      income: [this.data ? this.data.income : '', [Validators.required, Validators.pattern('[0-9]*')]],
+      growthRate: [this.data ? this.data.growth : '', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
+      otherEMI: [this.data ? this.data.otherEMI : '', [Validators.required, Validators.pattern('[0-9]*')]],
     });
+    this.loanFG = this.fb.group({
+      loanAmt: [this.data ? this.data.loanAmt : '', [Validators.required, Validators.pattern('[0-9]*')]],
+      loanTenure: [this.data ? this.data.loanTenure : '', [Validators.required, Validators.pattern('[0-9]*')]],
+      interestRate: [this.data ? this.data.interestRate : '', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
+    })
+  }
+
+  calculate(){
+    if(this.incomeFG.invalid || this.loanFG.invalid) {
+      this.incomeFG.markAllAsTouched();
+      this.loanFG.markAllAsTouched();
+    } else {
+
+    }
+  }
+
+  saveToGoal(){
+    if(this.incomeFG.valid && this.loanFG.valid) {
+      // combine previous data if needed
+      let data = {
+        ...this.data,
+      }
+  
+      this.subInjectService.changeNewRightSliderState({ state: 'close', data: data, refreshRequired: true })
+    }
   }
 
   close() {

@@ -11,6 +11,7 @@ import { AddGoalsComponent } from '../add-goals/add-goals.component';
 import { EventService } from 'src/app/Data-service/event.service';
 import { EditNoteGoalComponent } from './edit-note-goal/edit-note-goal.component';
 import { ViewPastnotGoalComponent } from './view-pastnot-goal/view-pastnot-goal.component';
+import { PlanService } from '../plan.service';
 
 export interface PeriodicElement {
   position: string;
@@ -31,7 +32,10 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class GoalsPlanComponent implements OnInit {
 
-  constructor(private subInjectService: SubscriptionInject, private eventService: EventService, ) {
+  constructor(
+    private subInjectService: SubscriptionInject, 
+    private eventService: EventService, 
+    private plansService: PlanService) {
   }
   isLoading = false;
   ngOnInit() {
@@ -85,7 +89,7 @@ export class GoalsPlanComponent implements OnInit {
       case 'openEdit':
         fragmentData.componentName = EditNoteGoalComponent;
         fragmentData.state = 'open65';
-        fragmentData.
+        // fragmentData['popupHeaderText'] = '';
         break;
       case 'openKeyinfo':
         fragmentData.componentName = KeyInfoComponent;
@@ -106,10 +110,14 @@ export class GoalsPlanComponent implements OnInit {
 
     const subscription = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
-          switch (flag) {
-            case 'openAddgoals':
-              // this.getClientSubscriptionList();
-              break;
+          if(UtilService.isRefreshRequired(sideBarData)) {
+            switch (flag) {
+              case 'openCalculators':
+                // TODO:- add the save data method and then show snackbar
+                // sideBarData.data is the form value
+                this.eventService.openSnackBar('Goal calculation added successfully', 'OK');
+                break;
+            }
           }
           subscription.unsubscribe();
         }
