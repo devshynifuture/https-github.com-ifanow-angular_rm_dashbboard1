@@ -92,12 +92,12 @@ export class AddPoRdComponent implements OnInit {
     this.nomineesList = data.controls
   }
   getdataForm(data) {
-    this.flag = data;
-    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
     if (data == undefined) {
       data = {};
+      this.flag = "addPORD";
     } else {
-      this.editApi = data;
+      (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : this.editApi = data;
+      this.flag = "editPORD";
     }
     this.pordData = data;
     this.PORDForm = this.fb.group({
@@ -142,11 +142,13 @@ export class AddPoRdComponent implements OnInit {
       });
     }
     if (this.PORDForm.invalid) {
-      this.PORDForm.get('ownerName').markAsTouched();
-      this.PORDForm.get('monthlyContribution').markAsTouched();
-      this.PORDForm.get('tenure').markAsTouched();
-      this.PORDForm.get('commDate').markAsTouched();
-      this.PORDForm.get('ownership').markAsTouched();
+      for (let element in this.PORDForm.controls) {
+        console.log(element)
+        if (this.PORDForm.controls[element].invalid) {
+          this.PORDForm.controls[element].markAsTouched();
+          return;
+        }
+      }
     } else {
       const obj = {
         clientId: this.clientId,
@@ -165,7 +167,7 @@ export class AddPoRdComponent implements OnInit {
         isActive: 1,
         id: this.editApi.id
       };
-      if (this.editApi.id) {
+      if (this.flag == "editPORD") {
         this.cusService.editPORD(obj).subscribe(
           data => this.addPORDResponse(data),
           error => this.eventService.showErrorMessage(error)
@@ -196,7 +198,7 @@ export class AddPoRdComponent implements OnInit {
     this.close(true);
   }
   addPORDResponse(data) {
-    (this.editApi) ? this.eventService.openSnackBar('PO_RD is edited', 'Dismiss') : this.eventService.openSnackBar('PO_RD is added', 'added');
+    (this.flag = "editPORD") ? this.eventService.openSnackBar('PO_RD is edited', 'Dismiss') : this.eventService.openSnackBar('PO_RD is added', 'Dismiss');
     console.log(data);
     this.close(true);
   }

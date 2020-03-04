@@ -26,12 +26,14 @@
                     <div class="form-group">
                         <mat-form-field>
                             <input matInput [value]="healthInsurance.get('selectAdvice').value" class="form-control" formControlName="adviceHeader">
+                            <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
                     <p class="m-0 text-black pb-8">Advice rationale</p>
                     <div class="form-group">
                         <mat-form-field>
                             <textarea matInput rows="6" class="form-control" formControlName="adviceRationale"></textarea>
+                            <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
                     <p class="m-0 text-black pb-8 pt-110">Advice status</p>
@@ -39,6 +41,7 @@
                         <mat-form-field>
                             <input matInput class="form-control" value="Given"
                                 formControlName="adviceStatus">
+                                <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
                     <p class="m-0">Consent option<img src="/assets/images/svg/info.svg"></p>
@@ -65,6 +68,7 @@
                                 formControlName="adviceHeaderDate">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
+                            <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
                     <p class="m-0 text-black pb-8">Implementation date</p>
@@ -74,6 +78,7 @@
                                 formControlName="implementationDate">
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                             <mat-datepicker #picker1></mat-datepicker>
+                            <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
