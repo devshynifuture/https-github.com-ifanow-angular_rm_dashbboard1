@@ -1,37 +1,37 @@
 <div id="ui-customer-container">
 
-  <div class="col-md-12">
-    <h1 *ngIf="!clientId">Please select client</h1>
-    <div *ngIf="isOverlayVisible" [@dialogContainer]="dialogState" class="custom-overlay" (click)="close()">
+    <div class="col-md-12">
+        <h1 *ngIf="!clientId">Please select client</h1>
+        <div *ngIf="isOverlayVisible" [@dialogContainer]="dialogState" class="custom-overlay" (click)="close()">
+        </div>
+        <div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
+            <ng-template #dynamicUpper></ng-template>
+        </div>
+        <div [@openClose]="currentState" class="right_sidenav">
+            <ng-template #dynamic></ng-template>
+        </div>
     </div>
-    <div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
-      <ng-template #dynamicUpper></ng-template>
+    <div class="row" id="ui-customer">
+        <div class="col-md-2 p-0">
+            <img class="w-100" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+        </div>
+        <div class="col-md-8 pl-64">
+            <nav mat-tab-nav-bar>
+                <a [routerLink]="['/customer/detail/overview']" routerLinkActive="successBorder" mat-tab-link>OVERVIEW</a>
+                <a [routerLink]="['/customer/detail/account']" routerLinkActive="successBorder" mat-tab-link>PORTFOLIO</a>
+                <a [routerLink]="['/customer/detail/plan']" routerLinkActive="successBorder" mat-tab-link>PLAN</a>
+                <a [routerLink]="['/customer/detail/activity']" routerLinkActive="successBorder" mat-tab-link>ACTIVITY</a>
+                <a [routerLink]="['/customer/detail/transact']" routerLinkActive="successBorder" mat-tab-link>TRANSACT</a>
+            </nav>
+        </div>
     </div>
-    <div [@openClose]="currentState" class="right_sidenav">
-      <ng-template #dynamic></ng-template>
+    <div class="row">
+        <div class="col-md-12 p-0">
+            <router-outlet></router-outlet>
+            <ng-template>
+                <router-outlet></router-outlet>
+            </ng-template>
+        </div>
     </div>
-  </div>
-  <div class="row" id="ui-customer">
-    <div class="col-md-2 p-0">
-      <img class="w-100" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
-    </div>
-    <div class="col-md-8 p-0">
-      <nav mat-tab-nav-bar>
-        <a [routerLink]="['/customer/detail/overview']" routerLinkActive="successBorder" mat-tab-link>OVERVIEW</a>
-        <a [routerLink]="['/customer/detail/account']" routerLinkActive="successBorder" mat-tab-link>PORTFOLIO</a>
-        <a [routerLink]="['/customer/detail/plan']" routerLinkActive="successBorder" mat-tab-link>PLAN</a>
-        <a [routerLink]="['/customer/detail/activity']" routerLinkActive="successBorder" mat-tab-link>ACTIVITY</a>
-        <a [routerLink]="['/customer/detail/transact']" routerLinkActive="successBorder" mat-tab-link>TRANSACT</a>
-      </nav>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12 p-0">
-      <router-outlet></router-outlet>
-      <ng-template>
-        <router-outlet></router-outlet>
-      </ng-template>
-    </div>
-  </div>
 
 </div>

@@ -1,1 +1,85 @@
-<p>people-clients works!</p>
+<div class="row pt-150">
+    <div class="col-md-4">
+        <h4 class="m-0 pt-8">Clients</h4>
+    </div>
+    <div class="col-md-8">
+        <div class="col-md-8 p-0 right text-right">
+            <img src="assets/images/svg/download-bordered.svg" class="c-p">
+            <img src="assets/images/svg/up-down.svg" class="">
+            <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
+
+            <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
+                    class="material-icons">filter_list</i>FILTERS</button>
+            <button mat-stroked-button class="btn-primary pl-8" (click)="Addclient()"> <i
+                    class="material-icons pr-8 v-middle">
+                    add
+                </i>ADD NEW</button>
+        </div>
+    </div>
+    <div class="col-md-12 people-clients">
+        <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
+
+
+            <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef class="br w-20"> Group head name </th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef class="br"> Registered mobile </th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="weight">
+                <th mat-header-cell *matHeaderCellDef class="br"> Registered email </th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="symbol">
+                <th mat-header-cell *matHeaderCellDef class="br"> PAN </th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
+            </ng-container>
+            <ng-container matColumnDef="member">
+                <th mat-header-cell *matHeaderCellDef class="br"> Members </th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.member}} </td>
+            </ng-container>
+            <ng-container matColumnDef="owner">
+                <th mat-header-cell *matHeaderCellDef class="br"> Client owner </th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.owner}} </td>
+            </ng-container>
+            <ng-container matColumnDef="login">
+                <th mat-header-cell *matHeaderCellDef class="br"> Last login </th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.login}} </td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.status}} </td>
+            </ng-container>
+            <ng-container matColumnDef="icons">
+                <th mat-header-cell *matHeaderCellDef class="br"> </th>
+                <td mat-cell *matCellDef="let element" class="br c-p">
+                    <img src="/assets/images/svg/action.svg">
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="icons1">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let element">
+                    <img class="c-p" [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg">
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item>
+                            <span>Edit</span>
+                        </button>
+                        <button mat-menu-item>
+                            <span>Delete</span>
+                        </button>
+                    </mat-menu>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>

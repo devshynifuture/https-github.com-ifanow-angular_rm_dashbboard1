@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ConfirmationTransactionComponent } from '../confirmation-transaction/confirmation-transaction.component';
@@ -57,10 +57,12 @@ export class RedemptionTransactionComponent implements OnInit {
   id = 0;
   isEdit = false;
   childTransactions = [];
-  displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount','icons'];
+  displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount', 'icons'];
   editedId: any;
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private fb: FormBuilder, private eventService: EventService, private processTransaction: ProcessTransactionService) { }
+  @Output() changedValue = new EventEmitter();
+
   @Input()
   set data(data) {
     this.inputData = data;
@@ -78,7 +80,7 @@ export class RedemptionTransactionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getdataForm(this.inputData,false)
+    this.getdataForm(this.inputData, false)
     this.transactionSummary = {}
     this.childTransactions = []
     this.reInvestmentOpt = [];
@@ -88,6 +90,9 @@ export class RedemptionTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { transactType: 'REDEEM' });
     Object.assign(this.transactionSummary, { isMultiTransact: false });//when multi transact then disabled edit button in transaction summary
 
+  }
+  backToTransact() {
+    this.changedValue.emit('step-2');
   }
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
@@ -101,7 +106,7 @@ export class RedemptionTransactionComponent implements OnInit {
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
-  getdataForm(data,isEdit) {
+  getdataForm(data, isEdit) {
     if (isEdit == true) {
       this.isEdit = isEdit
       this.editedId = data.id;
@@ -131,7 +136,7 @@ export class RedemptionTransactionComponent implements OnInit {
 
     this.ownerData = this.redemptionTransaction.controls;
     if (data.folioNo) {
-      this.scheme.mutualFundSchemeMasterId=data.mutualFundSchemeMasterId;
+      this.scheme.mutualFundSchemeMasterId = data.mutualFundSchemeMasterId;
       this.getSchemeWiseFolios()
     }
   }
@@ -145,7 +150,7 @@ export class RedemptionTransactionComponent implements OnInit {
     this.showSpinner = true
     if (this.redemptionTransaction.get('schemeRedeem').invalid) {
       this.showSpinner = false
-      this.folioList=[];
+      this.folioList = [];
       Object.assign(this.transactionSummary, { schemeName: '' });
       Object.assign(this.transactionSummary, { folioNumber: '' });
     }
@@ -241,7 +246,7 @@ export class RedemptionTransactionComponent implements OnInit {
     this.showSpinnerFolio = false
     console.log('res scheme folio', data)
     this.folioList = data
-    if(this.redemptionTransaction.get('investmentAccountSelection').valid){
+    if (this.redemptionTransaction.get('investmentAccountSelection').valid) {
       Object.assign(this.transactionSummary, { folioNumber: this.folioList[0].folioNumber });
     }
   }
@@ -274,8 +279,8 @@ export class RedemptionTransactionComponent implements OnInit {
     } else {
       let obj = {
         productDbId: this.schemeDetails.id,
-        clientName:this.selectedFamilyMember,
-        holdingNature:this.getDataSummary.defaultClient.holdingType,
+        clientName: this.selectedFamilyMember,
+        holdingNature: this.getDataSummary.defaultClient.holdingType,
         mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
         productCode: this.schemeDetails.schemeCode,
         isin: this.schemeDetails.isin,
@@ -338,7 +343,7 @@ export class RedemptionTransactionComponent implements OnInit {
 
     if (this.isEdit != true) {
       this.id++
-    } 
+    }
     if (this.reInvestmentOpt.length > 1) {
       if (this.redemptionTransaction.get('reinvest').invalid) {
         this.redemptionTransaction.get('reinvest').markAsTouched();
@@ -372,14 +377,14 @@ export class RedemptionTransactionComponent implements OnInit {
           qty: (this.redemptionTransaction.controls.redeemType.value == 1) ? 0 : (this.redemptionTransaction.controls.redeemType.value == 3) ? this.schemeDetails.balance_units : this.redemptionTransaction.controls.employeeContry.value,
           bankDetailId: this.bankDetails.id,
           schemeName: this.scheme.schemeName,
-          redeemType:this.redemptionTransaction.get('redeemType').value
+          redeemType: this.redemptionTransaction.get('redeemType').value
 
         }
         if (this.isEdit == true) {
           this.childTransactions.forEach(element => {
             if (element.id == this.editedId) {
               element.id = this.editedId;
-              element.mutualFundSchemeMasterId=(this.scheme) ? this.scheme.mutualFundSchemeMasterId : null;
+              element.mutualFundSchemeMasterId = (this.scheme) ? this.scheme.mutualFundSchemeMasterId : null;
               element.folioNo = this.redemptionTransaction.get('investmentAccountSelection').value;
               element.orderVal = this.redemptionTransaction.get('employeeContry').value;
               element.schemeName = this.redemptionTransaction.get('schemeRedeem').value;
@@ -387,7 +392,7 @@ export class RedemptionTransactionComponent implements OnInit {
             }
             console.log(element)
           });
-          this.isEdit=false;
+          this.isEdit = false;
         } else {
           this.childTransactions.push(obj)
         }
@@ -396,7 +401,7 @@ export class RedemptionTransactionComponent implements OnInit {
         this.redemptionTransaction.controls.employeeContry.reset()
         this.redemptionTransaction.controls.investmentAccountSelection.reset()
         this.redemptionTransaction.controls.schemeRedeem.reset()
-        this.showUnits=false;
+        this.showUnits = false;
       }
     }
   }

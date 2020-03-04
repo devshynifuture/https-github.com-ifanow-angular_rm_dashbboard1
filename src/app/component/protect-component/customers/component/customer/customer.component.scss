@@ -1,57 +1,54 @@
 .show {
-  z-index: 999;
+    z-index: 999;
 }
 
 .img-top {
-  position: fixed;
-  width: 18% !important;
-  z-index: 100;
-
+    position: fixed;
+    width: 18% !important;
+    z-index: 100;
 }
 
 .right-side img {
-  right: 0;
-  position: fixed;
-  z-index: 9999;
+    right: 0;
+    position: fixed;
+    z-index: 9999;
 }
 
 ::ng-deep .headerClassNav .mat-tab-link {
-  height: 65px;
-  min-width: auto;
-  border-bottom: 5px solid #fff;
+    height: 65px;
+    min-width: auto;
+    border-bottom: 5px solid #fff;
 }
-
-
 
 #ui-router-outlet {
-  z-index: 10;
+    z-index: 10;
 }
 
+.pl-64 {
+    padding-left: 64px;
+}
 
 #ui-customer-container .mat-tab-link.active {
-  background-color: transparent !important;
-  border-bottom: 4px solid #008FFF !important;
-  color: #008FFF !important
+    background-color: transparent !important;
+    border-bottom: 4px solid #008FFF !important;
+    color: #008FFF !important
 }
 
 #ui-customer-container .mat-tab-link {
-  color: #595252;
-  border-bottom: 4px solid transparent;
-  width: 120px !important;
-  background: transparent !important;
-  opacity: 1 !important;
-
+    color: #595252;
+    border-bottom: 4px solid transparent;
+    width: 100px !important;
+    background: transparent !important;
+    opacity: 1 !important;
 }
 
 ::ng-deep .successBorder {
-  border-bottom: 4px solid #008FFF !important;
-  color: #008FFF !important;
-  opacity: 1;
-  margin-bottom: -5px;
-
-
+    border-bottom: 4px solid #008FFF !important;
+    color: #008FFF !important;
+    opacity: 1;
+    margin-bottom: -5px;
 }
 
 ::ng-deep a.successBorder:hover {
-  color: #008FFF;
+    color: #008FFF;
 }

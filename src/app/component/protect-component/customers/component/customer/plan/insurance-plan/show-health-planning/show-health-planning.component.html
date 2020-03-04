@@ -1,6 +1,21 @@
+<div class="row popup-header-fix-100">
+    <div class="col-md-2 border-right-1 p-0">
+        <img class="pt-4 w-100" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+    </div>
+    <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
+
+        <p class="f-16 mb-0">
+            {{showInsurance.heading}} planning</p>
+    </div>
+    <div class="col-md-2 text-right">
+        <i class="material-icons pt-16 c-p pr-16" (click)="close(showInsurance)">
+            clear
+        </i>
+    </div>
+</div>
 <div class="row pt-130 health-insuranceplanning">
     <div class="col-md-12">
-        <h5 class="m-0 f-500 text-black">Health insurance</h5>
+        <h5 class="m-0 f-500 text-black">{{showInsurance.heading}}</h5>
 
         <div class="row b-a">
             <div class="col-md-6">
@@ -51,7 +66,7 @@
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
-                <p class="m-0 text-black roboto pt-20 pb-20 c-p">+ Add more</p>
+                <p class="m-0 text-black roboto pt-20 pb-20 c-p" (click)="openHelthInsurance(showInsurance)">+ Add more</p>
             </div>
             <div class="col-md-6 bl-1">
                 <h5 class="text-center f-500 text-black bb-1 pt-8 pb-8">Step 2 - Suggest new policy</h5>
@@ -105,7 +120,7 @@
                     <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
                 </table>
-                <p class="m-0 text-black text-left roboto pt-20 pb-20 c-p">+ Suggest more</p>
+                <p class="m-0 text-black text-left roboto pt-20 pb-20 c-p" (click)="openSuggestHealth(showInsurance)">+ Suggest more</p>
             </div>
         </div>
     </div>
@@ -114,7 +129,7 @@
 <div class="bottom-fixed wrapper-12 w-100">
     <div class="row">
         <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="close(showInsurance)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
             <button mat-button class="btn-bottom br-0 text-inherit">Save

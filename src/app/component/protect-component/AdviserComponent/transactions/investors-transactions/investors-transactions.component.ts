@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { OnlineTransactionService } from '../online-transaction.service';
 import { TransactionEnumService } from '../transaction-enum.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-investors-transactions',
@@ -11,11 +12,14 @@ import { EventService } from 'src/app/Data-service/event.service';
 })
 export class InvestorsTransactionsComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'bank', 'bankac', 'amt', 'status', 'icons'];
-  dataSource: any;
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
   advisorId: any;
   filterData: any;
   selectedBrokerCode: any;
   selectedPlatform: any;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+
   // dataSource = ELEMENT_DATA;
   constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService) { }
 
@@ -23,10 +27,14 @@ export class InvestorsTransactionsComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId()
-    this.dataSource = [{}, {}, {}];
     this.isLoading = true;
     this.getMappedData();
     // this.getFilterOptionData();
+  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.sort = this.sort;
   }
   // getFilterOptionData() {
   //   let obj = {
@@ -53,7 +61,7 @@ export class InvestorsTransactionsComponent implements OnInit {
   // }
   getMappedData() {
     this.isLoading = true;
-    this.dataSource = [{}, {}, {}];
+    this.dataSource.data = [{}, {}, {}];
     let obj =
     {
       advisorId: this.advisorId,
@@ -64,11 +72,9 @@ export class InvestorsTransactionsComponent implements OnInit {
       data => {
         console.log(data);
         if (data) {
-          this.dataSource = TransactionEnumService.setHoldingTypeEnum(data);
-
-        } else {
-          this.dataSource = data;
-        }
+          this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
+          this.dataSource.sort = this.sort;
+        } 
         this.isLoading = false;
       },
       err => this.eventService.openSnackBar(err, 'dismiss')

@@ -87,7 +87,6 @@ export class AdviceCashAndHandComponent implements OnInit {
 
   openAddEdit(value, data) {
     let Component = (value == 'adviceCashInHand') ? CashInHandComponent : BankAccountsComponent;
-
     const fragmentData = {
       flag: value,
       data,
