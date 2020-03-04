@@ -122,16 +122,16 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   }
   copyFilesRes(data) {
-    this.eventService.openSnackBar('copy file successfully', 'dismiss');
+    this.eventService.openSnackBar('copy file successfully', 'Dismiss');
     this.reset()
   }
   moveFilesRes(data) {
-    this.eventService.openSnackBar('move file successfully', 'dismiss');
+    this.eventService.openSnackBar('move file successfully', 'Dismiss');
     this.getAllFileList('Documents')
     this.reset()
   }
   moveFolderRes(data) {
-    this.eventService.openSnackBar('move folder successfully', 'dismiss');
+    this.eventService.openSnackBar('move folder successfully', 'Dismiss');
     this.getAllFileList('Documents')
     this.reset()
   }
@@ -439,7 +439,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
           };
           this.custumService.deleteFolder(obj).subscribe(
             data => {
-              this.eventService.openSnackBar('Deleted', 'dismiss');
+              this.eventService.openSnackBar('Deleted', 'Dismiss');
               dialogRef.close();
               this.getAllFileList(this.valueTab);
             },
@@ -454,7 +454,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
           };
           this.custumService.deleteFile(obj1).subscribe(
             data => {
-              this.eventService.openSnackBar('Deleted', 'dismiss');
+              this.eventService.openSnackBar('Deleted', 'Dismiss');
               dialogRef.close();
               this.getAllFileList(this.valueTab);
             },

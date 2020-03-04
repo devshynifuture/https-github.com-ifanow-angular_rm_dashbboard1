@@ -53,7 +53,7 @@ export class EmailConsentComponent implements OnInit {
       data => {
         console.log("this is consent Data  after clicking ok::::", this.consentData);
         console.log(data);
-        this.eventService.openSnackBar("Consent updated", "dismiss")
+        this.eventService.openSnackBar("Consent updated", "Dismiss")
 
         setTimeout(() => {
           this.dialogClose()

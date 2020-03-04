@@ -50,7 +50,7 @@ export class AddPlanDetailComponent implements OnInit {
     planName: ['', [Validators.required]],
     code: ['', [Validators.required]],
     description: [''],
-    role: ['']
+    role: ['',[Validators.required]]
   });
 
   // planName = {maxLength: 20, placeholder: '', formControlName: 'planName', data: ''};
@@ -69,7 +69,7 @@ export class AddPlanDetailComponent implements OnInit {
       planName: [data, [Validators.required]],
       code: [data, [Validators.required]],
       description: [data],
-      role: [data]
+      role: ['',[Validators.required]]
     });
 
   }
@@ -87,6 +87,7 @@ export class AddPlanDetailComponent implements OnInit {
       this.planDataForm.get('planName').setValue(data.name);
       this.planDataForm.get('code').setValue(data.code);
       this.planDataForm.get('description').setValue(data.description);
+      (data.role)?this.planDataForm.get('role').setValue(data.role):'';
     }
   }
 
@@ -94,6 +95,7 @@ export class AddPlanDetailComponent implements OnInit {
     if(this.planDataForm.invalid){
       this.planDataForm.get('planName').markAsTouched();
       this.planDataForm.get('code').markAsTouched();
+      this.planDataForm.get('role').markAsTouched();
     }
     else {
       this.barButtonOptions.active = true;
@@ -127,7 +129,8 @@ export class AddPlanDetailComponent implements OnInit {
           name: this.getFormControl().planName.value,
           description: this.getFormControl().description.value,
           code: this.getFormControl().code.value,
-          id: this.editApiCall.id
+          id: this.editApiCall.id,
+          role: this.getFormControl().role.value,
         };
         this.subService.editPlanSettings(obj).subscribe(
           data =>{

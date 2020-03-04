@@ -381,7 +381,7 @@ export class ExpensesComponent implements OnInit {
         if (value == 'expense') {
           this.planService.deleteExpenseTransaction(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar('Expense transaction is deleted', 'dismiss');
+              this.eventService.openSnackBar('Expense transaction is deleted', 'Dismiss');
               dialogRef.close();
               this.getTransaction();
             },
@@ -390,7 +390,7 @@ export class ExpensesComponent implements OnInit {
         } else if (value == 'expenseRecuring') {
           this.planService.deleteExpenseRecurring(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar('Recurring expense transaction is deleted', 'dismiss');
+              this.eventService.openSnackBar('Recurring expense transaction is deleted', 'Dismiss');
               dialogRef.close();
               this.getRecuringTransactions();
             },
@@ -399,7 +399,7 @@ export class ExpensesComponent implements OnInit {
         } else if (value == 'budget') {
           this.planService.deletBudget(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar('Buget is deleted', 'dismiss');
+              this.eventService.openSnackBar('Buget is deleted', 'Dismiss');
               dialogRef.close();
               this.getRecuringTransactions();
             },
@@ -408,7 +408,7 @@ export class ExpensesComponent implements OnInit {
         } else {
           this.planService.deleteRecuringBudget(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar('Recurring budget is deleted', 'dismiss');
+              this.eventService.openSnackBar('Recurring budget is deleted', 'Dismiss');
               dialogRef.close();
               this.getRecuringTransactions();
             },

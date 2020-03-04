@@ -148,7 +148,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
             // this.errorMessage();
           }, (error) => {
             barButtonOption.active = false;
-            this.eventService.openSnackBar('Wait sometime....', 'dismiss');
+            this.eventService.openSnackBar('Wait sometime....', 'Dismiss');
           }
         )
       },
@@ -312,7 +312,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
       positiveMethod: () => {
         this.subService.deleteClientDocumentsMultiple(this.list).subscribe(
           data => {
-            this.eventService.openSnackBar('document is deleted', 'dismiss');
+            this.eventService.openSnackBar('document is deleted', 'Dismiss');
             // this.valueChange.emit('close');
             dialogRef.close(this.list);
             // this.getRealEstate();

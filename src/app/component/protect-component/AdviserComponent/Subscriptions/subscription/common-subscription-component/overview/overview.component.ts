@@ -90,7 +90,7 @@ export class OverviewComponent implements OnInit {
       data: value,
       header: 'DELETE',
       body: 'Are you sure you want to delete?',
-      body2: 'This cannot be undone..',
+      body2: 'This cannot be undone.',
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
@@ -130,7 +130,7 @@ export class OverviewComponent implements OnInit {
       // this.upperData = "plan";
       this.router.navigate(['/admin/subscription/settings','plans']);
       this.eventService.changeUpperSliderState({ state: 'close', refreshRequired:true });
-      this.eventService.openSnackBar('Deleted successfully!', 'dismiss');
+      this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
     }
   }
 }

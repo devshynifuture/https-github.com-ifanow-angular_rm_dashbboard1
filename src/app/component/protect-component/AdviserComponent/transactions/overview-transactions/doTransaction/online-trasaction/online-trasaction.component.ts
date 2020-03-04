@@ -168,7 +168,7 @@ export class OnlineTrasactionComponent implements OnInit {
   //   if (value.length > 2) {
   //     this.onlineTransact.getFamilyMemberList(obj).subscribe(
   //       data => this.getFamilyMemberListRes(data),
-  //       err => this.eventService.openSnackBar(err, 'dismiss')
+  //       err => this.eventService.openSnackBar(err, 'Dismiss')
   //     );
   //   }
   // }

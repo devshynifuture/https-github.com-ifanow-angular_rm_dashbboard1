@@ -103,7 +103,7 @@ export class ScssSchemeComponent implements OnInit {
       positiveMethod: () => {
         this.cusService.deleteSCSS(data.id).subscribe(
           data => {
-            this.eventService.openSnackBar('SCSS is deleted', 'dismiss');
+            this.eventService.openSnackBar('SCSS is deleted', 'Dismiss');
             dialogRef.close();
             this.getScssSchemedata();
           },

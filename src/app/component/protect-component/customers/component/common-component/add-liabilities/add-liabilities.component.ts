@@ -303,7 +303,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       this.close(true);
       this.eventService.openSnackBar('Liabilities added successfully', 'OK');
     } else {
-      this.eventService.openSnackBar('Error', 'dismiss');
+      this.eventService.openSnackBar('Error', 'Dismiss');
     }
   }
   editLiabilityRes(data) {
@@ -313,7 +313,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       this.close(true);
       this.eventService.openSnackBar('Liabilities edited successfully', 'OK');
     } else {
-      this.eventService.openSnackBar('Error', 'dismiss');
+      this.eventService.openSnackBar('Error', 'Dismiss');
     }
   }
 }

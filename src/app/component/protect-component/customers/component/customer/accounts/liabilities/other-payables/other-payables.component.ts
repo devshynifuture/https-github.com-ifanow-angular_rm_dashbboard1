@@ -110,7 +110,7 @@ export class OtherPayablesComponent implements OnInit {
     this.dataSource.data = [{}, {}, {}];
     this.custmService.getOtherPayables(obj).subscribe(
       data => this.getOtherPayablesRes(data), (error) => {
-        this.eventService.openSnackBar('Something went wrong!', 'dismiss');
+        this.eventService.openSnackBar('Something went wrong!', 'Dismiss');
         this.dataSource.data = [];
         this.isLoading = false;
       }
@@ -136,7 +136,7 @@ export class OtherPayablesComponent implements OnInit {
       positiveMethod: () => {
         this.custmService.deleteOtherPayables(data.id).subscribe(
           responseJson => {
-            this.eventService.openSnackBar('Other payables is deleted', 'dismiss');
+            this.eventService.openSnackBar('Other payables is deleted', 'Dismiss');
             dialogRef.close();
             this.getPayables();
           },

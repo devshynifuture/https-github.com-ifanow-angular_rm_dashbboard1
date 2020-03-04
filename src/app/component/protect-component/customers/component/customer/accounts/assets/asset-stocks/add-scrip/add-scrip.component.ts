@@ -42,7 +42,7 @@ export class AddScripComponent implements OnInit {
       this.cusService.addScrip(obj).subscribe(
         data => {
           console.log(data)
-          this.eventService.openSnackBar("Scrip is added", "dismiss")
+          this.eventService.openSnackBar("Scrip is added", "Dismiss")
           this.close();
         },
         error => this.eventService.showErrorMessage(error)

@@ -77,7 +77,7 @@ export class InvestorsTransactionsComponent implements OnInit {
         } 
         this.isLoading = false;
       },
-      err => this.eventService.openSnackBar(err, 'dismiss')
+      err => this.eventService.openSnackBar(err, 'Dismiss')
     )
   }
   // getUnmappedData() {
@@ -95,7 +95,7 @@ export class InvestorsTransactionsComponent implements OnInit {
   //       this.dataSource = TransactionEnumService.setHoldingTypeEnum(data);
   //       this.isLoading = false;
   //     },
-  //     err => this.eventService.openSnackBar(err, 'dismiss')
+  //     err => this.eventService.openSnackBar(err, 'Dismiss')
   //   )
   // }
 }

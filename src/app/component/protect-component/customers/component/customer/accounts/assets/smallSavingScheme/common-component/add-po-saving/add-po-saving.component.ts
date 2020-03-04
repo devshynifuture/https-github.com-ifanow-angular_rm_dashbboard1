@@ -178,7 +178,7 @@ export class AddPoSavingComponent implements OnInit {
         if (this.flag == 'advicePoSaving') {
           this.cusService.getAdvicePoSaving(adviceObj).subscribe(
             data => this.getAdvicePosavingRes(data),
-            err => this.eventService.openSnackBar(err, "dismiss")
+            err => this.eventService.openSnackBar(err, "Dismiss")
           );
         } else {
           this.cusService.addPOSAVINGScheme(obj).subscribe(
@@ -196,7 +196,7 @@ export class AddPoSavingComponent implements OnInit {
   addPOSavingResponse(data) {
     this.close(true);
     console.log(data);
-    (this.editApi) ? this.eventService.openSnackBar('PO_SAVING is edited', 'dismiss') : this.eventService.openSnackBar('PO_SAVING is edited', 'added');
+    (this.editApi) ? this.eventService.openSnackBar('PO_SAVING is edited', 'Dismiss') : this.eventService.openSnackBar('PO_SAVING is edited', 'added');
 
   }
 

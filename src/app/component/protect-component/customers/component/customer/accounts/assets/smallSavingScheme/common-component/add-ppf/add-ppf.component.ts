@@ -190,7 +190,7 @@ export class AddPpfComponent implements OnInit {
       if (this.flag == 'advicePPF') {
         this.cusService.getAdvicePpf(adviceObj).subscribe(
           data => this.getAdvicePpfRes(data),
-          err => this.eventService.openSnackBar(err, "dismiss")
+          err => this.eventService.openSnackBar(err, "Dismiss")
         );
       } else if (this.editApi != undefined && this.editApi != 'advicePPF') {
         obj['id'] = this.editApi.id
@@ -209,12 +209,12 @@ export class AddPpfComponent implements OnInit {
   }
   getAdvicePpfRes(data) {
     console.log(data)
-    this.eventService.openSnackBar("PPF is added", "dismiss")
+    this.eventService.openSnackBar("PPF is added", "Dismiss")
     this.close(true);
 
   }
   addPPFResponse(data) {
-    (this.editApi) ? this.eventService.openSnackBar("PPF is edited", "dismiss") : this.eventService.openSnackBar("PPF is added", "dismiss")
+    (this.editApi) ? this.eventService.openSnackBar("PPF is edited", "Dismiss") : this.eventService.openSnackBar("PPF is added", "Dismiss")
     console.log(data)
     this.close(true);
   }

@@ -82,7 +82,7 @@ export class AddClientMappingComponent implements OnInit {
           console.log(data);
           this.clientCodeData = data;
         },
-        err => this.eventService.openSnackBar(err, 'dismiss')
+        err => this.eventService.openSnackBar(err, 'Dismiss')
       );
     }
   }
@@ -104,7 +104,7 @@ export class AddClientMappingComponent implements OnInit {
         console.log(data);
         this.close();
       },
-      err => this.eventService.openSnackBar(err, 'dismiss')
+      err => this.eventService.openSnackBar(err, 'Dismiss')
     );
   }
 
@@ -121,7 +121,7 @@ export class AddClientMappingComponent implements OnInit {
         console.log(data);
         this.close();
       },
-      err => this.eventService.openSnackBar(err, 'dismiss')
+      err => this.eventService.openSnackBar(err, 'Dismiss')
     );
   }
 

@@ -150,7 +150,7 @@ export class AddScssComponent implements OnInit {
       if (this.flag == 'adviceSCSS') {
         this.cusService.getAdviceScss(adviceObj).subscribe(
           data => this.getAdviceScssRes(data),
-          err => this.eventService.openSnackBar(err, "dismiss")
+          err => this.eventService.openSnackBar(err, "Dismiss")
         );
       } else if (this.editApi != undefined && this.editApi != 'adviceSCSS') {
         obj.id = this.editApi.id;
@@ -167,7 +167,7 @@ export class AddScssComponent implements OnInit {
     }
   }
   getAdviceScssRes(data) {
-    this.eventService.openSnackBar('Scss is added', "dismiss");
+    this.eventService.openSnackBar('Scss is added', "Dismiss");
     this.close(true);
 
   }

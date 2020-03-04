@@ -129,7 +129,7 @@ export class CommoditiesComponent implements OnInit {
         if (value == 'GOLD') {
           this.custumService.deleteGold(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar("Gold is deleted", "dismiss")
+              this.eventService.openSnackBar("Gold is deleted", "Dismiss")
               dialogRef.close();
               this.getGoldList()
             },
@@ -138,7 +138,7 @@ export class CommoditiesComponent implements OnInit {
         } else {
           this.custumService.deleteOther(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar("Others is deleted", "dismiss")
+              this.eventService.openSnackBar("Others is deleted", "Dismiss")
               dialogRef.close();
               this.getOtherList()
             },

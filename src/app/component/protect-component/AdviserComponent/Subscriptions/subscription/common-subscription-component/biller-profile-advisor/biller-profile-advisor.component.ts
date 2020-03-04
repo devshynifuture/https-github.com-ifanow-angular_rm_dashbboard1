@@ -144,7 +144,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
             console.log('uploadImage success this.imageData : ', this.imageData);
             // this.logUrl.controls.url.setValue(this.imageData);
             this.uploadedImage = JSON.stringify(responseObject);
-            this.eventService.openSnackBar('Image uploaded sucessfully', 'dismiss');
+            this.eventService.openSnackBar('Image uploaded sucessfully', 'Dismiss');
             if(this.selected == 3){
               this.addEditBillerForm();
             }else{

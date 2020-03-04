@@ -180,7 +180,7 @@ export class AddPoRdComponent implements OnInit {
           }
           this.cusService.getAdvicePord(adviceObj).subscribe(
             data => this.getAdvicePordRes(data),
-            err => this.eventService.openSnackBar(err, "dismiss")
+            err => this.eventService.openSnackBar(err, "Dismiss")
           );
         } else {
           this.cusService.addPORDScheme(obj).subscribe(
@@ -196,7 +196,7 @@ export class AddPoRdComponent implements OnInit {
     this.close(true);
   }
   addPORDResponse(data) {
-    (this.editApi) ? this.eventService.openSnackBar('PO_RD is edited', 'dismiss') : this.eventService.openSnackBar('PO_RD is added', 'added');
+    (this.editApi) ? this.eventService.openSnackBar('PO_RD is edited', 'Dismiss') : this.eventService.openSnackBar('PO_RD is added', 'added');
     console.log(data);
     this.close(true);
   }

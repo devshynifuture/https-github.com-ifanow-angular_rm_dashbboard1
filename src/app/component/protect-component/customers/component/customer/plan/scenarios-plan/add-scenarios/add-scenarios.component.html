@@ -67,7 +67,7 @@
         </div>
     </div>
 </div> -->
-<div class="p-20 pl-24 pr-24">
+<div class="p-20 pl-24 pr-24" [formGroup]="addScenario">
     <h3 class="m-0 f-500 text-black">Add scenario</h3>
     <h5 class="m-0 f-500 text-black pt-20">How would you like to add a new scenario?</h5>
 
@@ -75,8 +75,8 @@
         create a
         scenario from scratch.</p>
     <div class="row">
-        <div class="col-md-12 p-0 pt-24">
-            <mat-radio-group aria-label="Select an option">
+        <div class="col-md-12 p-0 pt-24">       
+            <mat-radio-group aria-label="Select an option"  formControlName="choose">
                 <mat-radio-button value="1" class="bu-primary text-primary pr-20 pl-20 p-12" checked="false">Copy from
                     existing
                 </mat-radio-button>
@@ -96,6 +96,7 @@
                         <mat-option value="1">Scenario 1</mat-option>
                         <mat-option value="2">Scenario 2</mat-option>
                     </mat-select>
+                    <mat-error class="f-12">This field is required</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -114,21 +115,16 @@
             <h5 class="m-0 pt-8">Description</h5>
         </div>
         <div class="col-md-10">
-            <!-- <div class="form-control">
-                <mat-form-field>
-                    <input matInput class="form-group" value="Add description...">
-                </mat-form-field>
-            </div> -->
             <div class="form-group relClass">
                 <input type="text" class="form-control br-0" formControlName="prefix" value="Add description...">
-
+                <mat-error class="f-12">This field is required</mat-error>
             </div>
         </div>
     </div>
     <div class="row pt-28">
         <div class="col-md-12 text-right p-0">
             <button mat-button class="text-custom">Cancel</button>
-            <button mat-button class="text-primary">Save</button>
+            <button mat-button class="text-primary" (click)="saveScenario()">Save</button>
         </div>
     </div>
 </div>

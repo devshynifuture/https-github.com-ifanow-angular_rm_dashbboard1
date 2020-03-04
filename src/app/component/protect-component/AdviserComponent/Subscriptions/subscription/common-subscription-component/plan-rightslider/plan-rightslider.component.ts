@@ -69,7 +69,7 @@ export class PlanRightsliderComponent implements OnInit {
   }
   createSubscriptionResponse(data) {
     this.barButtonOptions.active = false;
-    this.eventservice.openSnackBar("plan is created", "dismiss")
+    this.eventservice.openSnackBar("plan is created", "Dismiss")
     this.Close(true);
   }
 

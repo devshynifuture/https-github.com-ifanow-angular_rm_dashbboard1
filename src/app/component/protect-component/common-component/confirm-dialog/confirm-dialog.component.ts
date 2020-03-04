@@ -48,7 +48,7 @@ export class ConfirmDialogComponent implements OnInit {
       let list = [this.dialogData.dataToShow];
       this.subscription.deleteInvoices(list).subscribe((data) => {
           this.dialogRef.close('close');
-          this.eventService.openSnackBar('invoice deleted successfully.', 'dismiss');
+          this.eventService.openSnackBar('invoice deleted successfully.', 'Dismiss');
         },
         error => this.eventService.showErrorMessage(error));
     }
@@ -88,7 +88,7 @@ export class ConfirmDialogComponent implements OnInit {
     if (data == true) {
       this.dialogRef.close();
       this.eventService.changeUpperSliderState({state: 'close'});
-      this.eventService.openSnackBar('Deleted successfully!', 'dismiss');
+      this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
     }
   }
 }
