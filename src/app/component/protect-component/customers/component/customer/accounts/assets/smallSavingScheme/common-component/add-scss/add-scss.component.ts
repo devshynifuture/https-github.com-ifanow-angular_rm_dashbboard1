@@ -7,6 +7,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { AssetValidationService } from '../../../asset-validation.service';
 
 @Component({
   selector: 'app-add-scss',
@@ -87,7 +88,7 @@ export class AddScssComponent implements OnInit {
     }
     this.scssData = data;
     this.scssSchemeForm = this.fb.group({
-      ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required, UtilService.ageValidators(60)]],
+      ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required, AssetValidationService.ageValidators(60)]],
       amtInvested: [data.amountInvested, [Validators.required, Validators.min(1000), Validators.max(1500000)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
       ownershipType: [data.ownerTypeI ? String(data.ownerTypeId) : '2', [Validators.required]]

@@ -110,7 +110,13 @@ export class CashInHandComponent implements OnInit {
 
   saveCashInHand() {
     if (this.cashInHand.invalid) {
-      this.cashInHand.markAllAsTouched();
+      for (let element in this.cashInHand.controls) {
+        console.log(element)
+        if (this.cashInHand.controls[element].invalid) {
+          this.cashInHand.controls[element].markAsTouched();
+          return;
+        }
+      }
     } else {
       const obj = {
         advisorId: this.advisorId,
@@ -129,7 +135,7 @@ export class CashInHandComponent implements OnInit {
         stringObject: obj,
         adviceDescription: "manualAssetDescription"
       }
-      if (this.cashInHand.controls.id.value == undefined && this.flag != 'adviceCashInHand') {
+      if (this.cashInHand.controls.id.value == '' && this.flag != 'adviceCashInHand') {
         this.custumService.addCashInHand(obj).subscribe(
           data => this.addCashInHandRes(data)
         );
@@ -159,7 +165,7 @@ export class CashInHandComponent implements OnInit {
 
   editCashInHandRes(data) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
-    this.eventService.openSnackBar('Cash in hand added successfully', 'OK');
+    this.eventService.openSnackBar('Cash in hand edited successfully', 'OK');
 
   }
 

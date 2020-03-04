@@ -558,6 +558,8 @@ export class DocumentComponent implements OnInit {
         }
       });
 
+    }else{
+      this.planDocumentData = [];
     }
 
   }
@@ -700,6 +702,8 @@ export class DocumentComponent implements OnInit {
         //   'viewer.</p>\n';
       });
 
+    }else{
+      this.serviceDocumentData=[];
     }
   }
 
