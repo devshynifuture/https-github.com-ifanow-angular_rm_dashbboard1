@@ -154,13 +154,13 @@ export class AddPpfComponent implements OnInit {
       });
     }
     if (this.ppfSchemeForm.invalid) {
-      this.ppfSchemeForm.get('ownerName').markAsTouched();
-      this.ppfSchemeForm.get('accountBalance').markAsTouched();
-      this.ppfSchemeForm.get('balanceAsOn').markAsTouched();
-      this.ppfSchemeForm.get('commencementDate').markAsTouched();
-      this.ppfSchemeForm.get('futureContribution').markAsTouched();
-      this.ppfSchemeForm.get('frquency').markAsTouched();
-      this.ppfSchemeForm.get('tenure').markAsTouched();
+      for (let element in this.ppfSchemeForm.controls) {
+        console.log(element)
+        if (this.ppfSchemeForm.controls[element].invalid) {
+          this.ppfSchemeForm.controls[element].markAsTouched();
+          return;
+        }
+      }
     }
     else {
       let obj = {
