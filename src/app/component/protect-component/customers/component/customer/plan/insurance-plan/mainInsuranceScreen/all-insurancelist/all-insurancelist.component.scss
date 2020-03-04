@@ -1,0 +1,75 @@
+ul {
+    display: block;
+}
+
+li {
+    text-align: left !important;
+    padding-left: 16px;
+    font-size: 14px;
+}
+
+ul>li:before {
+    content: "–";
+    /* en dash here */
+    position: absolute;
+    margin-left: -1.1em;
+}
+
+::ng-deep .in-btn {
+    font-size: 12px !important;
+    color: #008FFF;
+    border-radius: 2px;
+    height: 40px;
+    width: 138px;
+}
+
+.mat-stroked-button:not([disabled]) {
+    border-color: #008FFF;
+}
+
+.col-width-21 {
+    flex: 0 0 21.0%;
+    max-width: 21.0%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.col-width-79 {
+    flex: 0 0 79.0%;
+    max-width: 79.0%;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.insuranceAddBtn {
+    width: 105px;
+    padding: 0px;
+}
+
+.col-width-69 {
+    flex: 0 0 69.0%;
+    max-width: 69.0%;
+}
+
+.col-width-31 {
+    flex: 0 0 31.0%;
+    max-width: 31.0%;
+    padding-left: 15px;
+}
+
+::ng-deep .insuranceTable tr.mat-header-row {
+    height: 40px !important;
+}
+
+.btn140 {
+    width: 140px;
+    padding: 0px;
+}
+
+.pt26 {
+    padding-top: 26px;
+}
+
+::ng-deep .mat-progress-bar-fill::after {
+    background-color: #008FFF !important;
+}
