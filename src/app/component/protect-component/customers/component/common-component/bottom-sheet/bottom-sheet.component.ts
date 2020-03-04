@@ -41,6 +41,6 @@ export class BottomSheetComponent implements OnInit {
     console.log('folderNameToDisplay',this.folderNameToDisplay)
   }
 close(){
-  this._bottomSheetRef.Dismiss()
+  this._bottomSheetRef.dismiss()
 }
 }
