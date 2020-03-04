@@ -22,6 +22,7 @@
 @import'./assets/style/scss/Advice/_advice';
 @import'./assets/style/scss/Transactions/transactions';
 @import'./assets/style/scss/setting/setting';
+@import'./assets/style/scss/people/people';
 // responsive style
 @import'./assets/style/scss/responsive/subscriptions';
 @import'./assets/style/scss/responsive/transaction-media';
@@ -280,7 +281,8 @@
 
 #ui-subscriptions,
 #uiTransactions,
-#ui-setting {
+#ui-setting,
+#ui-people {
   position: fixed;
   margin-top: 4px;
   float: right;
@@ -488,7 +490,8 @@
 #ui-plans,
 #ui-transactions,
 #ui-settingsHeaders,
-#ui-settingsplan {
+#ui-settingsplan,
+#ui-people {
   @extend .mt-60;
 
   .example-card .mat-card-header-text {
@@ -613,7 +616,8 @@
 
 #ui-subscriptions,
 #ui-setting,
-#uiTransactions {
+#uiTransactions,
+#ui-people {
   .mat-tab-link {
     color: #595252 !important;
     border-bottom: 4px solid transparent;
@@ -1104,7 +1108,8 @@ mat-tab-group[vertical] {
 
 #ui-customer-secondhead,
 #ui-plan-secondhead,
-#ui-activity-secondhead {
+#ui-activity-secondhead,
+#ui-plan-secondhead {
   position: fixed !important;
   margin-right: 0px !important;
   right: 0 !important;

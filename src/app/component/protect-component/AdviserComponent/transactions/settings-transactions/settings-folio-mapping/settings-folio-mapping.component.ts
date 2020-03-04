@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { OnlineTransactionService } from '../../online-transaction.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
 import { AddClientMappingComponent } from '../settings-client-mapping/add-client-mapping/add-client-mapping.component';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
 import { TransactionEnumService } from '../../transaction-enum.service';
 
@@ -16,7 +16,8 @@ import { TransactionEnumService } from '../../transaction-enum.service';
 })
 export class SettingsFolioMappingComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'iname', 'hold', 'map'];
-  dataSource: any;
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
   filterData: any;
   type: string;
   selectedBrokerCode: any;
@@ -26,11 +27,14 @@ export class SettingsFolioMappingComponent implements OnInit {
   isLoading: boolean;
   clientData: any;
   advisorId: any;
+
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+
   constructor(public dialog: MatDialog, private onlineTransact: OnlineTransactionService, private eventService: EventService, private utilService: UtilService, private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId()
-    this.dataSource = [{}, {}, {}];
+    this.dataSource.data = [{}, {}, {}];
     this.isLoading = true;
     this.getFilterOptionData();
   }
@@ -58,12 +62,12 @@ export class SettingsFolioMappingComponent implements OnInit {
     this.type = '1';
     this.selectedBrokerCode = data[0];
     this.selectedPlatform = data[0];
-    this.dataSource = [{}, {}, {}];
+    this.dataSource.data = [{}, {}, {}];
     this.sortDataFilterWise();
   }
   getFolioMappedData() {
     this.isLoading = true;
-    this.dataSource = [{}, {}, {}];
+    this.dataSource.data= [{}, {}, {}];
     (this.clientData == undefined) ? this.clientData = { clientId: '', familyMemberId: '' } : '';
     const obj =
     {
@@ -76,10 +80,8 @@ export class SettingsFolioMappingComponent implements OnInit {
       data => {
         console.log(data);
         if (data) {
-          this.dataSource = TransactionEnumService.setHoldingTypeEnum(data);
-        }
-        else {
-          this.dataSource = data;
+          this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
+          this.dataSource.sort = this.sort;
         }
         this.isLoading = false;
       },
@@ -89,7 +91,7 @@ export class SettingsFolioMappingComponent implements OnInit {
     )
   }
   getFolioUnmappedData() {
-    this.dataSource = [{}, {}, {}];
+    this.dataSource.data = [{}, {}, {}];
     this.isLoading = true;
     (this.clientData == undefined) ? this.clientData = { clientId: '', familyMemberId: '' } : '';
     const obj =
@@ -101,10 +103,8 @@ export class SettingsFolioMappingComponent implements OnInit {
       data => {
         console.log(data);
         if (data) {
-          this.dataSource = TransactionEnumService.setHoldingTypeEnum(data);
-        }
-        else {
-          this.dataSource = data;
+          this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
+          this.dataSource.sort = this.sort;
         }
         this.isLoading = false;
       },
@@ -112,6 +112,11 @@ export class SettingsFolioMappingComponent implements OnInit {
         this.isLoading = false;
       }
     )
+  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.sort = this.sort;
   }
   chnageBrokerCode(value) {
     this.selectedPlatform = value;

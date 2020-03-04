@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { ConfirmationTransactionComponent } from '../confirmation-transaction/confirmation-transaction.component';
 import { UtilService } from 'src/app/services/util.service';
@@ -69,6 +69,8 @@ export class StpTransactionComponent implements OnInit {
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private processTransaction: ProcessTransactionService, private eventService: EventService,
     private fb: FormBuilder) { }
+  @Output() changedValue = new EventEmitter();
+
   @Input()
   set data(data) {
     this.inputData = data;
@@ -93,6 +95,9 @@ export class StpTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { allEdit: true });
     Object.assign(this.transactionSummary, { transactType: 'STP' });
     Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
+  }
+  backToTransact() {
+    this.changedValue.emit('step-2');
   }
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data)
@@ -289,7 +294,7 @@ export class StpTransactionComponent implements OnInit {
     this.showSpinnerFolio = false
     console.log('res scheme folio', data)
     this.folioList = data
-    if(this.stpTransaction.get('investmentAccountSelection').valid){
+    if (this.stpTransaction.get('investmentAccountSelection').valid) {
       Object.assign(this.transactionSummary, { folioNumber: this.folioList[0].folioNumber });
     }
   }
@@ -407,8 +412,8 @@ export class StpTransactionComponent implements OnInit {
       let obj = {
 
         productDbId: this.schemeDetails.id,
-        clientName:this.selectedFamilyMember,
-        holdingNature:this.getDataSummary.defaultClient.holdingType,
+        clientName: this.selectedFamilyMember,
+        holdingNature: this.getDataSummary.defaultClient.holdingType,
         toProductDbId: this.schemeDetailsTransfer.id,
         mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
         toMutualFundSchemeMasterId: this.schemeTransfer.mutualFundSchemeMasterId,

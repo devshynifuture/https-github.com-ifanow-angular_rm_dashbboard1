@@ -139,7 +139,7 @@
                     </i>
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item (click)="openAddEdit('adviceBankAccount',element)">Edit</button>
-                        <button mat-menu-item>Delete</button>
+                        <button mat-menu-item (click)="deleteModal('BANK ACCOUNTS',element)">Delete</button>
                     </mat-menu>
                 </div>
             </td>
@@ -245,7 +245,7 @@
                     </i>
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item (click)="openAddEdit('adviceCashInHand',element)">Edit</button>
-                        <button mat-menu-item>Delete</button>
+                        <button mat-menu-item (click)="deleteModal('CASH IN HAND',element)">Delete</button>
                     </mat-menu>
                 </div>
             </td>

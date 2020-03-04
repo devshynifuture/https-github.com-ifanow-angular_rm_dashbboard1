@@ -49,6 +49,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.adviceSlider = this.subinject.newRightSliderDataObs.subscribe((data) => {
+      console.log("suggest", data)
       if (data.childComponent) {
         this.componentRef = this.dynamicComponentService.addDynamicComponent(this.viewContainerRef, data.childComponent, data.childData);
         this.childComponentFlag = data.flag;

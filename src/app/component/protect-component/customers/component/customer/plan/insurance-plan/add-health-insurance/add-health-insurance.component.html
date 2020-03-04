@@ -1,7 +1,7 @@
 <div class="popup-header-fix w-70" *ngIf="showExisting == false">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20">ADD HEALTH INSURANCE</h4>
+            <h4 class="mb-0 wrapper-20">{{showInsurance.header}}</h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12"> <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
@@ -12,10 +12,9 @@
 <div class="pt-80 pl-28 pr-28 pb-44 mb-44" *ngIf="showExisting == false">
     <div class="row">
         <div class="col-md-12 text-center">
-            <img src="/assets/images/svg/helth-insurance.svg">
-            <h5 class="m-0 f-500 text-black pt-20">Health insurance</h5>
-            <h5 class="roboto text-black m-0 pt-60">Select how you’d like to proceed with planning for health insurance
-                policies.</h5>
+            <img src={{showInsurance.logo}}>
+            <h5 class="m-0 f-500 text-black pt-20">{{showInsurance.heading}}</h5>
+            <h5 class="roboto text-black m-0 pt-60">{{showInsurance.subHeading}}</h5>
             <p class="m-0 roboto text-custom pt-20 pb-40">You can suggest individual plans or family floater plans in
                 the next step
             </p>
@@ -33,7 +32,7 @@
 <div class="popup-header-fix w-70" *ngIf="showExisting == true">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20">Select health insurance policy</h4>
+            <h4 class="mb-0 wrapper-20">Select {{showInsurance.smallHeading}} policy</h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12"> <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
@@ -89,8 +88,9 @@
                 </ng-container>
                 <ng-container matColumnDef="advice">
                     <th mat-header-cell *matHeaderCellDef> Advice </th>
-                    <td mat-cell *matCellDef="let element" class="c-p" (click)="openDialog()"
-                    >  <img src="/assets/images/svg/plus-rounded.svg">{{element.advice}} </td>
+                    <td mat-cell *matCellDef="let element" class="c-p"> <img *ngIf="element.advice == true"
+                            src="/assets/images/svg/plus-rounded.svg"
+                            (click)="openDialog(element,showInsurance)">{{element.adviceValue}} </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
@@ -108,7 +108,8 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="showHealthInsurance(null)">Procced</button>
+            <button mat-button class="btn-bottom br-0 text-inherit"
+                (click)="showHealthInsurance(showInsurance)">Procced</button>
         </div>
     </div>
 </div>

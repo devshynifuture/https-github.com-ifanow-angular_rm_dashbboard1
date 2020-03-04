@@ -66,7 +66,7 @@ export class AddPoTdComponent implements OnInit {
     this.flag = data;
     (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : '';
 
-    this.editApi = data;
+    this.editApi = data.id?data:undefined;
     this.potdData = data;
     this.POTDForm = this.fb.group({
       ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required, UtilService.ageValidators(10)]],

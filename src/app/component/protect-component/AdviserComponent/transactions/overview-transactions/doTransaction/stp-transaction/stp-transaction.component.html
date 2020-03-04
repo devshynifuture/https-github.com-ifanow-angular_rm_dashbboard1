@@ -15,7 +15,7 @@
     <div class="pt-90 pr-20 pl-20 pb-44">
         <div class="row">
             <div class="col-md-12 p-0">
-                <h5 class="m-0 text-black"> <img src="/assets/images/svg/back-arrow.svg"
+                <h5 class="m-0 text-black"> <img src="/assets/images/svg/back-arrow.svg" (click)="backToTransact()"
                         class="v-initial pr-12">Investor name: {{selectedFamilyMember}}
                 </h5>
             </div>
@@ -64,7 +64,8 @@
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard">
                                 <input type="text" aria-label="Number" class="form-control" matInput
-                                    [matAutocomplete]="auto"  formControlName="schemeStp" (keyup)="getSchemeList($event.target.value)"
+                                    [matAutocomplete]="auto" formControlName="schemeStp"
+                                    (keyup)="getSchemeList($event.target.value)"
                                     placeholder="Start typing to see scheme names">
                                 <mat-autocomplete #auto="matAutocomplete">
                                     <mat-option (onSelectionChange)="selectedScheme(scheme)"
@@ -75,8 +76,7 @@
                                 <mat-error class="f-12" *ngIf="stpTransaction.get('schemeStp').errors?.required">
                                     This field is required
                                 </mat-error>
-                                <mat-error class="f-12"
-                                    *ngIf="stpTransaction.get('schemeStp').errors?.setValue">
+                                <mat-error class="f-12" *ngIf="stpTransaction.get('schemeStp').errors?.setValue">
                                     Selected scheme does not exist
                                 </mat-error>
                                 <mat-hint align="start" class="f-12 text-custom">Last closing NAV:
@@ -155,8 +155,7 @@
                                 <mat-error class="f-12" *ngIf="stpTransaction.get('transferIn').errors?.required">
                                     This field is required
                                 </mat-error>
-                                <mat-error class="f-12"
-                                    *ngIf="stpTransaction.get('transferIn').errors?.setValue">
+                                <mat-error class="f-12" *ngIf="stpTransaction.get('transferIn').errors?.setValue">
                                     Selected scheme does not exist
                                 </mat-error>
                                 <mat-hint align="start" class="f-12 text-custom">Last closing NAV:
@@ -228,7 +227,7 @@
                                 </mat-error>
                                 <mat-error *ngIf="(stpTransaction.get('employeeContry').errors?.required)" class="f-12">
                                     This field is requied
-                                 </mat-error>
+                                </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -305,7 +304,7 @@
             <!-- <button mat-button class="btn-green text-white ml-12" (click)="stp()">
                 SAVE & PROCEED
             </button> -->
-            <app-progress-button class="btn-green text-white ml-12"  (click)="stp()" [options]="barButtonOptions" >
+            <app-progress-button class="btn-green text-white ml-12" (click)="stp()" [options]="barButtonOptions">
             </app-progress-button>
         </div>
     </div>
