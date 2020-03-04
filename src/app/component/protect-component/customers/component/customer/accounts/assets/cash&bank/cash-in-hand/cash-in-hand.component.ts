@@ -95,8 +95,8 @@ export class CashInHandComponent implements OnInit {
       balanceAsOn: [(data.balanceAsOn == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
       cashBalance: [(data.cashValue == undefined) ? '' : data.cashValue, [Validators.required]],
       // bankAcNo: [(data.bankAccountNumber == undefined) ? '' : data.bankAccountNumber, [Validators.required]],
-      description: [(data.description == undefined) ? '' : data.description, [Validators.required]],
-      id: [(data.id == undefined) ? '' : data.id, [Validators.required]],
+      description: [(data.description == undefined) ? '' : data.description,],
+      id: [(data.id == undefined) ? '' : data.id,],
       familyMemberId: [[(data.familyMemberId == undefined) ? '' : data.familyMemberId],]
     });
     this.ownerData = this.cashInHand.controls;

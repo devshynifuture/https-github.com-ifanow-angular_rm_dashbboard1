@@ -102,15 +102,15 @@ export class BankAccountsComponent implements OnInit {
     this.bankAccounts = this.fb.group({
       ownerName: [(data.ownerName == undefined) ? '' : data.ownerName, [Validators.required]],
       accountType: [(data.accountType == undefined) ? '' : (data.accountType) + "", [Validators.required]],
-      bankName: [(data.bankName == undefined) ? '' : data.bankName, [Validators.required]],
+      bankName: [(data.bankName == undefined) ? '' : data.bankName,],
       compound: [(data.interestCompounding == undefined) ? '' : (data.interestCompounding) + "", [Validators.required]],
       interestRate: [(data.interestRate == undefined) ? '' : data.interestRate, [Validators.required]],
       balanceAsOn: [(data.balanceAsOn == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
       accountBalance: [(data.accountBalance == undefined) ? '' : data.accountBalance, [Validators.required]],
-      bankAcNo: [(data.accountNo == undefined) ? '' : data.accountNo, [Validators.required]],
-      description: [(data.description == undefined) ? '' : data.description, [Validators.required]],
-      id: [(data.id == undefined) ? '' : data.id, [Validators.required]],
-      familyMemberId: [[(data.familyMemberId == undefined) ? '' : data.familyMemberId], [Validators.required]],
+      bankAcNo: [(data.accountNo == undefined) ? '' : data.accountNo,],
+      description: [(data.description == undefined) ? '' : data.description,],
+      id: [(data.id == undefined) ? '' : data.id,],
+      familyMemberId: [[(data.familyMemberId == undefined) ? '' : data.familyMemberId],],
       nomineeList: this.nomineesList
     });
     this.ownerData = this.bankAccounts.controls;
