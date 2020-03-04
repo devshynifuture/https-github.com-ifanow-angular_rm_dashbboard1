@@ -191,7 +191,7 @@ export class SingleGoalYearComponent implements OnInit {
           this.planService.addCarGoal(obj).subscribe(
             data => {
               console.log(data)
-              this.eventService.openSnackBar("Car goal is added", "dismiss");
+              this.eventService.openSnackBar("Car goal is added", "Dismiss");
               this.close('close');
             },
             error => this.eventService.showErrorMessage(error)
@@ -214,7 +214,7 @@ export class SingleGoalYearComponent implements OnInit {
           this.planService.addMarriageGoal(obj).subscribe(
             data => {
               console.log(data)
-              this.eventService.openSnackBar("Marriage goal is added", "dismiss");
+              this.eventService.openSnackBar("Marriage goal is added", "Dismiss");
               this.close('close');
             },
             error => this.eventService.showErrorMessage(error)
@@ -233,7 +233,7 @@ export class SingleGoalYearComponent implements OnInit {
           this.planService.addEmergencyGoal(obj).subscribe(
             data => {
               console.log(data)
-              this.eventService.openSnackBar("Emergency goal is added", "dismiss");
+              this.eventService.openSnackBar("Emergency goal is added", "Dismiss");
               this.close('close');
             },
             error => this.eventService.showErrorMessage(error)
@@ -256,7 +256,7 @@ export class SingleGoalYearComponent implements OnInit {
           this.planService.addWealthCreationGoal(obj).subscribe(
             data => {
               console.log(data)
-              this.eventService.openSnackBar("Wealth creation goal is added", "dismiss"),
+              this.eventService.openSnackBar("Wealth creation goal is added", "Dismiss"),
                 this.close('close');
             },
             error => this.eventService.showErrorMessage(error)
@@ -275,7 +275,7 @@ export class SingleGoalYearComponent implements OnInit {
           this.planService.addBigSpendsGoal(obj).subscribe(
             data => {
               console.log(data),
-                this.eventService.openSnackBar("Big spends is added", 'dismiss'),
+                this.eventService.openSnackBar("Big spends is added", 'Dismiss'),
                 this.close('close')
             },
             error => this.eventService.showErrorMessage(error)
@@ -294,7 +294,7 @@ export class SingleGoalYearComponent implements OnInit {
           this.planService.addOthersGoal(obj).subscribe(
             data => {
               console.log(data),
-                this.eventService.openSnackBar("Others spends is added", 'dismiss'),
+                this.eventService.openSnackBar("Others spends is added", 'Dismiss'),
                 this.close('close')
             },
             error => this.eventService.showErrorMessage(error)

@@ -226,7 +226,7 @@ export class QuotationsComponent implements OnInit {
       positiveMethod: () => {
         this.subService.deleteSettingsDocument(this.list).subscribe(
           data => {
-            this.eventService.openSnackBar('document is deleted', 'dismiss');
+            this.eventService.openSnackBar('document is deleted', 'Dismiss');
             // this.valueChange.emit('close');
             dialogRef.close(this.list);
             // this.getRealEstate();

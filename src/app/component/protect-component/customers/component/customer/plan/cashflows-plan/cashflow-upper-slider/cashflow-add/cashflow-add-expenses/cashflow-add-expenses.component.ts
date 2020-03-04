@@ -91,7 +91,7 @@ export class CashflowAddExpensesComponent implements OnInit {
       console.log(this.formExpense.value);
       this.closeDialog();
     } else {
-      this.eventService.openSnackBar('Must fill required fields', "DISMISS")
+      this.eventService.openSnackBar('Must fill required fields', "Dismiss")
     }
   }
 }

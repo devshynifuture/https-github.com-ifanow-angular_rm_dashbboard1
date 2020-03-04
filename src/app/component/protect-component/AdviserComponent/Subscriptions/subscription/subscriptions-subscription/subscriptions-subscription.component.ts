@@ -233,11 +233,11 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
             }
             this.eventService.changeUpperSliderState({ state: 'close' })
             this.getSubSummaryRes(this.tableData);
-            // this.eventService.openSnackBar('Wait sometime....', 'dismiss');
+            // this.eventService.openSnackBar('Wait sometime....', 'Dismiss');
             // this.errorMessage();
           }, (error) => {
             barButtonOption.active = false;
-            this.eventService.openSnackBar('Wait sometime....', 'dismiss');
+            this.eventService.openSnackBar('Wait sometime....', 'Dismiss');
           }
         )
       },
@@ -708,7 +708,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   deletedData(data) {
     if (data) {
       this.eventService.changeUpperSliderState({ state: 'close' });
-      this.eventService.openSnackBar('Deleted successfully!', 'dismiss');
+      this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
     }
   }
 }

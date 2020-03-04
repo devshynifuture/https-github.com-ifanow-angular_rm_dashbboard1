@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, ViewContainerRef, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ViewContainerRef, OnDestroy, ElementRef, AfterViewInit } from '@angular/core';
 import { EventService } from '../../Data-service/event.service';
 import { SubscriptionInject } from '../../component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { DynamicComponentService } from '../../services/dynamic-component.service';
@@ -80,7 +80,7 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
       }
     );
     this.newRightSliderDataObsSubscription = this.subinject.newRightSliderDataObs.subscribe((data) => {
-      const tempData: any = data;
+    const tempData: any = data;
       if (tempData.componentName) {
         this.openDynamicComponent(data);
       }
@@ -183,5 +183,9 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
 
     this.newRightSliderDataObsSubscription.unsubscribe();
     // throw new Error("Method not implemented.");
+  }
+
+  close(){
+    this.subinject.changeNewRightSliderState({ state: 'close' });
   }
 }

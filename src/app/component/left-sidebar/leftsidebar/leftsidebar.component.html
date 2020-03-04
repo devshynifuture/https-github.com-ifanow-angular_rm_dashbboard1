@@ -425,7 +425,7 @@
     </mat-sidenav-content>
 
 </mat-sidenav-container>
-<div *ngIf="isOverlayVisible" [@dialogContainer]="dialogState" class="custom-overlay">
+<div *ngIf="isOverlayVisible" [@dialogContainer]="dialogState" class="custom-overlay" (click)="close()">
 </div>
 <!-- class="upper_slider" -->
 <div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">

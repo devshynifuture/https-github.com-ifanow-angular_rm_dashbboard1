@@ -39,7 +39,7 @@ export class CashflowUpperSurplusComponent implements OnInit {
       ELEMENT_DATA3 = this.cashflowService.alterTable(ELEMENT_DATA3, field, value, index);
     } else {
       this.onlyNumbers = '';
-      this.eventService.openSnackBar("This input only takes numbers", "DISMISS");
+      this.eventService.openSnackBar("This input only takes numbers", "Dismiss");
     }
   }
 

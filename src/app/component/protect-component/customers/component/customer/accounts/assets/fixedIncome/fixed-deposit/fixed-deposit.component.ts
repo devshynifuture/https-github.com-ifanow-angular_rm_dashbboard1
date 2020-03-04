@@ -352,19 +352,19 @@ export class FixedDepositComponent implements OnInit {
         // edit call
         this.custumService.editFixedDeposit(obj).subscribe(
           data => this.editFixedDepositRes(data),
-          err => this.event.openSnackBar(err, "dismiss")
+          err => this.event.openSnackBar(err, "Dismiss")
         );
       } else {
         this.custumService.addFixedDeposit(obj).subscribe(
           data => this.addFixedDepositRes(data),
-          err => this.event.openSnackBar(err, "dismiss")
+          err => this.event.openSnackBar(err, "Dismiss")
         );
       }
     }
   }
   getAdviceFdRes(data) {
     console.log('advice activity res ==>', data)
-    this.event.openSnackBar('Fixed deposite added successfully!', 'dismiss');
+    this.event.openSnackBar('Fixed deposite added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
   onChange(event) {
@@ -408,11 +408,11 @@ export class FixedDepositComponent implements OnInit {
   }
   addFixedDepositRes(data) {
     console.log('addFixedDepositRes', data);
-    this.event.openSnackBar('Added successfully!', 'dismiss');
+    this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
   editFixedDepositRes(data) {
-    this.event.openSnackBar('Updated successfully!', 'dismiss');
+    this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
 }

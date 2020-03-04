@@ -122,7 +122,7 @@ export class NscSchemeComponent implements OnInit {
       positiveMethod: () => {
         this.cusService.deleteNSC(data.id).subscribe(
           data => {
-            this.eventService.openSnackBar('NSC is deleted', 'dismiss');
+            this.eventService.openSnackBar('NSC is deleted', 'Dismiss');
             dialogRef.close();
             this.getNscSchemedata();
           },

@@ -43,6 +43,15 @@ import { SetupTaxPlanningComponent } from './texes-plan/setup-tax-planning/setup
 import { AddHealthInsuranceComponent } from './insurance-plan/add-health-insurance/add-health-insurance.component';
 import { ShowHealthPlanningComponent } from './insurance-plan/show-health-planning/show-health-planning.component';
 import { SuggestHealthInsuranceComponent } from './insurance-plan/suggest-health-insurance/suggest-health-insurance.component';
+import { AddScenariosComponent } from './scenarios-plan/add-scenarios/add-scenarios.component';
+import { HealthInsuranceComponent } from './insurance-plan/mainInsuranceScreen/health-insurance/health-insurance.component';
+import { LifeInsuranceComponent } from './insurance-plan/mainInsuranceScreen/life-insurance/life-insurance.component';
+import { CancerInsuranceComponent } from './insurance-plan/mainInsuranceScreen/cancer-insurance/cancer-insurance.component';
+import { CriticalInsuranceComponent } from './insurance-plan/mainInsuranceScreen/critical-insurance/critical-insurance.component';
+import { FireInsuranceComponent } from './insurance-plan/mainInsuranceScreen/fire-insurance/fire-insurance.component';
+import { HouseholdersInsuranceComponent } from './insurance-plan/mainInsuranceScreen/householders-insurance/householders-insurance.component';
+import { PersonalInsuranceComponent } from './insurance-plan/mainInsuranceScreen/personal-insurance/personal-insurance.component';
+import { InsurancePlanModule } from './insurance-plan/insurance-plan.module';
 
 export const componentList = [
   PreferencesComponent,
@@ -78,7 +87,11 @@ export const componentList = [
   SetupTaxPlanningComponent,
   AddHealthInsuranceComponent,
   ShowHealthPlanningComponent,
-  SuggestHealthInsuranceComponent
+  AddScenariosComponent,
+  SuggestHealthInsuranceComponent,
+  HealthInsuranceComponent,
+
+
 ];
 // import { AddPlaninsuranceComponent } from './insurance-plan/add-planinsurance/add-planinsurance.component';
 
@@ -88,14 +101,15 @@ export const componentList = [
 // ];
 
 @NgModule({
-  declarations: [...componentList, CashflowTableEditDirective,],
+  declarations: [...componentList, CashflowTableEditDirective,  CancerInsuranceComponent, CriticalInsuranceComponent, FireInsuranceComponent, HouseholdersInsuranceComponent, PersonalInsuranceComponent],
   imports: [
     CommonModule,
     MaterialModule,
     ChartModule,
     FormsModule,
     ReactiveFormsModule,
-    CustomDirectiveModule
+    CustomDirectiveModule,
+    InsurancePlanModule,
   ],
   exports: [
     FormsModule,

@@ -48,7 +48,7 @@ export class DeploymentsPlanComponent implements OnInit {
         this.isLoading = false;
         this.dataSource = (this.type == 1) ? data.GoalBaseDeploymentList : data.nonGoalBasedDeploymentList;
       },
-      err => this.eventService.openSnackBar("something went wrong", "dismiss")
+      err => this.eventService.openSnackBar("something went wrong", "Dismiss")
     )
 
   }
@@ -95,7 +95,7 @@ export class DeploymentsPlanComponent implements OnInit {
       positiveMethod: () => {
         this.cusService.deletePPF(deleteData.id).subscribe(
           data => {
-            this.eventService.openSnackBar("Deployment is deleted", "dismiss");
+            this.eventService.openSnackBar("Deployment is deleted", "Dismiss");
             this.getDeploymentData();
             dialogRef.close();
           },

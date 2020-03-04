@@ -188,7 +188,7 @@ export class AddPoTdComponent implements OnInit {
         if (this.flag == 'advicePOTD') {
           this.cusService.getAdvicePord(adviceObj).subscribe(
             data => this.getAdvicePotdRes(data),
-            err => this.eventService.openSnackBar(err, "dismiss")
+            err => this.eventService.openSnackBar(err, "Dismiss")
           );
         } else {
           this.cusService.addPOTD(obj).subscribe(
@@ -205,7 +205,7 @@ export class AddPoTdComponent implements OnInit {
 
   }
   response(data) {
-    (this.editApi) ? this.eventService.openSnackBar("PO_TD is edited", "dismiss") : this.eventService.openSnackBar("PO_TD is added", "added")
+    (this.editApi) ? this.eventService.openSnackBar("PO_TD is edited", "Dismiss") : this.eventService.openSnackBar("PO_TD is added", "added")
     console.log(data)
     this.close(true);
   }

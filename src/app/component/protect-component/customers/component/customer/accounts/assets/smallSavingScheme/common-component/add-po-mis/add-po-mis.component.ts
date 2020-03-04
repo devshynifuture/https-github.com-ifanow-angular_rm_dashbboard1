@@ -206,7 +206,7 @@ export class AddPoMisComponent implements OnInit {
         if (this.flag == 'advicePOMIS') {
           this.custumService.getAdvicePomis(adviceObj).subscribe(
             data => this.getAdvicePomisRes(data),
-            err => this.eventService.openSnackBar(err, "dismiss")
+            err => this.eventService.openSnackBar(err, "Dismiss")
           );
         } else {
           this.custumService.addPOMIS(objToSend).subscribe(
@@ -228,7 +228,7 @@ export class AddPoMisComponent implements OnInit {
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
       this.eventService.openSnackBar('Pomis added successfully', 'OK');
     } else {
-      this.eventService.openSnackBar('Error', 'dismiss');
+      this.eventService.openSnackBar('Error', 'Dismiss');
 
     }
   }
@@ -240,7 +240,7 @@ export class AddPoMisComponent implements OnInit {
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
       this.eventService.openSnackBar('Pomis edited successfully', 'OK');
     } else {
-      this.eventService.openSnackBar('Error', 'dismiss');
+      this.eventService.openSnackBar('Error', 'Dismiss');
     }
   }
 

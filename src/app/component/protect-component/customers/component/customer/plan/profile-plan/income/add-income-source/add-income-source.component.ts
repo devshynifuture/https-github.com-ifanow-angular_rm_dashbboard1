@@ -47,7 +47,7 @@ export class AddIncomeSourceComponent implements OnInit {
   }
   nextStep() {
     if (this.countIncomeType == 0) {
-      this.eventService.openSnackBar("Please select income mode", "dismiss")
+      this.eventService.openSnackBar("Please select income mode", "Dismiss")
       return;
     }
     const obj =

@@ -225,11 +225,11 @@ export class AddExpensesComponent implements OnInit {
     }
   }
   otherCommitmentsEditRes(data) {
-    this.event.openSnackBar('Added successfully!', 'dismiss');
+    this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
   otherCommitmentsAddRes(data) {
-    this.event.openSnackBar('Updated successfully!', 'dismiss');
+    this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
   addRecuringExpenseRes(data) {
@@ -318,23 +318,23 @@ export class AddExpensesComponent implements OnInit {
   }
   addBudgetRes(data) {
     console.log(data)
-    this.event.openSnackBar('Added successfully!', 'dismiss');
+    this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
   editBudgetRes(data) {
     console.log(data)
-    this.event.openSnackBar('Updated successfully!', 'dismiss');
+    this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
   addExpenseRes(data) {
     console.log('addExpenseRes', data);
-    this.event.openSnackBar('Added successfully!', 'dismiss');
+    this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
 
   editExpenseRes(data) {
     console.log('editExpenseRes', data);
-    this.event.openSnackBar('Updated successfully!', 'dismiss');
+    this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
 

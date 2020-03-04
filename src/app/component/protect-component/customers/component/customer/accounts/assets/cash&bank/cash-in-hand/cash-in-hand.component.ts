@@ -85,10 +85,14 @@ export class CashInHandComponent implements OnInit {
 
   getdataForm(data) {
     this.flag = data;
-    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
+    // (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
 
     if (data == undefined) {
       data = {};
+      this.flag = "addCASHINHAND";
+    }
+    else {
+      this.flag = "editCASHINHAND";
     }
     this.cashInHand = this.fb.group({
       ownerName: [(data.ownerName == undefined) ? '' : data.ownerName, [Validators.required]],
@@ -135,7 +139,7 @@ export class CashInHandComponent implements OnInit {
         stringObject: obj,
         adviceDescription: "manualAssetDescription"
       }
-      if (this.cashInHand.controls.id.value == '' && this.flag != 'adviceCashInHand') {
+      if (this.flag == "editCASHINHAND") {
         this.custumService.addCashInHand(obj).subscribe(
           data => this.addCashInHandRes(data)
         );
