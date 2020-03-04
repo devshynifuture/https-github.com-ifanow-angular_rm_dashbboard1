@@ -156,7 +156,7 @@ export class ChangePayeeComponent implements OnInit {
 
   saveChangePayeeSetting() {
     if(this.totalValue!=100){
-      this.eventService.openSnackBar('Total spliting ratio of selected payee should be equal to 100%', 'dismiss')
+      this.eventService.openSnackBar('Total spliting ratio of selected payee should be equal to 100%', 'Dismiss')
     }
     else{
       this.barButtonOptions.active = true;

@@ -203,7 +203,7 @@ export class AddSsyComponent implements OnInit {
         if (this.flag == 'adviceSSY') {
           this.cusService.getAdviceSsy(adviceObj).subscribe(
             data => this.getAdviceSsyRes(data),
-            err => this.eventService.openSnackBar(err, "dismiss")
+            err => this.eventService.openSnackBar(err, "Dismiss")
           );
         } else {
           this.cusService.addSSYScheme(obj).subscribe(
@@ -217,12 +217,12 @@ export class AddSsyComponent implements OnInit {
   }
   getAdviceSsyRes(data) {
     console.log(data);
-    this.eventService.openSnackBar("SSY is added", "dismiss");
+    this.eventService.openSnackBar("SSY is added", "Dismiss");
     this.close(true)
 
   }
   addSSYSchemeResponse(data) {
-    (this.editApi) ? this.eventService.openSnackBar("SSY is edited", "dismiss") : this.eventService.openSnackBar("SSY is added", "added")
+    (this.editApi) ? this.eventService.openSnackBar("SSY is edited", "Dismiss") : this.eventService.openSnackBar("SSY is added", "added")
     console.log(data)
     this.close(true)
   }

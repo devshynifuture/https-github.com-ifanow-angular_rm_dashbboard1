@@ -129,7 +129,7 @@ export class FeeStructureComponent implements OnInit {
     if (data == true) {
       this.router.navigate(['/admin/subscription/settings','plans'])
       this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
-      this.eventService.openSnackBar('Deleted successfully!', 'dismiss');
+      this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
     }
   }
 }

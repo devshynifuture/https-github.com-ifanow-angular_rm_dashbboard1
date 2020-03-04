@@ -111,7 +111,7 @@ export class SettingsComponent implements OnInit {
 
   deleteModal(value, data) {
     if (data.isPrimary == true) {
-      this.eventService.openSnackBar("You cannot delete primary client profile", "dismiss")
+      this.eventService.openSnackBar("You cannot delete primary client profile", "Dismiss")
       return;
     }
     const dialogData = {
@@ -125,7 +125,7 @@ export class SettingsComponent implements OnInit {
 
         this.subService.deleteClientProfileSubscriptionSetting(data.id).subscribe(
           resData => {
-            this.eventService.openSnackBar('Deleted successfully!', 'dismiss');
+            this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
             // this.SettingProfileData = [{}];
             // this.getSettingProfileData();
             dialogRef.close(data.id);

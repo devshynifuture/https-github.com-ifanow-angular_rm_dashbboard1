@@ -185,16 +185,16 @@ export class AddSuperannuationComponent implements OnInit {
     }
   }
   getAdviceSuperAnnuationRes(data) {
-    this.event.openSnackBar('Superannuation added successfully!', 'dismiss');
+    this.event.openSnackBar('Superannuation added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'addedSuperannuation', state: 'close', data, refreshRequired: true })
   }
   addSuperannuationRes(data) {
     console.log('addrecuringDepositRes', data)
-    this.event.openSnackBar('Added successfully!', 'dismiss');
+    this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'addedSuperannuation', state: 'close', data, refreshRequired: true })
   }
   editSuperannuationRes(data) {
-    this.event.openSnackBar('Updated successfully!', 'dismiss');
+    this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'addedSuperannuation', state: 'close', data, refreshRequired: true })
   }
 }

@@ -170,7 +170,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
             // this.errorMessage();
           }, (error) => {
             barButtonOption.active = false;
-            this.eventService.openSnackBar('Wait sometime....', 'dismiss');
+            this.eventService.openSnackBar('Wait sometime....', 'Dismiss');
           }
         )
       },
@@ -562,7 +562,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
         this.subscription.deleteInvoices(this.list).subscribe(
           data => {
             this.dataCount = 0;
-            this.eventService.openSnackBar('invoice deleted successfully.', 'dismiss');
+            this.eventService.openSnackBar('invoice deleted successfully.', 'Dismiss');
             dialogRef.close(this.list);
 
           },

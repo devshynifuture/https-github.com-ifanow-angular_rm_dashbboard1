@@ -39,7 +39,7 @@ export class DeploymentDetailsComponent implements OnInit {
         this.isLoading = false;
         this.deploymentData = data;
       },
-      err => this.eventService.openSnackBar(err, 'dismiss')
+      err => this.eventService.openSnackBar(err, 'Dismiss')
     )
 
   }

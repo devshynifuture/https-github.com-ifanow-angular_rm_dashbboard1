@@ -32,7 +32,7 @@ export class SettingsEmpanelledAmcComponent implements OnInit {
         this.getEmpanelledAmcDataRes(data);
         this.dataSource = data.amcMasterList;
       },
-      err => this.eventService.openSnackBar(err, "dismiss")
+      err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
   getEmpanelledAmcDataRes(data) {
@@ -53,7 +53,7 @@ export class SettingsEmpanelledAmcComponent implements OnInit {
         data => console.log(data),
         err => {
           singleBrokerData.selected = true;
-          this.eventService.openSnackBar(err, "dismiss")
+          this.eventService.openSnackBar(err, "Dismiss")
         }
       )
     }
@@ -71,7 +71,7 @@ export class SettingsEmpanelledAmcComponent implements OnInit {
         },
         err => {
           singleBrokerData.selected = false;
-          this.eventService.openSnackBar(err, "dismiss")
+          this.eventService.openSnackBar(err, "Dismiss")
         }
       )
     }

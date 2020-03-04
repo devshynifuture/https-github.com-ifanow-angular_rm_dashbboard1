@@ -58,7 +58,7 @@ export class TransactionsHistoryComponent implements OnInit {
         console.log(data);
         this.transactionDetailData = data;
       },
-      err => this.eventService.openSnackBar(err, "dismiss")
+      err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
   close() {

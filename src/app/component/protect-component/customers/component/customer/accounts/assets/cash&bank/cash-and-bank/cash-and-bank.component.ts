@@ -126,7 +126,7 @@ export class CashAndBankComponent implements OnInit {
         if (value == 'BANK') {
           this.custumService.deleteBankAccount(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar('Bank account is deleted', 'dismiss');
+              this.eventService.openSnackBar('Bank account is deleted', 'Dismiss');
               dialogRef.close();
               this.getBankAccountList();
             },
@@ -135,7 +135,7 @@ export class CashAndBankComponent implements OnInit {
         } else {
           this.custumService.deleteCashInHand(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar('Cash in hand is deleted', 'dismiss');
+              this.eventService.openSnackBar('Cash in hand is deleted', 'Dismiss');
               dialogRef.close();
               this.getCashInHandList();
             },

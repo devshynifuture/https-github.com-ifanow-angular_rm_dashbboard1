@@ -111,7 +111,7 @@ export class AddStockMasterComponent implements OnInit {
       // api Calling
       this.dialogClose();
     } else {
-      this.eventService.openSnackBar('Must complete form values', "DISMISS");
+      this.eventService.openSnackBar('Must complete form values', "Dismiss");
     }
   }
 

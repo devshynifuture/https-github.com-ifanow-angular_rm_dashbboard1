@@ -157,16 +157,16 @@ export class AddEPSComponent implements OnInit {
     }
   }
   getAdviceEpsRes(data) {
-    this.event.openSnackBar('EPS added successfully!', 'dismiss');
+    this.event.openSnackBar('EPS added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'addedEps', state: 'close', data, refreshRequired: true })
   }
   addEPSRes(data) {
     console.log('addrecuringDepositRes', data)
-    this.event.openSnackBar('Added successfully!', 'dismiss');
+    this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'addedEps', state: 'close', data, refreshRequired: true })
   }
   editEPSRes(data) {
-    this.event.openSnackBar('Updated successfully!', 'dismiss');
+    this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'addedEps', state: 'close', data, refreshRequired: true })
   }
 }

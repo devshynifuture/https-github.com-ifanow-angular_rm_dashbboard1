@@ -245,12 +245,12 @@ export class BondsComponent implements OnInit {
   addBondsRes(data) {
     console.log('addrecuringDepositRes', data)
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
-    this.eventService.openSnackBar('Added successfully!', 'dismiss');
+    this.eventService.openSnackBar('Added successfully!', 'Dismiss');
 
   }
   editBondsRes(data) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
-    this.eventService.openSnackBar('Updated successfully!', 'dismiss');
+    this.eventService.openSnackBar('Updated successfully!', 'Dismiss');
 
   }
 }

@@ -57,7 +57,7 @@ export class EventService {
   }
 
   showErrorMessage(data, actionCallback = null) {
-    this.openSnackBar('Something went wrong', 'dismiss', actionCallback);
+    this.openSnackBar('Something went wrong', 'Dismiss', actionCallback);
   }
 
   sidebarData(message: string) {
