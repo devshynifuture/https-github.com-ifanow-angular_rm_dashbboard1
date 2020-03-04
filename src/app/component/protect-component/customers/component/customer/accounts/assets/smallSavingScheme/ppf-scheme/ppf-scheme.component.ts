@@ -77,7 +77,7 @@ export class PPFSchemeComponent implements OnInit {
       positiveMethod: () => {
         this.cusService.deletePPF(data.id).subscribe(
           data => {
-            this.eventService.openSnackBar("PPF is deleted", "dismiss")
+            this.eventService.openSnackBar("PPF is deleted", "Dismiss")
             dialogRef.close();
             this.getPpfSchemeData();
           },

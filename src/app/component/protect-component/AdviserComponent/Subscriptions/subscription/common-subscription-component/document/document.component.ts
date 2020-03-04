@@ -558,6 +558,8 @@ export class DocumentComponent implements OnInit {
         }
       });
 
+    }else{
+      this.planDocumentData = [];
     }
 
   }
@@ -700,6 +702,8 @@ export class DocumentComponent implements OnInit {
         //   'viewer.</p>\n';
       });
 
+    }else{
+      this.serviceDocumentData=[];
     }
   }
 
@@ -726,7 +730,7 @@ export class DocumentComponent implements OnInit {
       positiveMethod: () => {
         this.subService.deleteClientDocumentsMultiple(list).subscribe(
           data => {
-            this.eventService.openSnackBar('document is deleted', 'dismiss');
+            this.eventService.openSnackBar('document is deleted', 'Dismiss');
             // this.valueChange.emit('close');
             dialogRef.close(list);
             // this.getRealEstate();
@@ -797,7 +801,7 @@ export class DocumentComponent implements OnInit {
           this.saveMappingDocumentToPlansResponse(data);
         }
         else if (data === 204) {
-          this.eventService.openSnackBar('No documents created', 'dismiss');
+          this.eventService.openSnackBar('No documents created', 'Dismiss');
           this.barButtonOptions.active = false;
         }
       },
@@ -890,7 +894,7 @@ export class DocumentComponent implements OnInit {
 
   mapDocumentToServiceResponse(data) {
     if (this.mappedData.length === 0) {
-      this.eventService.openSnackBar('No documents mapped', 'DISMISS');
+      this.eventService.openSnackBar('No documents mapped', 'Dismiss');
     } else {
       this.eventService.openSnackBar('Documents mapped', 'OK');
     }

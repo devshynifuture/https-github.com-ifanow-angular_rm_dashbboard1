@@ -243,18 +243,20 @@ export class FixedDepositComponent implements OnInit {
       data = this.dataSource;
     }
     this.fixedDeposit = this.fb.group({
-      ownerName: [(!data.ownerName) ? '' : data.ownerName, [Validators.required]],
       getCoOwnerName: this.fb.array([this.fb.group({
         ownerName: '',
         ownershipPerc: null,
         familyMemberId: null
       })]),
-      ownerPercent: [data.ownerPerc, [Validators.required]],
+      ownerType: [(!data.ownershipType) ? '' : (data.ownershipType) + '', [Validators.required]],
+      ownerName: [(!data.ownerName) ? '' : data.ownerName, [Validators.required]],
+      FDType: [(!data.fdType) ? '' : (data.fdType) + '', [Validators.required]],
       amountInvest: [(!data) ? '' : data.amountInvested, [Validators.required]],
       commencementDate: [(!data) ? '' : new Date(data.commencementDate), [Validators.required]],
       interestRate: [(!data) ? '' : data.interestRate, [Validators.required]],
       maturity: [!data.maturity ? 1 : data.maturity, [Validators.required]],
       compound: [(!data.interestCompoundingId) ? '' : data.interestCompoundingId],
+      ownerPercent: [data.ownerPerc],
       institution: [(!data) ? '' : data.institutionName],
       description: [(!data) ? '' : data.description],
       tenureY: [(!data.tenureY) ? '0' : data.tenureY.toString()],
@@ -264,9 +266,7 @@ export class FixedDepositComponent implements OnInit {
       maturityDate: [(!data) ? '' : new Date(data.maturityDate)],
       payOpt: [(!data.interestPayoutOption) ? '' : data.interestPayoutOption, [Validators.required]],
       bankACNo: [(!data) ? '' : data.bankAcNumber],
-      ownerType: [(!data.ownershipType) ? '' : (data.ownershipType) + '', [Validators.required]],
       fdNo: [(!data) ? '' : data.fdNumber],
-      FDType: [(!data.fdType) ? '' : (data.fdType) + '', [Validators.required]],
       id: [(!data) ? '' : data.id,],
       familyMemberId: [(!data) ? '' : data.familyMemberId],
       getNomineeName: this.fb.array([this.fb.group({
@@ -294,6 +294,7 @@ export class FixedDepositComponent implements OnInit {
   }
 
   saveFixedDeposit() {
+    (this.fixedDeposit.controls['ownerType'].value == '2') ? this.fixedDeposit.controls['ownerPercent'].clearValidators() : this.fixedDeposit.controls['ownerType'].setValidators(Validators.required);
     if (this.showTenure == true) {
       this.tenure = this.getDateYMD();
       this.maturityDate = this.tenure;
@@ -301,16 +302,13 @@ export class FixedDepositComponent implements OnInit {
       this.maturityDate = this.fixedDeposit.controls.maturityDate.value;
     }
     if (this.fixedDeposit.invalid || !this.tenureValid) {
-      this.fixedDeposit.get('ownerName').markAsTouched();
-      this.fixedDeposit.get('FDType').markAsTouched();
-      this.fixedDeposit.get('maturityDate').markAsTouched();
-      this.fixedDeposit.get('amountInvest').markAsTouched();
-      this.fixedDeposit.get('commencementDate').markAsTouched();
-      this.fixedDeposit.get('interestRate').markAsTouched();
-      this.fixedDeposit.get('compound').markAsTouched();
-      this.fixedDeposit.get('frequencyOfPayoutPerYear').markAsTouched();
-      this.fixedDeposit.get('ownerType').markAsTouched();
-      this.fixedDeposit.get('payOpt').markAsTouched();
+      for (let element in this.fixedDeposit.controls) {
+        console.log(element)
+        if (this.fixedDeposit.controls[element].invalid) {
+          this.fixedDeposit.controls[element].markAsTouched();
+          return;
+        }
+      }
     } else {
       const obj = {
         advisorId: this.advisorId,
@@ -354,19 +352,19 @@ export class FixedDepositComponent implements OnInit {
         // edit call
         this.custumService.editFixedDeposit(obj).subscribe(
           data => this.editFixedDepositRes(data),
-          err => this.event.openSnackBar(err, "dismiss")
+          err => this.event.openSnackBar(err, "Dismiss")
         );
       } else {
         this.custumService.addFixedDeposit(obj).subscribe(
           data => this.addFixedDepositRes(data),
-          err => this.event.openSnackBar(err, "dismiss")
+          err => this.event.openSnackBar(err, "Dismiss")
         );
       }
     }
   }
   getAdviceFdRes(data) {
     console.log('advice activity res ==>', data)
-    this.event.openSnackBar('Fixed deposite added successfully!', 'dismiss');
+    this.event.openSnackBar('Fixed deposite added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
   onChange(event) {
@@ -410,11 +408,11 @@ export class FixedDepositComponent implements OnInit {
   }
   addFixedDepositRes(data) {
     console.log('addFixedDepositRes', data);
-    this.event.openSnackBar('Added successfully!', 'dismiss');
+    this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
   editFixedDepositRes(data) {
-    this.event.openSnackBar('Updated successfully!', 'dismiss');
+    this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
 }

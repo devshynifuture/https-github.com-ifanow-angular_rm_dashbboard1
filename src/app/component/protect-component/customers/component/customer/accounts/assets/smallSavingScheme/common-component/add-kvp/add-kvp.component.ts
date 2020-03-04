@@ -156,7 +156,7 @@ export class AddKvpComponent implements OnInit {
       if (this.flag == 'adviceKVP') {
         this.cusService.getAdviceKvp(adviceObj).subscribe(
           data => this.getAdviceKvpRes(data),
-          err => this.eventService.openSnackBar(err, "dismiss")
+          err => this.eventService.openSnackBar(err, "Dismiss")
         );
       } else if (this.editApi != undefined && this.editApi != 'adviceKVP') {
         obj['id'] = this.editApi.id
@@ -179,7 +179,7 @@ export class AddKvpComponent implements OnInit {
     this.close(true);
   }
   addKVPResponse(data) {
-    (this.editApi) ? this.eventService.openSnackBar("KVP is edited", "dismiss") : this.eventService.openSnackBar("KVP is added", "added")
+    (this.editApi) ? this.eventService.openSnackBar("KVP is edited", "Dismiss") : this.eventService.openSnackBar("KVP is added", "added")
     console.log(data)
     this.close(true);
   }

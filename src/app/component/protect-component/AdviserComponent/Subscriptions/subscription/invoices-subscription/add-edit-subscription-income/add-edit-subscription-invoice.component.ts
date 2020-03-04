@@ -417,10 +417,10 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   }
 
 
-  Close(state, dismiss) {
+  Close(state, Dismiss) {
     const closeObj = {
       dataString: this.invoiceInSub,
-      closingState: dismiss
+      closingState: Dismiss
     };
     if (this.showRecord == true) {
       this.showRecord = false;

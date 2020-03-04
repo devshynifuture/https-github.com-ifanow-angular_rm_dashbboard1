@@ -124,7 +124,7 @@ export class TermsAgreementComponent implements OnInit {
     };
     this.subService.getSettingPlanServiceData(obj).subscribe(
       data => this.serviceData = data,
-      err => this.eventService.openSnackBar('Something went wrong', 'dismiss')
+      err => this.eventService.openSnackBar('Something went wrong', 'Dismiss')
     );
   }
 
@@ -138,7 +138,7 @@ export class TermsAgreementComponent implements OnInit {
     tag.select();
     document.execCommand('copy');
     document.body.removeChild(tag);
-    this.eventService.openSnackBar('text copied', 'dismiss');
+    this.eventService.openSnackBar('text copied', 'Dismiss');
   }
 
   onSubmit() {

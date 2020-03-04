@@ -429,7 +429,7 @@ export class RetirementAccountComponent implements OnInit {
         if (value == 'EPF') {
           this.custumService.deleteEPF(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar('EPF is deleted', 'dismiss');
+              this.eventService.openSnackBar('EPF is deleted', 'Dismiss');
               dialogRef.close();
               this.getListEPF();
             },
@@ -438,7 +438,7 @@ export class RetirementAccountComponent implements OnInit {
         } else if (value == 'NPS') {
           this.custumService.deleteNPS(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar('NPS is deleted', 'dismiss');
+              this.eventService.openSnackBar('NPS is deleted', 'Dismiss');
               dialogRef.close();
               this.getListNPS();
             },
@@ -447,7 +447,7 @@ export class RetirementAccountComponent implements OnInit {
         } else if (value == 'GRATUITY') {
           this.custumService.deleteGratuity(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar('Grautity is deleted', 'dismiss');
+              this.eventService.openSnackBar('Grautity is deleted', 'Dismiss');
               dialogRef.close();
               this.getListGratuity();
             },
@@ -456,7 +456,7 @@ export class RetirementAccountComponent implements OnInit {
         } else if (value == 'SUPERANNUATION') {
           this.custumService.deleteSuperAnnuation(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar('SuperAnnuation is deleted', 'dismiss');
+              this.eventService.openSnackBar('SuperAnnuation is deleted', 'Dismiss');
               dialogRef.close();
               this.getListSuperannuation();
             },
@@ -465,7 +465,7 @@ export class RetirementAccountComponent implements OnInit {
         } else {
           this.custumService.deleteEPS(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar('EPS is deleted', 'dismiss');
+              this.eventService.openSnackBar('EPS is deleted', 'Dismiss');
               dialogRef.close();
               this.getListEPS();
             },

@@ -69,7 +69,7 @@ export class AddIncomeFamilyMemberComponent implements OnInit {
       return;
     }
     if (this.ownerCount == 0) {
-      this.eventService.openSnackBar('Please select earning member', 'dismiss');
+      this.eventService.openSnackBar('Please select earning member', 'Dismiss');
       return;
     }
     const obj = {

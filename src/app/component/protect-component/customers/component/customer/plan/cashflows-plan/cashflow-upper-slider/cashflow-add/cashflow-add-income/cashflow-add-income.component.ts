@@ -107,7 +107,7 @@ export class CashflowAddIncomeComponent implements OnInit {
       console.log(this.formIncome);
       this.closeDialog();
     } else {
-      this.eventService.openSnackBar('Must fill required fields', "DISMISS");
+      this.eventService.openSnackBar('Must fill required fields', "Dismiss");
     }
     // api call for adding income
 

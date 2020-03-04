@@ -269,7 +269,7 @@ export class InvoicesComponent implements OnInit {
         this.subService.deleteInvoices(this.list).subscribe(
           data => {
             this.dataCount = 0;
-            this.eventService.openSnackBar('invoice deleted successfully.', 'dismiss');
+            this.eventService.openSnackBar('invoice deleted successfully.', 'Dismiss');
             dialogRef.close(this.list);
 
           },

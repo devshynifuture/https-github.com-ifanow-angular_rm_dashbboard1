@@ -241,19 +241,19 @@ export class RecuringDepositComponent implements OnInit {
       if (this.flag == 'adviceRecurringDeposit') {
         this.custumService.getAdviceRd(adviceObj).subscribe(
           data => this.getAdviceRdRes(data),
-          err => this.event.openSnackBar(err, "dismiss")
+          err => this.event.openSnackBar(err, "Dismiss")
         );
       }
       else if (this.recuringDeposit.controls.id.value == undefined) {
         this.custumService.addRecurringDeposit(obj).subscribe(
           data => this.addrecuringDepositRes(data),
-          err => this.event.openSnackBar(err, "dismiss")
+          err => this.event.openSnackBar(err, "Dismiss")
         );
       } else {
         //edit call
         this.custumService.editRecurringDeposit(obj).subscribe(
           data => this.editrecuringDepositRes(data),
-          err => this.event.openSnackBar(err, "dismiss")
+          err => this.event.openSnackBar(err, "Dismiss")
         );
       }
 
@@ -270,12 +270,12 @@ export class RecuringDepositComponent implements OnInit {
   }
   addrecuringDepositRes(data) {
     console.log('addrecuringDepositRes', data)
-    this.event.openSnackBar('Added successfully!', 'dismiss');
+    this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }
 
   editrecuringDepositRes(data) {
-    this.event.openSnackBar('Updated successfully!', 'dismiss');
+    this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }
 }

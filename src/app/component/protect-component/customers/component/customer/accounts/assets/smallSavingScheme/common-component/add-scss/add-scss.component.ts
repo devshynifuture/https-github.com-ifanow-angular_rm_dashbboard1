@@ -7,6 +7,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { AssetValidationService } from '../../../asset-validation.service';
 
 @Component({
   selector: 'app-add-scss',
@@ -87,7 +88,7 @@ export class AddScssComponent implements OnInit {
     }
     this.scssData = data;
     this.scssSchemeForm = this.fb.group({
-      ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required, UtilService.ageValidators(60)]],
+      ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required, AssetValidationService.ageValidators(60)]],
       amtInvested: [data.amountInvested, [Validators.required, Validators.min(1000), Validators.max(1500000)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
       ownershipType: [data.ownerTypeI ? String(data.ownerTypeId) : '2', [Validators.required]]
@@ -149,7 +150,7 @@ export class AddScssComponent implements OnInit {
       if (this.flag == 'adviceSCSS') {
         this.cusService.getAdviceScss(adviceObj).subscribe(
           data => this.getAdviceScssRes(data),
-          err => this.eventService.openSnackBar(err, "dismiss")
+          err => this.eventService.openSnackBar(err, "Dismiss")
         );
       } else if (this.editApi != undefined && this.editApi != 'adviceSCSS') {
         obj.id = this.editApi.id;
@@ -166,7 +167,7 @@ export class AddScssComponent implements OnInit {
     }
   }
   getAdviceScssRes(data) {
-    this.eventService.openSnackBar('Scss is added', "dismiss");
+    this.eventService.openSnackBar('Scss is added', "Dismiss");
     this.close(true);
 
   }

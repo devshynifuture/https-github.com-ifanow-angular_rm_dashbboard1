@@ -194,17 +194,17 @@ export class AddEPFComponent implements OnInit {
     }
   }
   getAdviceEpfRes(data) {
-    this.event.openSnackBar('EPF added successfully!', 'dismiss');
+    this.event.openSnackBar('EPF added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
 
   }
   addEPFRes(data) {
     console.log('addrecuringDepositRes', data)
-    this.event.openSnackBar('Added successfully!', 'dismiss');
+    this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
   editEPFRes(data) {
-    this.event.openSnackBar('Updated successfully!', 'dismiss');
+    this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
 }

@@ -68,14 +68,13 @@ export class AddSsyComponent implements OnInit {
     this.commencementDate = date
   }
   getdataForm(data) {
-    this.flag = data;
-    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
-
     if (data == undefined) {
       data = {};
+      this.flag = "addSSY";
     }
     else {
-      this.editApi = data
+      (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : this.editApi = data;
+      this.flag = "editSSY";
     }
     this.ssyData = data;
     this.ssySchemeForm = this.fb.group({
@@ -142,17 +141,16 @@ export class AddSsyComponent implements OnInit {
       });
     }
     if (this.ssySchemeForm.invalid) {
-      this.ssySchemeForm.get('ownerName').markAsTouched();
-      this.ssySchemeForm.get('guardian').markAsTouched();
-      this.ssySchemeForm.get('ownerName').markAsTouched();
-      this.ssySchemeForm.get('accBalance').markAsTouched();
-      this.ssySchemeForm.get('balanceAsOn').markAsTouched();
-      this.ssySchemeForm.get('commDate').markAsTouched();
-      this.ssySchemeForm.get('futureAppx').markAsTouched();
-      this.ssySchemeForm.get('frquency').markAsTouched();
+      for (let element in this.ssySchemeForm.controls) {
+        console.log(element)
+        if (this.ssySchemeForm.controls[element].invalid) {
+          this.ssySchemeForm.controls[element].markAsTouched();
+          return;
+        }
+      }
     }
     else {
-      if (this.editApi != undefined && this.editApi != 'adviceSSY') {
+      if (this.flag == 'editSSY') {
         let obj = {
           "id": this.editApi.id,
           "familyMemberId": this.familyMemberId,
@@ -165,7 +163,12 @@ export class AddSsyComponent implements OnInit {
           "linkedBankAccount": this.ssySchemeOptionalForm.get('linkedAcc').value,
           "agentName": this.ssySchemeOptionalForm.get('agentName').value,
           "guardianName": this.ssySchemeForm.get('guardian').value,
-          "nominees": this.nominees
+          "nominees": this.nominees,
+          "ssyFutureContributionList": [{
+            "futureApproxContribution": this.ssySchemeForm.get('futureAppx').value,
+            "frequency": this.ssySchemeForm.get('futureAppx').value,
+          }],
+          "ssyTransactionList": finalTransctList
         }
         this.cusService.editSSYData(obj).subscribe(
           data => this.addSSYSchemeResponse(data),
@@ -200,16 +203,16 @@ export class AddSsyComponent implements OnInit {
           stringObject: obj,
           adviceDescription: "manualAssetDescription"
         }
-        if (this.flag == 'adviceSSY') {
-          this.cusService.getAdviceSsy(adviceObj).subscribe(
-            data => this.getAdviceSsyRes(data),
-            err => this.eventService.openSnackBar(err, "dismiss")
-          );
-        } else {
+        if (this.flag == 'addSSY') {
           this.cusService.addSSYScheme(obj).subscribe(
             data => this.addSSYSchemeResponse(data),
             error => this.eventService.showErrorMessage(error)
           )
+        } else {
+          this.cusService.getAdviceSsy(adviceObj).subscribe(
+            data => this.getAdviceSsyRes(data),
+            err => this.eventService.openSnackBar(err, "Dismiss")
+          );
         }
 
       }
@@ -217,12 +220,12 @@ export class AddSsyComponent implements OnInit {
   }
   getAdviceSsyRes(data) {
     console.log(data);
-    this.eventService.openSnackBar("SSY is added", "dismiss");
+    this.eventService.openSnackBar("SSY is added", "Dismiss");
     this.close(true)
 
   }
   addSSYSchemeResponse(data) {
-    (this.editApi) ? this.eventService.openSnackBar("SSY is edited", "dismiss") : this.eventService.openSnackBar("SSY is added", "added")
+    (this.editApi) ? this.eventService.openSnackBar("SSY is edited", "Dismiss") : this.eventService.openSnackBar("SSY is added", "added")
     console.log(data)
     this.close(true)
   }

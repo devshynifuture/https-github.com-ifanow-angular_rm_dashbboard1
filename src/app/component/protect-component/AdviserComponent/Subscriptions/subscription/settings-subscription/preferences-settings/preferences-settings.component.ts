@@ -103,7 +103,7 @@ export class PreferencesSettingsComponent implements OnInit {
     this.billerProfileData.forEach(element => {
       if (element.id == data) {
         element.isPrimary = true
-        this.eventService.openSnackBar('primary set successfully', 'OK');
+        this.eventService.openSnackBar('Primary set successfully', 'OK');
       } else {
         element.isPrimary = false
       }
@@ -219,7 +219,7 @@ export class PreferencesSettingsComponent implements OnInit {
 
   deleteModal(singleBillerProfile) {
     if (singleBillerProfile.isPrimary == true) {
-      this.eventService.openSnackBar("You cannot delete primary biller profile", "dismiss")
+      this.eventService.openSnackBar("You cannot delete primary biller profile", "Dismiss")
       return;
     }
     const dialogData = {
@@ -237,7 +237,7 @@ export class PreferencesSettingsComponent implements OnInit {
           data => {
             this.getProfileBillerData();
             dialogRef.close();
-            this.eventService.openSnackBar("Biller is deleted", "dismiss")
+            this.eventService.openSnackBar("Biller is deleted", "Dismiss")
           },
           error => this.eventService.showErrorMessage(error)
         );
