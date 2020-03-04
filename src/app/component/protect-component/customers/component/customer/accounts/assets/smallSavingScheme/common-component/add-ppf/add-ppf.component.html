@@ -53,9 +53,6 @@
                         <mat-error *ngIf="(ppfSchemeForm.get('accountBalance').errors?.min)" class="f-12">
                             Should be greater than or equal to 500
                         </mat-error>
-                        <mat-error *ngIf="(ppfSchemeForm.get('accountBalance').errors?.max)" class="f-12">
-                            Should be less than 150000
-                        </mat-error>
                         <mat-hint align="end" class="f-12">{{accBal.value.length}}/10</mat-hint>
                     </mat-form-field>
                 </div>
@@ -88,8 +85,9 @@
                 <div class="form-group form-group_one mb-0">
                     <mat-form-field>
                         <input autocomplete="off" (click)="CommencementPicker.open()"
-                            [matDatepicker]="CommencementPicker" (dateChange)="setCommencementDate($event.target.value)"
-                            class="form-control br-0" formControlName="commencementDate" matInput readonly>
+                            [matDatepicker]="CommencementPicker" [max]="maxDate"
+                            (dateChange)="setCommencementDate($event.target.value)" class="form-control br-0"
+                            formControlName="commencementDate" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="CommencementPicker"></mat-datepicker-toggle>
                         <mat-datepicker #CommencementPicker></mat-datepicker>
                         <mat-error class="f-12">This field is required
@@ -110,6 +108,9 @@
                             matInput maxlength="20" type="text">
                         <mat-error class="f-12">
                             This field is required
+                        </mat-error>
+                        <mat-error *ngIf="(ppfSchemeForm.get('futureContribution').errors?.max)" class="f-12">
+                            Should be less than 150000
                         </mat-error>
                         <mat-hint align="end" class="f-12">{{futureContribution.value.length}}/20</mat-hint>
                     </mat-form-field>
