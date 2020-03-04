@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-add-tasks',
@@ -7,11 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddTasksComponent implements OnInit {
 
-  constructor() { }
+  constructor(private subInjectService: SubscriptionInject) { }
 
   ngOnInit() {
   }
-
+  close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  }
 }
 
 

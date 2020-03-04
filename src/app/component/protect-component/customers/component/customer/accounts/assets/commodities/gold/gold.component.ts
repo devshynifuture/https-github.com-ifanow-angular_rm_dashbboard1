@@ -93,10 +93,13 @@ export class GoldComponent implements OnInit {
     }
   }
   getdataForm(data) {
-    this.flag = data;
-    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
     if (data == undefined) {
-      data = {}
+      data = {};
+      this.flag = "addGOLD";
+    }
+    else {
+      // (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice:this.editGoldRes
+      this.flag = "editGOLD";
     }
     this.gold = this.fb.group({
       ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
@@ -128,7 +131,13 @@ export class GoldComponent implements OnInit {
   // }
   saveGold() {
     if (this.gold.invalid) {
-      this.gold.markAllAsTouched();
+      for (let element in this.gold.controls) {
+        console.log(element)
+        if (this.gold.controls[element].invalid) {
+          this.gold.controls[element].markAsTouched();
+          return;
+        }
+      }
     } else {
       let obj = {
         advisorId: this.advisorId,
@@ -137,7 +146,7 @@ export class GoldComponent implements OnInit {
         ownerName: (this.ownerName == undefined) ? this.gold.controls.ownerName.value : this.ownerName,
         approximatePurchaseValue: this.gold.controls.appPurValue.value,
         gramsOrTola: this.gold.controls.totalsGrams.value,
-        balanceAsOn: this.gold.controls.balanceAsOn.value,
+        // balanceAsOn: this.gold.controls.balanceAsOn.value,
         purchasedGramsOrTola: this.gold.controls.noTolasGramsPur.value,
         totalsGrams: this.gold.controls.totalsGrams.value,
         purchaseYear: this.gold.controls.tenure.value,
@@ -152,7 +161,7 @@ export class GoldComponent implements OnInit {
         stringObject: obj,
         adviceDescription: "manualAssetDescription"
       }
-      if (this.gold.controls.id.value == undefined && this.flag != 'adviceGOLD') {
+      if (this.flag = "addGOLD") {
         this.custumService.addGold(obj).subscribe(
           data => this.addGoldRes(data)
         );
