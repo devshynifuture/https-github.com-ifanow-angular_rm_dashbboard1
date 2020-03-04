@@ -25,8 +25,7 @@
                                     <div class="form-group">
                                         <mat-form-field>
                                             <input matInput formControlName="header" class="form-control">
-                                            <mat-error
-                                                *ngIf="adviceForm.get('header').touched && adviceForm.get('header').invalid">
+                                            <mat-error>
                                                 This field is required
                                             </mat-error>
                                         </mat-form-field>
@@ -36,8 +35,7 @@
                                         <mat-form-field>
                                             <textarea matInput formControlName="rationale" class="form-control"
                                                 rows="7"></textarea>
-                                            <mat-error
-                                                *ngIf="adviceForm.get('rationale').touched && adviceForm.get('rationale').invalid">
+                                            <mat-error>
                                                 This field is required
                                             </mat-error>
                                         </mat-form-field>
@@ -47,8 +45,7 @@
                                         <div class="form-group">
                                             <mat-form-field>
                                                 <input matInput formControlName="status" class="form-control">
-                                                <mat-error
-                                                    *ngIf="adviceForm.get('status').touched && adviceForm.get('status').invalid">
+                                                <mat-error>
                                                     This field is required
                                                 </mat-error>
                                             </mat-form-field>
@@ -64,8 +61,7 @@
                                                 [matDatepicker]="picker" class="form-control b-0">
                                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                             <mat-datepicker #picker></mat-datepicker>
-                                            <mat-error
-                                                *ngIf="adviceForm.get('givenOnDate').touched && adviceForm.get('givenOnDate').invalid">
+                                            <mat-error>
                                                 This field is required
                                             </mat-error>
                                         </mat-form-field>
@@ -77,8 +73,7 @@
                                                 [matDatepicker]="picker1" class="form-control b-0">
                                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                             <mat-datepicker #picker1></mat-datepicker>
-                                            <mat-error
-                                                *ngIf="adviceForm.get('implementDate').touched && adviceForm.get('implementDate').invalid">
+                                            <mat-error>
                                                 This field is required
                                             </mat-error>
                                         </mat-form-field>
@@ -87,8 +82,7 @@
                                     <div class="form-group">
                                         <mat-form-field class="ba-date">
                                             <input matInput formControlName="withdrawalAmt" class="form-control b-0">
-                                            <mat-error
-                                                *ngIf="adviceForm.get('withdrawalAmt').touched && adviceForm.get('withdrawalAmt').invalid">
+                                            <mat-error>
                                                 This field is required
                                             </mat-error>
                                         </mat-form-field>
@@ -118,9 +112,7 @@
                                             directly start further work on this advice without taking any
                                             explicit
                                             consent from your client.</p>
-                                        <mat-error
-                                            *ngIf="adviceForm.get('consentOption').touched && adviceForm.get('consentOption').invalid"
-                                            class=" f-10 f-500 mt-4">
+                                        <mat-error class=" f-10 f-500 mt-4">
                                             This field is required
                                         </mat-error>
                                     </mat-radio-group>
@@ -134,6 +126,7 @@
                         STEP 2
                         <p class="m-0 text-black roboto">Asset details</p>
                     </ng-template>
+                    <ng-template #dynamic></ng-template>
                 </mat-step>
             </mat-horizontal-stepper>
         </div>

@@ -40,6 +40,7 @@ export class AddEPFComponent implements OnInit {
   dataFM = [];
   familyList: any;
   flag: any;
+  adviceShowHeaderAndFooter: boolean = true;
 
   constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) { }
   @Input()
@@ -51,7 +52,15 @@ export class AddEPFComponent implements OnInit {
   get data() {
     return this.inputData;
   }
+
+  @Input() popupHeaderText: string = 'Add Employees providend fund (EPF)';
+
   ngOnInit() {
+    if (this.data && this.data.flag) {
+      this.adviceShowHeaderAndFooter = false;
+    } else {
+      this.adviceShowHeaderAndFooter = true;
+    }
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
   }

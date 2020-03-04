@@ -36,12 +36,18 @@ export class AddScssComponent implements OnInit {
   flag: any;
 
   @Input() popupHeaderText: string = 'Add Senior citizen savings scheme (SCSS)';
+  adviceShowHeaderAndFooter: boolean = true;
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
     private cusService: CustomerService, private eventService: EventService, public utils: UtilService) {
   }
 
   ngOnInit() {
+    if (this.data && this.data.flag) {
+      this.adviceShowHeaderAndFooter = false;
+    } else {
+      this.adviceShowHeaderAndFooter = true;
+    }
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
 
@@ -52,6 +58,10 @@ export class AddScssComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
+  }
+
+  get data() {
+    return this.inputData;
   }
 
   display(value) {

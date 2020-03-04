@@ -1,3 +1,4 @@
+import { SuggestAdviceComponent } from './../suggest-advice/suggest-advice.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NpsSummaryPortfolioComponent } from '../../../accounts/assets/retirementAccounts/add-nps/nps-summary-portfolio/nps-summary-portfolio.component';
 import { UtilService } from 'src/app/services/util.service';
@@ -9,8 +10,9 @@ import { AddSuperannuationComponent } from '../../../accounts/assets/retirementA
 import { AddEPSComponent } from '../../../accounts/assets/retirementAccounts/add-eps/add-eps.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ActiityService } from '../../actiity.service';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { MatSort, MatTableDataSource, MatDialog } from '@angular/material';
 import { AdviceUtilsService } from '../advice-utils.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-advice-retirement-account',
@@ -40,7 +42,7 @@ export class AdviceRetirementAccountComponent implements OnInit {
   superannuationCount: number;
   epsCount: number;
 
-  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
+  constructor(public dialog: MatDialog, private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -122,22 +124,52 @@ export class AdviceRetirementAccountComponent implements OnInit {
       data,
       id: 1,
       state: 'open',
-      componentName: Component
+      componentName: SuggestAdviceComponent,
+      childComponent: Component,
+      childData: { data: null, flag: value },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
+
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
           }
+          this.getAdviceByAsset();
           rightSideDataSub.unsubscribe();
         }
 
       }
     );
+  }
+  deleteModal(value, subData) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
   checkAll(flag, tableDataList, tableFlag) {
     console.log(flag, tableDataList)

@@ -9,6 +9,8 @@ import { BondsComponent } from '../../../accounts/assets/fixedIncome/bonds/bonds
 import { ActiityService } from '../../actiity.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { AdviceUtilsService } from '../advice-utils.service';
+import { SuggestAdviceComponent } from '../suggest-advice/suggest-advice.component';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-advice-fixed-income',
@@ -146,23 +148,26 @@ export class AdviceFixedIncomeComponent implements OnInit {
     );
   }
   openAddEdit(value, data) {
-    let component = (value == 'adviceFixedDeposit') ? FixedDepositComponent : (value == 'adviceRecurringDeposit') ? RecuringDepositComponent : BondsComponent;
+    let Component = (value == 'adviceFixedDeposit') ? FixedDepositComponent : (value == 'adviceRecurringDeposit') ? RecuringDepositComponent : BondsComponent;
     const fragmentData = {
       flag: value,
       data,
       id: 1,
       state: 'open',
-      componentName: component
+      componentName: SuggestAdviceComponent,
+      childComponent: Component,
+      childData: { data: null, flag: value },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
+
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
           }
+          this.getAdviceByAsset();
+          rightSideDataSub.unsubscribe();
         }
 
       }
@@ -213,5 +218,43 @@ export class AdviceFixedIncomeComponent implements OnInit {
 
       }
     );
+  }
+
+  deleteModal(value, subData) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != undefined) {
+        console.log(result, this.dataSource.data, 'delete result');
+        const tempList = [];
+        this.dataSource.data.forEach(singleElement => {
+          if (singleElement.id != result.id) {
+            tempList.push(singleElement);
+          }
+        });
+        this.dataSource.data = tempList;
+      }
+    });
   }
 }

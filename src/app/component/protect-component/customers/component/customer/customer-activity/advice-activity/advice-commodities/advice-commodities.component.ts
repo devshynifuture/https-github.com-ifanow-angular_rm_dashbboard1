@@ -5,10 +5,11 @@ import { GoldComponent } from '../../../accounts/assets/commodities/gold/gold.co
 import { OthersComponent } from '../../../accounts/assets/commodities/others/others.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ActiityService } from '../../actiity.service';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatTableDataSource, MatSort, MatDialog } from '@angular/material';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { AdviceUtilsService } from '../advice-utils.service';
 import { SuggestAdviceComponent } from '../suggest-advice/suggest-advice.component';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-advice-commodities',
@@ -30,7 +31,7 @@ export class AdviceCommoditiesComponent implements OnInit, AfterViewInit {
   otherDataSource: any = new MatTableDataSource();
   goalCount: number;
   othersCount: number;
-  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
+  constructor(public dialog: MatDialog, private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
   ngAfterViewInit() {
     this.goldDataSource.sort = this.sort1;
   }
@@ -88,15 +89,18 @@ export class AdviceCommoditiesComponent implements OnInit, AfterViewInit {
     console.log(data);
     this.isLoading = false
   }
-  openAddEdit(value, data) {
-    let Component = (value == "adviceGOLD") ? SuggestAdviceComponent : OthersComponent;
+
+  openAddEditAdvice(value, data) {
+    let Component = (value == "adviceGOLD") ? GoldComponent : OthersComponent;
+
     const fragmentData = {
       flag: value,
-      data: data,
+      data,
       id: 1,
       state: 'open',
-      componentName: Component,
-
+      componentName: SuggestAdviceComponent,
+      childComponent: Component,
+      childData: { data: null, flag: value },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -112,5 +116,33 @@ export class AdviceCommoditiesComponent implements OnInit, AfterViewInit {
 
       }
     );
+  }
+  deleteModal(value, subData) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
 }

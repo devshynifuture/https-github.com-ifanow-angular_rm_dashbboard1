@@ -34,6 +34,7 @@ export class AddPoSavingComponent implements OnInit {
   nomineesList: any;
   nominees: any[];
   flag: any;
+  adviceShowHeaderAndFooter: boolean = true;
 
   constructor(public utils: UtilService, private fb: FormBuilder, private cusService: CustomerService,
     private eventService: EventService, private subInjectService: SubscriptionInject) {
@@ -67,6 +68,11 @@ export class AddPoSavingComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.data && this.data.flag) {
+      this.adviceShowHeaderAndFooter = false;
+    } else {
+      this.adviceShowHeaderAndFooter = true;
+    }
     this.isOptionalField = true;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();

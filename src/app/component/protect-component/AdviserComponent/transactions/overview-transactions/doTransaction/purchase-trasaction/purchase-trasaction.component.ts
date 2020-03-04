@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 import { OnlineTransactionService } from '../../../online-transaction.service';
@@ -6,6 +6,8 @@ import { ProcessTransactionService } from '../process-transaction.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { OnlineTrasactionComponent } from '../online-trasaction/online-trasaction.component';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-purchase-trasaction',
@@ -66,9 +68,11 @@ export class PurchaseTrasactionComponent implements OnInit {
   editedId: any;
   constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
     private subInjectService: SubscriptionInject, private fb: FormBuilder, private eventService: EventService,
-    private customerService: CustomerService, ) { }
+    private customerService: CustomerService,private UtilService:UtilService) { }
   displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount', 'icons'];
   dataSource1 = ELEMENT_DATA;
+  @Output() changedValue = new EventEmitter();
+
   @Input()
   set data(data) {
     this.inputData = data;
@@ -232,31 +236,32 @@ export class PurchaseTrasactionComponent implements OnInit {
       }
     );
   }
-  // backToTransact(value,data){
-  //   data = {
-  //     formStep : 'step-2'
-  //   }
-  //   this.confirmTrasaction = true
-  //   const fragmentData = {
-  //     flag: 'addNsc',
-  //     data:data,
-  //     id: 1,
-  //     state: 'open65',
-  //     componentName: OnlineTrasactionComponent
-  //   };
-  //   const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-  //     sideBarData => {
-  //       console.log('this is sidebardata in subs subs : ', sideBarData);
-  //       if (UtilService.isDialogClose(sideBarData)) {
-  //         if (UtilService.isRefreshRequired(sideBarData)) {
-  //           console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-  //         }
-  //         rightSideDataSub.unsubscribe();
-  //       }
+  backToTransact(){
+    this.changedValue.emit('step-2');
+    // data = {
+    //   formStep : 'step-2'
+    // }
+    // this.confirmTrasaction = true
+    // const fragmentData = {
+    //   flag: 'addNsc',
+    //   data:data,
+    //   id: 1,
+    //   state: 'open65',
+    //   componentName: OnlineTrasactionComponent
+    // };
+    // const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+    //   sideBarData => {
+    //     console.log('this is sidebardata in subs subs : ', sideBarData);
+    //     if (UtilService.isDialogClose(sideBarData)) {
+    //       if (UtilService.isRefreshRequired(sideBarData)) {
+    //         console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+    //       }
+    //       rightSideDataSub.unsubscribe();
+    //     }
 
-  //     }
-  //   );
-  // }
+    //   }
+    // );
+  }
   getFoliosAmcWiseRes(data) {
     this.showSpinnerFolio = false
     console.log('getFoliosAmcWiseRes', data)

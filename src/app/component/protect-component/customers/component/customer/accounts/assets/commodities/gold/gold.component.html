@@ -1,7 +1,7 @@
-<div class="popup-header-fix-60">
+<div class="popup-header-fix-60" *ngIf="adviceFlagShowHeaderFooter">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20">{{popupHeaderText | uppercase}}</h4>
+            <h4 class="mb-0 wrapper-20">{{popupHeaderText}}</h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -19,7 +19,8 @@
         </div>
         <div class="col-md-5">
             <mat-form-field class="w-100">
-                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                    [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value='' disabled>Select family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
                         <span>{{f.userName}}</span>
@@ -38,8 +39,11 @@
         <div class="col-md-3">
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input matInput #appPurValue type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control rupess br-0" formControlName="appPurValue">
-                    <mat-error class="f-12" [ngClass]="{'v-h':!(iAppPurValue && getFormControl().appPurValue.invalid || getFormControl().appPurValue.touched && getFormControl().appPurValue.invalid)}">
+                    <input matInput #appPurValue type="text" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control rupess br-0"
+                        formControlName="appPurValue">
+                    <mat-error class="f-12"
+                        [ngClass]="{'v-h':!(iAppPurValue && getFormControl().appPurValue.invalid || getFormControl().appPurValue.touched && getFormControl().appPurValue.invalid)}">
                         This field is required
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{appPurValue.value.length}}/10</mat-hint>
@@ -59,7 +63,8 @@
                         <mat-option value="1">Entry in tolas</mat-option>
                         <mat-option value="2">Entry in grams</mat-option>
                     </mat-select>
-                    <mat-error class="f-12" [ngClass]="{'v-h':!(isTotalsGrams && getFormControl().totalsGrams.invalid || getFormControl().totalsGrams.touched && getFormControl().totalsGrams.invalid)}">
+                    <mat-error class="f-12"
+                        [ngClass]="{'v-h':!(isTotalsGrams && getFormControl().totalsGrams.invalid || getFormControl().totalsGrams.touched && getFormControl().totalsGrams.invalid)}">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -73,8 +78,11 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="E.g. 20" matInput #noTolasGramsPur type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0" formControlName="noTolasGramsPur">
-                    <mat-error class="f-12" [ngClass]="{'v-h':!(isNoTolasGramsPur && getFormControl().noTolasGramsPur.invalid || getFormControl().noTolasGramsPur.touched && getFormControl().noTolasGramsPur.invalid)}">
+                    <input placeholder="E.g. 20" matInput #noTolasGramsPur type="text" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0"
+                        formControlName="noTolasGramsPur">
+                    <mat-error class="f-12"
+                        [ngClass]="{'v-h':!(isNoTolasGramsPur && getFormControl().noTolasGramsPur.invalid || getFormControl().noTolasGramsPur.touched && getFormControl().noTolasGramsPur.invalid)}">
                         This field is required
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{noTolasGramsPur.value.length}}/10</mat-hint>
@@ -105,14 +113,18 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input [placeholder]="'E.g. '+ currentYear" matInput type="text" appInputValueValidation maxlength="4" [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 " formControlName="tenure">
-                    <mat-error class="f-12" *ngIf="getFormControl().tenure.touched && getFormControl().tenure.hasError('required')">
+                    <input [placeholder]="'E.g. '+ currentYear" matInput type="text" appInputValueValidation
+                        maxlength="4" [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 "
+                        formControlName="tenure">
+                    <mat-error class="f-12"
+                        *ngIf="getFormControl().tenure.touched && getFormControl().tenure.hasError('required')">
                         This field is required
                     </mat-error>
                     <mat-error class="f-12" *ngIf="getFormControl().tenure.hasError('minlength')">
                         Invalid purchesh year
                     </mat-error>
-                    <mat-error class="f-12" *ngIf="getFormControl().tenure.hasError('min') && !getFormControl().tenure.hasError('minlength')">
+                    <mat-error class="f-12"
+                        *ngIf="getFormControl().tenure.hasError('min') && !getFormControl().tenure.hasError('minlength')">
                         Purchase year should be grater than 1900
                     </mat-error>
                     <mat-error class="f-12" *ngIf="getFormControl().tenure.hasError('max')">
@@ -135,7 +147,8 @@
                         <mat-option value="22">22</mat-option>
                         <mat-option value="24">24</mat-option>
                     </mat-select>
-                    <mat-error class="f-12" [ngClass]="{'v-h':!(isCarats && getFormControl().carats.invalid || getFormControl().carats.touched && getFormControl().carats.invalid)}">
+                    <mat-error class="f-12"
+                        [ngClass]="{'v-h':!(isCarats && getFormControl().carats.invalid || getFormControl().carats.touched && getFormControl().carats.invalid)}">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -164,7 +177,9 @@
             <div class="col-md-3">
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
-                        <input matInput #marketValue type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10"  class="form-control rupess br-0" formControlName="marketValue">
+                        <input matInput #marketValue type="text" appInputValueValidation
+                            [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control rupess br-0"
+                            formControlName="marketValue">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{marketValue.value.length}}/10</mat-hint>
                     </mat-form-field>
@@ -193,7 +208,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #description maxlength="60" class="form-control br-0" formControlName="description">
+                        <input matInput #description maxlength="60" class="form-control br-0"
+                            formControlName="description">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                     </mat-form-field>
@@ -204,7 +220,7 @@
     </div>
 </div>
 
-<div class="bottom-fixed wrapper-12 pt-16">
+<div class="bottom-fixed wrapper-12 pt-16" *ngIf="adviceFlagShowHeaderFooter">
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>

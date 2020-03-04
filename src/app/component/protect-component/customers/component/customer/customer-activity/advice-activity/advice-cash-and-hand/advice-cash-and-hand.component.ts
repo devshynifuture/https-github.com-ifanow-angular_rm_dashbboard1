@@ -1,3 +1,4 @@
+import { SuggestAdviceComponent } from './../suggest-advice/suggest-advice.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -7,8 +8,9 @@ import { CashInHandComponent } from '../../../accounts/assets/cash&bank/cash-in-
 import { BankAccountsComponent } from '../../../accounts/assets/cash&bank/bank-accounts/bank-accounts.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ActiityService } from '../../actiity.service';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatTableDataSource, MatSort, MatDialog } from '@angular/material';
 import { AdviceUtilsService } from '../advice-utils.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-advice-cash-and-hand',
@@ -27,7 +29,7 @@ export class AdviceCashAndHandComponent implements OnInit {
   bankCount: number;
   cashCount: number;
 
-  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
+  constructor(public dialog: MatDialog, private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
 
   ngOnInit() {
     // this.dataSource3.sort = this.sort;
@@ -81,29 +83,61 @@ export class AdviceCashAndHandComponent implements OnInit {
     this.isLoading = false;
     // this.cashinHandData=data.CASH IN HAND;
   }
-  allAdvice = false
+  allAdvice = false;
+
   openAddEdit(value, data) {
     let Component = (value == 'adviceCashInHand') ? CashInHandComponent : BankAccountsComponent;
+
     const fragmentData = {
       flag: value,
       data,
       id: 1,
       state: 'open',
-      componentName: Component
+      componentName: SuggestAdviceComponent,
+      childComponent: Component,
+      childData: { data: null, flag: value },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
+
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
           }
+          this.getAdviceByAsset();
           rightSideDataSub.unsubscribe();
         }
 
       }
     );
+  }
+  deleteModal(value, subData) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
 }

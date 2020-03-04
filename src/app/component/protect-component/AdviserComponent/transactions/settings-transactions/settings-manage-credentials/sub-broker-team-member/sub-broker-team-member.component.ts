@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AddSubBrokerCredentialsComponent } from './add-sub-broker-credentials/add-sub-broker-credentials.component';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 import { OnlineTransactionService } from '../../../online-transaction.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-sub-broker-team-member',
@@ -12,8 +13,11 @@ import { AuthService } from 'src/app/auth-service/authService';
 })
 export class SubBrokerTeamMemberComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'code', 'euin', 'icons'];
-  dataSource: Array<any> = [{}, {}, {}];
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
   advisorId: any;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+
   constructor(private onlineTransact: OnlineTransactionService, private utilService: UtilService, private subInjectService: SubscriptionInject) { }
   isLoading = false;
 
@@ -35,10 +39,16 @@ export class SubBrokerTeamMemberComponent implements OnInit {
       data => this.getBSESubBrokerCredentialsRes(data)
     );
   }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.sort = this.sort;
+  }
   getBSESubBrokerCredentialsRes(data) {
     this.isLoading = false;
     console.log('getBSESubBrokerCredentialsRes', data)
-    this.dataSource = data
+    this.dataSource.data = data
+    this.dataSource.sort = this.sort;
   }
   openAddSubBrokerCredential(data, flag) {
     const fragmentData = {

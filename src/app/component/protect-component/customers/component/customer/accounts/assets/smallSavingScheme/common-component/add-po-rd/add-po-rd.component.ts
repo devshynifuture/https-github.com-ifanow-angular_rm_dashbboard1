@@ -35,6 +35,7 @@ export class AddPoRdComponent implements OnInit {
   nominees: any[];
   flag: any;
   multiplesOfFive: boolean = true;
+  adviceShowHeaderAndFooter: boolean = true;
 
   constructor(public utils: UtilService, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService,
     private subInjectService: SubscriptionInject) {
@@ -43,6 +44,11 @@ export class AddPoRdComponent implements OnInit {
   @Input() popupHeaderText: string = 'Add Post office recurring deposit (PO RD)';
 
   ngOnInit() {
+    if (this.data && this.data.flag) {
+      this.adviceShowHeaderAndFooter = false;
+    } else {
+      this.adviceShowHeaderAndFooter = true;
+    }
     this.isOptionalField = true;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();

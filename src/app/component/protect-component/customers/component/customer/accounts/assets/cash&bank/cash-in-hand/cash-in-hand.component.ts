@@ -32,6 +32,7 @@ export class CashInHandComponent implements OnInit {
   private clientId: any;
   nomineesListFM: any;
   flag: any;
+  adviceShowHeaderAndFooter: boolean = true;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService,
     public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
@@ -47,9 +48,14 @@ export class CashInHandComponent implements OnInit {
     return this.inputData;
   }
 
-  @Input() popupHeaderText: string = 'Add Cash In Hand';
+  @Input() popupHeaderText: string = 'Add Cash in hand';
 
   ngOnInit() {
+    if (this.data && this.data.flag) {
+      this.adviceShowHeaderAndFooter = false;
+    } else {
+      this.adviceShowHeaderAndFooter = true;
+    }
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getdataForm(this.data);
@@ -85,13 +91,13 @@ export class CashInHandComponent implements OnInit {
       data = {};
     }
     this.cashInHand = this.fb.group({
-      ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
-      balanceAsOn: [(data == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
-      cashBalance: [(data == undefined) ? '' : data.cashValue, [Validators.required]],
-      // bankAcNo: [(data == undefined) ? '' : data.bankAccountNumber, [Validators.required]],
-      description: [(data == undefined) ? '' : data.description, [Validators.required]],
-      id: [(data == undefined) ? '' : data.id, [Validators.required]],
-      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
+      ownerName: [(data.ownerName == undefined) ? '' : data.ownerName, [Validators.required]],
+      balanceAsOn: [(data.balanceAsOn == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
+      cashBalance: [(data.cashValue == undefined) ? '' : data.cashValue, [Validators.required]],
+      // bankAcNo: [(data.bankAccountNumber == undefined) ? '' : data.bankAccountNumber, [Validators.required]],
+      description: [(data.description == undefined) ? '' : data.description, [Validators.required]],
+      id: [(data.id == undefined) ? '' : data.id, [Validators.required]],
+      familyMemberId: [[(data.familyMemberId == undefined) ? '' : data.familyMemberId], [Validators.required]]
     });
     this.ownerData = this.cashInHand.controls;
     this.familyMemberId = this.cashInHand.controls.familyMemberId.value;
@@ -103,18 +109,8 @@ export class CashInHandComponent implements OnInit {
   }
 
   saveCashInHand() {
-    if (this.cashInHand.get('ownerName').invalid) {
-      this.cashInHand.get('ownerName').markAsTouched();
-      return;
-    } else if (this.cashInHand.get('cashBalance').invalid) {
-      this.cashInHand.get('cashBalance').markAsTouched();
-      return;
-    } else if (this.cashInHand.get('ownerName').invalid) {
-      this.cashInHand.get('ownerName').markAsTouched();
-      return
-    } else if (this.cashInHand.get('balanceAsOn').invalid) {
-      this.cashInHand.get('balanceAsOn').markAsTouched();
-      return;
+    if (this.cashInHand.invalid) {
+      this.cashInHand.markAllAsTouched();
     } else {
       const obj = {
         advisorId: this.advisorId,

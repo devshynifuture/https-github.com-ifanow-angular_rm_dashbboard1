@@ -28,6 +28,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
   scriptForm: any;
   portfolioFieldData: { familyMemberId: any; };
   nomineesListFM: any;
+  checkValid:boolean = false;
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   @Input() set data(data) {
@@ -67,7 +68,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
     this.portfolioFieldData = {
       familyMemberId: this.familyMemberId
     }
-    this.ownerData = this.scipLevelTransactionForm.controls;
+    // this.ownerData = this.scipLevelTransactionForm.controls;
     this.scriptForm = { formData: this.scipLevelTransactionForm }
   }
   transactionListForm = this.fb.group({
@@ -106,25 +107,30 @@ export class StockScripLevelTransactionComponent implements OnInit {
   selectScrip(value) {
     console.log(value)
   }
+
   display(value) {
     console.log('value selected', value)
     this.ownerInfo = value
-    this.ownerName = value.userName;
+    // this.ownerName = value.userName;
+    this.scipLevelTransactionForm.get('ownerName').setValue(value.userName)
     this.familyMemberId = value.id
     this.portfolioFieldData = {
       familyMemberId: this.familyMemberId
     }
   }
+
   lisNominee(value) {
     console.log(value)
     this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
   getPortfolioData(data) {
     console.log("", data)
-    this.portfolioData = data
+    this.portfolioData = data;
+    this.scipLevelTransactionForm.get('portfolioName').setValue(data.portfolioName)
   }
   saveSchemeHolding() {
     if (this.scipLevelTransactionForm.invalid) {
+      this.checkValid = true;
       this.scipLevelTransactionForm.get('scripName').markAsTouched();
       this.scipLevelTransactionForm.get('portfolioName').markAsTouched();
       this.transactionArray.controls.forEach(element => {

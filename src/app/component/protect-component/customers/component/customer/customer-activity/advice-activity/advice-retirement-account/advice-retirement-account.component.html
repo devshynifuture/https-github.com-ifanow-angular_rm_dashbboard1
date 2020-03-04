@@ -146,13 +146,14 @@
         <ng-container matColumnDef="icon">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
             <td mat-cell *matCellDef="let element">
-                <i class="material-icons c-p" [matMenuTriggerFor]="menu">
-                    more_vert
-                </i>
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="openAddEdit('adviceEPF',element)">Edit</button>
-                    <button mat-menu-item>Delete</button>
-                </mat-menu>
+                <div class="bar"> <i *ngIf="isLoading==false" class="material-icons c-p" [matMenuTriggerFor]="menu">
+                        more_vert
+                    </i>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="openAddEdit('adviceEPF',element)">Edit</button>
+                        <button mat-menu-item (click)="deleteModal('EPF',element)">Delete</button>
+                    </mat-menu>
+                </div>
             </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -284,13 +285,14 @@
         <ng-container matColumnDef="icon">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
             <td mat-cell *matCellDef="let element">
-                <i class="material-icons c-p" [matMenuTriggerFor]="menu">
-                    more_vert
-                </i>
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="openAddEdit('adviceNPSSummary',element)">Edit</button>
-                    <button mat-menu-item>Delete</button>
-                </mat-menu>
+                <div class="bar"> <i *ngIf="isLoading==false" class="material-icons c-p" [matMenuTriggerFor]="menu">
+                        more_vert
+                    </i>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="openAddEdit('adviceNPSSummary',element)">Edit</button>
+                        <button mat-menu-item (click)="deleteModal('NPS',element)">Delete</button>
+                    </mat-menu>
+                </div>
             </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
@@ -387,13 +389,14 @@
         <ng-container matColumnDef="icon">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
             <td mat-cell *matCellDef="let element">
-                <i class="material-icons c-p" [matMenuTriggerFor]="menu">
-                    more_vert
-                </i>
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="openAddEdit('adviceGratuity',element)">Edit</button>
-                    <button mat-menu-item>Delete</button>
-                </mat-menu>
+                <div class="bar"> <i *ngIf="isLoading==false" class="material-icons c-p" [matMenuTriggerFor]="menu">
+                        more_vert
+                    </i>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="openAddEdit('adviceGratuity',element)">Edit</button>
+                        <button mat-menu-item (click)="deleteModal('GRATUITY',element)">Delete</button>
+                    </mat-menu>
+                </div>
             </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
@@ -503,13 +506,14 @@
         <ng-container matColumnDef="icon">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
             <td mat-cell *matCellDef="let element">
-                <i class="material-icons c-p" [matMenuTriggerFor]="menu">
-                    more_vert
-                </i>
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="openAddEdit('adviceSuperAnnuation',element)">Edit</button>
-                    <button mat-menu-item>Delete</button>
-                </mat-menu>
+                <div class="bar"> <i *ngIf="isLoading==false" class="material-icons c-p" [matMenuTriggerFor]="menu">
+                        more_vert
+                    </i>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="openAddEdit('adviceSuperAnnuation',element)">Edit</button>
+                        <button mat-menu-item (click)="deleteModal('SUPERANNUATION',element)">Delete</button>
+                    </mat-menu>
+                </div>
             </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -615,13 +619,14 @@
         <ng-container matColumnDef="icon">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
             <td mat-cell *matCellDef="let element">
-                <i class="material-icons c-p" [matMenuTriggerFor]="menu">
-                    more_vert
-                </i>
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="openAddEdit('adviceEPS',element)">Edit</button>
-                    <button mat-menu-item>Delete</button>
-                </mat-menu>
+                <div class="bar"> <i *ngIf="isLoading==false" class="material-icons c-p" [matMenuTriggerFor]="menu">
+                        more_vert
+                    </i>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="openAddEdit('adviceEPS',element)">Edit</button>
+                        <button mat-menu-item (click)="deleteModal('EPS',element)">Delete</button>
+                    </mat-menu>
+                </div>
             </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns4"></tr>

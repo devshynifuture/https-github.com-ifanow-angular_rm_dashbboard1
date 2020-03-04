@@ -1,7 +1,7 @@
-<div class="popup-header-fix-60">
+<div class="popup-header-fix-60" *ngIf="adviceShowHeaderAndFooter">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20">{{popupHeaderText | uppercase}}</h4>
+            <h4 class="mb-0 wrapper-20">{{popupHeaderText}}</h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12"> <i class="material-icons c-p pt-8 v-middle" (click)="close(false)"> clear</i>
@@ -101,13 +101,13 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input #interestRate matInput type="number" (keyup)="onChange($event)" appInputValueValidation
-                        [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage"
-                        formControlName="interestRate">
+                            [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage"
+                            formControlName="interestRate">
                     </mat-form-field>
                 </div>
             </div>
         </div>
-        <div class="row pt-40" >
+        <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-12">Interest compounding</h5>
             </div>
@@ -217,7 +217,7 @@
 
     </div>
 </div>
-<div class="bottom-fixed wrapper-12 pt-16">
+<div class="bottom-fixed wrapper-12 pt-16" *ngIf="adviceShowHeaderAndFooter">
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close(false)">Cancel</h5>
