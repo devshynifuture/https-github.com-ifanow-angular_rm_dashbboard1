@@ -7,6 +7,7 @@ import { CustomerService } from '../../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { AssetValidationService } from '../../../asset-validation.service';
 
 @Component({
   selector: 'app-add-po-saving',
@@ -95,7 +96,7 @@ export class AddPoSavingComponent implements OnInit {
     }
     this.posavingData = data
     this.poSavingForm = this.fb.group({
-      ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required, UtilService.ageValidators]],
+      ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required, AssetValidationService.ageValidators]],
       accBal: [data.accountBalance, [Validators.required, Validators.min(20)]],
       balAsOn: [new Date(data.balanceAsOn), [Validators.required]],
       ownershipType: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]],

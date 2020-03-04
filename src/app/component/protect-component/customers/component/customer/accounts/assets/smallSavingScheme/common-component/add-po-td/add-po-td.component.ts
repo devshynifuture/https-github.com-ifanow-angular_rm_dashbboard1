@@ -7,6 +7,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { AssetValidationService } from '../../../asset-validation.service';
 
 @Component({
   selector: 'app-add-po-td',
@@ -66,10 +67,10 @@ export class AddPoTdComponent implements OnInit {
     this.flag = data;
     (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : '';
 
-    this.editApi = data.id?data:undefined;
+    this.editApi = data.id ? data : undefined;
     this.potdData = data;
     this.POTDForm = this.fb.group({
-      ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required, UtilService.ageValidators(10)]],
+      ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required, AssetValidationService.ageValidators(10)]],
       amtInvested: [data.amountInvested, [Validators.required, Validators.min(200)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
       description: [data.description],
