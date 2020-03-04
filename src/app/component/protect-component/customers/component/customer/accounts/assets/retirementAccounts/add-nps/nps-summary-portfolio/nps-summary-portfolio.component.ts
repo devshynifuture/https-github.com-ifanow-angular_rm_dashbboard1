@@ -127,19 +127,19 @@ export class NpsSummaryPortfolioComponent implements OnInit {
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       currentValue: [(data == undefined) ? '' : data.currentValuation, [Validators.required]],
       valueAsOn: [(data == undefined) ? '' : new Date(data.valueAsOn), [Validators.required]],
-      schemeChoice: [(data == undefined) ? '' : (data.schemeChoice) + "", [Validators.required]],
-      pran: [(data == undefined) ? '' : data.pran, [Validators.required]],
+      schemeChoice: [(data == undefined) ? '' : (data.schemeChoice) + "",],
+      pran: [(data == undefined) ? '' : data.pran,],
       totalContry: [(data == undefined) ? '' : data.contributionAmount, [Validators.required]],
-      description: [(data == undefined) ? '' : data.description, [Validators.required]],
-      id: [(data == undefined) ? '' : data.id, [Validators.required]],
+      description: [(data == undefined) ? '' : data.description,],
+      id: [(data == undefined) ? '' : data.id,],
       futureContributionList: this.fb.array([this.fb.group({
         frequencyId: [null, [Validators.required]],
         accountPreferenceId: [null, [Validators.required]], approxContribution: [null, [Validators.required]]
       })]),
       nominees: this.fb.array([this.fb.group({
-        name: [null, [Validators.required]], sharePercentage: [null, [Validators.required, Validators.min(1)]],
+        name: [null,], sharePercentage: [null,],
       })]),
-      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
+      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId],]
     });
     this.ownerData = this.summaryNPS.controls;
     this.nomineeData = this.summaryNPS.controls;
@@ -159,17 +159,17 @@ export class NpsSummaryPortfolioComponent implements OnInit {
       if (data.nominees.length != 0) {
         data.nominees.forEach(element => {
           this.summaryNPS.controls.nominees.push(this.fb.group({
-            name: [(element.name), [Validators.required]],
-            familyMemberId: [(element.familyMemberId), [Validators.required]],
-            sharePercentage: [element.sharePercentage, Validators.required],
-            id: [element.id, [Validators.required]]
+            name: [(element.name),],
+            familyMemberId: [(element.familyMemberId),],
+            sharePercentage: [element.sharePercentage,],
+            id: [element.id,]
           }))
         })
         this.nominee.removeAt(0);
 
       } else {
         this.nominee.push(this.fb.group({
-          name: [null, [Validators.required]], sharePercentage: [null, [Validators.required]],
+          name: [null,], sharePercentage: [null,],
         }));
       }
 

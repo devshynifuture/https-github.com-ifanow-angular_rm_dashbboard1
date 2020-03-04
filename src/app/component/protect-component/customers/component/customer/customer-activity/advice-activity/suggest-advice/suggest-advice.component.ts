@@ -127,10 +127,22 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
           ...ppfOptionalFormCopy
         }
         break;
-      case this.childComponentFlag === 'adviceNSC' && componentRefComponentValues.nscFormField.valid && componentRefComponentValues.nscFormOptionalField.valid:
+      case this.childComponentFlag === 'adviceNSC' && componentRefComponentValues.nscFormField.valid && componentRefComponentValues.nscFormOptionalField.valid && componentRefComponentValues.nomineesList.length !== 0:
+        let nscOptionalFormCopy = Object.assign({}, componentRefComponentValues.nscFormOptionalField.value);
+        let nomineeListCopyNsc = componentRefComponentValues.nomineesList.slice();
+
+        Object.keys(nscOptionalFormCopy).map(function (key) {
+          if (key == 'nominees') {
+            let arr = [];
+            nomineeListCopyNsc.forEach(item => {
+              arr.push(item.value);
+            });
+            nscOptionalFormCopy[key] = arr;
+          }
+        });
         componentRefFormValues = {
           ...componentRefComponentValues.nscFormField.value,
-          ...componentRefComponentValues.nscFormOptionalField.value
+          ...nscOptionalFormCopy
         }
         break;
       case this.childComponentFlag === 'adviceSSY' && componentRefComponentValues.ssySchemeForm.valid && componentRefComponentValues.ssySchemeOptionalForm.valid && componentRefComponentValues.nomineesList.length !== 0 && componentRefComponentValues.transactionData.length !== 0:
@@ -156,53 +168,105 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
         });
         componentRefFormValues = {
           ...componentRefComponentValues.ssySchemeForm.value,
-          ...ssyOptionalFormCopy,
-          ...transactionDataCopySsy
+          ...ssyOptionalFormCopy
         }
         break;
-      case this.childComponentFlag === 'adviceKVP' && componentRefComponentValues.KVPFormScheme.valid && componentRefComponentValues.KVPOptionalFormScheme.valid && componentRefComponentValues.nomineesList.length !== 0:
-        let kvpOptionalFormCopy = Object.assign({}, componentRefComponentValues.KVPOptionalFormScheme.value);
-        let nomineeListCopyKvp = componentRefComponentValues.nomineesList.slice();
-        Object.keys(kvpOptionalFormCopy).map(function (key) {
+      case this.childComponentFlag === 'adviceKVP' && componentRefComponentValues.KVPFormScheme.valid && componentRefComponentValues.KVPOptionalFormScheme.valid:
+        componentRefFormValues = {
+          ...componentRefComponentValues.KVPFormScheme.value,
+          ...componentRefComponentValues.KVPOptionalFormScheme.value
+        }
+        break;
+      case this.childComponentFlag === 'adviceSCSS' && componentRefComponentValues.scssSchemeForm.valid && componentRefComponentValues.scssOptionalSchemeForm.valid && componentRefComponentValues.nomineesList.length !== 0:
+        let scssOptionalFormCopy = Object.assign({}, componentRefComponentValues.scssOptionalSchemeForm.value);
+        let nomineeListCopyScss = componentRefComponentValues.nomineesList.slice();
+        Object.keys(scssOptionalFormCopy).map(function (key) {
           if (key == 'nominees') {
             let arr = [];
-            nomineeListCopyKvp.forEach(item => {
+            nomineeListCopyScss.forEach(item => {
               arr.push(item.value);
             });
-            kvpOptionalFormCopy[key] = arr;
+            scssOptionalFormCopy[key] = arr;
           }
         });
         componentRefFormValues = {
-          ...componentRefComponentValues.KVPFormScheme.value,
-          ...kvpOptionalFormCopy
-        }
-        break;
-      case this.childComponentFlag === 'adviceSCSS' && componentRefComponentValues.scssSchemeForm.valid && componentRefComponentValues.scssOptionalSchemeForm.valid:
-        componentRefFormValues = {
           ...componentRefComponentValues.scssSchemeForm.value,
-          ...componentRefComponentValues.scssOptionalSchemeForm.value
+          ...scssOptionalFormCopy
         }
         break;
-      case this.childComponentFlag === 'advicePoSaving' && componentRefComponentValues.poSavingForm.valid && componentRefComponentValues.poSavingOptionalForm.valid:
+      case this.childComponentFlag === 'advicePoSaving' && componentRefComponentValues.poSavingForm.valid && componentRefComponentValues.poSavingOptionalForm.valid && componentRefComponentValues.nomineesList.length !== 0:
+        let posavingOptionalFormCopy = Object.assign({}, componentRefComponentValues.poSavingOptionalForm.value);
+        let nomineeListCopyPosaving = componentRefComponentValues.nomineesList.slice();
+        Object.keys(posavingOptionalFormCopy).map(function (key) {
+          if (key == 'nominees') {
+            let arr = [];
+            nomineeListCopyPosaving.forEach(item => {
+              arr.push(item.value);
+            });
+            posavingOptionalFormCopy[key] = arr;
+          }
+        });
         componentRefFormValues = {
           ...componentRefComponentValues.poSavingForm.value,
-          ...componentRefComponentValues.poSavingOptionalForm.value
+          ...posavingOptionalFormCopy
         }
         break;
-      case this.childComponentFlag === 'advicePORD' && componentRefComponentValues.PORDForm.valid && componentRefComponentValues.PORDFormoptionalForm.valid:
+      case this.childComponentFlag === 'advicePORD' && componentRefComponentValues.PORDForm.valid && componentRefComponentValues.PORDFormoptionalForm.valid && componentRefComponentValues.nomineesList.length !== 0:
+        let pordOptionalFormCopy = Object.assign({}, componentRefComponentValues.PORDFormoptionalForm.value);
+        let nomineeListCopyPord = componentRefComponentValues.nomineesList.slice();
+        Object.keys(pordOptionalFormCopy).map(function (key) {
+          if (key == 'nominees') {
+            let arr = [];
+            nomineeListCopyPord.forEach(item => {
+              arr.push(item.value);
+            });
+            pordOptionalFormCopy[key] = arr;
+          }
+        });
         componentRefFormValues = {
           ...componentRefComponentValues.PORDForm.value,
-          ...componentRefComponentValues.PORDFormoptionalForm.value
+          ...pordOptionalFormCopy
         }
         break;
-      case this.childComponentFlag === 'advicePOTD' && componentRefComponentValues.POTDForm.valid && componentRefComponentValues.POTDOptionalForm.valid:
+      case this.childComponentFlag === 'advicePOTD' && componentRefComponentValues.POTDForm.valid && componentRefComponentValues.POTDOptionalForm.valid && componentRefComponentValues.nomineesList.length !== 0:
+        let potdOptionalFormCopy = Object.assign({}, componentRefComponentValues.POTDOptionalForm.value);
+        let nomineeListCopyPotd = componentRefComponentValues.nomineesList.slice();
+        Object.keys(potdOptionalFormCopy).map(function (key) {
+          if (key == 'nominees') {
+            let arr = [];
+            nomineeListCopyPotd.forEach(item => {
+              arr.push(item.value);
+            });
+            potdOptionalFormCopy[key] = arr;
+          }
+        });
         componentRefFormValues = {
           ...componentRefComponentValues.POTDForm.value,
-          ...componentRefComponentValues.POTDOptionalForm.value
+          ...potdOptionalFormCopy
         }
         break;
       case this.childComponentFlag === 'advicePOMIS' && componentRefComponentValues.pomisForm.valid:
-        componentRefFormValues = componentRefComponentValues.pomisForm.value;
+        let pomisFormCopy = Object.assign({}, componentRefComponentValues.pomisForm.value);
+        let nomineeListCopyPomis = componentRefComponentValues.nomineesList.slice();
+        Object.keys(pomisFormCopy).map(function (key) {
+          if (key == 'nominees') {
+            let arr = [];
+            nomineeListCopyPomis.forEach(item => {
+              arr.push(item.value);
+            });
+            pomisFormCopy[key] = arr;
+          }
+        });
+        componentRefFormValues = pomisFormCopy
+        break;
+      case this.childComponentFlag === 'adviceEPF' && componentRefComponentValues.epf.valid:
+        componentRefFormValues = componentRefComponentValues.epf.value
+        break;
+      case this.childComponentFlag === 'adviceNPSSummary' && componentRefComponentValues.summaryNPS.valid:
+        componentRefFormValues = componentRefComponentValues.summaryNPS.value;
+        break;
+      case this.childComponentFlag === 'adviceNPSSchemeHolding' && componentRefComponentValues.schemeHoldingsNPS.valid:
+        componentRefFormValues = componentRefComponentValues.schemeHoldingsNPS.value;
         break;
     }
 
