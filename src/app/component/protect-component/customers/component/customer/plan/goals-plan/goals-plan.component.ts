@@ -12,6 +12,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { EditNoteGoalComponent } from './edit-note-goal/edit-note-goal.component';
 import { ViewPastnotGoalComponent } from './view-pastnot-goal/view-pastnot-goal.component';
 import { PlanService } from '../plan.service';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 export interface PeriodicElement {
   position: string;
@@ -37,7 +38,19 @@ export class GoalsPlanComponent implements OnInit {
     private eventService: EventService, 
     private plansService: PlanService) {
   }
+
+  dummyDashBoardData:any = {
+    goalYear: 2025,
+    presentValue: 24325,
+    futureValue: 456543,
+    equity_monthly: 5200,
+    debt_monthly: 44553,
+    lump_equity: 45232,
+    lump_debt: 35452
+  }
+
   isLoading = false;
+  goalProgress = 35;
   ngOnInit() {
   }
 
@@ -77,6 +90,7 @@ export class GoalsPlanComponent implements OnInit {
     switch (flag) {
       case 'openCalculators':
         fragmentData.componentName = CalculatorsComponent;
+        fragmentData['popupHeaderText'] = 'CALCULATORS - NEW HOUSE 2035';
         break;
       case 'openPreferences':
         fragmentData.componentName = PreferencesComponent;
@@ -94,6 +108,9 @@ export class GoalsPlanComponent implements OnInit {
       case 'openKeyinfo':
         fragmentData.componentName = KeyInfoComponent;
         fragmentData.state = 'open25';
+
+        // TODO:- remove .data as its for demo purpose only
+        fragmentData.data = this.dummyDashBoardData;
         break;
       case 'openallocations':
         fragmentData.componentName = AddGoalComponent;
@@ -122,6 +139,18 @@ export class GoalsPlanComponent implements OnInit {
           subscription.unsubscribe();
         }
       });
+  }
+
+  // drag drop allocations
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+                        event.container.data,
+                        event.previousIndex,
+                        event.currentIndex);
+    }
   }
 }
 
