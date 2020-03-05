@@ -149,8 +149,8 @@
                                 </div>
                                 <div class="row p-16 pr-0 pl-0">
                                     <div class="col-md-9">
-                                        <h4 class="m-0 f-14">{{storeData.services[0].serviceName}}</h4>
-                                        <span class="m-0 f-14 text-custom"> {{storeData.services[0].description}}</span>
+                                        <h4 class="m-0 f-14">{{(storeData.services.length>0)?storeData.services[0].serviceName:''}}</h4>
+                                        <span class="m-0 f-14 text-custom"> {{(storeData.services.length>0)?storeData.services[0].description:''}}</span>
                                     </div>
                                     <div class="col-md-3 d-flex align-items-center justify-content-end">
                                         <h4 class="m-0 f-14  text-right"> ₹{{formatter(storeData.subTotal)}}</h4>

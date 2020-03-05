@@ -98,7 +98,7 @@ export class ClientSubscriptionComponent implements OnInit {
           }, (error) => {
             barButtonOption.active = false;
 
-            this.eventService.openSnackBar('Wait sometime....', 'Dismiss');
+            this.eventService.openSnackBar('Wait for sometime....', 'Dismiss');
             // this.eventService.showErrorMessage(error);
           }
         )
