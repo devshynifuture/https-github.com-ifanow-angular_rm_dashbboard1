@@ -35,7 +35,7 @@ export class BankAccountsComponent implements OnInit {
   clientId: any;
   nomineesListFM: any;
   flag: any;
-  nomineesList: any;
+  nomineesList: any[] = [];
   bankData: any;
   nominees: any[];
   adviceShowHeaderAndFooter: boolean = true;
@@ -196,7 +196,7 @@ export class BankAccountsComponent implements OnInit {
   }
 
   isFormValuesForAdviceValid(): boolean {
-    if (this.bankAccounts.valid && this.nomineesList.length !== 0) {
+    if (this.bankAccounts.valid || (this.bankAccounts.valid && this.nomineesList.length !== 0)) {
       return true;
     } else {
       return false;

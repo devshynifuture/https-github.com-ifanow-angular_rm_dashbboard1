@@ -34,7 +34,7 @@ export class AddNscComponent implements OnInit {
   clientId: any;
   nomineesListFM: any;
   nscData: any;
-  nomineesList: any;
+  nomineesList: any[] = [];
   nominees: any;
   flag: any;
   dataSource: { "id": any; "familyMemberId": any; "ownerName": any; "amountInvested": any; "commencementDate": string; "tenure": any; "certificateNumber": any; "postOfficeBranch": any; "bankAccountNumber": any; "ownerTypeId": number; "nominees": any; "description": any; };
@@ -69,7 +69,8 @@ export class AddNscComponent implements OnInit {
   }
 
   isFormValuesForAdviceValid() {
-    if (this.nscFormField.valid && this.nscFormOptionalField.valid && this.nomineesList.length !== 0) {
+    if (this.nscFormField.valid ||
+      (this.nscFormField.valid && this.nscFormOptionalField.valid && this.nomineesList.length !== 0)) {
       return true;
     } else {
       return false;

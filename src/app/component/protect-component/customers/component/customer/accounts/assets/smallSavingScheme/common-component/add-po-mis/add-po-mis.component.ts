@@ -7,7 +7,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { AssetValidationService } from '../../../asset-validation.service';
+import { AssetValidationService } from './../../../asset-validation.service';
 
 @Component({
   selector: 'app-add-po-mis',
@@ -33,7 +33,7 @@ export class AddPoMisComponent implements OnInit {
   clientId: number;
   familyMemberId: any;
   nominees: any;
-  nomineesList: any;
+  nomineesList: any[] = [];
   nomineesListFM: any;
   pomisData: any;
   flag: any;

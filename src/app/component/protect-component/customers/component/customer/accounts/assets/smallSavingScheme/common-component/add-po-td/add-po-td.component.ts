@@ -7,7 +7,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { AssetValidationService } from '../../../asset-validation.service';
+import { AssetValidationService } from './../../../asset-validation.service';
 
 @Component({
   selector: 'app-add-po-td',
@@ -32,7 +32,7 @@ export class AddPoTdComponent implements OnInit {
   editApi: any;
   clientId: any;
   nomineesListFM: any;
-  nomineesList: any;
+  nomineesList: any[] = [];
   nominees: any[];
   potdData: any;
   flag: any;
@@ -212,6 +212,15 @@ export class AddPoTdComponent implements OnInit {
   close(flag) {
     this.isOptionalField = true
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+  }
+
+  isFormValuesForAdviceValid() {
+    if (this.POTDForm.valid ||
+      (this.POTDForm.valid && this.POTDOptionalForm.valid && this.nomineesList.length !== 0)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }
