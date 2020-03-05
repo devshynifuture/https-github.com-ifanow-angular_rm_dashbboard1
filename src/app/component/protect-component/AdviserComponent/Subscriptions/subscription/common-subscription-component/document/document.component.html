@@ -136,7 +136,7 @@
                 <div class="col-md-10 p-0 pt-8 text-center">
                     <div class="row text-right content">
                         <div class="col-md-11 p-0">
-                            <p class="pt-4 f-16">Map documents to the selected service. </p>
+                            <p class="pt-2 f-16">Map documents to the selected service. </p>
                         </div>
                         <div class="col-md-1 text-left p-0">
                             <img src="/assets/images/svg/info.svg" class="c-p">
@@ -155,7 +155,7 @@
             <div class="row padder-80 overflow-hidden">
                 <div class="col-xl-4 col-md-6 pr-20 pb-20 pl-0 skeletonAnimation"
                     *ngFor="let document of serviceDocumentData" appSkeletonLoading [appSkeletonLoading]="isLoading">
-                    <div (click)="selectDocument(document)">
+                    <div (click)="selectDocument(document)" class="mt-4">
                         <mat-card [ngClass]="{'ba-blue': document.selected,'b-ua':document.selected==false}"
                             class="example-card  p-0 c-p  ">
 
