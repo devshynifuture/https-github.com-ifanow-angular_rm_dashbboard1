@@ -184,7 +184,7 @@ export class CommoditiesComponent implements OnInit {
     console.log('getGoldList @@@@', data);
     this.isLoading = false;
     if (data == undefined) {
-      this.noData = 'No data found';
+      this.noData = 'No Gold found';
       this.goldList.data = []
     }
     else if (data.goldList.length != 0) {
@@ -193,7 +193,7 @@ export class CommoditiesComponent implements OnInit {
       this.sumOfMarketValue = data.sumOfMarketValue
       this.sumOfPurchaseValue = data.sumOfPurchaseValue
     } else {
-      this.noData = 'No data found';
+      this.noData = 'No Gold found';
       this.goldList.data = []
     }
   }
@@ -215,7 +215,7 @@ export class CommoditiesComponent implements OnInit {
   getOthersRes(data) {
     this.isLoading = false;
     if (data == undefined) {
-      this.noData = 'No data found';
+      this.noData = 'No Others found';
       this.otherCommodityList.data = []
     } else if (data.otherCommodityList.length != 0) {
       console.log('getOthersRes @@@@', data);
@@ -225,7 +225,7 @@ export class CommoditiesComponent implements OnInit {
       this.sumOfPurchaseValueOther = data.sumOfPurchaseValue
     }
     else {
-      this.noData = 'No data found';
+      this.noData = 'No Others found';
       this.otherCommodityList.data = []
     }
   }
