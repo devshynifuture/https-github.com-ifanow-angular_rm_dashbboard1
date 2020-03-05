@@ -10,7 +10,7 @@
                     details, map services/documents to the selected plan</p>
                 <p class="f-16 mb-0"
                     *ngIf="fragmentDataSubsUpper.data.flag=='services' || fragmentDataSubsUpper.data===''">Add fee
-                    structure, map plans/documents/modules to the selected service</p>
+                    structure, map plans/documents to the selected service</p>
                 <p class="f-16 mb-0"
                     *ngIf="fragmentDataSubsUpper.data.flag=='documents' || fragmentDataSubsUpper.data==='documents'">Add
                     documents, map them to services/plans
@@ -65,14 +65,14 @@
                 <mat-tab #tab [disabled]='fragmentDataSubsUpper.data=="" && !addedData' label="PLANS">
                     <ng-template matTabContent>
                         <!--*ngIf="subscriptionTab=='PLANS'"-->
-                        <app-plans (changePlanData)="getData($event)" *ngIf="fragmentDataSubsUpper"
+                        <app-plans (changePlanData)="getData($event)"
                             [componentFlag]='plans' [upperData]="!addedData?fragmentDataSubsUpper.data:addedData">
                         </app-plans>
                     </ng-template>
                 </mat-tab>
                 <mat-tab #tab [disabled]='fragmentDataSubsUpper.data=="" && !addedData' label="DOCUMENTS">
                     <ng-template matTabContent>
-                        <app-document (changeServiceData)="getData($event)" *ngIf="fragmentDataSubsUpper"
+                        <app-document (changeServiceData)="getData($event)"
                             [componentFlag1]='servicesDocuments'
                             [upperData]="!addedData?fragmentDataSubsUpper.data:addedData"></app-document>
                     </ng-template>
@@ -175,7 +175,7 @@
 </div>
 
 
-<div *ngIf="isOverlayVisible" [@dialogContainer]="upperState" class="custom-overlay">
+<div *ngIf="isOverlayVisible" [@dialogContainer]="upperState" class="custom-overlay" (click)="close()">
 </div>
 <div [@upperSliderOpenClose]="upperState" class="upper_slider">
     <ng-template #dynamicUpper></ng-template>

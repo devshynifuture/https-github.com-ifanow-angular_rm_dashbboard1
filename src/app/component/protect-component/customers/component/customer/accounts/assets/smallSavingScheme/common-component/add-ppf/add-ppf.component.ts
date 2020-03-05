@@ -95,7 +95,7 @@ export class AddPpfComponent implements OnInit {
     this.flag = data;
     (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
 
-    this.editApi = data.id?data:undefined;
+    this.editApi = data.id ? data : undefined;
 
     this.ppfData = data;
     this.ppfSchemeForm = this.fb.group({
@@ -154,13 +154,13 @@ export class AddPpfComponent implements OnInit {
       });
     }
     if (this.ppfSchemeForm.invalid) {
-      this.ppfSchemeForm.get('ownerName').markAsTouched();
-      this.ppfSchemeForm.get('accountBalance').markAsTouched();
-      this.ppfSchemeForm.get('balanceAsOn').markAsTouched();
-      this.ppfSchemeForm.get('commencementDate').markAsTouched();
-      this.ppfSchemeForm.get('futureContribution').markAsTouched();
-      this.ppfSchemeForm.get('frquency').markAsTouched();
-      this.ppfSchemeForm.get('tenure').markAsTouched();
+      for (let element in this.ppfSchemeForm.controls) {
+        console.log(element)
+        if (this.ppfSchemeForm.controls[element].invalid) {
+          this.ppfSchemeForm.controls[element].markAsTouched();
+          return;
+        }
+      }
     }
     else {
       let obj = {
@@ -179,6 +179,7 @@ export class AddPpfComponent implements OnInit {
         "futureApproxcontribution": this.ppfSchemeForm.get('futureContribution').value,
         "publicprovidendfundtransactionlist": finalTransctList,
       }
+      console.log(obj);
       this.dataSource = obj;
       let adviceObj = {
         advice_id: this.advisorId,
@@ -189,7 +190,7 @@ export class AddPpfComponent implements OnInit {
       if (this.flag == 'advicePPF') {
         this.cusService.getAdvicePpf(adviceObj).subscribe(
           data => this.getAdvicePpfRes(data),
-          err => this.eventService.openSnackBar(err, "dismiss")
+          err => this.eventService.openSnackBar(err, "Dismiss")
         );
       } else if (this.editApi != undefined && this.editApi != 'advicePPF') {
         obj['id'] = this.editApi.id
@@ -208,12 +209,12 @@ export class AddPpfComponent implements OnInit {
   }
   getAdvicePpfRes(data) {
     console.log(data)
-    this.eventService.openSnackBar("PPF is added", "dismiss")
+    this.eventService.openSnackBar("PPF is added", "Dismiss")
     this.close(true);
 
   }
   addPPFResponse(data) {
-    (this.editApi) ? this.eventService.openSnackBar("PPF is edited", "dismiss") : this.eventService.openSnackBar("PPF is added", "dismiss")
+    (this.editApi) ? this.eventService.openSnackBar("PPF is edited", "Dismiss") : this.eventService.openSnackBar("PPF is added", "Dismiss")
     console.log(data)
     this.close(true);
   }

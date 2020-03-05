@@ -82,7 +82,7 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
       data => {
         console.log(data)
       },
-      err => this.eventService.openSnackBar(err, "dismiss")
+      err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
   close() {

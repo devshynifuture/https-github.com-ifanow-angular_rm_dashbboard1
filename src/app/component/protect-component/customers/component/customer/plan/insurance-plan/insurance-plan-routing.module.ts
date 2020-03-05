@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { InsurancePlanComponent } from './insurance-plan.component';
+import { AllInsurancelistComponent } from './mainInsuranceScreen/all-insurancelist/all-insurancelist.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: InsurancePlanComponent
+    component: AllInsurancelistComponent
   }
 ];
 

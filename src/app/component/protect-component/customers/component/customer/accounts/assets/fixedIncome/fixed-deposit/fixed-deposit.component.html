@@ -89,8 +89,7 @@
                         [ngClass]="{'v-h':!(isOwnerPercent && getFormControl().ownerPercent.invalid || getFormControl().ownerPercent.touched && getFormControl().ownerPercent.invalid)}">
                         This field is required
                     </mat-error> -->
-                    <mat-error class="f-12 "
-                        [ngClass]="{'v-h':!(getFormControl().ownerPercent.invalid || getFormControl().ownerPercent.touched && getFormControl().ownerPercent.invalid)}">
+                    <mat-error>
                         This field is required
                     </mat-error>
                 </mat-form-field>

@@ -244,7 +244,7 @@ export class TransactionSummaryComponent implements OnInit {
       btnYes: 'NO',
       btnNo: 'OK, PROCEED',
       positiveMethod: () => {
-        this.eventService.openSnackBar('Holding nature changed sucessfully', 'dismiss');
+        this.eventService.openSnackBar('Holding nature changed sucessfully', 'Dismiss');
         this.changeDetails.noAlert = true
         this.getDefaultDetailsRes(this.changeDetails)
         dialogRef.close();

@@ -1,21 +1,21 @@
 <div class="row" id="ui-plan-secondhead">
-    <div class="col-md-2 pt-16">
-        <button (click)="goToAdvisorHome()" class="btn-warning-outline br-2" mat-stroked-button><i
-                class="material-icons mr-12">
-                keyboard_backspace
-            </i>ADVISOR HOME
+    <div class="col-md-2 d-flex align-items-center">
+        <button (click)="goToAdvisorHome()" class="btn-warning-outline advisorHomeBtn br-2" mat-stroked-button>
+            <i class="material-icons"> keyboard_backspace</i>
+            ADVISOR HOME
         </button>
     </div>
-    <div class="col-md-10">
+    <div class="col-md-9">
         <nav mat-align-tabs="center" mat-tab-nav-bar>
             <a (click)="value=1" routerLinkActive="active" [routerLink]="'summary'" mat-tab-link>SUMMARY</a>
             <a (click)="value=2" routerLinkActive="active" [routerLink]="'profile'" mat-tab-link>PROFILE</a>
             <a (click)="value=3" routerLinkActive="active" [routerLink]="'insurance'" mat-tab-link>INSURANCE</a>
-            <a (click)="value=4" routerLinkActive="active" [routerLink]="'goals'" mat-tab-link>GOALS</a>
-            <a (click)="value=5" routerLinkActive="active" [routerLink]="'taxes'" mat-tab-link>TAXES</a>
-            <a (click)="value=6" routerLinkActive="active" [routerLink]="'cash-flow'" mat-tab-link>CASH FLOWS</a>
-            <a (click)="value=7" routerLinkActive="active" [routerLink]="'investments'" mat-tab-link>DEPLOYMENTS</a>
-            <a (click)="value=8" routerLinkActive="active" [routerLink]="'scenarios'" mat-tab-link>SCENARIOS</a>
+            <a class="width70" (click)="value=4" routerLinkActive="active" [routerLink]="'goals'" mat-tab-link>GOALS</a>
+            <a class="width70" (click)="value=5" routerLinkActive="active" [routerLink]="'taxes'" mat-tab-link>TAXES</a>
+            <a class="width120" (click)="value=6" routerLinkActive="active" [routerLink]="'cash-flow'" mat-tab-link>CASH
+                FLOWS</a>
+            <a class="width120" (click)="value=7" routerLinkActive="active" [routerLink]="'investments'" mat-tab-link>DEPLOYMENTS</a>
+            <a class="width110" (click)="value=8" routerLinkActive="active" [routerLink]="'scenarios'" mat-tab-link>SCENARIOS</a>
         </nav>
     </div>
 </div>

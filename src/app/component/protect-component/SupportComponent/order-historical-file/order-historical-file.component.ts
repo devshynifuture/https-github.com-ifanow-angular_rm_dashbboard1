@@ -249,7 +249,7 @@ export class OrderHistoricalFileComponent implements OnInit {
       this.dialogClose(false);
     } else {
       this.formValidationFalseCount++;
-      this.eventService.openSnackBar("Must fill required field", "DISMISS");
+      this.eventService.openSnackBar("Must fill required field", "Dismiss");
     }
   }
 

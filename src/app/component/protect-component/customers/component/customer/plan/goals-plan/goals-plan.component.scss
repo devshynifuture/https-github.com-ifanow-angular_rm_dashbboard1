@@ -1,11 +1,29 @@
-::ng-deep .in-btn{
+::ng-deep .in-btn {
     font-size: 12px !important;
     color: #008FFF;
     border-radius: 2px;
-  
     height: 40px;
     width: 138px;
 }
-.mat-stroked-button:not([disabled]){
-    border-color:#008FFF;
+
+.mat-stroked-button:not([disabled]) {
+    border-color: #008FFF;
+}
+
+.col-width-22 {
+    flex: 0 0 22%;
+    max-width: 22%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.col-width-78 {
+    flex: 0 0 78%;
+    max-width: 78%;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.maxWidth100 {
+    max-width: 100%;
 }

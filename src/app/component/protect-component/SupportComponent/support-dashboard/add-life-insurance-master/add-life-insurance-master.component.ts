@@ -31,7 +31,7 @@ export class AddLifeInsuranceMasterComponent implements OnInit {
       // add api call
       this.dialogClose();
     } else {
-      this.eventService.openSnackBar("Must fill required fields", "DISMISS");
+      this.eventService.openSnackBar("Must fill required fields", "Dismiss");
     }
   }
 

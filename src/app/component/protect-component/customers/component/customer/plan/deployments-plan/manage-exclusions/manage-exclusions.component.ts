@@ -63,10 +63,10 @@ export class ManageExclusionsComponent implements OnInit {
       this.planService.editManageExclusive(obj).subscribe(
         data => {
           console.log(data);
-          this.eventService.openSnackBar("Manage exclusion edited", "dismiss");
+          this.eventService.openSnackBar("Manage exclusion edited", "Dismiss");
           this.close();
         },
-        err => this.eventService.openSnackBar(err, 'dismiss')
+        err => this.eventService.openSnackBar(err, 'Dismiss')
       )
 
     }

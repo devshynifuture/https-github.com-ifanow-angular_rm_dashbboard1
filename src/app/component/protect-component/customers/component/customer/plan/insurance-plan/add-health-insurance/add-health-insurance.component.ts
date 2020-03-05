@@ -16,7 +16,7 @@ import { AddInsuranceUpperComponent } from '../add-insurance-upper/add-insurance
 
 export class AddHealthInsuranceComponent implements OnInit {
   inputData: any;
-  showInsurance: { value: string; header: string; heading: string; subHeading: string; };
+  showInsurance: { value: string; header: string; heading: string; subHeading: string, logo: string, smallHeading: string };
 
   @Input()
   set data(data) {
@@ -32,69 +32,69 @@ export class AddHealthInsuranceComponent implements OnInit {
   showExisting = false;
 
   insuranceData = [{
-    value:'1',
+    value: '1',
     header: 'ADD HEALTH INSURANCE',
-    smallHeading:'health insurance',
-    logo:'/assets/images/svg/helth-insurance.svg',
+    smallHeading: 'health insurance',
+    logo: '/assets/images/svg/helth-insurance.svg',
     heading: 'Health insurance',
     subHeading: 'Select how you’d like to proceed with planning for health insurance policies.'
   }, {
-    value:'2',
-     logo:'/assets/images/svg/Criticalillness.svg',
+    value: '2',
+    logo: '/assets/images/svg/Criticalillness.svg',
     header: 'ADD CRITICAL ILLNESS',
-     smallHeading:'critical illness',
+    smallHeading: 'critical illness',
     heading: 'Critical illness',
     subHeading: 'Select how you’d like to proceed with planning for critical insurance policies.'
-  },{
-    value:'3',
-     logo:'/assets/images/svg/Cancercare.svg',
+  }, {
+    value: '3',
+    logo: '/assets/images/svg/Cancercare.svg',
     header: 'ADD CANCER CARE',
-     smallHeading:'cancer care',
+    smallHeading: 'cancer care',
     heading: 'Cancer care',
     subHeading: 'Select how you’d like to proceed with planning for cancer insurance policies.'
-  },{
-    value:'4',
-     logo:'/assets/images/svg/Personalaccident.svg',
+  }, {
+    value: '4',
+    logo: '/assets/images/svg/Personalaccident.svg',
     header: 'ADD PERSONAL ACCIDENT',
     heading: 'Personal accident',
-     smallHeading:'personal accident',
+    smallHeading: 'personal accident',
     subHeading: 'Select how you’d like to proceed with planning for personal insurance policies.'
-  },{
-    value:'5',
-     logo:'/assets/images/svg/Householders.svg',
+  }, {
+    value: '5',
+    logo: '/assets/images/svg/Householders.svg',
     header: 'ADD HOUSEHOLDERS',
-     smallHeading:'householders',
+    smallHeading: 'householders',
     heading: 'Householders',
     subHeading: 'Select how you’d like to proceed with planning for householders insurance policies.'
-  },{
-    value:'6',
-     logo:'/assets/images/svg/Fireinsurance.svg',
+  }, {
+    value: '6',
+    logo: '/assets/images/svg/Fireinsurance.svg',
     header: 'ADD FIRE INSURANCE',
-     smallHeading:'fire insurance',
+    smallHeading: 'fire insurance',
     heading: 'Fire insurance',
     subHeading: 'Select how you’d like to proceed with planning for fire insurance policies.'
   },]
 
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private custumService: CustomerService, private utils: UtilService, private eventService: EventService) { }
-  openDialog(value,data): void {
+  openDialog(value, data): void {
     const dialogRef = this.dialog.open(HelthInsurancePolicyComponent, {
       width: '780px',
       height: '600px',
-      data: {value, data }
+      data: { value, data }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed',result);
+      console.log('The dialog was closed', result);
     });
   }
   ngOnInit() {
-    console.log('get policy =',this.inputData)
+    console.log('get policy =', this.inputData)
     this.insuranceData.forEach(element => {
-      if(element.value == this.inputData.value){
+      if (element.value == this.inputData.value) {
         this.showInsurance = element
       }
-      console.log('selected insurance',this.showInsurance)
-      if(this.inputData.showExisting != undefined){
+      console.log('selected insurance', this.showInsurance)
+      if (this.inputData.showExisting != undefined) {
         this.showExisting = this.inputData.showExisting;
       }
     });
@@ -161,7 +161,7 @@ export interface PeriodicElement2 {
   symbol: string;
   sum: string;
   mname: string;
-  advice:any;
+  advice: any;
 
 }
 

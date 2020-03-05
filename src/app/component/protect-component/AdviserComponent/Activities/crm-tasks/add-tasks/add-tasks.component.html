@@ -1,0 +1,284 @@
+<div class="popup-header-fix-50">
+    <div class="row bb-1">
+        <div class="col-md-8 d-flex align-items-center">
+            <span class="b-primitive p-5 f-14 d-flex align-items-center br-4">
+                <i class="material-icons mr-4"> done</i> Mark complete
+            </span>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12">
+                <i class="material-icons c-p pt-8 v-middle" (click)="close(false)"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="pt-72 pb-60">
+    <div class="row">
+        <div class="col-md-8">
+            <h3 class="f-500 mb-20"> Do KYC and register mandate </h3>
+        </div>
+        <div class="col-md-4 text-right">
+            <img src="assets/images/svg/attchment-icon.svg" class="c-p ml-12">
+            <img src="assets/images/svg/sub-task-icon.svg" class="c-p ml-12">
+            <img src="assets/images/svg/delect-icon.svg" class="c-p ml-12">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                    View linked item
+                </button>
+                <button mat-menu-item disabled>
+                    View linked action plan
+                </button>
+                <button mat-menu-item>
+                    View activity log
+                </button>
+            </mat-menu>
+        </div>
+    </div>
+
+
+    <div class="row pt-12">
+        <div class="col-md-3 pr-0 text-left">
+            <h5 class="m-0 pt-12">Task description</h5>
+        </div>
+
+        <div class="col-md-8 form-group pl-0">
+            <mat-form-field>
+                <input class="form-control br-0 text-left" matInput type="text">
+            </mat-form-field>
+        </div>
+
+    </div>
+
+
+    <div class="row pt-16">
+        <div class="col-md-3 pr-0 text-left">
+            <h5 class="m-0 pt-12">Client</h5>
+        </div>
+
+        <div class="col-md-4 form-group pl-0">
+            <mat-form-field>
+                <input class="form-control br-0 text-left" matInput type="text">
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-4 form-group pl-0">
+            <mat-form-field>
+                <mat-select class="form-control br-0">
+                    <mat-option value="" disabled> Select family member</mat-option>
+                    <mat-option value="1"> Joint</mat-option>
+                    <mat-option value="2">Single</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row pt-16">
+        <div class="col-md-3 pr-0 text-left">
+            <h5 class="m-0 pt-12">Assigned to</h5>
+        </div>
+
+        <div class="col-md-4 form-group pl-0">
+            <mat-form-field>
+                <mat-select class="form-control br-0">
+                    <mat-option value="" disabled> Nita Shinde</mat-option>
+                    <mat-option value="1"> Joint</mat-option>
+                    <mat-option value="2">Single</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row pt-16">
+        <div class="col-md-3 pr-0 text-left">
+            <h5 class="m-0 pt-12">Due date</h5>
+        </div>
+
+        <div class="col-md-4 form-group pl-0">
+            <mat-form-field>
+                <input class="form-control" matInput [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-4 form-group pl-0">
+            <p class="f-12 l-18 text-primitive">Repeats every 6 months <br> on 8th day of the month</p>
+        </div>
+    </div>
+
+
+    <div class="row pt-28">
+        <div class="col-md-12">
+            <h5 class="f-500 m-0"> Sub-tasks </h5>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 tasksList">
+
+
+
+        </div>
+    </div>
+
+
+
+    <div class="row pt-14">
+        <div class="col-md-12 text-primitive f-14">
+            <img src="assets/images/svg/plus-icon-gray.svg" class="c-p"> Add sub-task
+        </div>
+    </div>
+
+
+    <div class="bg-white pb-20 pt-20">
+        <div class="row">
+            <div class="col-md-12">
+                <h5 class="f-500 roboto">Attachments</h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-4 pl-0">
+                        <div class="attachment-img">
+
+                        </div>
+                    </div>
+                    <div class="col-md-8 p-0">
+                        <h6>KYC form.pdf</h6>
+                        <p class=" l-18 m-0 text-primitive f-12">UPLOADED TIME</p>
+                        <p class=" m-0 l-18 f-12">10/01/2020 12.30 PM</p>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-4 pl-0">
+                        <div class="attachment-img">
+
+                        </div>
+                    </div>
+                    <div class="col-md-8 p-0">
+                        <h6>Mandate.png</h6>
+                        <p class=" l-18 m-0 text-primitive f-12">UPLOADED TIME</p>
+                        <p class=" m-0 l-18 f-12">10/01/2020 12.30 PM</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="uploadImgBox c-p d-flex align-items-center justify-content-center">
+                    <img src="assets/images/svg/plus-icon-gray.svg" class="c-p">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="bg-grey lter pt-20">
+        <div class="row">
+            <div class="col-md-12">
+                <h5 class="f-500 roboto">Comments</h5>
+            </div>
+        </div>
+
+        <div class="row pb-10">
+            <div class="col-md-1 text-center p-0">
+                <img src="assets/images/svg/avtarProfile.svg" class="c-p">
+            </div>
+            <div class="col-md-11 pl-0">
+                <div class="row">
+                    <div class="col-md-8 p-0">
+                        <h5 class="f-500 roboto">Ronak Hindocha <span class="text-primitive f-12"> a minute ago </span>
+                        </h5>
+                    </div>
+                    <div class="col-md-4 editDelectText text-right">
+                        <a class="f-12">Edit</a>
+                        <a class="f-12">Delete</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 p-0">
+                        <p class="f-14"> This is a test comment. All comments related to tasks come here. This is second
+                            line of the comment.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pb-10">
+            <div class="col-md-1 text-center p-0">
+                <img src="assets/images/svg/avtarProfile.svg" class="c-p">
+            </div>
+            <div class="col-md-11 pl-0">
+                <div class="row">
+                    <div class="col-md-8 p-0">
+                        <h5 class="f-500 roboto">Ronak Hindocha <span class="text-primitive f-12"> a minute ago </span>
+                        </h5>
+                    </div>
+                    <div class="col-md-4 editDelectText text-right">
+                        <a class="f-12">Edit</a>
+                        <a class="f-12">Delete</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 p-0">
+                        <p class="f-14"> This is a test comment. All comments related to tasks come here. This is second
+                            line of the comment.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>
+
+
+
+<!-- <div class="bottomCommentBox bg-grey lter">
+    <div class="row">
+        <div class="col-md-1 p-0">
+              <img src="assets/images/svg/avtar-2.svg" class="c-p ml-12">
+        </div>
+        <div class="col-md-11">
+            <mat-form-field>
+                <input class="form-control bg-white br-0 text-left" matInput type="text">
+            </mat-form-field>
+
+            <div class="row pt-10">
+                <div class="col-md-12 f-14 p-0">
+                    Collaborators
+                    <img src="assets/images/svg/avtar-1.svg" class="c-p ml-12">
+                    <img src="assets/images/svg/avtar-logo.svg" class="c-p ml-12">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div> -->
+
+<div class="bottom-fixed-50 wrapper-12 pt-16">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="close(false)">Cancel</h5>
+        </div>
+
+    </div>
+</div>

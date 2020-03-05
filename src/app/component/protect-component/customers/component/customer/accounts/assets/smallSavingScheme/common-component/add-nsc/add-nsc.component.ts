@@ -197,7 +197,7 @@ export class AddNscComponent implements OnInit {
         if (this.flag == 'adviceNSC') {
           this.cusService.getAdviceNsc(adviceObj).subscribe(
             data => this.getAdviceNscRes(data),
-            err => this.eventService.openSnackBar(err, "dismiss")
+            err => this.eventService.openSnackBar(err, "Dismiss")
           );
         } else {
           this.cusService.addNSCScheme(obj).subscribe(
@@ -214,7 +214,7 @@ export class AddNscComponent implements OnInit {
     this.close(true);
   }
   addNSCResponse(data) {
-    (this.editApi) ? this.eventService.openSnackBar("NSC is edited", "dismiss") : this.eventService.openSnackBar("NSC is added", "dismiss")
+    (this.editApi) ? this.eventService.openSnackBar("NSC is edited", "Dismiss") : this.eventService.openSnackBar("NSC is added", "Dismiss")
     console.log(data)
     this.close(true)
   }

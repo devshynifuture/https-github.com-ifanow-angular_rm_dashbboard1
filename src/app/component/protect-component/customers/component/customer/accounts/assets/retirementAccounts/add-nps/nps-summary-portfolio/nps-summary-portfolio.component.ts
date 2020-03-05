@@ -303,15 +303,15 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     }
   }
   getAdviceNscSummaryRes(data) {
-    this.event.openSnackBar('NSC added successfully!', 'dismiss');
+    this.event.openSnackBar('NSC added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }
   addNPSRes(data) {
-    this.event.openSnackBar('Added successfully!', 'dismiss');
+    this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }
   editNPSRes(data) {
-    this.event.openSnackBar('Updated successfully!', 'dismiss');
+    this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }
 }

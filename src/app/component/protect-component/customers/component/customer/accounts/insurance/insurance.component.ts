@@ -87,7 +87,7 @@ export class InsuranceComponent implements OnInit {
     this.cusService.getInsuranceData(obj).subscribe(
       data => this.getInsuranceDataRes(data)
       // , (error) => {
-      //   this.eventService.openSnackBar('Something went wrong!', 'dismiss');
+      //   this.eventService.openSnackBar('Something went wrong!', 'Dismiss');
       //   this.dataSource.data = [];
       //   this.isLoading = false;
       // }
@@ -129,7 +129,7 @@ export class InsuranceComponent implements OnInit {
       positiveMethod: () => {
         this.cusService.deleteInsurance(data.id).subscribe(
           data => {
-            this.eventService.openSnackBar('Insurance is deleted', 'dismiss');
+            this.eventService.openSnackBar('Insurance is deleted', 'Dismiss');
             dialogRef.close();
             this.getInsuranceData(this.insuranceTypeId)
           },

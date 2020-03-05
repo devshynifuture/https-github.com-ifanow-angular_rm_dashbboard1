@@ -127,7 +127,7 @@ export class PoMisSchemeComponent implements OnInit {
       positiveMethod: () => {
         this.cusService.deletePOMIS(data.id).subscribe(
           data => {
-            this.eventService.openSnackBar('POMIS is deleted', 'dismiss');
+            this.eventService.openSnackBar('POMIS is deleted', 'Dismiss');
             dialogRef.close();
             this.getPoMisSchemedata();
           },

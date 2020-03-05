@@ -158,18 +158,18 @@ export class AddGratuityComponent implements OnInit {
     }
   }
   getAdviceGratuityRes(data) {
-    this.event.openSnackBar('Gratuity added successfully!', 'dismiss');
+    this.event.openSnackBar('Gratuity added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'addedGratuity', state: 'close', data, refreshRequired: true })
 
   }
   addGratuityRes(data) {
     console.log('addrecuringDepositRes', data)
     this.subInjectService.changeNewRightSliderState({ flag: 'addedGratuity', state: 'close', data, refreshRequired: true })
-    this.event.openSnackBar('Added successfully!', 'dismiss');
+    this.event.openSnackBar('Added successfully!', 'Dismiss');
   }
   editGratuityRes(data) {
     this.subInjectService.changeNewRightSliderState({ flag: 'addedGratuity', state: 'close', data, refreshRequired: true })
-    this.event.openSnackBar('Updated successfully!', 'dismiss');
+    this.event.openSnackBar('Updated successfully!', 'Dismiss');
 
   }
 }

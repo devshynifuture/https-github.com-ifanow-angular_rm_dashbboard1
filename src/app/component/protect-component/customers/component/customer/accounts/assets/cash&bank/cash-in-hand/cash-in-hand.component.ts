@@ -85,19 +85,23 @@ export class CashInHandComponent implements OnInit {
 
   getdataForm(data) {
     this.flag = data;
-    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
+    // (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
 
     if (data == undefined) {
       data = {};
+      this.flag = "addCASHINHAND";
+    }
+    else {
+      this.flag = "editCASHINHAND";
     }
     this.cashInHand = this.fb.group({
       ownerName: [(data.ownerName == undefined) ? '' : data.ownerName, [Validators.required]],
       balanceAsOn: [(data.balanceAsOn == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
       cashBalance: [(data.cashValue == undefined) ? '' : data.cashValue, [Validators.required]],
       // bankAcNo: [(data.bankAccountNumber == undefined) ? '' : data.bankAccountNumber, [Validators.required]],
-      description: [(data.description == undefined) ? '' : data.description, [Validators.required]],
-      id: [(data.id == undefined) ? '' : data.id, [Validators.required]],
-      familyMemberId: [[(data.familyMemberId == undefined) ? '' : data.familyMemberId], [Validators.required]]
+      description: [(data.description == undefined) ? '' : data.description,],
+      id: [(data.id == undefined) ? '' : data.id,],
+      familyMemberId: [[(data.familyMemberId == undefined) ? '' : data.familyMemberId],]
     });
     this.ownerData = this.cashInHand.controls;
     this.familyMemberId = this.cashInHand.controls.familyMemberId.value;
@@ -110,7 +114,13 @@ export class CashInHandComponent implements OnInit {
 
   saveCashInHand() {
     if (this.cashInHand.invalid) {
-      this.cashInHand.markAllAsTouched();
+      for (let element in this.cashInHand.controls) {
+        console.log(element)
+        if (this.cashInHand.controls[element].invalid) {
+          this.cashInHand.controls[element].markAsTouched();
+          return;
+        }
+      }
     } else {
       const obj = {
         advisorId: this.advisorId,
@@ -129,7 +139,7 @@ export class CashInHandComponent implements OnInit {
         stringObject: obj,
         adviceDescription: "manualAssetDescription"
       }
-      if (this.cashInHand.controls.id.value == undefined && this.flag != 'adviceCashInHand') {
+      if (this.flag == "editCASHINHAND") {
         this.custumService.addCashInHand(obj).subscribe(
           data => this.addCashInHandRes(data)
         );
@@ -159,7 +169,7 @@ export class CashInHandComponent implements OnInit {
 
   editCashInHandRes(data) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
-    this.eventService.openSnackBar('Cash in hand added successfully', 'OK');
+    this.eventService.openSnackBar('Cash in hand edited successfully', 'OK');
 
   }
 

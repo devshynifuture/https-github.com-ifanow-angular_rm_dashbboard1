@@ -113,7 +113,7 @@ export class EmailListingComponent implements OnInit {
     this.paginatorSubscription = this.emailService.getProfile().subscribe(response => {
       console.log('paginator response=>>>>', response);
       if (response === undefined) {
-        this.eventService.openSnackBar("You must connect your gmail account", "DISMISS");
+        this.eventService.openSnackBar("You must connect your gmail account", "Dismiss");
         localStorage.removeItem('successStoringToken');
         this.router.navigate(['google-connect'], { relativeTo: this.activatedRoute });
       } else {
@@ -140,7 +140,7 @@ export class EmailListingComponent implements OnInit {
       const dialogData = {
         header: 'DELETE',
         body: 'Are you sure you want to delete the selected mails?',
-        body2: 'This cannot be undone..',
+        body2: 'This cannot be undone.',
         btnYes: 'DELETE',
         btnNo: 'CANCEL',
         positiveMethod: () => {
@@ -475,7 +475,7 @@ export class EmailListingComponent implements OnInit {
     });
 
     if (ids.length === 0) {
-      this.eventService.openSnackBar("Please select email or emails to delete!", "DISMISS");
+      this.eventService.openSnackBar("Please select email or emails to delete!", "Dismiss");
     } else {
       this.threadsToTrashService(ids);
     }

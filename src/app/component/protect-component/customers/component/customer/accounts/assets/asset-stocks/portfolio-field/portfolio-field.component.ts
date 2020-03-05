@@ -77,7 +77,7 @@ export class PortfolioFieldComponent implements OnInit {
   openAddPortfolio() {
     console.log(this.portfolioData)
     if (this.ownerIdData) {
-      this.eventService.openSnackBar("please select owner", "dismiss");
+      this.eventService.openSnackBar("please select owner", "Dismiss");
       return;
     }
     const dialogData =
@@ -93,7 +93,7 @@ export class PortfolioFieldComponent implements OnInit {
         this.cusService.addPortfolio(obj).subscribe(
           data => {
             dialogRef.close();
-            this.eventService.openSnackBar("portfolio is added", "dismiss");
+            this.eventService.openSnackBar("portfolio is added", "Dismiss");
             this.getPortfolioList();
           },
           error => this.eventService.showErrorMessage(error)

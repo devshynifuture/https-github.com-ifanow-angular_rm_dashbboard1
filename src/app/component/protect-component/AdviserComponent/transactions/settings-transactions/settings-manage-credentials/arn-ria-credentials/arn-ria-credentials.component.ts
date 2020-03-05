@@ -125,7 +125,7 @@ export class ArnRiaCredentialsComponent implements OnInit {
       positiveMethod: () => {
           this.customerService.deleteFixedDeposite(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar('Fixed deposite is deleted', 'dismiss');
+              this.eventService.openSnackBar('Fixed deposite is deleted', 'Dismiss');
               dialogRef.close();
               this.getBSECredentials()
             },

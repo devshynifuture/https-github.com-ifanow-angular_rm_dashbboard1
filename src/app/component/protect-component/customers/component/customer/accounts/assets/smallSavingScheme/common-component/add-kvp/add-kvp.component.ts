@@ -76,14 +76,14 @@ export class AddKvpComponent implements OnInit {
     this.nomineesList = data.controls
   }
   getdataForm(data) {
-    this.flag = data;
-    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
 
     if (data == undefined) {
       data = {};
+      this.flag = 'addKVP';
     }
     else {
-      this.editApi = data
+      (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : this.editApi = data;
+      this.flag = 'editKVP'
     }
     this.KVPFormScheme = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
@@ -156,9 +156,9 @@ export class AddKvpComponent implements OnInit {
       if (this.flag == 'adviceKVP') {
         this.cusService.getAdviceKvp(adviceObj).subscribe(
           data => this.getAdviceKvpRes(data),
-          err => this.eventService.openSnackBar(err, "dismiss")
+          err => this.eventService.openSnackBar(err, "Dismiss")
         );
-      } else if (this.editApi != undefined && this.editApi != 'adviceKVP') {
+      } else if (this.flag == 'editKVP') {
         obj['id'] = this.editApi.id
         this.cusService.editKVP(obj).subscribe(
           data => this.addKVPResponse(data),
@@ -179,7 +179,7 @@ export class AddKvpComponent implements OnInit {
     this.close(true);
   }
   addKVPResponse(data) {
-    (this.editApi) ? this.eventService.openSnackBar("KVP is edited", "dismiss") : this.eventService.openSnackBar("KVP is added", "added")
+    (this.editApi) ? this.eventService.openSnackBar("KVP is edited", "Dismiss") : this.eventService.openSnackBar("KVP is added", "added")
     console.log(data)
     this.close(true);
   }

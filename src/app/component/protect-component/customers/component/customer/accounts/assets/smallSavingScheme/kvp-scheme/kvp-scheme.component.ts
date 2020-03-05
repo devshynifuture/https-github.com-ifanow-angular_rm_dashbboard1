@@ -115,7 +115,7 @@ export class KvpSchemeComponent implements OnInit {
       positiveMethod: () => {
         this.cusService.deleteKVP(data.id).subscribe(
           data => {
-            this.eventService.openSnackBar('KVP is deleted', 'dismiss');
+            this.eventService.openSnackBar('KVP is deleted', 'Dismiss');
             dialogRef.close();
             this.getKvpSchemedata();
           },
