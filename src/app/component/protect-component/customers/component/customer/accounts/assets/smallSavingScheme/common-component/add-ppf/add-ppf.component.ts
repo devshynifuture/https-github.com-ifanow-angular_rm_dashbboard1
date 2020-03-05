@@ -196,7 +196,6 @@ export class AddPpfComponent implements OnInit {
         "futureApproxcontribution": this.ppfSchemeForm.get('futureContribution').value,
         "publicprovidendfundtransactionlist": finalTransctList,
       }
-      console.log(obj);
       this.dataSource = obj;
       let adviceObj = {
         advice_id: this.advisorId,
@@ -230,6 +229,15 @@ export class AddPpfComponent implements OnInit {
     this.close(true);
 
   }
+
+  isFormValuesForAdviceValid() {
+    if (this.ppfSchemeForm.valid && this.optionalppfSchemeForm.valid && this.nomineesList.length !== 0 && this.transactionData.length !== 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   addPPFResponse(data) {
     (this.editApi) ? this.eventService.openSnackBar("PPF is edited", "Dismiss") : this.eventService.openSnackBar("PPF is added", "Dismiss")
     console.log(data)

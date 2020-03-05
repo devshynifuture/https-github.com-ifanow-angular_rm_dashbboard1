@@ -204,7 +204,7 @@
 
             <div *ngIf="dataSourceFixed.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
-                <h4 class="text-center pt-12"> No Fixed deposit </h4>
+                <h4 class="text-center pt-12"> No Fixed deposit found</h4>
                 <button mat-stroked-button class="btn-primary proximaFont addon v-middle"
                     (click)="openPortfolioSummary('addFixedDeposit',null)"> ADD NEW
                 </button>
@@ -366,7 +366,7 @@
 
             <div *ngIf="dataSourceRecurring.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
-                <h4 class="text-center pt-12">No Recurring deposits</h4>
+                <h4 class="text-center pt-12">No Recurring deposits found</h4>
                 <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddRecurringDeposit(null)">
                     ADD NEW
                 </button>
@@ -542,7 +542,7 @@
 
             <div *ngIf="dataSourceBond.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
-                <h4 class="text-center pt-12">No Bonds</h4>
+                <h4 class="text-center pt-12">No Bonds found</h4>
                 <button mat-stroked-button class="btn-primary addon v-middle" (click)="openBonds(null)"> ADD NEW
                 </button>
             </div>

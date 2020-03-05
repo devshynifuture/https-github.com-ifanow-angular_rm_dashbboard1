@@ -118,7 +118,7 @@ export class AdviceRetirementAccountComponent implements OnInit {
     }
   }
   openAddEdit(value, data) {
-    let Component = (value == 'adviceEPF') ? AddEPFComponent : (value == "adviceNPSSummary") ? NpsSummaryPortfolioComponent : (value == 'adviceGratuity') ? AddGratuityComponent : (value == 'adviceSuperAnnuation') ? AddSuperannuationComponent : AddEPSComponent;
+    let Component = (value == 'adviceEPF') ? AddEPFComponent : (value == "adviceNPSSummary") ? NpsSummaryPortfolioComponent : (value == 'adviceNPSSchemeHolding') ? NpsSchemeHoldingComponent : (value == 'adviceGratuity') ? AddGratuityComponent : (value == 'adviceSuperAnnuation') ? AddSuperannuationComponent : AddEPSComponent;
     const fragmentData = {
       flag: value,
       data,

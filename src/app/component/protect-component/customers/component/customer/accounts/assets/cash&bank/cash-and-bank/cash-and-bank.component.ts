@@ -187,7 +187,7 @@ export class CashAndBankComponent implements OnInit {
       this.bankAccountList.sort = this.bankAccountListTableSort;
       this.totalAccountBalance = data.totalAccountBalance;
     } else {
-      this.noData = 'No data found';
+      this.noData = 'No Bank accounts found';
       this.bankAccountList.data = [];
     }
   }
@@ -212,7 +212,7 @@ export class CashAndBankComponent implements OnInit {
     console.log('getCashInHandRes ###', data);
     this.isLoading = false;
     if (data == undefined) {
-      this.noData = 'No data found';
+      this.noData = 'No Cash in hand found';
       this.cashInHandList.data = [];
     }
     else if (data.cashInHands.length != 0) {
@@ -220,7 +220,7 @@ export class CashAndBankComponent implements OnInit {
       this.cashInHandList.sort = this.cashInHandListTableSort;
       this.sumOfCashValue = data.sumOfCashValue;
     } else {
-      this.noData = 'No data found';
+      this.noData = 'No Cash in hand found';
       this.cashInHandList.data = [];
     }
   }

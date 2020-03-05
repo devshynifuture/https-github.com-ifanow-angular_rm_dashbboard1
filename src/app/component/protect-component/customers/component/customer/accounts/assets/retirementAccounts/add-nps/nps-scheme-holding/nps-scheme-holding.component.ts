@@ -40,6 +40,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
   nexNomineePer = 0;
   showError = false;
   flag: any;
+  adviceShowHeaderAndFooter: boolean = true;
 
   constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) { }
   @Input()
@@ -54,6 +55,11 @@ export class NpsSchemeHoldingComponent implements OnInit {
   @Input() popupHeaderText: string = 'Add Scheme level holding';
 
   ngOnInit() {
+    if (this.data && this.data.flag) {
+      this.adviceShowHeaderAndFooter = false;
+    } else {
+      this.adviceShowHeaderAndFooter = true;
+    }
     this.idForscheme1 = []
     this.advisorId = AuthService.getAdvisorId()
     this.clientId = AuthService.getClientId();
@@ -116,11 +122,11 @@ export class NpsSchemeHoldingComponent implements OnInit {
     }
     this.schemeHoldingsNPS = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
-      schemeChoice: [(data == undefined) ? '' : (data.schemeChoice) + "", [Validators.required]],
+      schemeChoice: [(data == undefined) ? '' : (data.schemeChoice) + "",],
       pran: [(data == undefined) ? '' : data.pran, [Validators.required]],
-      schemeName: [(data == undefined) ? '' : data.schemeName, [Validators.required]],
-      description: [(data == undefined) ? '' : data.description, [Validators.required]],
-      id: [(data == undefined) ? '' : data.id, [Validators.required]],
+      // schemeName: [(data == undefined) ? '' : data.schemeName, [Validators.required]],
+      description: [(data == undefined) ? '' : data.description,],
+      id: [(data == undefined) ? '' : data.id,],
       holdingList: this.fb.array([this.fb.group({
         schemeName: [null, [Validators.required]], holdingAsOn: [null, [Validators.required]],
         totalUnits: [null, [Validators.required]], totalNetContribution: [null, [Validators.required]]
@@ -132,7 +138,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
       nominees: this.fb.array([this.fb.group({
         name: null, sharePercentage: null,
       })]),
-      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
+      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId],]
     });
     this.ownerData = this.schemeHoldingsNPS.controls;
     this.familyMemberId = this.schemeHoldingsNPS.controls.familyMemberId.value
