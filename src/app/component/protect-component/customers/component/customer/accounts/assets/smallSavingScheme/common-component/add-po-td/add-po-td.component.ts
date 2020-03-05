@@ -84,7 +84,8 @@ export class AddPoTdComponent implements OnInit {
       tdNum: [data.tdNumber],
       bankAccNum: [],
       description: [data.description],
-      id: [data.id]
+      id: [data.id],
+      nominees: this.nominees
     })
     this.ownerData = this.POTDForm.controls;
 
