@@ -18,7 +18,7 @@
         </div>
         <div class="col-md-3 pr-0">
             <mat-form-field>
-                <mat-select #ownerType class="form-control br-0" formControlName="ownerType">
+                <mat-select #ownerType class="form-control br-0" (selectionChange)="checkOwnerType()" formControlName="ownerType">
                     <mat-option value="" disabled> Select option</mat-option>
                     <mat-option value="1"> Joint</mat-option>
                     <mat-option value="2">Single</mat-option>
@@ -57,54 +57,13 @@
         </div>
     </div>
 
-    <div class="row pt-40" *ngIf="fixedDeposit.get('ownerType').value === '1'">
-        <div class="col-md-5 text-right pr-0">
-            <h5 class="m-0">Owner</h5>
-            <p class="m-0 f-12 text-custom">In whose name is this asset</p>
-        </div>
-
-        <div class="col-md-3 pr-0">
-            <mat-form-field class="w-100">
-                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
-                    [data]='ownerData' formControlName="ownerName" class="form-control br-0">
-                    <mat-option value=''>Select family members</mat-option>
-                    <mat-option *ngFor="let f of nomineesListFM" (click)="ownerList(f)" [value]="f.userName"
-                        (click)="ownerDetails(f)">
-                        <span>{{f.userName}}</span>
-                    </mat-option>
-                </mat-select>
-                <mat-error class="f-12">
-                    This field is required
-                </mat-error>
-            </mat-form-field>
-        </div>
-
-        <div class="col-md-2">
-            <div class="form-group mb-0 iconPetage">
-                <mat-form-field>
-                    <input matInput class=" form-control br-0 percentage" type="number" formControlName="ownerPercent"
-                        (keyup)="onChangeJointOwnership('owner')">
-                    <!-- ng build prod isOwnerPercent removed -->
-                    <!-- <mat-error class="f-12 "
-                        [ngClass]="{'v-h':!(isOwnerPercent && getFormControl().ownerPercent.invalid || getFormControl().ownerPercent.touched && getFormControl().ownerPercent.invalid)}">
-                        This field is required
-                    </mat-error> -->
-                    <mat-error>
-                        This field is required
-                    </mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="col-md-2 p-0">
-            <h5 class="m-0 text-primitive pt-8 c-p" (click)="addNewCoOwner(true)">+ Add co-owner</h5>
-        </div>
-    </div>
+    
 
     <div formArrayName="getCoOwnerName" *ngIf="fixedDeposit.get('ownerType').value === '1'">
         <div class="row pt-36" *ngFor="let obj of getCoOwner.controls; let pointIndex=index"
             [formGroupName]="pointIndex">
             <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8 ">Co-owner{{pointIndex+1}}</h5>
+                <h5 class="m-0 pt-8 ">{{pointIndex != 0?'Co-' : ''}}owner{{pointIndex != 0?pointIndex:''}}</h5>
             </div>
             <div class="col-md-3 pr-0">
                 <div class="form-group mb-0">
@@ -117,6 +76,9 @@
                                 <span>{{f.userName}}</span>
                             </mat-option>
                         </mat-select>
+                        <mat-error class="f-12">
+                            This field is required
+                        </mat-error>
                         <!-- <input matInput aria-label="State" (click)="nomineesList()" [matAutocomplete]="auto" list="userName" class="form-control br-0 pl-8" formControlName="ownerName">
                         <mat-autocomplete #auto="matAutocomplete">
                             <mat-option *ngFor="let item of familyList" (click)="getCoOwnerDetails(item)" [value]="item.userName">
@@ -137,11 +99,12 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="col-md-2 p-0">
-                <i class="material-icons text-primitive f-20 c-p pl-10 pt-8"
-                    (click)="removeCoOwner(pointIndex)">remove</i>
-                <!-- <h5 class="mb-0 ml-12 text-primitive pt-8 c-p" (click)="removeCoOwner(pointIndex)">-</h5> -->
+            <div class="col-md-2 p-0 d-flex align-items-center">
+                <i *ngIf="pointIndex==0" class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(true)">add</i>
+                <i *ngIf="pointIndex!=0 && pointIndex!=1" class="material-icons text-primitive f-20 c-p pl-10 pt-8"
+                (click)="removeCoOwner(pointIndex)">remove</i>
             </div>
+           
         </div>
 
     </div>
@@ -195,7 +158,7 @@
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <input (click)="picker.open()" (dateChange)="checkDate()" matInput formControlName="commencementDate"
+                <input (focus)="picker.open()" (click)="picker.open()"(dateChange)="checkDate()" matInput formControlName="commencementDate"
                     [max]="maxDate" [matDatepicker]="picker" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
