@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MAT_DATE_FORMATS } from '@angular/material';
+import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -34,11 +34,12 @@ export class AddNscComponent implements OnInit {
   clientId: any;
   nomineesListFM: any;
   nscData: any;
-  nomineesList: any;
+  nomineesList: any[] = [];
   nominees: any;
   flag: any;
   dataSource: { "id": any; "familyMemberId": any; "ownerName": any; "amountInvested": any; "commencementDate": string; "tenure": any; "certificateNumber": any; "postOfficeBranch": any; "bankAccountNumber": any; "ownerTypeId": number; "nominees": any; "description": any; };
   adviceShowHeaderAndFooter: boolean = true;
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   @Input()
   set data(data) {
     this.inputData = data;
@@ -69,7 +70,8 @@ export class AddNscComponent implements OnInit {
   }
 
   isFormValuesForAdviceValid() {
-    if (this.nscFormField.valid && this.nscFormOptionalField.valid && this.nomineesList.length !== 0) {
+    if (this.nscFormField.valid ||
+      (this.nscFormField.valid && this.nscFormOptionalField.valid && this.nomineesList.length !== 0)) {
       return true;
     } else {
       return false;
@@ -149,6 +151,7 @@ export class AddNscComponent implements OnInit {
     //   });
     // }
     if (this.nscFormField.invalid) {
+      this.inputs.find(input => !input.ngControl.valid).focus();
       this.nscFormField.get('ownerName').markAsTouched();
       this.nscFormField.get('amountInvested').markAsTouched();
       this.nscFormField.get('ownerName').markAsTouched();

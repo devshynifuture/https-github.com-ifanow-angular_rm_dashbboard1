@@ -279,4 +279,12 @@ export class RecuringDepositComponent implements OnInit {
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }
+
+  isFormValuesForAdviceValid() {
+    if (this.recuringDeposit.valid || (this.recuringDeposit.valid && this.nomineesList.length !== 0)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

@@ -256,4 +256,13 @@ export class BondsComponent implements OnInit {
     this.eventService.openSnackBar('Updated successfully!', 'Dismiss');
 
   }
+
+  isFormValuesForAdviceValid() {
+    if (this.bonds.valid ||
+      (this.bonds.valid && this.nomineesList.length !== 0)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
