@@ -6,6 +6,8 @@ import { OnlineTrasactionComponent } from './doTransaction/online-trasaction/onl
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { KnowYourCustomerComponent } from './know-your-customer/know-your-customer.component';
+import { LeftSideInnUccListComponent } from './IIN/UCC-Creation/left-side-inn-ucc-list/left-side-inn-ucc-list.component';
+import { IinUccCreationComponent } from './IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
 
 @Component({
   selector: 'app-overview-transactions',
@@ -65,7 +67,26 @@ export class OverviewTransactionsComponent implements OnInit {
     );
 
   }
+  openNewCustomerIIN() {
+    const fragmentData = {
+      flag: 'addNewCustomer',
+      id: 1,
+      direction: 'top',
+      componentName: IinUccCreationComponent,
+      state: 'open'
+    };
+    // this.router.navigate(['/subscription-upper'])
+    AuthService.setSubscriptionUpperSliderData(fragmentData);
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getClientSubscriptionList();
+          subscription.unsubscribe();
+        }
+      }
+    );
 
+  }
 
 
 

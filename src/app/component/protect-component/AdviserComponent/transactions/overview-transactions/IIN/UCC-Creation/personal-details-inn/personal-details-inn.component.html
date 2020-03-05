@@ -12,28 +12,25 @@
         </div>
         <!-- (click)="dialogClose()" for prod build  -->
         <div class="col-md-2 text-right">
-            <i class="material-icons pt-16 c-p pr-16">
+            <i class="material-icons pt-16 c-p pr-16" (click)="close()">
                 clear
             </i>
         </div>
     </div>
 </div>
 
-
-
-
 <div class="pt-60 mb-100" [formGroup]="personalDetails">
     <div class="row">
-        <app-left-kyc-list></app-left-kyc-list>
+      <app-left-side-inn-ucc-list></app-left-side-inn-ucc-list>
         <div class="col-md-7 offset-2 p-0 bl-1 ">
             <div class="p-20">
                 <h3 class="f-18 mb-28 f-600">Personal details</h3>
 
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0">Investor type</h3>
+                        <h3 class="f-16 pt-8 m-0">Tax status</h3>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-5">
                         <mat-form-field>
                             <mat-select class="form-control" formControlName="inverstorType">
                                 <mat-option value="Resident individual">Individual </mat-option>
@@ -42,21 +39,10 @@
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
-                    <div class="col-md-3">
-                        <mat-form-field>
-                            <mat-select class="form-control" formControlName="investorType2">
-                                <mat-option value="Resident individual"> Resident individual </mat-option>
-                                <mat-option value="Non resident indian"> Non resident indian </mat-option>
-                                <mat-option value="Foreign national"> Foreign national </mat-option>
-                                <mat-option value="Person of indian origin"> Person of indian origin </mat-option>
-                            </mat-select>
-                            <mat-error class="f-12">This field is required</mat-error>
-                        </mat-form-field>
-                    </div>
-                </div>
+                </div> -->
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> PAN</h3>
+                        <h3 class="f-16 pt-8 m-0"> PAN </h3>
                     </div>
                     <div class="col-md-3">
                         <mat-form-field>
@@ -77,7 +63,7 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input matInput maxlength="10" type="text" formControlName="nameAsPan" class="form-control">
+                            <input matInput  type="text" formControlName="nameAsPan" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
@@ -89,7 +75,7 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input matInput maxlength="10" formControlName="madianName" type="text" class="form-control">
+                            <input matInput  formControlName="madianName" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
@@ -100,7 +86,7 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input matInput maxlength="10" formControlName="fatherSpouseName" type="text" class="form-control">
+                            <input matInput  formControlName="fatherSpouseName" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
@@ -111,7 +97,7 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input matInput maxlength="10" formControlName="motherName" type="text" class="form-control">
+                            <input matInput  formControlName="motherName" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
