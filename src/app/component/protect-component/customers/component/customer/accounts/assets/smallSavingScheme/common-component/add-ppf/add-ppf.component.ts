@@ -179,7 +179,6 @@ export class AddPpfComponent implements OnInit {
         "futureApproxcontribution": this.ppfSchemeForm.get('futureContribution').value,
         "publicprovidendfundtransactionlist": finalTransctList,
       }
-      console.log(obj);
       this.dataSource = obj;
       let adviceObj = {
         advice_id: this.advisorId,

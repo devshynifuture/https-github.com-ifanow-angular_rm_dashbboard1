@@ -42,7 +42,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row pt-44">
+                    <div class="row pt-32">
                         <div class="col-md-4 text-right">
                             <h5 class="m-0 pt-12">Full name</h5>
                         </div>
@@ -100,7 +100,8 @@
                     <div class="row pt-40">
                         <div class="col-md-4 text-right">
                             <h5 class="m-0 pt-12">Username</h5>
-                            <p class="f-12 roboto text-custom">This will be the login ID. By default, email is the username
+                            <p class="f-12 roboto text-custom">This will be the login ID. By default, email is the
+                                username
                             </p>
                         </div>
                         <div class="col-md-5 p-0">
@@ -112,7 +113,7 @@
                         </div>
                     </div>
 
-                    <div class="row pt-44">
+                    <div class="row pt-16">
                         <div class="col-md-4 text-right">
                             <h5 class="m-0 pt-36">Date of birth</h5>
                         </div>
@@ -137,7 +138,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row pt-44">
+                    <div class="row pt-60">
                         <div class="col-md-4 text-right">
                             <h5 class="m-0 pt-8">Gender</h5>
                         </div>
@@ -164,13 +165,714 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row pt-44 pb-60">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-4">Role</h5>
+                            <p class="m-0 f-12 text-custom">The selected role decides<br> what access the client has</p>
+                        </div>
+                        <div class="col-md-5 p-0">
+                            <div class="form-group m-0">
+                                <mat-form-field>
+                                    <mat-select class="form-control">
+                                        <mat-option value="option">Option</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
                 </mat-tab>
-                <mat-tab label="More info">Content 2</mat-tab>
-                <mat-tab label="Address">Content 3</mat-tab>
-                <mat-tab label="Bank">Content 1</mat-tab>
-                <mat-tab label="Demat">Content 2</mat-tab>
-                <mat-tab label="Upload">Content 3</mat-tab>
+                <mat-tab label="More info">
+                    <div class="pb-100">
+                        <div class="row pt-44">
+                            <div class="col-md-4 text-right">
+                                <h5 class="m-0">Display name</h5>
+                                <p class="m-0 f-12 text-custom">This will display everwhere</p>
+                            </div>
+                            <div class="col-md-6 p-0">
+                                <div class="form-group">
+                                    <mat-form-field>
+                                        <input matInput class="form-control">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pt-32">
+                            <div class="col-md-4 text-right">
+                                <h5 class="m-0 pt-8">Aadhaar number</h5>
+                            </div>
+                            <div class="col-md-4 p-0">
+                                <div class="form-group">
+                                    <mat-form-field>
+                                        <input matInput class="form-control">
+                                        <mat-hint>Optional</mat-hint>
+                                        <mat-hint align="end">0 / 12</mat-hint>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pt-32">
+                            <div class="col-md-4 text-right">
+                                <h5 class="m-0 pt-8">Occupation</h5>
+                            </div>
+                            <div class="col-md-7 p-0">
+                                <div class="form-group">
+                                    <mat-form-field>
+                                        <input matInput class="form-control">
+                                        <mat-hint>Optional</mat-hint>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pt-32">
+                            <div class="col-md-4 text-right">
+                                <h5 class="m-0 pt-8">Marital status</h5>
+                            </div>
+                            <div class="col-md-7 p-0 marital-status">
+                                <mat-radio-group aria-label="Select an option">
+                                    <mat-radio-button value="1" class="text-primary bu-primary">Married
+                                    </mat-radio-button>
+                                    <mat-radio-button value="2" class="text-custom b-ua">Unmarried</mat-radio-button>
+                                    <mat-radio-button value="3" class="text-custom b-ua">Other</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                        <div class="row pt-32">
+                            <div class="col-md-4 text-right">
+                                <h5 class="m-0 pt-8">Anniversary date</h5>
+                            </div>
+                            <div class="col-md-3 p-0">
+                                <div class="form-group mb-0">
+                                    <mat-form-field class="ba-date">
+                                        <input matInput [matDatepicker]="picker" class="form-control b-0">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                        <mat-hint>Optional</mat-hint>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pt-44">
+                            <div class="col-md-4 text-right">
+                                <h5 class="m-0 pt-8">Bio</h5>
+                                <p class="text-custom m-0 roboto f-12">This will be visible on
+                                    the Key details page</p>
+                            </div>
+                            <div class="col-md-5 p-0">
+                                <div class="form-group mb-0">
+                                    <mat-form-field>
+                                        <textarea matInput class="form-control" rows="5"></textarea>
+                                        <mat-hint>optional</mat-hint>
+                                        <mat-hint align="end">0/200</mat-hint>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ptb-100">
+                            <div class="col-md-4 text-right">
+                                <h5 class="m-0 pt-8">My notes</h5>
+                                <p class="text-custom m-0 roboto f-12">This will be visible to the client</p>
+                            </div>
+                            <div class="col-md-5 p-0">
+                                <div class="form-group mb-0">
+                                    <mat-form-field>
+                                        <textarea matInput class="form-control" rows="5"></textarea>
+                                        <mat-hint>optional</mat-hint>
+                                        <mat-hint align="end">0/200</mat-hint>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Address">
+                    <h4 class="f-500 text-black pt-20 pl-20 m-0">Permanent address</h4>
+                    <div class="row pt-24">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">Permanent address</h5>
+                        </div>
+                        <div class="col-md-6 p-0">
+                            <div class="form-group m-0 p-address">
+                                <mat-radio-group aria-label="Select an option">
+                                    <mat-radio-button value="1" class="bu-primary text-primary">Residential
+                                    </mat-radio-button>
+                                    <mat-radio-button value="2" class="b-ua">Business</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">Address proof type</h5>
+                        </div>
+                        <div class="col-md-6 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <mat-select class="form-control">
+                                        <mat-option value="Select proof type">Select proof type</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">Proof ID number</h5>
+                        </div>
+                        <div class="col-md-4 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">Address line 1</h5>
+                        </div>
+                        <div class="col-md-5 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">Address line 2</h5>
+                        </div>
+                        <div class="col-md-5 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">Pin code</h5>
+                        </div>
+                        <div class="col-md-3 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">City</h5>
+                        </div>
+                        <div class="col-md-5 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">State</h5>
+                        </div>
+                        <div class="col-md-5 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">Country</h5>
+                        </div>
+                        <div class="col-md-5 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pb-100 pl-20 pt-28">
+                        <h4 class="f-500 text-black m-0 pb-16">Correspondence address</h4>
+                        Same as a permanent address <mat-checkbox checked="false"></mat-checkbox>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Bank">
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">IFSC code</h5>
+                        </div>
+                        <div class="col-md-3 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                    <mat-hint>0 / 11</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">Bank name</h5>
+                        </div>
+                        <div class="col-md-6 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">MICR code</h5>
+                        </div>
+                        <div class="col-md-3 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                    <mat-hint>0 / 9</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">Account number</h5>
+                        </div>
+                        <div class="col-md-6 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">Account type</h5>
+                        </div>
+                        <div class="col-md-7 p-0 account-type">
+                            <mat-radio-group aria-label="Select an option">
+                                <mat-radio-button value="1" class="bu-primary">Savings</mat-radio-button>
+                                <mat-radio-button value="2" class="b-ua">Current</mat-radio-button>
+                                <mat-radio-button value="3" class="b-ua">Cash credit</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">First holder name</h5>
+                        </div>
+                        <div class="col-md-6 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <p class="m-0 text-custom roboto pt-12">+ Add more</p>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">Branch name</h5>
+                        </div>
+                        <div class="col-md-6 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">Branch country</h5>
+                        </div>
+                        <div class="col-md-6 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">Branch pin code</h5>
+                        </div>
+                        <div class="col-md-3 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">Branch address line 1</h5>
+                        </div>
+                        <div class="col-md-6 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">Branch address line 2</h5>
+                        </div>
+                        <div class="col-md-6 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">Branch city</h5>
+                        </div>
+                        <div class="col-md-6 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">Branch state</h5>
+                        </div>
+                        <div class="col-md-6 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Demat">
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">Mode of holding</h5>
+                        </div>
+                        <div class="col-md-7 p-0 mode-holding">
+                            <mat-radio-group aria-label="Select an option">
+                                <mat-radio-button value="1" class="bu-primary">Single</mat-radio-button>
+                                <mat-radio-button value="2" class="b-ua">Joint</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">Mode of holding</h5>
+                        </div>
+                        <div class="col-md-6 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <p class="m-0 text-custom roboto pt-8">+ Add more</p>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right pl-0">
+                            <h5 class="m-0 pt-8">Depository participant name</h5>
+                        </div>
+                        <div class="col-md-6 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right pl-0">
+                            <h5 class="m-0 pt-8">Depository participant ID</h5>
+                        </div>
+                        <div class="col-md-3 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">Client ID</h5>
+                        </div>
+                        <div class="col-md-3 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">Broker name</h5>
+                        </div>
+                        <div class="col-md-6 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                    <mat-hint>Optional</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">Broker name</h5>
+                        </div>
+                        <div class="col-md-6 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                    <mat-hint>Optional</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">Broker address</h5>
+                        </div>
+                        <div class="col-md-6 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                    <mat-hint>Optional</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">Broker phone</h5>
+                        </div>
+                        <div class="col-md-2 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <mat-select class="form-control">
+                                        <mat-option value="+91">+91</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3 pr-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                    <mat-hint>Optional</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-2 pr-0">
+                            <i class="material-icons text-custom c-p pt-12">
+                                add
+                            </i>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">Nominee</h5>
+                        </div>
+                        <div class="col-md-3 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <mat-select class="form-control">
+                                        <mat-option value="+91">+91</mat-option>
+                                    </mat-select>
+                                    <mat-hint>Optional</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3 pr-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-2 pr-0">
+                            <p class="m-0 roboto text-custom pt-8 ws-pre">+ Add nominee</p>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">Liked bank account</h5>
+                        </div>
+                        <div class="col-md-6 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                    <mat-hint>Optional</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44">
+                        <div class="col-md-4 text-right">
+                            <h5 class="m-0 pt-8">Power of attorney name</h5>
+                        </div>
+                        <div class="col-md-6 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                    <mat-hint>Optional</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-44 pb-100">
+                        <div class="col-md-4 text-right pl-0">
+                            <h5 class="m-0 pt-8">Power of attorney master ID</h5>
+                        </div>
+                        <div class="col-md-3 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control">
+                                    <mat-hint>Optional</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Upload">
+                    <div class="row pt-32">
+                        <div class="col-md-6">
+                            <h5 class="m-0 text-black pb-10">Company PAN</h5>
+                            <mat-card class="upload-card">
+                                <p class="m-0 roboto text-black">Drag & drop file here
+
+                                    or
+
+                                    Browse</p>
+                            </mat-card>
+                            <div class="col-md-12 upload-actions pr-0">
+                                <button mat-raised-button><i class="material-icons f-12 text-custom">
+                                        add
+                                    </i></button>
+                                <button mat-raised-button><i class="material-icons f-12 text-custom">
+                                        remove
+                                    </i></button>
+                                <button mat-raised-button class="mr-0">REMOVE</button>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="m-0 text-black pb-10">Contact/Authorized person PAN</h5>
+                            <mat-card class="upload-card">
+                                <p class="m-0 roboto text-black">Drag & drop file here
+
+                                    or
+
+                                    Browse</p>
+                            </mat-card>
+                            <div class="col-md-12 upload-actions pr-0">
+                                <button mat-raised-button><i class="material-icons f-12 text-custom">
+                                        add
+                                    </i></button>
+                                <button mat-raised-button><i class="material-icons f-12 text-custom">
+                                        remove
+                                    </i></button>
+                                <button mat-raised-button class="mr-0">REMOVE</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-40 pb-100">
+                        <div class="col-md-6">
+                            <h5 class="m-0 text-black pb-10">Bank proof</h5>
+                            <div class="row pb-12">
+                                <div class="col-md-6 pr-8 pl-0">
+                                    <div class="form-group mb-0">
+                                        <mat-form-field>
+                                            <mat-select class="form-control">
+                                                <mat-option value="Select bank">Select bank</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 pr-0 pl-8">
+                                    <div class="form-group mb-0">
+                                        <mat-form-field>
+                                            <mat-select class="form-control">
+                                                <mat-option value="Proof type">Proof type</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <mat-card class="upload-card h-340">
+                                <p class="m-0 roboto text-black">Drag & drop file here
+
+                                    or
+
+                                    Browse</p>
+                            </mat-card>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="m-0 text-black pb-10">Address proof</h5>
+                            <div class="row pb-12">
+                                <div class="col-md-6 pr-8 pl-0">
+                                    <div class="form-group mb-0">
+                                        <mat-form-field>
+                                            <mat-select class="form-control">
+                                                <mat-option value="Proof type">Proof type</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 pr-0 pt-4">
+                                    <button mat-raised-button class="text-primary font">Front</button>
+                                    <button mat-button class="p-0 back">Back</button>
+                                </div>
+                            </div>
+                            <mat-card class="upload-card h-340">
+                                <p class="m-0 roboto text-black">Drag & drop file here
+
+                                    or
+
+                                    Browse</p>
+                            </mat-card>
+                        </div>
+                    </div>
+                </mat-tab>
             </mat-tab-group>
+        </div>
+    </div>
+</div>
+<div class="bottom-fixed wrapper-12 w-50">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+            <button mat-raised-button class="br-0 text-inherit mr-12">SAVE & NEXT
+            </button>
+            <button mat-stroked-button class="btn-bottom br-0 text-inherit">SAVE & CLOSE
+            </button>
         </div>
     </div>
 </div>

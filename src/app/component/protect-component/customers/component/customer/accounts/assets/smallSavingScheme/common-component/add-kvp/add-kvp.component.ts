@@ -30,7 +30,7 @@ export class AddKvpComponent implements OnInit {
   KVPFormScheme: any;
   KVPOptionalFormScheme: any;
   nomineesListFM: any;
-  nomineesList: any;
+  nomineesList: any[] = [];
   nominees: any[];
   kvpData;
   flag: any;

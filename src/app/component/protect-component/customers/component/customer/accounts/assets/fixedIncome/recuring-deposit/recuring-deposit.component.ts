@@ -136,14 +136,15 @@ export class RecuringDepositComponent implements OnInit {
       commencementDate: [(data.commencementDate == undefined) ? null : new Date(data.commencementDate), [Validators.required]],
       interestRate: [(data == undefined) ? '' : data.interestRate, [Validators.required]],
       compound: [(data.interestCompounding == undefined) ? '' : (data.interestCompounding) + "", [Validators.required]],
-      linkBankAc: [(data == undefined) ? '' : data.linkedBankAccount, [Validators.required]],
+      linkBankAc: [(data == undefined) ? '' : data.linkedBankAccount,],
       tenure: [(data == undefined) ? '' : data.tenure, [Validators.required, Validators.min(0), Validators.max(120)]],
-      description: [(data == undefined) ? '' : data.description, [Validators.required]],
-      bankName: [(data == undefined) ? '' : data.bankName, [Validators.required]],
-      ownerType: [(data == undefined) ? '' : (data.ownershipType) + "", [Validators.required]],
-      rdNo: [(data == undefined) ? '' : data.rdNumber, [Validators.required]],
-      id: [(data == undefined) ? '' : data.id, [Validators.required]],
-      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
+      description: [(data == undefined) ? '' : data.description,],
+      bankName: [(data == undefined) ? '' : data.bankName,],
+      // ownerType: [(data == undefined) ? '' : (data.ownershipType) + "", [Validators.required]],
+      rdNo: [(data == undefined) ? '' : data.rdNumber,],
+      id: [(data == undefined) ? '' : data.id,],
+      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId],],
+      nominees: this.nominees
     });
 
     this.getFormControl().ownerName.maxLength = 40;

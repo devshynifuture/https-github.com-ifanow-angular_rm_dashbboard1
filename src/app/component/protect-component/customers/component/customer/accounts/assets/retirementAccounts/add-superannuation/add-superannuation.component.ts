@@ -51,7 +51,7 @@ export class AddSuperannuationComponent implements OnInit {
   get data() {
     return this.inputData;
   }
-  
+
   @Input() popupHeaderText: string = 'Add Superannuation';
 
   ngOnInit() {
@@ -107,10 +107,10 @@ export class AddSuperannuationComponent implements OnInit {
       growthEmployee: [(data == undefined) ? '' : data.growthRateEmployeeContribution, [Validators.required]],
       firstDateContry: [(data == undefined) ? '' : new Date(data.firstContributionDate), [Validators.required]],
       assumedRateReturn: [(data == undefined) ? '' : (data.assumedRateOfReturn), [Validators.required]],
-      linkBankAc: [(data == undefined) ? '' : data.bankAccountNumber, [Validators.required]],
-      description: [(data == undefined) ? '' : data.description, [Validators.required]],
-      id: [(data == undefined) ? '' : data.id, [Validators.required]],
-      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
+      linkBankAc: [(data == undefined) ? '' : data.bankAccountNumber,],
+      description: [(data == undefined) ? '' : data.description,],
+      id: [(data == undefined) ? '' : data.id,],
+      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId],]
     });
     this.ownerData = this.superannuation.controls;
     this.familyMemberId = this.superannuation.controls.familyMemberId.value
