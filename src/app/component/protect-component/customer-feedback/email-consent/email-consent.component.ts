@@ -30,20 +30,22 @@ export class EmailConsentComponent implements OnInit {
   }
   getConsentDetails(data) {
     this.isLoading = true;
-    this.cusService.getAdviceConsent(data).subscribe(
+    const getAdviceSubs = this.cusService.getAdviceConsent(data).subscribe(
       data => {
 
         this.isLoading = false;
         this.dataSource.data = data;
         data.forEach(element => {
+          console.log("this is some value::::::::", element);
           let obj =
           {
-            id: element.id,
-            acceptedOrDeclined: element.acceptedOrDeclined,
-            actionPerformed: this.datePipe.transform(new Date(element.actionPerformed), 'yyyy-MM-dd')
+            id: element.adviceConsent.id,
+            acceptedOrDeclined: element.adviceConsent.acceptedOrDeclined,
+            actionPerformed: this.datePipe.transform(new Date(element.adviceConsent.actionPerformed), 'yyyy-MM-dd')
           }
           this.consentData.push(obj)
         });
+        getAdviceSubs.unsubscribe();
       }
     )
   }
@@ -62,7 +64,8 @@ export class EmailConsentComponent implements OnInit {
     )
   }
 
-  acceptOrDeclineConsent(data, index, choice) {
+  acceptOrDeclineConsent(index, choice) {
+    console.log(this.consentData);
     this.consentData[index].acceptedOrDeclined = choice;
     this.consentData[index].actionPerformed = this.datePipe.transform(new Date(), 'yyyy-MM-dd')
     console.log(this.consentData[index]);

@@ -67,6 +67,14 @@ export class AddNscComponent implements OnInit {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true
 
   }
+
+  isFormValuesForAdviceValid() {
+    if (this.nscFormField.valid && this.nscFormOptionalField.valid && this.nomineesList.length !== 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   lisNominee(value) {
     console.log(value)
     this.nomineesListFM = Object.assign([], value.familyMembersList);

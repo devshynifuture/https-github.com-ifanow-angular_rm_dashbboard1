@@ -173,7 +173,7 @@
 
             <div *ngIf="dataEPFList.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
-                <h4 class="text-center pt-12">No data found</h4>
+                <h4 class="text-center pt-12">No EPF found</h4>
                 <button (click)="addDataFromSideBar(null, 'addEPF')" class="btn-primary addon v-middle" mat-stroked-button>
                     ADD NEW
                 </button>
@@ -355,7 +355,7 @@
         </table>
         <div *ngIf="dataNPSList.filteredData.length == 0" class="d-flex flex-column align-items-center">
             <img class="width300" src="assets/images/svg/noDataFound.svg">
-            <h4 class="text-center pt-12"> No data found </h4>
+            <h4 class="text-center pt-12"> No NPS found </h4>
             <!--              [matMenuTriggerFor]="menu1"-->
             <button [matMenuTriggerFor]="menu1" class="btn-primary addon v-middle" mat-stroked-button>
                         ADD NEW
@@ -432,7 +432,7 @@
         <div class="col-md-8 p-0 right text-right" *ngIf="dataGratuityList.filteredData.length > 0">
             <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
             <mat-menu #menu5="matMenu">
-                <button mat-menu-item>PDF</button>
+                <button mat-menu-item>NPS</button>
                 <button mat-menu-item (click)="ExportTOExcel('Gratuity')">XLS</button>
             </mat-menu>
             <img class="" src="assets/images/svg/up-down.svg">
@@ -559,7 +559,7 @@
         </table>
         <div *ngIf="dataGratuityList.filteredData.length == 0" class="d-flex flex-column align-items-center">
             <img class="width300" src="assets/images/svg/noDataFound.svg">
-            <h4 class="text-center pt-12">No data found</h4>
+            <h4 class="text-center pt-12">No Gratuity found</h4>
             <button (click)="addDataFromSideBar(null, 'addGratuity')" class="btn-primary addon v-middle" mat-stroked-button>
                     ADD NEW
                 </button>
@@ -706,7 +706,7 @@
         </table>
         <div *ngIf="dataSuperannuationList.filteredData.length == 0" class="d-flex flex-column align-items-center">
             <img class="width300" src="assets/images/svg/noDataFound.svg">
-            <h4 class="text-center pt-12">No data found</h4>
+            <h4 class="text-center pt-12">No Superannuation found</h4>
             <button (click)="addDataFromSideBar(null, 'addSuperannuation')" class="btn-primary addon v-middle" mat-stroked-button>
                     ADD NEW
                 </button>
@@ -840,7 +840,7 @@
         </table>
         <div *ngIf="EPSList.filteredData.length == 0" class="d-flex flex-column align-items-center">
             <img class="width300" src="assets/images/svg/noDataFound.svg">
-            <h4 class="text-center pt-12">No data found </h4>
+            <h4 class="text-center pt-12">No EPS found </h4>
             <button (click)="addDataFromSideBar(null, 'addEPS')" class="btn-primary addon v-middle" mat-stroked-button> ADD NEW
                 </button>
         </div>
