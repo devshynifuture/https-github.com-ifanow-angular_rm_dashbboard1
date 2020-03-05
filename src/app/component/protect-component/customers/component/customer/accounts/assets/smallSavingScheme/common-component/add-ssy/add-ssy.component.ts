@@ -30,11 +30,11 @@ export class AddSsyComponent implements OnInit {
   isOptionalField: boolean;
   advisorId: any;
   editApi: any;
-  transactionData: any;
+  transactionData: any[] = [];
   clientId: any;
   nomineesListFM: any;
   ssyData: any;
-  nomineesList: any;
+  nomineesList: any[] = [];
   nominees: any[];
   commencementDate: any;
   flag: any;
@@ -250,5 +250,16 @@ export class AddSsyComponent implements OnInit {
   close(flag) {
     this.isOptionalField = true
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+  }
+
+
+  isFormValuesForAdviceValid() {
+    if (this.ssySchemeForm.valid ||
+      (this.ssySchemeForm.valid && this.ssySchemeOptionalForm.valid) ||
+      (this.ssySchemeForm.valid && this.ssySchemeOptionalForm.valid && this.nomineesList.length !== 0 && this.transactionData.length !== 0)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

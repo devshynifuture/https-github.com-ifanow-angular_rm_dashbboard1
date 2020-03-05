@@ -1,7 +1,8 @@
 <div class="dialogclose">
     <div class="row popup-header-fix-100">
         <div class="col-md-2 border-right-1 p-0">
-            <img class="imgAdLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+            <img class="imgAdLogo"
+                src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
         </div>
         <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
 
@@ -21,102 +22,50 @@
 
 
 
-<div class="pt-60 mb-100">
+<div class="pt-60 mb-100" [formGroup]="personalDetails">
     <div class="row">
-        <div class="col-md-2 col-2 fixed-top">
-            <div class="details_ui">
-                <ul>
-                    <li class="text-primary">
-                        <span class="bg-primary text-white"> 1 </span> Personal details
-                    </li>
-
-                    <li>
-                        <span class="bg-grey lt"> 2 </span> Address details
-                    </li>
-
-                    <li>
-                        <span class="bg-grey lt"> 3 </span> Bank details
-                    </li>
-
-                    <li>
-                        <span class="bg-grey lt"> 4 </span> Nominee details
-                    </li>
-
-                    <li>
-                        <span class="bg-grey lt"> 5 </span> FATCA details
-                    </li>
-
-                    <li>
-                        <span class="bg-grey lt"> 6 </span> Photo & Signature
-                    </li>
-
-                    <li>
-                        <span class="bg-grey lt"> 7 </span> Video KYC
-                    </li>
-
-                    <li>
-                        <span class="bg-grey lt"> 8 </span> Review & submit
-                    </li>
-
-
-
-
-
-
-                </ul>
-            </div>
-
-        </div>
-
+        <app-left-kyc-list></app-left-kyc-list>
         <div class="col-md-7 offset-2 p-0 bl-1 ">
             <div class="p-20">
                 <h3 class="f-18 mb-28 f-600">Personal details</h3>
 
                 <div class="row">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0">Tax status</h3>
+                        <h3 class="f-16 pt-8 m-0">Investor type</h3>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-3">
                         <mat-form-field>
-                            <mat-select class="form-control">
-                                <mat-option value="Resident individual"> Resident individual </mat-option>
+                            <mat-select class="form-control" formControlName="inverstorType">
+                                <mat-option value="Resident individual">Individual </mat-option>
+                                <mat-option value="Resident individual">Non individual </mat-option>
                             </mat-select>
+                            <mat-error class="f-12">This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <mat-select class="form-control" formControlName="investorType2">
+                                <mat-option value="Resident individual"> Resident individual </mat-option>
+                                <mat-option value="Non resident indian"> Non resident indian </mat-option>
+                                <mat-option value="Foreign national"> Foreign national </mat-option>
+                                <mat-option value="Person of indian origin"> Person of indian origin </mat-option>
+                            </mat-select>
+                            <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
-
-
-                <div class="row pt-32">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-10 m-0"> Holding nature</h3>
-                    </div>
-                    <div class="col-md-8">
-
-                        <mat-radio-group aria-label="Select an option">
-                            <mat-radio-button value="1" class="b-a-custom bor_top_tb_left radioBtnSmall  text-primary custom-radio">
-                                Single
-                            </mat-radio-button>
-                            <mat-radio-button value="2" class="radioBtnSmall radio-border custom-radio">
-                                Joint </mat-radio-button>
-
-                            <mat-radio-button value="3" class="  bor_top_tb_right radioBtnBig radio-border  custom-radio">
-                                Anyone or survivor </mat-radio-button>
-                        </mat-radio-group>
-
-                    </div>
-                </div>
-
-
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0"> PAN</h3>
                     </div>
                     <div class="col-md-3">
                         <mat-form-field>
-                            <input matInput maxlength="10" type="text" class="form-control">
+                            <input matInput placeholder="XXXXX0000X" maxlength="10" type="text"
+                                formControlName="pan" class="form-control">
                             <mat-hint align="end" class="f-12 text-custom">
                                 0 / 10
                             </mat-hint>
+                            <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -128,189 +77,98 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input matInput maxlength="10" type="text" class="form-control">
-                            <mat-hint align="end" class="f-12 text-custom">
-                                0 / 10
-                            </mat-hint>
+                            <input matInput maxlength="10" type="text" formControlName="nameAsPan" class="form-control">
+                            <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
 
-
-
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Maidan name</h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <input matInput maxlength="10" formControlName="madianName" type="text" class="form-control">
+                            <mat-error class="f-12">This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0">Father/Spouse name</h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <input matInput maxlength="10" formControlName="fatherSpouseName" type="text" class="form-control">
+                            <mat-error class="f-12">This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0">Mother name</h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <input matInput maxlength="10" formControlName="motherName" type="text" class="form-control">
+                            <mat-error class="f-12">This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0"> Date of birth</h3>
                     </div>
                     <div class="col-md-3">
                         <mat-form-field>
-                            <input matInput class="form-control" [matDatepicker]="picker">
+                            <input matInput class="form-control" formControlName="dateOfBirth" [matDatepicker]="picker">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
+                            <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
-
-
-                <div class="row pt-32">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Aadhaar number</h3>
-                    </div>
-                    <div class="col-md-3">
-                        <mat-form-field>
-                            <input matInput maxlength="10" type="text" class="form-control">
-                            <mat-hint align="end" class="f-12 text-custom">
-                                0 / 10
-                            </mat-hint>
-                        </mat-form-field>
-                    </div>
-                </div>
-
-
-                <h3 class="f-18 mb-12 mt-44 f-600"> Contact person details </h3>
-
-                <div class="row">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Same as above</h3>
-                    </div>
-                    <div class="col-md-3">
-                        <mat-checkbox> </mat-checkbox>
-                    </div>
-                </div>
-
-                <div class="row pt-32">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Name </h3>
-                    </div>
-                    <div class="col-md-5">
-                        <mat-form-field>
-                            <input matInput maxlength="10" type="text" class="form-control">
-
-                        </mat-form-field>
-                    </div>
-                </div>
-
-
-                <div class="row pt-32">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Email </h3>
-                    </div>
-                    <div class="col-md-5">
-                        <mat-form-field>
-                            <input matInput maxlength="10" type="text" class="form-control">
-                        </mat-form-field>
-                    </div>
-                </div>
-
-
-                <div class="row pt-32">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Mobile number </h3>
-                    </div>
-                    <div class="col-md-5">
-                        <mat-form-field>
-                            <div class="row">
-                                <div class="col-md-5 pl-0">
-                                    <input matInput maxlength="10" type="text" class="form-control">
-                                </div>
-                                <div class="col-md-7 p-0">
-                                    <input matInput maxlength="10" type="text" class="form-control">
-                                </div>
-                            </div>
-                        </mat-form-field>
-                    </div>
-                </div>
-
-
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0"> Gender</h3>
                     </div>
                     <div class="col-md-8">
-
-                        <mat-radio-group aria-label="Select an option">
-                            <mat-radio-button value="1" class="b-a-custom bor_top_tb_left radioBtnSmall  text-primary custom-radio">
+                        <mat-radio-group aria-label="Select an option" formControlName="gender">
+                            <mat-radio-button value="1"
+                                class="b-a-custom bor_top_tb_left radioBtnSmall  text-primary custom-radio">
                                 Male
                             </mat-radio-button>
                             <mat-radio-button value="2" class="radioBtnSmall radio-border custom-radio">
                                 Female </mat-radio-button>
 
-                            <mat-radio-button value="3" class="  bor_top_tb_right radioBtnSmall radio-border  custom-radio">
+                            <mat-radio-button value="3"
+                                class="  bor_top_tb_right radioBtnSmall radio-border  custom-radio">
                                 Other </mat-radio-button>
                         </mat-radio-group>
-
                     </div>
                 </div>
-
-
 
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0"> Marital status</h3>
                     </div>
                     <div class="col-md-8">
-
-                        <mat-radio-group aria-label="Select an option">
-                            <mat-radio-button value="1" class="b-a-custom bor_top_tb_left radioBtnSmall  text-primary custom-radio">
+                        <mat-radio-group aria-label="Select an option" formControlName="maritalStatus">
+                            <mat-radio-button value="1"
+                                class="b-a-custom bor_top_tb_left radioBtnSmall  text-primary custom-radio">
                                 Married
                             </mat-radio-button>
                             <mat-radio-button value="2" class="radioBtnSmall radio-border custom-radio pr-12">
                                 Unmarried </mat-radio-button>
 
-                            <mat-radio-button value="3" class="  bor_top_tb_right radioBtnSmall radio-border  custom-radio">
+                            <mat-radio-button value="3"
+                                class="  bor_top_tb_right radioBtnSmall radio-border  custom-radio">
                                 Other </mat-radio-button>
                         </mat-radio-group>
-
                     </div>
                 </div>
-
-
-                <div class="row pt-32">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Father’s name </h3>
-                    </div>
-                    <div class="col-md-8">
-                        <mat-form-field>
-                            <div class="row">
-                                <div class="col-md-4 pl-0">
-                                    <input matInput maxlength="10" type="text" class="form-control">
-                                </div>
-                                <div class="col-md-4 pl-0">
-                                    <input matInput maxlength="10" type="text" class="form-control">
-                                </div>
-                                <div class="col-md-4 pl-0">
-                                    <input matInput maxlength="10" type="text" class="form-control">
-                                </div>
-                            </div>
-                        </mat-form-field>
-                    </div>
-                </div>
-
-
-                <div class="row pt-32">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Mother’s name </h3>
-                    </div>
-                    <div class="col-md-8">
-                        <mat-form-field>
-                            <div class="row">
-                                <div class="col-md-4 pl-0">
-                                    <input matInput maxlength="10" type="text" class="form-control">
-                                </div>
-                                <div class="col-md-4 pl-0">
-                                    <input matInput maxlength="10" type="text" class="form-control">
-                                </div>
-                                <div class="col-md-4 pl-0">
-                                    <input matInput maxlength="10" type="text" class="form-control">
-                                </div>
-                            </div>
-                        </mat-form-field>
-                    </div>
-                </div>
-
-
             </div>
-
         </div>
 
 
@@ -355,7 +213,8 @@
             PREVIOUS
         </button>
 
-        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4">SAVE</button>
+        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4"
+        (click)="savePersonalDetails()">SAVE</button>
         <button mat-button class="greenBtn  p-0 mw-40 br-left-white " [matMenuTriggerFor]="menu">
             <i class="material-icons">
                 keyboard_arrow_up

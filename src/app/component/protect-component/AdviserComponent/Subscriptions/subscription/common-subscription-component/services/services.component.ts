@@ -4,6 +4,8 @@ import { SubscriptionInject } from '../../../subscription-inject.service';
 import { EventService } from '../../../../../../../Data-service/event.service';
 import { AuthService } from "../../../../../../../auth-service/authService";
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-services',
@@ -52,7 +54,7 @@ export class ServicesComponent implements OnInit {
   }
 
   constructor(private eventService: EventService,
-    private subService: SubscriptionService, private subinject: SubscriptionInject) {
+    private subService: SubscriptionService, private subinject: SubscriptionInject,private router:Router,private location:Location) {
   }
 
   ngOnInit() {
@@ -221,6 +223,9 @@ export class ServicesComponent implements OnInit {
     this.changeServiceData.emit(true);
     this.eventService.openSnackBar('Service is mapped', 'OK');
     this.barButtonOptions.active = false;
+    this.router.navigate(['/admin/subscription/settings','documents']);
+    this.location.replaceState('/admin/subscription/settings/documents');
+    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired:true });
     // this.dialogClose()
   }
   savePlanMapToServiceResponse(data) {
@@ -234,6 +239,7 @@ export class ServicesComponent implements OnInit {
     }
     this.changeServiceData.emit(true);
     this.barButtonOptions.active = false;
+
   }
   saveServicePlanMapping() {
     const obj = [];

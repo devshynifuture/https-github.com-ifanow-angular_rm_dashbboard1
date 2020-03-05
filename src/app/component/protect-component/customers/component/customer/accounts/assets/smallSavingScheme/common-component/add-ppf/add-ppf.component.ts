@@ -30,7 +30,7 @@ export class AddPpfComponent implements OnInit {
   optionalppfSchemeForm;
   transactionList = [];
   addTransactionList: number;
-  transactionData: any;
+  transactionData: any[] = [];
   editApi: any;
   clientId: number;
   nexNomineePer = 0;
@@ -39,7 +39,7 @@ export class AddPpfComponent implements OnInit {
   dataFM: any;
   familyList: any;
   errorFieldName: string;
-  nomineesList: any;
+  nomineesList: any[] = [];
   ppfData: any;
   nominees: any[];
   commencementDate: any;
@@ -231,7 +231,9 @@ export class AddPpfComponent implements OnInit {
   }
 
   isFormValuesForAdviceValid() {
-    if (this.ppfSchemeForm.valid && this.optionalppfSchemeForm.valid && this.nomineesList.length !== 0 && this.transactionData.length !== 0) {
+    if (this.ppfSchemeForm.valid ||
+      (this.ppfSchemeForm.valid && this.optionalppfSchemeForm.valid) ||
+      (this.ppfSchemeForm.valid && this.optionalppfSchemeForm.valid && this.nomineesList.length !== 0 && this.transactionData.length !== 0)) {
       return true;
     } else {
       return false;

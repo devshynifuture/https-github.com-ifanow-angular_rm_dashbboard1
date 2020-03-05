@@ -145,7 +145,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
           ...nscOptionalFormCopy
         }
         break;
-      case this.childComponentFlag === 'adviceSSY' && componentRefComponentValues.ssySchemeForm.valid && componentRefComponentValues.ssySchemeOptionalForm.valid && componentRefComponentValues.nomineesList.length !== 0 && componentRefComponentValues.transactionData.length !== 0:
+      case this.childComponentFlag === 'adviceSSY' && componentRefComponentValues.isFormValuesForAdviceValid():
         let ssyOptionalFormCopy = Object.assign({}, componentRefComponentValues.ssySchemeOptionalForm.value);
         let nomineeListCopySsy = componentRefComponentValues.nomineesList.slice();
         let transactionDataCopySsy = componentRefComponentValues.transactionData.slice();
@@ -171,13 +171,13 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
           ...ssyOptionalFormCopy
         }
         break;
-      case this.childComponentFlag === 'adviceKVP' && componentRefComponentValues.KVPFormScheme.valid && componentRefComponentValues.KVPOptionalFormScheme.valid:
+      case this.childComponentFlag === 'adviceKVP' && componentRefComponentValues.isFormValuesForAdviceValid():
         componentRefFormValues = {
           ...componentRefComponentValues.KVPFormScheme.value,
           ...componentRefComponentValues.KVPOptionalFormScheme.value
         }
         break;
-      case this.childComponentFlag === 'adviceSCSS' && componentRefComponentValues.scssSchemeForm.valid && componentRefComponentValues.scssOptionalSchemeForm.valid && componentRefComponentValues.nomineesList.length !== 0:
+      case this.childComponentFlag === 'adviceSCSS' && componentRefComponentValues.isFormValuesForAdviceValid():
         let scssOptionalFormCopy = Object.assign({}, componentRefComponentValues.scssOptionalSchemeForm.value);
         let nomineeListCopyScss = componentRefComponentValues.nomineesList.slice();
         Object.keys(scssOptionalFormCopy).map(function (key) {
@@ -194,7 +194,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
           ...scssOptionalFormCopy
         }
         break;
-      case this.childComponentFlag === 'advicePoSaving' && componentRefComponentValues.poSavingForm.valid && componentRefComponentValues.poSavingOptionalForm.valid && componentRefComponentValues.nomineesList.length !== 0:
+      case this.childComponentFlag === 'advicePoSaving' && componentRefComponentValues.isFormValuesForAdviceValid():
         let posavingOptionalFormCopy = Object.assign({}, componentRefComponentValues.poSavingOptionalForm.value);
         let nomineeListCopyPosaving = componentRefComponentValues.nomineesList.slice();
         Object.keys(posavingOptionalFormCopy).map(function (key) {
@@ -211,7 +211,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
           ...posavingOptionalFormCopy
         }
         break;
-      case this.childComponentFlag === 'advicePORD' && componentRefComponentValues.PORDForm.valid && componentRefComponentValues.PORDFormoptionalForm.valid && componentRefComponentValues.nomineesList.length !== 0:
+      case this.childComponentFlag === 'advicePORD' && componentRefComponentValues.isFormValuesForAdviceValid():
         let pordOptionalFormCopy = Object.assign({}, componentRefComponentValues.PORDFormoptionalForm.value);
         let nomineeListCopyPord = componentRefComponentValues.nomineesList.slice();
         Object.keys(pordOptionalFormCopy).map(function (key) {
@@ -228,7 +228,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
           ...pordOptionalFormCopy
         }
         break;
-      case this.childComponentFlag === 'advicePOTD' && componentRefComponentValues.POTDForm.valid && componentRefComponentValues.POTDOptionalForm.valid && componentRefComponentValues.nomineesList.length !== 0:
+      case this.childComponentFlag === 'advicePOTD' && componentRefComponentValues.isFormValuesForAdviceValid():
         let potdOptionalFormCopy = Object.assign({}, componentRefComponentValues.POTDOptionalForm.value);
         let nomineeListCopyPotd = componentRefComponentValues.nomineesList.slice();
         Object.keys(potdOptionalFormCopy).map(function (key) {
@@ -283,10 +283,22 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
       case this.childComponentFlag === 'adviceFixedDeposit' && componentRefComponentValues.fixedDeposit.valid:
         componentRefFormValues = componentRefComponentValues.fixedDeposit.value;
         break;
-      case this.childComponentFlag === 'adviceRecurringDeposit' && componentRefComponentValues.recuringDeposit.valid:
-        componentRefFormValues = componentRefComponentValues.recuringDeposit.value;
+      case this.childComponentFlag === 'adviceRecurringDeposit' && componentRefComponentValues.isFormValuesForAdviceValid():
+        let arrRecurringDep = [];
+        let recurringDepositCopy = Object.assign({}, componentRefComponentValues.recuringDeposit.value);
+        componentRefComponentValues.nomineesList.forEach(element => {
+          let obj = {
+            "name": element.controls.name.value,
+            "sharePercentage": element.controls.sharePercentage.value,
+            "id": (element.controls.id.value) ? element.controls.id.value : 0,
+            "familyMemberId": (element.controls.familyMemberId.value) ? element.controls.familyMemberId.value : 0
+          }
+          arrRecurringDep.push(obj)
+        });
+        recurringDepositCopy['nominees'] = arrRecurringDep;
+        componentRefFormValues = recurringDepositCopy;
         break;
-      case this.childComponentFlag === 'adviceBonds' && componentRefComponentValues.bonds.valid && componentRefComponentValues.nomineesList.length !== 0:
+      case this.childComponentFlag === 'adviceBonds' && componentRefComponentValues.isFormValuesForAdviceValid():
         let arr = [];
         let bondsFormCopy = Object.assign({}, componentRefComponentValues.bonds.value);
         componentRefComponentValues.nomineesList.forEach(element => {
@@ -299,9 +311,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
           arr.push(obj)
         });
         bondsFormCopy['nominees'] = arr;
-        componentRefFormValues = {
-          ...bondsFormCopy
-        };
+        componentRefFormValues = bondsFormCopy;
         break;
       case this.childComponentFlag === 'adviceAssetStock' && componentRefComponentValues.assetForm.valid:
         componentRefFormValues = componentRefComponentValues.assetForm.value;

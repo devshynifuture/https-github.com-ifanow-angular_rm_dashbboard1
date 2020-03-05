@@ -31,7 +31,7 @@ export class AddPoRdComponent implements OnInit {
   editApi: any;
   nomineesListFM: any;
   pordData: any;
-  nomineesList: any;
+  nomineesList: any[] = [];
   nominees: any[];
   flag: any;
   multiplesOfFive: boolean = true;
@@ -207,5 +207,14 @@ export class AddPoRdComponent implements OnInit {
   close(flag) {
     this.isOptionalField = true;
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+  }
+
+  isFormValuesForAdviceValid() {
+    if (this.PORDForm.valid ||
+      (this.PORDForm.valid && this.PORDFormoptionalForm.valid && this.nomineesList.length !== 0)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

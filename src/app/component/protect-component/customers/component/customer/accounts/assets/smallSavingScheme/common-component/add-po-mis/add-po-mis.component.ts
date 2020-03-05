@@ -34,7 +34,7 @@ export class AddPoMisComponent implements OnInit {
   clientId: number;
   familyMemberId: any;
   nominees: any;
-  nomineesList: any;
+  nomineesList: any[] = [];
   nomineesListFM: any;
   pomisData: any;
   flag: any;

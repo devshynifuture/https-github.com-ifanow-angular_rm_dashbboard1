@@ -189,4 +189,12 @@ export class AddKvpComponent implements OnInit {
     this.isOptionalField = true
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
+
+  isFormValuesForAdviceValid() {
+    if (this.KVPFormScheme.valid || (this.KVPFormScheme.valid && this.KVPOptionalFormScheme.valid)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

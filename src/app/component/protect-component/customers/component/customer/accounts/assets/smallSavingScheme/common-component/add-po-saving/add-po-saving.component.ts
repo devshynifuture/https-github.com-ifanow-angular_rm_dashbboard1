@@ -7,7 +7,7 @@ import { CustomerService } from '../../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { AssetValidationService } from '../../../asset-validation.service';
+import { AssetValidationService } from './../../../asset-validation.service';
 
 @Component({
   selector: 'app-add-po-saving',
@@ -32,7 +32,7 @@ export class AddPoSavingComponent implements OnInit {
   accBalance: number;
   nomineesListFM: any;
   posavingData: any;
-  nomineesList: any;
+  nomineesList: any[] = [];
   nominees: any[];
   flag: any;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
@@ -208,5 +208,14 @@ export class AddPoSavingComponent implements OnInit {
   close(flag) {
     this.isOptionalField = true;
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+  }
+
+  isFormValuesForAdviceValid() {
+    if (this.poSavingForm.valid ||
+      (this.poSavingForm.valid && this.poSavingOptionalForm.valid && this.nomineesList.length !== 0)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
