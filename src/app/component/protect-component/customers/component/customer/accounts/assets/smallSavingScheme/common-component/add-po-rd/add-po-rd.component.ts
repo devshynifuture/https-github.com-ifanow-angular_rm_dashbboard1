@@ -1,10 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CustomerService } from '../../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { MAT_DATE_FORMATS } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 
@@ -36,7 +36,7 @@ export class AddPoRdComponent implements OnInit {
   flag: any;
   multiplesOfFive: boolean = true;
   adviceShowHeaderAndFooter: boolean = true;
-
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   constructor(public utils: UtilService, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService,
     private subInjectService: SubscriptionInject) {
   }
@@ -143,7 +143,8 @@ export class AddPoRdComponent implements OnInit {
     }
     if (this.PORDForm.invalid) {
       for (let element in this.PORDForm.controls) {
-        console.log(element)
+        console.log(element);
+        this.inputs.find(input => !input.ngControl.valid).focus();
         if (this.PORDForm.controls[element].invalid) {
           this.PORDForm.controls[element].markAsTouched();
           return;

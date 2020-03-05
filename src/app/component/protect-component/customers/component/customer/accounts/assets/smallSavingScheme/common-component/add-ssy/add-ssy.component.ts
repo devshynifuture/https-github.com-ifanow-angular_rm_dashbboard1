@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MAT_DATE_FORMATS } from '@angular/material';
+import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -38,6 +38,7 @@ export class AddSsyComponent implements OnInit {
   nominees: any[];
   commencementDate: any;
   flag: any;
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   transactionViewData =
     {
       optionList: [
@@ -156,6 +157,7 @@ export class AddSsyComponent implements OnInit {
       for (let element in this.ssySchemeForm.controls) {
         console.log(element)
         if (this.ssySchemeForm.controls[element].invalid) {
+          this.inputs.find(input => !input.ngControl.valid).focus();
           this.ssySchemeForm.controls[element].markAsTouched();
           return;
         }

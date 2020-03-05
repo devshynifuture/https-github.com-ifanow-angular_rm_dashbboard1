@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MAT_DATE_FORMATS } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { CustomerService } from '../../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -35,6 +35,7 @@ export class AddPoSavingComponent implements OnInit {
   nomineesList: any;
   nominees: any[];
   flag: any;
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   adviceShowHeaderAndFooter: boolean = true;
 
   constructor(public utils: UtilService, private fb: FormBuilder, private cusService: CustomerService,
@@ -136,6 +137,7 @@ export class AddPoSavingComponent implements OnInit {
       for (let element in this.poSavingForm.controls) {
         console.log(element)
         if (this.poSavingForm.controls[element].invalid) {
+          this.inputs.find(input => !input.ngControl.valid).focus();
           this.poSavingForm.controls[element].markAsTouched();
           return;
         }
