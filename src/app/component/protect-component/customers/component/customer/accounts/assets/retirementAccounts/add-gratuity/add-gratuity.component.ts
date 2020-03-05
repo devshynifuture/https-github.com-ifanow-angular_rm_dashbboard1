@@ -90,13 +90,13 @@ export class AddGratuityComponent implements OnInit {
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       noOfcompleteYrs: [(data == undefined) ? '' : data.yearsCompleted, [Validators.required]],
       amountRecived: [(data == undefined) ? '' : data.amountReceived, [Validators.required]],
-      nameOfOrg: [(data == undefined) ? '' : data.organizationName, [Validators.required]],
-      yearOfReceipt: [(data == undefined) ? '' : data.yearOfReceipt, [Validators.required]],
-      resonOfRecipt: [(data == undefined) ? '' : data.reasonOfReceipt, [Validators.required]],
-      bankAcNo: [(data == undefined) ? '' : data.bankAccountNumber, [Validators.required]],
-      description: [(data == undefined) ? '' : data.description, [Validators.required]],
-      id: [(data == undefined) ? '' : data.id, [Validators.required]],
-      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
+      nameOfOrg: [(data == undefined) ? '' : data.organizationName,],
+      yearOfReceipt: [(data == undefined) ? '' : data.yearOfReceipt,],
+      resonOfRecipt: [(data == undefined) ? '' : data.reasonOfReceipt,],
+      bankAcNo: [(data == undefined) ? '' : data.bankAccountNumber,],
+      description: [(data == undefined) ? '' : data.description,],
+      id: [(data == undefined) ? '' : data.id,],
+      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId],]
     });
     this.ownerData = this.gratuity.controls;
     this.familyMemberId = this.gratuity.controls.familyMemberId.value

@@ -91,10 +91,10 @@ export class AddEPSComponent implements OnInit {
       commencementDate: [(data == undefined) ? '' : new Date(data.commencementDate), [Validators.required]],
       pensionAmount: [(data == undefined) ? '' : data.pensionAmount, [Validators.required]],
       pensionPayFreq: [(data.pensionPayoutFrequencyId == undefined) ? '' : (data.pensionPayoutFrequencyId) + "", [Validators.required]],
-      bankAcNo: [(data == undefined) ? '' : data.linkedBankAccount, [Validators.required]],
-      description: [(data == undefined) ? '' : data.description, [Validators.required]],
-      id: [(data == undefined) ? '' : data.id, [Validators.required]],
-      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
+      bankAcNo: [(data == undefined) ? '' : data.linkedBankAccount,],
+      description: [(data == undefined) ? '' : data.description,],
+      id: [(data == undefined) ? '' : data.id,],
+      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId],]
     });
     this.ownerData = this.eps.controls;
     this.familyMemberId = this.eps.controls.familyMemberId.value

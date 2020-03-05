@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MAT_DATE_FORMATS } from '@angular/material';
+import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -30,15 +30,23 @@ export class AddSsyComponent implements OnInit {
   isOptionalField: boolean;
   advisorId: any;
   editApi: any;
-  transactionData: any;
+  transactionData: any[] = [];
   clientId: any;
   nomineesListFM: any;
   ssyData: any;
-  nomineesList: any;
+  nomineesList: any[] = [];
   nominees: any[];
   commencementDate: any;
   flag: any;
-
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+  transactionViewData =
+    {
+      optionList: [
+        { name: 'Deposit', value: 1 },
+        { name: 'Withdrawal', value: 2 }
+      ],
+      transactionHeader: ['Transaction Type', 'Date', 'Amount']
+    }
   @Input() popupHeaderText: string = 'Add Sukanya samriddhi yojana (SSY)';
   adviceShowHeaderAndFooter: boolean = true;
 
@@ -111,20 +119,25 @@ export class AddSsyComponent implements OnInit {
   }
   getFormData(data) {
     console.log(data)
-    this.commencementDate = this.ssySchemeForm.controls.commencementDate.value;
+    this.commencementDate = this.ssySchemeForm.controls.commDate.value;
     this.transactionData = data.controls
   }
 
   addSSYScheme() {
-    let finalTransctList = []
-    if (this.transactionData) {
+    let transactionFlag, finalTransctList = []
+    if (this.transactionData && this.transactionData.length > 0) {
       this.transactionData.forEach(element => {
-        let obj = {
-          "date": this.datePipe.transform(element.controls.date.value, 'yyyy-MM-dd'),
-          "amount": element.controls.amount.value,
-          "paymentType": element.controls.transactionType.value
+        if (element.valid) {
+          let obj = {
+            "date": element.controls.date.value._d,
+            "amount": element.controls.amount.value,
+            "type": element.controls.type.value
+          }
+          finalTransctList.push(obj)
         }
-        finalTransctList.push(obj)
+        else {
+          transactionFlag = false;
+        }
       });
     }
     this.nominees = []
@@ -144,10 +157,14 @@ export class AddSsyComponent implements OnInit {
       for (let element in this.ssySchemeForm.controls) {
         console.log(element)
         if (this.ssySchemeForm.controls[element].invalid) {
+          this.inputs.find(input => !input.ngControl.valid).focus();
           this.ssySchemeForm.controls[element].markAsTouched();
           return;
         }
       }
+    }
+    else if (transactionFlag == false) {
+      return;
     }
     else {
       if (this.flag == 'editSSY') {
@@ -233,5 +250,16 @@ export class AddSsyComponent implements OnInit {
   close(flag) {
     this.isOptionalField = true
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+  }
+
+
+  isFormValuesForAdviceValid() {
+    if (this.ssySchemeForm.valid ||
+      (this.ssySchemeForm.valid && this.ssySchemeOptionalForm.valid) ||
+      (this.ssySchemeForm.valid && this.ssySchemeOptionalForm.valid && this.nomineesList.length !== 0 && this.transactionData.length !== 0)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

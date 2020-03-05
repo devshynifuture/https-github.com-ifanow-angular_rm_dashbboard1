@@ -124,12 +124,13 @@ export class BondsComponent implements OnInit {
       commencementDate: [(data == undefined) ? '' : new Date(data.commencementDate), [Validators.required]],
       interestRate: [(data == undefined) ? '' : data.couponRate, [Validators.required]],
       compound: [(data.compounding == undefined) ? '' : (data.compounding) + "", [Validators.required]],
-      linkBankAc: [(data == undefined) ? '' : data.linkedBankAccount, [Validators.required]],
+      linkBankAc: [(data == undefined) ? '' : data.linkedBankAccount,],
       tenure: [(data == undefined) ? '' : data.tenure, [Validators.required, Validators.min(0), Validators.max(120)]],
-      description: [(data == undefined) ? '' : data.description, [Validators.required]],
-      bankName: [(data == undefined) ? '' : data.bankName, [Validators.required]],
-      id: [(data == undefined) ? '' : data.id, [Validators.required]],
-      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
+      description: [(data == undefined) ? '' : data.description,],
+      // bankName: [(data == undefined) ? '' : data.bankName, [Validators.required]],
+      id: [(data == undefined) ? '' : data.id,],
+      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId],],
+      nominees: this.nominees
     });
 
     this.getFormControl().description.maxLength = 60;
@@ -159,6 +160,7 @@ export class BondsComponent implements OnInit {
   saveBonds() {
     // this.tenure = this.getDateYMD()
     // this.maturityDate = this.tenure
+    this.nominees = [];
     if (this.nomineesList) {
 
       this.nomineesList.forEach(element => {
@@ -171,6 +173,7 @@ export class BondsComponent implements OnInit {
         this.nominees.push(obj)
       });
     }
+
     if (this.bonds.get('ownerName').invalid) {
       this.bonds.get('ownerName').markAsTouched();
       return;
@@ -252,5 +255,14 @@ export class BondsComponent implements OnInit {
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
     this.eventService.openSnackBar('Updated successfully!', 'Dismiss');
 
+  }
+
+  isFormValuesForAdviceValid() {
+    if (this.bonds.valid ||
+      (this.bonds.valid && this.nomineesList.length !== 0)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
