@@ -16,11 +16,12 @@
             <p class="m-0 text-right text-custom roboto">You can map more than one payee</p>
         </div>
     </div>
-    <div class="row">
-        <div [hidden]="payeeDataRes.length <= 0" [appSkeletonLoading]="isLoading" appSkeletonLoading class="col-md-6 skeletonAnimation mt-20 hover c-p "
-            *ngFor="let singlePlan of payeeDataRes;  let i = index">
-            <mat-card class="p-0 b-ua relClass" [ngClass]="{'ba-blue': singlePlan.selected == 1,'b-ua':singlePlan.selected == 0}"
-                (click)="selectedPayee(singlePlan.selected,singlePlan)" >
+    <div class="row change-payee">
+        <div [hidden]="payeeDataRes.length <= 0" [appSkeletonLoading]="isLoading" appSkeletonLoading
+            class="col-md-6 skeletonAnimation mt-20 hover c-p " *ngFor="let singlePlan of payeeDataRes;  let i = index">
+            <mat-card class="p-0 b-ua relClass"
+                [ngClass]="{'ba-blue': singlePlan.selected == 1,'b-ua':singlePlan.selected == 0}"
+                (click)="selectedPayee(singlePlan.selected,singlePlan)">
                 <div [ngStyle]="{'display':isLoading? '':'none'}" class="bar">
                 </div>
                 <div *ngIf="!isLoading">
@@ -46,14 +47,14 @@
                                 <p class="text-custom m-0 f-12"> SPLITTING RATIO (%)</p>
                                 <div class="row" (click)="matSliderOnChange(0,singlePlan,0)">
                                     <div class="col-md-8 p-0">
-                                        <mat-slider [disabled]="singlePlan.selected==0||singlePlan.selected !=1" [max]='100'
-                                            [(ngModel)]="singlePlan.share"
+                                        <mat-slider [disabled]="singlePlan.selected==0||singlePlan.selected !=1"
+                                            [max]='100' [(ngModel)]="singlePlan.share"
                                             (change)="matSliderOnChange(0,singlePlan,$event.value)"></mat-slider>
                                     </div>
                                     <div class="col-md-4 pr-0 pt-8">
                                         <input [(ngModel)]="singlePlan.share" type="number"
-                                            (input)="restrictAfter100($event)" (change)="matSliderOnChange(0,singlePlan,0)"
-                                            min="0" max="100"
+                                            (input)="restrictAfter100($event)"
+                                            (change)="matSliderOnChange(0,singlePlan,0)" min="0" max="100"
                                             class="m-0 f-13 form-control text-black b-a p-4 text-center" />
                                     </div>
                                 </div>
@@ -83,8 +84,7 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <app-progress-button (btnClick)="saveChangePayeeSetting()" [options]="barButtonOptions"
-                >
+            <app-progress-button (btnClick)="saveChangePayeeSetting()" [options]="barButtonOptions">
             </app-progress-button>
             <!-- <button mat-button class="btn-bottom br-0 text-inherit" [disabled]="totalValue!=100"
                 (click)="saveChangePayeeSetting()">Save

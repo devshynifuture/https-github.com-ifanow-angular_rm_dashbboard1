@@ -118,13 +118,13 @@ export class AddEPFComponent implements OnInit {
       employerContry: [(data == undefined) ? '' : data.employersMonthlyContribution, [Validators.required]],
       annualSalGrowth: [(data == undefined) ? '' : data.annualSalaryGrowthRate, [Validators.required]],
       currentEPFBal: [(data == undefined) ? '' : data.currentEpfBalance, [Validators.required]],
-      maturityYear: [(data == undefined) ? '' : (data.maturityYear), [Validators.required]],
+      maturityYear: [(data == undefined) ? '' : (data.maturityYear),],
       balanceAsOn: [(data == undefined) ? '' : new Date(data.balanceAsOnDate), [Validators.required]],
-      EPFNo: [(data == undefined) ? '' : (data.epfNo), [Validators.required]],
-      bankAcNo: [(data == undefined) ? '' : data.bankAccountNumber, [Validators.required]],
-      description: [(data == undefined) ? '' : data.description, [Validators.required]],
-      id: [(data == undefined) ? '' : data.id, [Validators.required]],
-      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
+      EPFNo: [(data == undefined) ? '' : (data.epfNo),],
+      bankAcNo: [(data == undefined) ? '' : data.bankAccountNumber,],
+      description: [(data == undefined) ? '' : data.description,],
+      id: [(data == undefined) ? '' : data.id,],
+      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId],]
     });
     this.ownerData = this.epf.controls;
     this.familyMemberId = this.epf.controls.familyMemberId.value

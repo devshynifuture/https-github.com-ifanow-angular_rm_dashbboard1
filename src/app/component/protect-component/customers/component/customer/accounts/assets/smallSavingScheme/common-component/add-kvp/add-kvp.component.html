@@ -18,7 +18,7 @@
             </div>
             <div class="col-md-5">
                 <mat-form-field class="w-100">
-                    <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                    <mat-select appOwner matInput (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
                         [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                         <mat-option value=''>Select family members</mat-option>
                         <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
@@ -38,8 +38,8 @@
             <div class="col-md-3">
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
-                        <input matInput autocomplete="off" formControlName="amtInvested" #amountInvest type="text"
-                            maxlength="10" class="form-control br-0 rupess" appInputValueValidation
+                        <input matInput matInput autocomplete="off" formControlName="amtInvested" #amountInvest
+                            type="text" maxlength="10" class="form-control br-0 rupess" appInputValueValidation
                             [inputValidator]="validatorType.NUMBER_ONLY">
                         <mat-error *ngIf="KVPFormScheme.get('amtInvested').errors?.required" class="f-12">
                             Amount invested is required
@@ -59,7 +59,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput formControlName="commDate" [max]="maxDate" [matDatepicker]="KVPpicker"
+                        <input matInput matInput formControlName="commDate" [max]="maxDate" [matDatepicker]="KVPpicker"
                             class="form-control br-0" readonly>
                         <mat-datepicker-toggle matSuffix [for]="KVPpicker"></mat-datepicker-toggle>
                         <mat-datepicker #KVPpicker></mat-datepicker>
@@ -76,7 +76,7 @@
             </div>
             <div class="col-md-3">
                 <mat-form-field>
-                    <mat-select formControlName="ownerType" class="form-control br-0">
+                    <mat-select matInput formControlName="ownerType" class="form-control br-0">
                         <mat-option value="1"> Joint </mat-option>
                         <mat-option value="2">Single </mat-option>
                     </mat-select>

@@ -148,7 +148,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
             // this.errorMessage();
           }, (error) => {
             barButtonOption.active = false;
-            this.eventService.openSnackBar('Wait sometime....', 'Dismiss');
+            this.eventService.openSnackBar('Wait for sometime....', 'Dismiss');
           }
         )
       },
