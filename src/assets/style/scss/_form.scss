@@ -286,3 +286,13 @@ textarea.mat-input-element {
 .mat-select-trigger {
   padding-top: 2px !important;
 }
+
+.form-group .brtb-0 {
+  border-top-right-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+}
+
+.form-group .bltb-0 {
+  border-top-left-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+}
