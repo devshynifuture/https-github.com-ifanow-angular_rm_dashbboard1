@@ -126,7 +126,7 @@ export class CashAndBankComponent implements OnInit {
         if (value == 'BANK') {
           this.custumService.deleteBankAccount(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar('Bank account is deleted', 'dismiss');
+              this.eventService.openSnackBar('Bank account is deleted', 'Dismiss');
               dialogRef.close();
               this.getBankAccountList();
             },
@@ -135,7 +135,7 @@ export class CashAndBankComponent implements OnInit {
         } else {
           this.custumService.deleteCashInHand(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar('Cash in hand is deleted', 'dismiss');
+              this.eventService.openSnackBar('Cash in hand is deleted', 'Dismiss');
               dialogRef.close();
               this.getCashInHandList();
             },
@@ -225,14 +225,15 @@ export class CashAndBankComponent implements OnInit {
     }
   }
 
-  openCashAndBank(data,value) {
-    let popupHeaderText = !!data ? 'Edit Bank account' : 'Add Bank account';
+  openAddEdit(data, value) {
+    let popupHeaderText = (value == 'bankAccount') ? (!!data ? 'Edit Bank account' : 'Add Bank account') : (!!data ? 'Edit Cash in hand' : 'Add Cash in hand');
+    let componentName = (value == 'bankAccount') ? BankAccountsComponent : CashInHandComponent;
     const fragmentData = {
       flag: value,
       data,
       id: 1,
       state: 'open',
-      componentName: BankAccountsComponent,
+      componentName: componentName,
       popupHeaderText: popupHeaderText,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -241,30 +242,6 @@ export class CashAndBankComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getBankAccountList();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-          }
-          rightSideDataSub.unsubscribe();
-        }
-      }
-    );
-  }
-
-  openCashInHand(data,value) {
-    let popupHeaderText = !!data ? 'Edit Cash in hand' : 'Add Cash in hand';
-    const fragmentData = {
-      flag: value,
-      data,
-      id: 1,
-      state: 'open',
-      componentName: CashInHandComponent,
-      popupHeaderText: popupHeaderText,
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getCashInHandList();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
           }
           rightSideDataSub.unsubscribe();

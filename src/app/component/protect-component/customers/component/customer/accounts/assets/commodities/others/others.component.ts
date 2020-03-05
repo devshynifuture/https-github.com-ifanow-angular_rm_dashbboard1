@@ -93,10 +93,14 @@ export class OthersComponent implements OnInit {
   }
 
   getdataForm(data) {
-    this.flag = data;
-    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
+    // this.flag = data;
+    // (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
     if (data == undefined) {
       data = {};
+      this.flag = "addOTHERS";
+    }
+    else {
+      this.flag = "editOTHERS";
     }
     this.otherData = data;
     this.others = this.fb.group({
@@ -158,7 +162,7 @@ export class OthersComponent implements OnInit {
         stringObject: obj,
         adviceDescription: "manualAssetDescription"
       }
-      if (this.others.controls.id.value == undefined && this.flag != 'adviceOTHERS') {
+      if (this.flag == "addOTHERS") {
         delete obj.id;
         this.custumService.addOthers(obj).subscribe(
           data => this.addOthersRes(data)
@@ -176,16 +180,18 @@ export class OthersComponent implements OnInit {
     }
   }
   getAdviceOthersRes(data) {
-    this.eventService.openSnackBar('Others added successfully', 'OK');
+    this.eventService.openSnackBar('Others added successfully', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
 
   }
   addOthersRes(data) {
     console.log('addrecuringDepositRes', data);
+    this.eventService.openSnackBar('Others added successfully', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
 
   editOthersRes(data) {
+    this.eventService.openSnackBar('Others edited successfully', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
 

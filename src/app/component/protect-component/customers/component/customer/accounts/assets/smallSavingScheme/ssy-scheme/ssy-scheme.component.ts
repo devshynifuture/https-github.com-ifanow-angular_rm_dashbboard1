@@ -115,7 +115,7 @@ export class SsySchemeComponent implements OnInit {
       positiveMethod: () => {
         this.cusService.deleteSSY(data.id).subscribe(
           data => {
-            this.eventService.openSnackBar('SSY is deleted', 'dismiss');
+            this.eventService.openSnackBar('SSY is deleted', 'Dismiss');
             dialogRef.close();
             this.getSsySchemedata();
           },

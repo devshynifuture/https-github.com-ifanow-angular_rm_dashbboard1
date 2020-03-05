@@ -218,7 +218,7 @@ export class AddOtherPayablesComponent implements OnInit {
       // this.subInjectService.changeNewRightSliderState({ state: 'close' });
       this.eventService.openSnackBar('Other payables added successfully', 'OK');
     } else {
-      this.eventService.openSnackBar('Error', 'dismiss');
+      this.eventService.openSnackBar('Error', 'Dismiss');
 
     }
   }
@@ -231,7 +231,7 @@ export class AddOtherPayablesComponent implements OnInit {
       // this.subInjectService.changeNewRightSliderState({ state: 'close' });
       this.eventService.openSnackBar('other payables edited successfully', 'OK');
     } else {
-      this.eventService.openSnackBar('Error', 'dismiss');
+      this.eventService.openSnackBar('Error', 'Dismiss');
     }
   }
 }

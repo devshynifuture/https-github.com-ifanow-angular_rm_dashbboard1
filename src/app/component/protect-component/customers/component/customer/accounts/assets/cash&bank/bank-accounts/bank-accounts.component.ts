@@ -94,19 +94,23 @@ export class BankAccountsComponent implements OnInit {
   }
   getdataForm(data) {
     this.flag = data;
-    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
+    // // (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
     if (data == undefined) {
       data = {}
+      this.flag = "addBANK";
+    }
+    else {
+      this.flag = "editBANK";
     }
     this.bankData = {};
     this.bankAccounts = this.fb.group({
       ownerName: [(data.ownerName == undefined) ? '' : data.ownerName, [Validators.required]],
       accountType: [(data.accountType == undefined) ? '' : (data.accountType) + "", [Validators.required]],
-      bankName: [(data.bankName == undefined) ? '' : data.bankName,],
-      compound: [(data.interestCompounding == undefined) ? '' : (data.interestCompounding) + "", [Validators.required]],
-      interestRate: [(data.interestRate == undefined) ? '' : data.interestRate, [Validators.required]],
-      balanceAsOn: [(data.balanceAsOn == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
       accountBalance: [(data.accountBalance == undefined) ? '' : data.accountBalance, [Validators.required]],
+      balanceAsOn: [(data.balanceAsOn == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
+      interestRate: [(data.interestRate == undefined) ? '' : data.interestRate, [Validators.required]],
+      compound: [(data.interestCompounding == undefined) ? '' : (data.interestCompounding) + "", [Validators.required]],
+      bankName: [(data.bankName == undefined) ? '' : data.bankName,],
       bankAcNo: [(data.accountNo == undefined) ? '' : data.accountNo,],
       description: [(data.description == undefined) ? '' : data.description,],
       id: [(data.id == undefined) ? '' : data.id,],
@@ -129,7 +133,14 @@ export class BankAccountsComponent implements OnInit {
   saveCashInHand() {
 
     if (this.bankAccounts.invalid) {
-      this.bankAccounts.markAllAsTouched();
+      // this.bankAccounts.markAllAsTouched();
+      for (let element in this.bankAccounts.controls) {
+        console.log(element)
+        if (this.bankAccounts.controls[element].invalid) {
+          this.bankAccounts.controls[element].markAsTouched();
+          return;
+        }
+      }
     } else {
       this.nominees = []
       if (this.nomineesList) {
@@ -166,7 +177,7 @@ export class BankAccountsComponent implements OnInit {
         stringObject: obj,
         adviceDescription: "manualAssetDescription"
       }
-      if (this.bankAccounts.controls.id.value == null && this.flag != 'adviceBankAccount') {
+      if (this.flag == "addBANK") {
         this.custumService.addBankAccounts(obj).subscribe(
           data => this.addBankAccountsRes(data)
         );

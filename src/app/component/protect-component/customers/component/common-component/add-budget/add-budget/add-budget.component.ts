@@ -228,12 +228,12 @@ export class AddBudgetComponent implements OnInit {
   }
   addBudgetRes(data) {
     console.log(data)
-    this.event.openSnackBar('Added successfully!', 'dismiss');
+    this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
   editBudgetRes(data) {
     console.log(data)
-    this.event.openSnackBar('Updated successfully!', 'dismiss');
+    this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
 }

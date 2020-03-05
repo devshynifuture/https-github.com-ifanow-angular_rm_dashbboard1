@@ -7,6 +7,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { AssetValidationService } from '../../../asset-validation.service';
 
 @Component({
   selector: 'app-add-scss',
@@ -78,16 +79,16 @@ export class AddScssComponent implements OnInit {
     this.nomineesList = data.controls
   }
   getdataForm(data) {
-    this.flag = data;
-    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
     if (data == undefined) {
       data = {};
+      this.flag = "addSCSS";
     } else {
-      this.editApi = data;
+      (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : this.editApi = data;
+      this.flag = "editSCSS";
     }
     this.scssData = data;
     this.scssSchemeForm = this.fb.group({
-      ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required, UtilService.ageValidators(60)]],
+      ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required, AssetValidationService.ageValidators(60)]],
       amtInvested: [data.amountInvested, [Validators.required, Validators.min(1000), Validators.max(1500000)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
       ownershipType: [data.ownerTypeI ? String(data.ownerTypeId) : '2', [Validators.required]]
@@ -120,11 +121,13 @@ export class AddScssComponent implements OnInit {
       });
     }
     if (this.scssSchemeForm.invalid) {
-      this.scssSchemeForm.get('ownerName').markAsTouched();
-      this.scssSchemeForm.get('amtInvested').markAsTouched();
-      this.scssSchemeForm.get('ownerName').markAsTouched();
-      this.scssSchemeForm.get('commDate').markAsTouched();
-      this.scssSchemeForm.get('ownershipType').markAsTouched();
+      for (let element in this.scssSchemeForm.controls) {
+        console.log(element)
+        if (this.scssSchemeForm.controls[element].invalid) {
+          this.scssSchemeForm.controls[element].markAsTouched();
+          return;
+        }
+      }
     } else {
       const obj = {
         id: 0,
@@ -149,9 +152,9 @@ export class AddScssComponent implements OnInit {
       if (this.flag == 'adviceSCSS') {
         this.cusService.getAdviceScss(adviceObj).subscribe(
           data => this.getAdviceScssRes(data),
-          err => this.eventService.openSnackBar(err, "dismiss")
+          err => this.eventService.openSnackBar(err, "Dismiss")
         );
-      } else if (this.editApi != undefined && this.editApi != 'adviceSCSS') {
+      } else if (this.flag == "editSCSS") {
         obj.id = this.editApi.id;
         this.cusService.editSCSSData(obj).subscribe(
           data => this.addScssResponse(data),
@@ -166,7 +169,7 @@ export class AddScssComponent implements OnInit {
     }
   }
   getAdviceScssRes(data) {
-    this.eventService.openSnackBar('Scss is added', "dismiss");
+    this.eventService.openSnackBar('Scss is added', "Dismiss");
     this.close(true);
 
   }

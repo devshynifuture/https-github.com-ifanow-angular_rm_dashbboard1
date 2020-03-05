@@ -83,18 +83,7 @@ export class UtilService {
     return date;
 
   }
-  static ageValidators(age: Number) {
-    return (control: AbstractControl): ValidationErrors | null => {
-      if (control.value == null) {
-        return;
-      }
-      if (control.value.age < age) {
-        return { isaAgeInvalid: true }
-      }
-      return null;
-    }
 
-  }
   static convertDateObjectToDateString(datePipe: DatePipe, date: any) {
     return datePipe.transform(date, 'yyyy-MM-dd');
   }

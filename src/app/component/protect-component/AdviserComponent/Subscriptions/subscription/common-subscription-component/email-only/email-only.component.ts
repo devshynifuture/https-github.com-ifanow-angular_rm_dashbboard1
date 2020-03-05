@@ -164,8 +164,8 @@ export class EmailOnlyComponent implements OnInit {
       this.emailBody.replace('$client_name', invoiceData.clientData.clientName);
       this.emailBody.replace('$advisor_name', AuthService.getUserInfo().fullName);
     }, error => {
-      this.eventService.openSnackBar(error, 'dismiss', () => {
-        console.log('dismiss was clicked');
+      this.eventService.openSnackBar(error, 'Dismiss', () => {
+        console.log('Dismiss was clicked');
       });
     });
   }
@@ -182,8 +182,8 @@ export class EmailOnlyComponent implements OnInit {
   //     this.subject = this.emailData.subject;
   //     this.emailBody = this.emailData.body;
   //   }, error => {
-  //     this.eventService.openSnackBar(error, 'dismiss', () => {
-  //       console.log('dismiss was clicked');
+  //     this.eventService.openSnackBar(error, 'Dismiss', () => {
+  //       console.log('Dismiss was clicked');
   //     });
   //   });
   // }

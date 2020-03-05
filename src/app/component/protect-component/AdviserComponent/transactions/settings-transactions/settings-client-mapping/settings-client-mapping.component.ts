@@ -143,7 +143,7 @@ export class SettingsClientMappingComponent implements OnInit {
             this.sortDataFilterWise();
             dialogRef.close();
           },
-          err => this.eventService.openSnackBar(err, 'dismiss')
+          err => this.eventService.openSnackBar(err, 'Dismiss')
         )
       },
       negativeMethod: () => {

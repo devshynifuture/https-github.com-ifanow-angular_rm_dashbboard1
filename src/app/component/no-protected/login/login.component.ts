@@ -155,7 +155,7 @@ export class LoginComponent implements OnInit {
           this.isLoading = false;
           this.barButtonOptions.active = false;
           console.log('error on login: ', err);
-          this.eventService.openSnackBar(err, 'dismiss');
+          this.eventService.openSnackBar(err, 'Dismiss');
         }
       );
     }
@@ -181,7 +181,7 @@ export class LoginComponent implements OnInit {
       id: 2978, name: 'Aryendra Kumar Saxena'
     });
     // this.authService.setToken(loginData.payLoad);
-    this.eventService.openSnackBar('Login successFully', 'dismiss');
+    this.eventService.openSnackBar('Login successFully', 'Dismiss');
     this.router.navigate(['admin', 'subscription', 'dashboard']);
   }
 
@@ -190,10 +190,10 @@ export class LoginComponent implements OnInit {
     console.log(data);
     if (data.status === 200) {
       this.authService.setToken(loginData.payLoad);
-      this.eventService.openSnackBar('Login successFully ', 'dismiss');
+      this.eventService.openSnackBar('Login successFully ', 'Dismiss');
       this.router.navigate(['/admin/service']);
     } else {
-      this.eventService.openSnackBar(loginData.message, 'dismiss');
+      this.eventService.openSnackBar(loginData.message, 'Dismiss');
     }
   }
 

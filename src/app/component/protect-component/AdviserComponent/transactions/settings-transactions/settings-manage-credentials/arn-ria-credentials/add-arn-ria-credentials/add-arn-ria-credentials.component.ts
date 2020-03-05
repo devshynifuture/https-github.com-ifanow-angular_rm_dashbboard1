@@ -141,7 +141,7 @@ export class AddArnRiaCredentialsComponent implements OnInit {
 
   }
   addBSECredentilasRes(data) {
-    this.eventService.openSnackBar('Credential added successfully!', 'dismiss');
+    this.eventService.openSnackBar('Credential added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
   close() {

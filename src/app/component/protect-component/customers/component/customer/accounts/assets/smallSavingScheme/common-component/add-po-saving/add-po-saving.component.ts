@@ -7,6 +7,7 @@ import { CustomerService } from '../../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { AssetValidationService } from '../../../asset-validation.service';
 
 @Component({
   selector: 'app-add-po-saving',
@@ -84,18 +85,18 @@ export class AddPoSavingComponent implements OnInit {
     this.nomineesList = data.controls
   }
   getdataForm(data) {
-    this.flag = data;
-    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
     if (data == undefined) {
       data = {
         ownerTypeId: 1
       };
+      this.flag = "addPOSAVING";
     } else {
-      this.editApi = data;
+      this.flag = "editPOSAVING";
+      (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : this.editApi = data;
     }
     this.posavingData = data
     this.poSavingForm = this.fb.group({
-      ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required, UtilService.ageValidators]],
+      ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required, AssetValidationService.ageValidators]],
       accBal: [data.accountBalance, [Validators.required, Validators.min(20)]],
       balAsOn: [new Date(data.balanceAsOn), [Validators.required]],
       ownershipType: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]],
@@ -132,12 +133,15 @@ export class AddPoSavingComponent implements OnInit {
       });
     }
     if (this.poSavingForm.invalid) {
-      this.poSavingForm.get('ownerName').markAsTouched();
-      this.poSavingForm.get('accBal').markAsTouched();
-      this.poSavingForm.get('balAsOn').markAsTouched();
-      this.poSavingForm.get('ownershipType').markAsTouched();
+      for (let element in this.poSavingForm.controls) {
+        console.log(element)
+        if (this.poSavingForm.controls[element].invalid) {
+          this.poSavingForm.controls[element].markAsTouched();
+          return;
+        }
+      }
     } else {
-      if (this.editApi != undefined && this.editApi != 'advicePoSaving') {
+      if (this.flag == "editPOSAVING") {
         const obj = {
           id: this.editApi.id,
           familyMemberId: this.familyMemberId,
@@ -177,7 +181,7 @@ export class AddPoSavingComponent implements OnInit {
         if (this.flag == 'advicePoSaving') {
           this.cusService.getAdvicePoSaving(adviceObj).subscribe(
             data => this.getAdvicePosavingRes(data),
-            err => this.eventService.openSnackBar(err, "dismiss")
+            err => this.eventService.openSnackBar(err, "Dismiss")
           );
         } else {
           this.cusService.addPOSAVINGScheme(obj).subscribe(
@@ -195,7 +199,7 @@ export class AddPoSavingComponent implements OnInit {
   addPOSavingResponse(data) {
     this.close(true);
     console.log(data);
-    (this.editApi) ? this.eventService.openSnackBar('PO_SAVING is edited', 'dismiss') : this.eventService.openSnackBar('PO_SAVING is edited', 'added');
+    (this.flag == "editPOSAVING") ? this.eventService.openSnackBar('PO_SAVING is edited', 'Dismiss') : this.eventService.openSnackBar('PO_SAVING is added', 'Dismiss');
 
   }
 

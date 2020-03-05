@@ -172,7 +172,7 @@ export class LiabilitiesComponent implements OnInit {
       positiveMethod: () => {
         this.customerService.deleteLiabilities(data.id).subscribe(
           data => {
-            this.eventService.openSnackBar("Liabilities is deleted", "dismiss")
+            this.eventService.openSnackBar("Liabilities is deleted", "Dismiss")
             dialogRef.close();
             this.getLiability('');
           },
