@@ -17,7 +17,7 @@
         </div>
         <div class="col-md-5">
             <mat-form-field class="w-100">
-                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                <mat-select matInput appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
                     [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Select family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
@@ -38,8 +38,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input #guradian class="form-control br-0" formControlName="guardian" matInput maxlength="20"
-                            type="text">
+                        <input matInput #guradian class="form-control br-0" formControlName="guardian" matInput
+                            maxlength="20" type="text">
                         <mat-error class="f-12"> This field is required</mat-error>
 
                     </mat-form-field>
@@ -54,9 +54,9 @@
             </div>
             <div class="col-md-3 iconRupess">
                 <div class="form-group mb-0">
-                    <mat-form-field><input #accountBalance class="form-control rupess br-0" appInputValueValidation
-                            [inputValidator]="validatorType.NUMBER_ONLY" formControlName="accBalance" matInput
-                            maxlength="10" type="text">
+                    <mat-form-field><input matInput #accountBalance class="form-control rupess br-0"
+                            appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                            formControlName="accBalance" matInput maxlength="10" type="text">
                         <mat-error class="f-12" *ngIf="(ssySchemeForm.get('accBalance').errors?.required)"> This field
                             is required</mat-error>
                         <mat-hint align="end" class="f-12">{{accountBalance.value.length}}/10</mat-hint>
@@ -77,7 +77,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input (click)="SSYpicker.open()" [matDatepicker]="SSYpicker" [max]="maxDate"
+                        <input matInput (click)="SSYpicker.open()" [matDatepicker]="SSYpicker" [max]="maxDate"
                             class="form-control br-0" (dateChange)="setCommencementDate($event.target.value)"
                             formControlName="commDate" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="SSYpicker"></mat-datepicker-toggle>
@@ -97,9 +97,9 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group form-group_one mb-0">
-                    <mat-form-field><input (click)="balanceAsOn.open()" [max]="ssySchemeForm.get('commDate').value"
-                            [matDatepicker]="balanceAsOn" [max]="maxDate" class="form-control br-0"
-                            formControlName="balanceAsOn" matInput readonly>
+                    <mat-form-field><input matInput (click)="balanceAsOn.open()"
+                            [max]="ssySchemeForm.get('commDate').value" [matDatepicker]="balanceAsOn" [max]="maxDate"
+                            class="form-control br-0" formControlName="balanceAsOn" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                         <mat-datepicker #balanceAsOn></mat-datepicker>
                         <mat-error class="f-12">This field is required </mat-error>
@@ -114,7 +114,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
-                        <input #futureContribution class="form-control rupess br-0" appInputValueValidation
+                        <input matInput #futureContribution class="form-control rupess br-0" appInputValueValidation
                             [inputValidator]="validatorType.NUMBER_ONLY" formControlName="futureAppx" matInput
                             maxlength="10" type="text">
                         <mat-error class="f-12">
@@ -132,7 +132,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select formControlName="frquency" class="form-control br-0">
+                        <mat-select matInput formControlName="frquency" class="form-control br-0">
                             <mat-option value="1">Monthly</mat-option>
                             <mat-option value="4">Quarterly</mat-option>
                             <mat-option value="6">Half yearly</mat-option>
@@ -215,7 +215,8 @@
             </div>
         </div>
     </div>
-    <app-add-transaction (outputEvent)="getFormData($event)" [commencementDate]="commencementDate">
+    <app-add-transaction [transactionViewData]="transactionViewData" [data]="editApi"
+        (outputEvent)="getFormData($event)" [commencementDate]="commencementDate">
     </app-add-transaction>
 </div>
 <div class="bottom-fixed wrapper-12 pt-16" *ngIf="adviceShowHeaderAndFooter">

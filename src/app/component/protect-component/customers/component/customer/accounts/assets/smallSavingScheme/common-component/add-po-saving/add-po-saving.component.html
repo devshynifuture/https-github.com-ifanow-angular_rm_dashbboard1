@@ -17,7 +17,7 @@
         </div>
         <div class="col-md-5">
             <mat-form-field class="w-100">
-                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                <mat-select matInput appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
                     [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Select family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
@@ -40,7 +40,7 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group mb-0 iconRupess">
-                    <mat-form-field> <input autocomplete="off" appInputValueValidation
+                    <mat-form-field> <input matInput autocomplete="off" appInputValueValidation
                             [inputValidator]="validatorType.NUMBER_ONLY" formControlName="accBal" type="text" matInput
                             #accountBalance class="form-control rupess br-0" maxlength="7">
                         <mat-error *ngIf="poSavingForm.get('accBal').errors?.required " class="f-12">
@@ -65,7 +65,7 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group form-group_one mb-0">
-                    <mat-form-field> <input formControlName="balAsOn" (click)="balanceAsOn.open()" matInput
+                    <mat-form-field> <input matInput formControlName="balAsOn" (click)="balanceAsOn.open()" matInput
                             class="form-control br-0" [matDatepicker]="balanceAsOn" readonly>
                         <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                         <mat-datepicker #balanceAsOn></mat-datepicker>
@@ -80,7 +80,7 @@
             </div>
             <div class="col-md-5">
                 <mat-form-field>
-                    <mat-select (change)="changeAccountBalance($event)" formControlName="ownershipType"
+                    <mat-select matInput (change)="changeAccountBalance($event)" formControlName="ownershipType"
                         class="form-control br-0">
                         <mat-option value="1"> Joint </mat-option>
                         <mat-option value="2">Single </mat-option>
