@@ -215,7 +215,8 @@
             </div>
         </div>
     </div>
-    <app-add-transaction (outputEvent)="getFormData($event)" [commencementDate]="commencementDate">
+    <app-add-transaction [transactionViewData]="transactionViewData" [data]="editApi"
+        (outputEvent)="getFormData($event)" [commencementDate]="commencementDate">
     </app-add-transaction>
 </div>
 <div class="bottom-fixed wrapper-12 pt-16" *ngIf="adviceShowHeaderAndFooter">

@@ -38,7 +38,14 @@ export class AddSsyComponent implements OnInit {
   nominees: any[];
   commencementDate: any;
   flag: any;
-
+  transactionViewData =
+    {
+      optionList: [
+        { name: 'Deposit', value: 1 },
+        { name: 'Withdrawal', value: 2 }
+      ],
+      transactionHeader: ['Transaction Type', 'Date', 'Amount']
+    }
   @Input() popupHeaderText: string = 'Add Sukanya samriddhi yojana (SSY)';
   adviceShowHeaderAndFooter: boolean = true;
 
@@ -111,20 +118,25 @@ export class AddSsyComponent implements OnInit {
   }
   getFormData(data) {
     console.log(data)
-    this.commencementDate = this.ssySchemeForm.controls.commencementDate.value;
+    this.commencementDate = this.ssySchemeForm.controls.commDate.value;
     this.transactionData = data.controls
   }
 
   addSSYScheme() {
-    let finalTransctList = []
-    if (this.transactionData) {
+    let transactionFlag, finalTransctList = []
+    if (this.transactionData && this.transactionData.length > 0) {
       this.transactionData.forEach(element => {
-        let obj = {
-          "date": this.datePipe.transform(element.controls.date.value, 'yyyy-MM-dd'),
-          "amount": element.controls.amount.value,
-          "paymentType": element.controls.transactionType.value
+        if (element.valid) {
+          let obj = {
+            "date": element.controls.date.value._d,
+            "amount": element.controls.amount.value,
+            "type": element.controls.type.value
+          }
+          finalTransctList.push(obj)
         }
-        finalTransctList.push(obj)
+        else {
+          transactionFlag = false;
+        }
       });
     }
     this.nominees = []
@@ -148,6 +160,9 @@ export class AddSsyComponent implements OnInit {
           return;
         }
       }
+    }
+    else if (transactionFlag == false) {
+      return;
     }
     else {
       if (this.flag == 'editSSY') {
