@@ -111,7 +111,7 @@ export class AddSsyComponent implements OnInit {
   }
   getFormData(data) {
     console.log(data)
-    this.commencementDate = this.ssySchemeForm.controls.commencementDate.value;
+    this.commencementDate = this.ssySchemeForm.controls.commDate.value;
     this.transactionData = data.controls
   }
 
