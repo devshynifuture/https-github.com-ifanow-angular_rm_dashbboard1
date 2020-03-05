@@ -84,7 +84,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
       case this.childComponentFlag === 'adviceCashInHand' && componentRefComponentValues.cashInHand.valid:
         componentRefFormValues = componentRefComponentValues.cashInHand.value;
         break;
-      case this.childComponentFlag === 'adviceBankAccount' && componentRefComponentValues.bankAccounts.valid && componentRefComponentValues.nomineesList.length !== 0:
+      case this.childComponentFlag === 'adviceBankAccount' && componentRefComponentValues.isAdviceFormValid:
         let bankAccValCopy = Object.assign({}, componentRefComponentValues.bankAccounts.value);
         let nomineeListCopy = componentRefComponentValues.nomineesList.slice();
         Object.keys(bankAccValCopy).map(function (key) {
@@ -257,7 +257,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
             pomisFormCopy[key] = arr;
           }
         });
-        componentRefFormValues = pomisFormCopy
+        componentRefFormValues = pomisFormCopy;
         break;
       case this.childComponentFlag === 'adviceEPF' && componentRefComponentValues.epf.valid:
         componentRefFormValues = componentRefComponentValues.epf.value
@@ -271,8 +271,37 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
       case this.childComponentFlag === 'adviceGratuity' && componentRefComponentValues.gratuity.valid:
         componentRefFormValues = componentRefComponentValues.gratuity.value;
         break;
-      case this.childComponentFlag === 'adviceSuperAnnuation' && componentRefFormValues.superannuation.valid:
+      case this.childComponentFlag === 'adviceSuperAnnuation' && componentRefComponentValues.superannuation.valid:
         componentRefFormValues = componentRefComponentValues.superannuation.value;
+        break;
+      case this.childComponentFlag === 'adviceEPS' && componentRefComponentValues.eps.valid:
+        componentRefFormValues = componentRefComponentValues.eps.value;
+        break;
+      case this.childComponentFlag === 'adviceRealEstate' && componentRefComponentValues.addrealEstateForm.valid:
+        componentRefFormValues = componentRefComponentValues.addrealEstateForm.value;
+        break;
+      case this.childComponentFlag === 'adviceFixedDeposit' && componentRefComponentValues.fixedDeposit.valid:
+        componentRefFormValues = componentRefComponentValues.fixedDeposit.value;
+        break;
+      case this.childComponentFlag === 'adviceRecurringDeposit' && componentRefComponentValues.recuringDeposit.valid:
+        componentRefFormValues = componentRefComponentValues.recuringDeposit.value;
+        break;
+      case this.childComponentFlag === 'adviceBonds' && componentRefComponentValues.bonds.valid && componentRefComponentValues.nomineesList.length !== 0:
+        let arr = [];
+        let bondsFormCopy = Object.assign({}, componentRefComponentValues.bonds.value);
+        componentRefComponentValues.nomineesList.forEach(element => {
+          let obj = {
+            "name": element.controls.name.value,
+            "sharePercentage": element.controls.sharePercentage.value,
+            "id": (element.controls.id.value) ? element.controls.id.value : 0,
+            "familyMemberId": (element.controls.familyMemberId.value) ? element.controls.familyMemberId.value : 0
+          }
+          arr.push(obj)
+        });
+        bondsFormCopy['nominees'] = arr;
+        componentRefFormValues = {
+          ...bondsFormCopy
+        };
         break;
     }
 
