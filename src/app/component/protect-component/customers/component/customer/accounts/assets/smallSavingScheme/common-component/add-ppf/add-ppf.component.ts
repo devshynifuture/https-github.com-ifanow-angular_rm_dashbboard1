@@ -212,6 +212,15 @@ export class AddPpfComponent implements OnInit {
     this.close(true);
 
   }
+
+  isFormValuesForAdviceValid() {
+    if (this.ppfSchemeForm.valid && this.optionalppfSchemeForm.valid && this.nomineesList.length !== 0 && this.transactionData.length !== 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   addPPFResponse(data) {
     (this.editApi) ? this.eventService.openSnackBar("PPF is edited", "Dismiss") : this.eventService.openSnackBar("PPF is added", "Dismiss")
     console.log(data)

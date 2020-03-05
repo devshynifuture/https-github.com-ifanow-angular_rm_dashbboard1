@@ -195,11 +195,11 @@ export class BankAccountsComponent implements OnInit {
     }
   }
 
-  adviceDynamicFormValidation() {
+  isFormValuesForAdviceValid(): boolean {
     if (this.bankAccounts.valid && this.nomineesList.length !== 0) {
-      this.isAdviceFormValid = true;
+      return true;
     } else {
-      this.isAdviceFormValid = false;
+      return false;
     }
   }
 
