@@ -118,8 +118,31 @@ export class AddGoalComponent implements OnInit {
 
   familyList:any[] = [];
   displayedAssets:any[] = [];
-  currentFilter:string = 'all';
+  currentAllocationFilter:string = 'all';
+  currentFamilyFilter:any;
   currentSort:string = '';
+  allocationBtnList = [
+    {
+      name: 'All Assets',
+      filter: 'all'
+    },
+    {
+      name: 'Unallocated',
+      filter: 'unallocated'
+    },
+    {
+      name: 'Partially allocated',
+      filter: 'partially allocated'
+    },
+    {
+      name: 'Fully allocated',
+      filter: 'allocated'
+    },
+    {
+      name: 'Un-deployed',
+      filter: 'deployed'
+    },
+  ]
 
 
   
@@ -138,6 +161,7 @@ export class AddGoalComponent implements OnInit {
     }).filter((member, index, arr) => {
       return arr.findIndex(m => m.asset_owner_id === member.asset_owner_id) === index;
     });
+    this.familyList.unshift({name: 'All family', asset_owner_id: -1});
   }
 
   filterByFamily(member) {
@@ -153,7 +177,7 @@ export class AddGoalComponent implements OnInit {
   }
 
   filterByAllocation(filterType) {
-    this.currentFilter = filterType;
+    this.currentAllocationFilter = filterType;
     if(filterType == 'all') {
       this.displayedAssets = this.data.data;
     } else {
@@ -162,6 +186,10 @@ export class AddGoalComponent implements OnInit {
       })
     }
     this.sortList(this.currentSort);
+  }
+
+  filterAssets(){
+    
   }
 
   sortList(sortType) {
