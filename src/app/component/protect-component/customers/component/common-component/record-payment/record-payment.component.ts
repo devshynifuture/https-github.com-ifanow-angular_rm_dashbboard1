@@ -102,10 +102,11 @@ export class RecordPaymentComponent implements OnInit {
   onChange() {
     this.tdsAmt = this.balDue - this.rPayment.get('amountReceived').value
     if (this.rPayment.get('tds').value > this.tdsAmt) {
-      this.showError = true
-    } else {
-      this.showError = false;
+      this.rPayment.get('tds').setErrors({'incorrect': true });
+
+      // this.showError = true
     }
+    
     // this.rPayment.get('tds').errors.max=this.tdsAmt
   }
   getPaymentReceivedRes(data) {
@@ -140,9 +141,10 @@ export class RecordPaymentComponent implements OnInit {
     } else if (this.rPayment.get('gstTreatment').invalid) {
       this.rPayment.get('gstTreatment').markAsTouched();
       return
-    } else if (this.showError == true) {
-      return false
-    } else {
+    } else if (this.rPayment.get('tds').invalid) {
+      this.rPayment.get('tds').markAsTouched();
+      return
+    }else {
       this.formObj = [{
         advisorId: this.advisorId,
         // advisorId: 12345,
