@@ -1,5 +1,5 @@
 <div *ngIf="componentFlag=='plansDocuments'">
-    <div class="bottom-fixed wrapper-12">
+    <div class="bottom-fixed wrapper-12" *ngIf="planDocumentData.length > 0">
         <div class="row">
             <div class="col-md-4">
                 <!-- <h5 class="mb-0 pt-8 text-white c-p" (click)="dialogClose()">Cancel</h5> -->
@@ -108,8 +108,8 @@
 
 
 </div>
-<div *ngIf="componentFlag=='servicesDocuments'" id="ui-service-documents">
-    <mat-toolbar class="bottom-fixed">
+<div *ngIf="componentFlag=='servicesDocuments' && planDocumentData.length > 0" id="ui-service-documents">
+    <mat-toolbar class="bottom-fixed" *ngIf="serviceDocumentData.length > 0">
         <div class="row w-100">
             <div class="col-md-6 text-left">
                 <p class="text-white f-16 mb-0 pt-12 c-p" (click)="dialogClose()">Cancel</p>
@@ -136,7 +136,7 @@
                 <div class="col-md-10 p-0 pt-8 text-center">
                     <div class="row text-right content">
                         <div class="col-md-11 p-0">
-                            <p class="pt-4 f-16">Map documents to the selected service. </p>
+                            <p class="pt-2 f-16">Map documents to the selected service. </p>
                         </div>
                         <div class="col-md-1 text-left p-0">
                             <img src="/assets/images/svg/info.svg" class="c-p">
@@ -155,7 +155,7 @@
             <div class="row padder-80 overflow-hidden">
                 <div class="col-xl-4 col-md-6 pr-20 pb-20 pl-0 skeletonAnimation"
                     *ngFor="let document of serviceDocumentData" appSkeletonLoading [appSkeletonLoading]="isLoading">
-                    <div (click)="selectDocument(document)">
+                    <div (click)="selectDocument(document)" class="mt-4">
                         <mat-card [ngClass]="{'ba-blue': document.selected,'b-ua':document.selected==false}"
                             class="example-card  p-0 c-p  ">
 

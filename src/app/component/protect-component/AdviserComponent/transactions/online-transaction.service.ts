@@ -103,6 +103,9 @@ export class OnlineTransactionService {
   getMandateList(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_MANDATE_LIST, data, 1)
   }
+  getIINUCCRegistration(data){
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_REGISTRATION_UCC_IIN, data, 1)
+  }
   // sipBSE(data){
   //   return this.http.postEncoded(apiConfig.TRANSACT + appConfig.SIP_BSE, data)
   // }

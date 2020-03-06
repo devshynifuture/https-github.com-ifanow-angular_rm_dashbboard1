@@ -19,7 +19,7 @@
         </div>
         <div class="col-md-5">
             <mat-form-field class="w-100">
-                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                <mat-select matInput appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
                     [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Select family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName" (click)="ownerDetails(f)">
@@ -39,7 +39,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input matInput #monthlyContribution type="number" appInputValueValidation
+                    <input matInput matInput #monthlyContribution type="number" appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" class="form-control rupess br-0"
                         formControlName="monthlyContribution">
                     <mat-error class="f-12"
@@ -74,7 +74,7 @@
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <mat-select formControlName="compound" class="form-control br-0">
+                <mat-select matInput formControlName="compound" class="form-control br-0">
                     <mat-option value="" disabled>Select option</mat-option>
                     <mat-option value="2">Monthly</mat-option>
                     <mat-option value="3">Quarterly</mat-option>
@@ -96,8 +96,8 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput formControlName="commencementDate" [max]="maxDate" class="form-control br-0"
-                        [matDatepicker]="picker" readonly>
+                    <input matInput matInput formControlName="commencementDate" [max]="maxDate"
+                        class="form-control br-0" [matDatepicker]="picker" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-error class="f-12"
@@ -115,7 +115,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput autocomplete="off" formControlName="tenure" appInputValueValidation
+                    <input matInput matInput autocomplete="off" formControlName="tenure" appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY" #tenure type="text" maxlength=""
                         class="form-control br-0">
                     <!-- <mat-select formControlName="tenure" class="form-control br-0 ">

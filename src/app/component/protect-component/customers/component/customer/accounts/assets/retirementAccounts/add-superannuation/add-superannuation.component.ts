@@ -1,10 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { DatePipe } from '@angular/common';
-import { MAT_DATE_FORMATS } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -39,7 +39,7 @@ export class AddSuperannuationComponent implements OnInit {
   nomineesListFM: any;
   flag: any;
   adviceShowHeaderAndFooter: boolean = true;
-
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) { }
 
   @Input()
@@ -51,7 +51,7 @@ export class AddSuperannuationComponent implements OnInit {
   get data() {
     return this.inputData;
   }
-  
+
   @Input() popupHeaderText: string = 'Add Superannuation';
 
   ngOnInit() {
@@ -107,10 +107,10 @@ export class AddSuperannuationComponent implements OnInit {
       growthEmployee: [(data == undefined) ? '' : data.growthRateEmployeeContribution, [Validators.required]],
       firstDateContry: [(data == undefined) ? '' : new Date(data.firstContributionDate), [Validators.required]],
       assumedRateReturn: [(data == undefined) ? '' : (data.assumedRateOfReturn), [Validators.required]],
-      linkBankAc: [(data == undefined) ? '' : data.bankAccountNumber, [Validators.required]],
-      description: [(data == undefined) ? '' : data.description, [Validators.required]],
-      id: [(data == undefined) ? '' : data.id, [Validators.required]],
-      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
+      linkBankAc: [(data == undefined) ? '' : data.bankAccountNumber,],
+      description: [(data == undefined) ? '' : data.description,],
+      id: [(data == undefined) ? '' : data.id,],
+      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId],]
     });
     this.ownerData = this.superannuation.controls;
     this.familyMemberId = this.superannuation.controls.familyMemberId.value
@@ -121,6 +121,7 @@ export class AddSuperannuationComponent implements OnInit {
     return this.superannuation.controls;
   }
   saveSuperannuation() {
+    this.inputs.find(input => !input.ngControl.valid).focus();
     if (this.superannuation.get('ownerName').invalid) {
       this.superannuation.get('ownerName').markAsTouched();
       return;

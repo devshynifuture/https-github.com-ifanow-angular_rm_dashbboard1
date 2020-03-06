@@ -17,7 +17,7 @@
         </div>
         <div class="col-md-5">
             <mat-form-field class="w-100">
-                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                <mat-select appOwner matInput (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
                     [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Select family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
@@ -81,7 +81,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select formControlName="tenure" class="form-control br-0">
+                        <mat-select matInput formControlName="tenure" class="form-control br-0">
                             <mat-option value="" disabled>Select tenure</mat-option>
                             <mat-option value="5">5 Years</mat-option>
                         </mat-select>
@@ -100,9 +100,9 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input #interestRate matInput type="number" (keyup)="onChange($event)" appInputValueValidation
-                            [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage"
-                            formControlName="interestRate">
+                        <input matInput #interestRate matInput type="number" (keyup)="onChange($event)"
+                            appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                            class="form-control br-0 percentage" formControlName="interestRate">
                     </mat-form-field>
                 </div>
             </div>
@@ -114,7 +114,7 @@
             <div class="col-md-3 pr-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select #compound formControlName="compound" class="form-control br-0">
+                        <mat-select matInput #compound formControlName="compound" class="form-control br-0">
                             <mat-option value="" disabled>Select option</mat-option>
                             <mat-option value="3">Quarterly</mat-option>
                         </mat-select>
@@ -131,7 +131,7 @@
             </div>
             <div class="col-md-3">
                 <mat-form-field>
-                    <mat-select formControlName="ownership" class="form-control br-0">
+                    <mat-select matInput formControlName="ownership" class="form-control br-0">
                         <mat-option value="1"> Joint </mat-option>
                         <mat-option value="2">Single </mat-option>
                     </mat-select>

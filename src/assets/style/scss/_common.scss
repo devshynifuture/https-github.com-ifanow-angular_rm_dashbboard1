@@ -110,6 +110,10 @@ a:hover {
 .ba-date {
   border: 1px solid rgba(25, 25, 25, 0.32) !important;
   padding-right: 8px !important;
+
+  .form-control {
+    height: 38px !important;
+  }
 }
 
 .font-400 {
@@ -352,9 +356,7 @@ ul {
     padding-top: 12px !important;
   }
 
-  .mat-step-label:nth-child(5) {
-    padding-left: 12px;
-  }
+
 
   .mat-step-label-selected {
     color: #000 !important;
@@ -401,6 +403,12 @@ ul {
   .mat-step-header.cdk-program-focused,
   .mat-step-header:hover {
     background-color: transparent !important;
+  }
+
+  #cdk-step-label-0-4 {
+    .mat-step-label {
+      padding-left: 12px;
+    }
   }
 }
 

@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
-import { MAT_DATE_FORMATS } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { DatePipe } from '@angular/common';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -57,7 +57,7 @@ export class RecuringDepositComponent implements OnInit {
   depoData: any = [];
   nominees: any = [];
   adviceShowHeaderAndFooter: boolean = true;
-
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   constructor(private event: EventService, private fb: FormBuilder, private custumService: CustomerService,
     public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) {
   }
@@ -136,14 +136,15 @@ export class RecuringDepositComponent implements OnInit {
       commencementDate: [(data.commencementDate == undefined) ? null : new Date(data.commencementDate), [Validators.required]],
       interestRate: [(data == undefined) ? '' : data.interestRate, [Validators.required]],
       compound: [(data.interestCompounding == undefined) ? '' : (data.interestCompounding) + "", [Validators.required]],
-      linkBankAc: [(data == undefined) ? '' : data.linkedBankAccount, [Validators.required]],
+      linkBankAc: [(data == undefined) ? '' : data.linkedBankAccount,],
       tenure: [(data == undefined) ? '' : data.tenure, [Validators.required, Validators.min(0), Validators.max(120)]],
-      description: [(data == undefined) ? '' : data.description, [Validators.required]],
-      bankName: [(data == undefined) ? '' : data.bankName, [Validators.required]],
-      ownerType: [(data == undefined) ? '' : (data.ownershipType) + "", [Validators.required]],
-      rdNo: [(data == undefined) ? '' : data.rdNumber, [Validators.required]],
-      id: [(data == undefined) ? '' : data.id, [Validators.required]],
-      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
+      description: [(data == undefined) ? '' : data.description,],
+      bankName: [(data == undefined) ? '' : data.bankName,],
+      // ownerType: [(data == undefined) ? '' : (data.ownershipType) + "", [Validators.required]],
+      rdNo: [(data == undefined) ? '' : data.rdNumber,],
+      id: [(data == undefined) ? '' : data.id,],
+      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId],],
+      nominees: this.nominees
     });
 
     this.getFormControl().ownerName.maxLength = 40;
@@ -180,6 +181,7 @@ export class RecuringDepositComponent implements OnInit {
         this.nominees.push(obj)
       });
     }
+    this.inputs.find(input => !input.ngControl.valid).focus();
     if (this.recuringDeposit.controls.commencementDate.value != null || this.recuringDeposit.controls.tenure.value != null) {
       this.tenure = this.getDateYMD()
       this.maturityDate = this.tenure
@@ -277,5 +279,13 @@ export class RecuringDepositComponent implements OnInit {
   editrecuringDepositRes(data) {
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
+  }
+
+  isFormValuesForAdviceValid() {
+    if (this.recuringDeposit.valid || (this.recuringDeposit.valid && this.nomineesList.length !== 0)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

@@ -35,10 +35,11 @@ export class BankAccountsComponent implements OnInit {
   clientId: any;
   nomineesListFM: any;
   flag: any;
-  nomineesList: any;
+  nomineesList: any[] = [];
   bankData: any;
   nominees: any[];
   adviceShowHeaderAndFooter: boolean = true;
+  isAdviceFormValid: boolean = false;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
 
@@ -61,7 +62,6 @@ export class BankAccountsComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getdataForm(this.data);
-
   }
   display(value) {
     console.log('value selected', value)
@@ -171,6 +171,7 @@ export class BankAccountsComponent implements OnInit {
         id: this.bankAccounts.controls.id.value,
         nominees: this.nominees
       }
+
       let adviceObj = {
         advice_id: this.advisorId,
         adviceStatusId: 5,
@@ -193,6 +194,15 @@ export class BankAccountsComponent implements OnInit {
       }
     }
   }
+
+  isFormValuesForAdviceValid(): boolean {
+    if (this.bankAccounts.valid || (this.bankAccounts.valid && this.nomineesList.length !== 0)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   getAdviceBankAccountRes(data) {
     this.eventService.openSnackBar('Bank account added successfully', 'OK');
     this.subInjectService.changeNewRightSliderState({ flag: 'addedbankAc', state: 'close', data, refreshRequired: true })

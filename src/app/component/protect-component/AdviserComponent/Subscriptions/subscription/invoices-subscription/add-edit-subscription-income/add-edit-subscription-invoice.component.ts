@@ -336,10 +336,10 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       } else {
         service = [{
           serviceName: this.editPayment.value.serviceName,
-          averageFees: (this.storeData.services == undefined) ? '' : this.storeData.services[0].averageFees,
-          description: (this.storeData.services == undefined) ? '' : this.storeData.services[0].description,
-          fromDate: (this.storeData.services == undefined) ? '' : this.storeData.services[0].fromDate,
-          toDate: (this.storeData.services == undefined) ? '' : this.storeData.services[0].toDate,
+          averageFees: (this.storeData.services.length == 0) ? '' : this.storeData.services[0].averageFees,
+          description: (this.storeData.services.length == 0) ? '' : this.storeData.services[0].description,
+          fromDate: (this.storeData.services.length == 0) ? '' : this.storeData.services[0].fromDate,
+          toDate: (this.storeData.services.length == 0) ? '' : this.storeData.services[0].toDate,
         }];
         obj['id'] = this.storeData.id,
           obj['auto'] = this.editPayment.value.auto,

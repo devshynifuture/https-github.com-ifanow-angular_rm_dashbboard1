@@ -72,7 +72,7 @@ export class AssetStocksComponent implements OnInit {
       this.assetStockData = data;
       this.portfolioData = data.portfolios;
     } else {
-      this.noData = 'No Data Found';
+      this.noData = 'No Stocks Found';
     }
   }
 

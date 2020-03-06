@@ -1,10 +1,10 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { DatePipe } from '@angular/common';
-import { MAT_DATE_FORMATS, MatSort } from '@angular/material';
+import { MAT_DATE_FORMATS, MatSort, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
@@ -41,7 +41,7 @@ export class AddEPFComponent implements OnInit {
   familyList: any;
   flag: any;
   adviceShowHeaderAndFooter: boolean = true;
-
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) { }
   @Input()
   set data(data) {
@@ -118,13 +118,13 @@ export class AddEPFComponent implements OnInit {
       employerContry: [(data == undefined) ? '' : data.employersMonthlyContribution, [Validators.required]],
       annualSalGrowth: [(data == undefined) ? '' : data.annualSalaryGrowthRate, [Validators.required]],
       currentEPFBal: [(data == undefined) ? '' : data.currentEpfBalance, [Validators.required]],
-      maturityYear: [(data == undefined) ? '' : (data.maturityYear), [Validators.required]],
+      maturityYear: [(data == undefined) ? '' : (data.maturityYear),],
       balanceAsOn: [(data == undefined) ? '' : new Date(data.balanceAsOnDate), [Validators.required]],
-      EPFNo: [(data == undefined) ? '' : (data.epfNo), [Validators.required]],
-      bankAcNo: [(data == undefined) ? '' : data.bankAccountNumber, [Validators.required]],
-      description: [(data == undefined) ? '' : data.description, [Validators.required]],
-      id: [(data == undefined) ? '' : data.id, [Validators.required]],
-      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
+      EPFNo: [(data == undefined) ? '' : (data.epfNo),],
+      bankAcNo: [(data == undefined) ? '' : data.bankAccountNumber,],
+      description: [(data == undefined) ? '' : data.description,],
+      id: [(data == undefined) ? '' : data.id,],
+      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId],]
     });
     this.ownerData = this.epf.controls;
     this.familyMemberId = this.epf.controls.familyMemberId.value
@@ -134,6 +134,7 @@ export class AddEPFComponent implements OnInit {
     return this.epf.controls;
   }
   saveEPF() {
+    this.inputs.find(input => !input.ngControl.valid).focus();
     if (this.epf.get('ownerName').invalid) {
       this.epf.get('ownerName').markAsTouched();
       return;

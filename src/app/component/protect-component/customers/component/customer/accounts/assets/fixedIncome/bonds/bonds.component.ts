@@ -1,9 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { DatePipe } from '@angular/common';
-import { MAT_DATE_FORMATS } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import * as moment from 'moment';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -47,7 +47,7 @@ export class BondsComponent implements OnInit {
   clientId: any;
   nomineesListFM: any;
   adviceShowHeaderAndFooter: boolean = true;
-
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
   }
   @Input()
@@ -124,12 +124,13 @@ export class BondsComponent implements OnInit {
       commencementDate: [(data == undefined) ? '' : new Date(data.commencementDate), [Validators.required]],
       interestRate: [(data == undefined) ? '' : data.couponRate, [Validators.required]],
       compound: [(data.compounding == undefined) ? '' : (data.compounding) + "", [Validators.required]],
-      linkBankAc: [(data == undefined) ? '' : data.linkedBankAccount, [Validators.required]],
+      linkBankAc: [(data == undefined) ? '' : data.linkedBankAccount,],
       tenure: [(data == undefined) ? '' : data.tenure, [Validators.required, Validators.min(0), Validators.max(120)]],
-      description: [(data == undefined) ? '' : data.description, [Validators.required]],
-      bankName: [(data == undefined) ? '' : data.bankName, [Validators.required]],
-      id: [(data == undefined) ? '' : data.id, [Validators.required]],
-      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
+      description: [(data == undefined) ? '' : data.description,],
+      // bankName: [(data == undefined) ? '' : data.bankName, [Validators.required]],
+      id: [(data == undefined) ? '' : data.id,],
+      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId],],
+      nominees: this.nominees
     });
 
     this.getFormControl().description.maxLength = 60;
@@ -159,6 +160,7 @@ export class BondsComponent implements OnInit {
   saveBonds() {
     // this.tenure = this.getDateYMD()
     // this.maturityDate = this.tenure
+    this.nominees = [];
     if (this.nomineesList) {
 
       this.nomineesList.forEach(element => {
@@ -171,6 +173,7 @@ export class BondsComponent implements OnInit {
         this.nominees.push(obj)
       });
     }
+    this.inputs.find(input => !input.ngControl.valid).focus();
     if (this.bonds.get('ownerName').invalid) {
       this.bonds.get('ownerName').markAsTouched();
       return;
@@ -252,5 +255,14 @@ export class BondsComponent implements OnInit {
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
     this.eventService.openSnackBar('Updated successfully!', 'Dismiss');
 
+  }
+
+  isFormValuesForAdviceValid() {
+    if (this.bonds.valid ||
+      (this.bonds.valid && this.nomineesList.length !== 0)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

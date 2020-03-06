@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-plan-goals',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlanGoalsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private eventService: EventService) { }
   isLoading = false;
   displayedColumns: string[] = ['details', 'value', 'monthly', 'lumpsum'];
   dataSource = ELEMENT_DATA;
@@ -23,7 +24,14 @@ export class PlanGoalsComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  close() {
+    const fragmentData = {
+      direction: 'top',
+      componentName: PlanGoalsComponent,
+      state: 'close'
+    };
+    this.eventService.changeUpperSliderState(fragmentData);
+  }
 }
 
 export interface PeriodicElement {

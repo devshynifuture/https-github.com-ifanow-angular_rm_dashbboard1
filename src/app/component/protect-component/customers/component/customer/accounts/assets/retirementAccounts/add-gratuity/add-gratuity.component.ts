@@ -1,10 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { DatePipe } from '@angular/common';
 import { AuthService } from 'src/app/auth-service/authService';
-import { MAT_DATE_FORMATS } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -33,7 +33,7 @@ export class AddGratuityComponent implements OnInit {
   nomineesListFM: any;
   flag: any;
   adviceShowHeaderAndFooter: boolean = true;
-
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public event: EventService) { }
 
   @Input()
@@ -90,13 +90,13 @@ export class AddGratuityComponent implements OnInit {
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       noOfcompleteYrs: [(data == undefined) ? '' : data.yearsCompleted, [Validators.required]],
       amountRecived: [(data == undefined) ? '' : data.amountReceived, [Validators.required]],
-      nameOfOrg: [(data == undefined) ? '' : data.organizationName, [Validators.required]],
-      yearOfReceipt: [(data == undefined) ? '' : data.yearOfReceipt, [Validators.required]],
-      resonOfRecipt: [(data == undefined) ? '' : data.reasonOfReceipt, [Validators.required]],
-      bankAcNo: [(data == undefined) ? '' : data.bankAccountNumber, [Validators.required]],
-      description: [(data == undefined) ? '' : data.description, [Validators.required]],
-      id: [(data == undefined) ? '' : data.id, [Validators.required]],
-      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
+      nameOfOrg: [(data == undefined) ? '' : data.organizationName,],
+      yearOfReceipt: [(data == undefined) ? '' : data.yearOfReceipt,],
+      resonOfRecipt: [(data == undefined) ? '' : data.reasonOfReceipt,],
+      bankAcNo: [(data == undefined) ? '' : data.bankAccountNumber,],
+      description: [(data == undefined) ? '' : data.description,],
+      id: [(data == undefined) ? '' : data.id,],
+      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId],]
     });
     this.ownerData = this.gratuity.controls;
     this.familyMemberId = this.gratuity.controls.familyMemberId.value
@@ -107,6 +107,7 @@ export class AddGratuityComponent implements OnInit {
     return this.gratuity.controls;
   }
   saveEPF() {
+    this.inputs.find(input => !input.ngControl.valid).focus();
     if (this.gratuity.get('ownerName').invalid) {
       this.gratuity.get('ownerName').markAsTouched();
       return;

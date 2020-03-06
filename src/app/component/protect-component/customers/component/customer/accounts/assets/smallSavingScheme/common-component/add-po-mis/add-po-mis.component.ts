@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -8,6 +8,7 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { AssetValidationService } from '../../../asset-validation.service';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-add-po-mis',
@@ -33,11 +34,12 @@ export class AddPoMisComponent implements OnInit {
   clientId: number;
   familyMemberId: any;
   nominees: any;
-  nomineesList: any;
+  nomineesList: any[] = [];
   nomineesListFM: any;
   pomisData: any;
   flag: any;
   editApi: any;
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   adviceShowHeaderAndFooter: boolean = true;
 
   constructor(public utils: UtilService, private fb: FormBuilder, public subInjectService: SubscriptionInject,
@@ -139,6 +141,7 @@ export class AddPoMisComponent implements OnInit {
       });
     }
     if (this.pomisForm.invalid) {
+      this.inputs.find(input => !input.ngControl.valid).focus();
       this.pomisForm.get('ownerName').markAsTouched();
       this.pomisForm.get('amtInvested').markAsTouched();
       this.pomisForm.get('commencementdate').markAsTouched();

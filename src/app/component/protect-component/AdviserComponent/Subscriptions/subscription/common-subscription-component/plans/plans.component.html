@@ -6,17 +6,17 @@
 </div>
 <div class="bg-white pt-100 plans" *ngIf="servicePlanData.length > 0">
     <div class="row text-right pt-100">
-        <div class="col-md-7 p-0 pt-4">
+        <div class="col-md-7 p-0 pt-2">
             <p class="f-16">Map plans to the selected {{!_upperData.serviceName?"document":"service"}}.</p>
         </div>
-        <div class="col-md-1 text-left">
+        <div class="col-md-1 text-left p-0">
             <img src="/assets/images/svg/info.svg" class="c-p">
         </div>
         <div class="col-md-4 right text-right">
             <button mat-stroked-button class="btn-primary br-0 mt-8">{{mappedPlan.length}} Plans mapped</button>
         </div>
     </div>
-    <div  class="wrapper-100 pt-44">
+    <div class="wrapper-100 pt-44">
         <div class="row">
             <div class="col-xl-4 col-md-6 pb-40 c-p skeletonAnimation" *ngFor="let singleServicePlan of servicePlanData"
                 appSkeletonLoading [appSkeletonLoading]="isLoading">
@@ -52,7 +52,7 @@
                             <div class="wrapper-20">
                                 <div class="row">
                                     <div class="col-md-12 p-0">
-                                        <div class="l-h" [ngClass]="singleServicePlan.read? '':'height80'">
+                                        <div [ngClass]="singleServicePlan.read? '':'height75'">
                                             {{singleServicePlan.description}}
                                         </div>
 
@@ -71,19 +71,18 @@
             </div>
         </div>
     </div>
-</div>   
-    <div class="row" *ngIf="servicePlanData.length == 0">
-        <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
-            <img class="width200" src="assets/images/svg/new-add-plan.svg">
-            <p class="f-22 f-600 pt-28">Create Plan </p>
-            <p class="f-16 text-center l-21"> You start by creating Plans first. Plans are your core offerings. You can
-                have <br> multiple plans for different types of clients. Each plan will have sub offerings, also
-                <br> known as Services (explained in next slide). </p>
-            <!-- <button (click)="openFragment('','plan')" class="btn-primary d-flex align-items-center">
+</div>
+<div class="row" *ngIf="servicePlanData.length == 0">
+    <div class="h-100vh col-md-12 d-flex align-items-center flex-column justify-content-center">
+        <img class="width200 mt-120" src="assets/images/svg/new-add-plan.svg">
+        <p class="f-22 f-600 pt-28">Create Plan </p>
+        <p class="f-16 text-center l-21"> You start by creating Plans first. Plans are your core offerings. You can
+            have <br> multiple plans for different types of clients. Each plan will have sub offerings, also
+            <br> known as Services (explained in next slide). </p>
+        <!-- <button (click)="openFragment('','plan')" class="btn-primary d-flex align-items-center">
                 ADD PLAN </button> -->
-        </div>
     </div>
-<mat-toolbar class="bottom-fixed">
+<mat-toolbar class="bottom-fixed" *ngIf="servicePlanData.length > 0">
     <div class="row w-100">
         <div class="col-md-6 text-left">
             <!-- <p class="text-white f-16 mb-0 pt-12 c-p" (click)="dialogClose()">Cancel</p> -->
