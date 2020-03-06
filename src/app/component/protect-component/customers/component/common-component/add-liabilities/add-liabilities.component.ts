@@ -116,8 +116,12 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       this.addLiabilityForm.get('outstandingAmt').setValidators([Validators.required]);
     }
     else {
-      this.addLiabilityForm.get('poDate').clearValidators();
-      this.addLiabilityForm.get('outstandingAmt').clearValidators();
+      this.addLiabilityForm.get('poDate').setValidators();
+      this.addLiabilityForm.get('outstandingAmt').setValidators();
+      this.addLiabilityForm.get('poDate').updateValueAndValidity();
+      this.addLiabilityForm.get('outstandingAmt').updateValueAndValidity();
+
+
     }
   }
   getFormControl() {
@@ -179,7 +183,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   //   }
   // }
   saveFormData() {
-    this.inputs.find(input => !input.ngControl.valid).focus();
+
     let transactionFlag, finalTransctList = []
     if (this.transactionData && this.transactionData.length > 0) {
       this.transactionData.forEach(element => {
@@ -198,6 +202,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       });
     }
     if (this.addLiabilityForm.invalid) {
+      this.inputs.find(input => !input.ngControl.valid).focus();
       for (let element in this.addLiabilityForm.controls) {
         console.log(element)
         if (this.addLiabilityForm.controls[element].invalid) {

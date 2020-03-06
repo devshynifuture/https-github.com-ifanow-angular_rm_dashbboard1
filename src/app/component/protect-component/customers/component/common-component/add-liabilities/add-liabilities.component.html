@@ -117,8 +117,7 @@
                         (input)="preventDefault($event)" [matDatepicker]="picker" formControlName="poDate" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
-                    <mat-error class="f-12 pt-4"
-                        *ngIf="getFormControl().poDate.invalid || (getFormControl().poDate.touched && getFormControl().poDate.invalid)">
+                    <mat-error class="f-12 pt-4">
                         This field is required
                     </mat-error>
                 </mat-form-field>
