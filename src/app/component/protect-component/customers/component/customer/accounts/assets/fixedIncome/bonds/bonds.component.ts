@@ -1,9 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { DatePipe } from '@angular/common';
-import { MAT_DATE_FORMATS } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import * as moment from 'moment';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -47,7 +47,7 @@ export class BondsComponent implements OnInit {
   clientId: any;
   nomineesListFM: any;
   adviceShowHeaderAndFooter: boolean = true;
-
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
   }
   @Input()
@@ -173,7 +173,7 @@ export class BondsComponent implements OnInit {
         this.nominees.push(obj)
       });
     }
-
+    this.inputs.find(input => !input.ngControl.valid).focus();
     if (this.bonds.get('ownerName').invalid) {
       this.bonds.get('ownerName').markAsTouched();
       return;

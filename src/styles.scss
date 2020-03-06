@@ -831,6 +831,8 @@
                 #ui-assets-account {
                     .vertical-menu {
                         // height: 100vh;
+                        position: relative;
+                        height: calc(100vh - 150px);
                         display: block !important;
                         width: 100%;
                         text-align: left;
@@ -1564,6 +1566,16 @@
                 
                 .mat-select {
                     height: 40px;
+                }
+                
+                .brtb-0 {
+                    border-top-right-radius: 0px !important;
+                    border-bottom-right-radius: 0px !important;
+                }
+                
+                .bltb-0 {
+                    border-top-left-radius: 0px !important;
+                    border-bottom-left-radius: 0px !important;
                 }
                 
                 .borderRadio {

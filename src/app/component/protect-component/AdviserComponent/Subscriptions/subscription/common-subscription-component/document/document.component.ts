@@ -13,6 +13,8 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { CommonFroalaComponent } from '../common-froala/common-froala.component';
 import { EmailOnlyComponent } from '../email-only/email-only.component';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+
 // import { window } from 'rxjs/operators';
 
 // import {element} from 'protractor';
@@ -89,7 +91,7 @@ export class DocumentComponent implements OnInit {
 
   constructor(public subInjectService: SubscriptionInject,
     private eventService: EventService, public dialog: MatDialog, private subService: SubscriptionService,
-    public subscription: SubscriptionService, private router: Router) {
+    public subscription: SubscriptionService, private router: Router,private location:Location) {
     // this.subInjectService.rightSliderDocument.subscribe(
     //   data => this.getDocumentsDesignData(data)
     // );
@@ -828,6 +830,7 @@ export class DocumentComponent implements OnInit {
       this.eventService.openSnackBar('Document is mapped', 'OK');
     }
     this.router.navigate(['/admin/subscription/settings','plans']);
+    this.location.replaceState('/admin/subscription/settings/plans');
     this.eventService.changeUpperSliderState({ state: 'close', refreshRequired:true });
     this.barButtonOptions.active = false;
   }
@@ -907,6 +910,8 @@ export class DocumentComponent implements OnInit {
     }
     this.changeServiceData.emit(true);
     this.router.navigate(['/admin/subscription/settings','services']);
+    this.location.replaceState('/admin/subscription/settings/services');
+
     this.eventService.changeUpperSliderState({ state: 'close', refreshRequired:true });
   }
 

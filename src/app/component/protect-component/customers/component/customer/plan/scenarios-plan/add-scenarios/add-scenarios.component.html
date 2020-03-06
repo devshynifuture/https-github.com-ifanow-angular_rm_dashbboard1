@@ -76,7 +76,7 @@
         scenario from scratch.</p>
     <div class="row">
         <div class="col-md-12 p-0 pt-24">       
-            <mat-radio-group aria-label="Select an option"  formControlName="choose">
+            <mat-radio-group aria-label="Select an option"   (ngModelChange)="selectScenario($event)" formControlName="choose">
                 <mat-radio-button value="1" class="bu-primary text-primary pr-20 pl-20 p-12" checked="false">Copy from
                     existing
                 </mat-radio-button>
@@ -85,7 +85,7 @@
             </mat-radio-group>
         </div>
     </div>
-    <div class="row pt-28">
+    <div class="row pt-28" *ngIf="hideSelect == false">
         <div class="col-md-4 pr-4 text-right">
             <h5 class="m-0 text-black pt-16">Select base scenario</h5>
         </div>

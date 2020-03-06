@@ -1,10 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CustomerService } from '../../../../customer.service';
 import { DatePipe } from '@angular/common';
-import { MAT_DATE_FORMATS } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
@@ -35,7 +35,7 @@ export class AddEPSComponent implements OnInit {
   nomineesListFM: any;
   flag: any;
   adviceShowHeaderAndFooter: boolean = true;
-
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   constructor(private event: EventService, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) { }
 
   @Input()
@@ -106,6 +106,7 @@ export class AddEPSComponent implements OnInit {
   }
 
   saveEPF() {
+    this.inputs.find(input => !input.ngControl.valid).focus();
     if (this.eps.get('ownerName').invalid) {
       this.eps.get('ownerName').markAsTouched();
       return;

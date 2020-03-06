@@ -19,7 +19,7 @@
         </div>
         <div class="col-md-5">
             <mat-form-field class="w-100">
-                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                <mat-select matInput appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
                     [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Search family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
@@ -152,7 +152,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-40">
+        <div class="row pt-60">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">EPF number</h5>
             </div>
@@ -167,7 +167,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-40">
+        <div class="row pt-60">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Bank account number</h5>
             </div>
@@ -183,7 +183,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-40">
+        <div class="row pt-60">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Description</h5>
             </div>

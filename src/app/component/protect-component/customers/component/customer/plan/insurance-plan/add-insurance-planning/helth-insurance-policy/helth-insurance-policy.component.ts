@@ -50,12 +50,9 @@ export class HelthInsurancePolicyComponent implements OnInit {
     if (this.healthInsurance.get('selectAdvice').invalid) {
       this.healthInsurance.get('selectAdvice').markAsTouched();
       return;
-    } else if (this.healthInsurance.get('adviceHeader').invalid) {
-      this.healthInsurance.get('adviceHeader').markAsTouched();
+    } else if (this.healthInsurance.get('selectAdvice').invalid) {
+      this.healthInsurance.get('selectAdvice').markAsTouched();
       return;
-    } else if (this.healthInsurance.get('adviceStatus').invalid) {
-      this.healthInsurance.get('adviceStatus').markAsTouched();
-      return
     } else if (this.healthInsurance.get('bypassConsent').invalid) {
       this.healthInsurance.get('bypassConsent').markAsTouched();
       return;
@@ -74,7 +71,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
     }else {
     let obj = {
       selectAdvice:this.healthInsurance.controls.selectAdvice.value,
-      adviceHeader:this.healthInsurance.controls.adviceHeader.value,
+      adviceHeader:this.healthInsurance.controls.selectAdvice.value,
       adviceStatus:'Given',
       bypassConsent:this.healthInsurance.controls.bypassConsent.value,
       adviceRationale:this.healthInsurance.controls.adviceRationale.value,
@@ -83,7 +80,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
       consent:this.healthInsurance.controls.consent.value,
     }
     this.adviceHealthInsurance.push(obj);
-    this.data.value.adviceValue = obj.adviceHeader;
+    this.data.value.adviceValue = obj.selectAdvice;
     this.advice = this.data.value
   }
     
