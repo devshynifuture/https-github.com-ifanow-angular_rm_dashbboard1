@@ -115,10 +115,7 @@ export class FixedDepositComponent implements OnInit {
     this.getCoOwner.removeAt(item);
   }
 
-  ownerList(value) {
-    console.log(value)
-    this.familyMemberId = value.id
-  }
+ 
 
   addNewCoOwner(data) {
   //   if (this.addOwner == data) {
@@ -179,7 +176,28 @@ export class FixedDepositComponent implements OnInit {
   lisNominee(value) {
     console.log(value)
     this.nomineesListFM = Object.assign([], value.familyMembersList);
+    this.nomineesListFM.forEach(element => {
+        element['disable'] = false;
+    });
   }
+
+  disabledMember(){
+    this.nomineesListFM.forEach(element => {
+      for(let e in this.getCoOwner.controls){
+        const arrayCon:any = this.getCoOwner.controls[e];
+        if(arrayCon.value.ownerName != ''){
+          if(element.userName == arrayCon.value.ownerName){
+            element.disable = true;
+            return;
+          }
+          else{
+            element.disable = false;
+          }
+        }
+      }
+    });
+  }
+
   showLess(value) {
     if (value) {
       this.showHide = false;
@@ -295,12 +313,18 @@ export class FixedDepositComponent implements OnInit {
 
   checkOwnerType(){
     if(this.fixedDeposit.controls['ownerType'].value == '2'){
-      this.fixedDeposit.controls['ownerType'].setValidators(Validators.required);
+      this.fixedDeposit.controls['ownerName'].setValidators(Validators.required);
+      this.fixedDeposit.get('ownerName').updateValueAndValidity();
       for (let element in this.fixedDeposit.controls) {
         console.log(element)
         if(element == 'getCoOwnerName'){
-          for(let e in this.getCoOwner.controls[element]){
-            this.getCoOwner.controls[element].controls[e].clearValidators();
+          for(let e in this.getCoOwner.controls){
+            // this.getCoOwner.removeAt(e);
+            const arrayCon:any = this.getCoOwner.controls[e];
+            for(let i in arrayCon.controls){
+              arrayCon.get(i).setValidators([]);
+              arrayCon.get(i).updateValueAndValidity();
+            }
           }
         }
       }
@@ -309,13 +333,19 @@ export class FixedDepositComponent implements OnInit {
       if(this.fixedDeposit.value.getCoOwnerName.length < 2){
         this.addNewCoOwner(true);
       }
-      this.fixedDeposit.controls['ownerType'].clearValidators();
-
+      this.fixedDeposit.controls['ownerName'].setValidators([]);
+      this.fixedDeposit.get('ownerName').updateValueAndValidity();
       for (let element in this.fixedDeposit.controls) {
         console.log(element)
         if(element == 'getCoOwnerName'){
-          for(let e in this.getCoOwner.controls[element]){
-            this.getCoOwner.controls[element].controls[e].setValidators(Validators.required);
+          for(let e in this.getCoOwner.controls){
+            const arrayCon:any = this.getCoOwner.controls[e];
+            for(let i in arrayCon.controls){
+              if(i != 'familyMemberId'){
+                arrayCon.controls[i].setValidators(Validators.required);
+                arrayCon.get(i).updateValueAndValidity();
+              }
+            }
           }
         }
       }
@@ -335,8 +365,11 @@ export class FixedDepositComponent implements OnInit {
         console.log(element)
         this.fixedDeposit.controls[element].markAsTouched();
         if(element == 'getCoOwnerName'){
-          for(let e in this.getCoOwner.controls[element]){
-            this.getCoOwner.controls[element].controls[e].markAsTouched();
+          for(let e in this.getCoOwner.controls){
+            const arrayCon:any = this.getCoOwner.controls[e];
+            for(let i in arrayCon.controls){
+              arrayCon.controls[i].markAsTouched();
+            }
           }
         }
         // if (this.fixedDeposit.controls[element].invalid) {
@@ -423,24 +456,37 @@ export class FixedDepositComponent implements OnInit {
   onChangeJointOwnership(data) {
     if (data == 'owner') {
       this.nexNomineePer = 0;
-      this.getCoOwner.value.forEach(element => {
-        this.nexNomineePer += (element.ownershipPerc) ? parseInt(element.ownershipPerc) : null;
-      });
-      this.nexNomineePer = this.fixedDeposit.controls.ownerPercent.value + this.nexNomineePer
-      if (this.nexNomineePer > 100) {
-        this.showErrorOwner = true;
-        console.log('show error Percent cannot be more than 100%')
-      } else {
-        this.showErrorOwner = false
-        this.showErrorCoOwner = false;
+      
+      for(let e in this.getCoOwner.controls){
+        const arrayCon:any = this.getCoOwner.controls[e];
+        
+            this.nexNomineePer += arrayCon.value.ownershipPerc;
+          
+              if (this.nexNomineePer > 100 || this.nexNomineePer < 100) {
+                this.showErrorOwner = true;
+                if(e == "1"){
+                  arrayCon.controls['ownershipPerc'].setErrors({'incorrect': true});
+                }
+                console.log('show error Percent cannot be more than 100%')
+              } else {
+                this.showErrorOwner = false
+                // this.showErrorCoOwner = false;
+                arrayCon.controls['ownershipPerc'].setErrors({'incorrect': false});
+              }
+            
       }
+      // this.getCoOwner.value.forEach(element => {
+      //   this.nexNomineePer += (element.ownershipPerc) ? parseInt(element.ownershipPerc) : null;
+      // });
+      // this.nexNomineePer = this.fixedDeposit.controls.ownerPercent.value + this.nexNomineePer
+     
     } else {
       this.nexNomineePer = 0;
 
       this.getNominee.value.forEach(element => {
         this.nexNomineePer += (element.ownershipPer) ? parseInt(element.ownershipPer) : null;
       });
-      if (this.nexNomineePer > 100) {
+      if (this.nexNomineePer > 100 ) {
         this.showError = true
         console.log('show error Percent cannot be more than 100%')
       } else {
