@@ -14,8 +14,7 @@
             <div *ngIf="showTabs" class="main-details min-height">
                 <p class="f-16 f-600 mb-0">{{advisorName}}</p>
 
-                <button (click)="showsmallNavWrapper()" *ngIf="showTabs" aria-label="Toggle sidenav" class="btn_nav"
-                    mat-icon-button type="button">
+                <button (click)="showsmallNavWrapper()" *ngIf="showTabs" aria-label="Toggle sidenav" class="btn_nav" mat-icon-button type="button">
                     <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
                 </button>
             </div>
@@ -24,8 +23,7 @@
 
             <div class="pt-12 scorllable row">
                 <div class="col-md-12 p-0">
-                    <button class="ml-8" (click)="showMainNavWrapper()" *ngIf="showTabs==false"
-                        aria-label="Toggle sidenav" mat-icon-button type="button">
+                    <button class="ml-8" (click)="showMainNavWrapper()" *ngIf="showTabs==false" aria-label="Toggle sidenav" mat-icon-button type="button">
                         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
                     </button>
 
@@ -33,8 +31,7 @@
                         <img src="assets/images/svg/time-meter.svg">
                         <span *ngIf="showTabs" class="title" mat-line>Dashboard</span>
                     </a>
-                    <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                        routerLink="/customer/detail/account/summary">
+                    <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/customer/detail/account/summary">
                         <img routerLink="/customer/detail/overview" src="assets/images/svg/people.svg">
                         <span *ngIf="showTabs" class="title" mat-line>People</span>
                     </a>
@@ -59,45 +56,36 @@
                                 </mat-panel-title>
 
                             </mat-expansion-panel-header>
-                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                                routerLink="/admin/activies/advice">
+                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/advice">
                                 <span *ngIf="showTabs" class="title" mat-line>Advice</span>
                             </a>
-                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                                routerLink="/admin/activies/plans">
+                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/plans">
                                 <span *ngIf="showTabs" class="title" mat-line>Action plans</span>
                             </a>
-                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                                routerLink="/admin/activies/notes">
+                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/notes">
                                 <span *ngIf="showTabs" class="title" mat-line>Notes</span>
                             </a>
-                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                                routerLink="/admin/activies/tasks">
+                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/tasks">
                                 <span *ngIf="showTabs" class="title" mat-line>Tasks</span>
                             </a>
-                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                                routerLink="/admin/activies/opportunities">
+                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/opportunities">
                                 <span *ngIf="showTabs" class="title" mat-line>Opportunities</span>
                             </a>
-                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                                routerLink="/admin/activies/calendar">
+                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/calendar">
                                 <span *ngIf="showTabs" class="title" mat-line>calendar</span>
                             </a>
                         </mat-expansion-panel>
                     </mat-accordion>
 
-                    <a class="sidenav-link" [ngClass]="getActiveLink('emails') ? 'bg-grey lter': ''" mat-list-item
-                        routerLink="./emails/inbox/google-connect">
+                    <a class="sidenav-link" [ngClass]="getActiveLink('emails') ? 'bg-grey lter': ''" mat-list-item routerLink="./emails/inbox/google-connect">
                         <img src="assets/images/svg/mail.svg">
                         <span *ngIf="showTabs" class="title" mat-line>Email</span>
                     </a>
-                    <a class="sidenav-link" [ngClass]="getActiveLink('transactions') ? 'bg-grey lter': ''" mat-list-item
-                        routerLink="./transactions/overview">
+                    <a class="sidenav-link" [ngClass]="getActiveLink('transactions') ? 'bg-grey lter': ''" mat-list-item routerLink="./transactions/overview">
                         <img src="assets/images/svg/cart.svg">
                         <span *ngIf="showTabs" class="title" mat-line>Transactions</span>
                     </a>
-                    <a class="sidenav-link" [ngClass]="getActiveLink('subscription') ? 'bg-grey lter': ''" mat-list-item
-                        routerLink="./subscription/dashboard">
+                    <a class="sidenav-link" [ngClass]="getActiveLink('subscription') ? 'bg-grey lter': ''" mat-list-item routerLink="./subscription/dashboard">
                         <img src="assets/images/svg/ruppes.svg">
                         <span *ngIf="showTabs" class="title" mat-line>Subscription</span>
                     </a>
@@ -115,8 +103,7 @@
                         <span *ngIf="showTabs" class="title" mat-line>Back Office</span>
                     </a>
                     <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item>
-                        <span *ngIf="showTabs" class="title" routerLink="/admin/backoffice-aum-reconciliation"
-                            mat-line>AUM
+                        <span *ngIf="showTabs" class="title" routerLink="/admin/backoffice-aum-reconciliation" mat-line>AUM
                             Reconciliation</span>
                     </a>
                     <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item>
@@ -139,12 +126,10 @@
 
             <mat-form-field class="width40 serachbox ml-16">
                 <div class="form-group searchBoxHeader">
-                    <input #inputSearch [formControl]="myControl" [matAutocomplete]="auto" class="form-control pl-40"
-                        matInput type="text">
+                    <input #inputSearch [formControl]="myControl" [matAutocomplete]="auto" class="form-control pl-40" matInput type="text">
                     <i class="material-icons searchIcon"> search </i>
                     <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete">
-                        <mat-option (click)="selectClient(singleClient)"
-                            *ngFor="let singleClient of filteredOptions | async" [value]="singleClient">
+                        <mat-option (click)="selectClient(singleClient)" *ngFor="let singleClient of filteredOptions | async" [value]="singleClient">
                             <div class="row">
                                 <div class="col-md-1 d-flex align-items-center">
                                     <i class="material-icons"> person </i>
@@ -174,8 +159,7 @@
                     </mat-autocomplete>
                 </div>
             </mat-form-field>
-            <div class="hide-on-800 d-flex align-items-center justify-content-center right-fixed tablate-none"
-                id="right-sidemenu">
+            <div class="hide-on-800 d-flex align-items-center justify-content-center right-fixed tablate-none" id="right-sidemenu">
                 <a class="sidenav-link" mat-list-item>
                     <img class="t-12" src="assets/images/svg/bell.svg">
                 </a>
@@ -261,9 +245,7 @@
                                 </div>
                             </button>
                         </div>
-                        <p class="m-0 roboto text-primitive text-center pt-130 pb-28">Office hours: 10.00AM - 6.30PM
-                            (Monday
-                            to Friday)
+                        <p class="m-0 roboto text-primitive text-center pt-130 pb-28">Office hours: 10.00AM - 6.30PM (Monday to Friday)
                         </p>
                         <div class="p-20 bg-grey lter">
                             <div class="row">

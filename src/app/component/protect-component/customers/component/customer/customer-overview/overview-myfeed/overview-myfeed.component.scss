@@ -1,0 +1,66 @@
+.myfeedWrapper {
+    margin: 0px auto;
+    width: 78%;
+    .row {
+        margin-right: -15px !important;
+        margin-left: -15px !important;
+    }
+}
+
+.myFeedUi {
+    margin: 40px 0px 0px 0px;
+    padding: 0px;
+    list-style-type: none;
+    li {
+        height: 43px;
+        display: flex;
+        align-items: center;
+        padding-left: 32px;
+        border-left: 6px solid transparent;
+    }
+    .activeClass {
+        background: #D9DEE1;
+        border-left: 6px solid #008FFF;
+    }
+}
+
+.feedInformation {
+    .clientNameBox {
+        box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2), 0px 3px 14px rgba(0, 0, 0, 0.12), 0px 8px 10px rgba(0, 0, 0, 0.14);
+        border-radius: 0px;
+        padding: 14px 20px;
+        margin-top: 35px;
+    }
+    .wrapperBox {
+        margin-top: 34px;
+    }
+    .borderChatBox {
+        width: 100%;
+        height: 280px;
+        border: 1px solid #D9DEE1;
+        margin-top: 10px;
+    }
+    .scrollingDiv {
+        margin-bottom: 100px;
+        .fundBox {
+            width: 240px;
+            height: 170px;
+            border-radius: 4px;
+            padding: 10px;
+            border: 1px solid #D9DEE1;
+            margin-top: 10px;
+            margin-right: 20px;
+            .row {
+                margin-right: -15px !important;
+                margin-left: -15px !important;
+            }
+            .mfBox {
+                width: 30px;
+                height: 30px;
+                display: inline-block;
+                border-radius: 4px;
+                font-size: 14px;
+            }
+        }
+    }
+}
