@@ -78,6 +78,7 @@ export class InsuranceComponent implements OnInit {
 
   getInsuranceData(typeId) {
     this.isLoading = true;
+    this.dataSource = new MatTableDataSource([{}, {}, {}]);
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,

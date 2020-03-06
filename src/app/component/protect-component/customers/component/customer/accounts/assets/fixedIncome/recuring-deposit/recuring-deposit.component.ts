@@ -169,6 +169,7 @@ export class RecuringDepositComponent implements OnInit {
   }
 
   saveRecuringDeposit() {
+    this.inputs.find(input => !input.ngControl.valid).focus();
     if (this.nomineesList) {
 
       this.nomineesList.forEach(element => {
@@ -181,7 +182,6 @@ export class RecuringDepositComponent implements OnInit {
         this.nominees.push(obj)
       });
     }
-    this.inputs.find(input => !input.ngControl.valid).focus();
     if (this.recuringDeposit.controls.commencementDate.value != null || this.recuringDeposit.controls.tenure.value != null) {
       this.tenure = this.getDateYMD()
       this.maturityDate = this.tenure
