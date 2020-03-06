@@ -120,29 +120,51 @@ export class AddGoalComponent implements OnInit {
   displayedAssets:any[] = [];
   currentAllocationFilter:string = 'all';
   currentFamilyFilter:any;
-  currentSort:string = '';
+  currentSort:string = 'v-H2L';
   allocationBtnList = [
     {
       name: 'All Assets',
-      filter: 'all'
+      filter: 'all',
     },
     {
       name: 'Unallocated',
-      filter: 'unallocated'
+      filter: 'unallocated',
     },
     {
       name: 'Partially allocated',
-      filter: 'partially allocated'
+      filter: 'partially allocated',
     },
     {
       name: 'Fully allocated',
-      filter: 'allocated'
+      filter: 'allocated',
     },
     {
       name: 'Un-deployed',
-      filter: 'deployed'
+      filter: 'deployed',
     },
-  ]
+  ];
+  sortBtnList:any[] = [
+    {
+      name: 'Value - high to low',
+      sortKey: 'v-H2L'
+    },
+    {
+      name: 'Value - low to high',
+      sortKey: 'v-L2H'
+    },
+    {
+      name: 'Asset type wise',
+      sortKey: 'asset'
+    },
+    {
+      name: 'Maturity - near to far',
+      sortKey: 'm-N2F'
+    },
+    {
+      name: 'Maturity - far to near',
+      sortKey: 'm-F2N'
+    },
+  ];
 
 
   
@@ -162,22 +184,16 @@ export class AddGoalComponent implements OnInit {
       return arr.findIndex(m => m.asset_owner_id === member.asset_owner_id) === index;
     });
     this.familyList.unshift({name: 'All family', asset_owner_id: -1});
+    this.currentFamilyFilter = this.familyList[0];
   }
 
   filterByFamily(member) {
-    this.familyList.forEach((m) => {
-      m.selected = false;
-      if(m.asset_owner_id == member.asset_owner_id) {
-        m.selected = true;
-      }
-    })
     this.displayedAssets = this.data.data.filter((obj) => {
       return obj.asset_owner_id === member.asset_owner_id
     });
   }
 
   filterByAllocation(filterType) {
-    this.currentAllocationFilter = filterType;
     if(filterType == 'all') {
       this.displayedAssets = this.data.data;
     } else {
@@ -188,11 +204,16 @@ export class AddGoalComponent implements OnInit {
     this.sortList(this.currentSort);
   }
 
-  filterAssets(){
-    
+  filterAssets(member, filterType){
+    this.currentFamilyFilter = member;
+    this.currentAllocationFilter = filterType;
+    this.filterByFamily(this.currentFamilyFilter);
+    this.filterByAllocation(this.currentAllocationFilter);
+    this.sortList(this.currentSort);
   }
 
   sortList(sortType) {
+    this.currentSort = sortType;
     switch (sortType) {
       case 'v-H2L': // value high to low
         this.displayedAssets = this.displayedAssets.sort((a,b)=>{

@@ -7,10 +7,10 @@
             <div class="col-md-6">
                 <img src="/assets/images/svg/people.svg" class="pt-16 c-p" [matMenuTriggerFor]="menu">
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item *ngFor="let member of familyList">
+                    <button mat-menu-item *ngFor="let member of familyList" (click)="filterAssets(member, currentAllocationFilter)">
                         <div class="row">
                             <div class="col-md-3">
-                                <img src="/assets/images/svg/right.svg" class="c-p" *ngIf="member.selected">
+                                <img src="/assets/images/svg/right.svg" class="c-p" *ngIf="member.asset_owner_id == currentFamilyFilter.asset_owner_id">
                             </div>
                             <div class="col-md-9">
                                 {{member.name}}
@@ -22,84 +22,24 @@
             <div class="col-md-6">
                 <img src="/assets/images/svg/lines-3.svg" class="pt-16 c-p" [matMenuTriggerFor]="menu">
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item *ngFor="let ">
+                    <button mat-menu-item *ngFor="let allocation_filter of allocationBtnList" (click)="filterAssets(currentFamilyFilter, allocation_filter.filter)">
                         <div class="row">
                             <div class="col-md-3">
-                                <img src="/assets/images/svg/right.svg" class="c-p">
+                                <img src="/assets/images/svg/right.svg" class="c-p" *ngIf="allocation_filter.filter == currentAllocationFilter">
                             </div>
                             <div class="col-md-9">
-                                All assets
-                            </div>
-                        </div>
-                    </button>
-                    <button mat-menu-item>
-                        <div class="row">
-                            <div class="col-md-3">
-
-                            </div>
-                            <div class="col-md-9">
-                                Unallocated
-                            </div>
-                        </div>
-                    </button>
-                    <button mat-menu-item>
-                        <div class="row">
-                            <div class="col-md-3">
-
-                            </div>
-                            <div class="col-md-9">
-                                Partically allocated
-                            </div>
-                        </div>
-                    </button>
-                    <button mat-menu-item>
-                        <div class="row">
-                            <div class="col-md-3">
-
-                            </div>
-                            <div class="col-md-9">
-                                Rahul jain
-                            </div>
-                        </div>
-                    </button>
-                    <button mat-menu-item>
-                        <div class="row">
-                            <div class="col-md-3">
-
-                            </div>
-                            <div class="col-md-9">
-                                Fully allocated
+                                {{allocation_filter.name}}
                             </div>
                         </div>
                     </button>
                     <p class="text-primitive roboto m-0">Sort</p>
-                    <button mat-menu-item>
+                    <button mat-menu-item *ngFor="let sortMenu of sortBtnList" (click)="filterByAllocation(sortMenu.sortKey)">
                         <div class="row">
                             <div class="col-md-3">
-
+                                <img src="/assets/images/svg/right.svg" class="c-p" *ngIf="sortMenu.sortKey == currentSort">
                             </div>
                             <div class="col-md-9">
-                                Value - high to low
-                            </div>
-                        </div>
-                    </button>
-                    <button mat-menu-item>
-                        <div class="row">
-                            <div class="col-md-3">
-
-                            </div>
-                            <div class="col-md-9">
-                                Value - low to high
-                            </div>
-                        </div>
-                    </button>
-                    <button mat-menu-item>
-                        <div class="row">
-                            <div class="col-md-3">
-
-                            </div>
-                            <div class="col-md-9">
-                                Asset type wise
+                                {{sortMenu.name}}
                             </div>
                         </div>
                     </button>
