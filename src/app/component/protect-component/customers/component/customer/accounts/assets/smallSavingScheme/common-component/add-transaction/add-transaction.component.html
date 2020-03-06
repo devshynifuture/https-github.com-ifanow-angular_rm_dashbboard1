@@ -1,37 +1,43 @@
 <div class="row pt-40 justify-content-md-center ">
     <div class="col-md-9 bt-grey text-center">
-        <button *ngIf="addTransactionList==0" (click)="addTransaction()" mat-stroked-button class="btn-dark-black addon mt-16"><i class="material-icons">add</i>ADD
+        <button *ngIf="addTransactionList==0" (click)="addTransaction()" mat-stroked-button
+            class="btn-dark-black addon mt-16"><i class="material-icons">add</i>ADD
             TRANSACTIONS</button>
         <p *ngIf="addTransactionList==0" class="f-12 text-primitive mt-12 ">
             Adding transactions is optional but highly <br> recommended to get better reports
-            <span class="text-primary c-p" matTooltip="You can add partial transaction history too. E.g. if your A/c commenced in 2012, you can specify balance as on, say 31/03/2017 and enter transactions after 31/03/2017.">
+            <span class="text-primary c-p"
+                matTooltip="You can add partial transaction history too. E.g. if your A/c commenced in 2012, you can specify balance as on, say 31/03/2017 and enter transactions after 31/03/2017.">
                 More info </span>
         </p>
     </div>
 </div>
 <div *ngIf="addTransactionList>0" class="row pt-20">
     <div class="col-md-4">
-        <label class="f-14"> Transaction Type
+        <label class="f-14"> {{transactionViewData.transactionHeader[0]}}
         </label>
     </div>
     <div class="col-md-3 pl-0">
-        <label class="f-14"> Date
+        <label class="f-14"> {{transactionViewData.transactionHeader[1]}}
         </label>
     </div>
     <div class="col-md-3 pl-0">
-        <label class="f-14">Amount</label>
+        <label class="f-14">{{transactionViewData.transactionHeader[2]}}</label>
     </div>
 </div>
 <div [formGroup]="transactionForm">
-    <div class="pb-28" *ngFor="let singleTransForm of getTransFormList.controls;index as i" [formGroup]="transactionForm">
+    <div class="pb-28" *ngFor="let singleTransForm of getTransFormList.controls;index as i"
+        [formGroup]="transactionForm">
         <div [formGroup]="singleTransForm" class="row ">
             <div class="col-md-4">
                 <mat-form-field>
-                    <mat-select formControlName="transactionType" class="form-control br-0">
-                        <mat-option value="1">Deposit</mat-option>
-                        <mat-option value="2">Withdrawal</mat-option>
+                    <mat-select formControlName="type" class="form-control br-0">
+                        <!-- <mat-option value="1">Deposit</mat-option>
+                        <mat-option value="2">Withdrawal</mat-option> -->
+                        <mat-option *ngFor="let singleOption of transactionViewData.optionList"
+                            [value]="singleOption.value">
+                            {{singleOption.name}}</mat-option>
                     </mat-select>
-                    <mat-error class="f-12">
+                    <mat-error>
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -39,10 +45,11 @@
             <div class="col-md-3 pl-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input class="form-control br-0" [min]="minDate" [max]="maxDate" matInput formControlName="date" [matDatepicker]="picker" readonly>
+                        <input class="form-control br-0" [min]="minDate" [max]="maxDate" matInput formControlName="date"
+                            [matDatepicker]="picker" readonly>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
-                        <mat-error class="f-12">
+                        <mat-error>
                             This field is required
                         </mat-error>
                     </mat-form-field>
@@ -51,8 +58,9 @@
             <div class="col-md-3 pl-0">
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
-                        <input matInput type="text" formControlName="amount" maxlength="10" #partPayment class="form-control rupess br-0">
-                        <mat-error class="f-12">
+                        <input matInput type="text" autocomplete="off" formControlName="amount" maxlength="10"
+                            #partPayment class="form-control rupess br-0">
+                        <mat-error>
                             This field is required
                         </mat-error>
                         <mat-hint align="end" class="f-12">{{partPayment.value.length}}/10</mat-hint>
@@ -61,7 +69,8 @@
             </div>
             <div class="col-md-2 p-0">
                 <div class="pt-8">
-                    <i class="material-icons text-primitive c-p f-20 float-left" *ngIf="i==addTransactionList-1" (click)="addTransaction()">add</i>
+                    <i class="material-icons text-primitive c-p f-20 float-left" *ngIf="i==addTransactionList-1"
+                        (click)="addTransaction()">add</i>
                     <i class="material-icons text-primitive c-p f-20 pl-10 " (click)="removeTransaction(i)">remove</i>
                 </div>
             </div>

@@ -1,13 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CustomerService } from '../../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { MAT_DATE_FORMATS } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { AssetValidationService } from '../../../asset-validation.service';
+import { AssetValidationService } from './../../../asset-validation.service';
 
 @Component({
   selector: 'app-add-po-td',
@@ -32,10 +32,11 @@ export class AddPoTdComponent implements OnInit {
   editApi: any;
   clientId: any;
   nomineesListFM: any;
-  nomineesList: any;
+  nomineesList: any[] = [];
   nominees: any[];
   potdData: any;
   flag: any;
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   adviceShowHeaderAndFooter: boolean = true;
 
   constructor(public utils: UtilService, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject, private util: UtilService) { }
@@ -135,6 +136,7 @@ export class AddPoTdComponent implements OnInit {
       });
     }
     if (this.POTDForm.invalid) {
+      this.inputs.find(input => !input.ngControl.valid).focus();
       this.POTDForm.get('ownerName').markAsTouched();
       this.POTDForm.get('amtInvested').markAsTouched();
       this.POTDForm.get('commDate').markAsTouched();
@@ -212,6 +214,15 @@ export class AddPoTdComponent implements OnInit {
   close(flag) {
     this.isOptionalField = true
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+  }
+
+  isFormValuesForAdviceValid() {
+    if (this.POTDForm.valid ||
+      (this.POTDForm.valid && this.POTDOptionalForm.valid && this.nomineesList.length !== 0)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }

@@ -19,7 +19,6 @@ import { StpTransactionComponent } from './overview-transactions/doTransaction/s
 import { SipTransactionComponent } from './overview-transactions/doTransaction/sip-transaction/sip-transaction.component';
 import { TransactionsHistoryComponent } from './transactions-list/transactions-history/transactions-history.component';
 import { KnowYourCustomerComponent } from './overview-transactions/know-your-customer/know-your-customer.component';
-import { PersonalDetailsComponent } from './overview-transactions/know-your-customer/personal-details/personal-details.component';
 import { BackDetailsComponent } from './overview-transactions/know-your-customer/back-details/back-details.component';
 import { PermanentAddressComponent } from './overview-transactions/know-your-customer/permanent-address/permanent-address.component';
 import { NomineeDetailsComponent } from './overview-transactions/know-your-customer/nominee-details/nominee-details.component';
@@ -30,7 +29,15 @@ import { BankSelectPopUpComponent } from './overview-transactions/doTransaction/
 import { UmrnPopUpComponent } from './overview-transactions/doTransaction/umrn-pop-up/umrn-pop-up.component';
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
 import { ScrollDispatchModule, ScrollingModule } from '@angular/cdk/scrolling';
-
+import { PersonalDetailsComponent } from './overview-transactions/know-your-customer/personal-details/personal-details.component';
+import { LeftKycListComponent } from './overview-transactions/know-your-customer/left-kyc-list/left-kyc-list.component';
+import { FatcaDetailsComponent } from './overview-transactions/know-your-customer/fatca-details/fatca-details.component';
+import { ContactDetailsComponent } from './overview-transactions/know-your-customer/contact-details/contact-details.component';
+import { LeftSideInnUccListComponent } from './overview-transactions/IIN/UCC-Creation/left-side-inn-ucc-list/left-side-inn-ucc-list.component';
+import { IinUccCreationComponent } from './overview-transactions/IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
+import { PersonalDetailsInnComponent } from './overview-transactions/IIN/UCC-Creation/personal-details-inn/personal-details-inn.component';
+import { ContactDetailsInnComponent } from './overview-transactions/IIN/UCC-Creation/contact-details-inn/contact-details-inn.component';
+import { BankDetailsIINComponent } from './overview-transactions/IIN/UCC-Creation/bank-details-iin/bank-details-iin.component';
 export const componentList = [
     TransactionAddComponent,
     OnlineTrasactionComponent,
@@ -47,7 +54,6 @@ export const componentList = [
     SipTransactionComponent,
     TransactionsHistoryComponent,
     KnowYourCustomerComponent,
-    PersonalDetailsComponent,
     PermanentAddressComponent,
     BackDetailsComponent,
     NomineeDetailsComponent,
@@ -56,14 +62,24 @@ export const componentList = [
     EuinSelectPopUpComponent,
     BankSelectPopUpComponent,
     UmrnPopUpComponent,
-    // FatcaDetailsComponent,
+    PersonalDetailsComponent,
+    FatcaDetailsComponent,
+    ContactDetailsComponent,
+    LeftSideInnUccListComponent,
+    ContactDetailsComponent,
+    IinUccCreationComponent,
+    PersonalDetailsInnComponent,
+    LeftKycListComponent,
+    LeftSideInnUccListComponent,
+    ContactDetailsInnComponent,
+    BankDetailsIINComponent
     // VideoKycComponent
 
 
 
 ]
 @NgModule({
-    declarations: componentList,
+    declarations: [componentList,],
     imports: [
         CommonModule,
         MaterialModule,
@@ -71,7 +87,7 @@ export const componentList = [
         ReactiveFormsModule,
         CustomDirectiveModule,
         CustomCommonModule,
-        ScrollingModule
+        ScrollingModule,
     ],
     exports: [
         FormsModule,

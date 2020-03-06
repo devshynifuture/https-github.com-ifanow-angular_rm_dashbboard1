@@ -3,6 +3,8 @@ import { SubscriptionService } from '../../../subscription.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from '../../../../../../../auth-service/authService';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-plans',
@@ -28,7 +30,7 @@ export class PlansComponent implements OnInit {
   _upperData: any;
   flag: any;
 
-  constructor(private subService: SubscriptionService, private eventService: EventService) {
+  constructor(private subService: SubscriptionService, private eventService: EventService,private router:Router,private location:Location) {
   }
 
   @Output() changePlanData = new EventEmitter();
@@ -101,13 +103,18 @@ export class PlansComponent implements OnInit {
     this.isLoading = false;
     console.log(data)
     // if(this.servicePlanData && this.servicePlanData !== null && this.servicePlanData !== undefined){
-    this.servicePlanData = data;
-    this.servicePlanData.forEach(element => {
-      if (element.selected == true) {
-        this.mappedPlan.push(element);
+    if(data){
+      this.servicePlanData = data;
+      this.servicePlanData.forEach(element => {
+        if (element.selected == true) {
+          this.mappedPlan.push(element);
+        }
       }
+      );
+    }else{
+      this.servicePlanData=[];
     }
-    );
+
 
   }
   getPlansMappedToDocument() {
@@ -219,6 +226,9 @@ export class PlansComponent implements OnInit {
     this.changePlanData.emit(true);
     console.log(data)
     this.eventService.openSnackBar('Plans is mapped', 'OK');
+    this.router.navigate(['/admin/subscription/settings','documents']);
+    this.location.replaceState('/admin/subscription/settings/documents');
+    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired:true });
   }
 
   saveDocumentPlanMapping() {

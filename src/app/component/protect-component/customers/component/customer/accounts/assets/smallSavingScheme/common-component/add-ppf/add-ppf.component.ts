@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MAT_DATE_FORMATS } from '@angular/material';
+import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../../../customer.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -30,7 +30,7 @@ export class AddPpfComponent implements OnInit {
   optionalppfSchemeForm;
   transactionList = [];
   addTransactionList: number;
-  transactionData: any;
+  transactionData: any[] = [];
   editApi: any;
   clientId: number;
   nexNomineePer = 0;
@@ -39,11 +39,21 @@ export class AddPpfComponent implements OnInit {
   dataFM: any;
   familyList: any;
   errorFieldName: string;
-  nomineesList: any;
+  nomineesList: any[] = [];
   ppfData: any;
   nominees: any[];
   commencementDate: any;
   flag: any;
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+
+  transactionViewData =
+    {
+      optionList: [
+        { name: 'Deposit', value: 1 },
+        { name: 'Withdrawal', value: 2 }
+      ],
+      transactionHeader: ['Transaction Type', 'Date', 'Amount']
+    }
   adviceShowHeaderAndFooter: boolean = true;
   dataSource: { "advisorId": any; "clientId": number; "ownerName": any; "familyMemberId": any; "accountBalance": any; "balanceAsOn": any; "commencementDate": any; "description": any; "bankName": any; "linkedBankAccount": any; "nominees": any[]; "frequency": any; "futureApproxcontribution": any; "publicprovidendfundtransactionlist": any[]; };
   constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
@@ -126,23 +136,27 @@ export class AddPpfComponent implements OnInit {
     console.log(data)
     this.commencementDate = this.ppfSchemeForm.controls.commencementDate.value;
     this.transactionData = data.controls
-    return
+    return;
   }
   addPPF() {
-    let finalTransctList = []
-    if (this.transactionData) {
+    let transactionFlag, finalTransctList = []
+    if (this.transactionData && this.transactionData.length > 0) {
       this.transactionData.forEach(element => {
-        let obj = {
-          "date": element.controls.date.value._d,
-          "amount": element.controls.amount.value,
-          "paymentType": element.controls.transactionType.value
+        if (element.valid) {
+          let obj = {
+            "date": element.controls.date.value._d,
+            "amount": element.controls.amount.value,
+            "type": element.controls.type.value
+          }
+          finalTransctList.push(obj)
         }
-        finalTransctList.push(obj)
+        else {
+          transactionFlag = false;
+        }
       });
     }
     this.nominees = []
     if (this.nomineesList) {
-
       this.nomineesList.forEach(element => {
         let obj = {
           "name": element.controls.name.value,
@@ -156,11 +170,14 @@ export class AddPpfComponent implements OnInit {
     if (this.ppfSchemeForm.invalid) {
       for (let element in this.ppfSchemeForm.controls) {
         console.log(element)
-        if (this.ppfSchemeForm.controls[element].invalid) {
+        if (this.ppfSchemeForm.get(element).invalid) {
+          this.inputs.find(input => !input.ngControl.valid).focus();
           this.ppfSchemeForm.controls[element].markAsTouched();
-          return;
         }
       }
+    }
+    else if (transactionFlag == false) {
+      return;
     }
     else {
       let obj = {
@@ -214,7 +231,9 @@ export class AddPpfComponent implements OnInit {
   }
 
   isFormValuesForAdviceValid() {
-    if (this.ppfSchemeForm.valid && this.optionalppfSchemeForm.valid && this.nomineesList.length !== 0 && this.transactionData.length !== 0) {
+    if (this.ppfSchemeForm.valid ||
+      (this.ppfSchemeForm.valid && this.optionalppfSchemeForm.valid) ||
+      (this.ppfSchemeForm.valid && this.optionalppfSchemeForm.valid && this.nomineesList.length !== 0 && this.transactionData.length !== 0)) {
       return true;
     } else {
       return false;

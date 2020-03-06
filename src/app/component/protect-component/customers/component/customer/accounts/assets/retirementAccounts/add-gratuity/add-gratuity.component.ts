@@ -1,10 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { DatePipe } from '@angular/common';
 import { AuthService } from 'src/app/auth-service/authService';
-import { MAT_DATE_FORMATS } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -33,7 +33,7 @@ export class AddGratuityComponent implements OnInit {
   nomineesListFM: any;
   flag: any;
   adviceShowHeaderAndFooter: boolean = true;
-
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public event: EventService) { }
 
   @Input()
@@ -107,6 +107,7 @@ export class AddGratuityComponent implements OnInit {
     return this.gratuity.controls;
   }
   saveEPF() {
+    this.inputs.find(input => !input.ngControl.valid).focus();
     if (this.gratuity.get('ownerName').invalid) {
       this.gratuity.get('ownerName').markAsTouched();
       return;

@@ -82,8 +82,7 @@
         <!-- <button (click)="openFragment('','plan')" class="btn-primary d-flex align-items-center">
                 ADD PLAN </button> -->
     </div>
-</div>
-<mat-toolbar class="bottom-fixed">
+<mat-toolbar class="bottom-fixed" *ngIf="servicePlanData.length > 0">
     <div class="row w-100">
         <div class="col-md-6 text-left">
             <!-- <p class="text-white f-16 mb-0 pt-12 c-p" (click)="dialogClose()">Cancel</p> -->

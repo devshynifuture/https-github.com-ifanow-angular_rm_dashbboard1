@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
-import { MAT_DATE_FORMATS } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { DatePipe } from '@angular/common';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -57,7 +57,7 @@ export class RecuringDepositComponent implements OnInit {
   depoData: any = [];
   nominees: any = [];
   adviceShowHeaderAndFooter: boolean = true;
-
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   constructor(private event: EventService, private fb: FormBuilder, private custumService: CustomerService,
     public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) {
   }
@@ -181,6 +181,7 @@ export class RecuringDepositComponent implements OnInit {
         this.nominees.push(obj)
       });
     }
+    this.inputs.find(input => !input.ngControl.valid).focus();
     if (this.recuringDeposit.controls.commencementDate.value != null || this.recuringDeposit.controls.tenure.value != null) {
       this.tenure = this.getDateYMD()
       this.maturityDate = this.tenure
@@ -278,5 +279,13 @@ export class RecuringDepositComponent implements OnInit {
   editrecuringDepositRes(data) {
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
+  }
+
+  isFormValuesForAdviceValid() {
+    if (this.recuringDeposit.valid || (this.recuringDeposit.valid && this.nomineesList.length !== 0)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

@@ -7,7 +7,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { AssetValidationService } from '../../../asset-validation.service';
+import { AssetValidationService } from './../../../asset-validation.service';
 
 @Component({
   selector: 'app-add-scss',
@@ -32,7 +32,7 @@ export class AddScssComponent implements OnInit {
   editApi: any;
   nomineesListFM: any;
   scssData: any;
-  nomineesList: any;
+  nomineesList: any[] = [];
   nominees: any[];
   flag: any;
 
@@ -134,7 +134,7 @@ export class AddScssComponent implements OnInit {
         clientId: this.clientId,
         familyMemberId: this.familyMemberId,
         advisorId: this.advisorId,
-        ownerName: this.ownerName,
+        ownerName: this.ownerName.userName,
         amountInvested: this.scssSchemeForm.get('amtInvested').value,
         commencementDate: this.scssSchemeForm.get('commDate').value,
         postOfficeBranch: this.scssOptionalSchemeForm.get('poBranch').value,
@@ -181,5 +181,14 @@ export class AddScssComponent implements OnInit {
   close(flag) {
     this.isOptionalField = true;
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+  }
+
+  isFormValuesForAdviceValid() {
+    if (this.scssSchemeForm.valid ||
+      (this.scssSchemeForm.valid && this.scssOptionalSchemeForm.valid && this.nomineesList.length !== 0)) {
+      return true
+    } else {
+      return false;
+    }
   }
 }

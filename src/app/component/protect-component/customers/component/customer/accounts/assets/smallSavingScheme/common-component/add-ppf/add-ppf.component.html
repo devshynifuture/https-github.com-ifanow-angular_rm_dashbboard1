@@ -11,7 +11,7 @@
         </div>
     </div>
 </div>
-<div class="pt-100 pl-24 pr-24 pb-48 mb-48">
+<div class="pt-100 pl-24 pr-24 pb-48 mb-48 scroll-smooth">
     <div [formGroup]="ppfSchemeForm">
         <div class="row">
             <div class="col-md-5 pr-0 text-right">
@@ -20,7 +20,7 @@
             </div>
             <div class="col-md-5">
                 <mat-form-field class="w-100">
-                    <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                    <mat-select matInput appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
                         [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                         <mat-option value=''>Select family members</mat-option>
                         <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
@@ -123,7 +123,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select formControlName="tenure" class="form-control br-0">
+                        <mat-select matInput formControlName="tenure" class="form-control br-0">
                             <mat-option value="">Select tenure years</mat-option>
                             <mat-option value="5">5 Years</mat-option>
                             <mat-option value="6">6 Years</mat-option>
@@ -153,7 +153,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select formControlName="frquency" class="form-control br-0">
+                        <mat-select matInput formControlName="frquency" class="form-control br-0">
                             <mat-option value="1">Monthly</mat-option>
                             <mat-option value="4">Quarterly</mat-option>
                             <mat-option value="6">Half yearly</mat-option>
@@ -229,7 +229,8 @@
         <app-add-nominee [ownerName]="ownerName" [data]="ppfData" (outputEvent)="getFormDataNominee($event)">
         </app-add-nominee>
     </div>
-    <app-add-transaction (outputEvent)="getFormData($event)" [commencementDate]="commencementDate">
+    <app-add-transaction (outputEvent)="getFormData($event)" [data]='inputData'
+        [transactionViewData]="transactionViewData" [commencementDate]="commencementDate">
     </app-add-transaction>
 </div>
 <div class="bottom-fixed wrapper-12 pt-16" *ngIf="adviceShowHeaderAndFooter">
