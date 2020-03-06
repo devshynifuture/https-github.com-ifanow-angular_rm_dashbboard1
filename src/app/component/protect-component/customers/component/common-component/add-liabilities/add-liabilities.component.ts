@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { DataComponent } from '../../../../../../interfaces/data.component';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-add-liabilities',
@@ -46,6 +47,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     }
   transactionData: any;
   editData: any;
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   constructor(public utils: UtilService, private subInjectService: SubscriptionInject, private fb: FormBuilder,
     public custumService: CustomerService, public eventService: EventService) {
   }
@@ -177,6 +179,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   //   }
   // }
   saveFormData() {
+    this.inputs.find(input => !input.ngControl.valid).focus();
     let transactionFlag, finalTransctList = []
     if (this.transactionData && this.transactionData.length > 0) {
       this.transactionData.forEach(element => {
