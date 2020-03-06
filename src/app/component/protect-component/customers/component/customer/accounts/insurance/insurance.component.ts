@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatTableDataSource, MatSort } from '@angular/material';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AddInsuranceComponent } from '../../../common-component/add-insurance/add-insurance.component';
 import { DetailedViewComponent } from "../../../common-component/detailed-view/detailed-view.component";
@@ -29,7 +29,7 @@ export class InsuranceComponent implements OnInit {
   generalInsuranceFlag: boolean;
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
-
+  @ViewChild("tableOne", { static: true }) sort: MatSort;
   lifeInsuranceList = [{ name: 'Term', id: 1 }, { name: 'Traditional', id: 2 }, { name: 'ULIP', id: 3 }];
 
   viewMode;
@@ -69,7 +69,8 @@ export class InsuranceComponent implements OnInit {
   getInsuranceDataResponse(data) {
     this.isLoading = false
     if (data) {
-      this.dataSource = data.insuranceList;
+      this.dataSource.data = data.insuranceList;
+      this.dataSource.sort = this.sort;
     } else {
       this.dataSource = data
       this.noData = "No Insurance Data"
@@ -97,8 +98,9 @@ export class InsuranceComponent implements OnInit {
 
   getInsuranceDataRes(data) {
     if (data) {
-      this.dataSource = data.insuranceList;
-      this.isLoading = false
+      this.dataSource.data = data.insuranceList;
+      this.dataSource.sort = this.sort;
+      this.isLoading = false;
     } else {
       this.dataSource = undefined;
       this.noData = 'No Insurance Data';
