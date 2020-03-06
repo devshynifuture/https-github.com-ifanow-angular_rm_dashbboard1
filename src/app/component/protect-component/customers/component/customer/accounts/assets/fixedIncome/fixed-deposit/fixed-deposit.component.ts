@@ -323,6 +323,10 @@ export class FixedDepositComponent implements OnInit {
             // this.getCoOwner.removeAt(e);
             const arrayCon:any = this.getCoOwner.controls[e];
             for(let i in arrayCon.controls){
+              if(i== "ownerName"){
+              arrayCon.get(i).setValue('');
+              // arrayCon.get(i).setErrors({required:false});
+              }
               arrayCon.get(i).setValidators([]);
               arrayCon.get(i).updateValueAndValidity();
             }
@@ -334,6 +338,7 @@ export class FixedDepositComponent implements OnInit {
       if(this.fixedDeposit.value.getCoOwnerName.length < 2){
         this.addNewCoOwner(true);
       }
+      // this.disabledMember();
       this.fixedDeposit.controls['ownerName'].setValidators([]);
       this.fixedDeposit.get('ownerName').updateValueAndValidity();
       for (let element in this.fixedDeposit.controls) {
