@@ -12,7 +12,7 @@
     </div>
 </div>
 <div [formGroup]="fixedDeposit" class="pt-100 pb-48 mb-44">
-    <div class="row pt-40">
+    <div class="row">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-12">Ownership type</h5>
         </div>
@@ -254,7 +254,7 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-4 p-0">
-                    <mat-select matInput formControlName="tenureY" class="form-control br-0 br-none"
+                    <mat-select formControlName="tenureY" class="form-control btb-0 br-none brtb-0"
                         (change)="getDateYMD()">
                         <mat-option value="0">0 Year</mat-option>
                         <mat-option *ngFor="let Y of fdYears" [value]="Y">
@@ -263,7 +263,7 @@
                     </mat-select>
                 </div>
                 <div class="col-md-4 p-0">
-                    <mat-select matInput formControlName="tenureM" class="form-control br-0 br-none"
+                    <mat-select formControlName="tenureM" class="form-control btb-0 bltb-0 br-none "
                         (change)="getDateYMD()">
                         <mat-option value="0">0 Month</mat-option>
                         <mat-option *ngFor="let M of fdMonths" [value]="M">
@@ -272,16 +272,12 @@
                     </mat-select>
                 </div>
                 <div class="col-md-4 p-0">
-                    <mat-form-field>
-                        <mat-select matInput formControlName="tenureD" class="form-control br-0"
-                            (change)="getDateYMD()">
-                            <mat-option value="0">0 Day</mat-option>
-                            <mat-option *ngFor="let D of fdDays" [value]="D">
-                                <span>{{D == 1? D+" Day" : D+" Days" }}</span>
-                            </mat-option>
-                        </mat-select>
-
-                    </mat-form-field>
+                    <mat-select formControlName="tenureD" class="form-control bltb-0" (change)="getDateYMD()">
+                        <mat-option value="0">0 Day</mat-option>
+                        <mat-option *ngFor="let D of fdDays" [value]="D">
+                            <span>{{D == 1? D+" Day" : D+" Days" }}</span>
+                        </mat-option>
+                    </mat-select>
                 </div>
                 <mat-error class="f-12 pt-4" *ngIf="!tenureValid">
                     <b>This field is required</b>
