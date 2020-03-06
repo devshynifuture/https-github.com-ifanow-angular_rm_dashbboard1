@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionService } from '../../../subscription.service';
@@ -7,6 +7,7 @@ import { UtilService } from '../../../../../../../services/util.service';
 import { EventService } from '../../../../../../../Data-service/event.service';
 import { SubscriptionUpperSliderComponent } from '../upper-slider/subscription-upper-slider.component';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-add-edit-document',
@@ -29,6 +30,8 @@ export class AddEditDocumentComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   }
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+
   advisorId;
 
   blankOverview: any;
@@ -110,11 +113,15 @@ export class AddEditDocumentComponent implements OnInit {
   }
 
   saveDocuments() {
-    if(this.blankDocumentProperties.invalid){
-      this.blankDocumentProperties.get('docType').markAsTouched();
-      this.blankDocumentProperties.get('docName').markAsTouched();
-    }
-     else {
+    if (this.blankDocumentProperties.invalid) {
+      for (let element in this.blankDocumentProperties.controls) {
+        console.log(element)
+        if (this.blankDocumentProperties.get(element).invalid) {
+          this.inputs.find(input => !input.ngControl.valid).focus();
+          this.blankDocumentProperties.controls[element].markAsTouched();
+        }
+      }
+    } else {
       this.barButtonOptions.active = true;
       if (this._inputData.documentRepositoryId == undefined) {
         const obj = {
@@ -141,7 +148,7 @@ export class AddEditDocumentComponent implements OnInit {
             // this.sendDataToParentUpperFrag(data);
             this.barButtonOptions.active = false;
           },
-          err=>{
+          err => {
             this.barButtonOptions.active = false;
             console.log(err, "error changeNewRightSliderState");
           }
@@ -164,10 +171,10 @@ export class AddEditDocumentComponent implements OnInit {
             this.sendDataToParentUpperFrag(data);
             this.barButtonOptions.active = false;
           },
-          err =>{
+          err => {
             this.barButtonOptions.active = false;
             console.log(err, "error changeNewRightSliderState");
-            
+
           }
         );
       }
