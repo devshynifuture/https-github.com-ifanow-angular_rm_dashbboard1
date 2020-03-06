@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { CustomerService } from '../../../../customer.service';
-import { MAT_DATE_FORMATS } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { DatePipe } from '@angular/common';
@@ -74,6 +74,7 @@ export class FixedDepositComponent implements OnInit {
   isViewInitCalled = false;
   nomineesListFM: any;
   flag: string;
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   fdMonths = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
     '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26',
     '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41',
@@ -372,6 +373,8 @@ export class FixedDepositComponent implements OnInit {
             }
           }
         }
+        this.inputs.find(input => !input.ngControl.valid).focus();
+
         // if (this.fixedDeposit.controls[element].invalid) {
           // return;
         // }

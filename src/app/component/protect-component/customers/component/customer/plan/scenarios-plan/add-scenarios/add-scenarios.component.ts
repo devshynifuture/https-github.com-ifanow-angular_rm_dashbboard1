@@ -12,12 +12,19 @@ export class AddScenariosComponent implements OnInit {
   displayedColumns: string[] = ['name', 'scenario', 'conflicting'];
   dataSource = ELEMENT_DATA;
   addScenario: any;
+  hideSelect= false;
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder, ) { }
 
   ngOnInit() {
     this.getdataForm('')
   }
-
+  selectScenario(value) {
+    if (value == '2') {
+      this.hideSelect = true
+    }else{
+      this.hideSelect = false;
+    }
+  }
   close() {
     let data = this._inputData;
     this.subInjectService.changeNewRightSliderState({ state: 'close', data });
@@ -43,7 +50,7 @@ export class AddScenariosComponent implements OnInit {
     } else if (this.addScenario.get('choose').invalid) {
       this.addScenario.get('choose').markAsTouched();
       return
-    }else{
+    } else {
       let obj = {
         Duration: this.addScenario.controls.Duration.value,
         prefix: this.addScenario.controls.prefix.value,

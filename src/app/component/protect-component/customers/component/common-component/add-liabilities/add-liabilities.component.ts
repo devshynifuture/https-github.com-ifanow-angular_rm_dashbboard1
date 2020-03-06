@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { DataComponent } from '../../../../../../interfaces/data.component';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-add-liabilities',
@@ -36,7 +37,17 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   clientId: any;
   nomineesListFM: any;
   maxDate = new Date();
-
+  transactionViewData =
+    {
+      optionList: [
+        { name: 'Keep the EMI as it is and reduce the term', value: 1 },
+        { name: 'the term as it is and reduce the EMI', value: 2 }
+      ],
+      transactionHeader: ['Option', 'Part payment date', 'Part payment amount']
+    }
+  transactionData: any;
+  editData: any;
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   constructor(public utils: UtilService, private subInjectService: SubscriptionInject, private fb: FormBuilder,
     public custumService: CustomerService, public eventService: EventService) {
   }
@@ -67,16 +78,16 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   showLess() {
     this.show = false;
   }
-  showAddTransact() {
-    this.showTransact = true;
-    if (this.transactEntries.length == 0) {
-      this.transactEntries.push(this.fb.group({
-        partPaymentDate: ['', [Validators.required]],
-        partPayment: ['', [Validators.required]],
-        option: ['', [Validators.required]]
-      }));
-    }
-  }
+  // showAddTransact() {
+  //   this.showTransact = true;
+  //   if (this.transactEntries.length == 0) {
+  //     this.transactEntries.push(this.fb.group({
+  //       partPaymentDate: ['', [Validators.required]],
+  //       partPayment: ['', [Validators.required]],
+  //       option: ['', [Validators.required]]
+  //     }));
+  //   }
+  // }
   close(flag) {
     if (this.data) {
       if (this._data.loanTypeId == undefined) {
@@ -100,6 +111,18 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   }
   select(data) {
     this.showSelect = data.checked;
+    if (data.checked == true) {
+      this.addLiabilityForm.get('poDate').setValidators([Validators.required]);
+      this.addLiabilityForm.get('outstandingAmt').setValidators([Validators.required]);
+    }
+    else {
+      this.addLiabilityForm.get('poDate').setValidators();
+      this.addLiabilityForm.get('outstandingAmt').setValidators();
+      this.addLiabilityForm.get('poDate').updateValueAndValidity();
+      this.addLiabilityForm.get('outstandingAmt').updateValueAndValidity();
+
+
+    }
   }
   getFormControl() {
     return this.addLiabilityForm.controls;
@@ -113,42 +136,28 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     console.log(value)
     this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
+  getFormData(data) {
+    console.log(data)
+    this.transactionData = data.controls
+    return;
+  }
   getLiability(data) {
-    if (data == undefined) {
-      data = {};
-    }
+    (data == 'tab1') ? data = {} : this.editData = data;
     this.addLiabilityForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
       loanType: [(data.loanTypeId == undefined) ? '' : (data.loanTypeId) + '', [Validators.required]],
       loanAmount: [data.loanAmount, [Validators.required]],
       loanTenure: [data.loanTenure, [Validators.required]],
       outstandingCheck: [data.principalOutstanding],
-      poDate: [(data.principalOutstandingAsOn) ? new Date(data.principalOutstandingAsOn) : '', [Validators.required]],
-      outstandingAmt: [data.principalOutStandingAmount, [Validators.required]],
+      poDate: [(data.principalOutstandingAsOn) ? new Date(data.principalOutstandingAsOn) : ''],
+      outstandingAmt: [data.principalOutStandingAmount,],
       CommencementDate: [new Date(data.commencementDate), [Validators.required]],
       emiFrequency: [(data.frequencyOfPayments == undefined) ? '' : (data.frequencyOfPayments) + '', [Validators.required]],
       interest: [data.annualInterestRate, [Validators.required]],
       emi: [data.emi],
       finInstitution: [data.financialInstitution],
       collateral: [],
-      transact: this.fb.array([this.fb.group({
-        partPaymentDate: ['', [Validators.required]],
-        partPayment: ['', [Validators.required]],
-        option: ['', [Validators.required]]
-      })])
     });
-    if (data.loanPartPayments != undefined) {
-      this.showTransact = true;
-      data.loanPartPayments.forEach(element => {
-        this.addLiabilityForm.controls.transact.push(this.fb.group({
-          partPaymentDate: [new Date(element.partPaymentDate), [Validators.required]],
-          partPayment: [element.partPayment, Validators.required],
-          option: [(element.option + ''), Validators.required],
-          id: [(element.id + ''), Validators.required],
-        }));
-      });
-      this.transactEntries.removeAt(0);
-    }
     if (this.addLiabilityForm.controls.outstandingCheck.value == true) {
       this.showSelect = true;
     }
@@ -158,47 +167,51 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     this.getFormControl().outstandingAmt.maxLength = 20;
     this.ownerData = this.addLiabilityForm.controls;
   }
-  get transactEntries() {
-    return this.addLiabilityForm.get('transact') as FormArray;
-  }
-  addTransaction() {
-    this.transactEntries.push(this.fb.group({
-      partPaymentDate: ['', [Validators.required]],
-      partPayment: ['', [Validators.required]],
-      option: ['', [Validators.required]]
-    }));
-  }
-  removeTransaction(item) {
-    if (this.transactEntries.length > 1) {
-      this.transactEntries.removeAt(item);
-    }
-  }
+  // get transactEntries() {
+  //   return this.addLiabilityForm.get('transact') as FormArray;
+  // }
+  // addTransaction() {
+  //   this.transactEntries.push(this.fb.group({
+  //     partPaymentDate: ['', [Validators.required]],
+  //     partPayment: ['', [Validators.required]],
+  //     option: ['', [Validators.required]]
+  //   }));
+  // }
+  // removeTransaction(item) {
+  //   if (this.transactEntries.length > 1) {
+  //     this.transactEntries.removeAt(item);
+  //   }
+  // }
   saveFormData() {
-    if (this.addLiabilityForm.get('ownerName').invalid) {
-      this.addLiabilityForm.get('ownerName').markAsTouched();
-      return;
-    } else if (this.addLiabilityForm.get('loanType').invalid) {
-      this.addLiabilityForm.get('loanType').markAsTouched();
-      return;
-    } else if (this.addLiabilityForm.get('loanAmount').invalid) {
-      this.addLiabilityForm.get('loanAmount').markAsTouched();
-      return;
-    } else if (this.addLiabilityForm.get('loanTenure').invalid) {
-      this.addLiabilityForm.get('loanTenure').markAsTouched();
-      return;
-    } else if (this.addLiabilityForm.controls.outstandingCheck.touched == true && this.addLiabilityForm.get('poDate').invalid && this.addLiabilityForm.get('outstandingAmt').invalid) {
-      this.addLiabilityForm.get('poDate').markAsTouched();
-      this.addLiabilityForm.get('outstandingAmt').markAsTouched();
-    } else if (this.addLiabilityForm.get('CommencementDate').invalid) {
-      this.addLiabilityForm.get('CommencementDate').markAsTouched();
-      return;
-    } else if (this.addLiabilityForm.get('emiFrequency').invalid) {
-      this.addLiabilityForm.get('emiFrequency').markAsTouched();
-      return;
-    } else if (this.addLiabilityForm.get('interest').invalid) {
-      this.addLiabilityForm.get('interest').markAsTouched();
-      return;
-    } else {
+
+    let transactionFlag, finalTransctList = []
+    if (this.transactionData && this.transactionData.length > 0) {
+      this.transactionData.forEach(element => {
+        if (element.valid) {
+          let obj = {
+            "date": (element.controls.date.value._d) ? element.controls.date.value._d : element.controls.date.value,
+            "amount": element.controls.amount.value,
+            "type": element.controls.type.value,
+            "id": (this.editData) ? this.editData.id : null
+          }
+          finalTransctList.push(obj)
+        }
+        else {
+          transactionFlag = false;
+        }
+      });
+    }
+    if (this.addLiabilityForm.invalid) {
+      this.inputs.find(input => !input.ngControl.valid).focus();
+      for (let element in this.addLiabilityForm.controls) {
+        console.log(element)
+        if (this.addLiabilityForm.controls[element].invalid) {
+          this.addLiabilityForm.controls[element].markAsTouched();
+          return;
+        }
+      }
+    }
+    else {
       const obj = {
         ownerName: (this.ownerName == null) ? this.addLiabilityForm.controls.ownerName.value : this.ownerName,
         loanType: this.addLiabilityForm.controls.loanType.value,
@@ -227,30 +240,30 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       obj.CommencementDate = obj.CommencementDate.toISOString().slice(0, 10);
       obj.poDate = (obj.poDate) ? obj.poDate.toISOString().slice(0, 10) : '';
       obj.interest = parseInt(obj.interest);
-      this.addLiabilityForm.value.transact.forEach(element => {
-        if (element.partPaymentDate != "") {
-          let obj1 = {
-            'partPaymentDate': (element.partPaymentDate) ? element.partPaymentDate.toISOString().slice(0, 10) : null,
-            'partPayment': !element.partPayment?0 : parseInt(element.partPayment),
-            'option': !element.option? 0 : parseInt(element.option),
-            'id': element.id,
-            'delete': true
-          }
-          if (this._data.id != undefined) {
-            if (this._data.loanPartPayments.length == this.addLiabilityForm.value.transact.length) {
-              delete obj1.delete;
-            }
-          }
-          if (this._data == 'tab1') {
-            delete obj1.id;
-            delete obj1.delete;
-          }
-          obj.transactData.push(obj1);
-        }
-        else{
-          obj.transactData = [];
-        }
-      });
+      // this.addLiabilityForm.value.transact.forEach(element => {
+      //   if (element.partPaymentDate != "") {
+      //     let obj1 = {
+      //       'partPaymentDate': (element.partPaymentDate) ? element.partPaymentDate.toISOString().slice(0, 10) : null,
+      //       'partPayment': !element.partPayment ? 0 : parseInt(element.partPayment),
+      //       'option': !element.option ? 0 : parseInt(element.option),
+      //       'id': element.id,
+      //       'delete': true
+      //     }
+      //     if (this._data.id != undefined) {
+      //       if (this._data.loanPartPayments.length == this.addLiabilityForm.value.transact.length) {
+      //         delete obj1.delete;
+      //       }
+      //     }
+      //     if (this._data == 'tab1') {
+      //       delete obj1.id;
+      //       delete obj1.delete;
+      //     }
+      //     obj.transactData.push(obj1);
+      //   }
+      //   else {
+      //     obj.transactData = [];
+      //   }
+      // });
       if (this._data.id == undefined) {
         const objToSend = {
           advisorId: this.advisorId,
@@ -267,7 +280,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
           frequencyOfPayments: obj.emiFrequency,
           annualInterestRate: obj.interest,
           financialInstitution: obj.finInstitution,
-          loanPartPayments: obj.transactData
+          loanPartPayments: finalTransctList
         };
         console.log('obj', obj);
         this.custumService.addLiability(objToSend).subscribe(
@@ -288,7 +301,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
           annualInterestRate: obj.interest,
           emi: obj.emi,
           financialInstitution: obj.finInstitution,
-          loanPartPayments: obj.transactData
+          loanPartPayments: finalTransctList
         };
         this.custumService.editLiability(editObj).subscribe(
           data => this.editLiabilityRes(data)

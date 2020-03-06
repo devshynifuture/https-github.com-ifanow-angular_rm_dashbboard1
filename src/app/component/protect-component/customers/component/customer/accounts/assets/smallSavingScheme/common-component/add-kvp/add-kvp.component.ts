@@ -1,10 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CustomerService } from '../../../../../customer.service';
-import { MAT_DATE_FORMATS } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 
@@ -34,6 +34,7 @@ export class AddKvpComponent implements OnInit {
   nominees: any[];
   kvpData;
   flag: any;
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   adviceShowHeaderAndFooter: boolean = true;
   constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
@@ -114,6 +115,7 @@ export class AddKvpComponent implements OnInit {
         this.nominees.push(obj)
       });
     }
+    this.inputs.find(input => !input.ngControl.valid).focus();
     if (this.KVPFormScheme.get('ownerName').invalid) {
       this.KVPFormScheme.get('ownerName').markAsTouched();
       return;
@@ -186,5 +188,13 @@ export class AddKvpComponent implements OnInit {
   close(flag) {
     this.isOptionalField = true
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+  }
+
+  isFormValuesForAdviceValid() {
+    if (this.KVPFormScheme.valid || (this.KVPFormScheme.valid && this.KVPOptionalFormScheme.valid)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

@@ -19,7 +19,7 @@
         </div>
         <div class="col-md-5">
             <mat-form-field class="w-100">
-                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                <mat-select matInput appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
                     [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Select family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName" (click)="ownerDetails(f)">
@@ -34,12 +34,12 @@
     </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Monthly contrubution</h5>
+            <h5 class="m-0 pt-12">Monthly contrubution</h5>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input matInput #monthlyContribution type="number" appInputValueValidation
+                    <input matInput matInput #monthlyContribution type="number" appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" class="form-control rupess br-0"
                         formControlName="monthlyContribution">
                     <mat-error class="f-12"
@@ -53,7 +53,7 @@
     </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Interest rate</h5>
+            <h5 class="m-0 pt-12">Interest rate</h5>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0 iconPetage">
@@ -70,11 +70,11 @@
     </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Interest compounding</h5>
+            <h5 class="m-0 pt-12">Interest compounding</h5>
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <mat-select formControlName="compound" class="form-control br-0">
+                <mat-select matInput formControlName="compound" class="form-control br-0">
                     <mat-option value="" disabled>Select option</mat-option>
                     <mat-option value="2">Monthly</mat-option>
                     <mat-option value="3">Quarterly</mat-option>
@@ -91,13 +91,13 @@
     </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Commencement date </h5>
+            <h5 class="m-0 pt-12">Commencement date </h5>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput formControlName="commencementDate" [max]="maxDate" class="form-control br-0"
-                        [matDatepicker]="picker" readonly>
+                    <input matInput matInput formControlName="commencementDate" [max]="maxDate"
+                        class="form-control br-0" [matDatepicker]="picker" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-error class="f-12"
@@ -110,12 +110,12 @@
     </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Tenure(in months)</h5>
+            <h5 class="m-0 pt-12">Tenure(in months)</h5>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput autocomplete="off" formControlName="tenure" appInputValueValidation
+                    <input matInput matInput autocomplete="off" formControlName="tenure" appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY" #tenure type="text" maxlength=""
                         class="form-control br-0">
                     <!-- <mat-select formControlName="tenure" class="form-control br-0 ">
@@ -150,7 +150,7 @@
     <div *ngIf="showHide == true">
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">RD number</h5>
+                <h5 class="m-0 pt-12">RD number</h5>
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
@@ -165,7 +165,7 @@
         </div>
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Bank name</h5>
+                <h5 class="m-0 pt-12">Bank name</h5>
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
@@ -181,7 +181,7 @@
         </div>
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Linked bank account</h5>
+                <h5 class="m-0 pt-12">Linked bank account</h5>
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
@@ -198,7 +198,7 @@
         </div>
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Description</h5>
+                <h5 class="m-0 pt-12">Description</h5>
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">

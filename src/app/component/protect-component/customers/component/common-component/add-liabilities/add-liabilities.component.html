@@ -19,7 +19,8 @@
         </div>
         <div class="col-md-5">
             <mat-form-field class="w-100">
-                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                <mat-select matInput appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                    [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Select family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
                         <span>{{f.userName}}</span>
@@ -38,7 +39,7 @@
         <div class="col-md-3 ">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <mat-select class="form-control br-0" formControlName="loanType">
+                    <mat-select matInput class="form-control br-0" formControlName="loanType">
                         <mat-option value="" disabled>Select option</mat-option>
                         <mat-option value="1">Home Loan</mat-option>
                         <mat-option value="2">Vehicle</mat-option>
@@ -62,7 +63,9 @@
         <div class="col-md-3">
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input type="text" matInput #loanAmountRef class="form-control rupess br-0" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="loanAmount" maxlength="{{getFormControl().loanAmount.maxLength}}">
+                    <input type="text" matInput #loanAmountRef class="form-control rupess br-0" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" formControlName="loanAmount"
+                        maxlength="{{getFormControl().loanAmount.maxLength}}">
                     <mat-error class="f-12 pt-4">
                         This field is required
                     </mat-error>
@@ -79,7 +82,9 @@
         <div class="col-md-3 ">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input type="text" matInput #loanTenure class="form-control br-0" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="loanTenure" maxlength="{{getFormControl().loanTenure.maxLength}}">
+                    <input type="text" matInput #loanTenure class="form-control br-0" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" formControlName="loanTenure"
+                        maxlength="{{getFormControl().loanTenure.maxLength}}">
                     <mat-error class="f-12 pt-4">
                         This field is required
                     </mat-error>
@@ -95,7 +100,8 @@
             <p class="m-0"> I want to enter principal outstanding </p>
         </div>
         <div class="col-md-3 ">
-            <mat-checkbox class="text-primary checkBoxPositions text-line" (change)="select($event)" formControlName="outstandingCheck"></mat-checkbox>
+            <mat-checkbox class="text-primary checkBoxPositions text-line" (change)="select($event)"
+                formControlName="outstandingCheck"></mat-checkbox>
         </div>
     </div>
 
@@ -107,10 +113,11 @@
             <div class="form-group mb-0">
                 <label class="f-14">Outstanding as on</label>
                 <mat-form-field>
-                    <input class="form-control br-0" matInput (focus)="picker.open()" [max]="maxDate" (input)="preventDefault($event)" [matDatepicker]="picker" formControlName="poDate" readonly>
+                    <input class="form-control br-0" matInput (focus)="picker.open()" [max]="maxDate"
+                        (input)="preventDefault($event)" [matDatepicker]="picker" formControlName="poDate" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
-                    <mat-error class="f-12 pt-4" *ngIf="getFormControl().poDate.invalid || (getFormControl().poDate.touched && getFormControl().poDate.invalid)">
+                    <mat-error class="f-12 pt-4">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -120,7 +127,9 @@
             <div class="form-group mb-0 iconRupess">
                 <label class="f-14">Outstanding amount</label>
                 <mat-form-field>
-                    <input type="text" matInput #loanTenure class="form-control rupess br-0" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="outstandingAmt" maxlength="{{getFormControl().outstandingAmt.maxLength}}">
+                    <input type="text" matInput #loanTenure class="form-control rupess br-0" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" formControlName="outstandingAmt"
+                        maxlength="{{getFormControl().outstandingAmt.maxLength}}">
                     <mat-error class="f-12 pt-4">
                         This field is required
                     </mat-error>
@@ -136,7 +145,9 @@
         </div>
         <div class="col-md-3 ">
             <mat-form-field>
-                <input class="form-control br-0" (focus)="picker.open()" [max]="maxDate" (input)="preventDefault($event)" matInput [matDatepicker]="picker" formControlName="CommencementDate" readonly>
+                <input matInput class="form-control br-0" (focus)="picker.open()" [max]="maxDate"
+                    (input)="preventDefault($event)" matInput [matDatepicker]="picker"
+                    formControlName="CommencementDate" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error class="f-12 pt-4">
@@ -153,7 +164,7 @@
         <div class="col-md-3 ">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <mat-select formControlName="emiFrequency" class="form-control br-0">
+                    <mat-select matInput formControlName="emiFrequency" class="form-control br-0">
                         <!-- |<mat-option *ngFor="let emi of this.emiFrequency" value={{emi.name}}>{{emi.name}}</mat-option> -->
                         <mat-option value="" disabled>Select option</mat-option>
                         <mat-option value="1">Yearly</mat-option>
@@ -176,7 +187,9 @@
         <div class="col-md-3  ">
             <div class="form-group mb-0 iconPetage">
                 <mat-form-field>
-                    <input type="number" matInput #interest class="form-control br-0 percentage" (keyup)="onChange($event)" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="interest" maxlength="{{getFormControl().interest.maxLength}}">
+                    <input type="number" matInput #interest class="form-control br-0 percentage"
+                        (keyup)="onChange($event)" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                        formControlName="interest" maxlength="{{getFormControl().interest.maxLength}}">
                     <mat-error class="f-12 pt-4">
                         This field is required
                     </mat-error>
@@ -211,7 +224,9 @@
             <div class="col-md-3 ">
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
-                        <input type="text" appInputValueValidation matInput #emi class="form-control br-0 rupess" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="emi" maxlength="20">
+                        <input type="text" appInputValueValidation matInput #emi class="form-control br-0 rupess"
+                            appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="emi"
+                            maxlength="20">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{emi.value.length}}/20</mat-hint>
                     </mat-form-field>
@@ -222,12 +237,13 @@
 
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Financial Institution</h5>
+                <h5 class="m-0 pt-8">Financial institution</h5>
             </div>
             <div class="col-md-3  ">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input type="text" matInput #finInstitution class="form-control br-0" formControlName="finInstitution" maxlength="40">
+                        <input type="text" matInput #finInstitution class="form-control br-0"
+                            formControlName="finInstitution" maxlength="40">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{finInstitution.value.length}}/40</mat-hint>
                     </mat-form-field>
@@ -242,7 +258,8 @@
             <div class="col-md-3 ">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input type="text" matInput #collateral class="form-control br-0" formControlName="collateral" maxlength="20">
+                        <input type="text" matInput #collateral class="form-control br-0" formControlName="collateral"
+                            maxlength="20">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{collateral.value.length}}/20</mat-hint>
                     </mat-form-field>
@@ -250,77 +267,9 @@
             </div>
         </div>
     </div>
-    <div class="col-md-12 p-0">
-        <div class="row pt-40 justify-content-md-center ">
-            <div class="col-md-9 bt-grey text-center">
-                <button mat-stroked-button class="btn-dark-black addon mt-16" (click)="showAddTransact()"><i
-                        class="material-icons">add</i>ADD TRANSACTIONS
-                </button>
-                <p class="f-12 text-primitive mt-12 " *ngIf="this.showTransact==false">
-                    Adding transactions is optional but highly <br> recommended to get better reports
-                    <span class="text-primary c-p" matTooltip="You can add partial transaction history too. E.g. if your A/c commenced in 2012, you can specify balance as on, say 31/03/2017 and enter transactions after 31/03/2017.">
-                        More info </span>
-                </p>
-            </div>
-        </div>
-        <div class=" pt-16" *ngIf="this.showTransact==true">
-            <div class="row">
-                <div class="col-md-3">
-                    <h5 class="m-0 f-14 ">Part Payment date </h5>
-                </div>
-                <div class="col-md-3 pl-0">
-                    <h5 class="m-0 f-14">Part Payment Amount</h5>
-                </div>
-                <div class="col-md-3 pl-0">
-                    <h5 class="m-0 f-14">Option </h5>
-                </div>
-            </div>
-
-            <div formArrayName="transact">
-                <div class="row pb-28" *ngFor="let obj of transactEntries.controls; let pointIndex=index" [formGroupName]="pointIndex">
-                    <div class="col-md-3">
-                        <mat-form-field>
-                            <input class="form-control br-0" matInput (focus)="picker.open()" (input)="preventDefault($event)" [matDatepicker]="picker" formControlName="partPaymentDate" readonly>
-                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
-                            <mat-error class="f-12 pt-4">
-                                This field is required
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-3 pl-0 ">
-                        <div class="form-group mb-0 iconRupess">
-                            <mat-form-field>
-                                <input type="text" matInput #partPayment class="form-control rupess br-0" maxlength="20" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="partPayment">
-                                <mat-error class="f-12 pt-4">
-                                    This field is required
-                                </mat-error>
-                                <mat-hint align="end" class="f-12">{{partPayment.value.length}}/20</mat-hint>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="col-md-3 pl-0">
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <mat-select formControlName="option" class="form-control br-0">
-                                    <mat-option value="1" matTooltip="Keep the EMI as it is and reduce the term">Keep the EMI as it is and reduce the term</mat-option>
-                                    <mat-option value="2" matTooltip="Keep the term as it is and reduce the EMI">Keep the term as it is and reduce the EMI</mat-option>
-                                </mat-select>
-                                <mat-error class="f-12 pt-4">
-                                    This field is required
-                                </mat-error>
-                            </mat-form-field>
-
-                        </div>
-                    </div>
-                    <div class="col-md-1 p-0 align-items-center d-flex">
-                        <i class="material-icons text-primitive c-p f-20 " (click)="addTransaction()">add</i>
-                        <i class="material-icons text-primitive pl-10 c-p f-20 " (click)="removeTransaction(pointIndex)">remove</i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <app-add-transaction (outputEvent)="getFormData($event)" [data]="editData"
+        [transactionViewData]="transactionViewData">
+    </app-add-transaction>
 </div>
 <div class="bottom-fixed w-60 wrapper-12 pt-16">
     <div class="row">
@@ -332,169 +281,3 @@
         </div>
     </div>
 </div>
-
-<!-- LOAN SBI HOME 989898 -->
-<!-- <div class="popup-header-fix-60">
-  <div class="row bb-1">
-      <div class="col-md-8 p-0">
-          <h4 class="mb-0 wrapper-20">LOAN-SBI HOME 989898</h4>
-      </div>
-      <div class="col-md-4 text-right">
-          <div class="wrapper-12">
-              <i class="material-icons c-p pt-8 v-middle" (click)="closeNav('close')"> clear</i>
-          </div>
-      </div>
-  </div>
-</div>
-
-<div class="pt-72 pl-24 pr-24 pb-24">
-  <div class="row pt-40 ">
-      <div class="col-md-9 d-flex flex-column align-item-center text-center">
-          <img src="assets/images/svg/sbi-frame.svg" class="c-p pt-72">
-          <div class="mt-40">
-              <h3 class="f-18 f-bold">NO ACTIVITY YET</h3>
-              <p class="f-14">You can start off by adding advice, action plan <br> task, attachments, notes etc. Just do it!</p>
-          </div>
-      </div>
-      <div class="col-md-3 p-0">
-          <button class="br-0 min-180 mb-20 btn-lt text-light text-left f-14" mat-button> <img class="mr-4" src="assets/images/svg/Advice-icons-grey.svg">Advice</button>
-          <button class="br-0 min-180 mb-20 btn-lt text-light text-left f-14" mat-button> <img class="mr-4" src="assets/images/svg/Action-plan-icons-grey.svg"> Action plan</button>
-          <button class="br-0 min-180 mb-20 btn-lt text-light text-left f-14" mat-button> <img class="mr-4" src="assets/images/svg/Task-icons-grey.svg">Task</button>
-          <button class="br-0 min-180 mb-20 btn-lt text-light text-left f-14" mat-button> <img class="mr-4" src="assets/images/svg/Attachment-icons-grey.svg">Attachment</button>
-          <button class="br-0 min-180 mb-20 btn-lt text-light text-left f-14" mat-button> <img class="mr-4" src="assets/images/svg/Note-icons-grey.svg">Note</button>
-          <button class="br-0 min-180 mb-20 text-light text-left b-grey f-14" mat-button> <img class="mr-4" src="assets/images/svg/View-activity-log-icons-grey.svg">View activity log</button>
-          <button class="br-0 min-180 mb-20 text-light text-left b-grey f-14" mat-button> <img class="mr-4" src="assets/images/svg/Loan-chart-icons-grey.svg">Loan chart</button>
-      </div>
-  </div>
-</div> -->
-
-<!-- Loan Chart -->
-<!--  <div class="popup-header-fix-60">
-  <div class="row bb-1">
-      <div class="col-md-8 p-0">
-          <h4 class="mb-0 wrapper-20">LOAN-SBI HOME 989898</h4>
-      </div>
-      <div class="col-md-4 text-right">
-          <div class="wrapper-12">
-              <i class="material-icons c-p pt-8 v-middle" (click)="closeNav('close')"> clear</i>
-          </div>
-      </div>
-  </div>
-</div>
-<div class="pt-72 pl-24 pr-24 pb-24">
-  <div class="row pt-20 ">
-      <div class="col-md-9 p-0">
-          <h4 class="mb-28 f-18 f-bold">
-              <img src="assets/images/svg/loan-chart-big-icon.svg" class="mr-8 "> LOAN CHART
-          </h4>
-
-          <div class="row">
-              <div class="col-md-6 cashflow">
-                  <div class="bg-grey lter">
-                      <h5 class="m-0 wrapper-8 b-a f-14 f-500 bb-0"> Loan terms </h5>
-                  </div>
-                  <table mat-table [dataSource]="dataSource" class="documentsTable" id="table-low">
-
-
-                      <ng-container matColumnDef="name">
-                          <th mat-header-cell *matHeaderCellDef> </th>
-                          <td class="br" mat-cell *matCellDef="let element"> {{element.name}} </td>
-                      </ng-container>
-
-                      <ng-container matColumnDef="amountTable">
-                          <th mat-header-cell *matHeaderCellDef> </th>
-                          <td class="text-right" mat-cell *matCellDef="let element"> {{element.amountTable}} </td>
-                      </ng-container>
-
-                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                  </table>
-              </div>
-              <div class="col-md-6 pl-4">
-                  <div class="bg-grey lter">
-                      <h5 class="m-0 wrapper-8 b-a f-14 f-500 bb-0"> Results & summary </h5>
-                  </div>
-                  <div class="b-a row">
-                      <div class="col-md-6 pl-12 pr-0 mt-20">
-                          <label class="f-12 mb-0 text-primitive">MONTHLY PAYMENT</label>
-                          <h2 class="f-16 l-21">₹23,450</h2>
-                      </div>
-                      <div class="col-md-6 mt-20">
-                          <label class="f-12 mb-0 text-primitive">TOTAL INTEREST</label>
-                          <h2 class="f-16 l-21 text-danger">₹12,23,920</h2>
-                      </div>
-
-
-                      <div class="col-md-6 pl-12 pr-0 mt-16 mb-8">
-                          <label class="f-12 mb-0 text-primitive">TOTAL PAYOUT</label>
-                          <h2 class="f-16 l-21">₹52,23,920</h2>
-                      </div>
-
-                      <div class="col-md-6 mt-16 mb-8">
-                          <label class="f-12 mb-0 text-primitive">PAYOFF DATE</label>
-                          <h2 class="f-16 l-21 text-success">SEP 2032</h2>
-                      </div>
-                  </div>
-              </div>
-          </div>
-
-          <div class="row">
-              <div class="col-md-12 mt-20">
-                  <img src="assets/images/svg/loan-chart-map.svg" class="percentage100">
-              </div>
-          </div>
-
-          <div class="row">
-              <div class="col-md-12 ">
-                  <h4 class="f-16 mt-20 mb-8"> AMORTIZATION SCHEDULE </h4>
-                  <button class="br-0 min-130 text-left bg-primary text-white f-14" mat-button> YEARLY MODE </button>
-                  <button class="br-0 ml-12 min-130 text-primary text-left b-grey f-14" mat-button> MONTHLY MODE </button>
-              </div>
-          </div>
-
-          <div class="row">
-              <div class="col-md-12 mt-12 scheduleTable">
-                  <table mat-table [dataSource]="dataSource1" class="documentsTable" id="table-low">
-
-                      <ng-container matColumnDef="year">
-                          <th class="br text-left" mat-header-cell *matHeaderCellDef> Year</th>
-                          <td class="br text-left" mat-cell *matCellDef="let element"> {{element.year}} </td>
-                      </ng-container>
-
-                      <ng-container matColumnDef="principal">
-                          <th class="br text-right" mat-header-cell *matHeaderCellDef> Principal</th>
-                          <td class="br text-right" mat-cell *matCellDef="let element"> {{element.principal}} </td>
-                      </ng-container>
-
-                      <ng-container matColumnDef="interest">
-                          <th class="br text-right" mat-header-cell *matHeaderCellDef> Interest</th>
-                          <td class="br text-right" mat-cell *matCellDef="let element"> {{element.interest}} </td>
-                      </ng-container>
-
-                      <ng-container matColumnDef="totalPaid">
-                          <th class="br text-right" mat-header-cell *matHeaderCellDef> Total paid</th>
-                          <td class="br text-right" mat-cell *matCellDef="let element"> {{element.totalPaid}} </td>
-                      </ng-container>
-
-                      <ng-container matColumnDef="balance">
-                          <th class="text-right" mat-header-cell *matHeaderCellDef> Balance</th>
-                          <td class="text-right" mat-cell *matCellDef="let element"> {{element.balance}} </td>
-                      </ng-container>
-
-                      <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
-                      <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
-                  </table>
-              </div>
-          </div>
-
-
-      </div>
-
-      <div class="col-md-3">
-          <button class="br-0 min-180 mb-20 text-light text-left b-grey f-14" mat-button> <img class="mr-8" src="assets/images/svg/back-arrow.svg">Go back</button>
-          <button class="br-0 min-180 mb-20 text-light text-left b-grey f-14" mat-button> <img class="mr-8" src="assets/images/svg/Hide-chart-icon.svg">Hide chart</button>
-          <button class="br-0 min-180 mb-20 text-light text-left b-grey f-14" mat-button> <img class="mr-8" src="assets/images/svg/Rounding-off.svg">Rounding off</button>
-          <button class="br-0 min-180 mb-20 text-light text-left b-grey f-14" mat-button> <img class="mr-8" src="assets/images/svg/Simulate-on-icon.svg">Simulate on</button>
-      </div>
-  </div>
-</div> -->

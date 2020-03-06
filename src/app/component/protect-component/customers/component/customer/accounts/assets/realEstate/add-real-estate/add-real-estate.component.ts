@@ -1,10 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { Validators, FormBuilder, FormArray } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-add-real-estate',
@@ -47,6 +48,7 @@ export class AddRealEstateComponent implements OnInit {
   flag: any;
   ownerName: any;
   adviceShowHeaderFooter: boolean = true;
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   constructor(public custumService: CustomerService, public subInjectService: SubscriptionInject, private fb: FormBuilder, public custmService: CustomerService, public eventService: EventService, public utils: UtilService) { }
   @Input()
   set data(inputData) {
@@ -266,11 +268,11 @@ export class AddRealEstateComponent implements OnInit {
       type: [(data.typeId == undefined) ? '' : (data.typeId) + "", [Validators.required]],
       marketValue: [data.marketValue, [Validators.required]],
       purchasePeriod: [(data.purchasePeriod == undefined) ? null : new Date(data.purchasePeriod)],
-      purchaseValue: [data.purchaseValue, [Validators.required]],
-      unit: [data.unitId, [Validators.required]],
-      ratePerUnit: [data.ratePerUnit, [Validators.required]],
-      stampDuty: [data.stampDutyCharge, [Validators.required]],
-      registration: [data.registrationCharge],
+      purchaseValue: [data.purchaseValue,],
+      unit: [data.unitId,],
+      ratePerUnit: [data.ratePerUnit,],
+      stampDuty: [data.stampDutyCharge,],
+      registration: [data.registrationCharge,],
       gst: [data.gstCharge],
       location: [data.location],
       description: [data.description],
@@ -335,6 +337,7 @@ export class AddRealEstateComponent implements OnInit {
     this.ownerData = this.addrealEstateForm.controls;
   }
   saveFormData() {
+    this.inputs.find(input => !input.ngControl.valid).focus();
     this.addrealEstateForm.controls.familyMemberId.setValue(this.familyMemberId)
     if (this.addrealEstateForm.get('ownerName').invalid) {
       this.addrealEstateForm.get('ownerName').markAsTouched();

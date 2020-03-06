@@ -384,7 +384,7 @@ export class InvoiceComponent implements OnInit {
     }else{
       this.moreStatus="";
     }
-    if (this.storeData.balanceDue == 0) {
+    if (this.storeData.balanceDue == 0 || this.storeData.status==1) {
       this.rpyment = false
     }else {
       this.rpyment = true;
@@ -605,6 +605,9 @@ export class InvoiceComponent implements OnInit {
     if (value != undefined) {
       this.storeData.balanceDue = value.balanceDue;
       this.storeData.status=value.status;
+      if(value.status==1){
+        this.rpyment=false
+      }
     }
     this.showRecord = false;
     const obj = {
@@ -622,7 +625,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   passInvoice(data, index, event) {
-    if (data.balanceDue == 0) {
+    if (data.balanceDue == 0 || this.storeData.status==1) {
       this.rpyment = false
     }else{
       this.rpyment =true

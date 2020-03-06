@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Input, Optional } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Input, Optional, ViewChildren, QueryList } from '@angular/core';
 import { SubjectSubscriber } from 'rxjs/internal/Subject';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer/customer.service';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { MAT_DATE_FORMATS } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { DataComponent } from '../../../../../../interfaces/data.component';
 import { ValidatorType } from 'src/app/services/util.service';
 
@@ -29,6 +29,7 @@ import { ValidatorType } from 'src/app/services/util.service';
 })
 export class AddInsuranceComponent implements OnInit, DataComponent {
   maxDate = new Date();
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   /*_data;
   @Input()
   set data(inputData) {
@@ -304,7 +305,8 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       }
       finalCashFlowList.push(obj)
     })
-    this.lifeInsuranceForm.get('policyName').value
+    this.lifeInsuranceForm.get('policyName').value;
+    this.inputs.find(input => !input.ngControl.valid).focus();
     if (this.lifeInsuranceForm.get('lifeAssured').invalid) {
       this.lifeInsuranceForm.get('lifeAssured').markAsTouched();
       return
