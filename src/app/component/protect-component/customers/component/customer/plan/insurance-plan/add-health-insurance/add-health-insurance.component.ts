@@ -103,7 +103,7 @@ export class AddHealthInsuranceComponent implements OnInit {
     this.showExisting = true
   }
   close(data) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
   }
   showHealthInsurance(data) {
     this.close(data);

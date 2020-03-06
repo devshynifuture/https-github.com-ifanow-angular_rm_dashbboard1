@@ -1,6 +1,37 @@
+import { EventService } from './../../../../../../Data-service/event.service';
+import { UtilService } from './../../../../../../services/util.service';
+import { SupportUpperService } from './../support-upper.service';
 import { Component, OnInit } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { MatTableDataSource } from '@angular/material';
+import { FormControl } from '@angular/forms';
+import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
+// import { Observable } from 'rxjs';
+// import { map, startWith } from 'rxjs/operators';
+// import { FormControl } from '@angular/forms';
+
+export interface SchemeI {
+  id: number;
+  schemeCode: string;
+  schemeName: string;
+  balanceUnit: number;
+  amountInvested: number;
+  currentValue: number;
+  absoluteReturn: number;
+  allocatedPercentage: number;
+  switchIn: number;
+  switchOut: number;
+  redemption: number;
+  dividendPayout: number;
+  dividendReinvestment: number;
+  netInvestment: number;
+  marketValue: number;
+  netGain: number;
+  isActive: number;
+  amountInv: number;
+  amc_id: number;
+  njCount: number;
+}
 
 @Component({
   selector: 'app-support-upper-nj',
@@ -10,26 +41,98 @@ import { MatTableDataSource } from '@angular/material';
 export class SupportUpperNjComponent implements OnInit {
   displayedColumns: string[] = ['name', 'nav', 'schemeName', 'schemeCode', 'amficode', 'navTwo', 'navDate', 'njCount', 'map'];
   dataSource;
+  isLoadingForDropDown: boolean = false;
+  previousSchemesValues: {} = {};
+  changedSchemesValues: Object = {};
+  interval: NodeJS.Timeout;
+  isFilteredSchemesCalled: boolean = false;
+  dataTable: elementI[];
 
   constructor(
-    private subInjectService: SubscriptionInject
+    private subInjectService: SubscriptionInject,
+    private supportUpperService: SupportUpperService,
+    private utilService: UtilService,
+    private eventService: EventService
   ) { }
 
-
+  schemeControl = new FormControl();
+  filteredSchemes: any;
+  errorMsg: string;
+  isLoading: boolean = false;
 
   ngOnInit() {
+    // console.log(this.schemeFormControl);
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+    this.isLoading = true;
+    this.getUnmappedNjSchemes();
+    this.schemeControl.valueChanges
+      .pipe(
+        debounceTime(500),
+        tap(() => {
+          this.errorMsg = "";
+          this.filteredSchemes = [];
+          this.isLoadingForDropDown = true;
+        }),
+        switchMap(value => this.supportUpperService.getFilteredSchemes({ scheme: value })
+          .pipe(
+            finalize(() => {
+              this.isLoadingForDropDown = false
+            }),
+          )
+        )
+      )
+      .subscribe(data => {
+        this.filteredSchemes = data;
+        console.log("this is what i need::::::::", data);
+        console.log(this.filteredSchemes);
+      });
+  }
+
+  mapSchemeCodeAndOther(element, scheme) {
+    element.schemeCode = scheme.schemeCode;
+    element.njCount = scheme.njCount;
+  }
+
+  mapNjScheme(element) {
+    console.log("this is some mapping value:::::;", element);
+  }
+
+  getUnmappedNjSchemes() {
+    const data = {};
+    this.supportUpperService.getUnmappedSchemesNj(data).subscribe(res => {
+      console.log("this is unmapped Nj schemes::::::::::", res);
+      this.isLoading = false;
+      let dataTable: elementI[] = [];
+      res.forEach(item => {
+        console.log(item);
+        dataTable.push({
+          name: item.schemeName,
+          nav: '',
+          schemeName: '',
+          schemeCode: '',
+          amficode: '',
+          navTwo: '',
+          navDate: '',
+          njCount: '',
+          map: ''
+        });
+      });
+      console.log("this is some data::::::", dataTable);
+      this.dataTable = dataTable;
+      this.dataSource.data = dataTable;
+    }, err => {
+      console.error(err);
+    });
   }
 
   dialogClose() {
-    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
-    console.log('close');
+    clearInterval(this.interval);
+    this.eventService.changeUpperSliderState({ state: 'close' });
   }
 
 }
 
 export interface elementI {
-
   name: string;
   nav: string;
   schemeName: string;
@@ -42,7 +145,7 @@ export interface elementI {
 }
 
 const ELEMENT_DATA = [
-  { name: 'Aditya Birla Sun Life FTP Series - KH - Regular Div', nav: '1898.988', schemeName: ' ', amficode: ' ', navTwo: ' ', navDate: ' ', njCount: ' ', map: ' ' },
-
-
+  { name: '', nav: '', schemeName: '', amficode: '', navTwo: '', navDate: '', njCount: '', map: '' },
+  { name: '', nav: '', schemeName: '', amficode: '', navTwo: '', navDate: '', njCount: '', map: '' },
+  { name: '', nav: '', schemeName: '', amficode: '', navTwo: '', navDate: '', njCount: '', map: '' },
 ]

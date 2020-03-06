@@ -1,3 +1,4 @@
+import { SupportUpperService } from './support-upper.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./support-upper.component.scss']
 })
 export class SupportUpperComponent implements OnInit {
-  constructor() { }
+  constructor(
+    private supportUpperService: SupportUpperService
+  ) { }
 
   data;
 
   ngOnInit() {
+    console.log(this.data);
   }
 }

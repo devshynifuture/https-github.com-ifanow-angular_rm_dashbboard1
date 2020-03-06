@@ -21,56 +21,114 @@
 
 <div class="row pt-72">
     <div class="col-md-12">
-        <table id="table-low" mat-table [dataSource]="dataSource">
+        <table id="table-low" class="mt-8 skeletonAnimation" mat-table [dataSource]="dataSource" appSkeletonLoading
+            [appSkeletonLoading]="isLoading">
             <!-- Position Column -->
             <ng-container matColumnDef="name">
                 <th class="b-a" mat-header-cell *matHeaderCellDef> NJ name </th>
-                <td mat-cell class="b-a" *matCellDef="let element"> {{element.name}} </td>
+                <td mat-cell class="b-a" *matCellDef="let element">
+                    <div class="bar">
+                        {{element.name}}
+                    </div>
+                </td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="nav">
                 <th class="b-a" mat-header-cell *matHeaderCellDef> NJ NAV </th>
-                <td class="b-a" mat-cell *matCellDef="let element"> {{element.nav}} </td>
+                <td class="b-a" mat-cell *matCellDef="let element">
+                    <div class="bar">
+                        {{element.nav}}
+                    </div>
+                </td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="schemeName">
                 <th class="b-a" mat-header-cell *matHeaderCellDef> Search corresponding scheme name </th>
-                <td class="b-a" mat-cell *matCellDef="let element"> <input class="form-control" matInput value="Sushi">
+                <td class="b-a" mat-cell *matCellDef="let element">
+                    <!-- <input class="form-control" matInput
+                        (focus)="getFilteredSchemes()">
+                         -->
+                    <mat-form-field>
+                        <input matInput placeholder="Search" aria-label="State" [matAutocomplete]="auto"
+                            [formControl]="schemeControl">
+                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                            <mat-option *ngIf="isLoadingForDropDown" class="is-loading">Loading...</mat-option>
+                            <ng-container *ngIf="!isLoadingForDropDown">
+                                <mat-option *ngFor="let scheme of filteredSchemes"
+                                    (click)="mapSchemeCodeAndOther(element, scheme)" [value]="scheme.schemeName"
+                                    [matTooltip]="scheme.schemeName" matTooltipPosition="after">
+                                    <span><b>{{scheme.schemeName}}</b> </span>
+                                </mat-option>
+                            </ng-container>
+                        </mat-autocomplete>
+                    </mat-form-field>
+
+                    <br>
+
+                    <ng-container *ngIf="errorMsg">
+                        {{errorMsg}}
+                    </ng-container>
                 </td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="schemeCode">
                 <th class="b-a" mat-header-cell *matHeaderCellDef> Scheme code </th>
-                <td class="b-a" mat-cell *matCellDef="let element"> {{element.schemeCode}} </td>
+                <td class="b-a" mat-cell *matCellDef="let element">
+                    <div class="bar">
+                        {{element.schemeCode}}
+                    </div>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="amficode">
                 <th class="b-a" mat-header-cell *matHeaderCellDef> AMFI code </th>
-                <td class="b-a" mat-cell *matCellDef="let element"> {{element.amficode}} </td>
+                <td class="b-a" mat-cell *matCellDef="let element">
+                    <div class="bar">
+                        {{element.amficode}}
+                    </div>
+                </td>
             </ng-container>
 
 
             <ng-container matColumnDef="navTwo">
                 <th class="b-a" mat-header-cell *matHeaderCellDef> NAV </th>
-                <td class="b-a" mat-cell *matCellDef="let element"> {{element.navTwo}} </td>
+                <td class="b-a" mat-cell *matCellDef="let element">
+                    <div class="bar">
+                        {{element.navTwo}}
+                    </div>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="navDate">
                 <th class="b-a" mat-header-cell *matHeaderCellDef> NAV date </th>
-                <td class="b-a" mat-cell *matCellDef="let element"> {{element.navDate}} </td>
+                <td class="b-a" mat-cell *matCellDef="let element">
+                    <div class="bar">
+                        {{element.navDate}}
+                    </div>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="njCount">
                 <th class="b-a" mat-header-cell *matHeaderCellDef> NJ count </th>
-                <td class="b-a" mat-cell *matCellDef="let element"> {{element.njCount}} </td>
+                <td class="b-a" mat-cell *matCellDef="let element">
+                    <div class="bar">
+                        {{element.njCount}}
+                    </div>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="map">
                 <th class="b-a" mat-header-cell *matHeaderCellDef> Map </th>
-                <td class="b-a" mat-cell *matCellDef="let element"> {{element.map}} </td>
+                <td class="b-a" mat-cell *matCellDef="let element">
+                    <div class="bar">
+                        <button mat-stroked-button (click)="mapNjScheme(element)">
+                            Map
+                        </button>
+                    </div>
+                </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

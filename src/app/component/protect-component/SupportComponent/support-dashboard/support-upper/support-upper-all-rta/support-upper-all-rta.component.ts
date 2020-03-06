@@ -11,16 +11,18 @@ import { MatTableDataSource } from '@angular/material';
 export class SupportUpperAllRtaComponent implements OnInit {
   displayedColumns: string[] = ['name', 'nav', 'schemeName', 'schemeCode', 'amficode', 'navTwo', 'navDate', 'njCount', 'map'];
   dataSource;
+  isLoading: boolean = false;
 
   constructor(
-    private subInjectService: SubscriptionInject,
     private eventService: EventService
   ) { }
 
-
-
   ngOnInit() {
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+  }
+
+  mapUnmappedSchemes(element) {
+    console.log(element);
   }
 
   dialogClose() {

@@ -132,7 +132,7 @@ export class GoldComponent implements OnInit {
   saveGold() {
     if (this.gold.invalid) {
       for (let element in this.gold.controls) {
-        console.log(element)
+        console.log(element);
         if (this.gold.controls[element].invalid) {
           this.gold.controls[element].markAsTouched();
           return;
