@@ -35,7 +35,7 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
   fragmentData;
   selectedSubscriptionTab: any;
 
-  isOverlayVisible;
+  isOverlayVisible = true;
   currentState;
   subscriptionTab;
   dialogState;
@@ -88,6 +88,7 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
       console.log(this.componentName + 'fragmentData dialog container: ', this.fragmentData);
       this.getFileResponseDataAum(this.fragmentData.flag);
       this.inputData = this.fragmentData.data;
+      this.isOverlayVisible = (this.fragmentData.isOverlayVisible == undefined ? true : this.fragmentData.isOverlayVisible);
       this.handleChangeOfState(this.fragmentData.state);
       // this.getRightSliderData(this.fragmentData.state);
     });
@@ -173,7 +174,6 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
       this.currentState = value;
       setTimeout(() => {
         this.dialogState = 'open';
-        this.isOverlayVisible = true;
       }, 100);
     }
   }

@@ -20,9 +20,9 @@ export class AddGoalComponent implements OnInit {
         "name": "Fixed Deposit - ICICI Bank FD 802321938",
         "allocated_percentage": 50,
         "asset_owner_id": "1",
-        "current_value": 43780,
-        "maturity_value": 8815785,
-        "maturity_year": 2033,
+        "current_value": 48941,
+        "maturity_value": 951456,
+        "maturity_year": 2029,
         "allocation_status": "partially allocated"
       },
       {
@@ -31,9 +31,9 @@ export class AddGoalComponent implements OnInit {
         "name": "Fixed Deposit - ICICI Bank FD 802321938",
         "allocated_percentage": 0,
         "asset_owner_id": "1",
-        "current_value": 43780,
-        "maturity_value": 8815785,
-        "maturity_year": 2033,
+        "current_value": 9842,
+        "maturity_value": 198436,
+        "maturity_year": 2040,
         "allocation_status": "unallocated"
       },
       {
@@ -42,9 +42,9 @@ export class AddGoalComponent implements OnInit {
         "name": "Fixed Deposit - ICICI Bank FD 802321938",
         "allocated_percentage": 0,
         "asset_owner_id": "1",
-        "current_value": 43780,
-        "maturity_value": 8815785,
-        "maturity_year": 2033,
+        "current_value": 3541,
+        "maturity_value": 768541,
+        "maturity_year": 2035,
         "allocation_status": "unallocated"
       },
       {
@@ -53,9 +53,9 @@ export class AddGoalComponent implements OnInit {
         "name": "Fixed Deposit - ICICI Bank FD 802321938",
         "allocated_percentage": 50,
         "asset_owner_id": "2",
-        "current_value": 43780,
-        "maturity_value": 8815785,
-        "maturity_year": 2033,
+        "current_value": 65378,
+        "maturity_value": 15498,
+        "maturity_year": 2030,
         "allocation_status": "partially allocated"
       },
       {
@@ -64,9 +64,9 @@ export class AddGoalComponent implements OnInit {
         "name": "Fixed Deposit - ICICI Bank FD 802321938",
         "allocated_percentage": 0,
         "asset_owner_id": "2",
-        "current_value": 43780,
+        "current_value": 4443,
         "maturity_value": 8815785,
-        "maturity_year": 2033,
+        "maturity_year": 2039,
         "allocation_status": "unallocated"
       },
       {
@@ -75,9 +75,9 @@ export class AddGoalComponent implements OnInit {
         "name": "Fixed Deposit - ICICI Bank FD 802321938",
         "allocated_percentage": 100,
         "asset_owner_id": "2",
-        "current_value": 43780,
-        "maturity_value": 8815785,
-        "maturity_year": 2033,
+        "current_value": 55343,
+        "maturity_value": 9785125,
+        "maturity_year": 2032,
         "allocation_status": "allocated"
       },
       {
@@ -86,9 +86,9 @@ export class AddGoalComponent implements OnInit {
         "name": "Fixed Deposit - ICICI Bank FD 802321938",
         "allocated_percentage": 0,
         "asset_owner_id": "2",
-        "current_value": 43780,
-        "maturity_value": 8815785,
-        "maturity_year": 2033,
+        "current_value": 12345,
+        "maturity_value": 6354545,
+        "maturity_year": 2038,
         "allocation_status": "unallocated"
       },
       {
@@ -97,9 +97,9 @@ export class AddGoalComponent implements OnInit {
         "name": "Fixed Deposit - ICICI Bank FD 802321938",
         "allocated_percentage": 50,
         "asset_owner_id": "3",
-        "current_value": 43780,
-        "maturity_value": 8815785,
-        "maturity_year": 2033,
+        "current_value": 89754,
+        "maturity_value": 789816,
+        "maturity_year": 2036,
         "allocation_status": "partially allocated"
       },
       {
@@ -108,9 +108,9 @@ export class AddGoalComponent implements OnInit {
         "name": "Fixed Deposit - ICICI Bank FD 802321938",
         "allocated_percentage": 0,
         "asset_owner_id": "3",
-        "current_value": 43780,
-        "maturity_value": 8815785,
-        "maturity_year": 2033,
+        "current_value": 63433,
+        "maturity_value": 1657841,
+        "maturity_year": 2031,
         "allocation_status": "unallocated"
       }
     ]
@@ -171,12 +171,13 @@ export class AddGoalComponent implements OnInit {
   constructor(private subInjectService: SubscriptionInject) { }
 
   ngOnInit() {
-    this.createFamilyList();
     this.data = this.tempDisplayData;
-    this.displayedAssets = this.data.data;
+    this.createFamilyList();
+    this.filterAndSortAssets(this.currentFamilyFilter, this.currentAllocationFilter);
     // this.displayData = this.data;
   }
 
+  // Creates list of family members from the given assets list for the family filter buttons.
   createFamilyList(){
     this.familyList = this.data.data.map((obj) => {
       return {name: obj.asset_owner, asset_owner_id: obj.asset_owner_id, selected: false};
@@ -188,23 +189,26 @@ export class AddGoalComponent implements OnInit {
   }
 
   filterByFamily(member) {
-    this.displayedAssets = this.data.data.filter((obj) => {
-      return obj.asset_owner_id === member.asset_owner_id
-    });
+    if(member.asset_owner_id == -1) {
+      this.displayedAssets = this.data.data;
+    } else {
+      this.displayedAssets = this.data.data.filter((obj) => {
+        return obj.asset_owner_id === member.asset_owner_id
+      });
+    }
   }
 
   filterByAllocation(filterType) {
     if(filterType == 'all') {
-      this.displayedAssets = this.data.data;
+      return; // Since filter by family is already taking fresh data
     } else {
-      this.displayedAssets = this.data.data.filter((obj)=> {
+      this.displayedAssets = this.displayedAssets.filter((obj)=> {
         return obj.allocation_status === filterType
       })
     }
-    this.sortList(this.currentSort);
   }
 
-  filterAssets(member, filterType){
+  filterAndSortAssets(member, filterType){
     this.currentFamilyFilter = member;
     this.currentAllocationFilter = filterType;
     this.filterByFamily(this.currentFamilyFilter);
@@ -232,7 +236,7 @@ export class AddGoalComponent implements OnInit {
           return b.asset_id - a.asset_id;
         });
         break;
-      
+
       case 'm-N2F': // maturity near to far
         this.displayedAssets = this.displayedAssets.sort((a,b)=> {
           return a.maturity_year - b.maturity_year;

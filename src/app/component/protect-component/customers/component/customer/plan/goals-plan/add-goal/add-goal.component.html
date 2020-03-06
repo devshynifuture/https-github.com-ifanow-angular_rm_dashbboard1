@@ -5,9 +5,9 @@
     <div class="col-md-4">
         <div class="row">
             <div class="col-md-6">
-                <img src="/assets/images/svg/people.svg" class="pt-16 c-p" [matMenuTriggerFor]="menu">
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item *ngFor="let member of familyList" (click)="filterAssets(member, currentAllocationFilter)">
+                <img src="/assets/images/svg/people.svg" class="pt-16 c-p" [matMenuTriggerFor]="peopleMenu">
+                <mat-menu #peopleMenu="matMenu">
+                    <button mat-menu-item *ngFor="let member of familyList" (click)="filterAndSortAssets(member, currentAllocationFilter)">
                         <div class="row">
                             <div class="col-md-3">
                                 <img src="/assets/images/svg/right.svg" class="c-p" *ngIf="member.asset_owner_id == currentFamilyFilter.asset_owner_id">
@@ -22,7 +22,7 @@
             <div class="col-md-6">
                 <img src="/assets/images/svg/lines-3.svg" class="pt-16 c-p" [matMenuTriggerFor]="menu">
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item *ngFor="let allocation_filter of allocationBtnList" (click)="filterAssets(currentFamilyFilter, allocation_filter.filter)">
+                    <button mat-menu-item *ngFor="let allocation_filter of allocationBtnList" (click)="filterAndSortAssets(currentFamilyFilter, allocation_filter.filter)">
                         <div class="row">
                             <div class="col-md-3">
                                 <img src="/assets/images/svg/right.svg" class="c-p" *ngIf="allocation_filter.filter == currentAllocationFilter">
@@ -33,7 +33,7 @@
                         </div>
                     </button>
                     <p class="text-primitive roboto m-0">Sort</p>
-                    <button mat-menu-item *ngFor="let sortMenu of sortBtnList" (click)="filterByAllocation(sortMenu.sortKey)">
+                    <button mat-menu-item *ngFor="let sortMenu of sortBtnList" (click)="sortList(sortMenu.sortKey)">
                         <div class="row">
                             <div class="col-md-3">
                                 <img src="/assets/images/svg/right.svg" class="c-p" *ngIf="sortMenu.sortKey == currentSort">

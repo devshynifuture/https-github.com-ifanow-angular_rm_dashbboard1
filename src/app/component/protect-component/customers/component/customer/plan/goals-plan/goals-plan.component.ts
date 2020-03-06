@@ -114,6 +114,7 @@ export class GoalsPlanComponent implements OnInit {
         break;
       case 'openallocations':
         fragmentData.componentName = AddGoalComponent;
+        fragmentData['isOverlayVisible'] = false;
         fragmentData.state = 'open25';
         break;
       case 'openMfAllocation':
