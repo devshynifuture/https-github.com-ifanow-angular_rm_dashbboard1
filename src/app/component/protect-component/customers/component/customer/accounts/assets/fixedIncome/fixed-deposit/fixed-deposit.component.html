@@ -39,14 +39,14 @@
         </div>
         <div class="col-md-5">
             <mat-form-field class="w-100">
-                <mat-select matInput appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                <mat-select matInput appOwnerNominee (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [callMethod] = 'callMethod'
                     [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Select family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName" (click)="ownerDetails(f)">
                         <span>{{f.userName}}</span>
                     </mat-option>
                 </mat-select>
-                <mat-error class="f-12 pt-4">
+                <mat-error class="f-12 pt-4" >
                     This field is required
                 </mat-error>
             </mat-form-field>
@@ -60,22 +60,22 @@
     
 
     <div formArrayName="getCoOwnerName" *ngIf="fixedDeposit.get('ownerType').value === '1'">
-        <div class="row pt-36" *ngFor="let obj of getCoOwner.controls; let pointIndex=index"
+        <div class="row pt-36" *ngFor="let obj of fixedDeposit.controls['getCoOwnerName'].controls; let pointIndex=index"
             [formGroupName]="pointIndex">
             <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8 ">{{pointIndex != 0?'Co-' : ''}}owner{{pointIndex != 0?pointIndex:''}}</h5>
+                <h5 class="m-0 pt-8 ">{{pointIndex != 0?'Co-o' : 'O'}}wner{{pointIndex != 0?pointIndex:''}}</h5>
             </div>
             <div class="col-md-3 pr-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select appOwner matInput
-                            formControlName="ownerName" (selectionChange)="disabledMember()" (valueChange1)='lisNominee($event)' class="form-control br-0" [data]='ownerData' >
+                        <mat-select appOwnerNominee matInput
+                            formControlName="ownerName" [data]='ownerData' (selectionChange)="disabledMember($event.value)" (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod] = 'callMethod' >
                             <mat-option value=''>Select family members</mat-option>
                             <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"   [value]="f.userName">
                                 <span>{{f.userName}}</span>
                             </mat-option>
                         </mat-select>
-                        <mat-error class="f-12">
+                        <mat-error class="f-12" *ngIf="reqError">
                             This field is required
                         </mat-error>
                     </mat-form-field>

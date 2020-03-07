@@ -92,7 +92,7 @@
           <p class="m-0 roboto f-500 text-black">Goal year</p>
         </div>
         <div class="col-md-6 p-8 bb">
-          <p class="m-0 roboto text-right">2012</p>
+          <p class="m-0 roboto text-right">{{data.goalYear}}</p>
         </div>
       </div>
       <div class="row">
@@ -100,7 +100,7 @@
           <p class="m-0 roboto f-500 text-black">Present value</p>
         </div>
         <div class="col-md-6 p-8 bb">
-          <p class="m-0 roboto text-right">25,541</p>
+          <p class="m-0 roboto text-right">₹<span appFormatNumber>{{data.presentValue}}</span></p>
         </div>
       </div>
       <div class="row">
@@ -108,7 +108,7 @@
           <p class="m-0 roboto f-500 text-black">Future value</p>
         </div>
         <div class="col-md-6 p-8">
-          <p class="m-0 roboto text-right">45,475</p>
+          <p class="m-0 roboto text-right">₹<span appFormatNumber>{{data.futureValue}}</span></p>
         </div>
       </div>
       </div>
@@ -121,7 +121,7 @@
               <p class="m-0 roboto f-500 text-black">Equity</p>
             </div>
             <div class="col-md-6 p-8 bb">
-              <p class="m-0 roboto text-right">5,200</p>
+              <p class="m-0 roboto text-right">₹<span appFormatNumber>{{data.equity_monthly}}</span></p>
             </div>
           </div>
           <div class="row">
@@ -129,7 +129,7 @@
               <p class="m-0 roboto f-500 text-black">Debt</p>
             </div>
             <div class="col-md-6 p-8 bb">
-              <p class="m-0 roboto text-right">2,555</p>
+              <p class="m-0 roboto text-right">₹<span appFormatNumber>{{data.debt_monthly}}</span></p>
             </div>
           </div>
         </div>
@@ -142,7 +142,7 @@
                   <p class="m-0 roboto f-500 text-black">Equity</p>
                 </div>
                 <div class="col-md-6 p-8 bb">
-                  <p class="m-0 roboto text-right">2,095</p>
+                  <p class="m-0 roboto text-right">₹<span appFormatNumber>{{data.lump_equity}}</span></p>
                 </div>
               </div>
               <div class="row">
@@ -150,7 +150,7 @@
                   <p class="m-0 roboto f-500 text-black">Debt</p>
                 </div>
                 <div class="col-md-6 p-8 bb">
-                  <p class="m-0 roboto text-right">6,031</p>
+                  <p class="m-0 roboto text-right">₹<span appFormatNumber>{{data.lump_debt}}</span></p>
                 </div>
               </div>
             </div>
@@ -163,7 +163,7 @@
         <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
       </div>
       <div class="col-md-8 right text-right">
-        <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
+        <button mat-button class="btn-bottom br-0 text-inherit" (click)="close()">Save</button>
       </div>
     </div>
   </div>
