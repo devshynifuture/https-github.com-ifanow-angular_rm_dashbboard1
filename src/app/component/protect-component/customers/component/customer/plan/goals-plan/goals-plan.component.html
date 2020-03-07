@@ -323,10 +323,12 @@
                     </div>
                     <div 
                         cdkDropList
-                        #allottedList="cdkDropList"
+                        id="allottedList"
                         [cdkDropListData]="todo"
                         [cdkDropListSortingDisabled]="true"
-                        (cdkDropListDropped)="drop($event)">
+                        (cdkDropListDropped)="drop($event)"
+                        (cdkDropListEntered)="logger($event)"
+                        class="hide-placeholder">
                         <table mat-table [dataSource]="dataSource" class="mt-8 goal-allocations skeletonAnimation" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
                             <ng-container matColumnDef="position">
                                 <th mat-header-cell *matHeaderCellDef class="t-30"> Description </th>
