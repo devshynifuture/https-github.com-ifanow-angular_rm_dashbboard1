@@ -115,8 +115,8 @@ export class AddKvpComponent implements OnInit {
         this.nominees.push(obj)
       });
     }
-    this.inputs.find(input => !input.ngControl.valid).focus();
     if (this.KVPFormScheme.invalid) {
+      this.inputs.find(input => !input.ngControl.valid).focus();
       this.KVPFormScheme.markAllAsTouched();
       return;
     }

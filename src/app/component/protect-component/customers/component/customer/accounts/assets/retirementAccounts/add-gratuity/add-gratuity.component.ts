@@ -107,8 +107,8 @@ export class AddGratuityComponent implements OnInit {
     return this.gratuity.controls;
   }
   saveEPF() {
-    this.inputs.find(input => !input.ngControl.valid).focus();
     if (this.gratuity.invalid) {
+      this.inputs.find(input => !input.ngControl.valid).focus();
       this.gratuity.markAllAsTouched();
       return;
     } else {

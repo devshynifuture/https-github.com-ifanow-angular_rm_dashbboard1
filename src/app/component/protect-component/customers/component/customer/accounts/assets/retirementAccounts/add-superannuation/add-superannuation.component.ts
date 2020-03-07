@@ -121,8 +121,8 @@ export class AddSuperannuationComponent implements OnInit {
     return this.superannuation.controls;
   }
   saveSuperannuation() {
-    this.inputs.find(input => !input.ngControl.valid).focus();
     if (this.superannuation.invalid) {
+      this.inputs.find(input => !input.ngControl.valid).focus();
       this.superannuation.markAllAsTouched();
       return;
     } else {

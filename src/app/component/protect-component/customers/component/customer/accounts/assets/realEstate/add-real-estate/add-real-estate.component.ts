@@ -337,9 +337,10 @@ export class AddRealEstateComponent implements OnInit {
     this.ownerData = this.addrealEstateForm.controls;
   }
   saveFormData() {
-    this.inputs.find(input => !input.ngControl.valid).focus();
+
     this.addrealEstateForm.controls.familyMemberId.setValue(this.familyMemberId)
     if (this.addrealEstateForm.invalid) {
+      this.inputs.find(input => !input.ngControl.valid).focus();
       this.addrealEstateForm.markAllAsTouched();
       return;
     }

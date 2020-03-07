@@ -134,8 +134,8 @@ export class AddEPFComponent implements OnInit {
     return this.epf.controls;
   }
   saveEPF() {
-    this.inputs.find(input => !input.ngControl.valid).focus();
     if (this.epf.invalid) {
+      this.inputs.find(input => !input.ngControl.valid).focus();
       this.epf.markAllAsTouched();
       return;
     } else {

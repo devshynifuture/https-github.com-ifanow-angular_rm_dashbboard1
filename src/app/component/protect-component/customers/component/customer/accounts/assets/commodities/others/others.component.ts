@@ -131,8 +131,8 @@ export class OthersComponent implements OnInit {
 
   saveOthers() {
     console.log("form group ::::::::::::", this.others);
-    this.inputs.find(input => !input.ngControl.valid).focus();
     if (this.others.invalid) {
+      this.inputs.find(input => !input.ngControl.valid).focus();
       this.others.markAllAsTouched();
       return;
     } else {

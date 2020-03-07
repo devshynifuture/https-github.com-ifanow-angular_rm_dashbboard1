@@ -306,8 +306,9 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       finalCashFlowList.push(obj)
     })
     this.lifeInsuranceForm.get('policyName').value;
-    this.inputs.find(input => !input.ngControl.valid).focus();
+
     if (this.lifeInsuranceForm.invalid) {
+      this.inputs.find(input => !input.ngControl.valid).focus();
       this.lifeInsuranceForm.markAllAsTouched();
       return
     }
