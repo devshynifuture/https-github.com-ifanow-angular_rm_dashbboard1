@@ -8,7 +8,7 @@
         <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
 
             <p class="f-16 mb-0">
-                Investment onboarding - KYC
+                Investment onboarding - IIN/UCC
             </p>
         </div>
         <!-- (click)="dialogClose()" for prod build  -->
@@ -20,7 +20,7 @@
     </div>
 </div>
 
-<div class="pt-60 mb-100">
+<div class="pt-60 mb-100" [formGroup]="bankDetails">
     <div class="row">
         <app-left-side-inn-ucc-list></app-left-side-inn-ucc-list>
         <div class="col-md-7 offset-2 p-0 bl-1 ">
@@ -48,12 +48,12 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input matInput formControlName="bankCode" maxlength="10" type="text" class="form-control">
+                            <input matInput formControlName="bankName" maxlength="10" type="text" class="form-control">
 
                         </mat-form-field>
                     </div>
                 </div>
-
+               
 
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
@@ -130,36 +130,23 @@
                         <mat-form-field>
                             <input matInput maxlength="10" formControlName="branchName" type="text"
                                 class="form-control">
-
                         </mat-form-field>
                     </div>
                 </div>
-
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Branch Country </h3>
+                        <h3 class="f-16 pt-8 m-0"> Branch code </h3>
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input matInput maxlength="10" formControlName="branchCode" type="text"
-                                class="form-control">
+                            <input matInput formControlName="branchCode" maxlength="10" type="text" class="form-control">
 
                         </mat-form-field>
                     </div>
                 </div>
 
 
-                <div class="row pt-32">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Branch Pin code </h3>
-                    </div>
-                    <div class="col-md-3">
-                        <mat-form-field>
-                            <input matInput maxlength="10" formControlName="branchPin" type="text" class="form-control">
-
-                        </mat-form-field>
-                    </div>
-                </div>
+             
 
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
@@ -169,7 +156,6 @@
                         <mat-form-field>
                             <input matInput maxlength="10" formControlName="branchAdd1" type="text"
                                 class="form-control">
-
                         </mat-form-field>
                     </div>
                 </div>
@@ -182,26 +168,19 @@
                         <mat-form-field>
                             <input matInput maxlength="10" formControlName="branchAdd2" type="text"
                                 class="form-control">
-
                         </mat-form-field>
                     </div>
                 </div>
-
-
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Branch citiy </h3>
+                        <h3 class="f-16 pt-8 m-0"> Branch Pin code </h3>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-3">
                         <mat-form-field>
-                            <input matInput maxlength="10" formControlName="branchCity" type="text"
-                                class="form-control">
-
+                            <input matInput maxlength="10" formControlName="branchPin" type="text" class="form-control">
                         </mat-form-field>
                     </div>
                 </div>
-
-
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0"> Branch state </h3>
@@ -210,6 +189,28 @@
                         <mat-form-field>
                             <input matInput maxlength="10" formControlName="bankState" type="text" class="form-control">
 
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Branch citiy </h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <input matInput maxlength="10" formControlName="branchCity" type="text"
+                                class="form-control">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Branch Country </h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <input matInput maxlength="10" formControlName="branchCountry" type="text"
+                                class="form-control">
                         </mat-form-field>
                     </div>
                 </div>
@@ -303,7 +304,7 @@
 <div class="bottom-fixed  pl-20 pr-20 d-flex  w-100 row">
 
     <div class="col-md-3 p-0 d-flex align-items-center ">
-        <a href="#" class="text-white f-300"> Skip this step </a>
+        <a href="#" class="text-white f-300" (click)="saveBankDetails('skip')"> Skip this step </a>
     </div>
 
     <div class="col-md-5 center_menu">
@@ -318,7 +319,7 @@
             PREVIOUS
         </button>
 
-        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4">SAVE</button>
+        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4"(click)="saveBankDetails(null)">SAVE</button>
         <button mat-button class="greenBtn  p-0 mw-40 br-left-white " [matMenuTriggerFor]="menu">
             <i class="material-icons">
                 keyboard_arrow_up

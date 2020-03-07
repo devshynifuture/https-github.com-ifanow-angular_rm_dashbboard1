@@ -38,6 +38,7 @@ import { IinUccCreationComponent } from './overview-transactions/IIN/UCC-Creatio
 import { PersonalDetailsInnComponent } from './overview-transactions/IIN/UCC-Creation/personal-details-inn/personal-details-inn.component';
 import { ContactDetailsInnComponent } from './overview-transactions/IIN/UCC-Creation/contact-details-inn/contact-details-inn.component';
 import { BankDetailsIINComponent } from './overview-transactions/IIN/UCC-Creation/bank-details-iin/bank-details-iin.component';
+import { NomineeDetailsIinComponent } from './overview-transactions/IIN/UCC-Creation/nominee-details-iin/nominee-details-iin.component';
 export const componentList = [
     TransactionAddComponent,
     OnlineTrasactionComponent,
@@ -72,7 +73,8 @@ export const componentList = [
     LeftKycListComponent,
     LeftSideInnUccListComponent,
     ContactDetailsInnComponent,
-    BankDetailsIINComponent
+    BankDetailsIINComponent,
+    NomineeDetailsIinComponent
     // VideoKycComponent
 
 

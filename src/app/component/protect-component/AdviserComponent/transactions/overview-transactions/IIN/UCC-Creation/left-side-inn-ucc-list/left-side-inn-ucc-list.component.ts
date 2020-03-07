@@ -8,6 +8,7 @@ import { FormBuilder } from '@angular/forms';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { DatePipe } from '@angular/common';
 import { EventService } from 'src/app/Data-service/event.service';
+import { NomineeDetailsIinComponent } from '../nominee-details-iin/nominee-details-iin.component';
 
 @Component({
   selector: 'app-left-side-inn-ucc-list',
@@ -75,5 +76,24 @@ export class LeftSideInnUccListComponent implements OnInit {
       }
     );
   }
+  openNomineeDetails(data) {
+    const fragmentData = {
+      flag: 'app-upper-customer',
+      id: 1,
+      data,
+      direction: 'top',
+      componentName: NomineeDetailsIinComponent,
+      state: 'open'
+    };
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getClientSubscriptionList();
+          subscription.unsubscribe();
+        }
+      }
+    );
+  }
+  
 
 }
