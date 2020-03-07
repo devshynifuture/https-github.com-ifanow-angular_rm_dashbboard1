@@ -85,6 +85,7 @@ export class AddEPSComponent implements OnInit {
   // }
   getdataForm(data) {
     this.flag = data;
+    this.familyMemberId = data.familyMemberId;
     (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : '';
     this.eps = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
