@@ -574,6 +574,10 @@ ul {
   transition: 0.5s;
 }
 
+.ox-hide {
+  overflow: hidden !important;
+}
+
 // .custom-overlay:hover + .upper_slider{overflow: hidden !important;}
 .z-value-100 {
   z-index: 100;
