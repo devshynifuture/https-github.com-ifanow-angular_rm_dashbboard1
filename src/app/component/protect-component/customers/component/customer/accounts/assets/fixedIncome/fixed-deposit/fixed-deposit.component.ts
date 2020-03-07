@@ -53,6 +53,7 @@ export class FixedDepositComponent implements OnInit {
   inputData: any;
   validMaturity: any;
   showErrorOwner = false;
+  callMethod:any;
   compoundValue = [
     { name: 'Daily', value: 2 },
     { name: 'Monthly', value: 3 },
@@ -74,6 +75,7 @@ export class FixedDepositComponent implements OnInit {
   isViewInitCalled = false;
   nomineesListFM: any;
   flag: string;
+  reqError: boolean = false;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   fdMonths = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
     '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26',
@@ -119,22 +121,9 @@ export class FixedDepositComponent implements OnInit {
  
 
   addNewCoOwner(data) {
-  //   if (this.addOwner == data) {
-  //     if (this.showErrorOwner == false) {
-        this.getCoOwner.push(this.fb.group({
-          ownerName: "", ownershipPerc: null, familyMemberId: null
-        }));
-    //   }
-    // } else {
-    //   if (this.showErrorOwner == false) {
-    //     this.addOwner = data;
-    //     if (this.getCoOwner.value.length == 0) {
-    //       this.getCoOwner.push(this.fb.group({
-    //         ownerName: "", ownershipPerc: null, familyMemberId: null
-    //       }));
-    //     }
-    //   }
-    // }
+    this.getCoOwner.push(this.fb.group({
+      ownerName: "", ownershipPerc: null, familyMemberId: null
+    }));
   }
   get data() {
     return this.inputData;
@@ -168,15 +157,17 @@ export class FixedDepositComponent implements OnInit {
   }
   display(value) {
     console.log('value selected', value);
-    this.ownerName = value.userName;
-    this.familyMemberId = value.id;
+    this.fixedDeposit.controls['getCoOwnerName'] = value;
+    // this.ownerName = value.userName;
+    // this.familyMemberId = value.id;
   }
   ownerDetails(value) {
     this.familyMemberId = value.id;
+    this.reqError = true;
   }
   lisNominee(value) {
     console.log(value)
-    this.nomineesListFM = Object.assign([], value.familyMembersList);
+    this.nomineesListFM = Object.assign([], value);
     this.nomineesListFM.forEach(element => {
         element['disable'] = false;
     });
@@ -294,7 +285,7 @@ export class FixedDepositComponent implements OnInit {
       })])
     });
 
-    this.ownerData = this.fixedDeposit.controls;
+    this.ownerData = this.fixedDeposit;
     this.familyMemberId = this.fixedDeposit.controls.familyMemberId.value;
     // this.familyMemberId = this.familyMemberId[0];
     this.fixedDeposit.controls.maturityDate.setValue(new Date(data.maturityDate));
@@ -313,49 +304,56 @@ export class FixedDepositComponent implements OnInit {
   }
 
   checkOwnerType(){
-    if(this.fixedDeposit.controls['ownerType'].value == '2'){
-      this.fixedDeposit.controls['ownerName'].setValidators(Validators.required);
-      this.fixedDeposit.get('ownerName').updateValueAndValidity();
-      for (let element in this.fixedDeposit.controls) {
-        console.log(element)
-        if(element == 'getCoOwnerName'){
-          for(let e in this.getCoOwner.controls){
-            // this.getCoOwner.removeAt(e);
-            const arrayCon:any = this.getCoOwner.controls[e];
-            for(let i in arrayCon.controls){
-              if(i== "ownerName"){
-              arrayCon.get(i).setValue('');
-              // arrayCon.get(i).setErrors({required:false});
-              }
-              arrayCon.get(i).setValidators([]);
-              arrayCon.get(i).updateValueAndValidity();
-            }
-          }
-        }
-      }
+    this.callMethod = {
+      methodName : "checkOwnerType",
+      ParamValue : this.fixedDeposit.get('ownerType').value
     }
-    else{
-      if(this.fixedDeposit.value.getCoOwnerName.length < 2){
-        this.addNewCoOwner(true);
-      }
-      // this.disabledMember();
-      this.fixedDeposit.controls['ownerName'].setValidators([]);
-      this.fixedDeposit.get('ownerName').updateValueAndValidity();
-      for (let element in this.fixedDeposit.controls) {
-        console.log(element)
-        if(element == 'getCoOwnerName'){
-          for(let e in this.getCoOwner.controls){
-            const arrayCon:any = this.getCoOwner.controls[e];
-            for(let i in arrayCon.controls){
-              if(i != 'familyMemberId'){
-                arrayCon.controls[i].setValidators(Validators.required);
-                arrayCon.get(i).updateValueAndValidity();
-              }
-            }
-          }
-        }
-      }
-    }
+    // if(this.fixedDeposit.get('ownerType').value == '2'){
+    // this.reqError = false;
+    //   this.fixedDeposit.controls['ownerName'].setValidators(Validators.required);
+    //   this.fixedDeposit.get('ownerName').updateValueAndValidity();
+    //   for (let element in this.fixedDeposit.controls) {
+    //     console.log(element)
+    //     if(element == 'getCoOwnerName'){
+    //       for(let e in this.getCoOwner.controls){
+    //         // this.getCoOwner.removeAt(parseInt(e));
+    //         const arrayCon:any = this.getCoOwner.controls[e];
+    //         for(let i in arrayCon.controls){
+    //           if(i== "ownerName"){
+    //           arrayCon.get(i).setValue('');
+    //           // arrayCon.get(i).setErrors({required:false});
+    //           }
+    //           arrayCon.get(i).setValidators([]);
+    //           arrayCon.get(i).updateValueAndValidity();
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
+    // else{
+    //   if(this.fixedDeposit.value.getCoOwnerName.length < 2){
+    //     for(let i = 0; i < 1 ; i++){
+    //       this.addNewCoOwner(true);
+    //     }
+    //   }
+    //   // this.disabledMember();
+    //   this.fixedDeposit.controls['ownerName'].setValidators([]);
+    //   this.fixedDeposit.get('ownerName').updateValueAndValidity();
+    //   for (let element in this.fixedDeposit.controls) {
+    //     console.log(element)
+    //     if(element == 'getCoOwnerName'){
+    //       for(let e in this.getCoOwner.controls){
+    //         const arrayCon:any = this.getCoOwner.controls[e];
+    //         for(let i in arrayCon.controls){
+    //           if(i != 'familyMemberId'){
+    //             arrayCon.controls[i].setValidators(Validators.required);
+    //             arrayCon.get(i).updateValueAndValidity();
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
   }
 
   saveFixedDeposit() {
@@ -367,6 +365,7 @@ export class FixedDepositComponent implements OnInit {
       this.maturityDate = this.fixedDeposit.controls.maturityDate.value;
     }
     if (this.fixedDeposit.invalid || !this.tenureValid) {
+    this.reqError = true;
       for (let element in this.fixedDeposit.controls) {
         console.log(element)
         this.fixedDeposit.controls[element].markAsTouched();

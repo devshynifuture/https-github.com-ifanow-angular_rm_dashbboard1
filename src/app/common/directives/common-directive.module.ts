@@ -15,6 +15,7 @@ import {
 import { InputValueValidationDirective } from './input-value-validation.directive';
 import { OwnerDirective } from './owner.directive';
 import { ClientSearchDirective } from 'src/app/component/protect-component/AdviserComponent/transactions/client-search.directive';
+import { OwnerNomineeDirective } from './owner-nominee.directive';
 
 // import {AppModule} from "../app.module";
 
@@ -32,10 +33,11 @@ import { ClientSearchDirective } from 'src/app/component/protect-component/Advis
     Formatter,
     InputValueValidationDirective,
     OwnerDirective,
-    ClientSearchDirective
+    ClientSearchDirective,
+    OwnerNomineeDirective
   ],
   exports: [RadioGroupDirectiveDirective, SkeletonLoadingDirective, FormatNumberDirective, NumberOnlyDirective,
-    AlphaNumericDirective, CodeTextDirective, TextOnlyDirective, Formatter, InputValueValidationDirective, OwnerDirective, ClientSearchDirective],
+    AlphaNumericDirective, CodeTextDirective, TextOnlyDirective, Formatter, InputValueValidationDirective, OwnerDirective,OwnerNomineeDirective, ClientSearchDirective],
   imports: [
 
     // AppModule
