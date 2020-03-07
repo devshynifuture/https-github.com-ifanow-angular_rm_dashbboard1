@@ -63,6 +63,7 @@ export class FixedDepositComponent implements OnInit {
   ];
   isOwnerPercent
   ownerData: any;
+  nomineeData: any;
   tenure: any;
   getDate: string;
   ownerName: any;
@@ -123,6 +124,18 @@ export class FixedDepositComponent implements OnInit {
       ownerName: "", ownershipPerc: null, familyMemberId: null
     }));
   }
+
+  removeNewNominee(item) {
+    this.getNominee.removeAt(item);
+  }
+
+  addNewNominee(data) {
+    this.getNominee.push(this.fb.group({
+      name: [""],
+      sharePercentage: [""],
+      familyMemberId: [""]
+    }));
+  }
   get data() {
     return this.inputData;
   }
@@ -156,7 +169,8 @@ export class FixedDepositComponent implements OnInit {
 
   display(value) {
     console.log('value selected', value);
-    this.fixedDeposit.controls['getCoOwnerName'] = value;
+    this.fixedDeposit.controls['getCoOwnerName'] = value.owner;
+    this.fixedDeposit.controls['getNomineeName'] = value.nominee;
   }
 
   ownerDetails(value) {
@@ -277,8 +291,9 @@ export class FixedDepositComponent implements OnInit {
       id: [(!data) ? '' : data.id,],
       familyMemberId: [(!data) ? '' : data.familyMemberId],
       getNomineeName: this.fb.array([this.fb.group({
-        name: null,
-        ownershipPer: null,
+        name: [""],
+        sharePercentage: [""],
+        familyMemberId: [""]
       })])
     });
 

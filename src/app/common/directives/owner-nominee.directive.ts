@@ -11,6 +11,7 @@ export class OwnerNomineeDirective {
   ownerData: any;
   clientId: any;
   sendData: any;
+  ownerNomineeJson:any;
   @Input()set data(data) {
     this.ownerData = data;
     console.log('1111121212121212121212 OwnerColumnComponent data : ', data);
@@ -155,21 +156,22 @@ export class OwnerNomineeDirective {
         }
       }
     }
-    this.valueChange.emit(this.ownerData.controls['getCoOwnerName']);
+    this.valueChange.emit(this.ownerNomineeJson);
   }
   showError:boolean = false;
-  nexNomineePer:any;
+  ownerPer:any;
+  NomineePer:any;
   showErrorOwner:boolean =false;
   onChangeJointOwnership(data) {
     if (data == 'owner') {
-      this.nexNomineePer = 0;
+      this.ownerPer = 0;
       
       for(let e in this.getCoOwner.controls){
         const arrayCon:any = this.getCoOwner.controls[e];
         
-            this.nexNomineePer += arrayCon.value.ownershipPerc;
+            this.ownerPer += arrayCon.value.ownershipPerc;
           
-              if (this.nexNomineePer > 100 || this.nexNomineePer < 100) {
+              if (this.ownerPer > 100 || this.ownerPer < 100) {
                 this.showErrorOwner = true;
                 if(e == "1"){
                   arrayCon.controls['ownershipPerc'].setErrors({'incorrect': true});
@@ -185,23 +187,41 @@ export class OwnerNomineeDirective {
             
       }
       // this.getCoOwner.value.forEach(element => {
-      //   this.nexNomineePer += (element.ownershipPerc) ? parseInt(element.ownershipPerc) : null;
+      //   this.ownerPer += (element.ownershipPerc) ? parseInt(element.ownershipPerc) : null;
       // });
-      // this.nexNomineePer = this.fixedDeposit.controls.ownerPercent.value + this.nexNomineePer
+      // this.ownerPer = this.fixedDeposit.controls.ownerPercent.value + this.ownerPer
      
     } else {
-      this.nexNomineePer = 0;
+      this.NomineePer = 0;
 
-      this.getNominee.value.forEach(element => {
-        this.nexNomineePer += (element.ownershipPer) ? parseInt(element.ownershipPer) : null;
-      });
-      if (this.nexNomineePer > 100 ) {
-        this.showError = true
-        console.log('show error Percent cannot be more than 100%')
-      } else {
-        this.showError = false
+      for(let e in this.getCoOwner.controls){
+        const arrayCon:any = this.getNominee.controls[e];
+        
+            this.NomineePer += arrayCon.value.sharePercentage;
+          
+              if (this.NomineePer > 100 || this.NomineePer < 100) {
+                this.showErrorOwner = true;
+                if(e == "1"){
+                  arrayCon.controls['sharePercentage'].setErrors({'incorrect': true});
+                  arrayCon.get('sharePercentage').updateValueAndValidity();
+                }
+                console.log('show error Percent cannot be more than 100%')
+              } else {
+                this.showErrorOwner = false
+                // this.showErrorCoOwner = false;
+                arrayCon.controls['sharePercentage'].setErrors({'incorrect': false});
+                arrayCon.get('sharePercentage').updateValueAndValidity();
+              }
+            
       }
     }
-    this.valueChange.emit(this.ownerData.controls['getCoOwnerName']);
+    this.valueChange.emit(this.ownerNomineeJson);
+  }
+
+  setOwnerNominee(){
+    this.ownerNomineeJson = {
+      owner: this.ownerData.controls['getCoOwnerName'],
+      nominee: this.ownerData.controls['getCoOwnerName']
+    }
   }
 }
