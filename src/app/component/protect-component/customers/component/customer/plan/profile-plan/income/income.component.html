@@ -43,7 +43,8 @@
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="owner">
-                            <th *matHeaderCellDef class="br t-18" mat-header-cell mat-sort-header> Owner</th>
+                            <th *matHeaderCellDef class="br t-18" mat-header-cell mat-sort-header="ownerName"> Owner
+                            </th>
                             <td *matCellDef="let element" class="br t-18" mat-cell>
                                 <div class="bar"> {{element.ownerName}} </div>
                             </td>
@@ -62,7 +63,8 @@
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="amt">
-                            <th *matHeaderCellDef class="br t-18 text-right" mat-header-cell mat-sort-header> Monthly
+                            <th *matHeaderCellDef class="br t-18 text-right" mat-header-cell
+                                mat-sort-header="monthlyIncome"> Monthly
                                 amount
                             </th>
                             <td *matCellDef="let element" class="br t-18 text-right" mat-cell>
@@ -70,7 +72,8 @@
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="income">
-                            <th *matHeaderCellDef class="br t-14 text-right" mat-header-cell mat-sort-header> Income
+                            <th *matHeaderCellDef class="br t-14 text-right" mat-header-cell
+                                mat-sort-header="incomeStyleId"> Income
                                 style
                             </th>
                             <td *matCellDef="let element" class="br t-14 text-right" mat-cell>
@@ -78,7 +81,8 @@
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="till">
-                            <th *matHeaderCellDef class="br t-14 text-right" mat-header-cell mat-sort-header> Continues
+                            <th *matHeaderCellDef class="br t-14 text-right" mat-header-cell
+                                mat-sort-header="continueTill"> Continues
                                 till
                             </th>
                             <td *matCellDef="let element" class="br t-14 text-right" mat-cell>
@@ -91,7 +95,8 @@
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="rate">
-                            <th *matHeaderCellDef class="br text-right" mat-header-cell mat-sort-header> Growth rate
+                            <th *matHeaderCellDef class="br text-right" mat-header-cell mat-sort-header="growthRate">
+                                Growth rate
                             </th>
                             <td *matCellDef="let element" class="br text-right" mat-cell>
                                 <div class="bar"> {{element.growthRate}} </div>
@@ -99,7 +104,7 @@
                         </ng-container>
 
                         <ng-container matColumnDef="status">
-                            <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header> Status</th>
+                            <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="status"> Status</th>
                             <td *matCellDef="let element" class="br text-primary" mat-cell>
                                 <div class="bar"> {{element.status}} </div>
                             </td>

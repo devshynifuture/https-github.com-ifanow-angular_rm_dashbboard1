@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-add-mutual-fund',
@@ -19,7 +20,7 @@ export class AddMutualFundComponent implements OnInit {
   familyList: any[];
   nexNomineePer: number;
   showError: boolean;
-
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   constructor(private fb: FormBuilder, public subInjectService: SubscriptionInject) { }
 
   // @Input()
@@ -42,7 +43,7 @@ export class AddMutualFundComponent implements OnInit {
       this.MfData = data
     }
     this.MfForm = this.fb.group({
-      ownerName: [!data.ownerName?'': data.ownerName, [Validators.required]],
+      ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
       currentMarketValue: [data.currentMarketValue, [Validators.required]],
       valueAsOn: [new Date(data.valueAsOn), [Validators.required]],
       amtInvested: [data.amountInvested, [Validators.required]],
@@ -59,6 +60,7 @@ export class AddMutualFundComponent implements OnInit {
   }
   SavePorfolio() {
     if (this.MfForm.invalid) {
+      this.inputs.find(input => !input.ngControl.valid).focus();
       this.MfForm.get('ownerName').markAsTouched();
       this.MfForm.get('currentMarketValue').markAsTouched();
       this.MfForm.get('valueAsOn').markAsTouched();

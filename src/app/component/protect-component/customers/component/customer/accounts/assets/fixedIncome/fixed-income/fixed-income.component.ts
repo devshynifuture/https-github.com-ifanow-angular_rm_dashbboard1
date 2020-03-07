@@ -26,8 +26,7 @@ export class FixedIncomeComponent implements OnInit {
   isLoading = false;
   showRequring: any;
   advisorId: any;
-  dataSourceRecurring: any;
-  dataSourceBond: any = new MatTableDataSource();
+  dataSource: any = new MatTableDataSource();;
   clientId: any;
   sumAmountInvested: any;
   sumCurrentValue: any;
@@ -45,7 +44,6 @@ export class FixedIncomeComponent implements OnInit {
   excelData: any[];
   footer = [];
   data: Array<any> = [{}, {}, {}];
-  dataSourceFixed = new MatTableDataSource(this.data);
   hidePdf: boolean;
   noData: string;
   fixedDepositList: any;
@@ -71,7 +69,7 @@ export class FixedIncomeComponent implements OnInit {
     this.clientId = AuthService.getClientId();
 
     this.getFixedDepositList();
-    // this.dataSourceFixed = new MatTableDataSource(this.data);
+    // this.dataSource = new MatTableDataSource(this.data);
   }
 
   Close() {
@@ -95,7 +93,7 @@ export class FixedIncomeComponent implements OnInit {
       { width: 10, key: 'Status' },];
       header = ['Owner', 'Type of FD', 'Current value', 'Rate', 'Amount invested',
         'Maturity date', 'FD number', 'Description', 'Status'];
-      this.dataSourceFixed.filteredData.forEach(element => {
+      this.dataSource.filteredData.forEach(element => {
         data = [element.ownerName, MathUtilService.formatAndRoundOffNumber(element.fdType),
         MathUtilService.formatAndRoundOffNumber(element.currentValue),
         MathUtilService.formatAndRoundOffNumber(element.interestRate),
@@ -121,7 +119,7 @@ export class FixedIncomeComponent implements OnInit {
       ];
       header = ['Owner', 'Current value', 'Rate', 'Monthly contribution',
         'Maturity date', 'RD number', 'Description', 'Status'];
-      this.dataSourceRecurring.filteredData.forEach(element => {
+      this.dataSource.filteredData.forEach(element => {
         data = [element.ownerName, MathUtilService.formatAndRoundOffNumber(element.currentValue),
         (element.interestRate), MathUtilService.formatAndRoundOffNumber(element.monthlyContribution),
         new Date(element.maturityDate), (element.rdNumber), element.description, element.status];
@@ -145,7 +143,7 @@ export class FixedIncomeComponent implements OnInit {
       { width: 10, key: 'Status' },];
       header = ['Owner', 'Current value', 'Coupon amount', 'Amount invested', 'Commencement date',
         'Rate', 'Maturity value', 'Tenure', 'Type', 'Description', 'Status'];
-      this.dataSourceBond.filteredData.forEach(element => {
+      this.dataSource.filteredData.forEach(element => {
         data = [element.ownerName, MathUtilService.formatAndRoundOffNumber(element.currentValue),
         MathUtilService.formatAndRoundOffNumber(element.couponAmount), (element.amountInvested),
         new Date(element.commencementDate),
@@ -168,9 +166,9 @@ export class FixedIncomeComponent implements OnInit {
     });
 
     this.isFixedIncomeFiltered = true;
-    this.dataSourceFixed.data = dataFiltered;
-    // this.dataSourceFixed = new MatTableDataSource(data);
-    this.dataSourceFixed.sort = this.fixedIncomeTableSort;
+    this.dataSource.data = dataFiltered;
+    // this.dataSource = new MatTableDataSource(data);
+    this.dataSource.sort = this.fixedIncomeTableSort;
     // const obj = {
     //   clientId: this.clientId,
     //   advisorId: this.advisorId
@@ -189,34 +187,32 @@ export class FixedIncomeComponent implements OnInit {
     //     // });
     //     console.log('this is filtered data ------------>', dataFiltered);
 
-    //     console.log('sorted ------------>', this.dataSourceFixed);
+    //     console.log('sorted ------------>', this.dataSource);
     //   }
     // );
   }
 
   changeRecurringFilterMode(value) {
     console.log('this is filter data', value);
-    this.dataSourceRecurring.filter = value.trim().toLowerCase();
+    this.dataSource.filter = value.trim().toLowerCase();
   }
 
   changeFixedIncomeFilterMode(value) {
     console.log('this is filter data', value);
-    this.dataSourceFixed.filter = value.trim().toLowerCase();
+    this.dataSource.filter = value.trim().toLowerCase();
   }
 
   getfixedIncomeData(value) {
     console.log('value++++++', value);
     this.showRequring = value;
 
-
+    this.isLoading = true;
+    this.dataSource.data = [{}, {}, {}];
     if (value == '2') {
-      this.dataSourceRecurring = new MatTableDataSource(this.data);
       this.getRecurringDepositList();
     } else if (value == '3') {
-      this.dataSourceBond = new MatTableDataSource(this.data);
       this.getBondsList();
     } else {
-      this.dataSourceFixed = new MatTableDataSource(this.data);
       this.getFixedDepositList();
     }
 
@@ -228,11 +224,11 @@ export class FixedIncomeComponent implements OnInit {
       clientId: this.clientId,
       advisorId: this.advisorId
     };
-    this.dataSourceFixed.data = [{}, {}, {}];
+    this.dataSource.data = [{}, {}, {}];
     this.customerService.getFixedDeposit(obj).subscribe(
       data => this.getFixedDepositRes(data), (error) => {
         this.eventService.showErrorMessage(error);
-        this.dataSourceFixed.data = [];
+        this.dataSource.data = [];
         this.isLoading = false;
       }
     );
@@ -244,15 +240,15 @@ export class FixedIncomeComponent implements OnInit {
     console.log('getFixedDepositRes ********** ', data);
     if (data == undefined) {
       this.noData = "No scheme found";
-      this.dataSourceFixed.data = [];
+      this.dataSource.data = [];
     } else if (data.fixedDepositList) {
       this.fixedDepositList = data.fixedDepositList;
-      this.dataSourceFixed.data = data.fixedDepositList;
-      this.dataSourceFixed.sort = this.fixedIncomeTableSort;
-      console.log('soted &&&&&&&&&', this.dataSourceFixed);
-      UtilService.checkStatusId(this.dataSourceFixed.filteredData);
+      this.dataSource.data = data.fixedDepositList;
+      this.dataSource.sort = this.fixedIncomeTableSort;
+      console.log('soted &&&&&&&&&', this.dataSource);
+      UtilService.checkStatusId(this.dataSource.filteredData);
       this.sumCurrentValue = 0;
-      this.dataSourceFixed.filteredData.forEach((o) => {
+      this.dataSource.filteredData.forEach((o) => {
         if (o.nomineePercentageShare) {
           this.sumCurrentValue += o.nomineePercentageShare;
         }
@@ -264,7 +260,7 @@ export class FixedIncomeComponent implements OnInit {
       this.sumMaturityValue = data.sumMaturityValue;
     } else {
       this.noData = 'No scheme found';
-      this.dataSourceFixed.data = [];
+      this.dataSource.data = [];
     }
 
   }
@@ -275,11 +271,11 @@ export class FixedIncomeComponent implements OnInit {
       clientId: this.clientId,
       advisorId: this.advisorId
     };
-    this.dataSourceRecurring.data = [{}, {}, {}];
+    this.dataSource.data = [{}, {}, {}];
     this.customerService.getRecurringDeposit(obj).subscribe(
       data => this.getRecurringDepositRes(data), (error) => {
         this.eventService.showErrorMessage(error);
-        this.dataSourceRecurring.data = [];
+        this.dataSource.data = [];
         this.isLoading = false;
       }
     );
@@ -290,20 +286,20 @@ export class FixedIncomeComponent implements OnInit {
     this.isLoading = false;
     if (data == undefined) {
       this.noData = 'No scheme found';
-      this.dataSourceRecurring.data = [];
+      this.dataSource.data = [];
     }
     else if (data.recurringDeposits) {
       console.log('FixedIncomeComponent getRecuringDepositRes data *** ', data);
-      this.dataSourceRecurring.data = data.recurringDeposits;
-      this.dataSourceRecurring.sort = this.recurringDepositTableSort;
-      UtilService.checkStatusId(this.dataSourceRecurring.filteredData);
+      this.dataSource.data = data.recurringDeposits;
+      this.dataSource.sort = this.recurringDepositTableSort;
+      UtilService.checkStatusId(this.dataSource.filteredData);
       data.recurringDeposits.forEach(element => {
         this.totalCurrentValue += element.currentValue
         this.totalMarketValue += element.monthlyContribution
       });
     } else {
       this.noData = 'No scheme found';
-      this.dataSourceRecurring.data = [];
+      this.dataSource.data = [];
     }
   }
 
@@ -313,11 +309,11 @@ export class FixedIncomeComponent implements OnInit {
       clientId: this.clientId,
       advisorId: this.advisorId
     };
-    this.dataSourceBond.data = [{}, {}, {}];
+    this.dataSource.data = [{}, {}, {}];
     this.customerService.getBonds(obj).subscribe(
       data => this.getBondsRes(data), (error) => {
         this.eventService.showErrorMessage(error);
-        this.dataSourceBond.data = [];
+        this.dataSource.data = [];
         this.isLoading = false;
       }
     );
@@ -327,18 +323,18 @@ export class FixedIncomeComponent implements OnInit {
     this.isLoading = false;
     if (data == undefined) {
       this.noData = 'No scheme found';
-      this.dataSourceBond.data = [];
+      this.dataSource.data = [];
     } else if (data.bondList) {
       console.log('getBondsRes ******** ', data);
-      this.dataSourceBond.data = data.bondList;
-      this.dataSourceBond.sort = this.bondListTableSort;
-      UtilService.checkStatusId(this.dataSourceBond.filteredData);
+      this.dataSource.data = data.bondList;
+      this.dataSource.sort = this.bondListTableSort;
+      UtilService.checkStatusId(this.dataSource.filteredData);
       this.sumAmountInvestedB = data.sumAmountInvested;
       this.sumCouponAmount = data.sumCouponAmount;
       this.sumCurrentValueB = data.sumCurrentValue;
     } else {
       this.noData = 'No scheme found';
-      this.dataSourceBond.data = [];
+      this.dataSource.data = [];
     }
   }
 

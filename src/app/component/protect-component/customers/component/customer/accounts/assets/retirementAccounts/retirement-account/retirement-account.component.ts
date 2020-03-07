@@ -30,10 +30,6 @@ export class RetirementAccountComponent implements OnInit {
   showRecurring = '1';
   getObject: {};
   advisorId: any;
-  dataGratuityList: any;
-  dataSuperannuationList: any;
-  EPSList: any;
-  dataNPSList: any;
   clientId: any;
   sumOfcurrentEpfBalance: any;
   sumOfcurrentValue: any;
@@ -47,9 +43,8 @@ export class RetirementAccountComponent implements OnInit {
   totalContribution: any;
   totalCurrentValue: any;
   data: Array<any> = [{}, {}, {}];
-  dataEPFList = new MatTableDataSource(this.data);
   isLoading = false;
-
+  dataSource: any = new MatTableDataSource();
 
   @ViewChild('epfListTable', { static: false }) epfListTableSort: MatSort;
   @ViewChild('npsListTable', { static: false }) npsListTableSort: MatSort;
@@ -79,7 +74,7 @@ export class RetirementAccountComponent implements OnInit {
       { width: 15, key: 'Description' },
       { width: 10, key: 'Status' },]
       var header = ['Owner', 'Notional value', 'Commencement date', 'Pension amount', ' Pension payout frequency', 'Description', 'Status'];
-      this.EPSList.filteredData.forEach(element => {
+      this.dataSource.filteredData.forEach(element => {
         data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.totalNotionalValue),
         new Date(element.commencementDate),
         this.formatNumber.first.formatAndRoundOffNumber(element.pensionAmount),
@@ -104,7 +99,7 @@ export class RetirementAccountComponent implements OnInit {
       ];
       var header = ['Owner', 'Name of the organization', 'Number of completed years',
         'Year of receipt', 'Amount recieved', 'Reason of receipt', 'Description', 'Status'];
-      this.dataGratuityList.filteredData.forEach(element => {
+      this.dataSource.filteredData.forEach(element => {
         data = [element.ownerName, (element.organizationName),
         (element.yearsCompleted), (element.yearReceipt),
         this.formatNumber.first.formatAndRoundOffNumber(element.amountReceived),
@@ -129,7 +124,7 @@ export class RetirementAccountComponent implements OnInit {
       var header = ['Owner', 'Annual employer contribution', 'Annual employee contribution', 'Assumed rate',
         'Growth rate employer contribution', 'Growth rate employee contribution',
         'Date of first contribution', 'Description', 'Status'];
-      this.dataSuperannuationList.filteredData.forEach(element => {
+      this.dataSource.filteredData.forEach(element => {
         data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.annualEmployerContribution),
         this.formatNumber.first.formatAndRoundOffNumber(element.annualEmployeeContribution),
         this.formatNumber.first.formatAndRoundOffNumber(element.assumedRateOfReturn),
@@ -155,7 +150,7 @@ export class RetirementAccountComponent implements OnInit {
       ];
       var header = ['Owner', 'Current value', 'Employee’s contribution', 'Employer’s contribution',
         'Rate of return', 'Balance mentioned', 'Balance as on', 'Maturity year', 'Description', 'Status'];
-      this.dataEPFList.filteredData.forEach(element => {
+      this.dataSource.filteredData.forEach(element => {
         data = [element.ownerName, (element.currentValue == undefined) ? 0 : this.formatNumber.first.formatAndRoundOffNumber(element.currentValue),
         (element.employeesMonthlyContribution == undefined) ? 0 : this.formatNumber.first.formatAndRoundOffNumber(element.employeesMonthlyContribution),
         (element.employersMonthlyContribution == undefined) ? 0 : this.formatNumber.first.formatAndRoundOffNumber(element.employersMonthlyContribution),
@@ -179,7 +174,7 @@ export class RetirementAccountComponent implements OnInit {
       { width: 15, key: 'Description' },
       { width: 10, key: 'Status' },]
       var header = ['Owner', 'Current value', 'Total contribution', 'Scheme choice', 'PRAN', 'Description', 'Status'];
-      this.dataNPSList.filteredData.forEach(element => {
+      this.dataSource.filteredData.forEach(element => {
         data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.currentValuation),
         this.formatNumber.first.formatAndRoundOffNumber(element.contributionAmount), (element.schemeChoice), (element.pran),
         element.description, element.status]
@@ -218,25 +213,26 @@ export class RetirementAccountComponent implements OnInit {
     };
     this.noData = "No scheme found";
     this.getListEPF();
-    this.dataEPFList = new MatTableDataSource(this.data);
+    this.dataSource = new MatTableDataSource(this.data);
   }
   getfixedIncomeData(value) {
     this.showRecurring = value;
+    this.isLoading = true;
     if (value == '2') {
-      this.dataNPSList = new MatTableDataSource(this.data);
+      this.dataSource = new MatTableDataSource([{}, {}, {}]);
       this.getListNPS()
     } else if (value == '3') {
-      this.dataGratuityList = new MatTableDataSource(this.data);
+      this.dataSource = new MatTableDataSource([{}, {}, {}]);
       this.getListGratuity()
     } else if (value == '4') {
-      this.dataSuperannuationList = new MatTableDataSource(this.data);
+      this.dataSource = new MatTableDataSource([{}, {}, {}]);
       this.getListSuperannuation()
     } else if (value == '5') {
-      this.EPSList = new MatTableDataSource(this.data);
+      this.dataSource = new MatTableDataSource([{}, {}, {}]);
       this.getListEPS()
     } else {
       this.getListEPF();
-      this.dataEPFList = new MatTableDataSource(this.data);
+      this.dataSource = new MatTableDataSource(this.data);
     }
   }
 
@@ -343,7 +339,7 @@ export class RetirementAccountComponent implements OnInit {
       }
     });
   }
-  
+
   openDetailedViewEPF(data) {
     const fragmentData = {
       flag: 'addEPF',
@@ -416,7 +412,7 @@ export class RetirementAccountComponent implements OnInit {
       }
     );
   }
-  
+
   deleteModal(value, data) {
     const dialogData = {
       data: value,
@@ -488,11 +484,11 @@ export class RetirementAccountComponent implements OnInit {
   getListEPF() {
     this.isLoading = true;
     const obj = this.getObject;
-    this.dataEPFList.data = [{}, {}, {}];
+    this.dataSource.data = [{}, {}, {}];
     this.custumService.getEPF(obj).subscribe(
       data => this.getEPFRes(data), (error) => {
         this.eventService.showErrorMessage(error);
-        this.dataEPFList.data = [];
+        this.dataSource.data = [];
         this.isLoading = false;
       }
     );
@@ -501,15 +497,15 @@ export class RetirementAccountComponent implements OnInit {
     this.isLoading = false;
     if (data == undefined) {
       this.noData = "No EPF found";
-      this.dataEPFList.data = [];
+      this.dataSource.data = [];
     }
     else if (data.listOfEpf) {
       console.log('getEPFRes =', data);
-      this.dataEPFList.data = data.listOfEpf;
-      this.dataEPFList.sort = this.epfListTableSort;
+      this.dataSource.data = data.listOfEpf;
+      this.dataSource.sort = this.epfListTableSort;
       var d = new Date();
       const n = d.getFullYear();
-      this.dataEPFList.filteredData.forEach(element => {
+      this.dataSource.filteredData.forEach(element => {
         if (element.maturityYear < n) {
           element.statusId = 'MATURED';
         } else {
@@ -523,18 +519,18 @@ export class RetirementAccountComponent implements OnInit {
     }
     else {
       this.noData = "No scheme found";
-      this.dataEPFList.data = [];
+      this.dataSource.data = [];
     }
 
   }
   getListGratuity() {
     this.isLoading = true;
     const obj = this.getObject;
-    this.dataGratuityList.data = [{}, {}, {}];
+    this.dataSource.data = [{}, {}, {}];
     this.custumService.getGrauity(obj).subscribe(
       data => this.getGrauityRes(data), (error) => {
         this.eventService.showErrorMessage(error);
-        this.dataGratuityList.data = [];
+        this.dataSource.data = [];
         this.isLoading = false;
       }
     );
@@ -544,29 +540,29 @@ export class RetirementAccountComponent implements OnInit {
     this.isLoading = false;
     if (data == undefined) {
       this.noData = 'No gratuity found';
-      this.dataGratuityList.data = []
+      this.dataSource.data = []
     }
     else if (data.gratuityList) {
       console.log('getGrauityRes =', data);
-      this.dataGratuityList.data = data.gratuityList;
-      this.dataGratuityList.sort = this.gratuityListTableSort;
-      UtilService.checkStatusId(this.dataGratuityList.filteredData);
+      this.dataSource.data = data.gratuityList;
+      this.dataSource.sort = this.gratuityListTableSort;
+      UtilService.checkStatusId(this.dataSource.filteredData);
       this.sumOfAmountReceived = data.sumOfAmountReceived;
     }
     else {
       this.noData = "No gratuity found";
-      this.dataGratuityList.data = [];
+      this.dataSource.data = [];
     }
 
   }
   getListNPS() {
     this.isLoading = true;
     const obj = this.getObject;
-    this.dataNPSList.data = [{}, {}, {}];
+    this.dataSource.data = [{}, {}, {}];
     this.custumService.getNPS(obj).subscribe(
       data => this.getNPSRes(data), (error) => {
         this.eventService.showErrorMessage(error);
-        this.dataNPSList.data = [];
+        this.dataSource.data = [];
         this.isLoading = false;
       }
     );
@@ -575,29 +571,29 @@ export class RetirementAccountComponent implements OnInit {
     this.isLoading = false;
     if (data == undefined) {
       this.noData = 'No NPS found';
-      this.dataNPSList.data = []
+      this.dataSource.data = []
     } else if (data.npsList) {
       console.log('getNPSRes =', data);
-      this.dataNPSList.data = data.npsList;
-      this.dataNPSList.sort = this.npsListTableSort;
-      UtilService.checkStatusId(this.dataNPSList.filteredData);
+      this.dataSource.data = data.npsList;
+      this.dataSource.sort = this.npsListTableSort;
+      UtilService.checkStatusId(this.dataSource.filteredData);
       this.totalContribution = data.totalContribution;
       this.totalCurrentValue = data.totalCurrentValue;
     }
     else {
       this.noData = "No NPS found";
-      this.dataNPSList.data = [];
+      this.dataSource.data = [];
     }
 
   }
   getListSuperannuation() {
     this.isLoading = true;
     const obj = this.getObject;
-    this.dataSuperannuationList.data = [{}, {}, {}];
+    this.dataSource.data = [{}, {}, {}];
     this.custumService.getSuperannuation(obj).subscribe(
       data => this.getSuperannuationRes(data), (error) => {
         this.eventService.showErrorMessage(error);
-        this.dataSuperannuationList.data = [];
+        this.dataSource.data = [];
         this.isLoading = false;
       }
     );
@@ -606,29 +602,29 @@ export class RetirementAccountComponent implements OnInit {
     this.isLoading = false;
     if (data == undefined) {
       this.noData = 'No superannuation found';
-      this.dataSuperannuationList.data = []
+      this.dataSource.data = []
     } else if (data.superannuationList) {
       console.log('getSuperannuationRes =', data);
-      this.dataSuperannuationList.data = data.superannuationList;
-      this.dataSuperannuationList.sort = this.superAnnuationListTableSort;
-      UtilService.checkStatusId(this.dataSuperannuationList.filteredData);
+      this.dataSource.data = data.superannuationList;
+      this.dataSource.sort = this.superAnnuationListTableSort;
+      UtilService.checkStatusId(this.dataSource.filteredData);
       this.sumOfAnnualEmployeeContribution = data.sumOfAnnualEmployeeContribution;
       this.sumOfAnnualEmployerContribution = data.sumOfAnnualEmployerContribution;
     }
     else {
       this.noData = "No superannuation found";
-      this.dataSuperannuationList.data = [];
+      this.dataSource.data = [];
     }
 
   }
   getListEPS() {
     this.isLoading = true;
     const obj = this.getObject;
-    this.EPSList.data = [{}, {}, {}];
+    this.dataSource.data = [{}, {}, {}];
     this.custumService.getEPS(obj).subscribe(
       data => this.getEPSRes(data), (error) => {
         this.eventService.showErrorMessage(error);
-        this.EPSList.data = [];
+        this.dataSource.data = [];
         this.isLoading = false;
       }
     );
@@ -637,18 +633,18 @@ export class RetirementAccountComponent implements OnInit {
     this.isLoading = false;
     if (data == undefined) {
       this.noData = 'No EPS found';
-      this.EPSList.data = []
+      this.dataSource.data = []
     } else if (data.epsList) {
       console.log('getEPSRes =', data);
-      this.EPSList.data = data.epsList;
-      this.EPSList.sort = this.epsListTableSort;
-      UtilService.checkStatusId(this.EPSList.filteredData);
+      this.dataSource.data = data.epsList;
+      this.dataSource.sort = this.epsListTableSort;
+      UtilService.checkStatusId(this.dataSource.filteredData);
       this.totalNotionalValue = data.totalNotionalValue;
       this.totalPensionAmount = data.totalPensionAmount;
     }
     else {
       this.noData = "No EPS found";
-      this.EPSList.data = [];
+      this.dataSource.data = [];
     }
 
   }

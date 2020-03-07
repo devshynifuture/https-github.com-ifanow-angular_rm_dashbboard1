@@ -1,6 +1,6 @@
 <div class="pt-150  mandates">
     <div class="row">
-        <div class="col-md-3 pr-0">
+        <div class="col-md-4 pr-0">
             <h3 class="m-0 pt-8">Mandates</h3>
         </div>
         <div class="col-md-4 text-right pr-0">
@@ -11,7 +11,7 @@
                 </mat-form-field>
             </div>
         </div>
-            <div class="col-md-5 text-right pl-0">
+        <div class="col-md-4 pt-4 text-right pl-0">
             <img src="/assets/images/svg/download-black.svg" class="b-a p-5">
             <img src="/assets/images/svg/reload.svg" class="b-a p-8">
             <button mat-stroked-button class="btn-default addon ml-12 mr-12 v-middle"><i
@@ -20,8 +20,6 @@
                 NEW</button>
         </div>
     </div>
-
-
     <div class="row">
         <div class="col-md-12">
             <table mat-table [dataSource]="dataSource" matSort *ngIf="dataSource.filteredData.length > 0"

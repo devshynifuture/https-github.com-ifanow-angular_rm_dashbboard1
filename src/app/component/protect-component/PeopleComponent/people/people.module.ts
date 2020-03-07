@@ -9,6 +9,7 @@ import { PeopleTeamMembersComponent } from './Component/people-team-members/peop
 import { PeopleSubBrokersComponent } from './Component/people-sub-brokers/people-sub-brokers.component';
 import { MaterialModule } from 'src/app/material/material';
 import { PeopleEntryModule } from './people-entry-module';
+//import { LeadsClientsComponent } from './Component/people-leads/leads-clients/leads-clients.component';
 
 
 @NgModule({
