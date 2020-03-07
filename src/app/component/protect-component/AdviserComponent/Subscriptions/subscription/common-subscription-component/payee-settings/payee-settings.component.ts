@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChildren, QueryList } from '@angular/core';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { PostalService } from 'src/app/services/postal.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-payee-settings',
@@ -30,6 +31,7 @@ export class PayeeSettingsComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   }
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   clientId: any;
   @Output() totalPayeeData = new EventEmitter<Object>();
   settingsModal;
@@ -169,7 +171,7 @@ export class PayeeSettingsComponent implements OnInit {
 
   getListOfFamilyByClientRes(data) {
     console.log('family Memebers', data)
-    if(data != undefined){
+    if (data != undefined) {
       this.family = data.familyMembersList
     }
   }
@@ -245,18 +247,13 @@ export class PayeeSettingsComponent implements OnInit {
   savePayeeSettings() {
     // this.inputData
     if (this.payeeSettingsForm.invalid) {
-      this.payeeSettingsForm.get('customerName').markAsTouched();
-      this.payeeSettingsForm.get('displayName').markAsTouched();
-      this.payeeSettingsForm.get('companyName').markAsTouched();
-      this.payeeSettingsForm.get('emailId').markAsTouched();
-      this.payeeSettingsForm.get('pan').markAsTouched();
-      this.payeeSettingsForm.get('gstIn').markAsTouched();
-      this.payeeSettingsForm.get('pincode').markAsTouched();
-      this.payeeSettingsForm.get('primaryContact').markAsTouched();
-      this.payeeSettingsForm.get('billingAddress').markAsTouched();
-      this.payeeSettingsForm.get('city').markAsTouched();
-      this.payeeSettingsForm.get('country').markAsTouched();
-      this.payeeSettingsForm.get('state').markAsTouched();
+      for (let element in this.payeeSettingsForm.controls) {
+        console.log(element)
+        if (this.payeeSettingsForm.get(element).invalid) {
+          this.inputs.find(input => !input.ngControl.valid).focus();
+          this.payeeSettingsForm.controls[element].markAsTouched();
+        }
+      }
     } else {
       this.barButtonOptions.active = true;
       if (this.payeeSettingsForm.controls.id.value != undefined) {

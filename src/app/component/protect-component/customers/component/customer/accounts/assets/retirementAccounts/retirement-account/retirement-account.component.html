@@ -579,7 +579,7 @@
                     </td>
                     <td *matFooterCellDef mat-footer-cell></td>
                 </ng-container>
-                <ng-container matColumnDef="icons">
+                <ng-container matColumnDef="icons" sticky>
                     <th *matHeaderCellDef class=" " mat-header-cell></th>
                     <td *matCellDef="let element" class=" " mat-cell>
                         <div *ngIf="!isLoading">
