@@ -77,8 +77,8 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
     this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
   saveMfSchemeLevel() {
-    this.inputs.find(input => !input.ngControl.valid).focus();
     if (this.schemeLevelHoldingForm.invalid) {
+      this.inputs.find(input => !input.ngControl.valid).focus();
       this.schemeLevelHoldingForm.get('ownerName').markAsTouched();
       this.schemeLevelHoldingForm.get('schemeName').markAsTouched();
       this.schemeLevelHoldingForm.get('folioNumber').markAsTouched();

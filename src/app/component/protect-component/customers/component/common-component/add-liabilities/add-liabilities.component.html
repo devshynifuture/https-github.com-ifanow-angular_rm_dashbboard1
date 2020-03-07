@@ -22,7 +22,7 @@
                 <mat-select matInput appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
                     [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Select family members</mat-option>
-                    <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
+                    <mat-option *ngFor="let f of nomineesListFM" [value]="f">
                         <span>{{f.userName}}</span>
                     </mat-option>
                 </mat-select>
@@ -157,7 +157,7 @@
 
         </div>
     </div>
-    <div class="row pt-40">
+    <div class="row pt-48">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">EMI frequency</h5>
         </div>
@@ -180,7 +180,7 @@
             </div>
         </div>
     </div>
-    <div class="row pt-40">
+    <div class="row pt-48">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Annual interest rate</h5>
         </div>
@@ -235,7 +235,7 @@
             </div>
         </div>
 
-        <div class="row pt-40">
+        <div class="row pt-48">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Financial institution</h5>
             </div>
@@ -251,7 +251,7 @@
             </div>
         </div>
 
-        <div class="row pt-40">
+        <div class="row pt-48">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Collateral</h5>
             </div>

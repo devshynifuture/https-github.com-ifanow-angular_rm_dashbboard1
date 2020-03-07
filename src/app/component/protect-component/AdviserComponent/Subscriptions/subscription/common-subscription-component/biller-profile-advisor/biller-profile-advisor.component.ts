@@ -1,15 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {HttpClient} from '@angular/common/http';
-import {PhotoCloudinaryUploadService} from '../../../../../../../services/photo-cloudinary-upload.service';
-import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
-import {UtilService, ValidatorType} from '../../../../../../../services/util.service';
-import {PostalService} from 'src/app/services/postal.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { HttpClient } from '@angular/common/http';
+import { PhotoCloudinaryUploadService } from '../../../../../../../services/photo-cloudinary-upload.service';
+import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { UtilService, ValidatorType } from '../../../../../../../services/util.service';
+import { PostalService } from 'src/app/services/postal.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -67,6 +68,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   postOfficeDataDistrict: any;
   postOfficeDataCircle: any;
   postOfficeDataCountry: any;
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   // validatorType = ValidatorType;
 
@@ -125,12 +127,12 @@ export class BillerProfileAdvisorComponent implements OnInit {
     }
   }
 
-  uploadImgOnSave(){
+  uploadImgOnSave() {
 
   }
 
   uploadImage() {
-    
+
     if (this.imageData.type == 'image/png' || this.imageData.type == 'image/jpeg') {
       this.barButtonOptions.active = true;
       const files = [this.imageData];
@@ -145,9 +147,9 @@ export class BillerProfileAdvisorComponent implements OnInit {
             // this.logUrl.controls.url.setValue(this.imageData);
             this.uploadedImage = JSON.stringify(responseObject);
             this.eventService.openSnackBar('Image uploaded sucessfully', 'Dismiss');
-            if(this.selected == 3){
+            if (this.selected == 3) {
               this.addEditBillerForm();
-            }else{
+            } else {
               this.barButtonOptions.active = false;
             }
           }
@@ -238,7 +240,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   Close(data) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: data });
     console.log("state close1", data);
-    
+
   }
 
   nextStep(value, eventName) {
@@ -264,70 +266,70 @@ export class BillerProfileAdvisorComponent implements OnInit {
     }
   }
 
-  getBankAddress(ifsc){
+  getBankAddress(ifsc) {
     let obj = {
       ifsc: ifsc
     }
     console.log('ifsc 121221', obj)
 
-    if(ifsc != ""){
+    if (ifsc != "") {
       this.subService.getBankAddress(obj).subscribe(data => {
         console.log('postal 121221', data)
-        this.bankData(data)  
+        this.bankData(data)
         // this.PinData(data, 'bankDetailsForm')
 
       },
-      err=>{
-        console.log(err, "error internet");
-        this.bankData(err) 
-      })
+        err => {
+          console.log(err, "error internet");
+          this.bankData(err)
+        })
     }
   }
 
-  pinInvalid:boolean = false;
+  pinInvalid: boolean = false;
 
   getPostalPin(value, state) {
     let obj = {
       zipCode: value
     }
-    console.log(value,"check value");
-    if(value != ""){
+    console.log(value, "check value");
+    if (value != "") {
       this.postalService.getPostalPin(value).subscribe(data => {
         console.log('postal 121221', data)
         this.PinData(data, state)
       })
     }
-    else{
+    else {
       this.pinInvalid = false;
     }
   }
   PinData(data, state) {
-    if(data[0].Status == "Error"){
+    if (data[0].Status == "Error") {
       this.pinInvalid = true;
       this.getFormControlProfile().ifscCode.setErrors(this.pinInvalid);
       this.getFormControlProfile().city.setValue("");
       this.getFormControlProfile().country.setValue("");
       this.getFormControlProfile().state.setValue("");
-    }else{
+    } else {
       this.getFormControlProfile().city.setValue(data[0].PostOffice[0].District);
       this.getFormControlProfile().country.setValue(data[0].PostOffice[0].Country);
       this.getFormControlProfile().state.setValue(data[0].PostOffice[0].Circle);
       this.pinInvalid = false;
     }
   }
-  ifsciInvalid:boolean;
-  bankData(data){
-    if(data.status != undefined){
+  ifsciInvalid: boolean;
+  bankData(data) {
+    if (data.status != undefined) {
       this.ifsciInvalid = true;
-        this.getFormControlBank().ifscCode.setErrors(this.ifsciInvalid);
-        this.getFormControlBank().cityB.setValue("")
-        this.getFormControlBank().countryB.setValue("")
-        this.getFormControlBank().stateB.setValue("")
-        this.getFormControlBank().address.setValue("")
-        this.getFormControlBank().pincodeB.setValue("")
-      }
+      this.getFormControlBank().ifscCode.setErrors(this.ifsciInvalid);
+      this.getFormControlBank().cityB.setValue("")
+      this.getFormControlBank().countryB.setValue("")
+      this.getFormControlBank().stateB.setValue("")
+      this.getFormControlBank().address.setValue("")
+      this.getFormControlBank().pincodeB.setValue("")
+    }
     else {
-      console.log(data,"bankPin 123");
+      console.log(data, "bankPin 123");
       let bankPin = data.address.split('A');
       this.getFormControlBank().pincodeB.setValue(bankPin[bankPin.length - 1])
       this.getFormControlBank().cityB.setValue(data.district)
@@ -343,60 +345,77 @@ export class BillerProfileAdvisorComponent implements OnInit {
   back() {
     console.log(this.selected, "this.selected 123");
     this.selected--;
-    if(this.selected == 2){
+    if (this.selected == 2) {
       this.barButtonOptions.text = "UPLOAD LOGO";
     }
 
   }
 
   validURL(str) {
-    var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-      '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+    var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
     return !!pattern.test(str);
   }
 
 
   submitBillerForm() {
-    if(this.profileDetailsForm.invalid){
-      this.profileDetailsForm.get("companyDisplayName").markAsTouched();
-      this.profileDetailsForm.get("gstinNum").markAsTouched();
-      this.profileDetailsForm.get("panNum").markAsTouched();
-      this.profileDetailsForm.get("Address").markAsTouched();
-      this.profileDetailsForm.get("city").markAsTouched();
-      this.profileDetailsForm.get("state").markAsTouched();
-      this.profileDetailsForm.get("country").markAsTouched();
-      this.profileDetailsForm.get("pincode").markAsTouched();
-    }
-    else if(this.bankDetailsForm.invalid){
-      this.bankDetailsForm.get("nameOnBank").markAsTouched();
-      this.bankDetailsForm.get("bankName").markAsTouched();
-      this.bankDetailsForm.get("acNo").markAsTouched();
-      this.bankDetailsForm.get("ifscCode").markAsTouched();
-      this.bankDetailsForm.get("address").markAsTouched();
-      this.bankDetailsForm.get("cityB").markAsTouched();
-      this.bankDetailsForm.get("stateB").markAsTouched();
-      this.bankDetailsForm.get("pincodeB").markAsTouched();
-      this.bankDetailsForm.get("countryB").markAsTouched();
-    }
-     else {
+    if (this.profileDetailsForm.invalid) {
+      for (let element in this.profileDetailsForm.controls) {
+        console.log(element)
+        if (this.profileDetailsForm.get(element).invalid) {
+          this.inputs.find(input => !input.ngControl.valid).focus();
+          this.profileDetailsForm.controls[element].markAsTouched();
+        }
+      }
+    } else if (this.bankDetailsForm.invalid) {
+      for (let element in this.bankDetailsForm.controls) {
+        console.log(element)
+        if (this.bankDetailsForm.get(element).invalid) {
+          this.inputs.find(input => !input.ngControl.valid).focus();
+          this.bankDetailsForm.controls[element].markAsTouched();
+        }
+      }
+    } 
+    // if (this.profileDetailsForm.invalid) {
+    //   this.profileDetailsForm.get("companyDisplayName").markAsTouched();
+    //   this.profileDetailsForm.get("gstinNum").markAsTouched();
+    //   this.profileDetailsForm.get("panNum").markAsTouched();
+    //   this.profileDetailsForm.get("Address").markAsTouched();
+    //   this.profileDetailsForm.get("city").markAsTouched();
+    //   this.profileDetailsForm.get("state").markAsTouched();
+    //   this.profileDetailsForm.get("country").markAsTouched();
+    //   this.profileDetailsForm.get("pincode").markAsTouched();
+    // }
+    // else if (this.bankDetailsForm.invalid) {
+    //   this.bankDetailsForm.get("nameOnBank").markAsTouched();
+    //   this.bankDetailsForm.get("bankName").markAsTouched();
+    //   this.bankDetailsForm.get("acNo").markAsTouched();
+    //   this.bankDetailsForm.get("ifscCode").markAsTouched();
+    //   this.bankDetailsForm.get("address").markAsTouched();
+    //   this.bankDetailsForm.get("cityB").markAsTouched();
+    //   this.bankDetailsForm.get("stateB").markAsTouched();
+    //   this.bankDetailsForm.get("pincodeB").markAsTouched();
+    //   this.bankDetailsForm.get("countryB").markAsTouched();
+    // }
+    else {
       this.barButtonOptions.active = true;
 
-      console.log("img url check", this.validURL(this.logoImg ), this.logoImg);
-      if(!this.validURL(this.logoImg ) && this.logoImg != undefined){
+      console.log("img url check", this.validURL(this.logoImg), this.logoImg);
+      if (!this.validURL(this.logoImg) && this.logoImg != undefined) {
         this.uploadImage();
       }
-      else{
+      else {
         this.addEditBillerForm();
 
       }
     }
   }
 
-  addEditBillerForm(){
+  addEditBillerForm() {
     const obj = {
       acNumber: this.bankDetailsForm.controls.acNo.value,
       advisorId: this.advisorId,
@@ -427,7 +446,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     if (this.profileDetailsForm.controls.id.value == undefined) {
       this.subService.saveBillerProfileSettings(obj).subscribe(
         data => this.closeTab(data),
-        error =>{
+        error => {
           this.barButtonOptions.active = false;
           this.eventService.showErrorMessage(error);
         }
@@ -436,7 +455,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     } else {
       this.subService.updateBillerProfileSettings(obj).subscribe(
         data => this.closeTab(data),
-        error =>{
+        error => {
           this.barButtonOptions.active = false;
           this.eventService.showErrorMessage(error);
         }

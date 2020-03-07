@@ -3,6 +3,7 @@
 
     letter-spacing: normal;
     text-transform: initial !important;
+    white-space: initial;
   }
 
   tr {
@@ -158,9 +159,10 @@ table {
 
 @media(max-width:1250px) {
   .table-scroll {
-    height: 400px;
-    overflow: auto;
-    // margin-top: 8px;
+    height: auto;
+    overflow: auto !important;
+    max-height: 400px;
+
 
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChildren, QueryList } from '@angular/core';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionService } from '../../../subscription.service';
@@ -6,6 +6,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from '../../../../../../../auth-service/authService';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-add-fixed-fee',
@@ -32,6 +33,8 @@ export class AddFixedFeeComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   }
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private subService: SubscriptionService, private eventService: EventService) {
   }
@@ -137,14 +140,15 @@ export class AddFixedFeeComponent implements OnInit {
   }
 
   saveFeeTypeData(feeType, state) {
-
     if (this.fixedFeeData.invalid) {
-      this.fixedFeeData.get('serviceName').markAsTouched();
-      this.fixedFeeData.get('code').markAsTouched();
-      this.fixedFeeData.get('fees').markAsTouched();
-      this.fixedFeeData.get('billEvery').markAsTouched();
-    }
-    else {
+      for (let element in this.fixedFeeData.controls) {
+        console.log(element)
+        if (this.fixedFeeData.get(element).invalid) {
+          this.inputs.find(input => !input.ngControl.valid).focus();
+          this.fixedFeeData.controls[element].markAsTouched();
+        }
+      }
+    } else {
       this.barButtonOptions.active = true;
       const obj = {
         serviceRepoId: this.serviceId,

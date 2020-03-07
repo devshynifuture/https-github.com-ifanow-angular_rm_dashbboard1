@@ -169,7 +169,7 @@ export class RecuringDepositComponent implements OnInit {
   }
 
   saveRecuringDeposit() {
-    this.inputs.find(input => !input.ngControl.valid).focus();
+
     if (this.nomineesList) {
 
       this.nomineesList.forEach(element => {
@@ -186,32 +186,16 @@ export class RecuringDepositComponent implements OnInit {
       this.tenure = this.getDateYMD()
       this.maturityDate = this.tenure
     }
-    if (this.recuringDeposit.get('ownerName').invalid) {
-      this.recuringDeposit.get('ownerName').markAsTouched();
-      return;
-    } else if (this.recuringDeposit.get('monthlyContribution').invalid) {
-      this.recuringDeposit.get('monthlyContribution').markAsTouched();
-      this.isMonthlyContribution = true;
-      return;
-    } else if (this.recuringDeposit.get('interestRate').invalid) {
-      this.recuringDeposit.get('interestRate').markAsTouched();
-      this.isInterestRate = true;
-      return;
-    } else if (this.recuringDeposit.get('compound').invalid) {
-      this.recuringDeposit.get('compound').markAsTouched();
-      this.isCompound = true;
-      return;
-    } else if (this.recuringDeposit.get('commencementDate').invalid) {
-      this.recuringDeposit.get('commencementDate').markAsTouched();
-      return;
-    } else if (this.recuringDeposit.get('tenure').invalid) {
-      this.recuringDeposit.get('tenure').markAsTouched();
-      return;
-    } else if (this.recuringDeposit.get('ownerType').invalid) {
-      this.recuringDeposit.get('ownerType').markAsTouched();
-      this.isOwnerType = true;
+    if (this.recuringDeposit.invalid) {
+      this.inputs.find(input => !input.ngControl.valid).focus();
+      this.recuringDeposit.markAllAsTouched();
       return;
     }
+    //  else if (this.recuringDeposit.get('ownerType').invalid) {
+    //   this.recuringDeposit.get('ownerType').markAsTouched();
+    //   this.isOwnerType = true;
+    //   return;
+    // }
     else {
 
       let obj = {
