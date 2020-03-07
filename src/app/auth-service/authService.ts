@@ -17,13 +17,6 @@ export class AuthService {
 
   static getClientData() {
     let clientDataString = sessionStorage.getItem('clientData');
-    if (clientDataString) {
-      localStorage.setItem('clientData', clientDataString);
-    } else {
-      clientDataString = localStorage.getItem('clientData');
-    }
-    console.log('getClientData : ', clientDataString);
-
     return clientDataString ? JSON.parse(clientDataString) : undefined;
   }
 

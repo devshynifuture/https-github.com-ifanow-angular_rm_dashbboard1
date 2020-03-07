@@ -13,6 +13,7 @@ import { EditNoteGoalComponent } from './edit-note-goal/edit-note-goal.component
 import { ViewPastnotGoalComponent } from './view-pastnot-goal/view-pastnot-goal.component';
 import { PlanService } from '../plan.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { AuthService } from 'src/app/auth-service/authService';
 
 export interface PeriodicElement {
   position: string;
@@ -32,13 +33,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./goals-plan.component.scss']
 })
 export class GoalsPlanComponent implements OnInit {
-
-  constructor(
-    private subInjectService: SubscriptionInject, 
-    private eventService: EventService, 
-    private plansService: PlanService) {
-  }
-
   dummyDashBoardData:any = {
     goalYear: 2025,
     presentValue: 24325,
@@ -48,21 +42,46 @@ export class GoalsPlanComponent implements OnInit {
     lump_equity: 45232,
     lump_debt: 35452
   }
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'icons'];
+  dataSource = ELEMENT_DATA;
+  clientFamily:any[] = [];
 
   isLoading = false;
   goalProgress = 35;
-  ngOnInit() {
+  advisor_client_id: any = {
+    advisorId:'',
+    clientId:''
   }
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'icons'];
-  dataSource = ELEMENT_DATA;
-  
-  openAddgoals(data) {
-    console.log('hello mf button clicked');
+  constructor(
+    private subInjectService: SubscriptionInject, 
+    private eventService: EventService, 
+    private plansService: PlanService,
+  ) {
+    this.advisor_client_id.advisorId = AuthService.getAdvisorId();
+    this.advisor_client_id.clientId = AuthService.getClientId();
+  }
+
+
+  ngOnInit() {
+    this.loadGlobalAPIs();
+  }
+
+  // loads all the global data required for various components called from here
+  loadGlobalAPIs(){
+    this.plansService.getListOfFamilyByClient(this.advisor_client_id).subscribe((data)=>{
+      this.clientFamily = data.familyMembersList;
+    }, (err) => {this.eventService.openSnackBar(err, "Dismiss")});
+  }
+
+  openAddgoals() {
+    let data = {
+      familyList: this.clientFamily,
+    }
     const fragmentData = {
       flag: 'openAddgoals',
       id: 1,
-      data,
+      data: data,
       direction: 'top',
       componentName: AddGoalsComponent,
       state: 'open'
@@ -142,7 +161,7 @@ export class GoalsPlanComponent implements OnInit {
       });
   }
 
-  // drag drop allocations
+  // drag drop for assets brought from allocations tab
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
