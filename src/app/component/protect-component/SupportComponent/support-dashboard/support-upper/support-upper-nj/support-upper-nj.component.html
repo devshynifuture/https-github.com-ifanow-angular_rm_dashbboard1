@@ -11,7 +11,7 @@
             </p>
         </div>
         <div class="col-md-2 text-right">
-            <i (click)="dialogClose()" class="material-icons pt-16 c-p pr-16">
+            <i (click)="supportUpperService.dialogClose()" class="material-icons pt-16 c-p pr-16">
                 clear
             </i>
         </div>
@@ -51,8 +51,8 @@
                         (focus)="getFilteredSchemes()">
                          -->
                     <mat-form-field>
-                        <input matInput placeholder="Search" aria-label="State" [matAutocomplete]="auto"
-                            [formControl]="schemeControl">
+                        <input matInput placeholder="Search" (focus)="showSuggestionsBasedOnSchemeName(element)"
+                            aria-label="State" [matAutocomplete]="auto" [formControl]="schemeControl">
                         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                             <mat-option *ngIf="isLoadingForDropDown" class="is-loading">Loading...</mat-option>
                             <ng-container *ngIf="!isLoadingForDropDown">
@@ -63,12 +63,13 @@
                                 </mat-option>
                             </ng-container>
                         </mat-autocomplete>
+
                     </mat-form-field>
-
                     <br>
-
-                    <ng-container *ngIf="errorMsg">
-                        {{errorMsg}}
+                    <ng-container *ngIf="filteredSchemeError">
+                        <span class="f-12">
+                            {{errorMsg}}
+                        </span>
                     </ng-container>
                 </td>
             </ng-container>

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {PlanService} from '../plan.service';
@@ -11,53 +11,26 @@ import {AuthService} from 'src/app/auth-service/authService';
 })
 export class AddGoalsComponent implements OnInit {
   goalTypeData: any;
-  goalFlag: any;
+  showGoalType: any;
   goalTypeFirstRowListData: any;
   goalTypeSecondRowListData: any;
   advisorId: any;
+  familyList:any[] = [];
+  @Input() data;
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService, private planService: PlanService) { }
-  // goalTypeFirstRowListData = [
-  //   { id: 1, name: "Retirement", imageUrl: "GlobalRetirementGoalImage", isActive: 0 },
-  //   {
-  //     id: 2, name: "House", imageUrl: "GlobalHouseGoalImage", isActive: 0,
-  //   },
-  //   {
-  //     id: 3, name: "Car", imageUrl: "GlobalCarGoalImage", isActive: 0, questions:
-  //   },
-  //   {
-  //     id: 4, name: "Marriage", imageUrl: "GlobalMarriageGoalImage", isActive: 0, questions:
-  //   },
-  //   { id: 5, name: "Vacation", imageUrl: "GlobalVacationGoalImage", isActive: 0 }
-  // ];
-  // goalTypeSecondRowListData = [
-  //   { id: 6, name: "Education", imageUrl: "GlobalEducationGoalImage", isActive: 0 },
-  //   {
-  //     id: 7, name: "Emergency", imageUrl: "GlobalEmergencyGoalImage", isActive: 0, questions:
-  //   },
-  //   {
-  //     id: 8, name: "Wealth creation", imageUrl: "GlobalWealthCreationGoalImage", isActive: 0, questions:
-  //   },
-  //   {
-  //     id: 9, name: "Big spends", imageUrl: "GlobalBigSpendGoalImage", isActive: 0, questions:
-  //   },
-  //   {
-  //     id: 10, name: "Others", imageUrl: "GlobalOthersGoalImage", isActive: 0, questions:
-  //   }
-  // ];
+
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.getGoalGlobalData();
+    this.familyList = this.data.familyList;
   }
-  close(state) {
-    const fragmentData = {
-      // direction: 'top',
-      // componentName: AddGoalsComponent,
-      state: 'close'
-    };
-    this.eventService.changeUpperSliderState(fragmentData)
 
+  close() {
+    this.eventService.changeUpperSliderState({state: 'close'});
   }
+
+  // load goal types and related images to display
   getGoalGlobalData() {
     let obj = {
       advisorId: this.advisorId
@@ -66,12 +39,16 @@ export class AddGoalsComponent implements OnInit {
       data => this.getGoalGlobalDataRes(data),
       error => this.eventService.showErrorMessage(error)
     )
-
   }
+
+  // Set questionnaires for all the 
   getGoalGlobalDataRes(data) {
     data.forEach(element => {
       switch (element.id) {
-        case 2:
+        case 1: // Retirement
+          element.imageUrl = '/assets/images/svg/retierment.svg';
+          break;
+        case 2: // House
           element.questions = {
             Q: 'Who are you planning this for?',
             Q1: 'When do you want to buy house?',
@@ -79,16 +56,34 @@ export class AddGoalsComponent implements OnInit {
             Q3: 'Give this goal a name',
             Q4: 'Notes'
           }
+          element.imageUrl = '/assets/images/svg/retierment.svg';
+          element.validations = {
+            minAgeFromPresent: 0,
+            maxAgeFromPresent: 60,
+            minCost: 500000,
+            maxCost: 100000000,
+            showAge: true,
+            placeHolder: 'Age'
+          }
           break;
-        case 3:
+        case 3: // Car
           element.questions = {
             Q1: 'When do you want to buy car?',
             Q2: "Car's cost as on today?",
             Q3: 'Give this goal a name',
             Q4: 'Notes'
           }
+          element.imageUrl = '/assets/images/svg/car.svg';
+          element.validations = {
+            minAgeFromPresent: 0,
+            maxAgeFromPresent: 20,
+            minCost: 500000,
+            maxCost: 50000000,
+            showAge: true,
+            placeHolder: 'Age'
+          }
           break;
-        case 4:
+        case 4: // Marriage
           element.questions = {
             Q: 'Who are you planning this for?',
             Q1: 'Member"s age at the time of marriage?',
@@ -96,16 +91,40 @@ export class AddGoalsComponent implements OnInit {
             Q3: 'Give this goal a name',
             Q4: 'Notes'
           }
+          element.imageUrl = '/assets/images/svg/wedding.svg';
+          element.validations = {
+            minAge: 18,
+            maxAge: 60,
+            minCost: 100000,
+            maxCost: 100000000,
+            showAge: true,
+            placeHolder: 'Age'
+          }
           break;
-        case 7:
+        case 5: // Vacation
+          element.imageUrl = '/assets/images/svg/retierment.svg';
+          break;
+        case 6: // Education
+          element.imageUrl = '/assets/images/svg/wedding.svg';
+          break;
+        case 7: // Emergency
           element.questions = {
             Q1: 'Set a time frame to achieve this fund',
             Q2: 'Emergency fund you want to accumulate?',
             Q3: 'Give this goal a name',
             Q4: 'Notes'
           }
+          element.imageUrl = '/assets/images/svg/wedding.svg';
+          element.validations = {
+            minAge: 1,
+            maxAge: 60,
+            minCost: 10000,
+            maxCost: 10000000,
+            showAge: true, // here age is true as we want fixed numbers
+            placeHolder: 'Months'
+          }
           break;
-        case 8:
+        case 8: // Wealth Creation
           element.questions = {
             Q: 'Who are you planning this for?',
             Q1: 'When do you want to it?',
@@ -113,38 +132,60 @@ export class AddGoalsComponent implements OnInit {
             Q3: 'Give this goal a name',
             Q4: 'Notes'
           }
+          element.imageUrl = '/assets/images/svg/wedding.svg';
+          element.validations = {
+            minAgeFromPresent: 2,
+            maxAgeFromPresent: 28,
+            minCost: 75000,
+            maxCost: 100000000,
+            showAge: true,
+            placeHolder: 'Age'
+          }
           break;
-        case 9:
+        case 9: // Big Spends
           element.questions = {
             Q1: 'When year do you plan this to happen?',
             Q2: 'How much does it cost today',
             Q3: 'Give this goal a name',
             Q4: 'notes'
           }
+          element.imageUrl = '/assets/images/svg/wedding.svg';
+          element.validations = {
+            minAgeFromPresent: 0,
+            maxAgeFromPresent: 30,
+            minCost: 100000,
+            maxCost: 10000000,
+            showAge: false,
+            placeHolder: 'Year'
+          }
           break;
-        case 10:
+        case 10: // Others
           element.questions = {
             Q1: 'When do you want to achieve this?',
             Q2: 'How much does it cost today',
             Q3: 'Give this goal a name',
             Q4: 'notes'
           }
+          element.imageUrl = '/assets/images/svg/wedding.svg';
+          element.validations = {
+            minAgeFromPresent: 0,
+            maxAgeFromPresent: 30,
+            minCost: 500000,
+            maxCost: 100000000,
+            showAge: false,
+            placeHolder: 'Year'
+          }
           break;
         default:
           console.log(element.id)
       }
     });
-    console.log(data);
     this.goalTypeFirstRowListData = data.slice(0, 5);
     this.goalTypeSecondRowListData = data.slice(5, 10);
-    console.log(`first  :${this.goalTypeFirstRowListData}' second:${this.goalTypeSecondRowListData}`)
   }
-  addSelectedGoalType(data) {
-    console.log(data);
+  
+  setGoalTypeData(data) {
     this.goalTypeData = data;
-  }
-  getGoalTypeData(data) {
-    this.goalTypeData = data;
-    this.goalFlag = (data.id == 1 || data.id == 5 || data.id == 6) ? false : true;
+    this.showGoalType = [1,5,6].includes(data.id) ? (data.id == 1 ? 'retirement' : 'multiYear') : 'singleYear' 
   }
 }

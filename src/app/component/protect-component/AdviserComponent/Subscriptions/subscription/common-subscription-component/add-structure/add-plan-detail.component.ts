@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChildren, QueryList } from '@angular/core';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionService } from '../../../subscription.service';
@@ -6,6 +6,7 @@ import { AuthService } from '../../../../../../../auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ValidatorType } from '../../../../../../../services/util.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-add-plan-detail',
@@ -32,6 +33,7 @@ export class AddPlanDetailComponent implements OnInit {
   @Output() planOuputData = new EventEmitter();
   isCheckPlanData: any;
   validatorType = ValidatorType;
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   constructor(private eventService: EventService, private subinject: SubscriptionInject,
     private fb: FormBuilder, private subService: SubscriptionService) {
@@ -92,12 +94,15 @@ export class AddPlanDetailComponent implements OnInit {
   }
 
   addPlanData(state) {
-    if(this.planDataForm.invalid){
-      this.planDataForm.get('planName').markAsTouched();
-      this.planDataForm.get('code').markAsTouched();
-      this.planDataForm.get('role').markAsTouched();
-    }
-    else {
+    if (this.planDataForm.invalid) {
+      for (let element in this.planDataForm.controls) {
+        console.log(element)
+        if (this.planDataForm.get(element).invalid) {
+          this.inputs.find(input => !input.ngControl.valid).focus();
+          this.planDataForm.controls[element].markAsTouched();
+        }
+      }
+    }else {
       this.barButtonOptions.active = true;
       console.log(this.editApiCall, this.editApiCall == undefined,"check editApiCall");
       

@@ -603,7 +603,7 @@ export class InvoiceComponent implements OnInit {
 
   cancel(value) {
     if (value != undefined) {
-      this.storeData.balanceDue = value.balanceDue;
+      this.storeData.balanceDue = (value.balanceDue)?value.balanceDue:'';
       this.storeData.status=value.status;
       if(value.status==1){
         this.rpyment=false

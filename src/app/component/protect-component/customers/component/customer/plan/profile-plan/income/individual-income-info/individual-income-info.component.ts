@@ -159,8 +159,8 @@ export class IndividualIncomeInfoComponent implements OnInit {
     }
   }
   submitIncomeForm() {
-    this.inputs.find(input => !input.ngControl.valid).focus();
     if (this.singleIndividualIncome.finalIncomeList.incomeTypeId == 1) {
+      this.inputs.find(input => !input.ngControl.valid).focus();
       if (this.incomeOption == '1') {
         if (this.incomeNetForm.get('basicIncome').invalid) {
           this.incomeNetForm.get('basicIncome').markAsTouched();

@@ -12,6 +12,8 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { EditNoteGoalComponent } from './edit-note-goal/edit-note-goal.component';
 import { ViewPastnotGoalComponent } from './view-pastnot-goal/view-pastnot-goal.component';
 import { PlanService } from '../plan.service';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { AuthService } from 'src/app/auth-service/authService';
 
 export interface PeriodicElement {
   position: string;
@@ -31,25 +33,55 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./goals-plan.component.scss']
 })
 export class GoalsPlanComponent implements OnInit {
+  dummyDashBoardData:any = {
+    goalYear: 2025,
+    presentValue: 24325,
+    futureValue: 456543,
+    equity_monthly: 5200,
+    debt_monthly: 44553,
+    lump_equity: 45232,
+    lump_debt: 35452
+  }
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'icons'];
+  dataSource = ELEMENT_DATA;
+  clientFamily:any[] = [];
+
+  isLoading = false;
+  goalProgress = 35;
+  advisor_client_id: any = {
+    advisorId:'',
+    clientId:''
+  }
 
   constructor(
     private subInjectService: SubscriptionInject, 
     private eventService: EventService, 
-    private plansService: PlanService) {
-  }
-  isLoading = false;
-  ngOnInit() {
+    private plansService: PlanService,
+  ) {
+    this.advisor_client_id.advisorId = AuthService.getAdvisorId();
+    this.advisor_client_id.clientId = AuthService.getClientId();
   }
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'icons'];
-  dataSource = ELEMENT_DATA;
-  
-  openAddgoals(data) {
-    console.log('hello mf button clicked');
+
+  ngOnInit() {
+    this.loadGlobalAPIs();
+  }
+
+  // loads all the global data required for various components called from here
+  loadGlobalAPIs(){
+    this.plansService.getListOfFamilyByClient(this.advisor_client_id).subscribe((data)=>{
+      this.clientFamily = data.familyMembersList;
+    }, (err) => {this.eventService.openSnackBar(err, "Dismiss")});
+  }
+
+  openAddgoals() {
+    let data = {
+      familyList: this.clientFamily,
+    }
     const fragmentData = {
       flag: 'openAddgoals',
       id: 1,
-      data,
+      data: data,
       direction: 'top',
       componentName: AddGoalsComponent,
       state: 'open'
@@ -77,6 +109,7 @@ export class GoalsPlanComponent implements OnInit {
     switch (flag) {
       case 'openCalculators':
         fragmentData.componentName = CalculatorsComponent;
+        fragmentData['popupHeaderText'] = 'CALCULATORS - NEW HOUSE 2035';
         break;
       case 'openPreferences':
         fragmentData.componentName = PreferencesComponent;
@@ -94,9 +127,13 @@ export class GoalsPlanComponent implements OnInit {
       case 'openKeyinfo':
         fragmentData.componentName = KeyInfoComponent;
         fragmentData.state = 'open25';
+
+        // TODO:- remove .data as its for demo purpose only
+        fragmentData.data = this.dummyDashBoardData;
         break;
       case 'openallocations':
         fragmentData.componentName = AddGoalComponent;
+        fragmentData['isOverlayVisible'] = false;
         fragmentData.state = 'open25';
         break;
       case 'openMfAllocation':
@@ -122,6 +159,16 @@ export class GoalsPlanComponent implements OnInit {
           subscription.unsubscribe();
         }
       });
+  }
+
+  // drag drop for assets brought from allocations tab
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+  }
+
+  todo:any[] = [];
+  logger(event) {
+    console.log('s')
   }
 }
 

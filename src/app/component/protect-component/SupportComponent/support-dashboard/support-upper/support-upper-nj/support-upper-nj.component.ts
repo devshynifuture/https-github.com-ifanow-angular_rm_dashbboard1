@@ -47,16 +47,17 @@ export class SupportUpperNjComponent implements OnInit {
   interval: NodeJS.Timeout;
   isFilteredSchemesCalled: boolean = false;
   dataTable: elementI[];
+  filteredSchemeError: boolean = false;
+  selectedElement: any;
+  apiCallingStack: any[] = [];
 
   constructor(
-    private subInjectService: SubscriptionInject,
     private supportUpperService: SupportUpperService,
-    private utilService: UtilService,
     private eventService: EventService
   ) { }
 
-  schemeControl = new FormControl();
-  filteredSchemes: any;
+  schemeControl: FormControl = new FormControl();
+  filteredSchemes: any[] = [];
   errorMsg: string;
   isLoading: boolean = false;
 
@@ -73,7 +74,7 @@ export class SupportUpperNjComponent implements OnInit {
           this.filteredSchemes = [];
           this.isLoadingForDropDown = true;
         }),
-        switchMap(value => this.supportUpperService.getFilteredSchemes({ scheme: value })
+        switchMap(value => this.getFilteredSchemesList(value)
           .pipe(
             finalize(() => {
               this.isLoadingForDropDown = false
@@ -82,15 +83,63 @@ export class SupportUpperNjComponent implements OnInit {
         )
       )
       .subscribe(data => {
+        this.apiCallingStack = [];
         this.filteredSchemes = data;
         console.log("this is what i need::::::::", data);
+        this.checkIfDataNotPresentAndShowError(data);
         console.log(this.filteredSchemes);
       });
   }
+  checkIfDataNotPresentAndShowError(data) {
+    if (data && data.length > 0) {
+      this.filteredSchemeError = false;
+    } else {
+      this.filteredSchemeError = true;
+      this.errorMsg = 'No data Found';
+    }
+  }
+
+  logValue(value) {
+    console.log("this is some value:::::::::", value);
+  }
+
+  getFilteredSchemesList(value) {
+
+    this.logValue('clicked frmo value changed')
+    if (value === '') {
+      let threeWords = this.supportUpperService.getThreeWordsOfSchemeName(this.selectedElement);
+      this.apiCallingStack.push(threeWords);
+      if (this.apiCallingStack[1] !== threeWords) {
+        return this.supportUpperService.getFilteredSchemes({ scheme: threeWords });
+      }
+    } else {
+      return this.supportUpperService.getFilteredSchemes({ scheme: value });
+    }
+  }
 
   mapSchemeCodeAndOther(element, scheme) {
+    this.logValue('again clicked');
     element.schemeCode = scheme.schemeCode;
     element.njCount = scheme.njCount;
+  }
+
+  showSuggestionsBasedOnSchemeName(element) {
+    console.log(element);
+    this.isLoadingForDropDown = true;
+    this.selectedElement = element;
+    let threeWords = this.supportUpperService.getThreeWordsOfSchemeName(element);
+    this.apiCallingStack.push(threeWords);
+    if (this.apiCallingStack[1] !== threeWords) {
+      this.supportUpperService.getFilteredSchemes({ scheme: threeWords })
+        .subscribe(res => {
+          this.apiCallingStack = [];
+          this.isLoadingForDropDown = false;
+          this.filteredSchemes = [];
+          this.filteredSchemes = res;
+          console.log(res);
+          this.checkIfDataNotPresentAndShowError(res);
+        });
+    }
   }
 
   mapNjScheme(element) {

@@ -5,13 +5,12 @@
                 src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
         </div>
         <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
-
             <p class="f-16 mb-0">
                 All - RTA Scheme Mapping
             </p>
         </div>
         <div class="col-md-2 text-right">
-            <i (click)="dialogClose()" class="material-icons pt-16 c-p pr-16">
+            <i (click)="supportUpperService.dialogClose()" class="material-icons pt-16 c-p pr-16">
                 clear
             </i>
         </div>
@@ -47,9 +46,27 @@
             <ng-container matColumnDef="schemeName">
                 <th class="b-a" mat-header-cell *matHeaderCellDef> Search corresponding scheme name </th>
                 <td class="b-a" mat-cell *matCellDef="let element">
-                    <div class="bar">
-                        <input class="form-control" matInput>
-                    </div>
+                    <mat-form-field>
+                        <input matInput placeholder="Search" (focus)="showSuggestionsBasedOnSchemeName(element)"
+                            aria-label="State" [matAutocomplete]="auto" [formControl]="schemeControl">
+                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                            <mat-option *ngIf="isLoadingForDropDown" class="is-loading">Loading...</mat-option>
+                            <ng-container *ngIf="!isLoadingForDropDown">
+                                <mat-option *ngFor="let scheme of filteredSchemes"
+                                    (click)="mapSchemeCodeAndOther(element, scheme)" [value]="scheme.schemeName"
+                                    [matTooltip]="scheme.schemeName" matTooltipPosition="after">
+                                    <span><b>{{scheme.schemeName}}</b> </span>
+                                </mat-option>
+                            </ng-container>
+                        </mat-autocomplete>
+
+                    </mat-form-field>
+                    <br>
+                    <ng-container *ngIf="filteredSchemeError">
+                        <span class="f-12">
+                            {{errorMsg}}
+                        </span>
+                    </ng-container>
                 </td>
             </ng-container>
 
