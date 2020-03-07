@@ -29,7 +29,7 @@
                         <mat-select matInput formControlName="lifeAssured" #Proposer autocomplete="true"
                             class="form-control br-0">
                             <mat-option (click)="getFamilyMember(option,i)"
-                                *ngFor="let option of FamilyMember;index as i" [value]="option.userName">
+                                *ngFor="let option of FamilyMember;index as i" [value]="option">
                                 {{option.userName}}</mat-option>
                         </mat-select>
                         <mat-error>This field is required

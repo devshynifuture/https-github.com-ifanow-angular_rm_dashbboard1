@@ -32,7 +32,6 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   _data: any;
   ownerData: any;
   ownerName: any;
-  selectedFamilyData: any;
   loanTypeView: any;
   clientId: any;
   nomineesListFM: any;
@@ -48,6 +47,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   transactionData: any;
   editData: any;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+  familyMemberId: any;
   constructor(public utils: UtilService, private subInjectService: SubscriptionInject, private fb: FormBuilder,
     public custumService: CustomerService, public eventService: EventService) {
   }
@@ -130,7 +130,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   display(value) {
     console.log('value selected', value);
     this.ownerName = value.userName;
-    this.selectedFamilyData = value;
+    this.familyMemberId = value.id;
   }
   lisNominee(value) {
     console.log(value)
@@ -142,7 +142,13 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     return;
   }
   getLiability(data) {
-    (data == 'tab1') ? data = {} : this.editData = data;
+    if (data == 'tab1') {
+      data = {};
+    }
+    else {
+      this.editData = data;
+      this.familyMemberId = data.id
+    }
     this.addLiabilityForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
       loanType: [(data.loanTypeId == undefined) ? '' : (data.loanTypeId) + '', [Validators.required]],
@@ -203,13 +209,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     }
     if (this.addLiabilityForm.invalid) {
       this.inputs.find(input => !input.ngControl.valid).focus();
-      for (let element in this.addLiabilityForm.controls) {
-        console.log(element)
-        if (this.addLiabilityForm.controls[element].invalid) {
-          this.addLiabilityForm.controls[element].markAsTouched();
-          return;
-        }
-      }
+      this.addLiabilityForm.markAllAsTouched();
     }
     else {
       const obj = {
@@ -268,7 +268,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
         const objToSend = {
           advisorId: this.advisorId,
           clientId: this.clientId,
-          familyMemberId: this._data.familyMemberId,
+          familyMemberId: this.familyMemberId,
           ownerName: obj.ownerName,
           loanTypeId: obj.loanType,
           loanAmount: obj.loanAmount,

@@ -37,7 +37,7 @@
             <div class="col-md-7 p-0">
                 <h4 class="m-0 text-black roboto pt-8">Employees providend fund (EPF)</h4>
             </div>
-            <div class="col-md-5 p-0 right text-right" *ngIf="dataEPFList.filteredData.length > 0">
+            <div class="col-md-5 p-0 right text-right" *ngIf="dataSource.filteredData.length > 0">
                 <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
                 <mat-menu #menu5="matMenu">
                     <button mat-menu-item>PDF</button>
@@ -61,8 +61,8 @@
         </div>
 
         <div class=" col-md-12 overflow-hidden p-0 mt-8 real-estate" id="epf" #EPF #epf>
-            <table *ngIf="dataEPFList.filteredData.length > 0" matSort #epfListTable="matSort" mat-table
-                [dataSource]="dataEPFList" matSort id="table-low" class="skeletonAnimation" appSkeletonLoading
+            <table *ngIf="dataSource.filteredData.length > 0" matSort #epfListTable="matSort" mat-table
+                [dataSource]="dataSource" matSort id="table-low" class="skeletonAnimation" appSkeletonLoading
                 [appSkeletonLoading]="isLoading">
 
                 <ng-container matColumnDef="no">
@@ -193,7 +193,7 @@
                 <tr mat-footer-row *matFooterRowDef="displayedColumns11;sticky: true" [hidden]="isLoading"></tr>
             </table>
 
-            <div *ngIf="dataEPFList.filteredData.length == 0" class="d-flex flex-column align-items-center">
+            <div *ngIf="dataSource.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12">No EPF found</h4>
                 <button (click)="addDataFromSideBar(null, 'addEPF')" class="btn-primary addon v-middle"
@@ -212,7 +212,7 @@
             <div class="col-md-4 p-0">
                 <h4 class="m-0 text-black roboto pt-8">National pension system (NPS)</h4>
             </div>
-            <div class="col-md-8 p-0 right text-right" *ngIf="dataNPSList.filteredData.length > 0">
+            <div class="col-md-8 p-0 right text-right" *ngIf="dataSource.filteredData.length > 0">
                 <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
                 <img class="" src="assets/images/svg/up-down.svg">
                 <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
@@ -282,8 +282,8 @@
                 </mat-menu>
             </div>
             <div class=" mt-8 col-md-12 p-0 overflow-hidden real-estate" #NPS #nps>
-                <table *ngIf="dataNPSList.filteredData.length > 0" matSort #npsListTable="matSort" mat-table
-                    [dataSource]="dataNPSList" id="table-low" class="skeletonAnimation" appSkeletonLoading
+                <table *ngIf="dataSource.filteredData.length > 0" matSort #npsListTable="matSort" mat-table
+                    [dataSource]="dataSource" id="table-low" class="skeletonAnimation" appSkeletonLoading
                     [appSkeletonLoading]="isLoading">
                     <ng-container matColumnDef="no">
                         <th *matHeaderCellDef class="br t-2" mat-header-cell mat-sort-header="no"> No</th>
@@ -388,7 +388,7 @@
                     <tr mat-row *matRowDef="let row; columns: displayedColumns12;"></tr>
                     <tr mat-footer-row *matFooterRowDef="displayedColumns12;sticky: true" [hidden]="isLoading"></tr>
                 </table>
-                <div *ngIf="dataNPSList.filteredData.length == 0" class="d-flex flex-column align-items-center">
+                <div *ngIf="dataSource.filteredData.length == 0" class="d-flex flex-column align-items-center">
                     <img class="width300" src="assets/images/svg/noDataFound.svg">
                     <h4 class="text-center pt-12"> No NPS found </h4>
                     <!--              [matMenuTriggerFor]="menu1"-->
@@ -467,7 +467,7 @@
             <div class="col-md-4 p-0">
                 <h4 class="m-0 text-black roboto pt-8">Gratuity</h4>
             </div>
-            <div class="col-md-8 p-0 right text-right" *ngIf="dataGratuityList.filteredData.length > 0">
+            <div class="col-md-8 p-0 right text-right" *ngIf="dataSource.filteredData.length > 0">
                 <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
                 <mat-menu #menu5="matMenu">
                     <button mat-menu-item>NPS</button>
@@ -488,12 +488,11 @@
                 </button>
             </div>
         </div>
-        <div [ngClass]="{'table-scroll':isLoading==false }" class=" mt-8 col-md-12 p-0 overflow-hidden real-estate"
-            #GRATUITY #Gratuity>
-            <table *ngIf="dataGratuityList.filteredData.length > 0" #gratuityListTable="matSort"
-                [dataSource]="dataGratuityList" id="table-low" mat-table matSort class="skeletonAnimation"
-                appSkeletonLoading [appSkeletonLoading]="isLoading">
-                <ng-container matColumnDef="no" sticky>
+        <div class=" mt-8 col-md-12 p-0 overflow-hidden real-estate" #GRATUITY #Gratuity>
+            <table *ngIf="dataSource.filteredData.length > 0" #gratuityListTable="matSort" [dataSource]="dataSource"
+                id="table-low" mat-table matSort class="skeletonAnimation" appSkeletonLoading
+                [appSkeletonLoading]="isLoading">
+                <ng-container matColumnDef="no">
                     <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="no"> No</th>
                     <td *matCellDef="let element let i = index" class="br" mat-cell>
                         <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
@@ -605,7 +604,7 @@
                 <tr *matRowDef="let row; columns: displayedColumns13;" mat-row></tr>
                 <tr *matFooterRowDef="displayedColumns13;sticky: true" [hidden]="isLoading" mat-footer-row></tr>
             </table>
-            <div *ngIf="dataGratuityList.filteredData.length == 0" class="d-flex flex-column align-items-center">
+            <div *ngIf="dataSource.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12">No Gratuity found</h4>
                 <button (click)="addDataFromSideBar(null, 'addGratuity')" class="btn-primary addon v-middle"
@@ -621,7 +620,7 @@
             <div class="col-md-4 p-0">
                 <h4 class="m-0 text-black roboto pt-8">Superannuation</h4>
             </div>
-            <div class="col-md-8 p-0 right text-right" *ngIf="dataSuperannuationList.filteredData.length > 0">
+            <div class="col-md-8 p-0 right text-right" *ngIf="dataSource.filteredData.length > 0">
                 <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
                 <mat-menu #menu5="matMenu">
                     <button mat-menu-item>PDF</button>
@@ -644,9 +643,9 @@
             </div>
         </div>
         <div class=" overflow-hidden col-md-12 p-0 mt-8 real-estate" #SUPERANNUATION #Superannuation>
-            <table *ngIf="dataSuperannuationList.filteredData.length > 0" #superAnnuationListTable="matSort"
-                [dataSource]="dataSuperannuationList" id="table-low" mat-table matSort class="skeletonAnimation"
-                appSkeletonLoading [appSkeletonLoading]="isLoading">
+            <table *ngIf="dataSource.filteredData.length > 0" #superAnnuationListTable="matSort"
+                [dataSource]="dataSource" id="table-low" mat-table matSort class="skeletonAnimation" appSkeletonLoading
+                [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no">
                     <th *matHeaderCellDef class="br  " mat-header-cell mat-sort-header="no"> No</th>
                     <td *matCellDef="let element let i = index" class="br  " mat-cell>
@@ -763,7 +762,7 @@
                 <tr *matRowDef="let row; columns: displayedColumns14;" mat-row></tr>
                 <tr *matFooterRowDef="displayedColumns14;sticky: true" [hidden]="isLoading" mat-footer-row></tr>
             </table>
-            <div *ngIf="dataSuperannuationList.filteredData.length == 0" class="d-flex flex-column align-items-center">
+            <div *ngIf="dataSource.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12">No Superannuation found</h4>
                 <button (click)="addDataFromSideBar(null, 'addSuperannuation')" class="btn-primary addon v-middle"
@@ -779,7 +778,7 @@
             <div class="col-md-4 p-0">
                 <h4 class="m-0 text-black roboto pt-8">EPS</h4>
             </div>
-            <div class="col-md-8 p-0 right text-right" *ngIf="EPSList.filteredData.length > 0">
+            <div class="col-md-8 p-0 right text-right" *ngIf="dataSource.filteredData.length > 0">
                 <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
                 <mat-menu #menu5="matMenu">
                     <button mat-menu-item>PDF</button>
@@ -801,8 +800,9 @@
             </div>
         </div>
         <div class=" overflow-hidden mt-8 col-md-12 p-0 real-estate" #EPS #eps>
-            <table *ngIf="EPSList.filteredData.length > 0" #epsListTable="matSort" [dataSource]="EPSList" id="table-low"
-                mat-table matSort class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+            <table *ngIf="dataSource.filteredData.length > 0" #epsListTable="matSort" [dataSource]="dataSource"
+                id="table-low" mat-table matSort class="skeletonAnimation" appSkeletonLoading
+                [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no">
                     <th *matHeaderCellDef class="br " mat-header-cell mat-sort-header="no"> No</th>
                     <td *matCellDef="let element let i = index" class="br" mat-cell>
@@ -907,7 +907,7 @@
                 <tr *matRowDef="let row; columns: displayedColumns15;" mat-row></tr>
                 <tr *matFooterRowDef="displayedColumns15;sticky: true" [hidden]="isLoading" mat-footer-row></tr>
             </table>
-            <div *ngIf="EPSList.filteredData.length == 0" class="d-flex flex-column align-items-center">
+            <div *ngIf="dataSource.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12">No EPS found </h4>
                 <button (click)="addDataFromSideBar(null, 'addEPS')" class="btn-primary addon v-middle"

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionService } from '../../../subscription.service';
@@ -7,6 +7,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from "../../../../../../../auth-service/authService";
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { MatInput } from '@angular/material';
 @Component({
   selector: 'app-add-variable-fee',
   templateUrl: './add-variable-fee.component.html',
@@ -44,6 +45,7 @@ export class AddVariableFeeComponent implements OnInit {
   serviceId: any;
   dataToSend: any;
   restrictMoreThan100Val;
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   @ViewChild('htmlTag', { static: true }) htmltag: ElementRef
   otherAssetDataId: any;
   _data: any;
@@ -203,25 +205,48 @@ export class AddVariableFeeComponent implements OnInit {
   }
 
   saveVariableFeeData(feeType) {
-    if (this.variableFeeData.invalid || this.variableFeeData.controls.directFees.invalid || this.variableFeeData.controls.regularFees.invalid) {
-      this.variableFeeData.get('serviceName').markAsTouched();
-      this.variableFeeData.get('code').markAsTouched();
-      this.variableFeeData.get('billEvery').markAsTouched();
-      this.variableFeeData.get('pricing').markAsTouched();
-      this.getFormControl().regularFees.controls.equity.markAsTouched();
-      this.getFormControl().regularFees.controls.debt.markAsTouched();
-      this.getFormControl().regularFees.controls.liquid.markAsTouched();
-      this.getFormControl().directFees.controls.equity.markAsTouched();
-      this.getFormControl().directFees.controls.debt.markAsTouched();
-      this.getFormControl().directFees.controls.liquid.markAsTouched();
-      this.variableFeeData.controls.pricing.markAsTouched();
-      if (this.variableFeeData.controls.pricing.invalid) {
-        this.pricing = true;
+    if (this.variableFeeData.invalid) {
+      for (let element in this.variableFeeData.controls) {
+        console.log(element)
+        if (this.variableFeeData.get(element).invalid) {
+          this.inputs.find(input => !input.ngControl.valid).focus();
+          this.variableFeeData.controls[element].markAsTouched();
+          this.getFormControl().regularFees.controls.equity.markAsTouched();
+          this.getFormControl().regularFees.controls.debt.markAsTouched();
+          this.getFormControl().regularFees.controls.liquid.markAsTouched();
+          this.getFormControl().directFees.controls.equity.markAsTouched();
+          this.getFormControl().directFees.controls.debt.markAsTouched();
+          this.getFormControl().directFees.controls.liquid.markAsTouched();
+          this.variableFeeData.controls.pricing.markAsTouched();
+          if (this.variableFeeData.controls.pricing.invalid) {
+            this.pricing = true;
+          }
+        }
       }
     }
-    else if (this.validateFees()) {
-      this.variableFees = false;
-    }
+    // if (this.variableFeeData.invalid || this.variableFeeData.controls.directFees.invalid || this.variableFeeData.controls.regularFees.invalid) {
+    //   this.variableFeeData.get('serviceName').markAsTouched();
+    //   this.variableFeeData.get('code').markAsTouched();
+    //   this.variableFeeData.get('billEvery').markAsTouched();
+    //   this.variableFeeData.get('pricing').markAsTouched();
+    //   this.getFormControl().regularFees.controls.equity.markAsTouched();
+    //   this.getFormControl().regularFees.controls.debt.markAsTouched();
+    //   this.getFormControl().regularFees.controls.liquid.markAsTouched();
+    //   this.getFormControl().directFees.controls.equity.markAsTouched();
+    //   this.getFormControl().directFees.controls.debt.markAsTouched();
+    //   this.getFormControl().directFees.controls.liquid.markAsTouched();
+    //   this.variableFeeData.controls.pricing.markAsTouched();
+    //   if (this.variableFeeData.controls.pricing.invalid) {
+    //     this.pricing = true;
+    //   }
+    // }
+    // else if (this.variableFeeData.controls.pricing.invalid) {
+    //   this.pricing = true;
+    //   this.variableFeeData.controls.pricing.markAsTouched();
+    // }
+    // else if (this.validateFees()) {
+    //   this.variableFees = false;
+    // }
     else {
       this.barButtonOptions.active = true;
       let obj = {

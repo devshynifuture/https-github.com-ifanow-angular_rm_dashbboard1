@@ -252,7 +252,7 @@
                                         [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE"
                                         appInputValueValidation maxLength="{{getFormControlBank().bankName.maxLength}}"
                                         type="text">
-                                    <mat-error class="f-12">This field is required</mat-error>
+                                    <mat-error class="f-12">Bank name is required</mat-error>
                                     <mat-hint align="end" class="f-12">{{bankName.value.length}}/35</mat-hint>
                                 </mat-form-field>
                             </div>
@@ -270,7 +270,7 @@
                                         [maxLength]="getFormControlBank().acNo.maxLength" appInputValueValidation
                                         class="form-control br-0 text-left" formControlName="acNo" matInput
                                         type="number">
-                                    <mat-error class="f-12">This field is required</mat-error>
+                                    <mat-error class="f-12">Account no. is required</mat-error>
                                     <mat-hint align="end" class="f-12">{{acNo.value.length}}/16</mat-hint>
                                 </mat-form-field>
                             </div>
@@ -305,7 +305,7 @@
                                 <mat-form-field>
                                     <textarea #address class="form-control br-0" rows="4" formControlName="address"
                                         matInput maxLength="{{getFormControlBank().address.maxLength}}"></textarea>
-                                    <mat-error class="f-12">This field is required</mat-error>
+                                    <mat-error class="f-12">Bank address is required</mat-error>
                                     <mat-hint align="end" class="f-12">{{address.value.length}}/150</mat-hint>
                                 </mat-form-field>
                             </div>
@@ -341,7 +341,7 @@
                                         [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="30"
                                         appInputValueValidation class="form-control br-0 text-left"
                                         formControlName="cityB" matInput type="text">
-                                    <mat-error class="f-12">This field is required</mat-error>
+                                    <mat-error class="f-12">City is required</mat-error>
                                     <mat-hint align="end" class="f-12">{{cityB.value.length}}/30</mat-hint>
                                 </mat-form-field>
                             </div>
@@ -358,7 +358,7 @@
                                         (changedValue)="getFormControlBank().stateB.setValue($event)"
                                         class="form-control br-0 text-left" formControlName="stateB" matInput
                                         maxLength="30" type="text">
-                                    <mat-error class="f-12">This field is required</mat-error>
+                                    <mat-error class="f-12">State is required</mat-error>
                                     <mat-hint align="end" class="f-12">{{stateB.value.length}}/30</mat-hint>
                                 </mat-form-field>
                             </div>
@@ -375,7 +375,7 @@
                                         (changedValue)="getFormControlBank().countryB.setValue($event)"
                                         class="form-control br-0 text-left" formControlName="countryB" matInput
                                         maxLength="30" type="text">
-                                    <mat-error class="f-12">This field is required</mat-error>
+                                    <mat-error class="f-12">Country is required</mat-error>
                                     <mat-hint align="end" class="f-12">{{countryB.value.length}}/30</mat-hint>
                                 </mat-form-field>
                             </div>

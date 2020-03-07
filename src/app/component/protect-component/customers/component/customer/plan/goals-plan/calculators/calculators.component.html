@@ -76,8 +76,7 @@
                 <div class="row pt-36">
                   <div class="col-md-6 p-0">
                     <p class="m-0 roboto pt-16 right">Loan to be taken</p>
-                    <p class="m-0 f-12 right text-primitive">Max available:
-                      {{maxAmtAvailable | currency :'INR': 'symbol' : '0.0'}}</p>
+                    <p class="m-0 f-12 right text-primitive">Max available: ₹<span appFormatNumber>{{maxAmtAvailable}}</span></p>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group mb-0">
@@ -127,48 +126,48 @@
                 <div class="row ">
                   <div class="col-md-6 p-0">
                     <p class="m-0 text-primitive f-12">INCOME IN GOAL YEAR</p>
-                    <h5 class="m-0 text-black">{{incomeInGoalYr | currency :'INR': 'symbol' : '0.0'}}</h5>
+                    <h5 class="m-0 text-black">₹<span appFormatNumber>{{incomeInGoalYr}}</span></h5>
                   </div>
                   <div class="col-md-6 p-0"></div>
                 </div>
                 <div class="row pt-28">
                   <div class="col-md-6 p-0">
                     <p class="m-0 text-primitive f-12">HIGHEST LOAN AVAILABLE</p>
-                    <h5 class="m-0 text-black">{{highestLoanAvailable | currency :'INR': 'symbol' : '0.0'}}</h5>
+                    <h5 class="m-0 text-black">₹<span appFormatNumber>{{highestLoanAvailable}}</span></h5>
                   </div>
                   <div class="col-md-6 p-0">
                     <p class="m-0 text-primitive f-12">HIGHEST EMI AVAILABLE</p>
-                    <h5 class="m-0 text-black">{{highestEMIAvailable | currency :'INR': 'symbol' : '0.0'}}</h5>
+                    <h5 class="m-0 text-black">₹<span appFormatNumber>{{highestEMIAvailable}}</span></h5>
                   </div>
                 </div>
                 <div class="row pt-28">
                   <div class="col-md-6 p-0">
                     <p class="m-0 text-primitive f-12">LOAN TO BE TAKEN</p>
-                    <h5 class="m-0 text-black">{{loanToBeTaken | currency :'INR': 'symbol' : '0.0'}}</h5>
+                    <h5 class="m-0 text-black">₹<span appFormatNumber>{{loanToBeTaken}}</span></h5>
                   </div>
                   <div class="col-md-6 p-0">
                     <p class="m-0 text-primitive f-12">EMI PAYABLE</p>
-                    <h5 class="m-0 text-black">{{emiPayable | currency :'INR': 'symbol' : '0.0'}}</h5>
+                    <h5 class="m-0 text-black">₹<span appFormatNumber>{{emiPayable}}</span></h5>
                   </div>
                 </div>
                 <div class="row pt-28">
                   <div class="col-md-6 p-0">
                     <p class="m-0 text-primitive f-12">ORIGINAL GOAL AMOUNT</p>
-                    <h5 class="m-0 text-black">{{originalGoalAmt | currency :'INR': 'symbol' : '0.0'}}</h5>
+                    <h5 class="m-0 text-black">₹<span appFormatNumber>{{originalGoalAmt}}</span></h5>
                   </div>
                   <div class="col-md-6 p-0">
                     <p class="m-0 text-primitive f-12">DOWN PAYMENT AMOUNT</p>
-                    <h5 class="m-0 text-black">{{dwnPaymentAmt | currency :'INR': 'symbol' : '0.0'}}</h5>
+                    <h5 class="m-0 text-black">₹<span appFormatNumber>{{dwnPaymentAmt}}</span></h5>
                   </div>
                 </div>
                 <div class="row pt-28">
                   <div class="col-md-6 p-0">
                     <p class="m-0 text-primitive f-12">MONTHLY REQUIRED</p>
-                    <h5 class="m-0 text-black">{{monthlyReq | currency :'INR': 'symbol' : '0.0'}}</h5>
+                    <h5 class="m-0 text-black">₹<span appFormatNumber>{{monthlyReq}}</span></h5>
                   </div>
                   <div class="col-md-6 p-0 pb-20">
                     <p class="m-0 text-primitive f-12">LUMPSUM REQUIRED</p>
-                    <h5 class="m-0 text-black">{{lumpsumReq | currency :'INR': 'symbol' : '0.0'}}</h5>
+                    <h5 class="m-0 text-black">₹<span appFormatNumber>{{lumpsumReq}}</span></h5>
                   </div>
                 </div>
                 <div class="row btl-1 pt-20 pb-20">

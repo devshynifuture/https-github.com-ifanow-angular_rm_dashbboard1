@@ -154,14 +154,7 @@ export class AddSsyComponent implements OnInit {
       });
     }
     if (this.ssySchemeForm.invalid) {
-      for (let element in this.ssySchemeForm.controls) {
-        console.log(element)
-        if (this.ssySchemeForm.controls[element].invalid) {
-          this.inputs.find(input => !input.ngControl.valid).focus();
-          this.ssySchemeForm.controls[element].markAsTouched();
-          return;
-        }
-      }
+      this.ssySchemeForm.markAllAsTouched();
     }
     else if (transactionFlag == false) {
       return;

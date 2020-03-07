@@ -115,13 +115,7 @@ export class CashInHandComponent implements OnInit {
   saveCashInHand() {
     if (this.cashInHand.invalid) {
       this.inputs.find(input => !input.ngControl.valid).focus();
-      for (let element in this.cashInHand.controls) {
-        console.log(element)
-        if (this.cashInHand.controls[element].invalid) {
-          this.cashInHand.controls[element].markAsTouched();
-          return;
-        }
-      }
+      this.cashInHand.markAllAsTouched();
     } else {
       const obj = {
         advisorId: this.advisorId,

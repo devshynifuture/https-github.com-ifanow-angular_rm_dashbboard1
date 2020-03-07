@@ -6,6 +6,7 @@ import { MaterialModule } from 'src/app/material/material';
 import { GoalsPlanComponent } from './goals-plan.component';
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
     CommonModule,
     PlanGoalsRoutingModule,
     MaterialModule,
-    CustomDirectiveModule
+    CustomDirectiveModule,
+    DragDropModule
   ]
 })
 export class PlanGoalsModule { }
