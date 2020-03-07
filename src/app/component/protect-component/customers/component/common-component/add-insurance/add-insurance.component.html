@@ -26,7 +26,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select formControlName="lifeAssured" #Proposer autocomplete="true"
+                        <mat-select matInput formControlName="lifeAssured" #Proposer autocomplete="true"
                             class="form-control br-0">
                             <mat-option (click)="getFamilyMember(option,i)"
                                 *ngFor="let option of FamilyMember;index as i" [value]="option.userName">
@@ -47,7 +47,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select formControlName="proposer" #lifeAssured autocomplete="true"
+                        <mat-select matInput formControlName="proposer" #lifeAssured autocomplete="true"
                             class="form-control br-0">
                             <mat-option (click)="getProposerData(option,i)"
                                 *ngFor="let option of ProposerData;index as i" [value]="option.userName">
@@ -68,7 +68,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field class="example-full-width">
-                        <input class="form-control br-0" type="text" (keyup)="findPolicyName($event)"
+                        <input matInput class="form-control br-0" type="text" (keyup)="findPolicyName($event)"
                             formControlName="policyName" aria-label="Number" matInput [matAutocomplete]="auto">
                         <mat-autocomplete #auto="matAutocomplete">
                             <mat-option (click)="selectPolicy(option)" *ngFor="let option of options"
@@ -168,7 +168,7 @@
                 <div class="form-group mb-0">
                     <label class="f-14 roboto">Frequency</label>
                     <mat-form-field>
-                        <mat-select formControlName="premiumDetailsFrequency" #frequency autocomplete="off"
+                        <mat-select matInput formControlName="premiumDetailsFrequency" #frequency autocomplete="off"
                             class="form-control br-0">
                             <mat-option value='1'>Monthly</mat-option>
                             <mat-option value='2'>Quarterly</mat-option>
@@ -199,7 +199,7 @@
                         </mat-error>
                     </mat-form-field> -->
                     <mat-form-field>
-                        <mat-select formControlName="tenureDetailsPolicy" #frequency autocomplete="off"
+                        <mat-select matInput formControlName="tenureDetailsPolicy" #frequency autocomplete="off"
                             class="form-control br-0">
                             <mat-option value="5">5 Years</mat-option>
                             <mat-option value="10">10 Years</mat-option>
@@ -235,7 +235,7 @@
                 <div class="form-group mb-0">
                     <label class="f-16 roboto"> </label>
                     <mat-form-field>
-                        <mat-select formControlName="policyStatus" #frequency autocomplete="off"
+                        <mat-select matInput formControlName="policyStatus" #frequency autocomplete="off"
                             class="form-control mt-28 br-0">
                             <mat-option value="1">In force</mat-option>
                             <mat-option value="2">Lapsed</mat-option>
