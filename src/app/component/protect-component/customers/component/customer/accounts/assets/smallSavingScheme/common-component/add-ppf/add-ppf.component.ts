@@ -183,7 +183,7 @@ export class AddPpfComponent implements OnInit {
       let obj = {
         "advisorId": this.advisorId,
         "clientId": this.clientId,
-        "ownerName": this.ownerName,
+        "ownerName": this.ownerName.userName,
         "familyMemberId": this.familyMemberId,
         "accountBalance": this.ppfSchemeForm.get('accountBalance').value,
         "balanceAsOn": this.ppfSchemeForm.get('balanceAsOn').value,
