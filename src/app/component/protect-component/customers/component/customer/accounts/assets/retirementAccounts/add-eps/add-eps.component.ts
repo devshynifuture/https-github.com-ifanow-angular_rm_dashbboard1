@@ -106,21 +106,10 @@ export class AddEPSComponent implements OnInit {
   }
 
   saveEPF() {
-    this.inputs.find(input => !input.ngControl.valid).focus();
-    if (this.eps.get('ownerName').invalid) {
-      this.eps.get('ownerName').markAsTouched();
-      return;
-    } else if (this.eps.get('commencementDate').invalid) {
-      this.eps.get('commencementDate').markAsTouched();
-      return;
-    } else if (this.eps.get('ownerName').invalid) {
-      this.eps.get('ownerName').markAsTouched();
-      return
-    } else if (this.eps.get('pensionAmount').invalid) {
-      this.eps.get('pensionAmount').markAsTouched();
-      return;
-    } else if (this.eps.get('pensionPayFreq').invalid) {
-      this.eps.get('pensionPayFreq').markAsTouched();
+
+    if (this.eps.invalid) {
+      this.inputs.find(input => !input.ngControl.valid).focus();
+      this.eps.markAllAsTouched();
       return;
     } else {
       let obj = {

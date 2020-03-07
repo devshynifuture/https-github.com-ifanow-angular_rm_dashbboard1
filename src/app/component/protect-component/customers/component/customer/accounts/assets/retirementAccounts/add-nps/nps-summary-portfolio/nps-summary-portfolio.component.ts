@@ -240,24 +240,9 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     }
   }
   summaryNPSSave() {
-    if (this.summaryNPS.get('ownerName').invalid) {
-      this.summaryNPS.get('ownerName').markAsTouched();
+    if (this.summaryNPS.invalid) {
+      this.summaryNPS.markAllAsTouched();
       return;
-    } else if (this.summaryNPS.get('currentValue').invalid) {
-      this.summaryNPS.get('currentValue').markAsTouched();
-      return;
-    } else if (this.summaryNPS.get('ownerName').invalid) {
-      this.summaryNPS.get('ownerName').markAsTouched();
-      return
-    } else if (this.summaryNPS.get('valueAsOn').invalid) {
-      this.summaryNPS.get('valueAsOn').markAsTouched();
-      return;
-    } else if (this.summaryNPS.get('totalContry').invalid) {
-      this.summaryNPS.get('totalContry').markAsTouched();
-      return;
-    } else if (this.summaryNPS.get('futureContributionList').invalid) {
-      this.summaryNPS.get('futureContributionList').markAsTouched();
-      return
     } else {
       let obj = {
         advisorId: this.advisorId,

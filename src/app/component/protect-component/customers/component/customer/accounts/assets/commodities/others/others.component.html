@@ -19,7 +19,7 @@
         </div>
         <div class="col-md-5">
             <mat-form-field class="w-100">
-                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                <mat-select matInput appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
                     [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Search family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
@@ -39,7 +39,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <mat-select formControlName="typeOfCommodity" class="form-control br-0">
+                    <mat-select matInput formControlName="typeOfCommodity" class="form-control br-0">
                         <mat-option value="" disabled>Select option</mat-option>
                         <mat-option value="1">Art</mat-option>
                         <mat-option value="2">Antiques</mat-option>
