@@ -59,8 +59,8 @@ export class AddMutualFundComponent implements OnInit {
     console.log(this.MfForm)
   }
   SavePorfolio() {
-    this.inputs.find(input => !input.ngControl.valid).focus();
     if (this.MfForm.invalid) {
+      this.inputs.find(input => !input.ngControl.valid).focus();
       this.MfForm.get('ownerName').markAsTouched();
       this.MfForm.get('currentMarketValue').markAsTouched();
       this.MfForm.get('valueAsOn').markAsTouched();

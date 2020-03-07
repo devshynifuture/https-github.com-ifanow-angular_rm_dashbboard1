@@ -52,6 +52,7 @@ import { FireInsuranceComponent } from './insurance-plan/mainInsuranceScreen/fir
 import { HouseholdersInsuranceComponent } from './insurance-plan/mainInsuranceScreen/householders-insurance/householders-insurance.component';
 import { PersonalInsuranceComponent } from './insurance-plan/mainInsuranceScreen/personal-insurance/personal-insurance.component';
 import { InsurancePlanModule } from './insurance-plan/insurance-plan.module';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 export const componentList = [
   PreferencesComponent,
@@ -110,6 +111,7 @@ export const componentList = [
     ReactiveFormsModule,
     CustomDirectiveModule,
     InsurancePlanModule,
+    DragDropModule
   ],
   exports: [
     FormsModule,

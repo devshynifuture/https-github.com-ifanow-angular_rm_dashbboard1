@@ -11,7 +11,7 @@ import { debounceTime } from 'rxjs/operators';
 export class CalculatorsComponent implements OnInit {
   
   @Input() data: any = {};
-  @Input() popupHeaderText: string = 'CALCULATORS - NEW HOUSE';
+  @Input() popupHeaderText: string = 'CALCULATORS';
   
   incomeFG: FormGroup;
   loanFG: FormGroup;
