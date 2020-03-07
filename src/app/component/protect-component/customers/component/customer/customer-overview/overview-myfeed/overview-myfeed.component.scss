@@ -92,6 +92,18 @@
             border-radius: 4px;
             padding: 10px;
             margin-right: 20px;
+            .spanClass {
+                display: inline-block;
+                border: 1px solid #008FFF;
+                padding: 0px 4px;
+                border-radius: 2px;
+            }
+            .spanClassDanger {
+                display: inline-block;
+                border: 1px solid #FF6823;
+                padding: 0px 4px;
+                border-radius: 2px;
+            }
         }
     }
     .activityBox {
@@ -112,4 +124,41 @@
             height: 40px;
         }
     }
+    .riskProfileBox {
+        border: 1px solid #D9DEE1;
+        border-radius: 4px;
+        .numberBox {
+            width: 100px;
+            height: 100px;
+            margin: 0px auto;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            border: 3px solid #1F1F1F;
+            font-size: 48px;
+        }
+    }
+}
+
+.advi_name {
+    width: 45px;
+    height: 45px;
+    overflow: hidden;
+    border-radius: 50%;
+    img {
+        max-width: 100%;
+    }
+}
+
+.markBtn {
+    background: transparent;
+    width: 78px;
+    height: 30px;
+    border: 1px solid #83959D;
+    padding: 0px;
+}
+
+.paddleft30 {
+    padding-left: 30px;
 }
