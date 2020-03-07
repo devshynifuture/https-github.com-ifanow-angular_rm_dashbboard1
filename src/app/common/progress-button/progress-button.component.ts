@@ -29,7 +29,7 @@ export class ProgressButtonComponent implements AfterViewInit, OnInit {
   };
 
   ngOnInit() {
-    if(this.options.text == "Login to your account"){
+    if(this.options.text.trim() == "Login to your account"){
       this.islogBut = true;
     }
    console.log(this.islogBut, this.options.customClass, "logbutton 123");
