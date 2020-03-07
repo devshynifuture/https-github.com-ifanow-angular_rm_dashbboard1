@@ -8,7 +8,7 @@ import { EventEmitter } from '@angular/core';
   styleUrls: ['./add-transaction.component.scss']
 })
 export class AddTransactionComponent implements OnInit {
-  addTransactionList: any;
+  addTransactionList = 0;
   maxDate = new Date();
   transactionForm: any;
   @Input() commencementDate;
@@ -38,6 +38,7 @@ export class AddTransactionComponent implements OnInit {
           type: [element.option, Validators.required],
           id: [(element.id + ''), Validators.required],
         }));
+        this.addTransactionList++;
       });
     }
     else {

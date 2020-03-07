@@ -115,9 +115,9 @@
                 <h5 class="m-0 pt-8">Commencement date</h5>
             </div>
             <div class="col-md-3">
-                <div class="form-group form-group_one mb-0">
-                    <mat-form-field>
-                        <input matInput formControlName="commencementDate" [max]="maxDate" class="form-control br-0"
+                <div class="form-group mb-0">
+                    <mat-form-field class="ba-date">
+                        <input matInput formControlName="commencementDate" [max]="maxDate" class="form-control br-0 b-0"
                             [matDatepicker]="CommencementPicker" (focus)="CommencementPicker.open()"
                             (input)="preventDefault($event)">
                         <mat-datepicker-toggle matSuffix [for]="CommencementPicker"></mat-datepicker-toggle>
@@ -248,7 +248,7 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="form-group form-group_two mb-0">
+                <div class="form-group mb-0">
                     <label class="f-14 roboto">Last unpaid premium</label>
                     <mat-form-field>
                         <input matInput type="number" [inputValidator]="validatorType.NUMBER_ONLY"
@@ -256,11 +256,9 @@
                             #lastunpaid autocomplete="off" class="form-control br-0">
                         <mat-error>This field is required
                         </mat-error>
+                        <mat-hint>Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{lastunpaid.value.length}}/10</mat-hint>
                     </mat-form-field>
-                </div>
-                <div class="col-md-12">
-                    <p class="f-12 text-primitive m-0 roboto">Optional</p>
                 </div>
             </div>
         </div>
@@ -430,7 +428,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-1 p-0">
+                                <div class="col-md-1 p-0 pt-8">
                                     <i class="material-icons text-primitive c-p float-left"
                                         (click)="addTransaction()">add</i>
                                     <i class="material-icons text-primitive c-p float-right"
@@ -550,10 +548,10 @@
                         <div class="col-md-4">
                             <div class="form-group mb-0">
                                 <label class="f-16 roboto">Loan taken on</label>
-                                <mat-form-field>
+                                <mat-form-field class="ba-date">
                                     <input formControlName="loanTakenOn" (input)="preventDefault($event)"
                                         (focus)="loanTakenOn.open()" autocomplete="off" [matDatepicker]="loanTakenOn"
-                                        matInput class="form-control br-0">
+                                        matInput class="form-control b-0 br-0">
                                     <mat-datepicker-toggle matSuffix [for]="loanTakenOn"></mat-datepicker-toggle>
                                     <mat-datepicker #loanTakenOn></mat-datepicker>
                                 </mat-form-field>

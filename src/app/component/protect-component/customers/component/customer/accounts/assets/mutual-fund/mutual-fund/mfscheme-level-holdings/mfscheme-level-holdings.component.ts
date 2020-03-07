@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-mfscheme-level-holdings',
@@ -14,6 +15,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   ownerName: any;
   selectedFamilyData: any;
   nomineesListFM: any;
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder) { }
   @Input()
@@ -33,7 +35,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       data = {};
     }
     this.schemeLevelHoldingForm = this.fb.group({
-      ownerName: [!data.ownerName?'':data.ownerName, [Validators.required]],
+      ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
       schemeName: [data.schemeName, [Validators.required]],
       folioNumber: [data.folioNumber, [Validators.required]],
       sip: [data.sip, [Validators.required]],
@@ -75,6 +77,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
     this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
   saveMfSchemeLevel() {
+    this.inputs.find(input => !input.ngControl.valid).focus();
     if (this.schemeLevelHoldingForm.invalid) {
       this.schemeLevelHoldingForm.get('ownerName').markAsTouched();
       this.schemeLevelHoldingForm.get('schemeName').markAsTouched();
