@@ -62,8 +62,8 @@
     </div>
     <div
         cdkDropList
-        #allocationList="cdkDropList"
         [cdkDropListData]="displayedAssets"
+        cdkDropListConnectedTo="allottedList"
         [cdkDropListSortingDisabled]="true">
         <div class="mb-12" *ngFor="let asset of displayedAssets" cdkDrag>
             <div class="row goal-border">
