@@ -337,22 +337,14 @@ export class AddRealEstateComponent implements OnInit {
     this.ownerData = this.addrealEstateForm.controls;
   }
   saveFormData() {
-    this.inputs.find(input => !input.ngControl.valid).focus();
-    this.addrealEstateForm.controls.familyMemberId.setValue(this.familyMemberId)
-    if (this.addrealEstateForm.get('ownerName').invalid) {
-      this.addrealEstateForm.get('ownerName').markAsTouched();
-      return;
-    } else if (this.addrealEstateForm.get('ownerPercent').invalid) {
-      this.addrealEstateForm.get('ownerPercent').markAsTouched();
-      return
-    } else if (this.addrealEstateForm.get('type').invalid) {
-      this.addrealEstateForm.get('type').markAsTouched();
-      return
-    } else if (this.addrealEstateForm.get('marketValue').invalid) {
-      this.addrealEstateForm.get('marketValue').markAsTouched();
-      return
 
-    } else {
+    this.addrealEstateForm.controls.familyMemberId.setValue(this.familyMemberId)
+    if (this.addrealEstateForm.invalid) {
+      this.inputs.find(input => !input.ngControl.valid).focus();
+      this.addrealEstateForm.markAllAsTouched();
+      return;
+    }
+    else {
 
       const obj = {
         ownerName: this.ownerName,

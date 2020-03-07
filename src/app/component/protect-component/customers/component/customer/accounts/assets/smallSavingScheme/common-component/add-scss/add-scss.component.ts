@@ -121,13 +121,7 @@ export class AddScssComponent implements OnInit {
       });
     }
     if (this.scssSchemeForm.invalid) {
-      for (let element in this.scssSchemeForm.controls) {
-        console.log(element)
-        if (this.scssSchemeForm.controls[element].invalid) {
-          this.scssSchemeForm.controls[element].markAsTouched();
-          return;
-        }
-      }
+      this.scssSchemeForm.markAllAsTouched();
     } else {
       const obj = {
         id: 0,

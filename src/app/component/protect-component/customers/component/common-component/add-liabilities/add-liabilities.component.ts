@@ -203,13 +203,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     }
     if (this.addLiabilityForm.invalid) {
       this.inputs.find(input => !input.ngControl.valid).focus();
-      for (let element in this.addLiabilityForm.controls) {
-        console.log(element)
-        if (this.addLiabilityForm.controls[element].invalid) {
-          this.addLiabilityForm.controls[element].markAsTouched();
-          return;
-        }
-      }
+      this.addLiabilityForm.markAllAsTouched();
     }
     else {
       const obj = {

@@ -134,14 +134,8 @@ export class BankAccountsComponent implements OnInit {
 
     if (this.bankAccounts.invalid) {
       this.inputs.find(input => !input.ngControl.valid).focus();
-      // this.bankAccounts.markAllAsTouched();
-      for (let element in this.bankAccounts.controls) {
-        console.log(element)
-        if (this.bankAccounts.controls[element].invalid) {
-          this.bankAccounts.controls[element].markAsTouched();
-          return;
-        }
-      }
+      this.bankAccounts.markAllAsTouched();
+
     } else {
       this.nominees = []
       if (this.nomineesList) {
