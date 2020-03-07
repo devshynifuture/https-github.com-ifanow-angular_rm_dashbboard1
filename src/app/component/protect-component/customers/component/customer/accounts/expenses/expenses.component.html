@@ -20,7 +20,7 @@
                                 <div class="col-md-4 p-0" *ngIf="dataSource">
                                     <h4 class="m-0 text-black roboto pt-8">Transactions</h4>
                                 </div>
-                                <div class="col-md-8 p-0 right text-right"  *ngIf="dataSource5.filteredData.length > 0">
+                                <div class="col-md-8 p-0 right text-right" *ngIf="dataSource5.data.length > 0">
                                     <button mat-stroked-button class="br-0 btn-sm p-0 min-52 text-custom">Help</button>
                                     <img src="assets/images/svg/download-bordered.svg" class="c-p">
                                     <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
@@ -34,9 +34,9 @@
                             <div class="row pt-12">
                                 <div class="col-md-7 pl-0">
                                     <div class="example-container mb-24 fixed-DEPOSIT">
-                                        <table *ngIf="dataSource.filteredData.length > 0" mat-table
-                                            [dataSource]="dataSource" id="table-low" class="skeletonAnimation"
-                                            appSkeletonLoading [appSkeletonLoading]="isLoading">
+                                        <table *ngIf="dataSource.data.length > 0" mat-table [dataSource]="dataSource"
+                                            id="table-low" class="skeletonAnimation" appSkeletonLoading
+                                            [appSkeletonLoading]="isLoading">
                                             <ng-container matColumnDef="no">
                                                 <th mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
                                                 <td mat-cell *matCellDef="let element let i = index;" class="br t-2">
@@ -95,22 +95,25 @@
                                             <ng-container matColumnDef="icons">
                                                 <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
                                                 <td mat-cell *matCellDef="let element" class="t-2">
-                                                    <i class="material-icons c-p text-black"
-                                                        [matMenuTriggerFor]="menu4">more_vert</i>
-                                                    <mat-menu #menu4="matMenu">
-                                                        <button mat-menu-item
-                                                            (click)="element.isRecuring = false;openExpenses('editExpenses',element)">Edit</button>
-                                                        <button mat-menu-item>Detailed view</button>
-                                                        <button mat-menu-item>Activity</button>
-                                                        <button mat-menu-item
-                                                            (click)="deleteModal('expense',element)">Delete</button>
-                                                    </mat-menu>
+                                                    <div class="bar">
+                                                        <i *ngIf="isLoading==false"
+                                                            class="material-icons c-p text-black"
+                                                            [matMenuTriggerFor]="menu4">more_vert</i>
+                                                        <mat-menu #menu4="matMenu">
+                                                            <button mat-menu-item
+                                                                (click)="element.isRecuring = false;openExpenses('editExpenses',element)">Edit</button>
+                                                            <button mat-menu-item>Detailed view</button>
+                                                            <button mat-menu-item>Activity</button>
+                                                            <button mat-menu-item
+                                                                (click)="deleteModal('expense',element)">Delete</button>
+                                                        </mat-menu>
+                                                    </div>
                                                 </td>
                                             </ng-container>
                                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                                         </table>
-                                        <div *ngIf="dataSource.filteredData.length == 0 && dataSource1.filteredData.length == 0"
+                                        <div *ngIf="dataSource.data.length == 0 "
                                             class="d-flex flex-column align-items-center">
                                             <img class="width400" src="assets/images/svg/clients-img.svg">
                                             <h4 class="text-center pt-12">{{noData}}</h4>
@@ -189,18 +192,21 @@
                                                 <ng-container matColumnDef="icons">
                                                     <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
                                                     <td mat-cell *matCellDef="let element" class="t-2">
-                                                        <i class="material-icons c-p text-black"
-                                                            [matMenuTriggerFor]="menu4">
-                                                            more_vert
-                                                        </i>
-                                                        <mat-menu #menu4="matMenu">
-                                                            <button mat-menu-item
-                                                                (click)="element.isRecuring = true;openExpenses('editExpenses',element)">Edit</button>
-                                                            <button mat-menu-item>Detailed view</button>
-                                                            <button mat-menu-item>Activity</button>
-                                                            <button mat-menu-item
-                                                                (click)="deleteModal('expenseRecuring',element)">Delete</button>
-                                                        </mat-menu>
+                                                        <div class="bar">
+                                                            <i *ngIf="isLoading==false"
+                                                                class="material-icons c-p text-black"
+                                                                [matMenuTriggerFor]="menu4">
+                                                                more_vert
+                                                            </i>
+                                                            <mat-menu #menu4="matMenu">
+                                                                <button mat-menu-item
+                                                                    (click)="element.isRecuring = true;openExpenses('editExpenses',element)">Edit</button>
+                                                                <button mat-menu-item>Detailed view</button>
+                                                                <button mat-menu-item>Activity</button>
+                                                                <button mat-menu-item
+                                                                    (click)="deleteModal('expenseRecuring',element)">Delete</button>
+                                                            </mat-menu>
+                                                        </div>
                                                     </td>
                                                 </ng-container>
                                                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true">
@@ -310,7 +316,10 @@
                                         <ng-container matColumnDef="progress">
                                             <th mat-header-cell *matHeaderCellDef class="br "> Progress </th>
                                             <td mat-cell *matCellDef="let element" class="br">
-                                                <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+                                                <div class="bar">
+                                                    <mat-progress-bar *ngIf="isLoading==false" mode="determinate"
+                                                        value="40"></mat-progress-bar>
+                                                </div>
                                             </td>
                                         </ng-container>
                                         <ng-container matColumnDef="spent">
@@ -326,16 +335,18 @@
                                         <ng-container matColumnDef="icons">
                                             <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
                                             <td mat-cell *matCellDef="let element" class="t-2">
-                                                <i class="material-icons c-p text-black"
-                                                    [matMenuTriggerFor]="menu4">more_vert</i>
-                                                <mat-menu #menu4="matMenu">
-                                                    <button mat-menu-item
-                                                        (click)="element.isRecuring = false;openExpenses('editBudget',element)">Edit</button>
-                                                    <button mat-menu-item>Detailed view</button>
-                                                    <button mat-menu-item>Activity</button>
-                                                    <button mat-menu-item
-                                                        (click)="deleteModal('budget',element)">Delete</button>
-                                                </mat-menu>
+                                                <div class="bar">
+                                                    <i *ngIf="isLoading==false" class="material-icons c-p text-black"
+                                                        [matMenuTriggerFor]="menu4">more_vert</i>
+                                                    <mat-menu #menu4="matMenu">
+                                                        <button mat-menu-item
+                                                            (click)="element.isRecuring = false;openExpenses('editBudget',element)">Edit</button>
+                                                        <button mat-menu-item>Detailed view</button>
+                                                        <button mat-menu-item>Activity</button>
+                                                        <button mat-menu-item
+                                                            (click)="deleteModal('budget',element)">Delete</button>
+                                                    </mat-menu>
+                                                </div>
                                             </td>
                                         </ng-container>
                                         <tr mat-header-row *matHeaderRowDef="displayedColumns4; sticky: true"></tr>
@@ -386,7 +397,10 @@
                                         <ng-container matColumnDef="progress">
                                             <th mat-header-cell *matHeaderCellDef class="br "> Progress </th>
                                             <td mat-cell *matCellDef="let element" class="br">
-                                                <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+                                                <div class="bar">
+                                                    <mat-progress-bar *ngIf="isLoading==false" mode="determinate"
+                                                        value="40"></mat-progress-bar>
+                                                </div>
                                             </td>
                                         </ng-container>
                                         <ng-container matColumnDef="spent">
@@ -401,16 +415,18 @@
                                         <ng-container matColumnDef="icons">
                                             <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
                                             <td mat-cell *matCellDef="let element" class="t-2">
-                                                <i class="material-icons c-p text-black"
-                                                    [matMenuTriggerFor]="menu4">more_vert</i>
-                                                <mat-menu #menu4="matMenu">
-                                                    <button mat-menu-item
-                                                        (click)="element.isRecuring = true;openExpenses('editBudget',element)">Edit</button>
-                                                    <button mat-menu-item>Detailed view</button>
-                                                    <button mat-menu-item>Activity</button>
-                                                    <button mat-menu-item
-                                                        (click)="deleteModal('budgetRecuring',element)">Delete</button>
-                                                </mat-menu>
+                                                <div class="bar">
+                                                    <i *ngIf="isLoading==false" class="material-icons c-p text-black"
+                                                        [matMenuTriggerFor]="menu4">more_vert</i>
+                                                    <mat-menu #menu4="matMenu">
+                                                        <button mat-menu-item
+                                                            (click)="element.isRecuring = true;openExpenses('editBudget',element)">Edit</button>
+                                                        <button mat-menu-item>Detailed view</button>
+                                                        <button mat-menu-item>Activity</button>
+                                                        <button mat-menu-item
+                                                            (click)="deleteModal('budgetRecuring',element)">Delete</button>
+                                                    </mat-menu>
+                                                </div>
                                             </td>
                                         </ng-container>
                                         <tr mat-header-row *matHeaderRowDef="displayedColumns4; sticky: true"></tr>

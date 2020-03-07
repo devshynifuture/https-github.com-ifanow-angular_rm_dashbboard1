@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./people-team-members.component.scss']
 })
 export class PeopleTeamMembersComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'map', 'action'];
+  displayedColumns: string[] = ['name', 'mobile', 'email', 'type', 'map', 'action'];
   dataSource = ELEMENT_DATA;
   constructor() { }
 
@@ -16,13 +16,19 @@ export class PeopleTeamMembersComponent implements OnInit {
 }
 export interface PeriodicElement {
   name: string;
-  position: string;
-  weight: string;
-  symbol: string;
+  mobile: string;
+  email: string;
+  type: string;
+  map: string;
+  action: string;
 
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 'Amit Mehta', name: 'Amit Mehta', weight: 'amit.mehta@gmail.com', symbol: 'Client' },
+  { name: 'Amit Mehta', mobile: '9322574914', email: 'amit.mehta@gmail.com', type: 'Client', map: '', action: '' },
+  { name: 'Amitesh Anand', mobile: '9322574914', email: 'amit.mehta@gmail.com', type: 'Client', map: '', action: '' },
+  { name: 'Hemal Karia', mobile: '9322574914', email: 'amit.mehta@gmail.com', type: 'Client', map: '', action: '' },
+  { name: 'Kiran Kumar', mobile: '9322574914', email: 'amit.mehta@gmail.com', type: 'Client', map: '', action: '' },
+
 
 ];

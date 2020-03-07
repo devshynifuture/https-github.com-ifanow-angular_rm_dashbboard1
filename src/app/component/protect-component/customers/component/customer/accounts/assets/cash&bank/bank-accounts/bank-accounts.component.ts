@@ -1,9 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { DatePipe } from '@angular/common';
-import { MAT_DATE_FORMATS } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
@@ -40,7 +40,7 @@ export class BankAccountsComponent implements OnInit {
   nominees: any[];
   adviceShowHeaderAndFooter: boolean = true;
   isAdviceFormValid: boolean = false;
-
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
 
   @Input()
@@ -133,6 +133,7 @@ export class BankAccountsComponent implements OnInit {
   saveCashInHand() {
 
     if (this.bankAccounts.invalid) {
+      this.inputs.find(input => !input.ngControl.valid).focus();
       // this.bankAccounts.markAllAsTouched();
       for (let element in this.bankAccounts.controls) {
         console.log(element)
