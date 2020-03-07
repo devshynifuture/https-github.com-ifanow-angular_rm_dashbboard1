@@ -8,6 +8,7 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { DataComponent } from '../../../../../../interfaces/data.component';
 import { ValidatorType } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-add-insurance',
@@ -39,7 +40,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   get data() {
     return this._data;
   }*/
-  constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder, private customerService: CustomerService) {
+  constructor(private eventService: EventService, private subInjectService: SubscriptionInject, private fb: FormBuilder, private customerService: CustomerService) {
   }
   validatorType = ValidatorType
   @Input() set data(data) {
@@ -365,6 +366,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         this.customerService.editLifeInsuranceData(this.insuranceFormFilledData).subscribe(
           data => {
             console.log(data);
+            this.eventService.openSnackBar("Insurance edited", 'dismiss');
             const insuranceData =
             {
               insuranceTypeId: this.insuranceTypeId,
@@ -377,6 +379,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         this.customerService.addLifeInsurance(this.insuranceFormFilledData).subscribe(
           data => {
             console.log(data);
+            this.eventService.openSnackBar("Insurance added", 'dismiss');
             this.close(insuranceData)
           }
         );

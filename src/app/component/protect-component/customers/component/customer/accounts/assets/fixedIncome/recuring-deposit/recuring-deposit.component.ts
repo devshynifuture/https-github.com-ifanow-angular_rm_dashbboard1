@@ -187,6 +187,7 @@ export class RecuringDepositComponent implements OnInit {
       this.maturityDate = this.tenure
     }
     if (this.recuringDeposit.invalid) {
+      this.inputs.find(input => !input.ngControl.valid).focus();
       this.recuringDeposit.markAllAsTouched();
       return;
     }
