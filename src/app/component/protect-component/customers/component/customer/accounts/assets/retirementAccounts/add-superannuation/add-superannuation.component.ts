@@ -122,29 +122,8 @@ export class AddSuperannuationComponent implements OnInit {
   }
   saveSuperannuation() {
     this.inputs.find(input => !input.ngControl.valid).focus();
-    if (this.superannuation.get('ownerName').invalid) {
-      this.superannuation.get('ownerName').markAsTouched();
-      return;
-    } else if (this.superannuation.get('employeeContry').invalid) {
-      this.superannuation.get('employeeContry').markAsTouched();
-      return;
-    } else if (this.superannuation.get('ownerName').invalid) {
-      this.superannuation.get('ownerName').markAsTouched();
-      return;
-    } else if (this.superannuation.get('employerContry').invalid) {
-      this.superannuation.get('employerContry').markAsTouched();
-      return;
-    } else if (this.superannuation.get('assumedRateReturn').invalid) {
-      this.superannuation.get('assumedRateReturn').markAsTouched();
-      return;
-    } else if (this.superannuation.get('growthEmployer').invalid) {
-      this.superannuation.get('growthEmployer').markAsTouched();
-      return;
-    } else if (this.superannuation.get('growthEmployee').invalid) {
-      this.superannuation.get('growthEmployee').markAsTouched();
-      return;
-    } else if (this.superannuation.get('firstDateContry').invalid) {
-      this.superannuation.get('firstDateContry').markAsTouched();
+    if (this.superannuation.invalid) {
+      this.superannuation.markAllAsTouched();
       return;
     } else {
 

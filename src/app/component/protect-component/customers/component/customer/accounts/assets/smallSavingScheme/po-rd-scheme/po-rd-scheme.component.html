@@ -23,12 +23,13 @@
 </div>
 <div class=" mt-8 overflow-hidden real-estate">
     <!-- "dataSource" Property 'dataSource' does not exist on type 'PoTdSchemeComponent'. Did you mean 'dataSource'?-->
-    <table class="skeletonAnimation" *ngIf="dataSource.data.length > 0" matSort mat-table [dataSource]="dataSource" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
+    <table class="skeletonAnimation" *ngIf="dataSource.data.length > 0" matSort mat-table [dataSource]="dataSource"
+        id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
         <ng-container matColumnDef="no">
             <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
             <td mat-cell *matCellDef="let element;index as i" class="br">
-                <div class="bar">{{i+1}} </div>
+                <div class="bar"><span *ngIf="isLoading==false">{{i+1}}</span> </div>
             </td>
             <td mat-footer-cell class="br text-left " *matFooterCellDef> </td>
         </ng-container>
@@ -47,7 +48,8 @@
             <td mat-cell *matCellDef="let element" class="br amt t-14 text-right">
                 <div class="bar" appFormatNumber>{{element.currentValue}}</div>
             </td>
-            <td mat-footer-cell class="br text-right t-14 amt f-600" *matFooterCellDef appFormatNumber [value]="sumOfCurrentValue">
+            <td mat-footer-cell class="br text-right t-14 amt f-600" *matFooterCellDef appFormatNumber
+                [value]="sumOfCurrentValue">
                 <div class="bar"> {{sumOfCurrentValue}} </div>
             </td>
         </ng-container>
@@ -67,7 +69,8 @@
             <td mat-cell *matCellDef="let element" class="br amt text-right t-18">
                 <div class="bar" appFormatNumber> {{element.monthlyContribution}} </div>
             </td>
-            <td mat-footer-cell class="br text-right  t-18 f-600" *matFooterCellDef appFormatNumber [value]="sumOfMonthlyDeposit">{{sumOfMonthlyDeposit}}</td>
+            <td mat-footer-cell class="br text-right  t-18 f-600" *matFooterCellDef appFormatNumber
+                [value]="sumOfMonthlyDeposit">{{sumOfMonthlyDeposit}}</td>
         </ng-container>
         <ng-container matColumnDef="mvalue">
             <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br textRight text-right t-15">
@@ -75,12 +78,14 @@
             <td mat-cell *matCellDef="let element" class="br amt text-right t-15">
                 <div class="bar" appFormatNumber> {{element.maturityValue}} </div>
             </td>
-            <td mat-footer-cell class="br text-right amt f-600" *matFooterCellDef appFormatNumber [value]="sumOfMaturityValue">
+            <td mat-footer-cell class="br text-right amt f-600" *matFooterCellDef appFormatNumber
+                [value]="sumOfMaturityValue">
                 <div class="bar"> {{sumOfMaturityValue}} </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="mdate">
-            <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef class="br text-right t-15">Maturity date </th>
+            <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef class="br text-right t-15">Maturity
+                date </th>
             <td mat-cell *matCellDef="let element" class="br text-left t-15">
                 <div class="bar"> {{element.maturityDate | date:'dd/MM/yyyy'}} </div>
 

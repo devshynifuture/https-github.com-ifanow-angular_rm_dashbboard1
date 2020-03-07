@@ -108,17 +108,8 @@ export class AddGratuityComponent implements OnInit {
   }
   saveEPF() {
     this.inputs.find(input => !input.ngControl.valid).focus();
-    if (this.gratuity.get('ownerName').invalid) {
-      this.gratuity.get('ownerName').markAsTouched();
-      return;
-    } else if (this.gratuity.get('noOfcompleteYrs').invalid) {
-      this.gratuity.get('noOfcompleteYrs').markAsTouched();
-      return;
-    } else if (this.gratuity.get('ownerName').invalid) {
-      this.gratuity.get('ownerName').markAsTouched();
-      return
-    } else if (this.gratuity.get('amountRecived').invalid) {
-      this.gratuity.get('amountRecived').markAsTouched();
+    if (this.gratuity.invalid) {
+      this.gratuity.markAllAsTouched();
       return;
     } else {
 

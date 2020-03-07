@@ -135,24 +135,8 @@ export class AddEPFComponent implements OnInit {
   }
   saveEPF() {
     this.inputs.find(input => !input.ngControl.valid).focus();
-    if (this.epf.get('ownerName').invalid) {
-      this.epf.get('ownerName').markAsTouched();
-      return;
-    } else if (this.epf.get('employeeContry').invalid) {
-      this.epf.get('employeeContry').markAsTouched();
-      return;
-    }
-    else if (this.epf.get('employerContry').invalid) {
-      this.epf.get('employerContry').markAsTouched();
-      return;
-    } else if (this.epf.get('currentEPFBal').invalid) {
-      this.epf.get('currentEPFBal').markAsTouched();
-      return;
-    } else if (this.epf.get('balanceAsOn').invalid) {
-      this.epf.get('balanceAsOn').markAsTouched();
-      return;
-    } else if (this.epf.get('annualSalGrowth').invalid) {
-      this.epf.get('annualSalGrowth').markAsTouched();
+    if (this.epf.invalid) {
+      this.epf.markAllAsTouched();
       return;
     } else {
 
