@@ -7,15 +7,20 @@
     </div>
     <div class="col-md-9">
         <nav mat-align-tabs="center" mat-tab-nav-bar>
-            <a (click)="value=1" routerLinkActive="active" [routerLink]="'summary'" mat-tab-link>SUMMARY</a>
-            <a (click)="value=2" routerLinkActive="active" [routerLink]="'profile'" mat-tab-link>PROFILE</a>
-            <a (click)="value=3" routerLinkActive="active" [routerLink]="'insurance'" mat-tab-link>INSURANCE</a>
-            <a class="width70" (click)="value=4" routerLinkActive="active" [routerLink]="'goals'" mat-tab-link>GOALS</a>
-            <a class="width70" (click)="value=5" routerLinkActive="active" [routerLink]="'taxes'" mat-tab-link>TAXES</a>
-            <a class="width120" (click)="value=6" routerLinkActive="active" [routerLink]="'cash-flow'" mat-tab-link>CASH
+            <a [routerLink]="['/customer/detail/plan/summary']" mat-tab-link routerLinkActive="active">SUMMARY</a>
+            <a [routerLink]="['/customer/detail/plan/profile']" mat-tab-link routerLinkActive="active">PROFILE</a>
+            <a [routerLink]="['/customer/detail/plan/insurance']" mat-tab-link routerLinkActive="active">INSURANCE</a>
+            <a class="width70" [routerLink]="['/customer/detail/plan/goals']" mat-tab-link
+                routerLinkActive="active">GOALS</a>
+            <a class="width70" [routerLink]="['/customer/detail/plan/taxes']" mat-tab-link
+                routerLinkActive="active">TAXES</a>
+            <a class="width120" [routerLink]="['/customer/detail/plan/cash-flow']" mat-tab-link
+                routerLinkActive="active">CASH
                 FLOWS</a>
-            <a class="width120" (click)="value=7" routerLinkActive="active" [routerLink]="'investments'" mat-tab-link>DEPLOYMENTS</a>
-            <a class="width110" (click)="value=8" routerLinkActive="active" [routerLink]="'scenarios'" mat-tab-link>SCENARIOS</a>
+            <a class="width120" [routerLink]="['/customer/detail/plan/investments']" mat-tab-link
+                routerLinkActive="active">DEPLOYMENTS</a>
+            <a class="width110" [routerLink]="['/customer/detail/plan/scenarios']" mat-tab-link
+                routerLinkActive="active">SCENARIOS</a>
         </nav>
     </div>
 </div>

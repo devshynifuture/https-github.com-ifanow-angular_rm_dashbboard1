@@ -19,7 +19,7 @@
         </div>
         <div class="col-md-5">
             <mat-form-field class="w-100">
-                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                <mat-select matInput appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
                     [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value='' disabled>Select family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
@@ -58,7 +58,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <mat-select formControlName="totalsGrams" class="form-control br-0">
+                    <mat-select matInput formControlName="totalsGrams" class="form-control br-0">
                         <mat-option value="" disabled>Select option</mat-option>
                         <mat-option value="1">Entry in tolas</mat-option>
                         <mat-option value="2">Entry in grams</mat-option>
@@ -141,7 +141,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <mat-select formControlName="carats" class="form-control br-0">
+                    <mat-select matInput formControlName="carats" class="form-control br-0">
                         <mat-option value="" disabled>Select option</mat-option>
                         <mat-option value="18">18</mat-option>
                         <mat-option value="22">22</mat-option>
