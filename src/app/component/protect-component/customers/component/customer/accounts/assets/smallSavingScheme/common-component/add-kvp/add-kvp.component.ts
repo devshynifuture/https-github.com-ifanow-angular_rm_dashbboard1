@@ -115,24 +115,10 @@ export class AddKvpComponent implements OnInit {
         this.nominees.push(obj)
       });
     }
-    this.inputs.find(input => !input.ngControl.valid).focus();
-    if (this.KVPFormScheme.get('ownerName').invalid) {
-      this.KVPFormScheme.get('ownerName').markAsTouched();
+    if (this.KVPFormScheme.invalid) {
+      this.inputs.find(input => !input.ngControl.valid).focus();
+      this.KVPFormScheme.markAllAsTouched();
       return;
-    } else if (this.KVPFormScheme.get('amtInvested').invalid) {
-      this.KVPFormScheme.get('amtInvested').markAsTouched();
-      return
-    } else if (this.KVPFormScheme.get('ownerName').invalid) {
-      this.KVPFormScheme.get('ownerName').markAsTouched();
-      return;
-    }
-    else if (this.KVPFormScheme.get('commDate').invalid) {
-      this.KVPFormScheme.get('commDate').markAsTouched();
-      return
-    }
-    else if (this.KVPFormScheme.get('ownerType').invalid) {
-      this.KVPFormScheme.get('ownerType').invmarkAsTouched();
-      return
     }
     else {
       let obj =

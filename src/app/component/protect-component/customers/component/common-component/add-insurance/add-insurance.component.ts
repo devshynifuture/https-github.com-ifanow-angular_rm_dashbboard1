@@ -8,6 +8,7 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { DataComponent } from '../../../../../../interfaces/data.component';
 import { ValidatorType } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-add-insurance',
@@ -39,7 +40,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   get data() {
     return this._data;
   }*/
-  constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder, private customerService: CustomerService) {
+  constructor(private eventService: EventService, private subInjectService: SubscriptionInject, private fb: FormBuilder, private customerService: CustomerService) {
   }
   validatorType = ValidatorType
   @Input() set data(data) {
@@ -306,53 +307,10 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       finalCashFlowList.push(obj)
     })
     this.lifeInsuranceForm.get('policyName').value;
-    this.inputs.find(input => !input.ngControl.valid).focus();
-    if (this.lifeInsuranceForm.get('lifeAssured').invalid) {
-      this.lifeInsuranceForm.get('lifeAssured').markAsTouched();
-      return
-    }
-    else if (this.lifeInsuranceForm.get('proposer').invalid) {
-      this.lifeInsuranceForm.get('proposer').markAsTouched();
-      return
-    }
-    else if (this.lifeInsuranceForm.get('policyName').invalid) {
-      this.lifeInsuranceForm.get('policyName').markAsTouched();
-      return
-    }
-    else if (this.lifeInsuranceForm.get('policyNum').invalid) {
-      this.lifeInsuranceForm.get('policyNum').markAsTouched();
-      return
-    }
-    else if (this.lifeInsuranceForm.get('commencementDate').invalid) {
-      this.lifeInsuranceForm.get('commencementDate').markAsTouched();
-      return
-    }
-    else if (this.lifeInsuranceForm.get('sumAssured').invalid) {
-      this.lifeInsuranceForm.get('sumAssured').markAsTouched();
-      return
-    }
-    else if (this.lifeInsuranceForm.get('premiumDetailsAmount').invalid) {
-      this.lifeInsuranceForm.get('premiumDetailsAmount').markAsTouched();
-      return
-    }
-    else if (this.lifeInsuranceForm.get('premiumDetailsFrequency').invalid) {
-      this.lifeInsuranceForm.get('premiumDetailsFrequency').markAsTouched();
-      return
-    }
-    else if (this.lifeInsuranceForm.get('tenureDetailsPolicy').invalid) {
-      this.lifeInsuranceForm.get('tenureDetailsPolicy').markAsTouched();
-      return
-    }
-    else if (this.lifeInsuranceForm.get('premiumPayingTerm').invalid) {
-      this.lifeInsuranceForm.get('premiumPayingTerm').markAsTouched();
-      return
-    }
-    else if (this.lifeInsuranceForm.get('policyStatus').invalid) {
-      this.lifeInsuranceForm.get('policyStatus').markAsTouched();
-      return
-    }
-    else if (this.lifeInsuranceForm.get('policyStatusLastUnpaid').invalid) {
-      this.lifeInsuranceForm.get('policyStatusLastUnpaid').markAsTouched();
+
+    if (this.lifeInsuranceForm.invalid) {
+      this.inputs.find(input => !input.ngControl.valid).focus();
+      this.lifeInsuranceForm.markAllAsTouched();
       return
     }
     else {
@@ -408,6 +366,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         this.customerService.editLifeInsuranceData(this.insuranceFormFilledData).subscribe(
           data => {
             console.log(data);
+            this.eventService.openSnackBar("Insurance edited", 'dismiss');
             const insuranceData =
             {
               insuranceTypeId: this.insuranceTypeId,
@@ -420,6 +379,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         this.customerService.addLifeInsurance(this.insuranceFormFilledData).subscribe(
           data => {
             console.log(data);
+            this.eventService.openSnackBar("Insurance added", 'dismiss');
             this.close(insuranceData)
           }
         );

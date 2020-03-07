@@ -134,14 +134,7 @@ export class AddPoSavingComponent implements OnInit {
       });
     }
     if (this.poSavingForm.invalid) {
-      for (let element in this.poSavingForm.controls) {
-        console.log(element)
-        if (this.poSavingForm.controls[element].invalid) {
-          this.inputs.find(input => !input.ngControl.valid).focus();
-          this.poSavingForm.controls[element].markAsTouched();
-          return;
-        }
-      }
+      this.poSavingForm.markAllAsTouched();
     } else {
       if (this.flag == "editPOSAVING") {
         const obj = {

@@ -148,7 +148,7 @@ export class AddPoTdComponent implements OnInit {
         let obj = {
 
           "familyMemberId": this.familyMemberId,
-          "ownerName": (this.ownerName == null) ? this.POTDForm.controls.ownerName.value : this.ownerName,
+          "ownerName": (this.ownerName == null) ? this.POTDForm.controls.ownerName.value : this.ownerName.userName,
           "amountInvested": this.POTDForm.get('amtInvested').value,
           "commencementDate": this.POTDForm.get('commDate').value,
           "tenure": this.POTDForm.get('tenure').value,
@@ -170,7 +170,7 @@ export class AddPoTdComponent implements OnInit {
           "clientId": this.clientId,
           "advisorId": this.advisorId,
           "familyMemberId": this.familyMemberId,
-          "ownerName": (this.ownerName == null) ? this.POTDForm.controls.ownerName.value : this.ownerName,
+          "ownerName": (this.ownerName == null) ? this.POTDForm.controls.ownerName.value : this.ownerName.userName,
           "amountInvested": this.POTDForm.get('amtInvested').value,
           "commencementDate": this.POTDForm.get('commDate').value,
           "tenure": this.POTDForm.get('tenure').value,
