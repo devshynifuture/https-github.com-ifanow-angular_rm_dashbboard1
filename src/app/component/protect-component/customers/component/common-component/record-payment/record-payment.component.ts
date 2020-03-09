@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { SubscriptionService } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-record-payment',
@@ -11,7 +12,7 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
   styleUrls: ['./record-payment.component.scss']
 })
 export class RecordPaymentComponent implements OnInit {
-  validatorType=ValidatorType
+  validatorType = ValidatorType
   rPayment;
   dataSource: any;
   showPaymentRecive: boolean;
@@ -25,10 +26,11 @@ export class RecordPaymentComponent implements OnInit {
   balDue: any;
   tdsAmt: any;
   showError = false;
-  feeMode=[{name:"Cheque",selected:false,value:1},{name:"NEFT",selected:false,value:2},
-  {name:"Cash",selected:false,value:3},{name:"ECS mandate",selected:false,value:4},{name:"Bank transfer",selected:false,value:5},
-  {name:"Debit card",selected:false,value:6},{name:"Credit card",selected:false,value:7},{name:"NACH mandate",selected:false,value:8}]
-  
+  feeMode = [{ name: "Cheque", selected: false, value: 1 }, { name: "NEFT", selected: false, value: 2 },
+  { name: "Cash", selected: false, value: 3 }, { name: "ECS mandate", selected: false, value: 4 }, { name: "Bank transfer", selected: false, value: 5 },
+  { name: "Debit card", selected: false, value: 6 }, { name: "Credit card", selected: false, value: 7 }, { name: "NACH mandate", selected: false, value: 8 }]
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+
   constructor(public subService: SubscriptionService, private fb: FormBuilder, public enumService: EnumServiceService, public AuthService: AuthService, public utils: UtilService) { }
   @Input() InvRecordData;
   @Input() padding;
@@ -42,8 +44,8 @@ export class RecordPaymentComponent implements OnInit {
   ngOnInit() {
     console.log(this.padding);
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
-    if(this.feeCollectionMode.length==0){
-      this.feeCollectionMode=this.feeMode
+    if (this.feeCollectionMode.length == 0) {
+      this.feeCollectionMode = this.feeMode
     }
     this.advisorId = AuthService.getAdvisorId();
     this.getRecordPayment(this.InvRecordData);
@@ -60,8 +62,8 @@ export class RecordPaymentComponent implements OnInit {
       chargesIfAny: [data.chargesIfAny, [Validators.required]],
       tds: [data.tds, [Validators.max(this.tdsAmt)]],
       paymentDate: [new Date(data.paymentDate), [Validators.required]],
-      paymentMode: [data.paymentMode, [Validators.required]],
-      gstTreatment: [(data.gstTreatmentId == 1) ? 'Registered Business - Regular' : (data.gstTreatmentId == 2) ? 'Registered Business - Composition' : 'Unregistered Business', [Validators.required]],
+      paymentMode: [(data.paymentMode) ? data.paymentMode : '', [Validators.required]],
+      gstTreatment: [(data.gstTreatmentId == 1) ? 'Registered Business - Regular' : (data.gstTreatmentId == 2) ? 'Registered Business - Composition' : (data.gstTreatmentId == 3) ? 'Unregistered Business' : '', [Validators.required]],
       notes: [data.notes],
       id: [data.id],
       editFormData: [true]
@@ -102,11 +104,11 @@ export class RecordPaymentComponent implements OnInit {
   onChange() {
     this.tdsAmt = this.balDue - this.rPayment.get('amountReceived').value
     if (this.rPayment.get('tds').value > this.tdsAmt) {
-      this.rPayment.get('tds').setErrors({'incorrect': true });
+      this.rPayment.get('tds').setErrors({ 'incorrect': true });
 
       // this.showError = true
     }
-    
+
     // this.rPayment.get('tds').errors.max=this.tdsAmt
   }
   getPaymentReceivedRes(data) {
@@ -128,23 +130,15 @@ export class RecordPaymentComponent implements OnInit {
     }
   }
   saveFormData() {
-    if (this.rPayment.get('amountReceived').value == null || this.rPayment.get('amountReceived').value == "") {
-      this.rPayment.get('amountReceived').markAsTouched();
-      return
-    } else if (this.rPayment.get('paymentDate').invalid) {
-      this.rPayment.get('paymentDate').markAsTouched();
-      return
-    } else if (this.rPayment.get('paymentMode').invalid) {
-      this.rPayment.get('paymentMode').markAsTouched();
-      return
-
-    } else if (this.rPayment.get('gstTreatment').invalid) {
-      this.rPayment.get('gstTreatment').markAsTouched();
-      return
-    } else if (this.rPayment.get('tds').invalid) {
-      this.rPayment.get('tds').markAsTouched();
-      return
-    }else {
+    if (this.rPayment.invalid) {
+      for (let element in this.rPayment.controls) {
+        console.log(element)
+        if (this.rPayment.get(element).invalid) {
+          this.inputs.find(input => !input.ngControl.valid).focus();
+          this.rPayment.controls[element].markAsTouched();
+        }
+      }
+    } else {
       this.formObj = [{
         advisorId: this.advisorId,
         // advisorId: 12345,

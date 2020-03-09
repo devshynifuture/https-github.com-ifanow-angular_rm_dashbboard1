@@ -142,14 +142,7 @@ export class AddPoRdComponent implements OnInit {
       });
     }
     if (this.PORDForm.invalid) {
-      for (let element in this.PORDForm.controls) {
-        console.log(element);
-        this.inputs.find(input => !input.ngControl.valid).focus();
-        if (this.PORDForm.controls[element].invalid) {
-          this.PORDForm.controls[element].markAsTouched();
-          return;
-        }
-      }
+      this.PORDForm.markAllAsTouched();
     } else {
       const obj = {
         clientId: this.clientId,

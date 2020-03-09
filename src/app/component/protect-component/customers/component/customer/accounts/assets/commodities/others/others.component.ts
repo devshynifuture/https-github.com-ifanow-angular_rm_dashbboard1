@@ -1,9 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { DatePipe } from '@angular/common';
-import { MAT_DATE_FORMATS } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
@@ -35,6 +35,7 @@ export class OthersComponent implements OnInit {
   flag: any;
   otherData: any;
   adviceShowHeaderAndFooter: boolean = true;
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
   }
@@ -130,17 +131,9 @@ export class OthersComponent implements OnInit {
 
   saveOthers() {
     console.log("form group ::::::::::::", this.others);
-    if (this.others.get('ownerName').invalid) {
-      this.others.get('ownerName').markAsTouched();
-      return;
-    } else if (this.others.get('typeOfCommodity').invalid) {
-      this.others.get('typeOfCommodity').markAsTouched();
-      return;
-    } else if (this.others.get('ownerName').invalid) {
-      this.others.get('ownerName').markAsTouched();
-      return
-    } else if (this.others.get('marketValue').invalid) {
-      this.others.get('marketValue').markAsTouched();
+    if (this.others.invalid) {
+      this.inputs.find(input => !input.ngControl.valid).focus();
+      this.others.markAllAsTouched();
       return;
     } else {
       const obj = {

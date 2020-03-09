@@ -23,7 +23,7 @@
                     <mat-select matInput appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
                         [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                         <mat-option value=''>Select family members</mat-option>
-                        <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
+                        <mat-option *ngFor="let f of nomineesListFM" [value]="f">
                             <span>{{f.userName}}</span>
                         </mat-option>
                     </mat-select>
@@ -42,7 +42,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
-                        <input #accBal appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                        <input matInput #accBal appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                             autocomplete="off" class="form-control rupess br-0" formControlName="accountBalance"
                             matInput type="text" maxlength="10">
                         <mat-error *ngIf="ppfSchemeForm.get('accountBalance').errors?.required" class="f-12">
@@ -56,14 +56,14 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-40">
+        <div class="row pt-24">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Commencement date</h5>
             </div>
             <div class="col-md-3">
                 <div class="form-group form-group_one mb-0">
                     <mat-form-field>
-                        <input autocomplete="off" (click)="CommencementPicker.open()"
+                        <input matInput autocomplete="off" (click)="CommencementPicker.open()"
                             [matDatepicker]="CommencementPicker" [max]="maxDate"
                             (dateChange)="setCommencementDate($event.target.value)" class="form-control br-0"
                             formControlName="commencementDate" matInput readonly>
@@ -95,7 +95,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-40">
+        <div class="row pt-28">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Future approx contribution</h5>
             </div>
@@ -116,7 +116,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-40">
+        <div class="row pt-48">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Tenure(in Years)</h5>
             </div>
@@ -146,7 +146,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-40">
+        <div class="row pt-44">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Frequency</h5>
             </div>
@@ -179,7 +179,7 @@
         </div>
     </div>
     <div *ngIf="isOptionalField==false" [formGroup]="optionalppfSchemeForm">
-        <div class="row pt-40">
+        <div class="row pt-48">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Description</h5>
             </div>
@@ -194,7 +194,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-40">
+        <div class="row pt-48">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Bank Name</h5>
             </div>
@@ -210,7 +210,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-40">
+        <div class="row pt-48">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Linked bank account</h5>
             </div>

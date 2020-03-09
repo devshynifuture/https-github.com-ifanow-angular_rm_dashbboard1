@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChildren, QueryList } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
@@ -6,6 +6,7 @@ import { SubscriptionService } from '../../../subscription.service';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-add-edit-subscription-invoice',
@@ -70,6 +71,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   defaultVal: any;
   serviceList: any;
   billerName: any;
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   constructor(public enumService: EnumServiceService, private fb: FormBuilder, private subService: SubscriptionService,
     public subInjectService: SubscriptionInject) {
@@ -284,14 +286,24 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
 
   updateInvoice() {
     // this.showErr = false;
-    if (this.showDateError || this.editPayment.invalid ) {
-      this.editPayment.get('dueDate').markAsTouched();
-      this.editPayment.get('taxStatus').markAsTouched();
-      this.editPayment.get('invoiceDate').markAsTouched();
-      this.editPayment.get('clientName').markAsTouched();
-      this.editPayment.get('serviceName').markAsTouched();
-      this.editPayment.get('finalAmount').markAsTouched();
-      console.log(this.editPayment.controls.finalAmount.valid,this.editPayment.value, "finalAmount 123");
+    // if (this.showDateError || this.editPayment.invalid ) {
+    //   this.editPayment.get('dueDate').markAsTouched();
+    //   this.editPayment.get('taxStatus').markAsTouched();
+    //   this.editPayment.get('invoiceDate').markAsTouched();
+    //   this.editPayment.get('clientName').markAsTouched();
+    //   this.editPayment.get('serviceName').markAsTouched();
+    //   this.editPayment.get('finalAmount').markAsTouched();
+    //   console.log(this.editPayment.controls.finalAmount.valid,this.editPayment.value, "finalAmount 123");
+    // }
+
+    if (this.showDateError || this.editPayment.invalid) {
+      for (let element in this.editPayment.controls) {
+        console.log(element)
+        if (this.editPayment.get(element).invalid) {
+          this.inputs.find(input => !input.ngControl.valid).focus();
+          this.editPayment.controls[element].markAsTouched();
+        }
+      }
     }
     //  else if (isNaN(this.editPayment.controls.finalAmount.value)) {
     //   this.showErr = true;

@@ -32,7 +32,6 @@ export class IncomeComponent implements OnInit {
   viewMode;
 
   ngOnInit() {
-    this.dataSource.sort = this.sort;
     this.viewMode = "tab1"
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -60,7 +59,7 @@ export class IncomeComponent implements OnInit {
       this.noData = 'No income found';
       this.dataSource.data = []
     }
-   else if (data) {
+    else if (data) {
       this.dataSource.data = data;
       this.dataSource.sort = this.sort;
 

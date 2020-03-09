@@ -1,9 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { DatePipe } from '@angular/common';
-import { MAT_DATE_FORMATS } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
@@ -53,6 +53,8 @@ export class GoldComponent implements OnInit {
   }
 
   @Input() popupHeaderText: string = 'Add Gold';
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+
 
   ngOnInit() {
     if (this.data && this.data.flag) {
@@ -131,13 +133,7 @@ export class GoldComponent implements OnInit {
   // }
   saveGold() {
     if (this.gold.invalid) {
-      for (let element in this.gold.controls) {
-        console.log(element)
-        if (this.gold.controls[element].invalid) {
-          this.gold.controls[element].markAsTouched();
-          return;
-        }
-      }
+      this.gold.markAllAsTouched();
     } else {
       let obj = {
         advisorId: this.advisorId,

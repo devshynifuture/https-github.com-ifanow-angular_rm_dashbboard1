@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChildren, QueryList } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { MAT_DATE_FORMATS } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { PlanService } from '../../../plan.service';
@@ -30,6 +30,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
   bonusList: any;
   showDateError: string;
   expectedBonusForm: any;
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private planService: PlanService, private eventService: EventService) { }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -159,6 +160,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
   }
   submitIncomeForm() {
     if (this.singleIndividualIncome.finalIncomeList.incomeTypeId == 1) {
+      this.inputs.find(input => !input.ngControl.valid).focus();
       if (this.incomeOption == '1') {
         if (this.incomeNetForm.get('basicIncome').invalid) {
           this.incomeNetForm.get('basicIncome').markAsTouched();
@@ -190,7 +192,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
       }
     }
     if (this.singleIndividualIncome.finalIncomeList.incomeTypeId != 1) {
-     
+
     }
     if (this.incomeNetForm.get('incomeGrowthRate').invalid) {
       this.incomeNetForm.get('incomeGrowthRate').markAsTouched();

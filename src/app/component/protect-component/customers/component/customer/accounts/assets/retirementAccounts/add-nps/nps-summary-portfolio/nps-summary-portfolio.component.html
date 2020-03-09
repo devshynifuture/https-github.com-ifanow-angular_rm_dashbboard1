@@ -23,7 +23,7 @@
                     <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
                         [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                         <mat-option value=''>Select family members</mat-option>
-                        <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
+                        <mat-option *ngFor="let f of nomineesListFM" [value]="f">
                             <span>{{f.userName}}</span>
                         </mat-option>
                     </mat-select>
@@ -201,7 +201,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row pt-40">
+            <div class="row pt-44">
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-8">PRAN</h5>
                 </div>

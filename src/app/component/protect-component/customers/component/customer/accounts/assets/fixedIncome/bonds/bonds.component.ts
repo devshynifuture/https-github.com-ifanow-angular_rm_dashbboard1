@@ -173,37 +173,9 @@ export class BondsComponent implements OnInit {
         this.nominees.push(obj)
       });
     }
-    this.inputs.find(input => !input.ngControl.valid).focus();
-    if (this.bonds.get('ownerName').invalid) {
-      this.bonds.get('ownerName').markAsTouched();
-      return;
-    } else if (this.bonds.get('bondName').invalid) {
-      this.bonds.get('bondName').markAsTouched();
-      return;
-    } else if (this.bonds.get('couponOption').invalid) {
-      this.bonds.get('couponOption').markAsTouched();
-      return;
-    } else if (this.bonds.get('interestRate').invalid) {
-      this.bonds.get('interestRate').markAsTouched();
-      return;
-    } else if (this.bonds.get('amountInvest').invalid) {
-      this.bonds.get('amountInvest').markAsTouched();
-      return;
-    } else if (this.bonds.get('commencementDate').invalid) {
-      this.bonds.get('commencementDate').markAsTouched();
-      return;
-    } else if (this.bonds.get('rateReturns').invalid) {
-      this.bonds.get('rateReturns').markAsTouched();
-      return;
-    } else if (this.bonds.get('compound').invalid) {
-      this.bonds.get('compound').markAsTouched();
-      return;
-    } else if (this.bonds.get('tenure').invalid) {
-      this.bonds.get('tenure').markAsTouched();
-      this.tenure = this.getDateYMD()
-      return;
-    } else if (this.bonds.get('type').invalid) {
-      this.bonds.get('type').markAsTouched();
+    if (this.bonds.invalid) {
+      this.inputs.find(input => !input.ngControl.valid).focus();
+      this.bonds.markAllAsTouched();
       return;
     } else {
       let obj = {

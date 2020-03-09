@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { DataComponent } from '../../../../../../interfaces/data.component';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-add-liabilities',
@@ -31,7 +32,6 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   _data: any;
   ownerData: any;
   ownerName: any;
-  selectedFamilyData: any;
   loanTypeView: any;
   clientId: any;
   nomineesListFM: any;
@@ -46,6 +46,8 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     }
   transactionData: any;
   editData: any;
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+  familyMemberId: any;
   constructor(public utils: UtilService, private subInjectService: SubscriptionInject, private fb: FormBuilder,
     public custumService: CustomerService, public eventService: EventService) {
   }
@@ -114,8 +116,12 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       this.addLiabilityForm.get('outstandingAmt').setValidators([Validators.required]);
     }
     else {
-      this.addLiabilityForm.get('poDate').clearValidators();
-      this.addLiabilityForm.get('outstandingAmt').clearValidators();
+      this.addLiabilityForm.get('poDate').setValidators();
+      this.addLiabilityForm.get('outstandingAmt').setValidators();
+      this.addLiabilityForm.get('poDate').updateValueAndValidity();
+      this.addLiabilityForm.get('outstandingAmt').updateValueAndValidity();
+
+
     }
   }
   getFormControl() {
@@ -124,7 +130,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   display(value) {
     console.log('value selected', value);
     this.ownerName = value.userName;
-    this.selectedFamilyData = value;
+    this.familyMemberId = value.id;
   }
   lisNominee(value) {
     console.log(value)
@@ -136,7 +142,13 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     return;
   }
   getLiability(data) {
-    (data == 'tab1') ? data = {} : this.editData = data;
+    if (data == 'tab1') {
+      data = {};
+    }
+    else {
+      this.editData = data;
+      this.familyMemberId = data.id
+    }
     this.addLiabilityForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
       loanType: [(data.loanTypeId == undefined) ? '' : (data.loanTypeId) + '', [Validators.required]],
@@ -177,6 +189,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   //   }
   // }
   saveFormData() {
+
     let transactionFlag, finalTransctList = []
     if (this.transactionData && this.transactionData.length > 0) {
       this.transactionData.forEach(element => {
@@ -195,13 +208,8 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       });
     }
     if (this.addLiabilityForm.invalid) {
-      for (let element in this.addLiabilityForm.controls) {
-        console.log(element)
-        if (this.addLiabilityForm.controls[element].invalid) {
-          this.addLiabilityForm.controls[element].markAsTouched();
-          return;
-        }
-      }
+      this.inputs.find(input => !input.ngControl.valid).focus();
+      this.addLiabilityForm.markAllAsTouched();
     }
     else {
       const obj = {
@@ -260,7 +268,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
         const objToSend = {
           advisorId: this.advisorId,
           clientId: this.clientId,
-          familyMemberId: this._data.familyMemberId,
+          familyMemberId: this.familyMemberId,
           ownerName: obj.ownerName,
           loanTypeId: obj.loanType,
           loanAmount: obj.loanAmount,

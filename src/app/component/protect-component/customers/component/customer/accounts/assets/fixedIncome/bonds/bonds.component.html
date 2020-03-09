@@ -19,7 +19,7 @@
         </div>
         <div class="col-md-5">
             <mat-form-field class="w-100">
-                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                <mat-select matInput appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
                     [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Select family members</mat-option>
                     <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName" (click)="ownerDetails(f)">
@@ -32,9 +32,9 @@
             </mat-form-field>
         </div>
     </div>
-    <div class="row pt-40">
+    <div class="row pt-36">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Bond name</h5>
+            <h5 class="m-0 pt-12">Bond name</h5>
         </div>
         <div class="col-md-5">
             <div class="form-group mb-0">
@@ -53,11 +53,11 @@
     </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Coupon payout option</h5>
+            <h5 class="m-0 pt-12">Coupon payout option</h5>
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <mat-select formControlName="couponOption" class="form-control br-0">
+                <mat-select matInput formControlName="couponOption" class="form-control br-0">
                     <mat-option value="" disabled>Select option</mat-option>
                     <mat-option value="1">Zero coupon</mat-option>
                     <mat-option value="2">Monthly</mat-option>
@@ -75,7 +75,7 @@
     </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Coupon rate</h5>
+            <h5 class="m-0 pt-12">Coupon rate</h5>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0 iconPetage">
@@ -93,7 +93,7 @@
     </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Amount invested</h5>
+            <h5 class="m-0 pt-12">Amount invested</h5>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0 iconRupess">
@@ -112,7 +112,7 @@
     </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Commencement date</h5>
+            <h5 class="m-0 pt-12">Commencement date</h5>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0">
@@ -131,7 +131,7 @@
     </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Rate of return</h5>
+            <h5 class="m-0 pt-12">Rate of return</h5>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0 iconPetage">
@@ -149,11 +149,11 @@
     </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Compounding</h5>
+            <h5 class="m-0 pt-12">Compounding</h5>
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <mat-select formControlName="compound" class="form-control br-0">
+                <mat-select matInput formControlName="compound" class="form-control br-0">
                     <mat-option value="" disabled>Select option</mat-option>
                     <mat-option value="1">Daily</mat-option>
                     <mat-option value="2">Monthly</mat-option>
@@ -170,7 +170,7 @@
     </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Tenure(in months)</h5>
+            <h5 class="m-0 pt-12">Tenure(in months)</h5>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0">
@@ -200,11 +200,11 @@
     </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Type</h5>
+            <h5 class="m-0 pt-12">Type</h5>
         </div>
         <div class="col-md-3 ">
             <mat-form-field>
-                <mat-select formControlName="type" class="form-control br-0">
+                <mat-select matInput formControlName="type" class="form-control br-0">
                     <mat-option value="" disabled> Select option</mat-option>
                     <mat-option value="1"> Tax free</mat-option>
                     <mat-option value="2">Non tax free</mat-option>
@@ -230,7 +230,7 @@
     <div *ngIf="showHide == true">
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Linked bank account</h5>
+                <h5 class="m-0 pt-12">Linked bank account</h5>
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
@@ -246,7 +246,7 @@
         </div>
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Description</h5>
+                <h5 class="m-0 pt-12">Description</h5>
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">

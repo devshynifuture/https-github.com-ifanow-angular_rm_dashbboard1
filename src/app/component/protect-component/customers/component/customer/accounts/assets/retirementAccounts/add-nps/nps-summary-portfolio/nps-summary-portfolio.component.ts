@@ -77,6 +77,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   display(value) {
     console.log('value selected', value)
     this.ownerName = value.userName;
+    this.familyMemberId = value.id;
   }
   lisNominee(value) {
     console.log(value)
@@ -122,7 +123,8 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   }
   getdataForm(data) {
     this.flag = data;
-    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : '';
+
+    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : this.familyMemberId = data.familyMemberId;;
     this.summaryNPS = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       currentValue: [(data == undefined) ? '' : data.currentValuation, [Validators.required]],
@@ -240,24 +242,9 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     }
   }
   summaryNPSSave() {
-    if (this.summaryNPS.get('ownerName').invalid) {
-      this.summaryNPS.get('ownerName').markAsTouched();
+    if (this.summaryNPS.invalid) {
+      this.summaryNPS.markAllAsTouched();
       return;
-    } else if (this.summaryNPS.get('currentValue').invalid) {
-      this.summaryNPS.get('currentValue').markAsTouched();
-      return;
-    } else if (this.summaryNPS.get('ownerName').invalid) {
-      this.summaryNPS.get('ownerName').markAsTouched();
-      return
-    } else if (this.summaryNPS.get('valueAsOn').invalid) {
-      this.summaryNPS.get('valueAsOn').markAsTouched();
-      return;
-    } else if (this.summaryNPS.get('totalContry').invalid) {
-      this.summaryNPS.get('totalContry').markAsTouched();
-      return;
-    } else if (this.summaryNPS.get('futureContributionList').invalid) {
-      this.summaryNPS.get('futureContributionList').markAsTouched();
-      return
     } else {
       let obj = {
         advisorId: this.advisorId,
