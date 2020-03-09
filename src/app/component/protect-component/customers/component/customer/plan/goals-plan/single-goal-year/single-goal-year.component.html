@@ -142,7 +142,7 @@
                     <img [src]="goalTypeData.imageUrl" *ngIf="!logoImg">
                     <img [src]="logoImg" alt="" *ngIf="logoImg" style="width: 100%;">
                 </div>
-                <input #file (change)="onChange($event)" accept='image/*'
+                <input #file (change)="previewGoalImage($event)" accept='image/*'
                     formControlName="logo" type="file" [hidden]="true">
             </div>
         </div>

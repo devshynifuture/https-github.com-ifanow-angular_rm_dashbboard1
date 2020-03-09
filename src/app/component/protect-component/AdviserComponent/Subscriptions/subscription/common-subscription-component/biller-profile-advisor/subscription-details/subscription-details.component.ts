@@ -1,5 +1,5 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
-import { MatSliderChange } from '@angular/material';
+import { Component, OnInit, Output, Input, EventEmitter, ViewChildren, QueryList } from '@angular/core';
+import { MatSliderChange, MatInput } from '@angular/material';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../../../subscription-inject.service';
 import { SubscriptionService } from '../../../../subscription.service';
@@ -30,6 +30,8 @@ export class SubscriptionDetailsComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   }
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+
   payeeDataRes: any;
   noDataMessage: string;
   @Output() subStartNextBtn = new EventEmitter();
@@ -96,13 +98,14 @@ export class SubscriptionDetailsComponent implements OnInit {
 
   saveChangeSubsDetails() {
     if (this.subscriptionDetails.invalid) {
-      this.subscriptionDetails.get('subscriptionNumber').markAsTouched();
-      this.subscriptionDetails.get('startsOn').markAsTouched();
-      this.subscriptionDetails.get('feeMode').markAsTouched();
-      this.subscriptionDetails.get('invoiceSending').markAsTouched();
-      this.subscriptionDetails.get('dueDateFrequency').markAsTouched();
-    }
-    else {
+      for (let element in this.subscriptionDetails.controls) {
+        console.log(element)
+        if (this.subscriptionDetails.get(element).invalid) {
+          this.inputs.find(input => !input.ngControl.valid).focus();
+          this.subscriptionDetails.controls[element].markAsTouched();
+        }
+      }
+    } else {
       this.barButtonOptions.active = true;
       console.log('obj ====', this.subscriptionDetails.value);
       this.subService.changeSubsDetails(this.subscriptionDetails.value).subscribe(

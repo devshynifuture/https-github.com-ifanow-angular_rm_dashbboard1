@@ -27,3 +27,10 @@
 .maxWidth100 {
     max-width: 100%;
 }
+
+.hide-placeholder {
+    // don't show placeholder as templates don't match
+    .cdk-drag-placeholder {
+        visibility: hidden;
+    }
+}

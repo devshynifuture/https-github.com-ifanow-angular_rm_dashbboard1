@@ -9,7 +9,7 @@
                     <button mat-stroked-button class="btn-primary br-0 addon" (click)="openAddgoals()">ADD GOAL</button>
                 </div>
                 <div class="col-md-1 p-0 d-flex align-items-center  ">
-                    <i class="material-icons pt-8 c-p" [matMenuTriggerFor]="menu"> more_vert </i>
+                    <i class="material-icons c-p" [matMenuTriggerFor]="menu"> more_vert </i>
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item>Item 1</button>
                         <button mat-menu-item>Item 2</button>
@@ -274,20 +274,23 @@
                                 <div class="col-md-6 p-0 ">
                                     <h5 class="f-12 m-0 text-primitive">GOAL FUTURE VALUE</h5>
                                     <h3 class="m-0">
-                                        <div class="bar">₹<span appFormatNumber>{{dummyDashBoardData.futureValue}}</span></div>
+                                        <div class="bar">₹<span
+                                                appFormatNumber>{{dummyDashBoardData.futureValue}}</span></div>
                                     </h3>
                                 </div>
                                 <div class="col-md-6">
                                     <h5 class="f-12 m-0 text-primitive">ACHIEVED</h5>
                                     <h3 class="m-0">
-                                        <div class="bar">₹<span appFormatNumber>{{dummyDashBoardData.presentValue}}</span></div>
+                                        <div class="bar">₹<span
+                                                appFormatNumber>{{dummyDashBoardData.presentValue}}</span></div>
                                     </h3>
                                 </div>
                             </div>
                             <div class="row pt-24">
                                 <div class="col-md-12 p-0">
                                     <h5 class="m-0 text-primitive f-12">GOAL PROGRESS</h5>
-                                    <mat-progress-bar id="bg-primary" mode="determinate" [value]="goalProgress" class="h-30">
+                                    <mat-progress-bar id="bg-primary" mode="determinate" [value]="goalProgress"
+                                        class="h-30">
                                     </mat-progress-bar>
                                 </div>
                             </div>
@@ -305,12 +308,15 @@
                                         <span class="bar" appFormatNumber>{{dummyDashBoardData.equity_monthly}}</span>
                                     </p>
 
-                                    <p class="m-0 text-black roboto p-12 bg-white br"><span class="bar" appFormatNumber>{{dummyDashBoardData.debt_monthly}}</span></p>
+                                    <p class="m-0 text-black roboto p-12 bg-white br"><span class="bar"
+                                            appFormatNumber>{{dummyDashBoardData.debt_monthly}}</span></p>
                                 </div>
                                 <div class="col-md-3 p-0">
                                     <p class="m-0 text-black roboto p-12 f-500 bb">Lumpsum</p>
-                                    <p class="m-0 text-black roboto p-12 bg-white bb"><span class="bar" appFormatNumber>{{dummyDashBoardData.lump_equity}}</span></p>
-                                    <p class="m-0 text-black roboto p-12 bg-white"><span class="bar" appFormatNumber>{{dummyDashBoardData.lump_debt}}</span></p>
+                                    <p class="m-0 text-black roboto p-12 bg-white bb"><span class="bar"
+                                            appFormatNumber>{{dummyDashBoardData.lump_equity}}</span></p>
+                                    <p class="m-0 text-black roboto p-12 bg-white"><span class="bar"
+                                            appFormatNumber>{{dummyDashBoardData.lump_debt}}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -323,10 +329,12 @@
                     </div>
                     <div 
                         cdkDropList
-                        #allottedList="cdkDropList"
+                        id="allottedList"
                         [cdkDropListData]="todo"
                         [cdkDropListSortingDisabled]="true"
-                        (cdkDropListDropped)="drop($event)">
+                        (cdkDropListDropped)="drop($event)"
+                        (cdkDropListEntered)="logger($event)"
+                        class="hide-placeholder">
                         <table mat-table [dataSource]="dataSource" class="mt-8 goal-allocations skeletonAnimation" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
                             <ng-container matColumnDef="position">
                                 <th mat-header-cell *matHeaderCellDef class="t-30"> Description </th>
@@ -387,94 +395,101 @@
                         </div>
                         <div class="col-md-1 pr-0">
                             <i class="material-icons c-p right">
-                more_vert
-              </i>
-            </div>
-            <div class="b-a relClass">
-              <div class="m-0 p-8 text-black f-14 roboto">
-                <div class="bar">
-                  We have given higher allocations to your retirement goal compared to
-                  other
-                  goals. We suggest you to first allocate
-                  maximum corpus to this goal. We wile update your EPF contributions too once we have the details of
-                  the
-                  same.
+                                more_vert
+                            </i>
+                        </div>
+                        <div class="b-a relClass">
+                            <div class="m-0 p-8 text-black f-14 roboto">
+                                <div class="bar">
+                                    We have given higher allocations to your retirement goal compared to
+                                    other
+                                    goals. We suggest you to first allocate
+                                    maximum corpus to this goal. We wile update your EPF contributions too once we have
+                                    the details of
+                                    the
+                                    same.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-24">
+                        <div class="col-md-11 p-0">
+                            <h5 class="m-0 f-500 pb-8">Loan deatils</h5>
+                        </div>
+                        <div class="col-md-1 pr-0">
+                            <mat-icon [matMenuTriggerFor]="menu" class="c-p right">more_vert</mat-icon>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="openInSideBar(null, 'openEdit')">Edit note</button>
+                                <button mat-menu-item>Hide from client</button>
+                                <button mat-menu-item>Delete note</button>
+                                <button mat-menu-item (click)="openInSideBar(null, 'openView')">View from
+                                    client</button>
+                                <button mat-menu-item (click)="openInSideBar(null, 'openEdit')">Add new note</button>
+                            </mat-menu>
+                        </div>
+                    </div>
+                    <div class="row b-a">
+                        <div class="col-md-10 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                            <div class="row pt-16 relClass">
+                                <div class="col-md-4 p-0">
+                                    <p class="m-0 f-12 text-primitive">INCOME IN GOAL YEAR</p>
+                                    <h5 class="m-0">
+                                        <span class="bar">₹2,41,577</span></h5>
+                                </div>
+                                <div class="col-md-4 p-0">
+                                    <p class="m-0 f-12 text-primitive">HIGHEST EMI AVAILABLE</p>
+                                    <h5 class="m-0"> <span class="bar">₹1,20,788</span></h5>
+                                </div>
+                                <div class="col-md-4 p-0">
+                                    <p class="m-0 f-12 text-primitive">HIGHEST LOAN AVAILABLE</p>
+                                    <h5 class="m-0"><span class="bar">₹34,81,356</span></h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 pl-0">
+                            <img src="/assets/images/svg/loan-deatils.svg" class="pt-12">
+                            <div class="row pt-16">
+                                <div class="col-md-2 pl-0">
+                                    <p class="hw-12 bg-primary mt-2 mb-0"></p>
+                                </div>
+                                <div class="col-md-10 pr-0 pl-0">
+                                    <p class="m-0 f-11">Loan amount</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2 pl-0">
+                                    <p class="hw-12 bg-warning mt-2 mb-0"></p>
+                                </div>
+                                <div class="col-md-10 pr-0 pl-0">
+                                    <p class="m-0 f-11">Down amount</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="row pt-24">
-            <div class="col-md-11 p-0">
-              <h5 class="m-0 f-500 pb-8">Loan deatils</h5>
-            </div>
-            <div class="col-md-1 pr-0">
-              <mat-icon [matMenuTriggerFor]="menu" class="c-p right">more_vert</mat-icon>
-              <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="openInSideBar(null, 'openEdit')">Edit note</button>
-                <button mat-menu-item>Hide from client</button>
-                <button mat-menu-item>Delete note</button>
-                <button mat-menu-item (click)="openInSideBar(null, 'openView')">View from client</button>
-                <button mat-menu-item (click)="openInSideBar(null, 'openEdit')">Add new note</button>
-              </mat-menu>
-            </div>
-          </div>
-          <div class="row b-a">
-            <div class="col-md-10 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
-              <div class="row pt-16 relClass">
-                <div class="col-md-4 p-0">
-                  <p class="m-0 f-12 text-primitive">INCOME IN GOAL YEAR</p>
-                  <h5 class="m-0">
-                    <span class="bar">₹2,41,577</span></h5>
-                </div>
-                <div class="col-md-4 p-0">
-                  <p class="m-0 f-12 text-primitive">HIGHEST EMI AVAILABLE</p>
-                  <h5 class="m-0"> <span class="bar">₹1,20,788</span></h5>
-                </div>
-                <div class="col-md-4 p-0">
-                  <p class="m-0 f-12 text-primitive">HIGHEST LOAN AVAILABLE</p>
-                  <h5 class="m-0"><span class="bar">₹34,81,356</span></h5>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2 pl-0">
-              <img src="/assets/images/svg/loan-deatils.svg" class="pt-12">
-              <div class="row pt-16">
-                <div class="col-md-2 pl-0">
-                  <p class="hw-12 bg-primary mt-2 mb-0"></p>
-                </div>
-                <div class="col-md-10 pr-0 pl-0">
-                  <p class="m-0 f-11">Loan amount</p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-2 pl-0">
-                  <p class="hw-12 bg-warning mt-2 mb-0"></p>
-                </div>
-                <div class="col-md-10 pr-0 pl-0">
-                  <p class="m-0 f-11">Down amount</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 pr-0 pt-20">
-          <img src="/assets/images/svg/goal1.svg" class="w-100">
-          <div class="row pt-20">
-            <div class="col-md-6 pl-0">
-              <button mat-stroked-button class="in-btn pl-8" (click)="openInSideBar(null, 'openallocations')"><img
-                  src="/assets/images/svg/btn-links.svg" class="pr-8">Allocations</button>
-              <button mat-stroked-button class="in-btn mt-20 pl-0" (click)="openInSideBar(null, 'openKeyinfo')"><img
-                  src="/assets/images/svg/filter-schemes.svg" class="pr-16 ">Key info</button>
-                            <button mat-stroked-button class="in-btn mt-20 pl-0"><img src="/assets/images/svg/btn-links.svg"
-                  class="pr-8 ">Action plan</button>
-            </div>
-            <div class="col-md-6">
-              <button mat-stroked-button class="in-btn pl-8 " (click)="openInSideBar(null, 'openMfAllocation')"><img
-                  src="/assets/images/svg/btn-links.svg" class="pr-8">MF allocations</button>
-              <button mat-stroked-button class="in-btn pl-0 mt-20" (click)="openInSideBar(null, 'openCalculators')"><img
-                  src="/assets/images/svg/cal-sm.svg" class="pr-12">Calculators</button>
-              <button mat-stroked-button class="in-btn pl-0 mt-20" (click)="openInSideBar(null, 'openPreferences')"><img
-                  src="/assets/images/svg/3lines.svg" class="pr-8">Preferences</button>
+                <div class="col-md-4 pr-0 pt-20">
+                    <img src="/assets/images/svg/goal1.svg" class="w-100">
+                    <div class="row pt-20">
+                        <div class="col-md-6 pl-0">
+                            <button mat-stroked-button class="in-btn pl-8"
+                                (click)="openInSideBar(null, 'openallocations')"><img
+                                    src="/assets/images/svg/btn-links.svg" class="pr-8">Allocations</button>
+                            <button mat-stroked-button class="in-btn mt-20 pl-0"
+                                (click)="openInSideBar(null, 'openKeyinfo')"><img
+                                    src="/assets/images/svg/filter-schemes.svg" class="pr-16 ">Key info</button>
+                            <button mat-stroked-button class="in-btn mt-20 pl-0"><img
+                                    src="/assets/images/svg/btn-links.svg" class="pr-8 ">Action plan</button>
+                        </div>
+                        <div class="col-md-6">
+                            <button mat-stroked-button class="in-btn pl-8 "
+                                (click)="openInSideBar(null, 'openMfAllocation')"><img
+                                    src="/assets/images/svg/btn-links.svg" class="pr-8">MF allocations</button>
+                            <button mat-stroked-button class="in-btn pl-0 mt-20"
+                                (click)="openInSideBar(null, 'openCalculators')"><img
+                                    src="/assets/images/svg/cal-sm.svg" class="pr-12">Calculators</button>
+                            <button mat-stroked-button class="in-btn pl-0 mt-20"
+                                (click)="openInSideBar(null, 'openPreferences')"><img
+                                    src="/assets/images/svg/3lines.svg" class="pr-8">Preferences</button>
                         </div>
                     </div>
                     <div class="row pt-20">

@@ -496,6 +496,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
           data => {
             this.deletedData(data);
             dialogRef.close(subData);
+            this.getClientSubData(false, false);
           }
         );
 

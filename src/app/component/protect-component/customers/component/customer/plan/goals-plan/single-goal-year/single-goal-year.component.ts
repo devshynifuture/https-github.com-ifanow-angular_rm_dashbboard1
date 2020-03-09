@@ -255,7 +255,7 @@ export class SingleGoalYearComponent implements OnInit {
     this.singleYearGoalForm.updateValueAndValidity();
   }
 
-  onChange(event) {
+  previewGoalImage(event) {
     if (event && event.target && event.target.files) {
       const fileList = event.target.files;
       this.imageData = fileList[0];

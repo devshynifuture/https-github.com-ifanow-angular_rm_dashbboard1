@@ -42,11 +42,11 @@ const routes: Routes = [
         data: { preload: true }
 
       },
-      /* {
-         path: '',
-         redirectTo: '/overview',
-         pathMatch: 'full'
-       }*/
+      {
+        path: '',
+        redirectTo: 'overview',
+        pathMatch: 'full'
+      }
     ]
   },
 ];
