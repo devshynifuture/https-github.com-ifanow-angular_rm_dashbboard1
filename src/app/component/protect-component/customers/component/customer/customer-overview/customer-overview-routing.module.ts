@@ -5,7 +5,7 @@ import { CustomerOverviewComponent } from './customer-overview.component';
 
 const routes: Routes = [
   {
-    path: 'customer-overview', component: CustomerOverviewComponent,
+    path: '', component: CustomerOverviewComponent,
     children: [
       { path: 'myfeed', loadChildren: () => import('./overview-myfeed/overview-myfeed.module').then(m => m.OverviewMyfeedModule) },
       { path: 'profile', loadChildren: () => import('./overview-profile/overview-profile.module').then(m => m.OverviewProfileModule) },
@@ -15,9 +15,9 @@ const routes: Routes = [
         redirectTo: 'myfeed',
         pathMatch: 'full'
       },
-
-    ]
+    ],
   },
+
 
 
 ];
