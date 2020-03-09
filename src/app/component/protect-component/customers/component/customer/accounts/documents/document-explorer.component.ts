@@ -1,20 +1,20 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {MatBottomSheet, MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {BottomSheetComponent} from '../../../common-component/bottom-sheet/bottom-sheet.component';
-import {EventService} from 'src/app/Data-service/event.service';
-import {Router} from '@angular/router';
-import {FormBuilder} from '@angular/forms';
-import {UtilService} from 'src/app/services/util.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {CustomerService} from '../../customer.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {HttpHeaders} from '@angular/common/http';
-import {DocumentNewFolderComponent} from '../../../common-component/document-new-folder/document-new-folder.component';
-import {HttpService} from 'src/app/http-service/http-service';
-import {CopyDocumentsComponent} from '../../../common-component/copy-documents/copy-documents.component';
-import {ViewActivityComponent} from './view-activity/view-activity.component';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {EmailQuotationComponent} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/email-quotation/email-quotation.component';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatBottomSheet, MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { BottomSheetComponent } from '../../../common-component/bottom-sheet/bottom-sheet.component';
+import { EventService } from 'src/app/Data-service/event.service';
+import { Router } from '@angular/router';
+import { FormBuilder } from '@angular/forms';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { CustomerService } from '../../customer.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { HttpHeaders } from '@angular/common/http';
+import { DocumentNewFolderComponent } from '../../../common-component/document-new-folder/document-new-folder.component';
+import { HttpService } from 'src/app/http-service/http-service';
+import { CopyDocumentsComponent } from '../../../common-component/copy-documents/copy-documents.component';
+import { ViewActivityComponent } from './view-activity/view-activity.component';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { EmailQuotationComponent } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/email-quotation/email-quotation.component';
 
 @Component({
   selector: 'app-document-explorer',
@@ -24,7 +24,7 @@ import {EmailQuotationComponent} from 'src/app/component/protect-component/Advis
 
 export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   fileType = [
     { id: 1, name: 'PDF' },
     { id: 2, name: 'DOC' },
@@ -142,7 +142,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result==undefined){
+      if (result == undefined) {
         return
       }
       console.log('The dialog was closed', element);
@@ -250,7 +250,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       advisorId: this.advisorId,
       clientId: this.clientId,
       docGetFlag: tabValue,
-      folderParentId: 0,
+      folderParentId: (this.parentId) ? this.parentId : 0,
     };
     this.isLoading = true;
     this.commonFileFolders.data = [{}, {}, {}];
@@ -283,6 +283,13 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       this.openFolderName.push(this.dataToCommon);
       this.valueFirst = this.openFolderName[0];
       if (this.dataToCommon.length > 0) {
+
+        this.dataToCommon.forEach(element => {
+          if (element.fileName) {
+            var type = /^.+\.([^.]+)$/.exec(element.fileName);
+            element.fileType = (type == null) ? "" : type[1];
+          }
+        });
         this.commonFileFolders = this.dataToCommon;
         this.commonFileFolders = new MatTableDataSource(this.dataToCommon);
         this.commonFileFolders.sort = this.sort;
@@ -419,7 +426,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   deleteModal(flag, data) {
     const dialogData = {
-      data,
+      data: flag,
       header: 'DELETE',
       body: 'Are you sure you want to delete?',
       body2: 'This cannot be undone.',
@@ -568,6 +575,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
 
   getFileDetails(e) {
+    this.myFiles = [];
     for (let i = 0; i < e.target.files.length; i++) {
       this.myFiles.push(e.target.files[i]);
     }
@@ -585,6 +593,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   uploadDocumentFolder(data) {
     this.myFiles = [];
     const array = [];
+    this.viewFolder = [];
 
     const folderName = data.target.files[0].webkitRelativePath.split('/');
     this.folderNameToDisplay = {
@@ -642,8 +651,11 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     };
     this.http.put(fileuploadurl, fileName, httpOptions).subscribe((responseData) => {
       console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
+
     });
     this.getAllFileList(this.valueTab);
+    this._bottomSheet.dismiss()
+    this.eventService.openSnackBar('Uploaded successfully', 'Dismiss');
   }
 }
 

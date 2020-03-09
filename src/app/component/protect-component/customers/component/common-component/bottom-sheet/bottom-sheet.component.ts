@@ -19,6 +19,8 @@ export class BottomSheetComponent implements OnInit {
   constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: any,private _bottomSheetRef: MatBottomSheetRef<BottomSheetComponent>) { }
 
   ngOnInit() {
+    this.display=[];
+    this.fileData=[];
     console.log(this.data)
   
     // var array=[];

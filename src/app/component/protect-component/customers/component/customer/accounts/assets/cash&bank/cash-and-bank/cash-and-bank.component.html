@@ -41,11 +41,11 @@
                 </button>
             </div>
         </div>
-        <div class="overflow-hidden mt-8 col-md-12 p-0 real-estate">
+        <div [ngClass]="{'table-scroll':isLoading==false }" class="overflow-hidden mt-8 col-md-12 p-0 real-estate">
             <table *ngIf="bankAccountList.filteredData.length > 0" matSort #bankAccountListTable="matSort"
-                [dataSource]="bankAccountList" id="table-low" mat-table class="skeletonAnimation" appSkeletonLoading
+                [dataSource]="bankAccountList" id="tbs" mat-table class="skeletonAnimation" appSkeletonLoading
                 [appSkeletonLoading]="isLoading">
-                <ng-container matColumnDef="no">
+                <ng-container matColumnDef="no" sticky>
                     <th mat-sort-header="no" *matHeaderCellDef class="br" mat-header-cell> No</th>
                     <td *matCellDef="let element let i = index" class="br" mat-cell>
                         <div class="bar">{{isLoading ? '' : i + 1 }} </div>
@@ -129,7 +129,7 @@
                     </td>
                     <td *matFooterCellDef mat-footer-cell></td>
                 </ng-container>
-                <ng-container matColumnDef="icons">
+                <ng-container matColumnDef="icons" sticky>
                     <th *matHeaderCellDef class="t-2" mat-header-cell></th>
                     <td *matCellDef="let element" class="t-2" mat-cell>
                         <div *ngIf="!isLoading">

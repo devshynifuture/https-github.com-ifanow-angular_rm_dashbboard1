@@ -1,0 +1,164 @@
+.myfeedWrapper {
+    margin: 0px auto;
+    width: 78%;
+    .row {
+        margin-right: -15px !important;
+        margin-left: -15px !important;
+    }
+}
+
+.myFeedUi {
+    margin: 40px 0px 0px 0px;
+    padding: 0px;
+    list-style-type: none;
+    li {
+        height: 43px;
+        display: flex;
+        align-items: center;
+        padding-left: 32px;
+        border-left: 6px solid transparent;
+    }
+    .activeClass {
+        background: #D9DEE1;
+        border-left: 6px solid #008FFF;
+    }
+}
+
+.feedInformation {
+    .clientNameBox {
+        box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2), 0px 3px 14px rgba(0, 0, 0, 0.12), 0px 8px 10px rgba(0, 0, 0, 0.14);
+        border-radius: 0px;
+        padding: 14px 20px;
+        margin-top: 35px;
+    }
+    .wrapperBox {
+        margin-top: 34px;
+    }
+    .viewBtn {
+        display: inline-block;
+        border: 1px solid #83959D;
+        padding: 2px 5px;
+    }
+    .borderChatBox {
+        width: 100%;
+        height: 260px;
+        border: 1px solid #D9DEE1;
+        margin-top: 10px;
+        img {
+            max-width: 100%;
+        }
+    }
+    .scrollingDiv {
+        margin-top: 10px;
+        .fundBox {
+            width: 240px;
+            height: 170px;
+            border-radius: 4px;
+            padding: 10px;
+            border: 1px solid #D9DEE1;
+            margin-right: 20px;
+            .row {
+                margin-right: -15px !important;
+                margin-left: -15px !important;
+            }
+            .mfBox {
+                width: 30px;
+                height: 30px;
+                display: inline-block;
+                border-radius: 4px;
+                font-size: 14px;
+            }
+        }
+        .goalsOverViewBox {
+            width: 400px;
+            height: 163px;
+            border: 1px solid #D9DEE1;
+            border-radius: 4px;
+            padding: 10px;
+            margin-right: 20px;
+        }
+        .insuranceListBox {
+            width: 300px;
+            height: 136px;
+            border: 1px solid #D9DEE1;
+            border-radius: 4px;
+            padding: 10px;
+            margin-right: 20px;
+        }
+        .transactionsBox {
+            width: 300px;
+            height: 166px;
+            border: 1px solid #D9DEE1;
+            border-radius: 4px;
+            padding: 10px;
+            margin-right: 20px;
+            .spanClass {
+                display: inline-block;
+                border: 1px solid #008FFF;
+                padding: 0px 4px;
+                border-radius: 2px;
+            }
+            .spanClassDanger {
+                display: inline-block;
+                border: 1px solid #FF6823;
+                padding: 0px 4px;
+                border-radius: 2px;
+            }
+        }
+    }
+    .activityBox {
+        border: 1px solid #D9DEE1;
+        border-radius: 4px;
+        height: 140px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .vaultbBox {
+        border: 1px solid #D9DEE1;
+        padding: 20px;
+        border-radius: 4px;
+        .vaultBtn {
+            width: 196px;
+            height: 40px;
+        }
+    }
+    .riskProfileBox {
+        border: 1px solid #D9DEE1;
+        border-radius: 4px;
+        .numberBox {
+            width: 100px;
+            height: 100px;
+            margin: 0px auto;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            border: 3px solid #1F1F1F;
+            font-size: 48px;
+        }
+    }
+}
+
+.advi_name {
+    width: 45px;
+    height: 45px;
+    overflow: hidden;
+    border-radius: 50%;
+    img {
+        max-width: 100%;
+    }
+}
+
+.markBtn {
+    background: transparent;
+    width: 78px;
+    height: 30px;
+    border: 1px solid #83959D;
+    padding: 0px;
+}
+
+.paddleft30 {
+    padding-left: 30px;
+}

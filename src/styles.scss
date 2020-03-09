@@ -26,6 +26,7 @@
                 // responsive style
                 @import'./assets/style/scss/responsive/subscriptions';
                 @import'./assets/style/scss/responsive/transaction-media';
+                @import'./assets/style/scss/responsive/account';
                 @mixin heading {
                     padding-left: 20px !important;
                     padding-top: 20px !important;
@@ -736,8 +737,10 @@
                 #ui-planinsurance,
                 #ui-goal,
                 #ui-texes,
-                #ui-scenarios {
-                    padding-top: 120px !important;
+                #ui-scenarios,
+                #ui-assets-account,
+                #ui-activity {
+                    padding-top: 78px !important;
                     //font-family: "Proxima Nova ", sans-serif;
                 }
                 
@@ -916,7 +919,7 @@
                     width: 100%;
                     top: 0;
                     background: #fff;
-                    z-index: 10;
+                    z-index: 101;
                     .left-icons {
                         position: fixed;
                         z-index: 11;
@@ -974,6 +977,7 @@
                     }
                 }
                 
+                #overview-secondhead,
                 #ui-customer-secondhead,
                 #ui-plan-secondhead,
                 #ui-activity-secondhead,
@@ -981,11 +985,11 @@
                     position: fixed !important;
                     margin-right: 0px !important;
                     right: 0 !important;
-                    margin-top: 58px !important;
+                    margin-top: 15px !important;
                     background-color: #000;
                     width: 100%;
                     box-shadow: 0 1px 6px rgba(0, 0, 0, .2), 0 1px 0 rgba(0, 0, 0, .12), 0 3px 3px rgba(0, 0, 0, .14);
-                    z-index: 11;
+                    z-index: 101;
                     .mat-tab-links {
                         height: 65px;
                     }
@@ -1580,10 +1584,6 @@
                 
                 .borderRadio {
                     border: 1px solid rgba(25, 25, 25, 0.32) !important;
-                }
-                
-                #ui-assets-account {
-                    margin-top: 120px;
                 }
                 
                 .width300 {

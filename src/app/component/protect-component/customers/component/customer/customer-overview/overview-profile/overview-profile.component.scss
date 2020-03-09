@@ -1,0 +1,29 @@
+.profileOverview {
+    .row {
+        margin-right: -15px !important;
+        margin-left: -15px !important;
+    }
+    .col-width-19 {
+        flex: 0 0 19.666667%;
+        max-width: 19.666667%;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .col-width-79 {
+        flex: 0 0 79.666667%;
+        max-width: 79.666667%;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .uiListProfile {
+        margin: 0px;
+        padding: 0px;
+        list-style-type: none;
+        display: block;
+        li {
+            height: 40px;
+            display: flex;
+            align-items: center;
+        }
+    }
+}

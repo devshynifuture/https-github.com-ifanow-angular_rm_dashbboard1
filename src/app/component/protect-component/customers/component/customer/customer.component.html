@@ -12,16 +12,20 @@
         </div>
     </div>
     <div class="row" id="ui-customer">
-        <div class="col-md-2 p-0">
+        <div class="col-md-2 p-0 d-flex align-items-center">
             <img class="w-100" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
         </div>
         <div class="col-md-8 pl-64">
             <nav mat-tab-nav-bar>
-                <a [routerLink]="['/customer/detail/overview']" routerLinkActive="successBorder" mat-tab-link>OVERVIEW</a>
-                <a [routerLink]="['/customer/detail/account']" routerLinkActive="successBorder" mat-tab-link>PORTFOLIO</a>
+                <a [routerLink]="['/customer/detail/overview']" routerLinkActive="successBorder"
+                    mat-tab-link>OVERVIEW</a>
+                <a [routerLink]="['/customer/detail/account']" routerLinkActive="successBorder"
+                    mat-tab-link>PORTFOLIO</a>
                 <a [routerLink]="['/customer/detail/plan']" routerLinkActive="successBorder" mat-tab-link>PLAN</a>
-                <a [routerLink]="['/customer/detail/activity']" routerLinkActive="successBorder" mat-tab-link>ACTIVITY</a>
-                <a [routerLink]="['/customer/detail/transact']" routerLinkActive="successBorder" mat-tab-link>TRANSACT</a>
+                <a [routerLink]="['/customer/detail/activity']" routerLinkActive="successBorder"
+                    mat-tab-link>ACTIVITY</a>
+                <a [routerLink]="['/customer/detail/transact']" routerLinkActive="successBorder"
+                    mat-tab-link>TRANSACT</a>
             </nav>
         </div>
     </div>
