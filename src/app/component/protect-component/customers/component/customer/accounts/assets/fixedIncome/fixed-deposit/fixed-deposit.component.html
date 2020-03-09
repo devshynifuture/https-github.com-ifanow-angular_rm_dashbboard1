@@ -69,7 +69,7 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <mat-select appOwnerNominee matInput
-                            formControlName="ownerName" [data]='ownerData' (selectionChange)="disabledMember($event.value)" (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod] = 'callMethod' >
+                            formControlName="ownerName" [data]='ownerData' (selectionChange)="disabledMember($event.value,'owner')" (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod] = 'callMethod' >
                             <mat-option value=''>Select family members</mat-option>
                             <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"   [value]="f.userName">
                                 <span>{{f.userName}}</span>
@@ -437,7 +437,7 @@
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select appOwnerNominee matInput
-                                    formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value)" (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod] = 'callMethod' >
+                                    formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'nominee')" (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod] = 'callMethod' >
                                     <mat-option value=''>Select family members</mat-option>
                                     <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"   [value]="f.userName">
                                         <span>{{f.userName}}</span>

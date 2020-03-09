@@ -74,7 +74,7 @@ export class FixedDepositComponent implements OnInit {
   recuringDeposit: any;
   clientId: any;
   isViewInitCalled = false;
-  nomineesListFM: any;
+  nomineesListFM: any = [];
   flag: string;
   reqError: boolean = false;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
@@ -180,13 +180,15 @@ export class FixedDepositComponent implements OnInit {
   
   lisNominee(value) {
     console.log(value)
+    this.ownerData.Fmember = value;
     this.nomineesListFM = Object.assign([], value);
   }
 
-  disabledMember(value) {
+  disabledMember(value, type) {
     this.callMethod = {
       methodName : "disabledMember",
-      ParamValue : value
+      ParamValue : value,
+      disControl : type
     }
   }
 
@@ -297,7 +299,7 @@ export class FixedDepositComponent implements OnInit {
       })])
     });
 
-    this.ownerData = this.fixedDeposit;
+    this.ownerData = {Fmember: this.nomineesListFM, controleData:this.fixedDeposit}
     this.familyMemberId = this.fixedDeposit.controls.familyMemberId.value;
     this.fixedDeposit.controls.maturityDate.setValue(new Date(data.maturityDate));
   }

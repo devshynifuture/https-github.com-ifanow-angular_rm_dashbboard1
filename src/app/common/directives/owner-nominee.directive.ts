@@ -10,12 +10,14 @@ export class OwnerNomineeDirective {
   advisorId: any;
   ownerData: any;
   clientId: any;
-  sendData: any;
+  sendData: any = [];
   ownerNomineeJson:any;
   @Input()set data(data) {
-    this.ownerData = data;
+    this.ownerData = data.controleData;
     console.log('1111121212121212121212 OwnerColumnComponent data : ', data);
+    if(data.Fmember.length <= 0){
     this.getListFamilyMem();
+    }
   }
 
   @Input()set callMethod(callMethod:any){
@@ -29,7 +31,7 @@ export class OwnerNomineeDirective {
       break;
 
       case "disabledMember":
-        this.disabledMember(callMethod.ParamValue);
+        this.disabledMember(callMethod.type);
       break;
 
       default:
@@ -48,20 +50,25 @@ export class OwnerNomineeDirective {
       advisorId: this.advisorId,
       clientId: this.clientId
     };
+    if(this.sendData.length <= 0){
     this.custumService.getListOfFamilyByClient(obj).subscribe(
       data => this.getListOfFamilyByClientRes(data)
     );
+    }
   }
 
   getListOfFamilyByClientRes(data) {
     console.log('family Memebers', data);
     if (data.familyMembersList && data.familyMembersList.length > 0) {
       data.familyMembersList.forEach((singleData) => {
-        singleData['disable'] = false;
+        setTimeout(() => {
+          singleData['disable'] = false;
+        }, 100);
       });
     }
     this.sendData = data.familyMembersList;
     this.valueChange1.emit(this.sendData);
+    console.log(this.sendData,"sendData 123");
   }
 
   get getCoOwner() {
@@ -88,6 +95,21 @@ export class OwnerNomineeDirective {
         const arrayCon:any = this.getCoOwner.controls[e];
         if(arrayCon.value.ownerName != ''){
           if(element.userName == arrayCon.value.ownerName){
+            element.disable = true;
+            return;
+          }
+          else{
+            element.disable = false;
+          }
+        }
+      }
+    });
+
+    this.sendData.forEach(element => {
+      for(let e in this.getNominee.controls){
+        const arrayCon:any = this.getNominee.controls[e];
+        if(arrayCon.value.name != ''){
+          if(element.userName == arrayCon.value.name){
             element.disable = true;
             return;
           }
@@ -156,6 +178,7 @@ export class OwnerNomineeDirective {
         }
       }
     }
+    this.setOwnerNominee();
     this.valueChange.emit(this.ownerNomineeJson);
   }
   showError:boolean = false;
@@ -215,13 +238,14 @@ export class OwnerNomineeDirective {
             
       }
     }
+    this.setOwnerNominee();
     this.valueChange.emit(this.ownerNomineeJson);
   }
 
   setOwnerNominee(){
     this.ownerNomineeJson = {
       owner: this.ownerData.controls['getCoOwnerName'],
-      nominee: this.ownerData.controls['getCoOwnerName']
+      nominee: this.ownerData.controls['getNomineeName']
     }
   }
 }
