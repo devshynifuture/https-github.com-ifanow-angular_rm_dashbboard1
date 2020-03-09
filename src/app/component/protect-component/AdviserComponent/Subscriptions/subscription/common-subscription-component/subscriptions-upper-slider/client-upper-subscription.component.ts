@@ -259,7 +259,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
           data => {
             this.deletedData(data);
             dialogRef.close(subData);
-
+            this.getSummaryDataClient();
           }
         );
       },
