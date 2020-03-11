@@ -81,10 +81,23 @@ export class AdviceCommoditiesComponent implements OnInit, AfterViewInit {
     this.getFlagCount(tableFlag, countValue);
     console.log(this.selectedAssetId)
   }
+  filterForAsset(data){//filter data to for showing in the table
+    let filterdData=[];
+    data.forEach(element => {
+      var asset=element.AssetDetails;
+      element.AdviceList.forEach(obj => {
+        obj.assetDetails=asset;
+        filterdData.push(obj);
+      });
+    });
+    return filterdData;
+  }
   getAllSchemeResponse(data) {
-    this.goldDataSource.data = data.GOLD;
+    let goldData=this.filterForAsset(data.GOLD)
+    this.goldDataSource.data = goldData;
     this.goldDataSource.sort = this.sort1;
-    this.otherDataSource.data = data.OTHERS;
+    let othersData=this.filterForAsset(data.OTHERS)
+    this.otherDataSource.data = othersData;
     this.goldDataSource['tableFlag'] = (data.GOLD.length == 0) ? false : true;
     this.otherDataSource['tableFlag'] = (data.OTHERS.length == 0) ? false : true;
     console.log(data);

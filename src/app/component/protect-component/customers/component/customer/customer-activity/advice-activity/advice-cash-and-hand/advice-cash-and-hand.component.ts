@@ -75,10 +75,23 @@ export class AdviceCashAndHandComponent implements OnInit {
       }
     );
   }
+  filterForAsset(data){//filter data to for showing in the table
+    let filterdData=[];
+    data.forEach(element => {
+      var asset=element.AssetDetails;
+      element.AdviceList.forEach(obj => {
+        obj.assetDetails=asset;
+        filterdData.push(obj);
+      });
+    });
+    return filterdData;
+  }
   getAllSchemeResponse(data) {
     console.log(data);
-    this.bankAccDataSource.data = data.BANK_ACCOUNTS;
-    this.cashInHandDataSource.data = data.CASH_IN_HAND;
+    let bankAccData=this.filterForAsset(data.BANK_ACCOUNTS)
+    this.bankAccDataSource.data = bankAccData;
+    let cashInHandData=this.filterForAsset(data.CASH_IN_HAND)
+    this.cashInHandDataSource.data = cashInHandData;
     this.bankAccDataSource['tableFlag'] = (data.BANK_ACCOUNTS.length == 0) ? false : true;
     this.cashInHandDataSource['tableFlag'] = (data.CASH_IN_HAND.length == 0) ? false : true;
     this.isLoading = false;
