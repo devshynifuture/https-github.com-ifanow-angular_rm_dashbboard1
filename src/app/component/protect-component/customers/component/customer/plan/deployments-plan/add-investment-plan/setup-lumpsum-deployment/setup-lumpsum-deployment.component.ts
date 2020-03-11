@@ -24,12 +24,14 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
   constructor(private subInjectService: SubscriptionInject, private planService: PlanService, private eventService: EventService) { }
   @Input() set data(data) {
     this.dataSource=data.data
+    let lumpsum=[];
     data.deploymentIdList.forEach(element => {
      const obj={
       id:element.id
      }
-     this.deploymentList.push(obj)
+     lumpsum.push(obj)
     });
+    this.deploymentList=lumpsum
     // this.deploymentList = data.deploymentIdList;
     this.getDeploymentData(this.deploymentList)
   }
