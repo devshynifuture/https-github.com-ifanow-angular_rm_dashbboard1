@@ -62,7 +62,8 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      assetCategory: 10
+      assetCategory: 10,
+      adviceStatusId:1
     }
     this.isLoading = true;
     this.ppfDataSource = new MatTableDataSource([{}, {}, {}]);

@@ -40,7 +40,7 @@ export class CreateSubscriptionComponent implements OnInit {
     // }
   }
 
-  
+
   feeModeData: any;
   isFlagPayee: boolean = false;
   payeeSettingData: any = null;
@@ -49,7 +49,7 @@ export class CreateSubscriptionComponent implements OnInit {
   subDateToShow: any;
   billEveryMsg: any;
 
-  
+
   constructor(private enumService: EnumServiceService, public subInjectService: SubscriptionInject,
     private eventService: EventService, private fb: FormBuilder,
     private subService: SubscriptionService, public datepipe: DatePipe) {
@@ -128,8 +128,8 @@ export class CreateSubscriptionComponent implements OnInit {
   }
   getPayeeFlagData(data) {
     this.isFlagPayee = data
-    if(!data){
-      setTimeout(() => {   
+    if (!data) {
+      setTimeout(() => {
         this.stepper.selectedIndex = 3;
         this.getSubStartDetails(this.payeeSettingData);
       }, 1);
@@ -137,7 +137,7 @@ export class CreateSubscriptionComponent implements OnInit {
     console.log(data, "abc 77")
   }
 
-  
+
   preventDefault(e) {
     e.preventDefault();
   }
@@ -185,7 +185,18 @@ export class CreateSubscriptionComponent implements OnInit {
       }
       this.subDateToShow = date;
     }
-
+    if (this.stepper.selectedIndex == 3) {
+      if (!this.selectedBiller) {
+        this.eventService.openSnackBar('Please select biller profie', 'OK');
+        this.stepper.selectedIndex = 2
+      }
+    }
+    if (this.stepper.selectedIndex == 4) {
+      if (this.totalSelectedPayeeShare != 100) {
+        this.eventService.openSnackBar('Total spliting ratio of selected payee should be equal to 100%', 'Dismiss')
+        this.stepper.selectedIndex = 3
+      }
+    }
     console.log(this.subscriptionDetails);
   }
   getSharesInfo(data) {
@@ -200,7 +211,7 @@ export class CreateSubscriptionComponent implements OnInit {
   goBack() {
     this.stepper.previous();
     console.log(this.stepper.selectedIndex, "check selectedIndex");
-    
+
   }
 
   nextStep(data) {
@@ -222,7 +233,7 @@ export class CreateSubscriptionComponent implements OnInit {
         // advisorId: 2808,
         advisorId: this.advisorId,
         clientId: data.clientId,
-        subId: !data.id? data.subscriptionPricing.id : data.id  
+        subId: !data.id ? data.subscriptionPricing.id : data.id
       };
       this.subService.getSubscriptionStartData(obj).subscribe(
         subStartData => this.getSubStartDetailsResponse(subStartData, data)

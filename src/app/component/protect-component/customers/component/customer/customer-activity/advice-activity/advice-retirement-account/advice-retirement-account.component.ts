@@ -54,7 +54,8 @@ export class AdviceRetirementAccountComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      assetCategory: 9
+      assetCategory: 9,
+      adviceStatusId:1
     }
     this.isLoading = true;
     this.epfDataSource = [{}, {}, {}];

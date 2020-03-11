@@ -47,7 +47,8 @@ export class AdviceCommoditiesComponent implements OnInit, AfterViewInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      assetCategory: 12
+      assetCategory: 12,
+      adviceStatusId:1
     }
     this.isLoading = true
     this.goldDataSource.data = [{}, {}, {}];
