@@ -120,8 +120,6 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       this.addLiabilityForm.get('outstandingAmt').setValidators();
       this.addLiabilityForm.get('poDate').updateValueAndValidity();
       this.addLiabilityForm.get('outstandingAmt').updateValueAndValidity();
-
-
     }
   }
   getFormControl() {
@@ -173,21 +171,6 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     this.getFormControl().outstandingAmt.maxLength = 20;
     this.ownerData = this.addLiabilityForm.controls;
   }
-  // get transactEntries() {
-  //   return this.addLiabilityForm.get('transact') as FormArray;
-  // }
-  // addTransaction() {
-  //   this.transactEntries.push(this.fb.group({
-  //     partPaymentDate: ['', [Validators.required]],
-  //     partPayment: ['', [Validators.required]],
-  //     option: ['', [Validators.required]]
-  //   }));
-  // }
-  // removeTransaction(item) {
-  //   if (this.transactEntries.length > 1) {
-  //     this.transactEntries.removeAt(item);
-  //   }
-  // }
   saveFormData() {
 
     let transactionFlag, finalTransctList = []
@@ -208,123 +191,60 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       });
     }
     if (this.addLiabilityForm.invalid) {
-      this.inputs.find(input => !input.ngControl.valid).focus();
       this.addLiabilityForm.markAllAsTouched();
+      this.inputs.find(input => !input.ngControl.valid).focus();
     }
     else {
-      const obj = {
-        ownerName: (this.ownerName == null) ? this.addLiabilityForm.controls.ownerName.value : this.ownerName,
-        loanType: this.addLiabilityForm.controls.loanType.value,
-        loanAmount: this.addLiabilityForm.controls.loanAmount.value,
-        outstandingCheck: this.addLiabilityForm.controls.outstandingCheck.value,
-        outstandingAmt: this.addLiabilityForm.controls.outstandingAmt.value,
-        loanTenure: this.addLiabilityForm.controls.loanTenure.value,
-        CommencementDate: this.addLiabilityForm.controls.CommencementDate.value,
-        emiFrequency: this.addLiabilityForm.controls.emiFrequency.value,
-        interest: this.addLiabilityForm.controls.interest.value,
-        emi: this.addLiabilityForm.controls.emi.value,
-        finInstitution: this.addLiabilityForm.controls.finInstitution.value,
-        collateral: this.addLiabilityForm.controls.collateral.value,
-        poDate: this.addLiabilityForm.controls.poDate.value,
-        transactData: []
-      };
-      obj.loanAmount = parseInt(obj.loanAmount);
-      obj.outstandingAmt = parseInt(obj.outstandingAmt);
-      obj.loanTenure = parseInt(obj.loanTenure);
-      obj.emi = parseInt(obj.emi);
-      obj.loanTenure = parseInt(obj.loanTenure);
-      obj.loanType = parseInt(obj.loanType);
-      this.loanTypeView = obj.loanType;
-      obj.emiFrequency = parseInt(obj.emiFrequency);
-      obj.outstandingCheck = (obj.outstandingCheck) ? obj.outstandingCheck.toString() : null;
-      obj.CommencementDate = obj.CommencementDate.toISOString().slice(0, 10);
-      obj.poDate = (obj.poDate) ? obj.poDate.toISOString().slice(0, 10) : '';
-      obj.interest = parseInt(obj.interest);
-      // this.addLiabilityForm.value.transact.forEach(element => {
-      //   if (element.partPaymentDate != "") {
-      //     let obj1 = {
-      //       'partPaymentDate': (element.partPaymentDate) ? element.partPaymentDate.toISOString().slice(0, 10) : null,
-      //       'partPayment': !element.partPayment ? 0 : parseInt(element.partPayment),
-      //       'option': !element.option ? 0 : parseInt(element.option),
-      //       'id': element.id,
-      //       'delete': true
-      //     }
-      //     if (this._data.id != undefined) {
-      //       if (this._data.loanPartPayments.length == this.addLiabilityForm.value.transact.length) {
-      //         delete obj1.delete;
-      //       }
-      //     }
-      //     if (this._data == 'tab1') {
-      //       delete obj1.id;
-      //       delete obj1.delete;
-      //     }
-      //     obj.transactData.push(obj1);
-      //   }
-      //   else {
-      //     obj.transactData = [];
-      //   }
-      // });
       if (this._data.id == undefined) {
         const objToSend = {
           advisorId: this.advisorId,
           clientId: this.clientId,
           familyMemberId: this.familyMemberId,
-          ownerName: obj.ownerName,
-          loanTypeId: obj.loanType,
-          loanAmount: obj.loanAmount,
-          principalOutStandingAmount: obj.outstandingAmt,
-          loanTenure: obj.loanTenure,
-          commencementDate: obj.CommencementDate,
-          principalOutstandingAsOn: obj.poDate,
-          principalOutstanding: obj.outstandingCheck,
-          frequencyOfPayments: obj.emiFrequency,
-          annualInterestRate: obj.interest,
-          financialInstitution: obj.finInstitution,
+          ownerName: (this.ownerName == null) ? this.addLiabilityForm.controls.ownerName.value : this.ownerName,
+          loanTypeId: this.addLiabilityForm.controls.loanType.value,
+          loanAmount: this.addLiabilityForm.controls.loanAmount.value,
+          principalOutStandingAmount: this.addLiabilityForm.controls.outstandingCheck.value,
+          loanTenure: this.addLiabilityForm.controls.loanTenure.value,
+          commencementDate: this.addLiabilityForm.controls.CommencementDate.value,
+          principalOutstandingAsOn: this.addLiabilityForm.controls.poDate.value,
+          principalOutstanding: this.addLiabilityForm.controls.outstandingCheck.value,
+          frequencyOfPayments: this.addLiabilityForm.controls.emiFrequency.value,
+          annualInterestRate: this.addLiabilityForm.controls.interest.value,
+          financialInstitution: this.addLiabilityForm.controls.finInstitution.value,
           loanPartPayments: finalTransctList
         };
-        console.log('obj', obj);
         this.custumService.addLiability(objToSend).subscribe(
-          data => this.addLiabilityRes(data)
+          data => this.addEditLiabilityRes(data)
         );
       } else {
         const editObj = {
           familyMemberId: this._data.familyMemberId,
-          ownerName: obj.ownerName,
-          loanTypeId: obj.loanType,
+          ownerName: (this.ownerName == null) ? this.addLiabilityForm.controls.ownerName.value : this.ownerName,
+          loanTypeId: this.addLiabilityForm.controls.loanType.value,
           id: this._data.id,
-          loanAmount: obj.loanAmount,
-          principalOutStandingAmount: obj.outstandingAmt,
-          loanTenure: obj.loanTenure,
-          commencementDate: obj.CommencementDate,
-          principalOutstandingAsOn: obj.poDate,
-          frequencyOfPayments: obj.emiFrequency,
-          annualInterestRate: obj.interest,
-          emi: obj.emi,
-          financialInstitution: obj.finInstitution,
+          loanAmount: this.addLiabilityForm.controls.loanAmount.value,
+          principalOutStandingAmount: this.addLiabilityForm.controls.outstandingCheck.value,
+          loanTenure: this.addLiabilityForm.controls.loanTenure.value,
+          commencementDate: this.addLiabilityForm.controls.CommencementDate.value,
+          principalOutstandingAsOn: this.addLiabilityForm.controls.poDate.value,
+          frequencyOfPayments: this.addLiabilityForm.controls.emiFrequency.value,
+          annualInterestRate: this.addLiabilityForm.controls.interest.value,
+          emi: this.addLiabilityForm.controls.emi.value,
+          financialInstitution: this.addLiabilityForm.controls.finInstitution.value,
           loanPartPayments: finalTransctList
         };
         this.custumService.editLiability(editObj).subscribe(
-          data => this.editLiabilityRes(data)
+          data => this.addEditLiabilityRes(data)
         );
       }
     }
   }
-  addLiabilityRes(data) {
+  addEditLiabilityRes(data) {
     if (data == 1) {
       console.log(data);
       data = this.loanTypeView;
       this.close(true);
-      this.eventService.openSnackBar('Liabilities added successfully', 'OK');
-    } else {
-      this.eventService.openSnackBar('Error', 'Dismiss');
-    }
-  }
-  editLiabilityRes(data) {
-    if (data == 1) {
-      console.log(data);
-      data = this.loanTypeView;
-      this.close(true);
-      this.eventService.openSnackBar('Liabilities edited successfully', 'OK');
+      (this._data.id == undefined) ? this.eventService.openSnackBar('Liabilities added successfully', 'OK') : this.eventService.openSnackBar('Liabilities edited successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'Dismiss');
     }
