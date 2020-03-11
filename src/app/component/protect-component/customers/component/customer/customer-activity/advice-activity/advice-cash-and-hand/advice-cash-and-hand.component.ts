@@ -64,7 +64,8 @@ export class AdviceCashAndHandComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      assetCategory: 11
+      assetCategory: 11,
+      adviceStatusId:1
     }
     this.cashInHandDataSource.data = [{}, {}, {}];
     this.bankAccDataSource.data = [{}, {}, {}]

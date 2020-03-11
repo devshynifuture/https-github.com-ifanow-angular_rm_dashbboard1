@@ -39,7 +39,8 @@ export class AdviceStocksComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      assetCategory: 1
+      assetCategory: 1,
+      adviceStatusId:1
     }
     this.stockDatasource = [{}, {}, {}]
     this.isLoading = true;
