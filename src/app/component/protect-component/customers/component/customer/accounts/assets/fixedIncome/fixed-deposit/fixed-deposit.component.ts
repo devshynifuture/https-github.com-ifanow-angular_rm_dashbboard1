@@ -116,20 +116,20 @@ export class FixedDepositComponent implements OnInit {
   removeCoOwner(item) {
     this.getCoOwner.removeAt(item);
     if(this.fixedDeposit.value.getCoOwnerName.length == 1){
-      this.getCoOwner.controls['0'].get('ownershipPerc').setValue('100');
+      this.getCoOwner.controls['0'].get('share').setValue('100');
     }else{
       for(let e in this.getCoOwner.controls){
-        this.getCoOwner.controls[e].get('ownershipPerc').setValue('');
+        this.getCoOwner.controls[e].get('share').setValue('');
       }
     }
   }
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      name: ["",[Validators.required]], ownershipPerc: ["",[Validators.required]], familyMemberId: null
+      name: ["",[Validators.required]], share: ["",[Validators.required]], familyMemberId: null
     }));
     for(let e in this.getCoOwner.controls){
-      this.getCoOwner.controls[e].get('ownershipPerc').setValue('');
+      this.getCoOwner.controls[e].get('share').setValue('');
     }
   }
 
@@ -208,12 +208,7 @@ export class FixedDepositComponent implements OnInit {
     return this.fixedDeposit.get('getCoOwnerName') as FormArray;
   }
 
-  // checkOwnerType(){
-  //   this.callMethod = {
-  //     methodName : "checkOwnerType",
-  //     ParamValue : this.fixedDeposit.get('ownerType').value
-  //   }
-  // }
+ 
 
   onChangeJointOwnership(data) {
     this.callMethod = {
@@ -280,7 +275,7 @@ export class FixedDepositComponent implements OnInit {
     this.fixedDeposit = this.fb.group({
       getCoOwnerName: this.fb.array([this.fb.group({
         name: ['',[Validators.required]],
-        ownershipPerc: ['',[Validators.required]],
+        share: ['',[Validators.required]],
         familyMemberId: null
       })]),
       // ownerType: [(!data.ownershipType) ? '' : (data.ownershipType) + '', [Validators.required]],
@@ -294,9 +289,9 @@ export class FixedDepositComponent implements OnInit {
       ownerPercent: [data.ownerPerc],
       institution: [(!data) ? '' : data.institutionName],
       description: [(!data) ? '' : data.description],
-      tenureY: [(!data.tenureY) ? '0' : data.tenureY.toString()],
-      tenureM: [(!data.tenureM) ? '0' : data.tenureM.toString()],
-      tenureD: [(!data.tenureD) ? '0' : data.tenureD.toString()],
+      tenureY: [(!data.tenureInYear) ? '0' : data.tenureInYear.toString()],
+      tenureM: [(!data.tenureInMonth) ? '0' : data.tenureInMonth.toString()],
+      tenureD: [(!data.tenureInDay) ? '0' : data.tenureInDay.toString()],
       frequencyOfPayoutPerYear: [(!data.frequencyOfPayoutPerYear) ? '' : data.frequencyOfPayoutPerYear],
       maturityDate: [(!data) ? '' : new Date(data.maturityDate)],
       payOpt: [(!data.interestPayoutOption) ? '' : data.interestPayoutOption, [Validators.required]],
@@ -306,7 +301,7 @@ export class FixedDepositComponent implements OnInit {
       familyMemberId: [(!data) ? '' : data.familyMemberId]
     });
     if(this.fixedDeposit.value.getCoOwnerName.length == 1){
-      this.getCoOwner.controls['0'].get('ownershipPerc').setValue('100');
+      this.getCoOwner.controls['0'].get('share').setValue('100');
     }
     
     
@@ -369,7 +364,7 @@ export class FixedDepositComponent implements OnInit {
         advisorId: this.advisorId,
         clientId: this.clientId,
         // familyMemberId: this.familyMemberId,
-        ownerName: this.fixedDeposit.value.getCoOwnerName,
+        ownerList: this.fixedDeposit.value.getCoOwnerName,
         amountInvested: this.fixedDeposit.controls.amountInvest.value,
         // ownershipType: this.fixedDeposit.controls.ownerType.value,
         interestRate: this.fixedDeposit.controls.interestRate.value,
