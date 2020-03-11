@@ -76,7 +76,7 @@ export class FixedDepositComponent implements OnInit {
   isViewInitCalled = false;
   nomineesListFM: any = [];
   flag: string;
-  reqError: boolean = false;
+  // reqError: boolean = false;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   fdMonths = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
     '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26',
@@ -115,14 +115,22 @@ export class FixedDepositComponent implements OnInit {
 
   removeCoOwner(item) {
     this.getCoOwner.removeAt(item);
+    if(this.fixedDeposit.value.getCoOwnerName.length == 1){
+      this.getCoOwner.controls['0'].get('ownershipPerc').setValue('100');
+    }else{
+      for(let e in this.getCoOwner.controls){
+        this.getCoOwner.controls[e].get('ownershipPerc').setValue('');
+      }
+    }
   }
-
-
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      ownerName: "", ownershipPerc: null, familyMemberId: null
+      name: ["",[Validators.required]], ownershipPerc: ["",[Validators.required]], familyMemberId: null
     }));
+    for(let e in this.getCoOwner.controls){
+      this.getCoOwner.controls[e].get('ownershipPerc').setValue('');
+    }
   }
 
   removeNewNominee(item) {
@@ -167,15 +175,19 @@ export class FixedDepositComponent implements OnInit {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
-  display(value) {
-    console.log('value selected', value);
-    this.fixedDeposit.controls['getCoOwnerName'] = value.owner;
-    this.fixedDeposit.controls['getNomineeName'] = value.nominee;
+  displayControler(con) {
+    console.log('value selected', con);
+    if(con.owner != null && con.owner){
+      this.fixedDeposit.controls.getCoOwnerName = con.owner;
+    }
+    if(con.nominee != null && con.nominee){
+      this.fixedDeposit.controls.getNomineeName = con.nominee;
+    }
   }
 
   ownerDetails(value) {
     this.familyMemberId = value.id;
-    this.reqError = true;
+    // this.reqError = true;
   }
   
   lisNominee(value) {
@@ -196,12 +208,12 @@ export class FixedDepositComponent implements OnInit {
     return this.fixedDeposit.get('getCoOwnerName') as FormArray;
   }
 
-  checkOwnerType(){
-    this.callMethod = {
-      methodName : "checkOwnerType",
-      ParamValue : this.fixedDeposit.get('ownerType').value
-    }
-  }
+  // checkOwnerType(){
+  //   this.callMethod = {
+  //     methodName : "checkOwnerType",
+  //     ParamValue : this.fixedDeposit.get('ownerType').value
+  //   }
+  // }
 
   onChangeJointOwnership(data) {
     this.callMethod = {
@@ -267,12 +279,12 @@ export class FixedDepositComponent implements OnInit {
     }
     this.fixedDeposit = this.fb.group({
       getCoOwnerName: this.fb.array([this.fb.group({
-        ownerName: [''],
-        ownershipPerc: [''],
+        name: ['',[Validators.required]],
+        ownershipPerc: ['',[Validators.required]],
         familyMemberId: null
       })]),
-      ownerType: [(!data.ownershipType) ? '' : (data.ownershipType) + '', [Validators.required]],
-      ownerName: [(!data.ownerName) ? '' : data.ownerName],
+      // ownerType: [(!data.ownershipType) ? '' : (data.ownershipType) + '', [Validators.required]],
+      // ownerName: [(!data.ownerName) ? '' : data.ownerName],
       FDType: [(!data.fdType) ? '' : (data.fdType) + '', [Validators.required]],
       amountInvest: [(!data) ? '' : data.amountInvested, [Validators.required]],
       commencementDate: [(!data) ? '' : new Date(data.commencementDate), [Validators.required]],
@@ -291,14 +303,13 @@ export class FixedDepositComponent implements OnInit {
       bankACNo: [(!data) ? '' : data.bankAcNumber],
       fdNo: [(!data) ? '' : data.fdNumber],
       id: [(!data) ? '' : data.id,],
-      familyMemberId: [(!data) ? '' : data.familyMemberId],
-      getNomineeName: this.fb.array([this.fb.group({
-        name: [""],
-        sharePercentage: [""],
-        familyMemberId: [""]
-      })])
+      familyMemberId: [(!data) ? '' : data.familyMemberId]
     });
-
+    if(this.fixedDeposit.value.getCoOwnerName.length == 1){
+      this.getCoOwner.controls['0'].get('ownershipPerc').setValue('100');
+    }
+    
+    
     this.ownerData = {Fmember: this.nomineesListFM, controleData:this.fixedDeposit}
     this.familyMemberId = this.fixedDeposit.controls.familyMemberId.value;
     this.fixedDeposit.controls.maturityDate.setValue(new Date(data.maturityDate));
@@ -326,7 +337,7 @@ export class FixedDepositComponent implements OnInit {
       this.maturityDate = this.fixedDeposit.controls.maturityDate.value;
     }
     if (this.fixedDeposit.invalid || !this.tenureValid) {
-    this.reqError = true;
+    // this.reqError = true;
       this.inputs.find(input => !input.ngControl.valid).focus();
       for (let element in this.fixedDeposit.controls) {
         console.log(element)
@@ -357,10 +368,10 @@ export class FixedDepositComponent implements OnInit {
       const obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
-        familyMemberId: this.familyMemberId,
-        ownerName: this.ownerName ? this.ownerName : this.fixedDeposit.controls.ownerName.value,
+        // familyMemberId: this.familyMemberId,
+        ownerName: this.fixedDeposit.value.getCoOwnerName,
         amountInvested: this.fixedDeposit.controls.amountInvest.value,
-        ownershipType: this.fixedDeposit.controls.ownerType.value,
+        // ownershipType: this.fixedDeposit.controls.ownerType.value,
         interestRate: this.fixedDeposit.controls.interestRate.value,
         commencementDate: this.datePipe.transform(this.fixedDeposit.controls.commencementDate.value, 'yyyy-MM-dd'),
         institutionName: this.fixedDeposit.controls.institution.value,
