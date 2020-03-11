@@ -43,7 +43,7 @@ export class LiabilitiesComponent implements OnInit {
   isLoading = false;
   noData: string;
   totalLoanAmt: any;
-  outStandingAmt:any;
+  outStandingAmt: any;
   filterData: any;
   excelData: any[];
   footer = [];
@@ -220,7 +220,7 @@ export class LiabilitiesComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-        
+
       }
     );
   }
@@ -235,10 +235,10 @@ export class LiabilitiesComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
-        
+
         if (UtilService.isRefreshRequired(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          
+
         }
         rightSideDataSub.unsubscribe();
       }
@@ -282,12 +282,8 @@ export class LiabilitiesComponent implements OnInit {
   getLiabiltyRes(data) {
     this.isLoading = false;
     // this.showLoader = false;
-    if (data.loans.length == 0) {
-      this.noData = "No Data Found";
-      this.dataSource.data = []
-
-    } else {
-      this.outStandingAmt=0;
+    if (data && data.loans.length) {
+      this.outStandingAmt = 0;
       this.totalLoanAmt = data.totalLoanAmount;
       // this.outStandingAmt = data.outstandingAmount;
       data.loans.forEach(element => {
@@ -326,6 +322,9 @@ export class LiabilitiesComponent implements OnInit {
         }
       });
       this.sortTable(this.dataToShow);
+    } else {
+      this.noData = "No Data Found";
+      this.dataSource.data = []
     }
   }
   clickHandling() {

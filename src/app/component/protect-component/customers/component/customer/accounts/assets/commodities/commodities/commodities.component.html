@@ -35,7 +35,7 @@
                     (click)="openCommodities('addGold','open',null)"> ADD NEW</button>
             </div>
         </div>
-        <div class=" overflow-hidden col-md-12 p-0 mt-8 overflow-hidden real-estate">
+        <div class="overflow-hidden mt-8 real-estate">
             <table *ngIf="goldList.filteredData.length > 0" matSort #goldListTable="matSort" mat-table
                 [dataSource]="goldList" id="table-low" class="skeletonAnimation" appSkeletonLoading
                 [appSkeletonLoading]="isLoading">
@@ -49,7 +49,7 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="owner">
-                    <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br w-20 "> Owner </th>
+                    <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br"> Owner </th>
                     <td mat-cell *matCellDef="let element" class="br">
                         <div class="bar"> {{element.ownerName}} </div>
                     </td>
@@ -195,7 +195,7 @@
                     <td mat-footer-cell *matFooterCellDef class="t-2 text-left pl-4 f-500"> </td>
                 </ng-container>
                 <ng-container matColumnDef="owner">
-                    <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br t-20"> Owner </th>
+                    <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br"> Owner </th>
                     <td mat-cell *matCellDef="let element" class="br">
                         <div class="bar"> {{element.ownerName}} </div>
                     </td>
