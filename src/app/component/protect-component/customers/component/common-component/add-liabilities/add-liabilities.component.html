@@ -36,7 +36,7 @@
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8"> Loan type</h5>
         </div>
-        <div class="col-md-3 ">
+        <div class="col-md-3 pr-0">
             <div class="form-group mb-0">
                 <mat-form-field>
                     <mat-select matInput class="form-control br-0" formControlName="loanType">
@@ -60,7 +60,7 @@
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Original loan amount</h5>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 pr-0">
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
                     <input type="text" matInput #loanAmountRef class="form-control rupess br-0" appInputValueValidation
@@ -79,7 +79,7 @@
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Loan tenure</h5>
         </div>
-        <div class="col-md-3 ">
+        <div class="col-md-3 pr-0">
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input type="text" matInput #loanTenure class="form-control br-0" appInputValueValidation
@@ -99,7 +99,7 @@
         <div class="col-md-5 pr-0 text-right">
             <p class="m-0"> I want to enter principal outstanding </p>
         </div>
-        <div class="col-md-3 ">
+        <div class="col-md-3 pr-0">
             <mat-checkbox class="text-primary checkBoxPositions text-line" (change)="select($event)"
                 formControlName="outstandingCheck"></mat-checkbox>
         </div>
@@ -109,7 +109,7 @@
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-40">Principal outstanding details</h5>
         </div>
-        <div class="col-md-3 ">
+        <div class="col-md-3 pr-0">
             <div class="form-group mb-0">
                 <label class="f-14">Outstanding as on</label>
                 <mat-form-field>
@@ -143,7 +143,7 @@
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Commencement date</h5>
         </div>
-        <div class="col-md-3 ">
+        <div class="col-md-3 pr-0">
             <mat-form-field>
                 <input matInput class="form-control br-0" (focus)="picker.open()" [max]="maxDate"
                     (input)="preventDefault($event)" matInput [matDatepicker]="picker"
@@ -161,7 +161,7 @@
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">EMI frequency</h5>
         </div>
-        <div class="col-md-3 ">
+        <div class="col-md-3 pr-0">
             <div class="form-group mb-0">
                 <mat-form-field>
                     <mat-select matInput formControlName="emiFrequency" class="form-control br-0">
@@ -184,7 +184,7 @@
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Annual interest rate</h5>
         </div>
-        <div class="col-md-3  ">
+        <div class="col-md-3  pr-0">
             <div class="form-group mb-0 iconPetage">
                 <mat-form-field>
                     <input type="number" matInput #interest class="form-control br-0 percentage"
@@ -221,7 +221,7 @@
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">EMI</h5>
             </div>
-            <div class="col-md-3 ">
+            <div class="col-md-3 pr-0">
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
                         <input type="text" appInputValueValidation matInput #emi class="form-control br-0 rupess"
@@ -239,7 +239,7 @@
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Financial institution</h5>
             </div>
-            <div class="col-md-3  ">
+            <div class="col-md-3  pr-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input type="text" matInput #finInstitution class="form-control br-0"
@@ -255,7 +255,7 @@
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Collateral</h5>
             </div>
-            <div class="col-md-3 ">
+            <div class="col-md-3 pr-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input type="text" matInput #collateral class="form-control br-0" formControlName="collateral"
