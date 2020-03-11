@@ -80,8 +80,8 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.assetDataOfAdvice">
-                        {{element.assetDataOfAdvice.ownerName}}
+                    <span *ngIf="element.assetDetails">
+                        {{element.assetDetails.ownerName}}
                     </span>
                 </div>
             </td>
@@ -90,7 +90,7 @@
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef mat-sort-header="adviceToAsset.adviceDescription"> Description </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"><span *ngIf="element.adviceToAsset">{{element.adviceToAsset.adviceDescription}}</span>
+                <div class="bar"><span *ngIf="element">{{element.adviceDescription}}</span>
                 </div>
             </td>
         </ng-container>
@@ -98,30 +98,30 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Purchase value </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.adviceToAsset">{{element.assetDataOfAdvice.marketValue}}</span></div>
+                    <span *ngIf="element.assetDetails" appFormatNumber>{{element.assetDetails.purchaseValue}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="mvalue">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Market value </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.adviceToAsset">{{element.assetDataOfAdvice.marketValue}}</span></div>
+                    <span *ngIf="element.assetDetails" appFormatNumber>{{element.assetDetails.marketValue}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="total">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Total/Grams </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"></div>
+                <div class="bar">{{element.assetDetails.totalGrams}}</div>
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"><span *ngIf="element.adviceToAsset">
-                        <span *ngIf="element.adviceToAsset.adviceId==0">Need to add</span>
-                        <span *ngIf="element.adviceToAsset.adviceId==1">Hold</span>
-                        <span *ngIf="element.adviceToAsset.adviceId==2">Sell</span>
-                        <span *ngIf="element.adviceToAsset.adviceId==3">Buy</span>
+                <div class="bar"><span *ngIf="element">
+                        <span *ngIf="element.adviceId==0">Need to add</span>
+                        <span *ngIf="element.adviceId==1">Hold</span>
+                        <span *ngIf="element.adviceId==2">Sell</span>
+                        <span *ngIf="element.adviceId==3">Buy</span>
                     </span></div>
             </td>
         </ng-container>
@@ -129,16 +129,16 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.adviceToAsset">
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==1">GIVEN</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==2">AWAITING CONSENT</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==3">ACCEPTED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==4">IN PROGRESS</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==5">IMPLEMENTED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==6">DECLINED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==7">PENDING</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==8">SYSTEM GENERATED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==9">REVISED</span>
+                    <span *ngIf="element">
+                        <span *ngIf="element.adviceStatusId==1">GIVEN</span>
+                        <span *ngIf="element.adviceStatusId==2">AWAITING CONSENT</span>
+                        <span *ngIf="element.adviceStatusId==3">ACCEPTED</span>
+                        <span *ngIf="element.adviceStatusId==4">IN PROGRESS</span>
+                        <span *ngIf="element.adviceStatusId==5">IMPLEMENTED</span>
+                        <span *ngIf="element.adviceStatusId==6">DECLINED</span>
+                        <span *ngIf="element.adviceStatusId==7">PENDING</span>
+                        <span *ngIf="element.adviceStatusId==8">SYSTEM GENERATED</span>
+                        <span *ngIf="element.adviceStatusId==9">REVISED</span>
                     </span>
                 </div>
             </td>
@@ -204,8 +204,8 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.assetDataOfAdvice">
-                        {{element.assetDataOfAdvice.ownerName}}
+                    <span *ngIf="element.assetDetails">
+                        {{element.assetDetails.ownerName}}
                     </span>
                 </div>
             </td>
@@ -214,20 +214,20 @@
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"><span *ngIf="element.adviceToAsset">{{element.adviceToAsset.adviceDescription}}</span>
+                <div class="bar"><span *ngIf="element">{{element.adviceDescription}}</span>
                 </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="pvalue">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Purchase value </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"></div>
+                <div class="bar"><span *ngIf="element.assetDetails" appFormatNumber>{{element.assetDetails.purchaseValue}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="mvalue">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Market value </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"></div>
+                <div class="bar"><span *ngIf="element.assetDetails" appFormatNumber>{{element.assetDetails.marketValue}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">

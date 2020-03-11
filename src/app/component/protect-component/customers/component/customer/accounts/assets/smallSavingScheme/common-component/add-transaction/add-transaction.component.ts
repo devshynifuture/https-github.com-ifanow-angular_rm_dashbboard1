@@ -49,6 +49,7 @@ export class AddTransactionComponent implements OnInit {
   ngOnInit() {
     console.log(this.transactionViewData)
     // this.addTransactionList = 0;
+    console.log(this.commencementDate)
   }
 
   addTransaction() {

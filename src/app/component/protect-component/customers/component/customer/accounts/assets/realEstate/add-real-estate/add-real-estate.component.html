@@ -36,8 +36,8 @@
         <div class="col-md-2">
             <div class="form-group mb-0 iconPetage">
                 <mat-form-field>
-                    <input matInput class=" form-control br-0 percentage" type="number" formControlName="ownerPercent"
-                        (keyup)="onChange('owner')">
+                    <input autocomplete="off" matInput class=" form-control br-0 percentage" type="number"
+                        formControlName="ownerPercent" (keyup)="onChange('owner')">
                     <mat-error class="f-12 "
                         [ngClass]="{'v-h':!(isOwnerPercent && getFormControl().ownerPercent.invalid || getFormControl().ownerPercent.touched && getFormControl().ownerPercent.invalid)}">
                         This field is required
@@ -80,7 +80,7 @@
             <div class="col-md-2">
                 <div class="form-group mb-0 iconPetage">
                     <mat-form-field>
-                        <input matInput class="form-control br-0 percentage" type="number"
+                        <input autocomplete="off" matInput class="form-control br-0 percentage" type="number"
                             formControlName="ownershipPerc" (keyup)="onChange('owner')">
                         <mat-error class="f-12">
                             This field is required
@@ -135,9 +135,9 @@
         <div class="col-md-3 pr-0 iconRupess">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput matInput #marketValue type="text" class="form-control rupess br-0"
-                        appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                        formControlName="marketValue" maxlength="10">
+                    <input autocomplete="off" matInput matInput #marketValue type="text"
+                        class="form-control rupess br-0" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" formControlName="marketValue" maxlength="10">
                     <mat-error class="f-12"
                         [ngClass]="{'v-h':!(isMvValid && getFormControl().marketValue.invalid || getFormControl().marketValue.touched && getFormControl().marketValue.invalid)}">
                         This field is required
@@ -169,7 +169,7 @@
                 <div class="form-group mb-0">
 
                     <mat-form-field>
-                        <input matInput class="form-control br-0" matInput (focus)="picker.open()"
+                        <input autocomplete="off" matInput class="form-control br-0" matInput (focus)="picker.open()"
                             (input)="preventDefault($event)" [matDatepicker]="picker" formControlName="purchasePeriod"
                             readonly>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -193,7 +193,7 @@
                     <div class="col-md-5 p-0 iconRupess">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput matInput #purchaseValue maxlength="10" type="text"
+                                <input autocomplete="off" matInput matInput #purchaseValue maxlength="10" type="text"
                                     class="form-control rupess br-0 " formControlName="purchaseValue">
                                 <mat-hint align="start" class="f-12">Optional</mat-hint>
                                 <mat-hint align="end" class="f-12">{{purchaseValue.value.length}}/10</mat-hint>
@@ -218,8 +218,8 @@
                         <h5 class="m-0 f-14">Rate per unit</h5>
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput #unit maxlength="10" type="text" class="form-control rupess br-0 "
-                                    formControlName="unit">
+                                <input autocomplete="off" matInput #unit maxlength="10" type="text"
+                                    class="form-control rupess br-0 " formControlName="ratePerUnit">
 
                             </mat-form-field>
                         </div>
@@ -228,7 +228,7 @@
                         <h5 class="m-0 f-14">Unit</h5>
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <mat-select matInput class="form-control br-0" formControlName="ratePerUnit">
+                                <mat-select matInput class="form-control br-0" formControlName="unit">
                                     <mat-option value="1">Square feet</mat-option>
                                     <mat-option value="3">Square meter</mat-option>
                                     <mat-option value="6">Acre</mat-option>
@@ -278,8 +278,8 @@
                         <h5 class="m-0 f-14 ">Stamp duty</h5>
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput #stampDuty maxlength="10" type="text" class="form-control rupess br-0 "
-                                    formControlName="stampDuty">
+                                <input autocomplete="off" matInput #stampDuty maxlength="10" type="text"
+                                    class="form-control rupess br-0 " formControlName="stampDuty">
                                 <mat-hint align="start" class="f-12">Optional</mat-hint>
                                 <mat-hint align="end" class="f-12">{{stampDuty.value.length}}/10</mat-hint>
                             </mat-form-field>
@@ -289,7 +289,7 @@
                         <h5 class="m-0 f-14">Registration</h5>
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput #registration maxlength="10" type="text"
+                                <input autocomplete="off" matInput #registration maxlength="10" type="text"
                                     class="form-control rupess br-0 " formControlName="registration">
                                 <!-- <mat-hint align="start" class="f-12">Optional</mat-hint> -->
                                 <mat-hint align="end" class="f-12">{{registration.value.length}}/10</mat-hint>
@@ -301,8 +301,8 @@
                         <h5 class="m-0 f-14 ">GST</h5>
                         <div class="form-group mb-0 iconRupess">
                             <mat-form-field>
-                                <input matInput #gst maxlength="10" type="text" class="form-control rupess br-0 "
-                                    formControlName="gst">
+                                <input autocomplete="off" matInput #gst maxlength="10" type="text"
+                                    class="form-control rupess br-0 " formControlName="gst">
                                 <!-- <mat-hint align="start" class="f-12">Optional</mat-hint> -->
                                 <mat-hint align="end" class="f-12">{{gst.value.length}}/10</mat-hint>
                             </mat-form-field>
@@ -319,8 +319,8 @@
                 <div class="form-group mb-0">
 
                     <mat-form-field>
-                        <input matInput #location maxlength="20" type="text" class="form-control br-0 "
-                            formControlName="location">
+                        <input autocomplete="off" matInput #location maxlength="20" type="text"
+                            class="form-control br-0 " formControlName="location">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{location.value.length}}/20</mat-hint>
                     </mat-form-field>
@@ -335,8 +335,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #description maxlength="60" type="text" class="form-control br-0"
-                            formControlName="description">
+                        <input autocomplete="off" matInput #description maxlength="60" type="text"
+                            class="form-control br-0" formControlName="description">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                     </mat-form-field>
@@ -353,8 +353,9 @@
                 <div class="col-md-3">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput aria-label="State" (click)="nomineesList()" [matAutocomplete]="auto"
-                                list="userName" class="form-control br-0 pl-8" formControlName="name">
+                            <input autocomplete="off" matInput aria-label="State" (click)="nomineesList()"
+                                [matAutocomplete]="auto" list="userName" class="form-control br-0 pl-8"
+                                formControlName="name">
                             <mat-autocomplete #auto="matAutocomplete">
                                 <mat-option *ngFor="let item of familyList" [value]="item.userName">
                                     <span>{{item.userName}}</span>
@@ -368,7 +369,7 @@
                 <div class="col-md-2 pl-0">
                     <div class="form-group mb-0 iconPetage">
                         <mat-form-field>
-                            <input matInput type="number" class="br-0 form-control percentage"
+                            <input autocomplete="off" matInput type="number" class="br-0 form-control percentage"
                                 formControlName="ownershipPer" (keyup)="onChange('nominee')">
                         </mat-form-field>
                     </div>
