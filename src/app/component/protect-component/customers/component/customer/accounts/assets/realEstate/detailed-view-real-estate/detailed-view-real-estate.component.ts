@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-detailed-view-real-estate',
@@ -22,8 +23,8 @@ export class DetailedViewRealEstateComponent implements OnInit {
     this._data = inputData;
     console.log('AddLiabilitiesComponent Input data : ', this._data);
     this.realEstate = this._data
-    this.nominee=this._data.nominees;
-    this.owners=this._data.realEstateOwners;
+    this.nominee = this._data.nominees;
+    this.owners = this._data.realEstateOwners.filter(element => element.ownerName != this.realEstate.ownerName);
 
   }
 
@@ -35,7 +36,7 @@ export class DetailedViewRealEstateComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 }
 export interface PeriodicElement {

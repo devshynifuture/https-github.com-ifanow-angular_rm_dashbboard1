@@ -62,7 +62,8 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      assetCategory: 10
+      assetCategory: 10,
+      adviceStatusId:1
     }
     this.isLoading = true;
     this.ppfDataSource = new MatTableDataSource([{}, {}, {}]);
@@ -79,17 +80,37 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
       }
     );
   }
+  filterForAsset(data){//filter data to for showing in the table
+    let filterdData=[];
+    data.forEach(element => {
+      var asset=element.AssetDetails;
+      element.AdviceList.forEach(obj => {
+        obj.assetDetails=asset;
+        filterdData.push(obj);
+      });
+    });
+    return filterdData;
+  }
   getAllSchemeResponse(data) {
     this.isLoading = false;
-    this.ppfDataSource.data = data.PPF;
-    this.nscDataSource.data = data.NSC;
-    this.ssyDataSource.data = data.SSY;
-    this.kvpDataSource.data = data.KVP;
-    this.scssDataSource.data = data.SCSS;
-    this.posavingDataSource.data = data.PO_Savings;
-    this.pordDataSource.data = data.PO_RD;
-    this.pomisDataSource.data = data.PO_MIS;
-    this.potdDataSource.data = data.PO_TD;
+    let ppfData=this.filterForAsset(data.PPF)
+    this.ppfDataSource.data = ppfData;
+    let nscData=this.filterForAsset(data.NSC)
+    this.nscDataSource.data = nscData;
+    let ssyData=this.filterForAsset(data.SSY)
+    this.ssyDataSource.data = ssyData;
+    let kvpData=this.filterForAsset(data.KVP)
+    this.kvpDataSource.data = kvpData;
+    let scssData=this.filterForAsset(data.SCSS)
+    this.scssDataSource.data = scssData;
+    let poSavingData=this.filterForAsset(data.PO_Savings)
+    this.posavingDataSource.data = poSavingData;
+    let pordData=this.filterForAsset(data.PO_RD)
+    this.pordDataSource.data = pordData;
+    let pomisData=this.filterForAsset(data.PO_MIS)
+    this.pomisDataSource.data = pomisData;
+    let potdData=this.filterForAsset(data.PO_TD)
+    this.potdDataSource.data = potdData;
     this.ppfDataSource['tableFlag'] = (data.PPF.length == 0) ? false : true;
     this.nscDataSource['tableFlag'] = (data.NSC.length == 0) ? false : true;
     this.ssyDataSource['tableFlag'] = (data.SSY.length == 0) ? false : true;

@@ -200,7 +200,7 @@
                         <button (click)="goBack()" *ngIf="subscriptionDetails.valid"
                             class="btn-default mr-12 br-0 text-inherit" mat-raised-button>PREVIOUS
                         </button>
-                        <button (click)="goForward()" [disabled]="!selectedBiller" class="btn-bottom br-0 text-inherit"
+                        <button (click)="goForward()"  class="btn-bottom br-0 text-inherit"
                             mat-button>
                             NEXT
                         </button>
@@ -222,8 +222,8 @@
                         <button (click)="goBack()" class="btn-default mr-12 br-0 text-inherit"
                             mat-raised-button>PREVIOUS
                         </button>
-                        <button (click)="goForward()" [disabled]="totalSelectedPayeeShare!=100"
-                            class="btn-bottom br-0 text-inherit" mat-button>NEXT
+                        <button (click)="goForward()"
+                            class="btn-bottom br-0 text-inherit" mat-button>NEXT 
                         </button>
                     </div>
                 </div>

@@ -39,7 +39,8 @@ export class AdviceStocksComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      assetCategory: 1
+      assetCategory: 1,
+      adviceStatusId:1
     }
     this.stockDatasource = [{}, {}, {}]
     this.isLoading = true;
@@ -53,7 +54,16 @@ export class AdviceStocksComponent implements OnInit {
 
   getAllAssetResponse(data) {
     this.isLoading = false;
-    this.stockDatasource = data.STOCKS;
+    let filterdData=[];
+    let stockData=data.STOCKS;
+    stockData.forEach(element => {
+      var asset=element.AssetDetails;
+      element.AdviceList.forEach(obj => {
+        obj.assetDetails=asset;
+        filterdData.push(obj);
+      });
+    });
+    this.stockDatasource = filterdData;
     this.stockDatasource['tableFlag'] = (data.STOCKS.length == 0) ? false : true;
     console.log(data);
   }

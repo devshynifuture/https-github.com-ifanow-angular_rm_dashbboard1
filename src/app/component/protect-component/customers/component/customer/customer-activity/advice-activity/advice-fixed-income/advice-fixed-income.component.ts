@@ -44,7 +44,8 @@ export class AdviceFixedIncomeComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      assetCategory: 7
+      assetCategory: 7,
+      adviceStatusId:1
     }
     this.isLoading = true;
     this.fixedDataSource = [{}, {}, {}];
@@ -82,15 +83,33 @@ export class AdviceFixedIncomeComponent implements OnInit {
     //   }
     // );
   }
+  filterForAsset(data){//filter data to for showing in the table
+    let filterdData=[];
+    data.forEach(element => {
+      var asset=element.AssetDetails;
+      element.AdviceList.forEach(obj => {
+        obj.assetDetails=asset;
+        filterdData.push(obj);
+      });
+    });
+    return filterdData;
+  }
   getAllSchemeResponse(data) {
     this.isLoading = false;
     console.log('data', data)
     this.dataSource = data;
-    this.fixedDataSource = new MatTableDataSource(data.FIXED_DEPOSIT);
+    let fixedData=this.filterForAsset(data.FIXED_DEPOSIT)
+    this.fixedDataSource = new MatTableDataSource(fixedData);
+    console.log('fddata',fixedData);
     // this.fixedDataSource.sort = this.sort
-    this.recurringDataSource = new MatTableDataSource(data.RECURRING_DEPOSIT);
+    let rdDAta=this.filterForAsset(data.RECURRING_DEPOSIT)
+    this.recurringDataSource = new MatTableDataSource(rdDAta);
+    console.log('rdData',rdDAta)
     // this.recurringDataSource.sort = this.sort
-    this.bondDataSource = new MatTableDataSource(data.BONDS);
+    let bondData=this.filterForAsset(data.BONDS)
+    this.bondDataSource = new MatTableDataSource(bondData);
+    console.log('bondData',bondData)
+
     // this.bondDataSource.sort = this.sort
     this.fixedDataSource['tableFlag'] = (data.FIXED_DEPOSIT.length == 0) ? false : true;
     this.recurringDataSource['tableFlag'] = (data.RECURRING_DEPOSIT.length == 0) ? false : true;
