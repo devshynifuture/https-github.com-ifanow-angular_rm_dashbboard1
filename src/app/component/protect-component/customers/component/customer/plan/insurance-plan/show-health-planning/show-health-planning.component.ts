@@ -17,10 +17,15 @@ export class ShowHealthPlanningComponent implements OnInit {
   dataSource = ELEMENT_DATA;
   inputData: any;
   showInsurance: any;
-  
+
   displayedColumns1: string[] = ['position', 'name', 'weight', 'symbol', 'icons'];
   dataSource1 = ELEMENT_DATA1;
-  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private utils: UtilService, private eventService: EventService) { }
+  constructor(
+    private subInjectService: SubscriptionInject,
+    private custumService: CustomerService,
+    private utils: UtilService,
+    private eventService: EventService
+  ) { }
 
 
   @Input()
@@ -32,10 +37,10 @@ export class ShowHealthPlanningComponent implements OnInit {
     return this.inputData;
   }
   ngOnInit() {
-    console.log('insurance data',this.inputData)
+    console.log('insurance data', this.inputData)
     this.showInsurance = this.inputData
   }
-  close(data){
+  close(data) {
     const fragmentData = {
       direction: 'top',
       componentName: ShowHealthPlanningComponent,
@@ -55,8 +60,8 @@ export class ShowHealthPlanningComponent implements OnInit {
 
   //   this.eventService.changeUpperSliderState(fragmentData);
   // }
-  
-  openSuggestHealth(data){
+
+  openSuggestHealth(data) {
     const fragmentData = {
       flag: 'opencurrentpolicies',
       data,
@@ -74,11 +79,11 @@ export class ShowHealthPlanningComponent implements OnInit {
       }
     );
   }
-  openHelthInsurance(data){
-    if(data == null){
+  openHelthInsurance(data) {
+    if (data == null) {
       data = {}
       data.showExisting = true
-    }else{
+    } else {
       data.showExisting = true
     }
     const fragmentData = {

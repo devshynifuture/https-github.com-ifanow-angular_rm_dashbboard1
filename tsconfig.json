@@ -31,6 +31,9 @@
       ],
       "@env/*": [
         "environments/*"
+      ],
+      "exceljs": [
+        "node_modules/exceljs/dist/exceljs.min"
       ]
     }
   },
