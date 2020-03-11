@@ -42,7 +42,11 @@ export class AddNscComponent implements OnInit {
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   @Input()
   set data(data) {
+    this.isOptionalField = true
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
     this.inputData = data;
+    this.getdataForm(data);
   }
 
   get data() {
@@ -59,14 +63,9 @@ export class AddNscComponent implements OnInit {
     } else {
       this.adviceShowHeaderAndFooter = true;
     }
-    this.isOptionalField = true
-    this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId();
-    this.getdataForm(this.data);
   }
   moreFields() {
-    (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true
-
+    (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true;
   }
 
   isFormValuesForAdviceValid() {
@@ -86,13 +85,13 @@ export class AddNscComponent implements OnInit {
     this.nomineesList = data.controls
   }
   getdataForm(data) {
-    this.flag = data;
-    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
     if (data == undefined) {
       data = {};
+      this.flag = "addNSC";
     }
     else {
-      this.editApi = data
+      this.flag = "editNSC";
+      (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : this.editApi = data;
       this.commDate = new Date(data.commencementDate)
     }
     this.nscData = data
@@ -152,15 +151,10 @@ export class AddNscComponent implements OnInit {
     // }
     if (this.nscFormField.invalid) {
       this.inputs.find(input => !input.ngControl.valid).focus();
-      this.nscFormField.get('ownerName').markAsTouched();
-      this.nscFormField.get('amountInvested').markAsTouched();
-      this.nscFormField.get('ownerName').markAsTouched();
-      this.nscFormField.get('commDate').markAsTouched();
-      this.nscFormField.get('Tenure').markAsTouched();
-      this.nscFormField.get('ownershipType').markAsTouched();
+      this.nscFormField.markAllAsTouched();
     }
     else {
-      if (this.editApi != undefined && this.editApi != 'adviceNSC') {
+      if (this.flag == "editNSC") {
         let obj =
         {
           "id": this.editApi.id,

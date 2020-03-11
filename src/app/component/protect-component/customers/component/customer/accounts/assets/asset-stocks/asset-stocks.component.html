@@ -194,8 +194,8 @@
           | {{singlePortfolio.ownerName}}</h5>
       </div>
     </div>
-    <div *ngIf="singlePortfolio.stocks&&singlePortfolio.stocks.length>0" class="stock-overview" id="table-low">
-      <table [dataSource]="checkAndFillDataSource(singlePortfolio)" mat-table>
+    <div class="stock-overview" id="table-low">
+      <table [dataSource]="singlePortfolio.stockList" mat-table>
         <!-- <ng-container matColumnDef="static-header">
            <td *matHeaderCellDef [attr.colspan]="displayedColumns25.length"
                class=" text-center text-primary bg-white" mat-header-cell>
