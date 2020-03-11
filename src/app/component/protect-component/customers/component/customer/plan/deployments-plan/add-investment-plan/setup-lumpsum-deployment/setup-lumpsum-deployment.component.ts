@@ -21,6 +21,7 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
   filterSchemeData: any;
   deploymentList: any;
   dataSource: any;
+  dataSource1: any;
   constructor(private subInjectService: SubscriptionInject, private planService: PlanService, private eventService: EventService) { }
   @Input() set data(data) {
     let lumpsum=[];
