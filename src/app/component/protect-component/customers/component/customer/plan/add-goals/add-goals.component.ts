@@ -188,4 +188,9 @@ export class AddGoalsComponent implements OnInit {
     this.goalTypeData = data;
     this.showGoalType = [1,5,6].includes(data.id) ? (data.id == 1 ? 'retirement' : 'multiYear') : 'singleYear' 
   }
+
+  cancelGoal(){
+    this.goalTypeData = undefined;
+    this.showGoalType = undefined;
+  }
 }

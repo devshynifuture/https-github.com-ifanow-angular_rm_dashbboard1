@@ -492,8 +492,8 @@
                                     src="/assets/images/svg/3lines.svg" class="pr-8">Preferences</button>
                         </div>
                     </div>
-                    <div class="row pt-20">
-                        <div class="col-md-12 right p-0 text-right">
+                    <div class="row pt-20" *ngIf="dashboardData">
+                        <div class="col-md-12 right p-0 text-right" (click)="deleteGoal(dashboardData)">
                             <img src="/assets/images/svg/blue-delete.svg">
                         </div>
                     </div>

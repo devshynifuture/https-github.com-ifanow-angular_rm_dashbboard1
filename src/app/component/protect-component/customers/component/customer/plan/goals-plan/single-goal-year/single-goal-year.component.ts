@@ -25,6 +25,7 @@ export class SingleGoalYearComponent implements OnInit {
   @ViewChild('mySlider3', { static: true }) sliderRef: ElementRef<object>;
   imageData: any;
   logoImg: any;
+  currentAge: number;
   constructor(
     private eventService: EventService, 
     private fb: FormBuilder, 
@@ -35,6 +36,7 @@ export class SingleGoalYearComponent implements OnInit {
   @Input() goalTypeData:any = {};
   @Input() familyList:any = {};
   @Input() statisticalData:any = {};
+  @Output() output = new EventEmitter<any>();
   minAgeYear = 0;
   maxAgeYear = 100;
   
@@ -53,189 +55,101 @@ export class SingleGoalYearComponent implements OnInit {
     this.singleYearGoalForm.updateValueAndValidity();
   }
   
-  addSingleYearGoal() {
+  createGoalObj() {
+    let obj = {
+      "clientId": this.clientId,
+      "advisorId": this.advisorId,
+      "goalName": this.singleYearGoalForm.get('field4').value,
+      "notes": this.singleYearGoalForm.get('field5').value,
+      "imageUrl": this.logoImg
+    }
+
+    /**
+     * 2 - house
+     * 3 - car
+     * 4 - marriage
+     * 7 - emergency
+     * 8 - wealth creation
+     * 9 - big spend
+     * 10 - others
+     */
+    if([2,4,8].includes(this.goalTypeData.id)) {
+      obj['planningThisForId'] = this.singleYearGoalForm.get('field1').value.id;
+      obj['clientOrFamilyMember'] = (this.singleYearGoalForm.get('field1').value.relationshipId === 0) ? 1 : 2;
+    }
+    if([2,3,4,8].includes(this.goalTypeData.id)) {
+      obj['currentAge'] = this.singleYearGoalForm.get('field1').value.age;
+    }
+    if([2,3,4,9,10].includes(this.goalTypeData.id)) {
+      obj['goalPresentValue'] = this.singleYearGoalForm.get('field3').value;
+    }
+
+    switch (this.goalTypeData.id) {
+      case 2: // House
+        obj['whatAgeBuyHouse'] = this.singleYearGoalForm.get('field2').value;
+        break;
+      case 3: // Car
+        obj['whatAgeBuyCar'] = this.singleYearGoalForm.get('field2').value;
+        break;
+      case 4: // Marriage
+        obj['marryAtAge'] = this.singleYearGoalForm.get('field2').value;
+        break;
+      case 7: // Emergency
+        obj['goalTargetInMonth'] = this.singleYearGoalForm.get('field2').value;
+        obj['goalFV'] = this.singleYearGoalForm.get('field3').value;
+        break;
+      case 8: // Wealth Creation
+        obj['goalTargetAge'] = this.singleYearGoalForm.get('field2').value;
+        obj['goalFV'] = this.singleYearGoalForm.get('field3').value;
+        break;
+      case 9: // Big Spends
+        obj['goalStartDate'] = this.singleYearGoalForm.get('field2').value;
+        break;
+      case 10: // Others
+        obj['goalStartDate'] = this.singleYearGoalForm.get('field2').value;
+        break;
+      default:
+        console.error('unknown goal id found')
+    }
+    return obj;
+  }
+
+  sendDataObj(obj){
+    this.planService.addHouseGoal(obj).subscribe(
+      data => {
+        this.eventService.changeUpperSliderState({state: 'close'});
+        this.eventService.openSnackBar("House goal is added");
+      },
+      error => this.eventService.showErrorMessage(error)
+    )
+  }
+
+  saveGoal(){
     if(this.singleYearGoalForm.invalid) {
       this.singleYearGoalForm.markAllAsTouched();
     } else {
-      // TODO:- recheck if data added correctly
-      const obj =
-      {
-        "clientId": this.clientId,
-        "advisorId": this.advisorId,
-        "planningThisForId": this.singleYearGoalForm.get('field1').value.id,
-        "clientOrFamilyMember": (this.singleYearGoalForm.get('field1').value.clientId == this.clientId) ? 1 : 2,
-        "whatAgeBuyHouse": this.singleYearGoalForm.get('field2').value,
-        "currentAge": this.singleYearGoalForm.get('field1').value.age,
-        "goalPresentValue": this.singleYearGoalForm.get('field3').value,
-        "goalName": this.singleYearGoalForm.get('field4').value,
-        "notes": this.singleYearGoalForm.get('field5').value,
-        "imageUrl": "image.png"
-      }
-      this.planService.addHouseGoal(obj).subscribe(
-        data => {
-          console.log(data);
-          this.close('close');
-          this.eventService.openSnackBar("House goal is added")
-        },
-        error => this.eventService.showErrorMessage(error)
-      )
+      let goalObj = this.createGoalObj();
+      console.log(goalObj);
+      // this.sendDataObj(goalObj);
     }
-
-    // TODO- remove below commented block if not needed
-
-    // switch (true) {
-    //   case (this.singleYearGoalForm.get('field1').invalid && (this.goalTypeData.id == 2 || this.goalTypeData.id == 4 || this.goalTypeData.id == 8)):
-    //     this.singleYearGoalForm.get('field1').markAsTouched();
-    //     break;
-    //   case (this.singleYearGoalForm.get('field2').value == null):
-    //     this.singleYearGoalForm.get('field2').markAsTouched();
-    //     break;
-    //   case (this.singleYearGoalForm.get('field3').invalid):
-    //     this.singleYearGoalForm.get('field3').markAsTouched();
-    //     break;
-    //   case (this.singleYearGoalForm.get('field4').invalid):
-    //     this.singleYearGoalForm.get('field4').markAsTouched();
-    //     break;
-    //   default:
-    //     if (this.goalTypeData.id == 2) {
-    //     }
-    //     else if (this.goalTypeData.id == 3) {
-    //       const obj = {
-    //         "clientId": this.clientId,
-    //         "advisorId": this.advisorId,
-    //         "whatAgeBuyCar": this.singleYearGoalForm.get('field2').value,
-    //         "goalPresentValue": this.singleYearGoalForm.get('field3').value,
-    //         "goalName": this.singleYearGoalForm.get('field4').value,
-    //         "notes": this.singleYearGoalForm.get('field5').value,
-    //         "imageUrl": "image.png"
-    //       }
-    //       this.planService.addCarGoal(obj).subscribe(
-    //         data => {
-    //           console.log(data)
-    //           this.eventService.openSnackBar("Car goal is added", "Dismiss");
-    //           this.close('close');
-    //         },
-    //         error => this.eventService.showErrorMessage(error)
-    //       )
-    //     }
-    //     else if (this.goalTypeData.id == 4) {
-    //       const obj =
-    //       {
-    //         "clientId": this.clientId,
-    //         "advisorId": this.advisorId,
-    //         "planningThisForId": this.singleYearGoalForm.get('field1').value.id,
-    //         "clientOrFamilyMember": (this.singleYearGoalForm.get('field1').value.clientId == this.clientId) ? 1 : 2,
-    //         "marryAtAge": this.singleYearGoalForm.get('field2').value,
-    //         "currentAge": 11,
-    //         "goalPresentValue": this.singleYearGoalForm.get('field3').value,
-    //         "goalName": this.singleYearGoalForm.get('field4').value,
-    //         "notes": this.singleYearGoalForm.get('field5').value,
-    //         "imageUrl": "image.png"
-    //       }
-    //       this.planService.addMarriageGoal(obj).subscribe(
-    //         data => {
-    //           console.log(data)
-    //           this.eventService.openSnackBar("Marriage goal is added", "Dismiss");
-    //           this.close('close');
-    //         },
-    //         error => this.eventService.showErrorMessage(error)
-    //       )
-    //     }
-    //     else if (this.goalTypeData.id == 7) {
-    //       const obj = {
-    //         "clientId": this.clientId,
-    //         "advisorId": this.advisorId,
-    //         "goalTargetInMonth": this.singleYearGoalForm.get('field2').value,
-    //         "goalFV": this.singleYearGoalForm.get('field3').value,
-    //         "goalName": this.singleYearGoalForm.get('field4').value,
-    //         "notes": this.singleYearGoalForm.get('field5').value,
-    //         "imageUrl": "image.png"
-    //       }
-    //       this.planService.addEmergencyGoal(obj).subscribe(
-    //         data => {
-    //           console.log(data)
-    //           this.eventService.openSnackBar("Emergency goal is added", "Dismiss");
-    //           this.close('close');
-    //         },
-    //         error => this.eventService.showErrorMessage(error)
-    //       )
-    //     }
-    //     else if (this.goalTypeData.id == 8) {
-    //       const obj =
-    //       {
-    //         "clientId": this.clientId,
-    //         "advisorId": this.advisorId,
-    //         "planningThisForId": this.singleYearGoalForm.get('field1').value.id,
-    //         "clientOrFamilyMember": (this.singleYearGoalForm.get('field1').value.clientId == this.clientId) ? 1 : 2,
-    //         "currentAge": this.singleYearGoalForm.get('field1').value.age,
-    //         "goalTargetAge": this.singleYearGoalForm.get('field2').value,
-    //         "goalFV": this.singleYearGoalForm.get('field3').value,
-    //         "goalName": this.singleYearGoalForm.get('field4').value,
-    //         "notes": this.singleYearGoalForm.get('field5').value,
-    //         "imageUrl": "image.png"
-    //       }
-    //       this.planService.addWealthCreationGoal(obj).subscribe(
-    //         data => {
-    //           console.log(data)
-    //           this.eventService.openSnackBar("Wealth creation goal is added", "Dismiss"),
-    //             this.close('close');
-    //         },
-    //         error => this.eventService.showErrorMessage(error)
-    //       )
-    //     }
-    //     else if (this.goalTypeData.id == 9) {
-    //       const obj = {
-    //         "clientId": this.clientId,
-    //         "advisorId": this.advisorId,
-    //         "goalStartDate": this.singleYearGoalForm.get('field2').value + '-01-01',
-    //         "goalPresentValue": this.singleYearGoalForm.get('field3').value,
-    //         "goalName": this.singleYearGoalForm.get('field4').value,
-    //         "notes": this.singleYearGoalForm.get('field5').value,
-    //         "imageUrl": "image.png"
-    //       }
-    //       this.planService.addBigSpendsGoal(obj).subscribe(
-    //         data => {
-    //           console.log(data),
-    //             this.eventService.openSnackBar("Big spends is added", 'Dismiss'),
-    //             this.close('close')
-    //         },
-    //         error => this.eventService.showErrorMessage(error)
-    //       )
-    //     }
-    //     else {
-    //       const obj = {
-    //         "clientId": this.clientId,
-    //         "advisorId": this.advisorId,
-    //         "goalStartDate": this.singleYearGoalForm.get('field2').value + '-01-01',
-    //         "goalPresentValue": this.singleYearGoalForm.get('field3').value,
-    //         "goalName": this.singleYearGoalForm.get('field4').value,
-    //         "notes": this.singleYearGoalForm.get('field5').value,
-    //         "imageUrl": "image.png"
-    //       }
-    //       this.planService.addOthersGoal(obj).subscribe(
-    //         data => {
-    //           console.log(data),
-    //             this.eventService.openSnackBar("Others spends is added", 'Dismiss'),
-    //             this.close('close')
-    //         },
-    //         error => this.eventService.showErrorMessage(error)
-    //       )
-    //     }
-    // }
-    
   }
 
+  // set the validation age for the age form field 
   setMinMaxAgeOrYear(value){
+    this.currentAge = this.getAge(value.dateOfBirth);
     if(this.goalTypeData.validations.showAge) {
-      let age = this.currentYear - (new Date(value.dateOfBirth).getFullYear());
-      this.minAgeYear = (this.goalTypeData.validations.minAge || (this.goalTypeData.validations.minAgeFromPresent + age));
-      this.maxAgeYear = (this.goalTypeData.validations.maxAge || (this.goalTypeData.validations.maxAgeFromPresent + age));
+      this.minAgeYear = (this.goalTypeData.validations.minAge || (this.goalTypeData.validations.minAgeFromPresent + this.currentAge));
+      this.maxAgeYear = (this.goalTypeData.validations.maxAge || (this.goalTypeData.validations.maxAgeFromPresent + this.currentAge));
     } else {
       this.minAgeYear = (this.goalTypeData.validations.minAgeFromPresent + this.currentYear);
       this.maxAgeYear = (this.goalTypeData.validations.maxAgeFromPresent + this.currentYear);
     }
+    if(this.minAgeYear < (this.currentAge + this.goalTypeData.validations.minAgeFromPresent)) {
+      this.minAgeYear = this.currentAge + this.goalTypeData.validations.minAgeFromPresent;
+    }
   }
 
+  // initialize the form for the goal
   createForm(){
     this.singleYearGoalForm = this.fb.group({
       field2: ['', [Validators.required]], // age or time
@@ -246,13 +160,10 @@ export class SingleGoalYearComponent implements OnInit {
     });
 
     if(this.planForFamily) {
-      this.singleYearGoalForm.addControl('field1', new FormControl('', Validators.required));
-    } else {
-      this.setMinMaxAgeOrYear(this.familyList[0]);
-      this.singleYearGoalForm.controls.field2.setValidators([Validators.required, Validators.min(this.minAgeYear), Validators.max(this.maxAgeYear)])
+      this.singleYearGoalForm.addControl('field1', new FormControl('', Validators.required)); // who the goal is for
     }
-  
-    this.singleYearGoalForm.updateValueAndValidity();
+    this.setMinMaxAgeOrYear(this.familyList[0]);
+    this.selectOwner(this.familyList[0]); //set client as the initial owner
   }
 
   previewGoalImage(event) {
@@ -266,10 +177,22 @@ export class SingleGoalYearComponent implements OnInit {
     }
   }
   
-  close(state) {
-    const fragmentData = {
-      state: 'close'
-    };
-    this.eventService.changeUpperSliderState(fragmentData)
+  goBack() {
+    this.output.emit();
+  }
+  
+  /**
+   * returns the age in years given the time (date obj)
+   * @param dateString long date - eg: 655516800000
+   */
+  getAge(dateString) {
+    var today = new Date();
+    var birthDate = new Date(dateString);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
   }
 }
