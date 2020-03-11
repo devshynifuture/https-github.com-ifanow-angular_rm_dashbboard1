@@ -80,8 +80,8 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.assetDataOfAdvice">
-                        {{element.assetDataOfAdvice.ownerName}}
+                    <span *ngIf="element.assetDetails">
+                        {{element.assetDetails.ownerName}}
                     </span>
                 </div>
             </td>
@@ -89,7 +89,7 @@
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"><span *ngIf="element.adviceToAsset">{{element.adviceToAsset.adviceDescription}}</span>
+                <div class="bar"><span *ngIf="element">{{element.adviceDescription}}</span>
                 </div>
             </td>
         </ng-container>
@@ -97,8 +97,8 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Current value </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.assetDataOfAdvice">
-                        {{element.assetDataOfAdvice.currentValue}}
+                    <span *ngIf="element.assetDetails" appFormatNumber> 
+                        {{element.assetDetails.currentValue}}
                     </span>
                 </div>
             </td>
@@ -106,15 +106,15 @@
         <ng-container matColumnDef="empcon">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Total amount invested </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar">{{element.empcon}}</div>
+                <div class="bar"><span *ngIf="element.assetDetails" appFormatNumber>{{element.assetDetails.empcon}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="emprcon">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Maturity date </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.assetDataOfAdvice">
-                        <span>{{element.assetDataOfAdvice.maturityDate | date:'dd/MM/yyyy'}}</span>
+                    <span *ngIf="element.assetDetails">
+                        <span>{{element.assetDetails.maturityDate | date:'dd/MM/yyyy'}}</span>
                     </span>
                 </div>
             </td>
@@ -123,15 +123,15 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.adviceToAsset">
-                        <span *ngIf="element.adviceToAsset.adviceId==1">Continue till maturity</span>
-                        <span *ngIf="element.adviceToAsset.adviceId==2">Withdraw as on same date as per rules</span>
-                        <span *ngIf="element.adviceToAsset.adviceId==3">Premature close</span>
-                        <span *ngIf="element.adviceToAsset.adviceId==4">Open new account</span>
-                        <span *ngIf="element.adviceToAsset.adviceId==5">Take loan against PPF</span>
-                        <span *ngIf="element.adviceToAsset.adviceId==6">Extend for period</span>
-                        <span *ngIf="element.adviceToAsset.adviceId==7">Increase the period</span>
-                        <span *ngIf="element.adviceToAsset.adviceId==8">Decrease the period</span>
+                    <span *ngIf="element">
+                        <span *ngIf="element.adviceId==1">Continue till maturity</span>
+                        <span *ngIf="element.adviceId==2">Withdraw as on same date as per rules</span>
+                        <span *ngIf="element.adviceId==3">Premature close</span>
+                        <span *ngIf="element.adviceId==4">Open new account</span>
+                        <span *ngIf="element.adviceId==5">Take loan against PPF</span>
+                        <span *ngIf="element.adviceId==6">Extend for period</span>
+                        <span *ngIf="element.adviceId==7">Increase the period</span>
+                        <span *ngIf="element.adviceId==8">Decrease the period</span>
                     </span>
                 </div>
             </td>
@@ -140,16 +140,16 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status</th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.adviceToAsset">
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==1">GIVEN</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==2">AWAITING CONSENT</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==3">ACCEPTED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==4">IN PROGRESS</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==5">IMPLEMENTED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==6">DECLINED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==7">PENDING</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==8">SYSTEM GENERATED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==9">REVISED</span>
+                    <span *ngIf="element">
+                        <span *ngIf="element.adviceStatusId==1">GIVEN</span>
+                        <span *ngIf="element.adviceStatusId==2">AWAITING CONSENT</span>
+                        <span *ngIf="element.adviceStatusId==3">ACCEPTED</span>
+                        <span *ngIf="element.adviceStatusId==4">IN PROGRESS</span>
+                        <span *ngIf="element.adviceStatusId==5">IMPLEMENTED</span>
+                        <span *ngIf="element.adviceStatusId==6">DECLINED</span>
+                        <span *ngIf="element.adviceStatusId==7">PENDING</span>
+                        <span *ngIf="element.adviceStatusId==8">SYSTEM GENERATED</span>
+                        <span *ngIf="element.adviceStatusId==9">REVISED</span>
                     </span>
                 </div>
             </td>
@@ -214,9 +214,9 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.assetDataOfAdvice">
+                    <span *ngIf="element.assetDetails">
                         <span>
-                            {{element.assetDataOfAdvice.ownerName}}
+                            {{element.assetDetails.ownerName}}
                         </span>
                     </span>
                 </div>
@@ -225,7 +225,7 @@
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> <span *ngIf="element.adviceToAsset">{{element.adviceToAsset.adviceDescription}}</span>
+                <div class="bar"> <span *ngIf="element">{{element.adviceDescription}}</span>
                 </div>
             </td>
         </ng-container>
@@ -233,8 +233,8 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Current value </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.assetDataOfAdvice">
-                        {{element.assetDataOfAdvice.currentValue}}
+                    <span *ngIf="element.assetDetails" appFormatNumber>
+                        {{element.assetDetails.currentValue}}
                     </span>
                 </div>
             </td>
@@ -242,17 +242,17 @@
         <ng-container matColumnDef="emprcon">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Maturity date </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.emprcon}}</div>
+                <div class="bar"> {{element.assetDetails.emprcon}}</div>
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.adviceToAsset">
-                        <span *ngIf="element.adviceToAsset.adviceId==1">Continue till maturity</span>
-                        <span *ngIf="element.adviceToAsset.adviceId==2">Open new account</span>
-                        <span *ngIf="element.adviceToAsset.adviceId==3">Take loan against NSC</span>
+                    <span *ngIf="element">
+                        <span *ngIf="element.adviceId==1">Continue till maturity</span>
+                        <span *ngIf="element.adviceId==2">Open new account</span>
+                        <span *ngIf="element.adviceId==3">Take loan against NSC</span>
                     </span>
                 </div>
             </td>
@@ -261,16 +261,16 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status</th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.adviceToAsset">
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==1">GIVEN</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==2">AWAITING CONSENT</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==3">ACCEPTED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==4">IN PROGRESS</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==5">IMPLEMENTED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==6">DECLINED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==7">PENDING</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==8">SYSTEM GENERATED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==9">REVISED</span>
+                    <span *ngIf="element">
+                        <span *ngIf="element.adviceStatusId==1">GIVEN</span>
+                        <span *ngIf="element.adviceStatusId==2">AWAITING CONSENT</span>
+                        <span *ngIf="element.adviceStatusId==3">ACCEPTED</span>
+                        <span *ngIf="element.adviceStatusId==4">IN PROGRESS</span>
+                        <span *ngIf="element.adviceStatusId==5">IMPLEMENTED</span>
+                        <span *ngIf="element.adviceStatusId==6">DECLINED</span>
+                        <span *ngIf="element.adviceStatusId==7">PENDING</span>
+                        <span *ngIf="element.adviceStatusId==8">SYSTEM GENERATED</span>
+                        <span *ngIf="element.adviceStatusId==9">REVISED</span>
                     </span>
                 </div>
             </td>
@@ -335,8 +335,8 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.assetDataOfAdvice">
-                        {{element.assetDataOfAdvice.ownerName}}
+                    <span *ngIf="element.assetDetails">
+                        {{element.assetDetails.ownerName}}
                     </span>
                 </div>
             </td>
@@ -345,7 +345,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.adviceToAsset">{{element.adviceToAsset.adviceDescription}}</span>
+                    <span *ngIf="element">{{element.adviceDescription}}</span>
                 </div>
             </td>
         </ng-container>
@@ -353,8 +353,8 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Current value </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.assetDataOfAdvice">
-                        {{element.assetDataOfAdvice.currentValue}}
+                    <span *ngIf="element.assetDetails" appFormatNumber>
+                        {{element.assetDetails.currentValue}}
                     </span>
                 </div>
             </td>
@@ -362,15 +362,15 @@
         <ng-container matColumnDef="empcon">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Total amount invested </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar">{{element.empcon}}</div>
+                <div class="bar">{{element.assetDetails.empcon}}</div>
             </td>
         </ng-container>
         <ng-container matColumnDef="emprcon">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Maturity date </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.assetDataOfAdvice">
-                        <span>{{element.assetDataOfAdvice.maturityDate | date:'dd/MM/yyyy'}}</span>
+                    <span *ngIf="element.assetDetails">
+                        <span>{{element.assetDetails.maturityDate | date:'dd/MM/yyyy'}}</span>
                     </span>
                 </div>
             </td>
@@ -385,16 +385,16 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status</th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.adviceToAsset">
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==1">GIVEN</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==2">AWAITING CONSENT</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==3">ACCEPTED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==4">IN PROGRESS</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==5">IMPLEMENTED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==6">DECLINED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==7">PENDING</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==8">SYSTEM GENERATED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==9">REVISED</span>
+                    <span *ngIf="element">
+                        <span *ngIf="element.adviceStatusId==1">GIVEN</span>
+                        <span *ngIf="element.adviceStatusId==2">AWAITING CONSENT</span>
+                        <span *ngIf="element.adviceStatusId==3">ACCEPTED</span>
+                        <span *ngIf="element.adviceStatusId==4">IN PROGRESS</span>
+                        <span *ngIf="element.adviceStatusId==5">IMPLEMENTED</span>
+                        <span *ngIf="element.adviceStatusId==6">DECLINED</span>
+                        <span *ngIf="element.adviceStatusId==7">PENDING</span>
+                        <span *ngIf="element.adviceStatusId==8">SYSTEM GENERATED</span>
+                        <span *ngIf="element.adviceStatusId==9">REVISED</span>
                     </span>
                 </div>
             </td>
@@ -459,8 +459,8 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.assetDataOfAdvice">
-                        {{element.assetDataOfAdvice.ownerName}}
+                    <span *ngIf="element.assetDetails">
+                        {{element.assetDetails.ownerName}}
                     </span>
                 </div>
             </td>
@@ -468,7 +468,7 @@
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> <span *ngIf="element.adviceToAsset">{{element.adviceToAsset.adviceDescription}}</span>
+                <div class="bar"> <span *ngIf="element">{{element.adviceDescription}}</span>
                 </div>
             </td>
         </ng-container>
@@ -476,8 +476,8 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Current value </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.assetDataOfAdvice">
-                        {{element.assetDataOfAdvice.currentValue}}
+                    <span *ngIf="element.assetDetails" appFormatNumber>
+                        {{element.assetDetails.currentValue}}
                     </span>
                 </div>
             </td>
@@ -485,25 +485,25 @@
         <ng-container matColumnDef="empcon">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Anuual employee's contribution </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.empcon}}</div>
+                <div class="bar"><span *ngIf="element.assetDetails" appFormatNumber> {{element.assetDetails.empcon}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="emprcon">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Anuual employer's contribution </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.emprcon}}</div>
+                <div class="bar"><span *ngIf="element.assetDetails" appFormatNumber> {{element.assetDetails.emprcon}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.adviceToAsset">
-                        <span *ngIf="element.adviceToAsset.adviceId==1">Continue contributions as per rule</span>
-                        <span *ngIf="element.adviceToAsset.adviceId==2">Withdraw as on same date</span>
-                        <span *ngIf="element.adviceToAsset.adviceId==3">Premature encashment</span>
-                        <span *ngIf="element.adviceToAsset.adviceId==4">Withdrawal</span>
-                        <span *ngIf="element.adviceToAsset.adviceId==5">Take loan against Kvp</span>
+                    <span *ngIf="element">
+                        <span *ngIf="element.adviceId==1">Continue contributions as per rule</span>
+                        <span *ngIf="element.adviceId==2">Withdraw as on same date</span>
+                        <span *ngIf="element.adviceId==3">Premature encashment</span>
+                        <span *ngIf="element.adviceId==4">Withdrawal</span>
+                        <span *ngIf="element.adviceId==5">Take loan against Kvp</span>
                     </span>
                 </div>
             </td>
@@ -512,16 +512,16 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status</th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.adviceToAsset">
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==1">GIVEN</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==2">AWAITING CONSENT</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==3">ACCEPTED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==4">IN PROGRESS</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==5">IMPLEMENTED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==6">DECLINED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==7">PENDING</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==8">SYSTEM GENERATED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==9">REVISED</span>
+                    <span *ngIf="element">
+                        <span *ngIf="element.adviceStatusId==1">GIVEN</span>
+                        <span *ngIf="element.adviceStatusId==2">AWAITING CONSENT</span>
+                        <span *ngIf="element.adviceStatusId==3">ACCEPTED</span>
+                        <span *ngIf="element.adviceStatusId==4">IN PROGRESS</span>
+                        <span *ngIf="element.adviceStatusId==5">IMPLEMENTED</span>
+                        <span *ngIf="element.adviceStatusId==6">DECLINED</span>
+                        <span *ngIf="element.adviceStatusId==7">PENDING</span>
+                        <span *ngIf="element.adviceStatusId==8">SYSTEM GENERATED</span>
+                        <span *ngIf="element.adviceStatusId==9">REVISED</span>
                     </span>
                 </div>
             </td>
@@ -587,8 +587,8 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.assetDataOfAdvice">
-                        {{element.assetDataOfAdvice.ownerName}}
+                    <span *ngIf="element.assetDetails">
+                        {{element.assetDetails.ownerName}}
                     </span>
                 </div>
             </td>
@@ -597,7 +597,7 @@
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"><span *ngIf="element.adviceToAsset">{{element.adviceToAsset.adviceDescription}}</span>
+                <div class="bar"><span *ngIf="element">{{element.adviceDescription}}</span>
                 </div>
             </td>
         </ng-container>
@@ -605,10 +605,10 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.adviceToAsset">
-                        <span *ngIf="element.adviceToAsset.adviceId==1">Continue contributions as per rule</span>
-                        <span *ngIf="element.adviceToAsset.adviceId==2">Withdraw as on same date</span>
-                        <span *ngIf="element.adviceToAsset.adviceId==3">Premature encashment</span>
+                    <span *ngIf="element">
+                        <span *ngIf="element.adviceId==1">Continue contributions as per rule</span>
+                        <span *ngIf="element.adviceId==2">Withdraw as on same date</span>
+                        <span *ngIf="element.adviceId==3">Premature encashment</span>
                     </span>
                 </div>
             </td>
@@ -617,16 +617,16 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.adviceToAsset">
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==1">GIVEN</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==2">AWAITING CONSENT</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==3">ACCEPTED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==4">IN PROGRESS</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==5">IMPLEMENTED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==6">DECLINED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==7">PENDING</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==8">SYSTEM GENERATED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==9">REVISED</span>
+                    <span *ngIf="element">
+                        <span *ngIf="element.adviceStatusId==1">GIVEN</span>
+                        <span *ngIf="element.adviceStatusId==2">AWAITING CONSENT</span>
+                        <span *ngIf="element.adviceStatusId==3">ACCEPTED</span>
+                        <span *ngIf="element.adviceStatusId==4">IN PROGRESS</span>
+                        <span *ngIf="element.adviceStatusId==5">IMPLEMENTED</span>
+                        <span *ngIf="element.adviceStatusId==6">DECLINED</span>
+                        <span *ngIf="element.adviceStatusId==7">PENDING</span>
+                        <span *ngIf="element.adviceStatusId==8">SYSTEM GENERATED</span>
+                        <span *ngIf="element.adviceStatusId==9">REVISED</span>
                     </span>
                 </div>
             </td>
@@ -691,8 +691,8 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.assetDataOfAdvice">
-                        {{element.assetDataOfAdvice.ownerName}}
+                    <span *ngIf="element.assetDetails">
+                        {{element.assetDetails.ownerName}}
                     </span>
                 </div>
             </td>
@@ -701,7 +701,7 @@
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> <span *ngIf="element.adviceToAsset">{{element.adviceToAsset.adviceDescription}}</span>
+                <div class="bar"> <span *ngIf="element">{{element.adviceDescription}}</span>
                 </div>
             </td>
         </ng-container>
@@ -709,8 +709,8 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Current value </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.assetDataOfAdvice">
-                        {{element.assetDataOfAdvice.currentValue}}
+                    <span *ngIf="element.assetDetails" appFormatNumber>
+                        {{element.assetDetails.currentValue}}
                     </span>
                 </div>
             </td>
@@ -725,16 +725,16 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.adviceToAsset">
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==1">GIVEN</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==2">AWAITING CONSENT</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==3">ACCEPTED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==4">IN PROGRESS</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==5">IMPLEMENTED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==6">DECLINED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==7">PENDING</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==8">SYSTEM GENERATED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==9">REVISED</span>
+                    <span *ngIf="element">
+                        <span *ngIf="element.adviceStatusId==1">GIVEN</span>
+                        <span *ngIf="element.adviceStatusId==2">AWAITING CONSENT</span>
+                        <span *ngIf="element.adviceStatusId==3">ACCEPTED</span>
+                        <span *ngIf="element.adviceStatusId==4">IN PROGRESS</span>
+                        <span *ngIf="element.adviceStatusId==5">IMPLEMENTED</span>
+                        <span *ngIf="element.adviceStatusId==6">DECLINED</span>
+                        <span *ngIf="element.adviceStatusId==7">PENDING</span>
+                        <span *ngIf="element.adviceStatusId==8">SYSTEM GENERATED</span>
+                        <span *ngIf="element.adviceStatusId==9">REVISED</span>
                     </span>
                 </div>
             </td>
@@ -799,15 +799,15 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.assetDataOfAdvice">
-                        {{element.assetDataOfAdvice.ownerName}}
+                    <span *ngIf="element.assetDetails">
+                        {{element.assetDetails.ownerName}}
                     </span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"><span *ngIf="element.adviceToAsset">{{element.adviceToAsset.adviceDescription}}</span>
+                <div class="bar"><span *ngIf="element">{{element.adviceDescription}}</span>
                 </div>
             </td>
         </ng-container>
@@ -815,8 +815,8 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Current value </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.assetDataOfAdvice">
-                        {{element.assetDataOfAdvice.currentValue}}
+                    <span *ngIf="element.assetDetails"  appFormatNumber>
+                        {{element.assetDetails.currentValue}}
                     </span>
                 </div>
             </td>
@@ -824,13 +824,13 @@
         <ng-container matColumnDef="empcon">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Anuual employee's contribution </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar">{{element.empcon}}</div>
+                <div class="bar"><span *ngIf="element.assetDetails" appFormatNumber>{{element.assetDetails.empcon}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="emprcon">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Anuual employer's contribution </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar">{{element.emprcon}}</div>
+                <div class="bar"><span *ngIf="element.assetDetails" appFormatNumber>{{element.assetDetails.emprcon}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
@@ -843,16 +843,16 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status</th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.adviceToAsset">
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==1">GIVEN</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==2">AWAITING CONSENT</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==3">ACCEPTED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==4">IN PROGRESS</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==5">IMPLEMENTED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==6">DECLINED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==7">PENDING</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==8">SYSTEM GENERATED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==9">REVISED</span>
+                    <span *ngIf="element">
+                        <span *ngIf="element.adviceStatusId==1">GIVEN</span>
+                        <span *ngIf="element.adviceStatusId==2">AWAITING CONSENT</span>
+                        <span *ngIf="element.adviceStatusId==3">ACCEPTED</span>
+                        <span *ngIf="element.adviceStatusId==4">IN PROGRESS</span>
+                        <span *ngIf="element.adviceStatusId==5">IMPLEMENTED</span>
+                        <span *ngIf="element.adviceStatusId==6">DECLINED</span>
+                        <span *ngIf="element.adviceStatusId==7">PENDING</span>
+                        <span *ngIf="element.adviceStatusId==8">SYSTEM GENERATED</span>
+                        <span *ngIf="element.adviceStatusId==9">REVISED</span>
                     </span>
                 </div>
             </td>
@@ -918,8 +918,8 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.assetDataOfAdvice">
-                        {{element.assetDataOfAdvice.ownerName}}
+                    <span *ngIf="element.assetDetails">
+                        {{element.assetDetails.ownerName}}
                     </span>
                 </div>
             </td>
@@ -927,7 +927,7 @@
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> <span *ngIf="element.adviceToAsset">{{element.adviceToAsset.adviceDescription}}</span>
+                <div class="bar"> <span *ngIf="element">{{element.adviceDescription}}</span>
                 </div>
             </td>
         </ng-container>
@@ -935,8 +935,8 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Current value </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.assetDataOfAdvice">
-                        {{element.assetDataOfAdvice.currentValue}}
+                    <span *ngIf="element.assetDetails" appFormatNumber>
+                        {{element.assetDetails.currentValue}}
                     </span>
                 </div>
             </td>
@@ -944,19 +944,19 @@
         <ng-container matColumnDef="emprcon">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Maturity date </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> {{element.emprcon}}</div>
+                <div class="bar"> {{element.assetDetails.emprcon}}</div>
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.adviceToAsset">
-                        <span *ngIf="element.adviceToAsset.adviceId==1">Open new account</span>
-                        <span *ngIf="element.adviceToAsset.adviceId==2">Withdraw</span>
-                        <span *ngIf="element.adviceToAsset.adviceId==3">Premature close</span>
-                        <span *ngIf="element.adviceToAsset.adviceId==4">Extend</span>
-                        <span *ngIf="element.adviceToAsset.adviceId==5">Take loan against po</span>
+                    <span *ngIf="element">
+                        <span *ngIf="element.adviceId==1">Open new account</span>
+                        <span *ngIf="element.adviceId==2">Withdraw</span>
+                        <span *ngIf="element.adviceId==3">Premature close</span>
+                        <span *ngIf="element.adviceId==4">Extend</span>
+                        <span *ngIf="element.adviceId==5">Take loan against po</span>
                     </span>
                 </div>
             </td>
@@ -964,16 +964,16 @@
         <ng-container matColumnDef="astatus">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Advice status</th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"> <span *ngIf="element.adviceToAsset">
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==1">GIVEN</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==2">AWAITING CONSENT</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==3">ACCEPTED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==4">IN PROGRESS</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==5">IMPLEMENTED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==6">DECLINED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==7">PENDING</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==8">SYSTEM GENERATED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==9">REVISED</span>
+                <div class="bar"> <span *ngIf="element">
+                        <span *ngIf="element.adviceStatusId==1">GIVEN</span>
+                        <span *ngIf="element.adviceStatusId==2">AWAITING CONSENT</span>
+                        <span *ngIf="element.adviceStatusId==3">ACCEPTED</span>
+                        <span *ngIf="element.adviceStatusId==4">IN PROGRESS</span>
+                        <span *ngIf="element.adviceStatusId==5">IMPLEMENTED</span>
+                        <span *ngIf="element.adviceStatusId==6">DECLINED</span>
+                        <span *ngIf="element.adviceStatusId==7">PENDING</span>
+                        <span *ngIf="element.adviceStatusId==8">SYSTEM GENERATED</span>
+                        <span *ngIf="element.adviceStatusId==9">REVISED</span>
                     </span></div>
             </td>
         </ng-container>
@@ -1038,8 +1038,8 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.assetDataOfAdvice">
-                        {{element.assetDataOfAdvice.ownerName}}
+                    <span *ngIf="element.assetDetails">
+                        {{element.assetDetails.ownerName}}
                     </span>
                 </div>
             </td>
@@ -1048,7 +1048,7 @@
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"><span *ngIf="element.adviceToAsset">{{element.adviceToAsset.adviceDescription}}</span>
+                <div class="bar"><span *ngIf="element">{{element.adviceDescription}}</span>
                 </div>
             </td>
         </ng-container>
@@ -1056,10 +1056,10 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.adviceToAsset">
-                        <span *ngIf="element.adviceToAsset.adviceId==1">Open new account</span>
-                        <span *ngIf="element.adviceToAsset.adviceId==2">Withdraw</span>
-                        <span *ngIf="element.adviceToAsset.adviceId==3">Close the account</span>
+                    <span *ngIf="element">
+                        <span *ngIf="element.adviceId==1">Open new account</span>
+                        <span *ngIf="element.adviceId==2">Withdraw</span>
+                        <span *ngIf="element.adviceId==3">Close the account</span>
 
                     </span>
                 </div>
@@ -1069,16 +1069,16 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span *ngIf="element.adviceToAsset">
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==1">GIVEN</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==2">AWAITING CONSENT</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==3">ACCEPTED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==4">IN PROGRESS</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==5">IMPLEMENTED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==6">DECLINED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==7">PENDING</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==8">SYSTEM GENERATED</span>
-                        <span *ngIf="element.adviceToAsset.adviceStatusId==9">REVISED</span>
+                    <span *ngIf="element">
+                        <span *ngIf="element.adviceStatusId==1">GIVEN</span>
+                        <span *ngIf="element.adviceStatusId==2">AWAITING CONSENT</span>
+                        <span *ngIf="element.adviceStatusId==3">ACCEPTED</span>
+                        <span *ngIf="element.adviceStatusId==4">IN PROGRESS</span>
+                        <span *ngIf="element.adviceStatusId==5">IMPLEMENTED</span>
+                        <span *ngIf="element.adviceStatusId==6">DECLINED</span>
+                        <span *ngIf="element.adviceStatusId==7">PENDING</span>
+                        <span *ngIf="element.adviceStatusId==8">SYSTEM GENERATED</span>
+                        <span *ngIf="element.adviceStatusId==9">REVISED</span>
                     </span>
                 </div>
             </td>

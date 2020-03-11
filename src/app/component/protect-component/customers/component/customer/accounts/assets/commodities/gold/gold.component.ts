@@ -157,7 +157,7 @@ export class GoldComponent implements OnInit {
         stringObject: obj,
         adviceDescription: "manualAssetDescription"
       }
-      if (this.flag = "addGOLD") {
+      if (this.flag == "addGOLD") {
         this.custumService.addGold(obj).subscribe(
           data => this.addGoldRes(data)
         );

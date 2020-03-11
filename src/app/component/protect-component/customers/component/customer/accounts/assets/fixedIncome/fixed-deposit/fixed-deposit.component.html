@@ -204,8 +204,8 @@
         <div class="col-md-3 pr-0">
             <div class="form-group mb-0 d-flex">
                 <mat-form-field>
-                    <input (click)="picker1.open()" (dateChange)="checkDate()" matInput formControlName="maturityDate"
-                        [min]="validMaturity" [matDatepicker]="picker1" readonly>
+                    <input (focus)="picker1.open()" (click)="picker1.open()" (dateChange)="checkDate()" matInput
+                        formControlName="maturityDate" [min]="validMaturity" [matDatepicker]="picker1" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
                     <mat-error class="f-12 pt-4 w-s">
