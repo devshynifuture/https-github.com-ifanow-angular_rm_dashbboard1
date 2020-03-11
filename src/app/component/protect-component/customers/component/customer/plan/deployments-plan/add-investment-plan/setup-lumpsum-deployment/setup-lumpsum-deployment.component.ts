@@ -13,7 +13,7 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'icons'];
   // dataSource = ELEMENT_DATA;
   displayedColumns1: string[] = ['position', 'name', 'weight', 'icons'];
-  dataSource1 = ELEMENT_DATA1;
+  // dataSource1 = ELEMENT_DATA1;
   displayedColumns2: string[] = ['name', 'weight', 'height', 'test', 'icons'];
   dataSource2 = ELEMENT_DATA2;
   advisorId: any;
@@ -23,16 +23,11 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
   dataSource: any;
   constructor(private subInjectService: SubscriptionInject, private planService: PlanService, private eventService: EventService) { }
   @Input() set data(data) {
-    this.dataSource=data.data
     let lumpsum=[];
     data.deploymentIdList.forEach(element => {
-     const obj={
-      id:element.id
-     }
-     lumpsum.push(obj)
+     lumpsum.push(element.id)
     });
     this.deploymentList=lumpsum
-    // this.deploymentList = data.deploymentIdList;
     this.getDeploymentData(this.deploymentList)
   }
   ngOnInit() {
@@ -49,6 +44,8 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
     this.planService.getDeploymentDetailsdata(obj).subscribe(
       data => {
         console.log(data);
+        this.dataSource=data.Equity
+        this.dataSource1=data.Debt
       },
       err => this.eventService.openSnackBar(err, 'Dismiss')
     )
