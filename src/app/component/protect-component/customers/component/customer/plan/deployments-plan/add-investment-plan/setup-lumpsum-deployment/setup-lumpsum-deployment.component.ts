@@ -11,7 +11,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 })
 export class SetupLumpsumDeploymentComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'icons'];
-  dataSource = ELEMENT_DATA;
+  // dataSource = ELEMENT_DATA;
   displayedColumns1: string[] = ['position', 'name', 'weight', 'icons'];
   dataSource1 = ELEMENT_DATA1;
   displayedColumns2: string[] = ['name', 'weight', 'height', 'test', 'icons'];
@@ -20,15 +20,39 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
   clientId: any;
   filterSchemeData: any;
   deploymentList: any;
+  dataSource: any;
   constructor(private subInjectService: SubscriptionInject, private planService: PlanService, private eventService: EventService) { }
   @Input() set data(data) {
-    this.deploymentList = data.deploymentIdList;
+    this.dataSource=data.data
+    let lumpsum=[];
+    data.deploymentIdList.forEach(element => {
+     const obj={
+      id:element.id
+     }
+     lumpsum.push(obj)
+    });
+    this.deploymentList=lumpsum
+    // this.deploymentList = data.deploymentIdList;
+    this.getDeploymentData(this.deploymentList)
   }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getMutualFundSchemeData();
     // this.filterScheme();
+  }
+  getDeploymentData(data) {
+    let obj =
+    {
+      deploymentIds: this.deploymentList
+    }
+    this.planService.getDeploymentDetailsdata(obj).subscribe(
+      data => {
+        console.log(data);
+      },
+      err => this.eventService.openSnackBar(err, 'Dismiss')
+    )
+
   }
   getMutualFundSchemeData() {
     this.planService.getMututalFundSchemeData().subscribe(

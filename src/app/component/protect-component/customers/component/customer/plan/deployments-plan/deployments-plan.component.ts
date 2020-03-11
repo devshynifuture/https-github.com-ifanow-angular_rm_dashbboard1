@@ -81,6 +81,7 @@ export class DeploymentsPlanComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      this.getDeploymentData();
     });
 
   }
@@ -124,18 +125,20 @@ export class DeploymentsPlanComponent implements OnInit {
     let component, deploymentData;
     if (flagValue == 'open') {
       component = DeploymentDetailsComponent
-      deploymentData =
-      {
-        data
-      }
+      deploymentData ={data}
     }
     else {
       component = SetupLumpsumDeploymentComponent;
       deploymentData =
       {
-        data,
+        data:[],
         deploymentIdList: this.selectedDeployments
       }
+      this.dataSource.forEach(singleElement => {
+          if (singleElement.selected) {
+            deploymentData.data.push(singleElement);
+          }
+        });
     }
     const fragmentData = {
       id: 1,
