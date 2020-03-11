@@ -267,7 +267,8 @@
             </div>
         </div>
     </div>
-    <app-add-transaction (outputEvent)="getFormData($event)" [data]="editData"
+    <app-add-transaction (outputEvent)="getFormData($event)"
+        [commencementDate]="addLiabilityForm.get('CommencementDate').value" [data]="editData"
         [transactionViewData]="transactionViewData">
     </app-add-transaction>
 </div>
