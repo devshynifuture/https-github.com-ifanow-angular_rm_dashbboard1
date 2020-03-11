@@ -43,7 +43,8 @@ export class AdviceRealAssetComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      assetCategory: 8
+      assetCategory: 8,
+      adviceStatusId:1
     }
     this.dataSource = [{}, {}, {}];
     this.isLoading = true;
