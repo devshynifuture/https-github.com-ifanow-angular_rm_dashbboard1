@@ -5,8 +5,8 @@ import { CustomerService } from 'src/app/component/protect-component/customers/c
 import { DatePipe } from '@angular/common';
 import { UtilService } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
-import { PersonalDetailsInnComponent } from '../personal-details-inn/personal-details-inn.component';
 import { OnlineTransactionService } from '../../../../online-transaction.service';
+import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
 
 @Component({
   selector: 'app-iin-ucc-creation',
@@ -20,7 +20,7 @@ export class IinUccCreationComponent implements OnInit {
   familyMemberId: any;
   generalDetails: any;
 
-  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
+  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,private processTrasaction : ProcessTransactionService,
     private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
     private onlineTransact: OnlineTransactionService, public eventService: EventService) { }
 
@@ -53,15 +53,8 @@ export class IinUccCreationComponent implements OnInit {
     return this.generalDetails.controls;
   }
   openPersonalDetails(data) {
-    const fragmentData = {
-      flag: 'app-upper-customer',
-      id: 1,
-      data,
-      direction: 'top',
-      componentName: PersonalDetailsInnComponent,
-      state: 'open'
-    };
-    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+
+    const subscription = this.processTrasaction.openPersonal(data).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           // this.getClientSubscriptionList();
@@ -69,6 +62,23 @@ export class IinUccCreationComponent implements OnInit {
         }
       }
     );
+
+    // const fragmentData = {
+    //   flag: 'app-upper-customer',
+    //   id: 1,
+    //   data,
+    //   direction: 'top',
+    //   componentName: PersonalDetailsInnComponent,
+    //   state: 'open'
+    // };
+    // const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+    //   upperSliderData => {
+    //     if (UtilService.isDialogClose(upperSliderData)) {
+    //       // this.getClientSubscriptionList();
+    //       subscription.unsubscribe();
+    //     }
+    //   }
+    // );
   }
   getIINUCCRegistration() {
     let obj = {
@@ -102,12 +112,16 @@ export class IinUccCreationComponent implements OnInit {
   }
   ownerDetails(value) {
     this.familyMemberData = value;
+    this.familyMemberId = value.familyMemberId
     this.familyMemberId = value.id;
   }
   saveGeneralDetails(data){
     let obj = {
       ownerName: this.generalDetails.controls.ownerName.value,
       holdingNature: this.generalDetails.controls.holdingNature.value,
+      familyMemberId : this.familyMemberId,
+      clientId: this.familyMemberData.clientId,
+      advisorId: this.familyMemberData.advisorId,
       taxStatus: this.generalDetails.controls.taxStatus.value,
     }
     this.openPersonalDetails(obj);

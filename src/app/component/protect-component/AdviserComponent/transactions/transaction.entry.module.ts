@@ -39,6 +39,7 @@ import { PersonalDetailsInnComponent } from './overview-transactions/IIN/UCC-Cre
 import { ContactDetailsInnComponent } from './overview-transactions/IIN/UCC-Creation/contact-details-inn/contact-details-inn.component';
 import { BankDetailsIINComponent } from './overview-transactions/IIN/UCC-Creation/bank-details-iin/bank-details-iin.component';
 import { NomineeDetailsIinComponent } from './overview-transactions/IIN/UCC-Creation/nominee-details-iin/nominee-details-iin.component';
+import { FatcaDetailsInnComponent } from './overview-transactions/IIN/UCC-Creation/fatca-details-inn/fatca-details-inn.component';
 export const componentList = [
     TransactionAddComponent,
     OnlineTrasactionComponent,
@@ -74,7 +75,8 @@ export const componentList = [
     LeftSideInnUccListComponent,
     ContactDetailsInnComponent,
     BankDetailsIINComponent,
-    NomineeDetailsIinComponent
+    NomineeDetailsIinComponent,
+    FatcaDetailsInnComponent
     // VideoKycComponent
 
 

@@ -3,9 +3,11 @@ import { Validators, FormBuilder } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { DatePipe } from '@angular/common';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { OnlineTransactionService } from '../../../../online-transaction.service';
+import { PostalService } from 'src/app/services/postal.service';
+import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
 
 @Component({
   selector: 'app-nominee-details-iin',
@@ -13,6 +15,7 @@ import { OnlineTransactionService } from '../../../../online-transaction.service
   styleUrls: ['./nominee-details-iin.component.scss']
 })
 export class NomineeDetailsIinComponent implements OnInit {
+  validatorType = ValidatorType
   holdingList: any[];
   nomineeDetails: any;
   inputData: any;
@@ -20,22 +23,34 @@ export class NomineeDetailsIinComponent implements OnInit {
   nomineeList: any;
   holderList: any;
   bankDetailList: any;
+  firstHolderNominee: any;
+  secondHolderNominee: any;
+  thirdHolderNominee: any;
+  holder = {
+    type: 'first',
+    data: ''
+  }
+  obj1: any;
+  sendObj: any;
+  nominee: any;
+  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
+    private onlineTransact: OnlineTransactionService, private postalService: PostalService,
+    private processTransaction: ProcessTransactionService
+    , private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    this.allData = data
+    this.getdataForm(data)
+  }
 
-  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,private onlineTransact: OnlineTransactionService,
-    private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
-    @Input()
-    set data(data) {
-      this.inputData = data;
-      this.allData = data
-      this.getdataForm(data)
-    }
-  
-    get data() {
-      return this.inputData;
-    }
+  get data() {
+    return this.inputData;
+  }
   ngOnInit() {
     this.getdataForm('')
     this.holdingList = []
+    this.nominee = []
   }
   close() {
     const fragmentData = {
@@ -50,51 +65,159 @@ export class NomineeDetailsIinComponent implements OnInit {
 
     this.nomineeDetails = this.fb.group({
       nomineeName: [(!data) ? '' : data.nomineeName, [Validators.required]],
-      relationType: [data ? '' : data.relationType, [Validators.required]],
-      nomineeType: [data ? '' : data.nomineeType, [Validators.required]],
-      nominneDOB: [data ? '' : data.nominneDOB, [Validators.required]],
-      nomineePercentage: [data ? '' : data.nomineePercentage, [Validators.required]],
-      addressType: [data ? '' : data.nameAsPan, [Validators.required]],
-      addressLine1: [data ? '' : data.motherName, [Validators.required]],
-      addressLine2: [data ? '' : data.dateOfBirth, [Validators.required]],
-      pinCode: [data ? '' : data.gender, [Validators.required]],
-      city: [data ? '' : data.maritalStatus, [Validators.required]],
-      district: [data ? '' : data.maritalStatus, [Validators.required]],
-      state: [data ? '' : data.maritalStatus, [Validators.required]],
-      country: [data ? '' : data.maritalStatus, [Validators.required]],
+      relationType: [!data ? '' : data.relationType, [Validators.required]],
+      nomineeType: [!data ? '' : data.nomineeType, [Validators.required]],
+      nominneDOB: [!data ? '' : data.nominneDOB, [Validators.required]],
+      nomineePercentage: [!data ? '' : data.addressType, [Validators.required]],
+      addressType: [!data ? '' : data.nameAsPan, [Validators.required]],
+      addressLine1: [!data ? '' : data.addressLine1, [Validators.required]],
+      addressLine2: [!data ? '' : data.addressLine2, [Validators.required]],
+      pinCode: [!data ? '' : data.pinCode, [Validators.required]],
+      city: [!data ? '' : data.city, [Validators.required]],
+      district: [!data ? '' : data.district, [Validators.required]],
+      state: [!data ? '' : data.state, [Validators.required]],
+      country: [!data ? '' : data.country, [Validators.required]],
     });
   }
   getFormControl(): any {
     return this.nomineeDetails.controls;
   }
-
-  saveNomineeDetails(value) {
-    this.nomineeList =[]
-    this.holderList = []
-    this.bankDetailList = []
-    if (value == 'skip') {
-      let address = {
-        addressType: this.nomineeDetails.controls.addressType.value,
-        addressLine1: this.nomineeDetails.controls.addressLine1.value,
-        addressLine2: this.nomineeDetails.controls.addressLine2.value,
-        pinCode: this.nomineeDetails.controls.pinCode.value,
-        city: this.nomineeDetails.controls.city.value,
-        district: this.nomineeDetails.controls.district.value,
-        state: this.nomineeDetails.controls.state.value,
-        country: this.nomineeDetails.controls.country.value,
-      }
-      let obj = {
-        nomineeName: this.nomineeDetails.controls.nomineeName.value,
-        relationType: this.nomineeDetails.controls.relationType.value,
-        nomineeType: this.nomineeDetails.controls.nomineeType.value,
-        nominneDOB: this.nomineeDetails.controls.nominneDOB.value,
-        nomineePercentage: this.nomineeDetails.controls.nomineePercentage.value,
-        address:address
-      }
-      console.log('personalDetials obj', obj)
-      this.holdingList.push(obj);
-      //this.openContactDetails(obj)
+  pinInvalid: boolean = false;
+  openBankDetails() {
+    this.processTransaction.openBank(this.allData.bankDetailList)
+  }
+  getPostalPin(value) {
+    let obj = {
+      zipCode: value
     }
+    console.log(value, "check value");
+    if (value != "") {
+      this.postalService.getPostalPin(value).subscribe(data => {
+        console.log('postal 121221', data)
+        this.PinData(data)
+      })
+    }
+    else {
+      this.pinInvalid = false;
+    }
+  }
+
+  PinData(data) {
+    if (data[0].Status == "Error") {
+      this.pinInvalid = true;
+
+      this.getFormControl().pincode.setErrors(this.pinInvalid);
+      this.getFormControl().city.setValue("");
+      this.getFormControl().country.setValue("");
+      this.getFormControl().district.setValue("");
+      this.getFormControl().state.setValue("");
+
+    }
+    else {
+      this.getFormControl().city.setValue(data[0].PostOffice[0].Region);
+      this.getFormControl().district.setValue(data[0].PostOffice[0].District);
+      this.getFormControl().country.setValue(data[0].PostOffice[0].Country);
+      this.getFormControl().state.setValue(data[0].PostOffice[0].Circle);
+      this.pinInvalid = false;
+    }
+  }
+  reset() {
+    this.nomineeDetails.reset();
+  }
+  SendToForm(value, flag) {
+    if (value == 'first') {
+      this.saveNomineeDetails(value);
+      if (this.firstHolderNominee) {
+        this.holder.type = value;
+        this.nomineeDetails.setValue(this.firstHolderNominee);
+      } else {
+        this.reset();
+      }
+    }
+    else if (value == 'second') {
+      this.saveNomineeDetails(value);
+      if (this.secondHolderNominee) {
+        this.holder.type = value;
+        this.nomineeDetails.setValue(this.secondHolderNominee);
+      } else {
+        this.reset();
+      }
+    }
+    else if (value == 'third') {
+      this.saveNomineeDetails(value);
+      if (this.thirdHolderNominee) {
+        this.holder.type = value;
+        this.nomineeDetails.setValue(this.thirdHolderNominee);
+      } else {
+        this.reset();
+      };
+    } else {
+      this.saveNomineeDetails(value);
+    }
+    if (flag == true) {
+      console.log('contact details', this.obj1)
+      const value = {}
+      this.obj1 = []
+      this.obj1.push(this.firstHolderNominee)
+      this.obj1.push(this.secondHolderNominee)
+      this.obj1.push(this.thirdHolderNominee)
+      this.obj1.forEach(element => {
+        if (element) {
+          this.getObj = this.setObj(element, value)
+          this.nominee.push(this.getObj)
+        }
+      });
+      let obj = {
+        ownerName: this.allData.ownerName,
+        holdingType: this.allData.holdingType,
+        taxStatus: this.allData.taxStatus,
+        holderList: this.allData.holderList,
+        bankDetailList: this.allData.bankDetailList,
+        nomineeList: this.nominee,
+        id: 2,
+        aggregatorType: 1,
+        familyMemberId: this.allData.familyMemberId,
+        clientId: this.allData.clientId,
+        advisorId: this.allData.advisorId,
+        commMode: 1,
+        confirmationFlag: 1,
+        tpUserSubRequestClientId1: 2,
+      }
+      console.log('##### ALLL DATA ####', obj)
+      this.onlineTransact.createIINUCC(obj).subscribe(
+        data => this.createIINUCCRes(data), (error) => {
+          this.eventService.showErrorMessage(error);
+        }
+      );
+    }
+  }
+  getObj(getObj: any) {
+    throw new Error("Method not implemented.");
+  }
+
+  setObj(holder, value) {
+
+    value = {
+      nomineeName: holder.nomineeName,
+      relationType: holder.relationType,
+      nomineeType: holder.nomineeType,
+      nominneDOB: holder.nominneDOB,
+      nomineePercentage: holder.nomineePercentage,
+      idNumber: holder.idNumber,
+    }
+    value.address = {
+      addressType: holder.addressType,
+      addressLine1: holder.addressLine1,
+      addressLine2: holder.addressLine2,
+      pinCode: holder.pinCode,
+      city: holder.city,
+      district: holder.district,
+      state: holder.state,
+      country: holder.country,
+    }
+    return value;
+  }
+  saveNomineeDetails(value) {
     if (this.nomineeDetails.get('nomineeName').invalid) {
       this.nomineeDetails.get('nomineeName').markAsTouched();
       return
@@ -122,7 +245,7 @@ export class NomineeDetailsIinComponent implements OnInit {
     } else if (this.nomineeDetails.get('pinCode').invalid) {
       this.nomineeDetails.get('pinCode').markAsTouched();
       return;
-    }else if (this.nomineeDetails.get('city').invalid) {
+    } else if (this.nomineeDetails.get('city').invalid) {
       this.nomineeDetails.get('city').markAsTouched();
       return;
     } else if (this.nomineeDetails.get('district').invalid) {
@@ -132,54 +255,32 @@ export class NomineeDetailsIinComponent implements OnInit {
       this.nomineeDetails.get('country').markAsTouched();
       return;
     } else {
-      let address = {
-        addressType: this.nomineeDetails.controls.addressType.value,
-        addressLine1: this.nomineeDetails.controls.addressLine1.value,
-        addressLine2: this.nomineeDetails.controls.addressLine2.value,
-        pinCode: this.nomineeDetails.controls.pinCode.value,
-        city: this.nomineeDetails.controls.city.value,
-        district: this.nomineeDetails.controls.district.value,
-        state: this.nomineeDetails.controls.state.value,
-        country: this.nomineeDetails.controls.country.value,
-      }
-      let obj = {
-        nomineeName: this.nomineeDetails.controls.nomineeName.value,
-        relationType: this.nomineeDetails.controls.relationType.value,
-        nomineeType: this.nomineeDetails.controls.nomineeType.value,
-        nominneDOB: this.nomineeDetails.controls.nominneDOB.value,
-        nomineePercentage: this.nomineeDetails.controls.nomineePercentage.value,
-        address:address
-      }
+      this.setEditHolder(this.holder.type, value)
 
-      console.log('nominnee list obj', obj)
-      this.nomineeList.push(obj);
-      this.holderList.push(this.allData.holderList)
-      const sendData = {
-        nomineeList : this.nomineeList,
-        holderList: this.holderList,
-        bankDetailList: this.allData.bankDetailList,
-        ownerName: this.allData.ownerName,
-        holdingType: this.allData.holdingNature,
-        taxStatus: this.allData.taxStatus,
-        id: 2,
-        advisorId: 414,
-        aggregatorType: 1,
-        familyMemberId: 112166,
-        commMode: 1,
-        confirmationFlag: 1,
-        tpUserSubRequestClientId1: 2,
-        bankDetail1: 3,
-        nomineeDetailId1: 2,
-      }
-      
-      this.onlineTransact.createIINUCC(sendData).subscribe(
-        data => this.createIINUCCRes(data), (error) => {
-          this.eventService.showErrorMessage(error);
-        }
-      );
     }
   }
-  createIINUCCRes(data){
-      console.log('data to created',data)
+
+  createIINUCCRes(data) {
+    console.log('data to created', data)
+  }
+  setEditHolder(type, value) {
+    switch (type) {
+      case "first":
+        this.firstHolderNominee = this.nomineeDetails.value;
+        this.holder.type = value;
+        break;
+
+      case "second":
+        this.secondHolderNominee = this.nomineeDetails.value;
+        this.holder.type = value;
+        break;
+
+      case "third":
+        this.thirdHolderNominee = this.nomineeDetails.value;
+        this.holder.type = value;
+        break;
+
+    }
+
   }
 }

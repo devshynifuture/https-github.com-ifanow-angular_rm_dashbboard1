@@ -3,9 +3,11 @@ import { Validators, FormBuilder } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { DatePipe } from '@angular/common';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { NomineeDetailsIinComponent } from '../nominee-details-iin/nominee-details-iin.component';
+import { PostalService } from 'src/app/services/postal.service';
+import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
 
 @Component({
   selector: 'app-bank-details-iin',
@@ -13,18 +15,35 @@ import { NomineeDetailsIinComponent } from '../nominee-details-iin/nominee-detai
   styleUrls: ['./bank-details-iin.component.scss']
 })
 export class BankDetailsIINComponent implements OnInit {
-
+  validatorType = ValidatorType
   bankDetails: any;
   inputData: any;
   holdingList: any;
   bankDetailList: any;
-
-  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
+  holder = {
+    type: 'first',
+    data: ''
+  }
+  obj1: any[];
+  sendObj: any;
+  contacts: any;
+  getObj: any;
+  thirdHolderBank: any;
+  secondHolderBank: any;
+  firstHolderBank: any;
+  bank: any;
+  temp: any;
+  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
+    private processTransaction : ProcessTransactionService,
     private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
   @Input()
   set data(data) {
     this.inputData = data;
     this.holdingList = data
+    this.firstHolderBank = data[0]
+    this.secondHolderBank = data[1]
+    this.thirdHolderBank = data[2]
+    console.log('#######', this.holdingList)
     this.getdataForm(data);
   }
 
@@ -32,7 +51,13 @@ export class BankDetailsIINComponent implements OnInit {
     return this.inputData;
   }
   ngOnInit() {
-    this.getdataForm('')
+    this.getdataForm(this.firstHolderBank)
+    this.bank = []
+    this.sendObj = []
+    this.temp = []
+    this.temp.push(this.holdingList.firstHolder)
+    this.temp.push(this.holdingList.secondHolder)
+    this.temp.push(this.holdingList.thirdHolder)
   }
   close() {
     const fragmentData = {
@@ -45,24 +70,24 @@ export class BankDetailsIINComponent implements OnInit {
   }
   getdataForm(data) {
     this.bankDetails = this.fb.group({
-      ifscCode: [(!data) ? '' : data.inverstorType, [Validators.required]],
-      bankName: [data ? '' : data.investorType2, [Validators.required]],
-      micrCode: [data ? '' : data.pan, [Validators.required]],
-      accountNumber: [data ? '' : data.nameAsPan, [Validators.required]],
-      accountType: [data ? '' : data.madianName, [Validators.required]],
-      branchCode: [data ? '' : data.madianName, [Validators.required]],
-      firstHolder: [data ? '' : data.fatherSpouseName, [Validators.required]],
-      branchName: [data ? '' : data.motherName, [Validators.required]],
-      branchAdd1: [data ? '' : data.dateOfBirth, [Validators.required]],
-      branchAdd2: [data ? '' : data.gender, [Validators.required]],
-      branchPin: [data ? '' : data.gender, [Validators.required]],
-      bankState: [data ? '' : data.maritalStatus, [Validators.required]],
-      branchCity: [data ? '' : data.maritalStatus, [Validators.required]],
-      branchCountry: [data ? '' : data.maritalStatus, [Validators.required]],
-      branchProof: [data ? '' : data.maritalStatus, [Validators.required]],
-      bankMandate: [data ? '' : data.maritalStatus, [Validators.required]],
-      mandateDate: [data ? '' : data.maritalStatus, [Validators.required]],
-      mandateAmount: [data ? '' : data.maritalStatus, [Validators.required]],
+      ifscCode: [(!data) ? '' : data.ifscCode, [Validators.required]],
+      bankName: [!data ? '' : data.bankName, [Validators.required]],
+      micrCode: [!data ? '' : data.micrCode, [Validators.required]],
+      accountNumber: [!data ? '' : data.accountNumber, [Validators.required]],
+      accountType: [!data ? '' : data.accountType, [Validators.required]],
+      branchCode: [!data ? '' : data.branchCode, [Validators.required]],
+      firstHolder: [!data ? '' : data.firstHolder, [Validators.required]],
+      branchName: [!data ? '' : data.branchName, [Validators.required]],
+      branchAdd1: [!data ? '' : data.branchAdd1, [Validators.required]],
+      branchAdd2: [!data ? '' : data.branchAdd2, [Validators.required]],
+      pinCode: [!data ? '' : data.pinCode, [Validators.required]],
+      city: [!data ? '' : data.city, [Validators.required]],
+      state: [!data ? '' : data.state, [Validators.required]],
+      country: [!data ? '' : data.country, [Validators.required]],
+      branchProof: [!data ? '' : data.branchProof, [Validators.required]],
+      bankMandate: [!data ? '' : data.bankMandate, [Validators.required]],
+      mandateDate: [!data ? '' : data.mandateDate, [Validators.required]],
+      mandateAmount: [!data ? '' : data.mandateAmount, [Validators.required]],
     });
   }
   getFormControl(): any {
@@ -86,33 +111,130 @@ export class BankDetailsIINComponent implements OnInit {
       }
     );
   }
-  saveBankDetails(value) {
-    this.bankDetailList = []
-    if(value == 'skip'){
-      let address = {
-        branchAdd1: this.bankDetails.controls.branchAdd1.value,
-        branchAdd2: this.bankDetails.controls.branchAdd2.value,
-        branchPin: this.bankDetails.controls.branchPin.value,
-        bankState: this.bankDetails.controls.bankState.value,
-        branchCity: this.bankDetails.controls.branchCity.value,
-        branchCountry: this.bankDetails.controls.branchCountry.value,
-        branchProof: this.bankDetails.controls.branchProof.value,
-        bankMandate: this.bankDetails.controls.bankMandate.value,
-        mandateDate: this.bankDetails.controls.mandateDate.value,
-        mandateAmount: this.bankDetails.controls.mandateAmount.value,
-      }
-      let obj = {
-        ifscCode: this.bankDetails.controls.ifscCode.value,
-        accountNumber: this.bankDetails.controls.accountNumber.value,
-        accountType: this.bankDetails.controls.accountType.value,
-        branchName: this.bankDetails.controls.branchName.value,
-        branchCode: this.bankDetails.controls.branchCode.value,
-        bankName:this.bankDetails.controls.bankName.value,
-        micrCode: this.bankDetails.controls.micrCode.value,
-        firstHolder: this.bankDetails.controls.firstHolder.value,
-        address : address
+  pinInvalid: boolean = false;
+  openContactDetails(){
+    this.processTransaction.openContact(this.holdingList)
+  }
+  getPostalPin(value) {
+    let obj = {
+      zipCode: value
+    }
+    console.log(value, "check value");
+    if (value != "") {
+      this.postalService.getPostalPin(value).subscribe(data => {
+        console.log('postal 121221', data)
+        this.PinData(data)
+      })
+    }
+    else {
+      this.pinInvalid = false;
+    }
+  }
+
+  PinData(data) {
+    if (data[0].Status == "Error") {
+      this.pinInvalid = true;
+
+      this.getFormControl().pinCode.setErrors(this.pinInvalid);
+      this.getFormControl().city.setValue("");
+      this.getFormControl().country.setValue("");
+      this.getFormControl().state.setValue("");
+
+    }
+    else {
+      this.getFormControl().city.setValue(data[0].PostOffice[0].Region);
+      this.getFormControl().country.setValue(data[0].PostOffice[0].Country);
+      this.getFormControl().state.setValue(data[0].PostOffice[0].Circle);
+      this.pinInvalid = false;
+    }
+  }
+  reset() {
+    this.bankDetails.reset();
+  }
+  SendToForm(value, flag) {
+    if (value == 'first') {
+      this.saveBankDetails(value);
+      if (this.firstHolderBank) {
+        this.holder.type = value;
+        this.bankDetails.setValue(this.firstHolderBank);
+      } else {
+        this.reset();
       }
     }
+    else if (value == 'second') {
+      this.saveBankDetails(value);
+      if (this.secondHolderBank) {
+        this.holder.type = value;
+        this.bankDetails.setValue(this.secondHolderBank);
+      } else {
+        this.reset();
+      }
+    }
+    else if (value == 'third') {
+      this.saveBankDetails(value);
+      if (this.thirdHolderBank) {
+        this.holder.type = value;
+        this.bankDetails.setValue(this.thirdHolderBank);
+      } else {
+        this.reset();
+      };
+    } else {
+      this.saveBankDetails(value);
+    }
+    this.obj1 = []
+    this.obj1.push(this.firstHolderBank)
+    this.obj1.push(this.secondHolderBank)
+    this.obj1.push(this.thirdHolderBank)
+    if (flag == true) {
+      console.log('contact details', this.obj1)
+      const value = {}
+      this.obj1.forEach(element => {
+        if (element) {
+          this.getObj = this.setObj(element, value)
+          this.bank.push(this.getObj)
+        }
+      });
+      var temp1 = this.holdingList.generalDetails;
+      this.sendObj = {
+        ownerName: temp1.ownerName,
+        holdingType: temp1.holdingNature,
+        taxStatus: temp1.taxStatus,
+        familyMemberId : temp1.familyMemberId,
+        clientId: temp1.clientId,
+        advisorId: temp1.advisorId,
+        holderList: this.temp,
+        bankDetailList: this.bank,
+      }
+      console.log('##### bank ######', this.sendObj)
+      this.openNomineeDetails(this.sendObj)
+    }
+  }
+  setObj(holder, value) {
+    value = {
+      ifscCode: holder.ifscCode,
+      accountNumber: holder.accountNumber,
+      accountType: holder.accountType,
+      bankName: holder.bankName,
+      branchName: holder.branchName,
+      branchCode: holder.branchCode,
+      micrCode: holder.micrCode,
+      firstHolder: holder.firstHolder,
+    }
+    value.address = {
+      address1: holder.branchAdd1,
+      address2: holder.branchAdd2,
+      pinCode: holder.pinCode,
+      state: holder.state,
+      city: holder.city,
+      country: holder.country,
+      branchProof: holder.branchProof,
+      bankMandate: holder.bankMandate,
+      mandateDate: holder.mandateDate,
+      mandateAmount: holder.mandateAmount,
+    }
+    return value;
+  }
+  saveBankDetails(value) {
     if (this.bankDetails.get('ifscCode').invalid) {
       this.bankDetails.get('ifscCode').markAsTouched();
       return;
@@ -131,31 +253,28 @@ export class BankDetailsIINComponent implements OnInit {
     } else if (this.bankDetails.get('firstHolder').invalid) {
       this.bankDetails.get('firstHolder').markAsTouched();
       return;
-    } else if (this.bankDetails.get('branchName').invalid) {
-      this.bankDetails.get('branchName').markAsTouched();
-      return;
     } else if (this.bankDetails.get('branchAdd1').invalid) {
       this.bankDetails.get('branchAdd1').markAsTouched();
       return;
     } else if (this.bankDetails.get('branchAdd2').invalid) {
       this.bankDetails.get('branchAdd2').markAsTouched();
       return;
-    } else if (this.bankDetails.get('branchPin').invalid) {
-      this.bankDetails.get('branchPin').markAsTouched();
+    } else if (this.bankDetails.get('pinCode').invalid) {
+      this.bankDetails.get('pinCode').markAsTouched();
       return;
-    }  else if (this.bankDetails.get('bankState').invalid) {
-      this.bankDetails.get('bankState').markAsTouched();
+    } else if (this.bankDetails.get('city').invalid) {
+      this.bankDetails.get('city').markAsTouched();
       return;
-    } else if (this.bankDetails.get('branchCity').invalid) {
-      this.bankDetails.get('branchCity').markAsTouched();
-      return;
-    } else if (this.bankDetails.get('branchCountry').invalid) {
-      this.bankDetails.get('branchCountry').markAsTouched();
-      return;
+    // } else if (this.bankDetails.get('state').invalid) {
+    //   this.bankDetails.get('state').markAsTouched();
+    //   return;
+    // } else if (this.bankDetails.get('country').invalid) {
+    //   this.bankDetails.get('country').markAsTouched();
+    //   return;
     } else if (this.bankDetails.get('branchProof').invalid) {
       this.bankDetails.get('branchProof').markAsTouched();
       return;
-    }else if (this.bankDetails.get('bankMandate').invalid) {
+    } else if (this.bankDetails.get('bankMandate').invalid) {
       this.bankDetails.get('bankMandate').markAsTouched();
       return;
     } else if (this.bankDetails.get('mandateDate').invalid) {
@@ -165,42 +284,26 @@ export class BankDetailsIINComponent implements OnInit {
       this.bankDetails.get('mandateAmount').markAsTouched();
       return;
     } else {
+      this.setEditHolder(this.holder.type, value)
+    }
+  }
+  setEditHolder(type, value) {
+    switch (type) {
+      case "first":
+        this.firstHolderBank = this.bankDetails.value;
+        this.holder.type = value;
+        break;
 
+      case "second":
+        this.secondHolderBank = this.bankDetails.value;
+        this.holder.type = value;
+        break;
 
-      let address = {
-        address1: this.bankDetails.controls.branchAdd1.value,
-        address2: this.bankDetails.controls.branchAdd2.value,
-        pinCode: this.bankDetails.controls.branchPin.value,
-        state: this.bankDetails.controls.bankState.value,
-        city: this.bankDetails.controls.branchCity.value,
-        country: this.bankDetails.controls.branchCountry.value,
-        branchProof: this.bankDetails.controls.branchProof.value,
-        bankMandate: this.bankDetails.controls.bankMandate.value,
-        mandateDate: this.bankDetails.controls.mandateDate.value,
-        mandateAmount: this.bankDetails.controls.mandateAmount.value,
-      }
-      let obj = {
-        ifscCode: this.bankDetails.controls.ifscCode.value,
-        accountNumber: this.bankDetails.controls.accountNumber.value,
-        accountType: this.bankDetails.controls.accountType.value,
-        bankName:this.bankDetails.controls.bankName.value,
-        branchName: this.bankDetails.controls.branchName.value,
-        branchCode: this.bankDetails.controls.branchCode.value,
-        micrCode: this.bankDetails.controls.micrCode.value,
-        firstHolder: this.bankDetails.controls.firstHolder.value,
-        address : address
-      }
-      this.bankDetailList.push(obj)
-      const test = {
-        holderList: this.holdingList.holderList,
-        bankDetailList: this.bankDetailList,
-        ownerName: this.holdingList.ownerName,
-        holdingNature: this.holdingList.holdingNature,
-        taxStatus: this.holdingList.taxStatus,
-      }
-      console.log('bank details', test)
-      this.openNomineeDetails(test);
-     
+      case "third":
+        this.thirdHolderBank = this.bankDetails.value;
+        this.holder.type = value;
+        break;
+
     }
   }
 }
