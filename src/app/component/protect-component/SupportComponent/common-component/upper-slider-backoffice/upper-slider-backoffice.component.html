@@ -92,7 +92,7 @@
                                 <th class="b-a" mat-header-cell *matHeaderCellDef> Export unmatched folios </th>
                                 <td class="b-a text-center" mat-cell *matCellDef="let element">
                                     <div class="bar">
-                                        <button class="bg-grey lt" mat-button>Export</button>
+                                        <button class="bg-grey lt" mat-button (click)="enableTabs()">Export</button>
                                     </div>
                                 </td>
                             </ng-container>
@@ -104,8 +104,8 @@
                 </div>
             </mat-tab>
 
-
-            <mat-tab label="Manual reconciliation">
+            <mat-tab label="Manual reconciliation" [disabled]="isTabDisabled"
+                matToolTip="Kindly, click on export button">
                 <p class="m-0 f-14">
                     Use this section to do manual reconciliation of folios based on available options below. Once done,
                     proceed to the next stage of deleting and reordering unmatched folios.
@@ -241,7 +241,8 @@
 
             </mat-tab>
 
-            <mat-tab label="Deletion & reordering">
+            <mat-tab label="Deletion & reordering" [disabled]="isTabDisabled"
+                matToolTip="Kindly, click on export button">
                 <p class=" f-14">
                     The following option was selected while doing the reconciliation
                 </p>

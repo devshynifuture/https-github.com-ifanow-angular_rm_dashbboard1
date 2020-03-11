@@ -23,16 +23,19 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
   displayedColumns3: string[] = ['foliosOrdered', 'file_order', 'file_status', 'id', 'trx_file', 'trx_added', 'file_name', 'download'];
   dataSource3 = ELEMENT_DATA3;
+  isTabDisabled: boolean = true;
 
   subTabState: number = 1;
-
-
 
   constructor(private subInjectService: SubscriptionInject,
     private eventService: EventService,
     private dialog: MatDialog) { }
 
   ngOnInit() {
+  }
+
+  enableTabs() {
+    this.isTabDisabled = false;
   }
 
   openReconciliationDetails(value, data, tableType) {
