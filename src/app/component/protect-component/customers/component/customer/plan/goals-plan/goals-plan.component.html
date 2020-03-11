@@ -324,10 +324,10 @@
 
                     <div class="row pt-40">
                         <div class="col-md-12 p-0">
-                            <h5 class="m-0">Allocations to this goal</h5>
+                            <h5 class="m-0 pb-12">Allocations to this goal</h5>
                         </div>
                     </div>
-                    <div 
+                    <!-- <div 
                         cdkDropList
                         id="allottedList"
                         [cdkDropListData]="todo"
@@ -375,6 +375,42 @@
                             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                         </table>
+                    </div> -->
+                    <div class="row b-a bg-grey lter">
+                        <div class="col-md-3 p-0">
+                            <p class="roboto m-0 p-8 text-black f-500">Description </p>
+                        </div>
+                        <div class="col-md-3 p-0">
+                            <p class="roboto m-0 p-8 text-black f-500">Advice </p>
+                        </div>
+                        <div class="col-md-3 p-0">
+                            <p class="roboto m-0 p-8 text-black f-500">Current value </p>
+                        </div>
+                        <div class="col-md-3 p-0">
+                            <p class="roboto m-0 p-8 text-black f-500">Maturity value </p>
+                        </div>
+                    </div>
+                    <div class="row bl-1 bb-1 br bg-white" cdkDrag>
+                        <div class="col-md-3">
+                            <p class="m-0 roboto pt-10">Fixed Deposit </p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="m-0 roboto pt-10">Continue till maturity</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="m-0 roboto pt-10">13,000 </p>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="row pt-10">
+                                <div class="col-md-11 p-0">
+                                    <p class="m-0 roboto ">5,28,000 </p>
+                                </div>
+                                <div class="col-md-1 p-0">
+                                    <mat-icon class="c-p">more_vert</mat-icon>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="row pt-28">
                         <div class="col-md-12 p-0">

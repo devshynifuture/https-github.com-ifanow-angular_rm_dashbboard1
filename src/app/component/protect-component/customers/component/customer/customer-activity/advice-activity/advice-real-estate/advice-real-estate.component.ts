@@ -43,7 +43,8 @@ export class AdviceRealAssetComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      assetCategory: 8
+      assetCategory: 8,
+      adviceStatusId:1
     }
     this.dataSource = [{}, {}, {}];
     this.isLoading = true;
@@ -54,7 +55,16 @@ export class AdviceRealAssetComponent implements OnInit {
   }
   getAllAssetResponse(data) {
     this.isLoading = false;
-    this.dataSource = new MatTableDataSource(data.REAL_ESTATE);
+    let filterdData=[];
+    let realEstateData=data.REAL_ESTATE;
+    realEstateData.forEach(element => {
+      var asset=element.AssetDetails;
+      element.AdviceList.forEach(obj => {
+        obj.assetDetails=asset;
+        filterdData.push(obj);
+      });
+    });
+    this.dataSource = new MatTableDataSource(filterdData);
     this.dataSource['tableFlag'] = (data.REAL_ESTATE.length == 0) ? false : true;
     this.dataSource.sort = this.sort
     console.log(data);

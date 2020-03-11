@@ -65,6 +65,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   showResult = false;
   noResult = false;
   selectedFolder: any;
+  countFile: any;
 
   constructor(private eventService: EventService, private http: HttpService, private _bottomSheet: MatBottomSheet,
     private event: EventService, private router: Router, private fb: FormBuilder,
@@ -591,6 +592,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
 
   uploadDocumentFolder(data) {
+    this.countFile=0;
     this.myFiles = [];
     const array = [];
     this.viewFolder = [];
@@ -615,7 +617,9 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     const fragData = {
       uploadFolder: this.uploadFolder,
       flag: 'uploadFolder',
-      viewFolder: this.viewFolder
+      viewFolder: this.viewFolder,
+      countFiles:this.countFile++
+
     };
     console.log(this.myFiles);
     const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
@@ -631,6 +635,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
 
   uploadFile(element, fileName) {
+    this.countFile++;
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
@@ -643,7 +648,13 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
 
   uploadFileRes(data, fileName) {
-
+    this.countFile++;
+    const fragData = {
+      uploadFolder: this.uploadFolder,
+      flag: 'uploadFolder',
+      viewFolder: this.viewFolder,
+      countFiles:this.countFile
+    };
     const fileuploadurl = data;
     const httpOptions = {
       headers: new HttpHeaders()

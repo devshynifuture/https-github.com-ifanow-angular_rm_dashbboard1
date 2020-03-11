@@ -84,9 +84,15 @@ export class AddEPSComponent implements OnInit {
   //   return this.getDate;
   // }
   getdataForm(data) {
-    this.flag = data;
-    this.familyMemberId = data.familyMemberId;
-    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : '';
+    if (data == undefined) {
+      data = {};
+      this.flag = "addEPS";
+    }
+    else {
+      this.flag = "editEPS";
+      (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : '';
+    }
+
     this.eps = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       commencementDate: [(data == undefined) ? '' : new Date(data.commencementDate), [Validators.required]],
@@ -131,7 +137,7 @@ export class AddEPSComponent implements OnInit {
         stringObject: obj,
         adviceDescription: "manualAssetDescription"
       }
-      if (this.eps.controls.id.value == undefined && this.flag != 'adviceEPS') {
+      if (this.flag == "addEPS") {
         this.custumService.addEPS(obj).subscribe(
           data => this.addEPSRes(data)
         );

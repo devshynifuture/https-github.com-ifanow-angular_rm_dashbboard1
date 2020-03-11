@@ -54,7 +54,8 @@ export class AdviceRetirementAccountComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      assetCategory: 9
+      assetCategory: 9,
+      adviceStatusId:1
     }
     this.isLoading = true;
     this.epfDataSource = [{}, {}, {}];
@@ -67,17 +68,33 @@ export class AdviceRetirementAccountComponent implements OnInit {
       }
     );
   }
+  filterForAsset(data){//filter data to for showing in the table
+    let filterdData=[];
+    data.forEach(element => {
+      var asset=element.AssetDetails;
+      element.AdviceList.forEach(obj => {
+        obj.assetDetails=asset;
+        filterdData.push(obj);
+      });
+    });
+    return filterdData;
+  }
   getAllSchemeResponse(data) {
     this.isLoading = false;
-    this.epfDataSource = new MatTableDataSource(data.EPF);
+    let epfData=this.filterForAsset(data.EPF)
+    this.epfDataSource = new MatTableDataSource(epfData);
     this.epfDataSource.sort = this.sort;
-    this.epsDataSource = new MatTableDataSource(data.EPS);
+    let epsData=this.filterForAsset(data.EPS)
+    this.epsDataSource = new MatTableDataSource(epsData);
     this.epsDataSource.sort = this.sort;
-    this.superannuationDataSource = new MatTableDataSource(data.SUPERANNUATION);
+    let superannuationData=this.filterForAsset(data.SUPERANNUATION)
+    this.superannuationDataSource = new MatTableDataSource(superannuationData);
     this.superannuationDataSource.sort = this.sort;
-    this.gratuityDataSource = new MatTableDataSource(data.GRATUITY);
+    let gratuityData=this.filterForAsset(data.GRATUITY)
+    this.gratuityDataSource = new MatTableDataSource(gratuityData);
     this.gratuityDataSource.sort = this.sort;
-    this.npsDataSource = new MatTableDataSource(data.NPS);
+    let npsData=this.filterForAsset(data.NPS)
+    this.npsDataSource = new MatTableDataSource(npsData);
     this.npsDataSource.sort = this.sort;
     this.epfDataSource['tableFlag'] = (data.EPF.length == 0) ? false : true;
     this.epsDataSource['tableFlag'] = (data.EPS.length == 0) ? false : true;
