@@ -1,14 +1,28 @@
+import { AuthService } from 'src/app/auth-service/authService';
 import { Injectable } from '@angular/core';
 import * as Excel from 'exceljs';
 import { saveAs } from 'file-saver';
 
+
+export interface UserDataI {
+  userId: number;
+  fullName: string;
+  emailId: string;
+  profilePic: string;
+  adminAdvisorId: number;
+  roleId: number;
+  token: string;
+  faLink: boolean;
+  advisorId: number;
+
+}
 @Injectable({
   providedIn: 'root'
 })
 export class ExcelService {
 
-  constructor() {
-  }
+  constructor() { }
+
   static async exportExcel(headerData, header, excelData: any, footer: any[], metaData: any) {
     const wb = new Excel.Workbook();
     const ws = wb.addWorksheet();
@@ -18,17 +32,18 @@ export class ExcelService {
     meta1.font = { bold: true };
     meta2.font = { bold: true };
     meta3.font = { bold: true };
+
+    let userData = AuthService.getUserInfo();
+
     ws.getCell('A1').value = 'Type of report - ' + metaData;
-    ws.getCell('A2').value = 'Client name - Rahul Jain';
+    ws.getCell('A2').value = `Client name - ` + userData.fullName;
     ws.getCell('A3').value = 'Report as on - ' + new Date();
     const head = ws.getRow(5);
     head.font = { bold: true };
     head.fill = {
       type: 'pattern',
       pattern: 'darkVertical',
-      fgColor: {
-        argb: '#f5f7f7'
-      }
+      fgColor: { argb: 'CCCCCC' }
     };
     ws.getRow(5).values = header;
     // ws.columns[0].style.alignment = {horizontal: 'left'};
@@ -41,7 +56,7 @@ export class ExcelService {
       last.font = { bold: true };
     });
     const buf = await wb.xlsx.writeBuffer();
-    saveAs(new Blob([buf]), 'Rahul Jain-' + metaData + '-' + new Date() + '.xlsx');
+    saveAs(new Blob([buf]), userData.fullName + '-' + metaData + '-' + new Date() + '.xlsx');
   }
 
 }

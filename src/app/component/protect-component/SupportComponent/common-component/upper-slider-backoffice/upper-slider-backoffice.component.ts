@@ -1,3 +1,4 @@
+import { ExcelService } from './../../../customers/component/customer/excel.service';
 import { ConfirmDialogComponent } from './../../../common-component/confirm-dialog/confirm-dialog.component';
 import { EventService } from './../../../../../Data-service/event.service';
 import { UtilService } from './../../../../../services/util.service';
@@ -34,8 +35,108 @@ export class UpperSliderBackofficeComponent implements OnInit {
   ngOnInit() {
   }
 
-  enableTabs() {
+
+  // async ExportTOExcel(value) {
+  //   this.excelData = [];
+  //   let data = [];
+  //   var headerData = [{ width: 20, key: 'Owner' },
+  //   { width: 20, key: 'Account type' },
+  //   { width: 25, key: 'Balance as on' },
+  //   { width: 18, key: 'Rate' },
+  //   { width: 18, key: 'Balance mentioned' },
+  //   { width: 18, key: 'Account number' },
+  //   { width: 18, key: 'Bank name' },
+  //   { width: 15, key: 'Description' },
+  //   { width: 10, key: 'Status' }];
+  //   var header = ['Owner', 'Account type', ' Balance as on', 'Description', 'Status'];
+
+  //   if (value == 'Cash in hand') {
+  //     headerData = [
+  //       { width: 20, key: 'Owner' },
+  //       { width: 20, key: 'Account type' },
+  //       { width: 25, key: 'Balance as on' },
+  //       { width: 15, key: 'Description' },
+  //       { width: 10, key: 'Status' },
+  //     ];
+  //     this.cashInHandList.filteredData.forEach(element => {
+  //       data = [element.ownerName, (element.accountType), (element.balanceAsOn),
+  //       element.description, element.status];
+  //       this.excelData.push(Object.assign(data));
+  //     });
+  //     const footerData = [
+  //       'Total',
+  //       this.formatNumber.first.formatAndRoundOffNumber(this.sumOfCashValue),
+  //       '',
+  //       '', ,
+  //       ''
+  //     ];
+  //     this.footer.push(Object.assign(footerData));
+  //   } else {
+
+  //     header = [
+  //       'Owner',
+  //       'Account type',
+  //       'Balance as on',
+  //       'Rate',
+  //       'Balance mentioned',
+  //       'Account number',
+  //       'Bank name',
+  //       'Description',
+  //       'Status'
+  //     ];
+  //     this.bankAccountList.filteredData.forEach(element => {
+  //       data = [
+  //         element.ownerName,
+  //         (element.accountType == 1) ? 'Current' : 'Savings',
+  //         new Date(element.balanceAsOn),
+  //         (element.interestRate),
+  //         this.formatNumber.first.formatAndRoundOffNumber(element.accountBalance),
+  //         (element.account),
+  //         element.bankName,
+  //         element.description,
+  //         element.status
+  //       ];
+  //       this.excelData.push(Object.assign(data));
+  //     });
+  //     const footerData = ['Total', '', '', '', this.formatNumber.first.formatAndRoundOffNumber(this.totalAccountBalance), '', '', '', ''];
+  //     this.footer.push(Object.assign(footerData));
+  //   }
+  //   ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value);
+  // }
+
+  exportToExcelSheet(value) {
     this.isTabDisabled = false;
+    // creation of excel sheet 
+
+    let headerData = [
+      { width: 20, key: 'Investor Name' },
+      { width: 20, key: 'Asset Id' },
+      { width: 25, key: 'Scheme Name' },
+      { width: 18, key: 'Scheme Code' },
+      { width: 18, key: 'Folio Number' },
+      { width: 18, key: 'RTA Type' },
+      { width: 18, key: 'IFANOW Units' },
+      { width: 15, key: 'RTA Units' },
+      { width: 10, key: 'RTA Bal as on' },
+      { width: 10, key: 'Unit Difference' },
+      { width: 10, key: 'Amount Difference' }
+    ];
+    let excelData = [];
+    let footer = [];
+    let header = [
+      'Investor Name',
+      'Asset Id',
+      'Scheme Name',
+      'Scheme Code',
+      'Folio Number',
+      'RTA Type',
+      'IFANOW Units',
+      'RTA Units',
+      'RTA Bal as on',
+      'Unit Difference',
+      'Amount Difference'
+    ];
+    ExcelService.exportExcel(headerData, header, excelData, footer, value);
   }
 
   openReconciliationDetails(value, data, tableType) {

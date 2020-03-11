@@ -1,3 +1,4 @@
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -9,15 +10,20 @@ import { ReconCamsComponent } from './recon-cams/recon-cams.component';
 import { ReconKarvyComponent } from './recon-karvy/recon-karvy.component';
 import { ReconFranklinComponent } from './recon-franklin/recon-franklin.component';
 
-
 @NgModule({
-  declarations: [ReconciliationComponent, ReconCamsComponent, ReconKarvyComponent, ReconFranklinComponent],
+  declarations: [
+    ReconciliationComponent,
+    ReconCamsComponent,
+    ReconKarvyComponent,
+    ReconFranklinComponent
+  ],
   imports: [
     CommonModule,
     ReconciliationRoutingModule,
     ReactiveFormsModule,
     MaterialModule,
-    FormsModule
+    FormsModule,
+    CustomDirectiveModule
   ]
 })
 export class ReconciliationModule { }
