@@ -1,9 +1,24 @@
 @media(max-width:1224px) {}
 
 @media(max-width:1200px) {
-  #ui-assets-account li {
 
-    padding: 0 0px 24px 13px !important;
+  #ui-assets-account,
+  #ui-insurance {
+    li {
+      padding: 0 0px 24px 13px !important;
+    }
+  }
+
+  #ui-insurance {
+    li {
+      .f-700 {
+        font-size: 13px;
+      }
+
+      .row {
+        flex-wrap: nowrap;
+      }
+    }
 
   }
 }
