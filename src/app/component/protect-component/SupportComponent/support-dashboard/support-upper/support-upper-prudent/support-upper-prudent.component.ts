@@ -26,7 +26,7 @@ export class SupportUpperPrudentComponent implements OnInit {
   isLoading: boolean = false;
 
   constructor(
-    private supportUpperService: SupportUpperService,
+    public supportUpperService: SupportUpperService,
     private eventService: EventService
   ) { }
 
@@ -61,6 +61,11 @@ export class SupportUpperPrudentComponent implements OnInit {
         }
         console.log(this.filteredSchemes);
       });
+  }
+
+
+  displayFn(scheme?: Scheme): string | undefined {
+    return scheme ? scheme.schemeName : undefined;
   }
 
 
@@ -143,6 +148,11 @@ export class SupportUpperPrudentComponent implements OnInit {
   }
 
 }
+
+export interface Scheme {
+  schemeName: string;
+}
+
 
 export interface elementI {
 
