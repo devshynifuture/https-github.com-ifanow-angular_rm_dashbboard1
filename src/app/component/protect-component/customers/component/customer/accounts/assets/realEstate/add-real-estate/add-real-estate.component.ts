@@ -269,7 +269,7 @@ export class AddRealEstateComponent implements OnInit {
       marketValue: [data.marketValue, [Validators.required]],
       purchasePeriod: [(data.purchasePeriod == undefined) ? null : new Date(data.purchasePeriod)],
       purchaseValue: [data.purchaseValue,],
-      unit: [data.unitId,],
+      unit: [String(data.unitId),],
       ratePerUnit: [data.ratePerUnit,],
       stampDuty: [data.stampDutyCharge,],
       registration: [data.registrationCharge,],

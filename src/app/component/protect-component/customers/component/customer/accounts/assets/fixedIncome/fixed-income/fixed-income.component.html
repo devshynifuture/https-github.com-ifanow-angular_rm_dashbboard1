@@ -80,8 +80,8 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="owner">
-                    <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br w-30"> Owner</th>
-                    <td mat-cell *matCellDef="let element" class="br w-30">
+                    <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br"> Owner</th>
+                    <td mat-cell *matCellDef="let element" class="br">
                         <div class="bar"> {{element.ownerName}} </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="f-600 br pr-16 proximaFont text-right">
@@ -169,7 +169,7 @@
                 </ng-container>
                 <ng-container matColumnDef="status">
                     <th mat-sort-header="statusId" mat-header-cell *matHeaderCellDef class="br"> Status</th>
-                    <td mat-cell *matCellDef="let element" class="br text-primary t-15">
+                    <td mat-cell *matCellDef="let element" class="br text-primary">
                         <div class="bar"> {{element.statusId}} </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef></td>
@@ -340,7 +340,7 @@
                     <td *matCellDef="let element" class="br text-primary " mat-cell>
                         <div class="bar"> {{element.statusId}} </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"></td>
+                    <td mat-footer-cell *matFooterCellDef class="br text-right"></td>
                 </ng-container>
                 <ng-container matColumnDef="icons">
                     <th mat-header-cell *matHeaderCellDef class=""></th>
@@ -414,7 +414,7 @@
                     </ng-container>
 
                     <ng-container matColumnDef="owner">
-                        <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br t-35"> Owner</th>
+                        <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br"> Owner</th>
                         <td mat-cell *matCellDef="let element" class="br">
                             <div class="bar"> {{element.ownerName}} </div>
                         </td>
