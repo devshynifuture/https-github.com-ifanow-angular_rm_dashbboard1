@@ -12,7 +12,7 @@
         </div>
         <!-- (click)="dialogClose()" for prod build  -->
         <div class="col-md-2 text-right">
-            <i class="material-icons pt-16 c-p pr-16">
+            <i class="material-icons pt-16 c-p pr-16" (click)="close();Close()">
                 clear
             </i>
         </div>
@@ -21,7 +21,7 @@
 
 <div class="pt-60 mb-100" [formGroup]="contactDetails">
     <div class="row">
-        <app-left-side-inn-ucc-list></app-left-side-inn-ucc-list>
+        <app-left-side-inn-ucc-list [data]='changedValue'></app-left-side-inn-ucc-list>
         <div class="col-md-7 offset-2 p-0 bl-1 ">
             <div class="p-20">
                 <h3 class="f-18 mb-12 mt-44 f-600"> Contact person details </h3>

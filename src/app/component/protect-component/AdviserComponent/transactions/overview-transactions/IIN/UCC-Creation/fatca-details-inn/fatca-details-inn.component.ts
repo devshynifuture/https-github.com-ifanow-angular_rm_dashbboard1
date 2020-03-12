@@ -17,6 +17,7 @@ export class FatcaDetailsInnComponent implements OnInit {
   fatcaDetails: any;
   inputData: any;
   allData: any;
+  changedValue: string;
 
 
   constructor(public subInjectService: SubscriptionInject,private fb: FormBuilder,
@@ -44,6 +45,8 @@ export class FatcaDetailsInnComponent implements OnInit {
     };
 
     this.eventService.changeUpperSliderState(fragmentData);
+    this.changedValue = 'close'
+
   }
   openNomineeDetails(){
    const subscription = this.processTransaction.openNominee(this.allData).subscribe(

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { BankDetailsIINComponent } from '../bank-details-iin/bank-details-iin.component';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -18,12 +18,33 @@ import { PersonalDetailsInnComponent } from '../personal-details-inn/personal-de
   styleUrls: ['./left-side-inn-ucc-list.component.scss']
 })
 export class LeftSideInnUccListComponent implements OnInit {
+  inputData: any;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private processTransaction : ProcessTransactionService,
     private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
 
+    @Input()
+    set data(data) {
+      this.inputData = data;
+      if(data == 'close'){
+        this.close()
+      }
+    }
+  
+    get data() {
+      return this.inputData;
+    }
   ngOnInit() {
+  }
+  close(){
+    const fragmentData = {
+      direction: 'top',
+      componentName: LeftSideInnUccListComponent,
+      state: 'close'
+    };
+
+    this.eventService.changeUpperSliderState(fragmentData);
   }
   openPersonalDetails(data) {
    
