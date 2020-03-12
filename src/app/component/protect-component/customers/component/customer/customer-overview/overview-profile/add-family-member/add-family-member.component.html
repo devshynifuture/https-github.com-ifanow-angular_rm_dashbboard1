@@ -1,0 +1,48 @@
+<div class="popup-header-fix-45">
+    <div class="row bb-1">
+        <div class="col-md-8 p-0">
+            <h4 class="mb-0 wrapper-20"> ADD FAMILY MEMBERS </h4>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12">
+                <i class="material-icons c-p pt-8 v-middle" (click)="Close(false)"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="pt-80 pl-24 pr-24 pb-48 mb-48">
+    <p>Rahul, first tell us a bit about you...</p>
+
+    <div class="row">
+        <div class="col-md-3 pl-0">
+            <h5>I am a</h5>
+        </div>
+        <div class="col-md-6">
+            <!-- <mat-radio-group aria-label="Select an option">
+                <mat-radio-button value="1" class="b-ua radioBtn text-custom" 
+                [ngClass]="{'b-a-custom': fixedDeposit.get('maturity').value==1,'text-primary':fixedDeposit.get('maturity').value==1,'borderRadio':fixedDeposit.get('maturity').value==2}" (click)="haveMaturity(false)">I have tenure
+                </mat-radio-button>
+
+                <mat-radio-button class="classBlue pr-10 radioBtn" value="2" [ngClass]="{'b-a-custom': fixedDeposit.get('maturity').value==2,'text-primary':fixedDeposit.get('maturity').value==2,'borderRadio text-custom':fixedDeposit.get('maturity').value==1}" (click)="haveMaturity(true)">I have maturity date
+                </mat-radio-button>
+            </mat-radio-group> -->
+        </div>
+    </div>
+
+</div>
+
+
+
+
+<div class="bottom-fixed wrapper-45">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="close(false)">Cancel</h5>
+        </div>
+        <div (click)="addNSC()" class="col-md-8 right text-right">
+            <button class="btn-bottom br-0 text-inherit" mat-button>Save
+            </button>
+        </div>
+    </div>
+</div>

@@ -14,6 +14,8 @@ import { ViewPastnotGoalComponent } from './view-pastnot-goal/view-pastnot-goal.
 import { PlanService } from '../plan.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { AuthService } from 'src/app/auth-service/authService';
+import { MatDialog } from '@angular/material';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 export interface PeriodicElement {
   position: string;
@@ -52,11 +54,14 @@ export class GoalsPlanComponent implements OnInit {
     advisorId:'',
     clientId:''
   }
+  dashboardData: any;
+  allGoals: any;
 
   constructor(
     private subInjectService: SubscriptionInject, 
     private eventService: EventService, 
     private plansService: PlanService,
+    private dialog: MatDialog,
   ) {
     this.advisor_client_id.advisorId = AuthService.getAdvisorId();
     this.advisor_client_id.clientId = AuthService.getClientId();
@@ -64,14 +69,29 @@ export class GoalsPlanComponent implements OnInit {
 
 
   ngOnInit() {
+    this.loadAllGoals();
     this.loadGlobalAPIs();
+  }
+
+  // load all goals created for the client and select the
+  loadAllGoals(){
+    this.plansService.getAllGoals(this.advisor_client_id).subscribe((data)=>{
+      this.allGoals = data;
+    }, err => this.eventService.openSnackBar(err, "Dismiss"))
   }
 
   // loads all the global data required for various components called from here
   loadGlobalAPIs(){
     this.plansService.getListOfFamilyByClient(this.advisor_client_id).subscribe((data)=>{
-      this.clientFamily = data.familyMembersList;
+      this.clientFamily = data.familyMembersList.sort((a, b) => {
+        return a.relationshipId - b.relationshipId;
+      });
     }, (err) => {this.eventService.openSnackBar(err, "Dismiss")});
+  }
+
+  // load the selected goal data
+  displayGoalData(goal){
+    this.dashboardData = goal;
   }
 
   openAddgoals() {
@@ -133,6 +153,7 @@ export class GoalsPlanComponent implements OnInit {
         break;
       case 'openallocations':
         fragmentData.componentName = AddGoalComponent;
+        fragmentData.data = this.clientFamily;
         fragmentData['isOverlayVisible'] = false;
         fragmentData.state = 'open25';
         break;
@@ -161,11 +182,36 @@ export class GoalsPlanComponent implements OnInit {
       });
   }
 
+  deleteGoal(goal) {
+    const dialogData = {
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        let deleteObj = {
+          goalId: goal.id,
+        }
+        this.plansService.deleteGoal(deleteObj).subscribe((data)=>{
+          this.eventService.openSnackBar("Goal has been deleted successfully", "Dismiss");
+        }, (err) => { this.eventService.openSnackBar(err, "Dismiss") })
+      }
+    };
+
+    this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+    });
+  }
+
   // drag drop for assets brought from allocations tab
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
   }
 
+  // dummy for allocation dragdrop list
   todo:any[] = [];
   logger(event) {
     console.log('s')

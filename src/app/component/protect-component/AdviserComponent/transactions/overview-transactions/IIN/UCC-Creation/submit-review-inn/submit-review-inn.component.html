@@ -1,0 +1,155 @@
+<div class="dialogclose">
+    <div class="row popup-header-fix-100">
+        <div class="col-md-2 border-right-1 p-0">
+            <img class="imgAdLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+        </div>
+        <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
+
+            <p class="f-16 mb-0">
+                Investment onboarding - IIN/UCC
+            </p>
+        </div>
+        <!-- (click)="dialogClose()" for prod build  -->
+        <div class="col-md-2 text-right">
+            <i class="material-icons pt-16 c-p pr-16" (click)="close()">
+                clear
+            </i>
+        </div>
+    </div>
+</div>
+
+
+<div class="pt-60 mb-100">
+    <app-left-side-inn-ucc-list></app-left-side-inn-ucc-list>
+    <div class="col-md-7 offset-2 p-0 bl-1 ">
+        <div class="p-20">
+            <h3 class="f-18 roboto mb-20 f-500">Review & submit</h3>
+            <p class="f-14">Thanks for adding the details. Let’s go ahead and complete the process.</p>
+            <p class="f-14">Please select the platform on whch you’d like to create the investment account. You can select multiple.
+            </p>
+
+
+            <div class="row pt-12 pb-12">
+                <div class="col-md-12 p-0">
+                    <mat-checkbox class="f-500 roboto">BSE StAR MF</mat-checkbox>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 pl-0">
+                    <h5>1) Select a broker code</h5>
+                    <p class="f-12 text-primitive">You can create a/c in multiple codes</p>
+                    <div class="form-group">
+                        <mat-select class="form-control">
+                            <mat-option>
+                                ARN-83865
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                </div>
+
+                <div class="col-md-3 pl-0">
+                    <h5>2) Provide account number</h5>
+                    <p class="f-12 text-primitive">This will be displayed as UCC number</p>
+                    <div class="form-group">
+                        <input matInput class="form-control">
+                    </div>
+                </div>
+
+
+                <div class="col-md-3 pl-0">
+                    <h5>3) Confirm & submit</h5>
+                    <p class="f-12 text-primitive">This will send request for UCC creation</p>
+                    <button class="btnConfirm bg-primary text-white" mat-button>Create account</button>
+                </div>
+
+
+                <div class="col-md-3 pl-0">
+                    <h5>4) Upload forms</h5>
+                    <p class="f-12 text-primitive">Upload relevant forms to complete the process</p>
+                    <button class="btnConfirm bg-primary text-white" mat-button>Upload AOF <i class="material-icons">
+                            arrow_upward
+                        </i></button>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 p-0">
+                    <p class="f-12 text-primitive">+ Add more</p>
+                </div>
+            </div>
+
+            <hr>
+
+
+            <div class="row pt-12 pb-12">
+                <div class="col-md-12 p-0">
+                    <mat-checkbox class="f-500 roboto">NSE NMF</mat-checkbox>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-4 pl-0">
+                    <h5>1) Select a broker code</h5>
+                    <p class="f-12 text-primitive">You can create a/c in multiple codes</p>
+                    <div class="form-group">
+                        <mat-select class="form-control">
+                            <mat-option>
+                                ARN-83865
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-4 pl-0">
+                    <h5>3) Confirm & submit</h5>
+                    <p class="f-12 text-primitive">This will send request for UCC creation</p>
+                    <button class="btnConfirm bg-primary text-white" mat-button>Create account</button>
+                </div>
+
+
+                <div class="col-md-4 pl-0">
+                    <h5>4) Upload forms</h5>
+                    <p class="f-12 text-primitive">Upload relevant forms to complete the process</p>
+                    <button class="btnConfirm bg-primary text-white" mat-button>Upload AOF <i class="material-icons">
+                            arrow_upward
+                        </i> </button>
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div class="bottom-fixed  pl-20 pr-20 d-flex  w-100 row">
+
+    <div class="col-md-3 p-0 d-flex align-items-center ">
+        <!-- <a  class="text-white f-300"   (click)="savePersonalDetails('skip')"> Skip this step </a> -->
+    </div>
+
+
+
+    <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">
+
+        <button class="br-0 perviousBtn text-inherit f-14" mat-button mat-raised-button>
+            PREVIOUS
+        </button>
+
+        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4">SAVE</button>
+
+
+
+    </div>
+
+</div>

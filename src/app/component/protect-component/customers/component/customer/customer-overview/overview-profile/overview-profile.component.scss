@@ -3,9 +3,9 @@
         margin-right: -15px !important;
         margin-left: -15px !important;
     }
-    .col-width-19 {
-        flex: 0 0 19.666667%;
-        max-width: 19.666667%;
+    .col-width-18 {
+        flex: 0 0 18.666667%;
+        max-width: 18.666667%;
         padding-left: 15px;
         padding-right: 15px;
     }
@@ -14,9 +14,10 @@
         max-width: 79.666667%;
         padding-left: 15px;
         padding-right: 15px;
+        margin-left: 15px;
     }
     .uiListProfile {
-        margin: 0px;
+        margin: 8px 0 0 0;
         padding: 0px;
         list-style-type: none;
         display: block;
@@ -24,6 +25,118 @@
             height: 40px;
             display: flex;
             align-items: center;
+            padding-left: 25px;
+            font-size: 14px;
+            img {
+                margin-right: 8px;
+            }
         }
+    }
+}
+
+.profilePhoto {
+    width: 120px;
+    height: 120px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-left: 8px;
+    img {
+        max-width: 100%;
+    }
+}
+
+.profileDetails {
+    margin-top: 12px;
+}
+
+.emailIcon {
+    margin-right: 6px;
+}
+
+.menu-myProfileIcon {
+    margin-right: 16px;
+    margin-top: 1px;
+}
+
+.familyMemberBox {
+    height: 76px;
+    border-radius: 4px;
+    display: flex;
+    align-content: center;
+    .memberName {
+        width: 92px;
+        margin: 0;
+        line-height: 18px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+    }
+    .memberList {
+        border-radius: 4px;
+        display: flex;
+        width: 148px;
+        height: 57px;
+        margin-right: 9px;
+        margin-top: 8px;
+        .familyList {
+            margin-left: 7px;
+            margin-top: 2px;
+            p {
+                line-height: 16px;
+            }
+        }
+    }
+    .addFamilyMember {
+        width: 60px;
+        height: 60px;
+        border-radius: 4px;
+        margin-top: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.detailContainer {
+    padding: 18px 0px;
+    .headingDetails {
+        margin-top: 8px;
+    }
+    .basicDetaisList {
+        margin-top: 6px;
+        margin-left: 10px;
+        margin-bottom: 19px;
+    }
+}
+
+.editCLass {
+    width: 37px;
+    height: 20px;
+    display: inline-block;
+    text-align: center;
+    border-radius: 2px;
+}
+
+.hrMargin {
+    margin: 22px 0px;
+}
+
+.arrowSlider {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-left: 6px;
+}
+
+// ------------------------------------- family member -----------------------
+.familyDetailsWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .memberBtn {
+        width: 196px;
+        height: 40px;
+        font-size: 16px;
     }
 }
