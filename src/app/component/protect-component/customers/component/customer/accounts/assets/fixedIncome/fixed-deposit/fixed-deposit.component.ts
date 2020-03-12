@@ -126,7 +126,7 @@ export class FixedDepositComponent implements OnInit {
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      name: [data?data.name:'',[Validators.required]], share: [data?String(data.share):'',[Validators.required]], familyMemberId: [data?data.familyMemberId:0]
+      name: [data?data.name:'',[Validators.required]], share: [data?String(data.share):'',[Validators.required]], familyMemberId: [data?data.familyMemberId:0], id: [data?data.id:0]
     }));
     if(!data || this.getCoOwner.value.length < 1){
       for(let e in this.getCoOwner.controls){
@@ -281,7 +281,8 @@ export class FixedDepositComponent implements OnInit {
       getCoOwnerName: this.fb.array([this.fb.group({
         name: ['',[Validators.required]],
         share: ['',[Validators.required]],
-        familyMemberId: null
+        familyMemberId: 0,
+        id:0
       })]),
       // ownerType: [(!data.ownershipType) ? '' : (data.ownershipType) + '', [Validators.required]],
       // ownerName: [(!data.ownerName) ? '' : data.ownerName],

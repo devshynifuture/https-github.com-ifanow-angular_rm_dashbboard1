@@ -154,7 +154,8 @@ export class BondsComponent implements OnInit {
     this.getNominee.push(this.fb.group({
       name: [""],
       sharePercentage: [""],
-      familyMemberId: [""]
+      familyMemberId: [""],
+      id:['']
     }));
 
     for(let e in this.getNominee.controls){
@@ -208,7 +209,8 @@ export class BondsComponent implements OnInit {
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
         sharePercentage: [''],
-        familyMemberId: null
+        familyMemberId: [0],
+        id:[0]
       })]),
     });
 
@@ -218,9 +220,15 @@ export class BondsComponent implements OnInit {
     if(this.bonds.value.getCoOwnerName.length == 1){
       this.getCoOwner.controls['0'].get('share').setValue('100');
     }
+    
   /***owner***/ 
 
- 
+  if(data.nomineeList){
+    this.getNominee.removeAt(0);
+    data.ownerList.forEach(element => {
+      this.addNewNominee(element);
+    });
+  }
     this.ownerData = {Fmember: this.nomineesListFM, controleData:this.bonds}
 
     this.familyMemberId = this.bonds.controls.familyMemberId.value

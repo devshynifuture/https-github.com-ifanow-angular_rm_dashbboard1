@@ -174,7 +174,7 @@ export class OwnerNomineeDirective {
     } else {
       this.NomineePer = 0;
 
-      for(let e in this.getCoOwner.controls){
+      for(let e in this.getNominee.controls){
         const arrayCon:any = this.getNominee.controls[e];
         
             this.NomineePer += arrayCon.value.sharePercentage;
@@ -183,7 +183,7 @@ export class OwnerNomineeDirective {
                 this.showErrorOwner = true;
                 if(e == "1"){
                   arrayCon.controls['sharePercentage'].setErrors({'incorrect': true});
-                  arrayCon.get('sharePercentage').updateValueAndValidity();
+                  // arrayCon.get('sharePercentage').updateValueAndValidity();
                 }
                 console.log('show error Percent cannot be more than 100%')
               } else {
