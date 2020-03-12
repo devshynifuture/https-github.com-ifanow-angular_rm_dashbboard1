@@ -36,6 +36,7 @@ export class OthersComponent implements OnInit {
   otherData: any;
   adviceShowHeaderAndFooter: boolean = true;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+  editData: any;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
   }
@@ -102,6 +103,7 @@ export class OthersComponent implements OnInit {
     }
     else {
       this.flag = "editOTHERS";
+      (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : this.editData = data;
     }
     this.otherData = data;
     this.others = this.fb.group({
@@ -112,7 +114,6 @@ export class OthersComponent implements OnInit {
       dateOfPurchase: [(data.dateOfPurchase == undefined) ? '' : new Date(data.dateOfPurchase)],
       growthRate: [(data.growthRate == undefined) ? '' : data.growthRate,],
       description: [(data.description == undefined) ? '' : data.description,],
-      id: [(data.id == undefined) ? '' : data.id,],
       familyMemberId: [[(data.familyMemberId == undefined) ? '' : data.familyMemberId],]
     });
     // this.othersNominee = this.fb.group({})
@@ -147,7 +148,6 @@ export class OthersComponent implements OnInit {
         growthRate: this.others.controls.growthRate.value,
         dateOfPurchase: (this.others.controls.dateOfPurchase.touched) ? this.datePipe.transform(this.others.controls.dateOfPurchase.value, 'yyyy-MM-dd') : this.others.controls.dateOfPurchase.value,
         description: this.others.controls.description.value,
-        id: this.others.controls.id.value
       };
       let adviceObj = {
         advice_id: this.advisorId,
@@ -156,7 +156,6 @@ export class OthersComponent implements OnInit {
         adviceDescription: "manualAssetDescription"
       }
       if (this.flag == "addOTHERS") {
-        delete obj.id;
         this.custumService.addOthers(obj).subscribe(
           data => this.addOthersRes(data)
         );
@@ -166,6 +165,7 @@ export class OthersComponent implements OnInit {
         );
       } else {
         // edit call
+        obj['id'] = this.editData.id;
         this.custumService.editOthers(obj).subscribe(
           data => this.editOthersRes(data)
         );
