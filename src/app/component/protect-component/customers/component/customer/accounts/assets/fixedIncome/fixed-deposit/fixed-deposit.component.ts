@@ -53,7 +53,7 @@ export class FixedDepositComponent implements OnInit {
   inputData: any;
   validMaturity: any;
   showErrorOwner = false;
-  callMethod:any;
+  callMethod: any;
   compoundValue = [
     { name: 'Daily', value: 2 },
     { name: 'Monthly', value: 3 },
@@ -110,15 +110,15 @@ export class FixedDepositComponent implements OnInit {
     }
   }
 
-  
+
   @Input() popupHeaderText: string = 'Add Fixed deposit';
 
   removeCoOwner(item) {
     this.getCoOwner.removeAt(item);
-    if(this.fixedDeposit.value.getCoOwnerName.length == 1){
+    if (this.fixedDeposit.value.getCoOwnerName.length == 1) {
       this.getCoOwner.controls['0'].get('share').setValue('100');
-    }else{
-      for(let e in this.getCoOwner.controls){
+    } else {
+      for (let e in this.getCoOwner.controls) {
         this.getCoOwner.controls[e].get('share').setValue('');
       }
     }
@@ -126,10 +126,10 @@ export class FixedDepositComponent implements OnInit {
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      name: [data?data.name:'',[Validators.required]], share: [data?String(data.share):'',[Validators.required]], familyMemberId: [data?data.familyMemberId:0], id: [data?data.id:0]
+      name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
     }));
-    if(!data || this.getCoOwner.value.length < 1){
-      for(let e in this.getCoOwner.controls){
+    if (!data || this.getCoOwner.value.length < 1) {
+      for (let e in this.getCoOwner.controls) {
         this.getCoOwner.controls[e].get('share').setValue('');
       }
     }
@@ -179,10 +179,10 @@ export class FixedDepositComponent implements OnInit {
 
   displayControler(con) {
     console.log('value selected', con);
-    if(con.owner != null && con.owner){
+    if (con.owner != null && con.owner) {
       this.fixedDeposit.controls.getCoOwnerName = con.owner;
     }
-    if(con.nominee != null && con.nominee){
+    if (con.nominee != null && con.nominee) {
       this.fixedDeposit.controls.getNomineeName = con.nominee;
     }
   }
@@ -191,7 +191,7 @@ export class FixedDepositComponent implements OnInit {
     this.familyMemberId = value.id;
     // this.reqError = true;
   }
-  
+
   lisNominee(value) {
     console.log(value)
     this.ownerData.Fmember = value;
@@ -200,9 +200,9 @@ export class FixedDepositComponent implements OnInit {
 
   disabledMember(value, type) {
     this.callMethod = {
-      methodName : "disabledMember",
-      ParamValue : value,
-      disControl : type
+      methodName: "disabledMember",
+      ParamValue: value,
+      disControl: type
     }
   }
 
@@ -210,12 +210,12 @@ export class FixedDepositComponent implements OnInit {
     return this.fixedDeposit.get('getCoOwnerName') as FormArray;
   }
 
- 
+
 
   onChangeJointOwnership(data) {
     this.callMethod = {
-      methodName : "onChangeJointOwnership",
-      ParamValue : data
+      methodName: "onChangeJointOwnership",
+      ParamValue: data
     }
   }
 
@@ -258,7 +258,7 @@ export class FixedDepositComponent implements OnInit {
       this.tenure = moment(this.fixedDeposit.controls.commencementDate.value).add(m, 'months');
       this.tenure = moment(this.tenure).add(y, 'years');
       this.tenure = moment(this.tenure).add(d, 'days');
-      if(this.fixedDeposit.controls.commencementDate.valid){
+      if (this.fixedDeposit.controls.commencementDate.valid) {
         this.getDate = this.datePipe.transform(this.tenure, 'yyyy-MM-dd');
       }
       this.tenureValid = true;
@@ -276,13 +276,13 @@ export class FixedDepositComponent implements OnInit {
     if (this.dataSource) {
       data = this.dataSource;
     }
-    
+
     this.fixedDeposit = this.fb.group({
       getCoOwnerName: this.fb.array([this.fb.group({
-        name: ['',[Validators.required]],
-        share: ['',[Validators.required]],
+        name: ['', [Validators.required]],
+        share: ['', [Validators.required]],
         familyMemberId: 0,
-        id:0
+        id: 0
       })]),
       // ownerType: [(!data.ownershipType) ? '' : (data.ownershipType) + '', [Validators.required]],
       // ownerName: [(!data.ownerName) ? '' : data.ownerName],
@@ -306,16 +306,16 @@ export class FixedDepositComponent implements OnInit {
       id: [(!data) ? '' : data.id,],
       familyMemberId: [(!data) ? '' : data.familyMemberId]
     });
-    if(this.fixedDeposit.value.getCoOwnerName.length == 1){
+    if (this.fixedDeposit.value.getCoOwnerName.length == 1) {
       this.getCoOwner.controls['0'].get('share').setValue('100');
     }
-    if(data.ownerList){
+    if (data.ownerList) {
       this.getCoOwner.removeAt(0);
       data.ownerList.forEach(element => {
         this.addNewCoOwner(element);
       });
     }
-    this.ownerData = {Fmember: this.nomineesListFM, controleData:this.fixedDeposit}
+    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.fixedDeposit }
     this.familyMemberId = this.fixedDeposit.controls.familyMemberId.value;
     this.fixedDeposit.controls.maturityDate.setValue(new Date(data.maturityDate));
   }
@@ -332,7 +332,7 @@ export class FixedDepositComponent implements OnInit {
     }
   }
 
-  
+
 
   saveFixedDeposit() {
     if (this.showTenure == true) {
@@ -342,7 +342,7 @@ export class FixedDepositComponent implements OnInit {
       this.maturityDate = this.fixedDeposit.controls.maturityDate.value;
     }
     if (this.fixedDeposit.invalid || !this.tenureValid) {
-    // this.reqError = true;
+      // this.reqError = true;
       this.inputs.find(input => !input.ngControl.valid).focus();
       for (let element in this.fixedDeposit.controls) {
         console.log(element)
@@ -406,6 +406,7 @@ export class FixedDepositComponent implements OnInit {
       if (this.flag == 'adviceFixedDeposit') {
         this.custumService.getAdviceFd(adviceObj).subscribe(
           data => this.getAdviceFdRes(data),
+          err => this.event.openSnackBar(err, "Dismiss")
         );
       }
       else if (this.fixedDeposit.controls.id.value) {
@@ -438,7 +439,7 @@ export class FixedDepositComponent implements OnInit {
     return this.fixedDeposit.get('getNomineeName') as FormArray;
   }
 
-  
+
   addFixedDepositRes(data) {
     console.log('addFixedDepositRes', data);
     this.event.openSnackBar('Added successfully!', 'Dismiss');
