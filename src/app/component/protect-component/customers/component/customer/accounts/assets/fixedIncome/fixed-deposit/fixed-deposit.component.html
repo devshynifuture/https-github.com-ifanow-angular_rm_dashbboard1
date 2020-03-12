@@ -26,7 +26,7 @@
                     <mat-form-field>
                         <mat-select appOwnerNominee matInput
                             formControlName="name" [data]='ownerData' (selectionChange)="disabledMember(value,'owner')" (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod] = 'callMethod' >
-                            <mat-option value=''>Select family members</mat-option>
+                            <mat-option value='' disabled>Select family members</mat-option>
                             <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"   [value]="f.userName">
                                 <span>{{f.userName}}</span>
                             </mat-option>
@@ -52,7 +52,7 @@
                 </div>
             </div>
             <div class="col-md-2 p-0 d-flex align-items-center">
-                <i *ngIf="pointIndex==0" class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(true)">add</i>
+                <i *ngIf="pointIndex==0" class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i>
                 <i *ngIf="pointIndex!=0" class="material-icons text-primitive f-20 c-p pl-10 pt-8"
                 (click)="removeCoOwner(pointIndex)">remove</i>
             </div>
@@ -166,7 +166,7 @@
             <div class="row">
                 <div class="col-md-4 p-0">
                     <mat-select formControlName="tenureY" class="form-control btb-0 br-none brtb-0"
-                        (change)="getDateYMD()">
+                        (selectionChange)="getDateYMD()">
                         <mat-option value="0">0 Year</mat-option>
                         <mat-option *ngFor="let Y of fdYears" [value]="Y">
                             <span>{{Y == 1? Y+" year" : Y+" years"}}</span>
@@ -175,7 +175,7 @@
                 </div>
                 <div class="col-md-4 p-0">
                     <mat-select formControlName="tenureM" class="form-control btb-0 bltb-0 br-none "
-                        (change)="getDateYMD()">
+                        (selectionChange)="getDateYMD()">
                         <mat-option value="0">0 Month</mat-option>
                         <mat-option *ngFor="let M of fdMonths" [value]="M">
                             <span>{{M == 1? M+" Month" : M+" Months" }}</span>
@@ -183,7 +183,7 @@
                     </mat-select>
                 </div>
                 <div class="col-md-4 p-0">
-                    <mat-select formControlName="tenureD" class="form-control bltb-0" (change)="getDateYMD()">
+                    <mat-select formControlName="tenureD" class="form-control bltb-0" (selectionChange)="getDateYMD()">
                         <mat-option value="0">0 Day</mat-option>
                         <mat-option *ngFor="let D of fdDays" [value]="D">
                             <span>{{D == 1? D+" Day" : D+" Days" }}</span>

@@ -189,7 +189,7 @@ export class BondsComponent implements OnInit {
         share: ['',[Validators.required]],
         familyMemberId: null
       })]),
-      ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
+      // ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       bondName: [(data == undefined) ? '' : data.bondName, [Validators.required]],
       type: [(data.type == undefined) ? '' : (data.type) + "", [Validators.required]],
       amountInvest: [(data == undefined) ? '' : data.amountInvested, [Validators.required]],
@@ -220,12 +220,7 @@ export class BondsComponent implements OnInit {
     }
   /***owner***/ 
 
-  /***nominee***/ 
-    if(this.bonds.value.getNomineeName.length == 1 && this.bonds.value.getNomineeName[0] != ''){
-      this.getNominee.controls['0'].get('sharePercentage').setValue('100');
-    }
-  /***nominee***/ 
-
+ 
     this.ownerData = {Fmember: this.nomineesListFM, controleData:this.bonds}
 
     this.familyMemberId = this.bonds.controls.familyMemberId.value
@@ -253,19 +248,19 @@ export class BondsComponent implements OnInit {
   saveBonds() {
     // this.tenure = this.getDateYMD()
     // this.maturityDate = this.tenure
-    this.nominees = [];
-    if (this.nomineesList) {
+    // this.nominees = [];
+    // if (this.nomineesList) {
 
-      this.nomineesList.forEach(element => {
-        let obj = {
-          "name": element.controls.name.value,
-          "sharePercentage": element.controls.sharePercentage.value,
-          "id": (element.controls.id.value) ? element.controls.id.value : 0,
-          "familyMemberId": (element.controls.familyMemberId.value) ? element.controls.familyMemberId.value : 0
-        }
-        this.nominees.push(obj)
-      });
-    }
+    //   this.nomineesList.forEach(element => {
+    //     let obj = {
+    //       "name": element.controls.name.value,
+    //       "sharePercentage": element.controls.sharePercentage.value,
+    //       "id": (element.controls.id.value) ? element.controls.id.value : 0,
+    //       "familyMemberId": (element.controls.familyMemberId.value) ? element.controls.familyMemberId.value : 0
+    //     }
+    //     this.nominees.push(obj)
+    //   });
+    // }
     if (this.bonds.invalid) {
       this.inputs.find(input => !input.ngControl.valid).focus();
       this.bonds.markAllAsTouched();
@@ -274,8 +269,9 @@ export class BondsComponent implements OnInit {
       let obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
-        familyMemberId: this.familyMemberId,
-        ownerName: (this.ownerName == undefined) ? this.bonds.controls.ownerName.value : this.ownerName,
+        // familyMemberId: this.familyMemberId,
+        // ownerName: this.bonds.getCoOwnerName.value,
+        memberList: this.bonds.value.getCoOwnerName,
         amountInvested: this.bonds.controls.amountInvest.value,
         bondName: this.bonds.controls.bondName.value,
         // couponAmount: this.bonds.controls.couponAmount.value,
@@ -287,7 +283,7 @@ export class BondsComponent implements OnInit {
         description: this.bonds.controls.description.value,
         // maturityDate: this.datePipe.transform(this.maturityDate, 'yyyy-MM-dd'),
         // bankName: this.bonds.controls.bankName.value,
-        nominees: this.nominees,
+        nomineeslist: this.bonds.value.getNomineeName,
 
         tenure: this.bonds.controls.tenure.value,
         type: this.bonds.controls.type.value,

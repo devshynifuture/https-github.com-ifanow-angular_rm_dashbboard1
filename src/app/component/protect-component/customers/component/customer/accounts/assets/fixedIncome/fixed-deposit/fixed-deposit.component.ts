@@ -126,10 +126,12 @@ export class FixedDepositComponent implements OnInit {
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      name: ["",[Validators.required]], share: ["",[Validators.required]], familyMemberId: null
+      name: [data?data.name:'',[Validators.required]], share: [data?String(data.share):'',[Validators.required]], familyMemberId: [data?data.familyMemberId:0]
     }));
-    for(let e in this.getCoOwner.controls){
-      this.getCoOwner.controls[e].get('share').setValue('');
+    if(!data || this.getCoOwner.value.length < 1){
+      for(let e in this.getCoOwner.controls){
+        this.getCoOwner.controls[e].get('share').setValue('');
+      }
     }
   }
 
@@ -256,7 +258,9 @@ export class FixedDepositComponent implements OnInit {
       this.tenure = moment(this.fixedDeposit.controls.commencementDate.value).add(m, 'months');
       this.tenure = moment(this.tenure).add(y, 'years');
       this.tenure = moment(this.tenure).add(d, 'days');
-      this.getDate = this.datePipe.transform(this.tenure, 'yyyy-MM-dd');
+      if(this.fixedDeposit.controls.commencementDate.valid){
+        this.getDate = this.datePipe.transform(this.tenure, 'yyyy-MM-dd');
+      }
       this.tenureValid = true;
       return this.getDate;
     }
@@ -272,6 +276,7 @@ export class FixedDepositComponent implements OnInit {
     if (this.dataSource) {
       data = this.dataSource;
     }
+    
     this.fixedDeposit = this.fb.group({
       getCoOwnerName: this.fb.array([this.fb.group({
         name: ['',[Validators.required]],
@@ -303,8 +308,12 @@ export class FixedDepositComponent implements OnInit {
     if(this.fixedDeposit.value.getCoOwnerName.length == 1){
       this.getCoOwner.controls['0'].get('share').setValue('100');
     }
-    
-    
+    if(data.ownerList){
+      this.getCoOwner.removeAt(0);
+      data.ownerList.forEach(element => {
+        this.addNewCoOwner(element);
+      });
+    }
     this.ownerData = {Fmember: this.nomineesListFM, controleData:this.fixedDeposit}
     this.familyMemberId = this.fixedDeposit.controls.familyMemberId.value;
     this.fixedDeposit.controls.maturityDate.setValue(new Date(data.maturityDate));

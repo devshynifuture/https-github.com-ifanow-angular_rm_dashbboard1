@@ -283,12 +283,12 @@
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
                 </div>
-                <div class="col-md-3 pr-0">
+                <div class="pr-0" [ngClass]="bonds.value.getNomineeName.length > 1?'col-md-3' : 'col-md-5'">
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <mat-select appOwnerNominee matInput
                                 formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'nominee')" (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod] = 'callMethod' >
-                                <mat-option value=''>Select family members</mat-option>
+                                <mat-option value='' disabled>Select family members</mat-option>
                                 <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"   [value]="f.userName">
                                     <span>{{f.userName}}</span>
                                 </mat-option>
@@ -299,7 +299,7 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2" *ngIf="bonds.value.getNomineeName.length > 1">
                     <div class="form-group mb-0 iconPetage">
                         <mat-form-field>
                             <input matInput class="form-control br-0 percentage" type="number"
