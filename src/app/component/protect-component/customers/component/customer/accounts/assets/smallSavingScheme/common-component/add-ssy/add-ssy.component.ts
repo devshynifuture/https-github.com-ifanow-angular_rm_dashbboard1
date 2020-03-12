@@ -235,7 +235,7 @@ export class AddSsyComponent implements OnInit {
 
   }
   addSSYSchemeResponse(data) {
-    (this.editApi) ? this.eventService.openSnackBar("SSY is edited", "Dismiss") : this.eventService.openSnackBar("SSY is added", "added")
+    (this.editApi) ? this.eventService.openSnackBar("Updated successfully!", "Dismiss") : this.eventService.openSnackBar("Added successfully!", "added")
     console.log(data)
     this.close(true)
   }

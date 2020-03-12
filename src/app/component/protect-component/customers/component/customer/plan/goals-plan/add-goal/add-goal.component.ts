@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { PlanService } from '../../plan.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-add-goal',
@@ -10,6 +12,8 @@ export class AddGoalComponent implements OnInit {
 
   @Input() data: any = {};
   @Input() popupHeaderText: string = 'KEY INFO';
+
+  allAssetsList:any[] = [];
 
   // TODO:- replace tempDisplayData with data
   tempDisplayData = {
@@ -165,34 +169,39 @@ export class AddGoalComponent implements OnInit {
       sortKey: 'm-F2N'
     },
   ];
+  advisorId: any;
 
 
   
-  constructor(private subInjectService: SubscriptionInject) { }
+  constructor(private subInjectService: SubscriptionInject, private goalService: PlanService) { }
 
   ngOnInit() {
-    this.data = this.tempDisplayData;
     this.createFamilyList();
-    this.filterAndSortAssets(this.currentFamilyFilter, this.currentAllocationFilter);
+    this.advisorId = AuthService.getAdvisorId();
+    this.loadAssets();
     // this.displayData = this.data;
+  }
+
+  loadAssets(){
+    let data = {advisorId: this.advisorId}
+    this.goalService.getAssetsForAllocation(data).subscribe((data)=>{
+      this.allAssetsList = data;
+      this.filterAndSortAssets(this.currentFamilyFilter, this.currentAllocationFilter);
+    })
   }
 
   // Creates list of family members from the given assets list for the family filter buttons.
   createFamilyList(){
-    this.familyList = this.data.data.map((obj) => {
-      return {name: obj.asset_owner, asset_owner_id: obj.asset_owner_id, selected: false};
-    }).filter((member, index, arr) => {
-      return arr.findIndex(m => m.asset_owner_id === member.asset_owner_id) === index;
-    });
-    this.familyList.unshift({name: 'All family', asset_owner_id: -1});
+    this.familyList = this.data;
+    this.familyList.unshift({userName: 'All family', id: -1});
     this.currentFamilyFilter = this.familyList[0];
   }
 
   filterByFamily(member) {
     if(member.asset_owner_id == -1) {
-      this.displayedAssets = this.data.data;
+      this.displayedAssets = this.allAssetsList;
     } else {
-      this.displayedAssets = this.data.data.filter((obj) => {
+      this.displayedAssets = this.allAssetsList.filter((obj) => {
         return obj.asset_owner_id === member.asset_owner_id
       });
     }

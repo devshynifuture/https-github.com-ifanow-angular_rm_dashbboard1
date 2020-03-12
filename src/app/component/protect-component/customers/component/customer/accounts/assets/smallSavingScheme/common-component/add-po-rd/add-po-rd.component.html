@@ -38,7 +38,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
-                        <input matInput type="text" (focusout)="numberMultiplesOfFive($event)"
+                        <input autocomplete="off" matInput type="text" (focusout)="numberMultiplesOfFive($event)"
                             formControlName="monthlyContribution" #amountInvest maxlength="10"
                             class="form-control br-0 rupess" appInputValueValidation
                             [inputValidator]="validatorType.NUMBER_ONLY">
@@ -63,8 +63,9 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput (focus)="KVPpicker.open()" (click)="KVPpicker.open()" formControlName="commDate"
-                            [max]="maxDate" [matDatepicker]="KVPpicker" class="form-control br-0" readonly>
+                        <input autocomplete="off" matInput (focus)="KVPpicker.open()" (click)="KVPpicker.open()"
+                            formControlName="commDate" [max]="maxDate" [matDatepicker]="KVPpicker"
+                            class="form-control br-0" readonly>
                         <mat-datepicker-toggle matSuffix [for]="KVPpicker"></mat-datepicker-toggle>
                         <mat-datepicker #KVPpicker></mat-datepicker>
                         <mat-error class="f-12">
@@ -100,9 +101,10 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #interestRate matInput type="number" (keyup)="onChange($event)"
-                            appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                            class="form-control br-0 percentage" formControlName="interestRate">
+                        <input autocomplete="off" matInput #interestRate matInput type="number"
+                            (keyup)="onChange($event)" appInputValueValidation
+                            [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage"
+                            formControlName="interestRate">
                     </mat-form-field>
                 </div>
             </div>
@@ -159,7 +161,8 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input formControlName="rdNum" matInput #rdNum type="text" maxlength="20"
+                    <mat-form-field>
+                        <input autocomplete="off" formControlName="rdNum" matInput #rdNum type="text" maxlength="20"
                             class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{rdNum.value.length}}/20</mat-hint>
@@ -173,8 +176,9 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input matInput formControlName="poBranch" #poBranch type="text" maxlength="20"
-                            class="form-control br-0">
+                    <mat-form-field>
+                        <input autocomplete="off" matInput formControlName="poBranch" #poBranch type="text"
+                            maxlength="20" class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{poBranch.value.length}}/20</mat-hint>
                     </mat-form-field>
@@ -189,7 +193,8 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input type="text" matInput formControlName="linkedBankAcc" #linkedBankAcc
+                    <mat-form-field>
+                        <input autocomplete="off" type="text" matInput formControlName="linkedBankAcc" #linkedBankAcc
                             maxlength="16" class="form-control br-0" appInputValueValidation
                             [inputValidator]="validatorType.NUMBER_ONLY">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
@@ -204,7 +209,8 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input matInput formControlName="description" #description maxlength="60"
+                    <mat-form-field>
+                        <input autocomplete="off" matInput formControlName="description" #description maxlength="60"
                             class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
