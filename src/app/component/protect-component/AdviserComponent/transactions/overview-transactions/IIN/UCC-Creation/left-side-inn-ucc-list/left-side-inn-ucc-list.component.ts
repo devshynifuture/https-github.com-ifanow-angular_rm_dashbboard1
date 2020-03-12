@@ -11,6 +11,7 @@ import { ProcessTransactionService } from '../../../doTransaction/process-transa
 import { FatcaDetailsInnComponent } from '../fatca-details-inn/fatca-details-inn.component';
 import { ContactDetailsInnComponent } from '../contact-details-inn/contact-details-inn.component';
 import { PersonalDetailsInnComponent } from '../personal-details-inn/personal-details-inn.component';
+import { SubmitReviewInnComponent } from '../submit-review-inn/submit-review-inn.component';
 
 @Component({
   selector: 'app-left-side-inn-ucc-list',
@@ -21,7 +22,7 @@ export class LeftSideInnUccListComponent implements OnInit {
   inputData: any;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
-    private processTransaction : ProcessTransactionService,
+    private processTransaction: ProcessTransactionService,
     private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
 
     @Input()
@@ -47,7 +48,7 @@ export class LeftSideInnUccListComponent implements OnInit {
     this.eventService.changeUpperSliderState(fragmentData);
   }
   openPersonalDetails(data) {
-   
+
     const fragmentData = {
       flag: 'app-upper-customer',
       id: 1,
@@ -83,7 +84,7 @@ export class LeftSideInnUccListComponent implements OnInit {
       }
     );
   }
-  openContactDetails(data) {   
+  openContactDetails(data) {
     const fragmentData = {
       flag: 'app-upper-customer',
       id: 1,
@@ -101,7 +102,7 @@ export class LeftSideInnUccListComponent implements OnInit {
       }
     );
   }
-  openFatcaDetails(data){
+  openFatcaDetails(data) {
 
     const fragmentData = {
       flag: 'app-upper-customer',
@@ -138,6 +139,26 @@ export class LeftSideInnUccListComponent implements OnInit {
       }
     );
   }
-  
+
+
+  openReviewSubmit(data) {
+    const fragmentData = {
+      flag: 'app-upper-customer',
+      id: 1,
+      data,
+      direction: 'top',
+      componentName: SubmitReviewInnComponent,
+      state: 'open'
+    };
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getClientSubscriptionList();
+          subscription.unsubscribe();
+        }
+      }
+    );
+  }
+
 
 }
