@@ -180,12 +180,12 @@ export class GoldComponent implements OnInit {
   addGoldRes(data) {
     console.log('addrecuringDepositRes', data)
     this.subInjectService.changeNewRightSliderState({ flag: 'addedGold', state: 'close', data, refreshRequired: true })
-    this.eventService.openSnackBar('Gold added successfully', 'OK');
+    this.eventService.openSnackBar('Added successfully!', 'OK');
 
   }
   editGoldRes(data) {
     this.subInjectService.changeNewRightSliderState({ flag: 'addedGold', state: 'close', data, refreshRequired: true })
-    this.eventService.openSnackBar('Gold edited successfully', 'OK');
+    this.eventService.openSnackBar('Updated successfully!', 'OK');
 
   }
 

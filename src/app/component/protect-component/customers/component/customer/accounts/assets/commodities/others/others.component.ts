@@ -179,12 +179,12 @@ export class OthersComponent implements OnInit {
   }
   addOthersRes(data) {
     console.log('addrecuringDepositRes', data);
-    this.eventService.openSnackBar('Others added successfully', 'Dismiss');
+    this.eventService.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
 
   editOthersRes(data) {
-    this.eventService.openSnackBar('Others edited successfully', 'Dismiss');
+    this.eventService.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
 

@@ -207,12 +207,12 @@ export class BankAccountsComponent implements OnInit {
   addBankAccountsRes(data) {
     console.log('addrecuringDepositRes', data)
     this.subInjectService.changeNewRightSliderState({ flag: 'addedbankAc', state: 'close', data, refreshRequired: true })
-    this.eventService.openSnackBar('Bank account added successfully', 'OK');
+    this.eventService.openSnackBar('Added successfully!', 'OK');
 
   }
   editBankAcountsRes(data) {
     this.subInjectService.changeNewRightSliderState({ flag: 'editedbankAc', state: 'close', data, refreshRequired: true })
-    this.eventService.openSnackBar('Bank account edited successfully', 'OK');
+    this.eventService.openSnackBar('Updated successfully!', 'OK');
 
   }
 }
