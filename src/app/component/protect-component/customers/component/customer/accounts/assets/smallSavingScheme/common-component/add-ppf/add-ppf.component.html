@@ -230,7 +230,7 @@
         </app-add-nominee>
     </div>
     <app-add-transaction (outputEvent)="getFormData($event)" [data]='inputData'
-        [transactionViewData]="transactionViewData" [commencementDate]="ppfSchemeForm.get('CommencementDate').value">
+        [transactionViewData]="transactionViewData" [commencementDate]="commencementDate">
     </app-add-transaction>
 </div>
 <div class="bottom-fixed wrapper-12 pt-16" *ngIf="adviceShowHeaderAndFooter">

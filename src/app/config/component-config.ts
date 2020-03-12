@@ -394,7 +394,7 @@ export const appConfig = {
   SEARCH_SCHEME: 'report/transaction/list/get',
   GET_TRANSACTION_DETAILS: 'report/transaction/detail/get',
   GET_MANDATE_LIST: 'report/ach-mandate/get',
-  GET_REGISTRATION_UCC_IIN:'user/register/detail/get',
+  GET_REGISTRATION_UCC_IIN: 'user/register/detail/get',
   // SIP_BSE:'bse/order/create',
 
   // cashflow 
@@ -423,7 +423,9 @@ export const appConfig = {
   BACKOFFICE_GET_UNMAPPED_SCHEMES_NJ: 'backoffice/get/unmapped/njschemes',
   BACKOFFICE_GET_UNMAPPED_SCHEMES_PRUDENT: 'backoffice/get/unmapped/prudentschemes',
   BACKOFFICE_GET_FILTERED_SCHEMES: 'backoffice/get/filtered/shemes',
-
+  BACKOFFICE_ADV_GET_BROKER_LIST: 'backoffice/broker/list/get',
+  BACKOFFICE_GET_RT_LIST: 'backoffice/rt/list/get',
+  BACKOFFICE_GET_AUM_RECON_HISTORY_LIST: 'backoffice/aum/recon/history/get',
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',

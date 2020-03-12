@@ -5,7 +5,7 @@
                 <li class="b-ua pb-12 c-p" [ngClass]="{'bg-grey lt':lifeInsuranceFlag}">
                     <div (click)="toggle('lifeInsurance');getInsuranceData(1)" class="row">
                         <div class="col-md-11 p-0 f-700">LIFE INSURANCE</div>
-                        <div class="col-md-1 p-0 text-custom">20</div>
+                        <div class="col-md-1 p-0 text-custom text-left">20</div>
                     </div>
                 </li>
                 <li (click)="getInsuranceTypeData(1,item.id)" *ngFor="let item of lifeInsuranceList"
@@ -13,23 +13,23 @@
                     <div>
                         <div class="row">
                             <div class="col-md-11 p-0">{{item.name}}</div>
-                            <div class="col-md-1 p-0 text-custom">{{item.id}}</div>
+                            <div class="col-md-1 p-0 text-custom text-left">{{item.id}}</div>
                         </div>
                     </div>
                 </li>
             </ul>
-            <ul class=" d-block">
+            <ul class="vertical-menu d-block">
                 <li class="pb-12 c-p" [ngClass]="{'bg-grey lt':generalInsuranceFlag}">
                     <div (click)="toggle('generalInsurance')" class="row">
                         <div class="col-md-11 p-0 f-700">GENERAL INSURANCE</div>
-                        <div class="col-md-1 p-0 text-custom">1</div>
+                        <div class="col-md-1 pl-0 text-custom text-left">1</div>
                     </div>
                 </li>
                 <li (click)="getInsuranceTypeData(2,item1.id)" *ngFor="let item1 of generalLifeInsuranceList"
                     [ngClass]="{'bg-grey lt':item1.id==insuranceSubTypeId}" class="pb-12 c-p">
                     <div class="row">
                         <div class="col-md-11 p-0">{{item1.name}}</div>
-                        <div class="col-md-1 p-0 text-custom">{{item1.id}}</div>
+                        <div class="col-md-1 p-0 text-custom text-left">{{item1.id}}</div>
                     </div>
                 </li>
             </ul>
@@ -57,7 +57,7 @@
                             </mat-menu>
                         </div>
                     </div> -->
-                    <div class="row">
+                    <div class="row pb-12">
                         <div class="col-md-4 p-0">
                             <h4 class="m-0 text-black roboto pt-4">Life insurance</h4>
                         </div>
@@ -72,105 +72,110 @@
 
                         </div>
                     </div>
-                </div>
-                <div [ngClass]="{'table-scroll':isLoading==false }" class="liabilities wrapper-8">
-                    <table #tableOne="matSort" matSort mat-table [dataSource]="dataSource" id="tbs" appSkeletonLoading
-                        [appSkeletonLoading]="isLoading" class="skeletonAnimation">
-                        <ng-container matColumnDef="no" sticky>
-                            <th mat-header-cell *matHeaderCellDef class="br"> No. </th>
-                            <td mat-cell *matCellDef="let element; let i = index" class="br">
-                                <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="life">
-                            <th mat-sort-header="lifeAssuredName" mat-sort-header *matHeaderCellDef class="br t-18">
-                                Life assured </th>
-                            <td mat-cell *matCellDef="let element" class="br t-18">
-                                <div class="bar"> {{element.lifeAssuredName}} </div>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="name">
-                            <th mat-sort-header="policyName" *matHeaderCellDef class="br t-12"> Policy name </th>
-                            <td mat-cell *matCellDef="let element" class="br t-12">
-                                <div class="bar"> {{element.policyName}} </div>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="number">
-                            <th mat-sort-header="policyNumber" *matHeaderCellDef class="br t-18"> Policy number </th>
-                            <td mat-cell *matCellDef="let element" class="br t-18">
-                                <div class="bar"> {{element.policyNumber}} </div>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="sum">
-                            <th mat-header-cell mat-sort-header="policyNumber" *matHeaderCellDef
-                                class="br t-14 text-right"> Sum
-                                assured </th>
-                            <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar"> {{element.sumAssured}} </div>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="cvalue">
-                            <th mat-header-cell mat-sort-header="currentValue" *matHeaderCellDef
-                                class="br t-14 text-right"> Current
-                                value
-                            </th>
-                            <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar"> {{element.currentValue}} </div>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="premium">
-                            <th mat-header-cell mat-sort-header="premiumAmount" *matHeaderCellDef class="br text-right">
-                                Premium </th>
-                            <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar"> {{element.premiumAmount}} </div>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="term">
-                            <th mat-header-cell mat-sort-header="premiumPayingTerm" *matHeaderCellDef class="br t-12">
-                                Premium paying term
-                            </th>
-                            <td mat-cell *matCellDef="let element" class="br">
-                                <div class="bar">{{element.premiumPayingTerm}} </div>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="pterm">
-                            <th mat-header-cell mat-sort-header="term" *matHeaderCellDef class="br"> Policy term </th>
-                            <td mat-cell *matCellDef="let element" class="br">
-                                <div class="bar"> {{element.term}} </div>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="desc">
-                            <th mat-header-cell mat-sort-header="description" *matHeaderCellDef class="br t-14">
-                                Description </th>
-                            <td mat-cell *matCellDef="let element" class="br t-14">
-                                <div class="bar"> {{element.description}} </div>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="status">
-                            <th mat-header-cell mat-sort-header="status" *matHeaderCellDef class="br"> Status </th>
-                            <td mat-cell *matCellDef="let element" class="br text-primary">
-                                <div class="bar"> {{element.status}} </div>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="icons" sticky>
-                            <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-                            <td mat-cell *matCellDef="let element" class="t-2">
-                                <div *ngIf="!isLoading">
-                                    <i class="material-icons c-p text-black" [matMenuTriggerFor]="menu4">
-                                        more_vert
-                                    </i>
-                                    <mat-menu #menu4="matMenu">
-                                        <button (click)="openAddInsurance(element)" mat-menu-item>Edit</button>
-                                        <button (click)="open(element)" mat-menu-item>Detailed view</button>
-                                        <button mat-menu-item>Activity</button>
-                                        <button mat-menu-item (click)="deleteModal('INSURANCE',element)">Delete</button>
-                                    </mat-menu>
-                                </div>
-                            </td>
-                        </ng-container>
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                    </table>
+
+                    <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 liabilities">
+                        <table #tableOne="matSort" matSort mat-table [dataSource]="dataSource" id="tbs"
+                            appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
+                            <ng-container matColumnDef="no" sticky>
+                                <th mat-header-cell *matHeaderCellDef class="br"> No. </th>
+                                <td mat-cell *matCellDef="let element; let i = index" class="br">
+                                    <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="life">
+                                <th mat-sort-header="lifeAssuredName" mat-sort-header *matHeaderCellDef class="br">
+                                    Life assured </th>
+                                <td mat-cell *matCellDef="let element" class="br">
+                                    <div class="bar"> {{element.lifeAssuredName}} </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="name">
+                                <th mat-sort-header="policyName" *matHeaderCellDef class="br "> Policy name </th>
+                                <td mat-cell *matCellDef="let element" class="br">
+                                    <div class="bar"> {{element.policyName}} </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="number">
+                                <th mat-sort-header="policyNumber" *matHeaderCellDef class="br"> Policy number
+                                </th>
+                                <td mat-cell *matCellDef="let element" class="br">
+                                    <div class="bar"> {{element.policyNumber}} </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="sum">
+                                <th mat-header-cell mat-sort-header="policyNumber" *matHeaderCellDef
+                                    class="br text-right"> Sum
+                                    assured </th>
+                                <td mat-cell *matCellDef="let element" class="br text-right">
+                                    <div class="bar"> {{element.sumAssured}} </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="cvalue">
+                                <th mat-header-cell mat-sort-header="currentValue" *matHeaderCellDef
+                                    class="br text-right"> Current
+                                    value
+                                </th>
+                                <td mat-cell *matCellDef="let element" class="br text-right">
+                                    <div class="bar"> {{element.currentValue}} </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="premium">
+                                <th mat-header-cell mat-sort-header="premiumAmount" *matHeaderCellDef
+                                    class="br text-right">
+                                    Premium </th>
+                                <td mat-cell *matCellDef="let element" class="br text-right">
+                                    <div class="bar"> {{element.premiumAmount}} </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="term">
+                                <th mat-header-cell mat-sort-header="premiumPayingTerm" *matHeaderCellDef class="br">
+                                    Premium paying term
+                                </th>
+                                <td mat-cell *matCellDef="let element" class="br">
+                                    <div class="bar">{{element.premiumPayingTerm}} </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="pterm">
+                                <th mat-header-cell mat-sort-header="term" *matHeaderCellDef class="br"> Policy term
+                                </th>
+                                <td mat-cell *matCellDef="let element" class="br">
+                                    <div class="bar"> {{element.term}} </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="desc">
+                                <th mat-header-cell mat-sort-header="description" *matHeaderCellDef class="br">
+                                    Description </th>
+                                <td mat-cell *matCellDef="let element" class="br">
+                                    <div class="bar"> {{element.description}} </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell mat-sort-header="status" *matHeaderCellDef class="br"> Status </th>
+                                <td mat-cell *matCellDef="let element" class="br text-primary">
+                                    <div class="bar"> {{element.status}} </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="icons" sticky>
+                                <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
+                                <td mat-cell *matCellDef="let element" class="t-2">
+                                    <div *ngIf="!isLoading">
+                                        <i class="material-icons c-p text-black" [matMenuTriggerFor]="menu4">
+                                            more_vert
+                                        </i>
+                                        <mat-menu #menu4="matMenu">
+                                            <button (click)="openAddInsurance(element)" mat-menu-item>Edit</button>
+                                            <button (click)="open(element)" mat-menu-item>Detailed view</button>
+                                            <button mat-menu-item>Activity</button>
+                                            <button mat-menu-item
+                                                (click)="deleteModal('INSURANCE',element)">Delete</button>
+                                        </mat-menu>
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                    </div>
                 </div>
                 <div *ngIf="dataSource==undefined" class="d-flex flex-column align-items-center">
                     <img class="width400" src="assets/images/svg/noDataFound.svg">

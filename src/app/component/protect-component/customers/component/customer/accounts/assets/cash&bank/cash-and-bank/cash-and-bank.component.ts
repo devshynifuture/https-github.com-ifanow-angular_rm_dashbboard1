@@ -72,27 +72,51 @@ export class CashAndBankComponent implements OnInit {
     var header = ['Owner', 'Account type', ' Balance as on', 'Description', 'Status'];
 
     if (value == 'Cash in hand') {
-      headerData = [{ width: 20, key: 'Owner' },
-      { width: 20, key: 'Account type' },
-      { width: 25, key: ' Balance as on' },
-      { width: 15, key: 'Description' },
-      { width: 10, key: 'Status' },];
+      headerData = [
+        { width: 20, key: 'Owner' },
+        { width: 20, key: 'Account type' },
+        { width: 25, key: 'Balance as on' },
+        { width: 15, key: 'Description' },
+        { width: 10, key: 'Status' },
+      ];
       this.cashInHandList.filteredData.forEach(element => {
         data = [element.ownerName, (element.accountType), (element.balanceAsOn),
         element.description, element.status];
         this.excelData.push(Object.assign(data));
       });
-      const footerData = ['Total',
-        this.formatNumber.first.formatAndRoundOffNumber(this.sumOfCashValue), '', '', , ''];
+      const footerData = [
+        'Total',
+        this.formatNumber.first.formatAndRoundOffNumber(this.sumOfCashValue),
+        '',
+        '', ,
+        ''
+      ];
       this.footer.push(Object.assign(footerData));
     } else {
 
-      header = ['Owner', 'Account type', 'Balance as on', 'Rate',
-        'Balance mentioned', 'Account number', 'Bank name', 'Description', 'Status'];
+      header = [
+        'Owner',
+        'Account type',
+        'Balance as on',
+        'Rate',
+        'Balance mentioned',
+        'Account number',
+        'Bank name',
+        'Description',
+        'Status'
+      ];
       this.bankAccountList.filteredData.forEach(element => {
-        data = [element.ownerName, (element.accountType == 1) ? 'Current' : 'Savings', new Date(element.balanceAsOn),
-        (element.interestRate), this.formatNumber.first.formatAndRoundOffNumber(element.accountBalance),
-        (element.account), element.bankName, element.description, element.status];
+        data = [
+          element.ownerName,
+          (element.accountType == 1) ? 'Current' : 'Savings',
+          new Date(element.balanceAsOn),
+          (element.interestRate),
+          this.formatNumber.first.formatAndRoundOffNumber(element.accountBalance),
+          (element.account),
+          element.bankName,
+          element.description,
+          element.status
+        ];
         this.excelData.push(Object.assign(data));
       });
       const footerData = ['Total', '', '', '', this.formatNumber.first.formatAndRoundOffNumber(this.totalAccountBalance), '', '', '', ''];
