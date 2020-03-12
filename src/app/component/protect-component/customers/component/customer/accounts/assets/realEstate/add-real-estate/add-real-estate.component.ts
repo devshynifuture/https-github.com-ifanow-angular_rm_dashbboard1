@@ -415,12 +415,16 @@ export class AddRealEstateComponent implements OnInit {
           adviceDescription: "manualAssetDescription"
         }
         this.custumService.getAdviceRealEstate(adviceObj).subscribe(
-          data => this.getAdviceRealEstateRes(data),
+          data => this.getAdviceRealEstateRes(data), (error) => {
+            this.eventService.showErrorMessage(error);
+          }
         );
       } else {
         console.log(obj);
         this.custumService.editRealEstate(obj).subscribe(
-          data => this.editRealEstateRes(data)
+          data => this.editRealEstateRes(data), (error) => {
+            this.eventService.showErrorMessage(error);
+          }
         );
       }
     }

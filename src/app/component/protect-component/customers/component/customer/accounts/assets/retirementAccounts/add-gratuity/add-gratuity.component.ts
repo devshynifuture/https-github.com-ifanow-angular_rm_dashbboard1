@@ -135,16 +135,22 @@ export class AddGratuityComponent implements OnInit {
       }
       if (this.gratuity.controls.id.value == undefined && this.flag != 'adviceGratuity') {
         this.custumService.addGratuity(obj).subscribe(
-          data => this.addGratuityRes(data)
+          data => this.addGratuityRes(data), (error) => {
+            this.event.showErrorMessage(error);
+          }
         );
       } else if (this.flag == 'adviceGratuity') {
         this.custumService.getAdviceGratuity(adviceObj).subscribe(
-          data => this.getAdviceGratuityRes(data),
+          data => this.getAdviceGratuityRes(data), (error) => {
+            this.event.showErrorMessage(error);
+          }
         );
       } else {
         //edit call
         this.custumService.editGratuity(obj).subscribe(
-          data => this.editGratuityRes(data)
+          data => this.editGratuityRes(data), (error) => {
+            this.event.showErrorMessage(error);
+          }
         );
       }
     }
