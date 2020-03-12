@@ -15,6 +15,7 @@ import { PlanEntryModule } from './component/customer/plan/plan.entry.module';
 import { DynamicComponentService } from '../../../services/dynamic-component.service';
 import { AdviceEntryModule } from './component/customer/customer-activity/advice-entry.module';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+import { CustomerOverviewEntryModule } from './component/customer/customer-overview/customer-overview-entry-module';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -40,14 +41,14 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
     PlanEntryModule,
     CustomersRoutingModule,
     AdviceEntryModule,
+    CustomerOverviewEntryModule,
     CustomDirectiveModule
-
     // PlanModule
   ],
   exports: [],
   providers: [DynamicComponentService],
   entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), AdviceEntryModule.getComponentList()
-    , PlanEntryModule.getComponentList()]
+    , PlanEntryModule.getComponentList(), CustomerOverviewEntryModule.getComponentList()]
 })
 export class CustomersModule {
 }

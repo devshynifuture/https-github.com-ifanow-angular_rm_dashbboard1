@@ -1081,7 +1081,6 @@
                   }
                 }
 
-                #overview-secondhead,
                 #ui-customer-secondhead,
                 #ui-plan-secondhead,
                 #ui-activity-secondhead,
@@ -1840,5 +1839,80 @@
                     background-color: transparent !important;
                     border-bottom: 4px solid #008FFF !important;
                     color: #008FFF !important;
+                  }
+                }
+
+                .advisorHomeBtn {
+                  padding: 0px !important;
+                  width: 151px;
+                  height: 36px;
+                }
+
+                #overview-secondhead {
+                  position: fixed !important;
+                  margin-right: 0px !important;
+                  right: 0 !important;
+                  margin-top: 15px !important;
+                  background-color: #000;
+                  width: 100%;
+                  box-shadow: 0 1px 6px rgba(0, 0, 0, .2), 0 1px 0 rgba(0, 0, 0, .12), 0 3px 3px rgba(0, 0, 0, .14);
+                  z-index: 101;
+
+                  .mat-tab-links {
+                    height: 65px;
+                  }
+
+                  .mat-tab-header {
+                    border-bottom: 0px;
+                  }
+
+                  .mat-tab-link:focus:not(.mat-tab-disabled) {
+                    background-color: #E2E2E2 !important;
+                    color: #008FFF !important;
+                  }
+
+                  .mat-tab-link {
+                    height: auto;
+                    color: #fff;
+                    padding: 0;
+                    min-width: 110px !important;
+                    opacity: 1;
+
+                    #ui-plan-secondhead {
+                      position: fixed !important;
+                      margin-right: 0px !important;
+                      right: 0 !important;
+                      margin-top: 58px !important;
+                      background-color: #000;
+                      width: 100%;
+                      box-shadow: 0 1px 6px rgba(0, 0, 0, .2), 0 1px 0 rgba(0, 0, 0, .12), 0 3px 3px rgba(0, 0, 0, .14);
+                      z-index: 11;
+
+                      .mat-tab-links {
+                        height: 65px;
+                      }
+
+                      .mat-tab-header {
+                        border-bottom: 0px;
+                      }
+
+                      .mat-tab-link:focus:not(.mat-tab-disabled) {
+                        background-color: #E2E2E2 !important;
+                        color: #008FFF !important;
+                      }
+
+                      .mat-tab-link {
+                        height: auto;
+                        color: #fff;
+                        padding: 0;
+                        min-width: 95px !important;
+                        opacity: 1;
+
+                        &.active {
+                          background-color: #E2E2E2 !important;
+                          color: #008FFF !important;
+                        }
+                      }
+                    }
                   }
                 }

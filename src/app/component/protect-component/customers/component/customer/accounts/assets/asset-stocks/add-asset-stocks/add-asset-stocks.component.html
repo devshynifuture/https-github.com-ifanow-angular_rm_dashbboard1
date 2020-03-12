@@ -41,10 +41,10 @@
             <h5 class="m-0 pt-8">Value as on</h5>
         </div>
         <div class="col-md-3">
-            <div class="form-group form-group_one mb-0">
-                <mat-form-field>
+            <div class="form-group mb-0">
+                <mat-form-field class="ba-date">
                     <input matInput (click)="balanceAsOn.open()" (input)="preventDefault($event)" autocomplete="off"
-                        formControlName="valueAsOn" class="form-control br-0" [matDatepicker]="balanceAsOn">
+                        formControlName="valueAsOn" class="form-control br-0 b-0" [matDatepicker]="balanceAsOn">
                     <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                     <mat-datepicker #balanceAsOn></mat-datepicker>
                     <mat-error>This field is required
