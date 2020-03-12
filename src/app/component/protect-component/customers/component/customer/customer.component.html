@@ -1,7 +1,7 @@
 <div id="ui-customer-container">
 
     <div class="col-md-12">
-        <h1 *ngIf="!clientId">Please select client</h1>
+        <!-- <h1 *ngIf="!clientId">Please select client</h1> -->
         <div *ngIf="isOverlayVisible" [@dialogContainer]="dialogState" class="custom-overlay" (click)="close()">
         </div>
         <div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
