@@ -16,14 +16,14 @@ export class OverviewProfileComponent implements OnInit {
   }
 
   open(value, data) {
-    let popupHeaderText = !!data ? 'Edit Real estate' : 'Add Real estate';
+
     const fragmentData = {
       flag: value,
       data,
       id: 1,
-      state: 'open45',
+      state: 'open50',
       componentName: AddFamilyMemberComponent,
-      popupHeaderText: popupHeaderText,
+
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

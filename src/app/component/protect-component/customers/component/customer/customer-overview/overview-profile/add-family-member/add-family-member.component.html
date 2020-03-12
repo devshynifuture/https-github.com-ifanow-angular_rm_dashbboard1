@@ -1,4 +1,4 @@
-<div class="popup-header-fix-45">
+<div class="popup-header-fix-50">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
             <h4 class="mb-0 wrapper-20"> ADD FAMILY MEMBERS </h4>
@@ -11,22 +11,43 @@
     </div>
 </div>
 
-<div class="pt-80 pl-24 pr-24 pb-48 mb-48">
-    <p>Rahul, first tell us a bit about you...</p>
+<div class="pt-80 pl-20">
+    <h5 class=" roboto">How would you like to add the family member? </h5>
 
-    <div class="row">
-        <div class="col-md-3 pl-0">
-            <h5>I am a</h5>
+    <div class="row pt-20">
+        <div class="col-md-3 pr-0 ">
+            <div class="manuallyBox">
+                <mat-radio-group aria-label="Select an option">
+                    <mat-radio-button class="f-14 text-light" value="1">Manually</mat-radio-button>
+                </mat-radio-group>
+            </div>
         </div>
-        <div class="col-md-6">
-            <!-- <mat-radio-group aria-label="Select an option">
-                <mat-radio-button value="1" class="b-ua radioBtn text-custom" 
-                [ngClass]="{'b-a-custom': fixedDeposit.get('maturity').value==1,'text-primary':fixedDeposit.get('maturity').value==1,'borderRadio':fixedDeposit.get('maturity').value==2}" (click)="haveMaturity(false)">I have tenure
-                </mat-radio-button>
+        <div class="col-md-8 pl-0 ">
+            <div class="contentHeight">
+                <p class="text-light f-14 m-0">Chose this option if the family member hasn’t invested through you before and so the member’s data isn’t currently present in the system.</p>
+            </div>
 
-                <mat-radio-button class="classBlue pr-10 radioBtn" value="2" [ngClass]="{'b-a-custom': fixedDeposit.get('maturity').value==2,'text-primary':fixedDeposit.get('maturity').value==2,'borderRadio text-custom':fixedDeposit.get('maturity').value==1}" (click)="haveMaturity(true)">I have maturity date
-                </mat-radio-button>
-            </mat-radio-group> -->
+        </div>
+    </div>
+
+
+    <div class="row pt-20">
+        <div class="col-md-3 pr-0">
+            <div class="manuallyBox">
+                <mat-radio-group aria-label="Select an option">
+                    <mat-radio-button class="f-14 text-light l-18" value="1">Merge from <br> existing
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+
+        </div>
+        <div class="col-md-8 pl-0 ">
+            <div class="contentHeight">
+                <p class="text-light f-14 m-0">
+                    If the family member has previously invested through you then the member is likely to be already present in the system as a client. You can merge the member into this group.
+                </p>
+            </div>
+
         </div>
     </div>
 
@@ -34,8 +55,7 @@
 
 
 
-
-<div class="bottom-fixed wrapper-45">
+<div class="bottom-fixed-50 wrapper-12">
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close(false)">Cancel</h5>

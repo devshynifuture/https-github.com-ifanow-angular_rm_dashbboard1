@@ -1,0 +1,32 @@
+::ng-deep .radioBtn .mat-radio-label {
+    min-width: 140px;
+    height: 45px;
+    display: flex !important;
+    justify-content: left;
+    align-items: center;
+    padding-left: 10px !important;
+}
+
+::ng-deep .familyGroup .mat-radio-button {
+    min-width: 143px;
+}
+
+.contentHeight {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #757575;
+    border-left: transparent;
+    padding-left: 15px;
+}
+
+::ng-deep .manuallyBox {
+    height: 80px;
+    display: flex;
+    border: 1px solid #757575;
+    align-items: center;
+    mat-radio-group {
+        margin: 0px auto;
+        width: 100px;
+    }
+}
