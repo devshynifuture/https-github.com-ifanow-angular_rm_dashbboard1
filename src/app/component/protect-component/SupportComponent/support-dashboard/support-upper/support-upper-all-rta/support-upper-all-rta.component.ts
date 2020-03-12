@@ -25,7 +25,7 @@ export class SupportUpperAllRtaComponent implements OnInit {
 
   constructor(
     private eventService: EventService,
-    private supportUpperService: SupportUpperService
+    public supportUpperService: SupportUpperService
   ) { }
 
   ngOnInit() {
@@ -80,6 +80,10 @@ export class SupportUpperAllRtaComponent implements OnInit {
     }
   }
 
+  displayFn(scheme?: Scheme): string | undefined {
+    return scheme ? scheme.schemeName : undefined;
+  }
+
   mapUnmappedSchemes(element) {
     console.log(element);
   }
@@ -107,6 +111,10 @@ export class SupportUpperAllRtaComponent implements OnInit {
     }
   }
 
+}
+
+export interface Scheme {
+  schemeName: string;
 }
 
 export interface elementI {

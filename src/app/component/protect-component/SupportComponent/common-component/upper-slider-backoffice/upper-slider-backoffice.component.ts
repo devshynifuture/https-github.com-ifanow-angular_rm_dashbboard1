@@ -1,3 +1,5 @@
+import { AuthService } from './../../../../../auth-service/authService';
+import { SupportService } from './../../support.service';
 import { ExcelService } from './../../../customers/component/customer/excel.service';
 import { ConfirmDialogComponent } from './../../../common-component/confirm-dialog/confirm-dialog.component';
 import { EventService } from './../../../../../Data-service/event.service';
@@ -5,7 +7,7 @@ import { UtilService } from './../../../../../services/util.service';
 import { Component, OnInit } from '@angular/core';
 import { ReconciliationDetailsViewComponent } from '../reconciliation-details-view/reconciliation-details-view.component';
 import { SubscriptionInject } from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatTableDataSource } from '@angular/material';
 
 
 @Component({
@@ -22,87 +24,51 @@ export class UpperSliderBackofficeComponent implements OnInit {
   dataSource1 = ELEMENT_DATA1;
   dataSource2 = ELEMENT_DATA2;
 
-  displayedColumns3: string[] = ['foliosOrdered', 'file_order', 'file_status', 'id', 'trx_file', 'trx_added', 'file_name', 'download'];
-  dataSource3 = ELEMENT_DATA3;
+  displayedColumns3: string[] = ['folios', 'fileOrderDateTime', 'status', 'referenceId', 'transactionAddedInFiles', 'transactionAdded', 'fileName', 'fileUrl'];
+  dataSource3 = new MatTableDataSource<PeriodicElement3>(ELEMENT_DATA3);
   isTabDisabled: boolean = true;
 
+  data;
+
   subTabState: number = 1;
+  aumReconId: any = null;
 
   constructor(private subInjectService: SubscriptionInject,
     private eventService: EventService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    private supportService: SupportService
+  ) { }
 
   ngOnInit() {
+    if (this.data) {
+      this.aumReconId = this.data.id;
+    }
+    console.log("this is data that we got:::::::", this.data);
+    this.getBackofficeAumFileOrderList();
   }
 
+  getBackofficeAumFileOrderList() {
+    this.supportService.getBackofficeAumOrderListValues({ aumReconId: this.aumReconId })
+      .subscribe(res => {
+        console.log(res);
+        res.map(element => {
+          if (element && element.folios !== '') {
+            let obj = {
+              count: element.folios.split(',').length,
+              file: new Blob([element.folios], { type: "text/plain" })
+            }
+            element.folios = obj;
+          }
+          return element;
+        });
+        this.dataSource3.data = res;
+      });
+  }
 
-  // async ExportTOExcel(value) {
-  //   this.excelData = [];
-  //   let data = [];
-  //   var headerData = [{ width: 20, key: 'Owner' },
-  //   { width: 20, key: 'Account type' },
-  //   { width: 25, key: 'Balance as on' },
-  //   { width: 18, key: 'Rate' },
-  //   { width: 18, key: 'Balance mentioned' },
-  //   { width: 18, key: 'Account number' },
-  //   { width: 18, key: 'Bank name' },
-  //   { width: 15, key: 'Description' },
-  //   { width: 10, key: 'Status' }];
-  //   var header = ['Owner', 'Account type', ' Balance as on', 'Description', 'Status'];
-
-  //   if (value == 'Cash in hand') {
-  //     headerData = [
-  //       { width: 20, key: 'Owner' },
-  //       { width: 20, key: 'Account type' },
-  //       { width: 25, key: 'Balance as on' },
-  //       { width: 15, key: 'Description' },
-  //       { width: 10, key: 'Status' },
-  //     ];
-  //     this.cashInHandList.filteredData.forEach(element => {
-  //       data = [element.ownerName, (element.accountType), (element.balanceAsOn),
-  //       element.description, element.status];
-  //       this.excelData.push(Object.assign(data));
-  //     });
-  //     const footerData = [
-  //       'Total',
-  //       this.formatNumber.first.formatAndRoundOffNumber(this.sumOfCashValue),
-  //       '',
-  //       '', ,
-  //       ''
-  //     ];
-  //     this.footer.push(Object.assign(footerData));
-  //   } else {
-
-  //     header = [
-  //       'Owner',
-  //       'Account type',
-  //       'Balance as on',
-  //       'Rate',
-  //       'Balance mentioned',
-  //       'Account number',
-  //       'Bank name',
-  //       'Description',
-  //       'Status'
-  //     ];
-  //     this.bankAccountList.filteredData.forEach(element => {
-  //       data = [
-  //         element.ownerName,
-  //         (element.accountType == 1) ? 'Current' : 'Savings',
-  //         new Date(element.balanceAsOn),
-  //         (element.interestRate),
-  //         this.formatNumber.first.formatAndRoundOffNumber(element.accountBalance),
-  //         (element.account),
-  //         element.bankName,
-  //         element.description,
-  //         element.status
-  //       ];
-  //       this.excelData.push(Object.assign(data));
-  //     });
-  //     const footerData = ['Total', '', '', '', this.formatNumber.first.formatAndRoundOffNumber(this.totalAccountBalance), '', '', '', ''];
-  //     this.footer.push(Object.assign(footerData));
-  //   }
-  //   ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value);
-  // }
+  saveFile(blob) {
+    const userData = AuthService.getUserInfo();
+    saveAs(blob, userData.fullName + '-' + 'ordered-folios' + '.txt');
+  }
 
   exportToExcelSheet(value) {
     this.isTabDisabled = false;
@@ -236,19 +202,19 @@ const ELEMENT_DATA2: PeriodicElement1[] = [
   { name: 'HDFC Prudents Fund - Growth', folioNumber: '47471/80	', unitsIfanow: '520.90', unitsRta: '420.90', difference: '100.00', transactions: '6' },
 ];
 
-
-
 export interface PeriodicElement3 {
-  foliosOrdered: string;
-  file_order: string;
-  file_status: string;
-  id: string;
-  trx_file: string;
-  trx_added: string;
-  file_name: string;
-  download: string;
+  folios: string;
+  fileOrderDateTime: string;
+  status: string;
+  referenceId: string;
+  transactionAddedInFiles: string;
+  transactionAdded: string;
+  fileName: string;
+  fileUrl: string;
 
 }
 const ELEMENT_DATA3: PeriodicElement3[] = [
-  { foliosOrdered: 'IIFL Dividend Opportunities Index Fund - Growth', file_order: '7716853/43	', file_status: '0', id: '463.820', trx_file: '463.82', trx_added: ' ', file_name: '', download: '' },
+  { folios: '', fileOrderDateTime: '', status: '', referenceId: '', transactionAddedInFiles: '', transactionAdded: '', fileName: '', fileUrl: '' },
+  { folios: '', fileOrderDateTime: '', status: '', referenceId: '', transactionAddedInFiles: '', transactionAdded: '', fileName: '', fileUrl: '' },
+  { folios: '', fileOrderDateTime: '', status: '', referenceId: '', transactionAddedInFiles: '', transactionAdded: '', fileName: '', fileUrl: '' },
 ];

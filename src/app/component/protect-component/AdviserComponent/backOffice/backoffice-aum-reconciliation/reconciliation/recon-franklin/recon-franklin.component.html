@@ -1,1 +1,145 @@
-<p>recon-franklin works!</p>
+<div class="wrapper-20">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row justify-content-right" [formGroup]="selectBrokerForm">
+                <div class="col-md-6"></div>
+                <div class="col-md-4">
+                    <button class="btn-primary addon" mat-stroked-button color="primary"
+                        (click)="openAumReconciliation('','')">START
+                        RECONCILIATION</button>
+                </div>
+                <div class="col-md-2">
+                    <!-- <button mat-stroked-button class="btn-default br-0 help-btn">ARN-83865</button> -->
+                    <mat-select class="b-a" formControlName="selectBrokerId" placeholder="Select broker"
+                        (selectionChange)="getAumReconHistoryData($event)">
+                        <mat-option value="">
+                            Select Option
+                        </mat-option>
+                        <mat-option *ngFor="let broker of brokerList" [value]="broker.id">
+                            {{ broker.brokerCode }}
+                        </mat-option>
+                    </mat-select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row"
+        *ngIf="selectBrokerForm.get('selectBrokerId').valid && selectBrokerForm.get('selectBrokerId').touched">
+        <div class="col-md-12">
+            <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low" appSkeletonLoading
+                [appSkeletonLoading]="isLoading">
+                <ng-container matColumnDef="doneOn">
+                    <th mat-header-cell *matHeaderCellDef class="w-20"> Last Done On </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar">
+                            {{ element.doneOn | date: 'yyyy-MM-dd' }}
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="doneBy">
+                    <th mat-header-cell *matHeaderCellDef class="w-10"> Done By </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar">
+                            {{ element.doneBy }}
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="totalFolioCount">
+                    <th mat-header-cell *matHeaderCellDef class="w-20"> Total Folios </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar">
+                            {{ element.totalFolioCount }}
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="unmatchedCountBeforeRecon">
+                    <th mat-header-cell *matHeaderCellDef> Before Recon </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar">
+                            {{ element.unmatchedCountBeforeRecon }}
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="unmatchedCountAfterRecon">
+                    <th mat-header-cell *matHeaderCellDef> After Recon </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar">
+                            {{ element.unmatchedCountAfterRecon }}
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="aumBalanceDate">
+                    <th mat-header-cell *matHeaderCellDef> AUM Balance </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar">
+                            {{element.aumBalanceDate | date: 'yyyy-MM-dd'}}
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="transactionDate">
+                    <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar">
+                            {{ element.transactionDate | date: 'yyyy-MM-dd'}}
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="deleted">
+                    <th mat-header-cell *matHeaderCellDef> Delete </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar">
+                            {{ element.deleted ? 'Yes' : 'No'}}
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="reordered">
+                    <th mat-header-cell *matHeaderCellDef> Re ordered </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar">
+                            {{ element.reordered ? 'Yes': 'No'}}
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="orderSuccess">
+                    <th mat-header-cell *matHeaderCellDef> Success </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar">
+                            {{ element.orderSuccess }}
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="orderFailed">
+                    <th mat-header-cell *matHeaderCellDef> Failed </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar">
+                            {{ element.orderFailed }}
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-stroked-button class="btn-primary addon" color="primary"
+                            (click)="openAumReconciliation('report',element)">
+                            Report
+                        </button>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="row text-center"
+        *ngIf="selectBrokerForm.get('selectBrokerId').invalid && selectBrokerForm.get('selectBrokerId').untouched">
+        <div class="col-md-12 b-a p-44 mt-12 text-primitive">
+            Please Select Broker From the Drop down
+        </div>
+    </div>
+</div>
