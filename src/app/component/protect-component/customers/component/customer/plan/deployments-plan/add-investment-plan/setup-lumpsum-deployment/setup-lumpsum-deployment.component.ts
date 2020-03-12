@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SearchSchemeComponent } from '../../search-scheme/search-scheme.component';
 import { MatDialog } from '@angular/material';
+import { AddAmountComponent } from '../../add-amount/add-amount.component';
 
 @Component({
   selector: 'app-setup-lumpsum-deployment',
@@ -13,7 +14,7 @@ import { MatDialog } from '@angular/material';
 })
 export class SetupLumpsumDeploymentComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'icons'];
-  dataSource = ELEMENT_DATA;
+  // dataSource = ELEMENT_DATA;
   displayedColumns1: string[] = ['position', 'name', 'weight', 'icons'];
   dataSource1 = ELEMENT_DATA1;
   displayedColumns2: string[] = ['name', 'weight', 'height', 'test', 'icons'];
@@ -22,15 +23,20 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
   clientId: any;
   filterSchemeData: any;
   deploymentList: any;
+  dataSource: any;
+  isLoading = false;
+  schemeData: any;
+  dataForAddAmount: any;
 
-  constructor(private subInjectService: SubscriptionInject, private planService: PlanService, private eventService: EventService ,public dialog: MatDialog) { }
+  constructor(private subInjectService: SubscriptionInject, private planService: PlanService, private eventService: EventService, public dialog: MatDialog) { }
   @Input() set data(data) {
-    let lumpsum=[];
+    let lumpsum = [];
     data.deploymentIdList.forEach(element => {
-     lumpsum.push(element.id)
+      lumpsum.push(element.id)
     });
-    this.deploymentList=lumpsum
-    this.getDeploymentData(this.deploymentList)
+    this.deploymentList = lumpsum
+    this.getDeploymentData(this.deploymentList);
+    
   }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -39,15 +45,32 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
     // this.filterScheme();
   }
   getDeploymentData(data) {
+    this.isLoading = true;
+    this.dataSource = {
+      EQUITY: [{}, {}, {}],
+      DEBT: [{}, {}, {}],
+      equity_investment: [{}, {}, {}],
+      debt_investment: [{}, {}, {}]
+    }
     let obj =
     {
       deploymentIds: this.deploymentList
     }
     this.planService.getDeploymentDetailsdata(obj).subscribe(
       data => {
+        this.isLoading = false;
         console.log(data);
+        this.dataForAddAmount;
+        this.dataSource = data;
+        this.dataForAddAmount={
+            EQUITY:this.dataSource.EQUITY,
+            DEBT:this.dataSource.DEBT
+          }
       },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss');
+        this.isLoading = false;
+      }
     )
 
   }
@@ -55,6 +78,7 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
     this.planService.getMututalFundSchemeData().subscribe(
       data => {
         console.log(data)
+        this.schemeData=data
       }
     )
   }
@@ -86,15 +110,29 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
       }
     )
   }
-  openSearchandAdd(value) {
+  openPopup(value,data) {
     let componentName;
     let dialogRef
+    if(value=='addAmount'){
+      componentName = AddAmountComponent;
+      let sendData={
+        data:value,
+        dataForAddAmount:this.dataForAddAmount
+      }
+      dialogRef = this.dialog.open(componentName, {
+        width: '600px',
+        height: '300px',
+        data: sendData
+      });
+    }else{
       componentName = SearchSchemeComponent;
       dialogRef = this.dialog.open(componentName, {
         width: '600px',
         height: '300px',
         data: value
       });
+    }
+
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');

@@ -23,4 +23,7 @@ export class SearchSchemeComponent implements OnInit {
       amount:[(!data) ? '' : data.amount, [Validators.required]]
     });
   }
+  close() {
+    this.dialogRef.close()
+  }
 }

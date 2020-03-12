@@ -54,6 +54,7 @@ import { PersonalInsuranceComponent } from './insurance-plan/mainInsuranceScreen
 import { InsurancePlanModule } from './insurance-plan/insurance-plan.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SearchSchemeComponent } from './deployments-plan/search-scheme/search-scheme.component';
+import { AddAmountComponent } from './deployments-plan/add-amount/add-amount.component';
 
 export const componentList = [
   PreferencesComponent,
@@ -93,7 +94,7 @@ export const componentList = [
   SuggestHealthInsuranceComponent,
   HealthInsuranceComponent,
   SearchSchemeComponent,
-
+  AddAmountComponent
 ];
 // import { AddPlaninsuranceComponent } from './insurance-plan/add-planinsurance/add-planinsurance.component';
 

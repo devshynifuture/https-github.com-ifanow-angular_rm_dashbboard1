@@ -1,11 +1,6 @@
 <div class="p-24">
-    <!-- <h3>Search scheme</h3> -->
+    <h3>Search scheme</h3>
     <div [formGroup]="searchSchemeForm" class="row pt-4">
-        <div class="row">
-            <div class="col-md-12 p-0 text-left">
-                <h5 class="m-0 pt-28 text-black pb-12">Search scheme</h5>
-            </div>
-        </div>
         <div class="row">
             <div class="col-md-11 p-0">
                 <div class="form-group">
@@ -28,7 +23,6 @@
                                     Selected scheme does not exist
                                 </mat-error> -->
                         <mat-hint align="start" class="f-12 text-custom">Last closing NAV:
-                            {{navOfSelectedScheme}}
                         </mat-hint>
                     </mat-form-field>
                 </div>
@@ -41,7 +35,7 @@
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Amount</h5>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-5">
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
                         <input matInput #accBal appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
