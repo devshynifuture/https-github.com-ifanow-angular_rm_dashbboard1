@@ -1,2 +1,64 @@
-<p>search-scheme works!</p>
-{{this.data}}
+<div class="p-24">
+    <!-- <h3>Search scheme</h3> -->
+    <div [formGroup]="searchSchemeForm" class="row pt-4">
+        <div class="row">
+            <div class="col-md-12 p-0 text-left">
+                <h5 class="m-0 pt-28 text-black pb-12">Search scheme</h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-11 p-0">
+                <div class="form-group">
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <input type="text" aria-label="Number" formControlName="schemeName" class="form-control"
+                            matInput (keyup)="getSchemeList($event.target.value)" [matAutocomplete]="auto"
+                            placeholder="Start typing to see scheme names">
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option (onSelectionChange)="selectedScheme(scheme)" *ngFor="let scheme of schemeList"
+                                [value]="scheme.schemeName">
+                                {{scheme.schemeName}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <!-- <mat-error class="f-12"
+                                    *ngIf="purchaseTransaction.get('schemePurchase').errors?.required">
+                                    This field is required
+                                </mat-error>
+                                <mat-error class="f-12"
+                                    *ngIf="purchaseTransaction.get('schemePurchase').errors?.setValue">
+                                    Selected scheme does not exist
+                                </mat-error> -->
+                        <mat-hint align="start" class="f-12 text-custom">Last closing NAV:
+                            {{navOfSelectedScheme}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-1" *ngIf="showSpinner == true">
+                <mat-spinner class="mt-8"></mat-spinner>
+            </div>
+        </div>
+        <div class="row pt-40">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8">Amount</h5>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group mb-0 iconRupess">
+                    <mat-form-field>
+                        <input matInput #accBal appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                            autocomplete="off" class="form-control rupess br-0" formControlName="amount"
+                            matInput type="text" maxlength="10">
+                        <mat-error  class="f-12">
+                            This field is required
+                        </mat-error>
+                        <mat-hint align="end" class="f-12">{{accBal.value.length}}/10</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="f-right mt-44">
+        <button mat-raised-button (click)="close()">CANCEL</button>
+        <button mat-raised-button (click)="addExclusions()" class="text-primary">ADD</button>
+    </div>
+</div>
