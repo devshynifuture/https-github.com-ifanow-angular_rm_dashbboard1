@@ -28,9 +28,7 @@ export class LeftSideInnUccListComponent implements OnInit {
     @Input()
     set data(data) {
       this.inputData = data;
-      if(data == 'close'){
-        this.close()
-      }
+    console.log('dondtaa == ',data)
     }
   
     get data() {

@@ -67,14 +67,13 @@ export class NomineeDetailsIinComponent implements OnInit {
     this.nominee = []
   }
   close() {
+    this.changedValue = 'close'
     const fragmentData = {
       direction: 'top',
-      componentName: NomineeDetailsIinComponent,
       state: 'close'
     };
 
     this.eventService.changeUpperSliderState(fragmentData);
-    this.changedValue = 'close'
   }
   getdataForm(data) {
 
@@ -99,7 +98,7 @@ export class NomineeDetailsIinComponent implements OnInit {
   }
   pinInvalid: boolean = false;
   openBankDetails() {
-    const subscription = this.processTransaction.openBank(this.allData.bankDetailList).subscribe(
+    const subscription = this.processTransaction.openBank(this.allData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           subscription.unsubscribe();

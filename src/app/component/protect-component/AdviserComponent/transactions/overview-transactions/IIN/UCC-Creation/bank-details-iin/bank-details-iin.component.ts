@@ -36,17 +36,20 @@ export class BankDetailsIINComponent implements OnInit {
   bank: any;
   temp: any;
   changedValue: string;
+  genralDetails: any;
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
     private processTransaction: ProcessTransactionService,
-    private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
+    private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
   @Input()
   set data(data) {
     this.inputData = data;
     this.holdingList = data
-    if (data) {
-      this.firstHolderBank = data[0]
-      this.secondHolderBank = data[1]
-      this.thirdHolderBank = data[2]
+    this.genralDetails = data.generalDetails
+    if (data && data.bankDetailList) {
+      this.firstHolderBank = data.bankDetailList[0]
+      this.secondHolderBank = data.bankDetailList[1]
+      this.thirdHolderBank = data.bankDetailList[2]
+      this.genralDetails = data.generalDetails
       this.getdataForm(this.firstHolderBank);
     }
     console.log('#######', this.holdingList)
@@ -55,43 +58,38 @@ export class BankDetailsIINComponent implements OnInit {
   get data() {
     return this.inputData;
   }
- // @Output() changedValue = new EventEmitter();
+  // @Output() changedValue = new EventEmitter();
   ngOnInit() {
     if (this.firstHolderBank) {
       this.getdataForm(this.firstHolderBank)
     } else {
       this.getdataForm('')
     }
-
+    this.changedValue = ''
     this.bank = []
     this.sendObj = []
     this.temp = []
-    if(this.holdingList){
+    if (this.holdingList) {
       this.temp.push(this.holdingList.firstHolder)
       this.temp.push(this.holdingList.secondHolder)
       this.temp.push(this.holdingList.thirdHolder)
     }
   }
   close() {
-    const fragmentData = {
-      direction: 'top',
-      componentName: BankDetailsIINComponent,
-      state: 'close'
-    };
-
-    this.eventService.changeUpperSliderState(fragmentData);
     this.changedValue = 'close'
-  }
-  Close() {
     const fragmentData = {
       direction: 'top',
-      componentName: LeftSideInnUccListComponent,
       state: 'close'
     };
 
     this.eventService.changeUpperSliderState(fragmentData);
   }
   getdataForm(data) {
+    if (!data) {
+      data = {
+        address: {}
+      }
+    }
     this.bankDetails = this.fb.group({
       ifscCode: [(!data) ? '' : data.ifscCode, [Validators.required]],
       bankName: [!data ? '' : data.bankName, [Validators.required]],
@@ -101,8 +99,8 @@ export class BankDetailsIINComponent implements OnInit {
       branchCode: [!data ? '' : data.branchCode, [Validators.required]],
       firstHolder: [!data ? '' : data.firstHolder, [Validators.required]],
       branchName: [!data ? '' : data.branchName, [Validators.required]],
-      branchAdd1: [!data.address ? '' : data.address.branchAdd1, [Validators.required]],
-      branchAdd2: [!data.address ? '' : data.address.branchAdd2, [Validators.required]],
+      branchAdd1: [!data.address ? '' : data.address.address1, [Validators.required]],
+      branchAdd2: [!data.address ? '' : data.address.address2, [Validators.required]],
       pinCode: [!data.address ? '' : data.address.pinCode, [Validators.required]],
       city: [!data.address ? '' : data.address.city, [Validators.required]],
       state: [!data.address ? '' : data.address.state, [Validators.required]],
@@ -235,14 +233,15 @@ export class BankDetailsIINComponent implements OnInit {
       });
       var temp1 = this.holdingList.generalDetails;
       this.sendObj = {
-        ownerName: temp1.ownerName,
-        holdingType: temp1.holdingNature,
-        taxStatus: temp1.taxStatus,
-        familyMemberId: temp1.familyMemberId,
-        clientId: temp1.clientId,
-        advisorId: temp1.advisorId,
+        ownerName: this.genralDetails.ownerName,
+        holdingType: this.genralDetails.holdingNature,
+        taxStatus: this.genralDetails.taxStatus,
+        familyMemberId: this.genralDetails.familyMemberId,
+        clientId: this.genralDetails.clientId,
+        advisorId: this.genralDetails.advisorId,
         holderList: this.temp,
         bankDetailList: this.bank,
+        generalDetails: this.genralDetails
       }
       console.log('##### bank ######', this.sendObj)
       this.openNomineeDetails(this.sendObj)

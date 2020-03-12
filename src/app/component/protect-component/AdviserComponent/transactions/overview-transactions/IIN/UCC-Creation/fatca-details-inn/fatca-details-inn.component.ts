@@ -7,6 +7,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { OnlineTransactionService } from '../../../../online-transaction.service';
 import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
+import { SubmitReviewInnComponent } from '../submit-review-inn/submit-review-inn.component';
+import { LeftSideInnUccListComponent } from '../left-side-inn-ucc-list/left-side-inn-ucc-list.component';
 
 @Component({
   selector: 'app-fatca-details-inn',
@@ -38,15 +40,13 @@ export class FatcaDetailsInnComponent implements OnInit {
     this.getdataForm('')
   }
   close(){
+    this.changedValue = 'close'
     const fragmentData = {
       direction: 'top',
-      componentName: FatcaDetailsInnComponent,
       state: 'close'
     };
 
     this.eventService.changeUpperSliderState(fragmentData);
-    this.changedValue = 'close'
-
   }
   openNomineeDetails(){
    const subscription = this.processTransaction.openNominee(this.allData).subscribe(
@@ -119,6 +119,7 @@ export class FatcaDetailsInnComponent implements OnInit {
         holderList: this.allData.holderList,
         bankDetailList: this.allData.bankDetailList,
         nomineeList: this.allData.nomineeList,
+        generalDetails: this.allData.generalDetails,
         fatcaDetail: obj,
         id: 2,
         aggregatorType: 1,
@@ -129,15 +130,25 @@ export class FatcaDetailsInnComponent implements OnInit {
         confirmationFlag: 1,
         tpUserSubRequestClientId1: 2,
       }
-      this.onlineTransact.createIINUCC(obj1).subscribe(
-          data => this.createIINUCCRes(data), (error) => {
-            this.eventService.showErrorMessage(error);
-          }
-        );
+      this.openReviwSubmit(obj1);
     }
   }
-  createIINUCCRes(data){
-    console.log('data respose =',data)
+  openReviwSubmit(data){
+    var temp = {
+      flag: 'app-upper-customer',
+      id: 1,
+      data,
+      direction: 'top',
+      componentName: SubmitReviewInnComponent,
+      state: 'open'
+    }
+    const subscription = this.eventService.changeUpperSliderState(temp).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          subscription.unsubscribe();
+        }
+      }
+    );
   }
    // this.onlineTransact.createIINUCC(obj).subscribe(
   //   data => this.createIINUCCRes(data), (error) => {

@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
+import { LeftSideInnUccListComponent } from '../left-side-inn-ucc-list/left-side-inn-ucc-list.component';
 
 @Component({
   selector: 'app-personal-details-inn',
@@ -29,6 +30,7 @@ export class PersonalDetailsInnComponent implements OnInit {
   replaceObj: { panNumber: any; clientName: any; madianName: any; fatherName: any; motherName: any; dateOfBirth: any; gender: any; martialStatus: any; };
   validatorType = ValidatorType
   changedValue: string;
+  doneData: string;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private processTransaction: ProcessTransactionService,
@@ -61,14 +63,13 @@ export class PersonalDetailsInnComponent implements OnInit {
     this.obj1 = []
   }
   close() {
+    this.changedValue = 'close'
     const fragmentData = {
       direction: 'top',
-      componentName: PersonalDetailsInnComponent,
       state: 'close'
     };
 
     this.eventService.changeUpperSliderState(fragmentData);
-    this.changedValue = 'close'
   }
   getdataForm(data) {
 
@@ -134,6 +135,7 @@ export class PersonalDetailsInnComponent implements OnInit {
     this.obj1.thirdHolder = this.thirdHolder;
     this.obj1.generalDetails = this.generalDetails;
     if (flag == true) {
+      this.doneData = 'personal'
       this.openContactDetails(this.obj1);
     }
   }

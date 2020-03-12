@@ -34,6 +34,7 @@ export class ContactDetailsInnComponent implements OnInit {
   getObj: void;
   contacts: any[];
   changedValue: string;
+  generalDetails: any;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
     private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
@@ -54,6 +55,7 @@ export class ContactDetailsInnComponent implements OnInit {
       this.thirdHolderContact = data.thirdHolder
       this.getdataForm(this.firstHolderContact)
     }
+    this.generalDetails = data.generalDetails
     console.log('################## = ', this.list)
   }
 
@@ -73,19 +75,9 @@ export class ContactDetailsInnComponent implements OnInit {
     console.log('holding list', this.holdingList)
   }
   close() {
-    const fragmentData = {
-      direction: 'top',
-      componentName: ContactDetailsInnComponent,
-      state: 'close'
-    };
-
-    this.eventService.changeUpperSliderState(fragmentData);
     this.changedValue = 'close'
-  }
-  Close() {
     const fragmentData = {
       direction: 'top',
-      componentName: LeftSideInnUccListComponent,
       state: 'close'
     };
 
@@ -214,7 +206,7 @@ export class ContactDetailsInnComponent implements OnInit {
       this.sendObj.firstHolder = Object.assign({}, this.list.firstHolder, this.contacts[0]);
       this.sendObj.secondHolder = Object.assign({}, this.list.secondHolder, this.contacts[1]);
       this.sendObj.thirdHolder = Object.assign({}, this.list.thirdHolder, this.contacts[2]);
-      this.sendObj.generalDetails = this.list.generalDetails
+      this.sendObj.generalDetails = this.generalDetails
 
       this.openBankDetails(this.sendObj)
     }

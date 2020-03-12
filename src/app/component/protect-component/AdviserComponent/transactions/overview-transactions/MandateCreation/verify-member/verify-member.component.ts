@@ -1,31 +1,32 @@
 import { Component, OnInit } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Validators, FormBuilder } from '@angular/forms';
+import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
+import { ProcessTransactionService } from '../../doTransaction/process-transaction.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { DatePipe } from '@angular/common';
 import { UtilService } from 'src/app/services/util.service';
+import { OnlineTransactionService } from '../../../online-transaction.service';
 import { EventService } from 'src/app/Data-service/event.service';
-import { OnlineTransactionService } from '../../../../online-transaction.service';
-import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
+import { MandateCreationComponent } from '../mandate-creation/mandate-creation.component';
 
 @Component({
-  selector: 'app-iin-ucc-creation',
-  templateUrl: './iin-ucc-creation.component.html',
-  styleUrls: ['./iin-ucc-creation.component.scss']
+  selector: 'app-verify-member',
+  templateUrl: './verify-member.component.html',
+  styleUrls: ['./verify-member.component.scss']
 })
-export class IinUccCreationComponent implements OnInit {
+export class VerifyMemberComponent implements OnInit {
   nomineesListFM: any;
   showSpinnerOwner = false;
   familyMemberData: any;
   familyMemberId: any;
   generalDetails: any;
+  clientCodeData: any;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,private processTrasaction : ProcessTransactionService,
     private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
     private onlineTransact: OnlineTransactionService, public eventService: EventService) { }
 
   ngOnInit() {
-    this.getIINUCCRegistration()
     this.getdataForm('')
   }
 
@@ -51,47 +52,8 @@ export class IinUccCreationComponent implements OnInit {
   getFormControl(): any {
     return this.generalDetails.controls;
   }
-  openPersonalDetails(data) {
 
-    const subscription = this.processTrasaction.openPersonal(data).subscribe(
-      upperSliderData => {
-        if (UtilService.isDialogClose(upperSliderData)) {
-          // this.getClientSubscriptionList();
-          subscription.unsubscribe();
-        }
-      }
-    );
-
-    // const fragmentData = {
-    //   flag: 'app-upper-customer',
-    //   id: 1,
-    //   data,
-    //   direction: 'top',
-    //   componentName: PersonalDetailsInnComponent,
-    //   state: 'open'
-    // };
-    // const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-    //   upperSliderData => {
-    //     if (UtilService.isDialogClose(upperSliderData)) {
-    //       // this.getClientSubscriptionList();
-    //       subscription.unsubscribe();
-    //     }
-    //   }
-    // );
-  }
-  getIINUCCRegistration() {
-    let obj = {
-      id: 2,
-    }
-
-    this.onlineTransact.getIINUCCRegistration(obj).subscribe(
-      data => this.getIINUCCRegistrationRes(data), (error) => {
-      }
-    );
-  }
-  getIINUCCRegistrationRes(data) {
-    console.log('INN UCC CREATION DATA GET', data)
-  }
+ 
 
   lisNominee(value) {
     //this.showSpinnerOwner = false
@@ -113,6 +75,7 @@ export class IinUccCreationComponent implements OnInit {
     this.familyMemberData = value;
     this.familyMemberId = value.familyMemberId
     this.familyMemberId = value.id;
+    this.ownerDetail()
   }
   saveGeneralDetails(data){
     let obj = {
@@ -123,6 +86,50 @@ export class IinUccCreationComponent implements OnInit {
       advisorId: this.familyMemberData.advisorId,
       taxStatus: this.generalDetails.controls.taxStatus.value,
     }
-    this.openPersonalDetails(obj);
+    this.openMandate(null)
+  }
+  ownerDetail() {
+    
+      const obj = {
+        clientId: this.familyMemberData.clientId,
+        advisorId: this.familyMemberData.advisorId,
+        familyMemberId: this.familyMemberData.familyMemberId,
+        tpUserCredentialId: 292
+      }
+      // let obj = {
+      //   "advisorId": 414,
+      //   "familyMemberId": 112166,
+      //   "clientId": 53637
+      // }
+      this.onlineTransact.getClientCodes(obj).subscribe(
+        data => {
+          console.log(data);
+          this.clientCodeData = data;
+        },
+        err => this.eventService.openSnackBar(err, 'Dismiss')
+      );
+  }
+  selectIINUCC(){
+    
+  }
+  openMandate(data){
+    const fragmentData = {
+      flag: 'mandate',
+      data,
+      id: 1,
+      state: 'open',
+      componentName: MandateCreationComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+
+        if (UtilService.isRefreshRequired(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+
+        }
+        rightSideDataSub.unsubscribe();
+      }
+    );
   }
 }
