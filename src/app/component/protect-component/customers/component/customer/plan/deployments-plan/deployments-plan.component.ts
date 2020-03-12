@@ -85,10 +85,10 @@ export class DeploymentsPlanComponent implements OnInit {
     });
 
   }
-  deleteDeployment(deleteData) {
+  deleteDeployment(deleteData,flag) {
     const dialogData = {
-      data: deleteData,
-      header: 'DELETE DEPLOYMENT',
+      data: flag,
+      header: 'DELETE',
       body: 'Are you sure you want to delete?',
       body2: 'This cannot be undone.',
       btnYes: 'CANCEL',

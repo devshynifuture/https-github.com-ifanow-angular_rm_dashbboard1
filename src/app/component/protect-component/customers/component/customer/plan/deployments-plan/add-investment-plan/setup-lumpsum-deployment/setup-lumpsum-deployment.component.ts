@@ -3,6 +3,8 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { PlanService } from '../../../plan.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
+import { SearchSchemeComponent } from '../../search-scheme/search-scheme.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-setup-lumpsum-deployment',
@@ -11,18 +13,17 @@ import { EventService } from 'src/app/Data-service/event.service';
 })
 export class SetupLumpsumDeploymentComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'icons'];
-  // dataSource = ELEMENT_DATA;
+  dataSource = ELEMENT_DATA;
   displayedColumns1: string[] = ['position', 'name', 'weight', 'icons'];
-  // dataSource1 = ELEMENT_DATA1;
+  dataSource1 = ELEMENT_DATA1;
   displayedColumns2: string[] = ['name', 'weight', 'height', 'test', 'icons'];
   dataSource2 = ELEMENT_DATA2;
   advisorId: any;
   clientId: any;
   filterSchemeData: any;
   deploymentList: any;
-  dataSource: any;
-  dataSource1: any;
-  constructor(private subInjectService: SubscriptionInject, private planService: PlanService, private eventService: EventService) { }
+
+  constructor(private subInjectService: SubscriptionInject, private planService: PlanService, private eventService: EventService ,public dialog: MatDialog) { }
   @Input() set data(data) {
     let lumpsum=[];
     data.deploymentIdList.forEach(element => {
@@ -45,8 +46,6 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
     this.planService.getDeploymentDetailsdata(obj).subscribe(
       data => {
         console.log(data);
-        this.dataSource=data.Equity
-        this.dataSource1=data.Debt
       },
       err => this.eventService.openSnackBar(err, 'Dismiss')
     )
@@ -86,6 +85,21 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
         this.filterSchemeData = data;
       }
     )
+  }
+  openSearchandAdd(value) {
+    let componentName;
+    let dialogRef
+      componentName = SearchSchemeComponent;
+      dialogRef = this.dialog.open(componentName, {
+        width: '600px',
+        height: '300px',
+        data: value
+      });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+
   }
   addPurchaseScheme() {
     let obj = {
