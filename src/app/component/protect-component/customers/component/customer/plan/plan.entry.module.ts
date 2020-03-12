@@ -55,6 +55,9 @@ import { InsurancePlanModule } from './insurance-plan/insurance-plan.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SearchSchemeComponent } from './deployments-plan/search-scheme/search-scheme.component';
 import { AddAmountComponent } from './deployments-plan/add-amount/add-amount.component';
+import { Ng5SliderModule } from 'ng5-slider';
+import { SingleGoalYearComponent } from './goals-plan/single-goal-year/single-goal-year.component';
+import { MultiYearGoalComponent } from './goals-plan/multi-year-goal/multi-year-goal.component';
 
 export const componentList = [
   PreferencesComponent,
@@ -113,11 +116,14 @@ export const componentList = [
     ReactiveFormsModule,
     CustomDirectiveModule,
     InsurancePlanModule,
-    DragDropModule
+    DragDropModule,
+    Ng5SliderModule
   ],
   exports: [
     FormsModule,
-    ReactiveFormsModule],
+    ReactiveFormsModule,
+    DragDropModule,
+    Ng5SliderModule],
   entryComponents: [componentList],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

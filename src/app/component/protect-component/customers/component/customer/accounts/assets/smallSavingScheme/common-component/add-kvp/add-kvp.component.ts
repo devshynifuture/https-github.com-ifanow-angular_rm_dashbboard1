@@ -167,7 +167,7 @@ export class AddKvpComponent implements OnInit {
     this.close(true);
   }
   addKVPResponse(data) {
-    (this.editApi) ? this.eventService.openSnackBar("KVP is edited", "Dismiss") : this.eventService.openSnackBar("KVP is added", "added")
+    (this.editApi) ? this.eventService.openSnackBar("Updated successfully!", "Dismiss") : this.eventService.openSnackBar("Added successfully!", "added")
     console.log(data)
     this.close(true);
   }

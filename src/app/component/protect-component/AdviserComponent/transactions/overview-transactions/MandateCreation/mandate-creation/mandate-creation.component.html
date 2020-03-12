@@ -1,0 +1,283 @@
+<div class="popup-header-fix-60">
+    <div class="row bb-1">
+        <div class="col-md-8 p-0">
+            <h4 class="mb-0 wrapper-20"> CREATE MANDATE</h4>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12">
+                <i class="material-icons c-p pt-8 v-middle" (click)="Close(false)"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pt-60 mb-100" [formGroup]="bankDetails">
+    <div class="row">
+        <div class="col-md-7 offset-2 p-0 bl-1 ">
+            <div class="p-20">
+                <div class="row">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> IFSC code </h3>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC"
+                                formControlName="ifscCode" maxlength="11" type="number" class="form-control">
+                            <mat-hint align="end" class="f-12 text-custom">
+                                0 / 11
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Bank name </h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <input appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" matInput
+                                formControlName="bankName" maxlength="10" type="text" class="form-control">
+
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-10 m-0">MICR code</h3>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" maxlength="10" formControlName="micrCode" type="text" class="form-control">
+                            <mat-hint align="end" class="f-12 text-custom">
+                                0 / 10
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+
+                </div>
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Account number</h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="16" appInputValueValidation
+                                matInput maxlength="10" formControlName="accountNumber" type="text"
+                                class="form-control">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Account type </h3>
+                    </div>
+                    <div class="col-md-8">
+
+                        <mat-radio-group aria-label="Select an option" formControlName="accountType">
+                            <mat-radio-button value="1"
+                                class="b-a-custom bor_top_tb_left radioBtnSmall  text-primary custom-radio">
+                                Savings
+                            </mat-radio-button>
+                            <mat-radio-button value="2" class="radioBtnSmall radio-border custom-radio">
+                                Current </mat-radio-button>
+                            <mat-radio-button value="3" class="radioBtnSmall radio-border pr-12 custom-radio">
+                                Cash credit </mat-radio-button>
+
+                        </mat-radio-group>
+
+                    </div>
+                </div>
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> First holder name </h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <input matInput maxlength="10" appInputValueValidation
+                                [inputValidator]="validatorType.TEXT_ONLY" formControlName="firstHolder" type="text"
+                                class="form-control">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        + Add more
+                    </div>
+                </div>
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Branch name </h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <input matInput maxlength="30"  appInputValueValidation
+                            [inputValidator]="validatorType.TEXT_ONLY" formControlName="branchName" type="text"
+                                class="form-control">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Branch code </h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <input matInput appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="branchCode" maxlength="10" type="text"
+                                class="form-control">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Branch address line 1 </h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <input matInput maxlength="30" formControlName="branchAdd1" type="text"
+                                class="form-control">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Branch address line 2 </h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <input matInput maxlength="30" formControlName="branchAdd2" type="text"
+                                class="form-control">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Branch Pin code </h3>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input #pincode [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6"
+                                (focusout)="getPostalPin($event.target.value)" appInputValueValidation matInput
+                                maxlength="10" formControlName="pinCode" type="text" class="form-control">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Branch state </h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <input matInput maxlength="30" formControlName="state" type="text" class="form-control">
+
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Branch city </h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <input matInput maxlength="30" formControlName="city" type="text" class="form-control">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Branch Country </h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <input matInput maxlength="30" formControlName="country" type="text" class="form-control">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Branch proof type </h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <mat-select class="form-control" formControlName="branchProof">
+                                <mat-option value="Resident individual"> Resident individual </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+                <h3 class="f-18 mb-12 mt-44 f-600"> Bank mandate </h3>
+
+
+                <div class="row">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Register mandate </h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-radio-group aria-label="Select an option" formControlName="bankMandate">
+                            <mat-radio-button value="1"
+                                class="b-a-custom bor_top_tb_left pr-12 radioBtnSmall  text-primary custom-radio">
+                                Physical
+                            </mat-radio-button>
+                            <mat-radio-button value="2" class="radioBtnSmall radio-border custom-radio">
+                                Biler </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Mandate date </h3>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput class="form-control" formControlName="mandateDate" [matDatepicker]="picker">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Mandate amount </h3>
+                    </div>
+                    <div class="col-md-3 iconRupess">
+                        <mat-form-field>
+                            <input matInput maxlength="10" formControlName="mandateAmount" type="text"
+                                class="form-control rupess">
+
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="bottom-fixed wrapper-12 pt-16">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
+                </div>
+                <div class="col-md-8 right text-right">
+                    <button mat-button class="btn-bottom br-0 text-inherit" (click)="createMandate()">Save</button>
+                </div>
+            </div>
+        </div>

@@ -13,7 +13,8 @@
 
 <div [formGroup]="transactionAddForm">
     <!-- first page -->
-    <div class="pt-90 pr-40 pl-40 pb-40" *ngIf="formStep == 'step-1' || formStep == 'step-2' && transactionType==undefined">
+    <div class="pt-90 pr-40 pl-40 pb-40"
+        *ngIf="formStep == 'step-1' || formStep == 'step-2' && transactionType==undefined">
         <div class="row">
             <div class="col-md-8 p-0">
                 <h5 class="m-0 text-black pb-12">Select an investor from the search box below...</h5>
@@ -22,9 +23,7 @@
                         (keyup)="ownerList($event.target.value)" (valueChange1)='lisNominee($event)' #searchClient
                         [matAutocomplete]="auto1" aria-label="client" class="form-control pl-8"
                         formControlName="ownerName" matInput>
-
                     <mat-autocomplete #auto1="matAutocomplete">
-                        <!-- <mat-option value=''>Search family members</mat-option> -->
                         <mat-option (onSelectionChange)="ownerDetails(f)" *ngFor="let f of nomineesListFM"
                             [value]="f.name">
                             <span>{{f.name}}</span>
@@ -33,13 +32,9 @@
                     <mat-error class="f-12 pt-4" *ngIf="transactionAddForm.get('ownerName').errors?.required">
                         This field is required
                     </mat-error>
-                    <!-- <mat-error class="f-12" *ngIf="transactionAddForm.get('ownerName').errors?.isFamilyListInvalid">
-                        This family member dose not exist
-                    </mat-error> -->
                     <mat-error class="f-12" *ngIf="transactionAddForm.get('ownerName').errors?.setValue">
                         This family member does not exist
                     </mat-error>
-                    <!-- {{transactionAddForm.get('ownerName').errors.setValue}} -->
                 </mat-form-field>
             </div>
             <div class="col-md-1 align-items-end d-flex" *ngIf="showSpinnerOwner == true">
@@ -371,12 +366,18 @@
         </button>
     </div>
     <div>
-        <app-purchase-trasaction *ngIf="transactionType=='PURCHASE'" [data]='transactionData' (changedValue)="getResponse($event)"></app-purchase-trasaction>
-        <app-switch-transaction *ngIf="transactionType=='SWITCH'" [data]='transactionData' (changedValue)="getResponse($event)"></app-switch-transaction>
-        <app-redemption-transaction *ngIf="transactionType=='REDEMPTION'" [data]='transactionData' (changedValue)="getResponse($event)"></app-redemption-transaction>
-        <app-sip-transaction *ngIf="transactionType=='SIP'" [data]='transactionData' (changedValue)="getResponse($event)"></app-sip-transaction>
-        <app-stp-transaction *ngIf="transactionType=='STP'" [data]='transactionData' (changedValue)="getResponse($event)"></app-stp-transaction>
-        <app-swp-transaction *ngIf="transactionType=='SWP'" [data]='transactionData' (changedValue)="getResponse($event)"></app-swp-transaction>
+        <app-purchase-trasaction *ngIf="transactionType=='PURCHASE'" [data]='transactionData'
+            (changedValue)="getResponse($event)"></app-purchase-trasaction>
+        <app-switch-transaction *ngIf="transactionType=='SWITCH'" [data]='transactionData'
+            (changedValue)="getResponse($event)"></app-switch-transaction>
+        <app-redemption-transaction *ngIf="transactionType=='REDEMPTION'" [data]='transactionData'
+            (changedValue)="getResponse($event)"></app-redemption-transaction>
+        <app-sip-transaction *ngIf="transactionType=='SIP'" [data]='transactionData'
+            (changedValue)="getResponse($event)"></app-sip-transaction>
+        <app-stp-transaction *ngIf="transactionType=='STP'" [data]='transactionData'
+            (changedValue)="getResponse($event)"></app-stp-transaction>
+        <app-swp-transaction *ngIf="transactionType=='SWP'" [data]='transactionData'
+            (changedValue)="getResponse($event)"></app-swp-transaction>
     </div>
     <div class="bottom-fixed row pl-20 pr-20 w-65 d-flex align-items-center" *ngIf="transactionType==undefined">
 
@@ -388,7 +389,7 @@
             *ngIf="noSubBroker==false && noMapping==false ">
             <button mat-button class="btn-green text-white" (click)="saveAndNext()">NEXT</button>
         </div>
-<!-- 
+        <!-- 
         <div class="col-md-8 p-0 d-flex align-item-center justifly-content-end" *ngIf="formStep == 'step-3' && transactionType!=undefined">
             {{formStep}}
             <button class="br-0 text-success f-14" (click)="saveAndAddAnother()" mat-button mat-raised-button>

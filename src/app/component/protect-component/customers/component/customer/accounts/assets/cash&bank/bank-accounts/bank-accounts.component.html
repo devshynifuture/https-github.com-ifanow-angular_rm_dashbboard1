@@ -22,7 +22,7 @@
                 <mat-select matInput appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
                     [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Search family members</mat-option>
-                    <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
+                    <mat-option *ngFor="let f of nomineesListFM" [value]="f">
                         <span>{{f.userName}}</span>
                     </mat-option>
                 </mat-select>
@@ -60,7 +60,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input matInput #accountBalance type="text" appInputValueValidation
+                    <input autocomplete="off" matInput #accountBalance type="text" appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess"
                         formControlName="accountBalance">
                     <mat-error class="f-12"
@@ -79,8 +79,8 @@
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <input matInput (focus)="picker.open()" formControlName="balanceAsOn" class="form-control br-0"
-                    [matDatepicker]="picker" readonly>
+                <input matInput autocomplete="off" (focus)="picker.open()" formControlName="balanceAsOn"
+                    class="form-control br-0" [matDatepicker]="picker" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error class="f-12"
@@ -98,8 +98,9 @@
         <div class="col-md-3">
             <div class="form-group mb-0 iconPetage">
                 <mat-form-field>
-                    <input matInput type="number" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                        class="form-control br-0 percentage" formControlName="interestRate" (keyup)="onChange($event)">
+                    <input matInput autocomplete="off" type="number" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage"
+                        formControlName="interestRate" (keyup)="onChange($event)">
                     <mat-error class="f-12"
                         [ngClass]="{'v-h':!(isInterestRate && getFormControl().interestRate.invalid || getFormControl().interestRate.touched && getFormControl().interestRate.invalid)}">
                         This field is required
@@ -150,7 +151,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #bankName maxlength="60" appInputValueValidation
+                        <input autocomplete="off" matInput #bankName maxlength="60" appInputValueValidation
                             [inputValidator]="validatorType.TEXT_ONLY" class="form-control br-0"
                             formControlName="bankName">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
@@ -166,7 +167,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #bankAcNo type="text" appInputValueValidation
+                        <input autocomplete="off" matInput #bankAcNo type="text" appInputValueValidation
                             [inputValidator]="validatorType.NUMBER_ONLY" maxlength="16" class="form-control br-0"
                             formControlName="bankAcNo">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
@@ -183,7 +184,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #description maxlength="60" class="form-control br-0"
+                        <input autocomplete="off" matInput #description maxlength="60" class="form-control br-0"
                             formControlName="description">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
