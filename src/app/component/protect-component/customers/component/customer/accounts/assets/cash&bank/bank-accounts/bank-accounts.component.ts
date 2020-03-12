@@ -176,17 +176,23 @@ export class BankAccountsComponent implements OnInit {
       }
       if (this.flag == "addBANK") {
         this.custumService.addBankAccounts(obj).subscribe(
-          data => this.addBankAccountsRes(data)
+          data => this.addBankAccountsRes(data), (error) => {
+            this.eventService.showErrorMessage(error);
+          }
         );
       } else if (this.flag == 'adviceBankAccount') {
         this.custumService.getAdviceBankAccount(adviceObj).subscribe(
-          data => this.getAdviceBankAccountRes(data),
+          data => this.getAdviceBankAccountRes(data), (error) => {
+            this.eventService.showErrorMessage(error);
+          }
         );
       } else {
         //edit call
         obj['id'] = this.editData.id,
           this.custumService.editBankAcounts(obj).subscribe(
-            data => this.editBankAcountsRes(data)
+            data => this.editBankAcountsRes(data), (error) => {
+              this.eventService.showErrorMessage(error);
+            }
           );
       }
     }

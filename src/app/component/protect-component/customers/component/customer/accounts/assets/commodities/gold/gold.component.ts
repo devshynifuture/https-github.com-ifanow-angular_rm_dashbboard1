@@ -159,16 +159,22 @@ export class GoldComponent implements OnInit {
       }
       if (this.flag == "addGOLD") {
         this.custumService.addGold(obj).subscribe(
-          data => this.addGoldRes(data)
+          data => this.addGoldRes(data), (error) => {
+            this.eventService.showErrorMessage(error);
+          }
         );
       } else if (this.flag == 'adviceGOLD') {
         this.custumService.getAdviceGold(adviceObj).subscribe(
-          data => this.getAdviceGoldRes(data),
+          data => this.getAdviceGoldRes(data), (error) => {
+            this.eventService.showErrorMessage(error);
+          }
         );
       } else {
         //edit call
         this.custumService.editGold(obj).subscribe(
-          data => this.editGoldRes(data)
+          data => this.editGoldRes(data), (error) => {
+            this.eventService.showErrorMessage(error);
+          }
         );
       }
     }

@@ -136,17 +136,23 @@ export class CashInHandComponent implements OnInit {
       }
       if (this.flag == "addCASHINHAND") {
         this.custumService.addCashInHand(obj).subscribe(
-          data => this.addCashInHandRes(data)
+          data => this.addCashInHandRes(data), (error) => {
+            this.eventService.showErrorMessage(error);
+          }
         );
       } else if (this.flag == 'adviceCashInHand') {
         this.custumService.getAdviceCashInHand(adviceObj).subscribe(
-          data => this.getAdviceCashInHandRes(data),
+          data => this.getAdviceCashInHandRes(data), (error) => {
+            this.eventService.showErrorMessage(error);
+          }
         );
       } else {
         // edit call
         obj['id'] = this.editData.id;
         this.custumService.editCashInHand(obj).subscribe(
-          data => this.editCashInHandRes(data)
+          data => this.editCashInHandRes(data), (error) => {
+            this.eventService.showErrorMessage(error);
+          }
         );
       }
     }

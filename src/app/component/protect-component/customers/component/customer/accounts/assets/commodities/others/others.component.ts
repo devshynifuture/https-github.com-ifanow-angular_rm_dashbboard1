@@ -157,17 +157,23 @@ export class OthersComponent implements OnInit {
       }
       if (this.flag == "addOTHERS") {
         this.custumService.addOthers(obj).subscribe(
-          data => this.addOthersRes(data)
+          data => this.addOthersRes(data), (error) => {
+            this.eventService.showErrorMessage(error);
+          }
         );
       } else if (this.flag == 'adviceOTHERS') {
         this.custumService.getAdviceOthers(adviceObj).subscribe(
-          data => this.getAdviceOthersRes(data),
+          data => this.getAdviceOthersRes(data), (error) => {
+            this.eventService.showErrorMessage(error);
+          }
         );
       } else {
         // edit call
         obj['id'] = this.editData.id;
         this.custumService.editOthers(obj).subscribe(
-          data => this.editOthersRes(data)
+          data => this.editOthersRes(data), (error) => {
+            this.eventService.showErrorMessage(error);
+          }
         );
       }
     }
