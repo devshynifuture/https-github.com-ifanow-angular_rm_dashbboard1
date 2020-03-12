@@ -192,7 +192,7 @@ export class AddPoRdComponent implements OnInit {
     this.close(true);
   }
   addPORDResponse(data) {
-    (this.flag = "editPORD") ? this.eventService.openSnackBar('PO_RD is edited', 'Dismiss') : this.eventService.openSnackBar('PO_RD is added', 'Dismiss');
+    (this.flag = "editPORD") ? this.eventService.openSnackBar('Updated successfully!', 'Dismiss') : this.eventService.openSnackBar('Added successfully!', 'Dismiss');
     console.log(data);
     this.close(true);
   }

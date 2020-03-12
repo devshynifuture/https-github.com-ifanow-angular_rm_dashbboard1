@@ -150,16 +150,22 @@ export class AddSuperannuationComponent implements OnInit {
       }
       if (this.superannuation.controls.id.value == undefined && this.flag != 'adviceSuperAnnuation') {
         this.custumService.addSuperannuation(obj).subscribe(
-          data => this.addSuperannuationRes(data)
+          data => this.addSuperannuationRes(data), (error) => {
+            this.event.showErrorMessage(error);
+          }
         );
       } else if (this.flag == 'adviceSuperAnnuation') {
         this.custumService.getAdviceSuperannuation(adviceObj).subscribe(
-          data => this.getAdviceSuperAnnuationRes(data),
+          data => this.getAdviceSuperAnnuationRes(data), (error) => {
+            this.event.showErrorMessage(error);
+          }
         );
       } else {
         //edit call
         this.custumService.editSuperannuation(obj).subscribe(
-          data => this.editSuperannuationRes(data)
+          data => this.editSuperannuationRes(data), (error) => {
+            this.event.showErrorMessage(error);
+          }
         );
       }
     }

@@ -137,11 +137,7 @@ export class AddPoTdComponent implements OnInit {
     }
     if (this.POTDForm.invalid) {
       this.inputs.find(input => !input.ngControl.valid).focus();
-      this.POTDForm.get('ownerName').markAsTouched();
-      this.POTDForm.get('amtInvested').markAsTouched();
-      this.POTDForm.get('commDate').markAsTouched();
-      this.POTDForm.get('tenure').markAsTouched();
-      this.POTDForm.get('ownershipType').markAsTouched();
+      this.POTDForm.markAllAsTouched();
     }
     else {
       if (this.editApi != undefined && this.editApi != 'advicePOTD') {
@@ -207,7 +203,7 @@ export class AddPoTdComponent implements OnInit {
 
   }
   response(data) {
-    (this.editApi) ? this.eventService.openSnackBar("PO_TD is edited", "Dismiss") : this.eventService.openSnackBar("PO_TD is added", "added")
+    (this.editApi) ? this.eventService.openSnackBar("Updated successfully!", "Dismiss") : this.eventService.openSnackBar("Added successfully!", "added")
     console.log(data)
     this.close(true);
   }

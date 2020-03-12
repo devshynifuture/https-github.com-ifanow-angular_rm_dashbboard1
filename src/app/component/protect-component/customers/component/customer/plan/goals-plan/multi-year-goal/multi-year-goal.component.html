@@ -1,4 +1,4 @@
-<!-- <div class="row bg-white bb-1 popup-header-fix w-100">
+<div class="row bg-white bb-1 popup-header-fix w-100">
     <div class="col-md-5 p-0">
         <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png" class="w-45">
     </div>
@@ -6,7 +6,7 @@
         <h5 class="m-0 p-20 pl-50" *ngIf="goalTypeData">{{goalTypeData.name}} goal</h5>
     </div>
     <div class="col-md-2">
-        <i class="material-icons pt-16 pb-12 c-p right pr-16" (click)="close('close')">
+        <i class="material-icons pt-16 pb-12 c-p right pr-16" (click)="goBack()">
             close
         </i>
     </div>
@@ -16,162 +16,109 @@
         <div class="wrapper-40 pt-72">
             <div class="row">
                 <div class="col-md-8 p-0">
-                    <div *ngIf="goalTypeData.id==1" class="row">
+
+                    <!-- FAMILY SELECTION -->
+                    <div class="row" *ngIf="planForFamily">
                         <div class="col-md-8 p-0">
-                            <h5 class="m-0 text-black pl-0">Who are you planning this for?</h5>
+                            <h5 class="m-0 text-black pl-0">{{Questions.Q}}</h5>
                             <div class="form-group mb-0 pt-8">
                                 <mat-form-field>
-                                    <mat-select class="form-control br-0 br-none" formControlName="name">
-                                        <mat-option>Rahul Jain</mat-option>
-                                        <mat-option>Rahul Jain</mat-option>
+                                    <mat-select (selectionChange)="selectOwnerAndUpdateForm($event.value)" formControlName="field1"
+                                        class="form-control br-0 br-none">
+                                        <mat-option value="" disabled>Select member</mat-option>
+                                        <mat-option *ngFor="let familyMember of familyList" [value]="familyMember">
+                                            {{familyMember.userName}}</mat-option>
                                     </mat-select>
                                     <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
-                            <div class="col-md-12 p-0">
+                            <!-- <div class="col-md-12 p-0">
                                 <p class="text-regular pt-4">Add spouse</p>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
-                    <div *ngIf="goalTypeData.id==5 || goalTypeData.id==6" class="row pt-20">
+
+                    <!-- AGE/YEAR RANGE FIELD -->
+                    <div class="row" [ngClass]="{'pt-20': planForFamily}">
                         <div class="col-md-12 p-0">
-                            <h5 class="m-0 text-black">Age you want to retire? (present age - 39)</h5>
+                            <h5 class="m-0 text-black">{{Questions.Q1}}</h5>
                             <div class="row pt-8">
-                                <div class="col-md-4 p-0">
-                                    <div class="form-group mb-0">
-                                        <div id="custom-slider">
-                                            <mat-slider></mat-slider>
-                                        </div>
-                                    </div>
+                                <div id="custom-slider" class="col-md-8">
+                                    <ng5-slider
+                                        formControlName="field2"    
+                                        [options]="rangeFieldOptions"
+                                    ></ng5-slider>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="goalTypeData.id==1" class="row pt-20">
-                        <div class="col-md-12 p-0">
-                            <h5 class="m-0 text-black">Age you want to retire? (present age - 39)</h5>
-                            <div class="row pt-8">
-                                <div class="col-md-4 p-0">
-                                    <div class="form-group mb-0">
-                                        <mat-form-field>
-                                            <input formControlName="retirementAge" autocomplete="off" matInput #message
-                                                class="form-control br-0" value="55 Years">
-                                            <mat-error>This field is required</mat-error>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-                                <div class="col-md-8 pr-0">
-                                    <div id="custom-slider">
-                                        <mat-slider></mat-slider>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div *ngIf="goalTypeData.id==1" class="row pt-20">
-                        <div class="col-md-12 p-0">
-                            <h5 class="m-0 text-black">Your current monthly expenses?</h5>
-                            <div class="row pt-8">
-                                <div class="col-md-4 p-0">
-                                    <div class="form-group mb-0">
-                                        <mat-form-field>
-                                            <input formControlName="monthlyExpenses" autocomplete="off" matInput
-                                                #message class="form-control br-0 rupess">
-                                            <mat-error>This field is required</mat-error>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-                                <div class="col-md-8 pr-0">
-                                    <div id="custom-slider">
-                                        <mat-slider></mat-slider>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+                    <!-- GOAL COST -->
                     <div class="row pt-20">
                         <div class="col-md-12 p-0">
-                            <h5 class="m-0 text-black">At retirement, by what % will the expenses change?</h5>
-                            <div class="row pt-8">
+                            <h5 class="m-0 text-black">{{Questions.Q2}}</h5>
+                            <div class="row pt-8" *ngFor="let spending of multiYearGoalForm.get('detailedSpendings').controls; index as i">
                                 <div class="col-md-4 p-0">
                                     <div class="form-group mb-0">
                                         <mat-form-field>
-                                            <input formControlName="expenseChanges" autocomplete="off" matInput #message
-                                                class="form-control br-0" value="-10%">
+                                            <input type="number"
+                                                [formControl]="spending" autocomplete="off" matInput
+                                                [value]="spending.value"
+                                                class="form-control br-0 rupess">
                                             <mat-error>This field is required</mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>
                                 <div class="col-md-8 pr-0">
                                     <div id="custom-slider">
-                                        <mat-slider></mat-slider>
+                                        <mat-slider [formControl]="spending"
+                                            [value]="spending.value"
+                                            [min]="goalTypeData.validations.minCost"
+                                            [max]="goalTypeData.validations.maxCost"></mat-slider>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div *ngIf="goalTypeData.id==1" class="row pt-20">
-                        <div class="col-md-12 p-0">
-                            <h5 class="m-0 text-black">Milestones you’d also like to plan for (optional)...</h5>
-                            <div class="row pt-8">
-                                <div class="col-md-4 p-0">
-                                    <div class="form-group mb-0">
-                                        <mat-form-field>
-                                            <mat-select class="form-control br-0 br-none" formControlName="milstones">
-                                                <mat-option>Rahul Jain</mat-option>
-                                                <mat-option>Rahul Jain</mat-option>
-                                            </mat-select>
-                                            <mat-error>This field is required</mat-error>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 p-0">
-                                    <div class="form-group mb-0">
-                                        <mat-form-field>
-                                            <mat-select class="form-control br-0 br-none">
-                                                <mat-option>Rahul Jain</mat-option>
-                                                <mat-option>Rahul Jain</mat-option>
-                                            </mat-select>
-                                            <mat-error>This field is required</mat-error>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 p-0">
-                                    <div class="form-group mb-0">
-                                        <input autocomplete="off" matInput #message
-                                            class="form-control br-0 rupess h-38">
-                                    </div>
-                                </div>
+                            <div class="row pt-8" *ngIf="!detailedPlanning">
+                                Want customized goal values for each year? <span (click)="revisePlanning()">Click here</span>
+                            </div>
+                            <div class="row pt-8" *ngIf="detailedPlanning">
+                                Want same goal values for each year? <span (click)="revisePlanning()">Click here</span>
                             </div>
                         </div>
                     </div>
+
+                    <!-- GOAL NAME -->
                     <div class="row pt-20">
                         <div class="col-md-12 p-0">
-                            <h5 class="m-0 text-black">Give this goal a name</h5>
+                            <h5 class="m-0 text-black">{{Questions.Q3}}</h5>
                             <div class="row pt-8">
-                                <div class="col-md-8 p-0">
+                                <div class="col-md-4 p-0">
                                     <div class="form-group mb-0">
                                         <mat-form-field>
-                                            <input formControlName="goalName" autocomplete="off" matInput #message
+                                            <input formControlName="field4" autocomplete="off" matInput
                                                 class="form-control br-0">
                                             <mat-error>This field is required</mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>
-                                <div class="col-md-12 pt-4">
-                                    <p class="f-12 m-0 text-primitive">Optional</p>
-                                </div>
+                                <!-- <div class="col-md-8 pr-0">
+                                    <div id="custom-slider">
+                                        <mat-slider></mat-slider>
+                                    </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="goalTypeData.id==5 || goalTypeData.id==6" class="row pt-20">
+                    
+                    <!-- GOAL NOTES -->
+                    <div class="row pt-20">
                         <div class="col-md-12 p-0">
-                            <h5 class="m-0 text-black">Notes</h5>
+                            <h5 class="m-0 text-black">{{Questions.Q4}}</h5>
                             <div class="row pt-8">
                                 <div class="col-md-8 p-0">
                                     <div class="form-group mb-0">
                                         <mat-form-field>
-                                            <input formControlName="notes" autocomplete="off" matInput #message
+                                            <input formControlName="field5" autocomplete="off" matInput
                                                 class="form-control br-0">
                                             <mat-error>This field is required</mat-error>
                                         </mat-form-field>
@@ -184,23 +131,26 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <img src="/assets/images/svg/retierment.svg">
+                <div class="col-md-4" (click)="file.click()">
+                    <img [src]="goalTypeData.imageUrl" *ngIf="!logoImg">
+                    <img [src]="logoImg" alt="" *ngIf="logoImg" style="width: 100%;">
                 </div>
+                <input #file (change)="previewGoalImage($event)" accept='image/*'
+                    formControlName="logo" type="file" [hidden]="true">
             </div>
         </div>
         <div class="col-md-4"></div>
 
     </div>
     <div class="col-md-4 p-0">
-        <h5 class="m-0 text-black pt-16">Rahul, here’s how people with similar profile as yours are planning for their
+        <h5 class="m-0 text-black pt-16">{{goalTypeData.name}}, here’s how people with similar profile as yours are planning for
+            their
             house goal.<img src="/assets/images/svg/info.svg"></h5>
         <h5 class="m-0 f-500 text-black pt-20">Retirement age</h5>
         <div class="row pt-12">
             <div class="col-md-10 p-0">
                 <div class="addgoal-common">
                     <mat-progress-bar mode="determinate" value="50">
-
                     </mat-progress-bar>
                 </div>
             </div>
@@ -253,7 +203,6 @@
             <div class="col-md-10 p-0">
                 <div class="addgoal-common">
                     <mat-progress-bar mode="determinate" value="50">
-
                     </mat-progress-bar>
                 </div>
             </div>
@@ -302,10 +251,10 @@
 <div class="bottom-fixed wrapper-12 w-100">
     <div class="row">
         <div class="col-md-4">
-            <h4 class="mb-0 pt-8 text-white c-p f-16" (click)="close('close')">Cancel</h4>
+            <h4 class="mb-0 pt-8 text-white c-p f-16" (click)="goBack()">Cancel</h4>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="open()">Save</button>
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveGoal()">Save</button>
         </div>
     </div>
-</div> -->
+</div>

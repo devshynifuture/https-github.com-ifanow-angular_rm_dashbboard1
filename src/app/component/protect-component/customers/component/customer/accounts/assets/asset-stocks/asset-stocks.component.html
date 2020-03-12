@@ -91,12 +91,12 @@
               <h5 *ngIf="assetStockData" appFormatNumber class="m-0 text-black">
                 {{assetStockData.grandTotalAmountInvested | currency:'INR'}}</h5>
             </div>
-            <div class="col-md-4 pr-0 pl-12">
+            <div class="col-md-5 pr-0 pl-12">
               <p class="text-custom m-0 roboto">Unrealized gain/loss</p>
               <h5 *ngIf="assetStockData" appFormatNumber class="m-0 text-danger">
                 {{assetStockData.grandTotalUnrealizedGainLoss | currency:'INR'}}</h5>
             </div>
-            <div class="col-md-4 pr-0 pl-12">
+            <div class="col-md-3 pr-0 pl-12">
               <p class="text-custom m-0 roboto">Returns</p>
               <h5 *ngIf="assetStockData" class="m-0 text-danger">{{assetStockData.grandTotalAbsReturns}}
                 <i class="material-icons text-danger v-sub f-18 f-700">
@@ -120,10 +120,10 @@
             <div class="col-md-6">
               <p class="f-500 text-black mb-0">Banking</p>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 pl-0">
               <p class="text-black mb-0">5,24,819</p>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 pl-0">
               <p class="text-black mb-0">23.43%</p>
             </div>
           </div>
@@ -134,10 +134,10 @@
             <div class="col-md-6">
               <p class="f-500 text-black mb-0">Information technology</p>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 pl-0">
               <p class="text-black mb-0">5,24,819</p>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 pl-0">
               <p class="text-black mb-0">23.43%</p>
             </div>
           </div>
@@ -148,10 +148,10 @@
             <div class="col-md-6">
               <p class="f-500 text-black mb-0">FMCG</p>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 pl-0">
               <p class="text-black mb-0">5,24,819</p>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 pl-0">
               <p class="text-black mb-0">23.43%</p>
             </div>
           </div>
@@ -162,10 +162,10 @@
             <div class="col-md-6">
               <p class="f-500 text-black mb-0">Auto ancillaries</p>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 pl-0">
               <p class="text-black mb-0">5,24,819</p>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 pl-0">
               <p class="text-black mb-0">23.43%</p>
             </div>
           </div>
@@ -176,10 +176,10 @@
             <div class="col-md-6">
               <p class="f-500 text-black mb-0">Others</p>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 pl-0">
               <p class="text-black mb-0">5,24,819</p>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 pl-0">
               <p class="text-black mb-0">23.43%</p>
             </div>
           </div>
@@ -194,8 +194,8 @@
           | {{singlePortfolio.ownerName}}</h5>
       </div>
     </div>
-    <div class="stock-overview" id="table-low">
-      <table [dataSource]="singlePortfolio.stockList" mat-table>
+    <div class="stock-overview">
+      <table [dataSource]="singlePortfolio.stockList" mat-table id="table-low">
         <!-- <ng-container matColumnDef="static-header">
            <td *matHeaderCellDef [attr.colspan]="displayedColumns25.length"
                class=" text-center text-primary bg-white" mat-header-cell>

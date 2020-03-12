@@ -139,16 +139,22 @@ export class AddEPSComponent implements OnInit {
       }
       if (this.flag == "addEPS") {
         this.custumService.addEPS(obj).subscribe(
-          data => this.addEPSRes(data)
+          data => this.addEPSRes(data), (error) => {
+            this.event.showErrorMessage(error);
+          }
         );
       } else if (this.flag == 'adviceEPS') {
         this.custumService.getAdviceEps(adviceObj).subscribe(
-          data => this.getAdviceEpsRes(data),
+          data => this.getAdviceEpsRes(data), (error) => {
+            this.event.showErrorMessage(error);
+          }
         );
       } else {
         //edit call
         this.custumService.editEPS(obj).subscribe(
-          data => this.editEPSRes(data)
+          data => this.editEPSRes(data), (error) => {
+            this.event.showErrorMessage(error);
+          }
         );
       }
     }
