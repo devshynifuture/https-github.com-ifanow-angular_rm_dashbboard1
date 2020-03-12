@@ -210,7 +210,8 @@ export class AddPoMisComponent implements OnInit {
           );
         } else {
           this.custumService.addPOMIS(objToSend).subscribe(
-            data => this.addPOMISRes(data)
+            data => this.addPOMISRes(data),
+            err => this.eventService.openSnackBar(err, "Dismiss")
           );
         }
 
