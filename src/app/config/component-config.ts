@@ -390,7 +390,8 @@ export const appConfig = {
   SEARCH_SCHEME: 'report/transaction/list/get',
   GET_TRANSACTION_DETAILS: 'report/transaction/detail/get',
   GET_MANDATE_LIST: 'report/ach-mandate/get',
-  GET_REGISTRATION_UCC_IIN: 'user/register/detail/get',
+  GET_REGISTRATION_UCC_IIN:'user/register/detail/get',
+  CREATE_IIN_UCC :'user/register/create',
   // SIP_BSE:'bse/order/create',
 
   // cashflow 

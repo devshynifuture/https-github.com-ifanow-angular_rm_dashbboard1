@@ -106,6 +106,9 @@ export class OnlineTransactionService {
   getIINUCCRegistration(data){
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_REGISTRATION_UCC_IIN, data, 1)
   }
+  createIINUCC(data){
+    return this.http.postEncoded(apiConfig.TRANSACT + appConfig.CREATE_IIN_UCC, data, 1)
+  }
   // sipBSE(data){
   //   return this.http.postEncoded(apiConfig.TRANSACT + appConfig.SIP_BSE, data)
   // }

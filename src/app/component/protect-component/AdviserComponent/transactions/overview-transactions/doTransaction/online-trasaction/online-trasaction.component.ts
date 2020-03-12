@@ -191,34 +191,11 @@ export class OnlineTrasactionComponent implements OnInit {
       this.showSpinnerOwner = true
     }
   }
-  // display(value) {
-  //   console.log('value selected', value);
-  //   this.ownerName = value.userName;
-  //   this.familyMemberId = value.id;
-  // }
+
   ownerDetails(value) {
     this.familyMemberData = value;
     this.familyMemberId = value.id;
     this.getDefaultDetails(value);
-    //   if (this.nomineesListFM && this.transactionAddForm.get('ownerName').valid ) {
-    //     // this.nomineesListFM.forEach(element => {
-    //     //   this.checkFamilyMem = element.name.includes(this.transactionAddForm.controls.ownerName.value)
-    //     // });
-    //     if (this.formStep == 'step-1') {
-    //       if (this.allData && this.allData.length > 0) {
-    //         this.formStep = 'step-2';
-    //       }
-    //       this.formStep = 'step-2';
-    //     } else if (this.transactionAddForm.get('transactionType').valid && this.formStep == 'step-2') {
-    //       let data = {
-    //         selectedFamilyMember: this.ownerData.ownerName.value,
-    //         transactionType: this.transactionAddForm.controls.transactionType.value,
-    //         clientId: value.clientId
-    //       }
-    //       this.openPurchaseTransaction(data.transactionType, data)
-    //     }
-
-    // }
   }
   lisNominee(value) {
     this.showSpinnerOwner = false
