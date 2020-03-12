@@ -8,6 +8,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { OnlineTransactionService } from '../../../../online-transaction.service';
 import { PostalService } from 'src/app/services/postal.service';
 import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
+import { FatcaDetailsInnComponent } from '../fatca-details-inn/fatca-details-inn.component';
 
 @Component({
   selector: 'app-nominee-details-iin',
@@ -41,14 +42,20 @@ export class NomineeDetailsIinComponent implements OnInit {
   set data(data) {
     this.inputData = data;
     this.allData = data
-    this.getdataForm(data)
+    if (data.nomineeList) {
+      this.firstHolderNominee = data.nomineeList[0]
+      this.secondHolderNominee = data.nomineeList[1]
+      this.thirdHolderNominee = data.nomineeList[2]
+      this.getdataForm(this.firstHolderNominee)
+    }
+
   }
 
   get data() {
     return this.inputData;
   }
   ngOnInit() {
-    this.getdataForm('')
+    this.getdataForm(this.firstHolderNominee)
     this.holdingList = []
     this.nominee = []
   }
@@ -84,7 +91,30 @@ export class NomineeDetailsIinComponent implements OnInit {
   }
   pinInvalid: boolean = false;
   openBankDetails() {
-    this.processTransaction.openBank(this.allData.bankDetailList)
+    const subscription = this.processTransaction.openBank(this.allData.bankDetailList).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          subscription.unsubscribe();
+        }
+      }
+    );
+  }
+  openFatcaDetails(data) {
+    var temp = {
+      flag: 'app-upper-customer',
+      id: 1,
+      data,
+      direction: 'top',
+      componentName: FatcaDetailsInnComponent,
+      state: 'open'
+    }
+    const subscription = this.eventService.changeUpperSliderState(temp).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          subscription.unsubscribe();
+        }
+      }
+    );
   }
   getPostalPin(value) {
     let obj = {
@@ -154,19 +184,20 @@ export class NomineeDetailsIinComponent implements OnInit {
     } else {
       this.saveNomineeDetails(value);
     }
+    console.log('contact details', this.obj1)
+
+    this.obj1 = []
+    this.obj1.push(this.firstHolderNominee)
+    this.obj1.push(this.secondHolderNominee)
+    this.obj1.push(this.thirdHolderNominee)
+    this.obj1.forEach(element => {
+      if (element) {
+        this.getObj = this.setObj(element, value)
+        this.nominee.push(this.getObj)
+      }
+    });
     if (flag == true) {
-      console.log('contact details', this.obj1)
       const value = {}
-      this.obj1 = []
-      this.obj1.push(this.firstHolderNominee)
-      this.obj1.push(this.secondHolderNominee)
-      this.obj1.push(this.thirdHolderNominee)
-      this.obj1.forEach(element => {
-        if (element) {
-          this.getObj = this.setObj(element, value)
-          this.nominee.push(this.getObj)
-        }
-      });
       let obj = {
         ownerName: this.allData.ownerName,
         holdingType: this.allData.holdingType,
@@ -184,11 +215,7 @@ export class NomineeDetailsIinComponent implements OnInit {
         tpUserSubRequestClientId1: 2,
       }
       console.log('##### ALLL DATA ####', obj)
-      this.onlineTransact.createIINUCC(obj).subscribe(
-        data => this.createIINUCCRes(data), (error) => {
-          this.eventService.showErrorMessage(error);
-        }
-      );
+      this.openFatcaDetails(obj)
     }
   }
   getObj(getObj: any) {

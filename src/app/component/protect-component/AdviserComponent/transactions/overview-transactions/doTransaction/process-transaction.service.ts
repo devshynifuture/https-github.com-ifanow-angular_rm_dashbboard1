@@ -8,6 +8,8 @@ import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.s
 import { PersonalDetailsInnComponent } from '../IIN/UCC-Creation/personal-details-inn/personal-details-inn.component';
 import { ContactDetailsInnComponent } from '../IIN/UCC-Creation/contact-details-inn/contact-details-inn.component';
 import { BankDetailsIINComponent } from '../IIN/UCC-Creation/bank-details-iin/bank-details-iin.component';
+import { NomineeDetailsIinComponent } from '../IIN/UCC-Creation/nominee-details-iin/nominee-details-iin.component';
+import { FatcaDetailsInnComponent } from '../IIN/UCC-Creation/fatca-details-inn/fatca-details-inn.component';
 @Injectable({
   providedIn: 'root'
 })
@@ -44,6 +46,30 @@ export class ProcessTransactionService {
       data,
       direction: 'top',
       componentName: BankDetailsIINComponent,
+      state: 'open'
+    }
+    
+    return this.eventService.changeUpperSliderState(temp);
+  }
+  openNominee(data) {
+    var temp = {
+      flag: 'app-upper-customer',
+      id: 1,
+      data,
+      direction: 'top',
+      componentName: NomineeDetailsIinComponent,
+      state: 'open'
+    }
+    
+    return this.eventService.changeUpperSliderState(temp);
+  }
+  openFataca(data) {
+    var temp = {
+      flag: 'app-upper-customer',
+      id: 1,
+      data,
+      direction: 'top',
+      componentName: FatcaDetailsInnComponent ,
       state: 'open'
     }
     

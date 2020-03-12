@@ -106,56 +106,7 @@
 
                 <h3 class="f-18 mb-12 mt-44 f-600">(i) Current/Permanent/Overseas address details </h3>
 
-                <div class="row">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0">Address type</h3>
-                    </div>
-                    <div class="col-md-5">
-                        <mat-form-field>
-                            <mat-select class="form-control" formControlName="addressType">
-                                <mat-option value="Residential/Business"> Residential/Business </mat-option>
-                                <mat-option value="Residential"> Residential </mat-option>
-                                <mat-option value="Business">Business </mat-option>
-                                <mat-option value="Registered office">Registered office </mat-option>
-                                <mat-option value="Unspecified">Unspecified </mat-option>
-                            </mat-select>
-                            <mat-error class="f-12">This field is required</mat-error>
-
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row pt-32">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0">ID type</h3>
-                    </div>
-                    <div class="col-md-3">
-                        <mat-form-field>
-                            <mat-select class="form-control" formControlName="idType">
-                                <mat-option value="Passport">Passport </mat-option>
-                                <mat-option value="Driving licence"> Driving licence </mat-option>
-                                <mat-option value="Aadhaar">Aadhaar </mat-option>
-                                <mat-option value="Voters ID">Voters ID </mat-option>
-                                <mat-option value="NREGA job card">NREGA job card </mat-option>
-                                <mat-option value="Others">Others </mat-option>
-                            </mat-select>
-                            <mat-error class="f-12">This field is required</mat-error>
-
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row pt-32">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0">ID number </h3>
-                    </div>
-                    <div class="col-md-3">
-                        <mat-form-field>
-                            <input matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10"
-                            appInputValueValidation  formControlName="idNumber" type="number" class="form-control">
-                            <mat-error class="f-12">This field is required</mat-error>
-
-                        </mat-form-field>
-                    </div>
-                </div>
+  
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0">Address line 1</h3>

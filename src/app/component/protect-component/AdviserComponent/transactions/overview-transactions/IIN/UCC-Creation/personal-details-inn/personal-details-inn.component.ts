@@ -82,7 +82,6 @@ export class PersonalDetailsInnComponent implements OnInit {
  const subscription =this.processTransaction.openContact(data).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
-          // this.getClientSubscriptionList();
           subscription.unsubscribe();
         }
       }

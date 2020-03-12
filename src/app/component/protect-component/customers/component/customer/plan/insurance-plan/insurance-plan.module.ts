@@ -8,9 +8,8 @@ import { AllInsurancelistComponent } from './mainInsuranceScreen/all-insuranceli
 import { LifeInsuranceComponent } from './mainInsuranceScreen/life-insurance/life-insurance.component';
 
 
-
 @NgModule({
-  declarations: [AllInsurancelistComponent,LifeInsuranceComponent],
+  declarations: [AllInsurancelistComponent, LifeInsuranceComponent],
   imports: [
     CommonModule,
     InsurancePlanRoutingModule,

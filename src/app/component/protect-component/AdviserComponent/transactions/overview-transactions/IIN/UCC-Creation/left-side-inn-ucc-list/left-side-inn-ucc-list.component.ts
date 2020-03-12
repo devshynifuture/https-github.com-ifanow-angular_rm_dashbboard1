@@ -9,6 +9,8 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { NomineeDetailsIinComponent } from '../nominee-details-iin/nominee-details-iin.component';
 import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
 import { FatcaDetailsInnComponent } from '../fatca-details-inn/fatca-details-inn.component';
+import { ContactDetailsInnComponent } from '../contact-details-inn/contact-details-inn.component';
+import { PersonalDetailsInnComponent } from '../personal-details-inn/personal-details-inn.component';
 
 @Component({
   selector: 'app-left-side-inn-ucc-list',
@@ -25,7 +27,15 @@ export class LeftSideInnUccListComponent implements OnInit {
   }
   openPersonalDetails(data) {
    
-    const subscription = this.processTransaction.openPersonal(data).subscribe(
+    const fragmentData = {
+      flag: 'app-upper-customer',
+      id: 1,
+      data,
+      direction: 'top',
+      componentName: PersonalDetailsInnComponent,
+      state: 'open'
+    };
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           // this.getClientSubscriptionList();
@@ -52,9 +62,16 @@ export class LeftSideInnUccListComponent implements OnInit {
       }
     );
   }
-  openContactDetails(data) {
-    
-    const subscription = this.processTransaction.openContact(data).subscribe(
+  openContactDetails(data) {   
+    const fragmentData = {
+      flag: 'app-upper-customer',
+      id: 1,
+      data,
+      direction: 'top',
+      componentName: ContactDetailsInnComponent,
+      state: 'open'
+    };
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           // this.getClientSubscriptionList();
@@ -64,6 +81,7 @@ export class LeftSideInnUccListComponent implements OnInit {
     );
   }
   openFatcaDetails(data){
+
     const fragmentData = {
       flag: 'app-upper-customer',
       id: 1,

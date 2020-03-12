@@ -20,9 +20,9 @@
 </div>
 
 
-<div class="pt-60 mb-100">
+<div class="pt-60 mb-100" [formGroup]="fatcaDetails">
     <div class="row">
-        <app-left-kyc-list></app-left-kyc-list>
+        <app-left-side-inn-ucc-list></app-left-side-inn-ucc-list>
         <div class="col-md-7 offset-2 p-0 bl-1 ">
             <div class="p-20">
                 <h3 class="f-18 mb-28 f-600"> FATCA details </h3>
@@ -33,7 +33,7 @@
                         <h3 class="f-16 pt-10 m-0"> Nationality </h3>
                     </div>
                     <div class="col-md-8">
-                        <mat-radio-group aria-label="Select an option">
+                        <mat-radio-group aria-label="Select an option" formControlName="nationality">
                             <mat-radio-button value="1"
                                 class="b-a-custom bor_top_tb_left radioBtnSmall  text-primary custom-radio">
                                 India
@@ -57,7 +57,7 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input matInput maxlength="10" type="text" class="form-control">
+                            <input matInput maxlength="10" formControlName="cityOfBirth" type="text" class="form-control">
                         </mat-form-field>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input matInput maxlength="10" type="text" class="form-control">
+                            <input matInput maxlength="10" formControlName="countryOfBirth" type="text" class="form-control">
                         </mat-form-field>
                     </div>
                 </div>
@@ -77,12 +77,12 @@
 
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Gross annual income </h3>
+                        <h3 class="f-16 pt-8 m-0"> Gross annual income in Laks </h3>
                         <p class="text-custom f-12 m-0">in Indian Rupees</p>
                     </div>
                     <div class="col-md-3">
                         <mat-form-field>
-                            <input matInput formControlName="annualIncome" maxlength="10" type="text"
+                            <input matInput formControlName="annualIncome"maxlength="10" type="text"
                             class="form-control">
                         </mat-form-field>
                     </div>
@@ -95,9 +95,18 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <mat-select class="form-control">
-                                <mat-option>
-                                    select
+                            <mat-select class="form-control" formControlName="sourceOfWealth">
+                                <mat-option value='01'>
+                                    Salary
+                                </mat-option>
+                                <mat-option value='02'>
+                                    Business Income
+                                </mat-option>
+                                <mat-option value='05'>
+                                    Rental Income
+                                </mat-option>
+                                <mat-option value='08'>
+                                    Others
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -111,9 +120,18 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <mat-select class="form-control">
-                                <mat-option>
-                                    select
+                            <mat-select class="form-control" formControlName="occupation">
+                                <mat-option value="S">
+                                    Service
+                                </mat-option>
+                                <mat-option value="B">
+                                    Business
+                                </mat-option>
+                                <mat-option value="O">
+                                    Others
+                                </mat-option>
+                                <mat-option value="X">
+                                    Not Categorized
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -126,15 +144,15 @@
                         <h3 class="f-16 pt-10 m-0"> Are you politically exposed person </h3>
                     </div>
                     <div class="col-md-8">
-                        <mat-radio-group aria-label="Select an option">
-                            <mat-radio-button value="1"
+                        <mat-radio-group aria-label="Select an option" formControlName="politically">
+                            <mat-radio-button value="Y"
                                 class="b-a-custom bor_top_tb_left radioBtnSmall  text-primary custom-radio">
                                 Yes
                             </mat-radio-button>
-                            <mat-radio-button value="2" class="radioBtnSmall radio-border custom-radio">
+                            <mat-radio-button value="N" class="radioBtnSmall radio-border custom-radio">
                                 No </mat-radio-button>
 
-                            <mat-radio-button value="2" class="radioBtnSmall radio-border pr-12 custom-radio">
+                            <mat-radio-button value="R" class="radioBtnSmall radio-border pr-12 custom-radio">
                                 Related to PEP </mat-radio-button>
                         </mat-radio-group>
                     </div>
@@ -148,7 +166,7 @@
                     </div>
 
                     <div class="col-md-5">
-                        <mat-radio-group aria-label="Select an option">
+                        <mat-radio-group aria-label="Select an option" formControlName="taxResidency">
                             <mat-radio-button value="1"
                                 class="b-a-custom bor_top_tb_left radioBtnSmall  text-primary custom-radio">
                                 Yes
@@ -158,12 +176,7 @@
 
                         </mat-radio-group>
                     </div>
-
                 </div>
-
-
-
-
             </div>
 
         </div>
@@ -248,19 +261,15 @@
         <a href="#" class="text-white f-300"> Skip this step </a>
     </div>
 
-    <div class="col-md-5 center_menu">
-        <a class="activeLink" href=""> First holder </a>
-        <a class="activeLink" href=""> Second holder </a>
-        <a class="activeLink" href=""> Third holder </a>
-    </div>
+
 
     <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">
 
-        <button class="br-0 perviousBtn text-inherit f-14" mat-button mat-raised-button>
+        <button class="br-0 perviousBtn text-inherit f-14" mat-button mat-raised-button (click)="openNomineeDetails()">
             PREVIOUS
         </button>
 
-        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4">SAVE</button>
+        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" (click)="SendToForm()">SAVE</button>
         <button mat-button class="greenBtn  p-0 mw-40 br-left-white " [matMenuTriggerFor]="menu">
             <i class="material-icons">
                 keyboard_arrow_up

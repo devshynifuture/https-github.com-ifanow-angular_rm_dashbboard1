@@ -46,9 +46,11 @@ export class ContactDetailsInnComponent implements OnInit {
   set data(data) {
     this.inputData = data;
     this.list = data
-    this.firstHolderContact = data.firstHolder
-    this.secondHolderContact = data.secondHolder
-    this.thirdHolderContact = data.thirdHolder
+    if(data.firstHolder){
+      this.firstHolderContact = data.firstHolder
+      this.secondHolderContact = data.secondHolder
+      this.thirdHolderContact = data.thirdHolder
+    }
     console.log('################## = ', this.list)
     this.getdataForm(data)
   }
@@ -63,15 +65,15 @@ export class ContactDetailsInnComponent implements OnInit {
     this.contacts =[]
     console.log('holding list', this.holdingList)
   }
-  // close() {
-  //   const fragmentData = {
-  //     direction: 'top',
-  //     componentName: ContactDetailsInnComponent,
-  //     state: 'close'
-  //   };
+  close() {
+    const fragmentData = {
+      direction: 'top',
+      componentName: ContactDetailsInnComponent,
+      state: 'close'
+    };
 
-  //   this.eventService.changeUpperSliderState(fragmentData);
-  // }
+    this.eventService.changeUpperSliderState(fragmentData);
+  }
   getdataForm(data) {
 
     this.contactDetails = this.fb.group({
@@ -79,9 +81,6 @@ export class ContactDetailsInnComponent implements OnInit {
       aadharNumber: [(!data) ? '' : data.aadharNumber, [Validators.required]],
       mobileNo: [!data ? '' : data.mobileNo, [Validators.required]],
       phoneNo: [!data ? '' : data.phoneNo, [Validators.required]],
-      addressType: [!data ? '' : data.addressType, [Validators.required]],
-      idType: [!data ? '' : data.idType, [Validators.required]],
-      idNumber: [!data ? '' : data.idNumber, [Validators.required]],
       addressLine1: [!data ? '' : data.addressLine1, [Validators.required]],
       addressLine2: [!data ? '' : data.addressLine2, [Validators.required]],
       pinCode: [!data ? '' : data.pinCode, [Validators.required]],
@@ -96,19 +95,23 @@ export class ContactDetailsInnComponent implements OnInit {
     return this.contactDetails.controls;
   }
   openBankDetails(data) {
-    const fragmentData = {
-      flag: 'app-upper-customer',
-      id: 1,
-      data,
-      direction: 'top',
-      componentName: BankDetailsIINComponent,
-      state: 'open'
-    };
-    const subscription = this.eventService.changeUpperSliderState(fragmentData)
+    const subscription =this.ProcessTransactionService.openBank(data).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          subscription.unsubscribe();
+        }
+      }
+    );
   }
   pinInvalid: boolean = false;
   openPersonalDetails(){
-    this.ProcessTransactionService.openPersonal(this.list)
+    const subscription = this.ProcessTransactionService.openPersonal(this.list).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          subscription.unsubscribe();
+        }
+      }
+    );
   }
   getPostalPin(value) {
     let obj = {
@@ -206,11 +209,9 @@ export class ContactDetailsInnComponent implements OnInit {
       aadharNumber:holder.aadharNumber,
       mobileNo:holder.mobileNo,
       phoneNo:holder.phoneNo,
-      idType:holder.idType,
-      idNumber:holder.idNumber,
     }
     value.address = {
-      addressType: holder.addressType,
+
       addressLine1: holder.addressLine1,
       addressLine2: holder.addressLine2,
       pinCode: holder.pinCode,
@@ -234,15 +235,6 @@ export class ContactDetailsInnComponent implements OnInit {
     } else if (this.contactDetails.get('phoneNo').invalid) {
       this.contactDetails.get('phoneNo').markAsTouched();
       return
-    } else if (this.contactDetails.get('addressType').invalid) {
-      this.contactDetails.get('addressType').markAsTouched();
-      return;
-    } else if (this.contactDetails.get('idType').invalid) {
-      this.contactDetails.get('idType').markAsTouched();
-      return;
-    } else if (this.contactDetails.get('idNumber').invalid) {
-      this.contactDetails.get('idNumber').markAsTouched();
-      return;
     } else if (this.contactDetails.get('addressLine1').invalid) {
       this.contactDetails.get('addressLine1').markAsTouched();
       return;

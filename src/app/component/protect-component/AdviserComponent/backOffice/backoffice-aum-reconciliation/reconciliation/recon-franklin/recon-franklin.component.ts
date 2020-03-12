@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-recon-franklin',
@@ -8,8 +8,11 @@ import { Component, OnInit } from '@angular/core';
 export class ReconFranklinComponent implements OnInit {
 
   constructor() { }
+  @Input() rtId;
 
   ngOnInit() {
+    console.log('my id is ::', this.rtId);
+
   }
 
 }

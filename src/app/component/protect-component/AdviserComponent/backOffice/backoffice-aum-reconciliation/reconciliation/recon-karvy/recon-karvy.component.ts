@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-recon-karvy',
@@ -8,8 +8,10 @@ import { Component, OnInit } from '@angular/core';
 export class ReconKarvyComponent implements OnInit {
 
   constructor() { }
+  @Input() rtId;
 
   ngOnInit() {
+    console.log('my id is ::', this.rtId);
   }
 
 }
