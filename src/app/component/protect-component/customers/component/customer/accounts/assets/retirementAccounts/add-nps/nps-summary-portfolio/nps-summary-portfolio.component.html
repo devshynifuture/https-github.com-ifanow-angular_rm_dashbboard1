@@ -42,7 +42,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
-                        <input matInput #currentValue type="text" appInputValueValidation
+                        <input autocomplete="off" matInput #currentValue type="text" appInputValueValidation
                             [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess"
                             formControlName="currentValue">
                         <mat-error class="f-12"
@@ -60,8 +60,8 @@
             </div>
             <div class="col-md-3">
                 <mat-form-field>
-                    <input matInput formControlName="valueAsOn" class="form-control br-0" [matDatepicker]="picker"
-                        readonly>
+                    <input autocomplete="off" matInput (click)="picker.open()" formControlName="valueAsOn"
+                        class="form-control br-0" [matDatepicker]="picker" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-error class="f-12"
@@ -79,7 +79,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
-                        <input matInput #totalContry type="text" appInputValueValidation
+                        <input autocomplete="off" matInput #totalContry type="text" appInputValueValidation
                             [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess"
                             formControlName="totalContry">
                         <mat-error class="f-12"
@@ -208,10 +208,11 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput #pran maxlength="20" class="form-control br-0" type="text"
+                            <input appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                                autocomplete="off" matInput #pran maxlength="12" class="form-control br-0" type="text"
                                 formControlName="pran">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
-                            <mat-hint align="end" class="f-12">{{pran.value.length}}/20</mat-hint>
+                            <mat-hint align="end" class="f-12">{{pran.value.length}}/12</mat-hint>
                         </mat-form-field>
                     </div>
                 </div>
@@ -240,8 +241,8 @@
                                 </div>
                                 <div class="col-md-4 pl-0 iconPetage">
                                     <mat-form-field>
-                                        <input matInput #nomineePercentageShare type="number" appInputValueValidation
-                                            [inputValidator]="validatorType.NUMBER_ONLY"
+                                        <input autocomplete="off" matInput #nomineePercentageShare type="number"
+                                            appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                                             class="form-control br-0 percentage" formControlName="sharePercentage">
                                     </mat-form-field>
                                 </div>
@@ -279,7 +280,7 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput #description maxlength="60" class="form-control br-0"
+                            <input autocomplete="off" matInput #description maxlength="60" class="form-control br-0"
                                 formControlName="description">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
                             <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
