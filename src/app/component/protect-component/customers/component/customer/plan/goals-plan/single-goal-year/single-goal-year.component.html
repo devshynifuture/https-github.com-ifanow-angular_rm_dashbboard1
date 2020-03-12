@@ -23,7 +23,7 @@
                             <h5 class="m-0 text-black pl-0">{{Questions.Q}}</h5>
                             <div class="form-group mb-0 pt-8">
                                 <mat-form-field>
-                                    <mat-select (selectionChange)="selectOwner($event.value)" formControlName="field1"
+                                    <mat-select (selectionChange)="selectOwnerAndUpdateForm($event.value)" formControlName="field1"
                                         class="form-control br-0 br-none">
                                         <mat-option value="" disabled>Select member</mat-option>
                                         <mat-option *ngFor="let familyMember of familyList" [value]="familyMember">

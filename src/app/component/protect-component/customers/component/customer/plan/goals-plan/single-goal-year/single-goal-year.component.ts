@@ -11,44 +11,42 @@ import {UtilService} from 'src/app/services/util.service';
   styleUrls: ['./single-goal-year.component.scss']
 })
 export class SingleGoalYearComponent implements OnInit {
+  @Input() goalTypeData:any = {};
+  @Input() familyList:any = {};
+  @Input() statisticalData:any = {};
+  @Output() output = new EventEmitter<any>();
+  @Output() backToaddGoal = new EventEmitter();
   Questions: any;
   familyData: any;
   singleYearGoalForm: FormGroup;
   currentYear: number = new Date().getFullYear();
-  field2SliderData: any;
-  field2MinData: any;
-  clientId = AuthService.getClientId();
-  advisorId = AuthService.getAdvisorId();
   field3SliderData: any;
   planForFamily:boolean = false;
-  @ViewChild('myInput3', { static: true }) inputRef: ElementRef;
-  @ViewChild('mySlider3', { static: true }) sliderRef: ElementRef<object>;
   imageData: any;
   logoImg: any;
   currentAge: number;
+  minAgeYear = 0;
+  maxAgeYear = 100;
+  clientId: any;
+  advisorId: any;
+  
   constructor(
     private eventService: EventService, 
     private fb: FormBuilder, 
     private planService: PlanService, 
     private utilService: UtilService
-  ) { }
-
-  @Input() goalTypeData:any = {};
-  @Input() familyList:any = {};
-  @Input() statisticalData:any = {};
-  @Output() output = new EventEmitter<any>();
-  minAgeYear = 0;
-  maxAgeYear = 100;
+  ) {
+    this.clientId = AuthService.getClientId();
+    this.advisorId = AuthService.getAdvisorId();
+  }
   
-
-  @Output() backToaddGoal = new EventEmitter();
   ngOnInit() {
     this.Questions = this.goalTypeData.questions;
     this.planForFamily = !!this.goalTypeData.questions.Q; // Plan for family question present or not
-    this.createForm();
+    this.initializeForm();
   }
   
-  selectOwner(value) {
+  selectOwnerAndUpdateForm(value) {
     this.setMinMaxAgeOrYear(value);
     this.singleYearGoalForm.controls.field2.setValidators([Validators.required, Validators.min(this.minAgeYear), Validators.max(this.maxAgeYear)])
     this.singleYearGoalForm.controls.field2.setValue(this.minAgeYear);
@@ -149,8 +147,7 @@ export class SingleGoalYearComponent implements OnInit {
     }
   }
 
-  // initialize the form for the goal
-  createForm(){
+  initializeForm(){
     this.singleYearGoalForm = this.fb.group({
       field2: ['', [Validators.required]], // age or time
       field3: ['', [Validators.required, Validators.min(this.goalTypeData.validations.minCost), Validators.max(this.goalTypeData.validations.maxCost)]], // cost
@@ -163,7 +160,7 @@ export class SingleGoalYearComponent implements OnInit {
       this.singleYearGoalForm.addControl('field1', new FormControl('', Validators.required)); // who the goal is for
     }
     this.setMinMaxAgeOrYear(this.familyList[0]);
-    this.selectOwner(this.familyList[0]); //set client as the initial owner
+    this.selectOwnerAndUpdateForm(this.familyList[0]); //set client as the initial owner
   }
 
   previewGoalImage(event) {

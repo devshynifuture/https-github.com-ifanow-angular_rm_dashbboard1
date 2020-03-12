@@ -102,10 +102,39 @@ export class AddGoalsComponent implements OnInit {
           }
           break;
         case 5: // Vacation
+        element.questions = {
+          Q1: 'Which year you plan to travel',
+          Q2: 'Travel expense in today\'s value',
+          Q3: 'Give this goal a name',
+          Q4: 'Notes'
+        }
           element.imageUrl = '/assets/images/svg/retierment.svg';
+          element.validations = {
+            minAgeFromPresent: 0,
+            maxAgeFromPresent: 50,
+            minCost: 25000,
+            maxCost: 2500000,
+            showAge: false,
+            placeHolder: 'Year'
+          }
           break;
         case 6: // Education
+        element.questions = {
+          Q: 'Who are you planning this for?',
+          Q1: 'Member"s age at the time of course?',
+          Q2: 'Annual Course expenses in today\'s value',
+          Q3: 'Give this goal a name',
+          Q4: 'Notes'
+        }
           element.imageUrl = '/assets/images/svg/wedding.svg';
+          element.validations = {
+            minAge: 2,
+            maxAge: 60,
+            minCost: 50000,
+            maxCost: 50000000,
+            showAge: true,
+            placeHolder: 'Age'
+          }
           break;
         case 7: // Emergency
           element.questions = {
