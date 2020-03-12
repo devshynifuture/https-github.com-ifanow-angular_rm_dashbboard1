@@ -41,11 +41,13 @@ export class BankAccountsComponent implements OnInit {
   adviceShowHeaderAndFooter: boolean = true;
   isAdviceFormValid: boolean = false;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+  editData: any;
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
 
   @Input()
   set data(data) {
     this.inputData = data;
+    this.getdataForm(data);
   }
 
   get data() {
@@ -61,7 +63,6 @@ export class BankAccountsComponent implements OnInit {
     }
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getdataForm(this.data);
   }
   display(value) {
     console.log('value selected', value)
@@ -101,6 +102,7 @@ export class BankAccountsComponent implements OnInit {
     }
     else {
       this.flag = "editBANK";
+      (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : this.editData = data;
     }
     this.bankData = {};
     this.bankAccounts = this.fb.group({
@@ -113,7 +115,7 @@ export class BankAccountsComponent implements OnInit {
       bankName: [(data.bankName == undefined) ? '' : data.bankName,],
       bankAcNo: [(data.accountNo == undefined) ? '' : data.accountNo,],
       description: [(data.description == undefined) ? '' : data.description,],
-      id: [(data.id == undefined) ? '' : data.id,],
+      // id: [(data.id == undefined) ? '' : data.id,],
       familyMemberId: [[(data.familyMemberId == undefined) ? '' : data.familyMemberId],],
       nomineeList: this.nomineesList
     });
@@ -163,7 +165,6 @@ export class BankAccountsComponent implements OnInit {
         accountBalance: this.bankAccounts.controls.accountBalance.value,
         accountNo: this.bankAccounts.controls.bankAcNo.value,
         description: this.bankAccounts.controls.description.value,
-        id: this.bankAccounts.controls.id.value,
         nominees: this.nominees
       }
 
@@ -183,9 +184,10 @@ export class BankAccountsComponent implements OnInit {
         );
       } else {
         //edit call
-        this.custumService.editBankAcounts(obj).subscribe(
-          data => this.editBankAcountsRes(data)
-        );
+        obj['id'] = this.editData.id,
+          this.custumService.editBankAcounts(obj).subscribe(
+            data => this.editBankAcountsRes(data)
+          );
       }
     }
   }
@@ -205,12 +207,12 @@ export class BankAccountsComponent implements OnInit {
   addBankAccountsRes(data) {
     console.log('addrecuringDepositRes', data)
     this.subInjectService.changeNewRightSliderState({ flag: 'addedbankAc', state: 'close', data, refreshRequired: true })
-    this.eventService.openSnackBar('Bank account added successfully', 'OK');
+    this.eventService.openSnackBar('Added successfully!', 'OK');
 
   }
   editBankAcountsRes(data) {
-    this.subInjectService.changeNewRightSliderState({ flag: 'addedbankAc', state: 'close', data, refreshRequired: true })
-    this.eventService.openSnackBar('Bank account edited successfully', 'OK');
+    this.subInjectService.changeNewRightSliderState({ flag: 'editedbankAc', state: 'close', data, refreshRequired: true })
+    this.eventService.openSnackBar('Updated successfully!', 'OK');
 
   }
 }

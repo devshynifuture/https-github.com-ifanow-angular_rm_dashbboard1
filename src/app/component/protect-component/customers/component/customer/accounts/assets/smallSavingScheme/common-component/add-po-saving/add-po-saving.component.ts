@@ -194,7 +194,7 @@ export class AddPoSavingComponent implements OnInit {
   addPOSavingResponse(data) {
     this.close(true);
     console.log(data);
-    (this.flag == "editPOSAVING") ? this.eventService.openSnackBar('PO_SAVING is edited', 'Dismiss') : this.eventService.openSnackBar('PO_SAVING is added', 'Dismiss');
+    (this.flag == "editPOSAVING") ? this.eventService.openSnackBar('Updated successfully!', 'Dismiss') : this.eventService.openSnackBar('Added successfully!', 'Dismiss');
 
   }
 

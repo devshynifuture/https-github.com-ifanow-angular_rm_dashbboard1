@@ -34,6 +34,7 @@ export class NomineeDetailsIinComponent implements OnInit {
   obj1: any;
   sendObj: any;
   nominee: any;
+  changedValue: string;
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private onlineTransact: OnlineTransactionService, private postalService: PostalService,
     private processTransaction: ProcessTransactionService
@@ -42,7 +43,7 @@ export class NomineeDetailsIinComponent implements OnInit {
   set data(data) {
     this.inputData = data;
     this.allData = data
-    if (data.nomineeList) {
+    if (data && data.nomineeList) {
       this.firstHolderNominee = data.nomineeList[0]
       this.secondHolderNominee = data.nomineeList[1]
       this.thirdHolderNominee = data.nomineeList[2]
@@ -55,14 +56,20 @@ export class NomineeDetailsIinComponent implements OnInit {
     return this.inputData;
   }
   ngOnInit() {
-    this.getdataForm(this.firstHolderNominee)
+
+    if (this.firstHolderNominee) {
+      this.getdataForm(this.firstHolderNominee)
+    } else {
+      this.getdataForm('')
+    }
+
     this.holdingList = []
     this.nominee = []
   }
   close() {
+    this.changedValue = 'close'
     const fragmentData = {
       direction: 'top',
-      componentName: NomineeDetailsIinComponent,
       state: 'close'
     };
 
@@ -91,7 +98,7 @@ export class NomineeDetailsIinComponent implements OnInit {
   }
   pinInvalid: boolean = false;
   openBankDetails() {
-    const subscription = this.processTransaction.openBank(this.allData.bankDetailList).subscribe(
+    const subscription = this.processTransaction.openBank(this.allData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           subscription.unsubscribe();

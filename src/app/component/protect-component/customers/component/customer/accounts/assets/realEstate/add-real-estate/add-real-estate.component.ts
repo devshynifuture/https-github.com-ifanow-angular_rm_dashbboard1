@@ -506,7 +506,7 @@ export class AddRealEstateComponent implements OnInit {
     if (data) {
       console.log(data);
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true })
-      this.eventService.openSnackBar('Real estate added successfully', 'OK');
+      this.eventService.openSnackBar('Added successfully!', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'Dismiss');
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true })
@@ -517,7 +517,7 @@ export class AddRealEstateComponent implements OnInit {
     if (data) {
       console.log(data);
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true })
-      this.eventService.openSnackBar('Real edited successfully', 'OK');
+      this.eventService.openSnackBar('Updated successfully!', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'Dismiss');
     }

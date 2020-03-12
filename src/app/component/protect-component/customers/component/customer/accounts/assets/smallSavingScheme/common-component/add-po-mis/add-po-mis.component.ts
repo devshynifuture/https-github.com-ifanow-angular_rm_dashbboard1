@@ -142,13 +142,10 @@ export class AddPoMisComponent implements OnInit {
     }
     if (this.pomisForm.invalid) {
       this.inputs.find(input => !input.ngControl.valid).focus();
-      this.pomisForm.get('ownerName').markAsTouched();
-      this.pomisForm.get('amtInvested').markAsTouched();
-      this.pomisForm.get('commencementdate').markAsTouched();
-      this.pomisForm.get('ownershipType').markAsTouched();
+      this.pomisForm.markAllAsTouched();
     } else {
       const obj = {
-        ownerName: (this.ownerName == null) ? this.pomisForm.controls.ownerName.value : this.ownerName,
+        ownerName: (this.ownerName == null) ? this.pomisForm.controls.ownerName.value : this.ownerName.userName,
         amtInvested: this.pomisForm.controls.amtInvested.value,
         commencementdate: this.pomisForm.controls.commencementdate.value,
         ownershipType: this.pomisForm.controls.ownershipType.value,
@@ -229,7 +226,7 @@ export class AddPoMisComponent implements OnInit {
     if (data) {
       console.log(data);
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
-      this.eventService.openSnackBar('Pomis added successfully', 'OK');
+      this.eventService.openSnackBar('Added successfully!', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'Dismiss');
 
@@ -241,7 +238,7 @@ export class AddPoMisComponent implements OnInit {
     if (data) {
       console.log(data);
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
-      this.eventService.openSnackBar('Pomis edited successfully', 'OK');
+      this.eventService.openSnackBar('Updated successfully!', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'Dismiss');
     }

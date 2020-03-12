@@ -366,7 +366,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         this.customerService.editLifeInsuranceData(this.insuranceFormFilledData).subscribe(
           data => {
             console.log(data);
-            this.eventService.openSnackBar("Insurance edited", 'dismiss');
+            this.eventService.openSnackBar("Updated successfully!", 'dismiss');
             const insuranceData =
             {
               insuranceTypeId: this.insuranceTypeId,
@@ -379,7 +379,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         this.customerService.addLifeInsurance(this.insuranceFormFilledData).subscribe(
           data => {
             console.log(data);
-            this.eventService.openSnackBar("Insurance added", 'dismiss');
+            this.eventService.openSnackBar("Added successfully!", 'dismiss');
             this.close(insuranceData)
           }
         );

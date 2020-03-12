@@ -8,6 +8,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { BankDetailsIINComponent } from '../bank-details-iin/bank-details-iin.component';
 import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
 import { PostalService } from 'src/app/services/postal.service';
+import { LeftSideInnUccListComponent } from '../left-side-inn-ucc-list/left-side-inn-ucc-list.component';
 
 @Component({
   selector: 'app-contact-details-inn',
@@ -32,10 +33,12 @@ export class ContactDetailsInnComponent implements OnInit {
   sendObj: any;
   getObj: void;
   contacts: any[];
+  changedValue: string;
+  generalDetails: any;
 
-  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,private postalService : PostalService,
-    private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService, 
-    public eventService: EventService, private ProcessTransactionService : ProcessTransactionService) { }
+  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
+    private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
+    public eventService: EventService, private ProcessTransactionService: ProcessTransactionService) { }
 
   @ViewChild('dynamic', {
     read: ViewContainerRef,
@@ -46,29 +49,35 @@ export class ContactDetailsInnComponent implements OnInit {
   set data(data) {
     this.inputData = data;
     this.list = data
-    if(data.firstHolder){
+    if (data && data.firstHolder) {
       this.firstHolderContact = data.firstHolder
       this.secondHolderContact = data.secondHolder
       this.thirdHolderContact = data.thirdHolder
+      this.getdataForm(this.firstHolderContact)
     }
+    this.generalDetails = data.generalDetails
     console.log('################## = ', this.list)
-    this.getdataForm(data)
   }
 
   get data() {
     return this.inputData;
   }
   ngOnInit() {
-    this.getdataForm(this.firstHolderContact)
+    if (this.firstHolderContact) {
+      this.getdataForm(this.firstHolderContact)
+    } else {
+      this.getdataForm('')
+    }
+
     this.obj1 = []
     this.sendObj = []
-    this.contacts =[]
+    this.contacts = []
     console.log('holding list', this.holdingList)
   }
   close() {
+    this.changedValue = 'close'
     const fragmentData = {
       direction: 'top',
-      componentName: ContactDetailsInnComponent,
       state: 'close'
     };
 
@@ -81,13 +90,13 @@ export class ContactDetailsInnComponent implements OnInit {
       aadharNumber: [(!data) ? '' : data.aadharNumber, [Validators.required]],
       mobileNo: [!data ? '' : data.mobileNo, [Validators.required]],
       phoneNo: [!data ? '' : data.phoneNo, [Validators.required]],
-      addressLine1: [!data ? '' : data.addressLine1, [Validators.required]],
-      addressLine2: [!data ? '' : data.addressLine2, [Validators.required]],
-      pinCode: [!data ? '' : data.pinCode, [Validators.required]],
-      city: [!data ? '' : data.city, [Validators.required]],
-      district: [!data ? '' : data.district, [Validators.required]],
-      state: [!data ? '' : data.state, [Validators.required]],
-      country: [!data ? '' : data.country, [Validators.required]],
+      addressLine1: [!data.address ? '' : data.address.addressLine1, [Validators.required]],
+      addressLine2: [!data.address ? '' : data.address.addressLine2, [Validators.required]],
+      pinCode: [!data.address ? '' : data.address.pinCode, [Validators.required]],
+      city: [!data.address ? '' : data.address.city, [Validators.required]],
+      district: [!data.address ? '' : data.address.district, [Validators.required]],
+      state: [!data.address ? '' : data.address.state, [Validators.required]],
+      country: [!data.address ? '' : data.address.country, [Validators.required]],
 
     });
   }
@@ -95,7 +104,7 @@ export class ContactDetailsInnComponent implements OnInit {
     return this.contactDetails.controls;
   }
   openBankDetails(data) {
-    const subscription =this.ProcessTransactionService.openBank(data).subscribe(
+    const subscription = this.ProcessTransactionService.openBank(data).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           subscription.unsubscribe();
@@ -104,7 +113,7 @@ export class ContactDetailsInnComponent implements OnInit {
     );
   }
   pinInvalid: boolean = false;
-  openPersonalDetails(){
+  openPersonalDetails() {
     const subscription = this.ProcessTransactionService.openPersonal(this.list).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
@@ -189,26 +198,26 @@ export class ContactDetailsInnComponent implements OnInit {
     if (flag == true) {
       const value = {}
       this.obj1.forEach(element => {
-        if(element){
+        if (element) {
           this.getObj = this.setObj(element, value)
           this.contacts.push(this.getObj)
         }
-     });
-       this.sendObj.firstHolder = Object.assign({}, this.list.firstHolder, this.contacts[0]);
-       this.sendObj.secondHolder = Object.assign({}, this.list.secondHolder, this.contacts[1]);
-       this.sendObj.thirdHolder = Object.assign({}, this.list.thirdHolder, this.contacts[2]);
-       this.sendObj.generalDetails = this.list.generalDetails
+      });
+      this.sendObj.firstHolder = Object.assign({}, this.list.firstHolder, this.contacts[0]);
+      this.sendObj.secondHolder = Object.assign({}, this.list.secondHolder, this.contacts[1]);
+      this.sendObj.thirdHolder = Object.assign({}, this.list.thirdHolder, this.contacts[2]);
+      this.sendObj.generalDetails = this.generalDetails
 
       this.openBankDetails(this.sendObj)
     }
   }
-  setObj(holder, value){
-   
+  setObj(holder, value) {
+
     value = {
-      email:holder.email,
-      aadharNumber:holder.aadharNumber,
-      mobileNo:holder.mobileNo,
-      phoneNo:holder.phoneNo,
+      email: holder.email,
+      aadharNumber: holder.aadharNumber,
+      mobileNo: holder.mobileNo,
+      phoneNo: holder.phoneNo,
     }
     value.address = {
 

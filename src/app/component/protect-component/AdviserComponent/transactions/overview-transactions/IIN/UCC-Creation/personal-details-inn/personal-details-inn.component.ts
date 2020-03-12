@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
+import { LeftSideInnUccListComponent } from '../left-side-inn-ucc-list/left-side-inn-ucc-list.component';
 
 @Component({
   selector: 'app-personal-details-inn',
@@ -28,19 +29,23 @@ export class PersonalDetailsInnComponent implements OnInit {
   }
   replaceObj: { panNumber: any; clientName: any; madianName: any; fatherName: any; motherName: any; dateOfBirth: any; gender: any; martialStatus: any; };
   validatorType = ValidatorType
+  changedValue: string;
+  doneData: string;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
-    private processTransaction :ProcessTransactionService,
-    private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService, 
+    private processTransaction: ProcessTransactionService,
+    private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
     public eventService: EventService) { }
   @Input()
   set data(data) {
     this.inputData = data;
-    this.getdataForm(data.firstHolder)
-    this.firstHolder = data.firstHolder
-    this.secondHolder = data.secondHolder
-    this.thirdHolder = data.thirdHolder
-    console.log('return data', data)
+    if (data && data.firstHolder) {
+      this.getdataForm(data.firstHolder)
+      this.firstHolder = data.firstHolder
+      this.secondHolder = data.secondHolder
+      this.thirdHolder = data.thirdHolder
+      console.log('return data', data)
+    }
     this.generalDetails = data
   }
 
@@ -48,14 +53,19 @@ export class PersonalDetailsInnComponent implements OnInit {
     return this.inputData;
   }
   ngOnInit() {
-    this.getdataForm(this.firstHolder)
+
+    if (this.firstHolder) {
+      this.getdataForm(this.firstHolder)
+    } else {
+      this.getdataForm('')
+    }
     this.holdingList = []
     this.obj1 = []
   }
   close() {
+    this.changedValue = 'close'
     const fragmentData = {
       direction: 'top',
-      componentName: PersonalDetailsInnComponent,
       state: 'close'
     };
 
@@ -79,7 +89,7 @@ export class PersonalDetailsInnComponent implements OnInit {
   }
   openContactDetails(data) {
 
- const subscription =this.processTransaction.openContact(data).subscribe(
+    const subscription = this.processTransaction.openContact(data).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           subscription.unsubscribe();
@@ -90,7 +100,7 @@ export class PersonalDetailsInnComponent implements OnInit {
   reset() {
     this.personalDetails.reset();
   }
-  SendToForm(value,flag) {
+  SendToForm(value, flag) {
     if (value == 'first') {
       this.savePersonalDetails(value);
       if (this.firstHolder) {
@@ -123,8 +133,9 @@ export class PersonalDetailsInnComponent implements OnInit {
     this.obj1.firstHolder = this.firstHolder;
     this.obj1.secondHolder = this.secondHolder;
     this.obj1.thirdHolder = this.thirdHolder;
-    this.obj1.generalDetails =  this.generalDetails;
-    if(flag == true){
+    this.obj1.generalDetails = this.generalDetails;
+    if (flag == true) {
+      this.doneData = 'personal'
       this.openContactDetails(this.obj1);
     }
   }
