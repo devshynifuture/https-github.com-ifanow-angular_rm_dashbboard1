@@ -159,7 +159,7 @@ export class AddNscComponent implements OnInit {
         {
           "id": this.editApi.id,
           "familyMemberId": this.familyMemberId,
-          "ownerName": (this.ownerName == undefined) ? this.nscFormField.controls.ownerName.value : this.ownerName,
+          "ownerName": (this.ownerName == undefined) ? this.nscFormField.controls.ownerName.value : this.ownerName.value,
           "amountInvested": this.nscFormField.get('amountInvested').value,
           "commencementDate": this.datePipe.transform(this.nscFormField.get('commDate').value, 'yyyy-MM-dd'),
           "tenure": this.nscFormField.get('Tenure').value,
@@ -181,7 +181,7 @@ export class AddNscComponent implements OnInit {
           "clientId": this.clientId,
           "familyMemberId": this.familyMemberId,
           "advisorId": this.advisorId,
-          "ownerName": (this.ownerName == undefined) ? this.nscFormField.controls.ownerName.value : this.ownerName,
+          "ownerName": (this.ownerName == undefined) ? this.nscFormField.controls.ownerName.value : this.ownerName.value,
           "amountInvested": this.nscFormField.get('amountInvested').value,
           "commencementDate": this.datePipe.transform(this.nscFormField.get('commDate').value, 'yyyy-MM-dd'),
           "tenure": this.nscFormField.get('Tenure').value,

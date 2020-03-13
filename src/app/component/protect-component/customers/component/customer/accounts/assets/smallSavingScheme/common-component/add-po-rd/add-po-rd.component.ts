@@ -148,7 +148,7 @@ export class AddPoRdComponent implements OnInit {
         clientId: this.clientId,
         advisorId: this.advisorId,
         familyMemberId: this.familyMemberId,
-        ownerName: this.ownerName,
+        ownerName: this.ownerName.userName,
         monthlyContribution: this.PORDForm.get('monthlyContribution').value,
         commencementDate: this.PORDForm.get('commDate').value,
         rdNumber: this.PORDFormoptionalForm.get('rdNum').value,
@@ -159,9 +159,9 @@ export class AddPoRdComponent implements OnInit {
         ownerTypeId: this.PORDForm.get('ownership').value,
         interestCompounding: this.PORDForm.get('compound').value,
         isActive: 1,
-        id: this.editApi.id
       };
       if (this.flag == "editPORD") {
+        obj['id'] = this.editApi.id;
         this.cusService.editPORD(obj).subscribe(
           data => this.addPORDResponse(data),
           error => this.eventService.showErrorMessage(error)
