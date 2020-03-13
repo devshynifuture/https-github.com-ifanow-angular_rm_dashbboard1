@@ -5,7 +5,8 @@
             <div class="col-md-8">
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
-                        <input matInput #accBal appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                        <!-- [inputValidator]="validatorType.NUMBER_ONLY" removed for prod -->
+                        <input matInput #accBal appInputValueValidation 
                             autocomplete="off" class="form-control rupess br-0" formControlName="amount"
                             matInput type="text" maxlength="10">
                         <mat-error  class="f-12">

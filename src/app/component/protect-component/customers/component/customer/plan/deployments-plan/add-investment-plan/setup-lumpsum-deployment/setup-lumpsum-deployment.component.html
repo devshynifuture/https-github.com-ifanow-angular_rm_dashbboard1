@@ -211,7 +211,8 @@
                         </div>
                     </div>
                     <div *ngIf="schemeData && schemeData.DEBT.length == 0  && schemeData.EQUITY.length == 0" class="d-flex flex-column align-items-center">
-                            <h4 class="text-center pt-12" (click)="openPopup('addAmount',item)">No Data found</h4>
+                        <!-- ,item removed for build -->
+                            <h4 class="text-center pt-12" (click)="openPopup('addAmount', null)">No Data found</h4>
                     </div>
 
                 </div>

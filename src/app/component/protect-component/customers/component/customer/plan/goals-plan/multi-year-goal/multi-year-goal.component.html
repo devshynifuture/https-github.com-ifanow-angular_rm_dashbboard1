@@ -57,13 +57,15 @@
                     <div class="row pt-20">
                         <div class="col-md-12 p-0">
                             <h5 class="m-0 text-black">{{Questions.Q2}}</h5>
-                            <div class="row pt-8" *ngFor="let spending of multiYearGoalForm.get('detailedSpendings').controls; index as i">
+                            <!-- *ngFor="let spending of multiYearGoalForm.get('detailedSpendings').controls; index as i" removed for prod build -->
+                            <div class="row pt-8" >
                                 <div class="col-md-4 p-0">
                                     <div class="form-group mb-0">
                                         <mat-form-field>
+                                            <!--[value]="spending.value" [formControl]="spending" removed for prod build -->
                                             <input type="number"
-                                                [formControl]="spending" autocomplete="off" matInput
-                                                [value]="spending.value"
+                                                 autocomplete="off" matInput
+                                                
                                                 class="form-control br-0 rupess">
                                             <mat-error>This field is required</mat-error>
                                         </mat-form-field>
@@ -71,8 +73,9 @@
                                 </div>
                                 <div class="col-md-8 pr-0">
                                     <div id="custom-slider">
-                                        <mat-slider [formControl]="spending"
-                                            [value]="spending.value"
+                                        <!-- [formControl]="spending" removed for prod build [value]="spending.value"-->
+                                        <mat-slider 
+                                            
                                             [min]="goalTypeData.validations.minCost"
                                             [max]="goalTypeData.validations.maxCost"></mat-slider>
                                     </div>

@@ -22,7 +22,7 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <mat-select appOwnerNominee matInput
-                            formControlName="name" [data]='ownerData' (selectionChange)="disabledMember(value,'owner')" (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod] = 'callMethod' >
+                            formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'owner')" (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod] = 'callMethod' >
                             <mat-option value=''>Select family members</mat-option>
                             <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"   [value]="f.userName">
                                 <span>{{f.userName}}</span>
@@ -39,10 +39,10 @@
                     <mat-form-field>
                         <input matInput class="form-control br-0 percentage" type="number"
                             formControlName="share" (focusout)="onChangeJointOwnership('owner')">
-                        <mat-error class="f-12" *ngIf="getCoOwner.controls[pointIndex].controls['share'].hasError('required')">
+                        <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('required')">
                             This field is required
                         </mat-error>
-                        <mat-error class="f-12" *ngIf="getCoOwner.controls[pointIndex].controls['share'].hasError('incorrect') ">
+                        <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('incorrect') ">
                             Total percent should be 100%
                         </mat-error>
                     </mat-form-field>
@@ -304,10 +304,10 @@
                         <mat-form-field>
                             <input matInput class="form-control br-0 percentage" type="number"
                                 formControlName="sharePercentage" (focusout)="onChangeJointOwnership('nominee')">
-                            <mat-error class="f-12" *ngIf="getNominee.controls[pointIndex].controls['sharePercentage'].hasError('required')">
+                            <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('required')">
                                 This field is required
                             </mat-error>
-                            <mat-error class="f-12" *ngIf="getNominee.controls[pointIndex].controls['sharePercentage'].hasError('incorrect') ">
+                            <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('incorrect') ">
                                 Total percent should be 100%
                             </mat-error>
                         </mat-form-field>
