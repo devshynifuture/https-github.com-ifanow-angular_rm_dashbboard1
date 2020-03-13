@@ -37,13 +37,21 @@ export class BankDetailsIINComponent implements OnInit {
   temp: any;
   changedValue: string;
   genralDetails: any;
+  doneData: any;
+  allData: any;
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
     private processTransaction: ProcessTransactionService,
     private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
   @Input()
   set data(data) {
     this.inputData = data;
+    console.log('all data in bank', this.inputData)
+    this.allData = data
     this.holdingList = data
+    this.doneData = {}
+    this.doneData.contact = true
+    this.doneData.personal = true
+    this.doneData.bank = false
     this.genralDetails = data.generalDetails
     if (data && data.bankDetailList) {
       this.firstHolderBank = data.bankDetailList[0]
@@ -134,7 +142,7 @@ export class BankDetailsIINComponent implements OnInit {
   }
   pinInvalid: boolean = false;
   openContactDetails() {
-    var data = this.holdingList
+    var data = this.inputData
     const fragmentData = {
       flag: 'app-upper-customer',
       id: 1,
@@ -223,6 +231,7 @@ export class BankDetailsIINComponent implements OnInit {
     this.obj1.push(this.secondHolderBank)
     this.obj1.push(this.thirdHolderBank)
     if (flag == true) {
+      this.doneData = true
       console.log('contact details', this.obj1)
       const value = {}
       this.obj1.forEach(element => {
@@ -241,6 +250,8 @@ export class BankDetailsIINComponent implements OnInit {
         advisorId: this.genralDetails.advisorId,
         holderList: this.temp,
         bankDetailList: this.bank,
+        nomineeList:this.inputData.nomineeList,
+        fatcaDetail:this.inputData.fatcaDetail,
         generalDetails: this.genralDetails
       }
       console.log('##### bank ######', this.sendObj)

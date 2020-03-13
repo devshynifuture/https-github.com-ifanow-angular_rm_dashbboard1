@@ -20,20 +20,18 @@ import { SubmitReviewInnComponent } from '../submit-review-inn/submit-review-inn
 })
 export class LeftSideInnUccListComponent implements OnInit {
   inputData: any;
+  @Input()
+  set data(data) {
+    this.inputData = data;
+  }
 
+  get data() {
+    return this.inputData;
+  }
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private processTransaction: ProcessTransactionService,
     private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
 
-    @Input()
-    set data(data) {
-      this.inputData = data;
-    console.log('dondtaa == ',data)
-    }
-  
-    get data() {
-      return this.inputData;
-    }
   ngOnInit() {
   }
   close(){

@@ -14,31 +14,33 @@
     <div class="row">
         <div class="col-md-6 pl-0">
             <h5 class="m-0">Deployment status</h5>
-            <table mat-table *ngIf="dataSource" [dataSource]="dataSource.EQUITY"  id="table-low" class="skeletonAnimation mt-12" appSkeletonLoading [appSkeletonLoading]="isLoading">
+            <table mat-table *ngIf="dataSource" [dataSource]="dataSource.EQUITY" id="table-low"
+                class="skeletonAnimation mt-12" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
                 <ng-container matColumnDef="position">
                     <th mat-header-cell *matHeaderCellDef>Equity <img src="/assets/images/svg/plus-rounded.svg"
-                            class="c-p"></th>
+                        (click)="openPopup('equityPopup','Equity')"    class="c-p"></th>
                     <td mat-cell *matCellDef="let element">
-                            <div class="bar"> {{element.EQT_TITLE}} 
-                                </div>
-                            </td>
+                        <div class="bar"> {{element.EQT_TITLE}}
+                        </div>
+                    </td>
                 </ng-container>
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef> Target </th>
                     <td mat-cell *matCellDef="let element">
-                            <div class="bar"> {{element.EQT_TARGET}}
-                            </div>    
-                            </td>
+                        <div class="bar"> {{element.EQT_TARGET | number : 2}}
+                        </div>
+                    </td>
                 </ng-container>
 
                 <!-- Weight Column -->
                 <ng-container matColumnDef="weight">
                     <th mat-header-cell *matHeaderCellDef> Remaining </th>
-                    <td mat-cell *matCellDef="let element"> <div class="bar"> {{element.EQT_REMAIN}}</div>
-                     </td>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar"> {{element.EQT_REMAIN | number : 2}}</div>
+                    </td>
                 </ng-container>
 
                 <!-- Symbol Column -->
@@ -55,26 +57,33 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
             <div *ngIf="dataSource.EQUITY == 0" class="d-flex flex-column align-items-center">
-                    <h4 class="text-center pt-12">No Data found</h4>
+                <h4 class="text-center pt-12">No Data found</h4>
             </div>
-            <table mat-table *ngIf="dataSource" [dataSource]="dataSource.DEBT" id="table-low"  class="skeletonAnimation mt-20" appSkeletonLoading [appSkeletonLoading]="isLoading">
+            <table mat-table *ngIf="dataSource" [dataSource]="dataSource.DEBT" id="table-low"
+                class="skeletonAnimation mt-20" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
                 <ng-container matColumnDef="position">
                     <th mat-header-cell *matHeaderCellDef>Debt <img src="/assets/images/svg/plus-rounded.svg"
-                            class="c-p"></th>
-                    <td mat-cell *matCellDef="let element"><div class="bar"> {{element.DEBT_TITLE}}</div> </td>
+                        (click)="openPopup('debtPopup','Debt')"  class="c-p"></th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar"> {{element.DEBT_TITLE}}</div>
+                    </td>
                 </ng-container>
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef>Target </th>
-                    <td mat-cell *matCellDef="let element"> <div class="bar">{{element.DEBT_TARGET}}</div> </td>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar">{{element.DEBT_TARGET | number : 2}}</div>
+                    </td>
                 </ng-container>
 
                 <!-- Weight Column -->
                 <ng-container matColumnDef="weight">
                     <th mat-header-cell *matHeaderCellDef> Remaining </th>
-                    <td mat-cell *matCellDef="let element"> <div class="bar">{{element.DEBT_REMAIN}}</div> </td>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar">{{element.DEBT_REMAIN | number : 2}}</div>
+                    </td>
                 </ng-container>
 
                 <!-- Symbol Column -->
@@ -91,7 +100,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
             </table>
             <div *ngIf="dataSource.DEBT == 0" class="d-flex flex-column align-items-center">
-                    <h4 class="text-center pt-12">No Data found</h4>
+                <h4 class="text-center pt-12">No Data found</h4>
             </div>
         </div>
         <div class="col-md-6 pr-0">
@@ -125,7 +134,8 @@
                     </mat-form-field>
                 </div>
                 <div class="col-md-3 pl-0">
-                    <button mat-stroked-button class="btn-primary pr-12 pl-12" (click)="openPopup('searchAndAdd','null')">Search
+                    <button mat-stroked-button class="btn-primary pr-12 pl-12"
+                        (click)="openPopup('searchAndAdd','null')">Search
                         & add</button>
                 </div>
 
@@ -195,11 +205,11 @@
 
                 </div>
             </div> -->
-            <div class="row bb-1 pb-12">
+            <div class="row bb-1 pb-12 pt-8">
                 <h4>EQUITY</h4>
                 <div class="col-md-12 pl-0 pt-12" *ngIf="schemeData && schemeData.EQUITY.length > 0">
-                    <div class="row"  *ngFor="let item of schemeData.EQUITY">
-                        <div class="col-md-10 pl-0" >
+                    <div class="row" *ngFor="let item of schemeData.EQUITY">
+                        <div class="col-md-10 pl-0">
                             <p class="m-0 roboto">{{item.schemeName}}/
                                 {{item.schemeCode}}</p>
                             <p class="m-0 text-success pt-4 roboto">Goals - 2, <span class="text-custom"> portfolios -
@@ -210,39 +220,41 @@
                             <button mat-stroked-button class="text-primary b-a-custom">Add</button>
                         </div>
                     </div>
-                    <div *ngIf="schemeData && schemeData.DEBT.length == 0  && schemeData.EQUITY.length == 0" class="d-flex flex-column align-items-center">
-                        <!-- ,item removed for build -->
-                            <h4 class="text-center pt-12" (click)="openPopup('addAmount', null)">No Data found</h4>
-                    </div>
 
                 </div>
-            </div>
-            <div class="row bb-1 pb-12">
-                    <h4>DEBT</h4>
-                    <div class="col-md-12 pl-0 pt-12" *ngIf="schemeData && schemeData.DEBT.length > 0">
-                        <div class="row"  *ngFor="let item of schemeData.DEBT">
-                            <div class="col-md-10 pl-0" >
-                                <p class="m-0 roboto">{{item.schemeName}}/
-                                        {{item.schemeCode}}</p>
-                                <p class="m-0 text-success pt-4 roboto">Goals - 2, <span class="text-custom"> portfolios -
-                                        1</span>
-                                </p>
-                            </div>
-                            <div class="col-md-2 pr-0">
-                                <button mat-stroked-button class="text-primary b-a-custom" (click)="openPopup('addAmount',item)">Add</button>
-                            </div>
-                        </div>
-                        <div *ngIf="schemeData && schemeData.DEBT.length == 0 " class="d-flex flex-column align-items-center">
-                                <h4 class="text-center pt-12">No Data found</h4>
-                        </div>
-    
-                    </div>
+                <div *ngIf="schemeData  && schemeData.EQUITY.length == 0" class="d-flex flex-column align-items-center pt-20">
+                    <h4 class="text-center pt-12" (click)="openPopup('addAmount',item)">No scheme found</h4>
                 </div>
+            </div>
+            <div class="row bb-1 pb-12 pt-8">
+                <h4>DEBT</h4>
+                <div class="col-md-12 pl-0 pt-12" *ngIf="schemeData && schemeData.DEBT.length > 0">
+                    <div class="row" *ngFor="let item of schemeData.DEBT">
+                        <div class="col-md-10 pl-0">
+                            <p class="m-0 roboto">{{item.schemeName}}/
+                                {{item.schemeCode}}</p>
+                            <p class="m-0 text-success pt-4 roboto">Goals - 2, <span class="text-custom"> portfolios -
+                                    1</span>
+                            </p>
+                        </div>
+                        <div class="col-md-2 pr-0">
+                            <button mat-stroked-button class="text-primary b-a-custom"
+                                (click)="openPopup('addAmount',item)">Add</button>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div *ngIf="schemeData && schemeData.DEBT.length == 0 " class="d-flex flex-column align-items-center pt-20">
+                    <h4 class="text-center pt-12">No scheme found</h4>
+                </div>
+            </div>
         </div>
     </div>
     <h5 class="m-0 f-500 text-black pt-44">Added items</h5>
     <p class="roboto m-0 f-500 text-black pt-20">EQUITY</p>
-    <table *ngIf="dataSource" mat-table   [dataSource]="dataSource.equity_investment" class="skeletonAnimation mt-12" appSkeletonLoading [appSkeletonLoading]="isLoading" class="mt-8" id="table-low">
+    <table *ngIf="dataSource" mat-table [dataSource]="dataSource.equity_investment" class="skeletonAnimation mt-12"
+        appSkeletonLoading [appSkeletonLoading]="isLoading" class="mt-8" id="table-low">
         <!-- Name Column -->
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Scheme name </th>
@@ -284,11 +296,11 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
     </table>
     <div *ngIf="dataSource.equity_investment == 0" class="d-flex flex-column align-items-center">
-            <h4 class="text-center pt-12">No Data found</h4>
+        <h4 class="text-center pt-12">No Data found</h4>
     </div>
     <p class="roboto m-0 f-500 text-black pt-20">DEBT</p>
-    <table *ngIf="dataSource" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation"
-        mat-table [dataSource]="dataSource.debt_investment" class="mt-8" id="table-low">
+    <table *ngIf="dataSource" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation" mat-table
+        [dataSource]="dataSource.debt_investment" class="mt-8" id="table-low">
         <!-- Name Column -->
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Scheme name </th>
@@ -330,7 +342,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
     </table>
     <div *ngIf="dataSource.debt_investment == 0" class="d-flex flex-column align-items-center">
-            <h4 class="text-center pt-12">No Data found</h4>
+        <h4 class="text-center pt-12">No Data found</h4>
     </div>
 </div>
 <div class="bottom-fixed wrapper-12 w-70">
