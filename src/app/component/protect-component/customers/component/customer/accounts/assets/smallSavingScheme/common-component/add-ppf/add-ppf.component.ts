@@ -176,6 +176,9 @@ export class AddPpfComponent implements OnInit {
         }
       }
     }
+    else if (this.transactionData.length == 0) {
+      return;
+    }
     else if (transactionFlag == false) {
       return;
     }
