@@ -115,7 +115,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" matInput matInput formControlName="commencementDate" [max]="maxDate"
+                    <input autocomplete="off" (click)="picker.open()" matInput matInput formControlName="commencementDate" [max]="maxDate"
                         class="form-control br-0" [matDatepicker]="picker" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
@@ -136,7 +136,7 @@
                 <mat-form-field>
                     <input autocomplete="off" matInput matInput autocomplete="off" formControlName="tenure"
                         appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" #tenure type="text"
-                        maxlength="" class="form-control br-0">
+                        maxlength="3" class="form-control br-0">
                     <!-- <mat-select formControlName="tenure" class="form-control br-0 ">
                         <mat-option [value]="">Months</mat-option>
                         <mat-option *ngFor="let M of fdMonths" [value]="M">
@@ -148,8 +148,8 @@
                         class="f-12">
                         This field is required
                     </mat-error>
-                    <mat-error *ngIf="(recuringDeposit.get('tenure').errors?.max)" class="f-12">
-                        Should be between than 0 to 120
+                    <mat-error *ngIf="recuringDeposit.get('tenure').errors?.max || recuringDeposit.get('tenure').errors?.min" class="f-12">
+                        Should be between than 1 to 120
                     </mat-error>
                 </mat-form-field>
             </div>

@@ -213,7 +213,7 @@ export class RecuringDepositComponent implements OnInit {
       interestRate: [(data == undefined) ? '' : data.interestRate, [Validators.required]],
       compound: [(data.interestCompounding == undefined) ? '' : (data.interestCompounding) + "", [Validators.required]],
       linkBankAc: [(data == undefined) ? '' : data.linkedBankAccount,],
-      tenure: [(data == undefined) ? '' : data.tenure, [Validators.required, Validators.min(0), Validators.max(120)]],
+      tenure: [(data == undefined) ? '' : data.tenure, [Validators.required, Validators.min(1), Validators.max(120)]],
       description: [(data == undefined) ? '' : data.description,],
       bankName: [(data == undefined) ? '' : data.bankName,],
       // ownerType: [(data == undefined) ? '' : (data.ownershipType) + "", [Validators.required]],

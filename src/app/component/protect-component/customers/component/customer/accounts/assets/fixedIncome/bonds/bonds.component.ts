@@ -131,6 +131,17 @@ export class BondsComponent implements OnInit {
     return this.bonds.get('getCoOwnerName') as FormArray;
   }
 
+  addNewCoOwner(data) {
+    this.getCoOwner.push(this.fb.group({
+      name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+    }));
+    if (!data || this.getCoOwner.value.length < 1) {
+      for (let e in this.getCoOwner.controls) {
+        this.getCoOwner.controls[e].get('share').setValue('');
+      }
+    }
+  }
+
   /***owner***/ 
 
   /***nominee***/ 
@@ -150,17 +161,18 @@ export class BondsComponent implements OnInit {
     }
   }
 
+
+  
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
-      name: [""],
-      sharePercentage: [""],
-      familyMemberId: [""],
-      id:['']
+      name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : ''], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
     }));
-
-    for(let e in this.getNominee.controls){
-      this.getNominee.controls[e].get('sharePercentage').setValue('');
+    if (!data || this.getNominee.value.length < 1) {
+      for (let e in this.getNominee.controls) {
+        this.getNominee.controls[e].get('sharePercentage').setValue('');
+      }
     }
+    
   }
   /***nominee***/ 
   // ===================owner-nominee directive=====================//
@@ -220,8 +232,24 @@ export class BondsComponent implements OnInit {
     if(this.bonds.value.getCoOwnerName.length == 1){
       this.getCoOwner.controls['0'].get('share').setValue('100');
     }
+
+    if (data.ownerList) {
+      this.getCoOwner.removeAt(0);
+      data.ownerList.forEach(element => {
+        this.addNewCoOwner(element);
+      });
+    }
     
   /***owner***/ 
+
+  /***nominee***/ 
+  if (data.ownerList) {
+    this.getNominee.removeAt(0);
+    data.nomineeList.forEach(element => {
+      this.addNewNominee(element);
+    });
+  }
+  /***nominee***/ 
 
   if(data.nomineeList){
     this.getNominee.removeAt(0);
@@ -279,7 +307,7 @@ export class BondsComponent implements OnInit {
         clientId: this.clientId,
         // familyMemberId: this.familyMemberId,
         // ownerName: this.bonds.getCoOwnerName.value,
-        memberList: this.bonds.value.getCoOwnerName,
+        ownerList: this.bonds.value.getCoOwnerName,
         amountInvested: this.bonds.controls.amountInvest.value,
         bondName: this.bonds.controls.bondName.value,
         // couponAmount: this.bonds.controls.couponAmount.value,
