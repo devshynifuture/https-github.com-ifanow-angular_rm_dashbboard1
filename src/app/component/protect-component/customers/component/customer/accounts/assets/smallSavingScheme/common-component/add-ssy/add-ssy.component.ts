@@ -178,7 +178,8 @@ export class AddSsyComponent implements OnInit {
             "futureApproxContribution": this.ssySchemeForm.get('futureAppx').value,
             "frequency": this.ssySchemeForm.get('futureAppx').value,
           }],
-          "ssyTransactionList": finalTransctList
+          "ssyTransactionList": finalTransctList,
+          'familyMemberDob': this.ownerName.dateOfBirth
         }
         this.cusService.editSSYData(obj).subscribe(
           data => this.addSSYSchemeResponse(data),
@@ -205,7 +206,8 @@ export class AddSsyComponent implements OnInit {
             "futureApproxContribution": this.ssySchemeForm.get('futureAppx').value,
             "frequency": this.ssySchemeForm.get('futureAppx').value,
           }],
-          "ssyTransactionList": finalTransctList
+          "ssyTransactionList": finalTransctList,
+          'familyMemberDob': this.ownerName.dateOfBirth
         }
         let adviceObj = {
           advice_id: this.advisorId,
