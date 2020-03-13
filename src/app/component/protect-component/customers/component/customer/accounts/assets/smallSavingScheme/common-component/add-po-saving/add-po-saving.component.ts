@@ -165,7 +165,7 @@ export class AddPoSavingComponent implements OnInit {
           nominees: this.nominees,
           acNumber: this.poSavingOptionalForm.get('bankAccNo').value,
           description: this.poSavingOptionalForm.get('description').value,
-          ownerName: this.ownerName.userNames
+          ownerName: (this.ownerName == undefined) ? this.poSavingForm.controls.ownerName.value : this.ownerName.userName
         };
         let adviceObj = {
           advice_id: this.advisorId,
