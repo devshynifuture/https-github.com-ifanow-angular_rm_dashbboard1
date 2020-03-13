@@ -84,9 +84,8 @@
             <div class="col-md-3">
                 <div class="form-group form-group_one mb-0">
                     <mat-form-field>
-                        <input [matDatepicker]="balanceAsOn" (click)="balanceAsOn.open()"
-                            [max]="ppfSchemeForm.get('commencementDate').value" class="form-control br-0"
-                            formControlName="balanceAsOn" matInput readonly>
+                        <input [matDatepicker]="balanceAsOn" (click)="balanceAsOn.open()" [max]="maxDate"
+                            class="form-control br-0" formControlName="balanceAsOn" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                         <mat-datepicker #balanceAsOn></mat-datepicker>
                         <mat-error class="f-12">This field is required
