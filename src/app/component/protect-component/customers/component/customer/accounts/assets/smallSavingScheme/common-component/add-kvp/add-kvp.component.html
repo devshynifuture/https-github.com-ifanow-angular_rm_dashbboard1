@@ -59,8 +59,8 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput matInput formControlName="commDate" [max]="maxDate" [matDatepicker]="KVPpicker"
-                            class="form-control br-0" readonly>
+                        <input matInput matInput (click)="KVPpicker.open()" formControlName="commDate" [max]="maxDate"
+                            [matDatepicker]="KVPpicker" class="form-control br-0" readonly>
                         <mat-datepicker-toggle matSuffix [for]="KVPpicker"></mat-datepicker-toggle>
                         <mat-datepicker #KVPpicker></mat-datepicker>
                         <mat-error class="f-12">
@@ -104,8 +104,8 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input matInput formControlName="poBranch" #poBranch type="text" maxlength="20"
-                            class="form-control br-0">
+                    <mat-form-field> <input autocomplete="off" matInput formControlName="poBranch" #poBranch type="text"
+                            maxlength="20" class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{poBranch.value.length}}/20</mat-hint>
                     </mat-form-field>
@@ -120,8 +120,8 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input type="text" matInput formControlName="bankAccNum" #bankAccNum maxlength="16"
-                            class="form-control br-0" appInputValueValidation
+                    <mat-form-field> <input autocomplete="off" type="text" matInput formControlName="bankAccNum"
+                            #bankAccNum maxlength="16" class="form-control br-0" appInputValueValidation
                             [inputValidator]="validatorType.NUMBER_ONLY">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{bankAccNum.value.length}}/16</mat-hint>
@@ -135,8 +135,8 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input matInput formControlName="description" #description maxlength="60"
-                            class="form-control br-0">
+                    <mat-form-field> <input autocomplete="off" matInput formControlName="description" #description
+                            maxlength="60" class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                     </mat-form-field>
