@@ -241,7 +241,7 @@
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
                 </div>
-                <div class="pr-0" [ngClass]="recuringDeposit.value.getNomineeName.length > 1?'col-md-3' : 'col-md-5'">
+                <div class="pr-0" [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <mat-select appOwnerNominee matInput
@@ -257,7 +257,7 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="col-md-2" *ngIf="recuringDeposit.value.getNomineeName.length > 1">
+                <div class="col-md-2" *ngIf="getNominee.length > 1">
                     <div class="form-group mb-0 iconPetage">
                         <mat-form-field>
                             <input matInput class="form-control br-0 percentage" type="number"
