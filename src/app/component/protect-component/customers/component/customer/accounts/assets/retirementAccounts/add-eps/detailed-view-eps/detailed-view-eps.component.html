@@ -43,7 +43,10 @@
                         Pension payout frequency
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{eps.pensionPayoutFrequencyId}}
+                        <span *ngIf="eps.pensionPayoutFrequencyId==2">Monthly</span>
+                        <span *ngIf="eps.pensionPayoutFrequencyId==3">Quarterly</span>
+                        <span *ngIf="eps.pensionPayoutFrequencyId==4">Half yearly</span>
+                        <span *ngIf="eps.pensionPayoutFrequencyId==5">Yearly</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
