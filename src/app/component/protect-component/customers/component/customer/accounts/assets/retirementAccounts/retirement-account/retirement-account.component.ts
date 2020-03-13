@@ -19,6 +19,7 @@ import { DetailedViewGratuityComponent } from '../add-gratuity/detailed-view-gra
 import { DetaildedViewSuperannuationComponent } from '../add-superannuation/detailded-view-superannuation/detailded-view-superannuation.component';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../../../excel.service';
+import { DetailedViewNpsComponent } from '../add-nps/detailed-view-nps/detailed-view-nps.component';
 
 
 @Component({
@@ -340,67 +341,14 @@ export class RetirementAccountComponent implements OnInit {
     });
   }
 
-  openDetailedViewEPF(data) {
+  openDetailedView(data, flag) {
+    let component = (flag == 'detailedViewEpf') ? DetailedViewEPFComponent : (flag == 'detailedViewNps') ? DetailedViewNpsComponent : (flag == 'detailedViewGratuity') ? DetailedViewGratuityComponent : (flag == 'detailedViewSuperannuation') ? DetaildedViewSuperannuationComponent : DetailedViewEPSComponent;
     const fragmentData = {
       flag: 'addEPF',
       data,
       id: 1,
       state: 'open35',
-      componentName: DetailedViewEPFComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isRefreshRequired(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
-        }
-        rightSideDataSub.unsubscribe();
-      }
-    );
-  }
-  detailedViewEPS(data) {
-    const fragmentData = {
-      flag: 'addEPF',
-      data,
-      id: 1,
-      state: 'open35',
-      componentName: DetailedViewEPSComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isRefreshRequired(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
-        }
-        rightSideDataSub.unsubscribe();
-      }
-    );
-  }
-  detailedViewGratuity(data) {
-    const fragmentData = {
-      flag: 'addEPF',
-      data,
-      id: 1,
-      state: 'open35',
-      componentName: DetailedViewGratuityComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isRefreshRequired(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
-        }
-        rightSideDataSub.unsubscribe();
-      }
-    );
-  }
-  detailedViewSuperannuation(data) {
-    const fragmentData = {
-      flag: 'addEPF',
-      data,
-      id: 1,
-      state: 'open35',
-      componentName: DetaildedViewSuperannuationComponent
+      componentName: component
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

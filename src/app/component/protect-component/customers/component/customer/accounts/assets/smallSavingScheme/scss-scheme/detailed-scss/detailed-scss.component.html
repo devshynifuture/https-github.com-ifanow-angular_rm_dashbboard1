@@ -45,7 +45,8 @@
                         Ownership type
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{data.ownerTypeId}}
+                        <span *ngIf="data.ownerTypeId==1">Joint</span>
+                        <span *ngIf="data.ownerTypeId==2">Single</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -56,12 +57,12 @@
                         {{data.postOfficeBranch}}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br">
+                <div *ngFor="let singleNominee of data.nominees;index as i" class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Nominee
+                        Nominee{{i+1}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{data.nominee}}
+                        {{singleNominee.name}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">

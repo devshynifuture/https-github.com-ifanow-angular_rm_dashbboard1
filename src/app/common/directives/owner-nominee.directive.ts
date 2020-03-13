@@ -126,12 +126,13 @@ export class OwnerNomineeDirective {
           }
         }
       });
-        
-      if(this.getNominee.value.length == 1 && this.getNominee.value[0].name != ''){
-          this.getNominee.controls['0'].get('sharePercentage').setValue('100');
-          this.setOwnerNominee();
-          this.valueChange3.emit(this.ownerNomineeJson);
-        }
+      if(this.getNominee != null){
+        if(this.getNominee.value.length == 1 && this.getNominee.value[0].name != ''){
+            this.getNominee.controls['0'].get('sharePercentage').setValue('100');
+            this.setOwnerNominee();
+            this.valueChange3.emit(this.ownerNomineeJson);
+          }
+      }
 
   }
 

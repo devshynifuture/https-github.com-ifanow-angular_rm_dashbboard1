@@ -178,7 +178,8 @@
                             <mat-menu #menubank="matMenu">
                                 <button mat-menu-item class="c-p"
                                     (click)="addDataFromSideBar(element, 'addEPF')">Edit</button>
-                                <button mat-menu-item class="c-p" (click)="openDetailedViewEPF(element)">Detailed
+                                <button mat-menu-item class="c-p"
+                                    (click)="openDetailedView(element,'detailedViewEpf')">Detailed
                                     view
                                 </button>
                                 <button mat-menu-item class="c-p">Activity</button>
@@ -375,7 +376,8 @@
                                     <button mat-menu-item class="c-p" *ngIf="element.schemeChoice == undefined"
                                         (click)="addDataFromSideBar(element, 'addSchemeHolding')">Edit
                                     </button>
-                                    <button mat-menu-item class="c-p">Detailed view</button>
+                                    <button mat-menu-item class="c-p"
+                                        (click)="openDetailedView(element,'detailedViewNps')">Detailed view</button>
                                     <button mat-menu-item class="c-p">Activity</button>
                                     <button mat-menu-item class="c-p"
                                         (click)="deleteModal('NPS',element)">Delete</button>
@@ -589,7 +591,8 @@
                             <mat-menu #menubank="matMenu">
                                 <button (click)="addDataFromSideBar(element, 'addGratuity')" class="c-p"
                                     mat-menu-item>Edit</button>
-                                <button (click)="detailedViewGratuity(element)" class="c-p" mat-menu-item>Detailed
+                                <button (click)="openDetailedView(element,'detailedViewGratuity')" class="c-p"
+                                    mat-menu-item>Detailed
                                     view
                                 </button>
                                 <button class="c-p" mat-menu-item>Activity</button>
@@ -750,7 +753,8 @@
                         <mat-menu #menubank="matMenu">
                             <button (click)="addDataFromSideBar(element, 'addSuperannuation')" class="c-p"
                                 mat-menu-item>Edit</button>
-                            <button (click)="detailedViewSuperannuation(element)" class="c-p" mat-menu-item>Detailed
+                            <button (click)="openDetailedView(element,'detailedViewSuperannuation')" class="c-p"
+                                mat-menu-item>Detailed
                                 view</button>
                             <button class="c-p" mat-menu-item>Activity</button>
                             <button (click)="deleteModal('SUPERANNUATION',element)" class="c-p"
@@ -895,7 +899,8 @@
                             <mat-menu #menubank="matMenu">
                                 <button (click)="addDataFromSideBar(element, 'addEPS')" class="c-p"
                                     mat-menu-item>Edit</button>
-                                <button (click)="detailedViewEPS(element)" class="c-p" mat-menu-item>Detailed
+                                <button (click)="openDetailedView(element,'detailedViewEps')" class="c-p"
+                                    mat-menu-item>Detailed
                                     view</button>
                                 <button class="c-p" mat-menu-item>Activity</button>
                                 <button (click)="deleteModal('EPS',element)" class="c-p" mat-menu-item>Delete</button>

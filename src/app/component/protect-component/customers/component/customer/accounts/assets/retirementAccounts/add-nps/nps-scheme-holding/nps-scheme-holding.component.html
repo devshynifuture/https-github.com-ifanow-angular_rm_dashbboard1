@@ -20,7 +20,7 @@
                 <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
                     [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Select family members</mat-option>
-                    <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
+                    <mat-option *ngFor="let f of nomineesListFM" [value]="f">
                         <span>{{f.userName}}</span>
                     </mat-option>
                 </mat-select>
@@ -35,14 +35,13 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input autocomplete="off" matInput #pran type="text" appInputValueValidation
-                        [inputValidator]="validatorType.NUMBER_ONLY" maxlength="20" class="form-control br-0 rupess"
+                        [inputValidator]="validatorType.NUMBER_ONLY" maxlength="12" class="form-control br-0 rupess"
                         formControlName="pran">
-                    <mat-error class="f-12"
-                        [ngClass]="{'v-h':!(isPran && getFormControl().pran.invalid || getFormControl().pran.touched && getFormControl().pran.invalid)}">
+                    <mat-error class="f-12">
                         This field is required
                     </mat-error>
                     <mat-hint align="start" class="f-12">Permanent Retirement Account Number</mat-hint>
-                    <mat-hint align="end" class="f-12">{{pran.value.length}}/20</mat-hint>
+                    <mat-hint align="end" class="f-12">{{pran.value.length}}/12</mat-hint>
                 </mat-form-field>
             </div>
         </div>

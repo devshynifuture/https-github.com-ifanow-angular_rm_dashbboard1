@@ -57,7 +57,7 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
     PoSavingsComponent,
     PoRdSchemeComponent,
     PoTdSchemeComponent,
-    PoMisSchemeComponent,
+    PoMisSchemeComponent
   ],
   imports: [
     CommonModule,
