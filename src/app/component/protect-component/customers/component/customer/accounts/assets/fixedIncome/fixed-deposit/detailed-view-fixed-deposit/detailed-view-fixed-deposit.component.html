@@ -38,7 +38,7 @@ Description description: "this is futurewise Tech" -->
                         Owner Name
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{fixedDeposit.ownerName}}
+                        {{fixedDeposit.ownerName?fixedDeposit.ownerName:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -54,7 +54,7 @@ Description description: "this is futurewise Tech" -->
                         Amount invested
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{utils.formatter(fixedDeposit.amountInvested)}}
+                        {{fixedDeposit.amountInvested?utils.formatter(fixedDeposit.amountInvested):'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -70,7 +70,7 @@ Description description: "this is futurewise Tech" -->
                         Interest rate
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{fixedDeposit.interestRate}}
+                        {{fixedDeposit.interestRate?fixedDeposit.interestRate:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -86,7 +86,7 @@ Description description: "this is futurewise Tech" -->
                         Tenure
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{fixedDeposit.tenure}}
+                        {{fixedDeposit.tenure?fixedDeposit.tenure:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -110,7 +110,7 @@ Description description: "this is futurewise Tech" -->
                         Frequency of payout per year
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{fixedDeposit.frequencyOfPayoutPerYear}}
+                        {{fixedDeposit.frequencyOfPayoutPerYear?fixedDeposit.frequencyOfPayoutPerYear:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -127,7 +127,7 @@ Description description: "this is futurewise Tech" -->
                         Current value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{utils.formatter(fixedDeposit.currentValue)}}
+                        {{fixedDeposit.currentValue?utils.formatter(fixedDeposit.currentValue):'-'}}
                     </div>
                 </div>
 
@@ -136,7 +136,7 @@ Description description: "this is futurewise Tech" -->
                         Payout amount Rate
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{fixedDeposit.payoutAmount}}
+                        {{fixedDeposit.payoutAmount?fixedDeposit.payoutAmount:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -144,7 +144,7 @@ Description description: "this is futurewise Tech" -->
                         Maturity value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{utils.formatter(fixedDeposit.maturityValue)}}
+                        {{fixedDeposit.maturityValue?utils.formatter(fixedDeposit.maturityValue):'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -152,7 +152,7 @@ Description description: "this is futurewise Tech" -->
                         FD number
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{fixedDeposit.fdNumber}}
+                        {{fixedDeposit.fdNumber?fixedDeposit.fdNumber:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -160,7 +160,7 @@ Description description: "this is futurewise Tech" -->
                         Bank account number
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{fixedDeposit.bankAcountNumber}}
+                        {{fixedDeposit.bankAcountNumber?fixedDeposit.bankAcountNumber:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -168,7 +168,7 @@ Description description: "this is futurewise Tech" -->
                         Institution name
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{fixedDeposit.institutionName}}
+                        {{fixedDeposit.institutionName?fixedDeposit.institutionName:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -176,7 +176,7 @@ Description description: "this is futurewise Tech" -->
                         Description
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{fixedDeposit.description}}
+                        {{fixedDeposit.description?fixedDeposit.description:'-'}}
                     </div>
                 </div>
             </div>

@@ -54,7 +54,7 @@
                         Linked Bank account
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{eps.linkedBankAccount}}
+                        {{eps.linkedBankAccount ? eps.linkedBankAccount:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -62,7 +62,7 @@
                         Description
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{eps.description}}
+                        {{eps.description ? eps.description:'-'}}
                     </div>
                 </div>
             </div>
