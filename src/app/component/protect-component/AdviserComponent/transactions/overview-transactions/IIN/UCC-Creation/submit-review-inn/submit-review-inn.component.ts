@@ -3,6 +3,8 @@ import { OnlineTransactionService } from '../../../../online-transaction.service
 import { AuthService } from 'src/app/auth-service/authService';
 import { Validators, FormBuilder } from '@angular/forms';
 import { EventService } from 'src/app/Data-service/event.service';
+import { FatcaDetailsInnComponent } from '../fatca-details-inn/fatca-details-inn.component';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-submit-review-inn',
@@ -23,13 +25,19 @@ export class SubmitReviewInnComponent implements OnInit {
   matValue: any;
   addedNse = false;
   addedBse = false;
+  doneData: any;
 
   constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
     private eventService: EventService) { }
   @Input()
   set data(data) {
+    this.doneData = {}
     this.inputData = data;
     this.allData = data
+    this.doneData.nominee = true
+    this.doneData.bank = true
+    this.doneData.contact = true
+    this.doneData.personal = true
     if (data && data.firstHolder) {
       // this.getdataForm(data.firstHolder)
       // this.firstHolder = data.firstHolder
@@ -87,6 +95,24 @@ export class SubmitReviewInnComponent implements OnInit {
       nseBroker: [!data ? '' : data.nseBroker, [Validators.required]],
     });
   }
+  openFatcaDetails(){
+    var data = this.inputData
+    var temp = {
+      flag: 'app-upper-customer',
+      id: 1,
+      data,
+      direction: 'top',
+      componentName: FatcaDetailsInnComponent,
+      state: 'open'
+    }
+    const subscription = this.eventService.changeUpperSliderState(temp).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          subscription.unsubscribe();
+        }
+      }
+    );
+  }
   getFormControl(): any {
     return this.reviewSubmit.controls;
   }
@@ -105,6 +131,7 @@ export class SubmitReviewInnComponent implements OnInit {
     this.addedBse = value.checked
   }
   submit() {
+    this.doneData = true
     if(this.addedBse == true){
       let obj1 = {
         ownerName: this.allData.ownerName,
