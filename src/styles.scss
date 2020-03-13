@@ -1848,6 +1848,12 @@
                   height: 36px;
                 }
 
+                .mat-form-field-subscript-wrapper {
+                  overflow: visible !important; padding-left: 0px !important; 
+                  .mat-error{white-space: nowrap !important;}
+                }
+
+
                 #overview-secondhead {
                   position: fixed !important;
                   margin-right: 0px !important;

@@ -200,7 +200,7 @@ export class BondsComponent implements OnInit {
       interestRate: [(data == undefined) ? '' : data.couponRate, [Validators.required]],
       compound: [(data.compounding == undefined) ? '' : (data.compounding) + "", [Validators.required]],
       linkBankAc: [(data == undefined) ? '' : data.linkedBankAccount,],
-      tenure: [(data == undefined) ? '' : data.tenure, [Validators.required, Validators.min(0), Validators.max(120)]],
+      tenure: [(data == undefined) ? '' : data.tenure, [Validators.required, Validators.min(1), Validators.max(120)]],
       description: [(data == undefined) ? '' : data.description,],
       // bankName: [(data == undefined) ? '' : data.bankName, [Validators.required]],
       id: [(data == undefined) ? '' : data.id,],

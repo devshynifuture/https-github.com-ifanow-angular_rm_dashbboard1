@@ -192,10 +192,10 @@
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input autocomplete="off" matInput autocomplete="off" formControlName="tenure"
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input autocomplete="off" matInput autocomplete="off" formControlName="tenure" placeholder="E.g. 30"
                         appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" #tenure type="text"
-                        maxlength="" class="form-control br-0">
+                        maxlength="3" class="form-control br-0">
                     <!-- <mat-select formControlName="tenure" class="form-control br-0">
                             <mat-option [value]="">Months</mat-option>
                             <mat-option *ngFor="let M of fdMonths" [value]="M">
@@ -209,8 +209,8 @@
                         class="f-12 pt-4">
                         This field is required
                     </mat-error>
-                    <mat-error *ngIf="(bonds.get('tenure').errors?.max)" class="f-12 pt-4">
-                        Should be between than 0 to 120
+                    <mat-error *ngIf="bonds.get('tenure').errors?.max || bonds.get('tenure').errors?.min" class="f-12 pt-4">
+                        Should be between than 1 to 120
                     </mat-error>
                 </mat-form-field>
             </div>
