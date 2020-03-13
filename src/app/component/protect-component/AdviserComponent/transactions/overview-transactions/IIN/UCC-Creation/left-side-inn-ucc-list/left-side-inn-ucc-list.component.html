@@ -1,27 +1,61 @@
 <div class="col-md-2 col-2 fixed-top">
     <div class="details_ui">
         <ul>
-            <li class="text-success">
-                <span class="bg-success " (click)="openPersonalDetails(null)"> <i class="material-icons text-white">
+            <li [ngClass]="inputData.personal == true ? 'text-success' : 'text-primary'">
+                <span [ngClass]="inputData.personal == true ? 'bg-success' : 'bg-primary text-white'"
+                    (click)="openPersonalDetails(null)"> <i *ngIf="inputData.personal == true"
+                        class="material-icons text-white">
                         done
-                    </i> </span> Personal details
+                    </i><i *ngIf="!inputData">1
+                    </i></span> Personal details
             </li>
-
-            <li class="text-success">
-                <span class="bg-success " (click)="openContactDetails(null)"> <i class="material-icons text-white">
+            <li (click)="openContactDetails(null)" *ngIf="inputData.contact == undefined">
+                <span class="bg-grey lt"> 2 </span> Contact details
+            </li>
+            <li *ngIf="inputData.contact == true || inputData.contact == false"
+                [ngClass]="inputData.contact == true ? 'text-success' : 'text-primary'">
+                <span [ngClass]="inputData.contact == true ? 'bg-success' : 'bg-primary text-white'"
+                    (click)="openContactDetails(null)"> <i *ngIf="inputData.contact == true"
+                        class="material-icons text-white">
                         done
+                    </i><i *ngIf="inputData.contact == false">2
                     </i> </span> Contact details
             </li>
-
-            <li class="text-primary">
-                <span class="bg-primary text-white" (click)="openBankDetails(null)"> 3 </span> Bank details
+            <li (click)="openBankDetails(null)" *ngIf="inputData.bank == undefined">
+                <span class="bg-grey lt"> 3 </span> Bank details
             </li>
-
-            <li>
-                <span class="bg-grey lt" (click)="openNomineeDetails(null)"> 4 </span> Nominee details
+            <li *ngIf="inputData.bank == false || inputData.bank == true" 
+            [ngClass]="inputData.bank == true ? 'text-success' : 'text-primary'">
+                <span [ngClass]="inputData.bank == true ? 'bg-success' : 'bg-primary  text-white'"
+                    (click)="openBankDetails(null)">
+                    <i *ngIf="inputData.bank == true" class="material-icons text-white">
+                        done
+                    </i> <i *ngIf="inputData.bank == false">3
+                    </i></span> Bank
+                details
             </li>
-            <li>
-                <span class="bg-grey lt" (click)="openFatcaDetails(null)"> 5 </span> FATCA details
+            <li (click)="openNomineeDetails(null)" *ngIf="inputData.nominee == undefined">
+                <span class="bg-grey lt"> 4 </span> Nominee details
+            </li>
+            <li *ngIf="inputData.nominee == false" [ngClass]="inputData.nomminee == true ? 'text-success' : 'text-primary'">
+                <span class="bg-grey lt" (click)="openNomineeDetails(null)"> <i *ngIf="inputData.nominee == true"
+                        class="material-icons text-white">
+                        done
+                    </i>
+                    <i *ngIf="inputData.nominee == false">4
+                    </i></span> Nominee details
+            </li>
+            <li (click)="openNomineeDetails(null)" *ngIf="inputData.fatca == undefined">
+                <span class="bg-grey lt"> 5 </span> FATCA details
+            </li>
+            <li *ngIf="inputData.fatca == false" [ngClass]="inputData.fatca == true ? 'text-success' : 'text-primary'">
+                <span class="bg-grey lt" (click)="openFatcaDetails(null)"> <i *ngIf="inputData.fatca == true"
+                        class="material-icons text-white">
+                        done
+                    </i>
+                    <i *ngIf="inputData.fatca == false">5
+                    </i>
+                </span> FATCA details
             </li>
             <li (click)="openReviewSubmit(null)">
                 <span class="bg-grey lt"> 6 </span> Review & submit
