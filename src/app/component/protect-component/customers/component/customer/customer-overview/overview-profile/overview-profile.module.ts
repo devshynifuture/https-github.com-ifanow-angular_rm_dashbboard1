@@ -10,6 +10,7 @@ import { OverviewProfileComponent } from './overview-profile.component';
   imports: [
     CommonModule,
     OverviewProfileRoutingModule
+
   ]
 })
 export class OverviewProfileModule { }
