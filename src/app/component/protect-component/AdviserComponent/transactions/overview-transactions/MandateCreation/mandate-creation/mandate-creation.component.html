@@ -274,7 +274,8 @@
         <div class="bottom-fixed wrapper-12 pt-16">
             <div class="row">
                 <div class="col-md-4">
-                    <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
+                    <!-- (click)="close()" removed for prod build -->
+                    <h5 class="mb-0 pt-8 text-white c-p" >Cancel</h5>
                 </div>
                 <div class="col-md-8 right text-right">
                     <button mat-button class="btn-bottom br-0 text-inherit" (click)="createMandate()">Save</button>
