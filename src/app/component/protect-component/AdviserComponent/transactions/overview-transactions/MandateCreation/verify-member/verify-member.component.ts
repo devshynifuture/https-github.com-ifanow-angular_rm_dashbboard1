@@ -96,11 +96,6 @@ export class VerifyMemberComponent implements OnInit {
         familyMemberId: this.familyMemberData.familyMemberId,
         tpUserCredentialId: 292
       }
-      // let obj = {
-      //   "advisorId": 414,
-      //   "familyMemberId": 112166,
-      //   "clientId": 53637
-      // }
       this.onlineTransact.getClientCodes(obj).subscribe(
         data => {
           console.log(data);
