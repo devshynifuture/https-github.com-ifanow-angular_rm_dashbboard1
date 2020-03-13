@@ -1,8 +1,8 @@
+import { appConfig } from './../../../config/component-config';
+import { apiConfig } from './../../../config/main-config';
 import { Injectable } from '@angular/core';
 
 import { HttpService } from './../../../http-service/http-service';
-import { apiConfig } from 'src/app/config/main-config';
-import { appConfig } from 'src/app/config/component-config';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,10 @@ export class SupportService {
 
   getMyIFAValues(data) {
 
+  }
+
+  getBackofficeAumOrderListValues(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_GET_AUM_ORDER_LIST, data);
   }
 
 

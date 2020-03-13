@@ -219,7 +219,7 @@ export class AddNscComponent implements OnInit {
     this.close(true);
   }
   addNSCResponse(data) {
-    (this.editApi) ? this.eventService.openSnackBar("NSC is edited", "Dismiss") : this.eventService.openSnackBar("NSC is added", "Dismiss")
+    (this.editApi) ? this.eventService.openSnackBar("Updated successfully!", "Dismiss") : this.eventService.openSnackBar("Added successfully!", "Dismiss")
     console.log(data)
     this.close(true)
   }

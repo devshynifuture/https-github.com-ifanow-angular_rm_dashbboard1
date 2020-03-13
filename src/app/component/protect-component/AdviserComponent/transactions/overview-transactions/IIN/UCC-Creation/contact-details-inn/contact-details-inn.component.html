@@ -7,12 +7,12 @@
         <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
 
             <p class="f-16 mb-0">
-                Investment onboarding - KYC
+                Investment onboarding - IIN/UCC
             </p>
         </div>
         <!-- (click)="dialogClose()" for prod build  -->
         <div class="col-md-2 text-right">
-            <i class="material-icons pt-16 c-p pr-16">
+            <i class="material-icons pt-16 c-p pr-16" (click)="close();">
                 clear
             </i>
         </div>
@@ -32,13 +32,25 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input matInput maxlength="10" formControlName="email" type="text" class="form-control">
+                            <input matInput maxlength="30" formControlName="email" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
 
                         </mat-form-field>
                     </div>
                 </div>
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Aadhar number </h3>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <input matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="11"
+                           appInputValueValidation formControlName="aadharNumber" type="number" class="form-control">
+                            <mat-error class="f-12">This field is required</mat-error>
 
+                        </mat-form-field>
+                    </div>
+                </div>
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0"> Mobile number </h3>
@@ -55,7 +67,8 @@
                             </div>
                             <div class="col-md-7 p-0">
                                 <mat-form-field>
-                                    <input matInput maxlength="10" type="text"  formControlName="mobileNo" class="form-control">
+                                    <input matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10"
+                                    appInputValueValidation maxlength="10" type="number"  formControlName="mobileNo" class="form-control">
                                     <mat-error class="f-12">This field is required</mat-error>
 
                                 </mat-form-field>
@@ -79,7 +92,8 @@
                             </div>
                             <div class="col-md-7 p-0">
                                 <mat-form-field>
-                                    <input matInput maxlength="10" type="text" formControlName="phoneNo"class="form-control">
+                                    <input matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10"
+                                    appInputValueValidation maxlength="10" type="number" formControlName="phoneNo"class="form-control">
                                     <mat-error class="f-12">This field is required</mat-error>
 
                                 </mat-form-field>
@@ -92,55 +106,7 @@
 
                 <h3 class="f-18 mb-12 mt-44 f-600">(i) Current/Permanent/Overseas address details </h3>
 
-                <div class="row">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0">Address type</h3>
-                    </div>
-                    <div class="col-md-5">
-                        <mat-form-field>
-                            <mat-select class="form-control" formControlName="addressType">
-                                <mat-option value="Residential/Business"> Residential/Business </mat-option>
-                                <mat-option value="Residential"> Residential </mat-option>
-                                <mat-option value="Business">Business </mat-option>
-                                <mat-option value="Registered office">Registered office </mat-option>
-                                <mat-option value="Unspecified">Unspecified </mat-option>
-                            </mat-select>
-                            <mat-error class="f-12">This field is required</mat-error>
-
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row pt-32">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0">ID type</h3>
-                    </div>
-                    <div class="col-md-3">
-                        <mat-form-field>
-                            <mat-select class="form-control" formControlName="idType">
-                                <mat-option value="Passport">Passport </mat-option>
-                                <mat-option value="Driving licence"> Driving licence </mat-option>
-                                <mat-option value="Aadhaar">Aadhaar </mat-option>
-                                <mat-option value="Voters ID">Voters ID </mat-option>
-                                <mat-option value="NREGA job card">NREGA job card </mat-option>
-                                <mat-option value="Others">Others </mat-option>
-                            </mat-select>
-                            <mat-error class="f-12">This field is required</mat-error>
-
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row pt-32">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0">ID number </h3>
-                    </div>
-                    <div class="col-md-3">
-                        <mat-form-field>
-                            <input matInput formControlName="idNumber" type="text" class="form-control">
-                            <mat-error class="f-12">This field is required</mat-error>
-
-                        </mat-form-field>
-                    </div>
-                </div>
+  
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0">Address line 1</h3>
@@ -171,7 +137,9 @@
                     </div>
                     <div class="col-md-3">
                         <mat-form-field>
-                            <input matInput formControlName="pinCode" type="text" class="form-control">
+                            <input #pincode [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6"
+                            appInputValueValidation matInput formControlName="pinCode" 
+                            (focusout)="getPostalPin($event.target.value)"type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
 
                         </mat-form-field>
@@ -251,22 +219,22 @@
 <div class="bottom-fixed  pl-20 pr-20 d-flex  w-100 row">
 
     <div class="col-md-3 p-0 d-flex align-items-center ">
-        <a href="#" class="text-white f-300"> Skip this step </a>
+        <!-- <a class="text-white f-300" (click)="saveContactDetails('skip')"> Skip this step </a> -->
     </div>
 
     <div class="col-md-5 center_menu">
-        <a class="activeLink" href=""> First holder1 </a>
-        <a class="activeLink" href=""> Second holder </a>
-        <a class="activeLink" href=""> Third holder </a>
+        <a class="activeLink" (click)="SendToForm('first',false);"> First holder </a>
+        <a class="activeLink" (click)="SendToForm('second',false);"> Second holder </a>
+        <a class="activeLink" (click)="SendToForm('third',false);"> Third holder </a>
     </div>
 
     <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">
 
-        <button class="br-0 perviousBtn text-inherit f-14" mat-button mat-raised-button>
+        <button class="br-0 perviousBtn text-inherit f-14" mat-button mat-raised-button (click)="openPersonalDetails()">
             PREVIOUS
         </button>
 
-        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" (click)="saveContactDetails()">SAVE</button>
+        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" (click)="SendToForm('third',true);">SAVE</button>
         <button mat-button class="greenBtn  p-0 mw-40 br-left-white " [matMenuTriggerFor]="menu">
             <i class="material-icons">
                 keyboard_arrow_up

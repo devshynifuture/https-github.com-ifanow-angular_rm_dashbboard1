@@ -10,10 +10,10 @@
                     <button mat-menu-item *ngFor="let member of familyList" (click)="filterAndSortAssets(member, currentAllocationFilter)">
                         <div class="row">
                             <div class="col-md-3">
-                                <img src="/assets/images/svg/right.svg" class="c-p" *ngIf="member.asset_owner_id == currentFamilyFilter.asset_owner_id">
+                                <img src="/assets/images/svg/right.svg" class="c-p" *ngIf="member.id == currentFamilyFilter.id">
                             </div>
                             <div class="col-md-9">
-                                {{member.name}}
+                                {{member.userName}}
                             </div>
                         </div>
                     </button>

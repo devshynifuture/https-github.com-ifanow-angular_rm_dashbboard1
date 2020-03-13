@@ -241,7 +241,7 @@ export class AddPpfComponent implements OnInit {
   }
 
   addPPFResponse(data) {
-    (this.editApi) ? this.eventService.openSnackBar("PPF is edited", "Dismiss") : this.eventService.openSnackBar("PPF is added", "Dismiss")
+    (this.editApi) ? this.eventService.openSnackBar("Updated successfully!", "Dismiss") : this.eventService.openSnackBar("Added successfully!", "Dismiss")
     console.log(data)
     this.close(true);
   }

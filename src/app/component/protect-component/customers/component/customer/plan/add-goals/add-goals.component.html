@@ -31,10 +31,10 @@
 
 <div *ngIf="goalTypeData">
   <div *ngIf="showGoalType == 'singleYear'">
-    <app-single-goal-year [goalTypeData]="goalTypeData" [familyList]="familyList"></app-single-goal-year>
+    <app-single-goal-year [goalTypeData]="goalTypeData" [familyList]="familyList" (output)="cancelGoal()"></app-single-goal-year>
   </div>
   <div *ngIf="showGoalType == 'multiYear'">
-    <app-multi-year-goal [goalData]="goalTypeData"></app-multi-year-goal>
+    <app-multi-year-goal [goalTypeData]="goalTypeData" [familyList]="familyList" (output)="cancelGoal()"></app-multi-year-goal>
   </div>
 </div>
 <div></div>

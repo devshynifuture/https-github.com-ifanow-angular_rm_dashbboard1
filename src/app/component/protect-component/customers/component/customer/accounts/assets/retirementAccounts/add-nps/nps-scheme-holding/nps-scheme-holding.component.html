@@ -34,7 +34,7 @@
             <h5 class="m-0 f-14">PRAN</h5>
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #pran type="text" appInputValueValidation
+                    <input autocomplete="off" matInput #pran type="text" appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY" maxlength="20" class="form-control br-0 rupess"
                         formControlName="pran">
                     <mat-error class="f-12"
@@ -50,7 +50,7 @@
             <h5 class="m-0 f-14">Description</h5>
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #description maxlength="60" type="text" class="form-control br-0"
+                    <input autocomplete="off" matInput #description maxlength="60" type="text" class="form-control br-0"
                         formControlName="description">
                     <mat-hint align="start" class="f-12">Optional</mat-hint>
                     <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
@@ -91,8 +91,8 @@
             <div class="col-md-4 pl-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput aria-label="State" [matAutocomplete]="auto" class="form-control br-0 pl-8"
-                            formControlName="schemeName">
+                        <input autocomplete="off" matInput aria-label="State" [matAutocomplete]="auto"
+                            class="form-control br-0 pl-8" formControlName="schemeName">
                         <mat-autocomplete #auto="matAutocomplete">
                             <mat-option *ngFor="let s of schemeList" [value]="s.id">{{ s.name }}
                             </mat-option>
@@ -109,7 +109,7 @@
                     <div class="col-md-4 pl-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput #totalUnits type="text" appInputValueValidation
+                                <input autocomplete="off" matInput #totalUnits type="text" appInputValueValidation
                                     [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10"
                                     class="form-control br-0 rupess" formControlName="totalUnits">
                                 <mat-hint align="start" class="m-0 f-11 text-custom pt-4">As in statement</mat-hint>
@@ -124,8 +124,8 @@
                     <div class="col-md-4 pl-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput formControlName="holdingAsOn" [matDatepicker]="picker"
-                                    class="form-control br-0" readonly>
+                                <input autocomplete="off" matInput formControlName="holdingAsOn"
+                                    [matDatepicker]="picker" class="form-control br-0" readonly>
                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
                                 <mat-error class="f-12">
@@ -137,8 +137,8 @@
                     <div class="col-md-4 pl-0">
                         <div class="form-group mb-0 iconRupess">
                             <mat-form-field>
-                                <input matInput #totalNetContribution type="text" appInputValueValidation
-                                    [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10"
+                                <input autocomplete="off" matInput #totalNetContribution type="text"
+                                    appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10"
                                     class="form-control br-0 rupess" formControlName="totalNetContribution">
                                 <mat-hint align="end" class="f-12">{{totalNetContribution.value.length}}/10</mat-hint>
                                 <mat-error class="f-12">
@@ -227,7 +227,7 @@
                     <div class="col-md-4 pl-0">
                         <div class="form-group mb-0 iconRupess">
                             <mat-form-field>
-                                <input matInput #currentValue type="text" appInputValueValidation
+                                <input autocomplete="off" matInput #currentValue type="text" appInputValueValidation
                                     [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10"
                                     class="form-control br-0 rupess" formControlName="approxContribution">
                                 <mat-hint align="end" class="f-12">{{currentValue.value.length}}/10</mat-hint>
@@ -264,8 +264,9 @@
                     <div class="row">
                         <div class="col-md-8 pl-0">
                             <mat-form-field>
-                                <input matInput aria-label="State" (click)="nomineesList()" [matAutocomplete]="auto"
-                                    list="userName" class="form-control br-0 pl-8" formControlName="name">
+                                <input autocomplete="off" matInput aria-label="State" (click)="nomineesList()"
+                                    [matAutocomplete]="auto" list="userName" class="form-control br-0 pl-8"
+                                    formControlName="name">
                                 <mat-autocomplete #auto="matAutocomplete">
                                     <mat-option *ngFor="let item of familyList" [value]="item.userName">
                                         <span>{{item.userName}}</span>
@@ -276,7 +277,7 @@
                         </div>
                         <div class="col-md-4 pl-0 iconPetage">
                             <mat-form-field>
-                                <input matInput maxlength="30" class="form-control br-0 percentage"
+                                <input autocomplete="off" matInput maxlength="30" class="form-control br-0 percentage"
                                     formControlName="sharePercentage">
                             </mat-form-field>
                         </div>

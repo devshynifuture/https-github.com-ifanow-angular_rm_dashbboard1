@@ -71,6 +71,16 @@
     <div class="col-lg-6" *ngIf="tableEntriesType==2">
         <mat-checkbox>Show All Transactions</mat-checkbox>
     </div>
+    <div class="col-lg-4 text-right">
+        <button class="ba-black" mat-button>
+            Unfreeze
+        </button>
+    </div>
+    <div class="col-lg-2 text-right">
+        <button class="ba-black" mat-button>
+            Freeze
+        </button>
+    </div>
 </div>
 
 <div class="row">
@@ -84,6 +94,7 @@
                         arrow_drop_down
                     </i>
                     <mat-menu #menu="matMenu">
+                        <button mat-menu-item>All</button>
                         <button mat-menu-item>SIP</button>
                         <button mat-menu-item>Transfer out Change of Broker</button>
                     </mat-menu>

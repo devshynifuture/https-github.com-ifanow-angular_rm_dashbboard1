@@ -1,7 +1,8 @@
 <div class="dialogclose">
     <div class="row popup-header-fix-100">
         <div class="col-md-2 border-right-1 p-0">
-            <img class="imgAdLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+            <img class="imgAdLogo"
+                src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
         </div>
         <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
             <p class="f-16 mb-0">
@@ -10,14 +11,15 @@
         </div>
 
         <div class="col-md-2 text-right">
-            <i (click)="Close(null)" class="material-icons pt-16 c-p pr-16">
+            <i (click)="Close(null)" class="material-icons pt-16 c-p pr-16" (click)="close()">
                 clear
             </i>
         </div>
     </div>
 </div>
 
-<div class="pt-125 mb-100 ">
+<div class="pt-125 mb-100 " [formGroup]="generalDetails">
+
     <div class="row ">
         <div class="col-md-12 text-center">
             <h4 class="f-18 f-600">Good afternoon!</h4>
@@ -27,60 +29,69 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12">
-            <div class="detailsBox">
-                <div class="detailsProof">
-                    <img src="assets/images/svg/id-proof.svg">
-                    <h4 class="f-16 mt-16 f-600 roboto">IDENTITY PROOF</h4>
-                    <p class="f-14">PAN, aadhaar card, driving license, passport are accepted documents</p>
-                </div>
+        <div class="col-md-3 pr-0">
+            <h5 class="m-0 text-right pt-8">Enter name</h5>
+        </div>
+        <div class="col-md-8 text-center">
+            <mat-form-field floatLabel="never" appearance="standard">
+                <input appClientSearch [data]='searchClient.value' formControlName="ownerName" placeholder="Start typing to see investor names"
+                    (keyup)="ownerList($event.target.value)" (valueChange1)='lisNominee($event)' #searchClient
+                    [matAutocomplete]="auto1" aria-label="client" class="form-control pl-8" matInput>
+                <mat-autocomplete #auto1="matAutocomplete">
+                    <mat-option (onSelectionChange)="ownerDetails(f)" *ngFor="let f of nomineesListFM" [value]="f.name">
+                        <span>{{f.name}}</span>
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error class="f-12 pt-4">
+                    This field is required
+                </mat-error>
+                <mat-error class="f-12">
+                    This family member does not exist
+                </mat-error>
+            </mat-form-field>
+        </div>
 
-                <div class="detailsProof">
-                    <img src="assets/images/svg/address-proof.svg">
-                    <h4 class="f-16 mt-16 f-600 roboto"> ADDRESS PROOF</h4>
-                    <p class="f-14"> Aadhaar card, driving license, passport are accepted documents </p>
-                </div>
-
-                <div class="detailsProof">
-                    <img src="assets/images/svg/bank-proof.svg">
-                    <h4 class="f-16 mt-16 f-600 roboto"> BANK A/C VERIFICATION </h4>
-                    <p class="f-14">A cancelled cheque is the accepted document for bank a/c verification</p>
-                </div>
-            </div>
-
-            <div class="detailsBoxTwo">
-                <div class="detailsProof">
-                    <img src="assets/images/svg/signature-proof.svg">
-                    <h4 class="f-16 mt-16 f-600 roboto">SIGNATURE PROOF</h4>
-                    <p class="f-14"> Upload a scanned copy or use Aadhaar based eSign option </p>
-                </div>
-
-                <div class="detailsProof">
-                    <img src="assets/images/svg/web-cam.svg">
-                    <h4 class="f-16 mt-16 f-600 roboto"> WEBCAM & MIC </h4>
-                    <p class="f-14"> Please ensure that your current device has webcam & microphone </p>
-                </div>
-            </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-md-4 text-right pr-0">
+            <h3 class="f-16 pt-8 m-0">Holding nature</h3>
+        </div>
+        <div class="col-md-5">
+            <mat-form-field>
+                <mat-select class="form-control" formControlName="holdingNature">
+                    <mat-option value="SI">Single </mat-option>
+                    <mat-option value="JO">Joint </mat-option>
+                    <mat-option value="AS">Anyone or survival </mat-option>
+                </mat-select>
+                <mat-error class="f-12">This field is required</mat-error>
+            </mat-form-field>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-md-12 text-center mt-32">
-            <mat-select class="form-control familyboxWidth">
-                <mat-option value="Select family member">Select family member </mat-option>
-            </mat-select>
-
-            <button mat-button class="f-16 m-0 btn-primary " (click)="openPersonalDetails(null)"> LET’S BEGIN <i class="material-icons ml-16">
-                    arrow_forward
-                </i> </button>
+    <div class="row pt-32">
+        <div class="col-md-4 text-right pr-0">
+            <h3 class="f-16 pt-8 m-0">Tax status</h3>
+        </div>
+        <div class="col-md-5">
+            <mat-form-field>
+                <mat-select class="form-control" formControlName="taxStatus">
+                    <mat-option value="01">Individual </mat-option>
+                    <mat-option value="01">Non individual </mat-option>
+                </mat-select>
+                <mat-error class="f-12">This field is required</mat-error>
+            </mat-form-field>
         </div>
     </div>
+    <button mat-button class="f-16 m-0 btn-primary " (click)="saveGeneralDetails(data)"> LET’S BEGIN <i
+            class="material-icons text-right ml-16">
+            arrow_forward
+        </i> </button>
 </div>
 
 <div class="bottom-fixed  pl-20 pr-20 d-flex  w-100 row">
 
     <div class="col-md-3 p-0 d-flex align-items-center ">
-        <a href="#" class="text-white f-300"> Cancel </a>
+        <a class="text-white f-300" (click)="close()"> Cancel </a>
     </div>
 
-</div> 
+</div>
+<ng-template #elemRef></ng-template>
