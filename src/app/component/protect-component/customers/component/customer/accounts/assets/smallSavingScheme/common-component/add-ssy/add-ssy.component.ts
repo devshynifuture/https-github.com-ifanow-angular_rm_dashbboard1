@@ -156,9 +156,6 @@ export class AddSsyComponent implements OnInit {
     if (this.ssySchemeForm.invalid) {
       this.ssySchemeForm.markAllAsTouched();
     }
-    else if (this.transactionData.length == 0) {
-      return;
-    }
     else if (transactionFlag == false) {
       return;
     }
