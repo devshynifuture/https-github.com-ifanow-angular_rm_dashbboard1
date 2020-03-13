@@ -35,6 +35,7 @@ export class NomineeDetailsIinComponent implements OnInit {
   sendObj: any;
   nominee: any;
   changedValue: string;
+  doneData: any;
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private onlineTransact: OnlineTransactionService, private postalService: PostalService,
     private processTransaction: ProcessTransactionService
@@ -42,7 +43,13 @@ export class NomineeDetailsIinComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
+    console.log('all data in nominee', this.inputData)
     this.allData = data
+    this.doneData = {}
+    this.doneData.bank = true
+    this.doneData.contact = true
+    this.doneData.personal = true
+    this.doneData.nominee = false
     if (data && data.nomineeList) {
       this.firstHolderNominee = data.nomineeList[0]
       this.secondHolderNominee = data.nomineeList[1]
@@ -76,21 +83,25 @@ export class NomineeDetailsIinComponent implements OnInit {
     this.eventService.changeUpperSliderState(fragmentData);
   }
   getdataForm(data) {
-
+    if (!data) {
+      data = {
+        address: {}
+      }
+    }
     this.nomineeDetails = this.fb.group({
       nomineeName: [(!data) ? '' : data.nomineeName, [Validators.required]],
       relationType: [!data ? '' : data.relationType, [Validators.required]],
       nomineeType: [!data ? '' : data.nomineeType, [Validators.required]],
       nominneDOB: [!data ? '' : data.nominneDOB, [Validators.required]],
-      nomineePercentage: [!data ? '' : data.addressType, [Validators.required]],
-      addressType: [!data ? '' : data.nameAsPan, [Validators.required]],
-      addressLine1: [!data ? '' : data.addressLine1, [Validators.required]],
-      addressLine2: [!data ? '' : data.addressLine2, [Validators.required]],
-      pinCode: [!data ? '' : data.pinCode, [Validators.required]],
-      city: [!data ? '' : data.city, [Validators.required]],
-      district: [!data ? '' : data.district, [Validators.required]],
-      state: [!data ? '' : data.state, [Validators.required]],
-      country: [!data ? '' : data.country, [Validators.required]],
+      nomineePercentage: [!data ? '' : data.nomineePercentage, [Validators.required]],
+      addressType: [!data.address ? '' : data.address.addressType, [Validators.required]],
+      addressLine1: [!data.address ? '' : data.address.addressLine1, [Validators.required]],
+      addressLine2: [!data.address ? '' : data.address.addressLine2, [Validators.required]],
+      pinCode: [!data.address ? '' : data.address.pinCode, [Validators.required]],
+      city: [!data.address ? '' : data.address.city, [Validators.required]],
+      district: [!data.address ? '' : data.address.district, [Validators.required]],
+      state: [!data.address ? '' : data.address.state, [Validators.required]],
+      country: [!data.address ? '' : data.address.country, [Validators.required]],
     });
   }
   getFormControl(): any {
@@ -98,7 +109,7 @@ export class NomineeDetailsIinComponent implements OnInit {
   }
   pinInvalid: boolean = false;
   openBankDetails() {
-    const subscription = this.processTransaction.openBank(this.allData).subscribe(
+    const subscription = this.processTransaction.openBank(this.inputData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           subscription.unsubscribe();
@@ -204,6 +215,7 @@ export class NomineeDetailsIinComponent implements OnInit {
       }
     });
     if (flag == true) {
+      this.doneData = true
       const value = {}
       let obj = {
         ownerName: this.allData.ownerName,
@@ -217,8 +229,11 @@ export class NomineeDetailsIinComponent implements OnInit {
         familyMemberId: this.allData.familyMemberId,
         clientId: this.allData.clientId,
         advisorId: this.allData.advisorId,
+        generalDetails : this.allData.generalDetails,
+        fatcaDetail:this.inputData.fatcaDetail,
         commMode: 1,
         confirmationFlag: 1,
+        allData : this.inputData,
         tpUserSubRequestClientId1: 2,
       }
       console.log('##### ALLL DATA ####', obj)
