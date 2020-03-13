@@ -22,7 +22,15 @@
 
   }
 
-  // .overflow-y {}
+  div.overflow-y {
+
+    overflow: auto;
+    white-space: nowrap;
+
+    .w-1024 {
+      width: 1024px;
+    }
+  }
 }
 
 @media(max-width:1142px) {}
