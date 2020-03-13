@@ -164,7 +164,7 @@ export class AddSsyComponent implements OnInit {
         let obj = {
           "id": this.editApi.id,
           "familyMemberId": this.familyMemberId,
-          "ownerName": (this.ownerName == null) ? this.ssySchemeForm.controls.ownerName.value : this.ownerName,
+          "ownerName": (this.ownerName == null) ? this.ssySchemeForm.controls.ownerName.value : this.ownerName.userName,
           "accountBalance": this.ssySchemeForm.get('accBalance').value,
           "balanceAsOn": this.ssySchemeForm.get('balanceAsOn').value,
           "commencementDate": this.ssySchemeForm.get('commDate').value,
@@ -192,7 +192,7 @@ export class AddSsyComponent implements OnInit {
           "clientId": this.clientId,
           "advisorId": this.advisorId,
           "familyMemberId": this.familyMemberId,
-          "ownerName": (this.ownerName == null) ? this.ssySchemeForm.controls.ownerName.value : this.ownerName,
+          "ownerName": (this.ownerName == null) ? this.ssySchemeForm.controls.ownerName.value : this.ownerName.userName,
           "accountBalance": this.ssySchemeForm.get('accBalance').value,
           "balanceAsOn": this.ssySchemeForm.get('balanceAsOn').value,
           "commencementDate": this.ssySchemeForm.get('commDate').value,
