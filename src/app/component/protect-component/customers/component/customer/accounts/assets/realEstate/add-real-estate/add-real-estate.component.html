@@ -355,7 +355,7 @@
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
                 </div>
-                <div class="pr-0" [ngClass]="addrealEstateForm.value.getNomineeName.length > 1?'col-md-3' : 'col-md-5'">
+                <div class="pr-0" [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <mat-select appOwnerNominee matInput
@@ -371,7 +371,7 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="col-md-2" *ngIf="addrealEstateForm.value.getNomineeName.length > 1">
+                <div class="col-md-2" *ngIf="getNominee.length > 1">
                     <div class="form-group mb-0 iconPetage">
                         <mat-form-field>
                             <input matInput class="form-control br-0 percentage" type="number"
@@ -386,7 +386,7 @@
                     </div>
                 </div>
                 <div class="col-md-2 p-0 d-flex align-items-center">
-                    <i class="material-icons text-primitive f-20 c-p float-left" (click)="addNewNominee(true)">add</i>
+                    <i class="material-icons text-primitive f-20 c-p float-left" (click)="addNewNominee(undefined)">add</i>
                     <i *ngIf="pointIndex!=0" class="material-icons text-primitive f-20 c-p pl-10 pt-8"
                     (click)="removeNewNominee(pointIndex)">remove</i>
                 </div>
