@@ -1,7 +1,7 @@
 <div class="popup-header-fix-35">
     <div class="row bb-1">
         <div class="col-md-10 p-0">
-            <h4 class="mb-0 wrapper-20">Bank account - Detailed view</h4>
+            <h4 class="mb-0 wrapper-20">NPS - Detailed view</h4>
         </div>
         <div class="col-md-2 text-left">
             <div class="wrapper-12">
@@ -10,8 +10,6 @@
         </div>
     </div>
 </div>
-
-
 <div class="pl-20 pr-20 mt-44 pb-48">
     <div class="row pt-40">
         <div class="col-md-12 p-0">
@@ -21,71 +19,64 @@
                         Owner Name
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{bankAccount.ownerName?bankAccount.ownerName:'-'}}
+                        {{npsData.ownerName}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Account type
+                        Current valuation
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(bankAccount.accountType==1)?'Current':'Savings'}}
+                        {{npsData.currentValuation}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Account balance
+                        Value as on
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{bankAccount.accountBalance?bankAccount.accountBalance:'-'}}
+                        {{npsData.valueAsOn | date:'dd/MM/yyyy'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Balance as on
+                        Total contribution
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{bankAccount.balanceAsOn | date:'dd/MM/yyyy'}}
+                        {{npsData.contributionAmount}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-6 text-left f-14 roboto p-0">
+                        Scheme choice
+                    </div>
+                    <div class="col-md-6 text-right f-14 roboto p-0">
+                        <span *ngIf="npsData.schemeChoice=='1'">Active-choice investment</span>
+                        <span *ngIf="npsData.schemeChoice=='2'">Auto-choice investment</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Interest rate
+                        PRAN
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{bankAccount.interestRate?bankAccount.interestRate:'-'}}
+                        {{npsData.pran ? npsData.pran:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Interest compounding
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(bankAccount.interestCompounding==1)?'Daily':(bankAccount.interestCompounding==2)?'Monthly':(bankAccount.interestCompounding==3)?'Quarterly':(bankAccount.interestCompounding==4)?'Half yearly':'Yearly'}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Account No.
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{bankAccount.accountNo?bankAccount.accountNo:'-'}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Bank Name
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{bankAccount.description?bankAccount.description:'-'}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
+                    <div class="col-md-6 text-left f-14 roboto p-0">
                         Description
                     </div>
+                    <div class="col-md-6 text-right f-14 roboto p-0">
+                        {{npsData.description ? npsData.description:'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br" *ngFor="let data of npsData.nominees; let i = index">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Nominee {{i+1}}
+                    </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{bankAccount.description}}
+                        {{ data.name }}
                     </div>
                 </div>
             </div>

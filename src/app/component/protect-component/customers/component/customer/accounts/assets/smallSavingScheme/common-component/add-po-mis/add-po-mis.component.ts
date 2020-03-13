@@ -144,37 +144,20 @@ export class AddPoMisComponent implements OnInit {
       this.inputs.find(input => !input.ngControl.valid).focus();
       this.pomisForm.markAllAsTouched();
     } else {
-      const obj = {
-        ownerName: (this.ownerName == null) ? this.pomisForm.controls.ownerName.value : this.ownerName.userName,
-        amtInvested: this.pomisForm.controls.amtInvested.value,
-        commencementdate: this.pomisForm.controls.commencementdate.value,
-        ownershipType: this.pomisForm.controls.ownershipType.value,
-        poBranch: this.pomisForm.controls.poBranch.value,
-        nominees: this.nominees,
-        accNumber: this.pomisForm.controls.accNumber.value,
-        description: this.pomisForm.controls.description.value,
-        familyMemberId: this.familyMemberId.id
-
-      };
-      obj.amtInvested = parseInt(obj.amtInvested);
-      obj.accNumber = parseInt(obj.accNumber);
-      obj.commencementdate = obj.commencementdate.toISOString().slice(0, 10);
-
-
       if (this.editApi != 'Add' && this.editApi != 'advicePOMIS') {
         const editObj = {
           id: this._inputData.id,
           clientId: this.clientId,
-          familyMemberId: obj.familyMemberId,
+          familyMemberId: this.familyMemberId.id,
           advisorId: this.advisorId,
-          ownerName: obj.ownerName,
-          amountInvested: obj.amtInvested,
-          commencementDate: obj.commencementdate,
-          postOfficeBranch: obj.poBranch,
-          bankAccountNumber: obj.accNumber,
-          ownerTypeId: obj.ownershipType,
-          nominees: obj.nominees,
-          description: obj.description,
+          ownerName: this.ownerName.userName,
+          amountInvested: this.pomisForm.controls.amtInvested.value,
+          commencementDate: this.pomisForm.controls.commencementdate.value,
+          postOfficeBranch: this.pomisForm.controls.poBranch.value,
+          bankAccountNumber: this.pomisForm.controls.accNumber.value,
+          ownerTypeId: this.pomisForm.controls.ownershipType.value,
+          nominees: this.nominees,
+          description: this.pomisForm.controls.description.value,
           // "createdDate":"2001-01-01"
         };
         this.custumService.editPOMIS(editObj).subscribe(
@@ -185,24 +168,24 @@ export class AddPoMisComponent implements OnInit {
           id: this._inputData.id,
           advisorId: this.advisorId,
           clientId: this.clientId,
-          familyMemberId: obj.familyMemberId,
-          ownerName: obj.ownerName,
-          amountInvested: obj.amtInvested,
-          commencementDate: obj.commencementdate,
-          postOfficeBranch: obj.poBranch,
-          bankAccountNumber: obj.accNumber,
-          ownerTypeId: obj.ownershipType,
-          nominees: obj.nominees,
-          description: obj.description,
+          familyMemberId: this.familyMemberId.id,
+          ownerName: this.ownerName.userName,
+          amountInvested: this.pomisForm.controls.amtInvested.value,
+          commencementDate: this.pomisForm.controls.commencementdate.value,
+          postOfficeBranch: this.pomisForm.controls.poBranch.value,
+          bankAccountNumber: this.pomisForm.controls.accNumber.value,
+          ownerTypeId: this.pomisForm.controls.ownershipType.value,
+          nominees: this.nominees,
+          description: this.pomisForm.controls.description.value,
           // "createdDate":obj.createdDate,
         };
         let adviceObj = {
           advice_id: this.advisorId,
           adviceStatusId: 5,
-          stringObject: obj,
+          // stringObject: obj,
           adviceDescription: "manualAssetDescription"
         }
-        console.log('obj', obj);
+        // console.log('obj', obj);
         if (this.flag == 'advicePOMIS') {
           this.custumService.getAdvicePomis(adviceObj).subscribe(
             data => this.getAdvicePomisRes(data),
