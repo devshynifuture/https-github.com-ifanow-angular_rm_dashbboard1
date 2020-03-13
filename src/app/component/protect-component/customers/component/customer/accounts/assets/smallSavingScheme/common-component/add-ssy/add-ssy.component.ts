@@ -50,7 +50,7 @@ export class AddSsyComponent implements OnInit {
   @Input() popupHeaderText: string = 'Add Sukanya samriddhi yojana (SSY)';
   adviceShowHeaderAndFooter: boolean = true;
 
-  constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService, private datePipe: DatePipe) { }
+  constructor(private dateFormatPipe: DatePipe, public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService, private datePipe: DatePipe) { }
 
   @Input()
   set data(data) {
@@ -179,7 +179,7 @@ export class AddSsyComponent implements OnInit {
             "frequency": this.ssySchemeForm.get('futureAppx').value,
           }],
           "ssyTransactionList": finalTransctList,
-          'familyMemberDob': this.ownerName.dateOfBirth
+          'familyMemberDob': this.dateFormatPipe.transform(this.ownerName.dateOfBirth, 'dd/MM/yyyy')
         }
         this.cusService.editSSYData(obj).subscribe(
           data => this.addSSYSchemeResponse(data),
@@ -207,7 +207,7 @@ export class AddSsyComponent implements OnInit {
             "frequency": this.ssySchemeForm.get('futureAppx').value,
           }],
           "ssyTransactionList": finalTransctList,
-          'familyMemberDob': this.ownerName.dateOfBirth
+          'familyMemberDob': this.dateFormatPipe.transform(this.ownerName.dateOfBirth, 'dd/MM/yyyy')
         }
         let adviceObj = {
           advice_id: this.advisorId,
