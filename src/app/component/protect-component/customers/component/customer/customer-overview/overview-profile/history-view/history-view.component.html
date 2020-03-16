@@ -1,0 +1,60 @@
+<div class="popup-header-fix-35">
+    <div class="row bb-1">
+        <div class="col-md-8 p-0">
+            <h4 class="mb-0 wrapper-20"> HISTORY </h4>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12">
+                <i class="material-icons c-p pt-8 v-middle"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="pt-80 pb-90 pl-20">
+
+    <div class="row">
+        <div class="col-md-12 historyTable">
+            <table mat-table [dataSource]="dataSource" class=" " id="table-low">
+                <ng-container matColumnDef="date">
+                    <th mat-header-cell class="br" *matHeaderCellDef>Date </th>
+                    <td mat-cell class="br" *matCellDef="let element"> {{element.date}} </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="rstatus">
+                    <th mat-header-cell class="br" *matHeaderCellDef> Risk status </th>
+                    <td mat-cell class="br" *matCellDef="let element"> {{element.rstatus}} </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="rscore">
+                    <th mat-header-cell class="br" *matHeaderCellDef> Risk score </th>
+                    <td mat-cell class="br" *matCellDef="let element"> {{element.rscore}} </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="empty">
+                    <th mat-header-cell class="br" *matHeaderCellDef> </th>
+                    <td mat-cell class="br text-primary c-p" *matCellDef="let element"> {{element.empty}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+
+        </div>
+    </div>
+
+</div>
+
+
+<div class="bottom-fixed-35 wrapper-12">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
+        </div>
+
+    </div>
+</div>

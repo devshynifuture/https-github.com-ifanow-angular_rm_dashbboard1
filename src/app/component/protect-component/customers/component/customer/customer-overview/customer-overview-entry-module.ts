@@ -4,9 +4,10 @@ import { MaterialModule } from 'src/app/material/material';
 import { ChartModule } from 'angular-highcharts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddFamilyMemberComponent } from './overview-profile/add-family-member/add-family-member.component';
+import { HistoryViewComponent } from './overview-profile/history-view/history-view.component';
 
 
-export const componentList = [AddFamilyMemberComponent];
+export const componentList = [AddFamilyMemberComponent, HistoryViewComponent];
 @NgModule({
     declarations: [componentList],
     imports: [
