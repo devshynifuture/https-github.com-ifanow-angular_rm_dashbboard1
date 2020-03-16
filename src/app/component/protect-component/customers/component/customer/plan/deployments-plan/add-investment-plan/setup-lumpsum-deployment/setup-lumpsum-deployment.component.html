@@ -19,7 +19,7 @@
 
                 <ng-container matColumnDef="position">
                     <th mat-header-cell *matHeaderCellDef>Equity <img src="/assets/images/svg/plus-rounded.svg"
-                        (click)="openPopup('equityPopup','Equity')"    class="c-p"></th>
+                            (click)="openPopup('equityPopup','Equity')" class="c-p"></th>
                     <td mat-cell *matCellDef="let element">
                         <div class="bar"> {{element.EQT_TITLE}}
                         </div>
@@ -30,7 +30,7 @@
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef> Target </th>
                     <td mat-cell *matCellDef="let element">
-                        <div class="bar"> {{element.EQT_TARGET | number : 2}}
+                        <div class="bar"> {{element.EQT_TARGET | number : '2'}}
                         </div>
                     </td>
                 </ng-container>
@@ -64,7 +64,7 @@
 
                 <ng-container matColumnDef="position">
                     <th mat-header-cell *matHeaderCellDef>Debt <img src="/assets/images/svg/plus-rounded.svg"
-                        (click)="openPopup('debtPopup','Debt')"  class="c-p"></th>
+                            (click)="openPopup('debtPopup','Debt')" class="c-p"></th>
                     <td mat-cell *matCellDef="let element">
                         <div class="bar"> {{element.DEBT_TITLE}}</div>
                     </td>
@@ -222,7 +222,8 @@
                     </div>
 
                 </div>
-                <div *ngIf="schemeData  && schemeData.EQUITY.length == 0" class="d-flex flex-column align-items-center pt-20">
+                <div *ngIf="schemeData  && schemeData.EQUITY.length == 0"
+                    class="d-flex flex-column align-items-center pt-20">
                     <h4 class="text-center pt-12" (click)="openPopup('addAmount',item)">No scheme found</h4>
                 </div>
             </div>
@@ -245,7 +246,8 @@
 
 
                 </div>
-                <div *ngIf="schemeData && schemeData.DEBT.length == 0 " class="d-flex flex-column align-items-center pt-20">
+                <div *ngIf="schemeData && schemeData.DEBT.length == 0 "
+                    class="d-flex flex-column align-items-center pt-20">
                     <h4 class="text-center pt-12">No scheme found</h4>
                 </div>
             </div>
