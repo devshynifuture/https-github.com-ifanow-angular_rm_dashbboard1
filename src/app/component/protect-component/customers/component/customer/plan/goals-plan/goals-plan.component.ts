@@ -24,11 +24,6 @@ export interface PeriodicElement {
   symbol: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 'Fixed Deposit', name: 'Continue till maturity', weight: '13,000', symbol: '5,28,000' },
-  { position: 'LIC Jeevan Saral', name: 'Pre close this asset', weight: '13,000', symbol: '5,28,000' },
-];
-
 @Component({
   selector: 'app-goals-plan',
   templateUrl: './goals-plan.component.html',
@@ -45,7 +40,6 @@ export class GoalsPlanComponent implements OnInit {
     lump_debt: 35452
   }
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'icons'];
-  dataSource = ELEMENT_DATA;
   clientFamily:any[];
 
   isLoading = false;
@@ -55,7 +49,33 @@ export class GoalsPlanComponent implements OnInit {
     clientId:''
   }
   dashboardData: any;
-  allGoals: any;
+  selectedGoal:any;
+  allGoals: any[] = [
+    {
+      goalName: 'Shreya’s higher education',
+      gv: 4813000,
+      year: '2030 - 2033',
+      img: '/assets/images/svg/higher-edu.svg'
+    },
+    {
+      goalName: 'House',
+      gv: 10000000,
+      year: '2033',
+      img: '/assets/images/svg/house-goals.svg'
+    },
+    {
+      goalName: 'Rahul’s retirement',
+      gv: 45522000,
+      year: '2030 - 2033',
+      img: '/assets/images/svg/retierment-goals.svg'
+    },
+    {
+      goalName: 'Aryan’s marriage',
+      gv: 4813000,
+      year: '2030 - 2033',
+      img: '/assets/images/svg/higher-edu.svg'
+    },
+  ];
 
   constructor(
     private subInjectService: SubscriptionInject, 
@@ -70,13 +90,15 @@ export class GoalsPlanComponent implements OnInit {
 
   ngOnInit() {
     this.loadAllGoals();
-    this.loadGlobalAPIs();
+    this.selectedGoal = this.allGoals[0];
+    // this.loadGlobalAPIs();
   }
 
   // load all goals created for the client and select the
   loadAllGoals(){
     this.plansService.getAllGoals(this.advisor_client_id).subscribe((data)=>{
-      this.allGoals = data;
+      // this.allGoals = data || [];
+      console.log(data);
     }, err => this.eventService.openSnackBar(err, "Dismiss"))
   }
 
@@ -180,6 +202,10 @@ export class GoalsPlanComponent implements OnInit {
           subscription.unsubscribe();
         }
       });
+  }
+
+  selectGoal(goalData) {
+    this.selectedGoal = goalData;
   }
 
   deleteGoal(goal) {

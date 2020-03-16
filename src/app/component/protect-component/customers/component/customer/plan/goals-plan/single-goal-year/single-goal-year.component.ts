@@ -62,6 +62,7 @@ export class SingleGoalYearComponent implements OnInit {
     }
 
     /**
+     * goal ids
      * 2 - house
      * 3 - car
      * 4 - marriage
@@ -112,13 +113,74 @@ export class SingleGoalYearComponent implements OnInit {
   }
 
   sendDataObj(obj){
-    this.planService.addHouseGoal(obj).subscribe(
-      data => {
-        this.eventService.changeUpperSliderState({state: 'close'});
-        this.eventService.openSnackBar("House goal is added");
-      },
-      error => this.eventService.showErrorMessage(error)
-    )
+
+    switch (this.goalTypeData.id) {
+      case 2: // House
+        this.planService.addHouseGoal(obj).subscribe(
+          data => {
+            this.eventService.changeUpperSliderState({state: 'close'});
+            this.eventService.openSnackBar("House goal is added");
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
+        break;
+      case 3: // Car
+        this.planService.addCarGoal(obj).subscribe(
+          data => {
+            this.eventService.changeUpperSliderState({state: 'close'});
+            this.eventService.openSnackBar("Car goal is added");
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
+        break;
+      case 4: // Marriage
+        this.planService.addMarriageGoal(obj).subscribe(
+          data => {
+            this.eventService.changeUpperSliderState({state: 'close'});
+            this.eventService.openSnackBar("Marriage goal is added");
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
+        break;
+      case 7: // Emergency
+        this.planService.addEmergencyGoal(obj).subscribe(
+          data => {
+            this.eventService.changeUpperSliderState({state: 'close'});
+            this.eventService.openSnackBar("Emergency goal is added");
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
+        break;
+      case 8: // Wealth Creation
+        this.planService.addWealthCreationGoal(obj).subscribe(
+          data => {
+            this.eventService.changeUpperSliderState({state: 'close'});
+            this.eventService.openSnackBar("Wealth Creation goal is added");
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
+        break;
+      case 9: // Big Spends
+        this.planService.addBigSpendsGoal(obj).subscribe(
+          data => {
+            this.eventService.changeUpperSliderState({state: 'close'});
+            this.eventService.openSnackBar("Big Spends goal is added");
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
+        break;
+      case 10: // Others
+        this.planService.addOthersGoal(obj).subscribe(
+          data => {
+            this.eventService.changeUpperSliderState({state: 'close'});
+            this.eventService.openSnackBar("Others goal is added");
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
+        break;
+      default:
+        console.error('unknown goal id found')
+    }
   }
 
   saveGoal(){
@@ -127,7 +189,7 @@ export class SingleGoalYearComponent implements OnInit {
     } else {
       let goalObj = this.createGoalObj();
       console.log(goalObj);
-      // this.sendDataObj(goalObj);
+      this.sendDataObj(goalObj);
     }
   }
 

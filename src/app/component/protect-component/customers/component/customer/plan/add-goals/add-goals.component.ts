@@ -17,13 +17,18 @@ export class AddGoalsComponent implements OnInit {
   advisorId: any;
   familyList:any[] = [];
   @Input() data;
+  clientName: string;
+  clientId: any;
 
-  constructor(public subInjectService: SubscriptionInject, private eventService: EventService, private planService: PlanService) { }
+  constructor(public subInjectService: SubscriptionInject, private eventService: EventService, private planService: PlanService) {
+    let clientData = AuthService.getClientData();
+    this.clientName = clientData.name;
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+  }
 
   ngOnInit() {
-    this.advisorId = AuthService.getAdvisorId();
-    this.getGoalGlobalData();
-    this.familyList = this.data.familyList;
+    this.loadGlobalGoalData();
   }
 
   close() {
@@ -31,17 +36,30 @@ export class AddGoalsComponent implements OnInit {
   }
 
   // load goal types and related images to display
-  getGoalGlobalData() {
-    let obj = {
+  // TODO:- create restrictive mechanism for failures of apis
+  loadGlobalGoalData() {
+    let advisorObj = {
       advisorId: this.advisorId
     }
-    this.planService.getGoalGlobalData(obj).subscribe(
+    this.planService.getGoalGlobalData(advisorObj).subscribe(
       data => this.getGoalGlobalDataRes(data),
       error => this.eventService.showErrorMessage(error)
     )
+
+    let advisor_client_obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    }
+
+    this.planService.getListOfFamilyByClient(advisor_client_obj).subscribe((data)=>{
+      this.familyList = data.familyMembersList.sort((a, b) => {
+        return a.relationshipId - b.relationshipId;
+      });
+    }, (err) => {this.eventService.openSnackBar(err, "Dismiss")});
   }
 
-  // Set questionnaires for all the 
+  // Set questionnaires for all the and divide the goal set into two rows
+  // TODO:- improve ui such that we dont need to divide it into two rows.
   getGoalGlobalDataRes(data) {
     data.forEach(element => {
       switch (element.id) {
