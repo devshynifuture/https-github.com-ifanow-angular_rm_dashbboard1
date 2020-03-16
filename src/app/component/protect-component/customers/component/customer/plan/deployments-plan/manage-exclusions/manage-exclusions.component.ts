@@ -64,7 +64,7 @@ export class ManageExclusionsComponent implements OnInit {
         data => {
           console.log(data);
           this.eventService.openSnackBar("Manage exclusion edited", "Dismiss");
-          this.close();
+          this.close(true);
         },
         err => this.eventService.openSnackBar(err, 'Dismiss')
       )
@@ -78,6 +78,6 @@ export class ManageExclusionsComponent implements OnInit {
     console.log(data)
   }
   close(flag) {
-    this.dialogRef.close({isRefreshRequired:flag})
+    this.dialogRef.close({ isRefreshRequired: flag })
   }
 }

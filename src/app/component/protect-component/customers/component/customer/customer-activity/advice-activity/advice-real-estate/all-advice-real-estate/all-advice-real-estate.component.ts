@@ -6,6 +6,8 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { AddRealEstateComponent } from '../../../../accounts/assets/realEstate/add-real-estate/add-real-estate.component';
 import { UtilService } from 'src/app/services/util.service';
 import { SelectAdviceComponent } from '../../select-advice/select-advice.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { ActiityService } from '../../../actiity.service';
 
 @Component({
   selector: 'app-all-advice-real-estate',
@@ -15,12 +17,32 @@ import { SelectAdviceComponent } from '../../select-advice/select-advice.compone
 export class AllAdviceRealAssetComponent implements OnInit {
   displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'mvalue', 'advice', 'astatus', 'adate', 'icon'];
   dataSource3 = ELEMENT_DATA1;
+  clientId: any;
+  advisorId: any;
   constructor(private eventService: EventService, public dialog: MatDialog, private subInjectService: SubscriptionInject,
-    private cusService: CustomerService) { }
+    private cusService: CustomerService,private activityService:ActiityService) { }
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    this.getAllAdviceByAsset();
   }
   allAdvice = true;
+  getAllAdviceByAsset() {
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      assetCategory: 8,
+      adviceStatusId:0
+    }
+    this.activityService.getAllAsset(obj).subscribe(
+      data => this.getAllSchemeResponse(data), (error) => {
+      }
+    );
+  }
+  getAllSchemeResponse(data){
+    console.log(data);
+  }
   openRealEstate(value, data) {
     const fragmentData = {
       flag: value,

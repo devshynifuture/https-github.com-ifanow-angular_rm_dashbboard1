@@ -7,6 +7,8 @@ import { NpsSummaryPortfolioComponent } from '../../../../accounts/assets/retire
 import { AddGratuityComponent } from '../../../../accounts/assets/retirementAccounts/add-gratuity/add-gratuity.component';
 import { AddSuperannuationComponent } from '../../../../accounts/assets/retirementAccounts/add-superannuation/add-superannuation.component';
 import { AddEPSComponent } from '../../../../accounts/assets/retirementAccounts/add-eps/add-eps.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { ActiityService } from '../../../actiity.service';
 
 @Component({
   selector: 'app-all-retirement-asset',
@@ -18,11 +20,31 @@ export class AllRetirementAssetComponent implements OnInit {
   dataSource = ELEMENT_DATA;
   displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'advice', 'astatus', 'adate', 'icon'];
   dataSource3 = ELEMENT_DATA1;
-  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, ) { }
+  clientId: any;
+  advisorId: any;
+  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject,private activityService:ActiityService) { }
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    this.getAllAdviceByAsset();
   }
   allAdvice = true;
+  getAllAdviceByAsset() {
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      assetCategory: 9,
+      adviceStatusId:0
+    }
+    this.activityService.getAllAsset(obj).subscribe(
+      data => this.getAllSchemeResponse(data), (error) => {
+      }
+    );
+  }
+  getAllSchemeResponse(data){
+    console.log(data);
+  }
   openAddEPF(data) {
     const fragmentData = {
       flag: 'addEPF',
@@ -81,7 +103,6 @@ export class AllRetirementAssetComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getListNPS();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
