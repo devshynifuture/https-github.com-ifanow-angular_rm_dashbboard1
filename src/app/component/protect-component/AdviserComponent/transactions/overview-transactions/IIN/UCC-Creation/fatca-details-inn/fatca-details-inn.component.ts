@@ -7,6 +7,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { OnlineTransactionService } from '../../../../online-transaction.service';
 import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
+import { SubmitReviewInnComponent } from '../submit-review-inn/submit-review-inn.component';
+import { LeftSideInnUccListComponent } from '../left-side-inn-ucc-list/left-side-inn-ucc-list.component';
 
 @Component({
   selector: 'app-fatca-details-inn',
@@ -17,36 +19,49 @@ export class FatcaDetailsInnComponent implements OnInit {
   fatcaDetails: any;
   inputData: any;
   allData: any;
+  changedValue: string;
+  doneData: any;
 
 
-  constructor(public subInjectService: SubscriptionInject,private fb: FormBuilder,
+  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
-    private onlineTransact : OnlineTransactionService, private processTransaction : ProcessTransactionService,
-     public eventService: EventService) { }
-     @Input()
-     set data(data) {
-       this.inputData = data;
-       this.allData = data
-       this.getdataForm(data)
-     }
-   
-     get data() {
-       return this.inputData;
-     }
-  ngOnInit() {
-    this.getdataForm('')
+    private onlineTransact: OnlineTransactionService, private processTransaction: ProcessTransactionService,
+    public eventService: EventService) { }
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    console.log('all data in fatca', this.inputData)
+    this.allData = data
+    this.doneData = {}
+    this.doneData.nominee = true
+    this.doneData.bank = true
+    this.doneData.contact = true
+    this.doneData.personal = true
+    this.doneData.fatca = false
+    this.getdataForm(data.fatcaDetail)
   }
-  close(){
+
+  get data() {
+    return this.inputData;
+  }
+  ngOnInit() {
+    if (this.allData.fatcaDetail) {
+      this.getdataForm(this.allData.fatcaDetail)
+    } else {
+      this.getdataForm('')
+    }
+  }
+  close() {
+    this.changedValue = 'close'
     const fragmentData = {
       direction: 'top',
-      componentName: FatcaDetailsInnComponent,
       state: 'close'
     };
 
     this.eventService.changeUpperSliderState(fragmentData);
   }
-  openNomineeDetails(){
-   const subscription = this.processTransaction.openNominee(this.allData).subscribe(
+  openNomineeDetails() {
+    const subscription = this.processTransaction.openNominee(this.allData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           subscription.unsubscribe();
@@ -71,7 +86,7 @@ export class FatcaDetailsInnComponent implements OnInit {
   getFormControl(): any {
     return this.fatcaDetails.controls;
   }
-  SendToForm(){
+  SendToForm() {
     if (this.fatcaDetails.get('nationality').invalid) {
       this.fatcaDetails.get('nationality').markAsTouched();
       return;
@@ -99,14 +114,14 @@ export class FatcaDetailsInnComponent implements OnInit {
     } else {
 
       let obj = {
-      nationality : this.fatcaDetails.controls.nationality.value,
-      annualIncome : this.fatcaDetails.controls.annualIncome.value,
-      cityOfBirth : this.fatcaDetails.controls.cityOfBirth.value,
-      countryOfBirth : this.fatcaDetails.controls.countryOfBirth.value,
-      sourceOfWealth : this.fatcaDetails.controls.sourceOfWealth.value,
-      occupation :this.fatcaDetails.controls.occupation.value,
-      politically : this.fatcaDetails.controls.politically.value,
-      taxResidency : this.fatcaDetails.controls.taxResidency.value,
+        nationality: this.fatcaDetails.controls.nationality.value,
+        annualIncome: this.fatcaDetails.controls.annualIncome.value,
+        cityOfBirth: this.fatcaDetails.controls.cityOfBirth.value,
+        countryOfBirth: this.fatcaDetails.controls.countryOfBirth.value,
+        sourceOfWealth: this.fatcaDetails.controls.sourceOfWealth.value,
+        occupation: this.fatcaDetails.controls.occupation.value,
+        politically: this.fatcaDetails.controls.politically.value,
+        taxResidency: this.fatcaDetails.controls.taxResidency.value,
       }
 
       let obj1 = {
@@ -116,6 +131,7 @@ export class FatcaDetailsInnComponent implements OnInit {
         holderList: this.allData.holderList,
         bankDetailList: this.allData.bankDetailList,
         nomineeList: this.allData.nomineeList,
+        generalDetails: this.allData.generalDetails,
         fatcaDetail: obj,
         id: 2,
         aggregatorType: 1,
@@ -126,17 +142,27 @@ export class FatcaDetailsInnComponent implements OnInit {
         confirmationFlag: 1,
         tpUserSubRequestClientId1: 2,
       }
-      this.onlineTransact.createIINUCC(obj1).subscribe(
-          data => this.createIINUCCRes(data), (error) => {
-            this.eventService.showErrorMessage(error);
-          }
-        );
+      this.openReviwSubmit(obj1);
     }
   }
-  createIINUCCRes(data){
-    console.log('data respose =',data)
+  openReviwSubmit(data) {
+    var temp = {
+      flag: 'app-upper-customer',
+      id: 1,
+      data,
+      direction: 'top',
+      componentName: SubmitReviewInnComponent,
+      state: 'open'
+    }
+    const subscription = this.eventService.changeUpperSliderState(temp).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          subscription.unsubscribe();
+        }
+      }
+    );
   }
-   // this.onlineTransact.createIINUCC(obj).subscribe(
+  // this.onlineTransact.createIINUCC(obj).subscribe(
   //   data => this.createIINUCCRes(data), (error) => {
   //     this.eventService.showErrorMessage(error);
   //   }

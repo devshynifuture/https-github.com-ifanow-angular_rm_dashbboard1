@@ -98,7 +98,7 @@
                                 <td class="b-a text-center" mat-cell *matCellDef="let element">
                                     <div class="bar">
                                         <button class="bg-grey lt" mat-button
-                                            (click)="exportToExcelSheet('export')">Export</button>
+                                            (click)="isTabDisabled = false">Export</button>
                                     </div>
                                 </td>
                             </ng-container>
@@ -273,10 +273,8 @@
                         Delete unmatched folios
                         <p class="text-primitive ws-normal">
                             This will simply delete the unmatched folios. Ensure that you reorder the folio wise
-                            data at
-                            the earliest. Also, ensure that you have downloaded the unmatched folio details from
-                            Summary
-                            & setup section as a backup
+                            data at the earliest. Also, ensure that you have downloaded the unmatched folio details from
+                            Summary & setup section as a backup
                         </p>
                     </mat-radio-button>
 
@@ -289,9 +287,8 @@
                         <p class="text-primitive ws-normal">
                             This will delete the unmatched folios as well as reorder the folio wise files from the
                             respective RTA and automatically upload them for you. Ensure that you have downloaded
-                            the
-                            unmatched folio details from Summary & setup section as a backup. <a href=""> Read
-                                more</a>
+                            the unmatched folio details from Summary & setup section as a backup.
+                            <a href=""> Read more</a>
                         </p>
                     </mat-radio-button>
                 </mat-radio-group>
@@ -306,7 +303,8 @@
                             <img src="/assets/images/svg/retry.svg">
                             Retry skipped files</button>
                         <button class="bg-grey lt" mat-button>
-                            <img src="/assets/images/svg/refresh.svg"> Refresh</button>
+                            <img src="/assets/images/svg/refresh.svg" (click)="getBackofficeAumFileOrderList()">
+                            Refresh</button>
                     </div>
 
                 </div>
@@ -316,71 +314,80 @@
                     <div class="col-md-12 overflow-hidden back-office-table">
                         <table mat-table [dataSource]="dataSource3" id="table-low" class=" mt-8">
 
-
                             <!-- Symbol Column -->
-                            <ng-container matColumnDef="foliosOrdered">
+                            <ng-container matColumnDef="folios">
                                 <th class="b-a" mat-header-cell *matHeaderCellDef> Folios ordered </th>
                                 <td class="b-a" mat-cell *matCellDef="let element">
-                                    <div class="bar"> {{element.foliosOrdered}} </div>
+                                    <div class="bar">
+                                        <span
+                                            *ngIf="element.folios && element.folios.count && element.folios.file else elseForFolios">
+                                            <a href="javascript:void(0)" (click)="saveFile(element.folios.file)">
+                                                {{element.folios.count}}
+                                            </a>
+                                        </span>
+                                        <ng-template #elseForFolios>
+                                            {{ element.folios }}
+                                        </ng-template>
+                                    </div>
                                 </td>
                             </ng-container>
 
-                            <ng-container matColumnDef="file_order">
+                            <ng-container matColumnDef="fileOrderDateTime">
                                 <th class="b-a" mat-header-cell *matHeaderCellDef> File order time (most recent)
                                 </th>
                                 <td class="b-a" mat-cell *matCellDef="let element">
-                                    <div class="bar"> {{element.file_order}} </div>
+                                    <div class="bar"> {{element.fileOrderDateTime | date:'short'}} </div>
                                 </td>
                             </ng-container>
 
-                            <ng-container matColumnDef="file_status">
+                            <ng-container matColumnDef="status">
                                 <th class="b-a" mat-header-cell *matHeaderCellDef> File status </th>
                                 <td class="b-a" mat-cell *matCellDef="let element">
-                                    <div class="bar"> {{element.file_status}} </div>
+                                    <div class="bar"> {{element.status}} </div>
                                 </td>
                             </ng-container>
 
-                            <ng-container matColumnDef="id">
+                            <ng-container matColumnDef="referenceId">
                                 <th class="b-a" mat-header-cell *matHeaderCellDef> Reference ID </th>
                                 <td class="b-a" mat-cell *matCellDef="let element">
-                                    <div class="bar"> {{element.id}} </div>
+                                    <div class="bar"> {{element.referenceId}} </div>
                                 </td>
                             </ng-container>
 
-                            <ng-container matColumnDef="trx_file">
+                            <ng-container matColumnDef="transactionAddedInFiles">
                                 <th class="b-a" mat-header-cell *matHeaderCellDef> Trx in file </th>
                                 <td class="b-a" mat-cell *matCellDef="let element">
-                                    <div class="bar"> {{element.trx_file}} </div>
+                                    <div class="bar"> {{element.transactionAddedInFiles}} </div>
                                 </td>
                             </ng-container>
 
-                            <ng-container matColumnDef="trx_added">
+                            <ng-container matColumnDef="transactionAdded">
                                 <th class="b-a" mat-header-cell *matHeaderCellDef> Trx added </th>
                                 <td class="b-a" mat-cell *matCellDef="let element">
-                                    <div class="bar"> {{element.trx_added}} </div>
+                                    <div class="bar"> {{element.transactionAdded}} </div>
                                 </td>
                             </ng-container>
 
-                            <ng-container matColumnDef="file_name">
+                            <ng-container matColumnDef="fileName">
                                 <th class="b-a" mat-header-cell *matHeaderCellDef> File name </th>
                                 <td class="b-a" mat-cell *matCellDef="let element">
-                                    <div class="bar"> {{element.file_name}} </div>
+                                    <div class="bar"> {{element.fileName}} </div>
                                 </td>
                             </ng-container>
 
-                            <ng-container matColumnDef="download">
+                            <ng-container matColumnDef="fileUrl">
                                 <th class="b-a" mat-header-cell *matHeaderCellDef> Download file </th>
                                 <td class="b-a" mat-cell *matCellDef="let element">
-                                    <div class="bar"> {{element.download}} </div>
+                                    <div class="bar">
+                                        <a [href]="element.fileUrl">download</a>
+                                    </div>
                                 </td>
                             </ng-container>
-
                             <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
                         </table>
                     </div>
                 </div>
-
             </mat-tab>
         </mat-tab-group>
     </div>

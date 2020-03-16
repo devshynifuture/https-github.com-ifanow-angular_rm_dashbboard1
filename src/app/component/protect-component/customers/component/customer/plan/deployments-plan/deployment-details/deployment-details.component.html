@@ -14,23 +14,31 @@
     <div class="row">
         <div class="col-md-12 pl-0">
             <h5 class="m-0">Deployment status</h5>
-            <table mat-table [dataSource]="dataSource" class="mt-12" id="table-low">
+            <table mat-table [dataSource]="deploymentData.EQUITY" *ngIf="deploymentData" id="table-low"
+                class="skeletonAnimation mt-12" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
                 <ng-container matColumnDef="position">
-                    <th mat-header-cell *matHeaderCellDef> </th>
-                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                    <th mat-header-cell *matHeaderCellDef>Equity<img (click)="openSelectAsset()"
+                            src="/assets/images/svg/plus-rounded.svg" class="c-p"></th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar">{{element.EQT_TITLE}}</div>
+                    </td>
                 </ng-container>
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef> Target </th>
-                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar">{{element.EQT_TARGET}}</div>
+                    </td>
                 </ng-container>
 
                 <!-- Weight Column -->
                 <ng-container matColumnDef="weight">
                     <th mat-header-cell *matHeaderCellDef> Remaining </th>
-                    <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar"> {{element.EQT_REMAIN}} </div>
+                    </td>
                 </ng-container>
 
                 <!-- Symbol Column -->
@@ -46,24 +54,34 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
-            <table mat-table [dataSource]="dataSource1" class="mt-20" id="table-low">
+            <div *ngIf="deploymentData.EQUITY == 0" class="d-flex flex-column align-items-center">
+                    <h4 class="text-center pt-12">No Data found</h4>
+            </div>
+            <table mat-table [dataSource]="deploymentData.DEBT" *ngIf="deploymentData" id="table-low"
+                class="skeletonAnimation mt-20" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
                 <ng-container matColumnDef="position">
                     <th mat-header-cell *matHeaderCellDef>Debt <img (click)="openSelectAsset()"
                             src="/assets/images/svg/plus-rounded.svg" class="c-p"></th>
-                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar">{{element.DEBT_TITLE}}</div>
+                    </td>
                 </ng-container>
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef> 60,000 </th>
-                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    <th mat-header-cell *matHeaderCellDef> Target </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar">{{element.DEBT_TARGET}}</div>
+                    </td>
                 </ng-container>
 
                 <!-- Weight Column -->
                 <ng-container matColumnDef="weight">
-                    <th mat-header-cell *matHeaderCellDef> 0 </th>
-                    <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                    <th mat-header-cell *matHeaderCellDef> Remaining </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar"> {{element.DEBT_REMAIN}}</div>
+                    </td>
                 </ng-container>
 
                 <!-- Symbol Column -->
@@ -79,7 +97,9 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
             </table>
-
+            <div *ngIf="deploymentData.DEBT == 0" class="d-flex flex-column align-items-center">
+                    <h4 class="text-center pt-12">No Data found</h4>
+            </div>
         </div>
     </div>
     <h5 class="m-0 f-500 text-black pt-44">Added items</h5>
@@ -126,8 +146,11 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
     </table>
+    <div *ngIf="deploymentData.equity_investment == 0" class="d-flex flex-column align-items-center">
+            <h4 class="text-center pt-12">No Data found</h4>
+    </div>
     <p class="roboto m-0 f-500 text-black pt-20">DEBT</p>
-    <table *ngIf="deploymentData" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation"
+    <table *ngIf="deploymentData" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading"
         mat-table [dataSource]="deploymentData.debt_investment" class="mt-8" id="table-low">
         <!-- Name Column -->
         <ng-container matColumnDef="name">
@@ -169,6 +192,9 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
     </table>
+    <div *ngIf="deploymentData.debt_investment == 0" class="d-flex flex-column align-items-center">
+            <h4 class="text-center pt-12">No Data found</h4>
+    </div>
 </div>
 <div class="bottom-fixed wrapper-12 w-70">
     <div class="row">

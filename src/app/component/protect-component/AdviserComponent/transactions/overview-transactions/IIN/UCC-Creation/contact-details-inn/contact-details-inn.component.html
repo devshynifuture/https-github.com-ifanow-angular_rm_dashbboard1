@@ -12,7 +12,7 @@
         </div>
         <!-- (click)="dialogClose()" for prod build  -->
         <div class="col-md-2 text-right">
-            <i class="material-icons pt-16 c-p pr-16">
+            <i class="material-icons pt-16 c-p pr-16" (click)="close();">
                 clear
             </i>
         </div>
@@ -21,7 +21,7 @@
 
 <div class="pt-60 mb-100" [formGroup]="contactDetails">
     <div class="row">
-        <app-left-side-inn-ucc-list></app-left-side-inn-ucc-list>
+        <app-left-side-inn-ucc-list [data]='doneData'></app-left-side-inn-ucc-list>
         <div class="col-md-7 offset-2 p-0 bl-1 ">
             <div class="p-20">
                 <h3 class="f-18 mb-12 mt-44 f-600"> Contact person details </h3>
@@ -234,7 +234,7 @@
             PREVIOUS
         </button>
 
-        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" (click)="SendToForm('third',true);">SAVE</button>
+        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" (click)="SendToForm(holder.type,true);">SAVE</button>
         <button mat-button class="greenBtn  p-0 mw-40 br-left-white " [matMenuTriggerFor]="menu">
             <i class="material-icons">
                 keyboard_arrow_up

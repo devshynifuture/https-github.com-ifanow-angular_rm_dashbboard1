@@ -164,16 +164,23 @@ export class AddEPFComponent implements OnInit {
       }
       if (this.epf.controls.id.value == undefined && this.flag != 'adviceEPF') {
         this.custumService.addEPF(obj).subscribe(
-          data => this.addEPFRes(data)
+          data => this.addEPFRes(data), (error) => {
+            this.event.showErrorMessage(error);
+          }
         );
-      } else if (this.flag == 'adviceEPF') {
+      }
+      else if (this.flag == 'adviceEPF') {
         this.custumService.getAdviceEpf(adviceObj).subscribe(
-          data => this.getAdviceEpfRes(data),
+          data => this.getAdviceEpfRes(data), (error) => {
+            this.event.showErrorMessage(error);
+          }
         );
       } else {
         //edit call
         this.custumService.editEPF(obj).subscribe(
-          data => this.editEPFRes(data)
+          data => this.editEPFRes(data), (error) => {
+            this.event.showErrorMessage(error);
+          }
         );
       }
     }
@@ -184,7 +191,7 @@ export class AddEPFComponent implements OnInit {
 
   }
   addEPFRes(data) {
-    console.log('addrecuringDepositRes', data)
+    console.log('Added successfully!', data)
     this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }

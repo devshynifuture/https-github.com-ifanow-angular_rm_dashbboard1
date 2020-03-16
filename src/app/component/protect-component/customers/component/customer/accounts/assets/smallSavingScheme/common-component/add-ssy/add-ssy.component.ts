@@ -50,7 +50,7 @@ export class AddSsyComponent implements OnInit {
   @Input() popupHeaderText: string = 'Add Sukanya samriddhi yojana (SSY)';
   adviceShowHeaderAndFooter: boolean = true;
 
-  constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService, private datePipe: DatePipe) { }
+  constructor(private dateFormatPipe: DatePipe, public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService, private datePipe: DatePipe) { }
 
   @Input()
   set data(data) {
@@ -164,7 +164,7 @@ export class AddSsyComponent implements OnInit {
         let obj = {
           "id": this.editApi.id,
           "familyMemberId": this.familyMemberId,
-          "ownerName": (this.ownerName == null) ? this.ssySchemeForm.controls.ownerName.value : this.ownerName,
+          "ownerName": (this.ownerName == null) ? this.ssySchemeForm.controls.ownerName.value : this.ownerName.userName,
           "accountBalance": this.ssySchemeForm.get('accBalance').value,
           "balanceAsOn": this.ssySchemeForm.get('balanceAsOn').value,
           "commencementDate": this.ssySchemeForm.get('commDate').value,
@@ -178,7 +178,8 @@ export class AddSsyComponent implements OnInit {
             "futureApproxContribution": this.ssySchemeForm.get('futureAppx').value,
             "frequency": this.ssySchemeForm.get('futureAppx').value,
           }],
-          "ssyTransactionList": finalTransctList
+          "ssyTransactionList": finalTransctList,
+          'familyMemberDob': this.dateFormatPipe.transform(this.ownerName.dateOfBirth, 'dd/MM/yyyy')
         }
         this.cusService.editSSYData(obj).subscribe(
           data => this.addSSYSchemeResponse(data),
@@ -191,7 +192,7 @@ export class AddSsyComponent implements OnInit {
           "clientId": this.clientId,
           "advisorId": this.advisorId,
           "familyMemberId": this.familyMemberId,
-          "ownerName": (this.ownerName == null) ? this.ssySchemeForm.controls.ownerName.value : this.ownerName,
+          "ownerName": (this.ownerName == null) ? this.ssySchemeForm.controls.ownerName.value : this.ownerName.userName,
           "accountBalance": this.ssySchemeForm.get('accBalance').value,
           "balanceAsOn": this.ssySchemeForm.get('balanceAsOn').value,
           "commencementDate": this.ssySchemeForm.get('commDate').value,
@@ -205,7 +206,8 @@ export class AddSsyComponent implements OnInit {
             "futureApproxContribution": this.ssySchemeForm.get('futureAppx').value,
             "frequency": this.ssySchemeForm.get('futureAppx').value,
           }],
-          "ssyTransactionList": finalTransctList
+          "ssyTransactionList": finalTransctList,
+          'familyMemberDob': this.dateFormatPipe.transform(this.ownerName.dateOfBirth, 'dd/MM/yyyy')
         }
         let adviceObj = {
           advice_id: this.advisorId,
@@ -235,7 +237,7 @@ export class AddSsyComponent implements OnInit {
 
   }
   addSSYSchemeResponse(data) {
-    (this.editApi) ? this.eventService.openSnackBar("SSY is edited", "Dismiss") : this.eventService.openSnackBar("SSY is added", "added")
+    (this.editApi) ? this.eventService.openSnackBar("Updated successfully!", "Dismiss") : this.eventService.openSnackBar("Added successfully!", "added")
     console.log(data)
     this.close(true)
   }

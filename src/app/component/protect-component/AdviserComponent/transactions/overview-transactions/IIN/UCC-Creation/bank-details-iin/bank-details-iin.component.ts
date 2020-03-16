@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
@@ -8,6 +8,8 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { NomineeDetailsIinComponent } from '../nominee-details-iin/nominee-details-iin.component';
 import { PostalService } from 'src/app/services/postal.service';
 import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
+import { ContactDetailsInnComponent } from '../contact-details-inn/contact-details-inn.component';
+import { LeftSideInnUccListComponent } from '../left-side-inn-ucc-list/left-side-inn-ucc-list.component';
 
 @Component({
   selector: 'app-bank-details-iin',
@@ -33,42 +35,69 @@ export class BankDetailsIINComponent implements OnInit {
   firstHolderBank: any;
   bank: any;
   temp: any;
+  changedValue: string;
+  genralDetails: any;
+  doneData: any;
+  allData: any;
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
-    private processTransaction : ProcessTransactionService,
-    private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
+    private processTransaction: ProcessTransactionService,
+    private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
   @Input()
   set data(data) {
     this.inputData = data;
+    console.log('all data in bank', this.inputData)
+    this.allData = data
     this.holdingList = data
-    this.firstHolderBank = data[0]
-    this.secondHolderBank = data[1]
-    this.thirdHolderBank = data[2]
+    this.doneData = {}
+    this.doneData.contact = true
+    this.doneData.personal = true
+    this.doneData.bank = false
+    this.genralDetails = data.generalDetails
+    if (data && data.bankDetailList) {
+      this.firstHolderBank = data.bankDetailList[0]
+      this.secondHolderBank = data.bankDetailList[1]
+      this.thirdHolderBank = data.bankDetailList[2]
+      this.genralDetails = data.generalDetails
+      this.getdataForm(this.firstHolderBank);
+    }
     console.log('#######', this.holdingList)
-    this.getdataForm(data);
   }
 
   get data() {
     return this.inputData;
   }
+  // @Output() changedValue = new EventEmitter();
   ngOnInit() {
-    this.getdataForm(this.firstHolderBank)
+    if (this.firstHolderBank) {
+      this.getdataForm(this.firstHolderBank)
+    } else {
+      this.getdataForm('')
+    }
+    this.changedValue = ''
     this.bank = []
     this.sendObj = []
     this.temp = []
-    this.temp.push(this.holdingList.firstHolder)
-    this.temp.push(this.holdingList.secondHolder)
-    this.temp.push(this.holdingList.thirdHolder)
+    if (this.holdingList) {
+      this.temp.push(this.holdingList.firstHolder)
+      this.temp.push(this.holdingList.secondHolder)
+      this.temp.push(this.holdingList.thirdHolder)
+    }
   }
   close() {
+    this.changedValue = 'close'
     const fragmentData = {
       direction: 'top',
-      componentName: BankDetailsIINComponent,
       state: 'close'
     };
 
     this.eventService.changeUpperSliderState(fragmentData);
   }
   getdataForm(data) {
+    if (!data) {
+      data = {
+        address: {}
+      }
+    }
     this.bankDetails = this.fb.group({
       ifscCode: [(!data) ? '' : data.ifscCode, [Validators.required]],
       bankName: [!data ? '' : data.bankName, [Validators.required]],
@@ -78,16 +107,16 @@ export class BankDetailsIINComponent implements OnInit {
       branchCode: [!data ? '' : data.branchCode, [Validators.required]],
       firstHolder: [!data ? '' : data.firstHolder, [Validators.required]],
       branchName: [!data ? '' : data.branchName, [Validators.required]],
-      branchAdd1: [!data ? '' : data.address.branchAdd1, [Validators.required]],
-      branchAdd2: [!data ? '' : data.address.branchAdd2, [Validators.required]],
-      pinCode: [!data ? '' : data.address.pinCode, [Validators.required]],
-      city: [!data ? '' : data.address.city, [Validators.required]],
-      state: [!data ? '' : data.address.state, [Validators.required]],
-      country: [!data ? '' : data.address.country, [Validators.required]],
-      branchProof: [!data ? '' : data.address.branchProof, [Validators.required]],
-      bankMandate: [!data ? '' : data.address.bankMandate, [Validators.required]],
-      mandateDate: [!data ? '' : data.address.mandateDate, [Validators.required]],
-      mandateAmount: [!data ? '' : data.address.mandateAmount, [Validators.required]],
+      branchAdd1: [!data.address ? '' : data.address.address1, [Validators.required]],
+      branchAdd2: [!data.address ? '' : data.address.address2, [Validators.required]],
+      pinCode: [!data.address ? '' : data.address.pinCode, [Validators.required]],
+      city: [!data.address ? '' : data.address.city, [Validators.required]],
+      state: [!data.address ? '' : data.address.state, [Validators.required]],
+      country: [!data.address ? '' : data.address.country, [Validators.required]],
+      branchProof: [!data.address ? '' : data.address.branchProof, [Validators.required]],
+      bankMandate: [!data.address ? '' : data.address.bankMandate, [Validators.required]],
+      mandateDate: [!data.address ? '' : data.address.mandateDate, [Validators.required]],
+      mandateAmount: [!data.address ? '' : data.address.mandateAmount, [Validators.required]],
     });
   }
   getFormControl(): any {
@@ -112,8 +141,24 @@ export class BankDetailsIINComponent implements OnInit {
     );
   }
   pinInvalid: boolean = false;
-  openContactDetails(){
-    this.processTransaction.openContact(this.holdingList)
+  openContactDetails() {
+    var data = this.inputData
+    const fragmentData = {
+      flag: 'app-upper-customer',
+      id: 1,
+      data,
+      direction: 'top',
+      componentName: ContactDetailsInnComponent,
+      state: 'open'
+    };
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getClientSubscriptionList();
+          subscription.unsubscribe();
+        }
+      }
+    );
   }
   getPostalPin(value) {
     let obj = {
@@ -186,6 +231,7 @@ export class BankDetailsIINComponent implements OnInit {
     this.obj1.push(this.secondHolderBank)
     this.obj1.push(this.thirdHolderBank)
     if (flag == true) {
+      this.doneData = true
       console.log('contact details', this.obj1)
       const value = {}
       this.obj1.forEach(element => {
@@ -196,14 +242,17 @@ export class BankDetailsIINComponent implements OnInit {
       });
       var temp1 = this.holdingList.generalDetails;
       this.sendObj = {
-        ownerName: temp1.ownerName,
-        holdingType: temp1.holdingNature,
-        taxStatus: temp1.taxStatus,
-        familyMemberId : temp1.familyMemberId,
-        clientId: temp1.clientId,
-        advisorId: temp1.advisorId,
+        ownerName: this.genralDetails.ownerName,
+        holdingType: this.genralDetails.holdingNature,
+        taxStatus: this.genralDetails.taxStatus,
+        familyMemberId: this.genralDetails.familyMemberId,
+        clientId: this.genralDetails.clientId,
+        advisorId: this.genralDetails.advisorId,
         holderList: this.temp,
         bankDetailList: this.bank,
+        nomineeList:this.inputData.nomineeList,
+        fatcaDetail:this.inputData.fatcaDetail,
+        generalDetails: this.genralDetails
       }
       console.log('##### bank ######', this.sendObj)
       this.openNomineeDetails(this.sendObj)
@@ -265,12 +314,12 @@ export class BankDetailsIINComponent implements OnInit {
     } else if (this.bankDetails.get('city').invalid) {
       this.bankDetails.get('city').markAsTouched();
       return;
-    // } else if (this.bankDetails.get('state').invalid) {
-    //   this.bankDetails.get('state').markAsTouched();
-    //   return;
-    // } else if (this.bankDetails.get('country').invalid) {
-    //   this.bankDetails.get('country').markAsTouched();
-    //   return;
+      // } else if (this.bankDetails.get('state').invalid) {
+      //   this.bankDetails.get('state').markAsTouched();
+      //   return;
+      // } else if (this.bankDetails.get('country').invalid) {
+      //   this.bankDetails.get('country').markAsTouched();
+      //   return;
     } else if (this.bankDetails.get('branchProof').invalid) {
       this.bankDetails.get('branchProof').markAsTouched();
       return;

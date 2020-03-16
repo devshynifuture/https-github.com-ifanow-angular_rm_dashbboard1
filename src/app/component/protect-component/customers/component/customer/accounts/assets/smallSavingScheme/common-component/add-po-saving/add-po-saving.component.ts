@@ -147,7 +147,7 @@ export class AddPoSavingComponent implements OnInit {
           nominees: this.nominees,
           acNumber: this.poSavingOptionalForm.get('bankAccNo').value,
           description: this.poSavingOptionalForm.get('description').value,
-          ownerName: (this.ownerName == undefined) ? this.poSavingForm.controls.ownerName.value : this.ownerName
+          ownerName: (this.ownerName == undefined) ? this.poSavingForm.controls.ownerName.value : this.ownerName.userName
         };
         this.cusService.editPOSAVINGData(obj).subscribe(
           data => this.addPOSavingResponse(data),
@@ -165,7 +165,7 @@ export class AddPoSavingComponent implements OnInit {
           nominees: this.nominees,
           acNumber: this.poSavingOptionalForm.get('bankAccNo').value,
           description: this.poSavingOptionalForm.get('description').value,
-          ownerName: this.ownerName
+          ownerName: (this.ownerName == undefined) ? this.poSavingForm.controls.ownerName.value : this.ownerName.userName
         };
         let adviceObj = {
           advice_id: this.advisorId,
@@ -194,7 +194,7 @@ export class AddPoSavingComponent implements OnInit {
   addPOSavingResponse(data) {
     this.close(true);
     console.log(data);
-    (this.flag == "editPOSAVING") ? this.eventService.openSnackBar('PO_SAVING is edited', 'Dismiss') : this.eventService.openSnackBar('PO_SAVING is added', 'Dismiss');
+    (this.flag == "editPOSAVING") ? this.eventService.openSnackBar('Updated successfully!', 'Dismiss') : this.eventService.openSnackBar('Added successfully!', 'Dismiss');
 
   }
 

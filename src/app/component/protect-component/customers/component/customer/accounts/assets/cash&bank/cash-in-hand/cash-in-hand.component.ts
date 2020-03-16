@@ -34,6 +34,7 @@ export class CashInHandComponent implements OnInit {
   flag: any;
   adviceShowHeaderAndFooter: boolean = true;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+  editData: any;
   constructor(private fb: FormBuilder, private custumService: CustomerService,
     public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
   }
@@ -93,6 +94,7 @@ export class CashInHandComponent implements OnInit {
     }
     else {
       this.flag = "editCASHINHAND";
+      (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : this.editData = data;
     }
     this.cashInHand = this.fb.group({
       ownerName: [(data.ownerName == undefined) ? '' : data.ownerName, [Validators.required]],
@@ -100,7 +102,6 @@ export class CashInHandComponent implements OnInit {
       cashBalance: [(data.cashValue == undefined) ? '' : data.cashValue, [Validators.required]],
       // bankAcNo: [(data.bankAccountNumber == undefined) ? '' : data.bankAccountNumber, [Validators.required]],
       description: [(data.description == undefined) ? '' : data.description,],
-      id: [(data.id == undefined) ? '' : data.id,],
       familyMemberId: [[(data.familyMemberId == undefined) ? '' : data.familyMemberId],]
     });
     this.ownerData = this.cashInHand.controls;
@@ -126,7 +127,6 @@ export class CashInHandComponent implements OnInit {
         cashValue: this.cashInHand.controls.cashBalance.value,
         // bankAccountNumber: this.cashInHand.controls.bankAcNo.value,
         description: this.cashInHand.controls.description.value,
-        id: this.cashInHand.controls.id.value
       };
       let adviceObj = {
         advice_id: this.advisorId,
@@ -134,18 +134,25 @@ export class CashInHandComponent implements OnInit {
         stringObject: obj,
         adviceDescription: "manualAssetDescription"
       }
-      if (this.flag == "editCASHINHAND") {
+      if (this.flag == "addCASHINHAND") {
         this.custumService.addCashInHand(obj).subscribe(
-          data => this.addCashInHandRes(data)
+          data => this.addCashInHandRes(data), (error) => {
+            this.eventService.showErrorMessage(error);
+          }
         );
       } else if (this.flag == 'adviceCashInHand') {
         this.custumService.getAdviceCashInHand(adviceObj).subscribe(
-          data => this.getAdviceCashInHandRes(data),
+          data => this.getAdviceCashInHandRes(data), (error) => {
+            this.eventService.showErrorMessage(error);
+          }
         );
       } else {
         // edit call
+        obj['id'] = this.editData.id;
         this.custumService.editCashInHand(obj).subscribe(
-          data => this.editCashInHandRes(data)
+          data => this.editCashInHandRes(data), (error) => {
+            this.eventService.showErrorMessage(error);
+          }
         );
       }
     }

@@ -4,11 +4,16 @@
             <div class="row justify-content-right" [formGroup]="selectBrokerForm">
                 <div class="col-md-6"></div>
                 <div class="col-md-4">
-                    <button class="btn-primary addon" mat-stroked-button color="primary"
-                        (click)="openAumReconciliation('','')">START
-                        RECONCILIATION</button>
+                    <div matTooltip="Kindly, Select the broker code" [matTooltipDisabled]="isBrokerSelected"
+                        matTooltipPosition="below">
+                        <button [disabled]="!isBrokerSelected" class="btn-primary addon" mat-stroked-button
+                            color="primary" (click)="openAumReconciliation('','')">
+                            START RECONCILIATION
+                        </button>
+
+                    </div>
                 </div>
-                <div class="col-md-2">
+                <div class=" col-md-2">
                     <!-- <button mat-stroked-button class="btn-default br-0 help-btn">ARN-83865</button> -->
                     <mat-select class="b-a" formControlName="selectBrokerId" placeholder="Select broker"
                         (selectionChange)="getAumReconHistoryData($event)">

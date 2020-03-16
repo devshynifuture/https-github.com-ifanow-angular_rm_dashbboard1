@@ -200,6 +200,9 @@ export const appConfig = {
   GET_DEPLOYMENT_DETAILS: '/activity/deployment/combined/deployment/detail/get',
   ADD_PURCHASE_SCHEME: '/activity/deployment/purchase/scheme/post',
   GET_MUTUAL_FUND_SCHEME: '/activity/deployment/scheme/get',
+  GET_ALL_ASSETS: 'goal-planning/static-allocation/get',
+  GET_ALL_GOALS: 'goal-planning/all/Goal-Details/get',
+  DELETE_GOAL: 'goal-planning/goal/delete',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   GET_EPF: 'account/asset/retirement/epf/list/get',
@@ -218,6 +221,7 @@ export const appConfig = {
   ADD_EPS: 'account/asset/retirement/eps/add',
   EDIT_EPS: 'account/asset/retirement/eps/edit',
   OTHER_PAYABLES: 'account/liability/otherpayables/get',
+  
 
   ////////////////////////////// subscription////////////////////////////////////////////
 
@@ -423,6 +427,9 @@ export const appConfig = {
   BACKOFFICE_ADV_GET_BROKER_LIST: 'backoffice/broker/list/get',
   BACKOFFICE_GET_RT_LIST: 'backoffice/rt/list/get',
   BACKOFFICE_GET_AUM_RECON_HISTORY_LIST: 'backoffice/aum/recon/history/get',
+  BACKOFFICE_GET_AUM_ORDER_LIST: 'backoffice/aum/file/order/list/get',
+
+
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',

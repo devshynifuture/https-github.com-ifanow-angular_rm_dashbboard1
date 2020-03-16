@@ -85,6 +85,8 @@ import { AddBudgetComponent } from './component/protect-component/customers/comp
 import { RightFilterComponent } from './component/protect-component/customers/component/common-component/right-filter/right-filter.component';
 import { FolioMasterDetailsComponent } from './component/protect-component/customers/component/common-component/folio-master-details/folio-master-details.component';
 import { SipDetailsComponent } from './component/protect-component/customers/component/common-component/sip-details/sip-details.component';
+import { Ng5SliderModule } from 'ng5-slider';
+import { DetailedViewNpsComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-nps/detailed-view-nps/detailed-view-nps.component';
 //import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
 
@@ -204,14 +206,15 @@ export const componentList = [
   ViewPastnotGoalComponent,
   AddSuggestPolicyComponent,
   CurrentPolicyComponent,
-  SingleGoalYearComponent,
-  MultiYearGoalComponent,
   SelectAdviceComponent,
   AddNomineeComponent,
   AddBudgetComponent,
   RightFilterComponent,
   FolioMasterDetailsComponent,
-  SipDetailsComponent
+  SipDetailsComponent,
+  SingleGoalYearComponent,
+  MultiYearGoalComponent,
+  DetailedViewNpsComponent
   // ComposeEmailComponent
 ];
 
@@ -227,6 +230,7 @@ export const componentList = [
     AccountEntryModule,
     AccountCommonModule,
     CustomDirectiveModule,
+    Ng5SliderModule, // used in MultiYearGoalComponent
   ],
   exports: [
     FormsModule,

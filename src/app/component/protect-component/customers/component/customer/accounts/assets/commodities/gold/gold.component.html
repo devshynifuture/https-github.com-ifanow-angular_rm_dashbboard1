@@ -22,7 +22,7 @@
                 <mat-select matInput appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
                     [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                     <mat-option value='' disabled>Select family members</mat-option>
-                    <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
+                    <mat-option *ngFor="let f of nomineesListFM" [value]="f">
                         <span>{{f.userName}}</span>
                     </mat-option>
                 </mat-select>
@@ -39,7 +39,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input matInput #appPurValue type="text" appInputValueValidation
+                    <input autocomplete="off" matInput #appPurValue type="text" appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control rupess br-0"
                         formControlName="appPurValue">
                     <mat-error class="f-12"
@@ -78,9 +78,9 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="E.g. 20" matInput #noTolasGramsPur type="text" appInputValueValidation
-                        [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0"
-                        formControlName="noTolasGramsPur">
+                    <input autocomplete="off" placeholder="E.g. 20" matInput #noTolasGramsPur type="text"
+                        appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10"
+                        class="form-control br-0" formControlName="noTolasGramsPur">
                     <mat-error class="f-12"
                         [ngClass]="{'v-h':!(isNoTolasGramsPur && getFormControl().noTolasGramsPur.invalid || getFormControl().noTolasGramsPur.touched && getFormControl().noTolasGramsPur.invalid)}">
                         This field is required
@@ -113,9 +113,9 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input [placeholder]="'E.g. '+ currentYear" matInput type="text" appInputValueValidation
-                        maxlength="4" [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 "
-                        formControlName="tenure">
+                    <input autocomplete="off" [placeholder]="'E.g. '+ currentYear" matInput type="text"
+                        appInputValueValidation maxlength="4" [inputValidator]="validatorType.NUMBER_ONLY"
+                        class="form-control br-0 " formControlName="tenure">
                     <mat-error class="f-12"
                         *ngIf="getFormControl().tenure.touched && getFormControl().tenure.hasError('required')">
                         This field is required
@@ -177,7 +177,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
-                        <input matInput #marketValue type="text" appInputValueValidation
+                        <input autocomplete="off" matInput #marketValue type="text" appInputValueValidation
                             [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control rupess br-0"
                             formControlName="marketValue">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
@@ -208,7 +208,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #description maxlength="60" class="form-control br-0"
+                        <input autocomplete="off" matInput #description maxlength="60" class="form-control br-0"
                             formControlName="description">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>

@@ -26,7 +26,9 @@ export class ReconCamsComponent implements OnInit {
   isLoading: boolean = false;
   selectBrokerForm = this.fb.group({
     selectBrokerId: [, Validators.required]
-  })
+  });
+
+  isBrokerSelected: boolean = false;
 
   @Input() rtId;
   displayedColumns: string[] = ['doneOn', 'doneBy', 'totalFolioCount', 'unmatchedCountBeforeRecon', 'unmatchedCountAfterRecon', 'aumBalanceDate', 'transactionDate', 'deleted', 'reordered', 'orderSuccess', 'orderFailed', 'action']
@@ -36,7 +38,6 @@ export class ReconCamsComponent implements OnInit {
     this.getBrokerList();
     console.log('my id is ::', this.rtId);
   }
-
 
   getBrokerList() {
     this.advisorId = AuthService.getAdvisorId();
@@ -57,20 +58,23 @@ export class ReconCamsComponent implements OnInit {
   }
 
   getAumReconHistoryData(event) {
-    this.isLoading = true;
-    console.log(event);
-    const data = {
-      advisorId: this.advisorId,
-      brokerId: this.selectBrokerForm.get('selectBrokerId').value,
-      rmId: 0,
-      rtId: this.rtId
+    if (this.selectBrokerForm.get('selectBrokerId').value) {
+      this.isLoading = true;
+      this.isBrokerSelected = true;
+      console.log(event);
+      const data = {
+        advisorId: this.advisorId,
+        brokerId: this.selectBrokerForm.get('selectBrokerId').value,
+        rmId: 0,
+        rtId: this.rtId
+      }
+      this.reconService.getAumReconHistoryDataValues(data)
+        .subscribe(res => {
+          this.isLoading = false;
+          console.log("this is some values ::::::::::", res);
+          this.dataSource.data = res;
+        })
     }
-    this.reconService.getAumReconHistoryDataValues(data)
-      .subscribe(res => {
-        this.isLoading = false;
-        console.log("this is some values ::::::::::", res);
-        this.dataSource.data = res;
-      })
   }
 
   openAumReconciliation(flag, data) {
@@ -109,25 +113,6 @@ export interface ElementI {
   orderFailed: string
   action: string
 }
-
-// id: 1
-// rmId: 0
-// advisorId: 0
-// brokerId: 4
-// orderTypeId: 0
-// totalFolioCount: 100
-// matchedCount: 50
-// unmatchedCountBeforeRecon: 50
-// unmatchedCountAfterRecon: 40
-// aumBalanceDate: 1583280000000
-// transactionDate: 1583366400000
-// rtId: 2
-// doneBy: "Avijit"
-// doneOn: 1583927404000
-// orderSuccess: 0
-// orderFailed: 0
-// deleted: true
-// reordered: false
 
 const ELEMENT_DATA: ElementI[] = [
   { doneOn: '', doneBy: '', totalFolioCount: '', unmatchedCountBeforeRecon: '', unmatchedCountAfterRecon: '', aumBalanceDate: '', transactionDate: '', deleted: '', reordered: '', orderSuccess: '', orderFailed: '', action: '' },
