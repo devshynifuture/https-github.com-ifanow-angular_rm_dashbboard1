@@ -94,12 +94,13 @@ export class AddScssComponent implements OnInit {
       ownershipType: [data.ownerTypeI ? String(data.ownerTypeId) : '2', [Validators.required]]
     });
     this.scssOptionalSchemeForm = this.fb.group({
-      poBranch: [],
+      poBranch: [data.postOfficeBranch],
       nominees: this.nominees,
-      bankAccNumber: [],
+      bankAccNumber: [data.bankAccountNumber],
       description: [data.description]
     });
     this.ownerData = this.scssSchemeForm.controls;
+    this.familyMemberId = data.familyMemberId
   }
 
   moreFields() {
