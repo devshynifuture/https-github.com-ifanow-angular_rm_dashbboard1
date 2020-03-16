@@ -40,6 +40,7 @@ export class GoldComponent implements OnInit {
   flag: any;
   currentYear: any = new Date().getFullYear();
   adviceFlagShowHeaderFooter: boolean = true;
+  editData: any;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
 
@@ -100,7 +101,7 @@ export class GoldComponent implements OnInit {
       this.flag = "addGOLD";
     }
     else {
-      // (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice:this.editGoldRes
+      (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : this.editData = data;
       this.flag = "editGOLD";
     }
     this.gold = this.fb.group({
@@ -114,11 +115,10 @@ export class GoldComponent implements OnInit {
       marketValue: [(data.marketValue == undefined) ? '' : data.marketValue],
       description: [(data.description == undefined) ? '' : data.description],
       bankAcNo: [(data.bankAcNo == undefined) ? '' : data.bankAcNo],
-      id: [(data.id == undefined) ? '' : data.id],
       familyMemberId: [(data.familyMemberId == undefined) ? '' : data.familyMemberId]
     });
     this.ownerData = this.gold.controls;
-    this.familyMemberId = this.gold.value.familyMemberId
+    this.familyMemberId = data.familyMemberId
 
   }
   getFormControl(): any {
@@ -149,7 +149,6 @@ export class GoldComponent implements OnInit {
         carat: this.gold.controls.carats.value,
         marketValue: this.gold.controls.marketValue.value,
         description: this.gold.controls.description.value,
-        id: this.gold.controls.id.value
       }
       let adviceObj = {
         advice_id: this.advisorId,
@@ -171,6 +170,7 @@ export class GoldComponent implements OnInit {
         );
       } else {
         //edit call
+        obj['id'] = this.editData.id
         this.custumService.editGold(obj).subscribe(
           data => this.editGoldRes(data), (error) => {
             this.eventService.showErrorMessage(error);

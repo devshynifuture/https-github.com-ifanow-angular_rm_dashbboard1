@@ -120,8 +120,7 @@ export class BankAccountsComponent implements OnInit {
       nomineeList: this.nomineesList
     });
     this.ownerData = this.bankAccounts.controls;
-    this.familyMemberId = this.bankAccounts.controls.familyMemberId.value
-    this.familyMemberId = this.familyMemberId[0]
+    this.familyMemberId = data.familyMemberId
   }
   onChange(event) {
     if (parseInt(event.target.value) > 100) {

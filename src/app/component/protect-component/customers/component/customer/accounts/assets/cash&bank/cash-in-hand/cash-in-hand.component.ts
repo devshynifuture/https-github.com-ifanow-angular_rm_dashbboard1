@@ -105,8 +105,7 @@ export class CashInHandComponent implements OnInit {
       familyMemberId: [[(data.familyMemberId == undefined) ? '' : data.familyMemberId],]
     });
     this.ownerData = this.cashInHand.controls;
-    this.familyMemberId = this.cashInHand.controls.familyMemberId.value;
-    this.familyMemberId = this.familyMemberId[0];
+    this.familyMemberId = data.familyMemberId;
   }
 
   getFormControl(): any {
