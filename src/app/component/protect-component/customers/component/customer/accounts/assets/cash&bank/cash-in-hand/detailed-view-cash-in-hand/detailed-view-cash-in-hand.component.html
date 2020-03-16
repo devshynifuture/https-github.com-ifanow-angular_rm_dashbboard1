@@ -21,7 +21,7 @@
                         Owner Name
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{cashInHand.ownerName}}
+                        {{cashInHand.ownerName?cashInHand.ownerName:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -29,7 +29,7 @@
                         Cash balance
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{cashInHand.cashValue}}
+                        {{cashInHand.cashValue?cashInHand.cashValue:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -45,7 +45,7 @@
                         Bank account number
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{cashInHand.bankAccountNumber}}
+                        {{cashInHand.bankAccountNumber?cashInHand.bankAccountNumber:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -53,7 +53,7 @@
                         Description
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{cashInHand.description}}
+                        {{cashInHand.description?cashInHand.description:'-'}}
                     </div>
                 </div>
             </div>

@@ -20,10 +20,10 @@
             </div>
             <div class="col-md-5">
                 <mat-form-field class="w-100">
-                    <mat-select matInput appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
-                        [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                    <mat-select matInput appOwner (valueChange1)='lisNominee($event)' [data]='ownerData'
+                        formControlName="ownerName" class="form-control br-0">
                         <mat-option value=''>Select family members</mat-option>
-                        <mat-option *ngFor="let f of nomineesListFM" [value]="f">
+                        <mat-option (click)="display(f)" *ngFor="let f of nomineesListFM" [value]="f.userName">
                             <span>{{f.userName}}</span>
                         </mat-option>
                     </mat-select>
@@ -84,9 +84,8 @@
             <div class="col-md-3">
                 <div class="form-group form-group_one mb-0">
                     <mat-form-field>
-                        <input [matDatepicker]="balanceAsOn" (click)="balanceAsOn.open()"
-                            [max]="ppfSchemeForm.get('commencementDate').value" class="form-control br-0"
-                            formControlName="balanceAsOn" matInput readonly>
+                        <input [matDatepicker]="balanceAsOn" (click)="balanceAsOn.open()" [max]="maxDate"
+                            class="form-control br-0" formControlName="balanceAsOn" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                         <mat-datepicker #balanceAsOn></mat-datepicker>
                         <mat-error class="f-12">This field is required

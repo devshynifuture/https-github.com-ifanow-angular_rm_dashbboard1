@@ -5,13 +5,15 @@
             <div class="col-md-11 p-0">
                 <div class="form-group">
                     <mat-form-field floatLabel="never" appearance="standard">
+                        <!-- (keyup)="getSchemeList($event.target.value)" removed for prod build -->
                         <input type="text" aria-label="Number" formControlName="schemeName" class="form-control"
-                            matInput (keyup)="getSchemeList($event.target.value)" [matAutocomplete]="auto"
+                        matInput  [matAutocomplete]="auto"
                             placeholder="Start typing to see scheme names">
                         <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option (onSelectionChange)="selectedScheme(scheme)" *ngFor="let scheme of schemeList"
-                                [value]="scheme.schemeName">
-                                {{scheme.schemeName}}
+                            <!--(onSelectionChange)="selectedScheme(scheme)"  *ngFor="let scheme of schemeList" removed for prod build [value]="scheme.schemeName" -->
+                            <mat-option 
+                                >
+                                <!-- {{scheme.schemeName}} removed for prod build-->
                             </mat-option>
                         </mat-autocomplete>
                         <!-- <mat-error class="f-12"
@@ -27,9 +29,6 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="col-md-1" *ngIf="showSpinner == true">
-                <mat-spinner class="mt-8"></mat-spinner>
-            </div>
         </div>
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
@@ -38,7 +37,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
-                        <input matInput #accBal appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                        <!-- [inputValidator]="validatorType.NUMBER_ONLY" removed for prod build -->
+                        <input matInput #accBal appInputValueValidation 
                             autocomplete="off" class="form-control rupess br-0" formControlName="amount"
                             matInput type="text" maxlength="10">
                         <mat-error  class="f-12">
@@ -53,6 +53,7 @@
     </div>
     <div class="f-right mt-44">
         <button mat-raised-button (click)="close()">CANCEL</button>
-        <button mat-raised-button (click)="addExclusions()" class="text-primary">ADD</button>
+        <!-- (click)="addExclusions()" removed for prod build -->
+        <button mat-raised-button class="text-primary">ADD</button>
     </div>
 </div>

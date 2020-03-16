@@ -131,6 +131,27 @@ export class BondsComponent implements OnInit {
     return this.bonds.get('getCoOwnerName') as FormArray;
   }
 
+  addNewCoOwner(data) {
+    this.getCoOwner.push(this.fb.group({
+      name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+    }));
+    if (!data || this.getCoOwner.value.length < 1) {
+      for (let e in this.getCoOwner.controls) {
+        this.getCoOwner.controls[e].get('share').setValue('');
+      }
+    }
+  }
+
+  removeCoOwner(item) {
+    this.getCoOwner.removeAt(item);
+    if (this.bonds.value.getCoOwnerName.length == 1) {
+      this.getCoOwner.controls['0'].get('share').setValue('100');
+    } else {
+      for (let e in this.getCoOwner.controls) {
+        this.getCoOwner.controls[e].get('share').setValue('');
+      }
+    }
+  }
   /***owner***/ 
 
   /***nominee***/ 
@@ -141,26 +162,21 @@ export class BondsComponent implements OnInit {
 
   removeNewNominee(item) {
     this.getNominee.removeAt(item);
-    if(this.bonds.value.getNomineeName.length == 1 && this.bonds.value.getNomineeName[0] != ''){
-      this.getNominee.controls['0'].get('sharePercentage').setValue('100');
-    }else{
-      for(let e in this.getNominee.controls){
+    
+  }
+
+
+  
+  addNewNominee(data) {
+    this.getNominee.push(this.fb.group({
+      name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : ''], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+    }));
+    if (!data || this.getNominee.value.length < 1) {
+      for (let e in this.getNominee.controls) {
         this.getNominee.controls[e].get('sharePercentage').setValue('');
       }
     }
-  }
-
-  addNewNominee(data) {
-    this.getNominee.push(this.fb.group({
-      name: [""],
-      sharePercentage: [""],
-      familyMemberId: [""],
-      id:['']
-    }));
-
-    for(let e in this.getNominee.controls){
-      this.getNominee.controls[e].get('sharePercentage').setValue('');
-    }
+    
   }
   /***nominee***/ 
   // ===================owner-nominee directive=====================//
@@ -200,7 +216,7 @@ export class BondsComponent implements OnInit {
       interestRate: [(data == undefined) ? '' : data.couponRate, [Validators.required]],
       compound: [(data.compounding == undefined) ? '' : (data.compounding) + "", [Validators.required]],
       linkBankAc: [(data == undefined) ? '' : data.linkedBankAccount,],
-      tenure: [(data == undefined) ? '' : data.tenure, [Validators.required, Validators.min(0), Validators.max(120)]],
+      tenure: [(data == undefined) ? '' : data.tenure, [Validators.required, Validators.min(1), Validators.max(120)]],
       description: [(data == undefined) ? '' : data.description,],
       // bankName: [(data == undefined) ? '' : data.bankName, [Validators.required]],
       id: [(data == undefined) ? '' : data.id,],
@@ -215,21 +231,32 @@ export class BondsComponent implements OnInit {
     });
 
     this.getFormControl().description.maxLength = 60;
-    // this.ownerData = this.bonds.controls;
+    // ==============owner-nominee Data ========================\\
   /***owner***/ 
     if(this.bonds.value.getCoOwnerName.length == 1){
       this.getCoOwner.controls['0'].get('share').setValue('100');
     }
+
+    if (data.ownerList) {
+      this.getCoOwner.removeAt(0);
+      data.ownerList.forEach(element => {
+        this.addNewCoOwner(element);
+      });
+    }
     
   /***owner***/ 
 
+  /***nominee***/ 
   if(data.nomineeList){
     this.getNominee.removeAt(0);
-    data.ownerList.forEach(element => {
+    data.nomineeList.forEach(element => {
       this.addNewNominee(element);
     });
   }
-    this.ownerData = {Fmember: this.nomineesListFM, controleData:this.bonds}
+  /***nominee***/ 
+
+  this.ownerData = {Fmember: this.nomineesListFM, controleData:this.bonds}
+  // ==============owner-nominee Data ========================\\
 
     this.familyMemberId = this.bonds.controls.familyMemberId.value
     this.familyMemberId = this.familyMemberId[0]
@@ -279,7 +306,7 @@ export class BondsComponent implements OnInit {
         clientId: this.clientId,
         // familyMemberId: this.familyMemberId,
         // ownerName: this.bonds.getCoOwnerName.value,
-        memberList: this.bonds.value.getCoOwnerName,
+        ownerList: this.bonds.value.getCoOwnerName,
         amountInvested: this.bonds.controls.amountInvest.value,
         bondName: this.bonds.controls.bondName.value,
         // couponAmount: this.bonds.controls.couponAmount.value,
@@ -291,7 +318,7 @@ export class BondsComponent implements OnInit {
         description: this.bonds.controls.description.value,
         // maturityDate: this.datePipe.transform(this.maturityDate, 'yyyy-MM-dd'),
         // bankName: this.bonds.controls.bankName.value,
-        nomineeslist: this.bonds.value.getNomineeName,
+        nomineeList: this.bonds.value.getNomineeName,
 
         tenure: this.bonds.controls.tenure.value,
         type: this.bonds.controls.type.value,

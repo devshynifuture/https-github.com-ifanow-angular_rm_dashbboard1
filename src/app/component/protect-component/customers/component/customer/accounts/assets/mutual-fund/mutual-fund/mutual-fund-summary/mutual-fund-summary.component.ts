@@ -25,7 +25,7 @@ export class MutualFundSummaryComponent implements OnInit {
   totalObj: any;
   customDataSource: any;
   catObj: {};
-
+   isLoading:boolean =false; //added for prod build
   constructor(private subInjectService: SubscriptionInject, private UtilService: UtilService, private MfServiceService: MfServiceService) { }
   @Input() mutualFund;
 

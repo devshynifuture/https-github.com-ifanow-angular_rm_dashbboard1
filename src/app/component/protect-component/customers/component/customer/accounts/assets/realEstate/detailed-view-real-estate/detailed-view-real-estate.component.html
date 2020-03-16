@@ -21,7 +21,7 @@
                         Owner name
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{realEstate.ownerName}}
+                        {{realEstate.ownerName?realEstate.ownerName:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br" *ngFor="let obj of owners; let i = index">
@@ -56,7 +56,7 @@
                         Market value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{realEstate.marketValue}}
+                        {{realEstate.marketValue?realEstate.marketValue:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -72,7 +72,7 @@
                         Purchase value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{realEstate.purchaseValue}}
+                        {{realEstate.purchaseValue?realEstate.purchaseValue:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -80,7 +80,7 @@
                         Stamp duty
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{realEstate.stampDutyCharge}}
+                        {{realEstate.stampDutyCharge?realEstate.stampDutyCharge:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -88,7 +88,7 @@
                         Registration
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{realEstate.registrationCharge}}
+                        {{realEstate.stampDutyCharge?realEstate.stampDutyCharge:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -96,7 +96,7 @@
                         GST
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{realEstate.gstCharge}}
+                        {{realEstate.gstCharge?realEstate.gstCharge:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -112,7 +112,7 @@
                         Description
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{realEstate.description}}
+                        {{realEstate.description?realEstate.description:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br" *ngFor="let data of nominee; let i = index">
