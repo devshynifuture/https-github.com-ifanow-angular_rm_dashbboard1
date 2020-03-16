@@ -87,10 +87,18 @@ export class AdviceFixedIncomeComponent implements OnInit {
     let filterdData=[];
     data.forEach(element => {
       var asset=element.AssetDetails;
-      element.AdviceList.forEach(obj => {
-        obj.assetDetails=asset;
+      if(element.AdviceList.length>0){
+        element.AdviceList.forEach(obj => {
+          obj.assetDetails=asset;
+          filterdData.push(obj);
+        });
+      }else{
+        const obj={
+          assetDetails:asset
+        }
         filterdData.push(obj);
-      });
+      }
+
     });
     return filterdData;
   }

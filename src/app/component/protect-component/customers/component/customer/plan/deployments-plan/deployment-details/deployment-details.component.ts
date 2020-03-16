@@ -13,7 +13,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 export class DeploymentDetailsComponent implements OnInit {
 
 
-  isLoading=false;
+  isLoading = false;
   deploymentData: any;
 
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject, public dialog: MatDialog, private planService: PlanService) { }
@@ -30,11 +30,11 @@ export class DeploymentDetailsComponent implements OnInit {
   }
   getDeploymentData(data) {
     this.isLoading = true;
-    this.deploymentData={
-      EQUITY:[{}, {}, {}],
+    this.deploymentData = {
+      EQUITY: [{}, {}, {}],
       DEBT: [{}, {}, {}],
-      equity_investment :[{}, {}, {}],
-      debt_investment :[{}, {}, {}]
+      equity_investment: [{}, {}, {}],
+      debt_investment: [{}, {}, {}]
     }
     let obj =
     {
@@ -59,7 +59,8 @@ export class DeploymentDetailsComponent implements OnInit {
   }
   openSelectAsset() {
     const dialogRef = this.dialog.open(SelectAssetClassComponent, {
-      width: '250px',
+      width: '600px',
+      height: '300px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
