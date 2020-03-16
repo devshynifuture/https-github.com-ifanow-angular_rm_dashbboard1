@@ -68,11 +68,7 @@ export class AddAssetStocksComponent implements OnInit {
     //   break;
     if (this.assetForm.invalid) {
       this.checkValid = true;
-      this.assetForm.get('ownerName').markAsTouched();
-      this.assetForm.get('currentMarketValue').markAsTouched();
-      this.assetForm.get('valueAsOn').markAsTouched();
-      this.assetForm.get('amtInvested').markAsTouched();
-      this.assetForm.get('portfolioName').markAsTouched();
+      this.assetForm.markAllAsTouched();
     }
     else {
       if (this.editApiData) {
@@ -122,6 +118,7 @@ export class AddAssetStocksComponent implements OnInit {
   }
   submitStockDataRes(data) {
     console.log(data)
+    this.eventService.openSnackBar()
     this.close();
   }
   close() {
