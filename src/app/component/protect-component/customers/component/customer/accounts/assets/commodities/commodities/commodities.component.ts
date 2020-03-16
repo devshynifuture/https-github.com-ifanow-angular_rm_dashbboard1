@@ -37,7 +37,7 @@ export class CommoditiesComponent implements OnInit {
   sumOfPurchaseValue: any;
   sumOfMarketValueOther: any;
   sumOfPurchaseValueOther: any;
-  currentDate= new Date();
+  currentDate = new Date();
   footer = [];
 
   @ViewChild('goldListTable', { static: false }) goldListTableSort: MatSort;
@@ -129,7 +129,6 @@ export class CommoditiesComponent implements OnInit {
         if (value == 'GOLD') {
           this.custumService.deleteGold(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar("Gold is deleted", "Dismiss")
               dialogRef.close();
               this.getGoldList()
             },
@@ -138,13 +137,13 @@ export class CommoditiesComponent implements OnInit {
         } else {
           this.custumService.deleteOther(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar("Others is deleted", "Dismiss")
               dialogRef.close();
               this.getOtherList()
             },
             error => this.eventService.showErrorMessage(error)
           )
         }
+        this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');

@@ -120,8 +120,7 @@ export class BankAccountsComponent implements OnInit {
       nomineeList: this.nomineesList
     });
     this.ownerData = this.bankAccounts.controls;
-    this.familyMemberId = this.bankAccounts.controls.familyMemberId.value
-    this.familyMemberId = this.familyMemberId[0]
+    this.familyMemberId = data.familyMemberId
   }
   onChange(event) {
     if (parseInt(event.target.value) > 100) {
@@ -212,12 +211,12 @@ export class BankAccountsComponent implements OnInit {
   }
   addBankAccountsRes(data) {
     console.log('addrecuringDepositRes', data)
-    this.subInjectService.changeNewRightSliderState({ flag: 'addedbankAc', state: 'close', data, refreshRequired: true })
+    this.subInjectService.changeNewRightSliderState({ flag: 'addedbankAc', state: 'close', data: 1, refreshRequired: true })
     this.eventService.openSnackBar('Added successfully!', 'OK');
 
   }
   editBankAcountsRes(data) {
-    this.subInjectService.changeNewRightSliderState({ flag: 'editedbankAc', state: 'close', data, refreshRequired: true })
+    this.subInjectService.changeNewRightSliderState({ flag: 'editedbankAc', state: 'close', data: 1, refreshRequired: true })
     this.eventService.openSnackBar('Updated successfully!', 'OK');
 
   }

@@ -123,7 +123,7 @@ export class PoRdSchemeComponent implements OnInit {
       positiveMethod: () => {
         this.cusService.deletePORD(data.id).subscribe(
           data => {
-            this.eventService.openSnackBar('PORD is deleted', 'Dismiss');
+            this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             dialogRef.close();
             this.getPoRdSchemedata();
           },
