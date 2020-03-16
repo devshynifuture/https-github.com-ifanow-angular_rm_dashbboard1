@@ -18,7 +18,7 @@ import { MatDialog, MatTableDataSource } from '@angular/material';
 export class UpperSliderBackofficeComponent implements OnInit {
 
   displayedColumns: string[] = ['doneOne', 'totalfolios', 'before_recon', 'after_recon', 'aum_balance', 'transaction', 'export_folios'];
-  dataSource = ELEMENT_DATA;
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   displayedColumns1: string[] = ['name', 'folioNumber', 'unitsIfnow', 'unitsRta', 'difference', 'transactions'];
   dataSource1 = ELEMENT_DATA1;
@@ -29,9 +29,10 @@ export class UpperSliderBackofficeComponent implements OnInit {
   isTabDisabled: boolean = true;
 
   data;
-
+  brokerId;
   subTabState: number = 1;
   aumReconId: any = null;
+  isLoading: boolean = false;
 
   constructor(private subInjectService: SubscriptionInject,
     private eventService: EventService,
@@ -42,9 +43,30 @@ export class UpperSliderBackofficeComponent implements OnInit {
   ngOnInit() {
     if (this.data) {
       this.aumReconId = this.data.id;
+      this.brokerId = this.data.brokerId
     }
     console.log("this is data that we got:::::::", this.data);
-    this.getBackofficeAumFileOrderList();
+    if (this.data.id) {
+      this.getBackofficeAumFileOrderList();
+    }
+    if (this.data.brokerId) {
+      this.isLoading = true;
+      this.getBackofficeAumReconList();
+
+    }
+  }
+
+  getBackofficeAumReconList() {
+    const data = {
+      advisorId: AuthService.getAdvisorId(),
+      brokerId: this.brokerId,
+      rt: this.data.rtId
+    }
+    this.supportService.getAumReconListGetValues(data).subscribe(res => {
+      this.isLoading = false;
+      console.log("this is some table values::::", res);
+      this.dataSource.data = res;
+    });
   }
 
   getBackofficeAumFileOrderList() {
@@ -178,7 +200,9 @@ export interface PeriodicElement {
 
 }
 const ELEMENT_DATA: PeriodicElement[] = [
-  { doneOne: '08/01/20 11:28AM', totalfolios: '890', before_recon: '14', after_recon: '0', aum_balance: '07/01/2020', transaction: '08/01/2020', export_folios: ' ' },
+  { doneOne: '', totalfolios: '', before_recon: '', after_recon: '', aum_balance: '', transaction: '', export_folios: '' },
+  { doneOne: '', totalfolios: '', before_recon: '', after_recon: '', aum_balance: '', transaction: '', export_folios: '' },
+  { doneOne: '', totalfolios: '', before_recon: '', after_recon: '', aum_balance: '', transaction: '', export_folios: '' },
 ];
 
 

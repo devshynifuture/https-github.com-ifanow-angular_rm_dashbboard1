@@ -44,7 +44,8 @@
 
                 <div class="row">
                     <div class="col-md-12 p-0 overflow-hidden back-office-table">
-                        <table mat-table [dataSource]="dataSource" id="table-low" class=" ">
+                        <table mat-table [dataSource]="dataSource" id="table-low" class="" appSkeletonLoading
+                            [appSkeletonLoading]="isLoading">
 
                             <ng-container matColumnDef="doneOne">
                                 <th class="b-a" mat-header-cell *matHeaderCellDef> Done on </th>
@@ -107,11 +108,16 @@
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                         </table>
                     </div>
+                    <div class="col-md-12 p-0" *ngIf="dataSource.data === undefined">
+                        <h4 class="d-flex justify-content-center p-44 b-a">
+                            No Data Found
+                        </h4>
+                    </div>
                 </div>
             </mat-tab>
 
 
-            <mat-tab [disabled]="isTabDisabled">
+            <mat-tab>
                 <ng-template mat-tab-label>
                     <div matTooltip="Kindly, click on export button" [matTooltipDisabled]="!isTabDisabled">
                         <h5 [ngClass]="{'text-custom': isTabDisabled}">
