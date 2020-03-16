@@ -140,8 +140,9 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
     }
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.getDeploymentData(this.deploymentList);
-
+      if(result.isRefreshRequired){
+        this.getDeploymentData(this.deploymentList);
+      }
     });
 
   }

@@ -81,7 +81,9 @@ export class DeploymentsPlanComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.getDeploymentData();
+      if(result.isRefreshRequired){
+        this.getDeploymentData();
+      }
     });
 
   }
