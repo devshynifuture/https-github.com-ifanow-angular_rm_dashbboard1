@@ -19,7 +19,7 @@
 
                 <ng-container matColumnDef="position">
                     <th mat-header-cell *matHeaderCellDef>Equity <img src="/assets/images/svg/plus-rounded.svg"
-                        (click)="openPopup('equityPopup','Equity')"    class="c-p"></th>
+                            (click)="openPopup('equityPopup','Equity')" class="c-p"></th>
                     <td mat-cell *matCellDef="let element">
                         <div class="bar"> {{element.EQT_TITLE}}
                         </div>
@@ -30,7 +30,7 @@
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef> Target </th>
                     <td mat-cell *matCellDef="let element">
-                        <div class="bar"> {{element.EQT_TARGET | number : 2}}
+                        <div class="bar"><span appFormatNumber> {{element.EQT_TARGET}}</span>
                         </div>
                     </td>
                 </ng-container>
@@ -39,18 +39,20 @@
                 <ng-container matColumnDef="weight">
                     <th mat-header-cell *matHeaderCellDef> Remaining </th>
                     <td mat-cell *matCellDef="let element">
-                        <div class="bar"> {{element.EQT_REMAIN | number : 2}}</div>
+                        <div class="bar"><span appFormatNumber> {{element.EQT_REMAIN}}</span></div>
                     </td>
                 </ng-container>
 
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="icons">
-                    <th mat-header-cell *matHeaderCellDef> <i class="material-icons text-custom">
-                            more_vert
-                        </i> </th>
-                    <td mat-cell *matCellDef="let element"> <i class="material-icons text-custom">
-                            more_vert
-                        </i> </td>
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div *ngIf="!isLoading">
+                            <i class="material-icons text-custom">
+                                more_vert
+                            </i>
+                        </div>
+                    </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -64,9 +66,9 @@
 
                 <ng-container matColumnDef="position">
                     <th mat-header-cell *matHeaderCellDef>Debt <img src="/assets/images/svg/plus-rounded.svg"
-                        (click)="openPopup('debtPopup','Debt')"  class="c-p"></th>
+                            (click)="openPopup('debtPopup','Debt')" class="c-p"></th>
                     <td mat-cell *matCellDef="let element">
-                        <div class="bar"> {{element.DEBT_TITLE}}</div>
+                        <div class="bar"><span appFormatNumber>{{element.DEBT_TITLE }}</span></div>
                     </td>
                 </ng-container>
 
@@ -74,7 +76,7 @@
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef>Target </th>
                     <td mat-cell *matCellDef="let element">
-                        <div class="bar">{{element.DEBT_TARGET | number : 2}}</div>
+                        <div class="bar"><span appFormatNumber>{{element.DEBT_TARGET}}</span></div>
                     </td>
                 </ng-container>
 
@@ -82,18 +84,20 @@
                 <ng-container matColumnDef="weight">
                     <th mat-header-cell *matHeaderCellDef> Remaining </th>
                     <td mat-cell *matCellDef="let element">
-                        <div class="bar">{{element.DEBT_REMAIN | number : 2}}</div>
+                        <div class="bar"><span appFormatNumber>{{element.DEBT_REMAIN}}</span></div>
                     </td>
                 </ng-container>
 
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="icons">
-                    <th mat-header-cell *matHeaderCellDef> <i class="material-icons text-custom">
-                            more_vert
-                        </i> </th>
-                    <td mat-cell *matCellDef="let element"> <i class="material-icons text-custom">
-                            more_vert
-                        </i> </td>
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element">
+                        <div *ngIf="!isLoading">
+                            <i class="material-icons text-custom">
+                                more_vert
+                            </i>
+                        </div>
+                    </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
@@ -222,7 +226,8 @@
                     </div>
 
                 </div>
-                <div *ngIf="schemeData  && schemeData.EQUITY.length == 0" class="d-flex flex-column align-items-center pt-20">
+                <div *ngIf="schemeData  && schemeData.EQUITY.length == 0"
+                    class="d-flex flex-column align-items-center pt-20">
                     <h4 class="text-center pt-12" (click)="openPopup('addAmount',item)">No scheme found</h4>
                 </div>
             </div>
@@ -245,7 +250,8 @@
 
 
                 </div>
-                <div *ngIf="schemeData && schemeData.DEBT.length == 0 " class="d-flex flex-column align-items-center pt-20">
+                <div *ngIf="schemeData && schemeData.DEBT.length == 0 "
+                    class="d-flex flex-column align-items-center pt-20">
                     <h4 class="text-center pt-12">No scheme found</h4>
                 </div>
             </div>
@@ -287,9 +293,12 @@
         <!-- Symbol Column -->
         <ng-container matColumnDef="icons">
             <th mat-header-cell *matHeaderCellDef> </th>
-            <td mat-cell *matCellDef="let element"><i class="material-icons text-custom">
-                    more_vert
-                </i> </td>
+            <td mat-cell *matCellDef="let element">
+                <div *ngIf="!isLoading">
+                    <i class="material-icons text-custom">
+                        more_vert
+                    </i> </div>
+            </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
@@ -333,9 +342,13 @@
         <!-- Symbol Column -->
         <ng-container matColumnDef="icons">
             <th mat-header-cell *matHeaderCellDef> </th>
-            <td mat-cell *matCellDef="let element"><i class="material-icons text-custom">
-                    more_vert
-                </i> </td>
+            <td mat-cell *matCellDef="let element">
+                <div *ngIf="!isLoading">
+                    <i class="material-icons text-custom">
+                        more_vert
+                    </i>
+                </div>
+            </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>

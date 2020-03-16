@@ -29,7 +29,7 @@
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef> Target </th>
                     <td mat-cell *matCellDef="let element">
-                        <div class="bar">{{element.EQT_TARGET}}</div>
+                        <div class="bar"><span appFormatNumber>{{element.EQT_TARGET}}</span></div>
                     </td>
                 </ng-container>
 
@@ -37,25 +37,27 @@
                 <ng-container matColumnDef="weight">
                     <th mat-header-cell *matHeaderCellDef> Remaining </th>
                     <td mat-cell *matCellDef="let element">
-                        <div class="bar"> {{element.EQT_REMAIN}} </div>
+                        <div class="bar"><span appFormatNumber>{{element.EQT_REMAIN}}</span></div>
                     </td>
                 </ng-container>
 
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="icons">
-                    <th mat-header-cell *matHeaderCellDef> <i class="material-icons text-custom">
-                            more_vert
-                        </i> </th>
-                    <td mat-cell *matCellDef="let element"> <i class="material-icons text-custom">
-                            more_vert
-                        </i> </td>
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div *ngIf="!isLoading">
+                            <i class="material-icons text-custom">
+                                more_vert
+                            </i>
+                        </div>
+                    </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
             <div *ngIf="deploymentData.EQUITY == 0" class="d-flex flex-column align-items-center">
-                    <h4 class="text-center pt-12">No Data found</h4>
+                <h4 class="text-center pt-12">No Data found</h4>
             </div>
             <table mat-table [dataSource]="deploymentData.DEBT" *ngIf="deploymentData" id="table-low"
                 class="skeletonAnimation mt-20" appSkeletonLoading [appSkeletonLoading]="isLoading">
@@ -72,7 +74,7 @@
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef> Target </th>
                     <td mat-cell *matCellDef="let element">
-                        <div class="bar">{{element.DEBT_TARGET}}</div>
+                        <div class="bar"><span appFormatNumber>{{element.DEBT_TARGET}}</span></div>
                     </td>
                 </ng-container>
 
@@ -80,25 +82,27 @@
                 <ng-container matColumnDef="weight">
                     <th mat-header-cell *matHeaderCellDef> Remaining </th>
                     <td mat-cell *matCellDef="let element">
-                        <div class="bar"> {{element.DEBT_REMAIN}}</div>
+                        <div class="bar"><span appFormatNumber> {{element.DEBT_REMAIN }}</span></div>
                     </td>
                 </ng-container>
 
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="icons">
-                    <th mat-header-cell *matHeaderCellDef> <i class="material-icons text-custom">
-                            more_vert
-                        </i> </th>
-                    <td mat-cell *matCellDef="let element"> <i class="material-icons text-custom">
-                            more_vert
-                        </i> </td>
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element">
+                        <div *ngIf="!isLoading">
+                            <i class="material-icons text-custom">
+                                more_vert
+                            </i>
+                        </div>
+                    </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
             </table>
             <div *ngIf="deploymentData.DEBT == 0" class="d-flex flex-column align-items-center">
-                    <h4 class="text-center pt-12">No Data found</h4>
+                <h4 class="text-center pt-12">No Data found</h4>
             </div>
         </div>
     </div>
@@ -138,16 +142,20 @@
         <!-- Symbol Column -->
         <ng-container matColumnDef="icons">
             <th mat-header-cell *matHeaderCellDef> </th>
-            <td mat-cell *matCellDef="let element"><i class="material-icons text-custom">
-                    more_vert
-                </i> </td>
+            <td mat-cell *matCellDef="let element">
+                <div *ngIf="!isLoading">
+                    <i class="material-icons text-custom">
+                        more_vert
+                    </i>
+                </div>
+            </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
     </table>
     <div *ngIf="deploymentData.equity_investment == 0" class="d-flex flex-column align-items-center">
-            <h4 class="text-center pt-12">No Data found</h4>
+        <h4 class="text-center pt-12">No Data found</h4>
     </div>
     <p class="roboto m-0 f-500 text-black pt-20">DEBT</p>
     <table *ngIf="deploymentData" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading"
@@ -184,16 +192,20 @@
         <!-- Symbol Column -->
         <ng-container matColumnDef="icons">
             <th mat-header-cell *matHeaderCellDef> </th>
-            <td mat-cell *matCellDef="let element"><i class="material-icons text-custom">
-                    more_vert
-                </i> </td>
+            <td mat-cell *matCellDef="let element">
+                <div *ngIf="!isLoading">
+                    <i class="material-icons text-custom">
+                        more_vert
+                    </i>
+                </div>
+            </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
     </table>
     <div *ngIf="deploymentData.debt_investment == 0" class="d-flex flex-column align-items-center">
-            <h4 class="text-center pt-12">No Data found</h4>
+        <h4 class="text-center pt-12">No Data found</h4>
     </div>
 </div>
 <div class="bottom-fixed wrapper-12 w-70">
