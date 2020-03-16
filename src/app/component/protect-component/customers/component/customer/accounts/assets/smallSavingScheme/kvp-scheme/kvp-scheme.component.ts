@@ -90,8 +90,8 @@ export class KvpSchemeComponent implements OnInit {
     if (data == undefined) {
       this.noData = 'No scheme found';
       this.datasource.data = [];
-    }else if (data && data.KVPList && data.KVPList.length != 0) {
-      console.log('getKvpSchemedataResponse',data);
+    } else if (data && data.KVPList && data.KVPList.length != 0) {
+      console.log('getKvpSchemedataResponse', data);
       this.datasource.data = data.KVPList;
       this.datasource.sort = this.sort;
       UtilService.checkStatusId(this.datasource.filteredData);
@@ -115,7 +115,7 @@ export class KvpSchemeComponent implements OnInit {
       positiveMethod: () => {
         this.cusService.deleteKVP(data.id).subscribe(
           data => {
-            this.eventService.openSnackBar('KVP is deleted', 'Dismiss');
+            this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             dialogRef.close();
             this.getKvpSchemedata();
           },
@@ -149,7 +149,7 @@ export class KvpSchemeComponent implements OnInit {
       state: (flag == 'detailedKvp') ? 'open35' : 'open',
       componentName: (flag == 'detailedKvp') ? DetailedKvpComponent : AddKvpComponent
     };
-    if(flag != 'detailedKvp') {
+    if (flag != 'detailedKvp') {
       fragmentData['popupHeaderText'] = popupHeaderText;
     }
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -163,7 +163,7 @@ export class KvpSchemeComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-       
+
       }
     );
   }

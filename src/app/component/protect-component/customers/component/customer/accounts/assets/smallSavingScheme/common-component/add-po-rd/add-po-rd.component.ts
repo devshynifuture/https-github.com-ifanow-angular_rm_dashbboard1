@@ -113,11 +113,11 @@ export class AddPoRdComponent implements OnInit {
       rdNum: [data.rdNumber],
       poBranch: [data.postOfficeBranch],
       nominees: this.nominees,
-      linkedBankAcc: [],
+      linkedBankAcc: [data.linkedBankAccount],
       description: [data.description]
     });
     this.ownerData = this.PORDForm.controls;
-
+    this.familyMemberId = data.familyMemberId;
   }
 
   onChange(event) {
@@ -148,7 +148,7 @@ export class AddPoRdComponent implements OnInit {
         clientId: this.clientId,
         advisorId: this.advisorId,
         familyMemberId: this.familyMemberId,
-        ownerName: this.ownerName.userName,
+        ownerName: (this.ownerName == undefined) ? this.PORDForm.controls.ownerName.value : this.ownerName.userName,
         monthlyContribution: this.PORDForm.get('monthlyContribution').value,
         commencementDate: this.PORDForm.get('commDate').value,
         rdNumber: this.PORDFormoptionalForm.get('rdNum').value,
@@ -158,6 +158,7 @@ export class AddPoRdComponent implements OnInit {
         interestRate: this.PORDForm.get('interestRate').value,
         ownerTypeId: this.PORDForm.get('ownership').value,
         interestCompounding: this.PORDForm.get('compound').value,
+        linkedBankAccount: this.PORDFormoptionalForm.get('linkedBankAcc').value,
         isActive: 1,
       };
       if (this.flag == "editPORD") {

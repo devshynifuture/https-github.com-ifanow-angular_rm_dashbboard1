@@ -19,14 +19,14 @@
         </div>
         <div class="col-md-5">
             <mat-form-field class="w-100">
-                <mat-select matInput appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
-                    [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                <mat-select matInput appOwner (valueChange1)='lisNominee($event)' [data]='ownerData'
+                    formControlName="ownerName" class="form-control br-0">
                     <mat-option value='' disabled>Select family members</mat-option>
-                    <mat-option *ngFor="let f of nomineesListFM" [value]="f">
+                    <mat-option (click)="display($event)" *ngFor="let f of nomineesListFM" [value]="f.userName">
                         <span>{{f.userName}}</span>
                     </mat-option>
                 </mat-select>
-                <mat-error class="f-12">
+                <mat-error class=" f-12">
                     This field is required
                 </mat-error>
             </mat-form-field>
