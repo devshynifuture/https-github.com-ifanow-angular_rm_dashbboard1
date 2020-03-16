@@ -17,7 +17,7 @@
                 </div>
             </div>
 
-            <div class="mt-8" *ngFor="let goal of allGoals" (click)="selectGoal(goal)">
+            <div class="mt-8" *ngFor="let goal of allGoals" (click)="loadSelectedGoalData(goal)">
                 <div class="row bg-grey lter p-8 c-p">
                     <div class="col-md-3 p-0">
                         <img class="maxWidth100" [src]="goal.img">

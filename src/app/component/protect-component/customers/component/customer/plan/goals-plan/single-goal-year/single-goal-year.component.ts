@@ -118,7 +118,7 @@ export class SingleGoalYearComponent implements OnInit {
       case 2: // House
         this.planService.addHouseGoal(obj).subscribe(
           data => {
-            this.eventService.changeUpperSliderState({state: 'close'});
+            this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
             this.eventService.openSnackBar("House goal is added");
           },
           error => this.eventService.showErrorMessage(error)
@@ -127,7 +127,7 @@ export class SingleGoalYearComponent implements OnInit {
       case 3: // Car
         this.planService.addCarGoal(obj).subscribe(
           data => {
-            this.eventService.changeUpperSliderState({state: 'close'});
+            this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
             this.eventService.openSnackBar("Car goal is added");
           },
           error => this.eventService.showErrorMessage(error)
@@ -136,7 +136,7 @@ export class SingleGoalYearComponent implements OnInit {
       case 4: // Marriage
         this.planService.addMarriageGoal(obj).subscribe(
           data => {
-            this.eventService.changeUpperSliderState({state: 'close'});
+            this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
             this.eventService.openSnackBar("Marriage goal is added");
           },
           error => this.eventService.showErrorMessage(error)
@@ -145,7 +145,7 @@ export class SingleGoalYearComponent implements OnInit {
       case 7: // Emergency
         this.planService.addEmergencyGoal(obj).subscribe(
           data => {
-            this.eventService.changeUpperSliderState({state: 'close'});
+            this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
             this.eventService.openSnackBar("Emergency goal is added");
           },
           error => this.eventService.showErrorMessage(error)
@@ -154,7 +154,7 @@ export class SingleGoalYearComponent implements OnInit {
       case 8: // Wealth Creation
         this.planService.addWealthCreationGoal(obj).subscribe(
           data => {
-            this.eventService.changeUpperSliderState({state: 'close'});
+            this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
             this.eventService.openSnackBar("Wealth Creation goal is added");
           },
           error => this.eventService.showErrorMessage(error)
@@ -163,7 +163,7 @@ export class SingleGoalYearComponent implements OnInit {
       case 9: // Big Spends
         this.planService.addBigSpendsGoal(obj).subscribe(
           data => {
-            this.eventService.changeUpperSliderState({state: 'close'});
+            this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
             this.eventService.openSnackBar("Big Spends goal is added");
           },
           error => this.eventService.showErrorMessage(error)
@@ -172,7 +172,7 @@ export class SingleGoalYearComponent implements OnInit {
       case 10: // Others
         this.planService.addOthersGoal(obj).subscribe(
           data => {
-            this.eventService.changeUpperSliderState({state: 'close'});
+            this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
             this.eventService.openSnackBar("Others goal is added");
           },
           error => this.eventService.showErrorMessage(error)

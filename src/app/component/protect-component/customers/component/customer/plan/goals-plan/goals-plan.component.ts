@@ -90,14 +90,15 @@ export class GoalsPlanComponent implements OnInit {
 
   ngOnInit() {
     this.loadAllGoals();
-    this.selectedGoal = this.allGoals[0];
     // this.loadGlobalAPIs();
+    this.selectedGoal = this.allGoals[0];
   }
 
   // load all goals created for the client and select the
   loadAllGoals(){
     this.plansService.getAllGoals(this.advisor_client_id).subscribe((data)=>{
       // this.allGoals = data || [];
+      this.loadSelectedGoalData(this.allGoals[0]);
       console.log(data);
     }, err => this.eventService.openSnackBar(err, "Dismiss"))
   }
@@ -117,9 +118,7 @@ export class GoalsPlanComponent implements OnInit {
   }
 
   openAddgoals() {
-    let data = {
-      familyList: this.clientFamily,
-    }
+    let data = {}
     const fragmentData = {
       flag: 'openAddgoals',
       id: 1,
@@ -129,11 +128,10 @@ export class GoalsPlanComponent implements OnInit {
       state: 'open'
     };
 
-    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+    this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
-        if (UtilService.isDialogClose(upperSliderData)) {
-          // this.getClientSubscriptionList();
-          subscription.unsubscribe();
+        if (UtilService.isRefreshRequired(upperSliderData)) {
+          this.loadAllGoals();
         }
       }
     );
@@ -204,8 +202,9 @@ export class GoalsPlanComponent implements OnInit {
       });
   }
 
-  selectGoal(goalData) {
+  loadSelectedGoalData(goalData) {
     this.selectedGoal = goalData;
+    this.selectedGoal = this.allGoals[0];
   }
 
   deleteGoal(goal) {
