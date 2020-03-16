@@ -19,7 +19,7 @@
                         Owner Name
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{epf.ownerName}}
+                        {{epf.ownerName?epf.ownerName:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -27,7 +27,7 @@
                         Employee's Monthly Contribution
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{utils.formatter(epf.employeesMonthlyContribution)}}
+                        {{epf.employeesMonthlyContribution?utils.formatter(epf.employeesMonthlyContribution):'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -35,7 +35,7 @@
                         Employer's Monthly Contribution
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{utils.formatter(epf.employersMonthlyContribution)}}
+                        {{epf.employersMonthlyContribution?utils.formatter(epf.employersMonthlyContribution):'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -43,7 +43,7 @@
                         Current value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{utils.formatter(epf.currentValue)}}
+                        {{epf.currentValue?utils.formatter(epf.currentValue):'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -51,7 +51,7 @@
                         Balance mentioned
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{utils.formatter(epf.currentEpfBalance)}}
+                        {{epf.currentEpfBalance?utils.formatter(epf.currentEpfBalance):'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -67,7 +67,7 @@
                         Maturity year
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{epf.maturityYear}}
+                        {{epf.maturityYear?epf.maturityYear:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -75,16 +75,16 @@
                         Annual Salary growth rate
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{epf.annualSalaryGrowth}}
+                        {{epf.annualSalaryGrowthRate?epf.annualSalaryGrowthRate:'-'}}
                     </div>
                 </div>
 
                 <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
+                    <div class="col-md-6 text-left f-14 roboto p-0">
                         EPF No.
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{epf.epfNo}}
+                    <div class="col-md-6 text-right f-14 roboto p-0">
+                        {{epf.epfNo?epf.epfNo:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -92,7 +92,7 @@
                         Bank account number
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{epf.bankAccountNumber}}
+                        {{epf.bankAccountNumber?epf.bankAccountNumber:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -100,7 +100,7 @@
                         Description
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{epf.description}}
+                        {{epf.description?epf.description:'-'}}
                     </div>
                 </div>
             </div>

@@ -11,7 +11,7 @@
         </div>
 
         <div class="col-md-2 text-right">
-            <i (click)="Close(null)" class="material-icons pt-16 c-p pr-16">
+            <i (click)="Close(null)" class="material-icons pt-16 c-p pr-16" (click)="close()">
                 clear
             </i>
         </div>
@@ -81,7 +81,8 @@
             </mat-form-field>
         </div>
     </div>
-    <button mat-button class="f-16 m-0 btn-primary " (click)="saveGeneralDetails(data)"> LET’S BEGIN <i
+    <!-- data removed for prod build -->
+    <button mat-button class="f-16 m-0 btn-primary " (click)="saveGeneralDetails(null)"> LET’S BEGIN <i
             class="material-icons text-right ml-16">
             arrow_forward
         </i> </button>
@@ -90,7 +91,7 @@
 <div class="bottom-fixed  pl-20 pr-20 d-flex  w-100 row">
 
     <div class="col-md-3 p-0 d-flex align-items-center ">
-        <a href="#" class="text-white f-300"> Cancel </a>
+        <a class="text-white f-300" (click)="close()"> Cancel </a>
     </div>
 
 </div>

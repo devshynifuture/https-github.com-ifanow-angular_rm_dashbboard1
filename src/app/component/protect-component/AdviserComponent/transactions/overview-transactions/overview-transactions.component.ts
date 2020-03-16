@@ -1,13 +1,12 @@
 import { UtilService } from '../../../../../services/util.service';
 import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
 import { Component, OnInit } from '@angular/core';
-import { TransactionAddComponent } from '../transaction-add/transaction-add.component';
 import { OnlineTrasactionComponent } from './doTransaction/online-trasaction/online-trasaction.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { KnowYourCustomerComponent } from './know-your-customer/know-your-customer.component';
-import { LeftSideInnUccListComponent } from './IIN/UCC-Creation/left-side-inn-ucc-list/left-side-inn-ucc-list.component';
 import { IinUccCreationComponent } from './IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
+import { VerifyMemberComponent } from './MandateCreation/verify-member/verify-member.component';
 
 @Component({
   selector: 'app-overview-transactions',
@@ -66,6 +65,27 @@ export class OverviewTransactionsComponent implements OnInit {
       }
     );
 
+  }
+
+  openMandate(data){
+    const fragmentData = {
+      flag: 'mandate',
+      data,
+      id: 1,
+      state: 'open',
+      componentName: VerifyMemberComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+
+        if (UtilService.isRefreshRequired(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+
+        }
+        rightSideDataSub.unsubscribe();
+      }
+    );
   }
   openNewCustomerIIN() {
     const fragmentData = {

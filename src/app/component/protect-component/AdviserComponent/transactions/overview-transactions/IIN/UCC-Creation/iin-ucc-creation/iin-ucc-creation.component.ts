@@ -35,7 +35,6 @@ export class IinUccCreationComponent implements OnInit {
   close() {
     const fragmentData = {
       direction: 'top',
-      componentName: IinUccCreationComponent,
       state: 'close'
     };
 

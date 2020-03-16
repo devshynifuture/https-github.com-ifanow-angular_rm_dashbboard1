@@ -427,6 +427,9 @@ export const appConfig = {
   BACKOFFICE_ADV_GET_BROKER_LIST: 'backoffice/broker/list/get',
   BACKOFFICE_GET_RT_LIST: 'backoffice/rt/list/get',
   BACKOFFICE_GET_AUM_RECON_HISTORY_LIST: 'backoffice/aum/recon/history/get',
+  BACKOFFICE_GET_AUM_ORDER_LIST: 'backoffice/aum/file/order/list/get',
+
+
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',

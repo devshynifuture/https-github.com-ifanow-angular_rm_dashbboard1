@@ -34,10 +34,10 @@
         </div>
         <div class="col-md-5">
             <mat-form-field class="w-100">
-                <mat-select matInput appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
-                    [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                <mat-select matInput appOwner (valueChange1)='lisNominee($event)' [data]='ownerData'
+                    formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Search family members</mat-option>
-                    <mat-option *ngFor="let f of nomineesListFM" [value]="f">
+                    <mat-option (click)="display(f)" *ngFor="let f of nomineesListFM" [value]="f.userName">
                         <span>{{f.userName}}</span>
                     </mat-option>
                 </mat-select>
@@ -81,8 +81,8 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput (click)="KVPpicker.open()" [matDatepicker]="KVPpicker" [max]="maxDate"
-                        class="form-control br-0" formControlName="commencementdate" readonly>
+                    <input autocomplete="off" matInput (click)="KVPpicker.open()" [matDatepicker]="KVPpicker"
+                        [max]="maxDate" class="form-control br-0" formControlName="commencementdate" readonly>
                     <mat-datepicker-toggle matSuffix [for]="KVPpicker"></mat-datepicker-toggle>
                     <mat-datepicker #KVPpicker></mat-datepicker>
                     <mat-error class="f-12">
@@ -141,8 +141,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #poBranch type="text" maxlength="20" class="form-control br-0"
-                            formControlName="poBranch">
+                        <input autocomplete="off" matInput #poBranch type="text" maxlength="20"
+                            class="form-control br-0" formControlName="poBranch">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{poBranch.value.length}}/20</mat-hint>
                     </mat-form-field>
@@ -158,8 +158,9 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" matInput
-                            #accNumber maxlength="16" class="form-control br-0" formControlName="accNumber">
+                        <input autocomplete="off" type="text" appInputValueValidation
+                            [inputValidator]="validatorType.NUMBER_ONLY" matInput #accNumber maxlength="16"
+                            class="form-control br-0" formControlName="accNumber">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{accNumber.value.length}}/16</mat-hint>
                     </mat-form-field>
@@ -173,7 +174,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #description maxlength="60" class="form-control br-0"
+                        <input autocomplete="off" matInput #description maxlength="60" class="form-control br-0"
                             formControlName="description">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>

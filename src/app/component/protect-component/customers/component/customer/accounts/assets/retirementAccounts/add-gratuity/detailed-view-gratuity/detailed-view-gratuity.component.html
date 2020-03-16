@@ -19,7 +19,7 @@
                         Owner Name
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{gratuity.ownerName}}
+                        {{gratuity.ownerName?gratuity.ownerName:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -27,7 +27,7 @@
                         Name of the organization
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{gratuity.organizationName}}
+                        {{gratuity.organizationName ?gratuity.organizationName:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -35,7 +35,7 @@
                         No. of completed years
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{gratuity.yearsCompleted}}
+                        {{gratuity.yearsCompleted ?gratuity.yearsCompleted:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -43,7 +43,7 @@
                         Amount Received
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{utils.formatter(gratuity.amountReceived)}}
+                        {{(gratuity.amountReceived)?utils.formatter(gratuity.amountReceived):'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -51,7 +51,7 @@
                         Year of receipt
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{gratuity.yearReceipt}}
+                        {{gratuity.yearOfReceipt?gratuity.yearOfReceipt:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -59,7 +59,7 @@
                         Reason of receipt
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{gratuity.reasonOfReceipt}}
+                        {{gratuity.reasonOfReceipt?gratuity.reasonOfReceipt:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -67,7 +67,7 @@
                         Bank account number
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{gratuity.bankAccountNumber}}
+                        {{gratuity.bankAccountNumber?gratuity.bankAccountNumber:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -75,7 +75,7 @@
                         Description
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{gratuity.description}}
+                        {{gratuity.description?gratuity.description:'-'}}
                     </div>
                 </div>
             </div>

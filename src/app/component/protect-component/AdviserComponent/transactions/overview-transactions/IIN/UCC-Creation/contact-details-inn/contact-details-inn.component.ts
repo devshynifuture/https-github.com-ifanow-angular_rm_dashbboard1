@@ -5,7 +5,6 @@ import { CustomerService } from 'src/app/component/protect-component/customers/c
 import { DatePipe } from '@angular/common';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
-import { BankDetailsIINComponent } from '../bank-details-iin/bank-details-iin.component';
 import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
 import { PostalService } from 'src/app/services/postal.service';
 
@@ -32,43 +31,60 @@ export class ContactDetailsInnComponent implements OnInit {
   sendObj: any;
   getObj: void;
   contacts: any[];
+  changedValue: string;
+  generalDetails: any;
+  doneData: any;
 
-  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,private postalService : PostalService,
-    private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService, 
-    public eventService: EventService, private ProcessTransactionService : ProcessTransactionService) { }
+  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
+    private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
+    public eventService: EventService, private ProcessTransactionService: ProcessTransactionService) { }
 
   @ViewChild('dynamic', {
     read: ViewContainerRef,
     static: true
   }) viewContainerRef: ViewContainerRef;
-
   @Input()
   set data(data) {
     this.inputData = data;
+    console.log('all data in contact', this.inputData)
+    this.doneData = {}
     this.list = data
-    if(data.firstHolder){
+    if (data && data.firstHolder) {
+      this.doneData.personal = true
+      this.doneData.contact = false
       this.firstHolderContact = data.firstHolder
       this.secondHolderContact = data.secondHolder
       this.thirdHolderContact = data.thirdHolder
+      this.getdataForm(this.firstHolderContact)
+    } else if (data.holderList) {
+      this.firstHolderContact = data.holderList[0]
+      this.secondHolderContact = data.holderList[1]
+      this.thirdHolderContact = data.holderList[2]
     }
+    this.generalDetails = data.generalDetails
     console.log('################## = ', this.list)
-    this.getdataForm(data)
   }
 
   get data() {
     return this.inputData;
   }
+
   ngOnInit() {
-    this.getdataForm(this.firstHolderContact)
+   let value = {}
+    if (this.firstHolderContact) {
+      this.getdataForm(this.firstHolderContact)
+    } else {
+      this.getdataForm('')
+    }
     this.obj1 = []
     this.sendObj = []
-    this.contacts =[]
+    this.contacts = []
     console.log('holding list', this.holdingList)
   }
   close() {
+    this.changedValue = 'close'
     const fragmentData = {
       direction: 'top',
-      componentName: ContactDetailsInnComponent,
       state: 'close'
     };
 
@@ -77,17 +93,25 @@ export class ContactDetailsInnComponent implements OnInit {
   getdataForm(data) {
 
     this.contactDetails = this.fb.group({
+      // panNumber: [!data ? '' : data.panNumber, [Validators.required]],
+      // clientName: [!data ? '' : data.clientName, [Validators.required]],
+      // madianName: [!data ? '' : data.madianName, [Validators.required]],
+      // fatherName: [!data ? '' : data.fatherName, [Validators.required]],
+      // motherName: [!data ? '' : data.motherName, [Validators.required]],
+      // dateOfBirth: [!data ? '' : data.dateOfBirth, [Validators.required]],
+      // gender: [!data ? '' : data.gender, [Validators.required]],
       email: [(!data) ? '' : data.email, [Validators.required]],
       aadharNumber: [(!data) ? '' : data.aadharNumber, [Validators.required]],
+      // maritalStatus: [!data ? '' : data.maritalStatus, [Validators.required]],
       mobileNo: [!data ? '' : data.mobileNo, [Validators.required]],
       phoneNo: [!data ? '' : data.phoneNo, [Validators.required]],
-      addressLine1: [!data ? '' : data.addressLine1, [Validators.required]],
-      addressLine2: [!data ? '' : data.addressLine2, [Validators.required]],
-      pinCode: [!data ? '' : data.pinCode, [Validators.required]],
-      city: [!data ? '' : data.city, [Validators.required]],
-      district: [!data ? '' : data.district, [Validators.required]],
-      state: [!data ? '' : data.state, [Validators.required]],
-      country: [!data ? '' : data.country, [Validators.required]],
+      addressLine1: [!data.address ? data.addressLine1 : data.address.addressLine1, [Validators.required]],
+      addressLine2: [!data.address ? data.addressLine2 : data.address.addressLine2, [Validators.required]],
+      pinCode: [!data.address ? data.pinCode : data.address.pinCode, [Validators.required]],
+      city: [!data.address ? data.city : data.address.city, [Validators.required]],
+      district: [!data.address ? data.district : data.address.district, [Validators.required]],
+      state: [!data.address ? data.state : data.address.state, [Validators.required]],
+      country: [!data.address ? data.country : data.address.country, [Validators.required]],
 
     });
   }
@@ -95,7 +119,7 @@ export class ContactDetailsInnComponent implements OnInit {
     return this.contactDetails.controls;
   }
   openBankDetails(data) {
-    const subscription =this.ProcessTransactionService.openBank(data).subscribe(
+    const subscription = this.ProcessTransactionService.openBank(data).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           subscription.unsubscribe();
@@ -104,8 +128,8 @@ export class ContactDetailsInnComponent implements OnInit {
     );
   }
   pinInvalid: boolean = false;
-  openPersonalDetails(){
-    const subscription = this.ProcessTransactionService.openPersonal(this.list).subscribe(
+  openPersonalDetails() {
+    const subscription = this.ProcessTransactionService.openPersonal(this.inputData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           subscription.unsubscribe();
@@ -152,9 +176,12 @@ export class ContactDetailsInnComponent implements OnInit {
     this.contactDetails.reset();
   }
   SendToForm(value, flag) {
+    if (flag == true) {
+      this.doneData = true
+    }
     if (value == 'first') {
       this.saveContactDetails(value);
-      if (this.firstHolderContact) {
+      if (this.firstHolderContact && this.firstHolderContact.email) {
         this.holder.type = value;
         this.contactDetails.setValue(this.firstHolderContact);
       } else {
@@ -163,7 +190,7 @@ export class ContactDetailsInnComponent implements OnInit {
     }
     else if (value == 'second') {
       this.saveContactDetails(value);
-      if (this.secondHolderContact) {
+      if (this.secondHolderContact && this.secondHolderContact.email) {
         this.holder.type = value;
         this.contactDetails.setValue(this.secondHolderContact);
       } else {
@@ -172,7 +199,7 @@ export class ContactDetailsInnComponent implements OnInit {
     }
     else if (value == 'third') {
       this.saveContactDetails(value);
-      if (this.thirdHolderContact) {
+      if (this.thirdHolderContact && this.thirdHolderContact.email) {
         this.holder.type = value;
         this.contactDetails.setValue(this.thirdHolderContact);
       } else {
@@ -189,26 +216,29 @@ export class ContactDetailsInnComponent implements OnInit {
     if (flag == true) {
       const value = {}
       this.obj1.forEach(element => {
-        if(element){
+        if (element) {
           this.getObj = this.setObj(element, value)
           this.contacts.push(this.getObj)
         }
-     });
-       this.sendObj.firstHolder = Object.assign({}, this.list.firstHolder, this.contacts[0]);
-       this.sendObj.secondHolder = Object.assign({}, this.list.secondHolder, this.contacts[1]);
-       this.sendObj.thirdHolder = Object.assign({}, this.list.thirdHolder, this.contacts[2]);
-       this.sendObj.generalDetails = this.list.generalDetails
-
+      });
+      this.sendObj.firstHolder = Object.assign({}, this.list.firstHolder, this.contacts[0]);
+      this.sendObj.secondHolder = Object.assign({}, this.list.secondHolder, this.contacts[1]);
+      this.sendObj.thirdHolder = Object.assign({}, this.list.thirdHolder, this.contacts[2]);
+      this.sendObj.holderList = this.inputData.holderList
+       this.sendObj.bankDetailList = this.inputData.bankDetailList
+       this.sendObj.nomineeList = this.inputData.nomineeList;
+       this.sendObj.fatcaDetail = this.inputData.fatcaDetail;
+       this.sendObj.generalDetails = this.inputData.generalDetails
       this.openBankDetails(this.sendObj)
     }
   }
-  setObj(holder, value){
-   
+  setObj(holder, value) {
+
     value = {
-      email:holder.email,
-      aadharNumber:holder.aadharNumber,
-      mobileNo:holder.mobileNo,
-      phoneNo:holder.phoneNo,
+      email: holder.email,
+      aadharNumber: holder.aadharNumber,
+      mobileNo: holder.mobileNo,
+      phoneNo: holder.phoneNo,
     }
     value.address = {
 

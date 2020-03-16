@@ -35,7 +35,7 @@
                 <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
                         class="material-icons">filter_list</i>FILTERS
                 </button>
-                <button (click)="openAddEdit('', 'bankAccount')" class="btn-primary addon v-middle"
+                <button (click)="openAddEdit(null, 'bankAccount')" class="btn-primary addon v-middle"
                     mat-stroked-button>ADD
                     NEW
                 </button>
@@ -154,7 +154,7 @@
             <div *ngIf="bankAccountList.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12">{{noData}}</h4>
-                <button (click)="openAddEdit('', 'bankAccount')" class="btn-primary addon v-middle"
+                <button (click)="openAddEdit(null, 'bankAccount')" class="btn-primary addon v-middle"
                     mat-stroked-button>ADD NEW
                 </button>
             </div>
@@ -181,7 +181,7 @@
                 <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
                         class="material-icons">filter_list</i>FILTERS
                 </button>
-                <button (click)="openAddEdit('', 'cashInHand')" class="btn-primary addon v-middle" mat-stroked-button>
+                <button (click)="openAddEdit(null, 'cashInHand')" class="btn-primary addon v-middle" mat-stroked-button>
                     ADD NEW
                 </button>
             </div>
@@ -271,7 +271,7 @@
             <div *ngIf="cashInHandList.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12">{{noData}}</h4>
-                <button (click)="openAddEdit('', 'cashInHand')" class="btn-primary addon v-middle"
+                <button (click)="openAddEdit(null, 'cashInHand')" class="btn-primary addon v-middle"
                     mat-stroked-button>ADD
                     NEW
                 </button>

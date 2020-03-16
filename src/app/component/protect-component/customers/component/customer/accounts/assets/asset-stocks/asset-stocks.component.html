@@ -72,115 +72,116 @@
       </mat-menu>
     </div>
   </div>
-
-  <div class="row pt-12">
-    <div class="col-md-5 pl-0 pr-4">
-      <div class="row b-a">
-        <div class="col-md-12 bg-grey lter p-0">
-          <h5 class="mb-0 wrapper-8 pt-12 pb-16 text-black b-b">Summary</h5>
-        </div>
-        <div class="col-md-12 p-0">
-          <p class="m-0 text-custom pt-16 pl-8 roboto">Current value</p>
-          <h2 *ngIf="assetStockData" appFormatNumber class="m-0 f-300 text-black pt-4 pl-8 pb-24">
-            {{assetStockData.grandTotalCurrentValue | currency:'INR'}}</h2>
-        </div>
-        <div class="col-md-12 p-0">
-          <div class="row bg-light lter pt-12 pb-12 bt-1">
-            <div class="col-md-4 pr-0 pl-12">
-              <p class="text-custom m-0 roboto">Amount invested</p>
-              <h5 *ngIf="assetStockData" appFormatNumber class="m-0 text-black">
-                {{assetStockData.grandTotalAmountInvested | currency:'INR'}}</h5>
-            </div>
-            <div class="col-md-5 pr-0 pl-12">
-              <p class="text-custom m-0 roboto">Unrealized gain/loss</p>
-              <h5 *ngIf="assetStockData" appFormatNumber class="m-0 text-danger">
-                {{assetStockData.grandTotalUnrealizedGainLoss | currency:'INR'}}</h5>
-            </div>
-            <div class="col-md-3 pr-0 pl-12">
-              <p class="text-custom m-0 roboto">Returns</p>
-              <h5 *ngIf="assetStockData" class="m-0 text-danger">{{assetStockData.grandTotalAbsReturns}}
-                <i class="material-icons text-danger v-sub f-18 f-700">
-                  arrow_upward
-                </i></h5>
+  <div class="overflow-y">
+    <div class="row pt-12 w-1024">
+      <div class="col-md-5 pl-0 pr-4">
+        <div class="row b-a">
+          <div class="col-md-12 bg-grey lter p-0">
+            <h5 class="mb-0 wrapper-8 pt-12 pb-16 text-black b-b">Summary</h5>
+          </div>
+          <div class="col-md-12 p-0">
+            <p class="m-0 text-custom pt-16 pl-8 roboto">Current value</p>
+            <h2 *ngIf="assetStockData" appFormatNumber class="m-0 f-300 text-black pt-4 pl-8 pb-24">
+              {{assetStockData.grandTotalCurrentValue | currency:'INR'}}</h2>
+          </div>
+          <div class="col-md-12 p-0">
+            <div class="row bg-light lter pt-12 pb-12 bt-1">
+              <div class="col-md-4 pr-0 pl-12">
+                <p class="text-custom m-0 roboto">Amount invested</p>
+                <h5 *ngIf="assetStockData" appFormatNumber class="m-0 text-black">
+                  {{assetStockData.grandTotalAmountInvested | currency:'INR'}}</h5>
+              </div>
+              <div class="col-md-5 pr-0 pl-12">
+                <p class="text-custom m-0 roboto">Unrealized gain/loss</p>
+                <h5 *ngIf="assetStockData" appFormatNumber class="m-0 text-danger">
+                  {{assetStockData.grandTotalUnrealizedGainLoss | currency:'INR'}}</h5>
+              </div>
+              <div class="col-md-3 pr-0 pl-12">
+                <p class="text-custom m-0 roboto">Returns</p>
+                <h5 *ngIf="assetStockData" class="m-0 text-danger">{{assetStockData.grandTotalAbsReturns}}
+                  <i class="material-icons text-danger v-sub f-18 f-700">
+                    arrow_upward
+                  </i></h5>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-7 pl-4 pr-0">
-      <div class="row">
-        <div class="col-md-4 p-0 b-a">
-          <div class="highcharts-figure" id="piechartStock"></div>
-        </div>
-        <div class="col-md-8 b-a bl-0 p-0">
-          <div class="row b-b pt-10 pb-10">
-            <div class="col-md-1">
-              <div class="hw-16 mt-2 bg-primary"></div>
-            </div>
-            <div class="col-md-6">
-              <p class="f-500 text-black mb-0">Banking</p>
-            </div>
-            <div class="col-md-3 pl-0">
-              <p class="text-black mb-0">5,24,819</p>
-            </div>
-            <div class="col-md-2 pl-0">
-              <p class="text-black mb-0">23.43%</p>
-            </div>
+      <div class="col-md-7 pl-4 pr-0">
+        <div class="row">
+          <div class="col-md-4 p-0 b-a">
+            <div class="highcharts-figure" id="piechartStock"></div>
           </div>
-          <div class="row b-b pt-10 pb-10">
-            <div class="col-md-1">
-              <div class="hw-16 mt-2 bg-success"></div>
+          <div class="col-md-8 b-a bl-0 p-0">
+            <div class="row b-b pt-10 pb-10">
+              <div class="col-md-1">
+                <div class="hw-16 mt-2 bg-primary"></div>
+              </div>
+              <div class="col-md-6">
+                <p class="f-500 text-black mb-0">Banking</p>
+              </div>
+              <div class="col-md-3 pl-0">
+                <p class="text-black mb-0">5,24,819</p>
+              </div>
+              <div class="col-md-2 pl-0">
+                <p class="text-black mb-0">23.43%</p>
+              </div>
             </div>
-            <div class="col-md-6">
-              <p class="f-500 text-black mb-0">Information technology</p>
+            <div class="row b-b pt-10 pb-10">
+              <div class="col-md-1">
+                <div class="hw-16 mt-2 bg-success"></div>
+              </div>
+              <div class="col-md-6">
+                <p class="f-500 text-black mb-0">Information technology</p>
+              </div>
+              <div class="col-md-3 pl-0">
+                <p class="text-black mb-0">5,24,819</p>
+              </div>
+              <div class="col-md-2 pl-0">
+                <p class="text-black mb-0">23.43%</p>
+              </div>
             </div>
-            <div class="col-md-3 pl-0">
-              <p class="text-black mb-0">5,24,819</p>
+            <div class="row b-b pt-10 pb-10">
+              <div class="col-md-1">
+                <div class="hw-16 mt-2 bg-warning"></div>
+              </div>
+              <div class="col-md-6">
+                <p class="f-500 text-black mb-0">FMCG</p>
+              </div>
+              <div class="col-md-3 pl-0">
+                <p class="text-black mb-0">5,24,819</p>
+              </div>
+              <div class="col-md-2 pl-0">
+                <p class="text-black mb-0">23.43%</p>
+              </div>
             </div>
-            <div class="col-md-2 pl-0">
-              <p class="text-black mb-0">23.43%</p>
+            <div class="row b-b pt-10 pb-10">
+              <div class="col-md-1">
+                <div class="hw-16 mt-2 bg-danger"></div>
+              </div>
+              <div class="col-md-6">
+                <p class="f-500 text-black mb-0">Auto ancillaries</p>
+              </div>
+              <div class="col-md-3 pl-0">
+                <p class="text-black mb-0">5,24,819</p>
+              </div>
+              <div class="col-md-2 pl-0">
+                <p class="text-black mb-0">23.43%</p>
+              </div>
             </div>
-          </div>
-          <div class="row b-b pt-10 pb-10">
-            <div class="col-md-1">
-              <div class="hw-16 mt-2 bg-warning"></div>
-            </div>
-            <div class="col-md-6">
-              <p class="f-500 text-black mb-0">FMCG</p>
-            </div>
-            <div class="col-md-3 pl-0">
-              <p class="text-black mb-0">5,24,819</p>
-            </div>
-            <div class="col-md-2 pl-0">
-              <p class="text-black mb-0">23.43%</p>
-            </div>
-          </div>
-          <div class="row b-b pt-10 pb-10">
-            <div class="col-md-1">
-              <div class="hw-16 mt-2 bg-danger"></div>
-            </div>
-            <div class="col-md-6">
-              <p class="f-500 text-black mb-0">Auto ancillaries</p>
-            </div>
-            <div class="col-md-3 pl-0">
-              <p class="text-black mb-0">5,24,819</p>
-            </div>
-            <div class="col-md-2 pl-0">
-              <p class="text-black mb-0">23.43%</p>
-            </div>
-          </div>
-          <div class="row pt-10 pb-10">
-            <div class="col-md-1">
-              <div class="hw-16 mt-2 bg-grey dker"></div>
-            </div>
-            <div class="col-md-6">
-              <p class="f-500 text-black mb-0">Others</p>
-            </div>
-            <div class="col-md-3 pl-0">
-              <p class="text-black mb-0">5,24,819</p>
-            </div>
-            <div class="col-md-2 pl-0">
-              <p class="text-black mb-0">23.43%</p>
+            <div class="row pt-10 pb-10">
+              <div class="col-md-1">
+                <div class="hw-16 mt-2 bg-grey dker"></div>
+              </div>
+              <div class="col-md-6">
+                <p class="f-500 text-black mb-0">Others</p>
+              </div>
+              <div class="col-md-3 pl-0">
+                <p class="text-black mb-0">5,24,819</p>
+              </div>
+              <div class="col-md-2 pl-0">
+                <p class="text-black mb-0">23.43%</p>
+              </div>
             </div>
           </div>
         </div>

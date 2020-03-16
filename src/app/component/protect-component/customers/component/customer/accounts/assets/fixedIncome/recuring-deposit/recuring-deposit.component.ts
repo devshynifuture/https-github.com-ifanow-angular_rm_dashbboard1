@@ -3,7 +3,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { DatePipe } from '@angular/common';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import * as moment from 'moment';
@@ -51,8 +51,9 @@ export class RecuringDepositComponent implements OnInit {
   ownerData: any;
   familyMemberId: any;
   clientId: any;
-  nomineesListFM: any;
+  nomineesListFM: any = [];
   flag: any;
+  callMethod:any;
   nomineesList = [];
   depoData: any = [];
   nominees: any = [];
@@ -92,18 +93,104 @@ export class RecuringDepositComponent implements OnInit {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag })
   }
 
+  // ===================owner-nominee directive=====================//
   display(value) {
     console.log('value selected', value)
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
+
+  lisNominee(value) {
+    this.ownerData.Fmember = value;
+    this.nomineesListFM = Object.assign([], value);
+  }
+
+  disabledMember(value, type) {
+    this.callMethod = {
+      methodName : "disabledMember",
+      ParamValue : value,
+      disControl : type
+    }
+  }
+
+  displayControler(con) {
+    console.log('value selected', con);
+    if(con.owner != null && con.owner){
+      this.recuringDeposit.controls.getCoOwnerName = con.owner;
+    }
+    if(con.nominee != null && con.nominee){
+      this.recuringDeposit.controls.getNomineeName = con.nominee;
+    }
+  }
+
+  onChangeJointOwnership(data) {
+    this.callMethod = {
+      methodName : "onChangeJointOwnership",
+      ParamValue : data
+    }
+  }
+
+  /***owner***/ 
+
+  get getCoOwner() {
+    return this.recuringDeposit.get('getCoOwnerName') as FormArray;
+  }
+
+  addNewCoOwner(data) {
+    this.getCoOwner.push(this.fb.group({
+      name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+    }));
+    if (!data || this.getCoOwner.value.length < 1) {
+      for (let e in this.getCoOwner.controls) {
+        this.getCoOwner.controls[e].get('share').setValue('');
+      }
+    }
+  }
+
+  removeCoOwner(item) {
+    this.getCoOwner.removeAt(item);
+    if (this.recuringDeposit.value.getCoOwnerName.length == 1) {
+      this.getCoOwner.controls['0'].get('share').setValue('100');
+    } else {
+      for (let e in this.getCoOwner.controls) {
+        this.getCoOwner.controls[e].get('share').setValue('');
+      }
+    }
+  }
+  /***owner***/ 
+
+  /***nominee***/ 
+
+  get getNominee() {
+    return this.recuringDeposit.get('getNomineeName') as FormArray;
+  }
+
+  removeNewNominee(item) {
+    this.getNominee.removeAt(item);
+    
+  }
+
+
+  
+  addNewNominee(data) {
+    this.getNominee.push(this.fb.group({
+      name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : ''], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+    }));
+    if (!data || this.getNominee.value.length < 1) {
+      for (let e in this.getNominee.controls) {
+        this.getNominee.controls[e].get('sharePercentage').setValue('');
+      }
+    }
+    
+  }
+  /***nominee***/ 
+  // ===================owner-nominee directive=====================//
+
+ 
   ownerDetails(value) {
     this.familyMemberId = value.id;
   }
-  lisNominee(value) {
-    console.log(value)
-    this.nomineesListFM = Object.assign([], value.familyMembersList);
-  }
+  
   keyPressRdNumber(event: any) {
     var k = event.keyCode;
     return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 45 || k == 47 || k == 8 || (k >= 48 && k <= 57));
@@ -131,31 +218,67 @@ export class RecuringDepositComponent implements OnInit {
     }
     this.depoData = data;
     this.recuringDeposit = this.fb.group({
-      ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
+      getCoOwnerName: this.fb.array([this.fb.group({
+        name: ['',[Validators.required]],
+        share: ['',[Validators.required]],
+        familyMemberId: null
+      })]),
+      // ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       monthlyContribution: [(data == undefined) ? '' : data.monthlyContribution, [Validators.required]],
       commencementDate: [(data.commencementDate == undefined) ? null : new Date(data.commencementDate), [Validators.required]],
       interestRate: [(data == undefined) ? '' : data.interestRate, [Validators.required]],
       compound: [(data.interestCompounding == undefined) ? '' : (data.interestCompounding) + "", [Validators.required]],
       linkBankAc: [(data == undefined) ? '' : data.linkedBankAccount,],
-      tenure: [(data == undefined) ? '' : data.tenure, [Validators.required, Validators.min(0), Validators.max(120)]],
+      tenure: [(data == undefined) ? '' : data.tenure, [Validators.required, Validators.min(1), Validators.max(120)]],
       description: [(data == undefined) ? '' : data.description,],
       bankName: [(data == undefined) ? '' : data.bankName,],
       // ownerType: [(data == undefined) ? '' : (data.ownershipType) + "", [Validators.required]],
       rdNo: [(data == undefined) ? '' : data.rdNumber,],
       id: [(data == undefined) ? '' : data.id,],
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId],],
-      nominees: this.nominees
+      getNomineeName: this.fb.array([this.fb.group({
+        name: [''],
+        sharePercentage: [''],
+        familyMemberId: [0],
+        id:['']
+      })]),
     });
 
-    this.getFormControl().ownerName.maxLength = 40;
+    // this.getFormControl().ownerName.maxLength = 40;
     this.getFormControl().description.maxLength = 60;
     this.getFormControl().rdNo.maxLength = 10;
     this.getFormControl().bankName.maxLength = 15;
+     // ==============owner-nominee Data ========================\\
+  /***owner***/ 
+  if(this.recuringDeposit.value.getCoOwnerName.length == 1){
+    this.getCoOwner.controls['0'].get('share').setValue('100');
+  }
+
+  if (data.ownerList) {
+    this.getCoOwner.removeAt(0);
+    data.ownerList.forEach(element => {
+      this.addNewCoOwner(element);
+    });
+  }
+  
+/***owner***/ 
+
+/***nominee***/ 
+if(data.nomineeList){
+  this.getNominee.removeAt(0);
+  data.nomineeList.forEach(element => {
+    this.addNewNominee(element);
+  });
+}
+/***nominee***/ 
+
+this.ownerData = {Fmember: this.nomineesListFM, controleData:this.recuringDeposit}
+// ==============owner-nominee Data ========================\\
     if (data != undefined) {
       this.familyMemberId = this.recuringDeposit.controls.familyMemberId.value
       this.familyMemberId = this.familyMemberId[0]
     }
-    this.ownerData = this.recuringDeposit.controls;
+    // this.ownerData = this.recuringDeposit.controls;
 
   }
 
@@ -202,7 +325,8 @@ export class RecuringDepositComponent implements OnInit {
         advisorId: this.advisorId,
         clientId: this.clientId,
         familyMemberId: this.familyMemberId,
-        ownerName: (this.ownerName == undefined) ? this.recuringDeposit.controls.ownerName.value : this.ownerName,
+        // ownerName: (this.ownerName == undefined) ? this.recuringDeposit.controls.ownerName.value : this.ownerName,
+        ownerList: this.recuringDeposit.value.getCoOwnerName,
         monthlyContribution: this.recuringDeposit.controls.monthlyContribution.value,
         interestRate: this.recuringDeposit.controls.interestRate.value,
         commencementDate: this.datePipe.transform(this.recuringDeposit.controls.commencementDate.value, 'yyyy-MM-dd'),
@@ -213,7 +337,8 @@ export class RecuringDepositComponent implements OnInit {
         bankName: this.recuringDeposit.controls.bankName.value,
         rdNumber: this.recuringDeposit.controls.rdNo.value,
         interestCompounding: this.recuringDeposit.controls.compound.value,
-        nominees: this.nominees,
+        nomineeList: this.recuringDeposit.value.getNomineeName,
+        // nominees: this.nominees,
         id: this.recuringDeposit.controls.id.value
       }
       console.log('recuringDeposit', obj)

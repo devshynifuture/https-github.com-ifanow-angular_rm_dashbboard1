@@ -53,6 +53,8 @@ import { HouseholdersInsuranceComponent } from './insurance-plan/mainInsuranceSc
 import { PersonalInsuranceComponent } from './insurance-plan/mainInsuranceScreen/personal-insurance/personal-insurance.component';
 import { InsurancePlanModule } from './insurance-plan/insurance-plan.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { SearchSchemeComponent } from './deployments-plan/search-scheme/search-scheme.component';
+import { AddAmountComponent } from './deployments-plan/add-amount/add-amount.component';
 import { Ng5SliderModule } from 'ng5-slider';
 import { SingleGoalYearComponent } from './goals-plan/single-goal-year/single-goal-year.component';
 import { MultiYearGoalComponent } from './goals-plan/multi-year-goal/multi-year-goal.component';
@@ -94,6 +96,8 @@ export const componentList = [
   AddScenariosComponent,
   SuggestHealthInsuranceComponent,
   HealthInsuranceComponent,
+  SearchSchemeComponent,
+  AddAmountComponent
 ];
 // import { AddPlaninsuranceComponent } from './insurance-plan/add-planinsurance/add-planinsurance.component';
 

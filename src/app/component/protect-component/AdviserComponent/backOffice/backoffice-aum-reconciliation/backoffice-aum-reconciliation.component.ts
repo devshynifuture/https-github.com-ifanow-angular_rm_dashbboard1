@@ -15,6 +15,10 @@ export class BackofficeAumReconciliationComponent implements OnInit {
   ngOnInit() {
   }
 
+  tabClick(event) {
+
+  }
+
 
   isLinkActive(): boolean {
     return "backoffice-aum-reconciliation" === this.router.url.split('/')[2];

@@ -21,6 +21,26 @@
     }
 
   }
+
+  .cashflow,
+  .familymember-wise {
+    padding-left: 0px !important;
+    padding-top: 20px;
+  }
+
+  .scheme-wise {
+    padding-right: 0px !important;
+  }
+
+  div.overflow-y {
+
+    overflow: auto;
+    white-space: nowrap;
+
+    .w-1024 {
+      width: 1024px;
+    }
+  }
 }
 
 @media(max-width:1142px) {}

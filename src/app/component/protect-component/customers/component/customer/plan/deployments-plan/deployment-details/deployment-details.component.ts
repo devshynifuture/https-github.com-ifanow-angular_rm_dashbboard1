@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatTableDataSource } from '@angular/material';
 import { SelectAssetClassComponent } from '../select-asset-class/select-asset-class.component';
 import { PlanService } from '../../plan.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -11,8 +11,10 @@ import { EventService } from 'src/app/Data-service/event.service';
   styleUrls: ['./deployment-details.component.scss']
 })
 export class DeploymentDetailsComponent implements OnInit {
+
+
+  isLoading=false;
   deploymentData: any;
-  isLoading: boolean;
 
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject, public dialog: MatDialog, private planService: PlanService) { }
   displayedColumns: string[] = ['position', 'name', 'weight', 'icons'];
@@ -27,8 +29,13 @@ export class DeploymentDetailsComponent implements OnInit {
     this.getDeploymentData(data)
   }
   getDeploymentData(data) {
-    this.deploymentData = [{}, {}, {}]
     this.isLoading = true;
+    this.deploymentData={
+      EQUITY:[{}, {}, {}],
+      DEBT: [{}, {}, {}],
+      equity_investment :[{}, {}, {}],
+      debt_investment :[{}, {}, {}]
+    }
     let obj =
     {
       deploymentIds: [data.data.id]
@@ -39,7 +46,11 @@ export class DeploymentDetailsComponent implements OnInit {
         this.isLoading = false;
         this.deploymentData = data;
       },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss')
+        this.deploymentData = [];
+        this.isLoading = false;
+      }
     )
 
   }

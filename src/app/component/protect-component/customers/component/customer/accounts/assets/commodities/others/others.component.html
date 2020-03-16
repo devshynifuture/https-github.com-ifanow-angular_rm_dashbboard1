@@ -19,10 +19,10 @@
         </div>
         <div class="col-md-5">
             <mat-form-field class="w-100">
-                <mat-select matInput appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
-                    [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                <mat-select matInput appOwner (valueChange1)='lisNominee($event)' [data]='ownerData'
+                    formControlName="ownerName" class="form-control br-0">
                     <mat-option value=''>Search family members</mat-option>
-                    <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
+                    <mat-option (click)="display(f)" *ngFor="let f of nomineesListFM" [value]="f.userName">
                         <span>{{f.userName}}</span>
                     </mat-option>
                 </mat-select>
@@ -65,7 +65,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input matInput #marketValue type="text" appInputValueValidation
+                    <input autocomplete="off" matInput #marketValue type="text" appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control rupess br-0"
                         formControlName="marketValue">
                     <mat-error class="f-12"
@@ -97,7 +97,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
-                        <input matInput #purchaseValue type="text" appInputValueValidation
+                        <input autocomplete="off" matInput #purchaseValue type="text" appInputValueValidation
                             [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control rupess br-0"
                             formControlName="purchaseValue">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
@@ -112,8 +112,8 @@
             </div>
             <div class="col-md-3">
                 <mat-form-field>
-                    <input matInput formControlName="dateOfPurchase" class="form-control br-0" [matDatepicker]="picker"
-                        readonly>
+                    <input autocomplete="off" matInput formControlName="dateOfPurchase" class="form-control br-0"
+                        [matDatepicker]="picker" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-hint align="start" class="f-12">Optional</mat-hint>
@@ -128,8 +128,8 @@
             <div class="col-md-3 iconPetage">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #growthRate type="number" (keyup)="onChange($event)" appInputValueValidation
-                            [inputValidator]="validatorType.NUMBER_ONLY" maxlength="30"
+                        <input autocomplete="off" matInput #growthRate type="number" (keyup)="onChange($event)"
+                            appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="30"
                             class="form-control percentage br-0" formControlName="growthRate">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
@@ -143,7 +143,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #description maxlength="60" class="form-control br-0"
+                        <input autocomplete="off" matInput #description maxlength="60" class="form-control br-0"
                             formControlName="description">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>

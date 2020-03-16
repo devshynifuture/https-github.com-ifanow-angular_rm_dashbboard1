@@ -142,6 +142,10 @@ export class SupportUpperNjComponent implements OnInit {
     }
   }
 
+  displayFn(scheme?: Scheme): string | undefined {
+    return scheme ? scheme.schemeName : undefined;
+  }
+
   mapNjScheme(element) {
     console.log("this is some mapping value:::::;", element);
   }
@@ -179,7 +183,14 @@ export class SupportUpperNjComponent implements OnInit {
     this.eventService.changeUpperSliderState({ state: 'close' });
   }
 
+
+
 }
+
+export interface Scheme {
+  schemeName: string;
+}
+
 
 export interface elementI {
   name: string;

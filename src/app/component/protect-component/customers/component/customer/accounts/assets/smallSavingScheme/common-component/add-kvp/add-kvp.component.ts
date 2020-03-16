@@ -126,7 +126,7 @@ export class AddKvpComponent implements OnInit {
         "clientId": this.clientId,
         "advisorId": this.advisorId,
         "familyMemberId": this.familyMemberId,
-        "ownerName": (this.ownerName == undefined) ? this.KVPFormScheme.controls.ownerName.value : this.ownerName,
+        "ownerName": (this.ownerName == undefined) ? this.KVPFormScheme.controls.ownerName.value : this.ownerName.userName,
         "amountInvested": this.KVPFormScheme.get('amtInvested').value,
         "commencementDate": this.KVPFormScheme.get('commDate').value,
         "postOfficeBranch": this.KVPOptionalFormScheme.get('poBranch').value,
@@ -167,7 +167,7 @@ export class AddKvpComponent implements OnInit {
     this.close(true);
   }
   addKVPResponse(data) {
-    (this.editApi) ? this.eventService.openSnackBar("KVP is edited", "Dismiss") : this.eventService.openSnackBar("KVP is added", "added")
+    (this.editApi) ? this.eventService.openSnackBar("Updated successfully!", "Dismiss") : this.eventService.openSnackBar("Added successfully!", "added")
     console.log(data)
     this.close(true);
   }

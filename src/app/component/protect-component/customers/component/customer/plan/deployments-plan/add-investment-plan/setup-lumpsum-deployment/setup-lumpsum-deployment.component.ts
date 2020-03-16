@@ -3,6 +3,11 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { PlanService } from '../../../plan.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
+import { SearchSchemeComponent } from '../../search-scheme/search-scheme.component';
+import { MatDialog } from '@angular/material';
+import { AddAmountComponent } from '../../add-amount/add-amount.component';
+import { SelectAssetClassComponent } from '../../select-asset-class/select-asset-class.component';
+import { ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-setup-lumpsum-deployment',
@@ -13,7 +18,7 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'icons'];
   // dataSource = ELEMENT_DATA;
   displayedColumns1: string[] = ['position', 'name', 'weight', 'icons'];
-  // dataSource1 = ELEMENT_DATA1;
+  dataSource1 = ELEMENT_DATA1;
   displayedColumns2: string[] = ['name', 'weight', 'height', 'test', 'icons'];
   dataSource2 = ELEMENT_DATA2;
   advisorId: any;
@@ -21,15 +26,19 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
   filterSchemeData: any;
   deploymentList: any;
   dataSource: any;
-  dataSource1: any;
-  constructor(private subInjectService: SubscriptionInject, private planService: PlanService, private eventService: EventService) { }
+  isLoading = false;
+  schemeData: any;
+  dataForAddAmount: any;
+  validatorType = ValidatorType
+  constructor(private subInjectService: SubscriptionInject, private planService: PlanService, private eventService: EventService, public dialog: MatDialog) { }
   @Input() set data(data) {
-    let lumpsum=[];
+    let lumpsum = [];
     data.deploymentIdList.forEach(element => {
-     lumpsum.push(element.id)
+      lumpsum.push(element.id)
     });
-    this.deploymentList=lumpsum
-    this.getDeploymentData(this.deploymentList)
+    this.deploymentList = lumpsum
+    this.getDeploymentData(this.deploymentList);
+    
   }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -38,24 +47,40 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
     // this.filterScheme();
   }
   getDeploymentData(data) {
+    this.isLoading = true;
+    this.dataSource = {
+      EQUITY: [{}, {}, {}],
+      DEBT: [{}, {}, {}],
+      equity_investment: [{}, {}, {}],
+      debt_investment: [{}, {}, {}]
+    }
     let obj =
     {
       deploymentIds: this.deploymentList
     }
     this.planService.getDeploymentDetailsdata(obj).subscribe(
       data => {
-        console.log(data);
-        this.dataSource=data.Equity
-        this.dataSource1=data.Debt
+        this.isLoading = false;
+        console.log('deployment data -------------->',data);
+        this.dataForAddAmount;
+        this.dataSource = data;
+        this.dataForAddAmount={
+            EQUITY:this.dataSource.EQUITY,
+            DEBT:this.dataSource.DEBT
+          }
       },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss');
+        this.isLoading = false;
+      }
     )
 
   }
   getMutualFundSchemeData() {
     this.planService.getMututalFundSchemeData().subscribe(
       data => {
-        console.log(data)
+        console.log('Scheme LIst Get *********************---->',data)
+        this.schemeData=data
       }
     )
   }
@@ -87,6 +112,42 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
       }
     )
   }
+  openPopup(value,data) {
+    let dialogRef
+    if(value=='addAmount'){
+      let sendData={
+        data:data,
+        dataForAddAmount:this.dataForAddAmount,
+        deploymentList:this.deploymentList
+      }
+      dialogRef = this.dialog.open(AddAmountComponent, {
+        width: '600px',
+        height: '300px',
+        data: sendData
+      });
+    }else if(value=='searchAndAdd'){
+      dialogRef = this.dialog.open(SearchSchemeComponent, {
+        width: '600px',
+        height: '300px',
+        data: value
+      });
+    } else{
+      const dialogRef = this.dialog.open(SelectAssetClassComponent, {
+        width: '600px',
+        height: '300px',
+        data: data
+      });
+    }
+
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.getDeploymentData(this.deploymentList);
+
+    });
+
+  }
+
   addPurchaseScheme() {
     let obj = {
       "deploymentList": [

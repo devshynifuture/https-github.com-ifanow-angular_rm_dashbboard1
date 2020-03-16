@@ -19,7 +19,7 @@
                         Owner Name
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{superannnuation.ownerName}}
+                        {{superannnuation.ownerName?superannnuation.ownerName:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -27,7 +27,7 @@
                         Annual employer contribution amount
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{utils.formatter(superannnuation.annualEmployerContribution)}}
+                        {{superannnuation.annualEmployerContribution?utils.formatter(superannnuation.annualEmployerContribution):'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -35,7 +35,7 @@
                         Annual employee contribution amount
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{utils.formatter(superannnuation.annualEmployeeContribution)}}
+                        {{superannnuation.annualEmployeeContribution?utils.formatter(superannnuation.annualEmployeeContribution):'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -43,7 +43,7 @@
                         Current value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{utils.formatter(superannnuation.currentValue)}}
+                        {{superannnuation.currentValue?utils.formatter(superannnuation.currentValue):'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -51,7 +51,7 @@
                         Assumed rate of return
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{superannnuation.assumedRateOfReturn}}
+                        {{superannnuation.assumedRateOfReturn?superannnuation.assumedRateOfReturn:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -59,7 +59,7 @@
                         Growth rate of employer contribution
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{superannnuation.growthRateEmployerContribution}}
+                        {{superannnuation.growthRateEmployerContribution?superannnuation.growthRateEmployerContribution:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -83,7 +83,7 @@
                         Bank account number
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{superannnuation.bankAccountNumber}}
+                        {{superannnuation.bankAccountNumber?superannnuation.bankAccountNumber:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -91,7 +91,7 @@
                         Description
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{superannnuation.description}}
+                        {{superannnuation.description?superannnuation.description:'-'}}
                     </div>
                 </div>
             </div>
