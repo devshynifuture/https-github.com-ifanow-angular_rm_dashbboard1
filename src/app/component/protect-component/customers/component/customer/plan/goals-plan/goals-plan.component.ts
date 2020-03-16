@@ -46,7 +46,7 @@ export class GoalsPlanComponent implements OnInit {
   }
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'icons'];
   dataSource = ELEMENT_DATA;
-  clientFamily:any[] = [];
+  clientFamily:any[];
 
   isLoading = false;
   goalProgress = 35;

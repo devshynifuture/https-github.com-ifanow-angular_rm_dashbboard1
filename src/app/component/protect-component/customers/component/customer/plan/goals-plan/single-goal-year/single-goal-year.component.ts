@@ -3,7 +3,6 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {FormBuilder, Validators, FormGroup, FormControl} from '@angular/forms';
 import {AuthService} from 'src/app/auth-service/authService';
 import {PlanService} from '../../plan.service';
-import {UtilService} from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-single-goal-year',
@@ -34,7 +33,6 @@ export class SingleGoalYearComponent implements OnInit {
     private eventService: EventService, 
     private fb: FormBuilder, 
     private planService: PlanService, 
-    private utilService: UtilService
   ) {
     this.clientId = AuthService.getClientId();
     this.advisorId = AuthService.getAdvisorId();
@@ -44,12 +42,13 @@ export class SingleGoalYearComponent implements OnInit {
     this.Questions = this.goalTypeData.questions;
     this.planForFamily = !!this.goalTypeData.questions.Q; // Plan for family question present or not
     this.initializeForm();
+    this.setDefaultOwner();
   }
   
   selectOwnerAndUpdateForm(value) {
     this.setMinMaxAgeOrYear(value);
     this.singleYearGoalForm.controls.field2.setValidators([Validators.required, Validators.min(this.minAgeYear), Validators.max(this.maxAgeYear)])
-    this.singleYearGoalForm.controls.field2.setValue(this.minAgeYear);
+    this.singleYearGoalForm.controls.field2.setValue(this.minAgeYear + this.goalTypeData.defaults.ageIncreament);
     this.singleYearGoalForm.updateValueAndValidity();
   }
   
@@ -150,18 +149,15 @@ export class SingleGoalYearComponent implements OnInit {
   initializeForm(){
     this.singleYearGoalForm = this.fb.group({
       field2: ['', [Validators.required]], // age or time
-      field3: ['', [Validators.required, Validators.min(this.goalTypeData.validations.minCost), Validators.max(this.goalTypeData.validations.maxCost)]], // cost
+      field3: [this.goalTypeData.defaults.cost, [Validators.required, Validators.min(this.goalTypeData.validations.minCost), Validators.max(this.goalTypeData.validations.maxCost)]], // cost
       field4: [''], // goal name
       field5: [''],  // goal description
       logo: ['']
     });
 
-    if(this.planForFamily) {
-      this.singleYearGoalForm.addControl('field1', new FormControl('', Validators.required)); // who the goal is for
-    }
-    this.setMinMaxAgeOrYear(this.familyList[0]);
-    this.selectOwnerAndUpdateForm(this.familyList[0]); //set client as the initial owner
+    this.singleYearGoalForm.addControl('field1', new FormControl('', Validators.required)); // who the goal is for
   }
+
 
   previewGoalImage(event) {
     if (event && event.target && event.target.files) {
@@ -172,6 +168,12 @@ export class SingleGoalYearComponent implements OnInit {
       reader.onload = e => this.logoImg = reader.result;
       reader.readAsDataURL(this.imageData);
     }
+  }
+
+  setDefaultOwner(){
+    let owner = this.familyList.find((member) => this.goalTypeData.defaults.planningForRelative.includes(member.relationshipId));
+    this.singleYearGoalForm.controls.field1.setValue(owner);
+    this.selectOwnerAndUpdateForm(owner);
   }
   
   goBack() {
