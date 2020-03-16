@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatTableDataSource } from '@angular/material';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { AddRealEstateComponent } from '../../../../accounts/assets/realEstate/add-real-estate/add-real-estate.component';
 import { UtilService } from 'src/app/services/util.service';
@@ -19,6 +19,8 @@ export class AllAdviceRealAssetComponent implements OnInit {
   dataSource3 = ELEMENT_DATA1;
   clientId: any;
   advisorId: any;
+  isLoading: any;
+  dataSource: MatTableDataSource<any>;
   constructor(private eventService: EventService, public dialog: MatDialog, private subInjectService: SubscriptionInject,
     private cusService: CustomerService,private activityService:ActiityService) { }
 
@@ -29,6 +31,7 @@ export class AllAdviceRealAssetComponent implements OnInit {
   }
   allAdvice = true;
   getAllAdviceByAsset() {
+    this.isLoading = true;
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -41,6 +44,25 @@ export class AllAdviceRealAssetComponent implements OnInit {
     );
   }
   getAllSchemeResponse(data){
+    this.isLoading = false;
+    let filterdData=[];
+    let realEstateData=data.REAL_ESTATE;
+    realEstateData.forEach(element => {
+      var asset=element.AssetDetails;
+      if(element.AdviceList.length>0){
+        element.AdviceList.forEach(obj => {
+          obj.assetDetails=asset;
+          filterdData.push(obj);
+        });
+      }else{
+        const obj={
+          assetDetails:asset
+        }
+        filterdData.push(obj);
+      }
+    });
+    this.dataSource = new MatTableDataSource(filterdData);
+    this.dataSource['tableFlag'] = (data.REAL_ESTATE.length == 0) ? false : true;
     console.log(data);
   }
   openRealEstate(value, data) {

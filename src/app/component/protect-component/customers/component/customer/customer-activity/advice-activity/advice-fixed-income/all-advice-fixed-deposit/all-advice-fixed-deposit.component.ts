@@ -21,9 +21,10 @@ export class AllAdviceFixedDepositComponent implements OnInit {
   dataSource3 = new MatTableDataSource<PeriodicElement3>(ELEMENT_DATA3);
   advisorId: any;
   clientId: any;
-  fixedDataSource: MatTableDataSource<any>;
-  recurringDataSource: MatTableDataSource<any>;
-  bondDataSource: MatTableDataSource<any>;
+  isLoading: any;
+  fixedDataSource: any;
+  recurringDataSource:any;
+  bondDataSource: any;
   selectedAssetId: any;
   fixedCount: any;
   recurringCount: any;
@@ -38,6 +39,10 @@ export class AllAdviceFixedDepositComponent implements OnInit {
   }
   allAdvice = true;
   getAllAdviceByAsset() {
+    this.isLoading = true;
+    this.fixedDataSource = [{}, {}, {}];
+    this.recurringDataSource = [{}, {}, {}];
+    this.bondDataSource = [{}, {}, {}];
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -69,6 +74,8 @@ export class AllAdviceFixedDepositComponent implements OnInit {
     return filterdData;
   }
   getAllSchemeResponse(data){
+    this.isLoading = false;
+
     console.log(data);
     let fixedData=this.filterForAsset(data.FIXED_DEPOSIT)
     this.fixedDataSource = new MatTableDataSource(fixedData);
