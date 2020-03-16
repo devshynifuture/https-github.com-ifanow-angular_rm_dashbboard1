@@ -78,7 +78,7 @@ export class AddPoMisComponent implements OnInit {
   display(value) {
     console.log('value selected', value);
     this.ownerName = value;
-    this.familyMemberId = value;
+    this.familyMemberId = value.id;
   }
   lisNominee(value) {
     console.log(value)
@@ -106,13 +106,8 @@ export class AddPoMisComponent implements OnInit {
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]],
 
     });
-
-    this.getFormControl().amtInvested.maxLength = 20;
-    this.getFormControl().accNumber.maxLength = 20;
-    this.familyMemberId = this.pomisForm.controls.familyMemberId.value,
-      this.familyMemberId = this.familyMemberId[0];
     this.ownerData = this.pomisForm.controls;
-
+    this.familyMemberId = data.familyMemberId;
   }
 
   getFormControl() {
@@ -150,7 +145,7 @@ export class AddPoMisComponent implements OnInit {
           clientId: this.clientId,
           familyMemberId: this.familyMemberId.id,
           advisorId: this.advisorId,
-          ownerName: this.ownerName.userName,
+          ownerName: (this.ownerName == undefined) ? this.pomisForm.controls.ownerName.value : this.ownerName.userName,
           amountInvested: this.pomisForm.controls.amtInvested.value,
           commencementDate: this.pomisForm.controls.commencementdate.value,
           postOfficeBranch: this.pomisForm.controls.poBranch.value,
@@ -168,8 +163,8 @@ export class AddPoMisComponent implements OnInit {
           id: this._inputData.id,
           advisorId: this.advisorId,
           clientId: this.clientId,
-          familyMemberId: this.familyMemberId.id,
-          ownerName: this.ownerName.userName,
+          familyMemberId: this.familyMemberId,
+          ownerName: (this.ownerName == undefined) ? this.pomisForm.get('ownerName').value : this.ownerName.userName,
           amountInvested: this.pomisForm.controls.amtInvested.value,
           commencementDate: this.pomisForm.controls.commencementdate.value,
           postOfficeBranch: this.pomisForm.controls.poBranch.value,

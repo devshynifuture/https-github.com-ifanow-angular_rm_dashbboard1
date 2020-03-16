@@ -118,7 +118,7 @@
                 <mat-select matInput class="form-control br-0" (selectionChange)="changeMaxValue($event)"
                     formControlName="ownershipType">
                     <mat-option value="1">Single </mat-option>
-                    <mat-option value="0"> Joint </mat-option>
+                    <mat-option value="2"> Joint </mat-option>
                 </mat-select>
                 <mat-error class="f-12" *ngIf="pomisForm.get('ownershipType').errors?.required">
                     This field is required

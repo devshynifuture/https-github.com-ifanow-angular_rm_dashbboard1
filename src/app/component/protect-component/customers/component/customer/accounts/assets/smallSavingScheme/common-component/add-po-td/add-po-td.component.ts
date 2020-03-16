@@ -76,7 +76,7 @@ export class AddPoTdComponent implements OnInit {
       commDate: [new Date(data.commencementDate), [Validators.required]],
       description: [data.description],
 
-      tenure: [(data.tenure) ? data.tenure : '5', [Validators.required]],
+      tenure: [(data.tenure) ? String(data.tenure) : '5', [Validators.required]],
       ownershipType: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]]
     })
     this.POTDOptionalForm = this.fb.group({
@@ -89,7 +89,7 @@ export class AddPoTdComponent implements OnInit {
       nominees: this.nominees
     })
     this.ownerData = this.POTDForm.controls;
-
+    this.familyMemberId = data.familyMemberId;
   }
   moreFields() {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true

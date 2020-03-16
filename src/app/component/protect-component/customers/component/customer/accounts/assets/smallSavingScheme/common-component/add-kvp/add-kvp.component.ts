@@ -93,12 +93,13 @@ export class AddKvpComponent implements OnInit {
       ownerType: [data.ownershipTypeId ? String(data.ownershipTypeId) : '1', [Validators.required]],
     })
     this.KVPOptionalFormScheme = this.fb.group({
-      poBranch: [, [Validators.required]],
+      poBranch: [data.postOfficeBranch, [Validators.required]],
       nominees: this.nominees,
-      bankAccNum: [, [Validators.required]],
+      bankAccNum: [data.bankAccountNumber, [Validators.required]],
       description: [data.description, [Validators.required]],
     })
     this.ownerData = this.KVPFormScheme.controls;
+    this.familyMemberId = data.familyMemberId;
   }
 
   addKVP() {

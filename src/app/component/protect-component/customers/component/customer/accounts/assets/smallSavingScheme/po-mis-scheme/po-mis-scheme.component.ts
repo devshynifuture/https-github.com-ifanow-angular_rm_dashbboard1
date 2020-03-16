@@ -99,8 +99,8 @@ export class PoMisSchemeComponent implements OnInit {
     if (data == undefined) {
       this.noData = 'No scheme found';
       this.datasource.data = [];
-    }else if (data && data.poMisList && data.poMisList.length != 0) {
-      console.log('getPoMisSchemedataResponse',data);
+    } else if (data && data.poMisList && data.poMisList.length != 0) {
+      console.log('getPoMisSchemedataResponse', data);
       this.datasource.data = data.poMisList;
       this.datasource.sort = this.sort;
       UtilService.checkStatusId(this.datasource.filteredData);
@@ -127,7 +127,7 @@ export class PoMisSchemeComponent implements OnInit {
       positiveMethod: () => {
         this.cusService.deletePOMIS(data.id).subscribe(
           data => {
-            this.eventService.openSnackBar('POMIS is deleted', 'Dismiss');
+            this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             dialogRef.close();
             this.getPoMisSchemedata();
           },
@@ -169,7 +169,7 @@ export class PoMisSchemeComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-        
+
       }
     );
   }
@@ -195,7 +195,7 @@ export class PoMisSchemeComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-        
+
       }
     );
   }
