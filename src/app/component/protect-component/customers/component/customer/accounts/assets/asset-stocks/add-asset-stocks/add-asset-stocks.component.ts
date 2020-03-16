@@ -118,7 +118,7 @@ export class AddAssetStocksComponent implements OnInit {
   }
   submitStockDataRes(data) {
     console.log(data)
-    // this.eventService.openSnackBar()
+    this.eventService.openSnackBar()
     this.close();
   }
   close() {
