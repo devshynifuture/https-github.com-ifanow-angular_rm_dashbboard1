@@ -91,7 +91,7 @@ export class AddScssComponent implements OnInit {
       ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required, AssetValidationService.ageValidators(60)]],
       amtInvested: [data.amountInvested, [Validators.required, Validators.min(1000), Validators.max(1500000)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
-      ownershipType: [data.ownerTypeI ? String(data.ownerTypeId) : '2', [Validators.required]]
+      ownershipType: [data.ownerTypeId ? String(data.ownerTypeId) : '2', [Validators.required]]
     });
     this.scssOptionalSchemeForm = this.fb.group({
       poBranch: [data.postOfficeBranch],
