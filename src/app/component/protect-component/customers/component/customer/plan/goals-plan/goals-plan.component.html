@@ -1,11 +1,11 @@
 <div id="ui-goal">
     <div class="row skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
         <div class="col-width-22 relClass br-grey pb-44">
-            <div class=" row pt-20 pb-10 bb-grey">
-                <div class="col-md-5 p-0">
-                    <h3 class="m-0 text-black pt-4">Goals</h3>
+            <div class=" row pt-12 pb-8 bb-grey">
+                <div class="col-md-4 p-0">
+                    <h3 class="mb-0 mt-8 text-black pt-4">Goals</h3>
                 </div>
-                <div class="col-md-6 text-right p-0">
+                <div class="col-md-7 text-right pl-0">
                     <button mat-stroked-button class="btn-primary br-0 addon" (click)="openAddgoals()">ADD GOAL</button>
                 </div>
                 <div class="col-md-1 p-0 d-flex align-items-center  ">
@@ -136,7 +136,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8 p-0 pb-44">
+            <div class="col-width-68 p-0 pb-44">
                 <div class="row">
                     <div class="col-md-6 pl-0">
                         <div class="row pt-28">
@@ -236,61 +236,75 @@
                       </div>
                       
             </div>
-            <div class="col-md-4 pr-0 pt-20">
-                <img src="/assets/images/svg/goal1.svg" class="w-100">
-                <div class="row pt-20">
-                        <div class="col-md-6 pl-0">
-                                <button mat-stroked-button class="in-btn pl-8"><img src="/assets/images/svg/btn-links.svg" class="pr-8">Allocations</button>
-                                <button mat-stroked-button class="in-btn mt-20 pl-0"><img src="/assets/images/svg/filter-schemes.svg" class="pr-16 ">Key info</button>
-                                <button mat-stroked-button class="in-btn mt-20 pl-0"><img src="/assets/images/svg/btn-links.svg" class="pr-8 ">Action plan</button>
-                        </div>
-                        <div class="col-md-6">
-                                <button mat-stroked-button class="in-btn pl-8 "><img src="/assets/images/svg/btn-links.svg" class="pr-8">MF allocations</button>
-                                <button mat-stroked-button class="in-btn pl-0 mt-20"><img src="/assets/images/svg/cal-sm.svg" class="pr-12">Calculators</button>
-                                <button mat-stroked-button class="in-btn pl-0 mt-20"><img src="/assets/images/svg/3lines.svg" class="pr-8">Preferences</button>
-                        </div>
+
+                <div class="col-width-31 pr-0 pt-20">
+                    <img src="/assets/images/svg/goal1.svg" class="">
+
+                    <div class="btnBox">
+                        <button mat-stroked-button class="in-btn" (click)="openInSideBar(null, 'openallocations')">
+                            <img src="/assets/images/svg/btn-links.svg">Allocations</button>
+                        <button mat-stroked-button class="in-btn-two" (click)="openInSideBar(null, 'openMfAllocation')">
+                            <img src="/assets/images/svg/btn-links.svg">MF allocations</button>
                     </div>
-                    <div class="row pt-20">
-                        <div class="col-md-12 right p-0 text-right">
+
+
+                    <div class="btnBox">
+                        <button mat-stroked-button class="in-btn" (click)="openInSideBar(null, 'openKeyinfo')">
+                            <img src="/assets/images/svg/filter-schemes.svg">Key info</button>
+                        <button mat-stroked-button class="in-btn-two" (click)="openInSideBar(null, 'openCalculators')">
+                            <img src="/assets/images/svg/cal-sm.svg">Calculators</button>
+                    </div>
+
+
+                    <div class="btnBox">
+                        <button mat-stroked-button class="in-btn">
+                            <img src="/assets/images/svg/btn-links.svg">Action plan</button>
+                        <button mat-stroked-button class="in-btn-two" (click)="openInSideBar(null, 'openPreferences')">
+                            <img src="/assets/images/svg/3lines.svg">Preferences</button>
+                    </div>
+
+
+                    <div class="row pt-20" *ngIf="dashboardData">
+                        <div class="col-md-12 right p-0 text-right" (click)="deleteGoal(dashboardData)">
                             <img src="/assets/images/svg/blue-delete.svg">
                         </div>
                     </div>
-        
                 </div>
+
+
+
+            
             </div>
         </div> -->
         <!-- house design -->
         <div class="col-width-78  ">
-            <div class="row bb-grey pt-28 pb-8">
+            <div class="row bb-grey pt-24 pb-8">
                 <div class="col-md-12 p-0">
-                    <h3 class="m-0 text-black f-500 pb-4">New House - {{dummyDashBoardData.goalYear}}</h3>
+                    <h3 class="m-0 text-black f-500">New House - {{dummyDashBoardData.goalYear}}</h3>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-8 p-0 pb-44 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                <div class="col-width-68 p-0 pb-44 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                     <div class="row relClass">
                         <div class="col-md-6 pl-0 ">
                             <div class="row pt-28">
                                 <div class="col-md-6 p-0 ">
                                     <h5 class="f-12 m-0 text-primitive">GOAL FUTURE VALUE</h5>
                                     <h3 class="m-0">
-                                        <div class="bar">₹<span
-                                                appFormatNumber>{{dummyDashBoardData.futureValue}}</span></div>
+                                        <div class="bar">₹<span appFormatNumber>{{dummyDashBoardData.futureValue}}</span></div>
                                     </h3>
                                 </div>
                                 <div class="col-md-6">
                                     <h5 class="f-12 m-0 text-primitive">ACHIEVED</h5>
                                     <h3 class="m-0">
-                                        <div class="bar">₹<span
-                                                appFormatNumber>{{dummyDashBoardData.presentValue}}</span></div>
+                                        <div class="bar">₹<span appFormatNumber>{{dummyDashBoardData.presentValue}}</span></div>
                                     </h3>
                                 </div>
                             </div>
                             <div class="row pt-24">
                                 <div class="col-md-12 p-0">
                                     <h5 class="m-0 text-primitive f-12">GOAL PROGRESS</h5>
-                                    <mat-progress-bar id="bg-primary" mode="determinate" [value]="goalProgress"
-                                        class="h-30">
+                                    <mat-progress-bar id="bg-primary" mode="determinate" [value]="goalProgress" class="h-30">
                                     </mat-progress-bar>
                                 </div>
                             </div>
@@ -308,15 +322,12 @@
                                         <span class="bar" appFormatNumber>{{dummyDashBoardData.equity_monthly}}</span>
                                     </p>
 
-                                    <p class="m-0 text-black roboto p-12 bg-white br"><span class="bar"
-                                            appFormatNumber>{{dummyDashBoardData.debt_monthly}}</span></p>
+                                    <p class="m-0 text-black roboto p-12 bg-white br"><span class="bar" appFormatNumber>{{dummyDashBoardData.debt_monthly}}</span></p>
                                 </div>
                                 <div class="col-md-3 p-0">
                                     <p class="m-0 text-black roboto p-12 f-500 bb">Lumpsum</p>
-                                    <p class="m-0 text-black roboto p-12 bg-white bb"><span class="bar"
-                                            appFormatNumber>{{dummyDashBoardData.lump_equity}}</span></p>
-                                    <p class="m-0 text-black roboto p-12 bg-white"><span class="bar"
-                                            appFormatNumber>{{dummyDashBoardData.lump_debt}}</span></p>
+                                    <p class="m-0 text-black roboto p-12 bg-white bb"><span class="bar" appFormatNumber>{{dummyDashBoardData.lump_equity}}</span></p>
+                                    <p class="m-0 text-black roboto p-12 bg-white"><span class="bar" appFormatNumber>{{dummyDashBoardData.lump_debt}}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -437,13 +448,7 @@
                         <div class="b-a relClass">
                             <div class="m-0 p-8 text-black f-14 roboto">
                                 <div class="bar">
-                                    We have given higher allocations to your retirement goal compared to
-                                    other
-                                    goals. We suggest you to first allocate
-                                    maximum corpus to this goal. We wile update your EPF contributions too once we have
-                                    the details of
-                                    the
-                                    same.
+                                    We have given higher allocations to your retirement goal compared to other goals. We suggest you to first allocate maximum corpus to this goal. We wile update your EPF contributions too once we have the details of the same.
                                 </div>
                             </div>
                         </div>
@@ -484,6 +489,7 @@
                         </div>
                         <div class="col-md-2 pl-0">
                             <img src="/assets/images/svg/loan-deatils.svg" class="pt-12">
+
                             <div class="row pt-16">
                                 <div class="col-md-2 pl-0">
                                     <p class="hw-12 bg-primary mt-2 mb-0"></p>
@@ -503,31 +509,33 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 pr-0 pt-20">
-                    <img src="/assets/images/svg/goal1.svg" class="w-100">
-                    <div class="row pt-20">
-                        <div class="col-md-6 pl-0">
-                            <button mat-stroked-button class="in-btn pl-8"
-                                (click)="openInSideBar(null, 'openallocations')"><img
-                                    src="/assets/images/svg/btn-links.svg" class="pr-8">Allocations</button>
-                            <button mat-stroked-button class="in-btn mt-20 pl-0"
-                                (click)="openInSideBar(null, 'openKeyinfo')"><img
-                                    src="/assets/images/svg/filter-schemes.svg" class="pr-16 ">Key info</button>
-                            <button mat-stroked-button class="in-btn mt-20 pl-0"><img
-                                    src="/assets/images/svg/btn-links.svg" class="pr-8 ">Action plan</button>
-                        </div>
-                        <div class="col-md-6">
-                            <button mat-stroked-button class="in-btn pl-8 "
-                                (click)="openInSideBar(null, 'openMfAllocation')"><img
-                                    src="/assets/images/svg/btn-links.svg" class="pr-8">MF allocations</button>
-                            <button mat-stroked-button class="in-btn pl-0 mt-20"
-                                (click)="openInSideBar(null, 'openCalculators')"><img
-                                    src="/assets/images/svg/cal-sm.svg" class="pr-12">Calculators</button>
-                            <button mat-stroked-button class="in-btn pl-0 mt-20"
-                                (click)="openInSideBar(null, 'openPreferences')"><img
-                                    src="/assets/images/svg/3lines.svg" class="pr-8">Preferences</button>
-                        </div>
+                <div class="col-width-31 pr-0 pt-20">
+                    <img src="/assets/images/svg/goal1.svg" class="">
+
+                    <div class="btnBox">
+                        <button mat-stroked-button class="in-btn" (click)="openInSideBar(null, 'openallocations')">
+                            <img src="/assets/images/svg/btn-links.svg">Allocations</button>
+                        <button mat-stroked-button class="in-btn-two" (click)="openInSideBar(null, 'openMfAllocation')">
+                            <img src="/assets/images/svg/btn-links.svg">MF allocations</button>
                     </div>
+
+
+                    <div class="btnBox">
+                        <button mat-stroked-button class="in-btn" (click)="openInSideBar(null, 'openKeyinfo')">
+                            <img src="/assets/images/svg/filter-schemes.svg">Key info</button>
+                        <button mat-stroked-button class="in-btn-two" (click)="openInSideBar(null, 'openCalculators')">
+                            <img src="/assets/images/svg/cal-sm.svg">Calculators</button>
+                    </div>
+
+
+                    <div class="btnBox">
+                        <button mat-stroked-button class="in-btn">
+                            <img src="/assets/images/svg/btn-links.svg">Action plan</button>
+                        <button mat-stroked-button class="in-btn-two" (click)="openInSideBar(null, 'openPreferences')">
+                            <img src="/assets/images/svg/3lines.svg">Preferences</button>
+                    </div>
+
+
                     <div class="row pt-20" *ngIf="dashboardData">
                         <div class="col-md-12 right p-0 text-right" (click)="deleteGoal(dashboardData)">
                             <img src="/assets/images/svg/blue-delete.svg">
