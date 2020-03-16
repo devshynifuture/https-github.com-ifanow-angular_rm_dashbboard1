@@ -112,7 +112,7 @@ export class AddPoSavingComponent implements OnInit {
     });
     this.ownerData = this.poSavingForm.controls;
     this.familyMemberId = this.poSavingForm.controls.familyMemberId.value,
-      this.familyMemberId = this.familyMemberId[0];
+      this.familyMemberId = data.familyMemberId;
   }
 
   moreFields() {
