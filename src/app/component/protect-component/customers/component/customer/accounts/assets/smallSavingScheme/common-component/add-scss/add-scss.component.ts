@@ -129,7 +129,7 @@ export class AddScssComponent implements OnInit {
         clientId: this.clientId,
         familyMemberId: this.familyMemberId,
         advisorId: this.advisorId,
-        ownerName: this.ownerName.userName,
+        ownerName: (this.ownerName == undefined) ? this.scssSchemeForm.controls.ownerName.value : this.ownerName.userName,
         amountInvested: this.scssSchemeForm.get('amtInvested').value,
         commencementDate: this.scssSchemeForm.get('commDate').value,
         postOfficeBranch: this.scssOptionalSchemeForm.get('poBranch').value,
