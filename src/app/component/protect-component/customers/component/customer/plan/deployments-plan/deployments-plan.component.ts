@@ -19,7 +19,7 @@ import { element } from 'protractor';
   styleUrls: ['./deployments-plan.component.scss']
 })
 export class DeploymentsPlanComponent implements OnInit {
-  displayedColumns: string[] = ['checkbox', 'position', 'name', 'weight', 'height', 'symbol', 'debt', 'status', 'icons'];
+  displayedColumns: string[] = ['checkbox', 'name', 'weight', 'height', 'symbol', 'debt', 'status', 'icons'];
   dataSource;
   clientId: any;
   advisorId: any;
@@ -81,7 +81,9 @@ export class DeploymentsPlanComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.getDeploymentData();
+      if(result.isRefreshRequired){
+        this.getDeploymentData();
+      }
     });
 
   }
