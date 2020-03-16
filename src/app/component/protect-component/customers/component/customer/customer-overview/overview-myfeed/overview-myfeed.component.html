@@ -427,9 +427,15 @@
 
             <div class="row">
                 <div class="col-md-12 mb-8">
-                    <button class="markBtn bg-white" mat-flat-button>Equities</button>
+                    <!-- <button class="markBtn bg-white" mat-flat-button>Equities</button>
                     <button class="markBtn" mat-flat-button>Debt</button>
-                    <button class="markBtn" mat-flat-button>C&M</button>
+                    <button class="markBtn" mat-flat-button>C&M</button> -->
+
+                    <mat-button-toggle-group class="matToggleToggle" name="fontStyle" aria-label="Font Style">
+                        <mat-button-toggle class="markBtn" value="equities">Equities</mat-button-toggle>
+                        <mat-button-toggle class="markBtn" value="debt">Debt</mat-button-toggle>
+                        <mat-button-toggle class="markBtn" value="cm">C&M</mat-button-toggle>
+                    </mat-button-toggle-group>
                 </div>
             </div>
             <div class="row">

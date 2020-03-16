@@ -118,7 +118,7 @@ export class PoSavingsComponent implements OnInit {
       positiveMethod: () => {
         this.cusService.deletePOSAVING(data.id).subscribe(
           data => {
-            this.eventService.openSnackBar('POSAVING is deleted', 'Dismiss');
+            this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             dialogRef.close();
             this.getPoSavingSchemedata();
           },

@@ -3,6 +3,8 @@ import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { GoldComponent } from '../../../../accounts/assets/commodities/gold/gold.component';
 import { OthersComponent } from '../../../../accounts/assets/commodities/others/others.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { ActiityService } from '../../../actiity.service';
 
 @Component({
   selector: 'app-all-advice-commodities',
@@ -13,11 +15,31 @@ export class AllAdviceCommoditiesComponent implements OnInit {
 
   displayedColumns3: string[] = ['checkbox', 'name', 'desc','mvalue', 'advice', 'astatus', 'adate', 'icon'];
   dataSource3 = ELEMENT_DATA1;
-  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject) { }
+  advisorId: any;
+  clientId: any;
+  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject,private activityService:ActiityService) { }
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    this.getAllAdviceByAsset();
   }
   allAdvice = true
+  getAllAdviceByAsset() {
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      assetCategory: 12,
+      adviceStatusId:0
+    }
+    this.activityService.getAllAsset(obj).subscribe(
+      data => this.getAllSchemeResponse(data), (error) => {
+      }
+    );
+  }
+  getAllSchemeResponse(data){
+    console.log(data);
+  }
   openCommodities(value, state, data) {
     const fragmentData = {
       flag: value,

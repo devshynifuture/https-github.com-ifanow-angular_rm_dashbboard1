@@ -78,7 +78,7 @@
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar">{{element.assetDetails.name}}
+                <div class="bar"><span *ngIf="element.assetDetails">{{element.assetDetails.name}}</span>
                 </div>
             </td>
         </ng-container>
@@ -95,7 +95,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Purchase value </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                   <span appFormatNumber> {{element.assetDetails.mvalue}}</span>
+                   <span appFormatNumber *ngIf="element.assetDetails"> {{element.assetDetails.mvalue}}</span>
                 </div>
             </td>
         </ng-container>
@@ -103,7 +103,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Market value </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <span appFormatNumber>{{element.assetDetails.mvalue}}</span>
+                    <span *ngIf="element.assetDetails" appFormatNumber>{{element.assetDetails.mvalue}}</span>
                 </div>
             </td>
         </ng-container>
@@ -111,7 +111,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> National gain </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                   <span appFormatNumber>{{element.assetDetails.mvalue}}</span> 
+                   <span appFormatNumber *ngIf="element.assetDetails">{{element.assetDetails.mvalue}}</span> 
                 </div>
             </td>
         </ng-container>

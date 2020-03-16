@@ -118,10 +118,8 @@ export class OthersComponent implements OnInit {
     });
     // this.othersNominee = this.fb.group({})
     this.ownerData = this.others.controls;
-    this.familyMemberId = this.others.value.familyMemberId;
+    this.familyMemberId = data.familyMemberId;
   }
-
-
   // get nominee() {
   //   return this.othersNominee.get('NomineesList') as FormArray;
   // }

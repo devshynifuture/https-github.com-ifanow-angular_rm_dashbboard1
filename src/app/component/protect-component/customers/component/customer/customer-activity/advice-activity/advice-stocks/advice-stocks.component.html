@@ -92,7 +92,7 @@
         <ng-container matColumnDef="mvalue">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Market value </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar"><span appFormatNumber>{{element.assetDetails.assetmvalue}}</span> </div>
+                <div class="bar"><span *ngIf="element.assetDetails" appFormatNumber>{{element.assetDetails.assetmvalue}}</span> </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
