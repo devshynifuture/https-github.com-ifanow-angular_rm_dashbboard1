@@ -106,8 +106,7 @@ export class AddPoMisComponent implements OnInit {
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]],
 
     });
-    this.familyMemberId = this.pomisForm.controls.familyMemberId.value,
-      this.ownerData = this.pomisForm.controls;
+    this.ownerData = this.pomisForm.controls;
     this.familyMemberId = data.familyMemberId;
   }
 
@@ -164,8 +163,8 @@ export class AddPoMisComponent implements OnInit {
           id: this._inputData.id,
           advisorId: this.advisorId,
           clientId: this.clientId,
-          familyMemberId: this.familyMemberId.id,
-          ownerName: this.ownerName.userName,
+          familyMemberId: this.familyMemberId,
+          ownerName: (this.ownerName == undefined) ? this.pomisForm.get('ownerName').value : this.ownerName.userName,
           amountInvested: this.pomisForm.controls.amtInvested.value,
           commencementDate: this.pomisForm.controls.commencementdate.value,
           postOfficeBranch: this.pomisForm.controls.poBranch.value,
