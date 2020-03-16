@@ -350,7 +350,6 @@ export class FixedIncomeComponent implements OnInit {
         if (value == 'FIXED DEPOSIT') {
           this.customerService.deleteFixedDeposite(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar('Fixed deposite is deleted', 'Dismiss');
               dialogRef.close();
               this.getFixedDepositList();
             },
@@ -359,7 +358,6 @@ export class FixedIncomeComponent implements OnInit {
         } else if (value == 'RECURRING DEPOSIT') {
           this.customerService.deleteRecurringDeposite(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar('Recurring deposite is deleted', 'Dismiss');
               dialogRef.close();
               this.getRecurringDepositList();
             },
@@ -368,13 +366,13 @@ export class FixedIncomeComponent implements OnInit {
         } else {
           this.customerService.deleteBond(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar('Bond is deleted', 'Dismiss');
               dialogRef.close();
               this.getBondsList();
             },
             error => this.eventService.showErrorMessage(error)
           );
         }
+        this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');

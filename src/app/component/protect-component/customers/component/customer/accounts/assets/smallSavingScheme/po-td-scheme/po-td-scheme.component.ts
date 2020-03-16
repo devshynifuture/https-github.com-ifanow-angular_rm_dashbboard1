@@ -119,7 +119,7 @@ export class PoTdSchemeComponent implements OnInit {
       positiveMethod: () => {
         this.cusService.deletePOTD(data.id).subscribe(
           data => {
-            this.eventService.openSnackBar('POSAVING is deleted', 'Dismiss');
+            this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             dialogRef.close();
             this.getPoTdSchemedata();
           },

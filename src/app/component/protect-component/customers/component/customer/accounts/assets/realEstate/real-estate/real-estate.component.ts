@@ -126,7 +126,7 @@ export class RealEstateComponent implements OnInit {
       positiveMethod: () => {
         this.cusService.deleteRealEstate(data.id).subscribe(
           data => {
-            this.eventService.openSnackBar('Real estate is deleted', 'Dismiss');
+            this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             dialogRef.close();
             this.getRealEstate();
           },

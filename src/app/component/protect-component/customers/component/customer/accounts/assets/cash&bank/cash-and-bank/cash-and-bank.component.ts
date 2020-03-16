@@ -150,7 +150,7 @@ export class CashAndBankComponent implements OnInit {
         if (value == 'BANK') {
           this.custumService.deleteBankAccount(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar('Bank account is deleted', 'Dismiss');
+              this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
               dialogRef.close();
               this.getBankAccountList();
             },
