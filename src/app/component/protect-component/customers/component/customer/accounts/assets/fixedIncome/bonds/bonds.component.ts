@@ -169,11 +169,11 @@ export class BondsComponent implements OnInit {
   
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
-      name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : ''], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+      name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
     }));
     if (!data || this.getNominee.value.length < 1) {
       for (let e in this.getNominee.controls) {
-        this.getNominee.controls[e].get('sharePercentage').setValue('');
+        this.getNominee.controls[e].get('sharePercentage').setValue(0);
       }
     }
     
@@ -224,7 +224,7 @@ export class BondsComponent implements OnInit {
       nominees: this.nominees,
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
-        sharePercentage: [''],
+        sharePercentage: [0],
         familyMemberId: [0],
         id:[0]
       })]),

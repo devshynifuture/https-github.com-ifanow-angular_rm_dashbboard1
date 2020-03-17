@@ -95,16 +95,16 @@ export class RealEstateComponent implements OnInit {
     }
     else if (data.realEstateList.length > 0) {
       console.log('getRealEstateRes', data);
-      data.realEstateList.forEach(element => {
-        if (element.realEstateOwners.length != 0) {
-          const array = element.realEstateOwners;
-          const ownerName = array.filter(element => element.owner != false)
-          if (ownerName.length != 0) {
-            this.ownerName = ownerName[0].ownerName;
-            element.ownerName = this.ownerName;
-          }
-        }
-      });
+      // data.realEstateList.forEach(element => {
+      //   if (element.ownerList.length != 0) {
+      //     const array = element.ownerList;
+      //     const ownerName = array.filter(element => element.owner != false)
+      //     if (ownerName.length != 0) {
+      //       this.ownerName = ownerName[0].ownerName;
+      //       element.ownerName = this.ownerName;
+      //     }
+      //   }
+      // });
       this.datasource3.data = data.realEstateList;
       this.datasource3.sort = this.sort;
       this.sumOfMarketValue = data.sumOfMarketValue;

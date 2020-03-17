@@ -393,7 +393,7 @@ export class FixedIncomeComponent implements OnInit {
   }
 
   openPortfolioSummary(value, data) {
-    let popupHeaderText = !!data ? 'Edit Fixed deposits' : 'Add Fixed deposits';
+    let popupHeaderText = !!data ? 'Edit Fixed deposit' : 'Add Fixed deposit';
     const fragmentData = {
       flag: value,
       data,
@@ -451,7 +451,7 @@ export class FixedIncomeComponent implements OnInit {
   }
 
   openAddRecurringDeposit(data) {
-    let popupHeaderText = !!data ? 'Edit Recurring deposits' : 'Add Recurring deposits';
+    let popupHeaderText = !!data ? 'Edit Recurring deposit' : 'Add Recurring deposit';
     const fragmentData = {
       flag: 'addRecuringDeposit',
       data,
