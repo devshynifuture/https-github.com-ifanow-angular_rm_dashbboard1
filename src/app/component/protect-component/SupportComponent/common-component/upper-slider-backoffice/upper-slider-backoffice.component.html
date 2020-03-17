@@ -50,7 +50,7 @@
                             <ng-container matColumnDef="doneOne">
                                 <th class="b-a" mat-header-cell *matHeaderCellDef> Done on </th>
                                 <td class="b-a" mat-cell *matCellDef="let element">
-                                    <div class="bar"> {{element.doneOne}} </div>
+                                    <div class="bar"> {{element.doneOne | date:'short'}} </div>
                                 </td>
                             </ng-container>
 
@@ -58,7 +58,7 @@
                             <ng-container matColumnDef="totalfolios">
                                 <th class="b-a" mat-header-cell *matHeaderCellDef> Total folios </th>
                                 <td class="b-a" mat-cell *matCellDef="let element">
-                                    <div class="bar"> {{element.totalfolios}} </div>
+                                    <div class="bar" appFormatNumber> {{element.totalfolios}} </div>
                                 </td>
                             </ng-container>
 
@@ -79,9 +79,9 @@
                             </ng-container>
 
                             <ng-container matColumnDef="aum_balance">
-                                <th mat-header-cell *matHeaderCellDef> AUM balance </th>
+                                <th mat-header-cell *matHeaderCellDef> AUM balance as on</th>
                                 <td mat-cell *matCellDef="let element">
-                                    <div class="bar"> {{element.aum_balance}} </div>
+                                    <div class="bar"> {{element.aum_balance | date:'short'}} </div>
                                 </td>
                             </ng-container>
 
@@ -99,7 +99,7 @@
                                 <td class="b-a text-center" mat-cell *matCellDef="let element">
                                     <div class="bar">
                                         <button class="bg-grey lt" mat-button
-                                            (click)="isTabDisabled = false">Export</button>
+                                            (click)="exportToExcelSheet('export-folios', element)">Export</button>
                                     </div>
                                 </td>
                             </ng-container>
@@ -117,9 +117,9 @@
             </mat-tab>
 
 
-            <mat-tab>
+            <mat-tab [disabled]="isTabDisabled">
                 <ng-template mat-tab-label>
-                    <div matTooltip="Kindly, click on export button" [matTooltipDisabled]="!isTabDisabled">
+                    <div matTooltip=" Kindly, click on export button" [matTooltipDisabled]="!isTabDisabled">
                         <h5 [ngClass]="{'text-custom': isTabDisabled}">
                             Manual reconciliation
                         </h5>

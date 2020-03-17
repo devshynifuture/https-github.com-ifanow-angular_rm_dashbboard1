@@ -45,63 +45,24 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   }
 
   putAumTransactionKeepOrRemove() {
+    let isKeepArray = [];
+    ELEMENT_DATA2.forEach((item, index) => {
+      isKeepArray.push({
+        id: index,
+        isKeep: item.isKeep
+      })
+    });
+    this.isKeepOrRemoveTransactions = isKeepArray;
+    console.log(this.isKeepOrRemoveTransactions);
     // this.supportService.putAumTransactionKeepOrRemove(this.isKeepOrRemoveTransactions)
     //   .subscribe(res => {
     //     console.log(res);
     //   })
-    console.log(this.isKeepOrRemoveTransactions);
   }
 
   shouldKeepOrRemove(value, element) {
     let id = ELEMENT_DATA2.indexOf(element);
     ELEMENT_DATA2[id].isKeep = (value === 1 ? true : false);
-
-    // if not empty 
-    // before inserting check if object has value
-    // check 
-    // if not present add value
-
-    // if present
-    // update isKeep
-    // if empty
-    // add value
-
-    if (this.isKeepOrRemoveTransactions.length !== 0) {
-      if (!this.doesDuplicateEntriesPresentInArray(id)) {
-        this.isKeepOrRemoveTransactions.push({
-          id,
-          isKeep: (value === 1 ? true : false)
-        })
-      } else {
-        if (this.isKeepOrRemoveTransactions[id]) {
-          this.isKeepOrRemoveTransactions[id].isKeep = (value === 1 ? true : false);
-        }
-      }
-    } else {
-      this.isKeepOrRemoveTransactions.push({
-        id,
-        isKeep: (value === 1 ? true : false)
-      })
-    }
-  }
-
-  doesDuplicateEntriesPresentInArray(id) {
-    let count = 0;
-    if (this.isKeepOrRemoveTransactions.length > 0) {
-      this.isKeepOrRemoveTransactions.forEach(item => {
-        if (item.id === id) {
-          count++;
-          // isPresent
-        }
-      });
-      if (count > 1) {
-        return true;
-      } else {
-        return false;
-      }
-    } else if (this.isKeepOrRemoveTransactions.length === 0) {
-      return false;
-    }
   }
 
   dialogClose() {

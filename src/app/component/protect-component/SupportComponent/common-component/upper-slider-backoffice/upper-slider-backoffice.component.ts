@@ -8,12 +8,13 @@ import { Component, OnInit } from '@angular/core';
 import { ReconciliationDetailsViewComponent } from '../reconciliation-details-view/reconciliation-details-view.component';
 import { SubscriptionInject } from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { MatDialog, MatTableDataSource } from '@angular/material';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
   selector: 'app-upper-slider-backoffice',
   templateUrl: './upper-slider-backoffice.component.html',
-  styleUrls: ['./upper-slider-backoffice.component.scss']
+  styleUrls: ['./upper-slider-backoffice.component.scss'],
 })
 export class UpperSliderBackofficeComponent implements OnInit {
 
@@ -33,30 +34,36 @@ export class UpperSliderBackofficeComponent implements OnInit {
   subTabState: number = 1;
   aumReconId: any = null;
   isLoading: boolean = false;
+  aumList: any;
 
-  constructor(private subInjectService: SubscriptionInject,
+  constructor(
+    private subInjectService: SubscriptionInject,
     private eventService: EventService,
     private dialog: MatDialog,
-    private supportService: SupportService
+    private supportService: SupportService,
+    private datePipe: DatePipe
   ) { }
 
   ngOnInit() {
     if (this.data) {
       this.aumReconId = this.data.id;
-      this.brokerId = this.data.brokerId
+      this.brokerId = this.data.brokerId;
+    }
+
+    if (this.data.startRecon) {
+      console.log('start recon is true::::');
+      this.isLoading = true;
+      this.getBackofficeAumReconListSummary();
+
+    } else if (this.data.startRecon === false) {
+      console.log('start recon is false::::');
+      this.getBackofficeAumFileOrderListDeleteReorder();
+
     }
     console.log("this is data that we got:::::::", this.data);
-    if (this.data.id) {
-      this.getBackofficeAumFileOrderList();
-    }
-    if (this.data.brokerId) {
-      this.isLoading = true;
-      this.getBackofficeAumReconList();
-
-    }
   }
 
-  getBackofficeAumReconList() {
+  getBackofficeAumReconListSummary() {
     const data = {
       advisorId: AuthService.getAdvisorId(),
       brokerId: this.brokerId,
@@ -65,11 +72,29 @@ export class UpperSliderBackofficeComponent implements OnInit {
     this.supportService.getAumReconListGetValues(data).subscribe(res => {
       this.isLoading = false;
       console.log("this is some table values::::", res);
-      this.dataSource.data = res;
+      this.aumList = res.aumList;
+      // this.dataSource.data = res;
+      let objArr = [];
+      if (res) {
+        // aum date for all object is the same 
+        objArr = [{
+          doneOne: new Date().getMilliseconds(),
+          aum_balance: res.aumList[0].aumDate,
+          transaction: '',
+          export_folios: '',
+          totalfolios: res.totalFolioCount,
+          before_recon: res.unmappedCount,
+          after_recon: res.unmappedCount
+        }];
+      } else {
+        objArr = undefined;
+      }
+
+      this.dataSource.data = objArr;
     });
   }
 
-  getBackofficeAumFileOrderList() {
+  getBackofficeAumFileOrderListDeleteReorder() {
     this.supportService.getBackofficeAumOrderListValues({ aumReconId: this.aumReconId })
       .subscribe(res => {
         console.log(res);
@@ -92,8 +117,9 @@ export class UpperSliderBackofficeComponent implements OnInit {
     saveAs(blob, userData.fullName + '-' + 'ordered-folios' + '.txt');
   }
 
-  exportToExcelSheet(value) {
+  exportToExcelSheet(value, element) {
     this.isTabDisabled = false;
+
     // creation of excel sheet 
 
     let headerData = [
@@ -124,6 +150,24 @@ export class UpperSliderBackofficeComponent implements OnInit {
       'Unit Difference',
       'Amount Difference'
     ];
+    this.aumList.forEach(element => {
+      let data = [
+        element.investorName,
+        element.mutualFundId,
+        element.shemeName,
+        element.schemeCode,
+        element.folioNumber,
+        (this.data.rtId === 1 ? 'cams' : (this.data.rtId === 2 ? 'karvy' : (this.data.rtId === 3 ? 'franklin' : ''))),
+        element.calculatedUnits,
+        element.aumUnits,
+        this.datePipe.transform(element.aumDate),
+        element.calculatedUnits - element.aumUnits,
+        'amt difference'
+      ]
+
+      excelData.push(Object.assign(data))
+    });
+
     ExcelService.exportExcel(headerData, header, excelData, footer, value);
   }
 
@@ -189,7 +233,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
 }
 
-export interface PeriodicElement {
+interface PeriodicElement {
   doneOne: string;
   totalfolios: string;
   before_recon: string;
@@ -207,7 +251,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 
 
 
-export interface PeriodicElement1 {
+interface PeriodicElement1 {
   name: string;
   folioNumber: string;
   unitsIfanow: string;
@@ -226,7 +270,7 @@ const ELEMENT_DATA2: PeriodicElement1[] = [
   { name: 'HDFC Prudents Fund - Growth', folioNumber: '47471/80	', unitsIfanow: '520.90', unitsRta: '420.90', difference: '100.00', transactions: '6' },
 ];
 
-export interface PeriodicElement3 {
+interface PeriodicElement3 {
   folios: string;
   fileOrderDateTime: string;
   status: string;

@@ -80,6 +80,7 @@ export class ReconKarvyComponent implements OnInit {
       id: 1,
       data: {
         ...data,
+        startRecon: flag === 'startReconciliation' ? true : (flag === 'report' ? false : null),
         brokerId: this.selectBrokerForm.get('selectBrokerId').value,
         rtId: this.rtId
       },
