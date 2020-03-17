@@ -6,6 +6,7 @@ import { PlanService } from '../../plan.service';
 import { debounceTime } from 'rxjs/operators';
 import { Options } from 'ng5-slider';
 import { DatePipe } from '@angular/common';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-multi-year-goal',
@@ -26,7 +27,6 @@ export class MultiYearGoalComponent implements OnInit {
   planForFamily:boolean = false;
   imageData: any;
   logoImg: any;
-  currentAge: number;
   giveDetailedPlan: boolean = false;
   startRange: number = 0;
   detailedPlanning:boolean = false;
@@ -39,7 +39,8 @@ export class MultiYearGoalComponent implements OnInit {
     private eventService: EventService, 
     private fb: FormBuilder, 
     private planService: PlanService, 
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private utilService: UtilService,
   ) { }
 
   @Input() goalTypeData:any = {};
@@ -121,16 +122,15 @@ export class MultiYearGoalComponent implements OnInit {
 
   // set the validation age for the age form field 
   setMinMaxAgeOrYear(value){
-    this.currentAge = this.getAge(value.dateOfBirth);
     if(this.goalTypeData.validations.showAge) {
-      this.minAgeYear = (this.goalTypeData.validations.minAge || (this.goalTypeData.validations.minAgeFromPresent + this.currentAge));
-      this.maxAgeYear = (this.goalTypeData.validations.maxAge || (this.goalTypeData.validations.maxAgeFromPresent + this.currentAge));
+      this.minAgeYear = (this.goalTypeData.validations.minAge || (this.goalTypeData.validations.minAgeFromPresent + value.age));
+      this.maxAgeYear = (this.goalTypeData.validations.maxAge || (this.goalTypeData.validations.maxAgeFromPresent + value.age));
     } else {
       this.minAgeYear = (this.goalTypeData.validations.minAgeFromPresent + this.currentYear);
       this.maxAgeYear = (this.goalTypeData.validations.maxAgeFromPresent + this.currentYear);
     }
-    if(this.minAgeYear < (this.currentAge + this.goalTypeData.validations.minAgeFromPresent)) {
-      this.minAgeYear = this.currentAge + this.goalTypeData.validations.minAgeFromPresent;
+    if(this.minAgeYear < (value.age + this.goalTypeData.validations.minAgeFromPresent)) {
+      this.minAgeYear = value.age + this.goalTypeData.validations.minAgeFromPresent;
     }
 
     const newOptions: Options = Object.assign({}, this.rangeFieldOptions);
@@ -141,6 +141,7 @@ export class MultiYearGoalComponent implements OnInit {
 
   initializeForm(){
     this.multiYearGoalForm = this.fb.group({
+      field1: ['', [Validators.required]], // who the goal is for
       field2: [[0, 20], [Validators.required]], // age or time
       // cumulated or detailed spending - cumulated will have single controller in array while detailed will have many.
       detailedSpendings: this.fb.array([
@@ -150,13 +151,11 @@ export class MultiYearGoalComponent implements OnInit {
       field5: [''],  // goal description
       logo: ['']
     });
-
-    this.multiYearGoalForm.addControl('field1', new FormControl('', Validators.required)); // who the goal is for
   }
 
   setDefaultOwner(){
     let owner = this.familyList.find((member) => this.goalTypeData.defaults.planningForRelative.includes(member.relationshipId));
-    this.multiYearGoalForm.controls.field1.setValue(owner);
+    this.multiYearGoalForm.get('field1').setValue(owner);
     this.selectOwnerAndUpdateForm(owner);
   }
 
@@ -212,20 +211,5 @@ export class MultiYearGoalComponent implements OnInit {
   
   goBack() {
     this.output.emit();
-  }
-  
-  /**
-   * returns the age in years given the time (date obj)
-   * @param dateString long date - eg: 655516800000
-   */
-  getAge(dateString) {
-    var today = new Date();
-    var birthDate = new Date(dateString);
-    var age = today.getFullYear() - birthDate.getFullYear();
-    var m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-    }
-    return age;
   }
 }
