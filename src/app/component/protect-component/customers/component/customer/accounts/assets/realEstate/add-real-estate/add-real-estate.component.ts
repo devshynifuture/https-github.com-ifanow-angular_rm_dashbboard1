@@ -202,11 +202,11 @@ export class AddRealEstateComponent implements OnInit {
   
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
-      name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : ''], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+      name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
     }));
     if (!data || this.getNominee.value.length < 1) {
       for (let e in this.getNominee.controls) {
-        this.getNominee.controls[e].get('sharePercentage').setValue('');
+        this.getNominee.controls[e].get('sharePercentage').setValue(0);
       }
     }
     
@@ -339,7 +339,7 @@ export class AddRealEstateComponent implements OnInit {
       description: [data.description],
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
-        sharePercentage: [''],
+        sharePercentage: [0],
         familyMemberId: [0],
         id:[0]
       })])
@@ -440,7 +440,7 @@ export class AddRealEstateComponent implements OnInit {
         // ownerName: this.ownerName,
         // familyMemeberId:this.familyMemberId,
         ownerList: this.addrealEstateForm.value.getCoOwnerName,
-        ownerPercent: this.addrealEstateForm.controls.ownerPercent.value,
+        // ownerPercent: this.addrealEstateForm.controls.ownerPercent.value,
         clientId: this.clientId,
         advisorId: this.advisorId,
         id: this._data == undefined ? 0 : this._data.id,
@@ -448,15 +448,14 @@ export class AddRealEstateComponent implements OnInit {
         marketValue: this.addrealEstateForm.controls.marketValue.value,
         purchasePeriod: (this.addrealEstateForm.controls.purchasePeriod.value) ? this.addrealEstateForm.controls.purchasePeriod.value.toISOString().slice(0, 10) : null,
         purchaseValue: this.addrealEstateForm.controls.purchaseValue.value,
-        unitId: this.addrealEstateForm.controls.unit.value,
+        unitId: 1,
         ratePerUnit: this.addrealEstateForm.controls.ratePerUnit.value,
         stampDutyCharge: this.addrealEstateForm.controls.stampDuty.value,
         registrationCharge: this.addrealEstateForm.controls.registration.value,
         gstCharge: this.addrealEstateForm.controls.gst.value,
         location: this.addrealEstateForm.controls.location.value,
         description: this.addrealEstateForm.controls.description.value,
-        nomineeList: this.addrealEstateForm.value.getNomineeName,
-        realEstateOwners: [],
+        nomineeList: this.addrealEstateForm.value.getNomineeName
       }
       // this.addrealEstateForm.value.getNomineeName.forEach(element => {
       //   if (element.name) {
@@ -483,14 +482,14 @@ export class AddRealEstateComponent implements OnInit {
       //     obj.realEstateOwners.push(obj1)
       //   }
       // });
-      let obj1 = {
-        'id': this.id,
-        'ownerName': this.ownerName,
-        'familyMemberId': this.familyMemberId,
-        'ownershipPerc': parseInt(this.addrealEstateForm.controls.ownerPercent.value),
-        'isOwner': true
-      }
-      obj.realEstateOwners.push(obj1)
+      // let obj1 = {
+      //   'id': this.id,
+      //   'ownerName': this.ownerName,
+      //   'familyMemberId': this.familyMemberId,
+      //   'ownershipPerc': parseInt(this.addrealEstateForm.controls.ownerPercent.value),
+      //   'isOwner': true
+      // }
+      // obj.realEstateOwners.push(obj1)
       if (obj.id == undefined && this.flag != 'adviceRealEstate') {
         console.log(obj);
         this.custumService.addRealEstate(obj).subscribe(

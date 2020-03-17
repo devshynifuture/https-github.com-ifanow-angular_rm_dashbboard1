@@ -87,6 +87,8 @@ import { FolioMasterDetailsComponent } from './component/protect-component/custo
 import { SipDetailsComponent } from './component/protect-component/customers/component/common-component/sip-details/sip-details.component';
 import { Ng5SliderModule } from 'ng5-slider';
 import { DetailedViewNpsComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-nps/detailed-view-nps/detailed-view-nps.component';
+import { CommonComponentModule } from './component/protect-component/common-component/common-component.module';
+import { OwnerNomineeComponent } from './component/protect-component/common-component/owner-nominee/owner-nominee.component';
 //import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
 
@@ -214,7 +216,8 @@ export const componentList = [
   SipDetailsComponent,
   SingleGoalYearComponent,
   MultiYearGoalComponent,
-  DetailedViewNpsComponent
+  DetailedViewNpsComponent,
+  OwnerNomineeComponent
   // ComposeEmailComponent
 ];
 
@@ -226,6 +229,7 @@ export const componentList = [
     ChartModule,
     FormsModule,
     ReactiveFormsModule,
+    CommonComponentModule,
     // OwnerComponentModule,
     AccountEntryModule,
     AccountCommonModule,

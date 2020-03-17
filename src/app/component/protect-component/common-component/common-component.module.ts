@@ -9,10 +9,11 @@ import {ErrorPageComponent} from './error-page/error-page.component';
 import {DataNotFoundComponent} from './data-not-found/data-not-found.component';
 // import {PhotoUploadComponent} from './photo-upload/photo-upload.component';
 import {FileUploadModule} from 'ng2-file-upload';
+// import { OwnerNomineeComponent } from './owner-nominee/owner-nominee.component';
 
 @NgModule({
   declarations: [
-    FroalaComponent, ConfirmDialogComponent, ErrorPageComponent, DataNotFoundComponent, /*PhotoUploadComponent*/],
+    FroalaComponent, ConfirmDialogComponent, ErrorPageComponent, DataNotFoundComponent /*PhotoUploadComponent*/],
   exports: [FroalaComponent, ConfirmDialogComponent, /*PhotoUploadComponent*/],
   imports: [
     MaterialModule,
