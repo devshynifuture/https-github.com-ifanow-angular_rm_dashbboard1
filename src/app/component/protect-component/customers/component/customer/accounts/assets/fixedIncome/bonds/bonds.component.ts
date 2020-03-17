@@ -46,13 +46,14 @@ export class BondsComponent implements OnInit {
   nominees: any = [];
   clientId: any;
   nomineesListFM: any = [];
-  callMethod:any;
+  callMethod: any;
   adviceShowHeaderAndFooter: boolean = true;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
   }
   @Input()
   set data(data) {
+    window.screenTop;
     this.inputData = data;
     this.getdataForm(data);
   }
@@ -74,16 +75,16 @@ export class BondsComponent implements OnInit {
     this.fdMonths = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120']
   }
 
-  
+
   getFormDataNominee(data) {
     this.nomineesList = data.controls;
     console.log(this.nomineesList, "this.nomineesList 123")
   }
-  
+
   ownerDetails(value) {
     this.familyMemberId = value.id;
   }
-  
+
   Close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag })
   }
@@ -102,30 +103,30 @@ export class BondsComponent implements OnInit {
 
   disabledMember(value, type) {
     this.callMethod = {
-      methodName : "disabledMember",
-      ParamValue : value,
-      disControl : type
+      methodName: "disabledMember",
+      ParamValue: value,
+      disControl: type
     }
   }
 
   displayControler(con) {
     console.log('value selected', con);
-    if(con.owner != null && con.owner){
+    if (con.owner != null && con.owner) {
       this.bonds.controls.getCoOwnerName = con.owner;
     }
-    if(con.nominee != null && con.nominee){
+    if (con.nominee != null && con.nominee) {
       this.bonds.controls.getNomineeName = con.nominee;
     }
   }
 
   onChangeJointOwnership(data) {
     this.callMethod = {
-      methodName : "onChangeJointOwnership",
-      ParamValue : data
+      methodName: "onChangeJointOwnership",
+      ParamValue: data
     }
   }
 
-  /***owner***/ 
+  /***owner***/
 
   get getCoOwner() {
     return this.bonds.get('getCoOwnerName') as FormArray;
@@ -152,9 +153,9 @@ export class BondsComponent implements OnInit {
       }
     }
   }
-  /***owner***/ 
+  /***owner***/
 
-  /***nominee***/ 
+  /***nominee***/
 
   get getNominee() {
     return this.bonds.get('getNomineeName') as FormArray;
@@ -162,11 +163,11 @@ export class BondsComponent implements OnInit {
 
   removeNewNominee(item) {
     this.getNominee.removeAt(item);
-    
+
   }
 
 
-  
+
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
       name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
@@ -176,9 +177,9 @@ export class BondsComponent implements OnInit {
         this.getNominee.controls[e].get('sharePercentage').setValue(0);
       }
     }
-    
+
   }
-  /***nominee***/ 
+  /***nominee***/
   // ===================owner-nominee directive=====================//
 
   getDateYMD() {
@@ -202,8 +203,8 @@ export class BondsComponent implements OnInit {
     this.bondData = data;
     this.bonds = this.fb.group({
       getCoOwnerName: this.fb.array([this.fb.group({
-        name: ['',[Validators.required]],
-        share: ['',[Validators.required]],
+        name: ['', [Validators.required]],
+        share: ['', [Validators.required]],
         familyMemberId: null
       })]),
       // ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
@@ -226,14 +227,14 @@ export class BondsComponent implements OnInit {
         name: [''],
         sharePercentage: [0],
         familyMemberId: [0],
-        id:[0]
+        id: [0]
       })]),
     });
 
     this.getFormControl().description.maxLength = 60;
     // ==============owner-nominee Data ========================\\
-  /***owner***/ 
-    if(this.bonds.value.getCoOwnerName.length == 1){
+    /***owner***/
+    if (this.bonds.value.getCoOwnerName.length == 1) {
       this.getCoOwner.controls['0'].get('share').setValue('100');
     }
 
@@ -243,20 +244,20 @@ export class BondsComponent implements OnInit {
         this.addNewCoOwner(element);
       });
     }
-    
-  /***owner***/ 
 
-  /***nominee***/ 
-  if(data.nomineeList){
-    this.getNominee.removeAt(0);
-    data.nomineeList.forEach(element => {
-      this.addNewNominee(element);
-    });
-  }
-  /***nominee***/ 
+    /***owner***/
 
-  this.ownerData = {Fmember: this.nomineesListFM, controleData:this.bonds}
-  // ==============owner-nominee Data ========================\\
+    /***nominee***/
+    if (data.nomineeList) {
+      this.getNominee.removeAt(0);
+      data.nomineeList.forEach(element => {
+        this.addNewNominee(element);
+      });
+    }
+    /***nominee***/
+
+    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.bonds }
+    // ==============owner-nominee Data ========================\\
 
     this.familyMemberId = this.bonds.controls.familyMemberId.value
     this.familyMemberId = this.familyMemberId[0]

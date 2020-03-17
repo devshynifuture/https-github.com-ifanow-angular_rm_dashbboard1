@@ -12,7 +12,7 @@
     </div>
 </div>
 <div [formGroup]="bonds" class="pt-100 pb-48 mb-44">
-    <div formArrayName="getCoOwnerName" >
+    <div formArrayName="getCoOwnerName">
         <div class="row pt-36" *ngFor="let obj of bonds.controls['getCoOwnerName'].controls; let pointIndex=index"
             [formGroupName]="pointIndex">
             <div class="col-md-5 pr-0 text-right">
@@ -21,10 +21,13 @@
             <div class="pr-0" [ngClass]="bonds.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select appOwnerNominee matInput
-                            formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'owner')" (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod] = 'callMethod' >
+                        <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
+                            (selectionChange)="disabledMember($event.value,'owner')"
+                            (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)'
+                            class="form-control br-0" [callMethod]='callMethod'>
                             <mat-option value=''>Select family members</mat-option>
-                            <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"   [value]="f.userName">
+                            <mat-option (click)="display(f)" *ngFor="let f of nomineesListFM" [disabled]="f.disable"
+                                [value]="f.userName">
                                 <span>{{f.userName}}</span>
                             </mat-option>
                         </mat-select>
@@ -37,8 +40,8 @@
             <div class="col-md-2" *ngIf="bonds.value.getCoOwnerName.length > 1">
                 <div class="form-group mb-0 iconPetage">
                     <mat-form-field>
-                        <input matInput class="form-control br-0 percentage" type="number"
-                            formControlName="share" (focusout)="onChangeJointOwnership('owner')">
+                        <input matInput class="form-control br-0 percentage" type="number" formControlName="share"
+                            (focusout)="onChangeJointOwnership('owner')">
                         <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('required')">
                             This field is required
                         </mat-error>
@@ -75,7 +78,7 @@
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <mat-select matInput formControlName="couponOption" class="form-control br-0">
+                <mat-select formControlName="couponOption" class="form-control br-0">
                     <mat-option value="" disabled>Select option</mat-option>
                     <mat-option value="1">Zero coupon</mat-option>
                     <mat-option value="2">Monthly</mat-option>
@@ -135,8 +138,8 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" (click)="picker.open()" matInput formControlName="commencementDate" [max]="maxDate"
-                        [matDatepicker]="picker" class="form-control br-0" readonly>
+                    <input autocomplete="off" (click)="picker.open()" matInput formControlName="commencementDate"
+                        [max]="maxDate" [matDatepicker]="picker" class="form-control br-0" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-error class="f-12 pt-4"
@@ -171,7 +174,7 @@
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <mat-select matInput formControlName="compound" class="form-control br-0">
+                <mat-select formControlName="compound" class="form-control br-0">
                     <mat-option value="" disabled>Select option</mat-option>
                     <mat-option value="1">Daily</mat-option>
                     <mat-option value="2">Monthly</mat-option>
@@ -209,7 +212,8 @@
                         class="f-12 pt-4">
                         This field is required
                     </mat-error>
-                    <mat-error *ngIf="bonds.get('tenure').errors?.max || bonds.get('tenure').errors?.min" class="f-12 pt-4">
+                    <mat-error *ngIf="bonds.get('tenure').errors?.max || bonds.get('tenure').errors?.min"
+                        class="f-12 pt-4">
                         Should be between than 1 to 120
                     </mat-error>
                 </mat-form-field>
@@ -222,7 +226,7 @@
         </div>
         <div class="col-md-3 ">
             <mat-form-field>
-                <mat-select matInput formControlName="type" class="form-control br-0">
+                <mat-select formControlName="type" class="form-control br-0">
                     <mat-option value="" disabled> Select option</mat-option>
                     <mat-option value="1"> Tax free</mat-option>
                     <mat-option value="2">Non tax free</mat-option>
@@ -277,7 +281,7 @@
                 </div>
             </div>
         </div>
-        <div formArrayName="getNomineeName" >
+        <div formArrayName="getNomineeName">
             <div class="row pt-36" *ngFor="let obj of bonds.controls['getNomineeName'].controls; let pointIndex=index"
                 [formGroupName]="pointIndex">
                 <div class="col-md-5 pr-0 text-right">
@@ -286,14 +290,16 @@
                 <div class="pr-0" [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <mat-select appOwnerNominee matInput
-                                formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'nominee')" (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod] = 'callMethod' >
+                            <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
+                                (selectionChange)="disabledMember($event.value,'nominee')"
+                                (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
                                 <mat-option value='' disabled>Select family members</mat-option>
-                                <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"   [value]="f.userName">
+                                <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
+                                    [value]="f.userName">
                                     <span>{{f.userName}}</span>
                                 </mat-option>
                             </mat-select>
-                            <mat-error class="f-12" >
+                            <mat-error class="f-12">
                                 This field is required
                             </mat-error>
                         </mat-form-field>
@@ -314,11 +320,12 @@
                     </div>
                 </div>
                 <div class="col-md-2 p-0 d-flex align-items-center">
-                    <i class="material-icons text-primitive f-20 c-p float-left" (click)="addNewNominee(undefined)">add</i>
+                    <i class="material-icons text-primitive f-20 c-p float-left"
+                        (click)="addNewNominee(undefined)">add</i>
                     <i *ngIf="pointIndex!=0" class="material-icons text-primitive f-20 c-p pl-10 pt-8"
-                    (click)="removeNewNominee(pointIndex)">remove</i>
+                        (click)="removeNewNominee(pointIndex)">remove</i>
                 </div>
-               
+
             </div>
         </div>
         <!-- <app-add-nominee [ownerName]="ownerName" [data]="bondData" (outputEvent)="getFormDataNominee($event)">
