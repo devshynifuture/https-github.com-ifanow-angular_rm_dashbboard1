@@ -135,7 +135,7 @@ export class AssetStocksComponent implements OnInit {
       positiveMethod: () => {
         this.cusService.deleteStockData(data.id).subscribe(
           data => {
-            this.eventService.openSnackBar('PPF is deleted', 'Dismiss');
+            this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             dialogRef.close();
             this.getStocksData();
           },
