@@ -1,7 +1,7 @@
 <div class="wrapper-20" *ngIf="allAdvice == true">
     <div class="row">
         <div class="col-md-6 p-0">
-            <button mat-stroked-button class="text-primary mr-12 br-0 b-priamry" (click) = "allAdvice = false">Advice
+            <button mat-stroked-button class="text-primary mr-12 br-0 b-priamry" (click)="allAdvice = false">Advice
                 given</button>
             <button mat-stroked-button class="btn-primary br-0">All Stocks</button>
         </div>
@@ -38,6 +38,10 @@
             </mat-menu>
         </div>
     </div>
+    <div class="row">
+        <app-advice-action [data]="selectedAssetId" [ngClass]="{'v-h': selectedAssetId.length==0}">
+        </app-advice-action>
+    </div>
     <div class="row pt-44">
         <div class="col-md-12 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
@@ -47,55 +51,93 @@
                     class="pr-8">Suggest new Stock</button>
         </div>
     </div>
-    <table mat-table [dataSource]="dataSource3" class="mt-8" id="table-low">
+    <table #tableOne="matSort" appSkeletonLoading [appSkeletonLoading]="isLoading" matSort mat-table
+        [dataSource]="stockDatasource" class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef>
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false && stockDatasource.tableFlag==true"
+                    (change)="checkAll($event,stockDatasource)"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false" [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Investor name </th>
-            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar">
+                    <span *ngIf="element.assetDetails">
+                        {{element.assetDetails.ownerName}}
+                    </span> </div>
+            </td>
         </ng-container>
         <ng-container matColumnDef="desc">
-            <th mat-header-cell *matHeaderCellDef> Description </th>
-            <td mat-cell *matCellDef="let element"> {{element.desc}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar">
+                    <span *ngIf="element">
+                        {{element.adviceDescription}}
+                    </span> </div>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="mvalue">
-            <th mat-header-cell *matHeaderCellDef> Market value </th>
-            <td mat-cell *matCellDef="let element"> {{element.mvalue}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Market value </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar"><span *ngIf="element.assetDetails"
+                        appFormatNumber>{{element.assetDetails.assetmvalue}}</span> </div>
+            </td>
         </ng-container>
         <ng-container matColumnDef="advice">
-            <th mat-header-cell *matHeaderCellDef> Advice </th>
-            <td mat-cell *matCellDef="let element"> {{element.advice}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar">{{element.advice}} </div>
+            </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
-            <th mat-header-cell *matHeaderCellDef> Advice status </th>
-            <td mat-cell *matCellDef="let element"> {{element.astatus}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar">
+                    <span *ngIf="element">
+                        <span *ngIf="element.adviceStatusId==1">GIVEN</span>
+                        <span *ngIf="element.adviceStatusId==2">AWAITING CONSENT</span>
+                        <span *ngIf="element.adviceStatusId==3">ACCEPTED</span>
+                        <span *ngIf="element.adviceStatusId==4">IN PROGRESS</span>
+                        <span *ngIf="element.adviceStatusId==5">IMPLEMENTED</span>
+                        <span *ngIf="element.adviceStatusId==6">DECLINED</span>
+                        <span *ngIf="element.adviceStatusId==7">PENDING</span>
+                        <span *ngIf="element.adviceStatusId==8">SYSTEM GENERATED</span>
+                        <span *ngIf="element.adviceStatusId==9">REVISED</span>
+                    </span>
+                </div>
+            </td>
         </ng-container>
         <ng-container matColumnDef="adate">
-            <th mat-header-cell *matHeaderCellDef> Applicable date </th>
-            <td mat-cell *matCellDef="let element"> {{element.adate}} </td>
-        </ng-container> 
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Applicable date </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar"> {{element.applicableDate | date:'dd/MM/yyyy'}} </div>
+            </td>
+        </ng-container>
         <ng-container matColumnDef="icon">
             <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let element">
-                <i class="material-icons c-p" [matMenuTriggerFor]="menu">
-                    more_vert
-                </i>
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Item 1</button>
-                    <button mat-menu-item>Item 2</button>
-                </mat-menu>
+                <div class="bar">
+                    <i *ngIf="isLoading==false" class="material-icons c-p" [matMenuTriggerFor]="menu">
+                        more_vert
+                    </i>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item>Item 1</button>
+                        <button mat-menu-item>Item 2</button>
+                    </mat-menu>
+                </div>
             </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
     </table>
+    <div *ngIf="stockDatasource.tableFlag==false">
+        <h4 class="text-center pt-44">No Data Found</h4>
+    </div>
 </div>
 <div *ngIf="allAdvice == false">
     <app-advice-stocks></app-advice-stocks>

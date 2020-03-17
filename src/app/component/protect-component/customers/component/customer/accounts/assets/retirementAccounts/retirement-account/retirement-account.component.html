@@ -645,11 +645,12 @@
                 </button>
             </div>
         </div>
-        <div class=" overflow-hidden col-md-12 p-0 mt-8 real-estate" #SUPERANNUATION #Superannuation>
+        <div [ngClass]="{'table-scroll':isLoading==false }" class=" overflow-hidden col-md-12 p-0 mt-8 superannuation"
+            #SUPERANNUATION #Superannuation>
             <table *ngIf="dataSource.filteredData.length > 0" #superAnnuationListTable="matSort"
-                [dataSource]="dataSource" id="table-low" mat-table matSort class="skeletonAnimation" appSkeletonLoading
+                [dataSource]="dataSource" id="tbs" mat-table matSort class="skeletonAnimation" appSkeletonLoading
                 [appSkeletonLoading]="isLoading">
-                <ng-container matColumnDef="no">
+                <ng-container matColumnDef="no" sticky>
                     <th *matHeaderCellDef class="br  " mat-header-cell mat-sort-header="no"> No</th>
                     <td *matCellDef="let element let i = index" class="br  " mat-cell>
                         <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
@@ -743,7 +744,7 @@
                     </td>
                     <td *matFooterCellDef mat-footer-cell></td>
                 </ng-container>
-                <ng-container matColumnDef="icons">
+                <ng-container matColumnDef="icons" sticky>
                     <th *matHeaderCellDef class="" mat-header-cell></th>
                     <td *matCellDef="let element" class="" mat-cell>
                         <i *ngIf="isLoading==false" [matMenuTriggerFor]="menubank"

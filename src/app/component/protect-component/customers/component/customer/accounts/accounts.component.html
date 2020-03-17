@@ -18,7 +18,16 @@
                 routerLinkActive="active">DOCUMENTS</a>
         </nav>
     </div>
-
+    <div class="col-md-2 d-flex justify-content-center align-items-center borderLeft">
+        <button mat-button [matMenuTriggerFor]="menu" class="common-button p-0">Ronak Hasmukh Hindocha <i
+                class="material-icons">
+                keyboard_arrow_down
+            </i></button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item>Item 1</button>
+            <button mat-menu-item>Item 2</button>
+        </mat-menu>
+    </div>
 </div>
 <div class="row">
     <div class="col-md-12 p-0">

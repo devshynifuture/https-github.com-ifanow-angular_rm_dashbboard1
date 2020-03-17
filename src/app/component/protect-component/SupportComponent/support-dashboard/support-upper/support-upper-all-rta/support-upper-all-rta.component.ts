@@ -50,7 +50,12 @@ export class SupportUpperAllRtaComponent implements OnInit {
         this.apiCallingStack = [];
         this.filteredSchemes = data;
         console.log("this is what i need::::::::", data);
-        this.checkIfDataNotPresentAndShowError(data);
+        if (data && data.length > 0) {
+          this.filteredSchemeError = false;
+        } else {
+          this.filteredSchemeError = true;
+          this.errorMsg = 'No data Found';
+        }
         console.log(this.filteredSchemes);
       });
   }
@@ -58,15 +63,6 @@ export class SupportUpperAllRtaComponent implements OnInit {
   mapSchemeCodeAndOther(element, scheme) {
     element.schemeCode = scheme.schemeCode;
     element.njCount = scheme.njCount;
-  }
-
-  checkIfDataNotPresentAndShowError(data) {
-    if (data && data.length > 0) {
-      this.filteredSchemeError = false;
-    } else {
-      this.filteredSchemeError = true;
-      this.errorMsg = 'No data Found';
-    }
   }
 
   getFilteredSchemesList(value) {
@@ -106,7 +102,12 @@ export class SupportUpperAllRtaComponent implements OnInit {
           this.isLoadingForDropDown = false;
           this.filteredSchemes = res;
           console.log(res);
-          this.checkIfDataNotPresentAndShowError(res);
+          if (res && res.length > 0) {
+            this.filteredSchemeError = false;
+          } else {
+            this.filteredSchemeError = true;
+            this.errorMsg = 'No data Found';
+          }
         })
     }
   }

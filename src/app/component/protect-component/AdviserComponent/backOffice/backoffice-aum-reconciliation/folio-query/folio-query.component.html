@@ -1,1 +1,187 @@
-<p>folio-query works!</p>
+<div class="mt-120">
+    <div class="row">
+        <div class="col-lg-6">
+            <h4 class="mt-20">
+                Folio Query
+            </h4>
+        </div>
+        <div class="col-lg-6 mt-20" *ngIf="isSearchDone">
+            <div class="row">
+                <div class="col-lg-4 pr-0">
+                    <mat-select>
+                        <mat-option None>
+                            Select Options
+                        </mat-option>
+                        <mat-option [value]="option" *ngFor="let option of optionList">
+                            {{ option }}
+                        </mat-option>
+                    </mat-select>
+                </div>
+                <div class="col-lg-6">
+                    <input type="text" class="form-control" matInput />
+                </div>
+                <div class="col-lg-2 pl-0">
+                    <button mat-button class="bg-grey">
+                        Search
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row" *ngIf="!isSearchDone">
+        <div class="col-lg-6 mt-40">
+            <div class="row">
+                <div class="col-lg-4"></div>
+                <div class="col-lg-8">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            Search by folio number
+                        </div>
+                        <div class="col-lg-12 form-group">
+                            <input type="text" matInput class="form-control mt-12"
+                                placeholder="Add a folio and hit search button">
+                        </div>
+                        <div class="col-lg-12">
+                            <button mat-button class="bg-grey" (click)="search()">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4"></div>
+                <div class="col-lg-8 mt-40">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            Search by Group head
+                        </div>
+                        <div class="col-lg-12 form-group">
+                            <input type="text" class="form-control mt-12" matInput
+                                placeholder="Start typing to get group head names">
+                        </div>
+                        <div class="col-lg-12">
+                            <button mat-button class="bg-grey" (click)="search()">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 mt-40">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            Search by PAN
+                        </div>
+                        <div class="col-lg-12 form-group">
+                            <input type="text" matInput class="form-control mt-12"
+                                placeholder="Add a PAN and hit search button">
+                        </div>
+                        <div class="col-lg-12">
+                            <button mat-button class="bg-grey" (click)="search()">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 mt-40">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            Search by investor
+                        </div>
+                        <div class="col-lg-12 form-group">
+                            <input type="text" matInput class="form-control mt-12"
+                                placeholder="Start typing to see investor names">
+                        </div>
+                        <div class="col-lg-12">
+                            <button mat-button class="bg-grey" (click)="search()">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="isSearchDone">
+        <div class="col-lg-12 mt-40">
+            <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low" appSkeletonLoading
+                [appSkeletonLoading]="isLoading">
+                <ng-container matColumnDef="folioNumber">
+                    <th mat-header-cell *matHeaderCellDef class="w-20"> Folio Number </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar">
+                            {{element.folioNumber}}
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="schemeName">
+                    <th mat-header-cell *matHeaderCellDef class="w-10"> Scheme Name </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar">
+                            {{element.schemeName}}
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="investorName">
+                    <th mat-header-cell *matHeaderCellDef class="w-20"> Investor Name </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar">
+                            {{element.investorName}}
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="arnRiaCode">
+                    <th mat-header-cell *matHeaderCellDef> ARN/RIA code</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar">
+                            {{element.arnRiaCode}}
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="reconStatus">
+                    <th mat-header-cell *matHeaderCellDef> Recon status </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar">
+                            {{element.reconStatus}}
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="transactions">
+                    <th mat-header-cell *matHeaderCellDef> Transactions </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar">
+                            <button mat-button color="primary" class="btn-xs h-22">
+                                view
+                            </button>
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="folioDetails">
+                    <th mat-header-cell *matHeaderCellDef> Folio Details </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar">
+                            <button mat-button color="primary" class="btn-xs h-22">
+                                view
+                            </button>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <div class="col-lg-12 p-0" *ngIf="dataSource.data === undefined">
+                <h4 class="d-flex justify-content-center b-a p-44">
+                    No Data Found
+                </h4>
+            </div>
+        </div>
+    </div>
+</div>

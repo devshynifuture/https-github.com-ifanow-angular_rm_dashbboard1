@@ -22,12 +22,16 @@ export class AdviceActionComponent implements OnInit {
   openConsentDialog(data) {
     console.log(this.selectedAssetData)
     const fragmentData = {
-      flag: 'detailPoTd',
-      data: this.selectedAssetData,
+      flag: 'consent',
+      data: {},
       id: 1,
       state: 'open',
       componentName: EmailAdviceComponent
     };
+    fragmentData.data={
+      selectedAssetData:this.selectedAssetData,
+      flagData:data
+    }
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);

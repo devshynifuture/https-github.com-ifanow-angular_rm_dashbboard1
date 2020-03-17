@@ -13,8 +13,7 @@
 </div>
 <div [formGroup]="recuringDeposit" class="pt-100 pl-24 pr-24 pb-48 mb-44">
     <div formArrayName="getCoOwnerName">
-        <div class="row pt-36"
-            *ngFor="let obj of recuringDeposit.controls['getCoOwnerName'].controls; let pointIndex=index"
+        <div class="row" *ngFor="let obj of recuringDeposit.controls['getCoOwnerName'].controls; let pointIndex=index"
             [formGroupName]="pointIndex">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8 ">{{pointIndex != 0?'Co-o' : 'O'}}wner{{pointIndex != 0?pointIndex:''}}</h5>

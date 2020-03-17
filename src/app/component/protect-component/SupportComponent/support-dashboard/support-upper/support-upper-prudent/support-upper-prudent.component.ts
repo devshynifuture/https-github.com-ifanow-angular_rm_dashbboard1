@@ -52,9 +52,10 @@ export class SupportUpperPrudentComponent implements OnInit {
         )
       )
       .subscribe(data => {
+        this.apiCallingStack = [];
         this.filteredSchemes = data;
         console.log("this is what i need::::::::", data);
-        if (this.supportUpperService.checkIfDataNotPresentAndShowError(data)) {
+        if (data && data.length > 0) {
           this.errorMsg = 'No Data Found';
         } else {
           this.errorMsg = '';
@@ -96,19 +97,12 @@ export class SupportUpperPrudentComponent implements OnInit {
     element.njCount = scheme.njCount;
   }
 
-  checkIfDataNotPresentAndShowError(data) {
-    if (data && data.length > 0) {
-      this.filteredSchemeError = false;
-    } else {
-      this.filteredSchemeError = true;
-      this.errorMsg = 'No data Found';
-    }
-  }
-
   getFilteredSchemesList(value) {
     if (value === '') {
       let threeWords = this.supportUpperService.getThreeWordsOfSchemeName(this.selectedElement);
-      return this.supportUpperService.getFilteredSchemes({ scheme: threeWords });
+      if (this.apiCallingStack[1] !== threeWords) {
+        return this.supportUpperService.getFilteredSchemes({ scheme: threeWords });
+      }
     } else {
       return this.supportUpperService.getFilteredSchemes({ scheme: value });
     }

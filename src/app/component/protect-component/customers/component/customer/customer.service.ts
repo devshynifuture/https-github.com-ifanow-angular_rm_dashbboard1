@@ -633,6 +633,9 @@ export class CustomerService {
   generateGroupId(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.GENERATE_GROUP_ID, data)
   }
+  consentBypass(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.CONSENT_BYPASS_POST, data)
+  }
   getAdviceConsent(data) {
     let httpParams = new HttpParams().set('adviceUuid', data);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_CONSENT, httpParams);

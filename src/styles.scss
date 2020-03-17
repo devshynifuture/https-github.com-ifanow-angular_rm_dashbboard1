@@ -61,6 +61,52 @@
                   color: #83959D;
                 }
 
+                .menuAccordion {
+
+                  .mat-expansion-panel-header:not([aria-disabled=true]) {
+                    cursor: pointer;
+                    margin-right: 0px;
+                    padding-right: 20px;
+                    // height: 48px !important;
+                  }
+
+                  .mat-expansion-indicator {
+                    transform: rotate(90deg);
+                  }
+
+                  .mat-expansion-panel {
+                    padding: 0px !important;
+                    height: auto !important;
+                  }
+
+                  .mat-expansion-panel-body {
+                    padding: 0px !important;
+                  }
+
+                  .mat-expansion-panel {
+                    box-shadow: none;
+                  }
+
+                  .mat-expansion-panel-header {
+                    padding: 0px;
+                    padding-right: 20px;
+                    margin-right: 0px;
+                  }
+
+
+                  .sidenav-link:hover,
+                  .sidenav-link:active,
+                  .sidenav-link:focus {
+                    background: transparent !important;
+
+                    .mat-ripple-element {
+                      width: 0px !important;
+                      background-color: transparent !important;
+                    }
+                  }
+                }
+
+
                 #earphones-menu {
                   .mat-menu-item {
                     height: 65px !important;
@@ -1154,6 +1200,9 @@
                 }
 
                 .real-estate,
+                .gold,
+                .other,
+                .superannuation,
                 .mutualfunds-capital-equity,
                 .mutualfunds-capital-debt,
                 .mutualfunds-capital-dividend-summary,

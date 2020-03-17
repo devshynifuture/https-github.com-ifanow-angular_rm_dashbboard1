@@ -46,7 +46,7 @@
         </div>
     </div>
     <div class="mt-8 p-0 col-md-12 real-estate">
-        <div [ngClass]="{'table-scroll':isLoading==false }">
+        <div class="overflow-hidden" [ngClass]="{'table-scroll':isLoading==false }">
             <table *ngIf="datasource3.filteredData.length > 0" matSort mat-table [dataSource]="datasource3"
                 id="table-low" class=" skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no">
