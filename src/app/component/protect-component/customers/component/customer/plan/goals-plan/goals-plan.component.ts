@@ -204,7 +204,6 @@ export class GoalsPlanComponent implements OnInit {
 
   loadSelectedGoalData(goalData) {
     this.selectedGoal = goalData;
-    this.selectedGoal = this.allGoals[0];
   }
 
   deleteGoal(goal) {
