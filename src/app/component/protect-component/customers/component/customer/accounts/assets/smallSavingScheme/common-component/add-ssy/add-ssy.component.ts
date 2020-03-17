@@ -49,17 +49,23 @@ export class AddSsyComponent implements OnInit {
     }
   @Input() popupHeaderText: string = 'Add Sukanya samriddhi yojana (SSY)';
   adviceShowHeaderAndFooter: boolean = true;
+  DOB: any;
 
   constructor(private dateFormatPipe: DatePipe, public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService, private datePipe: DatePipe) { }
 
   @Input()
   set data(data) {
+    this.clientId = AuthService.getClientId();
+    this.isOptionalField = true
+    this.advisorId = AuthService.getAdvisorId();
+    this.getdataForm(data);
     this.inputData = data;
   }
   display(value) {
     console.log('value selected', value)
     this.ownerName = value;
-    this.familyMemberId = value.id
+    this.familyMemberId = value.id;
+    this.DOB = value.dateOfBirth;
   }
   lisNominee(value) {
     console.log(value)
@@ -101,7 +107,9 @@ export class AddSsyComponent implements OnInit {
       nominees: this.nominees,
       agentName: [data.agentName]
     })
+    this.DOB = data.dateOfBirth
     this.ownerData = this.ssySchemeForm.controls;
+    this.familyMemberId = data.familyMemberId;
   }
   ngOnInit() {
     if (this.data && this.data.flag) {
@@ -109,10 +117,6 @@ export class AddSsyComponent implements OnInit {
     } else {
       this.adviceShowHeaderAndFooter = true;
     }
-    this.clientId = AuthService.getClientId();
-    this.isOptionalField = true
-    this.advisorId = AuthService.getAdvisorId();
-    this.getdataForm(this.data);
   }
   moreFields() {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true
@@ -179,7 +183,7 @@ export class AddSsyComponent implements OnInit {
             "frequency": this.ssySchemeForm.get('futureAppx').value,
           }],
           "ssyTransactionList": finalTransctList,
-          'familyMemberDob': this.dateFormatPipe.transform(this.ownerName.dateOfBirth, 'dd/MM/yyyy')
+          'familyMemberDob': this.dateFormatPipe.transform(this.DOB, 'dd/MM/yyyy')
         }
         this.cusService.editSSYData(obj).subscribe(
           data => this.addSSYSchemeResponse(data),

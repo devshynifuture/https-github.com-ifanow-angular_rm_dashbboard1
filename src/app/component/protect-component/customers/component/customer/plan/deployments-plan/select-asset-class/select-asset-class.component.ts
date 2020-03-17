@@ -25,7 +25,7 @@ export class SelectAssetClassComponent implements OnInit {
       amount:[(!data) ? '' : data.amount, [Validators.required]]
     });
   }
-  close() {
-    this.dialogRef.close()
+  close(flag) {
+    this.dialogRef.close({isRefreshRequired:flag})
   }
 }

@@ -59,10 +59,17 @@ export class AdviceRealAssetComponent implements OnInit {
     let realEstateData=data.REAL_ESTATE;
     realEstateData.forEach(element => {
       var asset=element.AssetDetails;
-      element.AdviceList.forEach(obj => {
-        obj.assetDetails=asset;
+      if(element.AdviceList.length>0){
+        element.AdviceList.forEach(obj => {
+          obj.assetDetails=asset;
+          filterdData.push(obj);
+        });
+      }else{
+        const obj={
+          assetDetails:asset
+        }
         filterdData.push(obj);
-      });
+      }
     });
     this.dataSource = new MatTableDataSource(filterdData);
     this.dataSource['tableFlag'] = (data.REAL_ESTATE.length == 0) ? false : true;

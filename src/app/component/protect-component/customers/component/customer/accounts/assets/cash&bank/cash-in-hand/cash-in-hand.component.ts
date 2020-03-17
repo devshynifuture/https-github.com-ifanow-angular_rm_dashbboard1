@@ -105,8 +105,7 @@ export class CashInHandComponent implements OnInit {
       familyMemberId: [[(data.familyMemberId == undefined) ? '' : data.familyMemberId],]
     });
     this.ownerData = this.cashInHand.controls;
-    this.familyMemberId = this.cashInHand.controls.familyMemberId.value;
-    this.familyMemberId = this.familyMemberId[0];
+    this.familyMemberId = data.familyMemberId;
   }
 
   getFormControl(): any {
@@ -164,13 +163,13 @@ export class CashInHandComponent implements OnInit {
   }
   addCashInHandRes(data) {
     console.log('addrecuringDepositRes', data);
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data: 2, refreshRequired: true });
     this.eventService.openSnackBar('Cash in hand added successfully', 'OK');
 
   }
 
   editCashInHandRes(data) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data: 2, refreshRequired: true });
     this.eventService.openSnackBar('Cash in hand edited successfully', 'OK');
 
   }

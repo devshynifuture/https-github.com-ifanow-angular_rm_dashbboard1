@@ -89,8 +89,8 @@ export class SsySchemeComponent implements OnInit {
     if (data == undefined) {
       this.noData = 'No scheme found';
       this.datasource.data = [];
-    }else if (data && data.SSYList.length != 0) {
-      console.log('getSsySchemedataResponse',data);
+    } else if (data && data.SSYList.length != 0) {
+      console.log('getSsySchemedataResponse', data);
       this.datasource.data = data.SSYList;
       this.datasource.sort = this.sort;
       UtilService.checkStatusId(this.datasource.filteredData);
@@ -115,7 +115,7 @@ export class SsySchemeComponent implements OnInit {
       positiveMethod: () => {
         this.cusService.deleteSSY(data.id).subscribe(
           data => {
-            this.eventService.openSnackBar('SSY is deleted', 'Dismiss');
+            this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             dialogRef.close();
             this.getSsySchemedata();
           },
@@ -149,7 +149,7 @@ export class SsySchemeComponent implements OnInit {
       state: (flag == 'detailedSsy') ? 'open35' : 'open',
       componentName: (flag == 'detailedSsy') ? DetailedSsyComponent : AddSsyComponent
     };
-    if(flag != 'detailedSsy') {
+    if (flag != 'detailedSsy') {
       fragmentData['popupHeaderText'] = popupHeaderText;
     }
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

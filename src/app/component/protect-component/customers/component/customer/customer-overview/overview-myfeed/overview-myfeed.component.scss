@@ -1,5 +1,5 @@
 .myfeedWrapper {
-    margin: 15px auto 0;
+    margin: 42px auto 0;
     width: 78%;
     .row {
         margin-right: -15px !important;
@@ -161,4 +161,19 @@
 
 .paddleft30 {
     padding-left: 30px;
+}
+
+.scrolling_myFeed {
+    height: 500px;
+    overflow-y: scroll;
+}
+
+::ng-deep .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+    line-height: 30px !important;
+    padding: 0 !important;
+    font-size: 14px;
+}
+
+::ng-deep .matToggleToggle button {
+    height: 30px !important;
 }
