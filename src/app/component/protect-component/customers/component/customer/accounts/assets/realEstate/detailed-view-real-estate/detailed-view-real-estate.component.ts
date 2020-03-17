@@ -24,8 +24,9 @@ export class DetailedViewRealEstateComponent implements OnInit {
     console.log('AddLiabilitiesComponent Input data : ', this._data);
     this.realEstate = this._data
     this.nominee = this._data.nominees;
-    this.owners = this._data.realEstateOwners.filter(element => element.ownerName != this.realEstate.ownerName);
-
+    if (this.realEstate.ownerName) {
+      this.owners = this._data.realEstateOwners.filter(element => element.ownerName != this.realEstate.ownerName);
+    }
   }
 
   get data() {
