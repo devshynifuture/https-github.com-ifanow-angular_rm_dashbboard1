@@ -184,12 +184,18 @@ export class RecuringDepositComponent implements OnInit {
     
   }
   /***nominee***/ 
-  formData:any;
+  formData:any={data : null, list:[]};
+  memberList:any = [];
   getlist(arrayData){
     console.log(arrayData,"arrayData 123", this.getCoOwner);
-    this.getCoOwner.controls = arrayData.owner;
-    this.getNominee.controls = arrayData.nominee;
-    this.formData = this.recuringDeposit;
+    this.memberList = arrayData.memberList
+    if(arrayData.type == "owner"){
+      this.getCoOwner.controls = arrayData.owner;
+    }
+    if(arrayData.type == "nomi"){
+      this.getNominee.controls = arrayData.nominee;
+    }
+    this.formData = {data:this.recuringDeposit, list: this.memberList};
   }
   // ===================owner-nominee directive=====================//
 
@@ -227,8 +233,9 @@ export class RecuringDepositComponent implements OnInit {
     this.recuringDeposit = this.fb.group({
       getCoOwnerName: this.fb.array([this.fb.group({
         name: ['',[Validators.required]],
-        share: ['',[Validators.required]],
-        familyMemberId: null
+        share: [0,[Validators.required]],
+        familyMemberId: [0],
+        id:[0]
       })]),
       // ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       monthlyContribution: [(data == undefined) ? '' : data.monthlyContribution, [Validators.required]],
@@ -278,9 +285,10 @@ if(data.nomineeList){
   });
 }
 /***nominee***/ 
+this.formData= {data:this.recuringDeposit, list: this.memberList};
 
 this.ownerData = {Fmember: this.nomineesListFM, controleData:this.recuringDeposit}
-this.formData = this.recuringDeposit;
+// this.formData = this.recuringDeposit;
 // ==============owner-nominee Data ========================\\
     if (data != undefined) {
       this.familyMemberId = this.recuringDeposit.controls.familyMemberId.value
@@ -349,6 +357,15 @@ this.formData = this.recuringDeposit;
         // nominees: this.nominees,
         id: this.recuringDeposit.value.id
       }
+
+      obj.nomineeList.forEach(element => {
+        if(element.name == ''){
+          obj.nomineeList= [];
+        }
+        else{
+          obj.nomineeList= this.recuringDeposit.value.getNomineeName;
+        }
+      });
       console.log('recuringDeposit', obj)
       this.dataSource = obj;
       let adviceObj = {
