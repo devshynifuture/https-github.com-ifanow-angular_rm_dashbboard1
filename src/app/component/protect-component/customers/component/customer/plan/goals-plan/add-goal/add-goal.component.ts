@@ -259,16 +259,7 @@ export class AddGoalComponent implements OnInit {
         break;
     }
   }
-
-  getAssetClass(allocated_percentage) {
-    if(allocated_percentage == 100) {
-      return 'btn-danger';
-    } else if(allocated_percentage > 0) {
-      return 'btn-success';
-    } else {
-      return 'btn-primary';
-    }
-  }
+  
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }

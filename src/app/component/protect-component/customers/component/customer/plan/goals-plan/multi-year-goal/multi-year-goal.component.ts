@@ -3,14 +3,15 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { FormBuilder, Validators, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { PlanService } from '../../plan.service';
-import { UtilService } from 'src/app/services/util.service';
 import { debounceTime } from 'rxjs/operators';
 import { Options } from 'ng5-slider';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-multi-year-goal',
   templateUrl: './multi-year-goal.component.html',
-  styleUrls: ['./multi-year-goal.component.scss']
+  styleUrls: ['./multi-year-goal.component.scss'],
+  providers: [DatePipe]
 })
 export class MultiYearGoalComponent implements OnInit {
   Questions: any;
@@ -38,7 +39,7 @@ export class MultiYearGoalComponent implements OnInit {
     private eventService: EventService, 
     private fb: FormBuilder, 
     private planService: PlanService, 
-    private utilService: UtilService
+    private datePipe: DatePipe
   ) { }
 
   @Input() goalTypeData:any = {};
@@ -54,71 +55,46 @@ export class MultiYearGoalComponent implements OnInit {
     this.Questions = this.goalTypeData.questions;
     this.planForFamily = !!this.goalTypeData.questions.Q; // Plan for family question present or not
     this.initializeForm();
+    this.setDefaultOwner();
     this.listenToYearRange();
   }
   
   selectOwnerAndUpdateForm(value) {
     this.setMinMaxAgeOrYear(value);
     this.multiYearGoalForm.controls.field2.setValidators([Validators.required])
-    this.multiYearGoalForm.controls.field2.setValue([this.minAgeYear, this.minAgeYear + 1]);
+    this.multiYearGoalForm.controls.field2.setValue([this.minAgeYear + this.goalTypeData.defaults.gap, this.minAgeYear + this.goalTypeData.defaults.gap*2]);
     this.multiYearGoalForm.updateValueAndValidity();
   }
   
+
+  // TODO:- recheck about the input params to be sent
   createGoalObj() {
     let obj = {
       "clientId": this.clientId,
       "advisorId": this.advisorId,
       "goalName": this.multiYearGoalForm.get('field4').value,
       "notes": this.multiYearGoalForm.get('field5').value,
-      "imageUrl": this.logoImg
+      "imageUrl": this.logoImg,
+      "goalType": this.goalTypeData.id,
     }
 
-    /**
-     * 2 - house
-     * 3 - car
-     * 4 - marriage
-     * 7 - emergency
-     * 8 - wealth creation
-     * 9 - big spend
-     * 10 - others
-     */
-    if([2,4,8].includes(this.goalTypeData.id)) {
-      obj['planningThisForId'] = this.multiYearGoalForm.get('field1').value.id;
-      obj['clientOrFamilyMember'] = (this.multiYearGoalForm.get('field1').value.relationshipId === 0) ? 1 : 2;
-    }
-    if([2,3,4,8].includes(this.goalTypeData.id)) {
-      obj['currentAge'] = this.multiYearGoalForm.get('field1').value.age;
-    }
-    if([2,3,4,9,10].includes(this.goalTypeData.id)) {
-      obj['goalPresentValue'] = this.multiYearGoalForm.get('field3').value;
-    }
+    switch(this.goalTypeData.id) {
+      case 5: // Vacation
+        obj['planningThisForId'] = this.multiYearGoalForm.get('field1').value.id;
+        // obj['planningforGroupHead'] = this.multiYearGoalForm.get('field1').value.id;
+        obj['ageAttheStartofTheCourse'] = this.multiYearGoalForm.get('field2').value[0];
+        obj['ageAtTheEndofTheCourse'] = this.multiYearGoalForm.get('field2').value[1];
+        obj['goalAdditionDate'] = this.datePipe.transform(new Date(), 'yyyy-MM-dd')
+        break;
 
-    switch (this.goalTypeData.id) {
-      case 2: // House
-        obj['whatAgeBuyHouse'] = this.multiYearGoalForm.get('field2').value;
+      case 6: // Education
+        obj['planningThisForId'] = this.multiYearGoalForm.get('field1').value.id;
+        // obj['planningforGroupHead'] = this.multiYearGoalForm.get('field1').value.id;
+        obj['vacationStartYr'] = this.multiYearGoalForm.get('field2').value[0];
+        obj['vacationEndYr'] = this.multiYearGoalForm.get('field2').value[1];
+        obj['goalAdditionDate'] = this.datePipe.transform(new Date(), 'yyyy-MM-dd')
         break;
-      case 3: // Car
-        obj['whatAgeBuyCar'] = this.multiYearGoalForm.get('field2').value;
-        break;
-      case 4: // Marriage
-        obj['marryAtAge'] = this.multiYearGoalForm.get('field2').value;
-        break;
-      case 7: // Emergency
-        obj['goalTargetInMonth'] = this.multiYearGoalForm.get('field2').value;
-        obj['goalFV'] = this.multiYearGoalForm.get('field3').value;
-        break;
-      case 8: // Wealth Creation
-        obj['goalTargetAge'] = this.multiYearGoalForm.get('field2').value;
-        obj['goalFV'] = this.multiYearGoalForm.get('field3').value;
-        break;
-      case 9: // Big Spends
-        obj['goalStartDate'] = this.multiYearGoalForm.get('field2').value;
-        break;
-      case 10: // Others
-        obj['goalStartDate'] = this.multiYearGoalForm.get('field2').value;
-        break;
-      default:
-        console.error('unknown goal id found')
+      
     }
     return obj;
   }
@@ -168,18 +144,20 @@ export class MultiYearGoalComponent implements OnInit {
       field2: [[0, 20], [Validators.required]], // age or time
       // cumulated or detailed spending - cumulated will have single controller in array while detailed will have many.
       detailedSpendings: this.fb.array([
-        new FormControl('', [Validators.required, Validators.min(this.goalTypeData.validations.minCost), Validators.max(this.goalTypeData.validations.maxCost)])
+        new FormControl(this.goalTypeData.defaults.cost, [Validators.required, Validators.min(this.goalTypeData.validations.minCost), Validators.max(this.goalTypeData.validations.maxCost)])
       ]),
       field4: [''], // goal name
       field5: [''],  // goal description
       logo: ['']
     });
 
-    if(this.planForFamily) {
-      this.multiYearGoalForm.addControl('field1', new FormControl('', Validators.required)); // who the goal is for
-    }
-    this.setMinMaxAgeOrYear(this.familyList[0]);
-    this.selectOwnerAndUpdateForm(this.familyList[0]); //set client as the initial owner
+    this.multiYearGoalForm.addControl('field1', new FormControl('', Validators.required)); // who the goal is for
+  }
+
+  setDefaultOwner(){
+    let owner = this.familyList.find((member) => this.goalTypeData.defaults.planningForRelative.includes(member.relationshipId));
+    this.multiYearGoalForm.controls.field1.setValue(owner);
+    this.selectOwnerAndUpdateForm(owner);
   }
 
   listenToYearRange(){
