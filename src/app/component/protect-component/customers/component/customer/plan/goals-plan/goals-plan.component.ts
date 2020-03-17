@@ -37,7 +37,6 @@ export class GoalsPlanComponent implements OnInit {
     advisorId:'',
     clientId:''
   }
-  dashboardData: any;
   selectedGoal:any;
   allGoals: any[] = [
     {
@@ -233,13 +232,13 @@ export class GoalsPlanComponent implements OnInit {
   deleteGoal(goal) {
     const dialogData = {
       header: 'DELETE',
-      body: 'Are you sure you want to delete?',
+      body: 'Are you sure you want to delete this goal?',
       body2: 'This cannot be undone.',
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
         let deleteObj = {
-          goalId: goal.id,
+          goalId: this.selectedGoal.id,
         }
         this.plansService.deleteGoal(deleteObj).subscribe((data)=>{
           this.eventService.openSnackBar("Goal has been deleted successfully", "Dismiss");
