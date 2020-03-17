@@ -54,10 +54,39 @@ export class TexesPlanComponent implements OnInit {
           // this.getQuotationsList();
 
         }
-       // rightSideDataSub.unsubscribe();
+        // rightSideDataSub.unsubscribe();
       }
     );
   }
+
+  openIncomeSalary(value) {
+    const fragmentData = {
+      flag: value,
+      id: 1,
+      state: 'open35',
+      componentName: EditApplicableTaxComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isRefreshRequired(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ');
+          // this.getQuotationsList();
+
+        }
+        // rightSideDataSub.unsubscribe();
+      }
+    );
+  }
+
+
+
+
+
+
+
+
+
 }
 export interface PeriodicElement {
   name: string;

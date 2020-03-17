@@ -12,8 +12,9 @@
     </div>
 </div>
 <div [formGroup]="recuringDeposit" class="pt-100 pl-24 pr-24 pb-48 mb-44">
-    <div formArrayName="getCoOwnerName" >
-        <div class="row pt-36" *ngFor="let obj of recuringDeposit.controls['getCoOwnerName'].controls; let pointIndex=index"
+    <div formArrayName="getCoOwnerName">
+        <div class="row pt-36"
+            *ngFor="let obj of recuringDeposit.controls['getCoOwnerName'].controls; let pointIndex=index"
             [formGroupName]="pointIndex">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8 ">{{pointIndex != 0?'Co-o' : 'O'}}wner{{pointIndex != 0?pointIndex:''}}</h5>
@@ -21,10 +22,12 @@
             <div class="pr-0" [ngClass]="recuringDeposit.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select appOwnerNominee matInput
-                            formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'owner')" (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod] = 'callMethod' >
+                        <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
+                            (selectionChange)="disabledMember($event.value,'owner')"
+                            (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)'
+                            class="form-control br-0" [callMethod]='callMethod'>
                             <mat-option value=''>Select family members</mat-option>
-                            <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"   [value]="f.userName">
+                            <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
                                 <span>{{f.userName}}</span>
                             </mat-option>
                         </mat-select>
@@ -37,8 +40,8 @@
             <div class="col-md-2" *ngIf="recuringDeposit.value.getCoOwnerName.length > 1">
                 <div class="form-group mb-0 iconPetage">
                     <mat-form-field>
-                        <input matInput class="form-control br-0 percentage" type="number"
-                            formControlName="share" (focusout)="onChangeJointOwnership('owner')">
+                        <input matInput class="form-control br-0 percentage" type="number" formControlName="share"
+                            (focusout)="onChangeJointOwnership('owner')">
                         <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('required')">
                             This field is required
                         </mat-error>
@@ -50,7 +53,7 @@
             </div>
         </div>
     </div>
-    <!-- <app-owner-nominee [coOwner]="true" [coNominee]="false" (coGroup)="getlist($event)"></app-owner-nominee> -->
+    <!-- <app-owner-nominee [coOwner]="true" [coNominee]="false" (coGroup)="getlist($event)" [formData] = "formData"></app-owner-nominee> -->
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-12">Monthly contrubution</h5>
@@ -116,8 +119,9 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" (click)="picker.open()" matInput matInput formControlName="commencementDate" [max]="maxDate"
-                        class="form-control br-0" [matDatepicker]="picker" readonly>
+                    <input autocomplete="off" (click)="picker.open()" matInput matInput
+                        formControlName="commencementDate" [max]="maxDate" class="form-control br-0"
+                        [matDatepicker]="picker" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-error class="f-12"
@@ -149,7 +153,9 @@
                         class="f-12">
                         This field is required
                     </mat-error>
-                    <mat-error *ngIf="recuringDeposit.get('tenure').errors?.max || recuringDeposit.get('tenure').errors?.min" class="f-12">
+                    <mat-error
+                        *ngIf="recuringDeposit.get('tenure').errors?.max || recuringDeposit.get('tenure').errors?.min"
+                        class="f-12">
                         Should be between than 1 to 120
                     </mat-error>
                 </mat-form-field>
@@ -176,9 +182,9 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input autocomplete="off" matInput #rdNo type="text" (keypress)="keyPressRdNumber($event)"
-                            maxlength="20" class="form-control br-0" formControlName="rdNo">
+                            maxlength="18" class="form-control br-0" formControlName="rdNo">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
-                        <mat-hint align="end" class="f-12">{{rdNo.value.length}}/20</mat-hint>
+                        <mat-hint align="end" class="f-12">{{rdNo.value.length}}/18</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -236,8 +242,9 @@
         </div>
         <!-- <app-add-nominee [ownerName]="ownerName" [data]="depoData" (outputEvent)="getFormDataNominee($event)">
         </app-add-nominee> -->
-        <div formArrayName="getNomineeName" >
-            <div class="row pt-36" *ngFor="let obj of recuringDeposit.controls['getNomineeName'].controls; let pointIndex=index"
+        <div formArrayName="getNomineeName">
+            <div class="row pt-36"
+                *ngFor="let obj of recuringDeposit.controls['getNomineeName'].controls; let pointIndex=index"
                 [formGroupName]="pointIndex">
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
@@ -245,14 +252,16 @@
                 <div class="pr-0" [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <mat-select appOwnerNominee matInput
-                                formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'nominee')" (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod] = 'callMethod' >
+                            <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
+                                (selectionChange)="disabledMember($event.value,'nominee')"
+                                (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
                                 <mat-option value='' disabled>Select family members</mat-option>
-                                <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"   [value]="f.userName">
+                                <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
+                                    [value]="f.userName">
                                     <span>{{f.userName}}</span>
                                 </mat-option>
                             </mat-select>
-                            <mat-error class="f-12" >
+                            <mat-error class="f-12">
                                 This field is required
                             </mat-error>
                         </mat-form-field>
@@ -263,7 +272,7 @@
                         <mat-form-field>
                             <input matInput class="form-control br-0 percentage" type="number"
                                 formControlName="sharePercentage" (focusout)="onChangeJointOwnership('nominee')">
-                            
+
                             <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('incorrect') ">
                                 Total percent should be 100%
                             </mat-error>
@@ -271,14 +280,15 @@
                     </div>
                 </div>
                 <div class="col-md-2 p-0 d-flex align-items-center">
-                    <i class="material-icons text-primitive f-20 c-p float-left" (click)="addNewNominee(undefined)">add</i>
+                    <i class="material-icons text-primitive f-20 c-p float-left"
+                        (click)="addNewNominee(undefined)">add</i>
                     <i *ngIf="pointIndex!=0" class="material-icons text-primitive f-20 c-p pl-10 pt-8"
-                    (click)="removeNewNominee(pointIndex)">remove</i>
+                        (click)="removeNewNominee(pointIndex)">remove</i>
                 </div>
-               
+
             </div>
         </div>
-        <!-- <app-owner-nominee [coOwner]="false" [coNominee]="true" (coGroup)="getlist($event)"></app-owner-nominee> -->
+        <!-- <app-owner-nominee [coOwner]="false" [coNominee]="true" (coGroup)="getlist($event)" [formData]="formData"></app-owner-nominee> -->
     </div>
 </div>
 <div class="bottom-fixed wrapper-12 pt-16" *ngIf="adviceShowHeaderAndFooter">

@@ -45,7 +45,7 @@ export class FixedDepositComponent implements OnInit {
   isFdNo = false;
   // isTenure = false;
   isInstitution = false;
-  fixedDeposit: any;
+  fixedDeposit;
   advisorId: any;
   dataSource: any;
   family: Observable<string[]>;
@@ -290,16 +290,16 @@ export class FixedDepositComponent implements OnInit {
       amountInvest: [(!data) ? '' : data.amountInvested, [Validators.required]],
       commencementDate: [(!data) ? '' : new Date(data.commencementDate), [Validators.required]],
       interestRate: [(!data) ? '' : data.interestRate, [Validators.required]],
-      maturity: [!data.maturity ? 1 : data.maturity, [Validators.required]],
+      maturity: [!data.fdEndDateIn ? 1 : data.fdEndDateIn, [Validators.required]],
       compound: [(!data.interestCompoundingId) ? '' : data.interestCompoundingId],
       ownerPercent: [data.ownerPerc],
       institution: [(!data) ? '' : data.institutionName],
       description: [(!data) ? '' : data.description],
-      tenureY: [(!data.tenureInYear) ? '0' : data.tenureInYear.toString()],
-      tenureM: [(!data.tenureInMonth) ? '0' : data.tenureInMonth.toString()],
-      tenureD: [(!data.tenureInDay) ? '0' : data.tenureInDay.toString()],
+      tenureY: [(!data.tenureInYear) ? '0' : (data.fdEndDateIn == 2) ? '' : data.tenureInYear.toString()],
+      tenureM: [(!data.tenureInMonth) ? '0' : (data.fdEndDateIn == 2) ? '' : data.tenureInMonth.toString()],
+      tenureD: [(!data.tenureInDay) ? '0' : (data.fdEndDateIn == 2) ? '' : data.tenureInDay.toString()],
       frequencyOfPayoutPerYear: [(!data.frequencyOfPayoutPerYear) ? '' : data.frequencyOfPayoutPerYear],
-      maturityDate: [(!data) ? '' : new Date(data.maturityDate)],
+      maturityDate: [(!data) ? '' : (data.fdEndDateIn == 1) ? '' : new Date(data.maturityDate)],
       payOpt: [(!data.interestPayoutOption) ? '' : data.interestPayoutOption, [Validators.required]],
       bankACNo: [(!data) ? '' : data.bankAcNumber],
       fdNo: [(!data) ? '' : data.fdNumber],
@@ -421,6 +421,17 @@ export class FixedDepositComponent implements OnInit {
           err => this.event.openSnackBar(err, "Dismiss")
         );
       }
+    }
+  }
+  getMaturityDate(data) {
+    console.log(data)
+    if (data.value == '1') {
+      this.fixedDeposit.get('tenureY').setValue('0');
+      this.fixedDeposit.get('tenureM').setValue('0');
+      this.fixedDeposit.get('tenureD').setValue('0');
+    }
+    else {
+      this.fixedDeposit.get('maturityDate').reset();
     }
   }
   getAdviceFdRes(data) {

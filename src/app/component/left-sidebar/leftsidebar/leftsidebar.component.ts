@@ -123,20 +123,20 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     // document.getElementById('d').classList.add('width-230');
     // document.getElementById('left').classList.remove('width-60');
     // document.getElementById('left').style.marginLeft = "230px";
-   
+
     document.getElementById('left').style.transition = "0.2s";
     this.showTabs = true;
     this.arrow = false;
- //   console.log("i was call left bar 3");
+    //   console.log("i was call left bar 3");
 
   }
 
   showsmallNavWrapper() {
     // document.getElementById('d').classList.remove('width-230');
-    
+
     document.getElementById('left').style.transition = "0.2s";
     console.log("i was call left bar");
-    
+
     this.showTabs = false;
     // this.arrow = false;
   }
