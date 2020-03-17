@@ -5,6 +5,8 @@ import { CustomerOverviewRoutingModule } from './customer-overview-routing.modul
 import { CustomerOverviewComponent } from './customer-overview.component';
 import { MaterialModule } from 'src/app/material/material';
 import { CustomerOverviewEntryModule } from './customer-overview-entry-module';
+import { MatButtonToggleModule, MatExpansionModule } from '@angular/material';
+
 
 
 @NgModule({
@@ -14,7 +16,9 @@ import { CustomerOverviewEntryModule } from './customer-overview-entry-module';
     MaterialModule,
     CustomerOverviewRoutingModule,
     CustomerOverviewEntryModule,
-    MaterialModule
+    MatButtonToggleModule,
+    MatExpansionModule
+
   ]
 })
 export class CustomerOverviewModule { }

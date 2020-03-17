@@ -122,7 +122,7 @@ export class NscSchemeComponent implements OnInit {
       positiveMethod: () => {
         this.cusService.deleteNSC(data.id).subscribe(
           data => {
-            this.eventService.openSnackBar('NSC is deleted', 'Dismiss');
+            this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             dialogRef.close();
             this.getNscSchemedata();
           },
@@ -155,7 +155,7 @@ export class NscSchemeComponent implements OnInit {
       state: (flag == 'detailedNsc') ? 'open35' : 'open',
       componentName: (flag == 'detailedNsc') ? DetailedNscComponent : AddNscComponent
     };
-    if(flag != 'detailedNsc') {
+    if (flag != 'detailedNsc') {
       fragmentData['popupHeaderText'] = popupHeaderText;
     }
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

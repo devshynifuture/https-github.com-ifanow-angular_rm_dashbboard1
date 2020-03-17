@@ -174,16 +174,23 @@ export class RecuringDepositComponent implements OnInit {
   
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
-      name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : ''], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+      name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
     }));
     if (!data || this.getNominee.value.length < 1) {
       for (let e in this.getNominee.controls) {
-        this.getNominee.controls[e].get('sharePercentage').setValue('');
+        this.getNominee.controls[e].get('sharePercentage').setValue(0);
       }
     }
     
   }
   /***nominee***/ 
+  formData:any;
+  getlist(arrayData){
+    console.log(arrayData,"arrayData 123", this.getCoOwner);
+    this.getCoOwner.controls = arrayData.owner;
+    this.getNominee.controls = arrayData.nominee;
+    this.formData = this.recuringDeposit;
+  }
   // ===================owner-nominee directive=====================//
 
  
@@ -234,13 +241,13 @@ export class RecuringDepositComponent implements OnInit {
       bankName: [(data == undefined) ? '' : data.bankName,],
       // ownerType: [(data == undefined) ? '' : (data.ownershipType) + "", [Validators.required]],
       rdNo: [(data == undefined) ? '' : data.rdNumber,],
-      id: [(data == undefined) ? '' : data.id,],
+      id: [(data == undefined) ? 0 : data.id,],
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId],],
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
-        sharePercentage: [''],
+        sharePercentage: [0],
         familyMemberId: [0],
-        id:['']
+        id:[0]
       })]),
     });
 
@@ -273,6 +280,7 @@ if(data.nomineeList){
 /***nominee***/ 
 
 this.ownerData = {Fmember: this.nomineesListFM, controleData:this.recuringDeposit}
+this.formData = this.recuringDeposit;
 // ==============owner-nominee Data ========================\\
     if (data != undefined) {
       this.familyMemberId = this.recuringDeposit.controls.familyMemberId.value
@@ -339,7 +347,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.recuringDeposi
         interestCompounding: this.recuringDeposit.controls.compound.value,
         nomineeList: this.recuringDeposit.value.getNomineeName,
         // nominees: this.nominees,
-        id: this.recuringDeposit.controls.id.value
+        id: this.recuringDeposit.value.id
       }
       console.log('recuringDeposit', obj)
       this.dataSource = obj;

@@ -80,11 +80,11 @@ export class AddAmountComponent implements OnInit {
     )
     console.log(obj)
     this.eventService.openSnackBar("Manage exclusion edited", "Dismiss");
-    this.close();
+    this.close(true);
     }
   }
-  close() {
-    this.dialogRef.close()
+  close(flag) {
+    this.dialogRef.close({isRefreshRequired:flag})
   }
   addExclusions(){
     // added for prod build

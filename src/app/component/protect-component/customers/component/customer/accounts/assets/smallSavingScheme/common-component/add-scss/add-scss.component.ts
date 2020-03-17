@@ -91,15 +91,16 @@ export class AddScssComponent implements OnInit {
       ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required, AssetValidationService.ageValidators(60)]],
       amtInvested: [data.amountInvested, [Validators.required, Validators.min(1000), Validators.max(1500000)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
-      ownershipType: [data.ownerTypeI ? String(data.ownerTypeId) : '2', [Validators.required]]
+      ownershipType: [(data.ownerTypeId) ? String(data.ownerTypeId) : '2', [Validators.required]]
     });
     this.scssOptionalSchemeForm = this.fb.group({
-      poBranch: [],
+      poBranch: [data.postOfficeBranch],
       nominees: this.nominees,
-      bankAccNumber: [],
+      bankAccNumber: [data.bankAccountNumber],
       description: [data.description]
     });
     this.ownerData = this.scssSchemeForm.controls;
+    this.familyMemberId = data.familyMemberId
   }
 
   moreFields() {
@@ -128,7 +129,7 @@ export class AddScssComponent implements OnInit {
         clientId: this.clientId,
         familyMemberId: this.familyMemberId,
         advisorId: this.advisorId,
-        ownerName: this.ownerName.userName,
+        ownerName: (this.ownerName == undefined) ? this.scssSchemeForm.controls.ownerName.value : this.ownerName.userName,
         amountInvested: this.scssSchemeForm.get('amtInvested').value,
         commencementDate: this.scssSchemeForm.get('commDate').value,
         postOfficeBranch: this.scssOptionalSchemeForm.get('poBranch').value,

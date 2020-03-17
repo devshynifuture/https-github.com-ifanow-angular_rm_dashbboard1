@@ -38,7 +38,7 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
     });
     this.deploymentList = lumpsum
     this.getDeploymentData(this.deploymentList);
-    
+
   }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -61,13 +61,13 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
     this.planService.getDeploymentDetailsdata(obj).subscribe(
       data => {
         this.isLoading = false;
-        console.log('deployment data -------------->',data);
+        console.log('deployment data -------------->', data);
         this.dataForAddAmount;
         this.dataSource = data;
-        this.dataForAddAmount={
-            EQUITY:this.dataSource.EQUITY,
-            DEBT:this.dataSource.DEBT
-          }
+        this.dataForAddAmount = {
+          EQUITY: this.dataSource.EQUITY,
+          DEBT: this.dataSource.DEBT
+        }
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
@@ -79,8 +79,8 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
   getMutualFundSchemeData() {
     this.planService.getMututalFundSchemeData().subscribe(
       data => {
-        console.log('Scheme LIst Get *********************---->',data)
-        this.schemeData=data
+        console.log('Scheme LIst Get *********************---->', data)
+        this.schemeData = data
       }
     )
   }
@@ -112,38 +112,37 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
       }
     )
   }
-  openPopup(value,data) {
+  openPopup(value, data) {
     let dialogRef
-    if(value=='addAmount'){
-      let sendData={
-        data:data,
-        dataForAddAmount:this.dataForAddAmount,
-        deploymentList:this.deploymentList
+    if (value == 'addAmount') {
+      let sendData = {
+        data: data,
+        dataForAddAmount: this.dataForAddAmount,
+        deploymentList: this.deploymentList
       }
       dialogRef = this.dialog.open(AddAmountComponent, {
         width: '600px',
         height: '300px',
         data: sendData
       });
-    }else if(value=='searchAndAdd'){
+    } else if (value == 'searchAndAdd') {
       dialogRef = this.dialog.open(SearchSchemeComponent, {
         width: '600px',
         height: '300px',
         data: value
       });
-    } else{
-      const dialogRef = this.dialog.open(SelectAssetClassComponent, {
+    } else {
+      dialogRef = this.dialog.open(SelectAssetClassComponent, {
         width: '600px',
         height: '300px',
         data: data
       });
     }
-
-
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.getDeploymentData(this.deploymentList);
-
+      if(result.isRefreshRequired){
+        this.getDeploymentData(this.deploymentList);
+      }
     });
 
   }

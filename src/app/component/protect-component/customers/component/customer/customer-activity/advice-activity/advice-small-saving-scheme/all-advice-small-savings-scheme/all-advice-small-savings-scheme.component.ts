@@ -10,6 +10,8 @@ import { AddPoMisComponent } from '../../../../accounts/assets/smallSavingScheme
 import { AddScssComponent } from '../../../../accounts/assets/smallSavingScheme/common-component/add-scss/add-scss.component';
 import { AddKvpComponent } from '../../../../accounts/assets/smallSavingScheme/common-component/add-kvp/add-kvp.component';
 import { AddNscComponent } from '../../../../accounts/assets/smallSavingScheme/common-component/add-nsc/add-nsc.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { ActiityService } from '../../../actiity.service';
 
 @Component({
   selector: 'app-all-advice-small-savings-scheme',
@@ -26,9 +28,29 @@ export class AllAdviceSmallSavingsSchemeComponent implements OnInit {
   dataSource3 = ELEMENT_DATA1;
   displayedColumns4: string[] = ['checkbox', 'name', 'desc','cvalue', 'advice', 'astatus', 'adate', 'icon'];
   dataSource4 = ELEMENT_DATA4;
-  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject) { }
+  advisorId: any;
+  clientId: any;
+  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject,private activityService:ActiityService) { }
   allAdvice = true
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    this.getAllAdviceByAsset();
+  }
+  getAllAdviceByAsset() {
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      assetCategory: 10,
+      adviceStatusId:0
+    }
+    this.activityService.getAllAsset(obj).subscribe(
+      data => this.getAllSchemeResponse(data), (error) => {
+      }
+    );
+  }
+  getAllSchemeResponse(data){
+    console.log(data);
   }
   openAddPPF(data) {
     const fragmentData = {
