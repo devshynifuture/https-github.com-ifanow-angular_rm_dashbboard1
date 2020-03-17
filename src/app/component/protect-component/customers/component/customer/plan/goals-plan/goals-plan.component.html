@@ -18,7 +18,7 @@
             </div>
 
             <div class="mt-8" *ngFor="let goal of allGoals" (click)="loadSelectedGoalData(goal)">
-                <div class="row br-2 bg-grey lter p-8 c-p b-primitive">
+                <div class="row bg-grey lter p-8 c-p br-2 b-primitive">
                     <div class="col-md-3 p-0">
                         <img class="maxWidth100" [src]="goal.img">
                     </div>
@@ -186,9 +186,10 @@
             
             </div>
         </div> -->
+
         <!-- house design -->
         <div class="col-width-78" *ngIf="allGoals.length > 0">
-            <div class="row br-2 bg-grey lter p-8 c-p b-primitive">
+            <div class="row bb-grey pt-28 pb-8">
                 <div class="col-md-12 p-0">
                     <h3 class="m-0 text-black f-500">New House - {{dummyDashBoardData.goalYear}}</h3>
                 </div>
@@ -248,7 +249,6 @@
                             <h5 class="m-0 pb-12">Allocations to this goal</h5>
                         </div>
                     </div>
-
                     <div class="row b-a bg-grey lter">
                         <div class="col-md-3 p-0">
                             <p class="roboto m-0 p-8 text-black f-500">Description </p>
@@ -375,7 +375,7 @@
                     </div>
                 </div>
                 <div class="col-width-31 pr-0 pt-20">
-                    <img [src]="selectedGoal.img" class="">
+                    <img [src]="selectedGoal.img" class="imgWidth">
 
                     <div class="btnBox">
                         <button mat-stroked-button class="in-btn" (click)="openInSideBar(null, 'openallocations')">
