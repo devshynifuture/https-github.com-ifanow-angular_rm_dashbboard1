@@ -94,7 +94,7 @@ export class VerifyMemberComponent implements OnInit {
         clientId: this.familyMemberData.clientId,
         advisorId: this.familyMemberData.advisorId,
         familyMemberId: this.familyMemberData.familyMemberId,
-        tpUserCredentialId: 292
+        //tpUserCredentialId: 292
       }
       this.onlineTransact.getClientCodes(obj).subscribe(
         data => {
@@ -108,6 +108,7 @@ export class VerifyMemberComponent implements OnInit {
     
   }
   openMandate(data){
+    var data = this.clientCodeData
     const fragmentData = {
       flag: 'mandate',
       data,

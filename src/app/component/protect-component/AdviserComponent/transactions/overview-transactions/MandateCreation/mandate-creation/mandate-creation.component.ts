@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 import { ProcessTransactionService } from '../../doTransaction/process-transaction.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { PostalService } from 'src/app/services/postal.service';
+import { OnlineTransactionService } from '../../../online-transaction.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-mandate-creation',
@@ -14,19 +16,42 @@ import { PostalService } from 'src/app/services/postal.service';
 export class MandateCreationComponent implements OnInit {
   bankDetails: any;
   pinInvalid: boolean;
+  advisorId: any;
+  inputData: any;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
-    private processTransaction: ProcessTransactionService,
+    private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
     public utils: UtilService, public eventService: EventService) { }
     validatorType = ValidatorType
-
+    @Input()
+    set data(data) {
+      this.inputData = data;
+      console.log('all data in per', this.inputData)
+    }
+  
+    get data() {
+      return this.inputData;
+    }
   ngOnInit() {
     this.getdataForm('')
+    this.getMandateDetails()
+    this.advisorId = AuthService.getAdvisorId();
   }
   Close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
-
+  getMandateDetails(){
+    let obj1 = {
+      advisorId : 414
+    }
+    this.onlineTransact.mandateView(obj1).subscribe(
+      data => this.mandateViewRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      })
+  }
+  mandateViewRes(data){
+    console.log('mandate',data)
+  }
   getPostalPin(value) {
     let obj = {
       zipCode: value

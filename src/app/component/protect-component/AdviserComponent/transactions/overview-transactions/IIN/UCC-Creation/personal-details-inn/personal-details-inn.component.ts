@@ -1,12 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { DatePipe } from '@angular/common';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
-import { LeftSideInnUccListComponent } from '../left-side-inn-ucc-list/left-side-inn-ucc-list.component';
+import { OnlineTransactionService } from '../../../../online-transaction.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-personal-details-inn',
@@ -31,11 +31,12 @@ export class PersonalDetailsInnComponent implements OnInit {
   validatorType = ValidatorType
   changedValue: string;
   doneData: any;
+  advisorId: any;
 
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private processTransaction: ProcessTransactionService,
-    private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
+    private onlineTransact: OnlineTransactionService, private datePipe: DatePipe, public utils: UtilService,
     public eventService: EventService) { }
   @Input()
   set data(data) {
@@ -60,6 +61,7 @@ export class PersonalDetailsInnComponent implements OnInit {
     return this.inputData;
   }
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId()
     this.doneData = false
     if (this.firstHolder) {
       this.getdataForm(this.firstHolder)

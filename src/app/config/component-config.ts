@@ -362,7 +362,7 @@ export const appConfig = {
   GIVE_ADVICE_ON_REAL_ESTATE: 'advice/asset/real-estate/advice/post',
   ////////////////////////////////////OnlineTransaction///////////////////////////////////////
   ADD_BSE_CREDENTIALS: 'bse/user/save',
-  GET_BSE_CREDENTIALS: 'bse/user/view',
+  GET_BSE_CREDENTIALS: '/user/view',
   GET_BSE_SUB_BROKER_CREDENTIALS: 'bse/user/sub-broker/view',
   GET_NEW_SCHEMES: 'mutual-fund/search',
   GET_EXISTING_SCHEMES: 'mutual-fund/existing/search',
@@ -387,7 +387,7 @@ export const appConfig = {
   GETIIN_DETAILS: 'nse/iin/detail/get',
   GET_FOLIO_MAPPED: '/mutual-fund/folios/mapped/get',
   GET_FOLIO_UNMAPPED: '/mutual-fund/folios/unmapped/get',
-  GET_CLIENT_CODE: '/bse/user/family-member/client-code',
+  GET_CLIENT_CODE: '/user/family-member/client-code',
   GET_EMPANELLED_AMC: 'mutual-fund/hidden-amc/amc-wise/get',
   ADD_HIDDEN_AMC: 'mutual-fund/hidden-amc/add',
   DELETE_HIDDEN_AMC: 'mutual-fund/hidden-amc/delete',
@@ -396,6 +396,8 @@ export const appConfig = {
   GET_MANDATE_LIST: 'report/ach-mandate/get',
   GET_REGISTRATION_UCC_IIN:'user/register/detail/get',
   CREATE_IIN_UCC :'user/register/create',
+  MANDATE_VIEW:'/mandate/view',
+  GET_TOKEN:'user/bse/upload/password',
   // SIP_BSE:'bse/order/create',
 
   // cashflow 
