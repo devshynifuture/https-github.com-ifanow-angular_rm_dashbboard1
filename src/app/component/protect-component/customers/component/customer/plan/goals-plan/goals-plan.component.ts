@@ -38,6 +38,8 @@ export class GoalsPlanComponent implements OnInit {
     clientId:''
   }
   selectedGoal:any;
+
+  // initializing dummy data
   allGoals: any[] = [
     {
       goalName: 'Shreya’s higher education',
@@ -122,7 +124,7 @@ export class GoalsPlanComponent implements OnInit {
     this.selectedGoal = this.allGoals[0];
   }
 
-  // load all goals created for the client and select the
+  // load all goals created for the client and select the first goal
   loadAllGoals(){
     this.plansService.getAllGoals(this.advisor_client_id).subscribe((data)=>{
       // this.allGoals = data || [];
@@ -131,7 +133,6 @@ export class GoalsPlanComponent implements OnInit {
     }, err => this.eventService.openSnackBar(err, "Dismiss"))
   }
 
-  // loads all the global data required for various components called from here
   loadGlobalAPIs(){
     this.plansService.getListOfFamilyByClient(this.advisor_client_id).subscribe((data)=>{
       this.clientFamily = data.familyMembersList.sort((a, b) => {
@@ -239,6 +240,7 @@ export class GoalsPlanComponent implements OnInit {
       positiveMethod: () => {
         let deleteObj = {
           goalId: this.selectedGoal.id,
+          goalType: this.selectedGoal.typeId
         }
         this.plansService.deleteGoal(deleteObj).subscribe((data)=>{
           this.eventService.openSnackBar("Goal has been deleted successfully", "Dismiss");
