@@ -189,9 +189,9 @@
 
         <!-- house design -->
         <div class="col-width-78" *ngIf="allGoals.length > 0">
-            <div class="row bb-grey pt-25 pb-8">
-                <div class="col-md-6 p-0">
-                    <h3 class="m-0 text-black f-500">New House - {{dummyDashBoardData.goalYear}}</h3>
+            <div class="row bb-grey pt-28 pb-8">
+                <div class="col-md-12 p-0">
+                    <h3 class="m-0 text-black f-500">{{selectedGoal.goalName}}</h3>
                 </div>
             </div>
             <div class="row">
@@ -202,20 +202,22 @@
                                 <div class="col-md-6 p-0 ">
                                     <h5 class="f-12 m-0 text-primitive">GOAL FUTURE VALUE</h5>
                                     <h3 class="m-0">
-                                        <div class="bar">₹<span appFormatNumber>{{dummyDashBoardData.futureValue}}</span></div>
+                                        <div class="bar">₹<span appFormatNumber>{{selectedGoal.dummyDashBoardData.futureValue}}</span>
+                                        </div>
                                     </h3>
                                 </div>
                                 <div class="col-md-6">
                                     <h5 class="f-12 m-0 text-primitive">ACHIEVED</h5>
                                     <h3 class="m-0">
-                                        <div class="bar">₹<span appFormatNumber>{{dummyDashBoardData.presentValue}}</span></div>
+                                        <div class="bar">₹<span appFormatNumber>{{selectedGoal.dummyDashBoardData.presentValue}}</span>
+                                        </div>
                                     </h3>
                                 </div>
                             </div>
                             <div class="row pt-24">
                                 <div class="col-md-12 p-0">
                                     <h5 class="m-0 text-primitive f-12">GOAL PROGRESS</h5>
-                                    <mat-progress-bar id="bg-primary" mode="determinate" [value]="goalProgress" class="h-30">
+                                    <mat-progress-bar id="bg-primary" mode="determinate" [value]="selectedGoal.dummyDashBoardData.goalProgress" class="h-30">
                                     </mat-progress-bar>
                                 </div>
                             </div>
@@ -230,15 +232,15 @@
                                 <div class="col-md-3 p-0">
                                     <p class="m-0 text-black roboto p-12 f-500 br bb">Monthly</p>
                                     <p class="m-0 text-black roboto p-12 bg-white br bb">
-                                        <span class="bar" appFormatNumber>{{dummyDashBoardData.equity_monthly}}</span>
+                                        <span class="bar" appFormatNumber>{{selectedGoal.dummyDashBoardData.equity_monthly}}</span>
                                     </p>
 
-                                    <p class="m-0 text-black roboto p-12 bg-white br"><span class="bar" appFormatNumber>{{dummyDashBoardData.debt_monthly}}</span></p>
+                                    <p class="m-0 text-black roboto p-12 bg-white br"><span class="bar" appFormatNumber>{{selectedGoal.dummyDashBoardData.debt_monthly}}</span></p>
                                 </div>
                                 <div class="col-md-3 p-0">
                                     <p class="m-0 text-black roboto p-12 f-500 bb">Lumpsum</p>
-                                    <p class="m-0 text-black roboto p-12 bg-white bb"><span class="bar" appFormatNumber>{{dummyDashBoardData.lump_equity}}</span></p>
-                                    <p class="m-0 text-black roboto p-12 bg-white"><span class="bar" appFormatNumber>{{dummyDashBoardData.lump_debt}}</span></p>
+                                    <p class="m-0 text-black roboto p-12 bg-white bb"><span class="bar" appFormatNumber>{{selectedGoal.dummyDashBoardData.lump_equity}}</span></p>
+                                    <p class="m-0 text-black roboto p-12 bg-white"><span class="bar" appFormatNumber>{{selectedGoal.dummyDashBoardData.lump_debt}}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -401,7 +403,7 @@
                     </div>
 
 
-                    <div class="row pt-20" *ngIf="dashboardData">
+                    <div class="row pt-20" *ngIf="selectedGoal">
                         <div class="col-md-12 right p-0 text-right" (click)="deleteGoal(dashboardData)">
                             <img src="/assets/images/svg/blue-delete.svg">
                         </div>

@@ -30,50 +30,78 @@ export interface PeriodicElement {
   styleUrls: ['./goals-plan.component.scss']
 })
 export class GoalsPlanComponent implements OnInit {
-  dummyDashBoardData:any = {
-    goalYear: 2025,
-    presentValue: 24325,
-    futureValue: 456543,
-    equity_monthly: 5200,
-    debt_monthly: 44553,
-    lump_equity: 45232,
-    lump_debt: 35452
-  }
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'icons'];
   clientFamily:any[];
 
   isLoading = false;
-  goalProgress = 35;
   advisor_client_id: any = {
     advisorId:'',
     clientId:''
   }
-  dashboardData: any;
   selectedGoal:any;
   allGoals: any[] = [
     {
       goalName: 'Shreya’s higher education',
       gv: 4813000,
       year: '2030 - 2033',
-      img: '/assets/images/svg/higher-edu.svg'
+      img: '/assets/images/svg/higher-edu.svg',
+      dummyDashBoardData: {
+        goalYear: 2025,
+        presentValue: 24325,
+        futureValue: 456543,
+        equity_monthly: 5200,
+        debt_monthly: 44553,
+        lump_equity: 45232,
+        lump_debt: 35452,
+        goalProgress: 20,
+      }
     },
     {
       goalName: 'House',
       gv: 10000000,
       year: '2033',
-      img: '/assets/images/svg/house-goals.svg'
+      img: '/assets/images/svg/house-goals.svg',
+      dummyDashBoardData: {
+        goalYear: 2025,
+        presentValue: 24325,
+        futureValue: 456543,
+        equity_monthly: 5200,
+        debt_monthly: 44553,
+        lump_equity: 45232,
+        lump_debt: 35452,
+        goalProgress: 20,
+      }
     },
     {
       goalName: 'Rahul’s retirement',
       gv: 45522000,
       year: '2030 - 2033',
-      img: '/assets/images/svg/retierment-goals.svg'
+      img: '/assets/images/svg/retierment-goals.svg',
+      dummyDashBoardData: {
+        goalYear: 2025,
+        presentValue: 24325,
+        futureValue: 456543,
+        equity_monthly: 5200,
+        debt_monthly: 44553,
+        lump_equity: 45232,
+        lump_debt: 35452,
+        goalProgress: 20,
+      }
     },
     {
       goalName: 'Aryan’s marriage',
       gv: 4813000,
       year: '2030 - 2033',
-      img: '/assets/images/svg/higher-edu.svg'
+      img: '/assets/images/svg/higher-edu.svg',
+      dummyDashBoardData: {
+        goalYear: 2025,
+        presentValue: 24325,
+        futureValue: 456543,
+        equity_monthly: 5200,
+        debt_monthly: 44553,
+        lump_equity: 45232,
+        lump_debt: 35452,
+        goalProgress: 20,
+      }
     },
   ];
 
@@ -110,11 +138,6 @@ export class GoalsPlanComponent implements OnInit {
         return a.relationshipId - b.relationshipId;
       });
     }, (err) => {this.eventService.openSnackBar(err, "Dismiss")});
-  }
-
-  // load the selected goal data
-  displayGoalData(goal){
-    this.dashboardData = goal;
   }
 
   openAddgoals() {
@@ -169,7 +192,7 @@ export class GoalsPlanComponent implements OnInit {
         fragmentData.state = 'open25';
 
         // TODO:- remove .data as its for demo purpose only
-        fragmentData.data = this.dummyDashBoardData;
+        fragmentData.data = this.selectedGoal.dummyDashBoardData;
         break;
       case 'openallocations':
         fragmentData.componentName = AddGoalComponent;
@@ -209,13 +232,13 @@ export class GoalsPlanComponent implements OnInit {
   deleteGoal(goal) {
     const dialogData = {
       header: 'DELETE',
-      body: 'Are you sure you want to delete?',
+      body: 'Are you sure you want to delete this goal?',
       body2: 'This cannot be undone.',
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
         let deleteObj = {
-          goalId: goal.id,
+          goalId: this.selectedGoal.id,
         }
         this.plansService.deleteGoal(deleteObj).subscribe((data)=>{
           this.eventService.openSnackBar("Goal has been deleted successfully", "Dismiss");
