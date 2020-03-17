@@ -350,7 +350,6 @@ export class FixedIncomeComponent implements OnInit {
         if (value == 'FIXED DEPOSIT') {
           this.customerService.deleteFixedDeposite(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar('Fixed deposit is deleted', 'Dismiss');
               dialogRef.close();
               this.getFixedDepositList();
             },
@@ -359,7 +358,6 @@ export class FixedIncomeComponent implements OnInit {
         } else if (value == 'RECURRING DEPOSIT') {
           this.customerService.deleteRecurringDeposite(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar('Recurring deposit is deleted', 'Dismiss');
               dialogRef.close();
               this.getRecurringDepositList();
             },

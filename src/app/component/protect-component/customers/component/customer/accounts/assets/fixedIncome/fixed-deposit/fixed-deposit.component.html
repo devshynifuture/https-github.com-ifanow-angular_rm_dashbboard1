@@ -144,13 +144,16 @@
             <h5 class="m-0 pt-12">FD end date</h5>
         </div>
         <div class="col-md-6 pr-0">
-            <mat-radio-group aria-label="Select an option" id="custom-radio" formControlName="maturity">
-                <mat-radio-button value="1" class="b-ua radioBtn text-custom" [checked]='true'
+            <mat-radio-group aria-label="Select an option" (change)="getMaturityDate($event)" id="custom-radio"
+                formControlName="maturity">
+                <mat-radio-button value="1" class="b-ua radioBtn text-custom"
+                    [checked]="fixedDeposit.get('maturity').value==1"
                     [ngClass]="{'b-a-custom': fixedDeposit.get('maturity').value==1,'text-primary':fixedDeposit.get('maturity').value==1,'borderRadio':fixedDeposit.get('maturity').value==2}"
                     (click)="haveMaturity(false)">I have tenure
                 </mat-radio-button>
 
                 <mat-radio-button class="classBlue pr-10 radioBtn" value="2"
+                    [checked]="fixedDeposit.get('maturity').value==2"
                     [ngClass]="{'b-a-custom': fixedDeposit.get('maturity').value==2,'text-primary':fixedDeposit.get('maturity').value==2,'borderRadio text-custom':fixedDeposit.get('maturity').value==1}"
                     (click)="haveMaturity(true)">I have maturity date
                 </mat-radio-button>
@@ -162,7 +165,7 @@
 
         </div>
     </div>
-    <div class="row pt-24" *ngIf="showTenure">
+    <div class="row pt-24" *ngIf="fixedDeposit.get('maturity').value==1">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-12">Tenure</h5>
         </div>
@@ -201,7 +204,7 @@
         </div>
     </div>
 
-    <div class="row pt-24" *ngIf="!showTenure">
+    <div class="row pt-24" *ngIf="fixedDeposit.get('maturity').value==2">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-12">Maturity date</h5>
         </div>
@@ -333,10 +336,10 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput #fdNo type="text" (keypress)="keyPress($event)" maxlength="20"
+                            <input autocomplete="off" #fdNo type="text" (keypress)="keyPress($event)" maxlength="18"
                                 class="form-control br-0" formControlName="fdNo">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
-                            <mat-hint align="end" class="f-12">{{fdNo.value.length}}/20</mat-hint>
+                            <mat-hint align="end" class="f-12">{{fdNo.value.length}}/18</mat-hint>
                         </mat-form-field>
                     </div>
                 </div>
@@ -348,7 +351,7 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput #bankACNo type="text" appInputValueValidation
+                            <input autocomplete="off" #bankACNo type="text" appInputValueValidation
                                 [inputValidator]="validatorType.NUMBER_ONLY" maxlength="16" class="form-control br-0"
                                 formControlName="bankACNo">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
@@ -364,7 +367,7 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input type="text" matInput #institution maxlength="50" class="form-control br-0"
+                            <input autocomplete="off" type="text" #institution maxlength="50" class="form-control br-0"
                                 formControlName="institution">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
                             <mat-hint align="end" class="f-12">{{institution.value.length}}/50</mat-hint>
@@ -379,7 +382,7 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput #description maxlength="60" class="form-control br-0"
+                            <input autocomplete="off" #description maxlength="60" class="form-control br-0"
                                 formControlName="description" type="text">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
                             <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>

@@ -52,7 +52,7 @@
             </div>
         </div>
     </div>
-    <!-- <app-owner-nominee [coOwner]="true" [coNominee]="false" (coGroup)="getlist($event)"></app-owner-nominee> -->
+    <!-- <app-owner-nominee [coOwner]="true" [coNominee]="false" (coGroup)="getlist($event)" [formData] = "formData"></app-owner-nominee> -->
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-12">Monthly contrubution</h5>
@@ -181,9 +181,9 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input autocomplete="off" matInput #rdNo type="text" (keypress)="keyPressRdNumber($event)"
-                            maxlength="20" class="form-control br-0" formControlName="rdNo">
+                            maxlength="18" class="form-control br-0" formControlName="rdNo">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
-                        <mat-hint align="end" class="f-12">{{rdNo.value.length}}/20</mat-hint>
+                        <mat-hint align="end" class="f-12">{{rdNo.value.length}}/18</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -287,7 +287,7 @@
 
             </div>
         </div>
-        <!-- <app-owner-nominee [coOwner]="false" [coNominee]="true" (coGroup)="getlist($event)"></app-owner-nominee> -->
+        <!-- <app-owner-nominee [coOwner]="false" [coNominee]="true" (coGroup)="getlist($event)" [formData]="formData"></app-owner-nominee> -->
     </div>
 </div>
 <div class="bottom-fixed wrapper-12 pt-16" *ngIf="adviceShowHeaderAndFooter">

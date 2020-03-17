@@ -3,6 +3,7 @@ import {SubscriptionInject} from 'src/app/component/protect-component/AdviserCom
 import {EventService} from 'src/app/Data-service/event.service';
 import {PlanService} from '../plan.service';
 import {AuthService} from 'src/app/auth-service/authService';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-goals',
@@ -20,7 +21,12 @@ export class AddGoalsComponent implements OnInit {
   clientName: string;
   clientId: any;
 
-  constructor(public subInjectService: SubscriptionInject, private eventService: EventService, private planService: PlanService) {
+  constructor(
+    public subInjectService: SubscriptionInject, 
+    private eventService: EventService, 
+    private planService: PlanService,
+    private utilService: UtilService,
+  ) {
     let clientData = AuthService.getClientData();
     this.clientName = clientData.name;
     this.advisorId = AuthService.getAdvisorId();
@@ -55,6 +61,7 @@ export class AddGoalsComponent implements OnInit {
       this.familyList = data.familyMembersList.sort((a, b) => {
         return a.relationshipId - b.relationshipId;
       });
+      this.familyList = this.utilService.calculateAgeFromCurrentDate(this.familyList);
     }, (err) => {this.eventService.openSnackBar(err, "Dismiss")});
   }
 
