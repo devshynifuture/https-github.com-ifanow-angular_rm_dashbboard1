@@ -77,6 +77,24 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
     this.potdDataSource = new MatTableDataSource([{}, {}, {}]);
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {
+        this.ppfDataSource = [];
+        this.nscDataSource = [];
+        this.ssyDataSource = [];
+        this.kvpDataSource = [];
+        this.scssDataSource = [];
+        this.posavingDataSource = [];
+        this.pordDataSource = [];
+        this.pomisDataSource = [];
+        this.potdDataSource = [];
+        this.ppfDataSource['tableFlag'] = (this.ppfDataSource.length == 0) ? false : true;
+        this.nscDataSource['tableFlag'] = (this.nscDataSource.length == 0) ? false : true;
+        this.ssyDataSource['tableFlag'] = (this.ssyDataSource.length == 0) ? false : true;
+        this.kvpDataSource['tableFlag'] = (this.kvpDataSource.length == 0) ? false : true;
+        this.scssDataSource['tableFlag'] = (this.scssDataSource.length == 0) ? false : true;
+        this.posavingDataSource['tableFlag'] = (this.posavingDataSource.length == 0) ? false : true;
+        this.pordDataSource['tableFlag'] = (this.pordDataSource.length == 0) ? false : true;
+        this.pomisDataSource['tableFlag'] = (this.pomisDataSource.length == 0) ? false : true;
+        this.potdDataSource['tableFlag'] = (this.potdDataSource.length == 0) ? false : true;
       }
     );
   }
@@ -84,10 +102,18 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
     let filterdData=[];
     data.forEach(element => {
       var asset=element.AssetDetails;
-      element.AdviceList.forEach(obj => {
-        obj.assetDetails=asset;
+      if(element.AdviceList.length>0){
+        element.AdviceList.forEach(obj => {
+          obj.assetDetails=asset;
+          filterdData.push(obj);
+        });
+      }else{
+        const obj={
+          assetDetails:asset
+        }
         filterdData.push(obj);
-      });
+      }
+
     });
     return filterdData;
   }

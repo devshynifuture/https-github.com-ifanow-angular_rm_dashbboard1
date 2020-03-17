@@ -25,7 +25,7 @@ export class AllAdviceFixedDepositComponent implements OnInit {
   fixedDataSource: any;
   recurringDataSource:any;
   bondDataSource: any;
-  selectedAssetId: any;
+  selectedAssetId: any = [];
   fixedCount: any;
   recurringCount: any;
   bondCount: any;
@@ -115,11 +115,11 @@ export class AllAdviceFixedDepositComponent implements OnInit {
   checkSingle(flag, selectedData, tableData, tableFlag) {
     if (flag.checked) {
       selectedData.selected = true;
-      this.selectedAssetId.push(selectedData.id)
+      this.selectedAssetId.push(selectedData.assetDetails.id)
     }
     else {
       selectedData.selected = false
-      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
+      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.assetDetails.id), 1)
     }
     let countValue = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
     this.getFlagCount(tableFlag, countValue);

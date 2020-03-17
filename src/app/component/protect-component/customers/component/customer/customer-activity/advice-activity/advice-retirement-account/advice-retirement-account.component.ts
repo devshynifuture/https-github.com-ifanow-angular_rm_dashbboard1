@@ -65,6 +65,17 @@ export class AdviceRetirementAccountComponent implements OnInit {
     this.epsDataSource = [{}, {}, {}];
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {
+        this.isLoading = false;
+        this.epfDataSource = [];
+        this.npsDataSource = [];
+        this.gratuityDataSource = [];
+        this.superannuationDataSource = [];
+        this.epsDataSource = [];
+        this.epfDataSource['tableFlag'] = (this.epfDataSource.length == 0) ? false : true;
+        this.epsDataSource['tableFlag'] = (this.epsDataSource.length == 0) ? false : true;
+        this.superannuationDataSource['tableFlag'] = (this.superannuationDataSource.length == 0) ? false : true;
+        this.gratuityDataSource['tableFlag'] = (this.gratuityDataSource.length == 0) ? false : true;
+        this.npsDataSource['tableFlag'] = (this.npsDataSource.length == 0) ? false : true;
       }
     );
   }
@@ -114,11 +125,11 @@ export class AdviceRetirementAccountComponent implements OnInit {
   checkSingle(flag, selectedData, tableData, tableFlag) {
     if (flag.checked) {
       selectedData.selected = true;
-      this.selectedAssetId.push(selectedData.id)
+      this.selectedAssetId.push(selectedData.assetDetails.id)
     }
     else {
       selectedData.selected = false
-      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
+      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.assetDetails.id), 1)
     }
     let countValue = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
     this.getFlagCount(tableFlag, countValue);

@@ -12,6 +12,8 @@ import { AddKvpComponent } from '../../../../accounts/assets/smallSavingScheme/c
 import { AddNscComponent } from '../../../../accounts/assets/smallSavingScheme/common-component/add-nsc/add-nsc.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ActiityService } from '../../../actiity.service';
+import { MatTableDataSource } from '@angular/material';
+import { AdviceUtilsService } from '../../advice-utils.service';
 
 @Component({
   selector: 'app-all-advice-small-savings-scheme',
@@ -21,15 +23,31 @@ import { ActiityService } from '../../../actiity.service';
 export class AllAdviceSmallSavingsSchemeComponent implements OnInit {
 
   displayedColumns: string[] = ['checkbox', 'name', 'desc', 'cvalue', 'empcon', 'emprcon', 'advice', 'astatus', 'adate', 'icon'];
-  dataSource = ELEMENT_DATA;
   displayedColumns2: string[] = ['checkbox', 'name', 'desc', 'cvalue', 'emprcon', 'advice', 'astatus', 'adate', 'icon'];
-  dataSource2 = ELEMENT_DATA2;
   displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'advice', 'astatus', 'adate', 'icon'];
-  dataSource3 = ELEMENT_DATA1;
-  displayedColumns4: string[] = ['checkbox', 'name', 'desc','cvalue', 'advice', 'astatus', 'adate', 'icon'];
-  dataSource4 = ELEMENT_DATA4;
+  displayedColumns4: string[] = ['checkbox', 'name', 'desc', 'cvalue', 'advice', 'astatus', 'adate', 'icon'];
   advisorId: any;
   clientId: any;
+  ppfDataSource: any;
+  isLoading: boolean;
+  nscDataSource: any;
+  ssyDataSource: any;
+  kvpDataSource: any;
+  scssDataSource: any;
+  posavingDataSource: any;
+  pordDataSource: any;
+  pomisDataSource: any;
+  potdDataSource: any;
+  ppfCount: any;
+  nscCount: any;
+  ssyCount: any;
+  kvpCount: any;
+  scssCount: any;
+  posavingCount: any;
+  potdCount: any;
+  pomisCount: any;
+  selectedAssetId: any = [];
+
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject,private activityService:ActiityService) { }
   allAdvice = true
   ngOnInit() {
@@ -38,6 +56,16 @@ export class AllAdviceSmallSavingsSchemeComponent implements OnInit {
     this.getAllAdviceByAsset();
   }
   getAllAdviceByAsset() {
+    this.isLoading = true;
+    this.ppfDataSource = new MatTableDataSource([{}, {}, {}]);
+    this.nscDataSource = new MatTableDataSource([{}, {}, {}]);
+    this.ssyDataSource = new MatTableDataSource([{}, {}, {}]);
+    this.kvpDataSource = new MatTableDataSource([{}, {}, {}]);
+    this.scssDataSource = new MatTableDataSource([{}, {}, {}]);
+    this.posavingDataSource = new MatTableDataSource([{}, {}, {}]);
+    this.pordDataSource = new MatTableDataSource([{}, {}, {}]);
+    this.pomisDataSource = new MatTableDataSource([{}, {}, {}]);
+    this.potdDataSource = new MatTableDataSource([{}, {}, {}]);
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -46,11 +74,114 @@ export class AllAdviceSmallSavingsSchemeComponent implements OnInit {
     }
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {
+        this.ppfDataSource = [];
+        this.nscDataSource = [];
+        this.ssyDataSource = [];
+        this.kvpDataSource = [];
+        this.scssDataSource = [];
+        this.posavingDataSource = [];
+        this.pordDataSource = [];
+        this.pomisDataSource = [];
+        this.potdDataSource = [];
+        this.ppfDataSource['tableFlag'] = (this.ppfDataSource.length == 0) ? false : true;
+        this.nscDataSource['tableFlag'] = (this.nscDataSource.length == 0) ? false : true;
+        this.ssyDataSource['tableFlag'] = (this.ssyDataSource.length == 0) ? false : true;
+        this.kvpDataSource['tableFlag'] = (this.kvpDataSource.length == 0) ? false : true;
+        this.scssDataSource['tableFlag'] = (this.scssDataSource.length == 0) ? false : true;
+        this.posavingDataSource['tableFlag'] = (this.posavingDataSource.length == 0) ? false : true;
+        this.pordDataSource['tableFlag'] = (this.pordDataSource.length == 0) ? false : true;
+        this.pomisDataSource['tableFlag'] = (this.pomisDataSource.length == 0) ? false : true;
+        this.potdDataSource['tableFlag'] = (this.potdDataSource.length == 0) ? false : true;
       }
     );
   }
+  filterForAsset(data){//filter data to for showing in the table
+    let filterdData=[];
+    data.forEach(element => {
+      var asset=element.AssetDetails;
+      if(element.AdviceList.length>0){
+        element.AdviceList.forEach(obj => {
+          obj.assetDetails=asset;
+          filterdData.push(obj);
+        });
+      }else{
+        const obj={
+          assetDetails:asset
+        }
+        filterdData.push(obj);
+      }
+
+    });
+    return filterdData;
+  }
+  checkAll(flag, tableDataList, tableFlag) {
+    console.log(flag, tableDataList)
+    const { selectedIdList, count } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
+    this.selectedAssetId = selectedIdList;
+    this.getFlagCount(tableFlag, count)
+    // console.log(this.selectedAssetId);
+  }
+  getFlagCount(flag, count) {
+    switch (true) {
+      case (flag == 'ppf'):
+        this.ppfCount = count;
+        break;
+      case (flag == 'nsc'):
+        this.nscCount = count;
+        break;
+      case (flag == 'ssy'):
+        this.ssyCount = count;
+        break;
+      case (flag == 'kvp'):
+        this.kvpCount = count;
+        break;
+      case (flag == 'scss'):
+        this.scssCount = count;
+        break;
+      case (flag == 'posaving'):
+        this.posavingCount = count;
+        break;
+      case (flag == 'pord'):
+        this.scssCount = count;
+        break;
+      case (flag == 'potd'):
+        this.potdCount = count;
+        break;
+      default:
+        this.pomisCount = count;
+        break;
+    }
+  }
   getAllSchemeResponse(data){
-    console.log(data);
+    this.isLoading = false;
+    let ppfData=this.filterForAsset(data.PPF)
+    this.ppfDataSource.data = ppfData;
+    let nscData=this.filterForAsset(data.NSC)
+    this.nscDataSource.data = nscData;
+    let ssyData=this.filterForAsset(data.SSY)
+    this.ssyDataSource.data = ssyData;
+    let kvpData=this.filterForAsset(data.KVP)
+    this.kvpDataSource.data = kvpData;
+    let scssData=this.filterForAsset(data.SCSS)
+    this.scssDataSource.data = scssData;
+    let poSavingData=this.filterForAsset(data.PO_Savings)
+    this.posavingDataSource.data = poSavingData;
+    let pordData=this.filterForAsset(data.PO_RD)
+    this.pordDataSource.data = pordData;
+    let pomisData=this.filterForAsset(data.PO_MIS)
+    this.pomisDataSource.data = pomisData;
+    let potdData=this.filterForAsset(data.PO_TD)
+    this.potdDataSource.data = potdData;
+    this.ppfDataSource['tableFlag'] = (data.PPF.length == 0) ? false : true;
+    this.nscDataSource['tableFlag'] = (data.NSC.length == 0) ? false : true;
+    this.ssyDataSource['tableFlag'] = (data.SSY.length == 0) ? false : true;
+    this.kvpDataSource['tableFlag'] = (data.KVP.length == 0) ? false : true;
+    this.scssDataSource['tableFlag'] = (data.SCSS.length == 0) ? false : true;
+    this.posavingDataSource['tableFlag'] = (data.PO_Savings.length == 0) ? false : true;
+    this.pordDataSource['tableFlag'] = (data.PO_RD.length == 0) ? false : true;
+    this.pomisDataSource['tableFlag'] = (data.PO_MIS.length == 0) ? false : true;
+    this.potdDataSource['tableFlag'] = (data.PO_TD.length == 0) ? false : true;
+    console.log("::::::::::::::::", data)
   }
   openAddPPF(data) {
     const fragmentData = {
