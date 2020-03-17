@@ -32,6 +32,7 @@ export interface PeriodicElement {
 export class GoalsPlanComponent implements OnInit {
   dummyDashBoardData:any = {
     goalYear: 2025,
+    goalName: 'Shreya’s higher education',
     presentValue: 24325,
     futureValue: 456543,
     equity_monthly: 5200,
@@ -55,25 +56,61 @@ export class GoalsPlanComponent implements OnInit {
       goalName: 'Shreya’s higher education',
       gv: 4813000,
       year: '2030 - 2033',
-      img: '/assets/images/svg/higher-edu.svg'
+      img: '/assets/images/svg/higher-edu.svg',
+      dummyDashBoardData: {
+        goalYear: 2025,
+        presentValue: 24325,
+        futureValue: 456543,
+        equity_monthly: 5200,
+        debt_monthly: 44553,
+        lump_equity: 45232,
+        lump_debt: 35452
+      }
     },
     {
       goalName: 'House',
       gv: 10000000,
       year: '2033',
-      img: '/assets/images/svg/house-goals.svg'
+      img: '/assets/images/svg/house-goals.svg',
+      dummyDashBoardData: {
+        goalYear: 2025,
+        presentValue: 24325,
+        futureValue: 456543,
+        equity_monthly: 5200,
+        debt_monthly: 44553,
+        lump_equity: 45232,
+        lump_debt: 35452
+      }
     },
     {
       goalName: 'Rahul’s retirement',
       gv: 45522000,
       year: '2030 - 2033',
-      img: '/assets/images/svg/retierment-goals.svg'
+      img: '/assets/images/svg/retierment-goals.svg',
+      dummyDashBoardData: {
+        goalYear: 2025,
+        presentValue: 24325,
+        futureValue: 456543,
+        equity_monthly: 5200,
+        debt_monthly: 44553,
+        lump_equity: 45232,
+        lump_debt: 35452
+      }
     },
     {
       goalName: 'Aryan’s marriage',
       gv: 4813000,
       year: '2030 - 2033',
-      img: '/assets/images/svg/higher-edu.svg'
+      img: '/assets/images/svg/higher-edu.svg',
+      dummyDashBoardData: {
+        goalYear: 2025,
+        presentValue: 24325,
+        futureValue: 456543,
+        equity_monthly: 5200,
+        debt_monthly: 44553,
+        lump_equity: 45232,
+        lump_debt: 35452
+      }
     },
   ];
 
