@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { GoldComponent } from '../../../../accounts/assets/commodities/gold/gold.component';
 import { OthersComponent } from '../../../../accounts/assets/commodities/others/others.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ActiityService } from '../../../actiity.service';
+import { AdviceUtilsService } from '../../advice-utils.service';
+import { MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-all-advice-commodities',
@@ -13,11 +15,19 @@ import { ActiityService } from '../../../actiity.service';
 })
 export class AllAdviceCommoditiesComponent implements OnInit {
 
-  displayedColumns3: string[] = ['checkbox', 'name', 'desc','mvalue', 'advice', 'astatus', 'adate', 'icon'];
-  dataSource3 = ELEMENT_DATA1;
+  displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'pvalue', 'mvalue', 'total', 'advice', 'astatus', 'adate', 'icon'];
+  displayedColumns4: string[] = ['checkbox', 'name', 'desc', 'pvalue', 'mvalue', 'advice', 'astatus', 'adate', 'icon'];  dataSource3 = ELEMENT_DATA1;
   advisorId: any;
   clientId: any;
-  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject,private activityService:ActiityService) { }
+  selectedAssetId: any =[];
+  goalCount: any;
+  othersCount: any;
+  isLoading: boolean;
+  goldDataSource: any = new MatTableDataSource();
+  otherDataSource: any = new MatTableDataSource();
+  @ViewChild("tableOne", { static: false }) sort1: MatSort;
+  @ViewChild("tableTwo", { static: false }) sort2: MatSort;
+  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject,private activityService:ActiityService,private AdviceUtilsService:AdviceUtilsService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -26,6 +36,9 @@ export class AllAdviceCommoditiesComponent implements OnInit {
   }
   allAdvice = true
   getAllAdviceByAsset() {
+    this.isLoading = true
+    this.goldDataSource.data = [{}, {}, {}];
+    this.otherDataSource.data = [{}, {}, {}]
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -34,11 +47,66 @@ export class AllAdviceCommoditiesComponent implements OnInit {
     }
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {
+        this.isLoading = false;
+        this.goldDataSource.data = [];
+        this.otherDataSource.data = []
+        this.goldDataSource['tableFlag'] = (this.goldDataSource.data.length == 0) ? false : true;
+        this.otherDataSource['tableFlag'] = (this.otherDataSource.data.length == 0) ? false : true;
       }
     );
   }
+  checkAll(flag, tableDataList, tableFlag) {
+    console.log(flag, tableDataList)
+    const { selectedIdList, count } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
+    this.selectedAssetId = selectedIdList;
+    this.getFlagCount(tableFlag, count);
+    // console.log(this.selectedAssetId);
+  }
+  getFlagCount(flag, count) {
+    (flag == 'gold') ? this.goalCount = count : this.othersCount = count
+  }
+  filterForAsset(data){//filter data to for showing in the table
+    let filterdData=[];
+    data.forEach(element => {
+      var asset=element.AssetDetails;
+      if(element.AdviceList.length>0){
+        element.AdviceList.forEach(obj => {
+          obj.assetDetails=asset;
+          filterdData.push(obj);
+        });
+      }else{
+        const obj={
+          assetDetails:asset
+        }
+        filterdData.push(obj);
+      }
+
+    });
+    return filterdData;
+  }
   getAllSchemeResponse(data){
+    let goldData=this.filterForAsset(data.GOLD)
+    this.goldDataSource.data = goldData;
+    this.goldDataSource.sort = this.sort1;
+    let othersData=this.filterForAsset(data.OTHERS)
+    this.otherDataSource.data = othersData;
+    this.goldDataSource['tableFlag'] = (data.GOLD.length == 0) ? false : true;
+    this.otherDataSource['tableFlag'] = (data.OTHERS.length == 0) ? false : true;
     console.log(data);
+    this.isLoading = false
+  }
+  checkSingle(flag, selectedData, tableData, tableFlag) {
+    if (flag.checked) {
+      selectedData.selected = true;
+      this.selectedAssetId.push(selectedData.assetDetails.id)
+    }
+    else {
+      selectedData.selected = false
+      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.assetDetails.id), 1)
+    }
+    let countValue = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
+    this.getFlagCount(tableFlag, countValue);
+    console.log(this.selectedAssetId)
   }
   openCommodities(value, state, data) {
     const fragmentData = {

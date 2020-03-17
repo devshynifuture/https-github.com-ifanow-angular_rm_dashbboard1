@@ -50,6 +50,10 @@ export class AdviceRealAssetComponent implements OnInit {
     this.isLoading = true;
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllAssetResponse(data), (error) => {
+        this.isLoading = false;
+        this.dataSource=[];
+        this.dataSource['tableFlag'] = (this.dataSource.length == 0) ? false : true;
+
       }
     );
   }
@@ -86,11 +90,11 @@ export class AdviceRealAssetComponent implements OnInit {
   checkSingle(flag, selectedData, tableData) {
     if (flag.checked) {
       selectedData.selected = true;
-      this.selectedAssetId.push(selectedData.id)
+      this.selectedAssetId.push(selectedData.assetDetails.id)
     }
     else {
       selectedData.selected = false
-      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
+      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.assetDetails.id), 1)
     }
     this.realEstateCount = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
   }

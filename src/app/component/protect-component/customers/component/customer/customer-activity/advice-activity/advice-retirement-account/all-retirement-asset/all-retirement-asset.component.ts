@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { AddEPFComponent } from '../../../../accounts/assets/retirementAccounts/add-epf/add-epf.component';
@@ -9,6 +9,8 @@ import { AddSuperannuationComponent } from '../../../../accounts/assets/retireme
 import { AddEPSComponent } from '../../../../accounts/assets/retirementAccounts/add-eps/add-eps.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ActiityService } from '../../../actiity.service';
+import { MatTableDataSource, MatSort } from '@angular/material';
+import { AdviceUtilsService } from '../../advice-utils.service';
 
 @Component({
   selector: 'app-all-retirement-asset',
@@ -17,11 +19,25 @@ import { ActiityService } from '../../../actiity.service';
 })
 export class AllRetirementAssetComponent implements OnInit {
   displayedColumns: string[] = ['checkbox', 'name', 'desc', 'cvalue', 'empcon', 'emprcon', 'advice', 'astatus', 'adate', 'icon'];
-  dataSource = ELEMENT_DATA;
+  displayedColumns1: string[] = ['checkbox', 'name', 'desc', 'cvalue', 'tcontro', 'advice', 'astatus', 'adate', 'icon'];
+  displayedColumns2: string[] = ['checkbox', 'name', 'desc', 'amtacc', 'advice', 'astatus', 'adate', 'icon'];
   displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'advice', 'astatus', 'adate', 'icon'];
-  dataSource3 = ELEMENT_DATA1;
+  displayedColumns4: string[] = ['checkbox', 'name', 'desc', 'pvalue', 'nvalue', 'advice', 'astatus', 'adate', 'icon'];
   clientId: any;
   advisorId: any;
+  isLoading: boolean;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  epfDataSource: any;
+  npsDataSource: any;
+  superannuationDataSource: any;
+  gratuityDataSource: any;
+  epsDataSource: any;
+  selectedAssetId: any = [];
+  epfCount: any;
+  npsCOunt: any;
+  gratuityCount: any;
+  superannuationCount: any;
+  epsCount: any;
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject,private activityService:ActiityService) { }
 
   ngOnInit() {
@@ -31,6 +47,12 @@ export class AllRetirementAssetComponent implements OnInit {
   }
   allAdvice = true;
   getAllAdviceByAsset() {
+    this.isLoading = true;
+    this.epfDataSource = [{}, {}, {}];
+    this.npsDataSource = [{}, {}, {}];
+    this.gratuityDataSource = [{}, {}, {}];
+    this.superannuationDataSource = [{}, {}, {}];
+    this.epsDataSource = [{}, {}, {}];
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -39,10 +61,61 @@ export class AllRetirementAssetComponent implements OnInit {
     }
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {
+        this.isLoading = false;
+        this.epfDataSource = [];
+        this.npsDataSource = [];
+        this.gratuityDataSource = [];
+        this.superannuationDataSource = [];
+        this.epsDataSource = [];
+        this.epfDataSource['tableFlag'] = (this.epfDataSource.length == 0) ? false : true;
+        this.epsDataSource['tableFlag'] = (this.epsDataSource.length == 0) ? false : true;
+        this.superannuationDataSource['tableFlag'] = (this.superannuationDataSource.length == 0) ? false : true;
+        this.gratuityDataSource['tableFlag'] = (this.gratuityDataSource.length == 0) ? false : true;
+        this.npsDataSource['tableFlag'] = (this.npsDataSource.length == 0) ? false : true;
       }
     );
   }
+  filterForAsset(data){//filter data to for showing in the table
+    let filterdData=[];
+    data.forEach(element => {
+      var asset=element.AssetDetails;
+      if(element.AdviceList.length>0){
+        element.AdviceList.forEach(obj => {
+          obj.assetDetails=asset;
+          filterdData.push(obj);
+        });
+      }else{
+        const obj={
+          assetDetails:asset
+        }
+        filterdData.push(obj);
+      }
+
+    });
+    return filterdData;
+  }
   getAllSchemeResponse(data){
+    this.isLoading = false;
+    let epfData=this.filterForAsset(data.EPF)
+    this.epfDataSource = new MatTableDataSource(epfData);
+    this.epfDataSource.sort = this.sort;
+    let epsData=this.filterForAsset(data.EPS)
+    this.epsDataSource = new MatTableDataSource(epsData);
+    this.epsDataSource.sort = this.sort;
+    let superannuationData=this.filterForAsset(data.SUPERANNUATION)
+    this.superannuationDataSource = new MatTableDataSource(superannuationData);
+    this.superannuationDataSource.sort = this.sort;
+    let gratuityData=this.filterForAsset(data.GRATUITY)
+    this.gratuityDataSource = new MatTableDataSource(gratuityData);
+    this.gratuityDataSource.sort = this.sort;
+    let npsData=this.filterForAsset(data.NPS)
+    this.npsDataSource = new MatTableDataSource(npsData);
+    this.npsDataSource.sort = this.sort;
+    this.epfDataSource['tableFlag'] = (data.EPF.length == 0) ? false : true;
+    this.epsDataSource['tableFlag'] = (data.EPS.length == 0) ? false : true;
+    this.superannuationDataSource['tableFlag'] = (data.SUPERANNUATION.length == 0) ? false : true;
+    this.gratuityDataSource['tableFlag'] = (data.GRATUITY.length == 0) ? false : true;
+    this.npsDataSource['tableFlag'] = (data.NPS.length == 0) ? false : true;
     console.log(data);
   }
   openAddEPF(data) {
@@ -67,6 +140,45 @@ export class AllRetirementAssetComponent implements OnInit {
 
       }
     );
+  }
+  checkSingle(flag, selectedData, tableData, tableFlag) {
+    if (flag.checked) {
+      selectedData.selected = true;
+      this.selectedAssetId.push(selectedData.assetDetails.id)
+    }
+    else {
+      selectedData.selected = false
+      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.assetDetails.id), 1)
+    }
+    let countValue = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
+    this.getFlagCount(tableFlag, countValue);
+  }
+  getFlagCount(flag, count) {
+    switch (true) {
+      case (flag == 'epf'):
+        this.epfCount = count;
+        break;
+      case (flag == 'nps'):
+        this.npsCOunt = count;
+        break;
+      case (flag == 'gratuity'):
+        this.gratuityCount = count;
+        break;
+      case (flag == 'superannuation'):
+        this.superannuationCount = count;
+        break;
+      default:
+        this.epsCount = count;
+        break;
+    }
+  }
+  checkAll(flag, tableDataList, tableFlag) {
+    console.log(flag, tableDataList)
+    const { selectedIdList, count } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
+    // this.dataSource = new MatTableDataSource(dataList);
+    this.selectedAssetId = selectedIdList;
+    this.getFlagCount(tableFlag, count);
+    console.log(this.selectedAssetId);
   }
   openAddSchemeHolding(data) {
     const fragmentData = {

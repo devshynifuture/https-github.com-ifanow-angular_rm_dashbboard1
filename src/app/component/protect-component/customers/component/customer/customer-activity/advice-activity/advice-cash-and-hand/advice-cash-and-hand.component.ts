@@ -28,6 +28,7 @@ export class AdviceCashAndHandComponent implements OnInit {
   selectedAssetId: any = [];
   bankCount: number;
   cashCount: number;
+  allAdvice = false;
 
   constructor(public dialog: MatDialog, private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
 
@@ -47,11 +48,11 @@ export class AdviceCashAndHandComponent implements OnInit {
   checkSingle(flag, selectedData, tableData, tableFlag) {
     if (flag.checked) {
       selectedData.selected = true;
-      this.selectedAssetId.push(selectedData.id)
+      this.selectedAssetId.push(selectedData.assetDetails.id)
     }
     else {
       selectedData.selected = false
-      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
+      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.assetDetails.id), 1)
     }
     let countValue = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
     this.getFlagCount(tableFlag, countValue)
@@ -72,6 +73,11 @@ export class AdviceCashAndHandComponent implements OnInit {
     this.isLoading = true;
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {
+        this.isLoading = false;
+        this.cashInHandDataSource.data = [];
+        this.bankAccDataSource.data = []
+        this.bankAccDataSource['tableFlag'] = (this.bankAccDataSource.data.length == 0) ? false : true;
+        this.cashInHandDataSource['tableFlag'] = (this.cashInHandDataSource.data.length == 0) ? false : true;
       }
     );
   }
@@ -105,7 +111,6 @@ export class AdviceCashAndHandComponent implements OnInit {
     this.isLoading = false;
     // this.cashinHandData=data.CASH IN HAND;
   }
-  allAdvice = false;
 
   openAddEdit(value, data) {
     let Component = (value == 'adviceCashInHand') ? CashInHandComponent : BankAccountsComponent;

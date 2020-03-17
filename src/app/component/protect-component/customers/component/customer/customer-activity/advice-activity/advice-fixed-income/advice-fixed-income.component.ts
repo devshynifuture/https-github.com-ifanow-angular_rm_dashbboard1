@@ -51,37 +51,10 @@ export class AdviceFixedIncomeComponent implements OnInit {
     this.fixedDataSource = [{}, {}, {}];
     this.recurringDataSource = [{}, {}, {}];
     this.bondDataSource = [{}, {}, {}];
-    // let obj1 = {
-    //   advisorId: this.advisorId,
-    //   clientId: this.clientId,
-    //   assetCategory: 13
-    // }
-    // let obj2 = {
-    //   advisorId: this.advisorId,
-    //   clientId: this.clientId,
-    //   assetCategory: 14
-    // }
-    // let obj3 = {
-    //   advisorId: this.advisorId,
-    //   clientId: this.clientId,
-    //   assetCategory: 15
-    // }
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {
       }
     );
-    // this.activityService.getAllAsset(obj1).subscribe(
-    //   data => this.getAllSchemeResponse(data), (error) => {
-    //   }
-    // );
-    // this.activityService.getAllAsset(obj2).subscribe(
-    //   data => this.getAllSchemeResponse(data), (error) => {
-    //   }
-    // );
-    // this.activityService.getAllAsset(obj3).subscribe(
-    //   data => this.getAllSchemeResponse(data), (error) => {
-    //   }
-    // );
   }
   filterForAsset(data){//filter data to for showing in the table
     let filterdData=[];
@@ -146,11 +119,11 @@ export class AdviceFixedIncomeComponent implements OnInit {
   checkSingle(flag, selectedData, tableData, tableFlag) {
     if (flag.checked) {
       selectedData.selected = true;
-      this.selectedAssetId.push(selectedData.id)
+      this.selectedAssetId.push(selectedData.assetDetails.id)
     }
     else {
       selectedData.selected = false
-      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
+      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.assetDetails.id), 1)
     }
     let countValue = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
     this.getFlagCount(tableFlag, countValue);
