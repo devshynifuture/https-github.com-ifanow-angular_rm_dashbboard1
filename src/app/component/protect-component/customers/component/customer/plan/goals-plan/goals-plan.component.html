@@ -18,7 +18,7 @@
             </div>
 
             <div class="mt-8" *ngFor="let goal of allGoals" (click)="loadSelectedGoalData(goal)">
-                <div class="row bg-grey lter p-8 c-p">
+                <div class="row bg-grey lter p-8 c-p br-2 b-primitive">
                     <div class="col-md-3 p-0">
                         <img class="maxWidth100" [src]="goal.img">
                     </div>
@@ -27,7 +27,8 @@
                         <div class="row pt-8">
                             <div class="col-md-6 pr-10 pl-0">
                                 <h5 class="m-0 l-18 f-12 text-primitive"> Goal value</h5>
-                                <h5 class="f-14 m-0"><span class="bar">₹<span appFormatNumber>{{goal.gv}}</span></span></h5>
+                                <h5 class="f-14 m-0"><span class="bar">₹<span appFormatNumber>{{goal.gv}}</span></span>
+                                </h5>
                             </div>
                             <div class="col-md-6 pr-0 pl-10">
                                 <h5 class="m-0 l-18 f-12 text-primitive"> Year</h5>
@@ -147,7 +148,7 @@
             </div>
 
                 <div class="col-width-31 pr-0 pt-20">
-                    <img src="/assets/images/svg/goal1.svg" class="">
+                    <img src="/assets/images/svg/goal1.svg" class="imgWidth">
 
                     <div class="btnBox">
                         <button mat-stroked-button class="in-btn" (click)="openInSideBar(null, 'openallocations')">
@@ -185,6 +186,7 @@
             
             </div>
         </div> -->
+
         <!-- house design -->
         <div class="col-width-78" *ngIf="allGoals.length > 0">
             <div class="row bb-grey pt-28 pb-8">
@@ -200,13 +202,15 @@
                                 <div class="col-md-6 p-0 ">
                                     <h5 class="f-12 m-0 text-primitive">GOAL FUTURE VALUE</h5>
                                     <h3 class="m-0">
-                                        <div class="bar">₹<span appFormatNumber>{{selectedGoal.dummyDashBoardData.futureValue}}</span></div>
+                                        <div class="bar">₹<span appFormatNumber>{{selectedGoal.dummyDashBoardData.futureValue}}</span>
+                                        </div>
                                     </h3>
                                 </div>
                                 <div class="col-md-6">
                                     <h5 class="f-12 m-0 text-primitive">ACHIEVED</h5>
                                     <h3 class="m-0">
-                                        <div class="bar">₹<span appFormatNumber>{{selectedGoal.dummyDashBoardData.presentValue}}</span></div>
+                                        <div class="bar">₹<span appFormatNumber>{{selectedGoal.dummyDashBoardData.presentValue}}</span>
+                                        </div>
                                     </h3>
                                 </div>
                             </div>
@@ -247,55 +251,6 @@
                             <h5 class="m-0 pb-12">Allocations to this goal</h5>
                         </div>
                     </div>
-                    <!-- <div 
-                        cdkDropList
-                        id="allottedList"
-                        [cdkDropListData]="todo"
-                        [cdkDropListSortingDisabled]="true"
-                        (cdkDropListDropped)="drop($event)"
-                        (cdkDropListEntered)="logger($event)"
-                        class="hide-placeholder">
-                        <table mat-table [dataSource]="dataSource" class="mt-8 goal-allocations skeletonAnimation" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
-                            <ng-container matColumnDef="position">
-                                <th mat-header-cell *matHeaderCellDef class="t-30"> Description </th>
-                                <td mat-cell *matCellDef="let element" class="t-30">
-                                    <div class="bar">{{element.position}}</div>
-                                </td>
-                            </ng-container>
-                            <ng-container matColumnDef="name">
-                                <th mat-header-cell *matHeaderCellDef class="t-30"> Advice </th>
-                                <td mat-cell *matCellDef="let element" class="t-30">
-                                    <div class="bar">{{element.name}}</div>
-                                </td>
-                            </ng-container>
-                            <ng-container matColumnDef="weight">
-                                <th mat-header-cell *matHeaderCellDef class="t-20"> Current value </th>
-                                <td mat-cell *matCellDef="let element" class="t-20">
-                                    <div class="bar" appFormatNumber>{{element.weight}} </div>
-                                </td>
-                            </ng-container>
-                            <ng-container matColumnDef="symbol">
-                                <th mat-header-cell *matHeaderCellDef class="t-20"> Maturity value </th>
-                                <td mat-cell *matCellDef="let element" class="t-20">
-                                    <div class="bar" appFormatNumber>{{element.symbol}} </div>
-                                </td>
-                            </ng-container>
-                            <ng-container matColumnDef="icons">
-                                <th mat-header-cell *matHeaderCellDef> </th>
-                                <td mat-cell *matCellDef="let element">
-                                    <div *ngIf="!isLoading">
-                                        <mat-icon [matMenuTriggerFor]="menu" class="c-p">more_vert</mat-icon>
-                                        <mat-menu #menu="matMenu">
-                                            <button mat-menu-item>Item 1</button>
-                                            <button mat-menu-item>Item 2</button>
-                                        </mat-menu>
-                                    </div>
-                                </td>
-                            </ng-container>
-                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                        </table>
-                    </div> -->
                     <div class="row b-a bg-grey lter">
                         <div class="col-md-3 p-0">
                             <p class="roboto m-0 p-8 text-black f-500">Description </p>
@@ -310,14 +265,7 @@
                             <p class="roboto m-0 p-8 text-black f-500">Maturity value </p>
                         </div>
                     </div>
-                    <div 
-                        cdkDropList
-                        id="allottedList"
-                        [cdkDropListData]="todo"
-                        [cdkDropListSortingDisabled]="true"
-                        (cdkDropListDropped)="drop($event)"
-                        (cdkDropListEntered)="logger($event)"
-                        class="hide-placeholder">
+                    <div cdkDropList id="allottedList" [cdkDropListData]="todo" [cdkDropListSortingDisabled]="true" (cdkDropListDropped)="drop($event)" (cdkDropListEntered)="logger($event)" class="hide-placeholder">
                         <div class="row bl-1 bb-1 br bg-white">
                             <div class="col-md-3">
                                 <p class="m-0 roboto pt-10">Fixed Deposit </p>
@@ -429,7 +377,7 @@
                     </div>
                 </div>
                 <div class="col-width-31 pr-0 pt-20">
-                    <img [src]="selectedGoal.img" class="">
+                    <img [src]="selectedGoal.img" class="imgWidth">
 
                     <div class="btnBox">
                         <button mat-stroked-button class="in-btn" (click)="openInSideBar(null, 'openallocations')">
