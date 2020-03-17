@@ -104,7 +104,7 @@ table {
 
     letter-spacing: normal;
     text-transform: initial !important;
-    white-space: normal !important;
+    // white-space: normal !important;
   }
 
   tr {
@@ -194,7 +194,7 @@ table {
 
     .mat-table-sticky:last-child {
       border-left: 1px solid #dadce0 !important;
-      right: -2px !important;
+      right: -3px !important;
     }
   }
 }
