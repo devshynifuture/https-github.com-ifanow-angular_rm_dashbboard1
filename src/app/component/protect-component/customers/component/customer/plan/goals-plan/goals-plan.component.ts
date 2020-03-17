@@ -30,21 +30,9 @@ export interface PeriodicElement {
   styleUrls: ['./goals-plan.component.scss']
 })
 export class GoalsPlanComponent implements OnInit {
-  dummyDashBoardData:any = {
-    goalYear: 2025,
-    goalName: 'Shreya’s higher education',
-    presentValue: 24325,
-    futureValue: 456543,
-    equity_monthly: 5200,
-    debt_monthly: 44553,
-    lump_equity: 45232,
-    lump_debt: 35452
-  }
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'icons'];
   clientFamily:any[];
 
   isLoading = false;
-  goalProgress = 35;
   advisor_client_id: any = {
     advisorId:'',
     clientId:''
@@ -64,7 +52,8 @@ export class GoalsPlanComponent implements OnInit {
         equity_monthly: 5200,
         debt_monthly: 44553,
         lump_equity: 45232,
-        lump_debt: 35452
+        lump_debt: 35452,
+        goalProgress: 20,
       }
     },
     {
@@ -79,7 +68,8 @@ export class GoalsPlanComponent implements OnInit {
         equity_monthly: 5200,
         debt_monthly: 44553,
         lump_equity: 45232,
-        lump_debt: 35452
+        lump_debt: 35452,
+        goalProgress: 20,
       }
     },
     {
@@ -94,7 +84,8 @@ export class GoalsPlanComponent implements OnInit {
         equity_monthly: 5200,
         debt_monthly: 44553,
         lump_equity: 45232,
-        lump_debt: 35452
+        lump_debt: 35452,
+        goalProgress: 20,
       }
     },
     {
@@ -109,7 +100,8 @@ export class GoalsPlanComponent implements OnInit {
         equity_monthly: 5200,
         debt_monthly: 44553,
         lump_equity: 45232,
-        lump_debt: 35452
+        lump_debt: 35452,
+        goalProgress: 20,
       }
     },
   ];
@@ -147,11 +139,6 @@ export class GoalsPlanComponent implements OnInit {
         return a.relationshipId - b.relationshipId;
       });
     }, (err) => {this.eventService.openSnackBar(err, "Dismiss")});
-  }
-
-  // load the selected goal data
-  displayGoalData(goal){
-    this.dashboardData = goal;
   }
 
   openAddgoals() {
@@ -206,7 +193,7 @@ export class GoalsPlanComponent implements OnInit {
         fragmentData.state = 'open25';
 
         // TODO:- remove .data as its for demo purpose only
-        fragmentData.data = this.dummyDashBoardData;
+        fragmentData.data = this.selectedGoal.dummyDashBoardData;
         break;
       case 'openallocations':
         fragmentData.componentName = AddGoalComponent;
