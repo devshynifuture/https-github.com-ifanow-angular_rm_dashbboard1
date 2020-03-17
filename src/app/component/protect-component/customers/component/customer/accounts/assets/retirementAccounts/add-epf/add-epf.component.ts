@@ -264,8 +264,9 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.epf}
       let obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
+        ownerList: this.epf.value.getCoOwnerName,
         familyMemberId: this.familyMemberId,
-        ownerName: (this.ownerName == undefined) ? this.epf.controls.ownerName.value : this.ownerName,
+        // ownerName: (this.ownerName == undefined) ? this.epf.controls.ownerName.value : this.ownerName,
         employeesMonthlyContribution: this.epf.controls.employeeContry.value,
         employersMonthlyContribution: this.epf.controls.employerContry.value,
         annualSalaryGrowthRate: this.epf.controls.annualSalGrowth.value,
@@ -275,8 +276,18 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.epf}
         epfNo: this.epf.controls.EPFNo.value,
         bankAccountNumber: this.epf.controls.bankAcNo.value,
         description: this.epf.controls.description.value,
+        nomineeList: this.epf.value.getNomineeName,
         id: this.epf.controls.id.value
       }
+
+      obj.nomineeList.forEach(element => {
+        if(element.name == ''){
+          obj.nomineeList= [];
+        }
+        else{
+          obj.nomineeList= this.epf.value.getNomineeName;
+        }
+      });
       let adviceObj = {
         advice_id: this.advisorId,
         adviceStatusId: 5,

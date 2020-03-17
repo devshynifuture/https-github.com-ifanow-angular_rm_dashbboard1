@@ -34,7 +34,8 @@ export class NpsSchemeHoldingComponent implements OnInit {
   idForscheme: any;
   idForscheme1: any[];
   clientId: any;
-  nomineesListFM: any;
+  nomineesListFM:any = [];
+  callMethod:any;
   dataFM = [];
   familyList: any;
   nexNomineePer = 0;
@@ -68,15 +69,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
 
   }
 
-  display(value) {
-    console.log('value selected', value)
-    this.ownerName = value.userName;
-    this.familyMemberId = value.id
-  }
-  lisNominee(value) {
-    console.log(value)
-    this.nomineesListFM = Object.assign([], value.familyMembersList);
-  }
+  
   nomineesList() {
     this.dataFM = this.nomineesListFM
     if (this.dataFM.length > 0) {
@@ -121,7 +114,12 @@ export class NpsSchemeHoldingComponent implements OnInit {
       data = {}
     }
     this.schemeHoldingsNPS = this.fb.group({
-      ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
+      getCoOwnerName: this.fb.array([this.fb.group({
+        name: ['',[Validators.required]],
+        share: ['',[Validators.required]],
+        familyMemberId: [0],
+        id:0
+      })]),
       schemeChoice: [(data == undefined) ? '' : (data.schemeChoice) + "",],
       pran: [(data == undefined) ? '' : data.pran, [Validators.required]],
       // schemeName: [(data == undefined) ? '' : data.schemeName, [Validators.required]],
@@ -135,14 +133,41 @@ export class NpsSchemeHoldingComponent implements OnInit {
         frequencyId: [null, [Validators.required]],
         accountPreferenceId: [null, [Validators.required]], approxContribution: [null, [Validators.required]]
       })]),
-      nominees: this.fb.array([this.fb.group({
-        name: null, sharePercentage: null,
-      })]),
-      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId],]
+      getNomineeName: this.fb.array([this.fb.group({
+        name: [''],
+        sharePercentage: [0],
+        familyMemberId: [0],
+        id:[0]
+      })])
     });
-    this.ownerData = this.schemeHoldingsNPS.controls;
-    this.familyMemberId = this.schemeHoldingsNPS.controls.familyMemberId.value
-    this.familyMemberId = this.familyMemberId[0]
+    // ==============owner-nominee Data ========================\\
+  /***owner***/ 
+  if(this.schemeHoldingsNPS.value.getCoOwnerName.length == 1){
+    this.getCoOwner.controls['0'].get('share').setValue('100');
+  }
+
+  if (data.ownerList) {
+    this.getCoOwner.removeAt(0);
+    data.ownerList.forEach(element => {
+      this.addNewCoOwner(element);
+    });
+  }
+  
+/***owner***/ 
+
+/***nominee***/ 
+if(data.nomineeList){
+  this.getNominee.removeAt(0);
+  data.nomineeList.forEach(element => {
+    this.addNewNominee(element);
+  });
+}
+/***nominee***/ 
+
+this.ownerData = {Fmember: this.nomineesListFM, controleData:this.schemeHoldingsNPS}
+// ==============owner-nominee Data ========================\\ 
+    // this.familyMemberId = this.schemeHoldingsNPS.controls.familyMemberId.value
+    // this.familyMemberId = this.familyMemberId[0]
     if (data.futureContributionList != undefined || data.nominees != undefined || data.holdingList != undefined) {
       data.futureContributionList.forEach(element => {
         this.schemeHoldingsNPS.controls.futureContributionList.push(this.fb.group({
@@ -160,25 +185,25 @@ export class NpsSchemeHoldingComponent implements OnInit {
       //     familyMemberId:[element.familyMemberId]
       //   }))
       // })
-      if (data.nominees != undefined) {
-        if (data.nominees.length != 0) {
-          data.nominees.forEach(element => {
-            this.schemeHoldingsNPS.controls.nominees.push(this.fb.group({
-              name: [(element.name), [Validators.required]],
-              familyMemberId: [(element.familyMemberId), [Validators.required]],
-              sharePercentage: [element.sharePercentage, Validators.required],
-              id: [element.id, [Validators.required]]
-            }))
-          })
-          this.nominee.removeAt(0);
+      // if (data.nominees != undefined) {
+      //   if (data.nominees.length != 0) {
+      //     data.nominees.forEach(element => {
+      //       this.schemeHoldingsNPS.controls.nominees.push(this.fb.group({
+      //         name: [(element.name), [Validators.required]],
+      //         familyMemberId: [(element.familyMemberId), [Validators.required]],
+      //         sharePercentage: [element.sharePercentage, Validators.required],
+      //         id: [element.id, [Validators.required]]
+      //       }))
+      //     })
+      //     this.nominee.removeAt(0);
 
-        } else {
-          this.nominee.push(this.fb.group({
-            name: [null, [Validators.required]], sharePercentage: [null, [Validators.required]],
-          }));
-        }
+      //   } else {
+      //     this.nominee.push(this.fb.group({
+      //       name: [null, [Validators.required]], sharePercentage: [null, [Validators.required]],
+      //     }));
+      //   }
 
-      }
+      // }
       data.holdingList.forEach(element => {
         this.schemeHoldingsNPS.controls.holdingList.push(this.fb.group({
           schemeName: [(element.schemeId) + "", [Validators.required]],
@@ -270,44 +295,131 @@ export class NpsSchemeHoldingComponent implements OnInit {
   Close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag })
   }
+
+ // ===================owner-nominee directive=====================//
+ display(value) {
+  console.log('value selected', value)
+  this.ownerName = value.userName;
+  this.familyMemberId = value.id
+}
+
+lisNominee(value) {
+  this.ownerData.Fmember = value;
+  this.nomineesListFM = Object.assign([], value);
+}
+
+disabledMember(value, type) {
+  this.callMethod = {
+    methodName : "disabledMember",
+    ParamValue : value,
+    disControl : type
+  }
+}
+
+displayControler(con) {
+  console.log('value selected', con);
+  if(con.owner != null && con.owner){
+    this.schemeHoldingsNPS.controls.getCoOwnerName = con.owner;
+  }
+  if(con.nominee != null && con.nominee){
+    this.schemeHoldingsNPS.controls.getNomineeName = con.nominee;
+  }
+}
+
+onChangeJointOwnership(data) {
+  this.callMethod = {
+    methodName : "onChangeJointOwnership",
+    ParamValue : data
+  }
+}
+
+/***owner***/ 
+
+get getCoOwner() {
+  return this.schemeHoldingsNPS.get('getCoOwnerName') as FormArray;
+}
+
+addNewCoOwner(data) {
+  this.getCoOwner.push(this.fb.group({
+    name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+  }));
+  if (!data || this.getCoOwner.value.length < 1) {
+    for (let e in this.getCoOwner.controls) {
+      this.getCoOwner.controls[e].get('share').setValue('');
+    }
+  }
+}
+
+removeCoOwner(item) {
+  this.getCoOwner.removeAt(item);
+  if (this.schemeHoldingsNPS.value.getCoOwnerName.length == 1) {
+    this.getCoOwner.controls['0'].get('share').setValue('100');
+  } else {
+    for (let e in this.getCoOwner.controls) {
+      this.getCoOwner.controls[e].get('share').setValue('');
+    }
+  }
+}
+/***owner***/ 
+
+/***nominee***/ 
+
+get getNominee() {
+  return this.schemeHoldingsNPS.get('getNomineeName') as FormArray;
+}
+
+removeNewNominee(item) {
+  this.getNominee.removeAt(item);
+  
+}
+
+
+
+addNewNominee(data) {
+  this.getNominee.push(this.fb.group({
+    name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+  }));
+  if (!data || this.getNominee.value.length < 1) {
+    for (let e in this.getNominee.controls) {
+      this.getNominee.controls[e].get('sharePercentage').setValue(0);
+    }
+  }
+  
+}
+/***nominee***/ 
+// ===================owner-nominee directive=====================//
+
   saveSchemeHolding() {
     console.log(this.schemeHoldingsNPS.get('holdingList').invalid)
     console.log(this.schemeHoldingsNPS.get('futureContributionList').invalid)
-    console.log(this.schemeHoldingsNPS.get('nominees').invalid)
-    if (this.schemeHoldingsNPS.get('ownerName').invalid) {
+    // console.log(this.schemeHoldingsNPS.get('nominees').invalid)
+    if (this.schemeHoldingsNPS.invalid) {
       this.schemeHoldingsNPS.get('ownerName').markAsTouched();
-      return;
-    } else if (this.schemeHoldingsNPS.get('pran').invalid) {
       this.schemeHoldingsNPS.get('pran').markAsTouched();
-      return;
-    } else if (this.schemeHoldingsNPS.get('ownerName').invalid) {
       this.schemeHoldingsNPS.get('ownerName').markAsTouched();
-      return
-    } else if (this.schemeHoldingsNPS.get('holdingList').invalid) {
       this.schemeHoldingsNPS.get('holdingList').markAsTouched();
-      return
-    } else if (this.schemeHoldingsNPS.get('futureContributionList').invalid) {
       this.schemeHoldingsNPS.get('futureContributionList').markAsTouched();
-      return
     } else {
       let obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
         familyMemberId: this.familyMemberId,
-        ownerName: (this.ownerName == undefined) ? this.schemeHoldingsNPS.controls.ownerName.value : this.ownerName,
+        // ownerName: (this.ownerName == undefined) ? this.schemeHoldingsNPS.controls.ownerName.value : this.ownerName,
+        ownerList: this.schemeHoldingsNPS.value.getCoOwnerName,
         pran: this.schemeHoldingsNPS.controls.pran.value,
         holdingList: this.schemeHoldingsNPS.controls.holdingList.value,
         futureContributionList: this.schemeHoldingsNPS.controls.futureContributionList.value,
-        nominees: this.schemeHoldingsNPS.controls.nominees.value,
+        // nominees: this.schemeHoldingsNPS.controls.nominees.value,
+        nomineeList: this.schemeHoldingsNPS.value.getNomineeName,
         description: this.schemeHoldingsNPS.controls.description.value,
         id: this.schemeHoldingsNPS.controls.id.value
       }
-      this.nominee.value.forEach(element => {
-        if (element.sharePercentage == null && element.name == null) {
-          this.nominee.removeAt(0);
-        }
-        obj.nominees = this.schemeHoldingsNPS.controls.nominees.value;
-      });
+      // this.nominee.value.forEach(element => {
+      //   if (element.sharePercentage == null && element.name == null) {
+      //     this.nominee.removeAt(0);
+      //   }
+      //   obj.nominees = this.schemeHoldingsNPS.controls.nominees.value;
+      // });
       let adviceObj = {
         advice_id: this.advisorId,
         adviceStatusId: 5,
