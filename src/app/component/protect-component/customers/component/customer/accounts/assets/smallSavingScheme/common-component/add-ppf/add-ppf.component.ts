@@ -114,8 +114,7 @@ export class AddPpfComponent implements OnInit {
       balanceAsOn: [new Date(data.balanceAsOn), [Validators.required]],
       commencementDate: [new Date(data.commencementDate), [Validators.required]],
       futureContribution: [data.futureApproxcontribution, [Validators.required]],
-      tenure: [!data.tenure ? '' : data.tenure, [Validators.required]],
-      frquency: [(data.frequency == undefined) ? "1" : data.frequency, [Validators.required]],
+      frquency: [(data.frequency == undefined) ? "1" : String(data.frequency), [Validators.required]],
     })
     this.optionalppfSchemeForm = this.fb.group({
       description: [data.description, [Validators.required]],
@@ -123,7 +122,9 @@ export class AddPpfComponent implements OnInit {
       linkedBankAccount: [data.linkedBankAccount, [Validators.required]],
       nominees: this.nomineesList
     })
+    this.commencementDate = data.commencementDate;
     this.ownerData = this.ppfSchemeForm.controls;
+    this.familyMemberId = data.familyMemberId;
   }
   get nominee() {
     return this.optionalppfSchemeForm.get('npsNomineesList') as FormArray;
@@ -183,7 +184,7 @@ export class AddPpfComponent implements OnInit {
       let obj = {
         "advisorId": this.advisorId,
         "clientId": this.clientId,
-        "ownerName": this.ownerName.userName,
+        "ownerName": (this.ownerName == undefined) ? this.ppfSchemeForm.get('ownerName').value : this.ownerName.userName,
         "familyMemberId": this.familyMemberId,
         "accountBalance": this.ppfSchemeForm.get('accountBalance').value,
         "balanceAsOn": this.ppfSchemeForm.get('balanceAsOn').value,

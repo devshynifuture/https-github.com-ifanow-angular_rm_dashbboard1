@@ -1,9 +1,27 @@
 ::ng-deep .in-btn {
-    font-size: 12px !important;
+    font-size: 14px !important;
     color: #008FFF;
-    border-radius: 2px;
-    height: 40px;
-    width: 138px;
+    border-radius: 2px !important;
+    width: 135px;
+    height: 36px;
+    text-align: left;
+    padding: 0px 0px 0px 10px;
+    img {
+        margin-right: 10px;
+    }
+}
+
+::ng-deep .in-btn-two {
+    font-size: 14px !important;
+    color: #008FFF;
+    border-radius: 2px !important;
+    width: 145px;
+    text-align: left;
+    padding: 0px 0px 0px 10px;
+    height: 36px;
+    img {
+        margin-right: 10px;
+    }
 }
 
 .mat-stroked-button:not([disabled]) {
@@ -33,4 +51,26 @@
     .cdk-drag-placeholder {
         visibility: hidden;
     }
+}
+
+.btnBox {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.col-width-31 {
+    flex: 0 0 31.333333%;
+    max-width: 31.333333%;
+    padding-left: 15px;
+}
+
+.col-width-68 {
+    flex: 0 0 68.666667%;
+    max-width: 68.666667%;
+}
+
+.imgPosition {
+    position: absolute;
 }

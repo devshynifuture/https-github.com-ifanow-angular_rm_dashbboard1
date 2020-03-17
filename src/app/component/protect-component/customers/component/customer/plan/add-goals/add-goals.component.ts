@@ -17,13 +17,18 @@ export class AddGoalsComponent implements OnInit {
   advisorId: any;
   familyList:any[] = [];
   @Input() data;
+  clientName: string;
+  clientId: any;
 
-  constructor(public subInjectService: SubscriptionInject, private eventService: EventService, private planService: PlanService) { }
+  constructor(public subInjectService: SubscriptionInject, private eventService: EventService, private planService: PlanService) {
+    let clientData = AuthService.getClientData();
+    this.clientName = clientData.name;
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+  }
 
   ngOnInit() {
-    this.advisorId = AuthService.getAdvisorId();
-    this.getGoalGlobalData();
-    this.familyList = this.data.familyList;
+    this.loadGlobalGoalData();
   }
 
   close() {
@@ -31,17 +36,30 @@ export class AddGoalsComponent implements OnInit {
   }
 
   // load goal types and related images to display
-  getGoalGlobalData() {
-    let obj = {
+  // TODO:- create restrictive mechanism for failures of apis
+  loadGlobalGoalData() {
+    let advisorObj = {
       advisorId: this.advisorId
     }
-    this.planService.getGoalGlobalData(obj).subscribe(
+    this.planService.getGoalGlobalData(advisorObj).subscribe(
       data => this.getGoalGlobalDataRes(data),
       error => this.eventService.showErrorMessage(error)
     )
+
+    let advisor_client_obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    }
+
+    this.planService.getListOfFamilyByClient(advisor_client_obj).subscribe((data)=>{
+      this.familyList = data.familyMembersList.sort((a, b) => {
+        return a.relationshipId - b.relationshipId;
+      });
+    }, (err) => {this.eventService.openSnackBar(err, "Dismiss")});
   }
 
-  // Set questionnaires for all the 
+  // Set questionnaires for all the and divide the goal set into two rows
+  // TODO:- improve ui such that we dont need to divide it into two rows.
   getGoalGlobalDataRes(data) {
     data.forEach(element => {
       switch (element.id) {
@@ -65,6 +83,11 @@ export class AddGoalsComponent implements OnInit {
             showAge: true,
             placeHolder: 'Age'
           }
+          element.defaults = {
+            ageIncreament: 5,
+            cost: 7500000,
+            planningForRelative: [0], // self
+          }
           break;
         case 3: // Car
           element.questions = {
@@ -81,6 +104,11 @@ export class AddGoalsComponent implements OnInit {
             maxCost: 50000000,
             showAge: true,
             placeHolder: 'Age'
+          }
+          element.defaults = {
+            ageIncreament: 5,
+            cost: 500000,
+            planningForRelative: [0], // self
           }
           break;
         case 4: // Marriage
@@ -100,6 +128,11 @@ export class AddGoalsComponent implements OnInit {
             showAge: true,
             placeHolder: 'Age'
           }
+          element.defaults = {
+            ageIncreament: 5,
+            cost: 3000000,
+            planningForRelative: [5,6], // children
+          }
           break;
         case 5: // Vacation
         element.questions = {
@@ -116,6 +149,11 @@ export class AddGoalsComponent implements OnInit {
             maxCost: 2500000,
             showAge: false,
             placeHolder: 'Year'
+          }
+          element.defaults = {
+            gap: 10,
+            cost: 75000,
+            planningForRelative: [0], // self
           }
           break;
         case 6: // Education
@@ -135,6 +173,11 @@ export class AddGoalsComponent implements OnInit {
             showAge: true,
             placeHolder: 'Age'
           }
+          element.defaults = {
+            gap: 5,
+            cost: 3000000,
+            planningForRelative: [5,6], // children
+          }
           break;
         case 7: // Emergency
           element.questions = {
@@ -149,8 +192,13 @@ export class AddGoalsComponent implements OnInit {
             maxAge: 60,
             minCost: 10000,
             maxCost: 10000000,
-            showAge: true, // here age is true as we want fixed numbers
+            showAge: true, // here age is true as we want fixed numbers of months
             placeHolder: 'Months'
+          }
+          element.defaults = {
+            ageIncreament: 5,
+            cost: 500000,
+            planningForRelative: [0], // self
           }
           break;
         case 8: // Wealth Creation
@@ -170,6 +218,11 @@ export class AddGoalsComponent implements OnInit {
             showAge: true,
             placeHolder: 'Age'
           }
+          element.defaults = {
+            ageIncreament: 5,
+            cost: 500000,
+            planningForRelative: [5,6], // children
+          }
           break;
         case 9: // Big Spends
           element.questions = {
@@ -187,6 +240,11 @@ export class AddGoalsComponent implements OnInit {
             showAge: false,
             placeHolder: 'Year'
           }
+          element.defaults = {
+            ageIncreament: 5,
+            cost: 1000000,
+            planningForRelative: [0], // self
+          }
           break;
         case 10: // Others
           element.questions = {
@@ -203,6 +261,11 @@ export class AddGoalsComponent implements OnInit {
             maxCost: 100000000,
             showAge: false,
             placeHolder: 'Year'
+          }
+          element.defaults = {
+            ageIncreament: 5,
+            cost: 75000,
+            planningForRelative: [0], // self
           }
           break;
         default:

@@ -40,6 +40,9 @@ export class ManageDeploymentComponent implements OnInit {
       value: [, [Validators.required]]
     }))
   }
+  close(flag) {
+    this.dialogRef.close({isRefreshRequired:flag})
+  }
   removeAsset(index) {
     this.assetAllcation.controls.assetAllocationList.removeAt(index)
   }

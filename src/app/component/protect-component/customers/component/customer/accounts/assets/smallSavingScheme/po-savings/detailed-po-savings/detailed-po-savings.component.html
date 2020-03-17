@@ -36,7 +36,7 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Balance as on
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" >
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{ (data.balanceAsOn)?(data.balanceAsOn | date: 'dd/MM/yyyy' ):'-' }}
                     </div>
                 </div>
@@ -85,7 +85,7 @@
                         PO branch
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{ (data.postOfficeBranch)? data.description:'-' }}
+                        {{ (data.postOfficeBranch)? data.postOfficeBranch:'-' }}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">

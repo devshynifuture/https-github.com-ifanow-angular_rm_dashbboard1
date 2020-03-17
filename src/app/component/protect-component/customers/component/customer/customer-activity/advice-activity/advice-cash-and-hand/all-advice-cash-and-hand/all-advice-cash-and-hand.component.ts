@@ -3,6 +3,8 @@ import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { BankAccountsComponent } from '../../../../accounts/assets/cash&bank/bank-accounts/bank-accounts.component';
 import { CashInHandComponent } from '../../../../accounts/assets/cash&bank/cash-in-hand/cash-in-hand.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { ActiityService } from '../../../actiity.service';
 
 @Component({
   selector: 'app-all-advice-cash-and-hand',
@@ -13,11 +15,31 @@ export class AllAdviceCashAndHandComponent implements OnInit {
 
   displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'balance','advice', 'astatus', 'adate', 'icon'];
   dataSource3 = ELEMENT_DATA1;
-  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, ) { }
+  clientId: any;
+  advisorId: any;
+  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject,private activityService:ActiityService) { }
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    this.getAllAdviceByAsset();
   }
   allAdvice = true
+  getAllAdviceByAsset() {
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      assetCategory: 11,
+      adviceStatusId:0
+    }
+    this.activityService.getAllAsset(obj).subscribe(
+      data => this.getAllSchemeResponse(data), (error) => {
+      }
+    );
+  }
+  getAllSchemeResponse(data){
+    console.log(data);
+  }
   openCashAndBank(data) {
     const fragmentData = {
       flag: '',

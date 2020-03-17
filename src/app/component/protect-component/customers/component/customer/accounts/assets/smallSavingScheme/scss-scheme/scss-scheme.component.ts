@@ -103,7 +103,7 @@ export class ScssSchemeComponent implements OnInit {
       positiveMethod: () => {
         this.cusService.deleteSCSS(data.id).subscribe(
           data => {
-            this.eventService.openSnackBar('SCSS is deleted', 'Dismiss');
+            this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             dialogRef.close();
             this.getScssSchemedata();
           },
@@ -133,8 +133,8 @@ export class ScssSchemeComponent implements OnInit {
     if (data == undefined) {
       this.noData = 'No scheme found';
       this.datasource.data = [];
-    }else if (data && data.scssList && data.scssList.length > 0) {
-      console.log('getKvpSchemedataResponse',data);
+    } else if (data && data.scssList && data.scssList.length > 0) {
+      console.log('getKvpSchemedataResponse', data);
       this.datasource.data = data.scssList;
       this.datasource.sort = this.sort;
       UtilService.checkStatusId(this.datasource.filteredData);
@@ -158,7 +158,7 @@ export class ScssSchemeComponent implements OnInit {
       state: (flag == 'detailedScss') ? 'open35' : 'open',
       componentName: (flag == 'detailedScss') ? DetailedScssComponent : AddScssComponent
     };
-    if(flag != 'detailedScss') {
+    if (flag != 'detailedScss') {
       fragmentData['popupHeaderText'] = popupHeaderText;
     }
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -172,7 +172,7 @@ export class ScssSchemeComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-       
+
       }
     );
   }

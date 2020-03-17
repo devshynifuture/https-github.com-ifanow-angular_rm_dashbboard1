@@ -150,7 +150,6 @@ export class CashAndBankComponent implements OnInit {
         if (value == 'BANK') {
           this.custumService.deleteBankAccount(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar('Bank account is deleted', 'Dismiss');
               dialogRef.close();
               this.getBankAccountList();
             },
@@ -159,14 +158,14 @@ export class CashAndBankComponent implements OnInit {
         } else {
           this.custumService.deleteCashInHand(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar('Cash in hand is deleted', 'Dismiss');
               dialogRef.close();
               this.getCashInHandList();
             },
             error => this.eventService.showErrorMessage(error)
           );
         }
-
+        (value == "BANK ACCOUNT") ? this.getBankAccountList() : this.getCashInHandList();
+        this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
 
       },
       negativeMethod: () => {
@@ -265,7 +264,7 @@ export class CashAndBankComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getBankAccountList();
+            (sideBarData.data == 1) ? this.getBankAccountList() : this.getCashInHandList();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
           }
           rightSideDataSub.unsubscribe();

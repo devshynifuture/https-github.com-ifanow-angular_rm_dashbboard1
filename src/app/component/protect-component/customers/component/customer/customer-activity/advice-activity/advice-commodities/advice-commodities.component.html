@@ -111,7 +111,7 @@
         <ng-container matColumnDef="total">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Total/Grams </th>
             <td mat-cell *matCellDef="let element">
-                <div class="bar">{{element.assetDetails.totalGrams}}</div>
+                <div class="bar"><span *ngIf="element.assetDetails">{{element.assetDetails.totalGrams}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">

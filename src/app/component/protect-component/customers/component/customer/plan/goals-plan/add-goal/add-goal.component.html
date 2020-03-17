@@ -72,7 +72,12 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <button mat-stroked-button class="br-0 mt-12" [class]="getAssetClass(asset.allocated_percentage)">{{asset.allocated_percentage}}%</button>
+                        <button mat-stroked-button class="br-0 mt-12" 
+                            [ngClass]="{'btn-danger': asset.allocated_percentage == 100, 
+                                        'btn-success': asset.allocated_percentage > 0, 
+                                        'btn-primary': asset.allocated_percentage == 0}">
+                            {{asset.allocated_percentage}}%
+                        </button>
                         <button mat-stroked-button class="btn-default br-0 mt-12 mb-12">{{asset.maturity_year}}</button>
                     </div>
                     <div class="col-md-4 pt-12 pr-0">
