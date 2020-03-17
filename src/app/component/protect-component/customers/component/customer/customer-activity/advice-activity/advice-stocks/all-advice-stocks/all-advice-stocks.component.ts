@@ -8,6 +8,8 @@ import { AssetStocksComponent } from '../../../../accounts/assets/asset-stocks/a
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatDialog } from '@angular/material';
 import { CustomerService } from '../../../../customer.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { AdviceUtilsService } from '../../advice-utils.service';
 
 @Component({
   selector: 'app-all-advice-stocks',
@@ -15,14 +17,78 @@ import { CustomerService } from '../../../../customer.service';
   styleUrls: ['./all-advice-stocks.component.scss']
 })
 export class AllAdviceStocksComponent implements OnInit {
-  displayedColumns3: string[] = ['checkbox', 'name', 'desc','mvalue', 'advice', 'astatus', 'adate', 'icon'];
+  displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'mvalue', 'advice', 'astatus', 'adate', 'icon'];
   dataSource3 = ELEMENT_DATA1;
+  advisorId: any;
+  clientId: any;
+  isLoading: boolean;
+  stockDatasource: any;
+  selectedAssetId: any = [];
+  stockCount: number;
+
+  
   constructor(private eventService: EventService, public dialog: MatDialog, private subInjectService: SubscriptionInject,
-    private cusService: CustomerService) { }
+    private cusService: CustomerService,private activityService:ActiityService) { }
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    this.getAssetAll();
   }
   allAdvice = true;
+  getAssetAll() {
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      assetCategory: 1,
+      adviceStatusId:0
+    }
+    this.stockDatasource = [{}, {}, {}]
+    this.isLoading = true;
+    this.activityService.getAllAsset(obj).subscribe(
+      data => this.getAllAssetResponse(data), (error) => {
+        this.isLoading = false;
+        this.stockDatasource=[];
+        this.stockDatasource['tableFlag'] = (this.stockDatasource.length == 0) ? false : true;
+
+        // this.datasource.data = [];
+        // this.isLoading = false;
+      }
+    );
+  }
+  checkAll(flag, tableDataList) {
+    console.log(flag, tableDataList)
+    const { selectedIdList, count } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
+    this.stockCount = count;
+    this.selectedAssetId = selectedIdList;
+    console.log(this.selectedAssetId);
+  }
+  checkSingle(flag, selectedData, tableData) {
+    if (flag.checked) {
+      selectedData.selected = true;
+      this.selectedAssetId.push(selectedData.assetDetails.id)
+    }
+    else {
+      selectedData.selected = false
+      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.assetDetails.id), 1)
+    }
+    this.stockCount = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
+  }
+  getAllAssetResponse(data) {
+    this.isLoading = false;
+    let filterdData=[];
+    let stockData=data.STOCKS;
+    stockData.forEach(element => {
+      var asset=element.AssetDetails;
+      element.AdviceList.forEach(obj => {
+        obj.assetDetails=asset;
+        filterdData.push(obj);
+      });
+    });
+    this.stockDatasource = filterdData;
+    this.stockDatasource['tableFlag'] = (data.STOCKS.length == 0) ? false : true;
+    console.log(data);
+  }
   openRealEstate(value, data) {
     const fragmentData = {
       flag: value,

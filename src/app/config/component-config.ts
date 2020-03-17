@@ -354,6 +354,7 @@ export const appConfig = {
   GET_ADVICE_BY_CATEGORY: 'advice/assetType/get',
   ADVICE_GET_DEPLOYMENTS: 'activity/deployment/get',
   GENERATE_GROUP_ID: 'advice/asset/consent/post',
+  CONSENT_BYPASS_POST:'advice/asset/consent-bypass/post',
   GET_ASSET_CONSENT: 'advice/advice/consent/get',
   UPDATE_ASSET_CONSENT: 'advice/asset/update/consent',
   SENT_EMAIL_CONSENT: 'advice/asset/update/consent/sent',

@@ -65,15 +65,14 @@
                 <mat-tab #tab [disabled]='fragmentDataSubsUpper.data=="" && !addedData' label="PLANS">
                     <ng-template matTabContent>
                         <!--*ngIf="subscriptionTab=='PLANS'"-->
-                        <app-plans (changePlanData)="getData($event)"
-                            [componentFlag]='plans' [upperData]="!addedData?fragmentDataSubsUpper.data:addedData">
+                        <app-plans (changePlanData)="getData($event)" [componentFlag]='plans'
+                            [upperData]="!addedData?fragmentDataSubsUpper.data:addedData">
                         </app-plans>
                     </ng-template>
                 </mat-tab>
                 <mat-tab #tab [disabled]='fragmentDataSubsUpper.data=="" && !addedData' label="DOCUMENTS">
                     <ng-template matTabContent>
-                        <app-document (changeServiceData)="getData($event)"
-                            [componentFlag1]='servicesDocuments'
+                        <app-document (changeServiceData)="getData($event)" [componentFlag1]='servicesDocuments'
                             [upperData]="!addedData?fragmentDataSubsUpper.data:addedData"></app-document>
                     </ng-template>
                 </mat-tab>
@@ -120,7 +119,7 @@
 
                 <mat-tab label="SUBSCRIPTIONS">
                     <ng-template matTabContent>
-                        <div class="wrapper-20 bg-grey lter heading-fix b-a">
+                        <div class="wrapper-18 bg-grey lter heading-fix b-a">
                             <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.data.name}}</h3>
                         </div>
                         <app-client-upper-subscription [upperData]="fragmentDataSubsUpper.data">
@@ -134,7 +133,7 @@
                     <!--                  <app-quotations-subscription [upperData]="fragmentDataSubsUpper.clientData" [screenType]="1"-->
                     <!--                                               *ngIf="subscriptionTab=='QUOTATIONS'"></app-quotations-subscription>-->
                     <ng-template matTabContent>
-                        <div class="wrapper-20 bg-grey lter heading-fix b-a">
+                        <div class="wrapper-18 bg-grey lter heading-fix b-a">
                             <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.data.name}}</h3>
                         </div>
                         <app-quotations [clientData]="fragmentDataSubsUpper.data">
@@ -143,7 +142,7 @@
                 </mat-tab>
                 <mat-tab label="INVOICES">
                     <ng-template matTabContent>
-                        <div class="wrapper-20 bg-grey lter heading-fix b-a">
+                        <div class="wrapper-18 bg-grey lter heading-fix b-a">
                             <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.data.name}}</h3>
                         </div>
                         <app-invoices [upperData]="fragmentDataSubsUpper.data">
@@ -152,7 +151,7 @@
                 </mat-tab>
                 <mat-tab label="DOCUMENTS">
                     <ng-template matTabContent>
-                        <div class="wrapper-20 bg-grey lter heading-fix b-a">
+                        <div class="wrapper-18 bg-grey lter heading-fix b-a">
                             <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.data.name}}</h3>
                         </div>
                         <app-document [clientData]="fragmentDataSubsUpper.data" [componentFlag1]='clientDocuments'
@@ -162,7 +161,7 @@
                 </mat-tab>
                 <mat-tab label="SETTINGS">
                     <ng-template matTabContent>
-                        <div class="wrapper-20 bg-grey lter heading-fix b-a">
+                        <div class="wrapper-18 bg-grey lter heading-fix b-a">
                             <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.data.name}}</h3>
                         </div>
                         <app-settings [upperData]="fragmentDataSubsUpper.data">

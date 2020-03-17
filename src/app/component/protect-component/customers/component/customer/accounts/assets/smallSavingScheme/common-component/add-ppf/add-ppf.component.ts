@@ -35,7 +35,7 @@ export class AddPpfComponent implements OnInit {
   clientId: number;
   nexNomineePer = 0;
   showError = false;
-  nomineesListFM: any;
+  nomineesListFM: any =[];
   dataFM: any;
   familyList: any;
   errorFieldName: string;
@@ -44,6 +44,7 @@ export class AddPpfComponent implements OnInit {
   nominees: any[];
   commencementDate: any;
   flag: any;
+  callMethod:any;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   transactionViewData =
@@ -80,15 +81,99 @@ export class AddPpfComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getdataForm(this.data);
   }
+  // ===================owner-nominee directive=====================//
   display(value) {
     console.log('value selected', value)
-    this.ownerName = value;
+    this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
+
   lisNominee(value) {
-    console.log(value)
-    this.nomineesListFM = Object.assign([], value.familyMembersList);
+    this.ownerData.Fmember = value;
+    this.nomineesListFM = Object.assign([], value);
   }
+
+  disabledMember(value, type) {
+    this.callMethod = {
+      methodName : "disabledMember",
+      ParamValue : value,
+      disControl : type
+    }
+  }
+
+  displayControler(con) {
+    console.log('value selected', con);
+    if(con.owner != null && con.owner){
+      this.ppfSchemeForm.controls.getCoOwnerName = con.owner;
+    }
+    if(con.nominee != null && con.nominee){
+      this.ppfSchemeForm.controls.getNomineeName = con.nominee;
+    }
+  }
+
+  onChangeJointOwnership(data) {
+    this.callMethod = {
+      methodName : "onChangeJointOwnership",
+      ParamValue : data
+    }
+  }
+
+  /***owner***/ 
+
+  get getCoOwner() {
+    return this.ppfSchemeForm.get('getCoOwnerName') as FormArray;
+  }
+
+  addNewCoOwner(data) {
+    this.getCoOwner.push(this.fb.group({
+      name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+    }));
+    if (!data || this.getCoOwner.value.length < 1) {
+      for (let e in this.getCoOwner.controls) {
+        this.getCoOwner.controls[e].get('share').setValue('');
+      }
+    }
+  }
+
+  removeCoOwner(item) {
+    this.getCoOwner.removeAt(item);
+    if (this.ppfSchemeForm.value.getCoOwnerName.length == 1) {
+      this.getCoOwner.controls['0'].get('share').setValue('100');
+    } else {
+      for (let e in this.getCoOwner.controls) {
+        this.getCoOwner.controls[e].get('share').setValue('');
+      }
+    }
+  }
+  /***owner***/ 
+
+  /***nominee***/ 
+
+  get getNominee() {
+    return this.ppfSchemeForm.get('getNomineeName') as FormArray;
+  }
+
+  removeNewNominee(item) {
+    this.getNominee.removeAt(item);
+    
+  }
+
+
+  
+  addNewNominee(data) {
+    this.getNominee.push(this.fb.group({
+      name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+    }));
+    if (!data || this.getNominee.value.length < 1) {
+      for (let e in this.getNominee.controls) {
+        this.getNominee.controls[e].get('sharePercentage').setValue(0);
+      }
+    }
+    
+  }
+  /***nominee***/ 
+  // ===================owner-nominee directive=====================//
+  
 
   moreFields() {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true
@@ -109,6 +194,12 @@ export class AddPpfComponent implements OnInit {
 
     this.ppfData = data;
     this.ppfSchemeForm = this.fb.group({
+      getCoOwnerName: this.fb.array([this.fb.group({
+        name: ['',[Validators.required]],
+        share: ['',[Validators.required]],
+        familyMemberId: 0,
+        id:0
+      })]),
       ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
       accountBalance: [data.accountBalance, [Validators.required, Validators.min(500), Validators.max(150000)]],
       balanceAsOn: [new Date(data.balanceAsOn), [Validators.required]],
@@ -120,10 +211,42 @@ export class AddPpfComponent implements OnInit {
       description: [data.description, [Validators.required]],
       bankName: [data.bankName, [Validators.required]],
       linkedBankAccount: [data.linkedBankAccount, [Validators.required]],
+      getNomineeName: this.fb.array([this.fb.group({
+        name: [''],
+        sharePercentage: [0],
+        familyMemberId: [0],
+        id:[0]
+      })]),
       nominees: this.nomineesList
     })
+      // ==============owner-nominee Data ========================\\
+  /***owner***/ 
+  if(this.ppfSchemeForm.value.getCoOwnerName.length == 1){
+    this.getCoOwner.controls['0'].get('share').setValue('100');
+  }
+
+  if (data.ownerList) {
+    this.getCoOwner.removeAt(0);
+    data.ownerList.forEach(element => {
+      this.addNewCoOwner(element);
+    });
+  }
+  
+/***owner***/ 
+
+/***nominee***/ 
+if(data.nomineeList){
+  this.getNominee.removeAt(0);
+  data.nomineeList.forEach(element => {
+    this.addNewNominee(element);
+  });
+}
+/***nominee***/ 
+
+this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ppfSchemeForm}
+// ==============owner-nominee Data ========================\\
     this.commencementDate = data.commencementDate;
-    this.ownerData = this.ppfSchemeForm.controls;
+    // this.ownerData = this.ppfSchemeForm.controls;
     this.familyMemberId = data.familyMemberId;
   }
   get nominee() {

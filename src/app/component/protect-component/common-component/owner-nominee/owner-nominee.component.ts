@@ -24,12 +24,20 @@ export class OwnerNomineeComponent implements OnInit {
     // if(data.Fmember.length <= 0){
     // this.getListFamilyMem();
     // }
-    this.coList.controls.getCoOwnerName.setValue(formData.controls.getCoOwnerName)
-    this.coList.controls.getNomineeName.setValue(formData.controls.getNomineeName)
+    if(formData.list.length <= 0){
+      this.getListFamilyMem();
+    }
+    else{
+      this.sendData = formData.list;
+    }
+    if(formData.data.controls.getCoOwnerName.value[0].name != ""){
+      this.coList.controls.getCoOwnerName = formData.data.controls.getCoOwnerName;
+      this.coList.controls.getNomineeName = formData.data.controls.getNomineeName;
+    }
   }
-  constructor(private fb: FormBuilder,private custumService: CustomerService) { }
 
-  ngOnInit() {
+  constructor(private fb: FormBuilder,private custumService: CustomerService) { 
+
     this.coList = this.fb.group({
       getCoOwnerName: this.fb.array([this.fb.group({
         name: ['',[Validators.required]],
@@ -44,7 +52,9 @@ export class OwnerNomineeComponent implements OnInit {
         id:[0]
       })]),
     })
-    this.getListFamilyMem();
+  }
+
+  ngOnInit() {
   }
 
   getListFamilyMem():any {
@@ -72,7 +82,7 @@ export class OwnerNomineeComponent implements OnInit {
     }
     this.sendData = data.familyMembersList;
     console.log(this.sendData,"sendData 123");
-    this.disabledMember(null);
+    // this.disabledMember(null);
   }
 
   disabledMember(value){
@@ -108,6 +118,24 @@ export class OwnerNomineeComponent implements OnInit {
               element.disable = false;
             }
           }
+          // if(e.type == 'owner'){
+          //   let coListForm={
+          //     type:"owner",
+          //     owner : this.getCoOwner,
+          //     nominee : this.getNominee,
+          //     memberList: this.sendData,
+          //   }
+          //   this.coGroup.emit(coListForm);
+          // }
+          // else{
+          //   let coListForm={
+          //     type:"nomi",
+          //     owner : this.getCoOwner,
+          //     nominee : this.getNominee,
+          //     memberList: this.sendData,
+          //   }
+          //   this.coGroup.emit(coListForm);
+          // }
         }
       });
       if(this.getNominee != null){
@@ -118,11 +146,7 @@ export class OwnerNomineeComponent implements OnInit {
           }
       }
 
-      let coListForm={
-        owner : this.getCoOwner,
-        nominee : this.getNominee
-      }
-      this.coGroup.emit(coListForm);
+      
 
   }
 
@@ -155,7 +179,13 @@ export class OwnerNomineeComponent implements OnInit {
               } 
               this.getCoOwner.controls[e] = arrayCon;
       }
-     
+      let coListForm={
+        type:"owner",
+        owner : this.getCoOwner,
+        nominee : this.getNominee,
+        memberList: this.sendData,
+      }
+      this.coGroup.emit(coListForm);
      
     } else {
       this.NomineePer = 0;
@@ -180,8 +210,14 @@ export class OwnerNomineeComponent implements OnInit {
               }
             
       }
+      let coListForm={
+        type:"nomi",
+        owner : this.getCoOwner,
+        nominee : this.getNominee,
+        memberList: this.sendData,
+      }
+      this.coGroup.emit(coListForm);
     }
-    
   }
 
   /***owner***/ 
@@ -201,8 +237,10 @@ export class OwnerNomineeComponent implements OnInit {
     }
 
     let coListForm={
+      type:"owner",
       owner : this.getCoOwner,
-      nominee : this.getNominee
+      nominee : this.getNominee,
+      memberList: this.sendData,
     }
     this.coGroup.emit(coListForm);
   }
@@ -216,6 +254,13 @@ export class OwnerNomineeComponent implements OnInit {
         this.getCoOwner.controls[e].get('share').setValue('');
       }
     }
+    let coListForm={
+      type:"owner",
+      owner : this.getCoOwner,
+      nominee : this.getNominee,
+      memberList: this.sendData,
+    }
+    this.coGroup.emit(coListForm);
   }
   /***owner***/ 
 
@@ -227,7 +272,13 @@ export class OwnerNomineeComponent implements OnInit {
 
   removeNewNominee(item) {
     this.getNominee.removeAt(item);
-    
+    let coListForm={
+      type:"nomi",
+      owner : this.getCoOwner,
+      nominee : this.getNominee,
+      memberList: this.sendData,
+    }
+    this.coGroup.emit(coListForm);
   }
 
 
@@ -242,8 +293,10 @@ export class OwnerNomineeComponent implements OnInit {
       }
     }
     let coListForm={
+      type:"nomi",
       owner : this.getCoOwner,
-      nominee : this.getNominee
+      nominee : this.getNominee,
+      memberList: this.sendData,
     }
     this.coGroup.emit(coListForm);
   }

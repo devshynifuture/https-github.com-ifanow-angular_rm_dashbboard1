@@ -24,6 +24,7 @@ export class AdviceStocksComponent implements OnInit {
   stockDatasource: any;
   isLoading: boolean;
   selectedAssetId: any = [];
+  stockCount: number;
   constructor(private eventService: EventService, public dialog: MatDialog, private subInjectService: SubscriptionInject,
     private cusService: CustomerService, private activityService: ActiityService) { }
   @ViewChild("tableOne", { static: true }) sort: MatSort;
@@ -46,6 +47,10 @@ export class AdviceStocksComponent implements OnInit {
     this.isLoading = true;
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllAssetResponse(data), (error) => {
+        this.isLoading = false;
+        this.stockDatasource=[];
+        this.stockDatasource['tableFlag'] = (this.stockDatasource.length == 0) ? false : true;
+
         // this.datasource.data = [];
         // this.isLoading = false;
       }
@@ -67,12 +72,7 @@ export class AdviceStocksComponent implements OnInit {
     this.stockDatasource['tableFlag'] = (data.STOCKS.length == 0) ? false : true;
     console.log(data);
   }
-  checkAll(flag, tableDataList) {
-    console.log(flag, tableDataList)
-    const { selectedIdList, count } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
-    this.selectedAssetId = selectedIdList;
-    console.log(this.selectedAssetId);
-  }
+
   openAddEdit(data, value) {
     const fragmentData = {
       flag: value,
@@ -96,6 +96,24 @@ export class AdviceStocksComponent implements OnInit {
 
       }
     );
+  }
+  checkAll(flag, tableDataList) {
+    console.log(flag, tableDataList)
+    const { selectedIdList, count } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
+    this.stockCount = count;
+    this.selectedAssetId = selectedIdList;
+    console.log(this.selectedAssetId);
+  }
+  checkSingle(flag, selectedData, tableData) {
+    if (flag.checked) {
+      selectedData.selected = true;
+      this.selectedAssetId.push(selectedData.assetDetails.id)
+    }
+    else {
+      selectedData.selected = false
+      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.assetDetails.id), 1)
+    }
+    this.stockCount = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
   }
   openselectAdvice(data) {
     const fragmentData = {

@@ -25,7 +25,8 @@
     </div>
 </div>
 <div class="mt-8 overflow-hidden col-md-12 p-0 real-estate">
-    <table *ngIf="datasource.filteredData.length > 0" [appSkeletonLoading]="isLoading" [dataSource]="datasource" appSkeletonLoading class="skeletonAnimation" id="table-low" mat-table matSort>
+    <table *ngIf="datasource.filteredData.length > 0" [appSkeletonLoading]="isLoading" [dataSource]="datasource"
+        appSkeletonLoading class="skeletonAnimation" id="table-low" mat-table matSort>
 
         <ng-container matColumnDef="no">
             <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="no"> No</th>
@@ -38,23 +39,24 @@
         </ng-container>
 
         <ng-container matColumnDef="owner">
-            <th *matHeaderCellDef class="br t-25" mat-header-cell mat-sort-header="ownerName"> Owner</th>
-            <td *matCellDef="let element" class="br t-25" mat-cell>
+            <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="ownerName"> Owner</th>
+            <td *matCellDef="let element" class="br" mat-cell>
                 <div class="bar"> {{element.ownerName}} </div>
             </td>
-            <td *matFooterCellDef class="br text-right pr-20 f-600 t-25" mat-footer-cell>
+            <td *matFooterCellDef class="br text-right pr-20 f-600" mat-footer-cell>
                 {{isLoading ? '' : 'Total' }}
             </td>
         </ng-container>
 
         <ng-container matColumnDef="cvalue">
-            <th *matHeaderCellDef class="br t-14 textRight text-right" mat-header-cell mat-sort-header="currentValue">
+            <th *matHeaderCellDef class="br textRight text-right" mat-header-cell mat-sort-header="currentValue">
                 Current value
             </th>
-            <td *matCellDef="let element" class="br t-14 amt text-right" mat-cell>
+            <td *matCellDef="let element" class="br amt text-right" mat-cell>
                 <div class="bar" appFormatNumber> {{element.currentValue}} </div>
             </td>
-            <td mat-footer-cell class="br text-right amt p-8 amt f-600 t-7" *matFooterCellDef appFormatNumber [value]="SumOfCurrentValue">
+            <td mat-footer-cell class="br text-right amt p-8 amt f-600" *matFooterCellDef appFormatNumber
+                [value]="SumOfCurrentValue">
                 <div class="bar"> {{SumOfCurrentValue}} </div>
             </td>
         </ng-container>
@@ -64,15 +66,17 @@
             <td *matCellDef="let element" class="br amt text-right" mat-cell>
                 <div class="bar"> {{element.rate}} </div>
             </td>
-            <td *matFooterCellDef class="br text-left t-7" mat-footer-cell></td>
+            <td *matFooterCellDef class="br text-left" mat-footer-cell></td>
         </ng-container>
         <ng-container matColumnDef="balanceM">
-            <th *matHeaderCellDef class="br textRight text-right" mat-header-cell mat-sort-header="balance">Balance mentioned
+            <th *matHeaderCellDef class="br textRight text-right" mat-header-cell mat-sort-header="balance">Balance
+                mentioned
             </th>
             <td *matCellDef="let element" class="br amt text-right" mat-cell>
                 <div class="bar" appFormatNumber> {{element.accountBalance}} </div>
             </td>
-            <td mat-footer-cell class="br text-right amt p-8 f-600 t-7" *matFooterCellDef appFormatNumber [value]="SumOfBalancementioned">
+            <td mat-footer-cell class="br text-right amt p-8 f-600" *matFooterCellDef appFormatNumber
+                [value]="SumOfBalancementioned">
                 <div class="bar"> {{SumOfBalancementioned}} </div>
             </td>
         </ng-container>
@@ -85,8 +89,8 @@
             <td *matFooterCellDef mat-footer-cell></td>
         </ng-container>
         <ng-container matColumnDef="desc">
-            <th *matHeaderCellDef class="br t-10" mat-header-cell mat-sort-header="description"> Description</th>
-            <td *matCellDef="let element" class="br t-10" mat-cell>
+            <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="description"> Description</th>
+            <td *matCellDef="let element" class="br" mat-cell>
                 <div class="bar"> {{isLoading ? '' : element.description || '-'}} </div>
             </td>
             <td *matFooterCellDef mat-footer-cell></td>

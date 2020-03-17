@@ -208,11 +208,11 @@
 
                                     </div>
                                 </div>
-                                <div *ngIf="dataSource.length >0" class=" overflow-hidden h-513">
+                                <div *ngIf="dataSource.length >0" class=" overflow-hidden h-513 mt-12">
 
 
                                     <table [appSkeletonLoading]="isLoadingSubSummary" [dataSource]="dataSource"
-                                        appSkeletonLoading class=" skeletonAnimation mt-12" id="table-low" mat-table>
+                                        appSkeletonLoading class=" skeletonAnimation" id="table-low" mat-table>
                                         <tbody>
                                             <ng-container matColumnDef="name">
                                                 <th *matHeaderCellDef mat-header-cell> Client name</th>

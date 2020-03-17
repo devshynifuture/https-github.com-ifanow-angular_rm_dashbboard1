@@ -429,6 +429,7 @@ export class AddRealEstateComponent implements OnInit {
   saveFormData() {
 
     this.addrealEstateForm.controls.familyMemberId.setValue(this.familyMemberId)
+    
     if (this.addrealEstateForm.invalid) {
       this.inputs.find(input => !input.ngControl.valid).focus();
       this.addrealEstateForm.markAllAsTouched();
@@ -457,6 +458,15 @@ export class AddRealEstateComponent implements OnInit {
         description: this.addrealEstateForm.controls.description.value,
         nomineeList: this.addrealEstateForm.value.getNomineeName
       }
+
+      obj.nomineeList.forEach(element => {
+        if(element.name == ''){
+          obj.nomineeList= [];
+        }
+        else{
+          obj.nomineeList= this.addrealEstateForm.value.getNomineeName;
+        }
+      });
       // this.addrealEstateForm.value.getNomineeName.forEach(element => {
       //   if (element.name) {
       //     let obj1 = {

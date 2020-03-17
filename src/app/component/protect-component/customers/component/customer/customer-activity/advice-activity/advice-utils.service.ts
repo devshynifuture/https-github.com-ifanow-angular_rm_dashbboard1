@@ -18,12 +18,12 @@ export class AdviceUtilsService {
       element.selected = flag.checked;
       if (flag.checked) {
         count++;
-        selectedIdList.push(element.id);
+        selectedIdList.push(element.assetDetails.id);
       }
       else {
         count--;
         selectedIdList.forEach(singleId => {
-          (singleId == element.id) ? selectedIdList.splice(selectedIdList.indexOf(singleId), 1) : ''
+          (singleId == element.assetDetails.id) ? selectedIdList.splice(selectedIdList.indexOf(singleId), 1) : ''
         });
       }
     });

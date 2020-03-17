@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatTableDataSource, MatSort } from '@angular/material';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { SelectAdviceComponent } from '../../select-advice/select-advice.component';
@@ -18,21 +18,20 @@ import { AdviceUtilsService } from '../../advice-utils.service';
 export class AllAdviceFixedDepositComponent implements OnInit {
 
   displayedColumns3: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'advice', 'astatus', 'adate', 'icon'];
-  dataSource3 = new MatTableDataSource<PeriodicElement3>(ELEMENT_DATA3);
   advisorId: any;
   clientId: any;
   isLoading: any;
   fixedDataSource: any;
   recurringDataSource:any;
   bondDataSource: any;
-  selectedAssetId: any;
+  selectedAssetId: any = [];
   fixedCount: any;
   recurringCount: any;
   bondCount: any;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private utilService: UtilService,private activityService:ActiityService) { }
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
   ngOnInit() {
-    this.dataSource3.sort = this.sort;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getAllAdviceByAsset();
@@ -80,11 +79,11 @@ export class AllAdviceFixedDepositComponent implements OnInit {
     let fixedData=this.filterForAsset(data.FIXED_DEPOSIT)
     this.fixedDataSource = new MatTableDataSource(fixedData);
     console.log('fddata',fixedData);
-    // this.fixedDataSource.sort = this.sort
+    this.fixedDataSource.sort = this.sort
     let rdDAta=this.filterForAsset(data.RECURRING_DEPOSIT)
     this.recurringDataSource = new MatTableDataSource(rdDAta);
     console.log('rdData',rdDAta)
-    // this.recurringDataSource.sort = this.sort
+    this.recurringDataSource.sort = this.sort
     let bondData=this.filterForAsset(data.BONDS)
     this.bondDataSource = new MatTableDataSource(bondData);
 
@@ -115,11 +114,11 @@ export class AllAdviceFixedDepositComponent implements OnInit {
   checkSingle(flag, selectedData, tableData, tableFlag) {
     if (flag.checked) {
       selectedData.selected = true;
-      this.selectedAssetId.push(selectedData.id)
+      this.selectedAssetId.push(selectedData.assetDetails.id)
     }
     else {
       selectedData.selected = false
-      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
+      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.assetDetails.id), 1)
     }
     let countValue = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
     this.getFlagCount(tableFlag, countValue);
