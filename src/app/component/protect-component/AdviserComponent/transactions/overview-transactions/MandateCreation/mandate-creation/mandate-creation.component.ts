@@ -7,6 +7,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { PostalService } from 'src/app/services/postal.service';
 import { OnlineTransactionService } from '../../../online-transaction.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-mandate-creation',
@@ -14,10 +15,14 @@ import { AuthService } from 'src/app/auth-service/authService';
   styleUrls: ['./mandate-creation.component.scss']
 })
 export class MandateCreationComponent implements OnInit {
+  inputData: any;
+  displayedColumns: string[] = ['set','position', 'name', 'weight','ifsc', 'aid', 'euin','hold' ];
+  data1: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.inputData);
   bankDetails: any;
   pinInvalid: boolean;
   advisorId: any;
-  inputData: any;
+  selectedMandate: any;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
     private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
@@ -27,6 +32,7 @@ export class MandateCreationComponent implements OnInit {
     set data(data) {
       this.inputData = data;
       console.log('all data in per', this.inputData)
+      this.dataSource = this.inputData
     }
   
     get data() {
@@ -34,24 +40,12 @@ export class MandateCreationComponent implements OnInit {
     }
   ngOnInit() {
     this.getdataForm('')
-    this.getMandateDetails()
     this.advisorId = AuthService.getAdvisorId();
   }
   Close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
-  getMandateDetails(){
-    let obj1 = {
-      advisorId : 414
-    }
-    this.onlineTransact.mandateView(obj1).subscribe(
-      data => this.mandateViewRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
-      })
-  }
-  mandateViewRes(data){
-    console.log('mandate',data)
-  }
+
   getPostalPin(value) {
     let obj = {
       zipCode: value

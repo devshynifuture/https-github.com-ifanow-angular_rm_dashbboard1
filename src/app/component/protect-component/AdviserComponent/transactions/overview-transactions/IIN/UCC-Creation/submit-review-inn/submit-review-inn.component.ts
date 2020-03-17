@@ -42,6 +42,8 @@ export class SubmitReviewInnComponent implements OnInit {
     this.doneData.bank = true
     this.doneData.contact = true
     this.doneData.personal = true
+    this.doneData.fatca = true
+    this.doneData.submit = false
     if (data && data.firstHolder) {
       // this.getdataForm(data.firstHolder)
       // this.firstHolder = data.firstHolder
@@ -54,7 +56,6 @@ export class SubmitReviewInnComponent implements OnInit {
   close() {
     const fragmentData = {
       direction: 'top',
-      componentName: SubmitReviewInnComponent,
       state: 'close'
     };
 

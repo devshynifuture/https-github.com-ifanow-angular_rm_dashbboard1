@@ -169,14 +169,16 @@ export class OverviewTransactionsComponent implements OnInit {
       .set('RefNo', '8000504');
 
     const httpOptions = {
-
-      
-      headers: new HttpHeaders()
-        .set('Content-Type', 'application/octet-stream'),
-        
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/octet-stream',
+        'Access-Control-Allow-Origin': "http://localhost:4200",
+        'Access-Control-Allow-Methods': "POST, GET, OPTIONS, DELETE, PUT",
+        'Access-Control-Allow-Headers': "append,delete,entries,foreach,get,has,keys,set,values,Authorization"
+      }),
       params: params,
       body: file
     };
+    
     this.http.post(fileuploadurl, fileName, httpOptions).subscribe((responseData) => {
       console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
 

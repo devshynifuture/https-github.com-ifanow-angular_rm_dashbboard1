@@ -113,7 +113,6 @@ openMandateClient(data){
         console.log('this is sidebardata in subs subs 2: ', sideBarData);
 
       }
-      rightSideDataSub.unsubscribe();
     }
   );
 }

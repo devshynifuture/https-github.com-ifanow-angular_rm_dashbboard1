@@ -18,4 +18,5 @@ export class DetailedViewMandateComponent implements OnInit {
   close() {
     this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
+  
 }

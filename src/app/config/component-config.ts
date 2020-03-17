@@ -398,6 +398,8 @@ export const appConfig = {
   CREATE_IIN_UCC :'user/register/create',
   MANDATE_VIEW:'/mandate/view',
   GET_TOKEN:'user/bse/upload/password',
+  BANK_MANDTAE:'nse/iin/bank-detail/get',
+  ADD_MANDATE :'mandate/add',
   // SIP_BSE:'bse/order/create',
 
   // cashflow 
