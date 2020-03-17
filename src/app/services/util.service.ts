@@ -125,7 +125,7 @@ export class UtilService {
    * Returns a new array of family member object with age key.
    * @param familyList - Array of family objects. Must contain key - dateOfBirth - otherwise it will fail.
    */
-  calculateAgeFromCurrentDate(familyList:any[]) {
+  calculateAgeFromCurrentDate(familyList: any[]) {
     return familyList.map(element => {
       const today = new Date();
       const birthDate = new Date(element.dateOfBirth);
@@ -134,7 +134,7 @@ export class UtilService {
       if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
         age--;
       }
-      element.age = age;
+      element['age'] = age;
       return element;
     });
   }
