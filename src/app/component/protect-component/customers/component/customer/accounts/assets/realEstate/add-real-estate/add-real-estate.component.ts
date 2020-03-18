@@ -174,7 +174,7 @@ export class AddRealEstateComponent implements OnInit {
       }
     }
 
-    if(this.getCoOwner.value.length > 1){
+    if(this.getCoOwner.value.length > 1 && !data){
      let share = 100/this.getCoOwner.value.length;
      for (let e in this.getCoOwner.controls) {
       if(!Number.isInteger(share) && e == "0"){
@@ -184,6 +184,9 @@ export class AddRealEstateComponent implements OnInit {
         this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
       }
      }
+    }
+    else{
+      this.disabledMember(null, null)
     }
   }
 
@@ -242,7 +245,7 @@ export class AddRealEstateComponent implements OnInit {
       }
     }
 
-    if(this.getNominee.value.length > 1){
+    if(this.getNominee.value.length > 1 && !data){
       let share = 100/this.getNominee.value.length;
       for (let e in this.getNominee.controls) {
         if(!Number.isInteger(share) && e == "0"){
@@ -253,6 +256,9 @@ export class AddRealEstateComponent implements OnInit {
         }
       }
      }
+     else{
+      this.disabledMember(null, null)
+    }
     
   }
   /***nominee***/ 
