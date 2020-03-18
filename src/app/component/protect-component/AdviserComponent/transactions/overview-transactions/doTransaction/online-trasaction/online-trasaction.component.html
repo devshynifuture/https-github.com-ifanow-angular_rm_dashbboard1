@@ -43,6 +43,9 @@
         </div>
     </div>
 
+    <div *ngIf="clientCodeData == undefined" class="d-flex flex-column align-items-center">
+        <h4 class="text-center pt-12">No IIN/UCC found</h4>
+    </div>
     <!-- second click -->
     <div *ngIf="formStep == 'step-2' &&  transactionType==undefined">
         <div class="row pt-10 pl-40 pr-40">

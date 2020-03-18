@@ -59,7 +59,7 @@
         </div>
         <div class="col-md-5">
             <mat-form-field>
-                <input autocomplete="off" (click)="picker.open()" matInput formControlName="fromDate" [max]="maxDate"
+                <input autocomplete="off" (click)="picker.open()" matInput formControlName="fromDate"
                     [matDatepicker]="picker" class="form-control br-0" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
@@ -75,7 +75,8 @@
         </div>
         <div class="col-md-5">
             <mat-form-field>
-                <mat-select class="form-control" formControlName="selectDateOption" (ngModelChange)="continuesTill($event)">
+                <mat-select class="form-control" formControlName="selectDateOption"
+                    (ngModelChange)="continuesTill($event)">
                     <mat-option [value]="1">
                         Custom date </mat-option>
                     <mat-option [value]="2">
@@ -91,7 +92,7 @@
         </div>
         <div class="col-md-5">
             <mat-form-field>
-                <input autocomplete="off" (click)="picker1.open()" matInput formControlName="toDate" [max]="maxDate"
+                <input autocomplete="off" (click)="picker1.open()" matInput formControlName="toDate"
                     [matDatepicker]="picker1" class="form-control br-0" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                 <mat-datepicker #picker1></mat-datepicker>
@@ -107,8 +108,7 @@
         </div>
         <div class="col-md-5">
             <mat-form-field>
-                <input matInput #mandateAmount type="number"
-                    class="form-control br-0" formControlName="mandateAmount">
+                <input matInput #mandateAmount type="number" class="form-control br-0" formControlName="mandateAmount">
                 <mat-error class="f-12 pt-4">
                     This field is required
                 </mat-error>
@@ -142,7 +142,7 @@
             </ng-container>
 
             <ng-container matColumnDef="name">
-                <th  mat-header-cell *matHeaderCellDef class="br"> Bank name </th>
+                <th mat-header-cell *matHeaderCellDef class="br"> Bank name </th>
                 <td mat-cell *matCellDef="let element" class="br">
                     <div class="bar">
                         {{isLoading ? '' : element.bankName}}
@@ -151,34 +151,34 @@
             </ng-container>
 
             <ng-container matColumnDef="weight">
-                <th  mat-header-cell *matHeaderCellDef class="br">Account no. </th>
+                <th mat-header-cell *matHeaderCellDef class="br">Account no. </th>
                 <td mat-cell *matCellDef="let element" class="br">
                     <div class="bar"> {{element.accountNo}}
                     </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="ifsc">
-                <th  mat-header-cell *matHeaderCellDef class="br"> IFSC code
+                <th mat-header-cell *matHeaderCellDef class="br"> IFSC code
                 </th>
                 <td mat-cell *matCellDef="let element" class="br">
                     <div class="bar"> {{element.ifscCode}}</div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="aid">
-                <th  mat-header-cell *matHeaderCellDef class="br"> Branch name
+                <th mat-header-cell *matHeaderCellDef class="br"> Branch name
                 </th>
                 <td mat-cell *matCellDef="let element" class="br">
                     <div class="bar"> {{element.branchName}}</div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="euin">
-                <th  mat-header-cell *matHeaderCellDef class="br"> Account type </th>
+                <th mat-header-cell *matHeaderCellDef class="br"> Account type </th>
                 <td mat-cell *matCellDef="let element" class="br">
                     <div class="bar"> {{element.accountType}}</div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="hold">
-                <th  mat-header-cell *matHeaderCellDef class="br"> Holding nature</th>
+                <th mat-header-cell *matHeaderCellDef class="br"> Holding nature</th>
                 <td mat-cell *matCellDef="let element" class="br">
                     <div class="bar"> {{element.holdNatureDescription}}</div>
                 </td>
@@ -186,8 +186,7 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <div *ngIf="isLoading==false"
-            class="d-flex flex-column align-items-center pt-44">
+        <div *ngIf="isLoading==false" class="d-flex flex-column align-items-center pt-44">
             <img class="width300" src="assets/images/svg/noDataFound.svg">
             <h4 class="pt-12">No data found</h4>
         </div>
