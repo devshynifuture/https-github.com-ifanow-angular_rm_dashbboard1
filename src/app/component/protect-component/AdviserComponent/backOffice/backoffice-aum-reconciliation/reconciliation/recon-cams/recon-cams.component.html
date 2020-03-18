@@ -29,7 +29,7 @@
         </div>
     </div>
     <div class="row"
-        *ngIf="selectBrokerForm.get('selectBrokerId').valid && selectBrokerForm.get('selectBrokerId').touched">
+        *ngIf="selectBrokerForm.get('selectBrokerId').valid && selectBrokerForm.get('selectBrokerId').touched && selectedBrokerForm.get('selectedBrokerId').value !== ''">
         <div class="col-md-12">
             <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low" appSkeletonLoading
                 [appSkeletonLoading]="isLoading">
