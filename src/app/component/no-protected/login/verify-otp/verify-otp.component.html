@@ -6,16 +6,19 @@
         <div class="col-md-6 p-0 bg-white flexLogin">
             <div class="loginBoxverifyOtp">
                 <p class="f-16 mb-12">
-                    <img class="advisorLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
+                    <img class="advisorLogo"
+                        src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
                 </p>
                 <h1 class="mb-16 f-600">Welcome back!</h1>
-                <p class="mb-24 f-16">This is a secure system and you will need to provide your login details to access your account.</p>
+                <p class="mb-24 f-16">This is a secure system and you will need to provide your login details to access
+                    your account.</p>
                 <div class="form_container_new_wrapper">
                     <div class="row">
                         <div class="col-md-12 form-group p-0">
                             <h5 class="pt-12">User Name</h5>
                             <mat-form-field floatLabel="never" appearance="standard">
-                                <input placeholder="rahul.jain01@gmail.com" tabindex="1" class="form-control br-0" matInput>
+                                <input placeholder="rahul.jain01@gmail.com" tabindex="1" class="form-control br-0"
+                                    matInput>
                                 <mat-error>Username required</mat-error>
                             </mat-form-field>
                         </div>
@@ -45,13 +48,15 @@
                         account</button>
 
 
-                    <h5 class="mt-20 text-primary c-p f-600">Login with password</h5>
+                    <h5 class="mt-20 text-primary c-p f-600" [routerLink]="[ '/login']">Login with password</h5>
 
                     <h5 class="mt-32 mb-24">Don’t have an account? <span class="text-primary c-p"> Sign up </span> </h5>
                 </div>
             </div>
 
-            <p class="f-12 l-18 ml-24 mb-0 text-primitive">Before logging in, please ensure that the URL on the address bar starts with “https” or has a padlock icon. The communication of your private information from any address beginning with "https" is encrypted and secured using SSL.</p>
+            <p class="f-12 l-18 ml-24 mb-0 text-primitive">Before logging in, please ensure that the URL on the address
+                bar starts with “https” or has a padlock icon. The communication of your private information from any
+                address beginning with "https" is encrypted and secured using SSL.</p>
         </div>
     </div>
 </div>
