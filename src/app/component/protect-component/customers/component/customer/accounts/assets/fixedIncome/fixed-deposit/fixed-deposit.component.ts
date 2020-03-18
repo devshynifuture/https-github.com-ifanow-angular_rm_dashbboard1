@@ -95,6 +95,7 @@ export class FixedDepositComponent implements OnInit {
   nexNomineePer: number;
   showErrorCoOwner: boolean;
   adviceShowHeaderAndFooter: boolean = true;
+  tenureFlag: boolean;
 
   constructor(public utils: UtilService, private event: EventService, private router: Router,
     private fb: FormBuilder, private custumService: CustomerService,
@@ -171,7 +172,23 @@ export class FixedDepositComponent implements OnInit {
   }
 
   checkDate() {
-    this.validMaturity = new Date(new Date().setDate(new Date(this.getFormControl().commencementDate.value).getDate() + 1))
+    this.validMaturity = new Date(new Date().setDate(new Date(this.getFormControl().commencementDate.value).getDate() + 1));
+    console.log(this.validMaturity);
+    this.checkCommDateAndTenure();
+  }
+  checkCommDateAndTenure() {
+    if (this.tenure && this.getFormControl().commencementDate.value) {
+      if (this.tenure._d < new Date()) {
+        console.log("error");
+        this.tenureFlag = true;
+        return;
+      }
+      this.tenureFlag = false;
+      return;
+    }
+  }
+  tenureError() {
+    return { flag: true }
   }
   Close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
@@ -260,6 +277,8 @@ export class FixedDepositComponent implements OnInit {
       this.tenure = moment(this.tenure).add(d, 'days');
       if (this.fixedDeposit.controls.commencementDate.valid) {
         this.getDate = this.datePipe.transform(this.tenure, 'yyyy-MM-dd');
+        console.log(this.tenure, this.getDate);
+        this.checkCommDateAndTenure();
       }
       this.tenureValid = true;
       return this.getDate;
@@ -341,6 +360,9 @@ export class FixedDepositComponent implements OnInit {
     } else {
       this.maturityDate = this.fixedDeposit.controls.maturityDate.value;
     }
+    if (this.tenureFlag) {
+      return;
+    }
     if (this.fixedDeposit.invalid || !this.tenureValid) {
       // this.reqError = true;
       this.inputs.find(input => !input.ngControl.valid).focus();
@@ -355,8 +377,6 @@ export class FixedDepositComponent implements OnInit {
             }
           }
         }
-
-
         // if (this.fixedDeposit.controls[element].invalid) {
         // return;
         // }

@@ -73,7 +73,7 @@
         <div class="col-md-3 pr-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <mat-select matInput #FDType formControlName="FDType" class="form-control br-0">
+                    <mat-select #FDType formControlName="FDType" class="form-control br-0">
                         <mat-option value="" disabled>Select option</mat-option>
                         <mat-option value="1">Bank FD</mat-option>
                         <mat-option value="2">Corporate FD</mat-option>
@@ -111,7 +111,7 @@
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <input (focus)="picker.open()" (click)="picker.open()" (dateChange)="checkDate()" matInput
+                <input (focus)="picker.open()" (click)="picker.open()" (dateChange)="checkDate($event)" matInput
                     formControlName="commencementDate" [max]="maxDate" [matDatepicker]="picker" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
@@ -199,6 +199,8 @@
                 </div>
                 <mat-error class="f-12 pt-4" *ngIf="!tenureValid">
                     <b>This field is required</b>
+                </mat-error>
+                <mat-error class="f-12 pt-4" [ngClass]="{'v-h': !tenureFlag}">Tenure is not valid
                 </mat-error>
             </div>
         </div>
