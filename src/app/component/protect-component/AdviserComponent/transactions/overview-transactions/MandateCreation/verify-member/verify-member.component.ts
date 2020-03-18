@@ -8,6 +8,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { OnlineTransactionService } from '../../../online-transaction.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MandateCreationComponent } from '../mandate-creation/mandate-creation.component';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-verify-member',
@@ -15,14 +16,23 @@ import { MandateCreationComponent } from '../mandate-creation/mandate-creation.c
   styleUrls: ['./verify-member.component.scss']
 })
 export class VerifyMemberComponent implements OnInit {
+  inputData: any;
+  displayedColumns: string[] = ['set', 'position', 'name', 'weight', 'ifsc', 'aid', 'euin', 'hold'];
+  data1: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource();
   nomineesListFM: any;
   showSpinnerOwner = false;
   familyMemberData: any;
   familyMemberId: any;
   generalDetails: any;
   clientCodeData: any;
+  detailsIIN: any;
+  showMandateTable = false
+  selectedMandate: any;
+  customValue: any;
+  Todate: Date;
 
-  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,private processTrasaction : ProcessTransactionService,
+  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private processTrasaction: ProcessTransactionService,
     private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
     private onlineTransact: OnlineTransactionService, public eventService: EventService) { }
 
@@ -41,19 +51,28 @@ export class VerifyMemberComponent implements OnInit {
 
     this.eventService.changeUpperSliderState(fragmentData);
   }
+  continuesTill(value) {
+    this.customValue = value
+    this.Todate = new Date(2099, 31, 12);
+    this.generalDetails.controls.toDate.setValue(this.Todate)
+  }
   getdataForm(data) {
 
     this.generalDetails = this.fb.group({
       ownerName: [(!data) ? '' : data.ownerName, [Validators.required]],
       holdingNature: [(!data) ? '' : data.ownerName, [Validators.required]],
       taxStatus: [data ? '' : data.ownerName, [Validators.required]],
+      fromDate: [data ? '' : data.fromDate, [Validators.required]],
+      toDate: [data ? '' : data.toDate, [Validators.required]],
+      mandateAmount: [data ? '' : data.mandateAmount, [Validators.required]],
+      selectDateOption : [data ? '' : data.mandateAmount, [Validators.required]],
     });
   }
   getFormControl(): any {
     return this.generalDetails.controls;
   }
 
- 
+
 
   lisNominee(value) {
     //this.showSpinnerOwner = false
@@ -77,11 +96,11 @@ export class VerifyMemberComponent implements OnInit {
     this.familyMemberId = value.id;
     this.ownerDetail()
   }
-  saveGeneralDetails(data){
+  saveGeneralDetails(data) {
     let obj = {
       ownerName: this.generalDetails.controls.ownerName.value,
       holdingNature: this.generalDetails.controls.holdingNature.value,
-      familyMemberId : this.familyMemberId,
+      familyMemberId: this.familyMemberId,
       clientId: this.familyMemberData.clientId,
       advisorId: this.familyMemberData.advisorId,
       taxStatus: this.generalDetails.controls.taxStatus.value,
@@ -89,42 +108,66 @@ export class VerifyMemberComponent implements OnInit {
     this.openMandate(null)
   }
   ownerDetail() {
-    
-      const obj = {
-        clientId: this.familyMemberData.clientId,
-        advisorId: this.familyMemberData.advisorId,
-        familyMemberId: this.familyMemberData.familyMemberId,
-        tpUserCredentialId: 292
-      }
-      this.onlineTransact.getClientCodes(obj).subscribe(
-        data => {
-          console.log(data);
-          this.clientCodeData = data;
-        },
-        err => this.eventService.openSnackBar(err, 'Dismiss')
-      );
-  }
-  selectIINUCC(){
-    
-  }
-  openMandate(data){
-    const fragmentData = {
-      flag: 'mandate',
-      data,
-      id: 1,
-      state: 'open',
-      componentName: MandateCreationComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
 
-        if (UtilService.isRefreshRequired(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
-
-        }
-        rightSideDataSub.unsubscribe();
-      }
+    const obj = {
+      clientId: this.familyMemberData.clientId,
+      advisorId: this.familyMemberData.advisorId,
+      familyMemberId: this.familyMemberData.familyMemberId,
+      //tpUserCredentialId: 292
+    }
+    this.onlineTransact.getClientCodes(obj).subscribe(
+      data => {
+        console.log(data);
+        this.clientCodeData = data;
+      },
+      err => this.eventService.openSnackBar(err, 'Dismiss')
     );
+  }
+  selectIINUCC(clientCode) {
+
+    this.detailsIIN = clientCode
+    this.getBankMandate()
+  }
+  getBankMandate() {
+    let obj1 = {
+      advisorId: this.detailsIIN.advisorId,
+      tpUserCredFamilyMappingId: this.detailsIIN.tpUserCredFamilyMappingId,
+      aggregatorType: this.detailsIIN.aggregatorType,
+      tpUserCredentialId: this.detailsIIN.tpUserCredentialId,
+      clientCode: this.detailsIIN.clientCode,
+    }
+    this.onlineTransact.getBankDetailsMandate(obj1).subscribe(
+      data => this.getBankDetailsMandateRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      })
+  }
+  getBankDetailsMandateRes(data) {
+    console.log(data)
+    this.openMandate(data)
+  }
+  openMandate(data) {
+    this.inputData = data
+    this.dataSource = data
+    this.showMandateTable = true
+  }
+  selectMandate(mandate) {
+    this.selectedMandate = mandate
+  }
+  createMandates() {
+    Object.assign(this.selectedMandate, { advisorId: this.detailsIIN.advisorId });
+    Object.assign(this.selectedMandate, { amount: this.generalDetails.controls.mandateAmount.value });
+    Object.assign(this.selectedMandate, { fromDate: this.generalDetails.controls.fromDate.value });
+    Object.assign(this.selectedMandate, { toDate: this.generalDetails.controls.toDate.value });
+    Object.assign(this.selectedMandate, { tpUserCredFamilyMappingId: this.detailsIIN.tpUserCredFamilyMappingId });
+    Object.assign(this.selectedMandate, { tpUserCredentialId: this.detailsIIN.tpUserCredentialId });
+    console.log('selectMandate  == ', this.selectedMandate)
+    this.onlineTransact.addMandate(this.selectedMandate).subscribe(
+      data => this.addMandateRes(data)
+    );
+  }
+  addMandateRes(data) {
+    console.log('res mandate', data)
+    this.eventService.openSnackBar('Added successfully!', 'Dismiss');
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
 }

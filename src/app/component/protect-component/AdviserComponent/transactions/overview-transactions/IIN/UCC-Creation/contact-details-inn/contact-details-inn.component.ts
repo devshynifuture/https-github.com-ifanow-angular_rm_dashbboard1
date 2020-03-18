@@ -91,18 +91,22 @@ export class ContactDetailsInnComponent implements OnInit {
     this.eventService.changeUpperSliderState(fragmentData);
   }
   getdataForm(data) {
-
+    if (!data) {
+      data = {
+        address: {}
+      }
+    }
     this.contactDetails = this.fb.group({
-      // panNumber: [!data ? '' : data.panNumber, [Validators.required]],
-      // clientName: [!data ? '' : data.clientName, [Validators.required]],
-      // madianName: [!data ? '' : data.madianName, [Validators.required]],
-      // fatherName: [!data ? '' : data.fatherName, [Validators.required]],
-      // motherName: [!data ? '' : data.motherName, [Validators.required]],
-      // dateOfBirth: [!data ? '' : data.dateOfBirth, [Validators.required]],
-      // gender: [!data ? '' : data.gender, [Validators.required]],
+      panNumber: [!data ? '' : data.panNumber, [Validators.required]],
+      clientName: [!data ? '' : data.clientName, [Validators.required]],
+      madianName: [!data ? '' : data.madianName, [Validators.required]],
+      fatherName: [!data ? '' : data.fatherName, [Validators.required]],
+      motherName: [!data ? '' : data.motherName, [Validators.required]],
+      dateOfBirth: [!data ? '' : data.dateOfBirth, [Validators.required]],
+      gender: [!data ? '' : data.gender, [Validators.required]],
       email: [(!data) ? '' : data.email, [Validators.required]],
       aadharNumber: [(!data) ? '' : data.aadharNumber, [Validators.required]],
-      // maritalStatus: [!data ? '' : data.maritalStatus, [Validators.required]],
+      maritalStatus: [!data ? '' : data.maritalStatus, [Validators.required]],
       mobileNo: [!data ? '' : data.mobileNo, [Validators.required]],
       phoneNo: [!data ? '' : data.phoneNo, [Validators.required]],
       addressLine1: [!data.address ? data.addressLine1 : data.address.addressLine1, [Validators.required]],
@@ -112,7 +116,7 @@ export class ContactDetailsInnComponent implements OnInit {
       district: [!data.address ? data.district : data.address.district, [Validators.required]],
       state: [!data.address ? data.state : data.address.state, [Validators.required]],
       country: [!data.address ? data.country : data.address.country, [Validators.required]],
-
+      address:[!data.address ? data.address : data.address, [Validators.required]],
     });
   }
   getFormControl(): any {
@@ -265,28 +269,6 @@ export class ContactDetailsInnComponent implements OnInit {
     } else if (this.contactDetails.get('phoneNo').invalid) {
       this.contactDetails.get('phoneNo').markAsTouched();
       return
-    } else if (this.contactDetails.get('addressLine1').invalid) {
-      this.contactDetails.get('addressLine1').markAsTouched();
-      return;
-    } else if (this.contactDetails.get('addressLine2').invalid) {
-      this.contactDetails.get('addressLine2').markAsTouched();
-      return;
-    } else if (this.contactDetails.get('pinCode').invalid) {
-      this.contactDetails.get('pinCode').markAsTouched();
-      return;
-    } else if (this.contactDetails.get('city').invalid) {
-      this.contactDetails.get('city').markAsTouched();
-      return;
-    } else if (this.contactDetails.get('district').invalid) {
-      this.contactDetails.get('district').markAsTouched();
-      return;
-    } else if (this.contactDetails.get('state').invalid) {
-      this.contactDetails.get('state').markAsTouched();
-      return;
-    } else if (this.contactDetails.get('country').invalid) {
-      this.contactDetails.get('country').markAsTouched();
-      return;
-
     } else {
 
       this.setEditHolder(this.holder.type, value)

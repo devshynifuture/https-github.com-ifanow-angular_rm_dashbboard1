@@ -3,6 +3,11 @@ import { OnlineTransactionService } from '../online-transaction.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { MatTableDataSource, MatSort } from '@angular/material';
+import { DetailedViewMandateComponent } from './detailed-view-mandate/detailed-view-mandate.component';
+import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { MandateCreationComponent } from '../overview-transactions/MandateCreation/mandate-creation/mandate-creation.component';
+import { VerifyMemberComponent } from '../overview-transactions/MandateCreation/verify-member/verify-member.component';
 
 @Component({
   selector: 'app-mandates-transactions',
@@ -19,7 +24,8 @@ export class MandatesTransactionsComponent implements OnInit {
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  constructor( private onlineTransact: OnlineTransactionService,private eventService:EventService) { }
+  constructor( private onlineTransact: OnlineTransactionService,private eventService:EventService,
+    private subInjectService : SubscriptionInject) { }
 
   isLoading = false;
 
@@ -51,6 +57,85 @@ export class MandatesTransactionsComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.dataSource.sort = this.sort;
+  }
+  openMandateDetails(data){
+    console.log('this is detailed potd data', data);
+    const fragmentData = {
+      flag: 'detailPoTd',
+      data,
+      id: 1,
+      state: 'open35',
+      componentName: DetailedViewMandateComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
+          rightSideDataSub.unsubscribe();
+        }
+
+      }
+    );
+  }
+  ownerDetail() {
+    
+    // const obj = {
+    //   clientId: this.familyMemberData.clientId,
+    //   advisorId: this.familyMemberData.advisorId,
+    //   familyMemberId: this.familyMemberData.familyMemberId,
+    //   //tpUserCredentialId: 292
+    // }
+    // this.onlineTransact.getClientCodes(obj).subscribe(
+    //   data => {
+    //     console.log(data);
+    //     this.clientCodeData = data;
+    //   },
+    //   err => this.eventService.openSnackBar(err, 'Dismiss')
+    // );
+}
+openMandateClient(data){
+  const fragmentData = {
+    flag: 'mandate',
+    data,
+    id: 1,
+    state: 'open',
+    componentName: VerifyMemberComponent
+  };
+  const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+    sideBarData => {
+      console.log('this is sidebardata in subs subs : ', sideBarData);
+
+      if (UtilService.isRefreshRequired(sideBarData)) {
+        console.log('this is sidebardata in subs subs 2: ', sideBarData);
+
+      }
+    }
+  );
+}
+  openMandate(data){
+    //var data = this.clientCodeData
+    const fragmentData = {
+      flag: 'mandate',
+      data,
+      id: 1,
+      state: 'open',
+      componentName: MandateCreationComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+
+        if (UtilService.isRefreshRequired(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+
+        }
+        rightSideDataSub.unsubscribe();
+      }
+    );
   }
 }
 export interface PeriodicElement {

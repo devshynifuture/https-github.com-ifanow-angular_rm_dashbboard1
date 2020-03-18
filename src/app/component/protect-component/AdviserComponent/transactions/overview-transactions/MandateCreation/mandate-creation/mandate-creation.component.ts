@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 import { ProcessTransactionService } from '../../doTransaction/process-transaction.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { PostalService } from 'src/app/services/postal.service';
+import { OnlineTransactionService } from '../../../online-transaction.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-mandate-creation',
@@ -12,16 +15,32 @@ import { PostalService } from 'src/app/services/postal.service';
   styleUrls: ['./mandate-creation.component.scss']
 })
 export class MandateCreationComponent implements OnInit {
+  inputData: any;
+  displayedColumns: string[] = ['set','position', 'name', 'weight','ifsc', 'aid', 'euin','hold' ];
+  data1: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.inputData);
   bankDetails: any;
   pinInvalid: boolean;
+  advisorId: any;
+  selectedMandate: any;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
-    private processTransaction: ProcessTransactionService,
+    private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
     public utils: UtilService, public eventService: EventService) { }
     validatorType = ValidatorType
-
+    @Input()
+    set data(data) {
+      this.inputData = data;
+      console.log('all data in per', this.inputData)
+      this.dataSource = this.inputData
+    }
+  
+    get data() {
+      return this.inputData;
+    }
   ngOnInit() {
     this.getdataForm('')
+    this.advisorId = AuthService.getAdvisorId();
   }
   Close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
