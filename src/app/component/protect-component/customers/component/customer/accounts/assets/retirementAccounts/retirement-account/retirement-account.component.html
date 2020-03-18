@@ -490,11 +490,12 @@
                 </button>
             </div>
         </div>
-        <div class=" mt-8 col-md-12 p-0 overflow-hidden real-estate" #GRATUITY #Gratuity>
+        <div [ngClass]="{'table-scroll':isLoading==false }" class=" mt-8 col-md-12 p-0 overflow-hidden real-estate"
+            #GRATUITY #Gratuity>
             <table *ngIf="dataSource.filteredData.length > 0" #gratuityListTable="matSort" [dataSource]="dataSource"
-                id="table-low" mat-table matSort class="skeletonAnimation" appSkeletonLoading
+                id="tbs" mat-table matSort class="skeletonAnimation" appSkeletonLoading
                 [appSkeletonLoading]="isLoading">
-                <ng-container matColumnDef="no">
+                <ng-container matColumnDef="no" sticky>
                     <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="no"> No</th>
                     <td *matCellDef="let element let i = index" class="br" mat-cell>
                         <div class="bar"> {{isLoading ? '' : i + 1 }} </div>

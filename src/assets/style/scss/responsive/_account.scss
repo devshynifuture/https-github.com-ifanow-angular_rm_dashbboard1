@@ -51,7 +51,22 @@
   }
 }
 
-@media(max-width:1142px) {}
+@media(max-width:1142px) {
+  .mat-radio-button#mat-radio-3 {
+    min-width: 135px;
+    width: 165px;
+  }
+
+  .future-contribution {
+    .f-14 {
+      font-size: 13px !important;
+    }
+
+    h5 {
+      font-size: 14px !important;
+    }
+  }
+}
 
 @media(max-width:1092px) {
 
@@ -64,6 +79,17 @@
   .superannuation {
     #tbs .mat-sort-header-button {
       white-space: nowrap !important;
+    }
+  }
+
+  .fddate {
+    .radioBtn .mat-radio-label {
+      padding-left: 5px !important;
+    }
+
+    .mat-radio-button#mat-radio-2 {
+      width: 123px !important;
+      min-width: 123px !important;
     }
   }
 }

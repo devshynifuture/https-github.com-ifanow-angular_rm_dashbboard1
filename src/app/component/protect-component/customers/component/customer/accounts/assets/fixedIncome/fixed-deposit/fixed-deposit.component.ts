@@ -75,7 +75,7 @@ export class FixedDepositComponent implements OnInit {
   clientId: any;
   isViewInitCalled = false;
   nomineesListFM: any = [];
-  flag: string;
+  flag: any;
   // reqError: boolean = false;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   fdMonths = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
@@ -95,6 +95,7 @@ export class FixedDepositComponent implements OnInit {
   nexNomineePer: number;
   showErrorCoOwner: boolean;
   adviceShowHeaderAndFooter: boolean = true;
+  tenureFlag: boolean;
 
   constructor(public utils: UtilService, private event: EventService, private router: Router,
     private fb: FormBuilder, private custumService: CustomerService,
@@ -171,7 +172,23 @@ export class FixedDepositComponent implements OnInit {
   }
 
   checkDate() {
-    this.validMaturity = new Date(new Date().setDate(new Date(this.getFormControl().commencementDate.value).getDate() + 1))
+    this.validMaturity = new Date(new Date().setDate(new Date(this.getFormControl().commencementDate.value).getDate() + 1));
+    console.log(this.validMaturity);
+    this.checkCommDateAndTenure();
+  }
+  checkCommDateAndTenure() {
+    if (this.tenure && this.getFormControl().commencementDate.value) {
+      if (this.tenure._d < new Date()) {
+        console.log("error");
+        this.tenureFlag = true;
+        return;
+      }
+      this.tenureFlag = false;
+      return;
+    }
+  }
+  tenureError() {
+    return { flag: true }
   }
   Close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
@@ -260,6 +277,8 @@ export class FixedDepositComponent implements OnInit {
       this.tenure = moment(this.tenure).add(d, 'days');
       if (this.fixedDeposit.controls.commencementDate.valid) {
         this.getDate = this.datePipe.transform(this.tenure, 'yyyy-MM-dd');
+        console.log(this.tenure, this.getDate);
+        this.checkCommDateAndTenure();
       }
       this.tenureValid = true;
       return this.getDate;
@@ -341,6 +360,9 @@ export class FixedDepositComponent implements OnInit {
     } else {
       this.maturityDate = this.fixedDeposit.controls.maturityDate.value;
     }
+    if (this.tenureFlag) {
+      return;
+    }
     if (this.fixedDeposit.invalid || !this.tenureValid) {
       // this.reqError = true;
       this.inputs.find(input => !input.ngControl.valid).focus();
@@ -355,8 +377,6 @@ export class FixedDepositComponent implements OnInit {
             }
           }
         }
-
-
         // if (this.fixedDeposit.controls[element].invalid) {
         // return;
         // }
@@ -426,12 +446,33 @@ export class FixedDepositComponent implements OnInit {
   getMaturityDate(data) {
     console.log(data)
     if (data.value == '1') {
-      this.fixedDeposit.get('tenureY').setValue('0');
-      this.fixedDeposit.get('tenureM').setValue('0');
-      this.fixedDeposit.get('tenureD').setValue('0');
+      if(this.flag.fdEndDateIn == "1"){
+        // this.fixedDeposit.get('tenureM').updateValueAndValidity();
+        // this.fixedDeposit.get('tenureY').updateValueAndValidity();
+        // this.fixedDeposit.get('tenureD').updateValueAndValidity();
+        let valueSet = {
+          tenureY:this.flag.tenureInYear,
+          tenureM: this.flag.tenureInMonth,
+          tenureD: this.flag.tenureInDay
+        }
+        this.fixedDeposit.setValue(valueSet);
+        // this.fixedDeposit.get('tenureY').setValue(this.flag.tenureInYear);
+        // this.fixedDeposit.get('tenureD').setValue(this.flag.tenureInDay);
+        
+      }
+      else{
+        this.fixedDeposit.get('tenureY').setValue('0');
+        this.fixedDeposit.get('tenureM').setValue('0');
+        this.fixedDeposit.get('tenureD').setValue('0');
+      }
     }
     else {
-      this.fixedDeposit.get('maturityDate').reset();
+      if(this.flag.fdEndDateIn == "2"){
+        this.fixedDeposit.get('maturityDate').setValue(new Date(this.flag.maturityDate));
+      }
+      else{
+        this.fixedDeposit.get('maturityDate').reset();
+      }
     }
   }
   getAdviceFdRes(data) {
