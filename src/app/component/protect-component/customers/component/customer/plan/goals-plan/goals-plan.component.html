@@ -195,21 +195,24 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-width-68 p-0 pb-44 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                <div class="col-width-68 p-0 pb-44 skeletonAnimation" appSkeletonLoading
+                    [appSkeletonLoading]="isLoading">
                     <div class="row relClass">
                         <div class="col-md-6 pl-0 ">
                             <div class="row pt-28">
                                 <div class="col-md-6 p-0 ">
                                     <h5 class="f-12 m-0 text-primitive">GOAL FUTURE VALUE</h5>
                                     <h3 class="m-0">
-                                        <div class="bar">₹<span appFormatNumber>{{selectedGoal.dummyDashBoardData.futureValue}}</span>
+                                        <div class="bar">₹<span
+                                                appFormatNumber>{{selectedGoal.dummyDashBoardData.futureValue}}</span>
                                         </div>
                                     </h3>
                                 </div>
                                 <div class="col-md-6">
                                     <h5 class="f-12 m-0 text-primitive">ACHIEVED</h5>
                                     <h3 class="m-0">
-                                        <div class="bar">₹<span appFormatNumber>{{selectedGoal.dummyDashBoardData.presentValue}}</span>
+                                        <div class="bar">₹<span
+                                                appFormatNumber>{{selectedGoal.dummyDashBoardData.presentValue}}</span>
                                         </div>
                                     </h3>
                                 </div>
@@ -217,7 +220,8 @@
                             <div class="row pt-24">
                                 <div class="col-md-12 p-0">
                                     <h5 class="m-0 text-primitive f-12">GOAL PROGRESS</h5>
-                                    <mat-progress-bar id="bg-primary" mode="determinate" [value]="selectedGoal.dummyDashBoardData.goalProgress" class="h-30">
+                                    <mat-progress-bar id="bg-primary" mode="determinate"
+                                        [value]="selectedGoal.dummyDashBoardData.goalProgress" class="h-30">
                                     </mat-progress-bar>
                                 </div>
                             </div>
@@ -232,15 +236,19 @@
                                 <div class="col-md-3 p-0">
                                     <p class="m-0 text-black roboto p-12 f-500 br bb">Monthly</p>
                                     <p class="m-0 text-black roboto p-12 bg-white br bb">
-                                        <span class="bar" appFormatNumber>{{selectedGoal.dummyDashBoardData.equity_monthly}}</span>
+                                        <span class="bar"
+                                            appFormatNumber>{{selectedGoal.dummyDashBoardData.equity_monthly}}</span>
                                     </p>
 
-                                    <p class="m-0 text-black roboto p-12 bg-white br"><span class="bar" appFormatNumber>{{selectedGoal.dummyDashBoardData.debt_monthly}}</span></p>
+                                    <p class="m-0 text-black roboto p-12 bg-white br"><span class="bar"
+                                            appFormatNumber>{{selectedGoal.dummyDashBoardData.debt_monthly}}</span></p>
                                 </div>
                                 <div class="col-md-3 p-0">
                                     <p class="m-0 text-black roboto p-12 f-500 bb">Lumpsum</p>
-                                    <p class="m-0 text-black roboto p-12 bg-white bb"><span class="bar" appFormatNumber>{{selectedGoal.dummyDashBoardData.lump_equity}}</span></p>
-                                    <p class="m-0 text-black roboto p-12 bg-white"><span class="bar" appFormatNumber>{{selectedGoal.dummyDashBoardData.lump_debt}}</span></p>
+                                    <p class="m-0 text-black roboto p-12 bg-white bb"><span class="bar"
+                                            appFormatNumber>{{selectedGoal.dummyDashBoardData.lump_equity}}</span></p>
+                                    <p class="m-0 text-black roboto p-12 bg-white"><span class="bar"
+                                            appFormatNumber>{{selectedGoal.dummyDashBoardData.lump_debt}}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -265,7 +273,9 @@
                             <p class="roboto m-0 p-8 text-black f-500">Maturity value </p>
                         </div>
                     </div>
-                    <div cdkDropList id="allottedList" [cdkDropListData]="todo" [cdkDropListSortingDisabled]="true" (cdkDropListDropped)="drop($event)" (cdkDropListEntered)="logger($event)" class="hide-placeholder">
+                    <div cdkDropList id="allottedList" [cdkDropListData]="todo" [cdkDropListSortingDisabled]="true"
+                        (cdkDropListDropped)="drop($event)" (cdkDropListEntered)="logger($event)"
+                        class="hide-placeholder">
                         <div class="row bl-1 bb-1 br bg-white">
                             <div class="col-md-3">
                                 <p class="m-0 roboto pt-10">Fixed Deposit </p>
@@ -315,7 +325,9 @@
                         <div class="b-a relClass">
                             <div class="m-0 p-8 text-black f-14 roboto">
                                 <div class="bar">
-                                    We have given higher allocations to your retirement goal compared to other goals. We suggest you to first allocate maximum corpus to this goal. We wile update your EPF contributions too once we have the details of the same.
+                                    We have given higher allocations to your retirement goal compared to other goals. We
+                                    suggest you to first allocate maximum corpus to this goal. We wile update your EPF
+                                    contributions too once we have the details of the same.
                                 </div>
                             </div>
                         </div>
@@ -404,8 +416,9 @@
 
 
                     <div class="row pt-20" *ngIf="selectedGoal">
-                        <div class="col-md-12 right p-0 text-right" (click)="deleteGoal(dashboardData)">
+                        <div class="col-md-12 right p-0 text-right">
                             <img src="/assets/images/svg/blue-delete.svg">
+                            <!-- (click)="deleteGoal(dashboardData)" -->
                         </div>
                     </div>
                 </div>

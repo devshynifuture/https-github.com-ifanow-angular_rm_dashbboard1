@@ -16,28 +16,28 @@ import { MatTableDataSource } from '@angular/material';
 })
 export class MandateCreationComponent implements OnInit {
   inputData: any;
-  displayedColumns: string[] = ['set','position', 'name', 'weight','ifsc', 'aid', 'euin','hold' ];
+  displayedColumns: string[] = ['set', 'position', 'name', 'weight', 'ifsc', 'aid', 'euin', 'hold'];
   data1: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.inputData);
   bankDetails: any;
   pinInvalid: boolean;
   advisorId: any;
   selectedMandate: any;
-
+  isLoading;
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
     private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
     public utils: UtilService, public eventService: EventService) { }
-    validatorType = ValidatorType
-    @Input()
-    set data(data) {
-      this.inputData = data;
-      console.log('all data in per', this.inputData)
-      this.dataSource = this.inputData
-    }
-  
-    get data() {
-      return this.inputData;
-    }
+  validatorType = ValidatorType
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    console.log('all data in per', this.inputData)
+    this.dataSource = this.inputData
+  }
+
+  get data() {
+    return this.inputData;
+  }
   ngOnInit() {
     this.getdataForm('')
     this.advisorId = AuthService.getAdvisorId();
@@ -175,7 +175,7 @@ export class MandateCreationComponent implements OnInit {
         branchCode: this.bankDetails.controls.branchCode.value,
         micrCode: this.bankDetails.controls.micrCode.value,
         firstHolder: this.bankDetails.controls.firstHolder.value,
-        address : address
+        address: address
       }
       console.log('mandate details', value)
     }

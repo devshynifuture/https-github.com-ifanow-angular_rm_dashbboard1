@@ -47,6 +47,7 @@ export class AllAdviceSmallSavingsSchemeComponent implements OnInit {
   potdCount: any;
   pomisCount: any;
   selectedAssetId: any = [];
+  pordCount: any;
 
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject,private activityService:ActiityService) { }
   allAdvice = true
@@ -114,6 +115,19 @@ export class AllAdviceSmallSavingsSchemeComponent implements OnInit {
     });
     return filterdData;
   }
+  checkSingle(flag, selectedData, tableData, tableFlag) {
+    if (flag.checked) {
+      selectedData.selected = true;
+      this.selectedAssetId.push(selectedData.id)
+    }
+    else {
+      selectedData.selected = false
+      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1);
+    }
+    let countValue = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
+    this.getFlagCount(tableFlag, countValue)
+    console.log(this.selectedAssetId)
+  }
   checkAll(flag, tableDataList, tableFlag) {
     console.log(flag, tableDataList)
     const { selectedIdList, count } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
@@ -142,7 +156,7 @@ export class AllAdviceSmallSavingsSchemeComponent implements OnInit {
         this.posavingCount = count;
         break;
       case (flag == 'pord'):
-        this.scssCount = count;
+        this.pordCount = count;
         break;
       case (flag == 'potd'):
         this.potdCount = count;

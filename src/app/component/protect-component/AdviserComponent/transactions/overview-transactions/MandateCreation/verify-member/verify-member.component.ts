@@ -32,7 +32,9 @@ export class VerifyMemberComponent implements OnInit {
   customValue: any;
   Todate: any;
   formDate: Date;
-  
+  isLoading;
+
+
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private processTrasaction: ProcessTransactionService,
     private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
