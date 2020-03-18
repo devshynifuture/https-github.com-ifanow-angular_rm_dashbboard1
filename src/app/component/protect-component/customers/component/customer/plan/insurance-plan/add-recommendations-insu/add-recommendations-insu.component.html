@@ -1,0 +1,56 @@
+<div class="popup-header-fix-60">
+    <div class="row bb-1">
+        <div class="col-md-7 p-0">
+            <h3 class="mb-0 wrapper-20 f-500"> Life insurance - Current policies - Rahul Jain</h3>
+        </div>
+        <div class="col-md-5 text-right">
+            <div class="wrapper-20">
+                <i class="material-icons c-p v-middle" (click)="close()"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="pt-90 pr-28 pl-28">
+    <div class="recommendationTable">
+        <table mat-table [dataSource]="dataSource" id="table-low" class=" ">
+            <ng-container matColumnDef="policyName">
+                <th mat-header-cell class="" *matHeaderCellDef> Policy name </th>
+                <td mat-cell class="" *matCellDef="let element"> {{element.policyName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="sum">
+                <th mat-header-cell class="text-right" *matHeaderCellDef> Sum assured </th>
+                <td mat-cell class="text-right" *matCellDef="let element"> {{element.sum}} </td>
+            </ng-container>
+            <ng-container matColumnDef="premium">
+                <th mat-header-cell class="text-right" *matHeaderCellDef> Annual premium </th>
+                <td mat-cell class="text-right" *matCellDef="let element"> {{element.premium}} </td>
+            </ng-container>
+            <ng-container matColumnDef="returns">
+                <th mat-header-cell class="text-right" *matHeaderCellDef> Returns </th>
+                <td mat-cell class="text-right" *matCellDef="let element"> {{element.returns}} </td>
+            </ng-container>
+            <ng-container matColumnDef="advice">
+                <th mat-header-cell class="" *matHeaderCellDef> Advice </th>
+                <td mat-cell class="" *matCellDef="let element"> {{element.advice}} </td>
+            </ng-container>
+            <ng-container matColumnDef="empty">
+                <th mat-header-cell class="" *matHeaderCellDef> </th>
+                <td mat-cell class="c-p" *matCellDef="let element">
+                    <img src="/assets/images/svg/dot-menu.svg">
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>
+
+<div class="bottom-fixed wrapper-12 pt-16">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
+        </div>
+
+    </div>
+</div>

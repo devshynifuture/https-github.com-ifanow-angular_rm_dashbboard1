@@ -9,7 +9,10 @@ const routes: Routes = [
     children: [
       { path: 'myfeed', loadChildren: () => import('./overview-myfeed/overview-myfeed.module').then(m => m.OverviewMyfeedModule) },
       { path: 'profile', loadChildren: () => import('./overview-profile/overview-profile.module').then(m => m.OverviewProfileModule) },
-      { path: 'documents', loadChildren: () => import('./overview-documents/overview-documents.module').then(m => m.OverviewDocumentsModule) },
+      { path: 'documents', loadChildren: () => import('./overview-documents/documents.module').then(m => m.DocumentsModule) },
+      { path: 'email', loadChildren: () => import('./overview-email/overview-email.module').then(m => m.OverviewEmailModule) },
+      { path: 'subscription', loadChildren: () => import('./overview-subscription/overview-subscription.module').then(m => m.OverviewSubscriptionModule) },
+      { path: 'settings', loadChildren: () => import('./overview-settings/overview-settings.module').then(m => m.OverviewSettingsModule) },
       {
         path: '',
         redirectTo: 'myfeed',
@@ -17,6 +20,8 @@ const routes: Routes = [
       },
     ],
   },
+
+
 
 
 
