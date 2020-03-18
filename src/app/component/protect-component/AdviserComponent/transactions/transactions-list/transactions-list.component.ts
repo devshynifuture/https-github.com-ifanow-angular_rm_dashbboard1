@@ -27,6 +27,7 @@ export class TransactionsListComponent implements OnInit {
   finalEndDate
   errMessage: any;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
+  noData: string;
 
   constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService, private utilService: UtilService, private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) { }
 
@@ -49,13 +50,21 @@ export class TransactionsListComponent implements OnInit {
     );
   }
   getFilterOptionDataRes(data) {
-    console.log(data);
-    this.filterData = data;
-    this.selectedBroker = data[0];
-    this.selectedPreviousToShowDate = '7';
-    this.finalStartDate = new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 1).getTime();
-    this.finalEndDate = new Date().getTime();
-    this.getAllTransactionList();
+    if(data){
+      this.isLoading = false
+      console.log(data);
+      this.filterData = data;
+      this.selectedBroker = data[0];
+      this.selectedPreviousToShowDate = '7';
+      this.finalStartDate = new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 1).getTime();
+      this.finalEndDate = new Date().getTime();
+      this.getAllTransactionList();
+    }else{
+      this.isLoading = false
+      this.noData = "No Transactions found";
+      this.dataSource.data = [];
+    }
+   
   }
   getAllTransactionList() {
     this.dataSource.data = [{}, {}, {}];
