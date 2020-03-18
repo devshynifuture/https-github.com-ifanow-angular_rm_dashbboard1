@@ -114,7 +114,6 @@ export class TransactionsListComponent implements OnInit {
     const fragmentData = {
       flag: 'addNewTransaction',
       data,
-      id: 1,
       state: 'open35',
       componentName: TransactionsHistoryComponent,
     };

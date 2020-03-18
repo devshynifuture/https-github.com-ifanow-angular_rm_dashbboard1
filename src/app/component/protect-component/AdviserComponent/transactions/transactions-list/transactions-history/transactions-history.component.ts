@@ -16,6 +16,7 @@ export class TransactionsHistoryComponent implements OnInit {
   processDetails: any;
   transactionDetails;
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService) { }
+  
   ngOnInit() {
     console.log("status details", detailStatusObj)
 
@@ -39,6 +40,9 @@ export class TransactionsHistoryComponent implements OnInit {
       case (this.transactionData.transactionType == "STP"):
         this.transactionDetails = detailStatusObj.transactionDetailStatus.STP;
         break;
+        case (this.transactionData.transactionType == "SIP"):
+          this.transactionDetails = detailStatusObj.transactionDetailStatus.ORDER;
+          break;
       default:
         console.log("")
     }
