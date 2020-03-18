@@ -60,59 +60,52 @@ export class SingleGoalYearComponent implements OnInit {
       "imageUrl": this.logoImg
     }
 
-    /**
-     * goal ids
-     * 2 - house
-     * 3 - car
-     * 4 - marriage
-     * 7 - emergency
-     * 8 - wealth creation
-     * 9 - big spend
-     * 10 - others
-     */
-    if([2,4,8].includes(this.goalTypeData.id)) {
-      obj['planningThisForId'] = this.singleYearGoalForm.get('field1').value.id;
-      obj['clientOrFamilyMember'] = (this.singleYearGoalForm.get('field1').value.relationshipId === 0) ? 1 : 2;
-    }
-    if([2,3,4,8].includes(this.goalTypeData.id)) {
-      obj['currentAge'] = this.singleYearGoalForm.get('field1').value.age;
-    }
-    if([2,3,4,9,10].includes(this.goalTypeData.id)) {
-      obj['goalPresentValue'] = this.singleYearGoalForm.get('field3').value;
-    }
-
     switch (this.goalTypeData.id) {
       case 2: // House
+        obj['currentAge'] = this.singleYearGoalForm.get('field1').value.age;
+        obj['planningThisForId'] = this.singleYearGoalForm.get('field1').value.id;
+        obj['clientOrFamilyMember'] = (this.singleYearGoalForm.get('field1').value.relationshipId === 0) ? 1 : 2;
         obj['whatAgeBuyHouse'] = this.singleYearGoalForm.get('field2').value;
+        obj['goalPresentValue'] = this.singleYearGoalForm.get('field3').value;
         break;
       case 3: // Car
+        obj['currentAge'] = this.singleYearGoalForm.get('field1').value.age;
         obj['whatAgeBuyCar'] = this.singleYearGoalForm.get('field2').value;
+        obj['goalPresentValue'] = this.singleYearGoalForm.get('field3').value;
         break;
       case 4: // Marriage
+        obj['currentAge'] = this.singleYearGoalForm.get('field1').value.age;
+        obj['planningThisForId'] = this.singleYearGoalForm.get('field1').value.id;
+        obj['clientOrFamilyMember'] = (this.singleYearGoalForm.get('field1').value.relationshipId === 0) ? 1 : 2;
         obj['marryAtAge'] = this.singleYearGoalForm.get('field2').value;
+        obj['goalPresentValue'] = this.singleYearGoalForm.get('field3').value;
         break;
       case 7: // Emergency
         obj['goalTargetInMonth'] = this.singleYearGoalForm.get('field2').value;
         obj['goalFV'] = this.singleYearGoalForm.get('field3').value;
         break;
       case 8: // Wealth Creation
+        obj['currentAge'] = this.singleYearGoalForm.get('field1').value.age;
+        obj['planningThisForId'] = this.singleYearGoalForm.get('field1').value.id;
+        obj['clientOrFamilyMember'] = (this.singleYearGoalForm.get('field1').value.relationshipId === 0) ? 1 : 2;
         obj['goalTargetAge'] = this.singleYearGoalForm.get('field2').value;
         obj['goalFV'] = this.singleYearGoalForm.get('field3').value;
         break;
       case 9: // Big Spends
         obj['goalStartDate'] = this.singleYearGoalForm.get('field2').value;
+        obj['goalPresentValue'] = this.singleYearGoalForm.get('field3').value;
         break;
       case 10: // Others
         obj['goalStartDate'] = this.singleYearGoalForm.get('field2').value;
+        obj['goalPresentValue'] = this.singleYearGoalForm.get('field3').value;
         break;
       default:
-        console.error('unknown goal id found')
+        console.error('unknown goal id found');
     }
     return obj;
   }
 
   sendDataObj(obj){
-
     switch (this.goalTypeData.id) {
       case 2: // House
         this.planService.addHouseGoal(obj).subscribe(

@@ -42,6 +42,7 @@ export class GoalsPlanComponent implements OnInit {
   // initializing dummy data
   allGoals: any[] = [
     {
+      id: 1,
       goalName: 'Shreya’s higher education',
       gv: 4813000,
       year: '2030 - 2033',
@@ -58,6 +59,7 @@ export class GoalsPlanComponent implements OnInit {
       }
     },
     {
+      id: 2,
       goalName: 'House',
       gv: 10000000,
       year: '2033',
@@ -74,6 +76,7 @@ export class GoalsPlanComponent implements OnInit {
       }
     },
     {
+      id: 3,
       goalName: 'Rahul’s retirement',
       gv: 45522000,
       year: '2030 - 2033',
@@ -90,6 +93,7 @@ export class GoalsPlanComponent implements OnInit {
       }
     },
     {
+      id: 4,
       goalName: 'Aryan’s marriage',
       gv: 4813000,
       year: '2030 - 2033',
