@@ -326,6 +326,15 @@ export class BondsComponent implements OnInit {
         compounding: this.bonds.controls.compound.value,
         id: this.bonds.controls.id.value
       }
+
+      obj.nomineeList.forEach(element => {
+        if(element.name == ''){
+          obj.nomineeList= [];
+        }
+        else{
+          obj.nomineeList= this.bonds.value.getNomineeName;
+        }
+      });
       console.log('bonds', obj)
       this.dataSource = obj
       if (this.bonds.controls.id.value == undefined) {

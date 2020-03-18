@@ -17,9 +17,11 @@ export class EmailAdviceComponent implements OnInit {
   @ViewChild('EmailIdTo', { static: true }) EmailIdToRef: ElementRef;
   @ViewChild('subBody', { static: true }) subBodyRef: ElementRef;
   selectedAssetId: any;
+  flag: any;
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService, private route: Router, private datePipe: DatePipe) { }
   @Input() set data(data) {
-    this.selectedAssetId = data;
+    this.selectedAssetId = data.selectedAssetData;
+    this.flag = data.flagData;
     console.log(this.selectedAssetId, "selected id")
   }
   ngOnInit() {
@@ -48,39 +50,47 @@ export class EmailAdviceComponent implements OnInit {
   }
   sendEmail() {
     let obj = this.selectedAssetId;
-    this.cusService.generateGroupId(obj).subscribe(
-      data => {
-        this.groupId = data;
-        let dateObj = new Date();
-        // this.elemRef.nativeElement.innerHTML
-        let obj =
-        {
-          "messageBody": "Test",
-          "toEmail": [
-            {
-              "emailAddress": this.EmailIdToRef.nativeElement.innerText
-            }
-          ],
-          "targetObject": {
-            "adviceUuid": this.groupId,
-            "sent": this.datePipe.transform(new Date(), 'yyyy-MM-dd')
-          },
-          "fromEmail": "sarvesh@futurewise.co.in",
-          "emailSubject": this.subBodyRef.nativeElement.innerText,
-          "placeholder": [
-            {
-              "user": "$user"
-            }
-          ]
+    if (this.flag == 'BypassConsent') {
+      this.cusService.consentBypass(obj).subscribe(
+        data => this.getResponse(data), (error) => {
         }
-        this.cusService.sentEmailConsent(obj).subscribe(
-          data => {
-            console.log(data)
-            this.route.navigate(['/cus/email-consent'], { queryParams: { gropID: this.groupId } });
-            this.close(false)
-          }
-        )
-
+      );
+    } else {
+      this.cusService.generateGroupId(obj).subscribe(
+        data => this.getResponse(data)
+      )
+    }
+  }
+  getResponse(data) {
+    console.log(data);
+    this.groupId = data;
+    let dateObj = new Date();
+    // this.elemRef.nativeElement.innerHTML
+    let obj =
+    {
+      "messageBody": "Test",
+      "toEmail": [
+        {
+          "emailAddress": this.EmailIdToRef.nativeElement.innerText
+        }
+      ],
+      "targetObject": {
+        "adviceUuid": this.groupId,
+        "sent": this.datePipe.transform(new Date(), 'yyyy-MM-dd')
+      },
+      "fromEmail": "sarvesh@futurewise.co.in",
+      "emailSubject": this.subBodyRef.nativeElement.innerText,
+      "placeholder": [
+        {
+          "user": "$user"
+        }
+      ]
+    }
+    this.cusService.sentEmailConsent(obj).subscribe(
+      data => {
+        console.log(data)
+        this.route.navigate(['/cus/email-consent'], { queryParams: { gropID: this.groupId } });
+        this.close(false)
       }
     )
   }

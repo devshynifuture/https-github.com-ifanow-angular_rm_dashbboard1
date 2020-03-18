@@ -17,7 +17,6 @@ export class UtilService {
   constructor(private eventService: EventService, private http: HttpClient, private subService: SubscriptionService) {
   }
   subscriptionStepData;
-  getFamilyMemberData: any;
 
   static convertObjectToArray(inputObject: object): object[] {
     const outputArray = [];
@@ -122,16 +121,22 @@ export class UtilService {
     return Math.round(data);
   }
 
-  calculateAgeFromCurrentDate(data) {
-    data.forEach(element => {
-      const bdate = new Date(element.dateOfBirth);
-      const timeDiff = Math.abs(Date.now() - bdate.getTime());
-      const age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
-      element.age = age;
+  /**
+   * Returns a new array of family member object with age key.
+   * @param familyList - Array of family objects. Must contain key - dateOfBirth - otherwise it will fail.
+   */
+  calculateAgeFromCurrentDate(familyList: any[]) {
+    return familyList.map(element => {
+      const today = new Date();
+      const birthDate = new Date(element.dateOfBirth);
+      let age = today.getFullYear() - birthDate.getFullYear();
+      var m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      element['age'] = age;
+      return element;
     });
-    this.getFamilyMemberData = data;
-    console.log('family Member with age', this.getFamilyMemberData);
-    return this.getFamilyMemberData;
   }
 
   formValidations(whichTable) {

@@ -1,3 +1,4 @@
+import { CustomDirectiveModule } from './../../../../../../common/directives/common-directive.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -14,7 +15,8 @@ import { MaterialModule } from 'src/app/material/material';
     FolioQueryRoutingModule,
     ReactiveFormsModule,
     MaterialModule,
-    FormsModule
+    FormsModule,
+    CustomDirectiveModule
   ]
 })
 export class FolioQueryModule { }

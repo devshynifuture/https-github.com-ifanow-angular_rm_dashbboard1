@@ -23,7 +23,6 @@ export class SingleGoalYearComponent implements OnInit {
   planForFamily:boolean = false;
   imageData: any;
   logoImg: any;
-  currentAge: number;
   minAgeYear = 0;
   maxAgeYear = 100;
   clientId: any;
@@ -195,29 +194,27 @@ export class SingleGoalYearComponent implements OnInit {
 
   // set the validation age for the age form field 
   setMinMaxAgeOrYear(value){
-    this.currentAge = this.getAge(value.dateOfBirth);
     if(this.goalTypeData.validations.showAge) {
-      this.minAgeYear = (this.goalTypeData.validations.minAge || (this.goalTypeData.validations.minAgeFromPresent + this.currentAge));
-      this.maxAgeYear = (this.goalTypeData.validations.maxAge || (this.goalTypeData.validations.maxAgeFromPresent + this.currentAge));
+      this.minAgeYear = (this.goalTypeData.validations.minAge || (this.goalTypeData.validations.minAgeFromPresent + value.age));
+      this.maxAgeYear = (this.goalTypeData.validations.maxAge || (this.goalTypeData.validations.maxAgeFromPresent + value.age));
     } else {
       this.minAgeYear = (this.goalTypeData.validations.minAgeFromPresent + this.currentYear);
       this.maxAgeYear = (this.goalTypeData.validations.maxAgeFromPresent + this.currentYear);
     }
-    if(this.minAgeYear < (this.currentAge + this.goalTypeData.validations.minAgeFromPresent)) {
-      this.minAgeYear = this.currentAge + this.goalTypeData.validations.minAgeFromPresent;
+    if(this.minAgeYear < (value.age + this.goalTypeData.validations.minAgeFromPresent)) {
+      this.minAgeYear = value.age + this.goalTypeData.validations.minAgeFromPresent;
     }
   }
 
   initializeForm(){
     this.singleYearGoalForm = this.fb.group({
+      field1: ['', [Validators.required]], // who the goal is for
       field2: ['', [Validators.required]], // age or time
       field3: [this.goalTypeData.defaults.cost, [Validators.required, Validators.min(this.goalTypeData.validations.minCost), Validators.max(this.goalTypeData.validations.maxCost)]], // cost
       field4: [''], // goal name
       field5: [''],  // goal description
       logo: ['']
     });
-
-    this.singleYearGoalForm.addControl('field1', new FormControl('', Validators.required)); // who the goal is for
   }
 
 
@@ -234,7 +231,7 @@ export class SingleGoalYearComponent implements OnInit {
 
   setDefaultOwner(){
     let owner = this.familyList.find((member) => this.goalTypeData.defaults.planningForRelative.includes(member.relationshipId));
-    this.singleYearGoalForm.controls.field1.setValue(owner);
+    this.singleYearGoalForm.get('field1').setValue(owner);
     this.selectOwnerAndUpdateForm(owner);
   }
   

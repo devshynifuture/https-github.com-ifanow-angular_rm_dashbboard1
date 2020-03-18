@@ -13,8 +13,7 @@
 </div>
 <div [formGroup]="recuringDeposit" class="pt-100 pl-24 pr-24 pb-48 mb-44">
     <div formArrayName="getCoOwnerName">
-        <div class="row pt-36"
-            *ngFor="let obj of recuringDeposit.controls['getCoOwnerName'].controls; let pointIndex=index"
+        <div class="row" *ngFor="let obj of recuringDeposit.controls['getCoOwnerName'].controls; let pointIndex=index"
             [formGroupName]="pointIndex">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8 ">{{pointIndex != 0?'Co-o' : 'O'}}wner{{pointIndex != 0?pointIndex:''}}</h5>
@@ -53,7 +52,7 @@
             </div>
         </div>
     </div>
-    <!-- <app-owner-nominee [coOwner]="true" [coNominee]="false" (coGroup)="getlist($event)"></app-owner-nominee> -->
+    <!-- <app-owner-nominee [coOwner]="true" [coNominee]="false" (coGroup)="getlist($event)" [formData] = "formData"></app-owner-nominee> -->
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-12">Monthly contrubution</h5>
@@ -288,7 +287,7 @@
 
             </div>
         </div>
-        <!-- <app-owner-nominee [coOwner]="false" [coNominee]="true" (coGroup)="getlist($event)"></app-owner-nominee> -->
+        <!-- <app-owner-nominee [coOwner]="false" [coNominee]="true" (coGroup)="getlist($event)" [formData]="formData"></app-owner-nominee> -->
     </div>
 </div>
 <div class="bottom-fixed wrapper-12 pt-16" *ngIf="adviceShowHeaderAndFooter">

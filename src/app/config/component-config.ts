@@ -221,7 +221,7 @@ export const appConfig = {
   ADD_EPS: 'account/asset/retirement/eps/add',
   EDIT_EPS: 'account/asset/retirement/eps/edit',
   OTHER_PAYABLES: 'account/liability/otherpayables/get',
-  
+
 
   ////////////////////////////// subscription////////////////////////////////////////////
 
@@ -354,6 +354,7 @@ export const appConfig = {
   GET_ADVICE_BY_CATEGORY: 'advice/assetType/get',
   ADVICE_GET_DEPLOYMENTS: 'activity/deployment/get',
   GENERATE_GROUP_ID: 'advice/asset/consent/post',
+  CONSENT_BYPASS_POST:'advice/asset/consent-bypass/post',
   GET_ASSET_CONSENT: 'advice/advice/consent/get',
   UPDATE_ASSET_CONSENT: 'advice/asset/update/consent',
   SENT_EMAIL_CONSENT: 'advice/asset/update/consent/sent',
@@ -432,7 +433,9 @@ export const appConfig = {
   BACKOFFICE_GET_RT_LIST: 'backoffice/rt/list/get',
   BACKOFFICE_GET_AUM_RECON_HISTORY_LIST: 'backoffice/aum/recon/history/get',
   BACKOFFICE_GET_AUM_ORDER_LIST: 'backoffice/aum/file/order/list/get',
-
+  BACKOFFICE_GET_AUM_RECON_LIST: 'backoffice/aum/reconcillation/list/get',
+  BACKOFFICE_PUT_AUM_TRANSACTION_KEEP_OR_REMOVE: 'backoffice/aum/transaction/keep/remove',
+  BACKOFFICE_PUT_AUM_TRANSACTION_MULTIPLE_DELETE: 'backoffice/aum/transaction/multiple/delete',
 
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',

@@ -1,3 +1,4 @@
+import { SupportService } from './../../support.service';
 import { SubscriptionInject } from './../../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
@@ -18,9 +19,12 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   dataSource1 = new MatTableDataSource<PeriodicElement1>(ELEMENT_DATA1);
   dataSource2 = new MatTableDataSource<PeriodicElement2>(ELEMENT_DATA2);
   tableEntriesType: number;
+  isKeepOrRemoveTransactions: any[] = [];
 
-  constructor(private subscriptionInject: SubscriptionInject) { }
-
+  constructor(
+    private subscriptionInject: SubscriptionInject,
+    private supportService: SupportService
+  ) { }
 
   ngOnInit() {
     console.log(this.data);
@@ -40,13 +44,34 @@ export class ReconciliationDetailsViewComponent implements OnInit {
 
   }
 
+  putAumTransactionKeepOrRemove() {
+    let isKeepArray = [];
+    ELEMENT_DATA2.forEach((item, index) => {
+      isKeepArray.push({
+        id: index,
+        isKeep: item.isKeep
+      })
+    });
+    this.isKeepOrRemoveTransactions = isKeepArray;
+    console.log(this.isKeepOrRemoveTransactions);
+    // this.supportService.putAumTransactionKeepOrRemove(this.isKeepOrRemoveTransactions)
+    //   .subscribe(res => {
+    //     console.log(res);
+    //   })
+  }
+
+  shouldKeepOrRemove(value, element) {
+    let id = ELEMENT_DATA2.indexOf(element);
+    ELEMENT_DATA2[id].isKeep = (value === 1 ? true : false);
+  }
+
   dialogClose() {
     this.subscriptionInject.changeNewRightSliderState({ state: 'close' });
   }
 
 }
 
-export interface PeriodicElement {
+interface PeriodicElement {
   unitOne: string;
   unitsRta: string;
   difference: string;
@@ -66,13 +91,14 @@ export interface PeriodicElement1 {
   action: string;
 }
 
-export interface PeriodicElement2 {
+interface PeriodicElement2 {
   transactionType: string;
   date: string;
   amount: string;
   nav: string;
   units: string;
   action: string;
+  isKeep: boolean;
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
@@ -81,6 +107,6 @@ const ELEMENT_DATA1: PeriodicElement1[] = [
 ];
 
 const ELEMENT_DATA2: PeriodicElement2[] = [
-  { transactionType: 'SIP', date: '07/01/2019', amount: '5,000.00', nav: '298.43', units: '156.23', action: ' ' },
-  { transactionType: 'Transfer Out Change of Broker', date: '07/01/2019', amount: '5,000.00', nav: '348.34', units: '156.23', action: ' ' },
+  { transactionType: 'SIP', date: '07/01/2019', amount: '5,000.00', nav: '298.43', units: '156.23', action: ' ', isKeep: false },
+  { transactionType: 'Transfer Out Change of Broker', date: '07/01/2019', amount: '5,000.00', nav: '348.34', units: '156.23', action: ' ', isKeep: true },
 ];
