@@ -306,9 +306,8 @@
                         </div>
                     </div>
                     <div class="row b-a">
-                        <div class="col-md-12 p-0">
-                            <img src="/assets/images/svg/progressbar.svg" class="w-100">
-                        </div>
+                        <div class="col-md-6" id="monthly-chart-container"></div>
+                        <div class="col-md-6" id="lumpsum-chart-container"></div>
                     </div>
                     <div class="row pt-24 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <div class="col-md-9 p-0">
@@ -367,7 +366,7 @@
                             </div>
                         </div>
                         <div class="col-md-2 pl-0">
-                            <img src="/assets/images/svg/loan-deatils.svg" class="pt-12">
+                            <div id="donut-chart-container"></div>
 
                             <div class="row pt-16">
                                 <div class="col-md-2 pl-0">

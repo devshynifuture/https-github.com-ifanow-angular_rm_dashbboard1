@@ -16,6 +16,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { AuthService } from 'src/app/auth-service/authService';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import * as Highcharts from 'highcharts';
 
 export interface PeriodicElement {
   position: string;
@@ -111,6 +112,63 @@ export class GoalsPlanComponent implements OnInit {
     },
   ];
 
+  // options set for bar charts
+  // Reference - https://api.highcharts.com/highcharts/
+  options: any = {
+    chart: {
+      type: 'bar',
+      height: 200
+    },
+    plotOptions: {
+      bar: {
+          dataLabels: {
+              enabled: true,
+              align: 'left',
+              inside: false
+          }
+      }
+    },
+    credits: {
+        enabled: false
+    },
+    title: {
+      text: 'Monthly Bar Chart'
+    },
+    xAxis: {
+        type: 'category',
+        lineWidth: 0,
+        tickWidth: 0
+    },
+    yAxis:{
+      visible: false
+    },
+    tooltip: {
+      enabled: false,
+    },
+    legend: {
+      enabled: false,
+    },
+    series: [{
+        data: [{
+            y: 123,
+            name: 'Gabriel',
+            color: 'green'
+        }, {
+            y: 60,
+            name: 'Marie',
+            color: 'blue'
+        }, {
+            y: 43,
+            name: 'Adam',
+            color: 'yellow'
+        }, {
+            y: 55,
+            name: 'Camille',
+            color: 'red'
+        }],
+    }]
+  }
+
   constructor(
     private subInjectService: SubscriptionInject, 
     private eventService: EventService, 
@@ -132,8 +190,8 @@ export class GoalsPlanComponent implements OnInit {
   loadAllGoals(){
     this.plansService.getAllGoals(this.advisor_client_id).subscribe((data)=>{
       // this.allGoals = data || [];
+      console.log('sagar', data);
       this.loadSelectedGoalData(this.allGoals[0]);
-      console.log(data);
     }, err => this.eventService.openSnackBar(err, "Dismiss"))
   }
 
@@ -232,9 +290,11 @@ export class GoalsPlanComponent implements OnInit {
 
   loadSelectedGoalData(goalData) {
     this.selectedGoal = goalData;
+    Highcharts.chart('monthly-chart-container', this.options);
+    Highcharts.chart('lumpsum-chart-container', this.options);
   }
 
-  deleteGoal(goal) {
+  deleteGoal() {
     const dialogData = {
       header: 'DELETE',
       body: 'Are you sure you want to delete this goal?',
