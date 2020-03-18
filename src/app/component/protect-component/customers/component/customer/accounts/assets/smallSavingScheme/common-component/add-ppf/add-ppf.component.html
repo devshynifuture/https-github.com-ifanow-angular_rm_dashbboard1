@@ -247,7 +247,7 @@
         </div>
         <!-- <app-add-nominee [ownerName]="ownerName" [data]="ppfData" (outputEvent)="getFormDataNominee($event)">
         </app-add-nominee> -->
-        <div formArrayName="getNomineeName">
+        <!-- <div formArrayName="getNomineeName">
             <div class="row pt-36"
                 *ngFor="let obj of addrealEstateForm.controls['getNomineeName'].controls; let pointIndex=index"
                 [formGroupName]="pointIndex">
@@ -294,7 +294,7 @@
                 </div>
 
             </div>
-        </div>
+        </div> -->
     </div>
     <app-add-transaction (outputEvent)="getFormData($event)" [data]='inputData'
         [transactionViewData]="transactionViewData" [commencementDate]="commencementDate">

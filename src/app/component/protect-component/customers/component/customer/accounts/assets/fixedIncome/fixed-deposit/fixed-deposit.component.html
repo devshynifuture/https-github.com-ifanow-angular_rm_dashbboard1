@@ -208,7 +208,7 @@
             <div class="form-group mb-0 d-flex">
                 <mat-form-field>
                     <input (focus)="picker1.open()" (click)="picker1.open()" (dateChange)="checkDate()" matInput
-                        formControlName="maturityDate" [min]="validMaturity" [matDatepicker]="picker1" readonly>
+                        formControlName="maturityDate" [min]="maxDate" [matDatepicker]="picker1" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
                     <mat-error class="f-12 pt-4 w-s">
@@ -332,8 +332,9 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input autocomplete="off" #fdNo type="text" (keypress)="keyPress($event)" maxlength="18"
-                                class="form-control br-0" formControlName="fdNo">
+                            <input matInput autocomplete="off" #fdNo type="text" appInputValueValidation
+                                [inputValidator]="validatorType.NUMBER_ONLY" maxlength="18" class="form-control br-0"
+                                formControlName="fdNo">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
                             <mat-hint align="end" class="f-12">{{fdNo.value.length}}/18</mat-hint>
                         </mat-form-field>
@@ -347,7 +348,7 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input autocomplete="off" #bankACNo type="text" appInputValueValidation
+                            <input matInput autocomplete="off" #bankACNo type="text" appInputValueValidation
                                 [inputValidator]="validatorType.NUMBER_ONLY" maxlength="16" class="form-control br-0"
                                 formControlName="bankACNo">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
@@ -363,8 +364,8 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input autocomplete="off" type="text" #institution maxlength="50" class="form-control br-0"
-                                formControlName="institution">
+                            <input matInput autocomplete="off" type="text" #institution maxlength="50"
+                                class="form-control br-0" formControlName="institution">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
                             <mat-hint align="end" class="f-12">{{institution.value.length}}/50</mat-hint>
                         </mat-form-field>
@@ -378,7 +379,7 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input autocomplete="off" #description maxlength="60" class="form-control br-0"
+                            <input matInput autocomplete="off" #description maxlength="60" class="form-control br-0"
                                 formControlName="description" type="text">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
                             <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
