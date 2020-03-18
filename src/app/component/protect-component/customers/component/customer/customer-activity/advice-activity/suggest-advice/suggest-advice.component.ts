@@ -2,9 +2,10 @@ import { DynamicComponentService } from './../../../../../../../../services/dyna
 import { SubscriptionInject } from './../../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { EventService } from './../../../../../../../../Data-service/event.service';
 import { UtilService } from './../../../../../../../../services/util.service';
-import { Component, OnInit, ViewChild, OnDestroy, ViewContainerRef, } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, ViewContainerRef, ViewChildren, QueryList, } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-suggest-advice',
@@ -26,8 +27,9 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
     "givenOnDate": [, Validators.required],
     "implementDate": [, Validators.required],
     "withdrawalAmt": [, Validators.required],
-    "consentOption": [, Validators.required],
+    "consentOption": ['1', Validators.required],
   })
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   @ViewChild('stepper', { static: true }) stepper;
 
@@ -60,8 +62,18 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.adviceSlider.unsubscribe();
   }
+  goBack() {
+    this.stepper.previous();
+    console.log(this.stepper.selectedIndex, "check selectedIndex");
 
+  }
   addOrNextStep() {
+    if (this.stepper) {
+      this.stepper.next();
+    }
+    if (this.stepper == undefined) {
+      return;
+    }
     // if (this.utilService.formValidations(this.adviceForm)) {
     // if (this.formStep === 1) {
     //   this.stepper.next();
@@ -71,7 +83,14 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
     let componentRefFormValues;
     let componentRefComponentValues = this.componentRef._component;
     // proceed on creating new suggest
-
+    if (this.adviceForm.invalid) {
+      for (let element in this.adviceForm.controls) {
+        console.log(element)
+        if (this.adviceForm.get(element).invalid) {
+          this.adviceForm.controls[element].markAsTouched();
+        }
+      }
+    }else{
     console.log("this is what i need:::::::::::::::", componentRefComponentValues)
 
     switch (true) {
@@ -327,6 +346,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
     console.log("this is form value::::::::::::", bothFormValues);
     // }
     // }
+  }
   }
 
   dialogClose() {
