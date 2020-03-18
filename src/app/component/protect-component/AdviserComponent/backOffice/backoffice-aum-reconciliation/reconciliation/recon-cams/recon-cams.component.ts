@@ -59,6 +59,7 @@ export class ReconCamsComponent implements OnInit {
 
   getAumReconHistoryData(event) {
     // check whether selectedBrokerid is selected 
+
     // make separate function for toggling the same
     if (this.selectBrokerForm.get('selectBrokerId').value) {
       this.isLoading = true;
@@ -93,7 +94,7 @@ export class ReconCamsComponent implements OnInit {
       componentName: UpperSliderBackofficeComponent,
       state: 'open'
     };
-    // this.router.navigate(['/subscription-upper'])
+    // this.router.navigate(['/subscription-upper']);
     AuthService.setSubscriptionUpperSliderData(fragmentData);
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
@@ -106,7 +107,7 @@ export class ReconCamsComponent implements OnInit {
   }
 }
 
-export interface ElementI {
+interface ElementI {
   doneOn: string,
   doneBy: string,
   totalFolioCount: string,

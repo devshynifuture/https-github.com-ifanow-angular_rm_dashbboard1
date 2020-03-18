@@ -126,15 +126,15 @@
                     </div>
                 </ng-template>
                 <p class="m-0 f-14">
-                    Use this section to do manual reconciliation of folios based on available options below. Once
-                    done,
+                    Use this section to do manual reconciliation of folios based on available options below. Once done,
                     proceed to the next stage of deleting and reordering unmatched folios.
                 </p>
 
                 <div class="row pt-60 pb-28">
                     <div class="col-md-12 p-0">
                         <button class="text-primary br-0" mat-button (click)="setSubTabState(1)">All
-                            folios</button>
+                            folios
+                        </button>
 
                         <button class="br-0" mat-button (click)="setSubTabState(2)">Folios with
                             duplicate entries</button>
@@ -193,9 +193,9 @@
 
                             <ng-container matColumnDef="transactions">
                                 <th mat-header-cell *matHeaderCellDef> Transactions </th>
-                                <td mat-cell *matCellDef="let element">
+                                <td mat-cell *matCellDef="let element; index as i">
                                     <div class="bar"> {{ element.transactions }} <button
-                                            (click)="openReconciliationDetails('reconciliationDetails', element, 'all-folios')"
+                                            (click)="openReconciliationDetails('reconciliationDetails', element, 'all-folios', i)"
                                             class="bg-primary text-white" mat-flat-button>View</button> </div>
                                 </td>
                             </ng-container>
@@ -245,9 +245,9 @@
 
                             <ng-container matColumnDef="transactions">
                                 <th mat-header-cell *matHeaderCellDef> Transactions </th>
-                                <td mat-cell *matCellDef="let element">
+                                <td mat-cell *matCellDef="let element; index as i">
                                     <div class="bar"> {{ element.transactions }}<button
-                                            (click)="openReconciliationDetails('reconciliationDetails', element, 'duplicate-folios')"
+                                            (click)="openReconciliationDetails('reconciliationDetails', element, 'duplicate-folios', i)"
                                             class="bg-primary text-white" mat-flat-button>View</button> </div>
                                 </td>
                             </ng-container>
@@ -305,16 +305,16 @@
                     </div>
 
                     <div class="col-md-6 text-right">
-                        <button class="bg-grey lt mr-8" mat-button>
+                        <button class="bg-grey lt mr-8" mat-button (click)="retryFileOrder()">
                             <img src="/assets/images/svg/retry.svg">
-                            Retry skipped files</button>
-                        <button class="bg-grey lt" mat-button>
-                            <img src="/assets/images/svg/refresh.svg" (click)="getBackofficeAumFileOrderList()">
-                            Refresh</button>
+                            Retry skipped files
+                        </button>
+                        <button class="bg-grey lt" mat-button (click)="getBackofficeAumFileOrderListDeleteReorder()">
+                            <img src="/assets/images/svg/refresh.svg" />
+                            Refresh
+                        </button>
                     </div>
-
                 </div>
-
 
                 <div class="row">
                     <div class="col-md-12 overflow-hidden back-office-table">

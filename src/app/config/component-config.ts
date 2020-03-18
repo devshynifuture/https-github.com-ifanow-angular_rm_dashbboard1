@@ -354,7 +354,7 @@ export const appConfig = {
   GET_ADVICE_BY_CATEGORY: 'advice/assetType/get',
   ADVICE_GET_DEPLOYMENTS: 'activity/deployment/get',
   GENERATE_GROUP_ID: 'advice/asset/consent/post',
-  CONSENT_BYPASS_POST:'advice/asset/consent-bypass/post',
+  CONSENT_BYPASS_POST: 'advice/asset/consent-bypass/post',
   GET_ASSET_CONSENT: 'advice/advice/consent/get',
   UPDATE_ASSET_CONSENT: 'advice/asset/update/consent',
   SENT_EMAIL_CONSENT: 'advice/asset/update/consent/sent',
@@ -395,12 +395,12 @@ export const appConfig = {
   SEARCH_SCHEME: 'report/transaction/list/get',
   GET_TRANSACTION_DETAILS: 'report/transaction/detail/get',
   GET_MANDATE_LIST: 'report/ach-mandate/get',
-  GET_REGISTRATION_UCC_IIN:'user/register/detail/get',
-  CREATE_IIN_UCC :'user/register/create',
-  MANDATE_VIEW:'/mandate/view',
-  GET_TOKEN:'user/bse/upload/password',
-  BANK_MANDTAE:'nse/iin/bank-detail/get',
-  ADD_MANDATE :'mandate/add',
+  GET_REGISTRATION_UCC_IIN: 'user/register/detail/get',
+  CREATE_IIN_UCC: 'user/register/create',
+  MANDATE_VIEW: '/mandate/view',
+  GET_TOKEN: 'user/bse/upload/password',
+  BANK_MANDTAE: 'nse/iin/bank-detail/get',
+  ADD_MANDATE: 'mandate/add',
   // SIP_BSE:'bse/order/create',
 
   // cashflow 
@@ -436,6 +436,9 @@ export const appConfig = {
   BACKOFFICE_GET_AUM_RECON_LIST: 'backoffice/aum/reconcillation/list/get',
   BACKOFFICE_PUT_AUM_TRANSACTION_KEEP_OR_REMOVE: 'backoffice/aum/transaction/keep/remove',
   BACKOFFICE_PUT_AUM_TRANSACTION_MULTIPLE_DELETE: 'backoffice/aum/transaction/multiple/delete',
+  BACKOFFICE_PUT_AUM_RECON_ADD: 'backoffice/aum/recon/add',
+  BACKOFFICE_PUT_FILE_ORDER_RETRY: 'backoffice/aum/file/order/retry',
+  BACKOFFICE_DELETE_AUM_TRANSACTION_SINGLE_MULTIPLE: 'backoffice/aum/transaction/multiple/delete',
 
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',

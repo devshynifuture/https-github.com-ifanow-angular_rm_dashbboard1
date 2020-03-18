@@ -9,6 +9,7 @@ import { ReconciliationDetailsViewComponent } from '../reconciliation-details-vi
 import { SubscriptionInject } from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { MatDialog, MatTableDataSource } from '@angular/material';
 import { DatePipe } from '@angular/common';
+import { ReconciliationService } from '../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   displayedColumns1: string[] = ['name', 'folioNumber', 'unitsIfnow', 'unitsRta', 'difference', 'transactions'];
-  dataSource1 = ELEMENT_DATA1;
+  dataSource1 = new MatTableDataSource(ELEMENT_DATA1);
   dataSource2 = ELEMENT_DATA2;
 
   displayedColumns3: string[] = ['folios', 'fileOrderDateTime', 'status', 'referenceId', 'transactionAddedInFiles', 'transactionAdded', 'fileName', 'fileUrl'];
@@ -41,7 +42,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
     private eventService: EventService,
     private dialog: MatDialog,
     private supportService: SupportService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private reconService: ReconciliationService
   ) { }
 
   ngOnInit() {
@@ -69,29 +71,83 @@ export class UpperSliderBackofficeComponent implements OnInit {
       brokerId: this.brokerId,
       rt: this.data.rtId
     }
-    this.supportService.getAumReconListGetValues(data).subscribe(res => {
-      this.isLoading = false;
-      console.log("this is some table values::::", res);
-      this.aumList = res.aumList;
-      // this.dataSource.data = res;
-      let objArr = [];
-      if (res) {
-        // aum date for all object is the same 
-        objArr = [{
-          doneOne: new Date().getMilliseconds(),
-          aum_balance: res.aumList[0].aumDate,
-          transaction: '',
-          export_folios: '',
-          totalfolios: res.totalFolioCount,
-          before_recon: res.unmappedCount,
-          after_recon: res.unmappedCount
-        }];
-      } else {
-        objArr = undefined;
-      }
+    this.supportService.getAumReconListGetValues(data)
+      .subscribe(res => {
+        this.isLoading = false;
+        // console.log("this is some table values::::", res);
+        if (res['aumList']) {
+          this.aumList = res['aumList'];
+          let arrayValue = [];
+          let filteredAumListWithIsMappedToMinusOne = this.aumList.filter(element => {
+            return element.isMapped === -1;
+          });
+          filteredAumListWithIsMappedToMinusOne.forEach(element => {
+            arrayValue.push({
+              name: element.shemeName,
+              folioNumber: element.folioNumber,
+              unitsIfnow: element.calculatedUnits,
+              unitsRta: element.aumUnits,
+              difference: element.calculatedUnits - element.aumUnits,
+              transactions: ''
+            });
+          });
+          this.dataSource1.data = arrayValue;
+        }
+        console.log("datas available till now:::::", this.data, res);
+        const data = {
+          advisorId: AuthService.getAdvisorId(),
+          brokerId: this.brokerId,
+          totalFolioCount: res.totalFolioCount,
+          matchedCount: res.mappedCount,
+          aumBalanceDate: res.aumList[0].aumDate,
+          unmatchedCountBeforeRecon: res.unmappedCount,
+          transactionDate: null,
+          rtId: this.data.rtId
+        }
 
-      this.dataSource.data = objArr;
-    });
+
+        this.reconService.putBackofficeReconAdd(data)
+          .subscribe(res => {
+            console.log("started reconciliation::::::::::::", res);
+          }, err => {
+            console.error(err);
+          })
+        this.dataSource.data = res;
+        let objArr = [];
+        if (res) {
+          // aum date for all object is the same 
+          objArr = [{
+            doneOne: new Date().getMilliseconds(),
+            aum_balance: res.aumList[0].aumDate,
+            transaction: '',
+            export_folios: '',
+            totalfolios: res.totalFolioCount,
+            before_recon: res.unmappedCount,
+            after_recon: res.unmappedCount
+          }];
+        } else {
+          objArr = undefined;
+        }
+
+        this.dataSource.data = objArr;
+      });
+  }
+
+  retryFileOrder() {
+    const data = {
+      id: this.aumReconId,
+      rtId: this.data.rtId
+    };
+    this.reconService.putFileOrderRetry(data)
+      .subscribe(res => {
+        console.log("retried values:::::::", res);
+
+        if (res === 1) {
+          this.getBackofficeAumFileOrderListDeleteReorder();
+        }
+      }, err => {
+        console.error(err);
+      })
   }
 
   getBackofficeAumFileOrderListDeleteReorder() {
@@ -171,10 +227,14 @@ export class UpperSliderBackofficeComponent implements OnInit {
     ExcelService.exportExcel(headerData, header, excelData, footer, value);
   }
 
-  openReconciliationDetails(value, data, tableType) {
+  openReconciliationDetails(value, data, tableType, index) {
+    let tableData = [];
+    if (tableType === 'all-folios') {
+      tableData = this.aumList[index]['mutualFundTransaction'];
+    }
     const fragmentData = {
       flag: value,
-      data: { ...data, tableType },
+      data: { ...data, tableType, tableData },
       id: 1,
       state: 'open',
       componentName: ReconciliationDetailsViewComponent

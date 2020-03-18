@@ -65,19 +65,19 @@
 
 <div class="row">
     <div class="col-lg-6" *ngIf="tableEntriesType==1">
-        <button class="ba-black" mat-stroked-button>Delete selected</button>
+        <button class="ba-black" mat-stroked-button *ngIf="shouldDeleteMultiple">Delete selected</button>
         <span class="text-primitive ml-12 f-14"> Selected units: 463.82 </span>
     </div>
     <div class="col-lg-6" *ngIf="tableEntriesType==2">
         <mat-checkbox>Show All Transactions</mat-checkbox>
     </div>
     <div class="col-lg-4 text-right">
-        <button class="ba-black" mat-button>
+        <button class="ba-black" mat-button *ngIf="isFreeze">
             Unfreeze
         </button>
     </div>
     <div class="col-lg-2 text-right">
-        <button class="ba-black" mat-button>
+        <button class="ba-black" mat-button *ngIf="!isFreeze">
             Freeze
         </button>
     </div>
@@ -89,21 +89,16 @@
             <table mat-table [dataSource]="dataSource1" id="table-low" class=" mt-8">
                 <ng-container matColumnDef="checkbox">
                     <th class="b-a" mat-header-cell *matHeaderCellDef>
-                        <mat-checkbox> </mat-checkbox>
-                        <i class="material-icons" mat-button [matMenuTriggerFor]="menu">
-                            arrow_drop_down
-                        </i>
-                        <mat-menu #menu="matMenu">
-                            <button mat-menu-item>All</button>
-                            <button mat-menu-item>SIP</button>
-                            <button mat-menu-item>Transfer out Change of Broker</button>
-                        </mat-menu>
-
+                        <mat-checkbox (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+                        </mat-checkbox>
                     </th>
-                    <td class="b-a" mat-cell *matCellDef="let element">
-                        <div class="bar">
-                            <mat-checkbox> </mat-checkbox>
-                        </div>
+                    <td mat-cell class="b-a" *matCellDef="let row">
+                        <mat-checkbox (click)="$event.stopPropagation(); "
+                            (change)="$event ? singleSelectionSelect(row): null" [checked]="selection.isSelected(row)"
+                            [aria-label]="checkboxLabel(row)">
+                        </mat-checkbox>
                     </td>
                 </ng-container>
 
@@ -118,7 +113,7 @@
                 <ng-container matColumnDef="date">
                     <th class="b-a" mat-header-cell *matHeaderCellDef> Date </th>
                     <td class="b-a" mat-cell *matCellDef="let element">
-                        <div class="bar"> {{element.date}} </div>
+                        <div class="bar"> {{element.date | date: 'short'}} </div>
                     </td>
                 </ng-container>
 
@@ -147,8 +142,8 @@
                     <th class="b-a" mat-header-cell *matHeaderCellDef> Action </th>
                     <td class="b-a" mat-cell *matCellDef="let element">
                         <div class="bar">
-
-                            <button mat-stroked-button class="bg-primary text-white mr-12 h-22 btn-xs">
+                            <button mat-stroked-button class="bg-primary text-white mr-12 h-22 btn-xs"
+                                (click)="deleteSingleTransaction(element)">
                                 Delete
                             </button>
                         </div>
@@ -156,7 +151,7 @@
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns1;">
+                <tr mat-row *matRowDef="let row; columns: displayedColumns1;" (click)="singleSelectionSelect(row)">
                 </tr>
             </table>
         </div>
