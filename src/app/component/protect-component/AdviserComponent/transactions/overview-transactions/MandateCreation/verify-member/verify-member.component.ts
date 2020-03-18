@@ -30,14 +30,11 @@ export class VerifyMemberComponent implements OnInit {
   showMandateTable = false
   selectedMandate: any;
   customValue: any;
-<<<<<<< HEAD
-  Todate: Date;
-  isLoading;
-=======
   Todate: any;
   formDate: Date;
-  
->>>>>>> ffa71c34f1979261df35d1597d1cd9789ab94c0d
+  isLoading;
+
+
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private processTrasaction: ProcessTransactionService,
     private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
