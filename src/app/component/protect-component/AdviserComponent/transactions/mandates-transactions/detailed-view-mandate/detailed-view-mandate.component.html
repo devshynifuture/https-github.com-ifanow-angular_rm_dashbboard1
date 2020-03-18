@@ -1,0 +1,153 @@
+<div class="popup-header-fix-35">
+    <div class="row bb-1">
+        <div class="col-md-10 p-0">
+            <h4 class="mb-0 wrapper-20">Mandate - Detailed view</h4>
+        </div>
+        <div class="col-md-2 text-left">
+            <div class="wrapper-12">
+                <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pl-20 pr-20 pb-48 mt-44">
+    <div class="row pt-40">
+        <div class="col-md-12 p-0">
+            <div class="insurance-ui bt">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Platform
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{ (details.aggregatorType == 1)? 'NSE' : 'BSE'  || '-' }}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        ARN/RIA
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{ (details.brokerCode)? details.brokerCode:'-' }}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Investor name
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{ (details.investorName)? details.investorName:'-' }}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        IIN/UCC
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(details.clientCode)? details.clientCode:'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Bank name
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(details.bankName)? details.bankName :'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                       Bank branch 
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(details.bankBranch)? details.bankBranch:'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Account number
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(details.accountNo)? details.accountNo :'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Account type
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(details.accountType)? details.accountType :'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Ifsc code
+                    </div>
+
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{ (details.ifscCode)? details.ifscCode:'-' }}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        UMRN no.
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(details.umrnNo)? details.umrnNo:'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Status
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{ (details.statusString)? details.statusString:'-'}}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div> 
+<div class="p-28 pt-20">
+    <div class="row">
+        <div class="col-md-6 p-0">
+            <h5 class="m-0 f-500 text-black">Status</h5>
+        </div>
+        <div class="col-md-6 p-0 text-right right">
+            <button mat-stroked-button class="primary-sm">REFRESH</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1 pl-0">
+            <mat-radio-group aria-label="Select an option">
+                <mat-radio-button value="1"></mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div class="col-md-11">
+            <h5 class="m-0 text-black">Pending authorization</h5>
+            <p class="m-0 roboto text-danger f-12">You will soon receive an OTP from NSE</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1 pl-0">
+            <mat-radio-group aria-label="Select an option">
+                <mat-radio-button value="1"></mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div class="col-md-11">
+            <h5 class="m-0 text-black">Form uploaded</h5>
+            <p class="m-0 roboto text-danger f-12">You will soon receive an status from NSE</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1 pl-0">
+            <mat-radio-group aria-label="Select an option">
+                <mat-radio-button value="1"></mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div class="col-md-11">
+            <h5 class="m-0 text-black">Pending authorization</h5>
+            <p class="m-0 roboto text-danger f-12">You will soon receive an OTP from NSE</p>
+        </div>
+    </div>
+</div>

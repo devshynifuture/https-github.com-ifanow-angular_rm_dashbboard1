@@ -202,7 +202,8 @@
                         </div>
                         <div class="col-md-2 p-0 d-flex align-items-center justify-content-around">
 
-                            <i class="material-icons text-custom f-20 c-p" (click)="addFutureContry()">
+                            <i class="material-icons text-custom f-20 c-p" *ngIf="i==futureContry.length-1"
+                                (click)="addFutureContry()">
                                 add
                             </i>
                             <i class="material-icons text-custom c-p f-20 right text-right"

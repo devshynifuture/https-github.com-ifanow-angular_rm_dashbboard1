@@ -75,7 +75,7 @@ export class FixedDepositComponent implements OnInit {
   clientId: any;
   isViewInitCalled = false;
   nomineesListFM: any = [];
-  flag: string;
+  flag: any;
   // reqError: boolean = false;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   fdMonths = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
@@ -426,12 +426,33 @@ export class FixedDepositComponent implements OnInit {
   getMaturityDate(data) {
     console.log(data)
     if (data.value == '1') {
-      this.fixedDeposit.get('tenureY').setValue('0');
-      this.fixedDeposit.get('tenureM').setValue('0');
-      this.fixedDeposit.get('tenureD').setValue('0');
+      if(this.flag.fdEndDateIn == "1"){
+        // this.fixedDeposit.get('tenureM').updateValueAndValidity();
+        // this.fixedDeposit.get('tenureY').updateValueAndValidity();
+        // this.fixedDeposit.get('tenureD').updateValueAndValidity();
+        let valueSet = {
+          tenureY:this.flag.tenureInYear,
+          tenureM: this.flag.tenureInMonth,
+          tenureD: this.flag.tenureInDay
+        }
+        this.fixedDeposit.setValue(valueSet);
+        // this.fixedDeposit.get('tenureY').setValue(this.flag.tenureInYear);
+        // this.fixedDeposit.get('tenureD').setValue(this.flag.tenureInDay);
+        
+      }
+      else{
+        this.fixedDeposit.get('tenureY').setValue('0');
+        this.fixedDeposit.get('tenureM').setValue('0');
+        this.fixedDeposit.get('tenureD').setValue('0');
+      }
     }
     else {
-      this.fixedDeposit.get('maturityDate').reset();
+      if(this.flag.fdEndDateIn == "2"){
+        this.fixedDeposit.get('maturityDate').setValue(new Date(this.flag.maturityDate));
+      }
+      else{
+        this.fixedDeposit.get('maturityDate').reset();
+      }
     }
   }
   getAdviceFdRes(data) {

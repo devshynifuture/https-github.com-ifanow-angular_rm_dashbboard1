@@ -109,6 +109,18 @@ export class OnlineTransactionService {
   createIINUCC(data){
     return this.http.postEncoded(apiConfig.TRANSACT + appConfig.CREATE_IIN_UCC, data, 1)
   }
+  mandateView(data){
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.MANDATE_VIEW, data, 1);
+  }
+  getToken(data){
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_TOKEN, data, 1);
+  }
+  getBankDetailsMandate(data){
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.BANK_MANDTAE, data, 1);
+  }
+  addMandate(data){
+    return this.http.postEncoded(apiConfig.TRANSACT + appConfig.ADD_MANDATE, data, 1)
+  }
   // sipBSE(data){
   //   return this.http.postEncoded(apiConfig.TRANSACT + appConfig.SIP_BSE, data)
   // }

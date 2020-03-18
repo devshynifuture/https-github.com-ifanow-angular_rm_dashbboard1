@@ -67,7 +67,7 @@
                     (change)="checkAll($event,stockDatasource)"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,stockDatasource,'stock')"  [checked]="element.selected"></mat-checkbox>
+                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,stockDatasource)"  [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
