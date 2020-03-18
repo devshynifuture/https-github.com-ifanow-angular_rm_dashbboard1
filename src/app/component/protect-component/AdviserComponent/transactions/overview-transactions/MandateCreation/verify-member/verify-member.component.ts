@@ -31,6 +31,7 @@ export class VerifyMemberComponent implements OnInit {
   selectedMandate: any;
   customValue: any;
   Todate: Date;
+  isLoading;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private processTrasaction: ProcessTransactionService,
     private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
@@ -65,7 +66,7 @@ export class VerifyMemberComponent implements OnInit {
       fromDate: [data ? '' : data.fromDate, [Validators.required]],
       toDate: [data ? '' : data.toDate, [Validators.required]],
       mandateAmount: [data ? '' : data.mandateAmount, [Validators.required]],
-      selectDateOption : [data ? '' : data.mandateAmount, [Validators.required]],
+      selectDateOption: [data ? '' : data.mandateAmount, [Validators.required]],
     });
   }
   getFormControl(): any {
