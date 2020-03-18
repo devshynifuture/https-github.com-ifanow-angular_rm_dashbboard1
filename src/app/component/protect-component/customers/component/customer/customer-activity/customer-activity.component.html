@@ -1,23 +1,29 @@
 <div class="row" id="ui-activity-secondhead">
-    <div class="col-md-2 pt-16">
-        <button (click)="goToAdvisorHome()" class="btn-warning-outline br-2" mat-stroked-button><i
-                class="material-icons mr-12">
-                keyboard_backspace
-            </i>ADVISOR HOME</button>
+    <div class="col-md-2 d-flex align-items-center">
+        <button (click)="goToAdvisorHome()" class="btn-warning-outline advisorHomeBtn br-2" mat-stroked-button>
+            <i class="material-icons"> keyboard_backspace </i> ADVISOR HOME
+        </button>
     </div>
     <div class="col-md-8">
         <nav mat-tab-nav-bar mat-align-tabs="center">
 
             <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/summary']">SUMMARY</a>
             <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/advice']">ADVICE</a>
-            <a mat-tab-link routerLinkActive="active"
-                [routerLink]="['/customer/detail/activity/deployments']">DEPLOYMENTS</a>
+            <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/deployments']">DEPLOYMENTS</a>
             <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/action-plan']">ACTION
                 PLANS</a>
             <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/task']">TASKS</a>
             <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/notes']">NOTES</a>
 
         </nav>
+    </div>
+
+    <div class="col-md-2 d-flex align-items-center borderLeft">
+        <p class="m-0 f-14 text-white d-flex align-items-center">Ronak Hasmukh Hindocha
+            <i class="material-icons f-14 ml-4">
+                keyboard_arrow_down
+            </i>
+        </p>
     </div>
 </div>
 

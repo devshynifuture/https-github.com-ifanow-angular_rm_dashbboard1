@@ -1,32 +1,24 @@
 <div class="row" id="ui-customer-secondhead">
     <div class="col-md-2 d-flex align-items-center">
-        <button (click)="goToAdvisorHome()" class="btn-warning-outline mn-auto br-2" mat-stroked-button><i
-                class="material-icons mr-12">
-                keyboard_backspace
-            </i>ADVISOR HOME
+        <button (click)="goToAdvisorHome()" class="btn-warning-outline advisorHomeBtn br-2" mat-stroked-button>
+            <i class="material-icons"> keyboard_backspace</i> ADVISOR HOME
         </button>
     </div>
     <div class="col-md-8 p-0">
         <nav mat-align-tabs="center" mat-tab-nav-bar>
             <a [routerLink]="['/customer/detail/account/summary']" mat-tab-link routerLinkActive="active">SUMMARY</a>
             <a [routerLink]="['/customer/detail/account/assets']" mat-tab-link routerLinkActive="active">ASSETS</a>
-            <a [routerLink]="['/customer/detail/account/liabilities']" mat-tab-link
-                routerLinkActive="active">LIABILITIES</a>
-            <a [routerLink]="['/customer/detail/account/insurance']" mat-tab-link
-                routerLinkActive="active">INSURANCE</a>
-            <a [routerLink]="['/customer/detail/account/documents']" mat-tab-link
-                routerLinkActive="active">DOCUMENTS</a>
+            <a [routerLink]="['/customer/detail/account/liabilities']" mat-tab-link routerLinkActive="active">LIABILITIES</a>
+            <a [routerLink]="['/customer/detail/account/insurance']" mat-tab-link routerLinkActive="active">INSURANCE</a>
+            <!-- <a [routerLink]="['/customer/detail/account/documents']" mat-tab-link routerLinkActive="active">DOCUMENTS</a> -->
         </nav>
     </div>
-    <div class="col-md-2 d-flex justify-content-center align-items-center borderLeft">
-        <button mat-button [matMenuTriggerFor]="menu" class="common-button p-0">Ronak Hasmukh Hindocha <i
-                class="material-icons">
+    <div class="col-md-2 d-flex align-items-center borderLeft">
+        <p class="m-0 f-14 text-white d-flex align-items-center">Ronak Hasmukh Hindocha
+            <i class="material-icons f-14 ml-4">
                 keyboard_arrow_down
-            </i></button>
-        <mat-menu #menu="matMenu">
-            <button mat-menu-item>Item 1</button>
-            <button mat-menu-item>Item 2</button>
-        </mat-menu>
+            </i>
+        </p>
     </div>
 </div>
 <div class="row">
