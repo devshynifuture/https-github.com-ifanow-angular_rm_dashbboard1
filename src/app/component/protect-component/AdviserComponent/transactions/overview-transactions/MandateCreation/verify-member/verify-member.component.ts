@@ -30,8 +30,14 @@ export class VerifyMemberComponent implements OnInit {
   showMandateTable = false
   selectedMandate: any;
   customValue: any;
+<<<<<<< HEAD
   Todate: Date;
   isLoading;
+=======
+  Todate: any;
+  formDate: Date;
+  
+>>>>>>> ffa71c34f1979261df35d1597d1cd9789ab94c0d
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private processTrasaction: ProcessTransactionService,
     private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
@@ -54,7 +60,10 @@ export class VerifyMemberComponent implements OnInit {
   }
   continuesTill(value) {
     this.customValue = value
-    this.Todate = new Date(2099, 31, 12);
+    this.Todate = new Date()
+    this.Todate.setDate("31");
+    this.Todate.setMonth("12");
+    this.Todate.setFullYear("2099");
     this.generalDetails.controls.toDate.setValue(this.Todate)
   }
   getdataForm(data) {
@@ -155,10 +164,12 @@ export class VerifyMemberComponent implements OnInit {
     this.selectedMandate = mandate
   }
   createMandates() {
+    this.formDate = new Date(this.generalDetails.controls.fromDate.value)
+    this.Todate = new Date(this.generalDetails.controls.toDate.value)
     Object.assign(this.selectedMandate, { advisorId: this.detailsIIN.advisorId });
     Object.assign(this.selectedMandate, { amount: this.generalDetails.controls.mandateAmount.value });
-    Object.assign(this.selectedMandate, { fromDate: this.generalDetails.controls.fromDate.value });
-    Object.assign(this.selectedMandate, { toDate: this.generalDetails.controls.toDate.value });
+    Object.assign(this.selectedMandate, { toDate: (this.Todate).getTime() });
+    Object.assign(this.selectedMandate, { fromDate: (this.formDate).getTime() });
     Object.assign(this.selectedMandate, { tpUserCredFamilyMappingId: this.detailsIIN.tpUserCredFamilyMappingId });
     Object.assign(this.selectedMandate, { tpUserCredentialId: this.detailsIIN.tpUserCredentialId });
     console.log('selectMandate  == ', this.selectedMandate)
