@@ -63,7 +63,7 @@
     </div>
 
     <div class="row">
-        <div [ngClass]="isLoading ? '': 'table-scroll'" class="col-md-12 pl-0 mb-8">
+        <div [ngClass]="isLoading ? '': 'table-scroll'" class="col-md-12 p-0 mb-8">
             <table matSort mat-table [dataSource]="customDataSource" id="tbs" class="mutualfunds-capital-equity">
 
                 <ng-container matColumnDef="schemeName" sticky>
@@ -220,7 +220,7 @@
                         </td>
                     </ng-container> -->
                 <ng-container matColumnDef="icons" sticky>
-                    <th *matHeaderCellDef class="" mat-header-cell></th>
+                    <th *matHeaderCellDef class="" mat-header-cell>test</th>
                     <td *matCellDef="let element" class="" mat-cell><i [matMenuTriggerFor]="menu25"
                             class="material-icons c-p text-black">
                             more_vert

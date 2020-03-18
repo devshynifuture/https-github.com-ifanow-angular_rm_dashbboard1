@@ -19,6 +19,7 @@ export class InvestorsTransactionsComponent implements OnInit {
   selectedBrokerCode: any;
   selectedPlatform: any;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
+  noData: string;
 
   // dataSource = ELEMENT_DATA;
   constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService) { }
@@ -74,7 +75,10 @@ export class InvestorsTransactionsComponent implements OnInit {
         if (data) {
           this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
           this.dataSource.sort = this.sort;
-        } 
+        } else if(data == undefined){
+          this.noData = "No scheme found";
+          this.dataSource.data = [];
+        }
         this.isLoading = false;
       },
       err => this.eventService.openSnackBar(err, 'Dismiss')

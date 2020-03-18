@@ -68,7 +68,7 @@ export class OnlineTransactionService {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_FREQUENCY, data, 1)
   }
   getNSEAchmandate(data) {
-    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.NSE_ACHMANDATE, data, 1)
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_MANDATE_LIST, data, 1)
   }
   getBankDetailsNSE(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.BANK_DETAILS_NSE, data, 1)
