@@ -334,5 +334,11 @@ img.header-img {
 }
 
 #setting-menu {
-    padding-bottom: 60px;
+    padding: 25px;
+    margin-top: 10px;
+    .row {
+        margin-right: -15px !important;
+        margin-left: -15px !important;
+        margin-bottom: 20px !important;
+    }
 }
