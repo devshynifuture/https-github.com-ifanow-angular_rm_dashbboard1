@@ -17,6 +17,7 @@ export class SubBrokerTeamMemberComponent implements OnInit {
   dataSource = new MatTableDataSource(this.data);
   advisorId: any;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
+  noData: string;
 
   constructor(private onlineTransact: OnlineTransactionService, private utilService: UtilService, private subInjectService: SubscriptionInject) { }
   isLoading = false;
@@ -45,10 +46,38 @@ export class SubBrokerTeamMemberComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
   getBSESubBrokerCredentialsRes(data) {
-    this.isLoading = false;
-    console.log('getBSESubBrokerCredentialsRes', data)
-    this.dataSource.data = data
-    this.dataSource.sort = this.sort;
+    if(data){
+      this.isLoading = false;
+      console.log('getBSESubBrokerCredentialsRes', data)
+      this.dataSource.data = data
+      this.dataSource.sort = this.sort;
+    }else{
+      this.isLoading = false;
+       this.noData = "No scheme found";
+      this.dataSource.data = [];
+    }
+  
+  }
+  addSubBroker(data){
+    const fragmentData = {
+      flag: 'addNsc',
+      data,
+      id: 1,
+      state: 'open35',
+      componentName: AddSubBrokerCredentialsComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+          }
+          rightSideDataSub.unsubscribe();
+        }
+
+      }
+    );
   }
   openAddSubBrokerCredential(data, flag) {
     const fragmentData = {
@@ -63,9 +92,7 @@ export class SubBrokerTeamMemberComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getNscSchemedata();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
           }
           rightSideDataSub.unsubscribe();
         }

@@ -173,6 +173,21 @@ export class AddRealEstateComponent implements OnInit {
         this.getCoOwner.controls[e].get('share').setValue('');
       }
     }
+
+    if(this.getCoOwner.value.length > 1 && !data){
+     let share = 100/this.getCoOwner.value.length;
+     for (let e in this.getCoOwner.controls) {
+      if(!Number.isInteger(share) && e == "0"){
+        this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+      }
+      else{
+        this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+      }
+     }
+    }
+    else{
+      this.disabledMember(null, null)
+    }
   }
 
   removeCoOwner(item) {
@@ -180,10 +195,17 @@ export class AddRealEstateComponent implements OnInit {
     if (this.addrealEstateForm.value.getCoOwnerName.length == 1) {
       this.getCoOwner.controls['0'].get('share').setValue('100');
     } else {
+      let share = 100/this.getCoOwner.value.length;
       for (let e in this.getCoOwner.controls) {
-        this.getCoOwner.controls[e].get('share').setValue('');
+        if(!Number.isInteger(share) && e == "0"){
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+        }
+        else{
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+        }
       }
     }
+    this.disabledMember(null, null);
   }
   /***owner***/ 
 
@@ -195,7 +217,20 @@ export class AddRealEstateComponent implements OnInit {
 
   removeNewNominee(item) {
     this.getNominee.removeAt(item);
-    
+    if (this.addrealEstateForm.value.getNomineeName.length == 1) {
+      this.getNominee.controls['0'].get('sharePercentage').setValue('100');
+    } else {
+      let share = 100/this.getNominee.value.length;
+      for (let e in this.getNominee.controls) {
+        if(!Number.isInteger(share) && e == "0"){
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+        }
+        else{
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+        }
+      }
+    }
+    this.disabledMember(null, null);
   }
 
 
@@ -208,6 +243,21 @@ export class AddRealEstateComponent implements OnInit {
       for (let e in this.getNominee.controls) {
         this.getNominee.controls[e].get('sharePercentage').setValue(0);
       }
+    }
+
+    if(this.getNominee.value.length > 1 && !data){
+      let share = 100/this.getNominee.value.length;
+      for (let e in this.getNominee.controls) {
+        if(!Number.isInteger(share) && e == "0"){
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+        }
+        else{
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+        }
+      }
+     }
+     else{
+      this.disabledMember(null, null)
     }
     
   }
