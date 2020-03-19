@@ -114,7 +114,7 @@ export class FixedDepositComponent implements OnInit {
 
   @Input() popupHeaderText: string = 'Add Fixed deposit';
 
- 
+
   get data() {
     return this.inputData;
   }
@@ -176,30 +176,30 @@ export class FixedDepositComponent implements OnInit {
 
   disabledMember(value, type) {
     this.callMethod = {
-      methodName : "disabledMember",
-      ParamValue : value,
-      disControl : type
+      methodName: "disabledMember",
+      ParamValue: value,
+      disControl: type
     }
   }
 
   displayControler(con) {
     console.log('value selected', con);
-    if(con.owner != null && con.owner){
+    if (con.owner != null && con.owner) {
       this.fixedDeposit.controls.getCoOwnerName = con.owner;
     }
-    if(con.nominee != null && con.nominee){
+    if (con.nominee != null && con.nominee) {
       this.fixedDeposit.controls.getNomineeName = con.nominee;
     }
   }
 
   onChangeJointOwnership(data) {
     this.callMethod = {
-      methodName : "onChangeJointOwnership",
-      ParamValue : data
+      methodName: "onChangeJointOwnership",
+      ParamValue: data
     }
   }
 
-  /***owner***/ 
+  /***owner***/
 
   get getCoOwner() {
     return this.fixedDeposit.get('getCoOwnerName') as FormArray;
@@ -215,18 +215,18 @@ export class FixedDepositComponent implements OnInit {
       }
     }
 
-    if(this.getCoOwner.value.length > 1 && !data){
-     let share = 100/this.getCoOwner.value.length;
-     for (let e in this.getCoOwner.controls) {
-      if(!Number.isInteger(share) && e == "0"){
-        this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+    if (this.getCoOwner.value.length > 1 && !data) {
+      let share = 100 / this.getCoOwner.value.length;
+      for (let e in this.getCoOwner.controls) {
+        if (!Number.isInteger(share) && e == "0") {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+        }
+        else {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+        }
       }
-      else{
-        this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
-      }
-     }
     }
-    else{
+    else {
       this.disabledMember(null, null)
     }
   }
@@ -236,21 +236,21 @@ export class FixedDepositComponent implements OnInit {
     if (this.fixedDeposit.value.getCoOwnerName.length == 1) {
       this.getCoOwner.controls['0'].get('share').setValue('100');
     } else {
-      let share = 100/this.getCoOwner.value.length;
+      let share = 100 / this.getCoOwner.value.length;
       for (let e in this.getCoOwner.controls) {
-        if(!Number.isInteger(share) && e == "0"){
+        if (!Number.isInteger(share) && e == "0") {
           this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
         }
-        else{
+        else {
           this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
         }
       }
     }
     this.disabledMember(null, null);
   }
-  /***owner***/ 
+  /***owner***/
 
-  /***nominee***/ 
+  /***nominee***/
 
   // get getNominee() {
   //   return this.fixedDeposit.get('getNomineeName') as FormArray;
@@ -275,7 +275,7 @@ export class FixedDepositComponent implements OnInit {
   // }
 
 
-  
+
   // addNewNominee(data) {
   //   this.getNominee.push(this.fb.group({
   //     name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
@@ -297,20 +297,20 @@ export class FixedDepositComponent implements OnInit {
   //       }
   //     }
   //    }
-    
+
   // }
-  /***nominee***/ 
+  /***nominee***/
   // ===================owner-nominee directive=====================//
 
-  
+
   ownerDetails(value) {
     this.familyMemberId = value.id;
     // this.reqError = true;
   }
 
- 
 
- 
+
+
 
   showLess(value) {
     if (value) {
@@ -477,13 +477,13 @@ export class FixedDepositComponent implements OnInit {
         commencementDate: this.datePipe.transform(this.fixedDeposit.controls.commencementDate.value, 'yyyy-MM-dd'),
         institutionName: this.fixedDeposit.controls.institution.value,
         description: this.fixedDeposit.controls.description.value,
-        frequencyOfPayoutPerYear: this.fixedDeposit.value.compound == '' ? this.fixedDeposit.value.frequencyOfPayoutPerYear : this.fixedDeposit.value.compound,
+        frequencyOfPayoutPerYear: (this.fixedDeposit.controls.payOpt.value == 2) ? this.fixedDeposit.value.frequencyOfPayoutPerYear : null,
         maturityDate: this.datePipe.transform(this.maturityDate, 'yyyy-MM-dd'),
         interestPayoutOption: this.fixedDeposit.controls.payOpt.value,
         bankAcNumber: this.fixedDeposit.controls.bankACNo.value,
         fdNumber: this.fixedDeposit.controls.fdNo.value,
         fdType: this.fixedDeposit.controls.FDType.value,
-        interestCompoundingId: this.fixedDeposit.value.compound == "" ? 0 : this.fixedDeposit.value.compound,
+        interestCompoundingId: (this.fixedDeposit.controls.payOpt.value == 1) ? this.fixedDeposit.value.compound : null,
         tenureInYear: this.fixedDeposit.controls.tenureY.value,
         tenureInMonth: this.fixedDeposit.controls.tenureM.value,
         tenureInDay: this.fixedDeposit.controls.tenureD.value,
@@ -522,31 +522,31 @@ export class FixedDepositComponent implements OnInit {
   getMaturityDate(data) {
     console.log(data)
     if (data.value == '1') {
-      if(this.flag.fdEndDateIn == "1"){
+      if (this.flag.fdEndDateIn == "1") {
         // this.fixedDeposit.get('tenureM').updateValueAndValidity();
         // this.fixedDeposit.get('tenureY').updateValueAndValidity();
         // this.fixedDeposit.get('tenureD').updateValueAndValidity();
         let valueSet = {
-          tenureY:this.flag.tenureInYear,
+          tenureY: this.flag.tenureInYear,
           tenureM: this.flag.tenureInMonth,
           tenureD: this.flag.tenureInDay
         }
         this.fixedDeposit.setValue(valueSet);
         // this.fixedDeposit.get('tenureY').setValue(this.flag.tenureInYear);
         // this.fixedDeposit.get('tenureD').setValue(this.flag.tenureInDay);
-        
+
       }
-      else{
+      else {
         this.fixedDeposit.get('tenureY').setValue('0');
         this.fixedDeposit.get('tenureM').setValue('0');
         this.fixedDeposit.get('tenureD').setValue('0');
       }
     }
     else {
-      if(this.flag.fdEndDateIn == "2"){
+      if (this.flag.fdEndDateIn == "2") {
         this.fixedDeposit.get('maturityDate').setValue(new Date(this.flag.maturityDate));
       }
-      else{
+      else {
         this.fixedDeposit.get('maturityDate').reset();
       }
     }
@@ -563,7 +563,7 @@ export class FixedDepositComponent implements OnInit {
     }
   }
 
-  
+
 
 
   addFixedDepositRes(data) {
