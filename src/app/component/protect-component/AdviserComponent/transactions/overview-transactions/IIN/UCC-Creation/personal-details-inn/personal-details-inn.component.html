@@ -46,7 +46,7 @@
                     </div>
                     <div class="col-md-3">
                         <mat-form-field>
-                            <input matInput appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC"
+                            <input #panNumber matInput appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC"
                                 placeholder="XXXXX0000X" maxlength="10" type="text" formControlName="panNumber"
                                 class="form-control">
                             <mat-hint align="end" class="f-12 text-custom">
@@ -64,7 +64,7 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input matInput type="text" formControlName="clientName" class="form-control">
+                            <input #clientName matInput type="text" formControlName="clientName" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
@@ -76,7 +76,7 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input matInput appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY"
+                            <input #madianName matInput appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY"
                                 formControlName="madianName" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
@@ -88,7 +88,7 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input matInput appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY"
+                            <input #fatherName matInput appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY"
                                 formControlName="fatherName" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
@@ -100,7 +100,7 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input matInput appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY"
+                            <input #motherName matInput appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY"
                                 formControlName="motherName" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>

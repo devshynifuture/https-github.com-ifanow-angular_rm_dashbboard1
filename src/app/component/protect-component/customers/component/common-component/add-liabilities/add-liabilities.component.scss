@@ -1,51 +1,47 @@
 ::ng-deep input.mat-input-element {
-    border: 1px solid rgba(25, 25, 25, 0.32);
+  border: 1px solid rgba(25, 25, 25, 0.32);
 }
 
 ::ng-deep .mat-checkbox label {
-    margin: inherit !important;
+  margin: inherit !important;
 }
 
 .min-180 {
-    min-width: 180px;
+  min-width: 180px;
 }
 
 .percentage100 {
-    width: 100%;
+  width: 100%;
 }
 
 .scheduleTable #table-low tr.mat-row {
-    height: auto !important;
+  height: auto !important;
 }
 
 .scheduleTable #table-low tr.mat-row td {
-    padding: 6px 4px !important;
+  padding: 6px 4px !important;
 }
 
 .checkBoxPositions {
-    position: absolute;
-    top: -5px;
+  position: absolute;
+  top: -5px;
 }
 
 ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
 .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
-    background-color: #008FFF !important
+  background-color: #008FFF !important
 }
 
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
-    padding: 0px;
+  padding: 0px;
 }
 
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
-    width: 1.5em !important;
+  width: 1.5em !important;
 }
 
-.mat-datepicker-toggle {
-    position: absolute;
-    right: 8px !important;
-    top: 10px !important;
-}
+
 
 ::ng-deep .mat-form-field-suffix {
-    position: inherit !important;
+  position: inherit !important;
 }

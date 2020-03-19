@@ -147,9 +147,9 @@
       </div>
       <div class="col-md-2 p-0">
         <div class="form-group mb-0">
-          <mat-form-field>
+          <mat-form-field class="ba-date">
             <input (click)="picker.open()" matInput autocomplete="off" formControlName="date" [matDatepicker]="picker"
-              class="form-control br-0">
+              class="form-control br-0 b-0">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
             <mat-error>

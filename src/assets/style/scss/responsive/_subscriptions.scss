@@ -187,13 +187,14 @@
 
   .mat-radio-button {
     min-width: 135px;
+    padding-left: 8px;
   }
 }
 
 @media(max-width:1042px) {
-  .mat-radio-label {
-    width: 128px !important;
-  }
+  // .mat-radio-label {
+  //   width: 128px !important;
+  // }
 
   .tab-flex {
     display: flex;

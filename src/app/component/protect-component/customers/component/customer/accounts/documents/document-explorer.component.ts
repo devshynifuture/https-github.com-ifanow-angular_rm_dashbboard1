@@ -219,6 +219,10 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
 
   newFolderRes(data) {
+    console.log('helooooo')
+    if(data==204){
+      this.eventService.openSnackBar('Folder name already exist', 'Ok');
+    }
     console.log('newFolderRes', data);
     this.getAllFileList(this.valueTab);
   }

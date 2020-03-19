@@ -73,6 +73,7 @@ export class SipTransactionComponent implements OnInit {
   editedId: any;
   displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount', 'icons'];
   umrn: any;
+  endDate: Date;
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private processTransaction: ProcessTransactionService, private fb: FormBuilder, private eventService: EventService) { }
   @Output() changedValue = new EventEmitter();
@@ -252,7 +253,9 @@ export class SipTransactionComponent implements OnInit {
     if (data.length > 1) {
       Object.assign(this.transactionSummary, { showUmrnEdit: true });
     }
-    this.achMandateNSE = data[0]
+    this.achMandateNSE = data.filter(element => element.statusString == 'ACCEPTED')
+    console.log('this.achMandateNSE', this.achMandateNSE)
+    this.achMandateNSE = this.achMandateNSE[0]
     Object.assign(this.transactionSummary, { umrnNo: this.achMandateNSE.umrnNo });
   }
   getFrequency() {
@@ -275,7 +278,7 @@ export class SipTransactionComponent implements OnInit {
   selectedFrequency(getFrerq) {
     this.fre = getFrerq
     this.frequency = getFrerq.frequency
-    this.sipTransaction.controls["employeeContry"].setValidators([Validators.min(getFrerq.minimumPurchaseAmount)])
+    this.sipTransaction.controls["employeeContry"].setValidators([Validators.min(getFrerq.additionalPurchaseAmount)])
     this.dateArray(getFrerq.sipDates)
   }
   dateArray(sipDates) {
@@ -418,6 +421,10 @@ export class SipTransactionComponent implements OnInit {
       this.sipTransaction.get('installment').markAsTouched();
       return;
     } else {
+      this.endDate = new Date()
+      this.endDate.setDate(31);
+      this.endDate.setMonth(11);
+      this.endDate.setFullYear(2099);
       let obj = {
         productDbId: this.schemeDetails.id,
         clientName: this.selectedFamilyMember,
@@ -433,6 +440,7 @@ export class SipTransactionComponent implements OnInit {
         adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
         clientId: this.getDataSummary.defaultClient.clientId,
         startDate: Number(new Date(this.sipTransaction.controls.date.value.replace(/"/g, ""))),
+        endDate:(this.endDate).getTime(),
         frequencyType: this.frequency,
         noOfInstallments: this.sipTransaction.controls.installment.value,
         orderType: 'SIP', //(this.mandateDetails==undefined)?null:this.mandateDetails[0].mandateType,

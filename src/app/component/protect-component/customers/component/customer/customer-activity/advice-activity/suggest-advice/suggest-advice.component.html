@@ -112,9 +112,9 @@
                                             directly start further work on this advice without taking any
                                             explicit
                                             consent from your client.</p>
-                                        <mat-error class=" f-10 f-500 mt-4">
+                                        <!-- <mat-error class=" f-10 f-500 mt-4">
                                             This field is required
-                                        </mat-error>
+                                        </mat-error> -->
                                     </mat-radio-group>
                                 </div>
                             </div>
@@ -138,6 +138,9 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="dialogClose()">Cancel</h5>
         </div>
         <div class="col-md-8 text-right">
+            <button (click)="goBack()" class="btn-default mr-12 br-0 text-inherit"
+                mat-raised-button>PREVIOUS
+            </button>
             <button mat-stroked-button class="btn-bottom" (click)="addOrNextStep()">PROCEED</button>
         </div>
     </div>

@@ -21,7 +21,7 @@
             <div class="pr-0" [ngClass]="recuringDeposit.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
+                        <mat-select appOwnerNominee formControlName="name" [data]='ownerData'
                             (selectionChange)="disabledMember($event.value,'owner')"
                             (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)'
                             class="form-control br-0" [callMethod]='callMethod'>
@@ -96,7 +96,7 @@
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <mat-select matInput formControlName="compound" class="form-control br-0">
+                <mat-select formControlName="compound" class="form-control br-0">
                     <mat-option value="" disabled>Select option</mat-option>
                     <mat-option value="2">Monthly</mat-option>
                     <mat-option value="3">Quarterly</mat-option>
@@ -117,9 +117,9 @@
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0">
-                <mat-form-field>
+                <mat-form-field class="ba-date">
                     <input autocomplete="off" (click)="picker.open()" matInput matInput
-                        formControlName="commencementDate" [max]="maxDate" class="form-control br-0"
+                        formControlName="commencementDate" [max]="maxDate" class="form-control b-0 br-0"
                         [matDatepicker]="picker" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
@@ -251,7 +251,7 @@
                 <div class="pr-0" [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
+                            <mat-select appOwnerNominee formControlName="name" [data]='ownerData'
                                 (selectionChange)="disabledMember($event.value,'nominee')"
                                 (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
                                 <mat-option value='' disabled>Select family members</mat-option>
