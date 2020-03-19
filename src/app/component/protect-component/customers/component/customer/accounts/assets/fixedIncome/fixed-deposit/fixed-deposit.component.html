@@ -51,9 +51,10 @@
                 </div>
             </div>
             <div class="col-md-2 pr-0 d-flex align-items-center">
-                <i *ngIf="pointIndex==0" class="material-icons text-primitive f-20 c-p float-left"
-                    (click)="addNewCoOwner(undefined)">add</i>
-                <i *ngIf="pointIndex!=0" class="material-icons text-primitive f-20 c-p pl-10 pt-8"
+                <i *ngIf="fixedDeposit.value.getCoOwnerName.length < 3"
+                    class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i>
+                <i *ngIf="fixedDeposit.value.getCoOwnerName.length > 1"
+                    class="material-icons text-primitive f-20 c-p pl-10 pt-8"
                     (click)="removeCoOwner(pointIndex)">remove</i>
             </div>
 
@@ -107,7 +108,7 @@
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <input (focus)="picker.open()" (click)="picker.open()" (dateChange)="checkDate($event)" matInput
+                <input (focus)="picker.open()" (click)="picker.open()" (dateChange)="checkDate()" matInput
                     formControlName="commencementDate" [max]="maxDate" [matDatepicker]="picker" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>

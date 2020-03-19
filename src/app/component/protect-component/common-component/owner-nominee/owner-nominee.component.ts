@@ -87,19 +87,23 @@ export class OwnerNomineeComponent implements OnInit {
 
   disabledMember(value){
     let controlsArr:any = [];
+    let test:any = []
     if(this.getCoOwner){
       for(let e in this.getCoOwner.controls){
         controlsArr.push({type:'owner', index:e, data:this.getCoOwner.controls[e].value});
+        test.push(this.getCoOwner.controls[e].value);
       }
     }
 
     if(this.getNominee){
       for(let e in this.getNominee.controls){
         controlsArr.push({type:'nominee', index:e, data:this.getNominee.controls[e].value});
+        test.push(this.getNominee.controls[e].value);
+
       }
     }
 
-    console.log(controlsArr, "controlsArr 123");
+    console.log(controlsArr,test, "controlsArr 123");
     
     this.sendData.forEach(element => {
       for(let e of controlsArr){

@@ -9,11 +9,20 @@
         <nav mat-align-tabs="center" mat-tab-nav-bar>
             <a [routerLink]="['/customer/detail/overview/myfeed']" mat-tab-link routerLinkActive="active">MY FEED</a>
             <a [routerLink]="['/customer/detail/overview/profile']" mat-tab-link routerLinkActive="active">PROFILE</a>
-            <a mat-tab-link routerLinkActive="active">DOCUMENTS</a>
+            <a [routerLink]="['/customer/detail/overview/documents']" mat-tab-link
+                routerLinkActive="active">DOCUMENTS</a>
             <a mat-tab-link routerLinkActive="active">EMAILS</a>
             <a mat-tab-link routerLinkActive="active">SUBSCRIPTION</a>
             <a mat-tab-link routerLinkActive="active">SETTINGS</a>
         </nav>
+    </div>
+
+    <div class="col-md-2 d-flex align-items-center borderLeft">
+        <p class="m-0 f-14 text-white d-flex align-items-center">Ronak Hasmukh Hindocha
+            <i class="material-icons f-14 ml-4">
+                keyboard_arrow_down
+            </i>
+        </p>
     </div>
 
 </div>

@@ -1,11 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators, FormControlName } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { BackOfficeService } from '../../protect-component/AdviserComponent/backOffice/back-office.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatProgressButtonOptions } from "../../../common/progress-button/progress-button.component";
+import { ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-login',
@@ -45,10 +46,15 @@ export class LoginComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   }
+  validatorType = ValidatorType;
+  hide = true;
   otpNumber: boolean = false;
   errorRequired: boolean = false;
   errorMsg: boolean = false;
-  errorStyle = {}
+  errorStyle = {};
+  userName = new FormControl();
+  getOtpFlag = false;
+  otpData = [];
   constructor(
     private formBuilder: FormBuilder, private eventService: EventService,
     public backOfficeService: BackOfficeService,
@@ -78,11 +84,28 @@ export class LoginComponent implements OnInit {
     // }
     this.btnProgressData = "state1";
   }
-
-  otpClick() {
-    this.otpNumber = true;
+  getOtp() {
+    (this.getOtpFlag) ? this.getOtpFlag = false : this.getOtpFlag = true;
   }
-
+  otpClick() {
+    (this.otpNumber) ? this.otpNumber = false : this.otpNumber = true;
+  }
+  enterOtp(value) {
+    if (value.code.substring(0, value.code.length - 1) == 'Key' || value.code == "Backspace") {
+      if (value.srcElement.previousElementSibling == undefined) {
+        return;
+      }
+      value.srcElement.previousElementSibling.focus();
+      this.otpData.pop();
+    }
+    else {
+      if (value.srcElement.nextElementSibling == undefined) {
+        return;
+      }
+      this.otpData.push(value.key);
+      value.srcElement.nextElementSibling.focus();
+    }
+  }
   private createForm() {
     this.loginForm = this.formBuilder.group({
       name: new FormControl('', {

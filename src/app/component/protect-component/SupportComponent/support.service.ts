@@ -1,8 +1,9 @@
-import { appConfig } from './../../../config/component-config';
-import { apiConfig } from './../../../config/main-config';
 import { Injectable } from '@angular/core';
 
+import { appConfig } from './../../../config/component-config';
+import { apiConfig } from './../../../config/main-config';
 import { HttpService } from './../../../http-service/http-service';
+import { Subject, Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,8 @@ import { HttpService } from './../../../http-service/http-service';
 export class SupportService {
 
   constructor(private http: HttpService) { }
+
+  private subject = new BehaviorSubject<any>('');
 
   getMyIFAValues(data) {
 
@@ -27,7 +30,14 @@ export class SupportService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.BACKOFFICE_PUT_AUM_TRANSACTION_KEEP_OR_REMOVE, data);
   }
 
-  putAumTransactionMultipleDelete(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.BACKOFFICE_PUT_AUM_TRANSACTION_MULTIPLE_DELETE, data);
+  // observable data sending
+
+  sendDataThroughObs(value) {
+    this.subject.next(value)
+  }
+
+  // get Observable Data
+  getDataThroughObs(): Observable<any> {
+    return this.subject.asObservable();
   }
 }

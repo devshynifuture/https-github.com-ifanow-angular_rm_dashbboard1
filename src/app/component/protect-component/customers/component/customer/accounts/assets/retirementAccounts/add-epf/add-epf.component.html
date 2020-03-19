@@ -225,9 +225,9 @@
                 </div>
             </div>
         </div>
-        <!-- <div formArrayName="getNomineeName">
+        <div formArrayName="getNomineeName">
             <div class="row pt-36"
-                *ngFor="let obj of addrealEstateForm.controls['getNomineeName'].controls; let pointIndex=index"
+                *ngFor="let obj of epf.controls['getNomineeName'].controls; let pointIndex=index"
                 [formGroupName]="pointIndex">
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
@@ -265,14 +265,14 @@
                     </div>
                 </div>
                 <div class="col-md-2 p-0 d-flex align-items-center">
-                    <i class="material-icons text-primitive f-20 c-p float-left"
-                        (click)="addNewNominee(undefined)">add</i>
-                    <i *ngIf="pointIndex!=0" class="material-icons text-primitive f-20 c-p pl-10 pt-8"
-                        (click)="removeNewNominee(pointIndex)">remove</i>
+                    <i *ngIf="epf.value.getNomineeName.length < 3" class="material-icons text-primitive f-20 c-p float-left"
+                    (click)="addNewNominee(undefined)">add</i>
+                <i *ngIf="epf.value.getNomineeName.length > 1" class="material-icons text-primitive f-20 c-p pl-10 pt-8"
+                    (click)="removeNewNominee(pointIndex)">remove</i>
                 </div>
 
             </div>
-        </div> -->
+        </div>
     </div>
 </div>
 <div class="bottom-fixed wrapper-12 pt-16" *ngIf="adviceShowHeaderAndFooter">

@@ -50,9 +50,10 @@
                 </div>
             </div>
             <div class="col-md-2 d-flex align-items-center">
-                <i *ngIf="pointIndex==0" class="material-icons text-primitive f-20 c-p float-left"
-                    (click)="addNewCoOwner(undefined)">add</i>
-                <i *ngIf="pointIndex!=0" class="material-icons text-primitive f-20 c-p pl-10 pt-8"
+                <i *ngIf="addrealEstateForm.value.getCoOwnerName.length < 3"
+                    class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i>
+                <i *ngIf="addrealEstateForm.value.getCoOwnerName.length > 1"
+                    class="material-icons text-primitive f-20 c-p pl-10 pt-8"
                     (click)="removeCoOwner(pointIndex)">remove</i>
             </div>
 
@@ -340,9 +341,11 @@
                     </div>
                 </div>
                 <div class="col-md-2 pr-0 d-flex align-items-center">
-                    <i class="material-icons text-primitive f-20 c-p float-left"
+                    <i *ngIf="addrealEstateForm.value.getNomineeName.length < 3"
+                        class="material-icons text-primitive f-20 c-p float-left"
                         (click)="addNewNominee(undefined)">add</i>
-                    <i *ngIf="pointIndex!=0" class="material-icons text-primitive f-20 c-p pl-10 pt-8"
+                    <i *ngIf="addrealEstateForm.value.getNomineeName.length > 1"
+                        class="material-icons text-primitive f-20 c-p pl-10 pt-8"
                         (click)="removeNewNominee(pointIndex)">remove</i>
                 </div>
 

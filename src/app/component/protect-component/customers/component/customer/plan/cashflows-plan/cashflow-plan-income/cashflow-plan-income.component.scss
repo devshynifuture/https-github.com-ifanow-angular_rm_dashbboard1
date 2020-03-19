@@ -1,0 +1,17 @@
+.cashflowTable {
+    #table-low {
+        tr.mat-header-row {
+            height: 35px !important;
+        }
+        tr.mat-row {
+            height: 30px !important;
+            th {
+                padding: 10px 8px !important;
+                font-weight: 400 !important;
+            }
+            td {
+                padding: 8px !important;
+            }
+        }
+    }
+}
