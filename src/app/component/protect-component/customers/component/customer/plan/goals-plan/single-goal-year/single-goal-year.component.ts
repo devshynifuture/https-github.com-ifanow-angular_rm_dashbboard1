@@ -39,6 +39,7 @@ export class SingleGoalYearComponent implements OnInit {
   
   ngOnInit() {
     this.Questions = this.goalTypeData.questions;
+    this.logoImg = this.goalTypeData.imageUrl;
     this.planForFamily = !!this.goalTypeData.questions.Q; // Plan for family question present or not
     this.initializeForm();
     this.setDefaultOwner();
@@ -57,7 +58,7 @@ export class SingleGoalYearComponent implements OnInit {
       "advisorId": this.advisorId,
       "goalName": this.singleYearGoalForm.get('field4').value,
       "notes": this.singleYearGoalForm.get('field5').value,
-      "imageUrl": this.logoImg
+      "imageUrl": this.logoImg || this.goalTypeData.imageUrl
     }
 
     switch (this.goalTypeData.id) {
