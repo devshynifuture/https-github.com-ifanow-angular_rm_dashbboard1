@@ -70,10 +70,18 @@
 
 @media(max-width:1092px) {
 
-  #ui-assets-account li // #ui-insurance li 
+  #ui-assets-account,
+  #ui-liabilities {
+    li {
+      padding: 0 0px 0px 8px !important;
+      font-size: 13px;
+    }
+  }
 
-    {
-    padding: 0 0px 0px 8px !important;
+  .add-liabilities {
+    .f-14 {
+      font-size: 13px !important;
+    }
   }
 
   .superannuation {
