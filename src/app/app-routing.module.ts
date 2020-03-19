@@ -16,37 +16,11 @@ import { VerifyOtpComponent } from './component/no-protected/login/verify-otp/ve
 
 const routes: Routes = [
   {
-    path: 'login',
-    component: LoginComponent,
+    path: '',
+    loadChildren: () => import('./component/no-protected/login/login.module').then(m => m.LoginModule),
     canActivate: [AuthGuard],
     // outlet: 'mainrouter'
   },
-  {
-    path: 'forgot-password',
-    component: ForgotPasswordComponent,
-    //canActivate: [AuthGuard],
-    // outlet: 'mainrouter'
-  },
-  {
-    path: 'sign-up',
-    component: SignUpComponent,
-    //canActivate: [AuthGuard],
-    // outlet: 'mainrouter'
-  },
-
-  {
-    path: 'set-new-password',
-    component: SetNewPasswordComponent,
-    //canActivate: [AuthGuard],
-    // outlet: 'mainrouter'
-  },
-  {
-    path: 'otp',
-    component: VerifyOtpComponent,
-    //canActivate: [AuthGuard],
-    // outlet: 'mainrouter'
-  },
-
   {
     path: 'admin',
     loadChildren: () => import('./component/left-sidebar/leftsidebar/leftsidebar.module').then(m => m.LeftsidebarModule),
@@ -101,12 +75,6 @@ const routes: Routes = [
     path: 'cus',
     loadChildren: () => import('./component/protect-component/customer-feedback/cus-feedback.module').then(m => m.CusFeedbackModule)
   },
-  {
-    path: '',
-    redirectTo: '/login',
-    pathMatch: 'full',
-  },
-
   {
     path: 'redirect',
     // outlet: 'mainrouter',

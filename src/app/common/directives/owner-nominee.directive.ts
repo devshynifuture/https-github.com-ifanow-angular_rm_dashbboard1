@@ -154,10 +154,11 @@ export class OwnerNomineeDirective {
         
             this.ownerPer += arrayCon.value.share;
             
-            if(e == "1"){
+            if(parseInt(e) == this.ownerData.value.getCoOwnerName.length-1){
               if (this.ownerPer > 100 || this.ownerPer < 100) {
                 this.showErrorOwner = true;
                   arrayCon.get('share').setErrors({'incorrect': true});
+                  arrayCon.get('share').markAsTouched();
                   // arrayCon.get('share').updateValueAndValidity();
                   console.log('show error Percent cannot be more than 100%', arrayCon)
                 }
@@ -182,8 +183,9 @@ export class OwnerNomineeDirective {
           
               if (this.NomineePer > 100 || this.NomineePer < 100) {
                 this.showErrorOwner = true;
-                if(e == "1"){
+                if(parseInt(e) == this.ownerData.value.getNomineeName.length-1){
                   arrayCon.controls['sharePercentage'].setErrors({'incorrect': true});
+                  arrayCon.get('sharePercentage').markAsTouched()
                   // arrayCon.get('sharePercentage').updateValueAndValidity();
                 }
                 console.log('show error Percent cannot be more than 100%')

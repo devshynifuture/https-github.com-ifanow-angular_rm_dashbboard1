@@ -42,11 +42,6 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
   declarations: [
     AppComponent,
     DashboardComponent,
-    LoginComponent,
-    ForgotPasswordComponent,
-    SignUpComponent,
-    SetNewPasswordComponent,
-    VerifyOtpComponent,
     // ConfirmDialogComponent,
     DialogComponent,
     CustomFormInputComponent,

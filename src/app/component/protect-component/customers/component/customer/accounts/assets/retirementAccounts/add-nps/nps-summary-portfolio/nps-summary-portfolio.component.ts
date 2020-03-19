@@ -26,15 +26,16 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   inputData: any;
   summaryNPS: any;
   ownerData: any;
+  callMethod:any;
   isValueAsOn = false;
   isTotalContry = false;
   isCurrentValue = false;
   isFrequency = false;
   isApproxContry = false;
   isAccountPref = false
-  nomineeList: any;
+  nomineeList: any=[];
   advisorId: any;
-  nomineesListFM: any[];
+  nomineesListFM: any=[];
 
   clientId: any;
   nexNomineePer = 0;
@@ -74,15 +75,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
   }
-  display(value) {
-    console.log('value selected', value)
-    this.ownerName = value.userName;
-    this.familyMemberId = value.id;
-  }
-  lisNominee(value) {
-    console.log(value)
-    this.nomineesListFM = Object.assign([], value.familyMembersList);
-  }
+ 
   nomineesList() {
     this.dataFM = this.nomineesListFM
     if (this.dataFM.length > 0) {
@@ -100,6 +93,149 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   Close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag })
   }
+
+  // ===================owner-nominee directive=====================//
+ display(value) {
+  console.log('value selected', value)
+  this.ownerName = value.userName;
+  this.familyMemberId = value.id
+}
+
+lisNominee(value) {
+  this.ownerData.Fmember = value;
+  this.nomineesListFM = Object.assign([], value);
+}
+
+disabledMember(value, type) {
+  this.callMethod = {
+    methodName : "disabledMember",
+    ParamValue : value,
+    disControl : type
+  }
+}
+
+displayControler(con) {
+  console.log('value selected', con);
+  if(con.owner != null && con.owner){
+    this.summaryNPS.controls.getCoOwnerName = con.owner;
+  }
+  if(con.nominee != null && con.nominee){
+    this.summaryNPS.controls.getNomineeName = con.nominee;
+  }
+}
+
+onChangeJointOwnership(data) {
+  this.callMethod = {
+    methodName : "onChangeJointOwnership",
+    ParamValue : data
+  }
+}
+
+/***owner***/ 
+
+get getCoOwner() {
+  return this.summaryNPS.get('getCoOwnerName') as FormArray;
+}
+
+addNewCoOwner(data) {
+  this.getCoOwner.push(this.fb.group({
+    name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+  }));
+  if (!data || this.getCoOwner.value.length < 1) {
+    for (let e in this.getCoOwner.controls) {
+      this.getCoOwner.controls[e].get('share').setValue('');
+    }
+  }
+
+  if(this.getCoOwner.value.length > 1 && !data){
+   let share = 100/this.getCoOwner.value.length;
+   for (let e in this.getCoOwner.controls) {
+    if(!Number.isInteger(share) && e == "0"){
+      this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+    }
+    else{
+      this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+    }
+   }
+  }
+  else{
+    this.disabledMember(null, null)
+  }
+}
+
+removeCoOwner(item) {
+  this.getCoOwner.removeAt(item);
+  if (this.summaryNPS.value.getCoOwnerName.length == 1) {
+    this.getCoOwner.controls['0'].get('share').setValue('100');
+  } else {
+    let share = 100/this.getCoOwner.value.length;
+    for (let e in this.getCoOwner.controls) {
+      if(!Number.isInteger(share) && e == "0"){
+        this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+      }
+      else{
+        this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+      }
+    }
+  }
+  this.disabledMember(null, null);
+}
+/***owner***/ 
+
+/***nominee***/ 
+
+get getNominee() {
+  return this.summaryNPS.get('getNomineeName') as FormArray;
+}
+
+removeNewNominee(item) {
+  this.getNominee.removeAt(item);
+  if (this.summaryNPS.value.getNomineeName.length == 1) {
+    this.getNominee.controls['0'].get('sharePercentage').setValue('100');
+  } else {
+    let share = 100/this.getNominee.value.length;
+    for (let e in this.getNominee.controls) {
+      if(!Number.isInteger(share) && e == "0"){
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+      }
+      else{
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+      }
+    }
+  }
+  this.disabledMember(null, null);
+}
+
+
+
+addNewNominee(data) {
+  this.getNominee.push(this.fb.group({
+    name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+  }));
+  if (!data || this.getNominee.value.length < 1) {
+    for (let e in this.getNominee.controls) {
+      this.getNominee.controls[e].get('sharePercentage').setValue(0);
+    }
+  }
+
+  if(this.getNominee.value.length > 1 && !data){
+    let share = 100/this.getNominee.value.length;
+    for (let e in this.getNominee.controls) {
+      if(!Number.isInteger(share) && e == "0"){
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+      }
+      else{
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+      }
+    }
+   }
+   else{
+    this.disabledMember(null, null)
+  }
+  
+}
+/***nominee***/ 
+// ===================owner-nominee directive=====================//
   showLess(value) {
     if (value == true) {
       this.showHide = false;
@@ -126,7 +262,12 @@ export class NpsSummaryPortfolioComponent implements OnInit {
 
     (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : this.familyMemberId = data.familyMemberId;;
     this.summaryNPS = this.fb.group({
-      ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
+      getCoOwnerName: this.fb.array([this.fb.group({
+        name: ['',[Validators.required]],
+        share: ['',[Validators.required]],
+        familyMemberId: 0,
+        id:0
+      })]),
       currentValue: [(data == undefined) ? '' : data.currentValuation, [Validators.required]],
       valueAsOn: [(data == undefined) ? '' : new Date(data.valueAsOn), [Validators.required]],
       schemeChoice: [(data == undefined) ? '' : (data.schemeChoice) + "",],
@@ -138,48 +279,77 @@ export class NpsSummaryPortfolioComponent implements OnInit {
         frequencyId: [null, [Validators.required]],
         accountPreferenceId: [null, [Validators.required]], approxContribution: [null, [Validators.required]]
       })]),
-      nominees: this.fb.array([this.fb.group({
-        name: [null,], sharePercentage: [null,],
-      })]),
-      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId],]
+      getNomineeName: this.fb.array([this.fb.group({
+        name: [''],
+        sharePercentage: [0],
+        familyMemberId: [0],
+        id:[0]
+      })])
     });
-    this.ownerData = this.summaryNPS.controls;
-    this.nomineeData = this.summaryNPS.controls;
-    if (data.futureContributionList != undefined) {
-      data.futureContributionList.forEach(element => {
-        this.summaryNPS.controls.futureContributionList.push(this.fb.group({
-          frequencyId: [(element.frequencyId) + "", [Validators.required]],
-          accountPreferenceId: [(element.accountPreferenceId + ""), Validators.required],
-          approxContribution: [(element.approxContribution), Validators.required],
-          id: [element.id, [Validators.required]]
-        }))
-      })
-      this.futureContry.removeAt(0);
 
-    }
-    if (data.nominees != undefined) {
-      if (data.nominees.length != 0) {
-        data.nominees.forEach(element => {
-          this.summaryNPS.controls.nominees.push(this.fb.group({
-            name: [(element.name),],
-            familyMemberId: [(element.familyMemberId),],
-            sharePercentage: [element.sharePercentage,],
-            id: [element.id,]
-          }))
-        })
-        this.nominee.removeAt(0);
+    // ==============owner-nominee Data ========================\\
+  /***owner***/ 
+  if(this.summaryNPS.value.getCoOwnerName.length == 1){
+    this.getCoOwner.controls['0'].get('share').setValue('100');
+  }
 
-      } else {
-        this.nominee.push(this.fb.group({
-          name: [null,], sharePercentage: [null,],
-        }));
-      }
+  if (data.ownerList) {
+    this.getCoOwner.removeAt(0);
+    data.ownerList.forEach(element => {
+      this.addNewCoOwner(element);
+    });
+  }
+  
+/***owner***/ 
 
-    }
+/***nominee***/ 
+if(data.nomineeList){
+  this.getNominee.removeAt(0);
+  data.nomineeList.forEach(element => {
+    this.addNewNominee(element);
+  });
+}
+/***nominee***/ 
+
+this.ownerData = {Fmember: this.nomineesListFM, controleData:this.summaryNPS}
+// ==============owner-nominee Data ========================\\ 
+    // this.ownerData = this.summaryNPS.controls;
+    // this.nomineeData = this.summaryNPS.controls;
+    // if (data.futureContributionList != undefined) {
+    //   data.futureContributionList.forEach(element => {
+    //     this.summaryNPS.controls.futureContributionList.push(this.fb.group({
+    //       frequencyId: [(element.frequencyId) + "", [Validators.required]],
+    //       accountPreferenceId: [(element.accountPreferenceId + ""), Validators.required],
+    //       approxContribution: [(element.approxContribution), Validators.required],
+    //       id: [element.id, [Validators.required]]
+    //     }))
+    //   })
+    //   this.futureContry.removeAt(0);
+
+    // }
+    // if (data.nominees != undefined) {
+    //   if (data.nominees.length != 0) {
+    //     data.nominees.forEach(element => {
+    //       this.summaryNPS.controls.nominees.push(this.fb.group({
+    //         name: [(element.name),],
+    //         familyMemberId: [(element.familyMemberId),],
+    //         sharePercentage: [element.sharePercentage,],
+    //         id: [element.id,]
+    //       }))
+    //     })
+    //     this.nominee.removeAt(0);
+
+    //   } else {
+    //     this.nominee.push(this.fb.group({
+    //       name: [null,], sharePercentage: [null,],
+    //     }));
+    //   }
+
+    // }
 
 
-    this.familyMemberId = this.summaryNPS.controls.familyMemberId.value
-    this.familyMemberId = this.familyMemberId[0]
+    // this.familyMemberId = this.summaryNPS.controls.familyMemberId.value
+    // this.familyMemberId = this.familyMemberId[0]
 
   }
   getFormControl(): any {
@@ -249,23 +419,33 @@ export class NpsSummaryPortfolioComponent implements OnInit {
       let obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
-        familyMemberId: this.familyMemberId,
-        ownerName: (this.ownerName == undefined) ? this.summaryNPS.controls.ownerName.value : this.ownerName,
+        ownerList: this.summaryNPS.value.getCoOwnerName,
+        // familyMemberId: this.familyMemberId,
+        // ownerName: (this.ownerName == undefined) ? this.summaryNPS.controls.ownerName.value : this.ownerName,
         valueAsOn: this.datePipe.transform(this.summaryNPS.controls.valueAsOn.value, 'yyyy-MM-dd'),
         currentValuation: this.summaryNPS.controls.currentValue.value,
         contributionAmount: this.summaryNPS.controls.totalContry.value,
         pran: this.summaryNPS.controls.pran.value,
         schemeChoice: this.summaryNPS.controls.schemeChoice.value,
         futureContributionList: this.summaryNPS.controls.futureContributionList.value,
-        nominees: this.summaryNPS.controls.nominees.value,
+        // nominees: this.summaryNPS.controls.nominees.value,
         description: this.summaryNPS.controls.description.value,
+        nomineeList: this.summaryNPS.value.getNomineeName,
         id: this.summaryNPS.controls.id.value
       }
-      this.nominee.value.forEach(element => {
-        if (element.sharePercentage == null && element.name == null) {
-          this.nominee.removeAt(0);
+      // this.nominee.value.forEach(element => {
+      //   if (element.sharePercentage == null && element.name == null) {
+      //     this.nominee.removeAt(0);
+      //   }
+      //   obj.nominees = this.summaryNPS.controls.nominees.value;
+      // });
+      obj.nomineeList.forEach(element => {
+        if(element.name == ''){
+          obj.nomineeList= [];
         }
-        obj.nominees = this.summaryNPS.controls.nominees.value;
+        else{
+          obj.nomineeList= this.summaryNPS.value.getNomineeName;
+        }
       });
       let adviceObj = {
         advice_id: this.advisorId,

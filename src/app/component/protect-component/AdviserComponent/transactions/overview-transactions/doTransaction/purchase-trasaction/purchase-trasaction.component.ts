@@ -311,7 +311,9 @@ export class PurchaseTrasactionComponent implements OnInit {
     if (data.length > 1) {
       Object.assign(this.transactionSummary, { showUmrnEdit: true });
     }
-    this.achMandateNSE = data[0]
+    this.achMandateNSE = data.filter(element => element.statusString == 'ACCEPTED')
+    console.log('this.achMandateNSE',this.achMandateNSE)
+    this.achMandateNSE = this.achMandateNSE[0]
     Object.assign(this.transactionSummary, { umrnNo: this.achMandateNSE.umrnNo });
   }
   close() {

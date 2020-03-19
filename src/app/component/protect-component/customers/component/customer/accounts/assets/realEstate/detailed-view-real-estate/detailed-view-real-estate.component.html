@@ -18,7 +18,7 @@
             <div class="insurance-ui bt">
                 <div class="row bb p-8 b-l br" *ngFor="let obj of realEstate.ownerList; let i = index">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Co-owner{{i+1}}
+                        {{i != 0?'Co-o' : 'O'}}wner{{i != 0?i:''}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{obj.name}}

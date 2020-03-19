@@ -216,7 +216,7 @@
 
 .profileRiskWidth {
     width: 60%;
-    margin: 0px auto;
+    margin: 50px auto 0px;
 }
 
 .numberBox {
@@ -229,4 +229,21 @@
     justify-content: center;
     border: 3px solid #1F1F1F;
     font-size: 48px;
+}
+
+.profileOverview {
+    .vertical-menu {
+        height: 100vh;
+        display: block !important;
+        width: 100%;
+        text-align: left;
+    }
+    li {
+        height: 40px;
+        line-height: 40px;
+        padding: 0 0px 0 24px !important;
+        font-size: 14px;
+        text-align: left;
+        margin-bottom: 10px;
+    }
 }

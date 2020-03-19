@@ -13,7 +13,7 @@
 </div>
 <div [formGroup]="recuringDeposit" class="pt-100 pl-24 pr-24 pb-48 mb-44">
     <div formArrayName="getCoOwnerName">
-        <div class="row" *ngFor="let obj of recuringDeposit.controls['getCoOwnerName'].controls; let pointIndex=index"
+        <div class="row pt-36" *ngFor="let obj of recuringDeposit.controls['getCoOwnerName'].controls; let pointIndex=index"
             [formGroupName]="pointIndex">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8 ">{{pointIndex != 0?'Co-o' : 'O'}}wner{{pointIndex != 0?pointIndex:''}}</h5>
@@ -278,10 +278,10 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="col-md-2 p-0 d-flex align-items-center">
-                    <i class="material-icons text-primitive f-20 c-p float-left"
+                <div class="col-md-2 pr-0 d-flex align-items-center">
+                    <i *ngIf="recuringDeposit.value.getNomineeName.length < 3" class="material-icons text-primitive f-20 c-p float-left"
                         (click)="addNewNominee(undefined)">add</i>
-                    <i *ngIf="pointIndex!=0" class="material-icons text-primitive f-20 c-p pl-10 pt-8"
+                    <i *ngIf="recuringDeposit.value.getNomineeName.length > 1" class="material-icons text-primitive f-20 c-p pl-10 pt-8"
                         (click)="removeNewNominee(pointIndex)">remove</i>
                 </div>
 
