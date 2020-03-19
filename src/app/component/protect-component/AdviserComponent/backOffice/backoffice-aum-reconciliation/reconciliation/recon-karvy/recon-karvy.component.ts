@@ -1,9 +1,9 @@
+import { AuthService } from './../../../../../../../auth-service/authService';
 import { Component, OnInit, Input } from '@angular/core';
 import { ReconciliationService } from '../reconciliation.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material';
-import { AuthService } from 'src/app/auth-service/authService';
 import { UpperSliderBackofficeComponent } from 'src/app/component/protect-component/SupportComponent/common-component/upper-slider-backoffice/upper-slider-backoffice.component';
 import { UtilService } from 'src/app/services/util.service';
 
@@ -23,8 +23,9 @@ export class ReconKarvyComponent implements OnInit {
 
   brokerList: any[] = [];
   dataSource;
-  advisorId;
+  advisorId = AuthService.getAdvisorId();
   isLoading: boolean = false;
+  isBrokerSelected: boolean = false;
   selectBrokerForm = this.fb.group({
     selectBrokerId: [, Validators.required]
   })
@@ -40,22 +41,13 @@ export class ReconKarvyComponent implements OnInit {
 
 
   getBrokerList() {
-    this.advisorId = AuthService.getAdvisorId();
-
     this.reconService.getBrokerListValues({ advisorId: this.advisorId })
       .subscribe(res => {
-        console.log(res);
-        res.forEach(item => {
-          const { id } = item;
-          const { brokerCode } = item;
-          this.brokerList.push({
-            id,
-            brokerCode
-          })
-        });
-        console.log(this.brokerList);
-      })
+        this.brokerList = res;
+        this.isBrokerSelected = true;
+      });
   }
+
 
   getAumReconHistoryData(event) {
     this.isLoading = true;
