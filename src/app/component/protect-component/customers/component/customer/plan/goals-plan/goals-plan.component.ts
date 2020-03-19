@@ -16,6 +16,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { AuthService } from 'src/app/auth-service/authService';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import * as Highcharts from 'highcharts';
 
 export interface PeriodicElement {
   position: string;
@@ -42,13 +43,14 @@ export class GoalsPlanComponent implements OnInit {
   // initializing dummy data
   allGoals: any[] = [
     {
+      id: 1,
       goalName: 'Shreya’s higher education',
       gv: 4813000,
       year: '2030 - 2033',
       img: '/assets/images/svg/higher-edu.svg',
       dummyDashBoardData: {
         goalYear: 2025,
-        presentValue: 24325,
+        goalPresentValue: 24325,
         futureValue: 456543,
         equity_monthly: 5200,
         debt_monthly: 44553,
@@ -58,13 +60,14 @@ export class GoalsPlanComponent implements OnInit {
       }
     },
     {
+      id: 2,
       goalName: 'House',
       gv: 10000000,
       year: '2033',
       img: '/assets/images/svg/house-goals.svg',
       dummyDashBoardData: {
         goalYear: 2025,
-        presentValue: 24325,
+        goalPresentValue: 24325,
         futureValue: 456543,
         equity_monthly: 5200,
         debt_monthly: 44553,
@@ -74,13 +77,14 @@ export class GoalsPlanComponent implements OnInit {
       }
     },
     {
+      id: 3,
       goalName: 'Rahul’s retirement',
       gv: 45522000,
       year: '2030 - 2033',
       img: '/assets/images/svg/retierment-goals.svg',
       dummyDashBoardData: {
         goalYear: 2025,
-        presentValue: 24325,
+        goalPresentValue: 24325,
         futureValue: 456543,
         equity_monthly: 5200,
         debt_monthly: 44553,
@@ -90,13 +94,14 @@ export class GoalsPlanComponent implements OnInit {
       }
     },
     {
+      id: 4,
       goalName: 'Aryan’s marriage',
       gv: 4813000,
       year: '2030 - 2033',
       img: '/assets/images/svg/higher-edu.svg',
       dummyDashBoardData: {
         goalYear: 2025,
-        presentValue: 24325,
+        goalPresentValue: 24325,
         futureValue: 456543,
         equity_monthly: 5200,
         debt_monthly: 44553,
@@ -106,6 +111,100 @@ export class GoalsPlanComponent implements OnInit {
       }
     },
   ];
+
+  // options set for bar charts
+  // Reference - https://api.highcharts.com/highcharts/
+  options: any = {
+    chart: {
+      type: 'bar',
+      height: 200
+    },
+    plotOptions: {
+      bar: {
+          dataLabels: {
+              enabled: true,
+              align: 'left',
+              inside: false
+          }
+      }
+    },
+    credits: {
+        enabled: false
+    },
+    title: {
+      text: 'Monthly Bar Chart'
+    },
+    xAxis: {
+        type: 'category',
+        lineWidth: 0,
+        tickWidth: 0
+    },
+    yAxis:{
+      visible: false
+    },
+    tooltip: {
+      enabled: false,
+    },
+    legend: {
+      enabled: false,
+    },
+    series: [{
+        data: [{
+            y: 123,
+            name: 'Gabriel',
+            color: 'green'
+        }, {
+            y: 60,
+            name: 'Marie',
+            color: 'blue'
+        }, {
+            y: 43,
+            name: 'Adam',
+            color: 'yellow'
+        }, {
+            y: 55,
+            name: 'Camille',
+            color: 'red'
+        }],
+    }]
+  }
+
+  // options set for donut chart
+  // TODO:- remove 'series' legend from the tooltip
+  donutOptions:any = {
+    chart: {
+        type: 'pie',
+        height: 170
+    },
+    title: {
+      text: ''
+    },
+    credits: {
+        enabled: false
+    },
+    yAxis: {
+        title: {
+            text: 'Total percent market share'
+        }
+    },
+    plotOptions: {
+        pie: {
+            shadow: false
+        }
+    },
+    legend:{
+      floating: true,
+    },
+    series: [{
+        data: [["Loan Amt",6],["Down Amt",4]],
+        size: '100%',
+        innerSize: '55%',
+        showInLegend:true,
+        dataLabels: {
+            enabled: false
+        }
+    }]
+}
 
   constructor(
     private subInjectService: SubscriptionInject, 
@@ -128,9 +227,24 @@ export class GoalsPlanComponent implements OnInit {
   loadAllGoals(){
     this.plansService.getAllGoals(this.advisor_client_id).subscribe((data)=>{
       // this.allGoals = data || [];
+      // this.allGoals = this.allGoals.map((goal)=> this.mapGoalDashboardData);
+      console.log('sagar', data);
       this.loadSelectedGoalData(this.allGoals[0]);
-      console.log(data);
     }, err => this.eventService.openSnackBar(err, "Dismiss"))
+  }
+
+  mapGoalDashboardData(goal:any) {
+    // single year goal model
+    if(goal.singleOrMulti == 1) {
+      goal.dashboardData = {
+        presentValue: goal.singleGoalModel.goalPresentValue,
+        futureValue: goal.singleGoalModel.goalFV,
+        equity_monthly: 0
+      }
+    } else {
+
+    }
+    return goal;
   }
 
   loadGlobalAPIs(){
@@ -228,9 +342,12 @@ export class GoalsPlanComponent implements OnInit {
 
   loadSelectedGoalData(goalData) {
     this.selectedGoal = goalData;
+    Highcharts.chart('monthly-chart-container', this.options);
+    Highcharts.chart('lumpsum-chart-container', this.options);
+    Highcharts.chart('donut-chart-container', this.donutOptions);
   }
 
-  deleteGoal(goal) {
+  deleteGoal() {
     const dialogData = {
       header: 'DELETE',
       body: 'Are you sure you want to delete this goal?',
