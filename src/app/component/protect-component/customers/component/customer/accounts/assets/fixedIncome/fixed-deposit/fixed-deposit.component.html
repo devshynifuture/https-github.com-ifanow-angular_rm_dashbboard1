@@ -108,7 +108,7 @@
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <input (focus)="picker.open()" (click)="picker.open()" (dateChange)="checkDate($event)" matInput
+                <input (focus)="picker.open()" (click)="picker.open()" (dateChange)="checkDate()" matInput
                     formControlName="commencementDate" [max]="maxDate" [matDatepicker]="picker" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>

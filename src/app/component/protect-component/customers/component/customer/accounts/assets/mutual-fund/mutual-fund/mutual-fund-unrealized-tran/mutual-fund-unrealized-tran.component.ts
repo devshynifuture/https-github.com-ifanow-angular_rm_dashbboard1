@@ -16,6 +16,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   schemeWise: any[];
   mutualFundList: any[];
   totalObj: {};
+  isLoading
   categoryMF: any[];
   dataSource: any[];
   catObj: {};
