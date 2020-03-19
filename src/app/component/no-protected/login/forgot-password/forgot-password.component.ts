@@ -30,9 +30,7 @@ export class ForgotPasswordComponent implements OnInit {
     this.otp = otp;
   }
   enterOtp(value) {
-
-
-    if (value.keyCode == 8) {
+    if (value.code.substring(0, value.code.length - 1) == 'Key' || value.code == "Backspace") {
       if (value.srcElement.previousElementSibling == undefined) {
         return;
       }
@@ -46,9 +44,6 @@ export class ForgotPasswordComponent implements OnInit {
       this.otpData.push(value.key);
       value.srcElement.nextElementSibling.focus();
     }
-
-    console.log(value)
-
   }
   verify() {
     this.isVerify = true;
