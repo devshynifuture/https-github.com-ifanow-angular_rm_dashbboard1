@@ -103,30 +103,30 @@ export class BondsComponent implements OnInit {
 
   disabledMember(value, type) {
     this.callMethod = {
-      methodName: "disabledMember",
-      ParamValue: value,
-      disControl: type
+      methodName : "disabledMember",
+      ParamValue : value,
+      disControl : type
     }
   }
 
   displayControler(con) {
     console.log('value selected', con);
-    if (con.owner != null && con.owner) {
+    if(con.owner != null && con.owner){
       this.bonds.controls.getCoOwnerName = con.owner;
     }
-    if (con.nominee != null && con.nominee) {
+    if(con.nominee != null && con.nominee){
       this.bonds.controls.getNomineeName = con.nominee;
     }
   }
 
   onChangeJointOwnership(data) {
     this.callMethod = {
-      methodName: "onChangeJointOwnership",
-      ParamValue: data
+      methodName : "onChangeJointOwnership",
+      ParamValue : data
     }
   }
 
-  /***owner***/
+  /***owner***/ 
 
   get getCoOwner() {
     return this.bonds.get('getCoOwnerName') as FormArray;
@@ -141,6 +141,21 @@ export class BondsComponent implements OnInit {
         this.getCoOwner.controls[e].get('share').setValue('');
       }
     }
+
+    if(this.getCoOwner.value.length > 1 && !data){
+     let share = 100/this.getCoOwner.value.length;
+     for (let e in this.getCoOwner.controls) {
+      if(!Number.isInteger(share) && e == "0"){
+        this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+      }
+      else{
+        this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+      }
+     }
+    }
+    else{
+      this.disabledMember(null, null)
+    }
   }
 
   removeCoOwner(item) {
@@ -148,14 +163,21 @@ export class BondsComponent implements OnInit {
     if (this.bonds.value.getCoOwnerName.length == 1) {
       this.getCoOwner.controls['0'].get('share').setValue('100');
     } else {
+      let share = 100/this.getCoOwner.value.length;
       for (let e in this.getCoOwner.controls) {
-        this.getCoOwner.controls[e].get('share').setValue('');
+        if(!Number.isInteger(share) && e == "0"){
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+        }
+        else{
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+        }
       }
     }
+    this.disabledMember(null, null);
   }
-  /***owner***/
+  /***owner***/ 
 
-  /***nominee***/
+  /***nominee***/ 
 
   get getNominee() {
     return this.bonds.get('getNomineeName') as FormArray;
@@ -163,11 +185,24 @@ export class BondsComponent implements OnInit {
 
   removeNewNominee(item) {
     this.getNominee.removeAt(item);
-
+    if (this.bonds.value.getNomineeName.length == 1) {
+      this.getNominee.controls['0'].get('sharePercentage').setValue('100');
+    } else {
+      let share = 100/this.getNominee.value.length;
+      for (let e in this.getNominee.controls) {
+        if(!Number.isInteger(share) && e == "0"){
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+        }
+        else{
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+        }
+      }
+    }
+    this.disabledMember(null, null);
   }
 
 
-
+  
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
       name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
@@ -178,8 +213,23 @@ export class BondsComponent implements OnInit {
       }
     }
 
+    if(this.getNominee.value.length > 1 && !data){
+      let share = 100/this.getNominee.value.length;
+      for (let e in this.getNominee.controls) {
+        if(!Number.isInteger(share) && e == "0"){
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+        }
+        else{
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+        }
+      }
+     }
+     else{
+      this.disabledMember(null, null)
+    }
+    
   }
-  /***nominee***/
+  /***nominee***/ 
   // ===================owner-nominee directive=====================//
 
   getDateYMD() {
@@ -352,7 +402,7 @@ export class BondsComponent implements OnInit {
     }
   }
   addBondsRes(data) {
-    console.log('addrecuringDepositRes', data)
+    console.log('addbondsRes', data)
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
     this.eventService.openSnackBar('Added successfully!', 'Dismiss');
 

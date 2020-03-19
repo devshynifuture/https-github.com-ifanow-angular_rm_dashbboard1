@@ -75,7 +75,7 @@ export class FixedDepositComponent implements OnInit {
   clientId: any;
   isViewInitCalled = false;
   nomineesListFM: any = [];
-  flag: string;
+  flag: any;
   // reqError: boolean = false;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   fdMonths = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
@@ -95,6 +95,7 @@ export class FixedDepositComponent implements OnInit {
   nexNomineePer: number;
   showErrorCoOwner: boolean;
   adviceShowHeaderAndFooter: boolean = true;
+  tenureFlag: boolean;
 
   constructor(public utils: UtilService, private event: EventService, private router: Router,
     private fb: FormBuilder, private custumService: CustomerService,
@@ -113,39 +114,7 @@ export class FixedDepositComponent implements OnInit {
 
   @Input() popupHeaderText: string = 'Add Fixed deposit';
 
-  removeCoOwner(item) {
-    this.getCoOwner.removeAt(item);
-    if (this.fixedDeposit.value.getCoOwnerName.length == 1) {
-      this.getCoOwner.controls['0'].get('share').setValue('100');
-    } else {
-      for (let e in this.getCoOwner.controls) {
-        this.getCoOwner.controls[e].get('share').setValue('');
-      }
-    }
-  }
-
-  addNewCoOwner(data) {
-    this.getCoOwner.push(this.fb.group({
-      name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
-    }));
-    if (!data || this.getCoOwner.value.length < 1) {
-      for (let e in this.getCoOwner.controls) {
-        this.getCoOwner.controls[e].get('share').setValue('');
-      }
-    }
-  }
-
-  removeNewNominee(item) {
-    this.getNominee.removeAt(item);
-  }
-
-  addNewNominee(data) {
-    this.getNominee.push(this.fb.group({
-      name: [""],
-      sharePercentage: [""],
-      familyMemberId: [""]
-    }));
-  }
+ 
   get data() {
     return this.inputData;
   }
@@ -171,53 +140,177 @@ export class FixedDepositComponent implements OnInit {
   }
 
   checkDate() {
-    this.validMaturity = new Date(new Date().setDate(new Date(this.getFormControl().commencementDate.value).getDate() + 1))
+    this.validMaturity = new Date(new Date().setDate(new Date(this.getFormControl().commencementDate.value).getDate() + 1));
+    console.log(this.validMaturity);
+    this.checkCommDateAndTenure();
+  }
+  checkCommDateAndTenure() {
+    if (this.tenure && this.getFormControl().commencementDate.value) {
+      if (this.tenure._d < new Date()) {
+        console.log("error");
+        this.tenureFlag = true;
+        return;
+      }
+      this.tenureFlag = false;
+      return;
+    }
+  }
+  tenureError() {
+    return { flag: true }
   }
   Close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
-  displayControler(con) {
-    console.log('value selected', con);
-    if (con.owner != null && con.owner) {
-      this.fixedDeposit.controls.getCoOwnerName = con.owner;
-    }
-    if (con.nominee != null && con.nominee) {
-      this.fixedDeposit.controls.getNomineeName = con.nominee;
-    }
-  }
-
-  ownerDetails(value) {
-    this.familyMemberId = value.id;
-    // this.reqError = true;
+  // ===================owner-nominee directive=====================//
+  display(value) {
+    console.log('value selected', value)
+    this.ownerName = value.userName;
+    this.familyMemberId = value.id
   }
 
   lisNominee(value) {
-    console.log(value)
     this.ownerData.Fmember = value;
     this.nomineesListFM = Object.assign([], value);
   }
 
   disabledMember(value, type) {
     this.callMethod = {
-      methodName: "disabledMember",
-      ParamValue: value,
-      disControl: type
+      methodName : "disabledMember",
+      ParamValue : value,
+      disControl : type
     }
   }
+
+  displayControler(con) {
+    console.log('value selected', con);
+    if(con.owner != null && con.owner){
+      this.fixedDeposit.controls.getCoOwnerName = con.owner;
+    }
+    if(con.nominee != null && con.nominee){
+      this.fixedDeposit.controls.getNomineeName = con.nominee;
+    }
+  }
+
+  onChangeJointOwnership(data) {
+    this.callMethod = {
+      methodName : "onChangeJointOwnership",
+      ParamValue : data
+    }
+  }
+
+  /***owner***/ 
 
   get getCoOwner() {
     return this.fixedDeposit.get('getCoOwnerName') as FormArray;
   }
 
+  addNewCoOwner(data) {
+    this.getCoOwner.push(this.fb.group({
+      name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+    }));
+    if (!data || this.getCoOwner.value.length < 1) {
+      for (let e in this.getCoOwner.controls) {
+        this.getCoOwner.controls[e].get('share').setValue('');
+      }
+    }
 
-
-  onChangeJointOwnership(data) {
-    this.callMethod = {
-      methodName: "onChangeJointOwnership",
-      ParamValue: data
+    if(this.getCoOwner.value.length > 1 && !data){
+     let share = 100/this.getCoOwner.value.length;
+     for (let e in this.getCoOwner.controls) {
+      if(!Number.isInteger(share) && e == "0"){
+        this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+      }
+      else{
+        this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+      }
+     }
+    }
+    else{
+      this.disabledMember(null, null)
     }
   }
+
+  removeCoOwner(item) {
+    this.getCoOwner.removeAt(item);
+    if (this.fixedDeposit.value.getCoOwnerName.length == 1) {
+      this.getCoOwner.controls['0'].get('share').setValue('100');
+    } else {
+      let share = 100/this.getCoOwner.value.length;
+      for (let e in this.getCoOwner.controls) {
+        if(!Number.isInteger(share) && e == "0"){
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+        }
+        else{
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+        }
+      }
+    }
+    this.disabledMember(null, null);
+  }
+  /***owner***/ 
+
+  /***nominee***/ 
+
+  // get getNominee() {
+  //   return this.fixedDeposit.get('getNomineeName') as FormArray;
+  // }
+
+  // removeNewNominee(item) {
+  //   this.getNominee.removeAt(item);
+  //   if (this.fixedDeposit.value.getNomineeName.length == 1) {
+  //     this.getNominee.controls['0'].get('sharePercentage').setValue('100');
+  //   } else {
+  //     let share = 100/this.getNominee.value.length;
+  //     for (let e in this.getNominee.controls) {
+  //       if(!Number.isInteger(share) && e == "0"){
+  //         this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+  //       }
+  //       else{
+  //         this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+  //       }
+  //     }
+  //   }
+  //   this.disabledMember(null, null);
+  // }
+
+
+  
+  // addNewNominee(data) {
+  //   this.getNominee.push(this.fb.group({
+  //     name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+  //   }));
+  //   if (!data || this.getNominee.value.length < 1) {
+  //     for (let e in this.getNominee.controls) {
+  //       this.getNominee.controls[e].get('sharePercentage').setValue(0);
+  //     }
+  //   }
+
+  //   if(this.getNominee.value.length > 1){
+  //     let share = 100/this.getNominee.value.length;
+  //     for (let e in this.getNominee.controls) {
+  //       if(!Number.isInteger(share) && e == "0"){
+  //         this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+  //       }
+  //       else{
+  //         this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+  //       }
+  //     }
+  //    }
+    
+  // }
+  /***nominee***/ 
+  // ===================owner-nominee directive=====================//
+
+  
+  ownerDetails(value) {
+    this.familyMemberId = value.id;
+    // this.reqError = true;
+  }
+
+ 
+
+ 
 
   showLess(value) {
     if (value) {
@@ -260,6 +353,8 @@ export class FixedDepositComponent implements OnInit {
       this.tenure = moment(this.tenure).add(d, 'days');
       if (this.fixedDeposit.controls.commencementDate.valid) {
         this.getDate = this.datePipe.transform(this.tenure, 'yyyy-MM-dd');
+        console.log(this.tenure, this.getDate);
+        this.checkCommDateAndTenure();
       }
       this.tenureValid = true;
       return this.getDate;
@@ -341,6 +436,9 @@ export class FixedDepositComponent implements OnInit {
     } else {
       this.maturityDate = this.fixedDeposit.controls.maturityDate.value;
     }
+    if (this.tenureFlag) {
+      return;
+    }
     if (this.fixedDeposit.invalid || !this.tenureValid) {
       // this.reqError = true;
       this.inputs.find(input => !input.ngControl.valid).focus();
@@ -355,8 +453,6 @@ export class FixedDepositComponent implements OnInit {
             }
           }
         }
-
-
         // if (this.fixedDeposit.controls[element].invalid) {
         // return;
         // }
@@ -426,12 +522,33 @@ export class FixedDepositComponent implements OnInit {
   getMaturityDate(data) {
     console.log(data)
     if (data.value == '1') {
-      this.fixedDeposit.get('tenureY').setValue('0');
-      this.fixedDeposit.get('tenureM').setValue('0');
-      this.fixedDeposit.get('tenureD').setValue('0');
+      if(this.flag.fdEndDateIn == "1"){
+        // this.fixedDeposit.get('tenureM').updateValueAndValidity();
+        // this.fixedDeposit.get('tenureY').updateValueAndValidity();
+        // this.fixedDeposit.get('tenureD').updateValueAndValidity();
+        let valueSet = {
+          tenureY:this.flag.tenureInYear,
+          tenureM: this.flag.tenureInMonth,
+          tenureD: this.flag.tenureInDay
+        }
+        this.fixedDeposit.setValue(valueSet);
+        // this.fixedDeposit.get('tenureY').setValue(this.flag.tenureInYear);
+        // this.fixedDeposit.get('tenureD').setValue(this.flag.tenureInDay);
+        
+      }
+      else{
+        this.fixedDeposit.get('tenureY').setValue('0');
+        this.fixedDeposit.get('tenureM').setValue('0');
+        this.fixedDeposit.get('tenureD').setValue('0');
+      }
     }
     else {
-      this.fixedDeposit.get('maturityDate').reset();
+      if(this.flag.fdEndDateIn == "2"){
+        this.fixedDeposit.get('maturityDate').setValue(new Date(this.flag.maturityDate));
+      }
+      else{
+        this.fixedDeposit.get('maturityDate').reset();
+      }
     }
   }
   getAdviceFdRes(data) {
@@ -446,9 +563,7 @@ export class FixedDepositComponent implements OnInit {
     }
   }
 
-  get getNominee() {
-    return this.fixedDeposit.get('getNomineeName') as FormArray;
-  }
+  
 
 
   addFixedDepositRes(data) {

@@ -55,12 +55,18 @@ export class SettingsClientMappingComponent implements OnInit {
   }
   getFilterOptionDataRes(data) {
     console.log(data);
-    this.filterData = TransactionEnumService.setPlatformEnum(data);
-    this.type = '1';
-    this.selectedBrokerCode = data[0];
-    this.selectedPlatform = data[0];
-    this.dataSource.data = [{}, {}, {}];
-    this.sortDataFilterWise();
+    if(data){
+      this.filterData = TransactionEnumService.setPlatformEnum(data);
+      this.type = '1';
+      this.selectedBrokerCode = data[0];
+      this.selectedPlatform = data[0];
+      this.dataSource.data = [{}, {}, {}];
+      this.sortDataFilterWise();
+    }else{
+      this.isLoading = false;
+      this.dataSource.data = [];
+    }
+   
   }
 
   getMappedData() {
@@ -78,6 +84,9 @@ export class SettingsClientMappingComponent implements OnInit {
         if (data) {
           this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
           this.dataSource.sort = this.sort;
+        }else{
+          this.isLoading = false;
+         this.dataSource.data = [];
         }
         this.isLoading = false;
       },

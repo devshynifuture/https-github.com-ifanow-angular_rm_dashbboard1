@@ -2,22 +2,22 @@
     <div class="row">
         <div class="col-width-18 bg-grey lter">
 
-            <ul class="uiListProfile">
+            <ul class="vertical-menu">
                 <li>
-                    <img src="/assets/images/svg/key-info-icon.svg"> Key info
+                    <img class="mr-8" src="/assets/images/svg/key-info-icon.svg"> Key info
                 </li>
 
                 <li>
-                    <img src="/assets/images/svg/user-icon.svg"> Family details
+                    <img class="mr-8" src="/assets/images/svg/user-icon.svg"> Family details
                 </li>
                 <li>
-                    <img src="/assets/images/svg/speed-meter-icon.svg"> Risk profile
+                    <img class="mr-8" src="/assets/images/svg/speed-meter-icon.svg"> Risk profile
                 </li>
                 <li>
-                    <img src="/assets/images/svg/financial-health-icon.svg"> Financial health check
+                    <img class="mr-8" src="/assets/images/svg/financial-health-icon.svg"> Financial health check
                 </li>
                 <li>
-                    <img src="/assets/images/svg/key-info-icon.svg"> Preliminary data
+                    <img class="mr-8" src="/assets/images/svg/key-info-icon.svg"> Preliminary data
                 </li>
 
             </ul>
@@ -382,23 +382,31 @@
                 <div class="col-md-12 text-right mt-28">
                     <button mat-button class="btn-primary-outline mr-20 riskBtn text-primary">Retake risk
                         assessment</button>
-                    <button (click)="openHistory('add',null)" mat-button
-                        class="btn-primary-outline historyBtn text-primary">History</button>
+                    <button (click)="openHistory('add',null)" mat-button class="btn-primary-outline historyBtn text-primary">History</button>
                 </div>
             </div>
 
             <div class="profileRiskWidth">
-                <div class="row pb-30">
-                    <div class="col-md-4">
+                <div class="row pb-60">
+                    <div class="col-md-3 text-center">
+                        <h5 class="mb-8 roboto f-500">Your risk score</h5>
                         <div class="numberBox">
-                            <h1 class="f-48 mb-12"> 38 </h1>
+                            <h1 class="f-48"> 38 </h1>
                             <p class="f-12 m-0 text-primitive">Max: 60</p>
                         </div>
                     </div>
+
+                    <div class="col-md-8 text-center">
+                        <h5 class="mb-8 roboto f-500">Your risk profile: Moderately aggressive</h5>
+                        <p class="m-0 text-primitive l-18">
+                            You are an investor who is willing to take <br> moderately high risk for moderately high returns
+                        </p>
+                    </div>
+
                 </div>
 
 
-                <div class="row">
+                <div class="row  ">
                     <div class="col-md-12">
                         <h5 class="roboto f-500">Equity asset allocation </h5>
                         <img src="/assets/images/svg/equity-map.svg">

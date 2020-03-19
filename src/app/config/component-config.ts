@@ -362,7 +362,7 @@ export const appConfig = {
   GIVE_ADVICE_ON_PO_SAVING: '/advice/asset/po-savings/advice/post',
   GIVE_ADVICE_ON_REAL_ESTATE: 'advice/asset/real-estate/advice/post',
   ////////////////////////////////////OnlineTransaction///////////////////////////////////////
-  ADD_BSE_CREDENTIALS: '/user/save',
+  ADD_BSE_CREDENTIALS: 'user/save',
   GET_BSE_CREDENTIALS: '/user/view',
   GET_BSE_SUB_BROKER_CREDENTIALS: '/user/sub-broker/view',
   GET_NEW_SCHEMES: 'mutual-fund/search',
@@ -383,7 +383,7 @@ export const appConfig = {
   GET_FREQUENCY: 'bse/scheme/sip/view',
   SIP_BSE: 'bse/order/create',
   BSE_TRANSACTION: 'bse/order/create',
-  NSE_ACHMANDATE: 'nse/ach-mandate/report/get',
+//  NSE_ACHMANDATE: 'nse/ach-mandate/report/get',
   BANK_DETAILS_NSE: 'nse/iin/bank-detail/get',
   GETIIN_DETAILS: 'nse/iin/detail/get',
   GET_FOLIO_MAPPED: '/mutual-fund/folios/mapped/get',

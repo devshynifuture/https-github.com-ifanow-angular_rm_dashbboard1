@@ -28,7 +28,7 @@ export class AssetsComponent implements OnInit {
   ];
   tab: any;
   Settab: any;
-  viewMode = 'tab1';
+  viewMode = 'tab3';
 
   constructor(private subInjectService: SubscriptionInject, private eventService: EventService,
     public dialog: MatDialog, private cusService: CustomerService, private route: ActivatedRoute) {

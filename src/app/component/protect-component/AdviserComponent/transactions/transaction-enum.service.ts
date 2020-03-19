@@ -8,10 +8,14 @@ export class TransactionEnumService {
   constructor() { }
 
   static setPlatformEnum(data) {
-    data.forEach(element => {
-      element['platformName'] = (element.aggregatorType == 1) ? "NSE" : "BSE"
-    });
-    return data;
+    if(data){
+      data.forEach(element => {
+        element['platformName'] = (element.aggregatorType == 1) ? "NSE" : "BSE"
+      });
+      return data;
+    }else{
+      return 
+    }
   }
   static setHoldingTypeEnum(data) {
     data.forEach(element => {
