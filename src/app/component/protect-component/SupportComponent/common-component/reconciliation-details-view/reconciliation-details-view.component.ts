@@ -28,12 +28,13 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   selection = new SelectionModel<PeriodicElement1>(true, []);
   shouldDeleteMultiple: boolean = false;
   deleteMultipleTransactionArray: any[] = []
+  upperTableArr: PeriodicElement[];
 
   constructor(
     private subscriptionInject: SubscriptionInject,
-    private supportService: SupportService,
     private reconService: ReconciliationService,
-    private eventService: EventService
+    private eventService: EventService,
+    private supportService: SupportService
   ) { }
 
   singleSelectionSelect(element) {
@@ -95,7 +96,17 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     this.reconService.deleteAumTransaction(value)
       .subscribe(res => {
         console.log("this transactions are deleted:::", res);
-      })
+        this.dataSource1.data = this.tableData1.filter(item => {
+          return (!value.includes(item.id)) ? item : null;
+        });
+        this.dataSource.data.map(item => {
+          item['unitOne'] = String((res.units).toFixed(3));
+          item['difference'] = String((parseInt(item['unitOne']) - parseInt(item['unitsRta'])).toFixed(3));
+        });
+        // this.dataSource.data['unitOne'] = this.dataSource.data['unitOne'] - res.units;
+        // this.dataSource.data['difference'] = this.dataSource.data['unitOne'] - this.dataSource.data['unitsRta'];
+        this.supportService.sendDataThroughObs(res);
+      });
   }
 
   deleteSingleTransaction(element) {
@@ -112,12 +123,13 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     }
 
     const tableArr: PeriodicElement[] = [{
-      unitsRta: this.data.unitsRta ? this.data.unitsRta : '',
-      unitOne: this.data.unitsIfnow ? this.data.unitsIfnow : '',
-      difference: this.data.difference ? this.data.difference : ''
+      unitsRta: this.data.unitsRta ? (this.data.unitsRta).toFixed(3) : '',
+      unitOne: this.data.unitsIfnow ? (this.data.unitsIfnow).toFixed(3) : '',
+      difference: this.data.difference ? (this.data.difference).toFixed(3) : ''
     }]
 
     this.dataSource.data = tableArr;
+    this.upperTableArr = tableArr;
     this.allFolioTransactionTableDataBinding();
   }
 
@@ -160,7 +172,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   }
 
   dialogClose() {
-    this.subscriptionInject.changeNewRightSliderState({ state: 'close' });
+    this.subscriptionInject.changeNewRightSliderState({ state: 'close', refreshRequired: true });
   }
 
 }

@@ -65,6 +65,21 @@ export class UpperSliderBackofficeComponent implements OnInit {
     console.log("this is data that we got:::::::", this.data);
   }
 
+  getDataFromObsAfterDeletingTransacn() {
+    console.log("updoate ifanow units function called");
+    this.supportService.getDataThroughObs().subscribe(res => {
+      console.log("this is something coming from obs:::::::::::", res);
+      if (res !== '') {
+        // update units ifanow
+        console.log("this is response that im getting::::", res);
+        this.dataSource1.data.map(item => {
+          item['unitsIfnow'] = String((res.units).toFixed(3));
+          item['difference'] = String((parseInt(item['unitsIfnow']) - parseInt(item['unitsRta'])).toFixed(3))
+        })
+      }
+    })
+  }
+
   getBackofficeAumReconListSummary() {
     const data = {
       advisorId: AuthService.getAdvisorId(),
@@ -224,7 +239,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       excelData.push(Object.assign(data))
     });
 
-    ExcelService.exportExcel(headerData, header, excelData, footer, value);
+    // ExcelService.exportExcel(headerData, header, excelData, footer, value);
   }
 
   openReconciliationDetails(value, data, tableType, index) {
@@ -244,8 +259,11 @@ export class UpperSliderBackofficeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+            console.log('this is sidebardata in subs subs 3 ani: is refresh Required??? ', sideBarData);
 
+            if (sideBarData.refreshRequired) {
+              this.getDataFromObsAfterDeletingTransacn();
+            }
           }
           rightSideDataSub.unsubscribe();
         }
