@@ -76,7 +76,7 @@ export class AddPoTdComponent implements OnInit {
       commDate: [new Date(data.commencementDate), [Validators.required]],
       description: [data.description],
 
-      tenure: [(data.tenure) ? String(data.tenure) : '5', [Validators.required]],
+      // tenure: [(data.tenure) ? String(data.tenure) : '1', [Validators.required]],
       ownershipType: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]]
     })
     this.POTDOptionalForm = this.fb.group({
@@ -136,7 +136,7 @@ export class AddPoTdComponent implements OnInit {
       });
     }
     if (this.POTDForm.invalid) {
-      this.inputs.find(input => !input.ngControl.valid).focus();
+      // this.inputs.find(input => !input.ngControl.valid).focus();
       this.POTDForm.markAllAsTouched();
     }
     else {

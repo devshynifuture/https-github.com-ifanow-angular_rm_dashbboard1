@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatInput } from '@angular/material';
 import { ValidatorType } from 'src/app/services/util.service';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-forgot-password',
@@ -12,6 +13,7 @@ export class ForgotPasswordComponent implements OnInit {
   otp: any;
   validatorType = ValidatorType;
   otpData = [];
+  userName = new FormControl('', [Validators.required]);
   constructor() { }
   ngOnInit() {
   }
@@ -46,7 +48,12 @@ export class ForgotPasswordComponent implements OnInit {
     }
   }
   verify() {
-    (this.isVerify) ? this.isVerify = false : this.isVerify = true;
+    if (this.userName.invalid) {
+      return;
+    }
+    else {
+      (this.isVerify) ? this.isVerify = false : this.isVerify = true;
+    }
   }
 
 }

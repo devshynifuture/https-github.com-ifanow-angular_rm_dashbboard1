@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
     // }
   }
   validatorType = ValidatorType;
-
+  hide = true;
   otpNumber: boolean = false;
   errorRequired: boolean = false;
   errorMsg: boolean = false;

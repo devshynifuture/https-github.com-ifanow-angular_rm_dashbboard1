@@ -56,7 +56,7 @@ export class FixedIncomeComponent implements OnInit {
 
   viewMode;
   displayedColumns4 = ['no', 'owner', 'type', 'cvalue', 'rate', 'amt', 'mdate', 'mvalue', 'number', 'desc', 'status', 'icons'];
-  displayedColumns5 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'mdate', 'number', 'desc', 'status', 'icons'];
+  displayedColumns5 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
   displayedColumns6 = ['no', 'owner', 'cvalue', 'camt', 'amt', 'cdate', 'rate', 'mvalue', 'tenure', 'type', 'desc', 'status', 'icons'];
   filterMode;
   dataSourceFixedFiltered;
