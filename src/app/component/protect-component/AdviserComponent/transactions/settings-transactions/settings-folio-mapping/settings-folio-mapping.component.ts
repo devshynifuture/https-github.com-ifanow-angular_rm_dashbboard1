@@ -57,13 +57,18 @@ export class SettingsFolioMappingComponent implements OnInit {
     );
   }
   getFilterOptionDataRes(data) {
-    console.log(data);
-    this.filterData = TransactionEnumService.setPlatformEnum(data);
-    this.type = '1';
-    this.selectedBrokerCode = data[0];
-    this.selectedPlatform = data[0];
-    this.dataSource.data = [{}, {}, {}];
-    this.sortDataFilterWise();
+    if(data){
+      console.log(data);
+      this.filterData = TransactionEnumService.setPlatformEnum(data);
+      this.type = '1';
+      this.selectedBrokerCode = data[0];
+      this.selectedPlatform = data[0];
+      this.dataSource.data = [{}, {}, {}];
+      this.sortDataFilterWise();
+    }else{
+      this.isLoading = false;
+      this.dataSource.data = [];
+    }
   }
   getFolioMappedData() {
     this.isLoading = true;

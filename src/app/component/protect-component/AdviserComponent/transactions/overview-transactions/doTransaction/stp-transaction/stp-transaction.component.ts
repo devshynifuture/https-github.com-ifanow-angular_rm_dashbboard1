@@ -95,6 +95,7 @@ export class StpTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { allEdit: true });
     Object.assign(this.transactionSummary, { transactType: 'STP' });
     Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
+    Object.assign(this.transactionSummary, { isMultiTransact: false });
   }
   backToTransact() {
     this.changedValue.emit('step-2');

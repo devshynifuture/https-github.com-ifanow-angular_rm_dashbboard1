@@ -3,7 +3,7 @@
         <div class="col-md-4 p-0">
             <h4 class="m-0 pt-12">Sub broker/Team member</h4>
         </div>
-        <div class="col-md-4 text-right p-0">
+        <div class="col-md-4 text-right p-0" *ngIf="dataSource.filteredData.length > 0">
 
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
@@ -12,8 +12,10 @@
                 </mat-form-field>
             </div>
         </div>
-        <div class="col-md-4 text-right  pr-0">
-            <button mat-stroked-button class="btn-primary pl-8"><i class="material-icons text-white pr-8">
+        <div class="col-md-4 text-right  pr-0" *ngIf="dataSource.filteredData.length > 0">
+            <button mat-stroked-button class="btn-primary pl-8"
+            (click)="addSubBroker(null)"
+            ><i class="material-icons text-white pr-8">
                     add
                 </i>ADD NEW</button>
         </div>
@@ -80,9 +82,13 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
     <div *ngIf="dataSource.filteredData.length==0 && isLoading==false"
-        class="d-flex flex-column align-items-center pt-44">
+        class="d-flex flex-column align-items-center pt-44">{{dataSource.filteredData}}
         <img class="width300" src="assets/images/svg/noDataFound.svg">
-        <h4 class="pt-12">No data found</h4>
+        <h4 class="pt-12">No sub-broker credentials found</h4>
+        <button mat-stroked-button class="btn-primary pl-8"><i class="material-icons text-white pr-8"
+            (click)="addSubBroker(null)">
+                add
+            </i>ADD NEW</button>
     </div>
 
 </div>

@@ -65,6 +65,7 @@ export class OnlineTrasactionComponent implements OnInit {
   noMapping = false;
   transactionType: any;
   transactionData: any;
+  clientCodeData: any;
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private eventService: EventService, private fb: FormBuilder, private processTransaction: ProcessTransactionService, private router: Router) {
   }
@@ -86,6 +87,7 @@ export class OnlineTrasactionComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.clientCodeData = {}
     this.getdataForm(this.inputData)
     // this.getDefaultDetails(null)
   }
@@ -196,6 +198,23 @@ export class OnlineTrasactionComponent implements OnInit {
     this.familyMemberData = value;
     this.familyMemberId = value.id;
     this.getDefaultDetails(value);
+    this.ownerDetail()
+  }
+  ownerDetail() {
+
+    const obj = {
+      clientId: this.familyMemberData.clientId,
+      advisorId: this.familyMemberData.advisorId,
+      familyMemberId: this.familyMemberData.familyMemberId,
+      //tpUserCredentialId: 292
+    }
+    this.onlineTransact.getClientCodes(obj).subscribe(
+      data => {
+        console.log(data);
+        this.clientCodeData = data;
+      },
+      err => this.eventService.openSnackBar(err, 'Dismiss')
+    );
   }
   lisNominee(value) {
     this.showSpinnerOwner = false
