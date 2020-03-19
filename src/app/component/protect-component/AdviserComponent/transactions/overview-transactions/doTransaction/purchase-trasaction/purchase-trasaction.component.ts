@@ -66,6 +66,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   id = 0;
   isEdit = false;
   editedId: any;
+  noFolio: string;
   constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
     private subInjectService: SubscriptionInject, private fb: FormBuilder, private eventService: EventService,
     private customerService: CustomerService,private UtilService:UtilService) { }
@@ -258,14 +259,18 @@ export class PurchaseTrasactionComponent implements OnInit {
     //       }
     //       rightSideDataSub.unsubscribe();
     //     }
-
     //   }
     // );
   }
   getFoliosAmcWiseRes(data) {
     this.showSpinnerFolio = false
     console.log('getFoliosAmcWiseRes', data)
-    this.folioList = data
+    if(data){
+      this.folioList = data
+    }else{
+      this.noFolio = 'No existing folios'
+    }
+   
     if (this.purchaseTransaction.get('investmentAccountSelection').valid) {
       Object.assign(this.transactionSummary, { folioNumber: this.folioList[0].folioNumber });
     }

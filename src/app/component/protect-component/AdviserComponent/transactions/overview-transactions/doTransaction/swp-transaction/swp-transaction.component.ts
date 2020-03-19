@@ -69,6 +69,7 @@ export class SwpTransactionComponent implements OnInit {
   childTransactions = [];
   displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount'];
   advisorId: any;
+  endDate: Date;
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private processTransaction: ProcessTransactionService, private fb: FormBuilder, private eventService: EventService) { }
   @Output() changedValue = new EventEmitter();
@@ -319,6 +320,10 @@ export class SwpTransactionComponent implements OnInit {
     return this.swpTransaction.controls;
   }
   swp() {
+    this.endDate = new Date()
+      this.endDate.setDate(31);
+      this.endDate.setMonth(11);
+      this.endDate.setFullYear(2099);
     if (this.swpTransaction.get('investmentAccountSelection').invalid) {
       this.swpTransaction.get('investmentAccountSelection').markAsTouched();
       return;
@@ -356,6 +361,7 @@ export class SwpTransactionComponent implements OnInit {
         clientCode: this.getDataSummary.defaultClient.clientCode,
         orderVal: this.swpTransaction.controls.employeeContry.value,
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+        endDate:(this.endDate).getTime(),
         orderType: "SWP",
         amountType: "Amount",
         bseDPTransType: "PHYSICAL",

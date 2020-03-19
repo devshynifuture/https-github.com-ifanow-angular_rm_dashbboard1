@@ -59,7 +59,7 @@ export class VerifyMemberComponent implements OnInit {
     this.customValue = value
     this.Todate = new Date()
     this.Todate.setDate("31");
-    this.Todate.setMonth("12");
+    this.Todate.setMonth("11");
     this.Todate.setFullYear("2099");
     this.generalDetails.controls.toDate.setValue(this.Todate)
   }

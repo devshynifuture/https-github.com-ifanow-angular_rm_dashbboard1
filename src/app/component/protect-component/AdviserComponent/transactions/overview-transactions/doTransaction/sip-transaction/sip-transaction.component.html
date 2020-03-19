@@ -181,6 +181,9 @@
                                 <mat-error class="f-12 pt-4">
                                     This field is required
                                 </mat-error>
+                                <mat-error class="f-12 pt-4" *ngIf="folioList == undefined">
+                                    No existing folios
+                                </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -219,10 +222,10 @@
                                     (change)="enteredAmount($event.target.value)">
                                 <mat-hint align="start" class="f-12 text-custom">
                                     Min amount:
-                                    ₹{{(schemeDetails == undefined)?'0':schemeDetails.minimumPurchaseAmount }}
+                                    ₹{{(schemeDetails == undefined)?'0':schemeDetails.additionalPurchaseAmount }}
                                 </mat-hint>
                                 <mat-error *ngIf="(sipTransaction.get('employeeContry').errors?.min)" class="f-12">
-                                    Should be greater than or equal to {{schemeDetails.minimumPurchaseAmount}}
+                                    Should be greater than or equal to {{schemeDetails.additionalPurchaseAmount}}
                                 </mat-error>
                                 <mat-error *ngIf="(sipTransaction.get('employeeContry').errors?.required)" class="f-12">
                                     This field is requied
