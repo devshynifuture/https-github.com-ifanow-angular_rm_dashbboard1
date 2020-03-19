@@ -200,7 +200,6 @@ export class RecuringDepositComponent implements OnInit {
         }
       }
     }
-    this.disabledMember(null, null);
   }
 
 
@@ -226,9 +225,7 @@ export class RecuringDepositComponent implements OnInit {
         }
       }
      }
-     else{
-      this.disabledMember(null, null)
-    }
+    
     
   }
   /***nominee***/ 

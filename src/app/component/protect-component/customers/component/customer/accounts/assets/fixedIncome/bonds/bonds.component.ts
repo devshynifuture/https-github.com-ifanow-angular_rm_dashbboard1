@@ -196,7 +196,6 @@ export class BondsComponent implements OnInit {
         }
       }
     }
-    this.disabledMember(null, null);
   }
 
 
@@ -222,9 +221,7 @@ export class BondsComponent implements OnInit {
         }
       }
      }
-     else{
-      this.disabledMember(null, null)
-    }
+     
     
   }
   /***nominee***/ 

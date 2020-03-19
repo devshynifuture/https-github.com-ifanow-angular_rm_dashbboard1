@@ -228,7 +228,6 @@ export class AddRealEstateComponent implements OnInit {
         }
       }
     }
-    this.disabledMember(null, null);
   }
 
 
@@ -254,9 +253,7 @@ export class AddRealEstateComponent implements OnInit {
         }
       }
      }
-     else{
-      this.disabledMember(null, null)
-    }
+     
     
   }
   /***nominee***/ 

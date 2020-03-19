@@ -200,7 +200,6 @@ removeNewNominee(item) {
       }
     }
   }
-  this.disabledMember(null, null);
 }
 
 
@@ -226,9 +225,7 @@ addNewNominee(data) {
       }
     }
    }
-   else{
-    this.disabledMember(null, null)
-  }
+   
   
 }
 /***nominee***/ 
