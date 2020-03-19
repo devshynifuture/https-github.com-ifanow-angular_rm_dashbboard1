@@ -16,7 +16,7 @@ import { VerifyOtpComponent } from './component/no-protected/login/verify-otp/ve
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'login',
     loadChildren: () => import('./component/no-protected/login/login.module').then(m => m.LoginModule),
     canActivate: [AuthGuard],
     // outlet: 'mainrouter'

@@ -60,12 +60,13 @@
             </div>
         </div>
 
-        <div class=" col-md-12 overflow-hidden p-0 mt-8 real-estate" id="epf" #EPF #epf>
+        <div [ngClass]="{'table-scroll':isLoading==false }" class=" col-md-12 overflow-hidden p-0 mt-8 real-estate"
+            id="epf" #EPF #epf>
             <table *ngIf="dataSource.filteredData.length > 0" matSort #epfListTable="matSort" mat-table
                 [dataSource]="dataSource" matSort id="table-low" class="skeletonAnimation" appSkeletonLoading
                 [appSkeletonLoading]="isLoading">
 
-                <ng-container matColumnDef="no">
+                <ng-container matColumnDef="no" sticky>
                     <th *matHeaderCellDef class="br " mat-header-cell mat-sort-header mat-sort-header="no"> No</th>
                     <td *matCellDef="let element let i = index" class="br" mat-cell>
                         <div class="bar">{{isLoading ? '' : i + 1 }} </div>
@@ -113,7 +114,19 @@
                         <div class="bar"> {{ sumOfemployeesMonthlyContribution || ' '}} </div>
                     </td>
                 </ng-container>
-
+                <ng-container matColumnDef="employer">
+                    <th mat-sort-header="employersMonthlyContribution" mat-header-cell *matHeaderCellDef
+                        class="br textRight text-right">
+                        Employer's <br>contribution
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="br amt text-right">
+                        <div class="bar" appFormatNumber> {{ element.employersMonthlyContribution }} </div>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef class="br amt f-600 p-8 text-right" appFormatNumber
+                        [value]="sumOfemployersMonthlyContribution">
+                        <div class="bar"> {{ sumOfemployersMonthlyContribution || ' '}} </div>
+                    </td>
+                </ng-container>
                 <ng-container matColumnDef="rate">
                     <th mat-sort-header="rateOfReturns" mat-header-cell *matHeaderCellDef
                         class="br textRight text-right">
@@ -171,7 +184,7 @@
                     </td>
                     <td *matFooterCellDef mat-footer-cell></td>
                 </ng-container>
-                <ng-container matColumnDef="icons">
+                <ng-container matColumnDef="icons" sticky>
                     <th *matHeaderCellDef class="t-2" mat-header-cell></th>
                     <td *matCellDef="let element" class="t-2" mat-cell>
                         <div *ngIf="!isLoading">
