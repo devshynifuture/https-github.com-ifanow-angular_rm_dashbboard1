@@ -14,6 +14,8 @@ import { AuthService } from 'src/app/auth-service/authService';
 export class AddSubBrokerCredentialsComponent implements OnInit {
   addSubCredential: any;
   dataSource: any;
+  memId;
+  euin;
   advisorId: any;
   brokerCredentials: any;
   nse: any;

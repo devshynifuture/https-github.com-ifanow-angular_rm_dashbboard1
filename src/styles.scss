@@ -963,11 +963,12 @@
 
                 #ui-assets-account,
                 #ui-texes,
-                #ui-insurance {
+                #ui-insurance,
+                #ui-liabilities {
                   .vertical-menu {
                     // height: 100vh;
                     position: relative;
-                    height: calc(100vh - 150px);
+                    height: calc(100vh - 147px);
                     display: block !important;
                     width: 100%;
                     text-align: left;
@@ -980,6 +981,14 @@
                     font-size: 14px;
                     text-align: left;
                     margin-bottom: 10px;
+                  }
+                }
+
+                #ui-liabilities {
+                  .vertical-menu {
+
+                    height: calc(100vh - 126px);
+
                   }
                 }
 
@@ -1892,9 +1901,8 @@
                 }
 
                 .advisorHomeBtn {
-                  padding: 0px !important;
-                  width: 151px;
-                  height: 36px;
+                  padding: 0px 5px !important;
+
                 }
 
                 .mat-form-field-subscript-wrapper {

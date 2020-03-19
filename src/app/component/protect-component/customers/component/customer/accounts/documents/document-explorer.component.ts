@@ -219,6 +219,10 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
 
   newFolderRes(data) {
+    console.log('helooooo')
+    if(data==204){
+      this.eventService.openSnackBar('Folder name already exist', 'Ok');
+    }
     console.log('newFolderRes', data);
     this.getAllFileList(this.valueTab);
   }
@@ -592,7 +596,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
 
   uploadDocumentFolder(data) {
-    this.countFile=0;
+    this.countFile = 0;
     this.myFiles = [];
     const array = [];
     this.viewFolder = [];
@@ -618,7 +622,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       uploadFolder: this.uploadFolder,
       flag: 'uploadFolder',
       viewFolder: this.viewFolder,
-      countFiles:this.countFile++
+      countFiles: this.countFile++
 
     };
     console.log(this.myFiles);
@@ -653,7 +657,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       uploadFolder: this.uploadFolder,
       flag: 'uploadFolder',
       viewFolder: this.viewFolder,
-      countFiles:this.countFile
+      countFiles: this.countFile
     };
     const fileuploadurl = data;
     const httpOptions = {

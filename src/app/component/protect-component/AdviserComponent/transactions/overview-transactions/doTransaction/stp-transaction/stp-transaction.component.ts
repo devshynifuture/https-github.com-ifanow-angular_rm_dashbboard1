@@ -66,6 +66,7 @@ export class StpTransactionComponent implements OnInit {
   multiTransact = false;
   childTransactions = [];
   displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount'];
+  endDate: Date;
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private processTransaction: ProcessTransactionService, private eventService: EventService,
     private fb: FormBuilder) { }
@@ -387,6 +388,10 @@ export class StpTransactionComponent implements OnInit {
     return this.stpTransaction.controls;
   }
   stp() {
+    this.endDate = new Date()
+    this.endDate.setDate(31);
+    this.endDate.setMonth(11);
+    this.endDate.setFullYear(2099);
     if (this.reInvestmentOpt.length > 1) {
       if (this.stpTransaction.get('reinvest').invalid) {
         this.stpTransaction.get('reinvest').markAsTouched();
@@ -430,6 +435,7 @@ export class StpTransactionComponent implements OnInit {
         toIsin: this.schemeDetailsTransfer.isin,
         schemeCd: this.schemeDetails.schemeCode,
         euin: this.getDataSummary.euin.euin,
+        endDate:(this.endDate).getTime(),
         orderType: "STP",
         buySell: "PURCHASE",
         transCode: "NEW",

@@ -52,10 +52,10 @@
 }
 
 @media(max-width:1142px) {
-  .mat-radio-button#mat-radio-3 {
-    min-width: 135px;
-    width: 165px;
-  }
+  // .mat-radio-button#mat-radio-3 {
+  //   min-width: 135px;
+  //   width: 165px;
+  // }
 
   .future-contribution {
     .f-14 {
@@ -70,10 +70,18 @@
 
 @media(max-width:1092px) {
 
-  #ui-assets-account li // #ui-insurance li 
+  #ui-assets-account,
+  #ui-liabilities {
+    li {
+      padding: 0 0px 0px 8px !important;
+      font-size: 13px;
+    }
+  }
 
-    {
-    padding: 0 0px 0px 8px !important;
+  .add-liabilities {
+    .f-14 {
+      font-size: 13px !important;
+    }
   }
 
   .superannuation {
@@ -82,14 +90,47 @@
     }
   }
 
+
+}
+
+@media(max-width:1042px) {
+  h5 {
+    font-size: 15px;
+  }
+
+  h4 {
+    font-size: 16px;
+  }
+
   .fddate {
     .radioBtn .mat-radio-label {
       padding-left: 5px !important;
     }
 
-    .mat-radio-button#mat-radio-2 {
-      width: 123px !important;
-      min-width: 123px !important;
+    #mat-radio-5 {
+      min-width: 130px !important;
     }
+
+    #mat-radio-6 {
+      min-width: 150px !important;
+    }
+  }
+}
+
+@media(max-width:1024px) {
+  .radioBtn .mat-radio-label {
+    min-width: 125px !important;
+    height: 37px !important;
+  }
+
+  .popup-header-fix-60 {
+    .f-17 {
+      font-size: 16px !important;
+    }
+  }
+
+  #ui-assets-account li,
+  #ui-liabilities li {
+    font-size: 13px !important;
   }
 }

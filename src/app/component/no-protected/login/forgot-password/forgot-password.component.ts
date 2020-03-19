@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatInput } from '@angular/material';
+import { ValidatorType } from 'src/app/services/util.service';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-forgot-password',
@@ -9,7 +11,9 @@ import { MatInput } from '@angular/material';
 export class ForgotPasswordComponent implements OnInit {
   isVerify: boolean = false;
   otp: any;
+  validatorType = ValidatorType;
   otpData = [];
+  userName = new FormControl('', [Validators.required]);
   constructor() { }
   ngOnInit() {
   }
@@ -28,26 +32,28 @@ export class ForgotPasswordComponent implements OnInit {
     this.otp = otp;
   }
   enterOtp(value) {
-    if (value.srcElement.nextElementSibling == undefined && this.otpData.length > 6) {
-      return;
-    }
-    if (value.srcElement.previousElementSibling == undefined && this.otpData.length < 0 || value == '') {
-      return;
-    }
-    if (value.inputType == "insertText") {
-      this.otpData.push(value);
-      value.srcElement.nextElementSibling.focus();
-    }
-    else {
+    if (value.code.substring(0, value.code.length - 1) == 'Key' || value.code == "Backspace") {
+      if (value.srcElement.previousElementSibling == undefined) {
+        return;
+      }
       value.srcElement.previousElementSibling.focus();
       this.otpData.pop();
     }
-
-    console.log(value)
-
+    else {
+      if (value.srcElement.nextElementSibling == undefined) {
+        return;
+      }
+      this.otpData.push(value.key);
+      value.srcElement.nextElementSibling.focus();
+    }
   }
   verify() {
-    this.isVerify = true;
+    if (this.userName.invalid) {
+      return;
+    }
+    else {
+      (this.isVerify) ? this.isVerify = false : this.isVerify = true;
+    }
   }
 
 }

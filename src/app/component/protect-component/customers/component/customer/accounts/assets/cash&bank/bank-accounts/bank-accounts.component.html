@@ -78,9 +78,9 @@
             <p class="m-0 text-custom f-12">Leave bank if you want to enter<br> complete transaction history </p>
         </div>
         <div class="col-md-3">
-            <mat-form-field>
+            <mat-form-field class="ba-date">
                 <input matInput autocomplete="off" (focus)="picker.open()" formControlName="balanceAsOn"
-                    class="form-control br-0" [matDatepicker]="picker" readonly>
+                    class="form-control br-0 b-0" [matDatepicker]="picker" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error class="f-12"

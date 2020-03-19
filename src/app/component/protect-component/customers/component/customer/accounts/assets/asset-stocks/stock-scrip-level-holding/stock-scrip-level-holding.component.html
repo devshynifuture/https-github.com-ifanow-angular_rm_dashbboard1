@@ -10,16 +10,13 @@
         </div>
     </div>
 </div>
-
 <div class="mb-48">
-
     <div [formGroup]="scipLevelHoldingForm" class="row pt-100 pl-28">
         <div class="col-md-3 p-0">
             <h5 class="m-0 pb-8">Owner</h5>
             <app-owner-column [data]='ownerName' [checkValid]='checkValid' (valueChange)='display($event)'>
             </app-owner-column>
         </div>
-
         <div class="col-md-3">
             <h5 class="m-0 pb-8">Portfolio name</h5>
             <app-portfolio-field (outputEvent)='getPortfolioData($event)' [checkValid]='checkValid'
@@ -35,11 +32,9 @@
         <div class="col-md-4 pl-0">
             <label class="f-16"> Scrip name</label>
         </div>
-
         <div class="col-md-2 pl-0">
             <label class="pb-8 f-16"> Holdings </label>
         </div>
-
         <div class="col-md-3">
             <label class="pb-8 f-16"> Holdings as on </label>
         </div>
@@ -47,7 +42,6 @@
             <label class="pb-8 f-16"> Amount invested</label>
         </div>
     </div>
-
     <div [formGroup]="holdingListForm">
         <div class="row pb-36 pl-28" *ngFor="let singleHolding of HoldingArray.controls; let i = index;"
             [formGroup]="singleHolding">
@@ -61,9 +55,11 @@
                     <mat-form-field>
                         <input matInput autocomplete="off" #totalUnits type="number" formControlName="holdings"
                             maxlength="20" class="form-control br-0 rupess">
-                        <mat-hint align="start" class="m-0 f-11 text-custom pt-4">As in statement</mat-hint>
+                        <mat-hint align="start"
+                            class="m-0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           text-custom pt-4">
+                            As in statement
+                        </mat-hint>
                         <mat-error>This field is required</mat-error>
-
                     </mat-form-field>
                 </div>
             </div>
@@ -75,7 +71,6 @@
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-error>This field is required</mat-error>
-
                     </mat-form-field>
                 </div>
             </div>
@@ -85,11 +80,8 @@
                         <input matInput autocomplete="off" #totalNetContribution formControlName="investedAmt"
                             type="number" maxlength="20" class="form-control br-0 rupess">
                     </mat-form-field>
-
                 </div>
-
             </div>
-
             <div class="col-md-1 d-flex pt-10 pl-0">
                 <i (click)="addHoldings()" *ngIf="i==HoldingArray.length-1" class="material-icons text-custom c-p">
                     add
@@ -98,7 +90,6 @@
                     remove
                 </i>
             </div>
-
         </div>
     </div>
     <hr class="ml-16 mr-16">

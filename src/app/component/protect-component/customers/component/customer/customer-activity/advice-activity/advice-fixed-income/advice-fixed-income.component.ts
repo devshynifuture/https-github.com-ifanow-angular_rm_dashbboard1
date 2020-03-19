@@ -119,11 +119,11 @@ export class AdviceFixedIncomeComponent implements OnInit {
   checkSingle(flag, selectedData, tableData, tableFlag) {
     if (flag.checked) {
       selectedData.selected = true;
-      this.selectedAssetId.push(selectedData.assetDetails.id)
+      this.selectedAssetId.push(selectedData.id)
     }
     else {
       selectedData.selected = false
-      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.assetDetails.id), 1)
+      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
     }
     let countValue = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
     this.getFlagCount(tableFlag, countValue);
