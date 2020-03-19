@@ -1,7 +1,10 @@
+import { EventService } from './../../../../../Data-service/event.service';
 import { SupportService } from './../../support.service';
 import { SubscriptionInject } from './../../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
+import { SelectionModel } from '@angular/cdk/collections';
+import { ReconciliationService } from '../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
 
 @Component({
   selector: 'app-reconciliation-details-view',
@@ -20,14 +23,99 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   dataSource2 = new MatTableDataSource<PeriodicElement2>(ELEMENT_DATA2);
   tableEntriesType: number;
   isKeepOrRemoveTransactions: any[] = [];
+  tableData1: any[] = [];
+  isFreeze: boolean = false;
+  selection = new SelectionModel<PeriodicElement1>(true, []);
+  shouldDeleteMultiple: boolean = false;
+  deleteMultipleTransactionArray: any[] = []
+  upperTableArr: PeriodicElement[];
 
   constructor(
     private subscriptionInject: SubscriptionInject,
+    private reconService: ReconciliationService,
+    private eventService: EventService,
     private supportService: SupportService
   ) { }
 
+  singleSelectionSelect(element) {
+    this.selection.toggle(element);
+    if (this.selection.isSelected(element)) {
+      this.shouldDeleteMultiple = true;
+      this.deleteMultipleTransactionArray.push(element.id);
+    } else {
+      this.shouldDeleteMultiple = false;
+      let index = this.deleteMultipleTransactionArray.indexOf(element);
+      this.deleteMultipleTransactionArray.splice(index, 1);
+    }
+    console.log(this.deleteMultipleTransactionArray);
+  }
+
+
+  masterToggle() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      this.shouldDeleteMultiple = false;
+      this.deleteMultipleTransactionArray = [];
+    } else {
+      this.shouldDeleteMultiple = true;
+      this.dataSource1.data.forEach(row => {
+        this.selection.select(row);
+        if (this.deleteMultipleTransactionArray.includes(row['id'])) {
+          return;
+        }
+        this.deleteMultipleTransactionArray.push(row['id']);
+      });
+    }
+    console.log(this.deleteMultipleTransactionArray);
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: PeriodicElement1): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+  }
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource1.data.length;
+    return numSelected === numRows;
+  }
+
+  deleteSingleOrMultipleTransaction(element) {
+    console.log(this.deleteMultipleTransactionArray);
+    if (this.deleteMultipleTransactionArray.length > 0) {
+      this.deleteTransactionApi(this.deleteMultipleTransactionArray);
+    } else {
+      this.eventService.openSnackBar("Please select atleast one transaction", "DISMISS")
+    }
+  }
+
+  deleteTransactionApi(value) {
+    this.reconService.deleteAumTransaction(value)
+      .subscribe(res => {
+        console.log("this transactions are deleted:::", res);
+        this.dataSource1.data = this.tableData1.filter(item => {
+          return (!value.includes(item.id)) ? item : null;
+        });
+        this.dataSource.data.map(item => {
+          item['unitOne'] = String((res.units).toFixed(3));
+          item['difference'] = String((parseInt(item['unitOne']) - parseInt(item['unitsRta'])).toFixed(3));
+        });
+        // this.dataSource.data['unitOne'] = this.dataSource.data['unitOne'] - res.units;
+        // this.dataSource.data['difference'] = this.dataSource.data['unitOne'] - this.dataSource.data['unitsRta'];
+        this.supportService.sendDataThroughObs(res);
+      });
+  }
+
+  deleteSingleTransaction(element) {
+    this.deleteTransactionApi([element['id']]);
+  }
+
   ngOnInit() {
     console.log(this.data);
+
     if (this.data && this.data.tableType == 'all-folios') {
       this.tableEntriesType = 1;
     } else if (this.data && this.data.tableType == 'duplicate-folios') {
@@ -35,13 +123,31 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     }
 
     const tableArr: PeriodicElement[] = [{
-      unitsRta: this.data.unitsRta ? this.data.unitsRta : '',
-      unitOne: this.data.unitsIfanow ? this.data.unitsIfanow : '',
-      difference: this.data.difference ? this.data.difference : ''
+      unitsRta: this.data.unitsRta ? (this.data.unitsRta).toFixed(3) : '',
+      unitOne: this.data.unitsIfnow ? (this.data.unitsIfnow).toFixed(3) : '',
+      difference: this.data.difference ? (this.data.difference).toFixed(3) : ''
     }]
 
     this.dataSource.data = tableArr;
+    this.upperTableArr = tableArr;
+    this.allFolioTransactionTableDataBinding();
+  }
 
+  allFolioTransactionTableDataBinding() {
+    if (this.data.tableData.length !== 0) {
+      this.data.tableData.forEach(element => {
+        this.tableData1.push({
+          id: element.id,
+          transactionType: element.fwTransactionType,
+          date: element.transactionDate,
+          amount: element.amount,
+          units: element.unit,
+          balanceUnits: element.balanceUnits,
+          actions: ''
+        })
+      });
+      this.dataSource1.data = this.tableData1;
+    }
   }
 
   putAumTransactionKeepOrRemove() {
@@ -57,7 +163,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     // this.supportService.putAumTransactionKeepOrRemove(this.isKeepOrRemoveTransactions)
     //   .subscribe(res => {
     //     console.log(res);
-    //   })
+    //   });
   }
 
   shouldKeepOrRemove(value, element) {
@@ -66,7 +172,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   }
 
   dialogClose() {
-    this.subscriptionInject.changeNewRightSliderState({ state: 'close' });
+    this.subscriptionInject.changeNewRightSliderState({ state: 'close', refreshRequired: true });
   }
 
 }
@@ -80,8 +186,8 @@ interface PeriodicElement {
 const ELEMENT_DATA: PeriodicElement[] = [
   { unitOne: '0', unitsRta: '463.820', difference: '463.82', },
 ];
-
-export interface PeriodicElement1 {
+interface PeriodicElement1 {
+  position: number;
   checkbox: string;
   transactionType: string;
   date: string;
@@ -102,8 +208,8 @@ interface PeriodicElement2 {
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
-  { checkbox: ' ', transactionType: 'SIP', date: '07/01/2019', amount: '5,000.00', units: '156.23', balanceUnits: '156.23', action: ' ' },
-  { checkbox: ' ', transactionType: 'Transfer Out Change of Broker', date: '07/01/2019', amount: '5,000.00', units: '156.23', balanceUnits: '156.23', action: ' ' },
+  { position: 1, checkbox: '', transactionType: 'SIP', date: '07/01/2019', amount: '5,000.00', units: '156.23', balanceUnits: '156.23', action: ' ' },
+  { position: 2, checkbox: '', transactionType: 'Transfer Out Change of Broker', date: '07/01/2019', amount: '5,000.00', units: '156.23', balanceUnits: '156.23', action: ' ' },
 ];
 
 const ELEMENT_DATA2: PeriodicElement2[] = [
