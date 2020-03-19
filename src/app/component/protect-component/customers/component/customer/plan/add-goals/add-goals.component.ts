@@ -71,6 +71,15 @@ export class AddGoalsComponent implements OnInit {
     data.forEach(element => {
       switch (element.id) {
         case 1: // Retirement
+          element.questions = {
+            Q: 'Who are you planning this for?',
+            Q1: 'Age you want to retire?',
+            Q2: 'Your current monthly expenses?',
+            Q5: "At retirement, by what % will the expenses change?",
+            Q6: "Milestones you'd also like to plan for (optional)",
+            Q3: 'Give this goal a name',
+            Q4: 'Notes'
+          }
           element.imageUrl = '/assets/images/svg/retierment.svg';
           break;
         case 2: // House
@@ -166,7 +175,7 @@ export class AddGoalsComponent implements OnInit {
         case 6: // Education
         element.questions = {
           Q: 'Who are you planning this for?',
-          Q1: 'Member"s age at the time of course?',
+          Q1: 'Member\'s age at the time of course?',
           Q2: 'Annual Course expenses in today\'s value',
           Q3: 'Give this goal a name',
           Q4: 'Notes'
@@ -212,7 +221,7 @@ export class AddGoalsComponent implements OnInit {
           element.questions = {
             Q: 'Who are you planning this for?',
             Q1: 'When do you want to it?',
-            Q2: "wahts the target amount?",
+            Q2: "What's the target amount?",
             Q3: 'Give this goal a name',
             Q4: 'Notes'
           }
@@ -285,7 +294,7 @@ export class AddGoalsComponent implements OnInit {
   
   setGoalTypeData(data) {
     this.goalTypeData = data;
-    this.showGoalType = [1,5,6].includes(data.id) ? (data.id == 1 ? 'retirement' : 'multiYear') : 'singleYear' 
+    this.showGoalType = [5,6].includes(data.id) ? 'multiYear' : 'singleYear' 
   }
 
   cancelGoal(){
