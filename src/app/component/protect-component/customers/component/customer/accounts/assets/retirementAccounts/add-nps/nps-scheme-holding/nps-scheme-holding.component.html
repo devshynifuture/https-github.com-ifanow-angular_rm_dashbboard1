@@ -119,12 +119,18 @@
             <div class="col-md-4 pl-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input autocomplete="off" matInput aria-label="State" [matAutocomplete]="auto"
+                        <!-- <input autocomplete="off" matInput aria-label="State" [matAutocomplete]="auto"
                             class="form-control br-0 pl-8" formControlName="schemeName">
                         <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let s of schemeList" [value]="s.id">{{ s.name }}
+                            <mat-option *ngFor="let s of schemeList" [value]="s.id">{{s.name}}
                             </mat-option>
-                        </mat-autocomplete>
+                        </mat-autocomplete> -->
+                        <mat-select  matInput
+                        formControlName="schemeName"  class="form-control br-0" >
+                            <mat-option [value]='0' disabled>Select scheme</mat-option>
+                            <mat-option *ngFor="let s of schemeList" [value]="s.id">{{s.name}}
+                            </mat-option>
+                        </mat-select>
                         <mat-error class="f-12">
                             This field is required
                         </mat-error>
@@ -152,7 +158,7 @@
                     <div class="col-md-4 pl-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input autocomplete="off" matInput formControlName="holdingAsOn"
+                                <input (click)="picker.open()" (focus)="picker.open()" autocomplete="off" matInput formControlName="holdingAsOn"
                                     [matDatepicker]="picker" class="form-control br-0" readonly>
                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
@@ -282,11 +288,11 @@
         </div>
 
     </div>
-    <div formArrayName="getNomineeName">
-        <div class="row pt-36 pb-36"
+    <div formArrayName="getNomineeName" class="pb-36">
+        <div class="row pt-36 "
             *ngFor="let obj of schemeHoldingsNPS.controls['getNomineeName'].controls; let pointIndex=index"
             [formGroupName]="pointIndex">
-            <div class="col-md-5 pr-0 text-right">
+            <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
             </div>
             <div class="pr-0" [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
@@ -322,9 +328,10 @@
                 </div>
             </div>
             <div class="col-md-2 p-0 d-flex align-items-center">
-                <i class="material-icons text-primitive f-20 c-p float-left" (click)="addNewNominee(undefined)">add</i>
-                <i *ngIf="pointIndex!=0" class="material-icons text-primitive f-20 c-p pl-10 pt-8"
-                    (click)="removeNewNominee(pointIndex)">remove</i>
+                <i *ngIf="schemeHoldingsNPS.value.getNomineeName.length < 3" class="material-icons text-primitive f-20 c-p float-left"
+                (click)="addNewNominee(undefined)">add</i>
+                <i *ngIf="schemeHoldingsNPS.value.getNomineeName.length > 1" class="material-icons text-primitive f-20 c-p pl-10 pt-8"
+                (click)="removeNewNominee(pointIndex)">remove</i>
             </div>
 
         </div>
