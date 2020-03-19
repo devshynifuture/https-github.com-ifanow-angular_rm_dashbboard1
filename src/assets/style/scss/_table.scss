@@ -145,6 +145,14 @@ table {
 
   }
 
+  td.mat-footer-cell {
+    bottom: -2px !important;
+  }
+
+  td.mat-footer-cell:first-of-type {
+    padding-left: 4px !important;
+  }
+
   .greentext {
     color: #02B875 !important;
   }
