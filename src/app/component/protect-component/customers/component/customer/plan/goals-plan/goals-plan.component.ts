@@ -50,7 +50,7 @@ export class GoalsPlanComponent implements OnInit {
       img: '/assets/images/svg/higher-edu.svg',
       dummyDashBoardData: {
         goalYear: 2025,
-        presentValue: 24325,
+        goalPresentValue: 24325,
         futureValue: 456543,
         equity_monthly: 5200,
         debt_monthly: 44553,
@@ -67,7 +67,7 @@ export class GoalsPlanComponent implements OnInit {
       img: '/assets/images/svg/house-goals.svg',
       dummyDashBoardData: {
         goalYear: 2025,
-        presentValue: 24325,
+        goalPresentValue: 24325,
         futureValue: 456543,
         equity_monthly: 5200,
         debt_monthly: 44553,
@@ -84,7 +84,7 @@ export class GoalsPlanComponent implements OnInit {
       img: '/assets/images/svg/retierment-goals.svg',
       dummyDashBoardData: {
         goalYear: 2025,
-        presentValue: 24325,
+        goalPresentValue: 24325,
         futureValue: 456543,
         equity_monthly: 5200,
         debt_monthly: 44553,
@@ -101,7 +101,7 @@ export class GoalsPlanComponent implements OnInit {
       img: '/assets/images/svg/higher-edu.svg',
       dummyDashBoardData: {
         goalYear: 2025,
-        presentValue: 24325,
+        goalPresentValue: 24325,
         futureValue: 456543,
         equity_monthly: 5200,
         debt_monthly: 44553,
@@ -169,6 +169,43 @@ export class GoalsPlanComponent implements OnInit {
     }]
   }
 
+  // options set for donut chart
+  // TODO:- remove 'series' legend from the tooltip
+  donutOptions:any = {
+    chart: {
+        type: 'pie',
+        height: 170
+    },
+    title: {
+      text: ''
+    },
+    credits: {
+        enabled: false
+    },
+    yAxis: {
+        title: {
+            text: 'Total percent market share'
+        }
+    },
+    plotOptions: {
+        pie: {
+            shadow: false
+        }
+    },
+    legend:{
+      floating: true,
+    },
+    series: [{
+        data: [["Loan Amt",6],["Down Amt",4]],
+        size: '100%',
+        innerSize: '55%',
+        showInLegend:true,
+        dataLabels: {
+            enabled: false
+        }
+    }]
+}
+
   constructor(
     private subInjectService: SubscriptionInject, 
     private eventService: EventService, 
@@ -190,9 +227,24 @@ export class GoalsPlanComponent implements OnInit {
   loadAllGoals(){
     this.plansService.getAllGoals(this.advisor_client_id).subscribe((data)=>{
       // this.allGoals = data || [];
+      // this.allGoals = this.allGoals.map((goal)=> this.mapGoalDashboardData);
       console.log('sagar', data);
       this.loadSelectedGoalData(this.allGoals[0]);
     }, err => this.eventService.openSnackBar(err, "Dismiss"))
+  }
+
+  mapGoalDashboardData(goal:any) {
+    // single year goal model
+    if(goal.singleOrMulti == 1) {
+      goal.dashboardData = {
+        presentValue: goal.singleGoalModel.goalPresentValue,
+        futureValue: goal.singleGoalModel.goalFV,
+        equity_monthly: 0
+      }
+    } else {
+
+    }
+    return goal;
   }
 
   loadGlobalAPIs(){
@@ -292,6 +344,7 @@ export class GoalsPlanComponent implements OnInit {
     this.selectedGoal = goalData;
     Highcharts.chart('monthly-chart-container', this.options);
     Highcharts.chart('lumpsum-chart-container', this.options);
+    Highcharts.chart('donut-chart-container', this.donutOptions);
   }
 
   deleteGoal() {
