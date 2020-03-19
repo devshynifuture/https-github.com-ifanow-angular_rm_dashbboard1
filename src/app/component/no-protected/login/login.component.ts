@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators, FormControlName } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -48,7 +48,8 @@ export class LoginComponent implements OnInit {
   otpNumber: boolean = false;
   errorRequired: boolean = false;
   errorMsg: boolean = false;
-  errorStyle = {}
+  errorStyle = {};
+  userName = new FormControl();
   constructor(
     private formBuilder: FormBuilder, private eventService: EventService,
     public backOfficeService: BackOfficeService,
@@ -80,7 +81,7 @@ export class LoginComponent implements OnInit {
   }
 
   otpClick() {
-    this.otpNumber = true;
+    (this.otpNumber) ? this.otpNumber = false : this.otpNumber = true;
   }
 
   private createForm() {

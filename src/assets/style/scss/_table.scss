@@ -100,6 +100,8 @@ table {
 }
 
 #tbs {
+
+
   .mat-sort-header-button {
 
     letter-spacing: normal;
@@ -143,6 +145,10 @@ table {
 
   }
 
+  td.mat-footer-cell {
+    bottom: -2px !important;
+  }
+
   .greentext {
     color: #02B875 !important;
   }
@@ -163,6 +169,7 @@ table {
     height: auto;
     overflow: auto !important;
     max-height: 400px;
+
 
 
   }

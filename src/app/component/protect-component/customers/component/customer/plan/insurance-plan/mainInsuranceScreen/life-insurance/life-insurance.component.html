@@ -1,154 +1,151 @@
+<div class="row pb-12 pt-28 bb-grey">
+    <div class="col-md-10 p-0">
+        <h3 class="m-0">{{getData.heading}} - Rahul Jain</h3>
+    </div>
+    <div class="col-md-2 pr-0 right text-right">
+        <img src="/assets/images/svg/insurance-delect-icon.svg">
+    </div>
+</div>
 
-    <div class="row pb-12 pt-28 bb-grey">
-        <div class="col-md-10 p-0">
-            <h3 class="m-0">{{getData.heading}} - Rahul Jain</h3>
+<div class="row">
+    <div class="col-width-69 ">
+        <div class="row pt-28">
+            <div class="col-md-3 p-0">
+                <p class="f-12 m-0 text-primitive">ACTUAL</p>
+                <h3 class="m-0">₹54,50,000</h3>
+            </div>
+            <div class="col-md-3 p-0">
+                <p class="f-12 m-0 text-primitive">ACTUAL</p>
+                <h3 class="m-0">₹54,50,000</h3>
+            </div>
+            <div class="col-md-6">
+                <p class="f-12 m-0">STATUS</p>
+                <mat-progress-bar mode="determinate" value="32" class="h-30 bg-primary " placeholder="32%">
+                    32%
+                </mat-progress-bar>
+            </div>
         </div>
-        <div class="col-md-2 pr-0 right text-right">
-            <img src="/assets/images/svg/insurance-delect-icon.svg">
+
+        <div class="row pt-20">
+            <div class="col-md-12 p-0">
+                <h5 class="roboto f-500">Planner notes</h5>
+                <div class="ba-light p-8">
+                    <p class="m-0 f-14 l-18">
+                        With increasing medical costs you are strongly advised to increase your sum assured. We suggest an additional sum assured of Rs.7,00,000. We have compared and suggested two of the best policies currently available in the market. We have done a comprehensive
+                        feature anlaysis of the same and presented a detailed feature analysis for your review.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row pt-32">
+            <div class="col-md-12 p-0 insuranceTable">
+
+                <h5 class="roboto f-500">Suggested policies</h5>
+                <table mat-table [dataSource]="dataSource1" class="mt-8" id="table-low">
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell class="w-25" *matHeaderCellDef> Policy name </th>
+                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="sum">
+                        <th mat-header-cell class="textRight" *matHeaderCellDef> Sum assured </th>
+                        <td mat-cell *matCellDef="let element" class="text-right  amt"> {{element.sum}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="premium">
+                        <th mat-header-cell class="textRight" *matHeaderCellDef> Annual premium </th>
+                        <td mat-cell class="text-right amt" *matCellDef="let element"> {{element.premium}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="returns">
+                        <th mat-header-cell class="textRight" *matHeaderCellDef> Returns </th>
+                        <td mat-cell class="text-right amt" *matCellDef="let element"> {{element.returns}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="advice">
+                        <th mat-header-cell *matHeaderCellDef> Advice </th>
+                        <td mat-cell *matCellDef="let element"> {{element.advice}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                </table>
+
+            </div>
+        </div>
+
+
+        <div class="row pt-32">
+            <div class="col-md-12 p-0 insuranceTable">
+
+                <h5 class="roboto f-500">Recommendations on current policies</h5>
+
+                <table mat-table [dataSource]="dataSource1" class="mt-8" id="table-low">
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell class="w-25" *matHeaderCellDef> Policy name </th>
+                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="sum">
+                        <th mat-header-cell class="textRight" *matHeaderCellDef> Sum assured </th>
+                        <td mat-cell *matCellDef="let element" class="text-right  amt"> {{element.sum}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="premium">
+                        <th mat-header-cell class="textRight" *matHeaderCellDef> Annual premium </th>
+                        <td mat-cell class="text-right amt" *matCellDef="let element"> {{element.premium}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="returns">
+                        <th mat-header-cell class="textRight" *matHeaderCellDef> Returns </th>
+                        <td mat-cell class="text-right amt" *matCellDef="let element"> {{element.returns}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="advice">
+                        <th mat-header-cell *matHeaderCellDef> Advice </th>
+                        <td mat-cell *matCellDef="let element"> {{element.advice}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                </table>
+
+            </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-width-69 ">
-            <div class="row pt-28">
-                <div class="col-md-3 p-0">
-                    <p class="f-12 m-0 text-primitive">ACTUAL</p>
-                    <h3 class="m-0">₹54,50,000</h3>
-                </div>
-                <div class="col-md-3 p-0">
-                    <p class="f-12 m-0 text-primitive">ACTUAL</p>
-                    <h3 class="m-0">₹54,50,000</h3>
-                </div>
-                <div class="col-md-6">
-                    <p class="f-12 m-0">STATUS</p>
-                    <mat-progress-bar mode="determinate" value="32" class="h-30 bg-primary " placeholder="32%">
-                        32%
-                    </mat-progress-bar>
-                </div>
-            </div>
+    <div class="col-width-31 text-right">
+        <img class="mt-20" src={{logo}}>
+        <div class="d-flex mt-20 align-items-center justify-content-between">
+            <button mat-stroked-button class="btn140 text-primary br-2" (click)="needAnalysis(null)">
+                <img src="/assets/images/svg/insuranceBtn-icon.svg"> Needs analysis
+            </button>
 
-            <div class="row pt-20">
-                <div class="col-md-12 p-0">
-                    <h5 class="roboto f-500">Planner notes</h5>
-                    <div class="ba-light p-8">
-                        <p class="m-0 f-14 l-18">
-                            With increasing medical costs you are strongly advised to increase your sum assured. We suggest an additional sum assured of Rs.7,00,000. We have compared and suggested two of the best policies currently available in the market. We have done a comprehensive
-                            feature anlaysis of the same and presented a detailed feature analysis for your review.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="row pt-32">
-                <div class="col-md-12 p-0 insuranceTable">
-
-                    <h5 class="roboto f-500">Suggested policies</h5>
-                    <table mat-table [dataSource]="dataSource1" class="mt-8" id="table-low">
-                        <ng-container matColumnDef="name">
-                            <th mat-header-cell class="w-25" *matHeaderCellDef> Policy name </th>
-                            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-                        </ng-container>
-
-                        <!-- Name Column -->
-                        <ng-container matColumnDef="sum">
-                            <th mat-header-cell class="textRight" *matHeaderCellDef> Sum assured </th>
-                            <td mat-cell *matCellDef="let element" class="text-right  amt"> {{element.sum}}
-                            </td>
-                        </ng-container>
-
-                        <!-- Weight Column -->
-                        <ng-container matColumnDef="premium">
-                            <th mat-header-cell class="textRight" *matHeaderCellDef> Annual premium </th>
-                            <td mat-cell class="text-right amt" *matCellDef="let element"> {{element.premium}}
-                            </td>
-                        </ng-container>
-
-                        <!-- Symbol Column -->
-                        <ng-container matColumnDef="returns">
-                            <th mat-header-cell class="textRight" *matHeaderCellDef> Returns </th>
-                            <td mat-cell class="text-right amt" *matCellDef="let element"> {{element.returns}}
-                            </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="advice">
-                            <th mat-header-cell *matHeaderCellDef> Advice </th>
-                            <td mat-cell *matCellDef="let element"> {{element.advice}} </td>
-                        </ng-container>
-
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
-                    </table>
-
-                </div>
-            </div>
-
-
-            <div class="row pt-32">
-                <div class="col-md-12 p-0 insuranceTable">
-
-                    <h5 class="roboto f-500">Recommendations on current policies</h5>
-
-                    <table mat-table [dataSource]="dataSource1" class="mt-8" id="table-low">
-                        <ng-container matColumnDef="name">
-                            <th mat-header-cell class="w-25" *matHeaderCellDef> Policy name </th>
-                            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-                        </ng-container>
-
-                        <!-- Name Column -->
-                        <ng-container matColumnDef="sum">
-                            <th mat-header-cell class="textRight" *matHeaderCellDef> Sum assured </th>
-                            <td mat-cell *matCellDef="let element" class="text-right  amt"> {{element.sum}}
-                            </td>
-                        </ng-container>
-
-                        <!-- Weight Column -->
-                        <ng-container matColumnDef="premium">
-                            <th mat-header-cell class="textRight" *matHeaderCellDef> Annual premium </th>
-                            <td mat-cell class="text-right amt" *matCellDef="let element"> {{element.premium}}
-                            </td>
-                        </ng-container>
-
-                        <!-- Symbol Column -->
-                        <ng-container matColumnDef="returns">
-                            <th mat-header-cell class="textRight" *matHeaderCellDef> Returns </th>
-                            <td mat-cell class="text-right amt" *matCellDef="let element"> {{element.returns}}
-                            </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="advice">
-                            <th mat-header-cell *matHeaderCellDef> Advice </th>
-                            <td mat-cell *matCellDef="let element"> {{element.advice}} </td>
-                        </ng-container>
-
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
-                    </table>
-
-                </div>
-            </div>
+            <button mat-stroked-button class="btn140 text-primary br-2" (click)="suggestPolicy(null)">
+                <img src="/assets/images/svg/insuranceBtn-icon.svg"> Suggest policy
+            </button>
         </div>
 
-        <div class="col-width-31 text-right">
-            <img class="mt-20" src={{logo}}>
-            <div class="d-flex mt-20 align-items-center justify-content-between">
-                <button mat-stroked-button class="btn140 text-primary br-2"
-                (click)="needAnalysis(null)">
-                    <img src="/assets/images/svg/insuranceBtn-icon.svg"> Needs analysis
-                </button>
-
-                <button mat-stroked-button class="btn140 text-primary br-2"
-                (click)="suggestPolicy(null)">
-                    <img src="/assets/images/svg/insuranceBtn-icon.svg"> Suggest policy
-                </button>
-            </div>
-
-            <div class="d-flex mt-20 align-items-center">
-                <button mat-stroked-button class="w-100 p-0 text-primary br-2">
-                    <img src="/assets/images/svg/insuranceBtn-icon.svg"> Recommendations on current policies
-                </button>
-            </div>
-
-
+        <div class="d-flex mt-20 align-items-center">
+            <button (click)="recommendationsPolicy(null)" mat-stroked-button class="w-100 p-0 text-primary br-2">
+                <img src="/assets/images/svg/insuranceBtn-icon.svg"> Recommendations on current policies
+            </button>
         </div>
+
+
     </div>
+</div>

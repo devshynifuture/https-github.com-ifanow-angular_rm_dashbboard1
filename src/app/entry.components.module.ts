@@ -89,6 +89,7 @@ import { Ng5SliderModule } from 'ng5-slider';
 import { DetailedViewNpsComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-nps/detailed-view-nps/detailed-view-nps.component';
 import { CommonComponentModule } from './component/protect-component/common-component/common-component.module';
 import { OwnerNomineeComponent } from './component/protect-component/common-component/owner-nominee/owner-nominee.component';
+import { AddRecommendationsInsuComponent } from './component/protect-component/customers/component/customer/plan/insurance-plan/add-recommendations-insu/add-recommendations-insu.component';
 //import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
 
@@ -207,6 +208,7 @@ export const componentList = [
   EditNoteGoalComponent,
   ViewPastnotGoalComponent,
   AddSuggestPolicyComponent,
+  AddRecommendationsInsuComponent,
   CurrentPolicyComponent,
   SelectAdviceComponent,
   AddNomineeComponent,

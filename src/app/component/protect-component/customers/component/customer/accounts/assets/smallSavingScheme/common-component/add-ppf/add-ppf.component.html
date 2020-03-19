@@ -33,8 +33,8 @@
                 </mat-form-field>
             </div>
         </div> -->
-        <div formArrayName="getCoOwnerName" >
-            <div class="row pt-36" *ngFor="let obj of ppfSchemeForm.controls['getCoOwnerName'].controls; let pointIndex=index"
+        <div formArrayName="getCoOwnerName">
+            <div class="row" *ngFor="let obj of ppfSchemeForm.controls['getCoOwnerName'].controls; let pointIndex=index"
                 [formGroupName]="pointIndex">
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-8 ">{{pointIndex != 0?'Co-o' : 'O'}}wner{{pointIndex != 0?pointIndex:''}}</h5>
@@ -42,10 +42,13 @@
                 <div class="pr-0" [ngClass]="ppfSchemeForm.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <mat-select appOwnerNominee matInput
-                                formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'owner')" (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod] = 'callMethod' >
+                            <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
+                                (selectionChange)="disabledMember($event.value,'owner')"
+                                (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)'
+                                class="form-control br-0" [callMethod]='callMethod'>
                                 <mat-option value='' disabled>Select family members</mat-option>
-                                <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"   [value]="f.userName">
+                                <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
+                                    [value]="f.userName">
                                     <span>{{f.userName}}</span>
                                 </mat-option>
                             </mat-select>
@@ -58,8 +61,8 @@
                 <div class="col-md-2" *ngIf="ppfSchemeForm.value.getCoOwnerName.length > 1">
                     <div class="form-group mb-0 iconPetage">
                         <mat-form-field>
-                            <input matInput class="form-control br-0 percentage" type="number"
-                                formControlName="share" (focusout)="onChangeJointOwnership('owner')">
+                            <input matInput class="form-control br-0 percentage" type="number" formControlName="share"
+                                (focusout)="onChangeJointOwnership('owner')">
                             <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('required')">
                                 This field is required
                             </mat-error>
@@ -72,9 +75,9 @@
                 <div class="col-md-2 p-0 d-flex align-items-center">
                     <!-- <i *ngIf="pointIndex==0" class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i> -->
                     <i *ngIf="pointIndex!=0" class="material-icons text-primitive f-20 c-p pl-10 pt-8"
-                    (click)="removeCoOwner(pointIndex)">remove</i>
+                        (click)="removeCoOwner(pointIndex)">remove</i>
                 </div>
-               
+
             </div>
         </div>
         <div class="row pt-24">
@@ -244,7 +247,7 @@
         </div>
         <!-- <app-add-nominee [ownerName]="ownerName" [data]="ppfData" (outputEvent)="getFormDataNominee($event)">
         </app-add-nominee> -->
-        <div formArrayName="getNomineeName">
+        <!-- <div formArrayName="getNomineeName">
             <div class="row pt-36"
                 *ngFor="let obj of addrealEstateForm.controls['getNomineeName'].controls; let pointIndex=index"
                 [formGroupName]="pointIndex">
@@ -284,13 +287,14 @@
                     </div>
                 </div>
                 <div class="col-md-2 p-0 d-flex align-items-center">
-                    <i class="material-icons text-primitive f-20 c-p float-left" (click)="addNewNominee(undefined)">add</i>
+                    <i class="material-icons text-primitive f-20 c-p float-left"
+                        (click)="addNewNominee(undefined)">add</i>
                     <i *ngIf="pointIndex!=0" class="material-icons text-primitive f-20 c-p pl-10 pt-8"
                         (click)="removeNewNominee(pointIndex)">remove</i>
                 </div>
 
             </div>
-        </div>
+        </div> -->
     </div>
     <app-add-transaction (outputEvent)="getFormData($event)" [data]='inputData'
         [transactionViewData]="transactionViewData" [commencementDate]="commencementDate">

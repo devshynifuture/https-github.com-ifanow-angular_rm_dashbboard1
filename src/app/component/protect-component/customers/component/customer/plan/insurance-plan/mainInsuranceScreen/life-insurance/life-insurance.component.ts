@@ -5,6 +5,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AddSuggestPolicyComponent } from '../../add-suggest-policy/add-suggest-policy.component';
+import { AddRecommendationsInsuComponent } from '../../add-recommendations-insu/add-recommendations-insu.component';
 
 @Component({
   selector: 'app-life-insurance',
@@ -106,6 +107,29 @@ export class LifeInsuranceComponent implements OnInit {
       }
     );
   }
+
+  recommendationsPolicy(data) {
+    const fragmentData = {
+      flag: 'opencurrentpolicies',
+      data,
+      componentName: AddRecommendationsInsuComponent,
+      id: 1,
+      state: 'open',
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
+
+
+
+
 }
 export interface PeriodicElement {
   name: string;

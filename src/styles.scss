@@ -922,8 +922,7 @@
                 #ui-expenses,
                 #ui-profile-plan,
                 #ui-activity,
-                #investmentPlan
-                 {
+                #investmentPlan {
                   .vertical-menu {
                     height: 100vh;
                     display: block !important;
@@ -964,11 +963,12 @@
 
                 #ui-assets-account,
                 #ui-texes,
-                #ui-insurance {
+                #ui-insurance,
+                #ui-liabilities {
                   .vertical-menu {
                     // height: 100vh;
                     position: relative;
-                    height: calc(100vh - 150px);
+                    height: calc(100vh - 147px);
                     display: block !important;
                     width: 100%;
                     text-align: left;
@@ -981,6 +981,14 @@
                     font-size: 14px;
                     text-align: left;
                     margin-bottom: 10px;
+                  }
+                }
+
+                #ui-liabilities {
+                  .vertical-menu {
+
+                    height: calc(100vh - 126px);
+
                   }
                 }
 
@@ -1919,7 +1927,7 @@
                   z-index: 101;
 
                   .mat-tab-links {
-                    height: 65px;
+                    height: 60px;
                   }
 
                   .mat-tab-header {
@@ -1978,8 +1986,8 @@
                 }
 
 
-                
-                #ui-plan-secondhead{
+
+                #ui-plan-secondhead {
                   position: fixed !important;
                   margin-right: 0px !important;
                   right: 0 !important;
@@ -1995,6 +2003,7 @@
 
                   .mat-tab-header {
                     border-bottom: 0px;
+                    margin-bottom: 0px;
                   }
 
                   .mat-tab-link:focus:not(.mat-tab-disabled) {
