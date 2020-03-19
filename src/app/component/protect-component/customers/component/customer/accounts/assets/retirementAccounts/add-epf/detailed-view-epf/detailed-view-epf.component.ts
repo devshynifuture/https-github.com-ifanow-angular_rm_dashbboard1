@@ -15,13 +15,13 @@ export class DetailedViewEPFComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
+    this.epf = this.inputData;
   }
 
   get data() {
     return this.inputData;
   }
   ngOnInit() {
-    this.epf = this.inputData
   }
   close() {
     this.subInjectService.changeNewRightSliderState({state: 'close'});
