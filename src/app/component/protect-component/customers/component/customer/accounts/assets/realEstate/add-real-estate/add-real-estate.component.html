@@ -126,10 +126,10 @@
             <div class="col-md-3 pr-0">
                 <div class="form-group mb-0">
 
-                    <mat-form-field>
-                        <input autocomplete="off" matInput class="form-control br-0" matInput (focus)="picker.open()"
-                            (input)="preventDefault($event)" [matDatepicker]="picker" formControlName="purchasePeriod"
-                            readonly>
+                    <mat-form-field class="ba-date">
+                        <input autocomplete="off" matInput class="form-control br-0 b-0" matInput
+                            (focus)="picker.open()" (input)="preventDefault($event)" [matDatepicker]="picker"
+                            formControlName="purchasePeriod" readonly>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
@@ -308,7 +308,7 @@
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
                 </div>
-                <div class="pr-0" [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
+                <div [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
@@ -340,7 +340,7 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="col-md-2 pr-0 d-flex align-items-center">
+                <div class="col-md-2 p-0 d-flex align-items-center">
                     <i *ngIf="addrealEstateForm.value.getNomineeName.length < 3"
                         class="material-icons text-primitive f-20 c-p float-left"
                         (click)="addNewNominee(undefined)">add</i>

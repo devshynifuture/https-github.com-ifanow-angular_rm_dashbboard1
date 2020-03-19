@@ -105,9 +105,9 @@
                 <h5 class="m-0 pt-8">Value as on</h5>
             </div>
             <div class="col-md-3">
-                <mat-form-field>
+                <mat-form-field class="ba-date">
                     <input autocomplete="off" matInput (click)="picker.open()" formControlName="valueAsOn"
-                        class="form-control br-0" [matDatepicker]="picker" readonly>
+                        class="form-control br-0 b-0" [matDatepicker]="picker" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-error class="f-12"
@@ -266,13 +266,13 @@
             </div>
 
             <div formArrayName="getNomineeName">
-                <div class="row pt-36"
+                <div class="row pt-44"
                     *ngFor="let obj of summaryNPS.controls['getNomineeName'].controls; let pointIndex=index"
                     [formGroupName]="pointIndex">
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
                     </div>
-                    <div class="pr-0" [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
+                    <div [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
@@ -316,7 +316,7 @@
 
                 </div>
             </div>
-            <div class="row pt-16">
+            <div class="row pt-36">
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-8">Description</h5>
                 </div>

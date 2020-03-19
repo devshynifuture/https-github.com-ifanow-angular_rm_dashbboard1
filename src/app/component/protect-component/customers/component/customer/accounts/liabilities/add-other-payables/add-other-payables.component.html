@@ -38,17 +38,18 @@
             <h5 class="m-0 pt-8">Date of receipt</h5>
         </div>
         <div class="col-md-3 pl-0">
-            <mat-form-field>
-                <input class="form-control br-0" matInput [matDatepicker]="picker" formControlName="dateOfReceipt"
-                    readonly>
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-                <mat-error class="f-12"
-                    *ngIf="isdateValid && getFormControl().dateOfReceipt.invalid || (getFormControl().dateOfReceipt.touched && getFormControl().dateOfReceipt.invalid)">
-                    This field is required
-                </mat-error>
-            </mat-form-field>
-
+            <div class="form-group mb-0">
+                <mat-form-field class="ba-date">
+                    <input class="form-control b-0 br-0" matInput [matDatepicker]="picker"
+                        formControlName="dateOfReceipt" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error class="f-12"
+                        *ngIf="isdateValid && getFormControl().dateOfReceipt.invalid || (getFormControl().dateOfReceipt.touched && getFormControl().dateOfReceipt.invalid)">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
         </div>
     </div>
     <div class="row pt-40">
@@ -111,16 +112,17 @@
             <h5 class="m-0 pt-8">Date of repayment</h5>
         </div>
         <div class="col-md-3 pl-0">
-            <mat-form-field>
-                <input [matDatepicker]="picker2" class="form-control br-0" formControlName="dateOfRepayment" matInput
-                    readonly>
-                <mat-datepicker-toggle [for]="picker2" matSuffix></mat-datepicker-toggle>
-                <mat-datepicker #picker2></mat-datepicker>
-                <mat-error class="f-12">This field is required
+            <div class="form-group mb-0">
+                <mat-form-field class="ba-date">
+                    <input [matDatepicker]="picker2" class="form-control b-0 br-0" formControlName="dateOfRepayment"
+                        matInput readonly>
+                    <mat-datepicker-toggle [for]="picker2" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                    <mat-error class="f-12">This field is required
 
-                </mat-error>
-            </mat-form-field>
-
+                    </mat-error>
+                </mat-form-field>
+            </div>
         </div>
     </div>
     <div class="row pt-40">

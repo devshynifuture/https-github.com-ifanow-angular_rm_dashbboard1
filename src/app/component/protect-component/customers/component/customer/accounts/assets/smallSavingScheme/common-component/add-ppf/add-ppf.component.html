@@ -86,10 +86,10 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group form-group_one mb-0">
-                    <mat-form-field>
+                    <mat-form-field class="ba-date">
                         <input matInput autocomplete="off" (click)="CommencementPicker.open()"
                             [matDatepicker]="CommencementPicker" [max]="maxDate"
-                            (dateChange)="setCommencementDate($event.target.value)" class="form-control br-0"
+                            (dateChange)="setCommencementDate($event.target.value)" class="form-control br-0 b-0"
                             formControlName="commencementDate" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="CommencementPicker"></mat-datepicker-toggle>
                         <mat-datepicker #CommencementPicker></mat-datepicker>
@@ -133,9 +133,9 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group form-group_one mb-0">
-                    <mat-form-field>
+                    <mat-form-field class="ba-date">
                         <input [matDatepicker]="balanceAsOn" (click)="balanceAsOn.open()" [max]="maxDate"
-                            class="form-control br-0" formControlName="balanceAsOn" matInput readonly>
+                            class="form-control br-0 b-0" formControlName="balanceAsOn" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                         <mat-datepicker #balanceAsOn></mat-datepicker>
                         <mat-error class="f-12">This field is required
