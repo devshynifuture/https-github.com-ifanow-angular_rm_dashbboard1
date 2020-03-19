@@ -201,7 +201,7 @@ export const appConfig = {
   ADD_PURCHASE_SCHEME: '/activity/deployment/purchase/scheme/post',
   GET_MUTUAL_FUND_SCHEME: '/activity/deployment/scheme/get',
   GET_ALL_ASSETS: 'goal-planning/static-allocation/get',
-  GET_ALL_GOALS: 'goal-planning/all/Goal-Details/get',
+  GET_ALL_GOALS: 'goal-planning/goal/list/get',
   DELETE_GOAL: 'goal-planning/goal/delete',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
