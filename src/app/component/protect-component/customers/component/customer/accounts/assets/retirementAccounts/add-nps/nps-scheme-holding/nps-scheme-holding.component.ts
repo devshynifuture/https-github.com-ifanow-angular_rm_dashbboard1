@@ -126,7 +126,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
       description: [(data == undefined) ? '' : data.description,],
       id: [(data == undefined) ? '' : data.id,],
       holdingList: this.fb.array([this.fb.group({
-        schemeName: [null, [Validators.required]], holdingAsOn: [null, [Validators.required]],
+        schemeName: [0, [Validators.required]], holdingAsOn: [null, [Validators.required]],
         totalUnits: [null, [Validators.required]], totalNetContribution: [null, [Validators.required]]
       })]),
       futureContributionList: this.fb.array([this.fb.group({
@@ -206,7 +206,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.schemeHoldings
       // }
       data.holdingList.forEach(element => {
         this.schemeHoldingsNPS.controls.holdingList.push(this.fb.group({
-          schemeName: [(element.schemeId) + "", [Validators.required]],
+          schemeName: [(element.schemeId), [Validators.required]],
           totalUnits: [(element.totalUnits), Validators.required],
           totalNetContribution: [(element.totalNetContribution), Validators.required],
           holdingAsOn: [new Date(element.totalNetContribution), Validators.required],
@@ -343,11 +343,24 @@ addNewCoOwner(data) {
   this.getCoOwner.push(this.fb.group({
     name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
   }));
-  if (!data || this.getCoOwner.value.length < 1) {
-    for (let e in this.getCoOwner.controls) {
-      this.getCoOwner.controls[e].get('share').setValue('');
-    }
+  if (data) {
+    setTimeout(() => {
+     this.disabledMember(null,null);
+    }, 1300);
   }
+
+  if(this.getCoOwner.value.length > 1 && !data){
+   let share = 100/this.getCoOwner.value.length;
+   for (let e in this.getCoOwner.controls) {
+    if(!Number.isInteger(share) && e == "0"){
+      this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+    }
+    else{
+      this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+    }
+   }
+  }
+ 
 }
 
 removeCoOwner(item) {
@@ -355,10 +368,17 @@ removeCoOwner(item) {
   if (this.schemeHoldingsNPS.value.getCoOwnerName.length == 1) {
     this.getCoOwner.controls['0'].get('share').setValue('100');
   } else {
+    let share = 100/this.getCoOwner.value.length;
     for (let e in this.getCoOwner.controls) {
-      this.getCoOwner.controls[e].get('share').setValue('');
+      if(!Number.isInteger(share) && e == "0"){
+        this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+      }
+      else{
+        this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+      }
     }
   }
+  this.disabledMember(null, null);
 }
 /***owner***/ 
 
@@ -370,7 +390,20 @@ get getNominee() {
 
 removeNewNominee(item) {
   this.getNominee.removeAt(item);
-  
+  if (this.schemeHoldingsNPS.value.getNomineeName.length == 1) {
+    this.getNominee.controls['0'].get('sharePercentage').setValue('100');
+  } else {
+    let share = 100/this.getNominee.value.length;
+    for (let e in this.getNominee.controls) {
+      if(!Number.isInteger(share) && e == "0"){
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+      }
+      else{
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+      }
+    }
+  }
+  this.disabledMember(null, null);
 }
 
 
@@ -383,6 +416,21 @@ addNewNominee(data) {
     for (let e in this.getNominee.controls) {
       this.getNominee.controls[e].get('sharePercentage').setValue(0);
     }
+  }
+
+  if(this.getNominee.value.length > 1 && !data){
+    let share = 100/this.getNominee.value.length;
+    for (let e in this.getNominee.controls) {
+      if(!Number.isInteger(share) && e == "0"){
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+      }
+      else{
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+      }
+    }
+   }
+   else{
+    this.disabledMember(null, null)
   }
   
 }

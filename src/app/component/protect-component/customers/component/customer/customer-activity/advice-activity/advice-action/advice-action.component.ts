@@ -46,4 +46,15 @@ export class AdviceActionComponent implements OnInit {
       }
     );
   }
+  sendBypassConsent(){
+    let obj = this.selectedAssetData;
+      this.cusService.consentBypass(obj).subscribe(
+        data => this.getResponse(data), (error) => {
+        }
+      );
+  }
+  getResponse(data){
+    console.log(data);
+  }
+
 }

@@ -76,6 +76,11 @@ const routes: Routes = [
     loadChildren: () => import('./component/protect-component/customer-feedback/cus-feedback.module').then(m => m.CusFeedbackModule)
   },
   {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
+  {
     path: 'redirect',
     // outlet: 'mainrouter',
     loadChildren: () => import('./component/gmail-redirect/gmail-redirect.module').then(m => m.GmailRedirectModule)

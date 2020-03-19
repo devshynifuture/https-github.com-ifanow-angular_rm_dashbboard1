@@ -74,7 +74,6 @@ export class AllAdviceFixedDepositComponent implements OnInit {
   }
   getAllSchemeResponse(data){
     this.isLoading = false;
-
     console.log(data);
     let fixedData=this.filterForAsset(data.FIXED_DEPOSIT)
     this.fixedDataSource = new MatTableDataSource(fixedData);

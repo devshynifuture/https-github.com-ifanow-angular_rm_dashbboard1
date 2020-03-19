@@ -1,8 +1,8 @@
+import { AuthService } from './../../../../../../../auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UpperSliderBackofficeComponent } from './../../../../../SupportComponent/common-component/upper-slider-backoffice/upper-slider-backoffice.component';
 import { MatTableDataSource } from '@angular/material';
-import { AuthService } from 'src/app/auth-service/authService';
 import { Component, OnInit, Input } from '@angular/core';
 import { ReconciliationService } from '../reconciliation.service';
 import { FormControl, FormBuilder, Validators } from '@angular/forms';
@@ -22,7 +22,7 @@ export class ReconCamsComponent implements OnInit {
 
   brokerList: any[] = [];
   dataSource;
-  advisorId;
+  advisorId = AuthService.getAdvisorId();
   isLoading: boolean = false;
   selectBrokerForm = this.fb.group({
     selectBrokerId: [, Validators.required]
@@ -40,21 +40,11 @@ export class ReconCamsComponent implements OnInit {
   }
 
   getBrokerList() {
-    this.advisorId = AuthService.getAdvisorId();
-
     this.reconService.getBrokerListValues({ advisorId: this.advisorId })
       .subscribe(res => {
-        console.log(res);
-        res.forEach(item => {
-          const { id } = item;
-          const { brokerCode } = item;
-          this.brokerList.push({
-            id,
-            brokerCode
-          })
-        });
-        console.log(this.brokerList);
-      })
+        this.brokerList = res;
+        this.isBrokerSelected = true;
+      });
   }
 
   getAumReconHistoryData(event) {
@@ -63,7 +53,6 @@ export class ReconCamsComponent implements OnInit {
     // make separate function for toggling the same
     if (this.selectBrokerForm.get('selectBrokerId').value) {
       this.isLoading = true;
-      this.isBrokerSelected = true;
       console.log(event);
       const data = {
         advisorId: this.advisorId,
