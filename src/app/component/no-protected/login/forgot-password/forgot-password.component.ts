@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatInput } from '@angular/material';
+import { ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -9,6 +10,7 @@ import { MatInput } from '@angular/material';
 export class ForgotPasswordComponent implements OnInit {
   isVerify: boolean = false;
   otp: any;
+  validatorType = ValidatorType;
   otpData = [];
   constructor() { }
   ngOnInit() {
@@ -28,19 +30,21 @@ export class ForgotPasswordComponent implements OnInit {
     this.otp = otp;
   }
   enterOtp(value) {
-    if (value.srcElement.nextElementSibling == undefined && this.otpData.length > 6) {
-      return;
-    }
-    if (value.srcElement.previousElementSibling == undefined && this.otpData.length < 0 || value == '') {
-      return;
-    }
-    if (value.inputType == "insertText") {
-      this.otpData.push(value);
-      value.srcElement.nextElementSibling.focus();
-    }
-    else {
+
+
+    if (value.keyCode == 8) {
+      if (value.srcElement.previousElementSibling == undefined) {
+        return;
+      }
       value.srcElement.previousElementSibling.focus();
       this.otpData.pop();
+    }
+    else {
+      if (value.srcElement.nextElementSibling == undefined) {
+        return;
+      }
+      this.otpData.push(value.key);
+      value.srcElement.nextElementSibling.focus();
     }
 
     console.log(value)

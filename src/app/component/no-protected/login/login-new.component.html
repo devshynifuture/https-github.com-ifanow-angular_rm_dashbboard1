@@ -29,7 +29,8 @@
                         <div class="col-md-12 form-group p-0">
                             <h5 class="left mb-4">Password</h5>
 
-                            <a class="right f-12 mb-4 c-p text-primitive" [routerLink]="[ '/forgotpassword']"> Forgot
+                            <a class="right f-12 mb-4 c-p text-primitive" [routerLink]="[ '/login/forgotpassword']">
+                                Forgot
                                 password? </a>
 
                             <mat-form-field floatLabel="never" appearance="standard">
@@ -54,7 +55,7 @@
 
                     <h5 (click)="otpClick()" class="mt-20 text-primary c-p f-600">Login with OTP</h5>
 
-                    <h5 class="mt-32 mb-24">Don’t have an account? <span [routerLink]="[ '/signup']"
+                    <h5 class="mt-32 mb-24">Don’t have an account? <span [routerLink]="[ '/login/signup']"
                             class="text-primary c-p"> Sign up </span> </h5>
                 </div>
             </div>
@@ -81,7 +82,7 @@
 
                     <div class="row">
                         <div class="col-md-12 p-0">
-                            <div class="otpBox" [routerLink]="[ '/verifyotp']">
+                            <div class="otpBox" [routerLink]="[ '/login/verifyotp']">
                                 <span>* * * *</span>
                                 <span>GET OTP</span>
                             </div>
@@ -89,7 +90,7 @@
                     </div>
                     <h5 class="mt-20 text-primary c-p f-600" (click)="otpClick()">Login with password</h5>
 
-                    <h5 class="mt-32 mb-24">Don’t have an account? <span [routerLink]="['/signup']"
+                    <h5 class="mt-32 mb-24">Don’t have an account? <span [routerLink]="['/login/signup']"
                             class="text-primary c-p"> Sign up </span> </h5>
                 </div>
             </div>
