@@ -46,7 +46,7 @@ export class ForgotPasswordComponent implements OnInit {
     }
   }
   verify() {
-    this.isVerify = true;
+    (this.isVerify) ? this.isVerify = false : this.isVerify = true;
   }
 
 }

@@ -87,6 +87,10 @@
                                 <span>GET OTP</span>
                             </div>
                         </div>
+                        <h5 class="mt-20 text-primary c-p f-600" (click)="otpClick()">Login with password</h5>
+
+                        <h5 class="mt-32 mb-24">Don’t have an account? <span [routerLink]="['/login/signup']"
+                                class="text-primary c-p"> Sign up </span> </h5>
                     </div>
 
                     <div *ngIf="getOtpFlag" class="row">
@@ -114,13 +118,14 @@
                                     autocomplete="off" class="form-control verifyDiv br-0" matInput>
                             </div>
 
-                            <h5 class="mb-0">Didn’t receive? <span class="lightRead c-p"> Resend </span></h5>
+                            <h5 class="mb-0">Didn’t receive? <span class="lightRead c-p" (click)="getOtp()"> Resend
+                                </span></h5>
 
                         </div>
                         <button mat-button class="mt-20 mb-28 bg-primary f-16  text-white w-100 br-4 ">
                             <img class="iconPosition" src="assets/images/svg/login-btn-icon.svg"> Login to your
                             account</button>
-                        <h5 class="mt-20 text-primary c-p f-600" (click)="otpClick()">Login with password</h5>
+                        <h5 class="mt-20 text-primary c-p f-600" [routerLink]="['/login']">Login with password</h5>
 
                         <h5 class="mt-32 mb-24">Don’t have an account? <span [routerLink]="['/login/signup']"
                                 class="text-primary c-p"> Sign up </span> </h5>

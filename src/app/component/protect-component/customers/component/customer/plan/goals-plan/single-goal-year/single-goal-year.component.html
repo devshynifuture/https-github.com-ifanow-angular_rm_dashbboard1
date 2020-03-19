@@ -94,6 +94,62 @@
                         </div>
                     </div>
 
+                    <!-- RETIREMENT EXPENSE -->
+                    <div class="row pt-20" *ngIf="Questions.Q5">
+                        <div class="col-md-12 p-0">
+                            <h5 class="m-0 text-black">{{Questions.Q5}}</h5>
+                            <div class="row pt-8">
+                                <div class="col-md-4 p-0">
+                                    <div class="form-group mb-0">
+                                        <mat-form-field>
+                                            <input type="number"
+                                                formControlName="field5" autocomplete="off" matInput
+                                                [value]="singleYearGoalForm.value.field5"
+                                                class="form-control br-0 rupess">
+                                            <mat-error>This field is required</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 pr-0">
+                                    <div id="custom-slider">
+                                        <mat-slider formControlName="field5"
+                                            [value]="singleYearGoalForm.value.field5"
+                                            [min]="goalTypeData.validations.minCost"
+                                            [max]="goalTypeData.validations.maxCost"></mat-slider>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RETIREMENT MILESTONES -->
+                    <div class="row pt-20" *ngIf="Questions.Q6">
+                        <div class="col-md-12 p-0">
+                            <h5 class="m-0 text-black">{{Questions.Q6}}</h5>
+                            <div class="row pt-8">
+                                <div class="col-md-4 p-0">
+                                    <div class="form-group mb-0">
+                                        <mat-form-field>
+                                            <input type="number"
+                                                formControlName="field3" autocomplete="off" matInput
+                                                [value]="singleYearGoalForm.value.field3"
+                                                class="form-control br-0 rupess">
+                                            <mat-error>This field is required</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 pr-0">
+                                    <div id="custom-slider">
+                                        <mat-slider formControlName="field3"
+                                            [value]="singleYearGoalForm.value.field3"
+                                            [min]="goalTypeData.validations.minCost"
+                                            [max]="goalTypeData.validations.maxCost"></mat-slider>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- GOAL NAME -->
                     <div class="row pt-20">
                         <div class="col-md-12 p-0">
@@ -139,8 +195,7 @@
                     </div>
                 </div>
                 <div class="col-md-4" (click)="file.click()">
-                    <img [src]="goalTypeData.imageUrl" *ngIf="!logoImg">
-                    <img [src]="logoImg" alt="" *ngIf="logoImg" style="width: 100%;">
+                    <img [src]="logoImg">
                 </div>
                 <input #file (change)="previewGoalImage($event)" accept='image/*'
                     formControlName="logo" type="file" [hidden]="true">
