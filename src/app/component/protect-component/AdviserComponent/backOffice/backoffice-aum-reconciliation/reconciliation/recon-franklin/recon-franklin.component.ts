@@ -23,7 +23,8 @@ export class ReconFranklinComponent implements OnInit {
 
   brokerList: any[] = [];
   dataSource;
-  advisorId;
+  advisorId = AuthService.getAdvisorId();
+  isBrokerSelected: boolean = false;
   isLoading: boolean = false;
   selectBrokerForm = this.fb.group({
     selectBrokerId: [, Validators.required]
@@ -38,23 +39,12 @@ export class ReconFranklinComponent implements OnInit {
     console.log('my id is ::', this.rtId);
   }
 
-
   getBrokerList() {
-    this.advisorId = AuthService.getAdvisorId();
-
     this.reconService.getBrokerListValues({ advisorId: this.advisorId })
       .subscribe(res => {
-        console.log(res);
-        res.forEach(item => {
-          const { id } = item;
-          const { brokerCode } = item;
-          this.brokerList.push({
-            id,
-            brokerCode
-          })
-        });
-        console.log(this.brokerList);
-      })
+        this.brokerList = res;
+        this.isBrokerSelected = true;
+      });
   }
 
   getAumReconHistoryData(event) {

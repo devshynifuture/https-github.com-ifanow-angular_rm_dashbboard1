@@ -168,10 +168,10 @@ export class AddRealEstateComponent implements OnInit {
     this.getCoOwner.push(this.fb.group({
       name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
     }));
-    if (!data || this.getCoOwner.value.length < 1) {
-      for (let e in this.getCoOwner.controls) {
-        this.getCoOwner.controls[e].get('share').setValue('');
-      }
+    if (data) {
+      setTimeout(() => {
+       this.disabledMember(null,null);
+      }, 1300);
     }
 
     if(this.getCoOwner.value.length > 1 && !data){
@@ -185,9 +185,7 @@ export class AddRealEstateComponent implements OnInit {
       }
      }
     }
-    else{
-      this.disabledMember(null, null)
-    }
+    
   }
 
   removeCoOwner(item) {
@@ -509,14 +507,12 @@ export class AddRealEstateComponent implements OnInit {
         nomineeList: this.addrealEstateForm.value.getNomineeName
       }
 
-      obj.nomineeList.forEach(element => {
+      obj.nomineeList.forEach((element, index) => {
         if(element.name == ''){
-          obj.nomineeList= [];
-        }
-        else{
-          obj.nomineeList= this.addrealEstateForm.value.getNomineeName;
+          this.removeNewNominee(index);
         }
       });
+      obj.nomineeList= this.addrealEstateForm.value.getNomineeName;
       // this.addrealEstateForm.value.getNomineeName.forEach(element => {
       //   if (element.name) {
       //     let obj1 = {

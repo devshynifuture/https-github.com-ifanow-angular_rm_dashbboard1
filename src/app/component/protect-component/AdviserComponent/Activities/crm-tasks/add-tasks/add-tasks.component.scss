@@ -1,60 +1,56 @@
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
-    width: 1.5em !important;
+  width: 1.5em !important;
 }
 
- ::ng-deep .mat-datepicker-toggle {
-    position: absolute;
-    right: 8px !important;
-    top: 10px !important;
+
+
+::ng-deep .mat-form-field {
+  width: 100%;
 }
 
- ::ng-deep .mat-form-field {
-    width: 100%;
+::ng-deep .mat-form-field-suffix {
+  position: inherit !important;
 }
 
- ::ng-deep .mat-form-field-suffix {
-    position: inherit !important;
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+  padding: 0px !important;
 }
 
- ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
-    padding: 0px !important;
-}
-
- ::ng-deep .mat-form-field-infix {
-    padding: 0px !important;
+::ng-deep .mat-form-field-infix {
+  padding: 0px !important;
 }
 
 .bottomCommentBox {
-    padding: 10px;
-    position: fixed;
-    width: 50%;
-    bottom: 65px;
-    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2), 0px 4px 5px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14);
+  padding: 10px;
+  position: fixed;
+  width: 50%;
+  bottom: 65px;
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2), 0px 4px 5px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14);
 }
 
 .attachment-img {
-    width: 62px;
-    height: 62px;
-    border: 1px solid #D9DEE1;
+  width: 62px;
+  height: 62px;
+  border: 1px solid #D9DEE1;
 }
 
 .uploadImgBox {
-    width: 62px;
-    height: 62px;
-    border: 2px dashed #D9DEE1;
+  width: 62px;
+  height: 62px;
+  border: 2px dashed #D9DEE1;
 }
 
 .editDelectText a {
-    display: inline-block;
-    padding: 5px;
-    text-decoration: underline !important;
-    color: #000000;
+  display: inline-block;
+  padding: 5px;
+  text-decoration: underline !important;
+  color: #000000;
 }
 
 .editDelectText a:hover {
-    color: #000000;
+  color: #000000;
 }
 
 ::ng-deep .tasksList mat-list-item {
-    height: 36px !important;
+  height: 36px !important;
 }

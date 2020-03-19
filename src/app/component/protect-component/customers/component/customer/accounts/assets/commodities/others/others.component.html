@@ -111,8 +111,8 @@
                 <h5 class="m-0 pt-8">Date of purchase</h5>
             </div>
             <div class="col-md-3">
-                <mat-form-field>
-                    <input autocomplete="off" matInput formControlName="dateOfPurchase" class="form-control br-0"
+                <mat-form-field class="ba-date">
+                    <input autocomplete="off" matInput formControlName="dateOfPurchase" class="form-control br-0 b-0"
                         [matDatepicker]="picker" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>

@@ -209,10 +209,10 @@ export class FixedDepositComponent implements OnInit {
     this.getCoOwner.push(this.fb.group({
       name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
     }));
-    if (!data || this.getCoOwner.value.length < 1) {
-      for (let e in this.getCoOwner.controls) {
-        this.getCoOwner.controls[e].get('share').setValue('');
-      }
+    if (data) {
+      setTimeout(() => {
+        this.disabledMember(null, null);
+      }, 1300);
     }
 
     if (this.getCoOwner.value.length > 1 && !data) {
@@ -226,8 +226,10 @@ export class FixedDepositComponent implements OnInit {
         }
       }
     }
-    else {
-      this.disabledMember(null, null)
+    if (data) {
+      setTimeout(() => {
+        this.disabledMember(null, null);
+      }, 1300);
     }
   }
 

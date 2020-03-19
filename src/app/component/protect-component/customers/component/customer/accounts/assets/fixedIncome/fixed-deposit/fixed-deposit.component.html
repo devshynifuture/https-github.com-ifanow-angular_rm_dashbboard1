@@ -107,16 +107,18 @@
             <h5 class="m-0 pt-12">Commencement date</h5>
         </div>
         <div class="col-md-3">
-            <mat-form-field>
-                <input (focus)="picker.open()" (click)="picker.open()" (dateChange)="checkDate()" matInput
-                    formControlName="commencementDate" [max]="maxDate" [matDatepicker]="picker" readonly>
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-                <mat-error class="f-12 pt-4">
-                    This field is required
-                </mat-error>
-            </mat-form-field>
-
+            <div class="form-group">
+                <mat-form-field class="ba-date">
+                    <input class="form-control b-0" (focus)="picker.open()" (click)="picker.open()"
+                        (dateChange)="checkDate($event)" matInput formControlName="commencementDate" [max]="maxDate"
+                        [matDatepicker]="picker" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error class="f-12 pt-4">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
         </div>
     </div>
     <div class="row pt-40">
@@ -137,10 +139,10 @@
         </div>
     </div>
     <div class="row pt-40">
-        <div class="col-md-5 pr-0 text-right">
+        <div class="col-xl-5  col-lg-5 pr-0 text-right">
             <h5 class="m-0 pt-12">FD end date</h5>
         </div>
-        <div class="col-md-6 pr-0 fddate">
+        <div class="col-xl-6 col-lg-7 pr-0 fddate">
             <mat-radio-group aria-label="Select an option" (change)="getMaturityDate($event)" id="custom-radio"
                 formControlName="maturity">
                 <mat-radio-button value="1" class="b-ua radioBtn text-custom"

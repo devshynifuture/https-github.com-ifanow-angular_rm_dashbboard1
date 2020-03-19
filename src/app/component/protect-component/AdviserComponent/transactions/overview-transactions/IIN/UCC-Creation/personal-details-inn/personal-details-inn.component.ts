@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { DatePipe } from '@angular/common';
@@ -7,6 +7,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
 import { OnlineTransactionService } from '../../../../online-transaction.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-personal-details-inn',
@@ -32,7 +33,7 @@ export class PersonalDetailsInnComponent implements OnInit {
   changedValue: string;
   doneData: any;
   advisorId: any;
-
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private processTransaction: ProcessTransactionService,
@@ -172,35 +173,16 @@ export class PersonalDetailsInnComponent implements OnInit {
     }
   }
   savePersonalDetails(value) {
-
-    if (this.personalDetails.get('panNumber').invalid) {
-      this.personalDetails.get('panNumber').markAsTouched();
-      return
-    } else if (this.personalDetails.get('clientName').invalid) {
-      this.personalDetails.get('clientName').markAsTouched();
-      return;
-    } else if (this.personalDetails.get('madianName').invalid) {
-      this.personalDetails.get('madianName').markAsTouched();
-      return;
-    } else if (this.personalDetails.get('fatherName').invalid) {
-      this.personalDetails.get('fatherName').markAsTouched();
-      return;
-    } else if (this.personalDetails.get('motherName').invalid) {
-      this.personalDetails.get('motherName').markAsTouched();
-      return;
-    } else if (this.personalDetails.get('dateOfBirth').invalid) {
-      this.personalDetails.get('dateOfBirth').markAsTouched();
-      return;
-    } else if (this.personalDetails.get('gender').invalid) {
-      this.personalDetails.get('gender').markAsTouched();
-      return;
-    } else if (this.personalDetails.get('maritalStatus').invalid) {
-      this.personalDetails.get('maritalStatus').markAsTouched();
-      return;
+    if (this.personalDetails.invalid) {
+      for (let element in this.personalDetails.controls) {
+        console.log(element)
+        if (this.personalDetails.get(element).invalid) {
+          this.inputs.find(input => !input.ngControl.valid).focus();
+          this.personalDetails.controls[element].markAsTouched();
+        }
+      }
     } else {
-
       this.setEditHolder(this.holder.type, value)
-
     }
   }
 
