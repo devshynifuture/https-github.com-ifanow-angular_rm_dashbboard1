@@ -21,10 +21,10 @@
 
     <div *ngIf="showRequring == '1'">
         <div class="row">
-            <div class="col-md-7 d-flex align-items-center p-0 text-left">
+            <div class="col-md-6 p-0 text-left">
                 <h2 class="f-18 m-0 proximaFont ">Fixed deposit</h2>
             </div>
-            <div class="col-md-5 p-0 text-right right" *ngIf="dataSource.filteredData.length > 0">
+            <div class="col-md-6 p-0 text-right right" *ngIf="dataSource.filteredData.length > 0">
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
                     <button mat-menu-item>PDF</button>
@@ -218,12 +218,12 @@
 
     <div *ngIf="showRequring == '2'">
         <div class="row">
-            <div class="col-md-7 d-flex align-items-center p-0">
+            <div class="col-md-6 p-0">
                 <h2 class="f-18 m-0 proximaFont">
                     Recurring deposits
                 </h2>
             </div>
-            <div class="col-md-5 p-0 text-right right " *ngIf="dataSource.filteredData.length > 0">
+            <div class="col-md-6 p-0 text-right right " *ngIf="dataSource.filteredData.length > 0">
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
                     <button mat-menu-item>PDF</button>
@@ -316,6 +316,15 @@
                         [value]="totalMarketValue">
                         <div class="bar"> {{ totalMarketValue || ' '}} </div>
                     </td>
+                </ng-container>
+                <ng-container matColumnDef="mvalue">
+                    <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br  text-left">
+                        Maturity value
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="br  text-left">
+                        <div class="bar"> {{element.maturityValue | date:'dd/MM/yyyy'}} </div>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef class="br  text-right"></td>
                 </ng-container>
                 <ng-container matColumnDef="mdate">
                     <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef class="br  text-left">

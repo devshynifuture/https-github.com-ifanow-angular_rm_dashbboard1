@@ -1,38 +1,29 @@
 ::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
-    background-color: #008FFF !important;
+  background-color: #008FFF !important;
 }
 
- ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
-    background-color: #008FFF !important;
-    /*inner circle color change*/
+::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+  background-color: #008FFF !important;
+  /*inner circle color change*/
 }
 
- ::ng-deep.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-    border-color: #008FFF !important;
-    /*outer ring color change*/
+::ng-deep.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #008FFF !important;
+  /*outer ring color change*/
 }
 
- ::ng-deep label {
-    margin: 0 !important;
+::ng-deep label {
+  margin: 0 !important;
 }
 
- ::ng-deep .mat-horizontal-stepper-header {
-    pointer-events: none !important;
+::ng-deep .mat-horizontal-stepper-header {
+  pointer-events: none !important;
 }
 
 .height60 {
-    height: 60px;
+  height: 60px;
 }
 
 .height38 {
-    height: 38px;
-}
-
-::ng-deep .radioBtn .mat-radio-label {
-    min-width: 152px;
-    height: 45px;
-    display: flex !important;
-    justify-content: left;
-    align-items: center;
-    padding-left: 10px !important;
+  height: 38px;
 }

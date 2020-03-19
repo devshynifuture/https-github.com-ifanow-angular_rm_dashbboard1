@@ -9,7 +9,7 @@ import { VerifyOtpComponent } from './verify-otp/verify-otp.component';
 
 const routes: Routes = [
   {
-    path: 'login',
+    path: '',
     component: LoginComponent
   },
   {
@@ -27,11 +27,6 @@ const routes: Routes = [
   {
     path: 'verifyotp',
     component: VerifyOtpComponent
-  },
-  {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
   }
 ];
 

@@ -21,7 +21,7 @@
         </label>
     </div>
     <div class="col-md-3 pl-0">
-        <label class="f-14">{{transactionViewData.transactionHeader[2]}}</label>
+        <label class="f-14 ws-nowrap">{{transactionViewData.transactionHeader[2]}}</label>
     </div>
 </div>
 <div [formGroup]="transactionForm">
@@ -44,9 +44,9 @@
             </div>
             <div class="col-md-3 pl-0">
                 <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input class="form-control br-0" [min]="minDate" [max]="maxDate" matInput formControlName="date"
-                            [matDatepicker]="picker" readonly>
+                    <mat-form-field class="ba-date">
+                        <input class="form-control b-0 br-0" [min]="minDate" [max]="maxDate" matInput
+                            formControlName="date" [matDatepicker]="picker" readonly>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-error>

@@ -118,7 +118,7 @@
                     <th mat-sort-header="status" *matHeaderCellDef class=" t-12" mat-header-cell> Status</th>
                     <td *matCellDef="let element" mat-cell>
                         <div class="bar">
-                            <span>
+                            <span class="ws-nowrap">
                                 <span class="text-success t-12 f-500 c-p" *ngIf="element.status==1">READY TO
                                     SEND</span>
                                 <span class="text-success t-12 f-500 c-p" *ngIf="element.status==0">NOT

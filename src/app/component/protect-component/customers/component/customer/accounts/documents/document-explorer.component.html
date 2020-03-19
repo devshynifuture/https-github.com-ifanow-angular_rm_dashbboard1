@@ -47,8 +47,11 @@
                                         {{tabValue || 'Documents'}}</p>
                                     <p *ngIf="showResult == true" class="m-0 text-black roboto f-18">Search results</p>
                                 </li>
-                                
-                                <li (click)="getFolders(folder,i)" *ngFor="let folder of openFolderName; let i = index" class="breadcrumb-item active c-p" [ngClass]="folder.openFolderNm ? 'breadcrumb-item active c-p' : 'none'">{{folder.openFolderNm}}</li>
+
+                                <li (click)="getFolders(folder,i)" *ngFor="let folder of openFolderName; let i = index"
+                                    class="breadcrumb-item active c-p"
+                                    [ngClass]="folder.openFolderNm ? 'breadcrumb-item active c-p' : 'none'">
+                                    {{folder.openFolderNm}}</li>
                             </ol>
                         </div>
                         <div class="col-md-6 p-0 d-flex justify-content-end">

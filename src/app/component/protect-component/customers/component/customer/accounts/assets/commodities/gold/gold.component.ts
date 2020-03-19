@@ -112,7 +112,6 @@ export class GoldComponent implements OnInit {
       tenure: [(data.purchaseYear == undefined) ? '' : (data.purchaseYear), [Validators.required, Validators.minLength(4), Validators.min(1900), Validators.max(this.currentYear)]],
       carats: [(data.carat == undefined) ? '' : (data.carat) + "", [Validators.required]],
       // balanceAsOn: [(data.balanceAsOn == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
-      marketValue: [(data.marketValue == undefined) ? null : data.marketValue],
       description: [(data.description == undefined) ? null : data.description],
       bankAcNo: [(data.bankAcNo == undefined) ? '' : data.bankAcNo],
     });
@@ -146,7 +145,6 @@ export class GoldComponent implements OnInit {
         totalsGrams: this.gold.controls.totalsGrams.value,
         purchaseYear: this.gold.controls.tenure.value,
         carat: this.gold.controls.carats.value,
-        marketValue: (this.gold.controls.marketValue.value == '') ? null : this.gold.controls.marketValue.value,
         description: (this.gold.controls.description.value == '') ? null : this.gold.controls.description.value,
       }
       let adviceObj = {

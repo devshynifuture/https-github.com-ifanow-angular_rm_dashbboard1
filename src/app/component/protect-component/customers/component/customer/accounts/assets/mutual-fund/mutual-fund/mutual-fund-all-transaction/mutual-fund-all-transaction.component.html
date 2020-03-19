@@ -25,19 +25,14 @@
                 <img class="c-p" src="assets/images/svg/download-bordered.svg">
                 <img class="c-p" src="assets/images/svg/three-dot-bordered.svg">
                 <img class="c-p mr-12" src="assets/images/svg/up-down.svg">
-                <button class="btn-default addon mr-12 v-middle mat-stroked-button mat-button-base"
-                    mat-stroked-button="">
-                    <span class="mat-button-wrapper"><i class="material-icons">filter_list</i>FILTERS</span>
-                    <div class="mat-button-ripple mat-ripple" matripple="" ng-reflect-centered="false"
-                        ng-reflect-disabled="false" ng-reflect-trigger="[object HTMLButtonElement]">
-                    </div>
-                    <div class="mat-button-focus-overlay"></div>
+                <button class="btn-default addon v-middle" mat-stroked-button>
+                    <i class="material-icons">filter_list</i>FILTERS
                 </button>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-12 pl-0 mb-8">
+            <div class="col-md-12 p-0 mb-8">
                 <table matSort mat-table [dataSource]="customDataSource" id="table-low"
                     class="mutualfunds-capital-equity">
                     <ng-container matColumnDef="no">

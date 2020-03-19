@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ValidatorType } from 'src/app/services/util.service';
+import { isString } from 'util';
 
 @Component({
   selector: 'app-verify-otp',
@@ -6,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./verify-otp.component.scss']
 })
 export class VerifyOtpComponent implements OnInit {
-
+  otpData = [];
+  validatorType = ValidatorType;
   constructor() { }
 
   ngOnInit() {

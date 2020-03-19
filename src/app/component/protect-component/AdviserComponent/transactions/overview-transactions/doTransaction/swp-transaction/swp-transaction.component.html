@@ -118,6 +118,9 @@
                                 <mat-error class="f-12 pt-4">
                                     This field is required
                                 </mat-error>
+                                <mat-error class="f-12 pt-4" *ngIf="folioList == undefined">
+                                    No existing folios
+                                </mat-error>
                             </mat-form-field>
                         </div>
                     </div>

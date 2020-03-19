@@ -1,37 +1,31 @@
 ::ng-deep .font {
-    padding: 0px !important;
-    min-width: 65px;
-    height: 30px;
-    line-height: 1;
-    box-shadow: none;
+  padding: 0px !important;
+  min-width: 65px;
+  height: 30px;
+  line-height: 1;
+  box-shadow: none;
 }
 
 ::ng-deep .back {
-    min-width: 50px;
+  min-width: 50px;
 }
 
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
-    width: 1.5em !important;
+  width: 1.5em !important;
 }
 
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
-    padding: 0px;
-}
-
-.mat-datepicker-toggle {
-    position: absolute;
-    right: 8px !important;
-    top: 10px !important;
+  padding: 0px;
 }
 
 ::ng-deep .mat-form-field-suffix {
-    position: inherit !important;
+  position: inherit !important;
 }
 
 .pr-7 {
-    padding-right: 7px;
+  padding-right: 7px;
 }
 
 .pl-7 {
-    padding-left: 7px;
+  padding-left: 7px;
 }

@@ -18,7 +18,7 @@
             </div>
             <div class="col-md-5">
                 <mat-form-field class="w-100">
-                    <mat-select appOwner matInput (valueChange1)='lisNominee($event)' [data]='ownerData'
+                    <mat-select appOwner (valueChange1)='lisNominee($event)' [data]='ownerData'
                         formControlName="ownerName" class="form-control br-0">
                         <mat-option value=''>Search family members</mat-option>
                         <mat-option (click)="display(f)" *ngFor="let f of nomineesListFM" [value]="f.userName">
@@ -62,9 +62,9 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group mb-0">
-                    <mat-form-field>
+                    <mat-form-field class="ba-date">
                         <input matInput autocomplete="off" (click)="KVPpicker.open()" formControlName="commDate"
-                            [max]="maxDate" [matDatepicker]="KVPpicker" class="form-control br-0" readonly>
+                            [max]="maxDate" [matDatepicker]="KVPpicker" class="form-control br-0 b-0" readonly>
                         <mat-datepicker-toggle matSuffix [for]="KVPpicker"></mat-datepicker-toggle>
                         <mat-datepicker #KVPpicker></mat-datepicker>
                         <mat-error class="f-12">
@@ -81,7 +81,10 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select matInput formControlName="tenure" class="form-control br-0">
+                        <mat-select formControlName="tenure" class="form-control br-0">
+                            <mat-option value="1">1 Years</mat-option>
+                            <mat-option value="2">2 Years</mat-option>
+                            <mat-option value="3">3 Years</mat-option>
                             <mat-option value="5">5 Years</mat-option>
                         </mat-select>
                         <mat-error class="f-12">
@@ -97,7 +100,7 @@
             </div>
             <div class="col-md-3">
                 <mat-form-field>
-                    <mat-select matInput formControlName="ownershipType" class="form-control br-0">
+                    <mat-select formControlName="ownershipType" class="form-control br-0">
                         <mat-option value="1"> Joint </mat-option>
                         <mat-option value="2">Single </mat-option>
                     </mat-select>
