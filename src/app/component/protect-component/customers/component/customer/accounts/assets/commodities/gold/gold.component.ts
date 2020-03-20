@@ -89,7 +89,7 @@ export class GoldComponent implements OnInit {
     this.callMethod = {
       methodName : "disabledMember",
       ParamValue : value,
-      //disControl : type
+      disControl : type
     }
   }
 
