@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
 import { EventService } from 'src/app/Data-service/event.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -9,6 +9,7 @@ import { OnlineTransactionService } from '../../../../online-transaction.service
 import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
 import { SubmitReviewInnComponent } from '../submit-review-inn/submit-review-inn.component';
 import { LeftSideInnUccListComponent } from '../left-side-inn-ucc-list/left-side-inn-ucc-list.component';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-fatca-details-inn',
@@ -21,6 +22,7 @@ export class FatcaDetailsInnComponent implements OnInit {
   allData: any;
   changedValue: string;
   doneData: any;
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
@@ -87,31 +89,15 @@ export class FatcaDetailsInnComponent implements OnInit {
     return this.fatcaDetails.controls;
   }
   SendToForm() {
-    if (this.fatcaDetails.get('nationality').invalid) {
-      this.fatcaDetails.get('nationality').markAsTouched();
-      return;
-    } else if (this.fatcaDetails.get('annualIncome').invalid) {
-      this.fatcaDetails.get('annualIncome').markAsTouched();
-      return;
-    } else if (this.fatcaDetails.get('cityOfBirth').invalid) {
-      this.fatcaDetails.get('cityOfBirth').markAsTouched();
-      return;
-    } else if (this.fatcaDetails.get('countryOfBirth').invalid) {
-      this.fatcaDetails.get('countryOfBirth').markAsTouched();
-      return
-    } else if (this.fatcaDetails.get('sourceOfWealth').invalid) {
-      this.fatcaDetails.get('sourceOfWealth').markAsTouched();
-      return;
-    } else if (this.fatcaDetails.get('occupation').invalid) {
-      this.fatcaDetails.get('occupation').markAsTouched();
-      return;
-    } else if (this.fatcaDetails.get('politically').invalid) {
-      this.fatcaDetails.get('politically').markAsTouched();
-      return;
-    } else if (this.fatcaDetails.get('taxResidency').invalid) {
-      this.fatcaDetails.get('taxResidency').markAsTouched();
-      return;
-    } else {
+    if (this.fatcaDetails.invalid) {
+      for (let element in this.fatcaDetails.controls) {
+        console.log(element)
+        if (this.fatcaDetails.get(element).invalid) {
+          this.inputs.find(input => !input.ngControl.valid).focus();
+          this.fatcaDetails.controls[element].markAsTouched();
+        }
+      }
+    }else {
 
       let obj = {
         nationality: this.fatcaDetails.controls.nationality.value,
