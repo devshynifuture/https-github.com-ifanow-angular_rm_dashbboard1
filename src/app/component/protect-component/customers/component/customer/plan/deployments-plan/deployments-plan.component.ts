@@ -96,7 +96,7 @@ export class DeploymentsPlanComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.cusService.deletePPF(deleteData.id).subscribe(
+        this.planService.deleteDeployment(deleteData.id).subscribe(
           data => {
             this.eventService.openSnackBar("Deployment is deleted", "Dismiss");
             this.getDeploymentData();
