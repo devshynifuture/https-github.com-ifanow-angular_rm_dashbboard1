@@ -18,7 +18,7 @@ export class AddAssetStocksComponent implements OnInit {
   ownerName: any;
   familyMemberId: any;
   editApiData: any;
-  nomineesListFM: any;
+    nomineesListFM: any = [];
   checkValid: boolean = false;
   adviceShowHeaderFooter: boolean = true;
 

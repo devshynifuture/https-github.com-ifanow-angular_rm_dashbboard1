@@ -26,7 +26,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
   portfolioData: any;
   scripForm: any;
   portfolioFieldData: { familyMemberId: any; };
-  nomineesListFM: any;
+    nomineesListFM: any = [];
   checkValid:boolean= false;
   constructor(public dialog: MatDialog, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 

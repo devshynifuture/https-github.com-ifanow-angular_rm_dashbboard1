@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ValidatorType } from 'src/app/services/util.service';
 
 @Component({
@@ -9,18 +9,66 @@ import { ValidatorType } from 'src/app/services/util.service';
 })
 export class SetNewPasswordComponent implements OnInit {
   newPasswordLength = 0;
-
+  upperCaseFlag: boolean;
+  passwordStregth = {
+    upperCase: false,
+    lowerCase: false,
+    specialCharacter: false
+  }
+  hide1 = true;
+  hide2 = true;
   constructor(private fb: FormBuilder) { }
   setNewPasswordForm;
   validatorType = ValidatorType
   ngOnInit() {
     this.setNewPasswordForm = this.fb.group({
-      newPassword: [, [Validators.required, Validators.pattern(this.validatorType.LOGIN_PASS_REGEX)]],
+      newPassword: [, [Validators.required, Validators.pattern(this.validatorType.LOGIN_PASS_REGEX), this.checkUpperCase(), this.checkLowerCase()]],
       confirmPassword: [, [Validators.required, Validators.pattern(this.validatorType.LOGIN_PASS_REGEX)]]
     });
   }
   setNewPassword() {
   }
+  checkUpperCase() {
+
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (new RegExp(/(?=.*[A-Z])/).test(control.value) && control.value != null) {
+        this.passwordStregth.upperCase = true;
+        return;
+      }
+      this.passwordStregth.upperCase = false;
+      return;
+    }
+  }
+  checkLowerCase() {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (new RegExp(/(?=.*[a-z])/).test(control.value) && control.value != null) {
+        this.passwordStregth.lowerCase = true;
+        return;
+      }
+      this.passwordStregth.lowerCase = false;
+      return;
+    }
+  }
+
+  // checkSpecialCharacter() {
+  //   return (control: AbstractControl): ValidationErrors | null => {
+  //     if (new RegExp(/(?=.*[@#$%])/).test(control.value) && control.value != null) {
+  //       return { isSpeCharCaseFlag: true };
+  //     }
+  //     return null;
+  //   }
+  // }
+  // checkPasswordStrength(event) {
+  //   switch (true) {
+  //     case (new RegExp(/(?=.*[A-Z])/).test(event.value) && event.value != null):
+  //       this.passwordStregth.upperCase = true;
+  //       break;
+  //       case (new RegExp(/(?=.*[a-z])/).test(control.value) && control.value != null):
+  //         this.passwordStregth.lowerCase
+  //     default:
+  //       this.upperCaseFlag
+  //   }
+  // }
   checkPassword() {
     const password = this.setNewPasswordForm.get('newPassword').value;
     const confirm_new_password = this.setNewPasswordForm.get('confirmPassword').value;

@@ -12,24 +12,45 @@
 </div>
 
 <div [formGroup]="gold" class="pb-44 mb-48 pt-100">
-    <div class="row">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Owner</h5>
-            <p class="m-0 f-12 text-custom">In whose name is this asset</p>
-        </div>
-        <div class="col-md-5">
-            <mat-form-field class="w-100">
-                <mat-select matInput appOwner (valueChange1)='lisNominee($event)' [data]='ownerData'
-                    formControlName="ownerName" class="form-control br-0">
-                    <mat-option value='' disabled>Select family members</mat-option>
-                    <mat-option (click)="display($event)" *ngFor="let f of nomineesListFM" [value]="f.userName">
-                        <span>{{f.userName}}</span>
-                    </mat-option>
-                </mat-select>
-                <mat-error class=" f-12">
-                    This field is required
-                </mat-error>
-            </mat-form-field>
+    <div formArrayName="getCoOwnerName">
+        <div class="row" *ngFor="let obj of gold.controls['getCoOwnerName'].controls; let pointIndex=index"
+            [formGroupName]="pointIndex">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8 ">{{pointIndex != 0?'Co-o' : 'O'}}wner{{pointIndex != 0?pointIndex:''}}</h5>
+            </div>
+            <div class="pr-0" [ngClass]="gold.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
+                            (selectionChange)="disabledMember($event.value,'owner')"
+                            (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)'
+                            class="form-control br-0" [callMethod]='callMethod'>
+                            <mat-option value=''>Select family members</mat-option>
+                            <mat-option (click)="display(f)" *ngFor="let f of nomineesListFM" [disabled]="f.disable"
+                                [value]="f.userName">
+                                <span>{{f.userName}}</span>
+                            </mat-option>
+                        </mat-select>
+                        <mat-error class="f-12">
+                            This field is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-2" *ngIf="gold.value.getCoOwnerName.length > 1">
+                <div class="form-group mb-0 iconPetage">
+                    <mat-form-field>
+                        <input matInput class="form-control br-0 percentage" type="number" formControlName="share"
+                            (focusout)="onChangeJointOwnership('owner')">
+                        <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('required')">
+                            This field is required
+                        </mat-error>
+                        <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('incorrect') ">
+                            Total percent should be 100%
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row pt-48">
@@ -197,6 +218,55 @@
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                     </mat-form-field>
+                </div>
+
+            </div>
+        </div>
+        <div formArrayName="getNomineeName">
+            <div class="row pt-36" *ngFor="let obj of gold.controls['getNomineeName'].controls; let pointIndex=index"
+                [formGroupName]="pointIndex">
+                <div class="col-md-5 pr-0 text-right">
+                    <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
+                </div>
+                <div [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
+                                (selectionChange)="disabledMember($event.value,'nominee')"
+                                (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
+                                <mat-option value='' disabled>Select family members</mat-option>
+                                <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
+                                    [value]="f.userName">
+                                    <span>{{f.userName}}</span>
+                                </mat-option>
+                            </mat-select>
+                            <mat-error class="f-12">
+                                This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-2" *ngIf="getNominee.length > 1">
+                    <div class="form-group mb-0 iconPetage">
+                        <mat-form-field>
+                            <input matInput class="form-control br-0 percentage" type="number"
+                                formControlName="sharePercentage" (focusout)="onChangeJointOwnership('nominee')">
+                            <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('required')">
+                                This field is required
+                            </mat-error>
+                            <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('incorrect') ">
+                                Total percent should be 100%
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-2 p-0 d-flex align-items-center">
+                    <i *ngIf="gold.value.getNomineeName.length < 3"
+                        class="material-icons text-primitive f-20 c-p float-left"
+                        (click)="addNewNominee(undefined)">add</i>
+                    <i *ngIf="gold.value.getNomineeName.length > 1"
+                        class="material-icons text-primitive f-20 c-p pl-10 pt-8"
+                        (click)="removeNewNominee(pointIndex)">remove</i>
                 </div>
 
             </div>

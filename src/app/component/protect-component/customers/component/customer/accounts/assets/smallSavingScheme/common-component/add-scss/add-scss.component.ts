@@ -30,7 +30,7 @@ export class AddScssComponent implements OnInit {
   ownerData: any;
   isOptionalField: any;
   editApi: any;
-  nomineesListFM: any;
+    nomineesListFM: any = [];
   scssData: any;
   nomineesList: any[] = [];
   nominees: any[];
