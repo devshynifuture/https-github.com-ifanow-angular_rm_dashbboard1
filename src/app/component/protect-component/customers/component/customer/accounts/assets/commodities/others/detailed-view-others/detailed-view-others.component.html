@@ -72,16 +72,22 @@
                             {{others.description}}
                         </div>
                     </div>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+                    <div class="row bb p-8 b-l br" *ngIf="!others.nomineeList">
+                        <div class="col-md-8 text-left f-14 roboto p-0" >
+                            Nominee
+                        </div>
+                        <div class="col-md-4 text-right f-14 roboto p-0">
+                            -
+                        </div>
+                    </div>
+                    <div class="row bb p-8 b-l br" *ngFor="let obj of others.nomineeList; let i = index">
+                        <div class="col-md-8 text-left f-14 roboto p-0" >
+                            Nominee {{i + 1}}
+                        </div>
+                        <div class="col-md-4 text-right f-14 roboto p-0">
+                            {{obj.name}}
+                        </div>
+                    </div>
                     <!-- <table mat-table [dataSource]="dataSourceDetail" class="documentsTable" id="table-low">
                         <ng-container matColumnDef="name">
                             <th mat-header-cell *matHeaderCellDef> </th>
