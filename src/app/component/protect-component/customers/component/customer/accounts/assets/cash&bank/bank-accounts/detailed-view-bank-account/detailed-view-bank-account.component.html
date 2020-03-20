@@ -16,12 +16,12 @@
     <div class="row pt-40">
         <div class="col-md-12 p-0">
             <div class="insurance-ui bt">
-                <div class="row bb p-8 b-l br">
+                <div class="row bb p-8 b-l br" *ngFor="let owner of bankAccount.ownerList; let i = index">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Owner Name
+                        {{i != 0?'Co-o' : 'O'}}wner {{i != 0?i:''}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{bankAccount.ownerName?bankAccount.ownerName:'-'}}
+                        {{owner.name}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
