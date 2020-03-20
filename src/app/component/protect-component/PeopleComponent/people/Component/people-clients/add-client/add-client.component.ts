@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
@@ -7,12 +7,19 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
   styleUrls: ['./add-client.component.scss']
 })
 export class AddClientComponent implements OnInit {
+  headingData: any;
 
   constructor(private subInjectService: SubscriptionInject) { }
-
   ngOnInit() {
   }
+  @Input() set data(data) {
+    this.headingData = data;
+  }
+  selected = 0;
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  }
+  changeTab(flag) {
+    (flag == 1) ? this.selected++ : '';
   }
 }

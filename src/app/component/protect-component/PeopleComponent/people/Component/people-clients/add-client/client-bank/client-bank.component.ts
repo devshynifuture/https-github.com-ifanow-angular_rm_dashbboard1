@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-client-bank',
@@ -7,9 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ClientBankComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private fb: FormBuilder) { }
+  bankForm;
+  @Output() tabChange = new EventEmitter();
   ngOnInit() {
+    this.bankForm = this.fb.group({
+      ifscCode: [, [Validators.required]],
+      bankName: [, [Validators.required]],
+      micrName: [, [Validators.required]],
+      accNumber: [, [Validators.required]],
+      accType: [, [Validators.required]],
+      branchName: [, [Validators.required]],
+      branchCountry: [, [Validators.required]],
+      branchPinCode: [, [Validators.required]],
+      branchAddressLine1: [, [Validators.required]],
+      branchAddressLine2: [, [Validators.required]],
+      branchCity: [, [Validators.required]],
+      branchState: [, [Validators.required]]
+    })
   }
 
 }

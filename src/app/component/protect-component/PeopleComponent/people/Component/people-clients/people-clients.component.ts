@@ -18,8 +18,9 @@ export class PeopleClientsComponent implements OnInit {
   ngOnInit() {
   }
   Addclient(data) {
+    (data == null) ? data = { flag: 'Add client', fieldFlag: 'client' } : '';
     const fragmentData = {
-      flag: 'detailedViewCashInHand',
+      flag: 'Add client',
       id: 1,
       data,
       state: 'open50',

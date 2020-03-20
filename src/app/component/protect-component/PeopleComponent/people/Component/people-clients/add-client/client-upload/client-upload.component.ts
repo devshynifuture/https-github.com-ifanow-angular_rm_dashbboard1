@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-client-upload',
@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class ClientUploadComponent implements OnInit {
 
   constructor() { }
-
+  @Output() tabChange = new EventEmitter();
   ngOnInit() {
   }
 
