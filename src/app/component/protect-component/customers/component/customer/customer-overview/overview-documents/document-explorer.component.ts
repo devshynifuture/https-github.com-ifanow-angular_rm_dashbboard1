@@ -114,14 +114,18 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       // if (element == 'CREATE') {
       //   this.createFolder(this.getInnerDoc);
       // }
+  
+      if(element=='RENAME'){
+        if (this.getInnerDoc.rename.flag == 'fileName') {
+          this.renameFile(this.getInnerDoc);
+        } else {
+          this.renameFolders(this.getInnerDoc);
+        }
+      }
       if(result.isRefreshRequired){
         this.getAllFileList(this.valueTab)
       }
-      if (element=='CREATE' && this.getInnerDoc.rename.flag == 'fileName') {
-        this.renameFile(this.getInnerDoc);
-      } else {
-        this.renameFolders(this.getInnerDoc);
-      }
+
     });
 
   }
