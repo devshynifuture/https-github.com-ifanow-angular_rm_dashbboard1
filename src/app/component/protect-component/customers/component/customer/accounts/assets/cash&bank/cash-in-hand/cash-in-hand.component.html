@@ -62,8 +62,7 @@
                     <input autocomplete="off" matInput #cashBalance type="text" appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control rupess br-0"
                         formControlName="cashBalance">
-                    <mat-error class="f-12"
-                        [ngClass]="{'v-h':!(isCashBalance && getFormControl().cashBalance.invalid || getFormControl().cashBalance.touched && getFormControl().cashBalance.invalid)}">
+                    <mat-error class="f-12">
                         This field is required
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{cashBalance.value.length}}/10</mat-hint>
@@ -134,7 +133,8 @@
             </div>
         </div>
         <div formArrayName="getNomineeName">
-            <div class="row pt-36" *ngFor="let obj of cashInHand.controls['getNomineeName'].controls; let pointIndex=index"
+            <div class="row pt-36"
+                *ngFor="let obj of cashInHand.controls['getNomineeName'].controls; let pointIndex=index"
                 [formGroupName]="pointIndex">
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
