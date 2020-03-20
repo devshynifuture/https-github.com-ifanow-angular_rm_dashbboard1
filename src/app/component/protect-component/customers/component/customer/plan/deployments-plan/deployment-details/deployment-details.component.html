@@ -56,7 +56,7 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
-            <div *ngIf="deploymentData.EQUITY == 0" class="d-flex flex-column align-items-center">
+            <div *ngIf="deploymentData.EQUITY.length == 0" class="d-flex flex-column align-items-center">
                 <h4 class="text-center pt-12">No Data found</h4>
             </div>
             <table mat-table [dataSource]="deploymentData.DEBT" *ngIf="deploymentData" id="table-low"
@@ -101,7 +101,7 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
             </table>
-            <div *ngIf="deploymentData.DEBT == 0" class="d-flex flex-column align-items-center">
+            <div *ngIf=" deploymentData.DEBT.length == 0" class="d-flex flex-column align-items-center">
                 <h4 class="text-center pt-12">No Data found</h4>
             </div>
         </div>
@@ -154,7 +154,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
     </table>
-    <div *ngIf="deploymentData.equity_investment == 0" class="d-flex flex-column align-items-center">
+    <div *ngIf="deploymentData.equity_investment.length == 0" class="d-flex flex-column align-items-center">
         <h4 class="text-center pt-12">No Data found</h4>
     </div>
     <p class="roboto m-0 f-500 text-black pt-20">DEBT</p>
@@ -204,7 +204,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
     </table>
-    <div *ngIf="deploymentData.debt_investment == 0" class="d-flex flex-column align-items-center">
+    <div *ngIf="deploymentData.debt_investment.length == 0" class="d-flex flex-column align-items-center">
         <h4 class="text-center pt-12">No Data found</h4>
     </div>
 </div>
