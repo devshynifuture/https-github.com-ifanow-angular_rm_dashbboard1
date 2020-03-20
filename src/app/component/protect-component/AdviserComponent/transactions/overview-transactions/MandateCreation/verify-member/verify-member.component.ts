@@ -20,7 +20,7 @@ export class VerifyMemberComponent implements OnInit {
   displayedColumns: string[] = ['set', 'position', 'name', 'weight', 'ifsc', 'aid', 'euin', 'hold'];
   data1: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource();
-  nomineesListFM: any;
+    nomineesListFM: any = [];
   showSpinnerOwner = false;
   familyMemberData: any;
   familyMemberId: any;

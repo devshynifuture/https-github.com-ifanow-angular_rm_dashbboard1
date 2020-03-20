@@ -31,7 +31,7 @@ export class AddPoTdComponent implements OnInit {
   transactionData: any;
   editApi: any;
   clientId: any;
-  nomineesListFM: any;
+    nomineesListFM: any = [];
   nomineesList: any[] = [];
   nominees: any[];
   potdData: any;

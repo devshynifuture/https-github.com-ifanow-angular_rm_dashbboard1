@@ -22,7 +22,7 @@ export class SettingsFolioMappingComponent implements OnInit {
   type: string;
   selectedBrokerCode: any;
   selectedPlatform: any;
-  nomineesListFM: any;
+    nomineesListFM: any = [];
   familyMemberData: any;
   isLoading: boolean;
   clientData: any;

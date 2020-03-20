@@ -30,7 +30,7 @@ export class CashInHandComponent implements OnInit {
   showHide = false;
   advisorId: any;
   private clientId: any;
-  nomineesListFM: any;
+    nomineesListFM: any = [];
   flag: any;
   adviceShowHeaderAndFooter: boolean = true;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;

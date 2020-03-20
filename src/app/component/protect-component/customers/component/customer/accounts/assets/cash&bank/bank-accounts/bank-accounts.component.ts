@@ -33,7 +33,7 @@ export class BankAccountsComponent implements OnInit {
   showHide = false;
   advisorId: any;
   clientId: any;
-  nomineesListFM: any;
+    nomineesListFM: any = [];
   flag: any;
   nomineesList: any[] = [];
   bankData: any;
