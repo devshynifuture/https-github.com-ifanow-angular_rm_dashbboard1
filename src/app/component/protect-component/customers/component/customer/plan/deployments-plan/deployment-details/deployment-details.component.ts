@@ -44,7 +44,16 @@ export class DeploymentDetailsComponent implements OnInit {
       data => {
         console.log(data);
         this.isLoading = false;
-        this.deploymentData = data;
+        if(data){
+          this.deploymentData = data;
+        }else{
+          this.deploymentData = {
+            EQUITY: [],
+            DEBT: [],
+            equity_investment: [],
+            debt_investment: []
+          }
+        }
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss')
