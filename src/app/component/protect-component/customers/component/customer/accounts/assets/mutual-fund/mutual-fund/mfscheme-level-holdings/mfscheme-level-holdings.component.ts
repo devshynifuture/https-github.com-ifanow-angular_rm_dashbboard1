@@ -14,7 +14,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   ownerData: any;
   ownerName: any;
   selectedFamilyData: any;
-  nomineesListFM: any;
+    nomineesListFM: any = [];
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder) { }

@@ -11,24 +11,51 @@
 </div>
 <div class="pt-100 pl-24 pr-24 pb-48 mb-48">
     <div [formGroup]="KVPFormScheme">
-        <div class="row">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Owner</h5>
-                <p class="m-0 f-12 text-custom">In whose name is this asset</p>
-            </div>
-            <div class="col-md-5">
-                <mat-form-field class="w-100">
-                    <mat-select appOwner matInput (valueChange1)='lisNominee($event)' [data]='ownerData'
-                        formControlName="ownerName" class="form-control br-0">
-                        <mat-option value=''>Select family members</mat-option>
-                        <mat-option (click)="display(f)" *ngFor="let f of nomineesListFM" [value]="f.userName">
-                            <span>{{f.userName}}</span>
-                        </mat-option>
-                    </mat-select>
-                    <mat-error class="f-12">
-                        This field is required
-                    </mat-error>
-                </mat-form-field>
+        <div formArrayName="getCoOwnerName">
+            <div class="row pt-36" *ngFor="let obj of KVPFormScheme.controls['getCoOwnerName'].controls; let pointIndex=index"
+                [formGroupName]="pointIndex">
+                <div class="col-md-5 pr-0 text-right">
+                    <h5 class="m-0 pt-8 ">{{pointIndex != 0?'Co-o' : 'O'}}wner{{pointIndex != 0?pointIndex:''}}</h5>
+                </div>
+                <div class="pr-0" [ngClass]="KVPFormScheme.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
+                                (selectionChange)="disabledMember($event.value,'owner')"
+                                (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)'
+                                class="form-control br-0" [callMethod]='callMethod'>
+                                <mat-option value='' disabled>Select family members</mat-option>
+                                <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
+                                    <span>{{f.userName}}</span>
+                                </mat-option>
+                            </mat-select>
+                            <mat-error class="f-12">
+                                This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-2" *ngIf="KVPFormScheme.value.getCoOwnerName.length > 1">
+                    <div class="form-group mb-0 iconPetage">
+                        <mat-form-field>
+                            <input matInput class="form-control br-0 percentage" type="number" formControlName="share"
+                                (focusout)="onChangeJointOwnership('owner')">
+                            <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('required')">
+                                This field is required
+                            </mat-error>
+                            <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('incorrect') ">
+                                Total percent should be 100%
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-2 d-flex align-items-center">
+                    <i *ngIf="KVPFormScheme.value.getCoOwnerName.length < 3"
+                        class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i>
+                    <i *ngIf="KVPFormScheme.value.getCoOwnerName.length > 1"
+                        class="material-icons text-primitive f-20 c-p pl-10 pt-8"
+                        (click)="removeCoOwner(pointIndex)">remove</i>
+                </div>
             </div>
         </div>
         <div class="row pt-40">
@@ -70,7 +97,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-40">
+        <!-- <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Ownership type</h5>
             </div>
@@ -85,67 +112,116 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-        </div>
-    </div>
-    <div class="row pt-40">
-        <div *ngIf="isOptionalField==false" (click)="moreFields()" class="col-md-5 text-right">
-            <h5 class="m-0 pt-8 text-custom c-p">Show less</h5>
-        </div>
-        <div *ngIf="isOptionalField" (click)="moreFields()" class="col-md-5 text-right">
-            <h5 class="m-0 pt-8 text-custom c-p">+ Add more [optional data] </h5>
-        </div>
-        <div class="col-md-5">
-        </div>
-    </div>
-    <div [formGroup]="KVPOptionalFormScheme" *ngIf="isOptionalField==false">
+        </div> -->
         <div class="row pt-40">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">PO branch</h5>
+            <div *ngIf="isOptionalField==false" (click)="moreFields()" class="col-md-5 text-right">
+                <h5 class="m-0 pt-8 text-custom c-p">Show less</h5>
+            </div>
+            <div *ngIf="isOptionalField" (click)="moreFields()" class="col-md-5 text-right">
+                <h5 class="m-0 pt-8 text-custom c-p">+ Add more [optional data] </h5>
             </div>
             <div class="col-md-5">
-                <div class="form-group mb-0">
-                    <mat-form-field> <input autocomplete="off" matInput formControlName="poBranch" #poBranch type="text"
-                            maxlength="20" class="form-control br-0">
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
-                        <mat-hint align="end" class="f-12">{{poBranch.value.length}}/20</mat-hint>
-                    </mat-form-field>
+            </div>
+        </div>
+        <div *ngIf="isOptionalField==false">
+            <div class="row pt-40">
+                <div class="col-md-5 pr-0 text-right">
+                    <h5 class="m-0 pt-8">PO branch</h5>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group mb-0">
+                        <mat-form-field> <input autocomplete="off" matInput formControlName="poBranch" #poBranch type="text"
+                                maxlength="20" class="form-control br-0">
+                            <mat-hint align="start" class="f-12">Optional</mat-hint>
+                            <mat-hint align="end" class="f-12">{{poBranch.value.length}}/20</mat-hint>
+                        </mat-form-field>
+                    </div>
                 </div>
             </div>
-        </div>
-        <app-add-nominee [ownerName]="ownerName" [data]="kvpData" (outputEvent)="getFormDataNominee($event)">
-        </app-add-nominee>
-        <div class="row pt-40">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Bank account number</h5>
-            </div>
-            <div class="col-md-5">
-                <div class="form-group mb-0">
-                    <mat-form-field> <input autocomplete="off" type="text" matInput formControlName="bankAccNum"
-                            #bankAccNum maxlength="16" class="form-control br-0" appInputValueValidation
-                            [inputValidator]="validatorType.NUMBER_ONLY">
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
-                        <mat-hint align="end" class="f-12">{{bankAccNum.value.length}}/16</mat-hint>
-                    </mat-form-field>
+            <app-add-nominee [ownerName]="ownerName" [data]="kvpData" (outputEvent)="getFormDataNominee($event)">
+            </app-add-nominee>
+            <div class="row pt-40">
+                <div class="col-md-5 pr-0 text-right">
+                    <h5 class="m-0 pt-8">Bank account number</h5>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group mb-0">
+                        <mat-form-field> <input autocomplete="off" type="text" matInput formControlName="bankAccNum"
+                                #bankAccNum maxlength="16" class="form-control br-0" appInputValueValidation
+                                [inputValidator]="validatorType.NUMBER_ONLY">
+                            <mat-hint align="start" class="f-12">Optional</mat-hint>
+                            <mat-hint align="end" class="f-12">{{bankAccNum.value.length}}/16</mat-hint>
+                        </mat-form-field>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row pt-40">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Description</h5>
+            <div class="row pt-40">
+                <div class="col-md-5 pr-0 text-right">
+                    <h5 class="m-0 pt-8">Description</h5>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group mb-0">
+                        <mat-form-field> <input autocomplete="off" matInput formControlName="description" #description
+                                maxlength="60" class="form-control br-0">
+                            <mat-hint align="start" class="f-12">Optional</mat-hint>
+                            <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-5">
-                <div class="form-group mb-0">
-                    <mat-form-field> <input autocomplete="off" matInput formControlName="description" #description
-                            maxlength="60" class="form-control br-0">
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
-                        <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
-                    </mat-form-field>
+            <div formArrayName="getNomineeName">
+                <div class="row pt-36"
+                    *ngFor="let obj of KVPFormScheme.controls['getNomineeName'].controls; let pointIndex=index"
+                    [formGroupName]="pointIndex">
+                    <div class="col-md-5 pr-0 text-right">
+                        <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
+                    </div>
+                    <div [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
+                                    (selectionChange)="disabledMember($event.value,'nominee')"
+                                    (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
+                                    <mat-option value='' disabled>Select family members</mat-option>
+                                    <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
+                                        [value]="f.userName">
+                                        <span>{{f.userName}}</span>
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error class="f-12">
+                                    This field is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-2" *ngIf="getNominee.length > 1">
+                        <div class="form-group mb-0 iconPetage">
+                            <mat-form-field>
+                                <input matInput class="form-control br-0 percentage" type="number"
+                                    formControlName="sharePercentage" (focusout)="onChangeJointOwnership('nominee')">
+                                <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('required')">
+                                    This field is required
+                                </mat-error>
+                                <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('incorrect') ">
+                                    Total percent should be 100%
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-2 p-0 d-flex align-items-center">
+                        <i *ngIf="KVPFormScheme.value.getNomineeName.length < 3"
+                            class="material-icons text-primitive f-20 c-p float-left"
+                            (click)="addNewNominee(undefined)">add</i>
+                        <i *ngIf="KVPFormScheme.value.getNomineeName.length > 1"
+                            class="material-icons text-primitive f-20 c-p pl-10 pt-8"
+                            (click)="removeNewNominee(pointIndex)">remove</i>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
     <div>
-
     </div>
 </div>
 <div class="bottom-fixed wrapper-12 pt-16" *ngIf="adviceShowHeaderAndFooter">

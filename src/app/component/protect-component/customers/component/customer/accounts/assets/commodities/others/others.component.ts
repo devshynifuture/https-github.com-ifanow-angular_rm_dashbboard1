@@ -30,7 +30,7 @@ export class OthersComponent implements OnInit {
   ownerData: any;
   advisorId: any;
   clientId: any;
-  nomineesListFM: any;
+    nomineesListFM: any = [];
   nomineesList: any;
   flag: any;
   otherData: any;

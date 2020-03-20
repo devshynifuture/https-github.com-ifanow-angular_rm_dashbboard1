@@ -9,7 +9,7 @@ export class ClientSearchDirective implements OnInit {
   familyMemberData: any;
   advisorId: any;
   clientId: any;
-  nomineesListFM: any;
+    nomineesListFM: any = [];
   @Output() valueChange = new EventEmitter();
   @Output() valueChange1 = new EventEmitter();
 

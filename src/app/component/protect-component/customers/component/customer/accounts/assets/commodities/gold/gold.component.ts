@@ -36,7 +36,7 @@ export class GoldComponent implements OnInit {
   advisorId: any;
   fdYears: string[];
   clientId: any;
-  nomineesListFM: any;
+    nomineesListFM: any = [];
   flag: any;
   currentYear: any = new Date().getFullYear();
   adviceFlagShowHeaderFooter: boolean = true;

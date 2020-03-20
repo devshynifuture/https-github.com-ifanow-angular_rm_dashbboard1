@@ -30,7 +30,7 @@ export class AddPoSavingComponent implements OnInit {
   poSavingOptionalForm: any;
   editApi: any;
   accBalance: number;
-  nomineesListFM: any;
+    nomineesListFM: any = [];
   posavingData: any;
   nomineesList: any[] = [];
   nominees: any[];

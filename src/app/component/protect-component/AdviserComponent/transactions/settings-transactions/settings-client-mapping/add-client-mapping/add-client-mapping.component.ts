@@ -16,7 +16,7 @@ export class AddClientMappingComponent implements OnInit {
   folioForm: any;
   advisorId: any;
   clientId: any;
-  nomineesListFM: any;
+    nomineesListFM: any = [];
   familyMemberId: any;
   familyMemberData: any;
   ownerName: any;
