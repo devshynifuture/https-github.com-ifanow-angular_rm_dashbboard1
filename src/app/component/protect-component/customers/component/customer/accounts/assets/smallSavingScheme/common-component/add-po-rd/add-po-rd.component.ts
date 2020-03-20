@@ -29,7 +29,7 @@ export class AddPoRdComponent implements OnInit {
   PORDForm: any;
   PORDFormoptionalForm: any;
   editApi: any;
-  nomineesListFM: any;
+    nomineesListFM: any = [];
   pordData: any;
   nomineesList: any[] = [];
   nominees: any[];

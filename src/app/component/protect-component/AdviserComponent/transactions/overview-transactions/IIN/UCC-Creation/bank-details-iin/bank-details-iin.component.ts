@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, QueryList, ViewChild, ViewContainerRef } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
@@ -10,6 +10,7 @@ import { PostalService } from 'src/app/services/postal.service';
 import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
 import { ContactDetailsInnComponent } from '../contact-details-inn/contact-details-inn.component';
 import { LeftSideInnUccListComponent } from '../left-side-inn-ucc-list/left-side-inn-ucc-list.component';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-bank-details-iin',
@@ -18,6 +19,8 @@ import { LeftSideInnUccListComponent } from '../left-side-inn-ucc-list/left-side
 })
 export class BankDetailsIINComponent implements OnInit {
   validatorType = ValidatorType
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+
   bankDetails: any;
   inputData: any;
   holdingList: any;
@@ -203,7 +206,7 @@ export class BankDetailsIINComponent implements OnInit {
         this.holder.type = value;
         this.bankDetails.setValue(this.firstHolderBank);
       } else {
-        this.reset();
+        return;
       }
     }
     else if (value == 'second') {
@@ -284,54 +287,14 @@ export class BankDetailsIINComponent implements OnInit {
     return value;
   }
   saveBankDetails(value) {
-    if (this.bankDetails.get('ifscCode').invalid) {
-      this.bankDetails.get('ifscCode').markAsTouched();
-      return;
-    } else if (this.bankDetails.get('bankName').invalid) {
-      this.bankDetails.get('bankName').markAsTouched();
-      return;
-    } else if (this.bankDetails.get('micrCode').invalid) {
-      this.bankDetails.get('micrCode').markAsTouched();
-      return
-    } else if (this.bankDetails.get('accountNumber').invalid) {
-      this.bankDetails.get('accountNumber').markAsTouched();
-      return;
-    } else if (this.bankDetails.get('accountType').invalid) {
-      this.bankDetails.get('accountType').markAsTouched();
-      return;
-    } else if (this.bankDetails.get('firstHolder').invalid) {
-      this.bankDetails.get('firstHolder').markAsTouched();
-      return;
-    } else if (this.bankDetails.get('branchAdd1').invalid) {
-      this.bankDetails.get('branchAdd1').markAsTouched();
-      return;
-    } else if (this.bankDetails.get('branchAdd2').invalid) {
-      this.bankDetails.get('branchAdd2').markAsTouched();
-      return;
-    } else if (this.bankDetails.get('pinCode').invalid) {
-      this.bankDetails.get('pinCode').markAsTouched();
-      return;
-    } else if (this.bankDetails.get('city').invalid) {
-      this.bankDetails.get('city').markAsTouched();
-      return;
-      // } else if (this.bankDetails.get('state').invalid) {
-      //   this.bankDetails.get('state').markAsTouched();
-      //   return;
-      // } else if (this.bankDetails.get('country').invalid) {
-      //   this.bankDetails.get('country').markAsTouched();
-      //   return;
-    } else if (this.bankDetails.get('branchProof').invalid) {
-      this.bankDetails.get('branchProof').markAsTouched();
-      return;
-    } else if (this.bankDetails.get('bankMandate').invalid) {
-      this.bankDetails.get('bankMandate').markAsTouched();
-      return;
-    } else if (this.bankDetails.get('mandateDate').invalid) {
-      this.bankDetails.get('mandateDate').markAsTouched();
-      return;
-    } else if (this.bankDetails.get('mandateAmount').invalid) {
-      this.bankDetails.get('mandateAmount').markAsTouched();
-      return;
+    if (this.bankDetails.invalid) {
+      for (let element in this.bankDetails.controls) {
+        console.log(element)
+        if (this.bankDetails.get(element).invalid) {
+          this.inputs.find(input => !input.ngControl.valid).focus();
+          this.bankDetails.controls[element].markAsTouched();
+        }
+      }
     } else {
       this.setEditHolder(this.holder.type, value)
     }

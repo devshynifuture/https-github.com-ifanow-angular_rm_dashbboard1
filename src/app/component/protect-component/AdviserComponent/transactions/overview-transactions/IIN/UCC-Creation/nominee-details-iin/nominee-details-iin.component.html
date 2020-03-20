@@ -34,7 +34,7 @@
                         <mat-form-field>
                             <input matInput maxlength="30"  appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" formControlName="nomineeName" type="text"
                                 class="form-control">
-
+                                <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -57,6 +57,7 @@
                                 <mat-option value="Sister"> Sister </mat-option>
                                 <mat-option value="Other"> Other </mat-option>
                             </mat-select>
+                            <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -89,6 +90,7 @@
                             <input matInput class="form-control" formControlName="nominneDOB" [matDatepicker]="picker">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
+                            <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -98,10 +100,13 @@
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0"> Nominee percentage </h3>
                     </div>
-                    <div class="col-md-3 iconPetage">
+                    <div class="col-md-3">
+                        <mat-form-field>
                         <input matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6"
                         appInputValueValidation maxlength="3" formControlName="nomineePercentage" type="text"
                             class="form-control percentage">
+                            <mat-error class="f-12">This field is required</mat-error>
+                        </mat-form-field>
                     </div>
                 </div>
 

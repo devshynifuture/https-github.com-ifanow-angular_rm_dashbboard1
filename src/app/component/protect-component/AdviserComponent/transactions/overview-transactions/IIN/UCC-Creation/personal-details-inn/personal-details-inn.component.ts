@@ -49,7 +49,7 @@ export class PersonalDetailsInnComponent implements OnInit {
       this.secondHolder = data.holderList[1]
       this.thirdHolder = data.holderList[2]
       console.log('return data', data)
-    }else if(data && data.firstHolder){
+    } else if (data && data.firstHolder) {
       this.getdataForm(data.firstHolder)
       this.firstHolder = data.firstHolder
       this.secondHolder = data.secondHolder
@@ -97,18 +97,18 @@ export class PersonalDetailsInnComponent implements OnInit {
       motherName: [!data ? '' : data.motherName, [Validators.required]],
       dateOfBirth: [!data ? '' : data.dateOfBirth, [Validators.required]],
       gender: [!data ? '' : data.gender, [Validators.required]],
-      email: [!data ? '' : data.email, [Validators.required]],
-      aadharNumber: [!data ? '' : data.aadharNumber, [Validators.required]],
-      mobileNo: [!data ? '' : data.mobileNo, [Validators.required]],
-      phoneNo: [!data ? '' : data.phoneNo, [Validators.required]],
+      email: [!data ? '' : data.email],
+      aadharNumber: [!data ? '' : data.aadharNumber],
+      mobileNo: [!data ? '' : data.mobileNo],
+      phoneNo: [!data ? '' : data.phoneNo],
       maritalStatus: [!data ? '' : data.maritalStatus, [Validators.required]],
-      addressLine1: [!data.address ? '' : data.address.addressLine1, [Validators.required]],
-      addressLine2: [!data.address ? '' : data.address.addressLine2, [Validators.required]],
-      pinCode: [!data.address ? '' : data.address.pinCode, [Validators.required]],
-      city: [!data.address ? '' : data.address.city, [Validators.required]],
-      district: [!data.address ? '' : data.address.district, [Validators.required]],
-      state: [!data.address ? '' : data.address.state, [Validators.required]],
-      country: [!data.address ? '' : data.address.country, [Validators.required]],
+      addressLine1: [!data.address ? '' : data.address.addressLine1],
+      addressLine2: [!data.address ? '' : data.address.addressLine2],
+      pinCode: [!data.address ? '' : data.address.pinCode],
+      city: [!data.address ? '' : data.address.city],
+      district: [!data.address ? '' : data.address.district],
+      state: [!data.address ? '' : data.address.state],
+      country: [!data.address ? '' : data.address.country],
     });
   }
   getFormControl(): any {
@@ -137,7 +137,7 @@ export class PersonalDetailsInnComponent implements OnInit {
         this.holder.type = value;
         this.personalDetails.setValue(this.firstHolder);
       } else {
-        this.reset();
+        return;
       }
     }
     else if (value == 'second') {
@@ -151,7 +151,7 @@ export class PersonalDetailsInnComponent implements OnInit {
     }
     else if (value == 'third') {
       this.savePersonalDetails(value);
-      if (this.thirdHolder  && this.thirdHolder.panNumber) {
+      if (this.thirdHolder && this.thirdHolder.panNumber) {
         this.holder.type = value;
         this.personalDetails.setValue(this.thirdHolder);
       } else {
@@ -160,6 +160,7 @@ export class PersonalDetailsInnComponent implements OnInit {
     } else {
       this.savePersonalDetails(value);
     }
+
     this.obj1.firstHolder = this.firstHolder;
     this.obj1.secondHolder = this.secondHolder;
     this.obj1.thirdHolder = this.thirdHolder;

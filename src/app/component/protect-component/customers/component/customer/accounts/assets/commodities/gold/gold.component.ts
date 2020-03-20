@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { DatePipe } from '@angular/common';
@@ -36,11 +36,13 @@ export class GoldComponent implements OnInit {
   advisorId: any;
   fdYears: string[];
   clientId: any;
-  nomineesListFM: any;
+    nomineesListFM: any = [];
   flag: any;
   currentYear: any = new Date().getFullYear();
   adviceFlagShowHeaderFooter: boolean = true;
   editData: any;
+  callMethod: { methodName: string; ParamValue: any; };
+  nominees: any;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
 
@@ -71,15 +73,144 @@ export class GoldComponent implements OnInit {
       '1950', '1951', '1952', '1953', '1954', '1955', '1956', '1957', '1958', '1959', '1960', '1961', '1962', '1963', '1964', '1965', '1966', '1967', '1968', '1969', '1970', '1971', '1972', '1973', '1974', '1975', '1976', '1977', '1978', '1979', '1980', '1981', '1982', '1983', '1984', '1985', '1986', '1987', '1988', '1989', '1990', '1991', '1992', '1993', '1994', '1995', '1996', '1997', '1998', '1999', '2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019']
   }
 
+  // ===================owner-nominee directive=====================//
   display(value) {
     console.log('value selected', value)
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
+
   lisNominee(value) {
-    console.log(value)
-    this.nomineesListFM = Object.assign([], value.familyMembersList);
+    this.ownerData.Fmember = value;
+    this.nomineesListFM = Object.assign([], value);
   }
+
+  disabledMember(value, type) {
+    this.callMethod = {
+      methodName : "disabledMember",
+      ParamValue : value,
+      //disControl : type
+    }
+  }
+
+  displayControler(con) {
+    console.log('value selected', con);
+    if(con.owner != null && con.owner){
+      this.gold.controls.getCoOwnerName = con.owner;
+    }
+    if(con.nominee != null && con.nominee){
+      this.gold.controls.getNomineeName = con.nominee;
+    }
+  }
+
+  onChangeJointOwnership(data) {
+    this.callMethod = {
+      methodName : "onChangeJointOwnership",
+      ParamValue : data
+    }
+  }
+
+  /***owner***/ 
+
+  get getCoOwner() {
+    return this.gold.get('getCoOwnerName') as FormArray;
+  }
+
+  addNewCoOwner(data) {
+    this.getCoOwner.push(this.fb.group({
+      name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+    }));
+    if (data) {
+      setTimeout(() => {
+       this.disabledMember(null,null);
+      }, 1300);
+    }
+
+    if(this.getCoOwner.value.length > 1 && !data){
+     let share = 100/this.getCoOwner.value.length;
+     for (let e in this.getCoOwner.controls) {
+      if(!Number.isInteger(share) && e == "0"){
+        this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+      }
+      else{
+        this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+      }
+     }
+    }
+   
+  }
+
+  removeCoOwner(item) {
+    this.getCoOwner.removeAt(item);
+    if (this.gold.value.getCoOwnerName.length == 1) {
+      this.getCoOwner.controls['0'].get('share').setValue('100');
+    } else {
+      let share = 100/this.getCoOwner.value.length;
+      for (let e in this.getCoOwner.controls) {
+        if(!Number.isInteger(share) && e == "0"){
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+        }
+        else{
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+        }
+      }
+    }
+    this.disabledMember(null, null);
+  }
+  /***owner***/ 
+
+  /***nominee***/ 
+
+  get getNominee() {
+    return this.gold.get('getNomineeName') as FormArray;
+  }
+
+  removeNewNominee(item) {
+    this.getNominee.removeAt(item);
+    if (this.gold.value.getNomineeName.length == 1) {
+      this.getNominee.controls['0'].get('sharePercentage').setValue('100');
+    } else {
+      let share = 100/this.getNominee.value.length;
+      for (let e in this.getNominee.controls) {
+        if(!Number.isInteger(share) && e == "0"){
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+        }
+        else{
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+        }
+      }
+    }
+  }
+
+
+  
+  addNewNominee(data) {
+    this.getNominee.push(this.fb.group({
+      name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+    }));
+    if (!data || this.getNominee.value.length < 1) {
+      for (let e in this.getNominee.controls) {
+        this.getNominee.controls[e].get('sharePercentage').setValue(0);
+      }
+    }
+
+    if(this.getNominee.value.length > 1 && !data){
+      let share = 100/this.getNominee.value.length;
+      for (let e in this.getNominee.controls) {
+        if(!Number.isInteger(share) && e == "0"){
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+        }
+        else{
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+        }
+      }
+     }
+     
+    
+  }
+  /***nominee***/ 
+  // ===================owner-nominee directive=====================//
+
   Close(flag) {
 
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag, sagar: false })
@@ -105,7 +236,11 @@ export class GoldComponent implements OnInit {
       this.flag = "editGOLD";
     }
     this.gold = this.fb.group({
-      ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
+      getCoOwnerName: this.fb.array([this.fb.group({
+        name: ['', [Validators.required]],
+        share: ['', [Validators.required]],
+        familyMemberId: null
+      })]),
       appPurValue: [data.approximatePurchaseValue, [Validators.required]],
       totalsGrams: [(data.gramsOrTola == undefined) ? '' : (data.gramsOrTola) + "", [Validators.required]],
       noTolasGramsPur: [(data.purchasedGramsOrTola == undefined) ? '' : (data.purchasedGramsOrTola), [Validators.required]],
@@ -114,9 +249,42 @@ export class GoldComponent implements OnInit {
       // balanceAsOn: [(data.balanceAsOn == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
       description: [(data.description == undefined) ? null : data.description],
       bankAcNo: [(data.bankAcNo == undefined) ? '' : data.bankAcNo],
+      nominees: this.nominees,
+      getNomineeName: this.fb.array([this.fb.group({
+        name: [''],
+        sharePercentage: [0],
+        familyMemberId: [0],
+        id: [0]
+      })]),
     });
-    this.ownerData = this.gold.controls;
-    this.familyMemberId = data.familyMemberId
+    // this.ownerData = this.gold.controls;
+    // this.familyMemberId = data.familyMemberId
+        // ==============owner-nominee Data ========================\\
+    /***owner***/
+    if (this.gold.value.getCoOwnerName.length == 1) {
+      this.getCoOwner.controls['0'].get('share').setValue('100');
+    }
+
+    if (data.ownerList) {
+      this.getCoOwner.removeAt(0);
+      data.ownerList.forEach(element => {
+        this.addNewCoOwner(element);
+      });
+    }
+
+    /***owner***/
+
+    /***nominee***/
+    if (data.nomineeList) {
+      this.getNominee.removeAt(0);
+      data.nomineeList.forEach(element => {
+        this.addNewNominee(element);
+      });
+    }
+    /***nominee***/
+
+    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.gold }
+    // ==============owner-nominee Data ========================\\
 
   }
   getFormControl(): any {
@@ -137,7 +305,7 @@ export class GoldComponent implements OnInit {
         advisorId: this.advisorId,
         clientId: this.clientId,
         familyMemberId: this.familyMemberId,
-        ownerName: (this.ownerName == undefined) ? this.gold.controls.ownerName.value : this.ownerName,
+        ownerList: this.gold.value.getCoOwnerName,
         approximatePurchaseValue: this.gold.controls.appPurValue.value,
         gramsOrTola: this.gold.controls.totalsGrams.value,
         // balanceAsOn: this.gold.controls.balanceAsOn.value,
@@ -145,8 +313,16 @@ export class GoldComponent implements OnInit {
         totalsGrams: this.gold.controls.totalsGrams.value,
         purchaseYear: this.gold.controls.tenure.value,
         carat: this.gold.controls.carats.value,
+        nomineeList:this.gold.value.getNomineeName,
         description: (this.gold.controls.description.value == '') ? null : this.gold.controls.description.value,
       }
+
+      obj.nomineeList.forEach((element, index) => {
+        if(element.name == ''){
+          this.removeNewNominee(index);
+        }
+      });
+      obj.nomineeList= this.gold.value.getNomineeName;
       let adviceObj = {
         advice_id: this.advisorId,
         adviceStatusId: 5,
