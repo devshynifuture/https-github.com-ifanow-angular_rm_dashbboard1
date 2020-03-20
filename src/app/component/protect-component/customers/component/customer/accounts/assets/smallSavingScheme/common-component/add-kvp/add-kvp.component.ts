@@ -29,7 +29,7 @@ export class AddKvpComponent implements OnInit {
   isOptionalField: boolean;
   KVPFormScheme: any;
   KVPOptionalFormScheme: any;
-  nomineesListFM: any;
+    nomineesListFM: any = [];
   nomineesList: any[] = [];
   nominees: any[];
   kvpData;

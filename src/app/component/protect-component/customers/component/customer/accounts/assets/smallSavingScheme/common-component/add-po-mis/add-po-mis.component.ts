@@ -35,7 +35,7 @@ export class AddPoMisComponent implements OnInit {
   familyMemberId: any;
   nominees: any;
   nomineesList: any[] = [];
-  nomineesListFM: any;
+    nomineesListFM: any = [];
   pomisData: any;
   flag: any;
   editApi: any;

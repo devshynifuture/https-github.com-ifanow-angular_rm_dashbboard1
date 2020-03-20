@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, QueryList, ViewChild, ViewContainerRef } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
@@ -7,12 +7,14 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
 import { PostalService } from 'src/app/services/postal.service';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-contact-details-inn',
   templateUrl: './contact-details-inn.component.html',
   styleUrls: ['./contact-details-inn.component.scss']
 })
+
 export class ContactDetailsInnComponent implements OnInit {
   validatorType = ValidatorType
   contactDetails: any;
@@ -34,6 +36,7 @@ export class ContactDetailsInnComponent implements OnInit {
   changedValue: string;
   generalDetails: any;
   doneData: any;
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
     private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
@@ -116,7 +119,7 @@ export class ContactDetailsInnComponent implements OnInit {
       district: [!data.address ? data.district : data.address.district, [Validators.required]],
       state: [!data.address ? data.state : data.address.state, [Validators.required]],
       country: [!data.address ? data.country : data.address.country, [Validators.required]],
-      address:[!data.address ? data.address : data.address, [Validators.required]],
+      address:[!data.address ? data.address : data.address],
     });
   }
   getFormControl(): any {
@@ -189,7 +192,7 @@ export class ContactDetailsInnComponent implements OnInit {
         this.holder.type = value;
         this.contactDetails.setValue(this.firstHolderContact);
       } else {
-        this.reset();
+       return;
       }
     }
     else if (value == 'second') {
@@ -257,18 +260,14 @@ export class ContactDetailsInnComponent implements OnInit {
     return value;
   }
   saveContactDetails(value) {
-    if (this.contactDetails.get('email').invalid) {
-      this.contactDetails.get('email').markAsTouched();
-      return;
-    } else if (this.contactDetails.get('aadharNumber').invalid) {
-      this.contactDetails.get('aadharNumber').markAsTouched();
-      return;
-    } else if (this.contactDetails.get('mobileNo').invalid) {
-      this.contactDetails.get('mobileNo').markAsTouched();
-      return;
-    } else if (this.contactDetails.get('phoneNo').invalid) {
-      this.contactDetails.get('phoneNo').markAsTouched();
-      return
+    if (this.contactDetails.invalid) {
+      for (let element in this.contactDetails.controls) {
+        console.log(element)
+        if (this.contactDetails.get(element).invalid) {
+          this.inputs.find(input => !input.ngControl.valid).focus();
+          this.contactDetails.controls[element].markAsTouched();
+        }
+      }
     } else {
 
       this.setEditHolder(this.holder.type, value)

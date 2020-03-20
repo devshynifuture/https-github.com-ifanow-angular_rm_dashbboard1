@@ -33,7 +33,7 @@ export class AddOtherPayablesComponent implements OnInit {
   _data: any;
   interestRate: number;
   showError: boolean;
-  nomineesListFM: any;
+    nomineesListFM: any = [];
 
   constructor(private fb: FormBuilder, public subInjectService: SubscriptionInject, public custumService: CustomerService, public eventService: EventService) {
   }

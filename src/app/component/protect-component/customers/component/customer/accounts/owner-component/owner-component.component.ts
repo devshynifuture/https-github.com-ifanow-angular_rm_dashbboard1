@@ -19,7 +19,7 @@ export class OwnerComponentComponent implements OnInit {
   sendData: any;
   ownerName: any;
   familyMemberId: any;
-  nomineesListFM: any;
+    nomineesListFM: any = [];
   dataFM = [];
   familyList: any;
 

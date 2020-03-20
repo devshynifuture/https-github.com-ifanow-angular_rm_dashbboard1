@@ -34,7 +34,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   ownerName: any;
   loanTypeView: any;
   clientId: any;
-  nomineesListFM: any;
+    nomineesListFM: any = [];
   maxDate = new Date();
   transactionViewData =
     {
