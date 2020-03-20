@@ -50,9 +50,8 @@
             </ng-container>
             <ng-container matColumnDef="icons">
                 <th mat-header-cell *matHeaderCellDef> </th>
-                <td mat-cell *matCellDef="let element">
-                    <mat-icon [matMenuTriggerFor]="menu" class="c-p">more_vert</mat-icon>
-
+                <td mat-cell class="text-center" *matCellDef="let element">
+                    <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item>
                             Edit
