@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { CustomerService } from '../../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -27,7 +27,7 @@ export class AddPoRdComponent implements OnInit {
   clientId: number;
   ownerData: any;
   PORDForm: any;
-  PORDFormoptionalForm: any;
+  callMethod: any;
   editApi: any;
     nomineesListFM: any = [];
   pordData: any;
@@ -78,15 +78,152 @@ export class AddPoRdComponent implements OnInit {
     return this.inputData;
   }
 
-  display(value) {
-    console.log('value selected', value);
-    this.ownerName = value;
-    this.familyMemberId = value.id;
+  // ===================owner-nominee directive=====================//
+display(value) {
+  console.log('value selected', value)
+  this.ownerName = value.userName;
+  this.familyMemberId = value.id
+}
+
+lisNominee(value) {
+  this.ownerData.Fmember = value;
+  this.nomineesListFM = Object.assign([], value);
+}
+
+disabledMember(value, type) {
+  this.callMethod = {
+    methodName : "disabledMember",
+    ParamValue : value,
+    disControl : type
   }
-  lisNominee(value) {
-    console.log(value)
-    this.nomineesListFM = Object.assign([], value.familyMembersList);
+}
+
+displayControler(con) {
+  console.log('value selected', con);
+  if(con.owner != null && con.owner){
+    this.PORDForm.controls.getCoOwnerName = con.owner;
   }
+  if(con.nominee != null && con.nominee){
+    this.PORDForm.controls.getNomineeName = con.nominee;
+  }
+}
+
+onChangeJointOwnership(data) {
+  this.callMethod = {
+    methodName : "onChangeJointOwnership",
+    ParamValue : data
+  }
+}
+
+/***owner***/ 
+
+get getCoOwner() {
+  return this.PORDForm.get('getCoOwnerName') as FormArray;
+}
+
+addNewCoOwner(data) {
+  this.getCoOwner.push(this.fb.group({
+    name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+  }));
+  if (data) {
+    setTimeout(() => {
+     this.disabledMember(null,null);
+    }, 1300);
+  }
+
+  if(this.getCoOwner.value.length > 1 && !data){
+   let share = 100/this.getCoOwner.value.length;
+   for (let e in this.getCoOwner.controls) {
+    if(!Number.isInteger(share) && e == "0"){
+      this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+    }
+    else{
+      this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+    }
+   }
+  }
+  
+}
+
+removeCoOwner(item) {
+  this.getCoOwner.removeAt(item);
+  if (this.PORDForm.value.getCoOwnerName.length == 1) {
+    this.getCoOwner.controls['0'].get('share').setValue('100');
+  } else {
+    let share = 100/this.getCoOwner.value.length;
+    for (let e in this.getCoOwner.controls) {
+      if(!Number.isInteger(share) && e == "0"){
+        this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+      }
+      else{
+        this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+      }
+    }
+  }
+  this.disabledMember(null, null);
+}
+/***owner***/ 
+
+/***nominee***/ 
+
+get getNominee() {
+  return this.PORDForm.get('getNomineeName') as FormArray;
+}
+
+removeNewNominee(item) {
+  this.getNominee.removeAt(item);
+  if (this.PORDForm.value.getNomineeName.length == 1) {
+    this.getNominee.controls['0'].get('sharePercentage').setValue('100');
+  } else {
+    let share = 100/this.getNominee.value.length;
+    for (let e in this.getNominee.controls) {
+      if(!Number.isInteger(share) && e == "0"){
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+      }
+      else{
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+      }
+    }
+  }
+}
+
+
+
+addNewNominee(data) {
+  this.getNominee.push(this.fb.group({
+    name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+  }));
+  if (!data || this.getNominee.value.length < 1) {
+    for (let e in this.getNominee.controls) {
+      this.getNominee.controls[e].get('sharePercentage').setValue(0);
+    }
+  }
+
+  if(this.getNominee.value.length > 1 && !data){
+    let share = 100/this.getNominee.value.length;
+    for (let e in this.getNominee.controls) {
+      if(!Number.isInteger(share) && e == "0"){
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+      }
+      else{
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+      }
+    }
+   }
+   
+  
+}
+/***nominee***/ 
+// ===================owner-nominee directive=====================//
+
+checkValue(){
+  if(this.PORDForm.get('tenure').value%5 != 0){
+    this.PORDForm.get('tenure').setErrors({incorrect: true});
+  }
+  else{
+    this.PORDForm.get('tenure').setErrors({incorrect: false});
+  }
+}
   getFormDataNominee(data) {
     console.log(data)
     this.nomineesList = data.controls
@@ -101,29 +238,67 @@ export class AddPoRdComponent implements OnInit {
     }
     this.pordData = data;
     this.PORDForm = this.fb.group({
-      ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
+      // ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
+      getCoOwnerName: this.fb.array([this.fb.group({
+        name: ['',[Validators.required]],
+        share: ['',[Validators.required]],
+        familyMemberId: 0,
+        id:0
+      })]),
       monthlyContribution: [data.monthlyContribution, [Validators.required, Validators.min(10)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
-      tenure: [(data.tenure) ? data.tenure : '5', [Validators.required]],
+      tenure: [(data.tenure) ? data.tenure : 5, [Validators.required]],
       ownership: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]],
       interestRate: [!data.interestRate ? '7.2' : data.interestRate, [Validators.required]],
-      compound: [(!data.compound) ? '3' : data.compound, [Validators.required]]
-    });
-    this.PORDFormoptionalForm = this.fb.group({
+      compound: [(!data.compound) ? '3' : data.compound, [Validators.required]],
       rdNum: [data.rdNumber],
       poBranch: [data.postOfficeBranch],
       nominees: this.nominees,
       linkedBankAcc: [data.linkedBankAccount],
-      description: [data.description]
+      description: [data.description],
+      getNomineeName: this.fb.array([this.fb.group({
+        name: [''],
+        sharePercentage: [0],
+        familyMemberId: [0],
+        id:[0]
+      })])
     });
-    this.ownerData = this.PORDForm.controls;
-    this.familyMemberId = data.familyMemberId;
+    
+
+    // ==============owner-nominee Data ========================\\
+  /***owner***/ 
+  if(this.PORDForm.value.getCoOwnerName.length == 1){
+    this.getCoOwner.controls['0'].get('share').setValue('100');
+  }
+
+  if (data.ownerList) {
+    this.getCoOwner.removeAt(0);
+    data.ownerList.forEach(element => {
+      this.addNewCoOwner(element);
+    });
+  }
+  
+/***owner***/ 
+
+/***nominee***/ 
+if(data.nomineeList){
+  this.getNominee.removeAt(0);
+  data.nomineeList.forEach(element => {
+    this.addNewNominee(element);
+  });
+}
+/***nominee***/ 
+
+this.ownerData = {Fmember: this.nomineesListFM, controleData:this.PORDForm}
+// ==============owner-nominee Data ========================\\ 
+    // this.ownerData = this.PORDForm.controls;
+    // this.familyMemberId = data.familyMemberId;
   }
 
   onChange(event) {
     if (parseInt(event.target.value) > 100) {
       event.target.value = "100";
-      this.PORDFormoptionalForm.get('interestRate').setValue(event.target.value);
+      this.PORDForm.get('interestRate').setValue(event.target.value);
     }
   }
 
@@ -147,20 +322,30 @@ export class AddPoRdComponent implements OnInit {
       const obj = {
         clientId: this.clientId,
         advisorId: this.advisorId,
-        familyMemberId: this.familyMemberId,
-        ownerName: (this.ownerName == undefined) ? this.PORDForm.controls.ownerName.value : this.ownerName.userName,
+        ownerList: this.PORDForm.value.getCoOwnerName,
+        // familyMemberId: this.familyMemberId,
+        // ownerName: (this.ownerName == undefined) ? this.PORDForm.controls.ownerName.value : this.ownerName.userName,
         monthlyContribution: this.PORDForm.get('monthlyContribution').value,
         commencementDate: this.PORDForm.get('commDate').value,
-        rdNumber: this.PORDFormoptionalForm.get('rdNum').value,
-        postOfficeBranch: this.PORDFormoptionalForm.get('poBranch').value,
+        rdNumber: this.PORDForm.get('rdNum').value,
+        postOfficeBranch: this.PORDForm.get('poBranch').value,
         nominees: this.nominees,
-        description: this.PORDFormoptionalForm.get('description').value,
+        description: this.PORDForm.get('description').value,
         interestRate: this.PORDForm.get('interestRate').value,
         ownerTypeId: this.PORDForm.get('ownership').value,
         interestCompounding: this.PORDForm.get('compound').value,
-        linkedBankAccount: this.PORDFormoptionalForm.get('linkedBankAcc').value,
+        linkedBankAccount: this.PORDForm.get('linkedBankAcc').value,
+        nomineeList: this.PORDForm.value.getNomineeName,
         isActive: 1,
       };
+
+      obj.nomineeList.forEach((element, index) => {
+        if(element.name == ''){
+          this.removeNewNominee(index);
+        }
+      });
+      obj.nomineeList= this.PORDForm.value.getNomineeName;
+
       if (this.flag == "editPORD") {
         obj['id'] = this.editApi.id;
         this.cusService.editPORD(obj).subscribe(
@@ -205,7 +390,7 @@ export class AddPoRdComponent implements OnInit {
 
   isFormValuesForAdviceValid() {
     if (this.PORDForm.valid ||
-      (this.PORDForm.valid && this.PORDFormoptionalForm.valid && this.nomineesList.length !== 0)) {
+      (this.PORDForm.valid && this.PORDForm.valid && this.nomineesList.length !== 0)) {
       return true;
     } else {
       return false;

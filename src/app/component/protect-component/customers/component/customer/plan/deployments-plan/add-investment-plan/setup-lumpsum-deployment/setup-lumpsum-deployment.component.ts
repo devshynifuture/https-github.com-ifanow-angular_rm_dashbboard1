@@ -62,12 +62,21 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
       data => {
         this.isLoading = false;
         console.log('deployment data -------------->', data);
-        this.dataForAddAmount;
+        if(data){
         this.dataSource = data;
         this.dataForAddAmount = {
           EQUITY: this.dataSource.EQUITY,
           DEBT: this.dataSource.DEBT
         }
+        }else{
+          this.dataSource = {
+            EQUITY: [],
+            DEBT: [],
+            equity_investment: [],
+            debt_investment: []
+          }
+        }
+
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
@@ -80,7 +89,9 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
     this.planService.getMututalFundSchemeData().subscribe(
       data => {
         console.log('Scheme LIst Get *********************---->', data)
-        this.schemeData = data
+        if(data){
+          this.schemeData = data
+        }
       }
     )
   }

@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CustomerActivityComponent } from './customer-activity.component';
 import { AdviceActivityComponent } from './advice-activity/advice-activity.component';
 import { DeploymentsActivityComponent } from './deployments-activity/deployments-activity.component';
+import { DeploymentsPlanComponent } from '../plan/deployments-plan/deployments-plan.component';
 
 const routes: Routes = [
   {
@@ -20,7 +21,7 @@ const routes: Routes = [
       },
       {
         path: 'deployments',
-        loadChildren: () => import('./deployments-activity/deployments-activity.module').then(m => m.DeploymentsActivityModule)
+        component: DeploymentsPlanComponent
       },
       {
         path: 'action-plan',
