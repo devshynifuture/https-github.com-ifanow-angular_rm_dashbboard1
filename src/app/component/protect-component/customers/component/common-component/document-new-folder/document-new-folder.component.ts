@@ -34,22 +34,26 @@ export class DocumentNewFolderComponent implements OnInit {
 
   createNewFolder(value){
    console.log(this.nameFolder)
-  //  let obj ={
-  //    newFolder : value, rename: this.SendObj
-  //  }
-  //  this.dialogRef.close(obj)
 
 
 
-   const obj = {
-     clientId: this.clientId,
-     advisorId: this.advisorId,
-     folderParentId: (this.data.parentId == undefined) ? 0 : this.parentId,
-     folderName: value
-   };
-   this.custumService.newFolder(obj).subscribe(
-     data => this.newFolderRes(data)
-   );
+    if(this.folderUpload!='CREATE'){
+   let obj ={
+     newFolder : value, rename: this.SendObj
+   }
+   this.close(true,obj)
+    }else{
+      const obj = {
+        clientId: this.clientId,
+        advisorId: this.advisorId,
+        folderParentId: (this.data.parentId == undefined) ? 0 : this.parentId,
+        folderName: value
+      };
+      this.custumService.newFolder(obj).subscribe(
+        data => this.newFolderRes(data)
+      );
+    }
+
   }
   newFolderRes(data){
     console.log(data)
