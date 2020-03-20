@@ -45,6 +45,7 @@
 
     <div *ngIf="clientCodeData == undefined" class="d-flex flex-column align-items-center">
         <h4 class="text-center pt-12">No IIN/UCC found</h4>
+        <button mat-button class="btn-green text-white" (click)="openNewCustomerIIN()">IIN/UCC CREATION</button>
     </div>
     <!-- second click -->
     <div *ngIf="formStep == 'step-2' &&  transactionType==undefined">
