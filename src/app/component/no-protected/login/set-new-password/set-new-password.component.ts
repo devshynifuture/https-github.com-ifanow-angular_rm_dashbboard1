@@ -15,7 +15,8 @@ export class SetNewPasswordComponent implements OnInit {
     lowerCase: false,
     specialCharacter: false
   }
-
+  hide1 = true;
+  hide2 = true;
   constructor(private fb: FormBuilder) { }
   setNewPasswordForm;
   validatorType = ValidatorType
