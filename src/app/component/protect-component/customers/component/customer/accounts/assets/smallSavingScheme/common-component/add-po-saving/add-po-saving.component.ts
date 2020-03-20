@@ -27,7 +27,6 @@ export class AddPoSavingComponent implements OnInit {
   poSavingForm: any;
   ownerName: any;
   familyMemberId: any;
-  poSavingOptionalForm: any;
   editApi: any;
   accBalance: number;
   nomineesListFM: any = [];
@@ -241,15 +240,13 @@ addNewNominee(data) {
         name: [''],
         sharePercentage: [0],
         familyMemberId: [0],
-        id:[0]
-      })])
-
-    });
-    this.poSavingOptionalForm = this.fb.group({
+        id:[0],
+      })]),
       poBranch: [data.postOfficeBranch],
       nominees: this.nominees,
       bankAccNo: [data.acNumber],
       description: [data.description]
+
     });
     // ==============owner-nominee Data ========================\\
     /***owner***/
@@ -306,13 +303,13 @@ addNewNominee(data) {
           familyMemberId: this.familyMemberId,
           balanceAsOn: this.poSavingForm.get('balAsOn').value,
           accountBalance: this.poSavingForm.get('accBal').value,
-          postOfficeBranch: this.poSavingOptionalForm.get('poBranch').value,
+          postOfficeBranch: this.poSavingForm.get('poBranch').value,
           ownerTypeId: this.poSavingForm.get('ownershipType').value,
           ownerList: this.poSavingForm.value.getCoOwnerName,
           nomineeList: this.poSavingForm.value.getNomineeName,
           nominees: this.nominees,
-          acNumber: this.poSavingOptionalForm.get('bankAccNo').value,
-          description: this.poSavingOptionalForm.get('description').value,
+          acNumber: this.poSavingForm.get('bankAccNo').value,
+          description: this.poSavingForm.get('description').value,
           ownerName: (this.ownerName == undefined) ? this.poSavingForm.controls.ownerName.value : this.ownerName.userName
         };
         this.cusService.editPOSAVINGData(obj).subscribe(
@@ -326,13 +323,13 @@ addNewNominee(data) {
           familyMemberId: this.familyMemberId,
           balanceAsOn: this.poSavingForm.get('balAsOn').value,
           accountBalance: this.poSavingForm.get('accBal').value,
-          postOfficeBranch: this.poSavingOptionalForm.get('poBranch').value,
+          postOfficeBranch: this.poSavingForm.get('poBranch').value,
           ownerTypeId: this.poSavingForm.get('ownershipType').value,
           ownerList: this.poSavingForm.value.getCoOwnerName,
           nomineeList: this.poSavingForm.value.getNomineeName,
           nominees: this.nominees,
-          acNumber: this.poSavingOptionalForm.get('bankAccNo').value,
-          description: this.poSavingOptionalForm.get('description').value,
+          acNumber: this.poSavingForm.get('bankAccNo').value,
+          description: this.poSavingForm.get('description').value,
         };
         obj.nomineeList.forEach((element, index) => {
           if(element.name == ''){
@@ -378,7 +375,7 @@ addNewNominee(data) {
 
   isFormValuesForAdviceValid() {
     if (this.poSavingForm.valid ||
-      (this.poSavingForm.valid && this.poSavingOptionalForm.valid && this.nomineesList.length !== 0)) {
+      (this.poSavingForm.valid && this.poSavingForm.valid && this.nomineesList.length !== 0)) {
       return true;
     } else {
       return false;
