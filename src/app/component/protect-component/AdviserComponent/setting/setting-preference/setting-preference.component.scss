@@ -1,1 +1,36 @@
+.b-outline {
+    outline: 1px solid #dee5e7 !important;
+    position: relative;
+    &::before {
+        content: '';
+        width: 10px;
+        height: 40px;
+        z-index: 2;
+        background: #fff;
+        position: absolute;
+        right: -5px;
+        top: 0px;
+    }
+}
 
+.settingPreference {
+    .vertical-menu {
+        li {
+            padding: 10px 12px !important;
+        }
+    }
+}
+
+.btnNewEmail {
+    width: 112px;
+    height: 36px;
+    padding: 0px !important;
+    text-align: center;
+}
+
+.sampleButton {
+    width: 140px;
+    padding: 0px;
+    height: 40px;
+    border-radius: 2px !important;
+}
