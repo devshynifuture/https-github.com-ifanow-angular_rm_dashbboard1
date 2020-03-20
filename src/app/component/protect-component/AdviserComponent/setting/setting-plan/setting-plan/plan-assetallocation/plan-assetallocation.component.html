@@ -30,48 +30,48 @@
 
     <!-- Name Column -->
     <ng-container matColumnDef="debt1">
-        <th mat-header-cell *matHeaderCellDef> Debt </th>
+        <th mat-header-cell class="text-right" *matHeaderCellDef> Debt </th>
         <td mat-cell class="text-right" *matCellDef="let element"> {{element.debt1}} </td>
     </ng-container>
 
     <!-- Weight Column -->
     <ng-container matColumnDef="equity1">
-        <th mat-header-cell *matHeaderCellDef class="br"> Equity </th>
-        <td mat-cell *matCellDef="let element" class="br"> {{element.equity1}} </td>
+        <th mat-header-cell *matHeaderCellDef class="br text-right"> Equity </th>
+        <td mat-cell *matCellDef="let element" class="br text-right"> {{element.equity1}} </td>
     </ng-container>
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="debt2">
-        <th mat-header-cell *matHeaderCellDef> Debt </th>
-        <td mat-cell *matCellDef="let element"> {{element.debt2}} </td>
+        <th mat-header-cell class="text-right" *matHeaderCellDef> Debt </th>
+        <td mat-cell class="text-right" *matCellDef="let element"> {{element.debt2}} </td>
     </ng-container>
     <ng-container matColumnDef="equity2">
-        <th mat-header-cell *matHeaderCellDef class="br"> Equity </th>
-        <td mat-cell *matCellDef="let element" class="br"> {{element.equity2}} </td>
+        <th mat-header-cell *matHeaderCellDef class="br text-right"> Equity </th>
+        <td mat-cell *matCellDef="let element" class="br text-right"> {{element.equity2}} </td>
     </ng-container>
     <ng-container matColumnDef="debt3">
-        <th mat-header-cell *matHeaderCellDef> Debt </th>
-        <td mat-cell *matCellDef="let element"> {{element.debt3}} </td>
+        <th mat-header-cell class="text-right" *matHeaderCellDef> Debt </th>
+        <td mat-cell *matCellDef="let element" class="text-right"> {{element.debt3}} </td>
     </ng-container>
     <ng-container matColumnDef="equity3">
-        <th mat-header-cell *matHeaderCellDef class="br"> Equity </th>
-        <td mat-cell *matCellDef="let element" class="br"> {{element.equity3}} </td>
+        <th mat-header-cell *matHeaderCellDef class="br text-right"> Equity </th>
+        <td mat-cell *matCellDef="let element" class="br text-right"> {{element.equity3}} </td>
     </ng-container>
     <ng-container matColumnDef="debt4">
-        <th mat-header-cell *matHeaderCellDef> Debt </th>
-        <td mat-cell *matCellDef="let element"> {{element.debt4}} </td>
+        <th mat-header-cell class="text-right" *matHeaderCellDef> Debt </th>
+        <td mat-cell class="text-right" *matCellDef="let element"> {{element.debt4}} </td>
     </ng-container>
     <ng-container matColumnDef="equity4">
-        <th mat-header-cell *matHeaderCellDef class="br"> Equity </th>
-        <td mat-cell *matCellDef="let element" class="br"> {{element.equity4}} </td>
+        <th mat-header-cell *matHeaderCellDef class="br text-right"> Equity </th>
+        <td mat-cell *matCellDef="let element" class="br text-right"> {{element.equity4}} </td>
     </ng-container>
     <ng-container matColumnDef="debt5">
-        <th mat-header-cell *matHeaderCellDef> Debt </th>
-        <td mat-cell *matCellDef="let element"> {{element.debt5}} </td>
+        <th mat-header-cell class="text-right" *matHeaderCellDef> Debt </th>
+        <td mat-cell class="text-right" *matCellDef="let element"> {{element.debt5}} </td>
     </ng-container>
     <ng-container matColumnDef="equity5">
-        <th mat-header-cell *matHeaderCellDef> Equity </th>
-        <td mat-cell *matCellDef="let element"> {{element.equity5}} </td>
+        <th mat-header-cell class="text-right" *matHeaderCellDef> Equity </th>
+        <td mat-cell class="text-right" *matCellDef="let element"> {{element.equity5}} </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
