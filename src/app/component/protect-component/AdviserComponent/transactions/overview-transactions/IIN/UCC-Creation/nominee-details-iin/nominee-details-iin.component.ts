@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
@@ -9,6 +9,7 @@ import { OnlineTransactionService } from '../../../../online-transaction.service
 import { PostalService } from 'src/app/services/postal.service';
 import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
 import { FatcaDetailsInnComponent } from '../fatca-details-inn/fatca-details-inn.component';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-nominee-details-iin',
@@ -16,6 +17,8 @@ import { FatcaDetailsInnComponent } from '../fatca-details-inn/fatca-details-inn
   styleUrls: ['./nominee-details-iin.component.scss']
 })
 export class NomineeDetailsIinComponent implements OnInit {
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+
   validatorType = ValidatorType
   holdingList: any[];
   nomineeDetails: any;
@@ -179,7 +182,7 @@ export class NomineeDetailsIinComponent implements OnInit {
         this.holder.type = value;
         this.nomineeDetails.setValue(this.firstHolderNominee);
       } else {
-        this.reset();
+        return;
       }
     }
     else if (value == 'second') {
@@ -267,42 +270,14 @@ export class NomineeDetailsIinComponent implements OnInit {
     return value;
   }
   saveNomineeDetails(value) {
-    if (this.nomineeDetails.get('nomineeName').invalid) {
-      this.nomineeDetails.get('nomineeName').markAsTouched();
-      return
-    } else if (this.nomineeDetails.get('relationType').invalid) {
-      this.nomineeDetails.get('relationType').markAsTouched();
-      return;
-    } else if (this.nomineeDetails.get('nomineeType').invalid) {
-      this.nomineeDetails.get('nomineeType').markAsTouched();
-      return;
-    } else if (this.nomineeDetails.get('nominneDOB').invalid) {
-      this.nomineeDetails.get('nominneDOB').markAsTouched();
-      return;
-    } else if (this.nomineeDetails.get('nomineePercentage').invalid) {
-      this.nomineeDetails.get('nomineePercentage').markAsTouched();
-      return;
-    } else if (this.nomineeDetails.get('addressType').invalid) {
-      this.nomineeDetails.get('addressType').markAsTouched();
-      return;
-    } else if (this.nomineeDetails.get('addressLine1').invalid) {
-      this.nomineeDetails.get('addressLine1').markAsTouched();
-      return;
-    } else if (this.nomineeDetails.get('addressLine2').invalid) {
-      this.nomineeDetails.get('addressLine2').markAsTouched();
-      return;
-    } else if (this.nomineeDetails.get('pinCode').invalid) {
-      this.nomineeDetails.get('pinCode').markAsTouched();
-      return;
-    } else if (this.nomineeDetails.get('city').invalid) {
-      this.nomineeDetails.get('city').markAsTouched();
-      return;
-    } else if (this.nomineeDetails.get('district').invalid) {
-      this.nomineeDetails.get('district').markAsTouched();
-      return;
-    } else if (this.nomineeDetails.get('country').invalid) {
-      this.nomineeDetails.get('country').markAsTouched();
-      return;
+    if (this.nomineeDetails.invalid) {
+      for (let element in this.nomineeDetails.controls) {
+        console.log(element)
+        if (this.nomineeDetails.get(element).invalid) {
+          this.inputs.find(input => !input.ngControl.valid).focus();
+          this.nomineeDetails.controls[element].markAsTouched();
+        }
+      }
     } else {
       this.setEditHolder(this.holder.type, value)
 
