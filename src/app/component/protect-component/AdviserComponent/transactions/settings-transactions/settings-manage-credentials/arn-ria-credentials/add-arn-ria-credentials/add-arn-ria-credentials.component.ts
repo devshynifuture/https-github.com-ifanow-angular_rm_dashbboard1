@@ -127,11 +127,11 @@ export class AddArnRiaCredentialsComponent implements OnInit {
         defaultLogin : (this.addCredential.controls.setDefault.value==true)?1:0,
         euin : this.addCredential.controls.euin.value,
         memberId: (this.addCredential.controls.memberId == undefined)?'':this.addCredential.controls.memberId.value,
-        id : (this.addCredential.controls.id== undefined)?'':this.addCredential.controls.memberId.value,
+        id : (this.addCredential.controls.id== undefined)?this.inputData.id:'',
         orderSerialNo : 0,
         password: this.addCredential.controls.pwd.value,
         subBrokerCode :(this.addCredential.controls.subBrokerCode == undefined)?'':this.addCredential.controls.subBrokerCode.value,
-        teamMemberSessionId :1,
+       // teamMemberSessionId :1,
         userId:this.addCredential.controls.appId.value,
       }
       this.onlineTransact.addBSECredentilas(obj).subscribe(

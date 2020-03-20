@@ -76,9 +76,9 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group mb-0">
-                    <mat-form-field>
+                    <mat-form-field class="ba-date">
                         <input autocomplete="off" matInput (click)="SSYpicker.open()" [matDatepicker]="SSYpicker"
-                            [max]="maxDate" class="form-control br-0"
+                            [max]="maxDate" class="form-control br-0 b-0"
                             (dateChange)="setCommencementDate($event.target.value)" formControlName="commDate" matInput
                             readonly>
                         <mat-datepicker-toggle matSuffix [for]="SSYpicker"></mat-datepicker-toggle>
@@ -97,10 +97,10 @@
                 <p class="m-0 f-12 text-custom">complete transaction history</p>
             </div>
             <div class="col-md-3">
-                <div class="form-group form-group_one mb-0">
-                    <mat-form-field><input autocomplete="off" matInput (click)="balanceAsOn.open()"
+                <div class="form-group mb-0">
+                    <mat-form-field class="ba-date"><input autocomplete="off" matInput (click)="balanceAsOn.open()"
                             [max]="ssySchemeForm.get('commDate').value" [matDatepicker]="balanceAsOn" [max]="maxDate"
-                            class="form-control br-0" formControlName="balanceAsOn" matInput readonly>
+                            class="form-control br-0 b-0" formControlName="balanceAsOn" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                         <mat-datepicker #balanceAsOn></mat-datepicker>
                         <mat-error class="f-12">This field is required </mat-error>

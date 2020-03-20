@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -25,14 +25,14 @@ export class AddNscComponent implements OnInit {
   inputData: any;
   ownerData: any;
   nscFormField: any;
-  nscFormOptionalField: any;
+  callMethod:any;
   ownerName: any;
   familyMemberId: any;
   editApi: any;
   transactionData: any;
   commDate: any;
   clientId: any;
-  nomineesListFM: any;
+  nomineesListFM: any = [];
   nscData: any;
   nomineesList: any[] = [];
   nominees: any;
@@ -70,16 +70,151 @@ export class AddNscComponent implements OnInit {
 
   isFormValuesForAdviceValid() {
     if (this.nscFormField.valid ||
-      (this.nscFormField.valid && this.nscFormOptionalField.valid && this.nomineesList.length !== 0)) {
+      (this.nscFormField.valid && this.nscFormField.valid && this.nomineesList.length !== 0)) {
       return true;
     } else {
       return false;
     }
   }
-  lisNominee(value) {
-    console.log(value)
-    this.nomineesListFM = Object.assign([], value.familyMembersList);
+  
+
+    // ===================owner-nominee directive=====================//
+ display(value) {
+  console.log('value selected', value)
+  this.ownerName = value.userName;
+  this.familyMemberId = value.id
+}
+
+lisNominee(value) {
+  this.ownerData.Fmember = value;
+  this.nomineesListFM = Object.assign([], value);
+}
+
+disabledMember(value, type) {
+  this.callMethod = {
+    methodName : "disabledMember",
+    ParamValue : value,
+    disControl : type
   }
+}
+
+displayControler(con) {
+  console.log('value selected', con);
+  if(con.owner != null && con.owner){
+    this.nscFormField.controls.getCoOwnerName = con.owner;
+  }
+  if(con.nominee != null && con.nominee){
+    this.nscFormField.controls.getNomineeName = con.nominee;
+  }
+}
+
+onChangeJointOwnership(data) {
+  this.callMethod = {
+    methodName : "onChangeJointOwnership",
+    ParamValue : data
+  }
+}
+
+/***owner***/ 
+
+get getCoOwner() {
+  return this.nscFormField.get('getCoOwnerName') as FormArray;
+}
+
+addNewCoOwner(data) {
+  this.getCoOwner.push(this.fb.group({
+    name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+  }));
+  if (data) {
+    setTimeout(() => {
+     this.disabledMember(null,null);
+    }, 1300);
+  }
+
+  if(this.getCoOwner.value.length > 1 && !data){
+   let share = 100/this.getCoOwner.value.length;
+   for (let e in this.getCoOwner.controls) {
+    if(!Number.isInteger(share) && e == "0"){
+      this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+    }
+    else{
+      this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+    }
+   }
+  }
+  
+}
+
+removeCoOwner(item) {
+  this.getCoOwner.removeAt(item);
+  if (this.nscFormField.value.getCoOwnerName.length == 1) {
+    this.getCoOwner.controls['0'].get('share').setValue('100');
+  } else {
+    let share = 100/this.getCoOwner.value.length;
+    for (let e in this.getCoOwner.controls) {
+      if(!Number.isInteger(share) && e == "0"){
+        this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+      }
+      else{
+        this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+      }
+    }
+  }
+  this.disabledMember(null, null);
+}
+/***owner***/ 
+
+/***nominee***/ 
+
+get getNominee() {
+  return this.nscFormField.get('getNomineeName') as FormArray;
+}
+
+removeNewNominee(item) {
+  this.getNominee.removeAt(item);
+  if (this.nscFormField.value.getNomineeName.length == 1) {
+    this.getNominee.controls['0'].get('sharePercentage').setValue('100');
+  } else {
+    let share = 100/this.getNominee.value.length;
+    for (let e in this.getNominee.controls) {
+      if(!Number.isInteger(share) && e == "0"){
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+      }
+      else{
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+      }
+    }
+  }
+}
+
+
+
+addNewNominee(data) {
+  this.getNominee.push(this.fb.group({
+    name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+  }));
+  if (!data || this.getNominee.value.length < 1) {
+    for (let e in this.getNominee.controls) {
+      this.getNominee.controls[e].get('sharePercentage').setValue(0);
+    }
+  }
+
+  if(this.getNominee.value.length > 1 && !data){
+    let share = 100/this.getNominee.value.length;
+    for (let e in this.getNominee.controls) {
+      if(!Number.isInteger(share) && e == "0"){
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+      }
+      else{
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+      }
+    }
+   }
+  
+  
+}
+/***nominee***/ 
+// ===================owner-nominee directive=====================//
   getFormDataNominee(data) {
     console.log(data)
     this.nomineesList = data.controls
@@ -96,30 +231,64 @@ export class AddNscComponent implements OnInit {
     }
     this.nscData = data
     this.nscFormField = this.fb.group({
-      ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
+      getCoOwnerName: this.fb.array([this.fb.group({
+        name: ['',[Validators.required]],
+        share: ['',[Validators.required]],
+        familyMemberId: 0,
+        id:0
+      })]),
+      // ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
       amountInvested: [data.amountInvested, [Validators.required, Validators.min(100)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
       Tenure: [(data.tenure) ? String(data.tenure) : '5', [Validators.required]],
       ownershipType: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]],
-      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
-    })
-    this.nscFormOptionalField = this.fb.group({
-      cNo: [data.certificateNumber, [Validators.required]],
-      poBranch: [data.postOfficeBranch, [Validators.required]],
+      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]],
+      cNo: [data.certificateNumber],
+      poBranch: [data.postOfficeBranch],
       nominees: this.nominees,
-      linkedBankAccount: [data.bankAccountNumber, [Validators.required]],
-      description: [data.description, [Validators.required]]
+      linkedBankAccount: [data.bankAccountNumber],
+      getNomineeName: this.fb.array([this.fb.group({
+        name: [''],
+        sharePercentage: [0],
+        familyMemberId: [0],
+        id:[0]
+      })]),
+      description: [data.description]
     })
-    this.ownerData = this.nscFormField.controls;
-    this.familyMemberId = this.nscFormField.controls.familyMemberId.value
-    this.familyMemberId = this.familyMemberId[0]
+    // this.nscFormField = this.fb.group({
+    // })
+    // ==============owner-nominee Data ========================\\
+  /***owner***/ 
+  if(this.nscFormField.value.getCoOwnerName.length == 1){
+    this.getCoOwner.controls['0'].get('share').setValue('100');
+  }
+
+  if (data.ownerList) {
+    this.getCoOwner.removeAt(0);
+    data.ownerList.forEach(element => {
+      this.addNewCoOwner(element);
+    });
+  }
+  
+/***owner***/ 
+
+/***nominee***/ 
+if(data.nomineeList){
+  this.getNominee.removeAt(0);
+  data.nomineeList.forEach(element => {
+    this.addNewNominee(element);
+  });
+}
+/***nominee***/ 
+
+this.ownerData = {Fmember: this.nomineesListFM, controleData:this.nscFormField}
+// ==============owner-nominee Data ========================\\ 
+    // this.ownerData = this.nscFormField.controls;
+    // this.familyMemberId = this.nscFormField.controls.familyMemberId.value
+    // this.familyMemberId = this.familyMemberId[0]
 
   }
-  display(value) {
-    console.log('value selected', value)
-    this.ownerName = value;
-    this.familyMemberId = value.id
-  }
+  
   // getFormData(data) {
   //   console.log(data)
   //   this.transactionData = data.controls
@@ -159,16 +328,18 @@ export class AddNscComponent implements OnInit {
         {
           "id": this.editApi.id,
           "familyMemberId": this.familyMemberId,
-          "ownerName": (this.ownerName == undefined) ? this.nscFormField.controls.ownerName.value : this.ownerName.userName,
+          "ownerList": this.nscFormField.value.getCoOwnerName,
+          // "ownerName": (this.ownerName == undefined) ? this.nscFormField.controls.ownerName.value : this.ownerName.userName,
           "amountInvested": this.nscFormField.get('amountInvested').value,
           "commencementDate": this.datePipe.transform(this.nscFormField.get('commDate').value, 'yyyy-MM-dd'),
           "tenure": this.nscFormField.get('Tenure').value,
-          "certificateNumber": this.nscFormOptionalField.get('cNo').value,
-          "postOfficeBranch": this.nscFormOptionalField.get('poBranch').value,
-          "bankAccountNumber": this.nscFormOptionalField.get('linkedBankAccount').value,
+          "certificateNumber": this.nscFormField.get('cNo').value,
+          "postOfficeBranch": this.nscFormField.get('poBranch').value,
+          "bankAccountNumber": this.nscFormField.get('linkedBankAccount').value,
           "ownerTypeId": parseInt(this.nscFormField.get('ownershipType').value),
           "nominees": this.nominees,
-          "description": this.nscFormOptionalField.get('description').value,
+          "nomineeList": this.nscFormField.value.getNomineeName,
+          "description": this.nscFormField.get('description').value,
         }
         this.cusService.editNSCData(obj).subscribe(
           data => this.addNSCResponse(data),
@@ -181,16 +352,18 @@ export class AddNscComponent implements OnInit {
           "clientId": this.clientId,
           "familyMemberId": this.familyMemberId,
           "advisorId": this.advisorId,
-          "ownerName": (this.ownerName == undefined) ? this.nscFormField.controls.ownerName.value : this.ownerName.userName,
+          "ownerList": this.nscFormField.value.getCoOwnerName,
+          // "ownerName": (this.ownerName == undefined) ? this.nscFormField.controls.ownerName.value : this.ownerName.userName,
           "amountInvested": this.nscFormField.get('amountInvested').value,
           "commencementDate": this.datePipe.transform(this.nscFormField.get('commDate').value, 'yyyy-MM-dd'),
           "tenure": this.nscFormField.get('Tenure').value,
-          "certificateNumber": this.nscFormOptionalField.get('cNo').value,
-          "postOfficeBranch": this.nscFormOptionalField.get('poBranch').value,
-          "bankAccountNumber": this.nscFormOptionalField.get('linkedBankAccount').value,
+          "certificateNumber": this.nscFormField.get('cNo').value,
+          "postOfficeBranch": this.nscFormField.get('poBranch').value,
+          "bankAccountNumber": this.nscFormField.get('linkedBankAccount').value,
           "ownerTypeId": parseInt(this.nscFormField.get('ownershipType').value),
           "nominees": this.nominees,
-          "description": this.nscFormOptionalField.get('description').value
+          "nomineeList": this.nscFormField.value.getNomineeName,
+          "description": this.nscFormField.get('description').value
         }
         console.log(obj)
         let adviceObj = {

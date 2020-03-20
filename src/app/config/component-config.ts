@@ -373,7 +373,7 @@ export const appConfig = {
   PURCHASE: 'bse/order/bse/order/create',
   GET_AMCWISE_FOLIO: 'mutual-fund/folios/amc-wise/get',
   GET_SCHEMEWISE_FOLIO: 'mutual-fund/folios/scheme-wise/get',
-  GET_MANDATE_DETAILS: 'bse/mandate/view',
+  GET_MANDATE_DETAILS: '/mandate/view',
   GET_UNMAPPED_CLIENTS: '/user/client/unmapped/view',
   GET_MAPPED_CLIENTS: '/user/client/mapped/view',
   MAP_UNMAP_CLIENT: '/user/clients/map/manual',
@@ -438,6 +438,10 @@ export const appConfig = {
   BACKOFFICE_PUT_AUM_RECON_ADD: 'backoffice/aum/recon/add',
   BACKOFFICE_PUT_FILE_ORDER_RETRY: 'backoffice/aum/file/order/retry',
   BACKOFFICE_DELETE_AUM_TRANSACTION_SINGLE_MULTIPLE: 'backoffice/aum/transaction/multiple/delete',
+  BACKOFFICE_DELETE_AND_REORDER: 'backoffice/aum/delete-reorder',
+  BACKOFFICE_PUT_FREEZE_FOLIO_DATA: 'backoffice/aum/freeze/folio',
+  BACKOFFICE_PUT_UNFREEZE_FOLIO_DATA: 'backoffice/aum/unfreeze/folio',
+  BACKOFFICE_GET_DUPLICATE_FOLIO_DATA: 'backoffice/duplicate/transaction/list/get',
 
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',

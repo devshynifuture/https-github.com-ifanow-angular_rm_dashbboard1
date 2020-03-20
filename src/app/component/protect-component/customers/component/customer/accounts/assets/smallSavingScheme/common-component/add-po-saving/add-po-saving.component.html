@@ -64,9 +64,9 @@
                 <p class="m-0 f-12 text-custom">complete transaction history</p>
             </div>
             <div class="col-md-3">
-                <div class="form-group form-group_one mb-0">
-                    <mat-form-field> <input autocomplete="off" matInput formControlName="balAsOn"
-                            (focus)="balanceAsOn.open()" matInput class="form-control br-0"
+                <div class="form-group mb-0">
+                    <mat-form-field class="ba-date"> <input autocomplete="off" matInput formControlName="balAsOn"
+                            (focus)="balanceAsOn.open()" matInput class="form-control b-0 br-0"
                             [matDatepicker]="balanceAsOn" readonly>
                         <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                         <mat-datepicker #balanceAsOn></mat-datepicker>

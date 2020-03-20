@@ -81,6 +81,22 @@ export class AddGoalsComponent implements OnInit {
             Q4: 'Notes'
           }
           element.imageUrl = '/assets/images/svg/retierment.svg';
+          element.validations = {
+            minAgeFromPresent: 0,
+            maxAgeFromPresent: 60,
+            minCostReduction: 0,
+            maxCostReduction: -50,
+            minCost: 500000,
+            maxCost: 100000000,
+            showAge: true,
+            placeHolder: 'Age'
+          }
+          element.defaults = {
+            ageIncreament: 5,
+            minReduction: -20,
+            cost: 7500000,
+            planningForRelative: [0], // self
+          }
           break;
         case 2: // House
           element.questions = {

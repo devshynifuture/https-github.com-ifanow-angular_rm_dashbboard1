@@ -103,6 +103,9 @@
                                 <mat-error class="f-12 pt-4">
                                     This field is required
                                 </mat-error>
+                                <mat-error class="f-12 pt-4" *ngIf="folioList == undefined">
+                                    No existing folios
+                                </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -259,6 +262,7 @@
                             <mat-select class="form-control" formControlName="tenure">
                                 <mat-option value="1">No. of installment</mat-option>
                                 <mat-option value="2">No. year</mat-option>
+                                <mat-option value="3" *ngIf="getDataSummary && getDataSummary.defaultClient.aggregatorType == 1" >Continue until cancelled</mat-option>
                             </mat-select>
                             <mat-error class="f-12 pt-4">
                                 This field is required

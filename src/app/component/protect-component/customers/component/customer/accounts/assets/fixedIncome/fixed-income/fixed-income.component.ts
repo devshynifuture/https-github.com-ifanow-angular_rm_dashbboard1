@@ -26,7 +26,7 @@ export class FixedIncomeComponent implements OnInit {
   isLoading = false;
   showRequring: any;
   advisorId: any;
-  dataSource: any = new MatTableDataSource();;
+  dataSource: any = new MatTableDataSource();
   clientId: any;
   sumAmountInvested: any;
   sumCurrentValue: any;

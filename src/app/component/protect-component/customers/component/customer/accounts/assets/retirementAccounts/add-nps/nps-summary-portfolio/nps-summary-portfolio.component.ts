@@ -141,12 +141,11 @@ addNewCoOwner(data) {
   this.getCoOwner.push(this.fb.group({
     name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
   }));
-  if (!data || this.getCoOwner.value.length < 1) {
-    for (let e in this.getCoOwner.controls) {
-      this.getCoOwner.controls[e].get('share').setValue('');
-    }
+  if (data) {
+    setTimeout(() => {
+     this.disabledMember(null,null);
+    }, 1300);
   }
-
   if(this.getCoOwner.value.length > 1 && !data){
    let share = 100/this.getCoOwner.value.length;
    for (let e in this.getCoOwner.controls) {
@@ -158,9 +157,7 @@ addNewCoOwner(data) {
     }
    }
   }
-  else{
-    this.disabledMember(null, null)
-  }
+ 
 }
 
 removeCoOwner(item) {
@@ -203,7 +200,6 @@ removeNewNominee(item) {
       }
     }
   }
-  this.disabledMember(null, null);
 }
 
 
@@ -229,9 +225,7 @@ addNewNominee(data) {
       }
     }
    }
-   else{
-    this.disabledMember(null, null)
-  }
+   
   
 }
 /***nominee***/ 
@@ -315,18 +309,18 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.summaryNPS}
 // ==============owner-nominee Data ========================\\ 
     // this.ownerData = this.summaryNPS.controls;
     // this.nomineeData = this.summaryNPS.controls;
-    // if (data.futureContributionList != undefined) {
-    //   data.futureContributionList.forEach(element => {
-    //     this.summaryNPS.controls.futureContributionList.push(this.fb.group({
-    //       frequencyId: [(element.frequencyId) + "", [Validators.required]],
-    //       accountPreferenceId: [(element.accountPreferenceId + ""), Validators.required],
-    //       approxContribution: [(element.approxContribution), Validators.required],
-    //       id: [element.id, [Validators.required]]
-    //     }))
-    //   })
-    //   this.futureContry.removeAt(0);
+    if (data.futureContributionList != undefined) {
+      data.futureContributionList.forEach(element => {
+        this.summaryNPS.controls.futureContributionList.push(this.fb.group({
+          frequencyId: [(element.frequencyId) + "", [Validators.required]],
+          accountPreferenceId: [(element.accountPreferenceId + ""), Validators.required],
+          approxContribution: [(element.approxContribution), Validators.required],
+          id: [element.id, [Validators.required]]
+        }))
+      })
+      this.futureContry.removeAt(0);
 
-    // }
+    }
     // if (data.nominees != undefined) {
     //   if (data.nominees.length != 0) {
     //     data.nominees.forEach(element => {
@@ -439,14 +433,12 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.summaryNPS}
       //   }
       //   obj.nominees = this.summaryNPS.controls.nominees.value;
       // });
-      obj.nomineeList.forEach(element => {
+      obj.nomineeList.forEach((element, index) => {
         if(element.name == ''){
-          obj.nomineeList= [];
-        }
-        else{
-          obj.nomineeList= this.summaryNPS.value.getNomineeName;
+          this.removeNewNominee(index);
         }
       });
+      obj.nomineeList= this.summaryNPS.value.getNomineeName;
       let adviceObj = {
         advice_id: this.advisorId,
         adviceStatusId: 5,

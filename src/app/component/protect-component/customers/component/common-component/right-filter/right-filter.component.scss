@@ -1,27 +1,26 @@
-::ng-deep .arrowfix-right{
-    position: absolute;
-    right: 2%;
+::ng-deep .arrowfix-right {
+  position: absolute;
+  right: 2%;
 }
-::ng-deep .mat-list-base .mat-list-item{
-    font-size: 14px;
+
+::ng-deep .mat-list-base .mat-list-item {
+  font-size: 14px;
 }
-::ng-deep .mat-radio-button{
-    min-width: 90px !important;
+
+::ng-deep .mat-radio-button {
+  min-width: 90px !important;
 }
+
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
-    padding: 0px;
+  padding: 0px;
 }
 
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
-    width: 1.5em !important;
+  width: 1.5em !important;
 }
 
-::ng-deep .mat-datepicker-toggle {
-    position: absolute;
-    right: 8px !important;
-    top: -16px !important;
-}
+
 
 ::ng-deep .mat-form-field {
-    width: 100%;
+  width: 100%;
 }

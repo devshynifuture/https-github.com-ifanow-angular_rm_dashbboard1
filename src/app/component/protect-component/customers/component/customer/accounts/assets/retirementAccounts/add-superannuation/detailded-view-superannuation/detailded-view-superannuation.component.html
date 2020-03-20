@@ -1,7 +1,7 @@
 <div class="popup-header-fix-35">
     <div class="row bb-1">
         <div class="col-md-10 p-0">
-            <h4 class="mb-0 wrapper-20">Superannuation - Detailed view</h4>
+            <h4 class="mb-0 wrapper-20">superannuation - Detailed view</h4>
         </div>
         <div class="col-md-2 text-left">
             <div class="wrapper-12">
@@ -14,12 +14,12 @@
     <div class="row pt-40">
         <div class="col-md-12 p-0">
             <div class="insurance-ui bt">
-                <div class="row bb p-8 b-l br">
+                <div class="row bb p-8 b-l br" *ngFor="let obj of superannuation.ownerList; let i = index">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Owner Name
+                        {{i != 0?'Co-o' : 'O'}}wner{{i != 0?i:''}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{superannnuation.ownerName?superannnuation.ownerName:'-'}}
+                        {{obj.name}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -27,7 +27,7 @@
                         Annual employer contribution amount
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{superannnuation.annualEmployerContribution?utils.formatter(superannnuation.annualEmployerContribution):'-'}}
+                        {{superannuation.annualEmployerContribution?utils.formatter(superannuation.annualEmployerContribution):'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -35,7 +35,7 @@
                         Annual employee contribution amount
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{superannnuation.annualEmployeeContribution?utils.formatter(superannnuation.annualEmployeeContribution):'-'}}
+                        {{superannuation.annualEmployeeContribution?utils.formatter(superannuation.annualEmployeeContribution):'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -43,7 +43,7 @@
                         Current value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{superannnuation.currentValue?utils.formatter(superannnuation.currentValue):'-'}}
+                        {{superannuation.currentValue?utils.formatter(superannuation.currentValue):'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -51,7 +51,7 @@
                         Assumed rate of return
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{superannnuation.assumedRateOfReturn?superannnuation.assumedRateOfReturn:'-'}}
+                        {{superannuation.assumedRateOfReturn?superannuation.assumedRateOfReturn:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -59,7 +59,7 @@
                         Growth rate of employer contribution
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{superannnuation.growthRateEmployerContribution?superannnuation.growthRateEmployerContribution:'-'}}
+                        {{superannuation.growthRateEmployerContribution?superannuation.growthRateEmployerContribution:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -67,7 +67,7 @@
                         Growth rate of employee contribution
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{superannnuation.growthRateEmployeeContribution}}
+                        {{superannuation.growthRateEmployeeContribution}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -75,7 +75,7 @@
                         Date of 1st contribution
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{superannnuation.firstContributionDate  | date:'dd/MM/yyyy'}}
+                        {{superannuation.firstContributionDate  | date:'dd/MM/yyyy'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -83,7 +83,7 @@
                         Bank account number
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{superannnuation.bankAccountNumber?superannnuation.bankAccountNumber:'-'}}
+                        {{superannuation.bankAccountNumber?superannuation.bankAccountNumber:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -91,7 +91,23 @@
                         Description
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{superannnuation.description?superannnuation.description:'-'}}
+                        {{superannuation.description?superannuation.description:'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br" *ngIf="!superannuation.nomineeList">
+                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                        Nominee
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        -
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br" *ngFor="let obj of superannuation.nomineeList; let i = index">
+                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                        Nominee {{i + 1}}
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{obj.name}}
                     </div>
                 </div>
             </div>
