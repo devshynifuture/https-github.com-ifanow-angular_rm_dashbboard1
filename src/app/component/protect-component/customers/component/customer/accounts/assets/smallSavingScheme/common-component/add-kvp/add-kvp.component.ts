@@ -303,7 +303,6 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.KVPFormScheme}
         "bankAccountNumber": this.KVPFormScheme.get('bankAccNum').value,
         "description": this.KVPFormScheme.get('description').value,
         "nomineeList": this.KVPFormScheme.value.getNomineeName,
-
       }
 
       obj.nomineeList.forEach((element, index) => {
@@ -312,6 +311,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.KVPFormScheme}
         }
       });
       obj.nomineeList= this.KVPFormScheme.value.getNomineeName;
+      
       let adviceObj = {
         advice_id: this.advisorId,
         adviceStatusId: 5,
