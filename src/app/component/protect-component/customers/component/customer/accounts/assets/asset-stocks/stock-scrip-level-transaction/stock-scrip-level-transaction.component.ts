@@ -27,7 +27,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
   portfolioData: any;
   scriptForm: any;
   portfolioFieldData: { familyMemberId: any; };
-  nomineesListFM: any;
+    nomineesListFM: any = [];
   checkValid:boolean = false;
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }

@@ -19,7 +19,7 @@ export class AddExpensesComponent implements OnInit {
   familyMember: any;
   familyMemberId: any;
   ownerName: any;
-  nomineesListFM: any;
+    nomineesListFM: any = [];
   inputData: any;
   isViewInitCalled: any;
   expenseList: {};
