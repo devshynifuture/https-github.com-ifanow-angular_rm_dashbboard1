@@ -47,6 +47,14 @@ export class ReconciliationService {
         return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_GET_DUPLICATE_FOLIO_DATA, data);
     }
 
+    getFoliowiseTransactionList(data) {
+        return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_FOLIOWISE_LIST_GET, data)
+    }
+
+    getMutualFundFolioMasterValues(data) {
+        return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_GET_FOLIO_MASTER_DETAIL, data)
+    }
+
     // post functions
 
     // put functions
@@ -64,6 +72,10 @@ export class ReconciliationService {
 
     putUnfreezeFolio(data) {
         return this.http.put(apiConfig.MAIN_URL + appConfig.BACKOFFICE_PUT_UNFREEZE_FOLIO_DATA, data)
+    }
+
+    putUnmapFolioTransaction(data) {
+        return this.http.put(apiConfig.MAIN_URL + appConfig.BACKOFFICE_PUT_UNMAP_FOLIO, data);
     }
 
     // delete functions

@@ -1,5 +1,10 @@
+import { ReconciliationDetailsViewComponent } from './../../../../SupportComponent/common-component/reconciliation-details-view/reconciliation-details-view.component';
+import { SubscriptionInject } from './../../../Subscriptions/subscription-inject.service';
+import { UtilService } from './../../../../../../services/util.service';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
+import { ReconciliationService } from '../reconciliation/reconciliation.service';
+import { FolioMasterDetailViewComponent } from '../folio-master-detail-view/folio-master-detail-view.component';
 
 @Component({
   selector: 'app-folio-query',
@@ -8,7 +13,10 @@ import { MatTableDataSource } from '@angular/material';
 })
 export class FolioQueryComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private reconService: ReconciliationService,
+    private subInjectService: SubscriptionInject
+  ) { }
   displayedColumns: string[] = ['folioNumber', 'schemeName', 'investorName', 'arnRiaCode', 'reconStatus', 'transactions', 'folioDetails'];
   isSearchDone: boolean = false;
   isLoading: boolean = false;
@@ -17,15 +25,52 @@ export class FolioQueryComponent implements OnInit {
   optionList = [];
 
   ngOnInit() {
-    this.dataSource.data = undefined;
+    this.dataSource.data = ELEMENT_DATA;
   }
 
   search() {
+    // search query logic
+    // on hold
+    // const data = '';
+    // cannot get folio id 
+    // this.reconService.getFoliowiseTransactionList(data)
+    //   .subscribe(res => {
+    //     console.log(res);
+    //   }, err => {
+    //     console.error(err);
+    //   })
+
     // toggling view
     this.isSearchDone = !this.isSearchDone;
 
-    // search query logic
   }
+
+  openReconDetailView(element) {
+
+  }
+
+  openFolioMasterDetailView(flag, data) {
+    const fragmentData = {
+      flag,
+      data,
+      id: 1,
+      state: 'open40',
+      componentName: FolioMasterDetailViewComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            console.log('this is sidebardata in subs subs 3 ani: is refresh Required??? ', sideBarData);
+          }
+          rightSideDataSub.unsubscribe();
+        }
+
+      }
+    );
+  }
+
 
 }
 
@@ -40,8 +85,8 @@ interface folioQueryI {
 }
 
 const ELEMENT_DATA: folioQueryI[] = [
-  { folioNumber: '', schemeName: '', investorName: '', arnRiaCode: '', reconStatus: '', transactions: '', folioDetails: '' },
-  { folioNumber: '', schemeName: '', investorName: '', arnRiaCode: '', reconStatus: '', transactions: '', folioDetails: '' },
-  { folioNumber: '', schemeName: '', investorName: '', arnRiaCode: '', reconStatus: '', transactions: '', folioDetails: '' },
+  { folioNumber: '3423', schemeName: 'sdfbhsf', investorName: 'wrgerfgsd', arnRiaCode: 'warsgherfg', reconStatus: 'adgjnadfha', transactions: 'adfhdfhdyh', folioDetails: 'sdthsdfhsd' },
+  { folioNumber: '34234', schemeName: 'sdfsdf', investorName: 'sthaseg', arnRiaCode: 'agfsdag', reconStatus: 'astfhbdf', transactions: 'afgbdgbsdf', folioDetails: 'sdgfhsdfh' },
+  { folioNumber: '5434', schemeName: 'sdgasdrfg', investorName: 'argaweras', arnRiaCode: 'dgnhsdfsd', reconStatus: 'aerhagdsfhsd', transactions: 'sdfhdfgsd', folioDetails: 'eshbdfh' },
 
 ]

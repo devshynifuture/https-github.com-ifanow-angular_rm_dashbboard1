@@ -15,7 +15,7 @@ import { SettingEntryModule } from '../../protect-component/AdviserComponent/set
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { PeopleEntryModule } from '../../protect-component/PeopleComponent/people/people-entry-module';
 import { ActivitesEntryModule } from '../../protect-component/AdviserComponent/Activities/activites-entry.module';
-
+import { BackofficeAumReconciliationEntryModule } from '../../protect-component/AdviserComponent/backOffice/backoffice-aum-reconciliation/backoffice-aum-reconciliation.entry.module'
 @NgModule({
   declarations: [
     LeftsidebarComponent
@@ -34,7 +34,8 @@ import { ActivitesEntryModule } from '../../protect-component/AdviserComponent/A
     SupportEntryModule,
     SettingEntryModule,
     PeopleEntryModule,
-    ActivitesEntryModule
+    ActivitesEntryModule,
+    BackofficeAumReconciliationEntryModule
   ],
   entryComponents: [SubscriptionEntry.getComponentList(), SupportEntryModule.getComponentList(), SettingEntryModule.getComponentList(), PeopleEntryModule.getComponentList()],
   providers: [DynamicComponentService]

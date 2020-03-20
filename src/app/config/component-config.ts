@@ -442,6 +442,9 @@ export const appConfig = {
   BACKOFFICE_PUT_FREEZE_FOLIO_DATA: 'backoffice/aum/freeze/folio',
   BACKOFFICE_PUT_UNFREEZE_FOLIO_DATA: 'backoffice/aum/unfreeze/folio',
   BACKOFFICE_GET_DUPLICATE_FOLIO_DATA: 'backoffice/duplicate/transaction/list/get',
+  BACKOFFICE_FOLIOWISE_LIST_GET: 'backoffice/aum/transaction/foliowise/list/get',
+  BACKOFFICE_PUT_UNMAP_FOLIO: 'backoffice/unmap/folio',
+  BACKOFFICE_GET_FOLIO_MASTER_DETAIL: 'backoffice/mutual-fund/folio-master/get',
 
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',

@@ -63,6 +63,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
     } else if (this.data.startRecon === false) {
       console.log('start recon is false::::');
+      this.dataSource1 = undefined;
       this.getBackofficeAumFileOrderListDeleteReorder();
 
     }
@@ -220,8 +221,10 @@ export class UpperSliderBackofficeComponent implements OnInit {
             }
             return element;
           });
+          this.dataSource3.data = res;
+        } else {
+          this.dataSource3 = undefined;
         }
-        this.dataSource3.data = res;
       });
   }
 
@@ -234,6 +237,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
     this.isTabDisabled = false;
 
     // creation of excel sheet 
+
+
 
     let headerData = [
       { width: 20, key: 'Investor Name' },

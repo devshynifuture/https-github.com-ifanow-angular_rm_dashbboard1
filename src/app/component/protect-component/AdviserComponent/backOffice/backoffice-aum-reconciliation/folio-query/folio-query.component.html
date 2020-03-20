@@ -165,7 +165,8 @@
                 </ng-container>
                 <ng-container matColumnDef="folioDetails">
                     <th mat-header-cell *matHeaderCellDef> Folio Details </th>
-                    <td mat-cell *matCellDef="let element">
+                    <td mat-cell *matCellDef="let element"
+                        (click)="openFolioMasterDetailView('openFolioDetail', element)">
                         <div class="bar">
                             <button mat-button color="primary" class="btn-xs h-22">
                                 view

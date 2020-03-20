@@ -43,6 +43,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.data);
+    this.unmapFolioTransaction();
 
     if (this.data && this.data.tableType == 'all-folios') {
       this.tableEntriesType = 1;
@@ -87,6 +88,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
       this.selection.clear();
       this.deleteMultipleTransactionArray = [];
       this.shouldDeleteMultiple = false;
+      this.selectedFolioUnits = 0;
     } else {
       this.shouldDeleteMultiple = true;
       this.dataSource1.data.forEach(row => {
@@ -94,6 +96,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
         if (this.deleteMultipleTransactionArray.includes(row['id'])) {
           return;
         }
+        this.selectedFolioUnits = this.selectedFolioUnits + parseInt(row.units);
         this.deleteMultipleTransactionArray.push(row['id']);
       });
     }
@@ -176,6 +179,21 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     this.deleteTransactionApi([element['id']]);
   }
 
+  unmapFolioTransaction() {
+    const data = {
+      id: this.data.mutualFundId
+    };
+
+    console.log(data);
+
+    // this.reconService.putUnmapFolioTransaction(data)
+    //   .subscribe(res => {
+    //     console.log(res);
+    //   }, err => {
+    //     console.error(err);
+    //   })
+  }
+
 
   allFolioTransactionTableDataBinding() {
     if (this.data.tableData.length !== 0) {
@@ -204,10 +222,10 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     });
     this.isKeepOrRemoveTransactions = isKeepArray;
     console.log(this.isKeepOrRemoveTransactions);
-    // this.supportService.putAumTransactionKeepOrRemove(this.isKeepOrRemoveTransactions)
-    //   .subscribe(res => {
-    //     console.log(res);
-    //   });
+    this.supportService.putAumTransactionKeepOrRemove(this.isKeepOrRemoveTransactions)
+      .subscribe(res => {
+        console.log(res);
+      });
   }
 
   shouldKeepOrRemove(value, element) {

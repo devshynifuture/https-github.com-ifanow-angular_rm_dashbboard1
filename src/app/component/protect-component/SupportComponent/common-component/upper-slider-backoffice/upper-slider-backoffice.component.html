@@ -398,6 +398,11 @@
                             <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
                         </table>
+                        <div *ngIf="dataSource3 === undefined">
+                            <h4 class="b-a p-44 d-flex justify-content-center">
+                                No Data Found
+                            </h4>
+                        </div>
                     </div>
                 </div>
             </mat-tab>
