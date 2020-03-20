@@ -170,10 +170,10 @@ export class OverviewTransactionsComponent implements OnInit {
 
     const httpOptions = {
       headers: new HttpHeaders({ 
-        'Content-Type': 'application/octet-stream',
-        'Access-Control-Allow-Origin': "http://localhost:4200",
-        'Access-Control-Allow-Methods': "POST, GET, OPTIONS, DELETE, PUT",
-        'Access-Control-Allow-Headers': "append,delete,entries,foreach,get,has,keys,set,values,Authorization"
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Access-Control-Allow-Origin': "*",
+        // 'Access-Control-Allow-Methods': "POST, GET, OPTIONS, DELETE, PUT",
+        // 'Access-Control-Allow-Headers': "append,delete,entries,foreach,get,has,keys,set,values,Authorization"
       }),
       params: params,
       body: file
