@@ -77,7 +77,7 @@
             <div class="col-md-3 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input [matDatepicker]="anniversaryStatus" (click)="anniversaryStatus.open()" [max]="maxDate"
+                        <input [matDatepicker]="anniversaryStatus" (click)="anniversaryStatus.open()"
                             class="form-control br-0 b-0" formControlName="anniversaryStatus" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="anniversaryStatus"></mat-datepicker-toggle>
                         <mat-datepicker #anniversaryStatus></mat-datepicker>
@@ -124,10 +124,10 @@
     <div class="bottom-fixed wrapper-12 w-50">
         <div class="row">
             <div class="col-md-4">
-                <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
+                <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
             </div>
             <div class="col-md-8 right text-right">
-                <button (click)="saveNext()" mat-raised-button class="br-0 text-inherit mr-12">SAVE & NEXT
+                <button mat-raised-button class="br-0 text-inherit mr-12">SAVE & NEXT
                 </button>
                 <button mat-stroked-button class="btn-bottom br-0 text-inherit">SAVE & CLOSE
                 </button>

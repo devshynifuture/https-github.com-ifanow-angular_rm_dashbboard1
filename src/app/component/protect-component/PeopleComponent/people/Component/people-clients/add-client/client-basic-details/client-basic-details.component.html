@@ -130,7 +130,7 @@
                 <p class="m-0 roboto">As per records</p>
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input [matDatepicker]="dobAsPerRecord" (click)="dobAsPerRecord.open()" [max]="maxDate"
+                        <input [matDatepicker]="dobAsPerRecord" (click)="dobAsPerRecord.open()"
                             class="form-control br-0 b-0" formControlName="dobAsPerRecord" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="dobAsPerRecord"></mat-datepicker-toggle>
                         <mat-datepicker #dobAsPerRecord></mat-datepicker>
@@ -143,8 +143,8 @@
                 <p class="m-0 roboto">Actual</p>
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input [matDatepicker]="dobActual" (click)="dobActual.open()" [max]="maxDate"
-                            class="form-control br-0 b-0" formControlName="dobActual" matInput readonly>
+                        <input [matDatepicker]="dobActual" (click)="dobActual.open()" class="form-control br-0 b-0"
+                            formControlName="dobActual" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="dobActual"></mat-datepicker-toggle>
                         <mat-datepicker #dobActual></mat-datepicker>
                         <mat-error class="f-12">This field is required
@@ -269,7 +269,7 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button (click)="saveNext()" mat-raised-button class="br-0 text-inherit mr-12">SAVE & NEXT
+            <button mat-raised-button class="br-0 text-inherit mr-12">SAVE & NEXT
             </button>
             <button mat-stroked-button class="btn-bottom br-0 text-inherit">SAVE & CLOSE
             </button>
