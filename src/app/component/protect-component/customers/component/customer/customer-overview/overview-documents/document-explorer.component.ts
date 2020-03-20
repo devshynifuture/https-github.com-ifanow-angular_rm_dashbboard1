@@ -105,16 +105,19 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     this.selectedFolder = element
     const dialogRef = this.dialog.open(DocumentNewFolderComponent, {
       width: '30%',
-      data: { name: value, animal: element }
+      data: { name: value, animal: element,parentId:this.parentId }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
-      this.getInnerDoc = result;
-      if (element == 'CREATE') {
-        this.createFolder(this.getInnerDoc);
+      this.getInnerDoc = result.data;
+      // if (element == 'CREATE') {
+      //   this.createFolder(this.getInnerDoc);
+      // }
+      if(result.isRefreshRequired){
+        this.getAllFileList(this.valueTab)
       }
-      if (this.getInnerDoc.rename.flag == 'fileName') {
+      if (element=='CREATE' && this.getInnerDoc.rename.flag == 'fileName') {
         this.renameFile(this.getInnerDoc);
       } else {
         this.renameFolders(this.getInnerDoc);
@@ -219,8 +222,11 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
 
   newFolderRes(data) {
+    if(data==204){
+      this.eventService.openSnackBar('Folder name already exist', 'Ok');
+    }
     console.log('newFolderRes', data);
-    this.getAllFileList(this.valueTab);
+    // this.getAllFileList(this.valueTab);
   }
 
   openBottomSheet(): void {
