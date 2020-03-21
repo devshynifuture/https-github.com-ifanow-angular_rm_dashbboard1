@@ -70,10 +70,10 @@
                 <mat-form-field>
                     <mat-select matInput class="form-control br-0" formControlName="type">
                         <mat-option value="" disabled>Select option</mat-option>
-                        <mat-option value="0">Land</mat-option>
-                        <mat-option value="1">Residential</mat-option>
-                        <mat-option value="2">Secondary</mat-option>
-                        <mat-option value="3">Commercial</mat-option>
+                        <mat-option value="0">Self Occupied property</mat-option>
+                        <mat-option value="1">Let out property</mat-option>
+                        <mat-option value="2">Commercial, Agricultural land</mat-option>
+                        <mat-option value="3">Non agricultural land</mat-option>
                     </mat-select>
                     <mat-error class="f-12"
                         [ngClass]="{'v-h':!(isTypeValid && getFormControl().type.invalid || getFormControl().type.touched && getFormControl().type.invalid)}">
@@ -121,7 +121,7 @@
 
         <div class="row pt-36">
             <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Purchase period</h5>
+                <h5 class="m-0 pt-8">Purchase date</h5>
             </div>
             <div class="col-md-3 pr-0">
                 <div class="form-group mb-0">
@@ -151,7 +151,8 @@
                     <div class="col-md-5 p-0 iconRupess">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input autocomplete="off" matInput matInput #purchaseValue maxlength="10" type="text"
+                                <input autocomplete="off" matInput appInputValueValidation
+                                [inputValidator]="validatorType.NUMBER_ONLY" #purchaseValue maxlength="10" type="text"
                                     class="form-control rupess br-0 " formControlName="purchaseValue">
                                 <mat-hint align="start" class="f-12">Optional</mat-hint>
                                 <mat-hint align="end" class="f-12">{{purchaseValue.value.length}}/10</mat-hint>
@@ -168,7 +169,7 @@
 
         <div class="row pt-44" *ngIf="showArea==true">
             <div class="col-md-5 text-right">
-                <h5 class="m-0 pt-36">Area details</h5>
+                <h5 class="m-0 pt-36">Area</h5>
             </div>
             <div class="col-md-5 iconRupess">
                 <div class="row">
@@ -176,7 +177,8 @@
                         <h5 class="m-0 f-14">Rate per unit</h5>
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input autocomplete="off" matInput #unit maxlength="10" type="text"
+                                <input autocomplete="off" matInput appInputValueValidation
+                                [inputValidator]="validatorType.NUMBER_ONLY" #unit maxlength="10" type="text"
                                     class="form-control rupess br-0 " formControlName="ratePerUnit">
 
                             </mat-form-field>
@@ -188,23 +190,23 @@
                             <mat-form-field>
                                 <mat-select matInput class="form-control br-0" formControlName="unit">
                                     <mat-option value="1">Square feet</mat-option>
-                                    <mat-option value="3">Square meter</mat-option>
-                                    <mat-option value="6">Acre</mat-option>
-                                    <mat-option value="12">Hectare</mat-option>
-                                    <mat-option value="12">Bigha</mat-option>
-                                    <mat-option value="12">Biswa</mat-option>
-                                    <mat-option value="12">Biswansi</mat-option>
-                                    <mat-option value="12">Killa</mat-option>
-                                    <mat-option value="12">Ghumaon</mat-option>
-                                    <mat-option value="12">Ankanam</mat-option>
-                                    <mat-option value="12">Cent</mat-option>
+                                    <mat-option value="2">Square meter</mat-option>
+                                    <mat-option value="3">Acre</mat-option>
+                                    <mat-option value="4">Hectare</mat-option>
+                                    <mat-option value="5">Bigha</mat-option>
+                                    <mat-option value="6">Biswa</mat-option>
+                                    <mat-option value="7">Biswansi</mat-option>
+                                    <mat-option value="8">Killa</mat-option>
+                                    <mat-option value="9">Ghumaon</mat-option>
+                                    <mat-option value="10">Ankanam</mat-option>
+                                    <mat-option value="11">Cent</mat-option>
                                     <mat-option value="12">Ground</mat-option>
-                                    <mat-option value="12">Guntha</mat-option>
-                                    <mat-option value="12">kuncham</mat-option>
-                                    <mat-option value="12">Chatak</mat-option>
-                                    <mat-option value="12">Dhur</mat-option>
-                                    <mat-option value="12">Kattha</mat-option>
-                                    <mat-option value="12">Lecha</mat-option>
+                                    <mat-option value="13">Guntha</mat-option>
+                                    <mat-option value="14">kuncham</mat-option>
+                                    <mat-option value="15">Chatak</mat-option>
+                                    <mat-option value="16">Dhur</mat-option>
+                                    <mat-option value="17">Kattha</mat-option>
+                                    <mat-option value="18">Lecha</mat-option>
                                 </mat-select>
                                 <mat-hint align="start" class="f-12">Optional</mat-hint>
                                 <mat-hint align="end" class="f-12">{{unit.value.length}}/10</mat-hint>
@@ -236,7 +238,8 @@
                         <h5 class="m-0 f-14 ">Stamp duty</h5>
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input autocomplete="off" matInput #stampDuty maxlength="10" type="text"
+                                <input autocomplete="off" matInput appInputValueValidation
+                                [inputValidator]="validatorType.NUMBER_ONLY" #stampDuty maxlength="10" type="text"
                                     class="form-control rupess br-0 " formControlName="stampDuty">
                                 <mat-hint align="start" class="f-12">Optional</mat-hint>
                                 <mat-hint align="end" class="f-12">{{stampDuty.value.length}}/10</mat-hint>
@@ -247,7 +250,8 @@
                         <h5 class="m-0 f-14">Registration</h5>
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input autocomplete="off" matInput #registration maxlength="10" type="text"
+                                <input autocomplete="off" matInput appInputValueValidation
+                                [inputValidator]="validatorType.NUMBER_ONLY" #registration maxlength="10" type="text"
                                     class="form-control rupess br-0 " formControlName="registration">
                                 <!-- <mat-hint align="start" class="f-12">Optional</mat-hint> -->
                                 <mat-hint align="end" class="f-12">{{registration.value.length}}/10</mat-hint>
@@ -259,7 +263,8 @@
                         <h5 class="m-0 f-14 ">GST</h5>
                         <div class="form-group mb-0 iconRupess">
                             <mat-form-field>
-                                <input autocomplete="off" matInput #gst maxlength="10" type="text"
+                                <input autocomplete="off" matInput appInputValueValidation
+                                [inputValidator]="validatorType.NUMBER_ONLY" #gst maxlength="10" type="text"
                                     class="form-control rupess br-0 " formControlName="gst">
                                 <!-- <mat-hint align="start" class="f-12">Optional</mat-hint> -->
                                 <mat-hint align="end" class="f-12">{{gst.value.length}}/10</mat-hint>
